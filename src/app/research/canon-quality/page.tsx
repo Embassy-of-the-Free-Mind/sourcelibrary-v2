@@ -811,8 +811,8 @@ function TengyurSections({ corrections }: { corrections: { received: number; rev
     <>
       <p>
         The draft puts every drafted page of the Derge Tengyur into English beside the woodblock and the Tibetan text.
-        On {Math.round(TQ.sample.light)}% of pages the reviewers judged it good enough for a Tibetologist to finish with
-        light edits; the figures below show where a closer look pays off.
+        In a random sample, reviewers judged that {Math.round(TQ.sample.light)}% of pages need only light edits. The
+        errors are concentrated in some sections and in verse; the figures below say where.
       </p>
       <p className="mt-4">
         Every translated page of the Derge Tengyur says, under its draft label, how its section measured here. The
@@ -838,11 +838,11 @@ function TengyurSections({ corrections }: { corrections: { received: number; rev
         Pages in the draft: {fmtDate(TQ.measured)}.
       </p>
 
-      <h3 className="font-serif text-xl text-stone-900 mt-10 mb-3">Known issues, and what we are fixing</h3>
+      <h3 className="font-serif text-xl text-stone-900 mt-10 mb-3">Known issues</h3>
       <ul className="list-disc pl-5 space-y-2 text-base">
         <li>
           <strong>Pramāṇa:</strong> an opponent&rsquo;s objection is sometimes given as the author&rsquo;s own view,
-          and some named reason-types need a specialist's rendering. It is the section that most rewards a check against the Tibetan.
+          and named reason-types are mistranslated. It has the highest error rates of any section.
           <S href={SRC.tengyurRandom} />
         </li>
         <li>
@@ -867,7 +867,7 @@ function TengyurSections({ corrections }: { corrections: { received: number; rev
           <S href={SRC.tengyurResidue} />
         </li>
         <li>
-          <strong>Verse</strong> is harder than prose: {Math.round(TQ.verse.mostly_verse.rev_agent_per100)} reversed
+          <strong>Verse</strong> has more errors than prose: {Math.round(TQ.verse.mostly_verse.rev_agent_per100)} reversed
           statements or wrong speakers per 100 pages on pages that are half verse or more (n ={' '}
           {TQ.verse.mostly_verse.n}), against {Math.round(TQ.verse.prose.rev_agent_per100)} on prose (n ={' '}
           {TQ.verse.prose.n}).

@@ -45,7 +45,7 @@ describe('tengyurNoteSentences', () => {
     expect(s).toHaveLength(2);
     expect(s[0]).toContain(`${q.n} random Pramāṇa pages`);
     expect(s[0]).toContain(`${Math.round(q.light!)}% needed only light edits`);
-    expect(s[1]).toContain(`${Math.round(q.rev_agent_per100!)} places per 100 pages`);
+    expect(s[1]).toContain(`${Math.round(q.rev_agent_per100!)} statements per 100 pages`);
   });
 
   it('gives no rate for a section below the threshold', () => {
@@ -53,7 +53,7 @@ describe('tengyurNoteSentences', () => {
     expect(small).toBeTruthy();
     const word = Object.entries(TENGYUR_QUALITY.section_words).find(([, sec]) => sec === small![0])![0];
     const s = tengyurNoteSentences({ title: `བསྟན་འགྱུར། སྡེ་དགེ། ${word}། ཀ` }, t, 'en')!;
-    expect(s.join(' ')).toContain("not enough pages reviewed yet for a figure of its own");
+    expect(s.join(' ')).toContain("too few pages reviewed for a section figure");
   });
 });
 

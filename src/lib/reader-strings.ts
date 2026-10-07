@@ -1039,21 +1039,21 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     },
     tengyurNote: {
       rated: ({ section, n, date, light, work, specialist }) =>
-        `A readable first draft: of ${n} random ${section} pages checked against the Tibetan by AI reviewers (${date}), ${light}% needed only light edits${work ? `, ${work}% a closer revision` : ''}${specialist ? ` and ${specialist}% a specialist's eye` : ''}.`,
+        `Of ${n} random ${section} pages checked against the Tibetan by AI reviewers (${date}), ${light}% needed only light edits${work ? `, ${work}% substantial revision` : ''}${specialist ? ` and ${specialist}% a specialist` : ''}.`,
       faults: ({ kinds, revAgent, voice }) =>
-        `Worth checking against the Tibetan: about ${revAgent} places per 100 pages where a statement is reversed or attributed to the wrong speaker${voice ? ", sometimes an opponent's objection read as the author's view" : ''}${kinds.length ? `; also check ${kinds.join(' and ')}` : ''}.`,
+        `Measured errors: about ${revAgent} statements per 100 pages are reversed or attributed to the wrong speaker${voice ? ", including opponents' objections given as the author's view" : ''}${kinds.length ? `. Also common: ${kinds.join(', ')}` : ''}.`,
       tooFew: ({ section, n, of, date, light, revAgent }) =>
-        `${section[0].toUpperCase()}${section.slice(1)}: not enough pages reviewed yet for a figure of its own (${n ? `${n} of ${of}` : `none of ${of}`} random pages in an AI review, ${date}). Across the whole Tengyur, ${light}% of pages needed only light edits; about ${revAgent} places per 100 pages are worth checking for a reversed statement or the wrong speaker.`,
+        `${section[0].toUpperCase()}${section.slice(1)}: too few pages reviewed for a section figure (${n ? `${n} of ${of}` : `none of ${of}`} random pages in an AI review, ${date}). Across the whole Tengyur, ${light}% of pages needed only light edits, and about ${revAgent} statements per 100 pages are reversed or attributed to the wrong speaker.`,
       kinds: {
-        term: 'technical terms',
-        structure: 'the structure of long sentences',
-        gloss: 'the explanatory notes',
-        omission: 'for omitted phrases',
-        addition: 'for added words',
-        reversal: 'for reversed statements',
-        agent: 'who is speaking',
+        term: 'mistranslated technical terms',
+        structure: 'misread sentence structure',
+        gloss: 'inaccurate notes',
+        omission: 'omitted phrases',
+        addition: 'added words',
+        reversal: 'reversed statements',
+        agent: 'misattributed speakers',
       },
-      vinayaTerms: (pct) => `technical terms (${pct}% of Vinaya pages use Pali names for the offence classes)`,
+      vinayaTerms: (pct) => `mistranslated technical terms (Pali names for the offence classes on ${pct}% of Vinaya pages)`,
       methodLink: 'How this was measured',
       sectionNames: {
         'Tantra commentary': 'tantra commentary',
@@ -1542,21 +1542,21 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     },
     tengyurNote: {
       rated: ({ section, n, date, light, work, specialist }) =>
-        `Un primer borrador legible: de ${n} páginas al azar de ${section}, cotejadas con el tibetano por revisores de IA (${date}), el ${light} % necesitaba solo retoques${work ? `, el ${work} % una revisión más atenta` : ''}${specialist ? ` y el ${specialist} % la mirada de un especialista` : ''}.`,
+        `De ${n} páginas al azar de ${section}, cotejadas con el tibetano por revisores de IA (${date}), el ${light} % necesitaba solo retoques${work ? `, el ${work} % una revisión sustancial` : ''}${specialist ? ` y el ${specialist} % un especialista` : ''}.`,
       faults: ({ kinds, revAgent, voice }) =>
-        `Conviene cotejar con el tibetano: unos ${revAgent} lugares por cada 100 páginas donde una afirmación sale invertida o atribuida a otro hablante${voice ? ', a veces la objeción de un oponente leída como la opinión del autor' : ''}${kinds.length ? `; revise también ${kinds.join(' y ')}` : ''}.`,
+        `Errores medidos: unas ${revAgent} afirmaciones por cada 100 páginas salen invertidas o atribuidas a otro hablante${voice ? ', entre ellas objeciones de un oponente presentadas como la opinión del autor' : ''}${kinds.length ? `. También frecuentes: ${kinds.join(', ')}` : ''}.`,
       tooFew: ({ section, n, of, date, light, revAgent }) =>
-        `${section[0].toUpperCase()}${section.slice(1)}: aún no hay suficientes páginas revisadas para una cifra propia (${n ? `${n} de ${of}` : `ninguna de ${of}`} páginas al azar en una revisión por IA, ${date}). En todo el Tengyur, el ${light} % de las páginas necesitaba solo retoques; conviene cotejar unos ${revAgent} lugares por cada 100 páginas por si una afirmación sale invertida o con otro hablante.`,
+        `${section[0].toUpperCase()}${section.slice(1)}: muy pocas páginas revisadas para una cifra de la sección (${n ? `${n} de ${of}` : `ninguna de ${of}`} páginas al azar en una revisión por IA, ${date}). En todo el Tengyur, el ${light} % de las páginas necesitaba solo retoques, y unas ${revAgent} afirmaciones por cada 100 páginas salen invertidas o atribuidas a otro hablante.`,
       kinds: {
-        term: 'los términos técnicos',
-        structure: 'la estructura de las frases largas',
-        gloss: 'las notas explicativas',
-        omission: 'si faltan frases',
-        addition: 'si sobran palabras',
-        reversal: 'si hay afirmaciones invertidas',
-        agent: 'quién habla',
+        term: 'términos técnicos mal traducidos',
+        structure: 'estructura de la frase mal leída',
+        gloss: 'notas inexactas',
+        omission: 'frases omitidas',
+        addition: 'palabras añadidas',
+        reversal: 'afirmaciones invertidas',
+        agent: 'hablantes mal atribuidos',
       },
-      vinayaTerms: (pct) => `los términos técnicos (el ${pct} % de las páginas del Vinaya usa nombres pali para las clases de faltas)`,
+      vinayaTerms: (pct) => `términos técnicos mal traducidos (nombres pali para las clases de faltas en el ${pct} % de las páginas del Vinaya)`,
       methodLink: 'Cómo se midió',
       sectionNames: {
         'Tantra commentary': 'comentario tántrico',
