@@ -1379,7 +1379,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         const ev = row.pick!;
         const bits = [ev.translator ? `trans. ${ev.translator}` : null, ev.publisher || null].filter(Boolean).join(', ');
         const summary = ev.english_title
-          ? `${ev.english_title}${bits ? ` — ${bits}` : ''}`
+          ? `${ev.english_title}${bits ? ` (${bits})` : ''}`
           : (bits || t.tlEarlierTranslationExists);
         detail = (
           <>
