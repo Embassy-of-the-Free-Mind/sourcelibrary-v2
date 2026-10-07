@@ -547,9 +547,12 @@ if (COLLECTIONS.includes('books')) {
   const src = `read_json([${files.join(', ')}], format = 'newline_delimited', maximum_depth = 1, sample_size = -1, union_by_name = true, map_inference_threshold = -1, filename = true)`;
   // With a delta, the dump's copy of every changed book is dropped (updated, or deleted).
   const where = ck.books.delta
-    ? `WHERE NOT (r.filename LIKE '%/books-dump-%' AND EXISTS (SELECT 1 FROM read_json('${staging}/books-changed-ids.ndjson.gz', format = 'newline_delimited', columns = {'_id': 'VARCHAR', 'it': 'VARCHAR'}) c WHERE c._id = r._id AND c.it = r._id_type))`
+    ? `WHERE NOT (r.filename LIKE '%/books-dump-%' AND EXISTS (SELECT 1 FROM read_json('${staging}/books-changed-ids.ndjson.gz', format = 'newline_delimited', columns = {'_id': 'VARCHAR', 'it': 'VARCHAR'}) c WHERE c._id = json_extract_string(r._id, '$') AND c.it = json_extract_string(r._id_type, '$')))`
     : '';
-  runDuckdb(`COPY (SELECT * EXCLUDE (filename) FROM ${src} r ${where}) TO '${out}' (FORMAT parquet, COMPRESSION zstd, ROW_GROUP_SIZE 5000)`, { memoryLimit: '6GB', threads: 2, timeoutMs: 3 * 3600_000 });
+  // Every books column is JSON (maximum_depth = 1); the two id columns are always strings and
+  // (json_extract_string, not ->>: `a = j->>'$'` parses as `(a = j)->>'$'`)
+  // are what readers join on, so they are stored as VARCHAR.
+  runDuckdb(`COPY (SELECT * EXCLUDE (filename) REPLACE (json_extract_string(r._id, '$') AS _id, json_extract_string(r._id_type, '$') AS _id_type) FROM ${src} r ${where}) TO '${out}' (FORMAT parquet, COMPRESSION zstd, ROW_GROUP_SIZE 5000)`, { memoryLimit: '6GB', threads: 2, timeoutMs: 3 * 3600_000 });
   const [{ n }] = runDuckdb(`SELECT count(*)::BIGINT AS n FROM read_parquet('${out}')`);
   const [{ dup }] = runDuckdb(`SELECT count(*)::BIGINT AS dup FROM (SELECT _id, _id_type FROM read_parquet('${out}') GROUP BY ALL HAVING count(*) > 1)`);
   const cols = describe(out);
