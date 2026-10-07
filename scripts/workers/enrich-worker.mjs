@@ -1353,7 +1353,10 @@ async function prepareChapterExtraction(db, bookId) {
 
   const pages = await db.collection('pages')
     .find(
-      { book_id: bookId, 'ocr.data': { $exists: true, $ne: '' } },
+      // page_number > 0: a split book keeps its spreads as archived pages at page_number <= 0, still carrying
+      // their old OCR. Read here they anchored chapters at page -5 and stretched the last endPage past the
+      // book's length (#6114 wave A).
+      { book_id: bookId, page_number: { $gt: 0 }, 'ocr.data': { $exists: true, $ne: '' } },
       { projection: { id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1, page_type: 1 } }
     )
     .sort({ page_number: 1 })
