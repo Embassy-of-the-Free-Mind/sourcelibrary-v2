@@ -1,0 +1,538 @@
+[
+  {
+    "book_id": "69e01110c47b5c9f882143be",
+    "slot": 5,
+    "title": "Kakawin Sutasoma (Old Javanese Buddhist epic)",
+    "tradition": "old-javanese-hindu-buddhist",
+    "shelf_fit": "fits",
+    "shelf_note": "Mpu Tantular's Sutasoma, the central Javanese Buddhist-Śaiva kakawin, in a romanised typescript; core of this shelf.",
+    "rights_flag": true,
+    "structure_note": "318 pages, all OCR'd and translated. Printed page numbers run 4 lower than the record numbers (record 10 = printed 9, 83 = 79, 160 = 156, 290 = 286), which fits a short front matter. The 3 printed repeats are probably misread numerals. The leaves are photographed sideways (rotated 90°) as open-book shots, and the OCR still reads them. The margin folio markers are misread or dropped on every page (see pages).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 10,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<insert>[: a : ]</insert>",
+            "image": "[6.a.] (boxed margin folio marker)",
+            "problem": "folio marker garbled into an insert tag",
+            "severity": "minor",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "sanghyang buddha wibhāga supta ya gĕngĕn ring byūha kāmaṇḍaka",
+            "english": "The divine Buddha in his various forms remains latent; keep him within the byūha kāmaṇḍaka <gloss>the tactical arrangements of political statecraft</gloss>",
+            "problem": "a dense, doubtful line is rendered fluently with no sign of uncertainty. The gloss is a guess presented as fact",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Tĕkwan rakwa kiteki manggala wiśeṣāmumpuni stryāhajĕng",
+            "english": "you are indeed the supreme leader who possesses beautiful women",
+            "problem": "the verse lists the auspicious treasures (beautiful women, gems...) that belong to the king. Making 'you' the leader who owns them is probably a misparse (low confidence)",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "<insert>a</insert> tag and <unclear> tag carried into the reader's English",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "low"
+      },
+      {
+        "page_number": 83,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "[1.5.7]",
+            "image": "[41.b.]",
+            "problem": "margin folio marker misread",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "[2.a.]",
+            "image": "[42.a.]",
+            "problem": "margin folio marker misread",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "kinon-ira bhikṣu wikwa",
+            "image": "kinon-ira bhikṣwa wikwa",
+            "problem": "small misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "gajawaktra rūpa ... durwāktra",
+            "english": "Gajawaktra <gloss>the elephant-faced one, Ganesha</gloss> ... Durwāktra <gloss>Ugly-Faced One, Ganesha</gloss>",
+            "problem": "in Sutasoma the elephant-headed being whom the prince converts, with the nāga and the tigress, is a demon, not the god Ganeśa. The gloss and the summary ('explains ... to Ganesha') misidentify the character",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "Sāmpun mateki ya kinon-ira bhikṣu wikwa",
+            "english": "After this, they were instructed by the bhikṣu sage",
+            "problem": "probably 'they were told by him to become monks'; the agent is shifted (low confidence)",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "Sang keśawārṣi",
+            "english": "<gloss>the sage Keshava, an incarnation of Vishnu</gloss>",
+            "problem": "the gloss is speculative and not supported by the text",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 160,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>22.a.</margin>",
+            "image": "[79.a.]",
+            "problem": "margin folio marker misread",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "-ahulak jaja",
+            "image": "-anulak jaja",
+            "problem": "letter misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Nirwwālas-ira ri narendra putra ... nirwwārĕmĕn-ira ri raras jinendra tanu",
+            "english": "Her lack of pity for the prince ... She felt no desire for the beauty of his Buddha-like body",
+            "problem": "a hard stanza is rendered confidently with uncertain sense; it may invert the princess's attitude (low confidence)",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "OCR stores model commentary: <meta>The text appears to be a transliteration ... Boxed notation \"22.a.\" likely refers to a folio number</meta>",
+            "severity": "moderate",
+            "class": "O15"
+          }
+        ],
+        "confidence": "low"
+      },
+      {
+        "page_number": 290,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "(no margin marker)",
+            "image": "[142.a.]",
+            "problem": "folio marker dropped",
+            "severity": "minor",
+            "class": "O12"
+          },
+          {
+            "ocr": "śirah-ira",
+            "image": "śireh-ira",
+            "problem": "vowel misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Śrī kāśīndrādbhuton ton sudasāsuta mahārudra mūrtti",
+            "english": "The illustrious King of Kasi <note>... referring to the antagonist Puruṣāda, the son of Sudasa</note> was wondrous to behold as he took the form of the Great Rudra",
+            "problem": "the line says the King of Kāśī was amazed to see the son of Sudāsa (Puruṣāda) in Mahārudra form. The translation merges the two characters and gives the transformation to the King of Kāśī. The note and the summary repeat the error",
+            "severity": "serious",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "summary states 'The King of Kasi transforms into ... Mahārudra' — the derived summary carries the misreading",
+            "severity": "moderate",
+            "class": "E1"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The right text, transcribed well from a sideways typescript, but the margin folio markers are misread on every page. The English reads fluently, yet it misidentifies characters (Gajawaktra as Ganeśa; King of Kāśī merged with Puruṣāda). It is a 1994 edition, so rights need checking.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      10
+    ],
+    "reader_summary": "Mpu Tantular's Sutasoma in a 1994 romanised typescript. The transcription matches the page apart from the margin folio numbers. The English is a fluent first draft that misnames characters and garbles who does what in difficult stanzas, so it must not be quoted without checking the Old Javanese; the edition's rights are also unclear."
+  },
+  {
+    "book_id": "6a195dcd3e125aa8d6dffc7a",
+    "slot": 6,
+    "title": "Het Râmâyana op Javaansche tempel reliefs",
+    "tradition": "old-javanese-hindu-buddhist",
+    "shelf_fit": "fits",
+    "shelf_note": "J. Kats 1925 bilingual (Dutch/English) photographic study of the Rāmāyaṇa reliefs at Prambanan and Panataran: secondary literature, but squarely on Javanese Hindu art.",
+    "rights_flag": null,
+    "structure_note": "90 pages, all OCR'd, 51 translated. Only 20 carry printed numbers, which fits a plate-heavy book. Page 29 is a second title page ('Het Râmâyana op de Prambanan tempelgroep'), so the volume joins a text part and a plate part. Nothing broken in the sample.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 9,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "en zijn plicht is heiliger dan het volbrengen van zijns vaders gebod",
+            "image": "en geen plicht is heiliger dan het volbrengen van zijns vaders gebod",
+            "problem": "'geen' read as 'zijn': 'no duty is holier than obeying his father' becomes 'his duty is holier than obeying his father', which reverses Rāma's motive",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "He had never desired earthly power but and no duty could he higher",
+            "image": "He had never desired earthly power but had always striven on the side of virtue and duty and no duty could he higher",
+            "problem": "a line of the printed English column is dropped",
+            "severity": "moderate",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "en zijn plicht is heiliger dan het volbrengen van zijns vaders gebod",
+            "english": "and his duty is holier than fulfilling his father's command",
+            "problem": "carries the OCR misreading: the reversed sense reaches the reader, while the printed English beside it says the opposite",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "vorst",
+            "english": "prince",
+            "problem": "Dutch 'vorst' (king) rendered 'prince' (copying the 1925 English column)",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "the translation pane also reproduces the book's own English column, so the English appears twice",
+            "severity": "minor",
+            "class": "T11"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 25,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "various parts of India",
+            "image": "various prats of India",
+            "problem": "printer's typo silently corrected",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "„wajang wong''",
+            "english": "wayang wong <gloss>human shadow theater</gloss>",
+            "problem": "wayang wong is masked dance drama with human actors, not shadow theatre",
+            "severity": "minor"
+          },
+          {
+            "source": "De verschillende Râma-verhalen",
+            "english": "The various Râmâyana stories",
+            "problem": "small wording drift",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 29,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 64,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "type=\"engraving\"",
+            "image": "halftone photographs of reliefs",
+            "problem": "image type tag wrong",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A sound bilingual 1925 relief study with the authors' own English printed beside the Dutch. On one text page an OCR misreading of 'geen' as 'zijn' reverses a sentence in the AI English.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      25,
+      29,
+      64
+    ],
+    "reader_summary": "Kats's 1925 photographic catalogue of the Rāmāyaṇa reliefs at Prambanan, with Dutch and the original English side by side. The transcription is of the right pages and mostly exact. Where the 1925 English exists, readers should trust it over the AI English: on page 9 a misread word reverses Rāma's reasoning in the AI translation."
+  },
+  {
+    "book_id": "6a195c693e125aa8d6dff7fc",
+    "slot": 7,
+    "title": "De Bodhisattwa's van den Mĕndut",
+    "tradition": "old-javanese-hindu-buddhist",
+    "shelf_fit": "fits",
+    "shelf_note": "N. J. Krom 1918 article on the eight Bodhisattvas of Candi Mendut: secondary scholarship on Javanese Mahāyāna.",
+    "rights_flag": null,
+    "structure_note": "Printed numbers run 420–430 on the early pages, then 481 and 489 on records 28 and 36. Those later leaves are in a different typeface and spell 'Mendoet' (not 'Mĕndut'), and they discuss the restoration of the temple roof (Dr Brandes, Tjandi Pawon), not the Bodhisattvas. A second, separate article has been bound or scanned under Krom's title. The one backstep comes from this splice, not from a misread numeral.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 3,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "Bovenaan staat onder die monumenten",
+            "english": "At the top of these monuments",
+            "problem": "'foremost among' rendered as 'at the top of'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "the running head is left in Dutch inside a <header> tag in the English pane",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 13,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "waarom een opvatting, die in Ellora zoowel als in Tibet heerschte, ook Java zou hebben kunnen bereiken",
+            "image": "waarom een opvatting, die in Ellora zoowel als in Tibet heerschte, ook niet Java zou hebben kunnen bereiken",
+            "problem": "'niet' dropped: Krom's 'why should it not also have reached Java' becomes 'why it could have reached Java', which reverses his rhetorical point",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "aan beide zijden staande",
+            "image": "aan zijn beide zijden staande",
+            "problem": "word dropped",
+            "severity": "minor",
+            "class": "O5"
+          },
+          {
+            "ocr": "religion of Nepal (1874)",
+            "image": "religion of Nepál and Tibet (1874)",
+            "problem": "'and Tibet' dropped from footnote title",
+            "severity": "minor",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "waarom een opvatting ... ook Java zou hebben kunnen bereiken",
+            "english": "one begins to ask oneself why a conception that prevailed in Ellora as well as in Tibet could also have reached Java",
+            "problem": "carries the dropped negation into the English",
+            "severity": "serious",
+            "class": "O6"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 28,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "this page is from a different article (Mendoet roof restoration, p. 481) bound under Krom's title",
+            "severity": "moderate",
+            "class": "I7"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 36,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "same spliced restoration article (p. 489)",
+            "severity": "moderate",
+            "class": "I7"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean Dutch OCR and a faithful English. One dropped 'niet' reverses a key rhetorical sentence, and the back half of the record is a different article on the Mendut restoration, catalogued under Krom's title.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      3,
+      28,
+      36
+    ],
+    "reader_summary": "Krom's 1918 study of the Mendut Bodhisattvas, transcribed accurately with a reliable English translation. The record also holds pages from a separate article on the temple's roof restoration, which the title does not mention. One dropped negation on page 13 turns Krom's 'why not Java?' into its opposite."
+  },
+  {
+    "book_id": "6a1969a43e125aa8d6e0071f",
+    "slot": 8,
+    "title": "De legende van Kuñjarakarṇa volgens het oudst bekende handschrift",
+    "tradition": "old-javanese-hindu-buddhist",
+    "shelf_fit": "fits",
+    "shelf_note": "H. Kern 1901 edition of the Old Javanese Buddhist Kuñjarakarṇa legend, with Dutch translation and notes; a primary text with its standard edition.",
+    "rights_flag": null,
+    "structure_note": "102 pages, all OCR'd, 60 translated. The gap probably falls on the Old Javanese text pages, but none of them is in this sample. The 2 backsteps and 1 repeat are probably misread numerals; the sampled printed numbers (11, 27, 45, 53) follow the record numbers with a constant offset of 4.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 15,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "wist men niet van elders hoe ze luiden",
+            "english": "if one did not know from elsewhere how they are pronounced",
+            "problem": "'luiden' here means 'what they are', not 'how they are pronounced'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "running head left in Dutch at the top of the English",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 31,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "een luid 37) geschreeuw ... onbehoorlijk 38) ... oogst 39) ... bedreven hebt 40) ... wedergeboren 41) ... De wereld 43) ... dwaasheid 44) ... pijnigden 45)",
+            "english": "<note>³⁷) piercing.</note> ... <note>³⁸) wrong.</note> ... <note>³⁹) harvest.</note> ... <note>⁴⁰) done.</note> ... <note>⁴¹) reincarnated.</note> ... <note>⁴³) the universe.</note> ... <note>⁴⁴) stupidity.</note> ... <note>⁴⁵) punished.</note>",
+            "problem": "the footnote numbers on this page point to Kern's notes on the Old Javanese words, which are printed elsewhere in the book. The model has made up note text ('piercing', 'wrong', 'harvest'…) and presents it as Kern's footnotes",
+            "severity": "serious",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 49,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "Ga heen, hel ver weg!",
+            "image": "Ga heen, heel ver weg!",
+            "problem": "letter dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "running head rendered as a markdown '#' heading",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 57,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "Skr. dveṣa",
+            "image": "Skr. dweṣa",
+            "problem": "spelling normalised from Kern's w to v",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "vgl. Verhandeling hiervoor blz. 17",
+            "english": "compare Treatise before page 17",
+            "problem": "means 'the essay above, p. 17'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Kern's classic edition is transcribed almost perfectly and translated faithfully. On page 31 the English invents the content of eight footnotes and presents it as Kern's apparatus.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      15,
+      49,
+      57
+    ],
+    "reader_summary": "Kern's 1901 edition and Dutch translation of the Kuñjarakarṇa, the Javanese Buddhist hell-journey legend under Vairocana. The Dutch transcription is exact and the English follows it closely. On the translation pages, notes that look like Kern's footnotes may be invented and must be checked against his printed notes."
+  }
+]
