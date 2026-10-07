@@ -77,7 +77,7 @@ export type Measure = {
   noChart: NoChartRow[];
 };
 
-const pctOf = (x: number | null | undefined, d = 1) => (x == null ? '—' : `${(x * 100).toFixed(d)}%`);
+const pctOf = (x: number | null | undefined, d = 1) => (x == null ? '–' : `${(x * 100).toFixed(d)}%`);
 
 // ── adapters: each data file to the renderer's shape ─────────────────────────────────────────
 type OcrPoint = { engine: string; label: string; production: boolean; accuracy: number | null; accuracy_ci95: number[] | null; invented: { median: number | null } | null; cost: Cost | null; on_frontier?: boolean };
@@ -111,7 +111,7 @@ type XData = { charts: (Omit<Chart, 'panels'> & { panels: XPanel[] })[]; no_char
 const ocrData = pareto as unknown as OcrData;
 const xData = xlate as unknown as XData;
 
-const score = (v: number | null | undefined, d = 2) => (v == null ? '—' : v.toFixed(d));
+const score = (v: number | null | undefined, d = 2) => (v == null ? '–' : v.toFixed(d));
 
 export const OCR: Measure = {
   key: 'ocr', anchor: 'pareto-',
@@ -417,7 +417,7 @@ function PanelView({ chart, panel, m, present }: { chart: Chart; panel: Panel; m
                 </a>
               ) : <span className="text-stone-600">not measured</span>}
             </td>
-            <td className="py-1 text-right text-stone-700">{p.ring_text ?? '—'}</td>
+            <td className="py-1 text-right text-stone-700">{p.ring_text ?? '–'}</td>
           </tr>
         ))}
         {panel.no_cost.map(p => (
@@ -434,7 +434,7 @@ function PanelView({ chart, panel, m, present }: { chart: Chart; panel: Panel; m
                 {p.y_ci95 && <span className="text-stone-600 whitespace-nowrap"> [{m.fmtY(p.y_ci95[0], ciDigits)}–{m.fmtY(p.y_ci95[1], ciDigits)}]</span>}
               </td>
               <td className="py-1 pr-2 text-right whitespace-nowrap"><span className="text-stone-600">not measured</span></td>
-              <td className="py-1 text-right text-stone-700">{p.ring_text ?? '—'}</td>
+              <td className="py-1 text-right text-stone-700">{p.ring_text ?? '–'}</td>
             </>)}
           </tr>
         ))}

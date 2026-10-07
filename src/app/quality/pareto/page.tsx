@@ -10,7 +10,7 @@ import { ParetoPresentation, TRANSLATION } from '../ParetoCharts';
 export const revalidate = false;
 
 export const metadata: Metadata = {
-  title: 'OCR and Translation Cost Against Quality — Source Library',
+  title: 'OCR and Translation Cost Against Quality | Source Library',
   description:
     'For each script we read, what each OCR engine costs per 1,000 pages and how accurately it reads against a typed edition; for each language we translate, what each engine costs and how faithful its English is to a published translation. With 95% intervals and the frontier of engines nothing else beats.',
   alternates: { canonical: '/quality/pareto' },

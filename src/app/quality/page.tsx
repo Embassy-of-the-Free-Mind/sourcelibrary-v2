@@ -20,7 +20,7 @@ import ParetoCharts, { TRANSLATION } from './ParetoCharts';
 export const revalidate = false;
 
 export const metadata: Metadata = {
-  title: 'Quality Center — Source Library',
+  title: 'Quality Center | Source Library',
   description:
     'How good the transcriptions and translations in Source Library are, by language and by canon; what we have not measured; the experiments behind the figures; what readers have reported; and how to take part.',
   alternates: { canonical: '/quality' },
@@ -284,16 +284,16 @@ export default function QualityCenterPage() {
                   return (
                     <tr key={language}>
                       <td className={`${td} font-semibold text-stone-900`}>{language}</td>
-                      <td className={td}>{row ? `${row.share_of_translated_pages}%` : <span className="text-stone-500">—</span>}</td>
+                      <td className={td}>{row ? `${row.share_of_translated_pages}%` : <span className="text-stone-500">–</span>}</td>
                       <td className={td}>
                         {ocr?.median_cer != null ? (
                           <>{pct(ocr.median_cer, 1)} <span className="text-stone-500 text-xs">({ocr.pages_scored} pages)</span></>
                         ) : (
-                          <span className="text-stone-500">{row ? 'not measured' : '—'}</span>
+                          <span className="text-stone-500">{row ? 'not measured' : '–'}</span>
                         )}
                       </td>
                       <td className={td}>
-                        {tr ? <>{pct(tr.share)} <span className="text-stone-500 text-xs">({tr.books} books)</span></> : <span className="text-stone-500">—</span>}
+                        {tr ? <>{pct(tr.share)} <span className="text-stone-500 text-xs">({tr.books} books)</span></> : <span className="text-stone-500">–</span>}
                       </td>
                       <td className={td}>
                         {fid?.share_ge4 != null ? (
@@ -347,7 +347,7 @@ export default function QualityCenterPage() {
             )}
             {caveats.map(r => (
               <li key={r.language}>
-                {r.language} &mdash; {r.caveat!.text}
+                {r.language}: {r.caveat!.text}
                 {'issue' in r.caveat! && r.caveat!.issue ? <> <IssueLink num={r.caveat!.issue as number} /></> : null}
               </li>
             ))}
@@ -390,7 +390,7 @@ export default function QualityCenterPage() {
                         {n(t.pages_transcribed)} <span className="text-stone-500 text-xs">of {n(t.pages_scanned)}</span>
                       </td>
                       <td className={td}>
-                        {t.pages_transcribed > 0 ? (typed > 0 ? `${share(typed, t.pages_transcribed)} (${n(typed)} pages)` : 'none') : <span className="text-stone-500">—</span>}
+                        {t.pages_transcribed > 0 ? (typed > 0 ? `${share(typed, t.pages_transcribed)} (${n(typed)} pages)` : 'none') : <span className="text-stone-500">–</span>}
                       </td>
                       <td className={td}>{n(t.pages_translated)}</td>
                     </tr>
