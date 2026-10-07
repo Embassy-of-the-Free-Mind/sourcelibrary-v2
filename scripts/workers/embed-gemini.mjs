@@ -388,7 +388,9 @@ async function addToEmbedJob(item) {
   // Mongo read; the hash lets the collector refuse a vector for changed text.
   const line = JSON.stringify({
     key: `${item.page.book_id}|${item.page.id}|${textHash(item.text)}`,
-    request: { content: { parts: [{ text: item.text }] }, outputDimensionality: DIMS },
+    // toWellFormed: the 8,000-char cut can split a surrogate pair, and the Batch API rejects the
+    // WHOLE job on one lone surrogate (#6175). The key keeps the hash of the composed text.
+    request: { content: { parts: [{ text: item.text.toWellFormed() }] }, outputDimensionality: DIMS },
   });
   embedJob.lines.push(line);
   embedJob.bytes += Buffer.byteLength(line) + 1;

@@ -88,7 +88,8 @@ const JOB_TEXTS = Number(flag('--job-texts', 20000));
 const MAX_RUNNING = Number(flag('--max-running', 2));
 const FILE_ISSUE = has('--file-issue');
 const E5_SCAN = has('--e5-scan');          // with --book-ids: every row of those books, e5 signature, server-side
-const PAGES_OUT = flag('--pages-out', null); // --e5-scan: write the e5 page ids (JSON) for embed-gemini --pages-file
+const PAGES_OUT = flag('--pages-out', null);
+const RESUBMIT = flag('--resubmit', null); // a state file whose sample was taken but whose jobs never got created // --e5-scan: write the e5 page ids (JSON) for embed-gemini --pages-file
 // Thresholds: books in the sample with at least one row of the class.
 const MAX_OFF_SPACE_BOOKS = Number(flag('--max-off-space-books', 0));
 const MAX_SHAPE_ROWS = Number(flag('--max-shape-rows', 0));
@@ -107,13 +108,14 @@ function legacyTagStripText(text) {
   return typeof text === 'string' ? text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 8000) : '';
 }
 
+let STATE_OVERRIDE = null;
 const BATCH_API = 'https://generativelanguage.googleapis.com/v1beta';
 const KEY = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
 const log = (s) => console.error(s);
 
 if (!process.env.MONGODB_URI || !process.env.SUPABASE_DB_URL) { log('Need MONGODB_URI and SUPABASE_DB_URL'); process.exit(2); }
 if (EMBED !== 'none' && !KEY) { log('Need GEMINI_API_KEY_TIER3 or GEMINI_API_KEY (or --embed none)'); process.exit(2); }
-if (!COLLECT && !ALL && !NBOOKS && !NUNTRANSLATED && !BOOK_IDS_FILE) { log('Pass --books N, --all, --untranslated N, --book-ids FILE or --collect STATE'); process.exit(2); }
+if (!COLLECT && !RESUBMIT && !ALL && !NBOOKS && !NUNTRANSLATED && !BOOK_IDS_FILE) { log('Pass --books N, --all, --untranslated N, --book-ids FILE or --collect STATE'); process.exit(2); }
 
 const PAGE_PROJECTION = {
   id: 1, book_id: 1, page_number: 1, updated_at: 1, translation_summary: 1, translation_keywords: 1,
@@ -129,7 +131,7 @@ await sql.query("SET statement_timeout = '120s'");
 
 let exitCode = 0;
 try {
-  exitCode = E5_SCAN ? await e5Scan() : COLLECT ? await collectRun() : await sampleRun();
+  exitCode = E5_SCAN ? await e5Scan() : RESUBMIT ? await resubmitFromState() : COLLECT ? await collectRun() : await sampleRun();
 } catch (e) {
   log(`ERROR page-vector-truth: ${e.stack || e.message}`);
   exitCode = 2;
@@ -444,7 +446,7 @@ async function submitBatch(rows, books, noRows) {
   log(`batch: ${uniq.length.toLocaleString()} texts, ~${tokens.toLocaleString()} tokens ≈ $${estUsd.toFixed(2)} at batch price, ${Math.ceil(uniq.length / JOB_TEXTS)} job(s)`);
   const slim = rows.map(({ vec, _page, target, ...r }) => ({ ...r, target_key: target ? sha(target).slice(0, 16) : null }));
   const st = { jobs: [], seed: SEED, per_book: PER_BOOK, est_usd: estUsd, frames: books.frames, books: books.length, noRows, rows: slim };
-  const save = () => fs.writeFileSync(STATE, JSON.stringify(st));
+  const save = () => fs.writeFileSync(STATE_OVERRIDE || STATE, JSON.stringify(st));
   save();
   for (let i = 0; i < uniq.length; i += JOB_TEXTS) {
     const chunk = uniq.slice(i, i + JOB_TEXTS);
@@ -454,19 +456,27 @@ async function submitBatch(rows, books, noRows) {
       if (running < MAX_RUNNING) break;
       await new Promise(r => setTimeout(r, 60000));
     }
-    const body = chunk.map(t => JSON.stringify({ key: sha(t).slice(0, 16), request: { content: { parts: [{ text: t }] }, outputDimensionality: EMBED_DIMS } })).join('\n') + '\n';
+    // toWellFormed: an 8,000-char cut can split a surrogate pair, and the Batch API rejects the
+    // whole job on one lone surrogate ("invalid JSON … expected '\\u'"). The key stays the hash
+    // of the composed text, so collect still matches it to its rows.
+    const body = chunk.map(t => JSON.stringify({ key: sha(t).slice(0, 16), request: { content: { parts: [{ text: t.toWellFormed() }] }, outputDimensionality: EMBED_DIMS } })).join('\n') + '\n';
     const jobId = `pvt-${Date.now().toString(36)}-${i / JOB_TEXTS}`;
     const fileName = await uploadBatchInputFile(body, jobId, KEY);
     const created = await createThenDeleteInput({
       fileName, apiKey: KEY,
       create: async () => {
-        const r = await fetch(`${BATCH_API}/models/${EMBED_MODEL}:asyncBatchEmbedContent?key=${KEY}`, {
-          method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ batch: { display_name: jobId, input_config: { file_name: fileName } } }),
-        });
-        const j = await r.json().catch(() => ({}));
-        if (!r.ok || !j.name) throw new Error(`batch create ${r.status}: ${JSON.stringify(j).slice(0, 300)}`);
-        return j;
+        // 429 = the project's enqueued-token quota (shared with every other batch lane): wait
+        // for running jobs to drain rather than fail the run.
+        for (let attempt = 0; ; attempt++) {
+          const r = await fetch(`${BATCH_API}/models/${EMBED_MODEL}:asyncBatchEmbedContent?key=${KEY}`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ batch: { display_name: jobId, input_config: { file_name: fileName } } }),
+          });
+          const j = await r.json().catch(() => ({}));
+          if (r.ok && j.name) return j;
+          if (r.status === 429 && attempt < 20) { log(`  ${jobId}: 429 (enqueued-token quota) — retry ${attempt + 1} in 3 min`); await new Promise(res => setTimeout(res, 180000)); continue; }
+          throw new Error(`batch create ${r.status}: ${JSON.stringify(j).slice(0, 300)}`);
+        }
       },
     });
     const jt = chunk.reduce((s, t) => s + estimateTextTokens(t), 0);
@@ -480,6 +490,30 @@ async function submitBatch(rows, books, noRows) {
   log(`state → ${STATE}. Collect: --collect ${STATE}`);
   console.log(JSON.stringify({ submitted: st.jobs.map(j => j.name), state: STATE, texts: uniq.length, est_usd: +estUsd.toFixed(3) }));
   return 0;
+}
+
+/** Rebuild the targets of a saved sample from Mongo and submit them (no re-sampling). */
+async function resubmitFromState() {
+  const st = JSON.parse(fs.readFileSync(RESUBMIT, 'utf8'));
+  if (st.jobs?.length) throw new Error(`${RESUBMIT} already has ${st.jobs.length} job(s) — collect it instead`);
+  const rows = st.rows;
+  let mismatched = 0;
+  for (let i = 0; i < rows.length; i += 2000) {
+    const chunk = rows.slice(i, i + 2000);
+    const pages = await loadPages(chunk.map(r => r.page_id));
+    for (const r of chunk) {
+      const t = pageEmbeddingInput(pages.get(r.page_id))?.text || null;
+      // A page edited since the sample is checked against its new text, and says so.
+      if (t && r.target_key && sha(t).slice(0, 16) !== r.target_key) mismatched++;
+      r.target = t;
+      r.vec = new Float32Array(EMBED_DIMS).fill(1 / Math.sqrt(EMBED_DIMS)); // shape only, for embeddable()
+    }
+  }
+  log(`resubmit: ${rows.length.toLocaleString()} rows rebuilt; ${mismatched} page(s) changed since the sample`);
+  for (const r of rows) r.flags ??= [];
+  const books = Object.assign(new Array(st.books), { frames: st.frames });
+  STATE_OVERRIDE = RESUBMIT;
+  return submitBatch(rows, books, st.noRows);
 }
 
 async function collectRun() {
