@@ -167,6 +167,8 @@ export async function GET(request: NextRequest) {
     const isPhrase = /^".*"$/.test(query.trim());
     const matchQuery = isPhrase ? query.trim().slice(1, -1) : query;
     const queryRegex = new RegExp(matchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+    // The same, plus each word's related forms (#5517). A quoted phrase is matched as typed.
+    const wordFormRegex = isPhrase ? queryRegex : stemmedQueryRegex(matchQuery);
 
     // Build Atlas Search filters
     const searchFilters: BookSearchFilters = {};
@@ -324,14 +326,15 @@ export async function GET(request: NextRequest) {
       // cards exist but vector search surfaced 4. This lane fuses in every artwork
       // that literally contains the term (#2735).
       withTimeout(
-        lexicalArtworkSearch(db, queryRegex, 24, tenantContext.id || undefined, yearRange)
+        // Related word forms too (#5517): "herbal" matched no artwork, "herbs" nine.
+        lexicalArtworkSearch(db, wordFormRegex, 24, tenantContext.id || undefined, yearRange)
           .catch(() => emptyLexicalArtworks),
         emptyLexicalArtworks, 'artworks-lexical', 3000,
       ),
       // Collection search: match collection names/descriptions (~300 docs, fast).
       // Stemmed so "botanical" finds the Botany collection (#5517).
       withTimeout(
-        searchCollections(db, stemmedQueryRegex(matchQuery), matchQuery).catch(() => emptyCollections),
+        searchCollections(db, wordFormRegex, matchQuery).catch(() => emptyCollections),
         emptyCollections, 'collections', 2000,
       ),
     ]);

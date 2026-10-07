@@ -7,6 +7,7 @@ import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search
 import { expandNameQuery } from '@/lib/search/name-variants';
 import { CONTENT_LICENSE } from '@/lib/license-info';
 import { searchBookIds } from '@/lib/books-catalog';
+import { stemmedQueryRegex } from '@/lib/search/word-forms';
 import { semanticBookSearch, semanticPageSearchGlobal, lexicalPageSearchLang } from '@/lib/semantic-search';
 import { rrfScores } from '@/lib/search/rrf';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
@@ -323,7 +324,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             const STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
             const words = matchQuery.trim().split(/\s+/).filter((w: string) => w.length >= 3 && !STOPWORDS.has(w.toLowerCase()));
             if (words.length >= 2) {
-              const wordRegexes = words.map((w: string) => new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'));
+              // Each word with its related forms (#5517): "botanical gardens" reaches books keyed "botany".
+              const wordRegexes = words.map((w: string) => stemmedQueryRegex(w));
               books = await db.collection('books')
                 .find({
                   $and: wordRegexes.map(rx => ({
