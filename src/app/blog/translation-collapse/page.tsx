@@ -5,7 +5,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 export const metadata: Metadata = {
   title: 'Quality Control on Four Million Machine-Translated Pages - Research Notes - Source Library',
   description:
-    'How we found, measured, and repaired "translation collapse" — pages where the AI returns a fragment instead of a translation — and the two times our measurement was wrong before the model was.',
+    'How we found, measured, and repaired "translation collapse" (pages where the AI returns a fragment instead of a translation) and the two times our measurement was wrong before the model was.',
   openGraph: {
     images: [{ url: 'https://images.sourcelibrary.org/archived/69b2f434f9f1ad2b3b15154a/9.jpg', alt: 'A page from Henri Estienne\'s 1589 edition of the fragments of Dicaearchus' }],
     title: 'Quality Control on Four Million Machine-Translated Pages',
@@ -50,11 +50,11 @@ export default function TranslationCollapsePage() {
 
       <article className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          <a className="text-accent-rust hover:underline" href="https://sourcelibrary.org/book/69b2f434f9f1ad2b3b15154a"><em>The Extant Fragments of Dicaearchus</em></a>, printed by Henri Estienne in 1589, contains a page of Latin commentary on the monuments of ancient Athens &mdash; the theatre, the temple of Athena, the Parthenon. On <a className="text-accent-rust hover:underline" href="https://sourcelibrary.org/book/69b2f434f9f1ad2b3b15154a/page/69b2f434f9f1ad2b3b15156c">our copy of that page</a> the source scan is clean, but the English translation read, in full: a note saying &ldquo;continued from previous page,&rdquo; and one word, &ldquo;structure.&rdquo; About twenty lines of Latin and Greek were not translated at all.
+          <a className="text-accent-rust hover:underline" href="https://sourcelibrary.org/book/69b2f434f9f1ad2b3b15154a"><em>The Extant Fragments of Dicaearchus</em></a>, printed by Henri Estienne in 1589, contains a page of Latin commentary on the monuments of ancient Athens: the theatre, the temple of Athena, the Parthenon. On <a className="text-accent-rust hover:underline" href="https://sourcelibrary.org/book/69b2f434f9f1ad2b3b15154a/page/69b2f434f9f1ad2b3b15156c">our copy of that page</a> the source scan is clean, but the English translation read, in full: a note saying &ldquo;continued from previous page,&rdquo; and one word, &ldquo;structure.&rdquo; About twenty lines of Latin and Greek were not translated at all.
         </p>
 
         <p>
-          This is a known failure class. Neural translation systems sometimes produce fluent output detached from the source, including omission, where part of the input is silently dropped (<a className="text-accent-rust hover:underline" href="https://aclanthology.org/2023.eacl-main.75/">Guerreiro, Voita &amp; Martins, 2023</a>). We call the severe form, where a page reduces to a fragment, <em>collapse</em>. We hold about <strong>4.25 million</strong> machine-translated pages and cannot read them all, so the question is not whether the system translates well on average, but how to find the pages it failed on &mdash; and how to keep the detection method from generating errors of its own.
+          This is a known failure class. Neural translation systems sometimes produce fluent output detached from the source, including omission, where part of the input is silently dropped (<a className="text-accent-rust hover:underline" href="https://aclanthology.org/2023.eacl-main.75/">Guerreiro, Voita &amp; Martins, 2023</a>). We call the severe form, where a page reduces to a fragment, <em>collapse</em>. We hold about <strong>4.25 million</strong> machine-translated pages and cannot read them all, so the question is not whether the system translates well on average, but how to find the pages it failed on, and how to keep the detection method from generating errors of its own.
         </p>
 
         <h2 id="detecting" className="font-serif text-2xl md:text-3xl text-primary">Detecting collapse, and two measurement errors</h2>
@@ -64,11 +64,11 @@ export default function TranslationCollapsePage() {
         </p>
 
         <p>
-          <strong>The metric&rsquo;s hidden assumption.</strong> We had also flagged translations much <em>longer</em> than their source as runaway repetition &mdash; a real decoding pathology (<a className="text-accent-rust hover:underline" href="https://arxiv.org/abs/1904.09751">Holtzman et al., 2020</a>). Almost none were. The flag assumed a translation is about as long as its source, which fails on the highest-expansion material: one Chinese character maps to several English words, so a faithful translation runs roughly three times the source&rsquo;s character count. Of 1,258 such flags in our published books, 32 were genuine; the rest were correct translations.
+          <strong>The metric&rsquo;s hidden assumption.</strong> We had also flagged translations much <em>longer</em> than their source as runaway repetition, a real decoding pathology (<a className="text-accent-rust hover:underline" href="https://arxiv.org/abs/1904.09751">Holtzman et al., 2020</a>). Almost none were. The flag assumed a translation is about as long as its source, which fails on the highest-expansion material: one Chinese character maps to several English words, so a faithful translation runs roughly three times the source&rsquo;s character count. Of 1,258 such flags in our published books, 32 were genuine; the rest were correct translations.
         </p>
 
         <p>
-          <strong>A noisy denominator.</strong> Some flagged short pages had good translations; the defect was in the <em>OCR</em>. One page carried an OCR artifact &mdash; a single combining mark repeated thousands of times &mdash; that inflated the measured source length until the real translation looked tiny beside it. Because OCR error propagates into every measurement built on it (<a className="text-accent-rust hover:underline" href="https://www.turing.ac.uk/news/publications/assessing-impact-ocr-quality-downstream-nlp-tasks">van Strien et al., 2020</a>), a ratio of two noisy quantities compounds rather than cancels their errors.
+          <strong>A noisy denominator.</strong> Some flagged short pages had good translations; the defect was in the <em>OCR</em>. One page carried an OCR artifact (a single combining mark repeated thousands of times) that inflated the measured source length until the real translation looked tiny beside it. Because OCR error propagates into every measurement built on it (<a className="text-accent-rust hover:underline" href="https://www.turing.ac.uk/news/publications/assessing-impact-ocr-quality-downstream-nlp-tasks">van Strien et al., 2020</a>), a ratio of two noisy quantities compounds rather than cancels their errors.
         </p>
 
         <p>
@@ -78,27 +78,27 @@ export default function TranslationCollapsePage() {
         <h2 id="predicts" className="font-serif text-2xl md:text-3xl text-primary">What predicts a collapse</h2>
 
         <p>
-          We expected the cause to be structural &mdash; the Dicaearchus page begins mid-sentence and ends on a catchword, so the model read the whole page as a continuation fragment and translated only the catchword. That story describes that page, but it does not generalize. Against healthy control pages from the same books, collapsed pages were no more likely to start mid-sentence (27% vs 26%), carry a catchword (5.6% vs 5.8%), or contain Greek (0.05 vs 0.06). Content and structure do not predict collapse.
+          We expected the cause to be structural: the Dicaearchus page begins mid-sentence and ends on a catchword, so the model read the whole page as a continuation fragment and translated only the catchword. That story describes that page, but it does not generalize. Against healthy control pages from the same books, collapsed pages were no more likely to start mid-sentence (27% vs 26%), carry a catchword (5.6% vs 5.8%), or contain Greek (0.05 vs 0.06). Content and structure do not predict collapse.
         </p>
 
         <p>
-          One thing does: <strong>length.</strong> Collapsed pages have a median OCR body of <strong>11,374 characters against 1,751 for healthy pages</strong> &mdash; roughly six times longer. On a long, dense page the weaker model is most likely to abandon translation and fall back to summarizing. Two further patterns fit this. Collapses <strong>cluster</strong>: 41% sit within two pages of another collapse, far above their base rate, so they arrive in runs rather than scattered. And they are partly <strong>stochastic</strong> &mdash; the Dicaearchus passage was scanned twice in this volume, and the <a className="text-accent-rust hover:underline" href="https://sourcelibrary.org/book/69b2f434f9f1ad2b3b15154a/page/69b2f434f9f1ad2b3b15155e">second copy</a> translated in full. Same input, different output. Which long page tips over is, at the margin, chance.
+          One thing does: <strong>length.</strong> Collapsed pages have a median OCR body of <strong>11,374 characters against 1,751 for healthy pages</strong>, roughly six times longer. On a long, dense page the weaker model is most likely to abandon translation and fall back to summarizing. Two further patterns fit this. Collapses <strong>cluster</strong>: 41% sit within two pages of another collapse, far above their base rate, so they arrive in runs rather than scattered. And they are partly <strong>stochastic</strong>: the Dicaearchus passage was scanned twice in this volume, and the <a className="text-accent-rust hover:underline" href="https://sourcelibrary.org/book/69b2f434f9f1ad2b3b15154a/page/69b2f434f9f1ad2b3b15155e">second copy</a> translated in full. Same input, different output. Which long page tips over is, at the margin, chance.
         </p>
 
         <h2 id="worst" className="font-serif text-2xl md:text-3xl text-primary">The worst cases are not translation failures</h2>
 
         <p>
-          The largest single block of collapses &mdash; about 11,800 pages &mdash; is Tibetan, and on inspection it is mostly not a translation problem at all. In a sample of Tibetan collapsed pages, <strong>87% had OCR that was itself a repetition loop</strong>: the OCR step, also a neural model, loops on repetitive liturgical script (mantras, Dzogchen texts) and emits twenty thousand characters of a single repeated syllable instead of the page. The translator receives that and correctly produces nothing. The empty translation is then flagged as collapse.
+          The largest single block of collapses (about 11,800 pages) is Tibetan, and on inspection it is mostly not a translation problem at all. In a sample of Tibetan collapsed pages, <strong>87% had OCR that was itself a repetition loop</strong>: the OCR step, also a neural model, loops on repetitive liturgical script (mantras, Dzogchen texts) and emits twenty thousand characters of a single repeated syllable instead of the page. The translator receives that and correctly produces nothing. The empty translation is then flagged as collapse.
         </p>
 
         <p>
-          So the chain is: repetitive low-resource script &rarr; OCR loop &rarr; unusable input &rarr; empty translation. The fix is upstream OCR, not re-translation, and re-translating these pages cannot help. It also means the corpus collapse count is still inflated &mdash; the true <em>translation</em>-collapse problem is smaller, and more concentrated in Latin-script text, than the raw number suggests.
+          So the chain is: repetitive low-resource script &rarr; OCR loop &rarr; unusable input &rarr; empty translation. The fix is upstream OCR, not re-translation, and re-translating these pages cannot help. It also means the corpus collapse count is still inflated: the true <em>translation</em>-collapse problem is smaller, and more concentrated in Latin-script text, than the raw number suggests.
         </p>
 
         <h2 id="comparison" className="font-serif text-2xl md:text-3xl text-primary">A controlled comparison</h2>
 
         <p>
-          Which model collapses is confounded by routing &mdash; we send Latin-script text to a cheaper &ldquo;lite&rdquo; model and harder scripts to a stronger &ldquo;flash&rdquo; one. Holding the language fixed removes the confound. For Latin, where the OCR is clean and the comparison is genuinely about translation:
+          Which model collapses is confounded by routing: we send Latin-script text to a cheaper &ldquo;lite&rdquo; model and harder scripts to a stronger &ldquo;flash&rdquo; one. Holding the language fixed removes the confound. For Latin, where the OCR is clean and the comparison is genuinely about translation:
         </p>
 
         <div className="my-6 overflow-x-auto rounded-lg border border-light bg-warm/30 p-4">
@@ -119,7 +119,7 @@ export default function TranslationCollapsePage() {
         </div>
 
         <p>
-          On the same language, flash collapses about eleven times less often than the legacy model that produced most of the backlog, and the ordering holds across every language tested. Two effects separate: the model (flash is steadier) and, independently, the script &mdash; on a fixed model, collapse rises from 0.38% on Latin to 1.7% on Hebrew to 5.6% on Tibetan. For non-Latin scripts the comparison is muddier, because much of what looks like collapse is the OCR problem above; the clean translation-model result is the Latin one.
+          On the same language, flash collapses about eleven times less often than the legacy model that produced most of the backlog, and the ordering holds across every language tested. Two effects separate: the model (flash is steadier) and, independently, the script: on a fixed model, collapse rises from 0.38% on Latin to 1.7% on Hebrew to 5.6% on Tibetan. For non-Latin scripts the comparison is muddier, because much of what looks like collapse is the OCR problem above; the clean translation-model result is the Latin one.
         </p>
 
         <h2 id="checking" className="font-serif text-2xl md:text-3xl text-primary">What checking a generative system requires</h2>
@@ -140,7 +140,7 @@ export default function TranslationCollapsePage() {
         <h2 id="outcome" className="font-serif text-2xl md:text-3xl text-primary">Outcome</h2>
 
         <p>
-          Where the model choice is reliable &mdash; Latin and Greek &mdash; we re-translated under those constraints. <strong>556 collapsed pages in published books were repaired</strong>, the Dicaearchus page among them, with prior versions retained. (You can still find unrepaired collapses elsewhere &mdash; <a className="text-accent-rust hover:underline" href="https://sourcelibrary.org/book/69b52c133dd6d9423027d89c/page/69b52c133dd6d9423027d995">this page of Aelian&rsquo;s <em>On the Nature of Animals</em></a>, held back by a separate content filter.) The remaining backlog is mostly in unpublished books, and its hardest part &mdash; the non-Latin tail &mdash; needs OCR work before any translation model can help.
+          Where the model choice is reliable (Latin and Greek), we re-translated under those constraints. <strong>556 collapsed pages in published books were repaired</strong>, the Dicaearchus page among them, with prior versions retained. (You can still find unrepaired collapses elsewhere: <a className="text-accent-rust hover:underline" href="https://sourcelibrary.org/book/69b52c133dd6d9423027d89c/page/69b52c133dd6d9423027d995">this page of Aelian&rsquo;s <em>On the Nature of Animals</em></a>, held back by a separate content filter.) The remaining backlog is mostly in unpublished books, and its hardest part (the non-Latin tail) needs OCR work before any translation model can help.
         </p>
 
         <p>
@@ -150,7 +150,7 @@ export default function TranslationCollapsePage() {
         <h2 id="methods" className="font-serif text-2xl md:text-3xl text-primary">Methods</h2>
 
         <p>
-          The diagnosis, the detection and repair tooling, the measurements, and a first draft of this note were produced by an agentic Claude Opus (Anthropic) session directed by Derek Lomas, as with these research notes generally. This is worth stating given the subject: the system under audit is Google&rsquo;s Gemini, which produced the translations and the OCR, and the auditor was a different model family &mdash; the kind of checker&ndash;checked independence the self-preference result above argues for, and more than a model evaluating its own outputs. It is not full independence; both are large language models and may share failure tendencies. And it does not exempt the auditor &mdash; the two measurement errors here were its own, caught only by reading the pages.
+          The diagnosis, the detection and repair tooling, the measurements, and a first draft of this note were produced by an agentic Claude Opus (Anthropic) session directed by Derek Lomas, as with these research notes generally. This is worth stating given the subject: the system under audit is Google&rsquo;s Gemini, which produced the translations and the OCR, and the auditor was a different model family: the kind of checker&ndash;checked independence the self-preference result above argues for, and more than a model evaluating its own outputs. It is not full independence; both are large language models and may share failure tendencies. And it does not exempt the auditor; the two measurement errors here were its own, caught only by reading the pages.
         </p>
 
         <h2 id="references" className="font-serif text-2xl md:text-3xl text-primary">References</h2>
