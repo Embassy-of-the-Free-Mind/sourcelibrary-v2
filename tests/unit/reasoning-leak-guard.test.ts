@@ -136,6 +136,11 @@ describe('the lanes go through the gate', () => {
       expect(src, f).toMatch(/refuseUnhealthy: true/);
     }
   });
+  it('the two Batch collectors refuse a leak beside their hidden-meta refusal', () => {
+    for (const f of ['scripts/workers/batch-collector.mjs', 'scripts/batch/collect-batch-results.mjs']) {
+      expect(read(f), f).toMatch(/if \(refusableReasoningLeak\(text\)\) \{[\s\S]{0,400}recordRefusedTranslation\([^)]*REASONING_LEAK_REASON/);
+    }
+  });
   it('the corpus count and the withhold use the gate\'s predicate', () => {
     expect(read('scripts/audit/translation-reasoning-leak.mjs')).toMatch(/refusableReasoningLeak\(/);
     expect(read('scripts/maintenance/withhold-leaked-reasoning-6117.mjs')).toMatch(/refusableReasoningLeak\(/);

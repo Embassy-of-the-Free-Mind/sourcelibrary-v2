@@ -27,6 +27,7 @@ import { isTrivialGalleryDetection } from '../lib/gallery-image-types.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, STRAY_SCRIPT_REASON, guardTranslationText } from '../lib/translate-core.mjs';
+import { refusableReasoningLeak, REASONING_LEAK_REASON } from '../lib/page-integrity.mjs';
 import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
 
 /** Provenance identity of this collector (#4613): recorded on every page it writes as `run.collected_by`. */
@@ -767,6 +768,12 @@ async function processOneJob(db, job) {
         if (hidesPageInMeta(text)) {
           if (!DRY_RUN) await recordRefusedTranslation(db, { id: pageId, book_id: job.book_id }, text, HIDDEN_META_REASON, { jobId: jobIdStr, model: job.model });
           failCount++; noteFail(HIDDEN_META_REASON); failedPageIds.set(pageId, HIDDEN_META_REASON);
+          continue;
+        }
+        // #6117: the model's reasoning or a chat reply is not a translation; refused the same way.
+        if (refusableReasoningLeak(text)) {
+          if (!DRY_RUN) await recordRefusedTranslation(db, { id: pageId, book_id: job.book_id }, text, REASONING_LEAK_REASON, { jobId: jobIdStr, model: job.model });
+          failCount++; noteFail(REASONING_LEAK_REASON); failedPageIds.set(pageId, REASONING_LEAK_REASON);
           continue;
         }
         // #5734: Korean 그-for-"that" repaired; any other script in the English that is in neither
