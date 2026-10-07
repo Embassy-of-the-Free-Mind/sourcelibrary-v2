@@ -138,6 +138,7 @@ export default function MeaningPage() {
               <h3 className="text-lg text-primary font-semibold mb-1">{g.title}</h3>
               <p className="text-secondary leading-relaxed">
                 {g.body} <a href={g.evidence} className={A}>The test</a>
+                {g.more && <> · <a href={g.more.href} className={A}>{g.more.link}</a></>}
               </p>
             </li>
           ))}

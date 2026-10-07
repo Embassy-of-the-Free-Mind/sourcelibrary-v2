@@ -17,7 +17,7 @@ Living doc. Written 2026-10-07 (#6201). Update the status column when something 
 | need | measured today | source |
 |---|---|---|
 | An English question finds an untranslated page | right page in the top 10 for **0.10** of queries through the shared index; **0.64** in a lane of its own; 0.93 in a small pool | `2026-10-07-orig-lang-embedding-recall-5729.md` |
-| A concept search shows several traditions | **1.68** traditions with a relevant page in the top 10; **2.80** with a plain-language abstract per page; 15 of 25 queries stuck at one tradition, 4 with the abstract | `…-embedding-granularity-cross-tradition.md` |
+| A concept search shows several traditions | **1.68** traditions with a relevant page in the top 10; **2.80** with a plain-language abstract per page; 15 of 25 queries stuck at one tradition, 4 with the abstract. After the #6211 re-rank: **1.88**, and 10 of 25 (`…-tradition-diversity-rerank.md`) | `…-embedding-granularity-cross-tradition.md` |
 | The stored vector matches its own text | 16% of sampled vectors have cosine < 0.9 with a fresh embed of their text; 2.1% are from another model | `…-embedding-models-qwen3-dual.md`, #6175 |
 | A different model would do better | no model or format clears the bar; preview and GA `gemini-embedding-2` are identical | `…-embedding-format-ga.md`, `…-qwen3-dual.md` |
 

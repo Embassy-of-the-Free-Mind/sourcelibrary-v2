@@ -15,6 +15,7 @@ export const MEASURED_ON = '7 October 2026';
 export const EVIDENCE = {
   untranslated: `${EXP}2026-10-07-orig-lang-embedding-recall-5729.md`,
   traditions: `${EXP}2026-10-07-embedding-granularity-cross-tradition.md`,
+  rerank: `${EXP}2026-10-07-tradition-diversity-rerank.md`,
   prototypes: `${EXP}2026-10-07-meaning-prototypes-6201.md`,
   models: `${EXP}2026-10-07-embedding-models-qwen3-dual.md`,
   opportunities: `${BLOB}.claude/docs/embeddings-opportunities.md`,
@@ -83,7 +84,7 @@ export const LIVE: Row[] = [
   { title: 'For AI assistants', body: 'Any assistant that speaks the MCP protocol can search the library and quote pages with their links.', href: '/developers', link: 'Developer notes' },
 ];
 
-export type Gap = { title: string; body: string; evidence: string };
+export type Gap = { title: string; body: string; evidence: string; more?: { href: string; link: string } };
 
 export const GAPS: Gap[] = [
   {
@@ -93,8 +94,9 @@ export const GAPS: Gap[] = [
   },
   {
     title: 'A search for an idea mostly returns one tradition.',
-    body: 'For 25 ideas that several traditions wrote about, the first ten results held relevant passages from 1.7 traditions on average, and from one or none for 15 of the 25. Each tradition has its own vocabulary, and the numbers follow the vocabulary. Describing each page in two plain sentences first, and searching those, raised the average to 2.8.',
+    body: 'For 25 ideas that several traditions wrote about, the first ten results held relevant passages from 1.88 traditions on average, and from one or none for 10 of the 25. That is after search began spreading its results across traditions on 7 October; before, it was 1.68 and 15. Counting every passage, relevant or not, the first ten now come from 4.16 groups of traditions. Each tradition has its own vocabulary, and the numbers follow the vocabulary. Describing each page in two plain sentences first, and searching those, raised the average to 2.8.',
     evidence: EVIDENCE.traditions,
+    more: { href: EVIDENCE.rerank, link: 'The test of the spread' },
   },
   {
     title: 'One page cannot yet suggest its own parallels.',
