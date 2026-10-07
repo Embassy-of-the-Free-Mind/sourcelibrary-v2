@@ -12,5 +12,8 @@ const [n, ocr, tr, blank] = await Promise.all([
   db.collection('pages').countDocuments({ ...q, page_type: 'blank' }),
 ]);
 const jobs = await db.collection('batch_jobs').aggregate([{ $match: { book_id: { $in: ids }, created_at: { $gte: new Date('2026-10-07T13:40:00Z') } } }, { $group: { _id: { s: '$status', t: '$type' }, n: { $sum: 1 } } }]).toArray();
+const runs = await db.collection('translate_batch_runs').find({ book_id: { $in: ids } }, { projection: { phase: 1, counts: 1, page_count: 1 } }).toArray();
+const open = runs.filter((r) => !['complete', 'written', 'failed', 'parked', 'shadow_complete', 'cancelled'].includes(r.phase)).length;
+console.log(`runs: ${runs.map((r) => `${r.phase}:${r.counts?.written ?? 0}/${r.page_count}`).join(' ')} OPEN_RUNS=${open}`);
 console.log(new Date().toISOString().slice(11, 19), `leaves=${n} ocr=${ocr} tr=${tr} blank=${blank}`, 'jobs:', jobs.map((j) => `${j._id.t || '?'}/${j._id.s}=${j.n}`).join(' '));
 await c.close();

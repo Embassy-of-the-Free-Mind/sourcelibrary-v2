@@ -5,8 +5,9 @@
 import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
 import fs from 'node:fs';
-const [id, D, OUT] = process.argv.slice(2);
-const before = JSON.parse(fs.readFileSync(`${D}/before.json`, 'utf8'));
+// Optional 4th/5th args: another snapshot file in before.json's shape (e.g. flagged.json from flagged.mjs) and a file prefix.
+const [id, D, OUT, beforeFile, prefix = ''] = process.argv.slice(2);
+const before = JSON.parse(fs.readFileSync(beforeFile || `${D}/before.json`, 'utf8'));
 const c = await MongoClient.connect(process.env.MONGODB_URI); const db = c.db('bookstore');
 const book = await db.collection('books').findOne({ id }, { projection: { title: 1, display_title: 1, slug: 1 } });
 const live = await db.collection('pages').find({ book_id: id, page_number: { $gt: 0 } }).sort({ page_number: 1 }).toArray();
@@ -25,10 +26,10 @@ for (const s of before.spreads) {
   const leaves = live.filter((p) => p.spread_source && p.spread_source.endsWith(`/${s.page_number}.jpg`));
   // Image order = as on the open book (left leaf, then right leaf); text order = reading order (page_number).
   const bySide = [...leaves].sort((a, b) => (a.split_side === 'left' ? 0 : 1) - (b.split_side === 'left' ? 0 : 1));
-  const tiles = [await fit(fs.readFileSync(`${D}/before/spread-${s.page_number}.jpg`), `BEFORE spread ${s.page_number} (cut at ${s.fold_pct}%)`)];
+  const tiles = [await fit(fs.existsSync(`${D}/before/spread-${s.page_number}.jpg`) ? fs.readFileSync(`${D}/before/spread-${s.page_number}.jpg`) : await get(s.archived_photo || s.image_url), `BEFORE spread ${s.page_number} (cut at ${s.fold_pct}%)`)];
   for (const p of bySide) tiles.push(await fit(await get(p.archived_photo || p.photo), `AFTER leaf p.${p.page_number} (${p.split_side})`));
   let x = 0; const comp = tiles.map((t) => { const o = { input: t.buf, top: 0, left: x }; x += t.w + 16; return o; });
-  const name = `spread-${String(s.page_number).padStart(3, '0')}.jpg`;
+  const name = `${prefix}spread-${String(s.page_number).padStart(3, '0')}.jpg`;
   await sharp({ create: { width: x - 16, height: H + 44, channels: 3, background: 'white' } }).composite(comp).jpeg({ quality: 82 }).toFile(`${OUT}/${name}`);
   const newOcr = leaves.reduce((n, p) => n + (p.ocr?.data?.length || 0), 0), newTr = leaves.reduce((n, p) => n + (p.translation?.data?.length || 0), 0);
   rows.push({ spread: s.page_number, leaves: leaves.map((p) => p.page_number), old_ocr_model: s.ocr.model, old_ocr_chars: s.ocr.data.length, new_ocr_chars: newOcr, old_en_chars: s.translation.data.length, new_en_chars: newTr });
@@ -40,6 +41,6 @@ for (const s of before.spreads) {
     txt += `\n----- AFTER: leaf p.${p.page_number} (${p.split_side}) English (${p.translation?.model || 'none'}, ${p.translation?.data?.length || 0} chars) -----\n${p.translation?.data || '(no translation)'}\n`;
   }
 }
-fs.writeFileSync(`${OUT}/before-after.txt`, txt);
-fs.writeFileSync(`${OUT}/summary.json`, JSON.stringify({ book_id: id, title: book.display_title || book.title, rows }, null, 1));
+fs.writeFileSync(`${OUT}/${prefix}before-after.txt`, txt);
+fs.writeFileSync(`${OUT}/${prefix}summary.json`, JSON.stringify({ book_id: id, title: book.display_title || book.title, rows }, null, 1));
 console.log(id, rows.map((r) => `s${r.spread}: ocr ${r.old_ocr_chars}→${r.new_ocr_chars}, en ${r.old_en_chars}→${r.new_en_chars}`).join(' | '));
