@@ -79,6 +79,8 @@ const QUERIES = {
   ],
 };
 
+// usage-ok: an embedding response carries no usageMetadata, so there is no token
+// count to record; this is five short query embeddings per run (well under a cent).
 async function embed(text) {
   const r = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2-preview:batchEmbedContents?key=${process.env.GEMINI_API_KEY}`,
