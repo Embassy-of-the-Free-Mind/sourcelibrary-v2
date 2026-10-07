@@ -94,6 +94,10 @@ function transformBook(book) {
     // means a book of plates and must not be confused with a missing value.
     pages_translatable: typeof book.pages_translatable === 'number' ? book.pages_translatable : null,
     is_first_translation: book.is_first_translation === true,
+    // Partial-scan / preview flag — mirrored so catalogue-fed cards can show
+    // the "Preview" badge. Must move together with `preview: 1` in the
+    // projection below (a field here but not there writes NULL for every book).
+    preview: book.preview === true,
     // LISTING predicate: matches the canonical public-listing filter
     // (visible: true), so Mongo's unset-visible legacy books collapse to
     // false here. This is intentionally STRICTER than the reader gate
@@ -251,6 +255,8 @@ const projection = {
   summary: 1, 'index.bookSummary.brief': 1, 'reading_summary.overview': 1,
   publisher: 1, place_published: 1, doi: 1, work_id: 1,
   content_type: 1, resource_type: 1, cover_image: 1, dedication: 1, subtitle: 1, text_role: 1,
+  // Partial-scan / preview flag — paired with `preview:` in transformBook.
+  preview: 1,
   source_work_dates: 1,
   'translation_verification.disposition': 1, 'translation_verification.reasoning': 1,
   // Graded FT verdict + screens (#3726 Tier 3) — pure projections; the render

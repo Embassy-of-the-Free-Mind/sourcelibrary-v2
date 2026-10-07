@@ -15,6 +15,7 @@ import PDFDocument from 'pdfkit';
 import { markForExport } from '@/lib/provenance';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { normalizeAnnotationSpans } from '@/lib/normalize-annotation-spans';
+import { separateTermDefinitions } from '@/lib/term-definitions';
 import { registerPdfFonts, type PdfFontNames } from '@/lib/pdf-fonts';
 
 export const PDF_MARGINS = { top: 72, bottom: 72, left: 72, right: 72 };
@@ -94,6 +95,8 @@ function normalizeTagsForPdf(text: string): string {
   // parseStyledLines() below needs well-formed spans or a nested note strands
   // the outer note's tail as body text.
   out = normalizeAnnotationSpans(out);
+  // The model's definitions inside <term> chips print as notes, as in the reader (#5895).
+  out = separateTermDefinitions(out);
 
   // Safety net for any OTHER tag: strip the markup, keep the content — real
   // page text should never be silently eaten by an unhandled tag. Annotation

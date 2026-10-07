@@ -3,7 +3,11 @@ import type { ReactNode } from 'react';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import gapMap from '../../../../scripts/catalog-coverage/results/canon-gap-map-2026-10.json';
 import gapStatus from '../../../../scripts/catalog-coverage/results/canon-gap-status-2026-10.json';
-import { CanonBars, RoutesDiagram, StatusBoard, STATUS_STYLE, TengyurProgress, TraditionProgress, ImprovementChart, short, type CanonBar, type Improvement, type TraditionProgressRow } from './diagrams';
+import folio from '../../../../scripts/catalog-coverage/results/canon-gap-folio-2026-10.json';
+import { READER_UI_STRINGS } from '@/lib/reader-strings';
+import { IMPROVEMENTS } from './improvements';
+import FolioPipeline, { type CritiqueGate, type FolioSnapshot } from './FolioPipeline';
+import { CanonBars, RoutesDiagram, StatusBoard, STATUS_STYLE, TengyurProgress, TraditionProgress, QualityLoop, short, type CanonBar, type TraditionProgressRow } from './diagrams';
 
 // Built for the Eternity Foundation working session (#5513): read once, seated, as a
 // table with a short argument. Sizes, licences, English shares and draft costs come from
@@ -60,52 +64,36 @@ const SHORT_NAME: Record<string, string> = {
 };
 const nameOf = (id: string, fallback: string) => SHORT_NAME[id] ?? fallback;
 
-// Before/after on the same pages and reference. Every figure is copied from the write-up in `source`:
-// an experiment file pinned to the commit it was read at, or, where the write-up is not on main yet,
-// the issue comment that reports the run. inUse = adopted in a production lane.
-const EXP = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/88b09e0084cbd9dc9c025cecec53e2a2430c8973/scripts/eval/experiments/';
-const IMPROVEMENTS: Improvement[] = [
+
+// The three automated checks in the "one page through the pipeline" figure (#5846). Each rate is
+// copied from the issue comment that reports it; "This page" is what changed on vol. 98 fol. 106b,
+// read from its revision rows (canon-gap-folio.mjs).
+const GATES: [CritiqueGate, CritiqueGate, CritiqueGate] = [
   {
-    change: 'Sanskrit, Pali, Chinese: Flash-Lite → Flash', measure: 'reversed statements per 100 pages', before: 15.4, after: 5.9, lowerBetter: true,
-    inUse: true, status: 'in use for new translations since 4 Oct 2026',
-    basis: '68 pages from 68 books, against published translations (SuttaCentral, CC0; public-domain translators); two blind Claude Opus judges; 3 Oct 2026',
-    source: `${EXP}2026-10-03-xlref-t5-sanskrit-pali-chinese-vs-reference.md`,
+    name: 'Against a human translation',
+    result: '6.2 reversed statements per 100 pages by either of two AI judges, 3.4 by both',
+    basis: '354 pages that 84000 has also translated, from 8 texts, none of them Madhyamaka or Pramāṇa; two blind Claude Opus judges',
+    source: `${ISSUE_URL}5797#issuecomment-5978287405`,
+    onThisPage: 'not in that sample: 84000 has published nothing from this section.',
   },
   {
-    change: 'Tengyur: 8-page blocks → one page at a time', measure: 'pages whose English belongs to another page, per 100', before: 13.3, after: 0.9, lowerBetter: true,
-    inUse: true, status: 'in use for the Tengyur draft',
-    basis: '113 pages (15 vs 1), against 84000’s published translations; two blind Claude Opus judges; 3 Oct 2026',
-    source: `${EXP}2026-10-03-tengyur-84000-reference-ab-5497.md`,
+    name: 'False “illegible” marks',
+    result: '16,157 pages repaired, with no new model calls',
+    basis: 'every drafted page scanned for an “illegible” tag at the page end that only marks where the side breaks off',
+    source: `${ISSUE_URL}5797#issuecomment-5978287405`,
+    onThisPage: 'the side ends mid-sentence and the draft called the break illegible. Now “…”.',
   },
   {
-    change: 'Syriac: Gemini → Kraken (Sophro Mhiro)', measure: 'line error rate, %', before: 74, after: 19, lowerBetter: true,
-    inUse: true, status: 'in use for Syriac',
-    basis: '40 manuscript pages with published transcriptions (Jerusalem SMMJ 36, ÖNB Cod. Syr. 1); Gemini arms 74–79%, lower shown; 16 Sep 2026',
-    source: `${EXP}2026-09-16-syriac-retest-do-the-beth-mardutho-kraken-models-read-4746.md`,
-  },
-  {
-    change: 'Blank and show-through leaves: OCR prompt v16 → v19.1', measure: 'leaves given invented text, %', before: 75, after: 30, lowerBetter: true,
-    inUse: true, status: 'in use for new OCR since 2 Oct 2026',
-    basis: '69 white and show-through leaves labelled by eye before any run, three reads each, v16 run alongside as control; 2 Oct 2026',
-    source: `${EXP}2026-10-02-ocr-v19-1-stamps-4195.md`,
-  },
-  {
-    change: 'Sentences across a page turn: Flash-Lite → Flash', measure: 'defects at mid-sentence page breaks, per 100', before: 26, after: 16, lowerBetter: true,
-    inUse: true, status: 'in use for new translations in seven languages since 4 Oct 2026',
-    basis: '100 mid-sentence page breaks from 100 books, screened by eye; a defect counts only when both of two blind Claude Opus judges flag it; 3–4 Oct 2026',
-    source: 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5678#issuecomment-5974324959',
-  },
-  {
-    change: 'Sentences across a page turn: Flash with page markers', measure: 'defects at mid-sentence page breaks, per 100', before: 26, after: 11, lowerBetter: true,
-    inUse: false, status: 'tested; markers added too little beyond Flash to adopt',
-    basis: 'same 100 breaks and judges as the row above; 3–4 Oct 2026',
-    source: 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5678#issuecomment-5974324959',
-  },
-  {
-    change: 'Persian manuscripts: Flash-Lite → Flash reading', measure: 'characters matching Ganjoor’s typed text, median %', before: 41, after: 70, lowerBetter: false,
-    inUse: false, status: 'tested; still below the 90% needed to translate',
-    basis: 'manuscript pages of classical poetry located in Ganjoor (9 and 13 pages); 1 Oct 2026; a small sample',
-    source: 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5525#issuecomment-5936907070',
+    name: 'AI specialist review against the Tibetan',
+    result: 'on 150 random pages, 75% need only light edits; about 38 per 100 pages have a reversed statement or a wrong speaker or agent (95% CI 23–50)',
+    basis: 'a random draw from all 116,703 pages with English; two blind Claude Opus reviewers acting as Tibetologists; rate adjusted for the share of their findings that held up when checked',
+    source: `${ISSUE_URL}5829#issuecomment-5982612936`,
+    onThisPage: (
+      <>
+        a Claude reviewer reading the Tibetan removed a fifth item the draft had added to a four-part list (&ldquo;inherit their
+        karma&rdquo;) and moved the materialists&rsquo; reason back to its clause. <A href={`${ISSUE_URL}5800`}>#5800</A>
+      </>
+    ),
   },
 ];
 
@@ -122,8 +110,6 @@ const fmt = (n: number) => n.toLocaleString('en-US');
 
 const rows = [...gapMap.rows].sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
 const inTotal = gapMap.rows.filter((r) => !OUT_OF_TOTAL.has(r.id));
-const typedChars = inTotal.reduce((s, r) => s + (r.size.base_chars ?? 0), 0);
-const tengyur = gapMap.rows.find((r) => r.id === 'derge-tengyur')!;
 const asOf = new Date(gapStatus.generated_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
 const bars: CanonBar[] = inTotal
@@ -186,12 +172,12 @@ const TRADITIONS = ([...gapStatus.traditions] as unknown as TraditionProgressRow
 
 const CONTENTS = [
   ['library', 'What we already hold'],
+  ['canons', 'Each canon, and what is next'],
+  ['eternity', 'The Eternity reading list'],
+  ['quality', 'How we check quality'],
   ['gap', 'How much is in English'],
   ['cost', 'Why typed text matters'],
   ['tengyur', 'The Derge Tengyur'],
-  ['canons', 'Each canon, and what is next'],
-  ['quality', 'How good the English is'],
-  ['eternity', 'The Eternity reading list'],
   ['method', 'Method and caveats'],
 ] as const;
 
@@ -203,17 +189,6 @@ function A({ href, children }: { href: string; children: ReactNode }) {
   );
 }
 
-function Stat({ n, label, href }: { n: string; label: string; href: string }) {
-  return (
-    <a
-      href={href}
-      className="group block px-5 py-6 border-stone-200 hover:bg-white transition-colors [&:not(:last-child)]:border-r max-sm:[&:nth-child(odd)]:border-r max-sm:[&:nth-child(-n+2)]:border-b"
-    >
-      <div className="font-serif text-3xl md:text-4xl text-stone-900 tracking-tight tabular-nums group-hover:text-amber-800">{n}</div>
-      <div className="font-body text-sm text-stone-500 mt-1.5 leading-snug">{label}</div>
-    </a>
-  );
-}
 
 function Section({ id, title, children }: { id: (typeof CONTENTS)[number][0]; title: string; children: ReactNode }) {
   const i = CONTENTS.findIndex(([k]) => k === id) + 1;
@@ -337,17 +312,6 @@ export default function CanonGapPage() {
           Prepared for the Eternity Foundation working session, October 2026. Figures measured {asOf}.
         </p>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 border border-stone-200 rounded-sm bg-stone-50 mt-6">
-          <Stat href="#gap" n={short(typedChars)} label="characters of canon typed in and openly available" />
-          <Stat href="#cost" n={`$${fmt(gapMap.total_draft_usd)}`} label="to draft all of it in English at our measured rates (mostly an upper bound)" />
-          <Stat
-            href="#tengyur"
-            n={`${(100 - (tengyur.english.fraction ?? 0) * 100).toFixed(1)}%`}
-            label="of the Derge Tengyur has no published English translation"
-          />
-          <Stat href="#eternity" n={`${SHELF.readable} / ${SHELF.listed}`} label="books on the Eternity reading list readable in English here" />
-        </div>
-
         <nav aria-label="Contents" className="mt-10 mb-4">
           <div className="font-body text-xs tracking-[0.16em] uppercase text-stone-400 mb-3">Contents</div>
           <ol className="grid sm:grid-cols-2 gap-x-8 gap-y-1.5 text-base">
@@ -371,67 +335,8 @@ export default function CanonGapPage() {
           <TraditionProgress n={1} rows={TRADITIONS} />
         </Section>
 
-        <Section id="gap" title="How much of each canon is in English">
-          <p>
-            Three catalogues publish how much of their canon has been translated: <A href={L.k84000}>84000</A> for the
-            Tibetan canon, <A href={L.suttacentral}>SuttaCentral</A> for the Pali, and <A href={L.sefaria}>Sefaria</A>{' '}
-            for the Hebrew. Nobody has measured it for the Chinese and Arabic canons, the two largest, so their draft
-            cost assumes none of it is in English. Click a canon to see its row in{' '}
-            <a href="#canons" className="text-amber-800 underline underline-offset-2">the table</a>.
-          </p>
-          <CanonBars n={2} rows={bars} />
-        </Section>
-
-        <Section id="cost" title="Why typed text matters">
-          <p className="mb-4">
-            A canon that exists only as page images has to be read by a model page by page, and the reading checked. A
-            canon already typed in, by <A href={L.esukhia}>Esukhia</A>, <A href={L.cbeta}>CBETA</A> or{' '}
-            <A href={L.sefaria}>Sefaria</A>, skips both steps. Where an open scan of the same edition exists, we pair
-            the typed text with it, so every page can still be checked against its image.
-          </p>
-          <p>
-            A draft English translation of every canon here would cost about ${fmt(gapMap.total_draft_usd)} in model
-            fees. Scholarly review costs far more. A draft lets a reader search a text and follow it in outline; it
-            does not replace a translator. Review money goes furthest on canons that are openly licensed, typed, paired
-            with scans, and have little English.
-          </p>
-          <RoutesDiagram n={3} />
-        </Section>
-
-        <Section id="tengyur" title="The first canon: the Derge Tengyur">
-          <p>
-            The Tengyur is the Tibetan canon of Indian commentaries and treatises. <A href={L.esukhia}>Esukhia&rsquo;s
-            typed text</A> is in the public domain, <A href={L.bdrcTengyur}>BDRC holds open scans</A> of the same
-            woodblock edition, and less than 1% of it is published in English by <A href={L.k84000}>84000</A>. So we
-            started there: all 213 volumes are imported, each typed folio is paired with its page image, and every
-            page is being drafted in English for scholars to review beside the woodblock.{' '}
-            <A href={TENGYUR.url}>Work log #{TENGYUR.owner_issue}</A>
-          </p>
-          <TengyurProgress
-            n={4}
-            perVolume={TENGYUR.per_volume as [number, number, number][]}
-            pagesImaged={TENGYUR.pages_imaged}
-            pagesWithText={TENGYUR.pages_with_text}
-            pagesTranslated={TENGYUR.pages_translated}
-            spendUsd={TENGYUR.spend_usd}
-          />
-          <ul className="list-disc pl-5 space-y-3 text-base">
-            <li>
-              <strong>Pilot quality.</strong> Of 40 sampled pages across five sections, 33 scored 4 or 5 out of 5. The
-              weakest section was pramāṇa (logic), 4 of 8, where compressed verse came out as a literal crib. Four pages
-              reversed a statement&rsquo;s meaning, three of them in Madhyamaka verse. Every Tengyur page is labelled
-              an unreviewed machine draft.
-            </li>
-            <li>
-              <strong>One page at a time.</strong> Against 84000&rsquo;s translations of the same passages (113
-              pages), drafting one page per request scored 4 or better on 99% of pages. Drafting eight pages at once
-              scored about the same but put English for the wrong passage beside the woodblock 15 times, against once.
-            </li>
-          </ul>
-        </Section>
-
         <Section id="canons" title="Each canon, and what happens next">
-          <StatusBoard n={5} items={rows.map((r) => ({ id: r.id, name: nameOf(r.id, r.corpus), status: STATUS.get(r.id)?.status ?? 'next' }))} />
+          <StatusBoard n={2} items={rows.map((r) => ({ id: r.id, name: nameOf(r.id, r.corpus), status: STATUS.get(r.id)?.status ?? 'next' }))} />
           <p className="mb-6 text-base text-stone-600">
             Ordered by how much untranslated text each canon holds, weighted by how open its licence is and whether
             open scans of the same edition exist. &ldquo;We hold&rdquo; counts our books for that canon: how many are
@@ -449,45 +354,6 @@ export default function CanonGapPage() {
           ))}
         </Section>
 
-        <Section id="quality" title="How good the English is">
-          <p className="mb-4">
-            We test the English against published human translations of the same passages. Two AI judges score each
-            page from 1 to 5 for fidelity without knowing which version is which, and we open the page images to find
-            the cause of every low score. These are model-scored samples, not a scholar&rsquo;s review. The full
-            write-up is on <a href="/research/quality" className="text-amber-800 underline underline-offset-2">our translation quality page</a>.
-          </p>
-          <ImprovementChart n={6} rows={IMPROVEMENTS} />
-          <ul className="list-disc pl-5 space-y-3 text-base">
-            <li>
-              <strong>Sanskrit, Pali and classical Chinese.</strong> On 64 pages from 64 books, 58% of the English we
-              serve scored 4 or better (mean 3.6). Sanskrit scored lowest: on pages with verse and commentary, the
-              English keeps the verse and shortens or drops the commentary. Gemini Flash in place of Flash-Lite raised
-              the mean by 0.4 and cut reversed statements from 15 to 6 per 100 pages. Since 4 October 2026 new
-              translations in these languages, and in Greek, Hebrew, Arabic and Persian, use Flash; pages already
-              served are not yet retranslated. <A href={`${ISSUE_URL}5695`}>#5695</A>
-            </li>
-            <li>
-              <strong>Misreading causes many failures.</strong> Of the 20 worst Sanskrit, Pali and Chinese pages, 6
-              failed because the source text was misread, not mistranslated. Correcting those transcriptions by hand
-              raised their scores more than a better model did, which is why the typed canons matter.
-            </li>
-            <li>
-              <strong>Transcription accuracy.</strong> Our reading of the Bhutanese Kangyur manuscripts matches the
-              Derge e-text on a median 95% of syllables. Our Sanskrit matches <A href={L.gretil}>GRETIL</A> on at
-              least 89% of characters, our Pali 95%. Persian manuscripts are not yet readable: the best model matches{' '}
-              <A href={L.ganjoor}>Ganjoor</A>&rsquo;s text on a median 70% of characters, short of the 90% we require
-              before translating. Printed Persian reads well. <A href={`${ISSUE_URL}5525`}>#5525</A>
-            </li>
-            <li>
-              <strong>What we withdrew.</strong> On some Tibetan manuscript folios an earlier reading model wrote out
-              Sanskrit scripture that is not on the page. We took down the English for the{' '}
-              <a href="/bhutan-library" className="text-amber-800 underline underline-offset-2">Bhutanese Kangyur manuscripts</a>{' '}
-              and are re-reading the affected pages with a model trained on Tibetan script.{' '}
-              <A href={`${ISSUE_URL}4523`}>#4523</A>
-            </li>
-          </ul>
-        </Section>
-
         <Section id="eternity" title="The Eternity reading list">
           <p>
             We are also transcribing and translating the scanned books on the reading list drawn up with Eternity.{' '}
@@ -497,6 +363,98 @@ export default function CanonGapPage() {
             can now be read in English on Source Library. The rest wait on a second reading of difficult pages or are
             still being translated. <A href={SHELF.url}>Work log #{SHELF.owner_issue}</A>
           </p>
+        </Section>
+
+        <Section id="quality" title="How we check quality">
+          <p className="mb-4">
+            Our checks compare our work with work done by people. Typed editions check our transcription; published
+            translations check our English. Two AI judges score samples without knowing which version is ours, and
+            we open the page image behind every low score. No scholar has yet reviewed our English for these canons;
+            the first round, on the Tengyur draft, is planned (<A href={`${ISSUE_URL}5800`}>#5800</A>).
+          </p>
+          <p className="mb-4">
+            Canon by canon, with the figures and what we would ask of a scholar:{' '}
+            <a href="/research/canon-quality" className="text-amber-800 underline underline-offset-2">How we check each canon</a>.
+            The method in full:{' '}
+            <a href="/research/quality" className="text-amber-800 underline underline-offset-2">How page quality is measured</a>.
+          </p>
+          <QualityLoop n={3} adopted={IMPROVEMENTS.filter((r) => r.inUse).length} tested={IMPROVEMENTS.length} issueUrl={ISSUE_URL} resultsHref="/research/canon-quality#changes" />
+          <h3 className="font-serif text-xl text-stone-900 mt-10 mb-3">One page through the pipeline</h3>
+          <p className="mb-6">
+            A single page of the Derge Tengyur, from the woodblock scan to the page a reader sees, through the six
+            stages of Eternity&rsquo;s translation pipeline. Click a stage to jump to it.
+          </p>
+          <FolioPipeline
+            folio={folio as unknown as FolioSnapshot}
+            tengyur={{
+              perVolume: TENGYUR.per_volume as [number, number, number][],
+              pagesWithText: TENGYUR.pages_with_text,
+              pagesTranslated: TENGYUR.pages_translated,
+              usdPerPage: TENGYUR.usd_per_page,
+              countedAt: TENGYUR.counted_at,
+            }}
+            gates={GATES}
+            draftLabel={READER_UI_STRINGS.en.info.machineDraftNotice}
+          />
+        </Section>
+
+        <Section id="gap" title="How much of each canon is in English">
+          <p>
+            Three catalogues publish how much of their canon has been translated: <A href={L.k84000}>84000</A> for the
+            Tibetan canon, <A href={L.suttacentral}>SuttaCentral</A> for the Pali, and <A href={L.sefaria}>Sefaria</A>{' '}
+            for the Hebrew. Nobody has measured it for the Chinese and Arabic canons, the two largest, so their draft
+            cost assumes none of it is in English. Click a canon to see its row in{' '}
+            <a href="#canons" className="text-amber-800 underline underline-offset-2">the table</a>.
+          </p>
+          <CanonBars n={4} rows={bars} />
+        </Section>
+
+        <Section id="cost" title="Why typed text matters">
+          <p className="mb-4">
+            A canon that exists only as page images has to be read by a model page by page, and the reading checked. A
+            canon already typed in, by <A href={L.esukhia}>Esukhia</A>, <A href={L.cbeta}>CBETA</A> or{' '}
+            <A href={L.sefaria}>Sefaria</A>, skips both steps. Where an open scan of the same edition exists, we pair
+            the typed text with it, so every page can still be checked against its image.
+          </p>
+          <p>
+            A draft English translation of every canon here would cost about ${fmt(gapMap.total_draft_usd)} in model
+            fees. Scholarly review costs far more. A draft lets a reader search a text and follow it in outline; it
+            does not replace a translator. Review money goes furthest on canons that are openly licensed, typed, paired
+            with scans, and have little English.
+          </p>
+          <RoutesDiagram n={5} />
+        </Section>
+
+        <Section id="tengyur" title="The first canon: the Derge Tengyur">
+          <p>
+            The Tengyur is the Tibetan canon of Indian commentaries and treatises. <A href={L.esukhia}>Esukhia&rsquo;s
+            typed text</A> is in the public domain, <A href={L.bdrcTengyur}>BDRC holds open scans</A> of the same
+            woodblock edition, and less than 1% of it is published in English by <A href={L.k84000}>84000</A>. So we
+            started there: all 213 volumes are imported, each typed folio is paired with its page image, and every
+            page is being drafted in English for scholars to review beside the woodblock.{' '}
+            <A href={TENGYUR.url}>Work log #{TENGYUR.owner_issue}</A>
+          </p>
+          <TengyurProgress
+            n={6}
+            perVolume={TENGYUR.per_volume as [number, number, number][]}
+            pagesImaged={TENGYUR.pages_imaged}
+            pagesWithText={TENGYUR.pages_with_text}
+            pagesTranslated={TENGYUR.pages_translated}
+            spendUsd={TENGYUR.spend_usd}
+          />
+          <ul className="list-disc pl-5 space-y-3 text-base">
+            <li>
+              <strong>Pilot quality.</strong> Of 40 sampled pages across five sections, 33 scored 4 or 5 out of 5. The
+              weakest section was pramāṇa (logic), 4 of 8, where compressed verse came out as a literal crib. Four pages
+              reversed a statement&rsquo;s meaning, three of them in Madhyamaka verse. Every Tengyur page is labelled
+              an AI translation not yet reviewed by a scholar.
+            </li>
+            <li>
+              <strong>One page at a time.</strong> Against 84000&rsquo;s translations of the same passages (113
+              pages), drafting one page per request scored 4 or better on 99% of pages. Drafting eight pages at once
+              scored about the same but put English for the wrong passage beside the woodblock 15 times, against once.
+            </li>
+          </ul>
         </Section>
 
         <Section id="method" title="Method and caveats">
@@ -573,6 +531,13 @@ export default function CanonGapPage() {
             </li>
           </ul>
         </Section>
+
+
+
+
+
+
+
       </div>
     </ContentPageLayout>
   );

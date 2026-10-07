@@ -1,0 +1,6 @@
+{
+ "rules": {
+  "scripts/eval/routing-eval/rules/translation-lift-v1.json": "104e5b848610a0122a9599a24294bf44c7c84830dfd3e83b182aeb9b0ab068a9"
+ },
+ "pinned_by": "the preregistration commit ee9f87c34 (pushed 2026-10-05 before Kraken ran); written after the run from that commit's blob, because contest.mjs pinned nothing at its first read — fixed for later runs"
+}

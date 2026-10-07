@@ -2,7 +2,7 @@
 
 PRIOR ART: `.claude/docs/community-quality-review-design.md` (credit and abstention rules, Phase 0; this is its first standing lane), `.claude/docs/eval-design.md` (vocabulary, one page per book, §2.1 the reader's chain), `MONTHLY.md` (the monthly draw and judge whose pages this reuses), `calibration-tasks.mjs` (queues the same pages for the /check route; not used, because answers come by email). The 2026-10-01 first version of this file (stratified draw, competence tiers, waves, two coders) was replaced the same day, before anything was sent, by this simpler design. It is in git history.
 
-Status: **draft for Derek's sign-off, 2026-10-01. Nothing sent under it yet.** The statistical analysis plan (§7a), alternating page order (§3) and random double reads (§6) were added on 2026-10-01, before sign-off. Issues: #5406, #5274 (the judge it checks), #3560 (volunteers), #4916 (the paper). Once signed off, this file is the preregistration: its commit hash and date go in the paper, and any later change is a dated amendment at the bottom, never an edit above it.
+Status: **signed off by Derek, 2026-10-06** ("defaults" on the §10 decisions, answered in session). **Nothing sent yet: §8's TU Delft ethics/GDPR question is still unanswered**, so no letter goes out before it is. Drafted 2026-10-01; the statistical analysis plan (§7a), alternating page order (§3) and random double reads (§6) were added that day, before sign-off. Issues: #5406, #5274 (the judge it checks), #3560 (volunteers), #4916 (the paper). From this commit this file is the preregistration: its commit hash and date go in the paper, and any later change is a dated amendment at the bottom, never an edit above it.
 
 ## 1. What this is for
 
@@ -126,8 +126,8 @@ Cannot say: a corpus accuracy figure from readers; anything per language until a
 
 ## 10. Open decisions for Derek
 
-1. **Where the preregistration lives.** Recommended: deposit this file on OSF or Zenodo once signed, and link that from the paper and from letters, instead of GitHub.
-2. **Who is first.** Recommended: all 34 candidates at once, since there are no waves.
+1. **Where the preregistration lives.** Recommended: deposit this file on OSF or Zenodo once signed, and link that from the paper and from letters, instead of GitHub. **Decided 2026-10-06: Zenodo** (where Source Library already mints DOIs), deposited at this commit.
+2. **Who is first.** Recommended: all 34 candidates at once, since there are no waves. **Decided 2026-10-06: all 34 at once**, once §8 is answered.
 
 ## 11. Landing
 
@@ -135,4 +135,7 @@ Assignment log and stored verdicts (no names) land in `scripts/eval/results/volu
 
 ## Amendments
 
-None yet.
+**2026-10-06, at sign-off (operational, no change to the measure).**
+- Letters 1 are drafted for Derek to send in one sitting: personal, under 150 words, one ask, carrying the §8 consent sentence. They are kept in the private ops repo (`volunteers/2026-10-06-letter1.json`), not as Gmail drafts, until §8 is answered.
+- Replies are logged daily in `~/sourcelibrary-ops/volunteers/` by a Claude session, with answers drafted. YES / NO / CANT clicks need nothing from Derek; he answers only free-text replies.
+- Month 0 keeps one page per letter. Reading three consecutive pages against the image is a separate arm of the monthly audit (#5914), not part of this lane.

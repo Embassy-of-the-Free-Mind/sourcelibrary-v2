@@ -1,0 +1,594 @@
+{
+  "engine": "gemini-3-flash-preview",
+  "ref": "gemini-3.1-flash-lite",
+  "repeat": "gemini-3.1-flash-lite-b",
+  "min_n": 50,
+  "rule": {
+    "margin": 0.02,
+    "ci_max": 0.05,
+    "noise": 0.02
+  },
+  "sources": [
+    {
+      "stratum": "latin-period-5126",
+      "file": "latin-period-5126-2026-10-04.json",
+      "n_pages": 93,
+      "n_with_ref": 91
+    }
+  ],
+  "classes": {
+    "Latin 1400s (corrected-OCR reference)": {
+      "prereg": {
+        "decidable": false,
+        "note": "directional (n=5 < 50) — rule (e): no routing decision",
+        "a_lite": "inadequate",
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0.6,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": null,
+          "repeat_pages_identical": 0,
+          "n": 0,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "gemini-3-flash-preview": 0.141,
+          "gemini-3.1-flash-lite": 0.401
+        },
+        "invention_indep": {
+          "gemini-3-flash-preview": 0.141,
+          "gemini-3.1-flash-lite": 0.401
+        },
+        "invention_ref": {
+          "gemini-3-flash-preview": 0.164,
+          "gemini-3.1-flash-lite": 0.423
+        }
+      },
+      "n_pages": 5,
+      "n_referenced": 5,
+      "n_paired": 5,
+      "n_gate": 5,
+      "n_by_stratum": {
+        "latin-period-5126": 5
+      },
+      "median_cer": {
+        "gemini-3-flash-preview": 0.07,
+        "gemini-3.1-flash-lite": 0.187,
+        "gemini-3.1-flash-lite-b": null
+      },
+      "ref_median_cer_ci95": [
+        0.096,
+        0.334
+      ],
+      "delta": {
+        "median": -0.111,
+        "ci95": [
+          -0.264,
+          0.547
+        ],
+        "wins": 4,
+        "losses": 1,
+        "ties": 0,
+        "untied": 5,
+        "p_sign": 0.375,
+        "share_le_minus_005": 0.6
+      },
+      "noise_floor": {
+        "n": 0,
+        "median_delta0": null,
+        "ci95": null
+      },
+      "catastrophic": {
+        "gemini-3-flash-preview": 1,
+        "gemini-3.1-flash-lite": 0
+      },
+      "invention_median": {
+        "gemini-3-flash-preview": 0.164,
+        "gemini-3.1-flash-lite": 0.423
+      },
+      "loops": {
+        "gemini-3-flash-preview": 1,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": false,
+        "noise_floor_below_margin": false,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": true,
+        "loops_le_ref": false
+      },
+      "better_reader": false,
+      "verdict": "directional (n=5 library < 50) — no lane decision"
+    },
+    "Latin 1500s": {
+      "prereg": {
+        "decidable": false,
+        "note": "directional (n=27 < 50) — rule (e): no routing decision",
+        "a_lite": "degraded",
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0.074,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": 0,
+          "repeat_pages_identical": 7,
+          "n": 7,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "gemini-3-flash-preview": 0.03,
+          "gemini-3.1-flash-lite": 0.035
+        },
+        "invention_indep": {
+          "gemini-3-flash-preview": 0.03,
+          "gemini-3.1-flash-lite": 0.043
+        },
+        "invention_ref": {
+          "gemini-3-flash-preview": 0.132,
+          "gemini-3.1-flash-lite": 0.164
+        }
+      },
+      "n_pages": 27,
+      "n_referenced": 27,
+      "n_paired": 27,
+      "n_gate": 27,
+      "n_by_stratum": {
+        "latin-period-5126": 27
+      },
+      "median_cer": {
+        "gemini-3-flash-preview": 0.068,
+        "gemini-3.1-flash-lite": 0.08,
+        "gemini-3.1-flash-lite-b": 0.086
+      },
+      "ref_median_cer_ci95": [
+        0.076,
+        0.097
+      ],
+      "delta": {
+        "median": -0.009,
+        "ci95": [
+          -0.022,
+          0.003
+        ],
+        "wins": 17,
+        "losses": 9,
+        "ties": 1,
+        "untied": 26,
+        "p_sign": 0.169,
+        "share_le_minus_005": 0.074
+      },
+      "noise_floor": {
+        "n": 7,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "invention_median": {
+        "gemini-3-flash-preview": 0.132,
+        "gemini-3.1-flash-lite": 0.164
+      },
+      "loops": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": true,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "directional (n=27 library < 50) — no lane decision"
+    },
+    "Latin 1500s (corrected-OCR reference)": {
+      "prereg": {
+        "decidable": false,
+        "note": "directional (n=1 < 50) — rule (e): no routing decision",
+        "a_lite": "degraded",
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": null,
+          "repeat_pages_identical": 0,
+          "n": 0,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "gemini-3-flash-preview": 0.041,
+          "gemini-3.1-flash-lite": 0.08
+        },
+        "invention_indep": {
+          "gemini-3-flash-preview": 0.041,
+          "gemini-3.1-flash-lite": 0.08
+        },
+        "invention_ref": {
+          "gemini-3-flash-preview": 0.129,
+          "gemini-3.1-flash-lite": 0.167
+        }
+      },
+      "n_pages": 2,
+      "n_referenced": 1,
+      "n_paired": 1,
+      "n_gate": 1,
+      "n_by_stratum": {
+        "latin-period-5126": 1
+      },
+      "median_cer": {
+        "gemini-3-flash-preview": 0.085,
+        "gemini-3.1-flash-lite": 0.081,
+        "gemini-3.1-flash-lite-b": null
+      },
+      "ref_median_cer_ci95": null,
+      "delta": {
+        "median": 0.004,
+        "ci95": null,
+        "wins": 0,
+        "losses": 1,
+        "ties": 0,
+        "untied": 1,
+        "p_sign": 1,
+        "share_le_minus_005": 0
+      },
+      "noise_floor": {
+        "n": 0,
+        "median_delta0": null,
+        "ci95": null
+      },
+      "catastrophic": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "invention_median": {
+        "gemini-3-flash-preview": 0.129,
+        "gemini-3.1-flash-lite": 0.167
+      },
+      "loops": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": false,
+        "noise_floor_below_margin": false,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": true,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "directional (n=1 library < 50) — no lane decision"
+    },
+    "Latin 1600s": {
+      "prereg": {
+        "decidable": true,
+        "note": null,
+        "a_lite": "degraded",
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0.04,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": 0,
+          "repeat_pages_identical": 10,
+          "n": 10,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "gemini-3-flash-preview": 0.038,
+          "gemini-3.1-flash-lite": 0.052
+        },
+        "invention_indep": {
+          "gemini-3-flash-preview": 0.038,
+          "gemini-3.1-flash-lite": 0.065
+        },
+        "invention_ref": {
+          "gemini-3-flash-preview": 0.125,
+          "gemini-3.1-flash-lite": 0.143
+        }
+      },
+      "n_pages": 50,
+      "n_referenced": 50,
+      "n_paired": 50,
+      "n_gate": 50,
+      "n_by_stratum": {
+        "latin-period-5126": 50
+      },
+      "median_cer": {
+        "gemini-3-flash-preview": 0.071,
+        "gemini-3.1-flash-lite": 0.075,
+        "gemini-3.1-flash-lite-b": 0.069
+      },
+      "ref_median_cer_ci95": [
+        0.068,
+        0.083
+      ],
+      "delta": {
+        "median": -0.003,
+        "ci95": [
+          -0.011,
+          -0.001
+        ],
+        "wins": 33,
+        "losses": 16,
+        "ties": 1,
+        "untied": 49,
+        "p_sign": 0.021,
+        "share_le_minus_005": 0.04
+      },
+      "noise_floor": {
+        "n": 10,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 1
+      },
+      "invention_median": {
+        "gemini-3-flash-preview": 0.125,
+        "gemini-3.1-flash-lite": 0.143
+      },
+      "loops": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": true,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "cost lane ADOPTED"
+    },
+    "Latin 1600s (corrected-OCR reference)": {
+      "prereg": {
+        "decidable": false,
+        "note": "directional (n=3 < 50) — rule (e): no routing decision",
+        "a_lite": "degraded",
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": null,
+          "repeat_pages_identical": 0,
+          "n": 0,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "gemini-3-flash-preview": 0.07,
+          "gemini-3.1-flash-lite": 0.042
+        },
+        "invention_indep": {
+          "gemini-3-flash-preview": 0.07,
+          "gemini-3.1-flash-lite": 0.042
+        },
+        "invention_ref": {
+          "gemini-3-flash-preview": 0.098,
+          "gemini-3.1-flash-lite": 0.069
+        }
+      },
+      "n_pages": 4,
+      "n_referenced": 3,
+      "n_paired": 3,
+      "n_gate": 3,
+      "n_by_stratum": {
+        "latin-period-5126": 3
+      },
+      "median_cer": {
+        "gemini-3-flash-preview": 0.07,
+        "gemini-3.1-flash-lite": 0.052,
+        "gemini-3.1-flash-lite-b": null
+      },
+      "ref_median_cer_ci95": [
+        0.051,
+        0.118
+      ],
+      "delta": {
+        "median": 0.012,
+        "ci95": [
+          0.007,
+          0.019
+        ],
+        "wins": 0,
+        "losses": 3,
+        "ties": 0,
+        "untied": 3,
+        "p_sign": 0.25,
+        "share_le_minus_005": 0
+      },
+      "noise_floor": {
+        "n": 0,
+        "median_delta0": null,
+        "ci95": null
+      },
+      "catastrophic": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "invention_median": {
+        "gemini-3-flash-preview": 0.098,
+        "gemini-3.1-flash-lite": 0.069
+      },
+      "loops": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": false,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": false,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "directional (n=3 library < 50) — no lane decision"
+    },
+    "Latin 1700s": {
+      "prereg": {
+        "decidable": false,
+        "note": "directional (n=5 < 50) — rule (e): no routing decision",
+        "a_lite": "degraded",
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0.2,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": 0,
+          "repeat_pages_identical": 3,
+          "n": 3,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "gemini-3-flash-preview": 0.008,
+          "gemini-3.1-flash-lite": 0
+        },
+        "invention_indep": {
+          "gemini-3-flash-preview": 0.008,
+          "gemini-3.1-flash-lite": 0.046
+        },
+        "invention_ref": {
+          "gemini-3-flash-preview": 0.102,
+          "gemini-3.1-flash-lite": 0.13
+        }
+      },
+      "n_pages": 5,
+      "n_referenced": 5,
+      "n_paired": 5,
+      "n_gate": 5,
+      "n_by_stratum": {
+        "latin-period-5126": 5
+      },
+      "median_cer": {
+        "gemini-3-flash-preview": 0.045,
+        "gemini-3.1-flash-lite": 0.059,
+        "gemini-3.1-flash-lite-b": 0.089
+      },
+      "ref_median_cer_ci95": [
+        0.033,
+        0.135
+      ],
+      "delta": {
+        "median": -0.023,
+        "ci95": [
+          -0.09,
+          -0.003
+        ],
+        "wins": 5,
+        "losses": 0,
+        "ties": 0,
+        "untied": 5,
+        "p_sign": 0.063,
+        "share_le_minus_005": 0.2
+      },
+      "noise_floor": {
+        "n": 3,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "invention_median": {
+        "gemini-3-flash-preview": 0.102,
+        "gemini-3.1-flash-lite": 0.13
+      },
+      "loops": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 1
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": true,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "directional (n=5 library < 50) — no lane decision"
+    }
+  }
+}

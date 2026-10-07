@@ -12,6 +12,7 @@ import { getEsSpanishCollectionCard, type EsSpanishCollectionCard } from '@/lib/
 import { localizedEditionFilterIndexed } from '@/lib/localized';
 import type { Locale } from '@/lib/locale-path';
 import { SITE_STATS_FALLBACK } from '@/lib/site-stats';
+import { dedupeHomeSections } from '@/lib/home-dedupe';
 
 // Shared data layer for the homepage. Both the English `/` route and the
 // Spanish `/es` route fetch through getHomeData() so the two pages can never
@@ -61,6 +62,9 @@ export interface FeaturedItem {
     hero_image: string | null;
   };
   books: any[];
+  /** Every usable hero image, best first — dedupeHomeSections() takes the first
+   *  one whose book is not already elsewhere on the page. */
+  heroCandidates?: string[];
 }
 
 async function getFeaturedCollections(): Promise<FeaturedItem[]> {
@@ -171,7 +175,16 @@ async function getFeaturedCollections(): Promise<FeaturedItem[]> {
 
     // Fall back to hardcoded hero image if DB doesn't have images
     const fallbackHero = FALLBACK_COLLECTIONS.find(f => f.slug === collection.slug)?.hero_image;
+    // The same preference order as heroUrl above, but every candidate, so the
+    // cross-section de-dupe can skip a book already shown higher on the page.
+    const heroCandidates = [...new Set([
+      ...gallery.map((img: Record<string, unknown>) => img?.image_url as string | undefined),
+      ...(collection.featured_images || []).map((img: unknown) => typeof img === 'string' ? img
+        : ((img as Record<string, unknown>)?.thumbnail_url || (img as Record<string, unknown>)?.extracted_url || (img as Record<string, unknown>)?.image_url) as string | undefined),
+      heroUrl, fallbackHero,
+    ].filter((u): u is string => typeof u === 'string' && u.length > 0))];
     return {
+      heroCandidates,
       collection: {
         slug: collection.slug as string,
         name: collection.name as string,
@@ -543,13 +556,16 @@ async function getHomeGalleryPlates(): Promise<Plate[]> {
     if (n >= 2) continue;
     const thumb = g.thumbnail_url as string | undefined;
     const full = (g.extracted_url as string) || (g.image_url as string) || undefined;
-    const src = (thumb && toGalleryCardUrl(thumb)) || thumb || full;
+    const card = thumb ? toGalleryCardUrl(thumb) : null;
+    const src = card || thumb || full;
     if (!src) continue;
+    // Many plates have no -card.jpg yet; step down to the thumb before the original.
+    const fallback = [card ? thumb : null, full].filter((u): u is string => !!u && u !== src);
     const id = g.page_id != null && g.detection_index != null ? `${g.page_id}-${g.detection_index}` : undefined;
     perBook.set(bookId, n + 1);
     pool.push({
       src,
-      fallback: full || thumb,
+      fallback,
       href: id ? `/gallery/image/${id}` : undefined,
       label: (g.museum_description as string) || (g.book_title as string) || 'Illustration',
       w: g.extracted_width as number | undefined,
@@ -557,15 +573,19 @@ async function getHomeGalleryPlates(): Promise<Plate[]> {
     });
   }
 
-  // Shuffle the pool with a per-window seed, then take 48. Same window → same 48.
+  // Shuffle the pool with a per-window seed. Same window → same order.
+  // Returns a few spares beyond the 48 shown, so getHomeData can drop plates
+  // from books other sections already show and still fill the wall.
   const windowSeed = Math.floor(Date.now() / (GALLERY_ROTATION_HOURS * 3600 * 1000));
   const rand = mulberry32(windowSeed);
   for (let i = pool.length - 1; i > 0; i--) {
     const j = Math.floor(rand() * (i + 1));
     [pool[i], pool[j]] = [pool[j], pool[i]];
   }
-  return pool.slice(0, 48);
+  return pool.slice(0, HOME_GALLERY_COUNT + 16);
 }
+
+const HOME_GALLERY_COUNT = 48;
 
 
 export interface HomeCounts {
@@ -803,5 +823,28 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
       : withTimeout(getLocalizedCollectionCounts(lang), 8000, {} as Record<string, number>),
   ]);
 
-  return { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, blogPosts: BLOG_POSTS, spanishCollection, localizedCollectionCounts };
+  // One book, one appearance: see src/lib/home-dedupe.ts.
+  const deduped = dedupeHomeSections({
+    recentlyTranslated,
+    mostLiked,
+    showcaseItems: curatedShowcase.items,
+    featuredItems,
+    galleryPlates,
+  }, {
+    pinnedShowcaseSlugs: new Set(curatedShowcase.items.filter((i) => coverOverride(i.slug)).map((i) => i.slug)),
+  });
+
+  return {
+    featuredItems: deduped.featuredItems,
+    discoverBooks,
+    recentlyTranslated,
+    mostLiked: deduped.mostLiked,
+    galleryPlates: deduped.galleryPlates.slice(0, HOME_GALLERY_COUNT),
+    counts,
+    collections,
+    curatedShowcase: { ...curatedShowcase, items: deduped.showcaseItems },
+    blogPosts: BLOG_POSTS,
+    spanishCollection,
+    localizedCollectionCounts,
+  };
 }

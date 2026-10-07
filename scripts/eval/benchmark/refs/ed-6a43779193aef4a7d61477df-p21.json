@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA poemata/melis1",
+  "edition": "Schediasmata poetica — Paris: Sittart, 1586.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "13/14",
+    "pb_aligned_pages": "12/13"
+  },
+  "origin": "library",
+  "book_id": "6a43779193aef4a7d61477df",
+  "page_number": 21,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 37000,
+    "to_char": 38156,
+    "overlap": 0.919,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts (struck-through/inked-over heading lines, then) 'Indugredi velle, non cuiuslibet est'; ends 'Age age Quiritum eloquentissime, nos umbram'; header 'EMMETRA' p.15; ref includes the inked-out heading lines (ACADEMIAE ARGENTINENSIS RECTOREM / Strophe / LAUDUM praeconia STURMI tuarum) which are barely legible in the image.",
+    "leaf_language": "lat",
+    "page_type": "verse",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:27.513Z",
+  "text_location": "repo",
+  "text_sha256": "e6e18f99376ee258195ccead6aa805dadfb058414355779adc176bc1091046e9",
+  "unit": {
+    "chars": 1156
+  },
+  "stratum": "latin-period-5126"
+}

@@ -274,7 +274,11 @@ export async function rateLimitedFetch(url, opts = {}) {
 /** A URL whose PATH declares Image API 3.0 — except dl.ndl.go.jp, which serves a
  *  v3-shaped path but 500s on `max` and wants `full` (see upgradeToFullRes). */
 function isIiifV3Path(url) {
-  return /\/iiif\/3\//.test(url) && !url.includes('dl.ndl.go.jp');
+  // `/iiif-img/v3/` is the DLCS spelling (dlc.services — TU Delft's Trésor
+  // plates): 400 on `/full/full/`, 200 with the 5160px master on `/full/max/`
+  // (measured 2026-10-04). Missing it left every TU Delft book un-upgradable:
+  // the #3186 guard could not hash a single source page.
+  return /\/iiif\/3\/|\/iiif-img\/v3\//.test(url) && !url.includes('dl.ndl.go.jp');
 }
 
 /**
