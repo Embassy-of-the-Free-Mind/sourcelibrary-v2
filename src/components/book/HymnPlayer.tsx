@@ -193,7 +193,7 @@ export default function HymnPlayer({ transcriptions }: { transcriptions: MusicTr
               <p className="text-xs text-muted">
                 {current.status === 'verified'
                   ? 'Transcribed from the original notation'
-                  : 'Draft transcription — not yet verified against the scan'}
+                  : 'Draft transcription, not yet verified against the scan'}
               </p>
             </div>
             <button
