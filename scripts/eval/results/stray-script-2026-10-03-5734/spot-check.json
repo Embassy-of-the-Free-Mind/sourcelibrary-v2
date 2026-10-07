@@ -1,0 +1,234 @@
+[
+ {
+  "kind": "repaired:hangul-envelope",
+  "url": "https://sourcelibrary.org/book/69e7abc25f1a22ab19a9d9d5?page=397",
+  "phrase": "at that time it becomes uncommon",
+  "phrase_in_db": true,
+  "served_phrase": true,
+  "absent": [
+   {
+    "token": "그",
+    "in_db": false,
+    "in_html": false
+   }
+  ],
+  "present": [],
+  "headers": "HTTP/2 200  · age: 39 · cf-cache-status: HIT"
+ },
+ {
+  "kind": "repaired:hangul-envelope",
+  "url": "https://sourcelibrary.org/book/69e7abb35f1a22ab19a9c9d3?page=305",
+  "phrase": "In that case, I am able",
+  "phrase_in_db": true,
+  "served_phrase": true,
+  "absent": [
+   {
+    "token": "그",
+    "in_db": false,
+    "in_html": false
+   }
+  ],
+  "present": [],
+  "headers": "HTTP/2 200  · age: 38 · cf-cache-status: HIT"
+ },
+ {
+  "kind": "repaired:hangul-envelope-fused",
+  "url": "https://sourcelibrary.org/book/69e787064a6785cfd60c9f70?page=336",
+  "phrase": "fiercely in that direction",
+  "phrase_in_db": true,
+  "served_phrase": true,
+  "absent": [
+   {
+    "token": "그",
+    "in_db": false,
+    "in_html": false
+   }
+  ],
+  "present": [],
+  "headers": "HTTP/2 200  · age: 38 · cf-cache-status: HIT"
+ },
+ {
+  "kind": "repaired:hangul-correct-doubled",
+  "url": "https://sourcelibrary.org/book/69e786de6846fc56c490f87c?page=78",
+  "phrase": "At that time, the son of the gods",
+  "phrase_in_db": true,
+  "served_phrase": true,
+  "absent": [
+   {
+    "token": "그",
+    "in_db": false,
+    "in_html": false
+   },
+   {
+    "token": "that that time",
+    "in_db": false,
+    "in_html": false
+   }
+  ],
+  "present": [],
+  "headers": "HTTP/2 200  · age: 37 · cf-cache-status: HIT"
+ },
+ {
+  "kind": "repaired:hangul-correct-doubled",
+  "url": "https://sourcelibrary.org/book/69e788b54a6785cfd60d1cf0?page=152",
+  "phrase": "from that basis",
+  "phrase_in_db": true,
+  "served_phrase": true,
+  "absent": [
+   {
+    "token": "그",
+    "in_db": false,
+    "in_html": false
+   },
+   {
+    "token": "that that basis",
+    "in_db": false,
+    "in_html": false
+   }
+  ],
+  "present": [],
+  "headers": "HTTP/2 200  · age: 36 · cf-cache-status: HIT"
+ },
+ {
+  "kind": "repaired:han",
+  "url": "https://sourcelibrary.org/book/69e76137cc48e59ad74ee43d?page=243",
+  "phrase": "Ninth, the intention",
+  "phrase_in_db": true,
+  "served_phrase": true,
+  "absent": [
+   {
+    "token": "第九",
+    "in_db": false,
+    "in_html": false
+   }
+  ],
+  "present": [],
+  "headers": "HTTP/2 200  · age: 36 · cf-cache-status: HIT"
+ },
+ {
+  "kind": "repaired:han",
+  "url": "https://sourcelibrary.org/book/6a14e1b7311a9edd4622379e?page=232",
+  "phrase": "They said an empowerment",
+  "phrase_in_db": true,
+  "served_phrase": true,
+  "absent": [
+   {
+    "token": "呢",
+    "in_db": false,
+    "in_html": false
+   }
+  ],
+  "present": [],
+  "headers": "HTTP/2 200  · age: 35 · cf-cache-status: HIT"
+ },
+ {
+  "kind": "repaired:hangul-corpus-latin",
+  "url": "https://sourcelibrary.org/book/694bf8d2343422769f237558?page=156",
+  "phrase": "in that part which is written concerning",
+  "phrase_in_db": true,
+  "served_phrase": true,
+  "absent": [
+   {
+    "token": "그",
+    "in_db": false,
+    "in_html": false
+   }
+  ],
+  "present": [],
+  "headers": "HTTP/2 200  · age: 0 · cf-cache-status: MISS"
+ },
+ {
+  "kind": "repaired:hangul-corpus-german",
+  "url": "https://sourcelibrary.org/book/695258ceab34727b1f0457c2?page=237",
+  "phrase": "this or that specific disease",
+  "phrase_in_db": true,
+  "served_phrase": true,
+  "absent": [
+   {
+    "token": "그",
+    "in_db": false,
+    "in_html": false
+   }
+  ],
+  "present": [],
+  "headers": "HTTP/2 200  · age: 35 · cf-cache-status: HIT"
+ },
+ {
+  "kind": "repaired:hangul-corpus-dutch",
+  "url": "https://sourcelibrary.org/book/6970e0757c9ab1d50ed22d41?page=155",
+  "phrase": "your faith, and that trust",
+  "phrase_in_db": true,
+  "served_phrase": true,
+  "absent": [
+   {
+    "token": "그",
+    "in_db": false,
+    "in_html": false
+   }
+  ],
+  "present": [],
+  "headers": "HTTP/2 200  · age: 35 · cf-cache-status: HIT"
+ },
+ {
+  "kind": "control:untouched-neighbour",
+  "url": "https://sourcelibrary.org/book/69e7abc25f1a22ab19a9d9d5?page=396",
+  "phrase": "the night, accompanying the Sun",
+  "phrase_in_db": true,
+  "served_phrase": true,
+  "absent": [],
+  "present": [],
+  "headers": "HTTP/2 200  · age: 34 · cf-cache-status: HIT"
+ },
+ {
+  "kind": "control:untouched-neighbour",
+  "url": "https://sourcelibrary.org/book/69e7abb35f1a22ab19a9c9d3?page=304",
+  "phrase": "now go against my mind?",
+  "phrase_in_db": true,
+  "served_phrase": true,
+  "absent": [],
+  "present": [],
+  "headers": "HTTP/2 200  · age: 34 · cf-cache-status: HIT"
+ },
+ {
+  "kind": "control:untouched-neighbour",
+  "url": "https://sourcelibrary.org/book/6970e0757c9ab1d50ed22d41?page=154",
+  "phrase": "the red rust that eats",
+  "phrase_in_db": true,
+  "served_phrase": true,
+  "absent": [],
+  "present": [],
+  "headers": "HTTP/2 200  · age: 34 · cf-cache-status: HIT"
+ },
+ {
+  "kind": "control:kept-han-note",
+  "url": "https://sourcelibrary.org/book/69e7ab205f1a22ab19a93586?page=183",
+  "phrase": "Buddha Samaya",
+  "phrase_in_db": true,
+  "served_phrase": true,
+  "absent": [],
+  "present": [
+   {
+    "token": "諸聾",
+    "in_db": true,
+    "in_html": true
+   }
+  ],
+  "headers": "HTTP/2 200  · age: 34 · cf-cache-status: HIT"
+ },
+ {
+  "kind": "control:review-list-not-repaired",
+  "url": "https://sourcelibrary.org/book/69e7abf45f1a22ab19aa0f4e?page=366",
+  "phrase": "brought benefit",
+  "phrase_in_db": true,
+  "served_phrase": true,
+  "absent": [],
+  "present": [
+   {
+    "token": "그",
+    "in_db": true,
+    "in_html": true
+   }
+  ],
+  "headers": "HTTP/2 200  · age: 34 · cf-cache-status: HIT"
+ }
+]

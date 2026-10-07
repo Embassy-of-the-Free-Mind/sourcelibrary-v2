@@ -1,0 +1,1121 @@
+{
+ "round": 2,
+ "arm": "v13-b",
+ "model": "gemini-3-flash-preview",
+ "positives": 37,
+ "recall": 37,
+ "recall_by_kind": {
+  "explanation": "10/10",
+  "image_description": "9/9",
+  "definition": "9/9",
+  "summary": "9/9"
+ },
+ "kind_right": 30,
+ "negatives": 57,
+ "clean_pages_flagged": 3,
+ "clean_flags": 7,
+ "clean_units": 1015,
+ "clean_continuation_pages": 5,
+ "clean_pages_flagged_before_filter": 5,
+ "unanswered": 0,
+ "recall_by_form": {
+  "bare": "32/32",
+  "bracketed": "5/5"
+ },
+ "clean_flags_by_kind": {
+  "definition": 3,
+  "unsupported": 4
+ },
+ "judge_named": {
+  "pages": 23,
+  "pages_flagged": 3,
+  "quotes_located": 44,
+  "quotes_flagged": 0,
+  "by_kind": {
+   "gloss/bare": "0/3",
+   "gloss/bracket": "0/6",
+   "added_fact/bare": "0/4",
+   "added_fact/bracket": "0/1",
+   "unreadable_fill/bare": "0/29",
+   "boundary/bare": "0/1"
+  }
+ },
+ "pass": {
+  "recall_ge_80": true,
+  "false_flag_le_10": true
+ },
+ "positives_detail": [
+  {
+   "id": "pos:69b51dc947b06ecd581849ee_00128",
+   "lang": "German",
+   "kind": "explanation",
+   "sentence": "Secret is mentioned here because of the long quarrel described by earlier historians.",
+   "n": 4,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69a5d924a63a00aaae8aae3b_00105",
+   "lang": "Dutch",
+   "kind": "image_description",
+   "sentence": "An engraved plate shows a laboratory with three stills and a seated assistant.",
+   "n": 8,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "image_description",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:6953e46f77f38f6761bee559_00040",
+   "lang": "Latin",
+   "kind": "definition",
+   "sentence": "Cluster is the name given to the dry residue left after distillation.",
+   "n": 10,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "definition",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69b6fb4a3c7947b468d7aa52_00309",
+   "lang": "Latin",
+   "kind": "summary",
+   "sentence": "This section sets out the rules that the rest of the chapter applies.",
+   "n": 4,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "summary",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69ade6cc2fcf4ffa86cec233_00093",
+   "lang": "German",
+   "kind": "explanation",
+   "sentence": "The author appears to have in mind the Stoic teaching on fate.",
+   "n": 4,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69593291b91a6184ea943bbe_00122",
+   "lang": "French",
+   "kind": "image_description",
+   "sentence": "[Image: a circular diagram divided into twelve sections, each marked with a sign.]",
+   "n": 14,
+   "form": "bracketed",
+   "answered": true,
+   "hit": true,
+   "kind_given": "image_description",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69b51dcc47b06ecd58184b91_00073",
+   "lang": "German",
+   "kind": "definition",
+   "sentence": "[Antimony: a unit of weight, roughly thirty grams]",
+   "n": 11,
+   "form": "bracketed",
+   "answered": true,
+   "hit": true,
+   "kind_given": "definition",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:6a09ff43fa20006dbaba8d78_00193",
+   "lang": "Pali",
+   "kind": "summary",
+   "sentence": "The author goes on to give four examples, of which this is the first.",
+   "n": 23,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "summary",
+   "kind_right": true,
+   "extra": 3
+  },
+  {
+   "id": "pos:699062f5ef12272ffdc8e9d5_00505",
+   "lang": "Latin",
+   "kind": "explanation",
+   "sentence": "This was a common argument among physicians trained at Padua.",
+   "n": 28,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "unsupported",
+   "kind_right": false,
+   "extra": 0
+  },
+  {
+   "id": "pos:695262d8ab34727b1f046ade_00167",
+   "lang": "Latin",
+   "kind": "image_description",
+   "sentence": "A small woodcut of a hand holding a flask is set into the text.",
+   "n": 12,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "image_description",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69e729a1a409200ea79f0ca5_00257",
+   "lang": "Persian",
+   "kind": "definition",
+   "sentence": "The word rendered 'spirit' here has the sense of a volatile substance.",
+   "n": 52,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": false,
+   "extra": 0
+  },
+  {
+   "id": "pos:69938e26d5a98fd66f4307b0_00136",
+   "lang": "Greek",
+   "kind": "summary",
+   "sentence": "In short, the argument is that the cause must come before its effect.",
+   "n": 21,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": false,
+   "extra": 0
+  },
+  {
+   "id": "pos:69906485ef12272ffdc93acc_00116",
+   "lang": "French",
+   "kind": "explanation",
+   "sentence": "The remark is ironic, since the opposite was generally held to be true.",
+   "n": 10,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69b99e681f30176bf4d3798a_00155",
+   "lang": "Pali",
+   "kind": "image_description",
+   "sentence": "The heading is printed in red and black within a ruled frame.",
+   "n": 20,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "image_description",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:6a26c3beaad44c98627cb64a_00013",
+   "lang": "German",
+   "kind": "definition",
+   "sentence": "(Furnaces, meaning \"the gate\" in the original language.)",
+   "n": 6,
+   "form": "bracketed",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": false,
+   "extra": 0
+  },
+  {
+   "id": "pos:69ea0f5413a685002bb8dc8a_00107",
+   "lang": "Spanish",
+   "kind": "summary",
+   "sentence": "The page opens in the middle of a sentence carried over from the one before.",
+   "n": 5,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "summary",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69bd9c796120d54bd036f318_00389",
+   "lang": "Latin",
+   "kind": "explanation",
+   "sentence": "Such a claim would have been understood as a criticism of the court.",
+   "n": 12,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69520588ab34727b1f042d0c_00165",
+   "lang": "Italian",
+   "kind": "definition",
+   "sentence": "A Bruno is a judge appointed to settle disputes of this kind.",
+   "n": 11,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": false,
+   "extra": 0
+  },
+  {
+   "id": "pos:1a8485e5-5331-41df-bfc1-6efd65238f55_00581",
+   "lang": "Latin",
+   "kind": "summary",
+   "sentence": "Here the narrative returns to the events described at the start of the book.",
+   "n": 14,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "summary",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69557433f63a75710917330c_00146",
+   "lang": "Greek",
+   "kind": "explanation",
+   "sentence": "The number is symbolic and should not be read as an exact count.",
+   "n": 8,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69ac7ee520878c5c9ba51e75_00098",
+   "lang": "Latin",
+   "kind": "image_description",
+   "sentence": "A later reader has underlined several lines and written a note beside them.",
+   "n": 12,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "image_description",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:6976f5fb7b4366f057e0e974_00631",
+   "lang": "Latin",
+   "kind": "summary",
+   "sentence": "The remainder of the passage is a list of names.",
+   "n": 13,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "summary",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69b6e791f8a84d859cde1de2_00473",
+   "lang": "Latin",
+   "kind": "explanation",
+   "sentence": "This is the same certain who appears in the letters of Cicero.",
+   "n": 13,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:6953e58d77f38f6761bf0cfc_00123",
+   "lang": "French",
+   "kind": "image_description",
+   "sentence": "The initial letter is a large decorated capital showing a saint at prayer.",
+   "n": 11,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "image_description",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:695594f97bd6d2cd1d61e685_00331",
+   "lang": "Latin",
+   "kind": "definition",
+   "sentence": "Sensual: the technical term for a syllogism with a suppressed premise.",
+   "n": 8,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "definition",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69a6827ed5bf106c72bb8d6f_00286",
+   "lang": "French",
+   "kind": "summary",
+   "sentence": "The author closes the section with a prayer.",
+   "n": 12,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "summary",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69b18a89c4be2cdd0edc810d_00135",
+   "lang": "Latin",
+   "kind": "explanation",
+   "sentence": "The comparison draws on the imagery of the Song of Songs.",
+   "n": 6,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69b51e6947b06ecd5818faf1_00131",
+   "lang": "German",
+   "kind": "image_description",
+   "sentence": "(An illustration of a tree with seven branches fills the lower part of the page.)",
+   "n": 2,
+   "form": "bracketed",
+   "answered": true,
+   "hit": true,
+   "kind_given": "image_description",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69de989b1b234a773e438e19_00234",
+   "lang": "Italian",
+   "kind": "definition",
+   "sentence": "Here blowing signifies the lowest of the three souls.",
+   "n": 2,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": false,
+   "extra": 0
+  },
+  {
+   "id": "pos:69905e262fd6a039938a154f_00067",
+   "lang": "Latin",
+   "kind": "summary",
+   "sentence": "Overall, the passage defends the older view against its recent critics.",
+   "n": 2,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "summary",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69e74ef95cf1eaf3ad80e04c_00131",
+   "lang": "Persian",
+   "kind": "explanation",
+   "sentence": "Modern scholars identify this place with a village near Aleppo.",
+   "n": 13,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69b2ff9f5545150b61b48a36_00075",
+   "lang": "Latin",
+   "kind": "image_description",
+   "sentence": "A table with four columns occupies the centre of the page.",
+   "n": 7,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "image_description",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69593274b91a6184ea943873_00315",
+   "lang": "French",
+   "kind": "definition",
+   "sentence": "(i.e. a dish made of barley and milk)",
+   "n": 6,
+   "form": "bracketed",
+   "answered": true,
+   "hit": true,
+   "kind_given": "definition",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:6991eac02f801130a473e424_00074",
+   "lang": "Italian",
+   "kind": "summary",
+   "sentence": "This paragraph serves as a transition to the second part of the treatise.",
+   "n": 10,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "summary",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69a6849d7ab725b59be41319_00173",
+   "lang": "Italian",
+   "kind": "explanation",
+   "sentence": "The writer is following Galen closely at this point.",
+   "n": 9,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69b185e9c4be2cdd0edc464c_00489",
+   "lang": "Dutch",
+   "kind": "image_description",
+   "sentence": "The tailpiece is a woodcut of two cherubs holding a wreath.",
+   "n": 10,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "image_description",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:6952603cab34727b1f04647b_00194",
+   "lang": "German",
+   "kind": "definition",
+   "sentence": "The expression means literally \"to wash the hands\" and so to give up a claim.",
+   "n": 6,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": false,
+   "extra": 0
+  }
+ ],
+ "clean_flag_detail": [
+  {
+   "id": "neg:69935b692c63944063133f67_00112",
+   "lang": "Chinese",
+   "flags": [
+    {
+     "n": 12,
+     "words": "forced action wei and attains non-action wu wei",
+     "whole": false,
+     "kind": "definition",
+     "source_has": "去為而不失於無為矣",
+     "reason": "The translator adds the Chinese terms 'wei' and 'wu wei' as glosses.",
+     "sentence": "When the mind is purified and nature is restored without remnant, one abandons forced action wei and attains non-action wu wei ."
+    },
+    {
+     "n": 56,
+     "words": "The Primary Wings of Laozi, Volume Two",
+     "whole": true,
+     "kind": "unsupported",
+     "source_has": "老子元翼 卷下",
+     "reason": "This renders the title/running head '老子元翼 卷下' found at the bottom of the page.",
+     "sentence": "The Primary Wings of Laozi, Volume Two"
+    }
+   ]
+  },
+  {
+   "id": "neg:69e792f880b52390feb17389_00344",
+   "lang": "Chinese",
+   "flags": [
+    {
+     "n": 21,
+     "words": "qisheng , cheng , zhuan , and he",
+     "whole": false,
+     "kind": "definition",
+     "source_has": "起承轉合",
+     "reason": "The translator adds the transliterated terms as a gloss/definition not in the source.",
+     "sentence": "It is nothing more than the qisheng , cheng , zhuan , and he ."
+    },
+    {
+     "n": 22,
+     "words": "'empty' words against 'solid' words",
+     "whole": false,
+     "kind": "definition",
+     "source_has": "虛的對實的，實的對虛的",
+     "reason": "The translator adds the English definitions for the technical terms xu and shi.",
+     "sentence": "For the continuation and transition in the middle, you need two pairs of couplets: level tones against deflected tones, and 'empty' words against 'solid' words ."
+    }
+   ]
+  },
+  {
+   "id": "neg:6a09ff43fa20006dbaba8d78_00193",
+   "lang": "Pali",
+   "flags": [
+    {
+     "n": 6,
+     "words": "All manuscripts read pisuṇâvâcâ and pharusâvâcâ.",
+     "whole": false,
+     "kind": "unsupported",
+     "source_has": "¹ All MSS. pisuṇâvâcâ and pharusâvâcâ (Comp. below XVI. 8).",
+     "reason": "The translator moved the footnote text into the middle of the running sentence.",
+     "sentence": "You would become speakers of slander pisuṇâvâcâ All manuscripts read pisuṇâvâcâ and pharusâvâcâ."
+    },
+    {
+     "n": 14,
+     "words": "The manuscripts here and below vary between gacchantam and gacchatam.",
+     "whole": false,
+     "kind": "unsupported",
+     "source_has": "² The MSS. here and below vary between gacchantam and gacchatam.",
+     "reason": "Footnote text inserted into the middle of the running sentence.",
+     "sentence": "For those, monks, who rely on what was done in the past The manuscripts here and below vary between gacchantam and gacchatam. as the essential truth, there is no desire, no effort, and no sense that \"this should be done\" or \"this should not be done.\""
+    },
+    {
+     "n": 19,
+     "words": "Manuscripts D. and T. read âmo.",
+     "whole": false,
+     "kind": "unsupported",
+     "source_has": "³ D., T. âmo.",
+     "reason": "Footnote text inserted into the running sentence.",
+     "sentence": "When they are asked this by me, they admit it, saying: \"Yes\" Manuscripts D. and T. read âmo. ."
+    }
+   ]
+  }
+ ],
+ "judge_named_detail": [
+  {
+   "id": "named:6991e171b53cae6bb6024476_00216",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "gloss",
+     "where": "bare",
+     "quote": "when he restored kingdoms to those from whom they were taken",
+     "unit": 12,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:6952872cab34727b1f04d284_00499",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "gloss",
+     "where": "bracket",
+     "quote": "they call these [Catholics] idolaters and the others [Protestants] fanatics",
+     "unit": 17,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "gloss",
+     "where": "bracket",
+     "quote": "under the Popish [regime]",
+     "unit": 12,
+     "flagged": false,
+     "both_judges": true
+    },
+    {
+     "kind": "gloss",
+     "where": "bracket",
+     "quote": "these [Catholics] idolaters and the others [Protestants] fanatics",
+     "unit": 17,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69affc54b3b18e354e59b7d8_00198",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "added_fact",
+     "where": "bare",
+     "quote": "### Proposition 8",
+     "unit": 2,
+     "flagged": false,
+     "both_judges": true
+    },
+    {
+     "kind": "added_fact",
+     "where": "bracket",
+     "quote": "Augustus [Heiberg] used his own judgment regarding the word order",
+     "unit": 18,
+     "flagged": false,
+     "both_judges": true
+    }
+   ]
+  },
+  {
+   "id": "named:69bfccd88ab50eb88e8c69fd_00521",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "This is not according to the Scripture. You are treated violently.",
+     "unit": null,
+     "flagged": false,
+     "both_judges": true
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "those things which are easy do not take root, they are not meant to last",
+     "unit": 24,
+     "flagged": false,
+     "both_judges": true
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "The village is mine.",
+     "unit": 26,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "Being long and blunt, I do not accept this legislation.",
+     "unit": 8,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69bd9d6a6120d54bd0376a04_00060",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "There are two water jars, neither more nor less",
+     "unit": 5,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69920bff01d3dcea63458842_00389",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "gloss",
+     "where": "bare",
+     "quote": "nor were they ever held in any account or numbered among significant peoples",
+     "unit": 2,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:699047e512d83c216b7e8c3f_00086",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "boundary",
+     "where": "bare",
+     "quote": "successive powers of unity increased by the interest rate",
+     "unit": 2,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:699ef9f2c2bcb75dbdbaad92_00102",
+   "flags": 1,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "the Ancient of Ancients is entirely white, and everything is life, everything is one",
+     "unit": 45,
+     "flagged": false,
+     "both_judges": true
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "The voice of the Lord is upon the waters",
+     "unit": 49,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "added_fact",
+     "where": "bare",
+     "quote": "in the section on Balak",
+     "unit": 45,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "It describes the arrangement of the right side and the left side",
+     "unit": 46,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69b2f3b821208ea9dc278c50_00277",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "refers to the living beings within them",
+     "unit": 3,
+     "flagged": false,
+     "both_judges": true
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "This refers to the Roman Empire.",
+     "unit": 24,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69d5ad004dc55b8478dde8b5_01455",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "regarding his return to the Dweller",
+     "unit": 2,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:6990630be7b7642c081de08b_00353",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "Who is this \"diminished male\"",
+     "unit": 2,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "Show me a single vessel and take silver for it",
+     "unit": 37,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "Do not uncover the nakedness of a daughter-in-law or a youth",
+     "unit": 32,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "This is made from the most exalted things",
+     "unit": 57,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "Isaac was thin and concerned for his portion",
+     "unit": 3,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "Woe that silver should be so depleted and yet endure",
+     "unit": 41,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69e7933580b52390feb18277_00263",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "and the loss of my wealth among my companions",
+     "unit": 8,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "let your companions' fate be a reminder of what befell you",
+     "unit": 12,
+     "flagged": false,
+     "both_judges": true
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "with the news of his betrayal",
+     "unit": 15,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "it became clear to him that I was a free man who had been wronged",
+     "unit": 9,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "the loss of my wealth among my companions",
+     "unit": 8,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69d5ac07d0bd3547a5654dcc_00313",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "added_fact",
+     "where": "bare",
+     "quote": "### The Solar Deities of the Months",
+     "unit": 9,
+     "flagged": false,
+     "both_judges": true
+    }
+   ]
+  },
+  {
+   "id": "named:69f33c97876dd827cbc5a94f_00258",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "Locusts strip the trees of their gold",
+     "unit": 6,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69e80670fdad300064d9ef9d_00599",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "sweet fruits of the <term>glaujaphala</term>",
+     "unit": 2,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69de10185cedf736edb851e4_00244",
+   "flags": 1,
+   "quotes": [
+    {
+     "kind": "added_fact",
+     "where": "bare",
+     "quote": "### Examination of Intentions",
+     "unit": 12,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69e72c6ba409200ea79f484e_00102",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "gloss",
+     "where": "bare",
+     "quote": "they chopped down the tree I sat under in Song",
+     "unit": 15,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69529509b184004c526a2793_00237",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "gloss",
+     "where": "bracket",
+     "quote": "*alimen-\nts* [food]",
+     "unit": null,
+     "flagged": false,
+     "both_judges": true
+    },
+    {
+     "kind": "gloss",
+     "where": "bracket",
+     "quote": "[acts] through circuits",
+     "unit": 22,
+     "flagged": false,
+     "both_judges": true
+    }
+   ]
+  },
+  {
+   "id": "named:8a9eea4b-6be1-4424-9a38-b7a0deb58f95_00256",
+   "flags": 2,
+   "quotes": [
+    {
+     "kind": "gloss",
+     "where": "bracket",
+     "quote": "[consider] how Alchemy achieves it",
+     "unit": 43,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "gloss",
+     "where": "bracket",
+     "quote": "[consider]",
+     "unit": 37,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69dbcc3e0f8c5edf20f484a0_00330",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "as a being, then as a body, then as a living being",
+     "unit": 22,
+     "flagged": false,
+     "both_judges": true
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "then as a being, then as a good, and prior to that as a being and as a substance",
+     "unit": 22,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "and so he knows the species and can eventually know the differences",
+     "unit": 24,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69b21c6c429e087c6f8646f6_00223",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "whom I believed I valued most highly",
+     "unit": 7,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69b1de4ea205bd982d8285bd_00396",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "Earlier Jafaf Empire Hall far",
+     "unit": 26,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69b525ba6be60460830310a9_00065",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "or an almost immeasurable depth",
+     "unit": 3,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  }
+ ]
+}

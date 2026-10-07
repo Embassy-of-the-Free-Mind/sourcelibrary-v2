@@ -1,0 +1,82 @@
+[
+{"id": "P8ZEZ", "score": 3, "verdict": "work",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "བྱ་བ་དང་ཁྱབ་པར་བྱེད་པའི་ངོ་བོ་འབའ་ཞིག་དཔྱོད་པར་བྱེད་པ",
+   "english": "When examining the nature of the pervasion [note: the relationship between the logical reason and the property to be proven] and the pervader",
+   "why": "khyab par bya ba is the pervaded (vyāpya), paired with the pervader (vyāpaka); the text examines only the pervaded–pervader relation between the two vipakṣa terms, not 'the pervasion'.",
+   "fix": {"find": "When examining the nature of the pervasion [note: the relationship between the logical reason and the property to be proven] and the pervader", "replace": "When examining only the relation of the pervaded and the pervader"}},
+  {"type": "reversal", "confidence": "medium",
+   "tibetan": "བདག་མེད་པ་ལོག་པ་ལ་ཡང་ངོ་། །དངོས་པོ་གྲུབ་པར་མི་འགྱུར་བ་སྟེ།",
+   "english": "even when being \"not without a self\" is reversed",
+   "why": "The Tibetan says that even when selflessness is excluded, the positive entity (the self) is not thereby established; the English makes the excluded term 'not without a self', i.e. the opposite."},
+  {"type": "gloss", "confidence": "medium",
+   "tibetan": "བདག་གཉི་ག་ལ་གྲུབ་པ་",
+   "english": "[note: referring to both the subject and the example]",
+   "why": "gnyi ga la grub pa med pa means the self is not established for both parties to the debate (proponent and opponent), not 'subject and example'."}
+ ],
+ "note": "Follows the kevalavyatirekin argument broadly, but the pervaded/pervader vocabulary and a couple of glosses are off, so a Pramāṇa reader would need to rework the logic passages."},
+{"id": "PCID5", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "agent", "confidence": "high",
+   "tibetan": "བདག་གིས་དོན་རྟོགས་པར་དཀའ་བ་བསྒྲུབས་སོ",
+   "english": "\"Aha! You have established a meaning that was difficult to understand,\"",
+   "why": "The bodhisattva does not think 'I have established a difficult meaning'; bdag gis is first person.",
+   "fix": {"find": "Aha! You have established", "replace": "Aha! I have established"}}
+ ],
+ "note": "A sound rendering of the commentary on the teacher's qualities and the sūtra list of speech qualities, with one first/second person slip."},
+{"id": "P3NTL", "score": 5, "verdict": "light",
+ "errors": [],
+ "note": "Careful 84000-style translation of the Saṃdhinirmocana commentary on name and basis; faithful throughout."},
+{"id": "PLHLC", "score": 5, "verdict": "light",
+ "errors": [],
+ "note": "Accurate rendering of the refutation of manifestation/transformation as grounds for distinguishing cause and effect."},
+{"id": "PCP6C", "score": 5, "verdict": "light",
+ "errors": [],
+ "note": "Faithful to the commentary on wisdom, method and consecration; inline glosses are clutter but not wrong."},
+{"id": "PYVSG", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "reversal", "confidence": "high",
+   "tibetan": "སངས་རྒྱས་ཐམས་ཅད་གཤེགས་གྱུར་ན",
+   "english": "Depart out of fear at his mere command,",
+   "why": "In context of summoning all buddhas by the vajra finger-snap, gshegs means they come (assemble) at his command, not depart.",
+   "fix": {"find": "Depart out of fear at his mere command,", "replace": "Come, awed, at his mere command,"}}
+ ],
+ "note": "Generally sound for the wrathful-manifestation passage, but the first verse inverts the summoning (come vs depart)."},
+{"id": "PX2FB", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "ཡེ་ཤེས་གང་ཡིན་པ",
+   "english": "what his faith is",
+   "why": "ye shes is gnosis/wisdom (jñāna), not faith.",
+   "fix": {"find": "what his faith is", "replace": "what his gnosis is"}},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "སྦྱིན་པ་ཡང་ཁྱད་པར་དུ་འགྱུར་ཞིང་",
+   "english": "\"May all merits, such as generosity, become concordant causes and may my generosity become inexhaustible.\"",
+   "why": "The purpose clause (so that all merits yield results concordant with their cause) is outside the dedication, whose words are 'may giving become distinguished and inexhaustible'; 'distinguished' is lost."}
+ ],
+ "note": "Good rendering of the Buddhānusmṛti commentary apart from 'faith' for ye shes and a reshuffled dedication formula."},
+{"id": "P9BVW", "score": 5, "verdict": "light",
+ "errors": [],
+ "note": "Faithful rendering of the transition to the chapter on practice and the five special objects of training."},
+{"id": "PG4I5", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "དུས་མིན་འདིར་ནི་གཉིས་སྐྱེས་ཀྱིས། །བསམས་ཏེ་བཀྲེས་པས་ཉེན་པ་ལས།",
+   "english": "because of what the twice-born (dvija) a member of the brahmin caste thought while oppressed by hunger, I am like a withered tree by the roadside",
+   "why": "The verse (Skt. dvijanmanā cintitaḥ kṣutparītena) says the king has been thought of / turned to by a hungry brahmin at the wrong time, like a dry tree on the road; the brahmin's thought is not the cause of his state."}
+ ],
+ "note": "The bilingual jātaka verses are rendered sensibly from the Tibetan; one clause misconstrues who thinks of whom."},
+{"id": "PRUPW", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "བུ་གཅིག་མ་",
+   "english": "Like an only child",
+   "why": "bu gcig ma is the mother of an only child (the image of undistracted care), not the child."},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "བུ་ཉོན་ཁྱོད་གང་རྣམ་པར་རྟོག །འདིར་བདག་མ་བཅིངས་མི་གྲོལ་ཕྱིར།",
+   "english": "Does not liberate because the self is not bound here.",
+   "why": "The Tibetan asks 'Listen, son, what are you conceptualizing?' and gives the reason that here the self is neither bound nor freed."}
+ ],
+ "note": "A reasonable verse translation of the doha-style instructions, with a few misconstrued similes and clauses."}
+]

@@ -1,0 +1,33 @@
+{
+ "arm": "olmocr",
+ "engine": "olmocr-2-7b-fp8",
+ "weights": "allenai/olmOCR-2-7B-1025-FP8",
+ "hf_snapshot": "40bd7202494b8264ee17ada08b401b5aab7a9ce1",
+ "pip": [
+  "torch==2.8.0",
+  "transformers==4.57.6",
+  "vllm==0.10.2"
+ ],
+ "gpu": "NVIDIA RTX PRO 4000 Blackwell (RunPod SECURE, $0.57/h)",
+ "pod": "0mgwwvbjosreyy",
+ "clients": 8,
+ "temperature": 0,
+ "max_tokens": 4500,
+ "longest_side_px": 1288,
+ "max_model_len": 12000,
+ "pages": 632,
+ "errors": 0,
+ "wall_secs": 1715.5,
+ "s_per_page": 2.714,
+ "finish_length_pages": 42,
+ "client_secs_total": 13616.1,
+ "client_secs_on_length_pages": 4034.8,
+ "setup_secs": 191,
+ "serve_secs": 100,
+ "warmup": {
+  "pages": 16,
+  "wall_secs": 92.2,
+  "discarded": true
+ },
+ "billed_usd": 0.345
+}

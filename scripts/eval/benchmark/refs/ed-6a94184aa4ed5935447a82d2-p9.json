@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA poemata/drama",
+  "edition": "Dramata sacra: comoediae atque tragoediae aliquot e Veteri Testamento desumptae. Tomus 1. — Basel: Johannes Oporinus, 1547.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": true,
+  "memorization_risk": "high",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "8/14",
+    "pb_aligned_pages": "8/8"
+  },
+  "origin": "library",
+  "book_id": "6a94184aa4ed5935447a82d2",
+  "page_number": 9,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 4289,
+    "to_char": 5047,
+    "overlap": 0.865,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'uestri ordinis adolescentib. præstetis. Mater uero' (running head 'NVNCVPATORIA.'); ends 'apud De- / um,' (catchword; sig *5); ref pads 'virtute, ac pietate ceteris' and 'sicut alloquebatur sancta'; ref gives line-per-line breaks. Early Latin print with ct ligatures, tildes and q-abbreviations.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "many",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:15.449Z",
+  "text_location": "repo",
+  "text_sha256": "cb6999bcf115e9e93af55bc6a68a17cf3c9ee4299a8558116c080ed043c1ee22",
+  "unit": {
+    "chars": 758
+  },
+  "stratum": "latin-period-5126"
+}

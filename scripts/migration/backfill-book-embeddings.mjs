@@ -28,6 +28,7 @@ import {
   composeBookEmbeddingText as composeEmbeddingText,
   BOOK_INDEX_EMBEDDING_PROJECTION,
 } from '../lib/book-embedding-text.mjs';
+import { assertStoreVector } from '../lib/vector-truth.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -49,7 +50,7 @@ const LIMIT = parseInt(args.find((_, i, a) => a[i - 1] === '--limit') || '0') ||
 
 const BATCH_SIZE = 50; // Gemini batchEmbedContents limit is 100
 const DIMS = 768;
-const MODEL = 'gemini-embedding-2-preview';
+const MODEL = 'gemini-embedding-2'; // bit-identical to -2-preview (#6170)
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:batchEmbedContents?key=${GEMINI_KEY}`;
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } });
@@ -245,7 +246,8 @@ async function main() {
         year: yearMatch ? parseInt(yearMatch[0]) : null,
         language: book.language || null,
         summary_text: item.text,
-        embedding: JSON.stringify(embeddings[idx]),
+        embedding: JSON.stringify(assertStoreVector(embeddings[idx], { model: MODEL })),
+        embedding_model: MODEL, // asserted by the writer, never a column default (#6175)
         metadata: {
           has_index: !!item.indexData,
           categories: book.categories || [],

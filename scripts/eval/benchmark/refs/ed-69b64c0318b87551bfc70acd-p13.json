@@ -1,0 +1,44 @@
+{
+  "source": "CAMENA poemata/poemata/Atrocianus_elegia.xml",
+  "edition": "Elegia De bello rustico: anno redempti orbis MDXXV in Germania exorto. Praeterea eiusdem Ioannis Atrociani Epigrammata aliquot selectiora. Praemissa etiam est Epistola ad bonas literas hortatoria. — Basel: Johann Faber, 1528",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-unit-by-eye",
+    "text_match_pages": null,
+    "pb_aligned_pages": null
+  },
+  "origin": "library",
+  "book_id": "69b64c0318b87551bfc70acd",
+  "page_number": 13,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "unit": "transcription-page",
+    "page_break_index": 13,
+    "probe": "none (located by eye)"
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-period-refs-5126.mjs",
+  "built_at": "2026-10-04T16:05:10.907Z",
+  "text_location": "repo",
+  "text_sha256": "e262c1bbc7f7bbc9fec417c5371792fa1159fd60deea3764c83c87dc2ffbb8ac",
+  "unit": {
+    "chars": 1058
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts at 'Sacri raptantur calices' (first verse line under running head RVSTICO), ends at 'Lucis habet Veneris stella serena minus.' (last verse line; catchword 'Sentit' and running head not transcribed). All 26 lines present, same order; page content boundaries coincide exactly, strong same-edition evidence (Basel: Faber 1528). Offset: our page_number = pb index (page 16 = pb 16), not +3. Red pilcrow/initials not transcribed. Single page, not a spread.",
+    "leaf_language": "la",
+    "page_type": "verse",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "stratum": "latin-period-5126"
+}

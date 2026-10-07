@@ -1,0 +1,67 @@
+[
+{"id": "QS4TF", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Faithful rendering of the sūtra citation on causes and conditions of affliction and purification and the Tathāgata's absorptions; terms (improper attention, latent tendencies/manifest afflictions, eight liberations in forward, reverse and mixed order) are correct."},
+{"id": "QO6L1", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "བདེ་བར་འགྲོ་བ་སྐྱེས་བུ་རིན་ཆེན་སྐྱེས", "english": "the Jewel among Men born for the sake of the world's happiness",
+   "why": "bde bar 'gro ba renders Sugata (Skt. sugate): a Sugata, a jewel of a man, is born; it is an epithet of the Buddha, not 'for the world's happiness'.",
+   "fix": {"find": "the Jewel among Men born for the sake of the world's happiness", "replace": "a Sugata, the Jewel among Men, born in the world"}},
+  {"type": "addition", "confidence": "high", "tibetan": "ལེགས་བྱས་སྐྱེད་ཚལ་དགའ་སྟེར་དུ། །གྲོང་ཁྱེར་", "english": "the city ends mid-sentence",
+   "why": "The Tibetan simply breaks off at 'the city'; 'ends mid-sentence' is an unmarked editorial remark printed as if part of the translation.",
+   "fix": {"find": "the city ends mid-sentence", "replace": "the city"}},
+  {"type": "omission", "confidence": "medium", "tibetan": "པ་ཁྱད་འཕགས་གསལ་བྱེད་ཅིང་", "english": "For the sake of illustration, to benefit the world, and to instruct the monks",
+   "why": "The closing verse says the Victor spoke 'making clear the excellence of [giving]' to instruct the monks; that clause is not rendered and 'to benefit the world' has no clear basis."},
+  {"type": "term", "confidence": "medium", "tibetan": "དཔལ་གྱི་སྡེའི་རྟོགས་པ་བརྗོད་པ", "english": "the Noble Sena [note: original: Shrisena] Account",
+   "why": "dpal gyi sde is the proper name Śrīsena ('Glorious', not 'Noble'); the name should stand as Śrīsena."}
+ ],
+ "note": "Colophon and opening verses of the Śrīsena chapter are rendered loosely; the Sugata epithet is lost and an editorial remark is left in the text."},
+{"id": "QHQH0", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "ཞུས་པ་ལ་ལ་ལས", "english": "In some versions of the (Pravrajyavastu) Scripture on Ordination",
+   "why": "zhus pa is the Vinaya 'Questions' (Paripṛcchā, e.g. Upāli's questions), as the later 'zhus pa gzhan las' confirms; it is not the Pravrajyāvastu.",
+   "fix": {"find": "In some versions of the (Pravrajyavastu) Scripture on Ordination", "replace": "In some versions of the Questions (Paripṛcchā)"}},
+  {"type": "agent", "confidence": "high", "tibetan": "དེའི་ཕྱིར་ཁྱོད་ལ་དབུལ་ལོ", "english": "\"You will give it to you,\"",
+   "why": "The cited phrase is 'therefore I will give (offer) it to you'.",
+   "fix": {"find": "\"You will give it to you,\"", "replace": "\"Therefore I will give it to you,\""}},
+  {"type": "agent", "confidence": "high", "tibetan": "དེ་མ་ཐག་པ་གཉི་ག་ཡང་དེ་དང་འདྲ་བར་ཤེས་པར་བྱའོ", "english": "Both the preceding and following cases should be understood in the same way.",
+   "why": "de ma thag pa gnyi ga refers to the two cases immediately following, not to a preceding and a following case.",
+   "fix": {"find": "Both the preceding and following cases should be understood in the same way.", "replace": "The two cases that immediately follow should be understood in the same way."}}
+ ],
+ "note": "Vinaya analysis of sthūlātyaya vs pārājika is sound, but a source title is misidentified and two cited phrases/referents are wrong."},
+{"id": "QNHIL", "score": 4, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Karmavācanā technicalities (jñapti, jñaptidvitīya, jñapticaturtha, sīmā markers, Upāli citation) are correctly handled; a few literal renderings ('perfectly/nearly abiding') remain opaque but are not clearly wrong."},
+{"id": "QYO16", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Accurate rendering of the discussion of contradictory reasons and of the words 'oneself' and 'wished' in the definition of the thesis."},
+{"id": "QWJMU", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "དེའི་ཕྱིར་དུས་ནི་མངོན་སུམ་གྱི་ཚད་མས་གཟུང་བར་བྱ་བ་ཁོ་ན་ཡིན་ནོ", "english": "Therefore, time is indeed something to be grasped by the valid means of direct inference.",
+   "why": "mngon sum gyi tshad ma is perception; the opponent concludes that time is grasped by perception alone.",
+   "fix": {"find": "valid means of direct inference", "replace": "valid means of direct perception"}},
+  {"type": "structure", "confidence": "medium", "tibetan": "དེས་ན་དལ་བུ་ལ་སོགས་པ་གཞན་དུ་མི་འཐད་པས། དུས་དཔག་པར་བྱ་བ་མ་", "english": "Thus, since slowness and other qualities would not be otherwise logical, the intention is that time is not something to be inferred.",
+   "why": "The point is that time cannot be inferred on the ground that slowness etc. would otherwise be impossible (arthāpatti), since slowness is explained without time; the English makes the impossibility the reason for the denial, inverting the argument."},
+  {"type": "agent", "confidence": "medium", "tibetan": "ཡང་གཞན་དག་གཞན་དུ་མི་འཐད་པས་", "english": "Furthermore, because others are otherwise illogical...",
+   "why": "gzhan dag are other opponents who argue that time is inferred from otherwise-impossibility; 'others' is the agent, not what is illogical."}
+ ],
+ "note": "Commentary on the refutation of time as a perceptible or inferable entity; perception is mistranslated as inference at a key conclusion and the arthāpatti argument is garbled."},
+{"id": "QSNH7", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Faithful word-by-word gloss commentary on the tigress episode; glosses and the cited verse are correctly rendered."},
+{"id": "QK7FS", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "high", "tibetan": "གཞན་མཚམས་#སྦྱོར་བས་སྐྱེ་བ་འབྱུང་བ་དེ་ལ་བཀག་པ་འབའ་ཞིག་ཡིན་ཏེ", "english": "Likewise, when birth occurs through the linking of another moment of similar kind, this is purely a negation.",
+   "why": "Destruction is merely the negation of the arising, through linkage, of a further moment of similar kind; the English makes the arising itself the negation.",
+   "fix": {"find": "Likewise, when birth occurs through the linking of another moment of similar kind, this is purely a negation.", "replace": "Likewise, it is purely the negation of the arising, through linkage, of another moment of similar kind."}}
+ ],
+ "note": "Good rendering of the Tattvasaṃgraha-pañjikā on the two kinds of destruction and the contradiction of non-coexistence, with one misconstrued clause."},
+{"id": "QNW7U", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "medium", "tibetan": "དེ་ལྟར་ཆོས་ལ་སོགས་པའི་དབྱེ་བས་ཐ་དད་པ་དེ་དག་ཀྱང་རྣམ་པ་གཉིས་ཏེ།", "english": "Actions differentiated by virtue and so forth are likewise of two kinds.",
+   "why": "This sentence is the commentary's prose lead-in; only the two lines 'drang srong mchog gi las rnams ni / sems pa dang ni bsam par gsungs' are the root verse (MMK 17.2ab), but the English sets the prose as a verse line."}
+ ],
+ "note": "Accurate treatment of cetanā and cetayitvā karma and the epithet paramarṣi; one prose sentence is merged into the root verse."},
+{"id": "QU8VK", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "medium", "tibetan": "བག་ཆགས་ཀྱི་མཚན་ཉིད་རྒྱུ་མི་མཐུན་པ་སྐྱེད་པ་ལས་དངོས་པོ་", "english": "When the mind engages with an entity [note: original: \"vastu\"], it produces an incompatible cause",
+   "why": "It is the cognition of non-entity that, by producing an incompatible cause in the form of a vāsanā, cuts off the continuum of the entity-cognition; the English makes the entity-cognition produce the incompatible cause."}
+ ],
+ "note": "Generally sound rendering of the argument on the contradiction of entity and non-entity conceptions; one agent confusion at the opening."}
+]

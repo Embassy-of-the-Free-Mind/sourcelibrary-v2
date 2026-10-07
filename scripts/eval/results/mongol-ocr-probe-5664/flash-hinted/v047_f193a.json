@@ -1,0 +1,45 @@
+{
+ "key": "v047_f193a",
+ "arm": "hinted",
+ "page": {
+  "key": "v047_f193a",
+  "vol": 47,
+  "book_id": "6ac029e49a86d56c1aa1f2a5",
+  "page_number": 385,
+  "page_label": "f. 193a",
+  "bdrc_canvas": "I1PD1103150388.jpg",
+  "ligeti": "Mng1.771",
+  "mng_span": "Cha Eldeb bilig baramid 192b–209b",
+  "toh": "D16",
+  "skt": "Vajracchedikā",
+  "derge_vol": 34,
+  "derge_file": "034_ཤེས་རབ་སྣ་ཚོགས།.txt"
+ },
+ "model": "gemini-3-flash-preview",
+ "ocr_prompt": {
+  "arm": "hinted",
+  "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "content_hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "translation_prompt": {
+  "name": "Standard Translation",
+  "version": "13",
+  "hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>193</page-num>\n<meta>Beijing Kanjur (1718–1720) woodblock print. Margin contains Chinese text: 諸般若經第一卷上, 百九十三 (Prajnaparamita Sutra, Volume 1, Part 1, Page 193).</meta>\n\n<margin>\n諸般若經第一卷上, 百九十三\n</margin>\n\nᠪᠣᠯᠪᠠᠴᠤ ᠪᠡᠶᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠦᠨ ᠲᠡᠶᠢᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠪᠡᠷ ᠮᠥᠨ ᠬᠡᠮᠡᠨ ᠦᠵᠡᠵᠦ ᠪᠠᠢᠢᠨᠤ ᠤᠤ᠄ ᠱᠠᠷᠢᠪᠤᠳᠠᠷᠢ ᠥᠴᠢᠷᠤᠨ᠂ ᠮᠠᠬᠠᠭᠠᠯᠠ ᠪᠡᠶᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠦᠨ ᠲᠡᠶᠢᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠪᠡᠷ ᠮᠥᠨ ᠬᠡᠮᠡᠨ ᠦᠵᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠢᠯᠡ᠄ ᠪᠤᠷᠬᠠᠨ ᠵᠠᠷᠯᠢᠭ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠨᠢ᠂ ᠱᠠᠷᠢᠪᠤᠳᠠᠷᠢ ᠠ᠋ ᠪᠡᠶᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠦᠨ ᠲᠡᠶᠢᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠡᠴᠡ ᠪᠤᠰᠤᠳ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠮᠥᠨ ᠬᠡᠮᠡᠨ ᠦᠵᠡᠵᠦ ᠪᠠᠢᠢᠨᠤ ᠤᠤ᠄ ᠱᠠᠷᠢᠪᠤᠳᠠᠷᠢ ᠥᠴᠢᠷᠤᠨ᠂ ᠮᠠᠬᠠᠭᠠᠯᠠ ᠪᠡᠶᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠦᠨ ᠲᠡᠶᠢᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠡᠴᠡ ᠪᠤᠰᠤᠳ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠮᠥᠨ ᠬᠡᠮᠡᠨ ᠦᠵᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠢᠯᠡ᠄ ᠪᠤᠷᠬᠠᠨ ᠵᠠᠷᠯᠢᠭ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠨᠢ᠂ ᠱᠠᠷᠢᠪᠤᠳᠠᠷᠢ ᠠ᠋ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠪᠡᠷ ᠪᠡᠶᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠦᠨ ᠲᠡᠶᠢᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠪᠡᠷ ᠮᠥᠨ ᠬᠡᠮᠡᠨ ᠦᠵᠡᠵᠦ ᠪᠠᠢᠢᠨᠤ ᠤᠤ᠄ ᠱᠠᠷᠢᠪᠤᠳᠠᠷᠢ ᠥᠴᠢᠷᠤᠨ᠂ ᠮᠠᠬᠠᠭᠠᠯᠠ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠪᠡᠷ ᠪᠡᠶᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠦᠨ ᠲᠡᠶᠢᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠪᠡᠷ ᠮᠥᠨ ᠬᠡᠮᠡᠨ ᠦᠵᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠢᠯᠡ᠄ ᠪᠤᠷᠬᠠᠨ ᠵᠠᠷᠯᠢᠭ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠨᠢ᠂ ᠱᠠᠷᠢᠪᠤᠳᠠᠷᠢ ᠠ᠋ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠪᠡᠷ ᠪᠡᠶᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠦᠨ ᠲᠡᠶᠢᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠡᠴᠡ ᠪᠤᠰᠤᠳ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠮᠥᠨ ᠬᠡᠮᠡᠨ ᠦᠵᠡᠵᠦ ᠪᠠᠢᠢᠨᠤ ᠤᠤ᠄ ᠱᠠᠷᠢᠪᠤᠳᠠᠷᠢ ᠥᠴᠢᠷᠤᠨ᠂ ᠮᠠᠬᠠᠭᠠᠯᠠ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠪᠡᠷ ᠪᠡᠶᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠦᠨ ᠲᠡᠶᠢᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠡᠴᠡ ᠪᠤᠰᠤᠳ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠮᠥᠨ ᠬᠡᠮᠡᠨ ᠦᠵᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠢᠯᠡ᠄ ᠪᠤᠷᠬᠠᠨ ᠵᠠᠷᠯᠢᠭ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠨᠢ᠂ ᠱᠠᠷᠢᠪᠤᠳᠠᠷᠢ ᠠ᠋ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠬᠡᠮᠡᠬᠦ ᠡᠨᠡ ᠨᠡᠷᠡᠢᠢᠳᠦᠯ ᠨᠢ ᠪᠡᠶᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠦᠨ ᠲᠡᠶᠢᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠪᠡᠷ ᠮᠥᠨ ᠬᠡᠮᠡᠨ ᠦᠵᠡᠵᠦ ᠪᠠᠢᠢᠨᠤ ᠤᠤ᠄ ᠱᠠᠷᠢᠪᠤᠳᠠᠷᠢ ᠥᠴᠢᠷᠤᠨ᠂ ᠮᠠᠬᠠᠭᠠᠯᠠ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠬᠡᠮᠡᠬᠦ ᠡᠨᠡ ᠨᠡᠷᠡᠢᠢᠳᠦᠯ ᠨᠢ ᠪᠡᠶᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠦᠨ ᠲᠡᠶᠢᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠪᠡᠷ ᠮᠥᠨ ᠬᠡᠮᠡᠨ ᠦᠵᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠢᠯᠡ᠄ ᠪᠤᠷᠬᠠᠨ ᠵᠠᠷᠯᠢᠭ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠨᠢ᠂ ᠱᠠᠷᠢᠪᠤᠳᠠᠷᠢ ᠠ᠋ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠬᠡᠮᠡᠬᠦ ᠡᠨᠡ ᠨᠡᠷᠡᠢᠢᠳᠦᠯ ᠨᠢ ᠪᠡᠶᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠦᠨ ᠲᠡᠶᠢᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠡᠴᠡ ᠪᠤᠰᠤᠳ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠮᠥᠨ ᠬᠡᠮᠡᠨ ᠦᠵᠡᠵᠦ ᠪᠠᠢᠢᠨᠤ ᠤᠤ᠄ ᠱᠠᠷᠢᠪᠤᠳᠠᠷᠢ ᠥᠴᠢᠷᠤᠨ᠂ ᠮᠠᠬᠠᠭᠠᠯᠠ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠬᠡᠮᠡᠬᠦ ᠡᠨᠡ ᠨᠡᠷᠡᠢᠢᠳᠦᠯ ᠨᠢ ᠪᠡᠶᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠦᠨ ᠲᠡᠶᠢᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠡᠴᠡ ᠪᠤᠰᠤᠳ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠮᠥᠨ ᠬᠡᠮᠡᠨ ᠦᠵᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠢᠯᠡ᠄ ᠪᠤᠷᠬᠠᠨ ᠵᠠᠷᠯᠢᠭ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠨᠢ᠂ ᠱᠠᠷᠢᠪᠤᠳᠠᠷᠢ ᠠ᠋ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠬᠡᠮᠡᠬᠦ ᠡᠨᠡ ᠨᠡᠷᠡᠢᠢᠳᠦᠯ ᠨᠢ ᠪᠡᠶᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠦᠨ ᠲᠡᠶᠢᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠪᠡᠷ ᠮᠥᠨ ᠬᠡᠮᠡᠨ ᠦᠵᠡᠵᠦ ᠪᠠᠢᠢᠨᠤ ᠤᠤ᠄ ᠱᠠᠷᠢᠪᠤᠳᠠᠷᠢ ᠥᠴᠢᠷᠤᠨ᠂ ᠮᠠᠬᠠᠭᠠᠯᠠ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠬᠡᠮᠡᠬᠦ ᠡᠨᠡ ᠨᠡᠷᠡᠢᠢᠳᠦᠯ ᠨᠢ ᠪᠡᠶᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠦᠨ ᠲᠡᠶᠢᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠪᠡᠷ ᠮᠥᠨ ᠬᠡᠮᠡᠨ ᠦᠵᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠢᠯᠡ᠄ ᠪᠤᠷᠬᠠᠨ ᠵᠠᠷᠯᠢᠭ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠨᠢ᠂ ᠱᠠᠷᠢᠪᠤᠳᠠᠷᠢ ᠠ᠋ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠬᠡᠮᠡᠬᠦ ᠡᠨᠡ ᠨᠡᠷᠡᠢᠢᠳᠦᠯ ᠨᠢ ᠪᠡᠶᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠦᠨ ᠲᠡᠶᠢᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠡᠴᠡ ᠪᠤᠰᠤᠳ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠮᠥᠨ ᠬᠡᠮᠡᠨ ᠦᠵᠡᠵᠦ ᠪᠠᠢᠢᠨᠤ ᠤᠤ᠄ ᠱᠠᠷᠢᠪᠤᠳᠠᠷᠢ ᠥᠴᠢᠷᠤᠨ᠂ ᠮᠠᠬᠠᠭᠠᠯᠠ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠬᠡᠮᠡᠬᠦ ᠡᠨᠡ ᠨᠡᠷᠡᠢᠢᠳᠦᠯ ᠨᠢ ᠪᠡᠶᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠦᠨ ᠲᠡᠶᠢᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠡᠴᠡ ᠪᠤᠰᠤᠳ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠮᠥᠨ ᠬᠡᠮᠡᠨ ᠦᠵᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠢᠯᠡ᠄ ᠪᠤᠷᠬᠠᠨ ᠵᠠᠷᠯᠢᠭ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠨᠢ᠂ ᠱᠠᠷᠢᠪᠤᠳᠠᠷᠢ ᠠ᠋ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠬᠡᠮᠡᠬᠦ ᠡᠨᠡ ᠨᠡᠷᠡᠢᠢᠳᠦᠯ ᠨᠢ ᠪᠡᠶᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠦᠨ ᠲᠡᠶᠢᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠪᠡᠷ ᠮᠥᠨ ᠬᠡᠮᠡᠨ ᠦᠵᠡᠵᠦ ᠪᠠᠢᠢᠨᠤ ᠤᠤ᠄ ᠱᠠᠷᠢᠪᠤᠳᠠᠷᠢ ᠥᠴᠢᠷᠤᠨ᠂ ᠮᠠᠬᠠᠭᠠᠯᠠ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠬᠡᠮᠡᠬᠦ ᠡᠨᠡ ᠨᠡᠷᠡᠢᠢᠳᠦᠯ ᠨᠢ ᠪᠡᠶᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠦᠨ ᠲᠡᠶᠢᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠪᠡᠷ ᠮᠥᠨ ᠬᠡᠮᠡᠨ ᠦᠵᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠢᠯᠡ᠄ ᠪᠤᠷᠬᠠᠨ ᠵᠠᠷᠯᠢᠭ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠨᠢ᠂ ᠱᠠᠷᠢᠪᠤᠳᠠᠷᠢ ᠠ᠋ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠬᠡᠮᠡᠬᠦ ᠡᠨᠡ ᠨᠡᠷᠡᠢᠢᠳᠦᠯ ᠨᠢ ᠪᠡᠶᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠦᠨ ᠲᠡᠶᠢᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠡᠴᠡ ᠪᠤᠰᠤᠳ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠮᠥᠨ ᠬᠡᠮᠡᠨ ᠦᠵᠡᠵᠦ ᠪᠠᠢᠢᠨᠤ ᠤᠤ᠄ ᠱᠠᠷᠢᠪᠤᠳᠠᠷᠢ ᠥᠴᠢᠷᠤᠨ᠂ ᠮᠠᠬᠠᠭᠠᠯᠠ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠬᠡᠮᠡᠬᠦ ᠡᠨᠡ ᠨᠡᠷᠡᠢᠢᠳᠦᠯ ᠨᠢ ᠪᠡᠶᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠦᠨ ᠲᠡᠶᠢᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠡᠴᠡ ᠪᠤᠰᠤᠳ ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠮᠥᠨ ᠬᠡᠮᠡᠨ ᠦᠵᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠢᠯᠡ᠄\n\n<vocab>ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ (Bodhisattva), ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ (Mahasattva), ᠱᠠᠷᠢᠪᠤᠳᠠᠷᠢ (Shariputra), ᠪᠡᠶᠡ ᠮᠡᠳᠡᠷᠡᠯ (body sensation), ᠲᠡᠶᠢᠨ ᠮᠡᠳᠡᠬᠦᠢ (consciousness/vijnana)</vocab>",
+  "finishReason": "STOP",
+  "inputTokens": 4341,
+  "outputTokens": 5609,
+  "cost_usd": 0.0189975
+ },
+ "translation": {
+  "text": "<margin>\nPrajnaparamita Sutra, Volume 1, Part 1, Page 193\n</margin>\n\neven so, do you see the <term>consciousness</term> <gloss>vijnana</gloss> of body sensation as being that? <term>Shariputra</term> <gloss>the principal disciple of the Buddha known for his wisdom</gloss> replied: Great Lord, I do not see the consciousness of body sensation as being that.\n\nThe Buddha spoke: O Shariputra, do you see the <term>Bodhisattva Mahasattva</term> <gloss>Great Enlightened Being</gloss> as being something other than the consciousness of body sensation? Shariputra replied: Great Lord, I do not see the Bodhisattva Mahasattva as being something other than the consciousness of body sensation.\n\nThe Buddha spoke: O Shariputra, does the Bodhisattva Mahasattva see the consciousness of body sensation as being that? Shariputra replied: Great Lord, the Bodhisattva Mahasattva does not see the consciousness of body sensation as being that.\n\nThe Buddha spoke: O Shariputra, does the Bodhisattva Mahasattva see the Bodhisattva Mahasattva as being something other than the consciousness of body sensation? Shariputra replied: Great Lord, the Bodhisattva Mahasattva does not see the Bodhisattva Mahasattva as being something other than the consciousness of body sensation.\n\nThe Buddha spoke: O Shariputra, do you see this designation called \"Bodhisattva Mahasattva\" as being the consciousness of body sensation? Shariputra replied: Great Lord, I do not see this designation called \"Bodhisattva Mahasattva\" as being the consciousness of body sensation.\n\nThe Buddha spoke: O Shariputra, do you see this designation called \"Bodhisattva Mahasattva\" as being something other than the consciousness of body sensation? Shariputra replied: Great Lord, I do not see this designation called \"Bodhisattva Mahasattva\" as being something other than the consciousness of body sensation.\n\nThe Buddha spoke: O Shariputra, does this designation called \"Bodhisattva Mahasattva\" see the consciousness of body sensation as being that? Shariputra replied: Great Lord, this designation called \"Bodhisattva Mahasattva\" does not see the consciousness of body sensation as being that.\n\nThe Buddha spoke: O Shariputra, does this designation called \"Bodhisattva Mahasattva\" see the Bodhisattva Mahasattva as being something other than the consciousness of body sensation? Shariputra replied: Great Lord, this designation called \"Bodhisattva Mahasattva\" does not see the Bodhisattva Mahasattva as being something other than the consciousness of body sensation.\n\nThe Buddha spoke: O Shariputra, do you see this designation called \"Bodhisattva Mahasattva\" as being the consciousness of body sensation? Shariputra replied: Great Lord, I do not see this designation called \"Bodhisattva Mahasattva\" as being the consciousness of body sensation.\n\nThe Buddha spoke: O Shariputra, do you see this designation called \"Bodhisattva Mahasattva\" as being something other than the consciousness of body sensation? Shariputra replied: Great Lord, I do not see this designation called \"Bodhisattva Mahasattva\" as being something other than the consciousness of body sensation.\n\n<summary>This page contains a dialectical exchange between the Buddha and Shariputra regarding the nature of the Bodhisattva and its relation to body consciousness. It employs a repetitive negating logic to demonstrate that the Bodhisattva cannot be identified with or separated from sensory consciousness or mere linguistic designations.</summary>\n<keywords>Prajnaparamita, Shariputra, Bodhisattva Mahasattva, body sensation, consciousness, vijnana, emptiness, designation</keywords>",
+  "finishReason": "STOP",
+  "inputTokens": 7339,
+  "outputTokens": 815,
+  "cost_usd": 0.0061145
+ }
+}

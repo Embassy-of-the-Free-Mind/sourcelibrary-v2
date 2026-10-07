@@ -59,6 +59,10 @@
  *   --run      translate every page under both arms                         PAID
  *   --score    metrics, paired statistics, verdict against the rule         FREE
  *   --judge-packet  emit blinded pairs for the Claude regression judge      FREE
+ *   --judge-tally   unblind the judge's verdicts, apply criterion 6         FREE
+ *
+ * v16 (Amendment 2): --tag v16 --b 16 --cap-usd 3, and --judge-packet --pairs-from
+ * results/translation-prompt-v15-judge-key.json so the judge sees the v15 study's 30 pages.
  *
  * `--run` REFUSES to start without `--approved-usd <n>` at least as large as
  * the printed estimate. Derek approves spend explicitly, every time.
@@ -83,10 +87,19 @@ const arg = (n, d = null) => { const i = args.indexOf(`--${n}`); return i === -1
 const has = (n) => args.includes(`--${n}`);
 
 const RESULTS = new URL('./results/', import.meta.url).pathname;
+/**
+ * `--tag` names this study's output files (arms, report, judge packet/key/verdicts).
+ * The default `v15` is the 2026-09-12 study; v16 (#3825 Amendment 2) runs with
+ * `--tag v16 --b 16`. The SAMPLE is shared on purpose: every study reads the same
+ * pinned draw, so its default is not derived from the tag.
+ */
+const TAG = arg('tag', 'v15');
 const SAMPLE_FILE = arg('sample', path.join(RESULTS, 'translation-prompt-v15-sample.json'));
-const OUT_FILE = arg('out', path.join(RESULTS, 'translation-prompt-v15-arms.jsonl'));
+const OUT_FILE = arg('out', path.join(RESULTS, `translation-prompt-${TAG}-arms.jsonl`));
 const A_VER = Number(arg('a', 13));
 const B_VER = Number(arg('b', 15));
+/** Hard stop on actual spend (USD): once reached, no new call starts. In-flight calls finish. */
+const CAP_USD = arg('cap-usd') == null ? null : Number(arg('cap-usd'));
 const MODEL = arg('model', 'gemini-3.1-flash-lite');
 const PER_STRATUM = Number(arg('per-stratum', 40));
 const CONCURRENCY = Number(arg('concurrency', 4));
@@ -185,6 +198,12 @@ export function scoreTranslation(translationText, ocrText) {
   const tags = tagStats(translationText);
   const body = bodyText(translationText);
   return {
+    // Every <note> that is NOT an original-note: identifications, references, wordplay,
+    // image descriptions. v15 cut these 1.27 → 0.81/page (Amendment 2's floor). Counted
+    // from the text, not from parseTranslationTerms, because that parser only harvests
+    // notes it can attach to a term.
+    interp_notes: ((translationText || '').match(/<note(?:\s[^>]*)?>[\s\S]*?<\/note>/gi) || [])
+      .filter((n) => !/^<note(?:\s[^>]*)?>\s*original\s*:/i.test(n)).length,
     notes_emitted: originals.length,
     notes_verified: verified,
     // null, not 0, when the page emitted no notes: a page with nothing to verify
@@ -352,8 +371,10 @@ async function phaseRun() {
   }
   console.log(`${jobs.length} calls to make (of ${payload.sample.length * 2}); models: ${Object.entries(est.models).map(([m, n]) => `${m} x${n}`).join(', ')}\n`);
 
-  let spent = 0, n = 0;
+  let spent = 0, n = 0, capped = 0;
+  if (CAP_USD != null) console.log(`hard cap: $${CAP_USD.toFixed(2)} actual spend (this invocation)`);
   await pool(jobs, CONCURRENCY, async ({ r, v }) => {
+    if (CAP_USD != null && spent >= CAP_USD) { capped++; return; }
     const book = bookOf(r);
     const model = modelFor(r);
     // Same door the pipeline uses, with the arm's prompt substituted for the default.
@@ -378,6 +399,7 @@ async function phaseRun() {
   });
   stream.end();
   console.log(`\ndone: ${n} calls, actual spend $${spent.toFixed(3)} (estimate was $${est.usd.toFixed(2)})`);
+  if (capped) console.log(`CAP REACHED: ${capped} calls NOT made — the arms are incomplete; scoring drops pages missing an arm`);
   console.log(`wrote ${OUT_FILE}`);
 }
 
@@ -387,6 +409,38 @@ function pooledRate(pages, num, den) {
   resetSeed();
   const r = bootstrapRatioCI(pages.map(num), pages.map(den));
   return { rate: r.rate, ci: r.ci, n: r.units, denom: r.denom };
+}
+
+/**
+ * PAIRED bootstrap on a difference, resampling PAGES with both arms attached. diffCI
+ * resamples the two arms independently (built for k runs per arm on one page); on paired
+ * pages that ignores the pairing and widens the interval. Both helpers draw from the
+ * paired-stats stream (mulberry32 since #5373), so `resetSeed()` before each makes it reproducible.
+ */
+function pairedMeanDiffCI(pages, f, iters = 10000) {
+  if (pages.length < 2) return null;
+  const d = pages.map((p) => f(p.b) - f(p.a));
+  const delta = mean(d);
+  const ms = [];
+  for (let i = 0; i < iters; i++) { let s = 0; for (let j = 0; j < d.length; j++) s += d[Math.floor(seededRand() * d.length)]; ms.push(s / d.length); }
+  ms.sort((x, y) => x - y);
+  const ci = [ms[Math.floor(iters * 0.025)], ms[Math.floor(iters * 0.975)]];
+  return { delta, ci, decisive: (ci[0] > 0 && ci[1] > 0) || (ci[0] < 0 && ci[1] < 0), n: pages.length };
+}
+/** …and on the difference of two POOLED ratios (e.g. verified/emitted under B minus under A). */
+function pairedRatioDiffCI(pages, num, den, iters = 10000) {
+  const rate = (ps, arm) => { const d = ps.reduce((s, p) => s + den(p[arm]), 0); return d ? ps.reduce((s, p) => s + num(p[arm]), 0) / d : null; };
+  const ra = rate(pages, 'a'), rb = rate(pages, 'b');
+  if (ra == null || rb == null || pages.length < 2) return { delta: ra != null && rb != null ? rb - ra : null, ci: null, decisive: false, n: pages.length };
+  const out = [];
+  for (let i = 0; i < iters; i++) {
+    const bs = Array.from({ length: pages.length }, () => pages[Math.floor(seededRand() * pages.length)]);
+    const a = rate(bs, 'a'), b = rate(bs, 'b');
+    if (a != null && b != null) out.push(b - a);
+  }
+  out.sort((x, y) => x - y);
+  const ci = out.length > 1 ? [out[Math.floor(out.length * 0.025)], out[Math.floor(out.length * 0.975)]] : null;
+  return { delta: rb - ra, ci, decisive: !!ci && ((ci[0] > 0 && ci[1] > 0) || (ci[0] < 0 && ci[1] < 0)), n: pages.length };
 }
 
 function phaseScore() {
@@ -406,7 +460,10 @@ function phaseScore() {
     const a = p.arms[A_VER], b = p.arms[B_VER];
     if (!a?.text || !b?.text) { dropped++; continue; }   // a page is usable only if BOTH arms produced text
     const ocr = ocrByKey.get(p.key);
-    pages.push({ ...p, a: scoreTranslation(a.text, ocr), b: scoreTranslation(b.text, ocr) });
+    // Amendment 1 (2026-09-12): a run to the token cap is a categorical failure, not a long
+    // reading; it is reported as a LOOP RATE and kept out of the body-length criterion.
+    pages.push({ ...p, a: { ...scoreTranslation(a.text, ocr), looped: a.finish === 'MAX_TOKENS' },
+      b: { ...scoreTranslation(b.text, ocr), looped: b.finish === 'MAX_TOKENS' } });
   }
   console.log(`pages scored: ${pages.length}   dropped (an arm errored): ${dropped}\n`);
   if (!pages.length) { console.log('nothing to score'); return; }
@@ -466,16 +523,40 @@ function phaseScore() {
     keywords: { a: mean(pages.map((p) => p.a.keywords_emitted)), b: mean(pages.map((p) => p.b.keywords_emitted)) },
   };
   const bodyA = mean(pages.map((p) => p.a.body_chars)), bodyB = mean(pages.map((p) => p.b.body_chars));
-  report.body_relative = bodyA ? (bodyB - bodyA) / bodyA : null;
+  report.body_relative_all_pages = bodyA ? (bodyB - bodyA) / bodyA : null;
+  // Amendment 1, applied prospectively: the body criterion is computed on pages where
+  // NEITHER arm looped. The all-pages figure above is kept beside it.
+  const normal = pages.filter((p) => !p.a.looped && !p.b.looped);
+  const nBodyA = mean(normal.map((p) => p.a.body_chars)), nBodyB = mean(normal.map((p) => p.b.body_chars));
+  report.body_relative = nBodyA ? (nBodyB - nBodyA) / nBodyA : null;
+  report.loops = { a: pages.filter((p) => p.a.looped).length, b: pages.filter((p) => p.b.looped).length,
+    normal_pages: normal.length, of: pages.length };
+
+  // Amendment 2: interpretive (non-original) notes per page, the outcome v15 lost.
+  const interpA = mean(pages.map((p) => p.a.interp_notes)), interpB = mean(pages.map((p) => p.b.interp_notes));
+  resetSeed();
+  report.interp_notes = { a: interpA, b: interpB, relative: interpA ? (interpB - interpA) / interpA : null,
+    paired: pairedMeanDiffCI(pages, (s) => s.interp_notes) };
 
   // ── per stratum, because fabrication is expected to be script-dependent ──
+  // Reported, not gated (preregistration). Each Δ carries a PAIRED CI: pages are resampled
+  // with both arms attached, which is the design's actual structure.
   report.by_stratum = [...new Set(pages.map((p) => p.stratum))].map((id) => {
     const ps = pages.filter((p) => p.stratum === id);
+    resetSeed();
+    const dRate = pairedRatioDiffCI(ps, (s) => s.notes_verified, (s) => s.notes_emitted);
+    resetSeed();
+    const dInterp = pairedMeanDiffCI(ps, (s) => s.interp_notes);
+    resetSeed();
+    const dEmit = pairedMeanDiffCI(ps, (s) => s.notes_emitted);
     return {
       stratum: id, n: ps.length,
       a: pooledRate(ps, (p) => p.a.notes_verified, (p) => p.a.notes_emitted),
       b: pooledRate(ps, (p) => p.b.notes_verified, (p) => p.b.notes_emitted),
-      emit_a: mean(ps.map((p) => p.a.notes_emitted)), emit_b: mean(ps.map((p) => p.b.notes_emitted)),
+      verified_delta: dRate,
+      emit_a: mean(ps.map((p) => p.a.notes_emitted)), emit_b: mean(ps.map((p) => p.b.notes_emitted)), emit_delta: dEmit,
+      interp_a: mean(ps.map((p) => p.a.interp_notes)), interp_b: mean(ps.map((p) => p.b.interp_notes)), interp_delta: dInterp,
+      loops_a: ps.filter((p) => p.a.looped).length, loops_b: ps.filter((p) => p.b.looped).length,
     };
   });
 
@@ -483,15 +564,17 @@ function phaseScore() {
   const THRESHOLD_PP = 3;      // percentage points, fixed in PREREGISTRATION-translation-prompt-v15.md
   const EMISSION_FLOOR = -0.20; // note emission may not fall more than 20% relative
   const BODY_FLOOR = -0.10;    // body length may not fall more than 10% relative
+  const INTERP_FLOOR = -0.15;  // interpretive notes may not fall more than 15% relative (Amendment 2)
   const criteria = {
     'paired CI on verified-rate excludes zero and is positive': !!(pairedDelta?.decisive && pairedDelta.delta > 0),
     [`verified-rate gain >= ${THRESHOLD_PP}pp`]: (vB.rate != null && vA.rate != null) && (vB.rate - vA.rate) >= THRESHOLD_PP / 100,
     [`note emission not down more than ${Math.abs(EMISSION_FLOOR) * 100}%`]: report.note_emission.relative == null || report.note_emission.relative >= EMISSION_FLOOR,
-    [`body length not down more than ${Math.abs(BODY_FLOOR) * 100}%`]: report.body_relative == null || report.body_relative >= BODY_FLOOR,
+    [`body length not down more than ${Math.abs(BODY_FLOOR) * 100}% (pages where neither arm looped)`]: report.body_relative == null || report.body_relative >= BODY_FLOOR,
+    [`interpretive notes not down more than ${Math.abs(INTERP_FLOOR) * 100}%`]: report.interp_notes.relative == null || report.interp_notes.relative >= INTERP_FLOOR,
     'no regression gate fired': report.gates.every((g) => !g.regressed),
   };
   report.criteria = criteria;
-  report.recommendation = Object.values(criteria).every(Boolean) ? 'FLIP (recommend v15 as default)' : 'DO NOT FLIP (not established)';
+  report.recommendation = Object.values(criteria).every(Boolean) ? `FLIP (recommend v${B_VER} as default)` : 'DO NOT FLIP (not established)';
   report.note = 'The blind Claude regression judge (--judge-packet) is a separate gate and is NOT included above; both must pass.';
 
   // ── print ──
@@ -504,6 +587,10 @@ function phaseScore() {
   console.log(`  sign test: ${better} pages better, ${worse} worse, p=${report.verified_rate.sign_p.toFixed(3)}\n`);
   console.log('═══ CO-PRIMARY: note emission (a prompt that stops writing notes has not won) ═══');
   console.log(`  notes/page  v${A_VER} ${emitA.toFixed(2)}  v${B_VER} ${emitB.toFixed(2)}  (${pct(report.note_emission.relative)} relative)\n`);
+  const ci = (d) => (d?.ci ? `[${d.ci[0].toFixed(2)}, ${d.ci[1].toFixed(2)}]` : '[—]');
+  console.log('═══ INTERPRETIVE NOTES (Amendment 2 floor: not down more than 15%) ═══');
+  console.log(`  per page  v${A_VER} ${interpA.toFixed(2)}  v${B_VER} ${interpB.toFixed(2)}  (${pct(report.interp_notes.relative)} relative)  paired Δ ${report.interp_notes.paired?.delta.toFixed(2)} 95% CI ${ci(report.interp_notes.paired)}\n`);
+  console.log(`═══ LOOPS (finishReason MAX_TOKENS) ═══\n  v${A_VER} ${report.loops.a}   v${B_VER} ${report.loops.b}   of ${report.loops.of} pages; body criterion on ${report.loops.normal_pages} normal pages (all-pages body ${pct(report.body_relative_all_pages)}, normal-pages ${pct(report.body_relative)})\n`);
   console.log('═══ GATES ═══');
   for (const g of report.gates) {
     console.log(`  ${g.label.padEnd(26)} v${A_VER} ${g.a.toFixed(2).padStart(9)}   v${B_VER} ${g.b.toFixed(2).padStart(9)}   Δ=${(g.delta ?? 0).toFixed(2).padStart(9)}${g.relative != null ? ` (${(g.relative * 100).toFixed(1)}%)`.padStart(10) : ''}  ${g.decisive ? 'decisive' : ''}${g.floor ? ` floor ${g.floor * 100}%` : ''}${g.regressed ? '  ← REGRESSION' : ''}`);
@@ -511,14 +598,14 @@ function phaseScore() {
   console.log(`  (descriptive) terms total/page  v${A_VER} ${report.descriptive.terms_total.a.toFixed(2)}  v${B_VER} ${report.descriptive.terms_total.b.toFixed(2)}   keywords/page  v${A_VER} ${report.descriptive.keywords.a.toFixed(2)}  v${B_VER} ${report.descriptive.keywords.b.toFixed(2)}`);
   console.log('\n═══ BY STRATUM (verified-note rate) ═══');
   for (const s of report.by_stratum) {
-    console.log(`  ${s.stratum.padEnd(14)} n=${String(s.n).padStart(3)}   v${A_VER} ${pct(s.a.rate)} (${s.a.denom || 0} notes)   v${B_VER} ${pct(s.b.rate)} (${s.b.denom || 0} notes)   emit ${s.emit_a.toFixed(1)}→${s.emit_b.toFixed(1)}`);
+    console.log(`  ${s.stratum.padEnd(14)} n=${String(s.n).padStart(3)}   v${A_VER} ${pct(s.a.rate)} (${s.a.denom || 0} notes)   v${B_VER} ${pct(s.b.rate)} (${s.b.denom || 0} notes)   Δ CI ${s.verified_delta?.ci ? `[${pct(s.verified_delta.ci[0])}, ${pct(s.verified_delta.ci[1])}]` : '[—]'}   emit ${s.emit_a.toFixed(1)}→${s.emit_b.toFixed(1)}   interp ${s.interp_a.toFixed(2)}→${s.interp_b.toFixed(2)} Δ CI ${ci(s.interp_delta)}`);
   }
   console.log('\n═══ DECISION RULE (pre-registered; not rewritten after seeing this) ═══');
   for (const [k, v] of Object.entries(criteria)) console.log(`  [${v ? 'x' : ' '}] ${k}`);
   console.log(`\n  ⇒ ${report.recommendation}`);
   console.log('  (the blind Claude regression judge is the other gate — run --judge-packet)');
 
-  const out = path.join(RESULTS, `translation-prompt-v15-report-${new Date().toISOString().slice(0, 10)}.json`);
+  const out = path.join(RESULTS, `translation-prompt-${TAG}-report-${new Date().toISOString().slice(0, 10)}.json`);
   fs.writeFileSync(out, JSON.stringify(report, null, 1));
   console.log(`\nwrote ${out}`);
 }
@@ -550,14 +637,25 @@ function phaseJudgePacket() {
     byStratum.get(s).push([k, v]);
   }
   const picked = [];
+  // `--pairs-from <key.json>`: judge exactly the pages an earlier study's judge saw, in its
+  // order. The round-robin below depends on the order rows landed in the arms file, which
+  // concurrency makes nondeterministic, so it would not pick the same 30 pages twice.
+  const pairsFrom = arg('pairs-from');
+  if (pairsFrom) {
+    const usableByKey = new Map(usable);
+    for (const { id } of JSON.parse(fs.readFileSync(pairsFrom, 'utf8'))) {
+      if (!usableByKey.has(id)) throw new Error(`--pairs-from: ${id} has no usable pair in this run`);
+      picked.push([id, usableByKey.get(id)]);
+    }
+  }
   let round = 0;
-  while (picked.length < PAIRS && round < 200) {
+  while (!pairsFrom && picked.length < PAIRS && round < 200) {
     for (const list of byStratum.values()) { if (list[round] && picked.length < PAIRS) picked.push(list[round]); }
     round++;
   }
   // The flips come from the seeded stream, and the generator changed on 2026-09-30 (#5373): a rebuild no longer
   // reproduces a packet built before that date, so it must not overwrite a key a judge has already read against.
-  const kf = path.join(RESULTS, 'translation-prompt-v15-judge-key.json');
+  const kf = path.join(RESULTS, `translation-prompt-${TAG}-judge-key.json`);
   if (fs.existsSync(kf)) throw new Error(`${kf} exists — a rebuilt packet invalidates judged verdicts; move it aside deliberately`);
   resetSeed();
   const packet = [], key = [];
@@ -571,16 +669,50 @@ function phaseJudgePacket() {
     });
     key.push({ id: k, left: flip ? B_VER : A_VER, right: flip ? A_VER : B_VER });
   }
-  const pf = path.join(RESULTS, 'translation-prompt-v15-judge-packet.jsonl');
+  const pf = path.join(RESULTS, `translation-prompt-${TAG}-judge-packet.jsonl`);
   fs.writeFileSync(pf, packet.map((p) => JSON.stringify(p)).join('\n') + '\n');
   fs.writeFileSync(kf, JSON.stringify(key, null, 1));
   console.log(`wrote ${packet.length} blinded pairs to ${pf}`);
   console.log(`key (do NOT give this to the judge): ${kf}`);
   console.log('\nJudge question, per pair — ask a Claude subagent, one pair at a time:');
-  console.log('  "Here is a page of OCR and two English translations of it, A and B.');
-  console.log('   Does either translation LOSE something the other keeps: a phrase left');
-  console.log('   untranslated, an annotation that explained something, a passage dropped?');
-  console.log('   Answer LEFT_WORSE, RIGHT_WORSE, or EQUIVALENT, then one sentence of why."');
+  console.log(`  "${JUDGE_QUESTION}"`);
+  console.log(`\nThen write the verdicts as [{ id, verdict, why }] to translation-prompt-${TAG}-judge-verdicts-raw.json and run --judge-tally.`);
+}
+
+/**
+ * The judge brief. The last sentence is Amendment 2: in the v15 study 4 of the 8
+ * "v15 worse" verdicts were running headers that #3825 item 4 removes BY DESIGN
+ * (they belong to the transcription the reader already has), and the brief should
+ * never have counted them.
+ */
+const JUDGE_QUESTION = 'Here is a page of OCR and two English translations of it, LEFT and RIGHT. ' +
+  'Does either translation LOSE something the other keeps: a phrase left untranslated, an annotation that explained something, a passage dropped? ' +
+  'Answer LEFT_WORSE, RIGHT_WORSE, or EQUIVALENT, then one sentence of why. ' +
+  'Do NOT count a running header, printed page number, signature mark or catchword that one side reproduces and the other omits: those belong to the transcription by design.';
+
+// ── phase: judge tally ──────────────────────────────────────────────────────
+/** Unblind the judge's verdicts with the key and apply criterion 6 (v_B worse ≤ 1.5× v_A worse, ties excluded). */
+function phaseJudgeTally() {
+  const key = new Map(JSON.parse(fs.readFileSync(path.join(RESULTS, `translation-prompt-${TAG}-judge-key.json`), 'utf8')).map((k) => [k.id, k]));
+  const packet = new Map(fs.readFileSync(path.join(RESULTS, `translation-prompt-${TAG}-judge-packet.jsonl`), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).map((p) => [p.id, p]));
+  const raw = JSON.parse(fs.readFileSync(path.join(RESULTS, `translation-prompt-${TAG}-judge-verdicts-raw.json`), 'utf8'));
+  if (raw.length !== key.size || new Set(raw.map((v) => v.id)).size !== key.size) throw new Error(`verdicts cover ${raw.length} pairs (${new Set(raw.map((v) => v.id)).size} distinct), key has ${key.size}`);
+  const verdicts = raw.map((v) => {
+    const k = key.get(v.id);
+    if (!k) throw new Error(`verdict for ${v.id} has no key row`);
+    const verdict = String(v.verdict).toUpperCase();
+    if (!['LEFT_WORSE', 'RIGHT_WORSE', 'EQUIVALENT'].includes(verdict)) throw new Error(`bad verdict ${v.verdict} on ${v.id}`);
+    const worse = verdict === 'LEFT_WORSE' ? k.left : verdict === 'RIGHT_WORSE' ? k.right : null;
+    return { id: v.id, stratum: packet.get(v.id)?.stratum, verdict, worse_arm: worse, why: v.why };
+  });
+  const aWorse = verdicts.filter((v) => v.worse_arm === A_VER).length;
+  const bWorse = verdicts.filter((v) => v.worse_arm === B_VER).length;
+  const out = { n: verdicts.length, [`v${A_VER}_worse`]: aWorse, [`v${B_VER}_worse`]: bWorse, equivalent: verdicts.length - aWorse - bWorse,
+    [`ratio_v${B_VER}_over_v${A_VER}`]: aWorse ? bWorse / aWorse : (bWorse ? Infinity : 0),
+    sign_p: binomTwoSided(bWorse, aWorse + bWorse),
+    pass: bWorse <= 1.5 * aWorse || bWorse === 0, verdicts };
+  fs.writeFileSync(path.join(RESULTS, `translation-prompt-${TAG}-judge-verdicts.json`), JSON.stringify(out, null, 1));
+  console.log(`judge: v${B_VER} worse ${bWorse}, v${A_VER} worse ${aWorse}, equivalent ${out.equivalent} of ${out.n}; sign p=${out.sign_p.toFixed(3)}; criterion 6 (≤1.5×) ${out.pass ? 'PASS' : 'FAIL'}`);
 }
 
 // ── main ────────────────────────────────────────────────────────────────────
@@ -593,7 +725,8 @@ if (invokedDirectly) {
     else if (has('run')) await phaseRun();
     else if (has('score')) phaseScore();
     else if (has('judge-packet')) phaseJudgePacket();
-    else console.log('one of --draw | --run | --score | --judge-packet (see the header)');
+    else if (has('judge-tally')) phaseJudgeTally();
+    else console.log('one of --draw | --run | --score | --judge-packet | --judge-tally (see the header)');
   } finally {
     await disconnect().catch(() => {});
   }

@@ -81,3 +81,70 @@ describe('derge-tengyur index mode (no folio labels in the manifest)', () => {
     expect(agreedOffset([loc(10, 11), loc(100, 101, 0.3), loc(200, 201, 0.3)]).offset).toBeNull();
   });
 });
+
+describe('derge canon: Kangyur additions (#5665)', () => {
+  it('parses sub-text Tohoku markers ({D1-1}) and strips them for scoring', async () => {
+    const { parseVolume, syllables } = await import('../../scripts/lib/derge-tengyur.mjs');
+    const pages = parseVolume('[1a]\n[1a.1]\n[1b]\n[1b.1]{D1}{D1-1}ཀ་ཁ་\n[2a]\n[2a.1]ག་{D1-2}ང་\n');
+    expect(pages.map((p) => p.tohoku)).toEqual([[], ['D1', 'D1-1'], ['D1-2']]);
+    expect(syllables(pages[1].lines.join(' '))).toEqual(['ཀ', 'ཁ']);
+  });
+  it('sideTexts carries the running text onto sides with no marker', async () => {
+    const { parseVolume, sideTexts } = await import('../../scripts/lib/derge-tengyur.mjs');
+    const pages = parseVolume('[1b]\n[1b.1]{D1}{D1-1}ཀ་\n[2a]\n[2a.1]ཁ་\n[2b]\n[2b.1]ག་{D1-2}ང་\n[3a]\n[3a.1]ཅ་\n');
+    expect(sideTexts(pages)).toEqual([['D1', 'D1-1'], ['D1-1'], ['D1-1', 'D1-2'], ['D1-2']]);
+  });
+  it('84000 status: sub-text falls back to its parent; a parent listed only via sub-texts is a container', async () => {
+    const { status84000, sideLeftTo84000 } = await import('../../scripts/lib/derge-tengyur.mjs');
+    const recs = new Map([['toh1-1', { status: 'Published', pages: 10 }], ['toh2', { status: 'Not Begun', pages: 5 }], ['toh3', { status: 'In Progress', pages: 5 }]]);
+    expect(status84000('D1-1', recs)).toBe('Published');
+    expect(status84000('D3-4', recs)).toBe('In Progress');
+    expect(status84000('D9', recs)).toBeNull();
+    expect(sideLeftTo84000(['D1', 'D1-1'], recs)).toBe(true);
+    expect(sideLeftTo84000(['D1-1', 'D3'], recs)).toBe(true);
+    expect(sideLeftTo84000(['D1-1', 'D2'], recs)).toBe(false);
+    expect(sideLeftTo84000(['D9'], recs)).toBe(false);
+    expect(sideLeftTo84000([], recs)).toBe(false);
+  });
+  it('the Kangyur maps e-text vol 100 ↔ scan vol 102 (Esukhia README) and nothing else', async () => {
+    const { CANONS } = await import('../../scripts/lib/derge-tengyur.mjs');
+    expect([1, 99, 100, 101, 102, 103].map(CANONS.kangyur.scanVolumeFor)).toEqual([1, 99, 102, 101, 100, 103]);
+    expect(CANONS.tengyur.imageGroupFor(1)).toBe('I1317');
+    expect(CANONS.tengyur.imageGroupFor(203)).toBe('I1521');
+  });
+});
+
+describe('derge canon: per-segment offsets (#5665 repair)', () => {
+  const loc = (canvas: number, index: number, identity = 0.95, control = 0.2) => ({ canvas, loc: { read_syllables: 400, index, side: null, identity, control } });
+  it('groups confident reads into runs of one offset and reports the gap where it changes', async () => {
+    const { offsetRuns } = await import('../../scripts/lib/derge-tengyur.mjs');
+    // A skipped leaf after canvas ~250: offset 0 before, +2 after; one weak read is ignored.
+    const { runs, gaps } = offsetRuns([loc(300, 302), loc(10, 10), loc(200, 200), loc(150, 151, 0.3), loc(400, 402)]);
+    expect(runs.map((r: { offset: number; first: number; last: number }) => [r.offset, r.first, r.last])).toEqual([[0, 10, 200], [2, 300, 400]]);
+    expect(gaps).toEqual([{ lo: 200, hi: 300 }]);
+  });
+  it('probes inside each gap until the break is one canvas wide', async () => {
+    const { gapProbes } = await import('../../scripts/lib/derge-tengyur.mjs');
+    expect(gapProbes([{ lo: 200, hi: 300 }], new Set())).toEqual([225, 250, 275]);
+    expect(gapProbes([{ lo: 249, hi: 251 }], new Set())).toEqual([250]);
+    expect(gapProbes([{ lo: 249, hi: 251 }], new Set([250]))).toEqual([]);
+    expect(gapProbes([{ lo: 250, hi: 251 }], new Set())).toEqual([]);
+  });
+  it('segments meet at an exact break, leave an unnarrowed gap unclaimed, and claim only passing segments', async () => {
+    const { segmentsFromRuns, claimFromSegments } = await import('../../scripts/lib/derge-tengyur.mjs');
+    const exact = segmentsFromRuns([{ offset: 0, first: 5, last: 6, reads: [5, 6] }, { offset: 2, first: 7, last: 8, reads: [7, 8] }], 10);
+    expect(exact.map((s: { from: number; to: number }) => [s.from, s.to])).toEqual([[0, 6], [7, 9]]);
+    const claim = claimFromSegments(exact.map((s: object) => ({ ...s, pass: true })), 10, 11);
+    expect(claim).toEqual([0, 1, 2, 3, 4, 5, 6, 9, 10, null]); // canvas 9 + 2 is past the last side
+    const gappy = segmentsFromRuns([{ offset: 0, first: 1, last: 3, reads: [1, 3] }, { offset: -1, first: 7, last: 8, reads: [7, 8] }], 10);
+    const c2 = claimFromSegments([{ ...gappy[0], pass: true }, { ...gappy[1], pass: false }], 10, 10);
+    expect(c2).toEqual([0, 1, 2, 3, null, null, null, null, null, null]);
+  });
+  it('the Tengyur keeps one offset per volume (segment mode is the Kangyur only)', async () => {
+    const { CANONS, agreedOffset } = await import('../../scripts/lib/derge-tengyur.mjs');
+    expect(CANONS.tengyur.segmentOffsets).toBe(false);
+    expect(CANONS.tengyur.redInk).toBe(false);
+    expect(CANONS.kangyur.segmentOffsets).toBe(true);
+    expect(agreedOffset([loc(10, 11), loc(100, 101), loc(200, 201)]).offset).toBe(1);
+  });
+});

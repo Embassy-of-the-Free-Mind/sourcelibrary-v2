@@ -1,0 +1,357 @@
+[
+ {
+  "id": "QGGSH",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "མཚམས་ཀྱི་ཁོངས་སུ་གཏོགས་པའི་ས་ལ་གནས་པའི་ཁྱེར་བ་པོ་ལ་དགོས་པ་མེད་པ་དེ་ལ་ལྟུང་བ་མེད་དོ",
+    "english": "If the carrier is situated on ground belonging to the boundary but has no specific purpose [note: to evade], there is no downfall.",
+    "why": "dgos pa med pa qualifies the mantra/medicine power: where it does not REQUIRE a carrier standing on ground inside the boundary there is no offence; where such a carrier is needed it is a sthūlātyaya; the English invents a carrier on the ground who lacks intent.",
+    "fix": {
+     "find": "If the carrier is situated on ground belonging to the boundary but has no specific purpose [note: to evade], there is no downfall.",
+     "replace": "If it does not require a carrier situated on ground belonging to the boundary, there is no downfall."
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "པར་ཤེས་པ་མེད་པར་ཞིང་ཉིད་མ་ཡིན་པའི་ཕྱིར་ཡིད་མི་ཆེས་པའི་སེམས་དང་ལྡན་པ་ལ",
+    "english": "Since there is no field of authority without such super-knowledge, there is no downfall in any case for one who possesses a mind lacking the intent to deceive.",
+    "why": "zhing is the Vinaya 'field', i.e. the valid object/basis of the offence (not a 'field of authority'), and yid mi ches pa is a mind of non-belief/distrust, not 'lacking the intent to deceive'."
+   }
+  ],
+  "note": "Generally follows the toll-evasion discussion, but the final mantra/medicine distinction is misread and the technical 'field' is mistranslated."
+ },
+ {
+  "id": "QE32K",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "addition",
+    "confidence": "medium",
+    "tibetan": "གང་གིས་ཕྱིར་ཞེས་བྱ་བའོ",
+    "english": "It is explained by the phrase \"because of the result.\"",
+    "why": "The lemma quoted is 'because of which' (gang gis phyir), not 'because of the result'."
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "སྲོག་ཉིད་ཀྱིས་གཙོ་བོར་དེ་ཡང་",
+    "english": "Thus, if life itself is the (Pradhana), then that too becomes hollow.",
+    "why": "srog nyid kyis means that the potency-result is the very life/essence by which pradhāna is posited, so pradhāna too becomes hollow; it is not a conditional 'if life itself is pradhāna'."
+   }
+  ],
+  "note": "A sound rendering of the refutation of the Sāṃkhya pradhāna, with two lemma/phrasing slips."
+ },
+ {
+  "id": "QL379",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "དམིགས་པ་འབྲེལ་ཏོ",
+    "english": "connecting with the cognitive object",
+    "why": "dmigs pa here is the verb 'is observed' (upalabhyate, cf. ཉེ་བར་དམིགས་སོ below), with which 'from which cause' is construed, not 'the cognitive object'."
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "གལ་ཏེ་རླུང་ལ་སོགས་པའི་ཁྱད་པར་གང་ཡང་རུང་བ་ཞིག་རྒྱུ་ཉིད་ཡིན་ཡང་",
+    "english": "Even if any particular distinction among wind and the other humors is indeed a cause",
+    "why": "The whole sentence from gal te through 'because it has a determinate cooperating distinction' is the anticipated objection introduced by 'or if the effect...'; the English presents its first part as the author's own statement."
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "མ་ཡིན་ཏེ་ཞེས་དོགས་པ་",
+    "english": "the objection is raised: \"It is not so...\"",
+    "why": "'It is not so' (ma yin te) is the author's reply that rejects (dogs pa 'gog pa, continued on the next side) the doubt, not the raising of an objection."
+   }
+  ],
+  "note": "Follows the dense humoral-causation argument tolerably, but blurs where the opponent's objection begins and ends."
+ },
+ {
+  "id": "QBTPN",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "མི་ཕན་འདོད་པའི་མི་རྣམས་ནི། །ནམ་ཞིག་སྐྱེས་ན་དགའ་འགྱུར་བ།",
+    "english": "When it arises in men who wish for harm,",
+    "why": "The anger arises in oneself, and it is the ill-wishers (enemies) who rejoice when it does; it does not arise in them.",
+    "fix": {
+     "find": "When it arises in men who wish for harm,",
+     "replace": "When it arises, men who wish one harm"
+    }
+   },
+   {
+    "type": "gloss",
+    "confidence": "high",
+    "tibetan": "སྤོང་བར་གྱུར་པས་དེ་ལ་གཏམ་ངན་འབྱུང་།",
+    "english": "[note: original: \"gtam ngan\" — here implying the loss of a worldly, aggressive reputation in favor of peace]",
+    "why": "The verse contrasts with the next one (whoever treats anger as an enemy gains fame like the waxing moon): the angry man is shunned and ill-repute arises for him, fading like the moon at dawn; the note rationalises a positive sense the text does not have.",
+    "fix": {
+     "find": " [note: original: \"gtam ngan\" — here implying the loss of a worldly, aggressive reputation in favor of peace]",
+     "replace": ""
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "དམ་པའི་དོན་ལ་སྤྱོད་མི་འགྱུར།",
+    "english": "One will not practice the ultimate meaning.",
+    "why": "dam pa'i don here is the highest good/welfare (śreyas), what one should pursue, not 'the ultimate meaning' (paramārtha)."
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "རྒྱལ་པོ་ལོག་པར་སྤྱོད་པ་ཡི། །ཁྲོ་བ་དེ་ལ་བདག་མི་གནས།",
+    "english": "In that anger of a king who acts wrongly,",
+    "why": "rgyal po is most likely a vocative ('O king, I do not dwell in that anger which makes one act wrongly'); the English makes the anger that of a wrong-acting king."
+   }
+  ],
+  "note": "The Kṣānti verses are mostly rendered, but several lines shift who feels or owns the anger, and one note invents a meaning."
+ },
+ {
+  "id": "QC6PJ",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "reversal",
+    "confidence": "high",
+    "tibetan": "འབྲས་བུ་དོན་གྱི་རྣམ་པར་རིག་པ་ཡང་དོན་རིག་པ་ཡིན་པའི་ཕྱིར་འགལ་བ་",
+    "english": "The result, which is not the awareness of the aspect of the object, is indeed the cognition of the object.",
+    "why": "The Tibetan says the result, the awareness of the object's aspect, is itself cognition of the object, so there is no contradiction; the English inserts a negation.",
+    "fix": {
+     "find": "The result, which is not the awareness of the aspect of the object, is indeed the cognition of the object.",
+     "replace": "For the result, the awareness of the aspect of the object, is itself the cognition of the object."
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "བདག་ཉིད་བྱེད་པོ་མིན་ན་ཡང་། །དེ་ཡི་དབང་གིས་དེར་གཞག་ཕྱིར།",
+    "english": "Even if the self is not the agent, it is established as such because of its influence.",
+    "why": "These are the last two lines of the verse (PV 3.308 akārakam api svayam / tadvaśāt tadvyavasthiteḥ): cognition, though not itself an agent, appears so because it is determined as such by virtue of that [aspect]; 'the self' is wrong and the verse lines are run into prose.",
+    "fix": {
+     "find": "Even if the self is not the agent, it is established as such because of its influence.",
+     "replace": "Though it is not itself an agent, it is so established by virtue of that [aspect]."
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "དེ་ཡི་བདག་ཉིད་འཛིན་པ་དེ།",
+    "english": "That which perceives its own nature",
+    "why": "'dzin pa here is 'bearing/holding' (dadhānā): cognition bearing the object's form within itself, not 'perceiving its own nature'."
+   }
+  ],
+  "note": "Readable treatment of pramāṇa and its result, but a negation is added at a key point and the verse on the 'as-if agent' cognition is misread."
+ },
+ {
+  "id": "QU8RZ",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "reversal",
+    "confidence": "high",
+    "tibetan": "མེ་ལས་གྲང་བ་ལྟར།",
+    "english": "just as coldness is produced from fire",
+    "why": "The stock example of non-coexistence is cold in relation to (removed by) fire; nothing says cold is produced from fire.",
+    "fix": {
+     "find": "just as coldness is produced from fire",
+     "replace": "just as with cold in relation to fire"
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "མེད་པའི་བློས་རྒྱུན་གཅོད་པ་ཡིན་ནོ",
+    "english": "because the very occurrence of a conception of an entity cuts off the continuum of the conception of non-entity",
+    "why": "With the instrumental བློས, it is the cognition of non-entity that cuts off the continuum of the occurring cognition of entity, by producing an incompatible cause of the nature of a vāsanā; the roles are swapped."
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "གང་གིས་ཧ་ཅང་ཐལ་བར་འགྱུར་བ་སྔོན་པོའི་རྣམ་པར་རྟོག་པ་ཡང་",
+    "english": "By this, to avoid an absurd consequence,",
+    "why": "The clause describes the conception of blue as that which would entail over-extension (if any conception could cut off another), not a purpose 'to avoid' an absurdity."
+   }
+  ],
+  "note": "The vāsanā-based account of incompatible conceptions is roughly conveyed, but who cuts off whom and the fire/cold example are garbled."
+ },
+ {
+  "id": "QLMUC",
+  "score": 2,
+  "verdict": "specialist",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "མཆོད་སྦྱིན་གྱི་རྒྱུད་ཀྱི་ལས་མ་ཡིན་པ་བཞིན་ནོ",
+    "english": "being like that which is not the action of the continuum of a sacrifice",
+    "why": "mchod sbyin is the placeholder name Yajñadatta (paired with Devadatta, cf. 'Yajñadatta's continuum', 'the self called Yajñadatta' on the next side), not 'sacrifice/sacrificer'; the error runs through the whole side.",
+    "fix": {
+     "find": "being like that which is not the action of the continuum of a sacrifice",
+     "replace": "being like that which is not the action of Yajñadatta's continuum"
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "བོ་ལ་དཔེ་མ་གྲུབ་པའི་སྐྱོན་མེད་དོ",
+    "english": "you are not subject to the fault of having an unestablished example",
+    "why": "The commentator says that HE ('ko bo, I') incurs no fault of an unestablished example.",
+    "fix": {
+     "find": "you are not subject to the fault of having an unestablished example",
+     "replace": "I am not subject to the fault of having an unestablished example"
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "ཁྱེད་ཀྱི་རྗེས་སུ་དཔག་པ་སྔ་མ་དེ་དག་གིས་ཁོ་བོ་ཅག་ལ་གནོད་པར་མི་འགྱུར་རོ་ཞེས་ཟེར་རོ",
+    "english": "Therefore, you claim that your previous inferences do not harm our position",
+    "why": "It is the opponents who say (zer ro) 'your earlier inferences do not harm us'; the English puts the claim in the addressee's mouth about his own inferences."
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "ཀྱི་ལས་ཡིན་པ་དང་མ་ཡིན་པར་གྱུར་པ་ལ་བྱེད་པ་པོ་ཡིན་པ་དང་མ་ཡིན་པར་གྱུར་པ་གཞན་ཡོད་པ་ཡིན་ནམ།",
+    "english": "one must ask: Is there another agent",
+    "why": "The dilemma (another agent or no agent; thesis lost or no example) is the dualists' objection, closed by ཞེ་ན, to which the author then replies; it is not the author's counter-question."
+   },
+   {
+    "type": "gloss",
+    "confidence": "medium",
+    "tibetan": "རྣམ་པ་གཉིས་སུ་སྨྲ་བ་དག",
+    "english": "[note: referring to opponent schools that maintain a rigid distinction between agent and action]",
+    "why": "rnam pa gnyis su smra ba are those who argue by a two-horned dilemma (as the following question shows), not a school holding an agent/action duality."
+   }
+  ],
+  "note": "The Yajñadatta/Devadatta example is mistranslated as 'sacrificer' throughout, and the speakers of the debate are repeatedly swapped."
+ },
+ {
+  "id": "QT9FD",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "འཇིག་རྟེན་ཐུགས་ནི་འབའ་ཞིག་གིས། ཕྱི་རོལ་སྤྱོད་ལ་",
+    "english": "solely out of concern for the world, he engages in external behavior",
+    "why": "Root verse (PV 3.219 kevalaṃ lokabuddhyaiva bāhyacintā pratanyate): solely with the world's understanding he engages in the investigation of external objects, not 'out of concern' or 'external behavior'.",
+    "fix": {
+     "find": "solely out of concern for the world, he engages in external behavior",
+     "replace": "solely by way of the world's understanding, he engages in the investigation of external objects"
+    }
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "དེ་ནི་དེ་ཉིད་རིགས་ཅན་མིན། གང་དག་གིས་ཤེ་ན།",
+    "english": "Who considers that this is not of the same nature as reality?",
+    "why": "The root says 'it is not fit [to be known as] reality — by whom? by all who do not see the supreme'; the English garbles it into a question about who considers it different from reality."
+   }
+  ],
+  "note": "The argument about non-dual reality seen only by the Buddha comes through, but the root verse on the Buddha's elephant-like feigned ignorance is misread at its key line."
+ },
+ {
+  "id": "QT0QQ",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "gloss",
+    "confidence": "high",
+    "tibetan": "རྒྱུད་ཡོངས་སུ་འགྱུར་བ་སྟེ།",
+    "english": "[note: original: \"རྒྱུད་ཡོངས་སུ་འགྱུར་བ་\" - refering to the mental continuum of the practitioner]",
+    "why": "The alternatives are that the application (prayoga) either produces the mantra's efficacious nature or transforms the mantra's own continuum by producing successive distinctions; the practitioner's mind is not meant.",
+    "fix": {
+     "find": "[note: original: \"རྒྱུད་ཡོངས་སུ་འགྱུར་བ་\" - refering to the mental continuum of the practitioner]",
+     "replace": "[note: the continuum of the mantra itself]"
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "བརྡ་བྱེད་པ་དེ་ལྟར་མངོན་པར་འདོད་པ་ལས་སོ",
+    "english": "This is because they are intended to be designated in that way.",
+    "why": "The point is that it follows from the intention of the convention-maker (the mantra's author) that results are fixed in this way; the agent is lost."
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "ཇི་ལྟར་རང་བཞིན་གྱི་ཁྱད་པར་ལས་འགྱུར་ན་འདི་ལ་ཡང་ཅིའི་ཕྱིར་མི་འགྱུར་ཞེས་ཐལ་བར་རིགས་པ་ཡིན་གྱིས",
+    "english": "How could those, through that very way, namely through their nature, arise from a specific natural quality?",
+    "why": "The Tibetan says that for nature-governed things one may rightly press the consequence 'as it arises from a particular nature, why not here too?'; the English invents a rhetorical question."
+   }
+  ],
+  "note": "The critique of Mīmāṃsā mantra efficacy is followable, but a wrong note on 'continuum' and a garbled opening argument need correction."
+ },
+ {
+  "id": "QVT5A",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "reversal",
+    "confidence": "high",
+    "tibetan": "འདིར་རྣམ་པ་གཉིས་ཀྱིས་#ཞིང་",
+    "english": "here there are not two ways...",
+    "why": "The text says the 'field' (valid object) is established here in two ways (by fact and by mind, continued on the next side); there is no negation.",
+    "fix": {
+     "find": "here there are not two ways...",
+     "replace": "here the field is established in two ways..."
+    }
+   },
+   {
+    "type": "gloss",
+    "confidence": "high",
+    "tibetan": "ཆེན་པོས་ལོ་བཅོ་བརྒྱད་ལོན་པ་རྣམས་ལ་བསྙེན་པར་རྫོགས་པའི་དབང་དུ་མཛད་ནས",
+    "english": "[note: likely referring to the Buddha or a high authority in the Vinaya tradition]",
+    "why": "'chen pos' completes མཁན་པོ་འཕགས་པ་མཽད་གལ་གྱི་བུ་ཆེན་པོས from the previous side: it was the preceptor Mahāmaudgalyāyana, whose ordaining of eighteen-year-olds occasioned the rule.",
+    "fix": {
+     "find": "[note: likely referring to the Buddha or a high authority in the Vinaya tradition]",
+     "replace": "[note: completing 'the preceptor, the noble Mahāmaudgalyāyana' from the previous side]"
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "གང་ཞིག་འདི་རྣམས་ལ་སྨད་#པར་བྱ་བ་",
+    "english": "The phrase \"Whoever disparages these\"",
+    "why": "smad par bya ba means 'is to be censured': those among them who are blameworthy, i.e. the remaining monks incur a duṣkṛta; nobody is disparaging anyone."
+   },
+   {
+    "type": "reversal",
+    "confidence": "medium",
+    "tibetan": "འདུ་ཤེས་སམ་ཡིད་གཉིས་ཟ་བ་ལ་སོགས་པ་རྣམས་ལ་ནི་འདིར་ནུས་པ་མ་ཡིན་ནོ",
+    "english": "In cases of mistaken perception or doubt, there is no efficacy here.",
+    "why": "The point is that perception or doubt has no power here (to invalidate the ordination of one actually twenty); the English reads as if the ordination were ineffective."
+   }
+  ],
+  "note": "The age-of-twenty rules are mostly clear, but the closing sentence is negated and the Maudgalyāyana reference is mis-glossed."
+ }
+]

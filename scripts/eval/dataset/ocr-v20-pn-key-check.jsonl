@@ -1,0 +1,31 @@
+{"_comment":"PRIOR ART: scripts/eval/dataset/ocr-v19-labels.jsonl — same by-eye label shape; this file holds the v20 PN key check (PREREGISTRATION-ocr-v20-tags.md amendment 1)"}
+{"uid":"69af423d3fd91d39913990f8","source":"misread","key":"222","key_ok":false,"seen":"no number printed (section opening); stored 123 is show-through","method":"read from image"}
+{"uid":"69b51db1f23ccdcced308c32","source":"misread","key":"31","key_ok":false,"seen":"blackletter 3 + glyph that reads as 1 or 2; ambiguous","method":"read from image (zoomed)"}
+{"uid":"69b00c1a7f585e4e0cd3b738","source":"misread","key":"190","key_ok":true,"seen":"190","method":"read from image"}
+{"uid":"6991c5643074a1745a4112cd","source":"misread","key":"51","key_ok":true,"seen":"5j. (manuscript 51)","method":"read from image"}
+{"uid":"69b51e26cf111105c42978d5","source":"misread","key":"58","key_ok":true,"seen":"58","method":"read from image"}
+{"uid":"69af0d082705dcc5410456f9","source":"misread","key":"178","key_ok":false,"seen":"173 printed (printer's number; stored tag was right)","method":"read from image"}
+{"uid":"69b51d58261c58d63664981a","source":"misread","key":"31","key_ok":false,"seen":"blackletter 3 + 1-or-2 glyph; ambiguous","method":"read from image (zoomed)"}
+{"uid":"6991bd7670254d38471e5ffa","source":"misread","key":"26","key_ok":true,"seen":"26 (faint 2)","method":"read from image"}
+{"uid":"69f720391a245fba5cf13587","source":"misread","key":"514","key_ok":true,"seen":"514","method":"read from image"}
+{"uid":"69f696d909282778642e8147","source":"misread","key":"225","key_ok":true,"seen":"( 225 )","method":"read from image"}
+{"uid":"69ee4f476dd925d126f43711","source":"misread","key":"424","key_ok":false,"seen":"no number printed (plate + part opening)","method":"read from image"}
+{"uid":"69d14a401c2a66dc094b3d84","source":"misread","key":"249","key_ok":false,"seen":"2?9, middle digit faint; ambiguous between 219 and 249","method":"read from image"}
+{"uid":"69bd93752d11455793b3f476","source":"misread","key":"357","key_ok":true,"seen":"357","method":"read from image"}
+{"uid":"697aa882f260bad03b6e17c3","source":"misread","key":"181","key_ok":false,"seen":"( 118 ) printed (printer's number; stored tag was right)","method":"read from image"}
+{"uid":"699246bebc722ec0ee812ab6","source":"misread","key":"l","key_ok":false,"seen":"single I/l glyph; cannot tell roman l (50) from I","method":"read from image"}
+{"uid":"69bda13af6d63c919748ee67","source":"misread","key":"35","key_ok":true,"seen":"35","method":"read from image"}
+{"uid":"69c822e86c6f3cc53c84ae6b","source":"misread","key":"26","key_ok":false,"seen":"29 printed (printer's number; stored tag was right)","method":"read from image"}
+{"uid":"6a0aca93676a42ccd97753f9","source":"misread","key":"232","key_ok":true,"seen":"२३२","method":"read from image"}
+{"uid":"6955754bf63a75710917409a","source":"misread","key":"29","key_ok":false,"seen":"२६ (26) printed (stored tag was right)","method":"read from image"}
+{"uid":"69b51e4c768235dc6598f879","source":"misread","key":"32","key_ok":true,"seen":"32","method":"read from image"}
+{"uid":"69e4169601fba13948b2d3e1","source":"online","key":"180","key_ok":true,"seen":"180","method":"read from image"}
+{"uid":"6a4438deaa50a8e8f5051d7a","source":"online","key":"514","key_ok":true,"seen":"514","method":"read from image"}
+{"uid":"695910faecb01322b3068a7a","source":"online","key":"530","key_ok":true,"seen":"530","method":"read from image"}
+{"uid":"6953e60e1479a63c11084c1f","source":"online","key":"239","key_ok":true,"seen":"239 (foot)","method":"read from image"}
+{"uid":"69b51de5768235dc6598903b","source":"online","key":"52","key_ok":true,"seen":"52","method":"read from image"}
+{"uid":"69c70f61da9771c716316214","source":"online","key":"122","key_ok":true,"seen":"( 122 )","method":"read from image"}
+{"uid":"69af45385387900711b9c77e","source":"online","key":"58","key_ok":true,"seen":"58","method":"read from image"}
+{"uid":"69bd9e516120d54bd037c950","source":"online","key":"204","key_ok":true,"seen":"204.","method":"read from image"}
+{"uid":"69942c74b2f6748db4abdd09","source":"online","key":"44","key_ok":true,"seen":"44","method":"read from image"}
+{"uid":"6974cd5ae7d8c9cc9ecce1d2","source":"online","key":"139","key_ok":true,"seen":"139","method":"read from image"}

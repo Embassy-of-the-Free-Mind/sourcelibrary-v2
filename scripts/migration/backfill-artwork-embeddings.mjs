@@ -21,7 +21,7 @@ const LIMIT = parseInt(process.argv.find(a => a.startsWith('--limit='))?.split('
 const BATCH_SIZE = 50;
 
 const GEMINI_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_MODEL = 'gemini-embedding-2-preview';
+const GEMINI_MODEL = 'gemini-embedding-2'; // bit-identical to -2-preview (#6170)
 const MONGODB_URI = process.env.MONGODB_URI;
 const SUPABASE_DB_URL = process.env.SUPABASE_DB_URL;
 
@@ -167,7 +167,7 @@ async function main() {
           art.wikidata_artist?.ulan_id ? parseInt(art.wikidata_artist.ulan_id) : (e.ulan_artist || null),
           art.collections || [], JSON.stringify(embeddings[idx]),
           art.resource_type || null, art.thumbnail_blob || art.thumbnail || null,
-          'gemini-embedding-2-preview',
+          GEMINI_MODEL,
         ]);
       }
       embedded += batch.length;

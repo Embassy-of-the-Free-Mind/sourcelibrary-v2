@@ -161,11 +161,12 @@ export default async function ModelsPage() {
           </li>
           <li>
             A count says how much a model wrote, not how good it is. For quality, follow the test linked on each card, or
-            read <Link href="/research/quality" className="text-accent-rust hover:underline">how we measure page quality</Link>.
+            read <Link href="/research/quality" className="text-accent-rust hover:underline">how we measure page quality</Link> and the{' '}
+            <Link href="/research/quality/open" className="text-accent-rust hover:underline">open quality work</Link>.
           </li>
           <li>
             The steps every book goes through are described in{' '}
-            <Link href="/about/processing" className="text-accent-rust hover:underline">how we process books</Link>.
+            <Link href="/how-it-works" className="text-accent-rust hover:underline">how Source Library works</Link>.
           </li>
         </ul>
       </section>

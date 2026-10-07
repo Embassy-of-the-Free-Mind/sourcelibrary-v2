@@ -1,0 +1,46 @@
+{
+  "source": "la.wikisource Liber:Principia newton la.djvu",
+  "edition": "Liber:Principia newton la.djvu — ",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://la.wikisource.org/wiki/Liber%3APrincipia_newton_la.djvu",
+  "same_edition": {
+    "evidence": "same-text",
+    "text_match_pages": "58/60",
+    "pb_aligned_pages": "0/58"
+  },
+  "origin": "library",
+  "book_id": "6953e4fa77f38f6761bef1dc",
+  "page_number": 53,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 64852,
+    "to_char": 66910,
+    "overlap": 0.908,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'contenta. Præmisi vero'; ends 'non autem transgredi. Hæc' (catchword); printed p.35 (Principia, Book I Scholium to Lemmata); faint bleed-through but text legible; ref pads 'solidorum superficies curvas &' and 'est velocitas'.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:54.434Z",
+  "text_location": "repo",
+  "text_sha256": "c0dff44ab664dd5d831774c7b14102fdc9bc564df6708a7760ddc151c767a429",
+  "unit": {
+    "chars": 2058
+  },
+  "stratum": "latin-period-5126"
+}

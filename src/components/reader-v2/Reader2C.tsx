@@ -46,11 +46,12 @@ import { usePairedEdition, PairedBadgeRow, PairedTranscriptionProse, PairedTrans
 import {
   CapsLabel, AiChip, CorpusChip, WitnessCaption, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS, SCAN_ZOOM_MAX,
   resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote, BAR_CONTROL, barControlStyle, useDialogFocus,
-  SURFACE, themeAttr, bookByline, TranscriptProvenanceChip,
+  SURFACE, themeAttr, bookByline, TranscriptProvenanceChip, TextSourceLine, MachineDraftLine,
 } from './ReaderV2Bits';
-import { pageTextCorpus, translationCorpus, transcriptProvenance, transcriptProvenanceLabel } from '@/lib/text-provenance';
+import { pageTextCorpus, pageTextSource, translationCorpus, transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTranslation } from '@/lib/text-provenance';
 import type { CdliWitness } from '@/lib/types/book';
 import { translationVerdict, type TranslationStateSource } from '@/lib/translation-completeness';
+import { displayTranscription } from '@/lib/esukhia-apparatus';
 
 // ─── Variant 2c: "Study Desk" ────────────────────────────────────────────────
 // The scholarly reader: scan, OCR and translation side by side, a left tool
@@ -81,10 +82,14 @@ const SHEET_DISMISS_PULL = 90;
 /** Width of the desktop tool rail, the first column of the desktop grid. */
 const DESKTOP_RAIL_W = 66;
 /** Width over height at which a scan counts as a wide leaf (palm-leaf, pothi,
- *  pecha) and the desktop panes stack instead of sitting side by side. Above
- *  an unsplit two-page spread (about 1.3 to 1.6), so an ordinary book keeps
- *  its columns (#5352). */
-const WIDE_LEAF_RATIO = 1.7;
+ *  pecha) and the desktop panes stack instead of sitting side by side (#5352).
+ *  Was 1.7, above an unsplit two-page spread (about 1.3 to 1.6), so ordinary
+ *  books kept their columns. Lowered to 1.4 (#5746): a photograph of two pecha
+ *  leaves, one above the other, is about 1.5 (the British Library's EAP
+ *  volumes are 3888×2592), and in a column the leaves' long lines wrapped four
+ *  or five times. Shape alone cannot tell that photo from a spread, and Derek
+ *  chose one shape rule over a per-language one: unsplit spreads now stack too. */
+const WIDE_LEAF_RATIO = 1.4;
 /** Most of the screen a stacked wide leaf may take before the text beneath it
  *  gets too short to read. */
 const WIDE_LEAF_MAX_H = '50dvh';
@@ -92,6 +97,11 @@ const WIDE_LEAF_MAX_H = '50dvh';
  *  vertical padding, and its horizontal padding. */
 const SCAN_PANE_CHROME_Y = 38 + 2 * 22;
 const SCAN_PANE_CHROME_X = 2 * 24;
+/** Bounds on the desktop scan column once it is sized to the page's shape:
+ *  never so narrow the controls crowd, never more than this share of the
+ *  panes, so the text beside it keeps a readable measure. */
+const SCAN_PANE_MIN_W = 320;
+const SCAN_PANE_MAX_SHARE = 0.6;
 /**
  * Stacks a wide leaf BEFORE hydration (#5367). The reader only learns a scan's
  * shape from the image, and its own code is not running until the bundle has
@@ -293,9 +303,12 @@ function PhonePanePicker({
   transition: string;
 }) {
   const t = getReaderStrings(useLocale()).panes;
+  // An English book's transcription and translation would both read "English"
+  // (#6092) — name the transcription segment "Original" instead.
+  const sameName = language.trim().toLowerCase() === translationLabel.trim().toLowerCase();
   const items: Array<{ key: 'scan' | 'ocr' | 'en' | 'translit'; label: string }> = [
     ...(hasScan ? [{ key: 'scan' as const, label: t.viewScan }] : []),
-    { key: 'ocr', label: language },
+    { key: 'ocr', label: sameName ? t.originalFallback : language },
     ...(showTranslit ? [{ key: 'translit' as const, label: t.viewRoman }] : []),
     { key: 'en', label: translationLabel },
   ];
@@ -1125,16 +1138,36 @@ function TranslitProgress({ ocrLength }: { ocrLength: number }) {
  * Suppressed when a paired critical edition is showing, because that surface
  * already carries its own, more specific version of the same warning and two
  * stacked disclaimers read as boilerplate.
+ *
+ * A page read by the specialist engine gets the quieter `caution` form: the
+ * text is good but unchecked, which is worth saying without the alarm (#5746).
  */
 function UnreliableTranscriptionNotice({
   book,
+  page,
   paired,
 }: {
-  book: { language?: string | null };
+  book: { language?: string | null; title?: string | null };
+  page: Pick<Page, 'ocr'>;
   paired: boolean;
 }) {
-  const flag = transcriptionReliability(book);
-  if (!flag || paired) return null;
+  const flag = transcriptionReliability(book, page);
+  // The flag is about OUR OCR of the script. A page whose text is an open
+  // e-text fitted to the scan (#5571) was not read by it, and saying it was
+  // contradicts the source line directly above.
+  if (!flag || paired || pageTextSource(page)) return null;
+  if (flag.level === 'caution') {
+    return (
+      <aside
+        className="mb-5 pl-2.5 border-l-2 text-[12.5px] leading-snug"
+        style={{ color: 'var(--text-secondary, #6b6560)', borderColor: 'rgba(158,74,58,0.45)' }}
+        data-transcription-caution
+      >
+        <p className="m-0">{flag.message}</p>
+        <p className="m-0 mt-1 text-[11.5px]">{flag.evidence}</p>
+      </aside>
+    );
+  }
   return (
     <aside
       className="mb-5 rounded-md px-4 py-3 text-[13.5px] leading-snug"
@@ -1428,7 +1461,7 @@ function TraceToggle({ on, onToggle, language, disabledReason }: {
 function CopyTextButton({ page, kind }: { page: Page; kind: 'ocr' | 'translation' }) {
   const [copied, setCopied] = useState(false);
   const t = getReaderStrings(useLocale()).panes;
-  const text = (kind === 'ocr' ? page.ocr?.data : page.translation?.data) || '';
+  const text = (kind === 'ocr' ? displayTranscription(page.ocr) : page.translation?.data) || '';
   if (!text) return null;
   const label = kind === 'ocr' ? t.copyTranscription : t.copyTranslation;
   return (
@@ -1529,9 +1562,10 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
           editions (#4350) branch on every row: there is no scan behind them,
           and an ETCSL translation is the corpus editors' scholarly work — the
           default wording was false in both directions. */}
-      {(page.ocr?.model || page.translation?.model) && (() => {
+      {(page.ocr?.model || page.translation?.model || transcriptProvenance(page)) && (() => {
         const ocrCorpus = pageTextCorpus(page);
         const trCorpus = translationCorpus(page);
+        const prov = transcriptProvenance(page);
         const witnessCount = (book.cdli_witnesses || []).length;
         return (
         <>
@@ -1543,12 +1577,21 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
                 {ocrCorpus ? t.corpusNoScan(witnessCount) : t.scannedFrom(page.page_number ?? undefined)}
               </dd>
             </div>
-            {page.ocr?.model && (
+            {(page.ocr?.model || prov) && (
               <div className="flex gap-3 py-1.5 border-t font-sans text-[12.5px]" style={{ borderColor: 'var(--border-light)' }}>
                 <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{t.fieldTranscript}</dt>
                 <dd style={{ color: 'var(--text-secondary)' }}>
                   {/* Same helper as the pane-header chip (#5186): one source of truth. */}
-                  {(() => { const prov = transcriptProvenance(page); return prov ? transcriptProvenanceLabel(prov, t, 'full') : t.transcribedBy(page.ocr!.model); })()}
+                  {prov ? transcriptProvenanceLabel(prov, t, 'full') : t.transcribedBy(page.ocr!.model)}
+                  {/* An open e-text's licence is the reader's to check (#5571). */}
+                  {prov?.kind === 'text_source' && (prov.source.licenseUrl || prov.source.url) && (
+                    <>
+                      {' · '}
+                      <a href={(prov.source.licenseUrl || prov.source.url)!} target="_blank" rel="noreferrer" className="underline" style={{ color: 'var(--accent-rust)' }}>
+                        {prov.source.licenseUrl ? t.licenceLink : t.sourceLink}
+                      </a>
+                    </>
+                  )}
                 </dd>
               </div>
             )}
@@ -1557,6 +1600,9 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
                 <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{t.fieldEnglish}</dt>
                 <dd style={{ color: 'var(--text-secondary)' }}>
                   {trCorpus ? t.corpusTranslation(trCorpus.name) : t.translatedBy(page.translation.model)}
+                  {isUnreviewedMachineTranslation(page) && (
+                    <span className="block mt-0.5" style={{ color: 'var(--accent-gold-dark)' }}>{t.machineDraftNotice}</span>
+                  )}
                 </dd>
               </div>
             )}
@@ -1717,9 +1763,11 @@ function LibrarianPanel({ page, book, messages, onMessages }: {
  * switch on (it used to follow the cursor uninvited).
  */
 function ScanControls({
-  zoom, onZoomStep, onZoomReset, lensOn, onToggleLens, onExpand, compact = false,
+  zoom, onZoomStep, onZoomReset, lensOn, onToggleLens, onExpand, compact = false, maxZoom = SCAN_ZOOM_MAX,
 }: {
   zoom: number;
+  /** Where this page's zoom stops (ScanViewer's onMaxZoom). */
+  maxZoom?: number;
   onZoomStep: (dir: 1 | -1) => void;
   onZoomReset: () => void;
   lensOn: boolean;
@@ -1780,7 +1828,7 @@ function ScanControls({
       >
         {Math.round(zoom * 100)}%
       </button>
-      <button type="button" aria-label={t.zoomIn} disabled={zoom >= SCAN_ZOOM_STEPS[SCAN_ZOOM_STEPS.length - 1]}
+      <button type="button" aria-label={t.zoomIn} disabled={zoom >= maxZoom - 0.001}
         onClick={() => onZoomStep(1)} className={btn} style={btnStyle}>
         <ZoomIn size={14} />
       </button>
@@ -1836,6 +1884,7 @@ function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext, s
   const t = strings.toolbar;
   // Zoom resets per page, keyed rather than set from an effect.
   const [zoomByPage, setZoomByPage] = useState<{ id: string; zoom: number }>({ id: page.id, zoom: 1 });
+  const [zoomMax, setZoomMax] = useState(SCAN_ZOOM_MAX);
   const zoom = zoomByPage.id === page.id ? zoomByPage.zoom : 1;
   const setZoom = useCallback((next: number | ((z: number) => number)) => {
     setZoomByPage(prev => {
@@ -1904,7 +1953,7 @@ function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext, s
       </div>
       <div className="flex-1 min-h-0 px-3 py-3" onTouchStart={onLbTouchStart} onTouchEnd={onLbTouchEnd}>
         <ScanViewer
-          page={page} book={book} zoom={zoom} onZoomChange={setZoom} fullRes
+          page={page} book={book} zoom={zoom} onZoomChange={setZoom} onMaxZoom={setZoomMax} fullRes
           srcOverride={srcOverride} altOverride={altOverride}
           onEdgePageTurn={dir => { if (dir === 'next') { if (hasNext) onNext(); } else if (hasPrev) onPrev(); }}
         />
@@ -1916,8 +1965,8 @@ function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext, s
         <button type="button" onClick={() => setZoom(1)} disabled={zoom === 1}
           className="min-w-[56px] h-10 font-sans text-[12px] tabular-nums transition-colors hover:bg-[rgba(253,252,249,0.12)] disabled:cursor-default"
           style={{ color: onInk(0.7) }}>{Math.round(zoom * 100)}%</button>
-        <button type="button" aria-label={strings.panes.zoomIn} disabled={zoom >= SCAN_ZOOM_MAX}
-          onClick={() => setZoom(z => SCAN_ZOOM_STEPS[Math.min(SCAN_ZOOM_STEPS.length - 1, SCAN_ZOOM_STEPS.indexOf(z) + 1)] ?? z)}
+        <button type="button" aria-label={strings.panes.zoomIn} disabled={zoom >= zoomMax - 0.001}
+          onClick={() => setZoom(z => Math.min(zoomMax, SCAN_ZOOM_STEPS[Math.min(SCAN_ZOOM_STEPS.length - 1, SCAN_ZOOM_STEPS.indexOf(z) + 1)] ?? z))}
           className={navBtn} style={{ color: onInk(0.7) }}><ZoomIn size={16} /></button>
       </div>
     </div>
@@ -2474,6 +2523,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   // Scan zoom + lens — controlled from the pane header, never from buttons
   // over the scan itself. The lens is off until asked for.
   const [scanZoom, setScanZoom] = useState(1);
+  const [scanZoomMax, setScanZoomMax] = useState(SCAN_ZOOM_MAX);
   const [lensOn, setLensOn] = useState(false);
   useEffect(() => { setScanZoom(1); }, [r.currentPageId]);
   // Any zoom holds the pane sync off briefly: the scan's scroll is being moved
@@ -2486,7 +2536,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const zoomStep = (dir: 1 | -1) => {
     const idx = SCAN_ZOOM_STEPS.findIndex(s => Math.abs(s - scanZoom) < 0.01);
     const next = SCAN_ZOOM_STEPS[Math.min(SCAN_ZOOM_STEPS.length - 1, Math.max(0, (idx === -1 ? 0 : idx) + dir))];
-    changeZoom(next);
+    changeZoom(Math.min(next, scanZoomMax));
   };
 
   // Filmstrip visibility — toggled from the bottom of the rail, persisted.
@@ -3259,6 +3309,31 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     ...(stackWideLeaf ? { '--rv2-leaf-ratio': String(scanRatio) } : {}),
   } as React.CSSProperties;
 
+  // Side by side, a tall page fits the pane by height and an equal flex share
+  // left a third of its column as empty bed either side of the page. Size the
+  // scan column to the page instead — its height in the pane times its shape —
+  // and give the rest to the text. Measured from the panes' own box, because
+  // the strip under them changes their height.
+  const [panesBox, setPanesBox] = useState<{ w: number; h: number } | null>(null);
+  const panesObserver = useRef<ResizeObserver | null>(null);
+  const panesRef = useCallback((el: HTMLElement | null) => {
+    panesObserver.current?.disconnect();
+    panesObserver.current = null;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver(([entry]) => {
+      const { width: w, height: h } = entry.contentRect;
+      setPanesBox(prev => (prev && Math.abs(prev.w - w) < 1 && Math.abs(prev.h - h) < 1 ? prev : { w, h }));
+    });
+    ro.observe(el);
+    panesObserver.current = ro;
+  }, []);
+  const scanPaneWidth = r.views.scan && textPaneCount > 0 && !stackWideLeaf && panesBox
+    ? Math.round(Math.min(
+        panesBox.w * SCAN_PANE_MAX_SHARE,
+        Math.max(SCAN_PANE_MIN_W, (panesBox.h - SCAN_PANE_CHROME_Y) * scanRatio + SCAN_PANE_CHROME_X),
+      ))
+    : null;
+
 
   // The text of a neighbouring page is already prefetched, but its scan is
   // not, so a page turn showed the words instantly and then waited on the
@@ -3588,6 +3663,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
         <main
           key={browserTranslated ? `translated-${r.currentPageId}` : undefined}
           data-reader-panels-container
+          ref={panesRef}
           data-wide-leaf={stackWideLeaf ? '' : undefined}
           className="rv2-panes relative flex min-h-0"
           style={panesStyle}
@@ -3599,12 +3675,17 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             <section
               data-scan-pane
               className="flex-1 min-w-0 min-h-0 flex flex-col border-r"
-              style={{ background: SURFACE.scanBed, borderColor: 'var(--border-medium)' }}
+              style={{
+                background: SURFACE.scanBed,
+                borderColor: 'var(--border-medium)',
+                ...(scanPaneWidth ? { flex: `0 0 ${scanPaneWidth}px` } : {}),
+              }}
             >
               <PaneHeader
                 right={
                   <ScanControls
                     zoom={scanZoom}
+                    maxZoom={scanZoomMax}
                     onZoomStep={zoomStep}
                     onZoomReset={() => changeZoom(1)}
                     lensOn={lensOn}
@@ -3628,6 +3709,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   book={r.book}
                   zoom={scanZoom}
                   onZoomChange={changeZoom}
+                  onMaxZoom={setScanZoomMax}
                   lensOn={lensOn}
                   scrollRef={scanScrollRef}
                   onScroll={() => syncFrom('scan')}
@@ -3695,7 +3777,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   style={{ overscrollBehavior: 'contain' }}
                 >
                   <div key={r.currentPageId} className="rv2-page-in">
-                    <UnreliableTranscriptionNotice book={r.book} paired={!!paired} />
+                    {!paired && <TextSourceLine page={r.currentPage} />}
+                    <UnreliableTranscriptionNotice book={r.book} page={r.currentPage} paired={!!paired} />
                     {paired
                       ? <PairedTranscriptionProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={17.5} />
                       : <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={17.5} />}
@@ -3780,7 +3863,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   style={{ overscrollBehavior: 'contain' }}
                 >
                   <div key={r.currentPageId} className="rv2-page-in">
-                    {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} paired={!!paired} />}
+                    {!paired && !showingSpanish && <MachineDraftLine page={displayPage} />}
+                    {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} page={r.currentPage} paired={!!paired} />}
                     {!paired && <ReadCautionNote page={r.currentPage} book={r.book} />}
                     {paired
                       ? <PairedTranslationProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={18.5} />
@@ -4004,6 +4088,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 <ScanControls
                   compact
                   zoom={scanZoom}
+                  maxZoom={scanZoomMax}
                   onZoomStep={zoomStep}
                   onZoomReset={() => changeZoom(1)}
                   lensOn={lensOn}
@@ -4032,6 +4117,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               >
                 <ScanViewer
                   page={r.currentPage} book={r.book} zoom={scanZoom} onZoomChange={changeZoom} lensOn={lensOn}
+                  wheelZooms={false} onMaxZoom={setScanZoomMax}
                   srcOverride={witnessSrc}
                   nativeSrcOverride={witnessNativeSrc}
                   altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}
@@ -4076,7 +4162,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
               </div>
               <div data-reader-panel className="px-[22px] pt-4 pb-8">
-                <UnreliableTranscriptionNotice book={r.book} paired={!!paired} />
+                {!paired && <TextSourceLine page={r.currentPage} />}
+                <UnreliableTranscriptionNotice book={r.book} page={r.currentPage} paired={!!paired} />
                 {paired
                       ? <PairedTranscriptionProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={16} />
                       : <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={16} />}
@@ -4146,7 +4233,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                     )}
                   </p>
                 )}
-                {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} paired={!!paired} />}
+                {!paired && !showingSpanish && <MachineDraftLine page={displayPage} />}
+                {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} page={r.currentPage} paired={!!paired} />}
                 {!paired && <ReadCautionNote page={r.currentPage} book={r.book} />}
                 {paired
                   ? <PairedTranslationProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={16} />

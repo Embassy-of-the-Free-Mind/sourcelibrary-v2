@@ -9,6 +9,16 @@ const nextConfig: NextConfig = {
   staticPageGenerationTimeout: 180, // Allow 3min for build-time pages (Atlas can be slow under load)
   trailingSlash: false, // Normalize URLs to prevent duplicate content (no trailing slash)
   experimental: {
+    // Turbopack's build cache (on by default since Next 16) is what pushed
+    // prod builds into OOM (#5887). It grows ~0.05–0.3 GB per build inside
+    // Vercel's build cache; at 1.5 GB Vercel throws the whole cache away, and
+    // the clean compile that follows ran out of the builder's 8 GB about half
+    // the time. Turning it off makes every compile a cold one, but a cold
+    // compile WITHOUT the cache layer peaks ~25% lower (measured locally from
+    // an empty .next, compile-only, two runs each: 5.72 → 4.28 GB) and writes
+    // nothing to .next/cache/turbopack, so the reset never comes. Cost: the
+    // ~40s a warm compile used to save. Re-measure before turning it back on.
+    turbopackFileSystemCacheForBuild: false,
     proxyClientMaxBodySize: 50 * 1024 * 1024, // 50MB // TODO: Remove if frontend logic changes to smaller uploads at a time.
   },
   // pdfkit must stay an unbundled runtime require: bundling it rewrites
@@ -231,6 +241,15 @@ const nextConfig: NextConfig = {
         source: '/admin/quality',
         headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
       },
+      // Work in flight (#5705): same belt and braces as the spend and quality pages.
+      {
+        source: '/admin/work/:path*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
+      },
+      {
+        source: '/admin/work',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
+      },
       {
         // Short TTL for embed scripts so partner sites pick up fixes within minutes.
         // stale-while-revalidate means no latency hit during revalidation.
@@ -271,6 +290,15 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/collections/:path*',
+        missing: [{ type: 'header', key: 'rsc' }],
+        headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
+      },
+      // /catalog is dynamic (it reads ?collection=) and was the only main-nav page
+      // with no edge rule: every visit was a ~3.6s full render (#6092). Nothing
+      // in it is per-user; Cloudflare keys the cache on the query string. Exact
+      // path only — /catalog/scholar and /catalog/complete are not covered.
+      {
+        source: '/catalog',
         missing: [{ type: 'header', key: 'rsc' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
@@ -378,6 +406,13 @@ const nextConfig: NextConfig = {
         destination: `/collections/${to}`,
         permanent: true,
       })),
+      // The processing page described the same steps as /how-it-works and drifted from
+      // it; one page now tells it (#6074).
+      {
+        source: '/about/processing',
+        destination: '/how-it-works',
+        permanent: true,
+      },
       {
         source: '/translation/:bookId/:pageId',
         destination: '/book/:bookId',
@@ -503,9 +538,15 @@ const nextConfig: NextConfig = {
         destination: '/search',
         permanent: false,
       },
+      // The authors index exists now (/browse/authors) — a better landing than search.
       {
         source: '/author',
-        destination: '/search',
+        destination: '/browse/authors',
+        permanent: false,
+      },
+      {
+        source: '/authors',
+        destination: '/browse/authors',
         permanent: false,
       },
       {

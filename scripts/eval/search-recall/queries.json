@@ -1,0 +1,310 @@
+{
+ "_prior_art": "PRIOR ART: scripts/eval/librarian-search/golden-set.json — hand-validated (book, page-range) tuples for the Librarian's tool variants; #5905 asks for expected BOOKS derived by script from Atlas page counts, scored on /api/search. scripts/eval/search-quality-eval.mjs — pass/fail assertions, no recall.",
+ "issue": 5905,
+ "queries": [
+  {
+   "id": "name-drebbel",
+   "query": "Drebbel",
+   "kind": "name",
+   "expect_terms": [
+    "Drebbel"
+   ]
+  },
+  {
+   "id": "name-khunrath",
+   "query": "Khunrath",
+   "kind": "name",
+   "expect_terms": [
+    "Khunrath"
+   ]
+  },
+  {
+   "id": "name-basil-valentine",
+   "query": "Basil Valentine",
+   "kind": "name",
+   "expect_terms": [
+    "Basil Valentine"
+   ]
+  },
+  {
+   "id": "name-zosimos",
+   "query": "Zosimos",
+   "kind": "name",
+   "expect_terms": [
+    "Zosimos"
+   ]
+  },
+  {
+   "id": "name-nagarjuna",
+   "query": "Nagarjuna",
+   "kind": "name",
+   "expect_terms": [
+    "Nagarjuna"
+   ]
+  },
+  {
+   "id": "name-abulafia",
+   "query": "Abulafia",
+   "kind": "name",
+   "expect_terms": [
+    "Abulafia"
+   ]
+  },
+  {
+   "id": "name-michael-maier",
+   "query": "Michael Maier",
+   "kind": "name",
+   "expect_terms": [
+    "Michael Maier"
+   ]
+  },
+  {
+   "id": "name-tsongkhapa",
+   "query": "Tsongkhapa",
+   "kind": "name",
+   "expect_terms": [
+    "Tsongkhapa"
+   ]
+  },
+  {
+   "id": "name-ibn-arabi",
+   "query": "Ibn Arabi",
+   "kind": "name",
+   "expect_terms": [
+    "Ibn Arabi"
+   ]
+  },
+  {
+   "id": "name-paracelsus",
+   "query": "Paracelsus",
+   "kind": "name",
+   "expect_terms": [
+    "Paracelsus"
+   ]
+  },
+  {
+   "id": "variant-drebbelius",
+   "query": "Drebbelius",
+   "kind": "variant",
+   "expect_terms": [
+    "Drebbel",
+    "Drebbelius",
+    "Drebelius",
+    "Drebbelii",
+    "Drebelii"
+   ],
+   "note": "Expected = the whole spelling family. Variant expansion is #5888 / PR #5893, not this change; these rows are here so a regression shows."
+  },
+  {
+   "id": "variant-raimundus-lullus",
+   "query": "Raimundus Lullus",
+   "kind": "variant",
+   "expect_terms": [
+    "Raimundus Lullus",
+    "Raymundus Lullius",
+    "Raymond Lull",
+    "Raymond Lully",
+    "Ramon Llull"
+   ],
+   "note": "Expected = the whole spelling family. Variant expansion is #5888 / PR #5893, not this change; these rows are here so a regression shows."
+  },
+  {
+   "id": "variant-jabir",
+   "query": "Jabir",
+   "kind": "variant",
+   "expect_terms": [
+    "Jabir",
+    "Geber",
+    "Jābir"
+   ],
+   "note": "Expected = the whole spelling family. Variant expansion is #5888 / PR #5893, not this change; these rows are here so a regression shows."
+  },
+  {
+   "id": "variant-basilius-valentinus",
+   "query": "Basilius Valentinus",
+   "kind": "variant",
+   "expect_terms": [
+    "Basilius Valentinus",
+    "Basil Valentine",
+    "Basile Valentin"
+   ],
+   "note": "Expected = the whole spelling family. Variant expansion is #5888 / PR #5893, not this change; these rows are here so a regression shows."
+  },
+  {
+   "id": "variant-cosmopolita",
+   "query": "Cosmopolita",
+   "kind": "variant",
+   "expect_terms": [
+    "Cosmopolita",
+    "Cosmopolite",
+    "Sendivogius"
+   ],
+   "note": "Expected = the whole spelling family. Variant expansion is #5888 / PR #5893, not this change; these rows are here so a regression shows."
+  },
+  {
+   "id": "modern-thermostat",
+   "query": "self-regulating oven",
+   "kind": "concept-modern",
+   "expect_terms": [
+    "hatching chickens",
+    "hatch chickens",
+    "hatching of chickens",
+    "regulate the heat",
+    "regulating the heat"
+   ],
+   "concept": "thermostat"
+  },
+  {
+   "id": "period-thermostat",
+   "query": "hatching chickens in an oven",
+   "kind": "concept-period",
+   "expect_terms": [
+    "hatching chickens",
+    "hatch chickens",
+    "hatching of chickens",
+    "regulate the heat",
+    "regulating the heat"
+   ],
+   "concept": "thermostat"
+  },
+  {
+   "id": "modern-perpetual-motion",
+   "query": "perpetual motion machine",
+   "kind": "concept-modern",
+   "expect_terms": [
+    "perpetual motion",
+    "perpetuum mobile"
+   ],
+   "concept": "perpetual-motion"
+  },
+  {
+   "id": "period-perpetual-motion",
+   "query": "perpetuum mobile",
+   "kind": "concept-period",
+   "expect_terms": [
+    "perpetual motion",
+    "perpetuum mobile"
+   ],
+   "concept": "perpetual-motion"
+  },
+  {
+   "id": "modern-magnetism",
+   "query": "magnetism",
+   "kind": "concept-modern",
+   "expect_terms": [
+    "loadstone",
+    "lodestone"
+   ],
+   "concept": "magnetism"
+  },
+  {
+   "id": "period-magnetism",
+   "query": "loadstone",
+   "kind": "concept-period",
+   "expect_terms": [
+    "loadstone",
+    "lodestone"
+   ],
+   "concept": "magnetism"
+  },
+  {
+   "id": "modern-blood-circulation",
+   "query": "blood circulation",
+   "kind": "concept-modern",
+   "expect_terms": [
+    "circulation of the blood",
+    "motu cordis",
+    "motion of the heart"
+   ],
+   "concept": "blood-circulation"
+  },
+  {
+   "id": "period-blood-circulation",
+   "query": "motion of the heart and blood",
+   "kind": "concept-period",
+   "expect_terms": [
+    "circulation of the blood",
+    "motu cordis",
+    "motion of the heart"
+   ],
+   "concept": "blood-circulation"
+  },
+  {
+   "id": "modern-thermometer",
+   "query": "thermometer",
+   "kind": "concept-modern",
+   "expect_terms": [
+    "weather glass",
+    "thermoscope",
+    "thermoscopium"
+   ],
+   "concept": "thermometer"
+  },
+  {
+   "id": "period-thermometer",
+   "query": "weather glass",
+   "kind": "concept-period",
+   "expect_terms": [
+    "weather glass",
+    "thermoscope",
+    "thermoscopium"
+   ],
+   "concept": "thermometer"
+  },
+  {
+   "id": "modern-breath-control",
+   "query": "yoga breathing exercises",
+   "kind": "concept-modern",
+   "expect_terms": [
+    "pranayama",
+    "prāṇāyāma",
+    "restraint of the breath"
+   ],
+   "concept": "breath-control"
+  },
+  {
+   "id": "period-breath-control",
+   "query": "pranayama",
+   "kind": "concept-period",
+   "expect_terms": [
+    "pranayama",
+    "prāṇāyāma",
+    "restraint of the breath"
+   ],
+   "concept": "breath-control"
+  },
+  {
+   "id": "modern-reincarnation",
+   "query": "reincarnation",
+   "kind": "concept-modern",
+   "expect_terms": [
+    "transmigration of souls",
+    "transmigration of the soul",
+    "metempsychosis"
+   ],
+   "concept": "reincarnation"
+  },
+  {
+   "id": "period-reincarnation",
+   "query": "transmigration of souls",
+   "kind": "concept-period",
+   "expect_terms": [
+    "transmigration of souls",
+    "transmigration of the soul",
+    "metempsychosis"
+   ],
+   "concept": "reincarnation"
+  },
+  {
+   "id": "modern-melancholy",
+   "query": "depression",
+   "kind": "concept-modern",
+   "expect_terms": [
+    "black bile",
+    "atra bilis",
+    "melancholia"
+   ],
+   "concept": "melancholy"
+  }
+ ]
+}

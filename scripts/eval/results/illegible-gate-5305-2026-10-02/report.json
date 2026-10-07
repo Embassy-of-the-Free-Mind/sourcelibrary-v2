@@ -1,0 +1,2650 @@
+{
+  "at": "2026-10-02T12:51:47.026Z",
+  "judge_noise": {
+    "pairs": 8,
+    "same_garble": 8,
+    "same_invention": 8,
+    "same_fidelity": 6
+  },
+  "table": {
+    "positive": {
+      "n": 27,
+      "A": {
+        "withheld": 0,
+        "fabricated": 15,
+        "fabricated_major": 4,
+        "fidelity_ge4": 15,
+        "with_summary": 27
+      },
+      "A2": {
+        "withheld": 0,
+        "fabricated": 13,
+        "fabricated_major": 4,
+        "fidelity_ge4": 12,
+        "with_summary": 27
+      },
+      "C": {
+        "withheld": 0,
+        "fabricated": 12,
+        "fabricated_major": 7,
+        "fidelity_ge4": 14,
+        "with_summary": 27
+      },
+      "G": {
+        "withheld": 1,
+        "fabricated": 14,
+        "fabricated_major": 4,
+        "fidelity_ge4": 14,
+        "with_summary": 26
+      },
+      "noise_A2_vs_A": {
+        "A2_only": 4,
+        "A_only": 6,
+        "p": 0.7539
+      },
+      "C_vs_A": {
+        "C_only": 4,
+        "A_only": 7,
+        "p": 0.5488
+      },
+      "G_vs_A": {
+        "G_only": 0,
+        "A_only": 1,
+        "p": 1
+      },
+      "withheld_C_vs_A": {
+        "C_only": 0,
+        "A_only": 0,
+        "p": 1
+      }
+    },
+    "control": {
+      "n": 15,
+      "A": {
+        "withheld": 0,
+        "fabricated": 2,
+        "fabricated_major": 0,
+        "fidelity_ge4": 14,
+        "with_summary": 15
+      },
+      "A2": {
+        "withheld": 0,
+        "fabricated": 1,
+        "fabricated_major": 0,
+        "fidelity_ge4": 15,
+        "with_summary": 15
+      },
+      "C": {
+        "withheld": 0,
+        "fabricated": 2,
+        "fabricated_major": 0,
+        "fidelity_ge4": 15,
+        "with_summary": 15
+      },
+      "G": {
+        "withheld": 0,
+        "fabricated": 2,
+        "fabricated_major": 0,
+        "fidelity_ge4": 14,
+        "with_summary": 15
+      },
+      "noise_A2_vs_A": {
+        "A2_only": 0,
+        "A_only": 1,
+        "p": 1
+      },
+      "C_vs_A": {
+        "C_only": 0,
+        "A_only": 0,
+        "p": 1
+      },
+      "G_vs_A": {
+        "G_only": 0,
+        "A_only": 0,
+        "p": 1
+      },
+      "withheld_C_vs_A": {
+        "C_only": 0,
+        "A_only": 0,
+        "p": 1
+      }
+    },
+    "illegible": {
+      "n": 12,
+      "A": {
+        "withheld": 0,
+        "fabricated": 1,
+        "fabricated_major": 0,
+        "fidelity_ge4": 11,
+        "with_summary": 12
+      },
+      "A2": {
+        "withheld": 0,
+        "fabricated": 1,
+        "fabricated_major": 0,
+        "fidelity_ge4": 12,
+        "with_summary": 12
+      },
+      "C": {
+        "withheld": 3,
+        "fabricated": 2,
+        "fabricated_major": 0,
+        "fidelity_ge4": 8,
+        "with_summary": 9
+      },
+      "G": {
+        "withheld": 12,
+        "fabricated": 0,
+        "fabricated_major": 0,
+        "fidelity_ge4": 0,
+        "with_summary": 0
+      },
+      "noise_A2_vs_A": {
+        "A2_only": 0,
+        "A_only": 0,
+        "p": 1
+      },
+      "C_vs_A": {
+        "C_only": 1,
+        "A_only": 0,
+        "p": 1
+      },
+      "G_vs_A": {
+        "G_only": 0,
+        "A_only": 1,
+        "p": 1
+      },
+      "withheld_C_vs_A": {
+        "C_only": 3,
+        "A_only": 0,
+        "p": 0.25
+      }
+    }
+  },
+  "missing": [],
+  "per_page": [
+    {
+      "id": "38fbfe04ed",
+      "stratum": "positive",
+      "language": "Latin",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": true,
+        "garble": false,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": true,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 1
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": true,
+        "garble": false,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "84ac5ad2ef",
+      "stratum": "positive",
+      "language": "German",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 27
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 1
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 2
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 27,
+        "from": "A"
+      }
+    },
+    {
+      "id": "dffe86faa0",
+      "stratum": "positive",
+      "language": "Latin",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": true,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 1
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": true,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "b8c9b3f722",
+      "stratum": "positive",
+      "language": "Japanese",
+      "major": true,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": true,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "b555628e1b",
+      "stratum": "positive",
+      "language": "Greek",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 7
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 9
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 12
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 7,
+        "from": "A"
+      }
+    },
+    {
+      "id": "276dffd044",
+      "stratum": "positive",
+      "language": "Arabic",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": true,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": true,
+        "garble": false,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 1
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": true,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "cf03cb80e8",
+      "stratum": "positive",
+      "language": "Greek",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 40
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 41
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 41
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 40,
+        "from": "A"
+      }
+    },
+    {
+      "id": "04fd772f8b",
+      "stratum": "positive",
+      "language": "Italian",
+      "major": true,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 4
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "a548f0df73",
+      "stratum": "positive",
+      "language": "Greek",
+      "major": true,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 3
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 1
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "e163c51e42",
+      "stratum": "positive",
+      "language": "Korean",
+      "major": true,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "546d7ba8f0",
+      "stratum": "positive",
+      "language": "Latin",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "eed8aeb7a2",
+      "stratum": "positive",
+      "language": "Hebrew",
+      "major": true,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": true,
+        "summary": true,
+        "unclear": 2
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": true,
+        "summary": true,
+        "unclear": 1
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": true,
+        "summary": true,
+        "unclear": 1
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": true,
+        "summary": true,
+        "unclear": 2,
+        "from": "A"
+      }
+    },
+    {
+      "id": "f4f7331295",
+      "stratum": "positive",
+      "language": "Hebrew",
+      "major": true,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 2,
+        "invention": true,
+        "garble": true,
+        "fabricated": true,
+        "major": true,
+        "summary": true,
+        "unclear": 7
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 1,
+        "invention": true,
+        "garble": true,
+        "fabricated": true,
+        "major": true,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 1,
+        "invention": true,
+        "garble": true,
+        "fabricated": true,
+        "major": true,
+        "summary": true,
+        "unclear": 10
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 2,
+        "invention": true,
+        "garble": true,
+        "fabricated": true,
+        "major": true,
+        "summary": true,
+        "unclear": 7,
+        "from": "A"
+      }
+    },
+    {
+      "id": "4932d87c92",
+      "stratum": "positive",
+      "language": "Arabic",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "aeb42759e7",
+      "stratum": "positive",
+      "language": "Greek",
+      "major": true,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 16
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 16
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 1
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 16,
+        "from": "A"
+      }
+    },
+    {
+      "id": "d1dc063067",
+      "stratum": "positive",
+      "language": "Sanskrit",
+      "major": true,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": true,
+        "garble": false,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": true,
+        "garble": false,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "f2c3bdefc9",
+      "stratum": "positive",
+      "language": "Sanskrit",
+      "major": true,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "b4dae784fd",
+      "stratum": "positive",
+      "language": "French",
+      "major": true,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "9229dc2916",
+      "stratum": "positive",
+      "language": "Japanese",
+      "major": true,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": true,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": true,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": true,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": true,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "0591b803f6",
+      "stratum": "positive",
+      "language": "Arabic",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 2
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 7
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": true,
+        "garble": true,
+        "fabricated": true,
+        "major": true,
+        "summary": true,
+        "unclear": 1
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 2,
+        "from": "A"
+      }
+    },
+    {
+      "id": "9f3c4b81cf",
+      "stratum": "positive",
+      "language": "Greek",
+      "major": false,
+      "gate": "no-legible-body",
+      "A": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": true,
+        "garble": false,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 1
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 1
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": true,
+        "output": "<warning>Illegible: the transcription holds no legible text</warning>"
+      }
+    },
+    {
+      "id": "dea55ea366",
+      "stratum": "positive",
+      "language": "Korean",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 2,
+        "invention": true,
+        "garble": true,
+        "fabricated": true,
+        "major": true,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": true,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": true,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 2,
+        "invention": true,
+        "garble": true,
+        "fabricated": true,
+        "major": true,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "1c9d1945e6",
+      "stratum": "positive",
+      "language": "French",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 1
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "897246fdea",
+      "stratum": "positive",
+      "language": "Sanskrit",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": true,
+        "garble": true,
+        "fabricated": true,
+        "major": true,
+        "summary": true,
+        "unclear": 3
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 4
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": true,
+        "garble": true,
+        "fabricated": true,
+        "major": true,
+        "summary": true,
+        "unclear": 3
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": true,
+        "garble": true,
+        "fabricated": true,
+        "major": true,
+        "summary": true,
+        "unclear": 3,
+        "from": "A"
+      }
+    },
+    {
+      "id": "03e5f6510e",
+      "stratum": "positive",
+      "language": "Chinese",
+      "major": true,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": true,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 4
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 2,
+        "invention": true,
+        "garble": true,
+        "fabricated": true,
+        "major": true,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": true,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 4,
+        "from": "A"
+      }
+    },
+    {
+      "id": "38e3a0869b",
+      "stratum": "positive",
+      "language": "Greek",
+      "major": true,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 129
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "4527f0ad49",
+      "stratum": "positive",
+      "language": "Arabic",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 1
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 2
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 1,
+        "from": "A"
+      }
+    },
+    {
+      "id": "3df3c6d365",
+      "stratum": "control",
+      "language": "Latin",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "da8dd70621",
+      "stratum": "control",
+      "language": "French",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 1
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 1
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 1
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 1,
+        "from": "A"
+      }
+    },
+    {
+      "id": "77e17c0733",
+      "stratum": "control",
+      "language": "Italian",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "7c972fdf5f",
+      "stratum": "control",
+      "language": "Latin",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 1
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 1
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 1,
+        "from": "A"
+      }
+    },
+    {
+      "id": "1cc475c4d4",
+      "stratum": "control",
+      "language": "Latin",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "3860aeacb7",
+      "stratum": "control",
+      "language": "Latin",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "ab55f30fa8",
+      "stratum": "control",
+      "language": "Latin",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "fefd2c45b1",
+      "stratum": "control",
+      "language": "Arabic",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "33b8e7a032",
+      "stratum": "control",
+      "language": "Dutch",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "7cf97b9e44",
+      "stratum": "control",
+      "language": "French",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": true,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": true,
+        "garble": true,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "da99026acc",
+      "stratum": "control",
+      "language": "Sanskrit",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "90ee75163d",
+      "stratum": "control",
+      "language": "French",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "e37dde5963",
+      "stratum": "control",
+      "language": "Japanese",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "640eeb7244",
+      "stratum": "control",
+      "language": "Japanese",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": true,
+        "garble": false,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": true,
+        "garble": false,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": true,
+        "garble": false,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": true,
+        "garble": false,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "c433548389",
+      "stratum": "control",
+      "language": "French",
+      "major": false,
+      "gate": null,
+      "A": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0
+      },
+      "G": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 0,
+        "from": "A"
+      }
+    },
+    {
+      "id": "c69dbca791040d1d5e20ac784",
+      "stratum": "illegible",
+      "language": "Latin",
+      "major": null,
+      "gate": "no-legible-body",
+      "A": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 2
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 2
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 2
+      },
+      "G": {
+        "withheld": true,
+        "output": "<warning>Illegible: the transcription holds no legible text</warning>"
+      }
+    },
+    {
+      "id": "c6991c55a3074a1745a410ed7",
+      "stratum": "illegible",
+      "language": "Latin",
+      "major": null,
+      "gate": "no-legible-body",
+      "A": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": true,
+        "garble": false,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 3
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": true,
+        "garble": false,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 3
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": true,
+        "garble": false,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 3
+      },
+      "G": {
+        "withheld": true,
+        "output": "<warning>Illegible: the transcription holds no legible text</warning>"
+      }
+    },
+    {
+      "id": "c69f709331300509a5bcf5b62",
+      "stratum": "illegible",
+      "language": "German",
+      "major": null,
+      "gate": "no-legible-body",
+      "A": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 7
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 7
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 7
+      },
+      "G": {
+        "withheld": true,
+        "output": "<warning>Illegible: the transcription holds no legible text</warning>"
+      }
+    },
+    {
+      "id": "c69b303e45facc83a9a3db5d3",
+      "stratum": "illegible",
+      "language": "Latin",
+      "major": null,
+      "gate": "no-legible-body",
+      "A": {
+        "withheld": false,
+        "fidelity": 2,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 16
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 15
+      },
+      "C": {
+        "withheld": true,
+        "output": "<warning>Illegible: The source text consists primarily of faint bleed-through or ghost images from the reverse side, rendering it largely illegible as a primary record.</warning>"
+      },
+      "G": {
+        "withheld": true,
+        "output": "<warning>Illegible: the transcription holds no legible text</warning>"
+      }
+    },
+    {
+      "id": "c6a357e822aadc65cf09070a4",
+      "stratum": "illegible",
+      "language": "Italian",
+      "major": null,
+      "gate": "no-legible-body",
+      "A": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 30
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 30
+      },
+      "C": {
+        "withheld": true,
+        "output": "<warning>Illegible: severe degradation, ink bleed, and fading render the source text unreadable.</warning>"
+      },
+      "G": {
+        "withheld": true,
+        "output": "<warning>Illegible: the transcription holds no legible text</warning>"
+      }
+    },
+    {
+      "id": "c699389760f04c37dcfa6145f",
+      "stratum": "illegible",
+      "language": "Greek",
+      "major": null,
+      "gate": "no-legible-body",
+      "A": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 9
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 9
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 9
+      },
+      "G": {
+        "withheld": true,
+        "output": "<warning>Illegible: the transcription holds no legible text</warning>"
+      }
+    },
+    {
+      "id": "c69a68280b3d8052782b3c5b8",
+      "stratum": "illegible",
+      "language": "French",
+      "major": null,
+      "gate": "no-legible-body",
+      "A": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 2
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 9
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 3,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 252
+      },
+      "G": {
+        "withheld": true,
+        "output": "<warning>Illegible: the transcription holds no legible text</warning>"
+      }
+    },
+    {
+      "id": "c6953cc6d77f38f6761be20e5",
+      "stratum": "illegible",
+      "language": "Latin",
+      "major": null,
+      "gate": "no-legible-body",
+      "A": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 2
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 2
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 2
+      },
+      "G": {
+        "withheld": true,
+        "output": "<warning>Illegible: the transcription holds no legible text</warning>"
+      }
+    },
+    {
+      "id": "c69f6599469131f2d8d9bd491",
+      "stratum": "illegible",
+      "language": "German",
+      "major": null,
+      "gate": "no-legible-body",
+      "A": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 1
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 1
+      },
+      "C": {
+        "withheld": true,
+        "output": "<warning>Illegible: The source page is severely faded with ink bleed-through, rendering the text beyond recovery.</warning>"
+      },
+      "G": {
+        "withheld": true,
+        "output": "<warning>Illegible: the transcription holds no legible text</warning>"
+      }
+    },
+    {
+      "id": "c69f512176b622947df79876d",
+      "stratum": "illegible",
+      "language": "German",
+      "major": null,
+      "gate": "no-legible-body",
+      "A": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 1
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 1
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 1
+      },
+      "G": {
+        "withheld": true,
+        "output": "<warning>Illegible: the transcription holds no legible text</warning>"
+      }
+    },
+    {
+      "id": "c6a45298cc6d95bc278fbc8dc",
+      "stratum": "illegible",
+      "language": "Greek",
+      "major": null,
+      "gate": "no-legible-body",
+      "A": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 14
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 14
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 4,
+        "invention": true,
+        "garble": false,
+        "fabricated": true,
+        "major": false,
+        "summary": true,
+        "unclear": 14
+      },
+      "G": {
+        "withheld": true,
+        "output": "<warning>Illegible: the transcription holds no legible text</warning>"
+      }
+    },
+    {
+      "id": "c69f7616c494c7d7d934fe420",
+      "stratum": "illegible",
+      "language": "Latin",
+      "major": null,
+      "gate": "no-legible-body",
+      "A": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 11
+      },
+      "A2": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 11
+      },
+      "C": {
+        "withheld": false,
+        "fidelity": 5,
+        "invention": false,
+        "garble": false,
+        "fabricated": false,
+        "major": false,
+        "summary": true,
+        "unclear": 11
+      },
+      "G": {
+        "withheld": true,
+        "output": "<warning>Illegible: the transcription holds no legible text</warning>"
+      }
+    }
+  ]
+}

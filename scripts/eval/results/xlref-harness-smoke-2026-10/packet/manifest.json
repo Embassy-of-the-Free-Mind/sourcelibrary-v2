@@ -1,0 +1,204 @@
+{
+ "built": "2026-10-03T10:38:20.933Z",
+ "seed": 5695,
+ "input": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-harness/scripts/eval/results/xlref-harness-smoke-2026-10/records.jsonl",
+ "input_sha": "6733ff4599842f64",
+ "any_private": false,
+ "n_items": 6,
+ "n_gate": 3,
+ "n_main": 3,
+ "chunk": 6,
+ "judges": [
+  "j1",
+  "j2"
+ ],
+ "chunks": [
+  {
+   "judge": "j1",
+   "phase": "gate",
+   "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-harness/scripts/eval/results/xlref-harness-smoke-2026-10/packet/packets/j1/gate-01.jsonl",
+   "verdicts": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-harness/scripts/eval/results/xlref-harness-smoke-2026-10/packet/verdicts/j1/gate-01.jsonl",
+   "n": 3
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-harness/scripts/eval/results/xlref-harness-smoke-2026-10/packet/packets/j1/main-01.jsonl",
+   "verdicts": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-harness/scripts/eval/results/xlref-harness-smoke-2026-10/packet/verdicts/j1/main-01.jsonl",
+   "n": 3
+  },
+  {
+   "judge": "j2",
+   "phase": "gate",
+   "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-harness/scripts/eval/results/xlref-harness-smoke-2026-10/packet/packets/j2/gate-01.jsonl",
+   "verdicts": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-harness/scripts/eval/results/xlref-harness-smoke-2026-10/packet/verdicts/j2/gate-01.jsonl",
+   "n": 3
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-harness/scripts/eval/results/xlref-harness-smoke-2026-10/packet/packets/j2/main-01.jsonl",
+   "verdicts": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-harness/scripts/eval/results/xlref-harness-smoke-2026-10/packet/verdicts/j2/main-01.jsonl",
+   "n": 3
+  }
+ ],
+ "warnings": [],
+ "records": [
+  {
+   "id": "69b99e551f30176bf4d37774_00306",
+   "track": "smoke",
+   "lang": "Pali",
+   "book_id": "69b99e551f30176bf4d37774",
+   "page_number": 306,
+   "reference_meta": {
+    "title": "Saṃyutta-Nikāya (Pali Text)",
+    "translator": "Bhikkhu Sujato",
+    "year": 2018,
+    "licence": "CC0 1.0 (bilara-data LICENSE.md: \"All translations created in Bilara … dedicated to the Public Domain by means of CC0\")",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "sn46.3:9.1 – sn46.3:9.10",
+    "url": "https://github.com/suttacentral/bilara-data/tree/published/translation/en/sujato/sutta/sn/sn46/sn46.3_translation-en-sujato.json translation/en/sujato/sutta/sn/sn46/sn46.40_translation-en-sujato.json",
+    "coverage_note": "automatic segment alignment (align-pali.py): coverage 1.89, shingle density 0.775; lines marked [context] are outside the located span",
+    "origin": "translation-ab-5606-2026-10-02"
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69b99e681f30176bf4d3798a_00155",
+   "track": "smoke",
+   "lang": "Pali",
+   "book_id": "69b99e681f30176bf4d3798a",
+   "page_number": 155,
+   "reference_meta": {
+    "title": "Aṅguttara-Nikāya (Pali Text)",
+    "translator": "Bhikkhu Sujato",
+    "year": 2018,
+    "licence": "CC0 1.0 (bilara-data LICENSE.md: \"All translations created in Bilara … dedicated to the Public Domain by means of CC0\")",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "an10.73:2.1 – an10.73:3.3",
+    "url": "https://github.com/suttacentral/bilara-data/tree/published/translation/en/sujato/sutta/an/an10/an10.73_translation-en-sujato.json translation/en/sujato/sutta/an/an10/an10.74_translation-en-sujato.json",
+    "coverage_note": "automatic segment alignment (align-pali.py): coverage 0.94, shingle density 0.666; lines marked [context] are outside the located span",
+    "origin": "translation-ab-5606-2026-10-02"
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69b99e496ed9e04909909f8f_00220",
+   "track": "smoke",
+   "lang": "Pali",
+   "book_id": "69b99e496ed9e04909909f8f",
+   "page_number": 220,
+   "reference_meta": {
+    "title": "Majjhima-Nikāya (Pali Text)",
+    "translator": "Bhikkhu Sujato",
+    "year": 2018,
+    "licence": "CC0 1.0 (bilara-data LICENSE.md: \"All translations created in Bilara … dedicated to the Public Domain by means of CC0\")",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "mn99:15.1 – mn99:17.6",
+    "url": "https://github.com/suttacentral/bilara-data/tree/published/translation/en/sujato/sutta/mn/mn99_translation-en-sujato.json",
+    "coverage_note": "automatic segment alignment (align-pali.py): coverage 1.12, shingle density 0.662; lines marked [context] are outside the located span",
+    "origin": "translation-ab-5606-2026-10-02"
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69b99e8b6ed9e0490990a274_00179",
+   "track": "smoke",
+   "lang": "Pali",
+   "book_id": "69b99e8b6ed9e0490990a274",
+   "page_number": 179,
+   "reference_meta": {
+    "title": "Sutta-Nipāta (Pali Text)",
+    "translator": "Bhikkhu Sujato",
+    "year": 2018,
+    "licence": "CC0 1.0 (bilara-data LICENSE.md: \"All translations created in Bilara … dedicated to the Public Domain by means of CC0\")",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "snp4.9:2.1 – snp4.9:6.5",
+    "url": "https://github.com/suttacentral/bilara-data/tree/published/translation/en/sujato/sutta/kn/snp/vagga4/snp4.9_translation-en-sujato.json",
+    "coverage_note": "automatic segment alignment (align-pali.py): coverage 1.074, shingle density 0.54; lines marked [context] are outside the located span",
+    "origin": "translation-ab-5606-2026-10-02"
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69b99d043a4a443c39c00775_00147",
+   "track": "smoke",
+   "lang": "Pali",
+   "book_id": "69b99d043a4a443c39c00775",
+   "page_number": 147,
+   "reference_meta": {
+    "title": "The Connected Discourses of the Buddha, Part I",
+    "translator": "Bhikkhu Sujato",
+    "year": 2018,
+    "licence": "CC0 1.0 (bilara-data LICENSE.md: \"All translations created in Bilara … dedicated to the Public Domain by means of CC0\")",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "sn4.25:20.1 – sn4.25:26.4",
+    "url": "https://github.com/suttacentral/bilara-data/tree/published/translation/en/sujato/sutta/sn/sn4/sn4.25_translation-en-sujato.json translation/en/sujato/sutta/sn/sn4/sn4.2_translation-en-sujato.json",
+    "coverage_note": "automatic segment alignment (align-pali.py): coverage 0.897, shingle density 0.333; lines marked [context] are outside the located span",
+    "origin": "translation-ab-5606-2026-10-02"
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "6a09ff48fa20006dbaba8ee1_00114",
+   "track": "smoke",
+   "lang": "Pali",
+   "book_id": "6a09ff48fa20006dbaba8ee1",
+   "page_number": 114,
+   "reference_meta": {
+    "title": "Aṅguttara Nikāya, Vol. II (Fours) — PTS Pali",
+    "translator": "Bhikkhu Sujato",
+    "year": 2018,
+    "licence": "CC0 1.0 (bilara-data LICENSE.md: \"All translations created in Bilara … dedicated to the Public Domain by means of CC0\")",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "an4.102:1.5 – an4.102:5.6",
+    "url": "https://github.com/suttacentral/bilara-data/tree/published/translation/en/sujato/sutta/an/an4/an4.102_translation-en-sujato.json",
+    "coverage_note": "automatic segment alignment (align-pali.py): coverage 1.231, shingle density 0.736; lines marked [context] are outside the located span",
+    "origin": "translation-ab-5606-2026-10-02"
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served"
+   ],
+   "canonical": true
+  }
+ ]
+}

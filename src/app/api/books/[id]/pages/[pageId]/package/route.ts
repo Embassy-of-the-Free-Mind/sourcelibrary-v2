@@ -207,7 +207,7 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
       editions.find(e => e.id === book.current_edition_id) ||
       editions.find(e => e.status === 'published') ||
       null;
-    const citation = generateCitations(book, page.page_number, bookId, page.id, baseUrl, edition || undefined);
+    const citation = generateCitations(book, page.page_number, bookId, page.id, baseUrl, edition || undefined, undefined, page.printed_page);
 
     const bookTitle = book.display_title || book.title || 'untitled';
     const safeTitle = bookTitle

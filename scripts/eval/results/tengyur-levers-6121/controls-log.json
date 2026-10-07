@@ -1,0 +1,230 @@
+{
+ "seed": 42849,
+ "plants": [
+  {
+   "page_id": "6abeb361896ea18127c83cdb",
+   "vol": 105,
+   "section": "Madhyamaka",
+   "page_number": 484,
+   "kind": "reversal",
+   "old": "Because it is connected to many, it would become many; otherwise, it could not be one.",
+   "new": "Because it is not connected to many, it would become many; otherwise, it could not be one.",
+   "how": "\\bis\\b → is not"
+  },
+  {
+   "page_id": "6abed5e1896ea18127c8e2b3",
+   "vol": 180,
+   "section": "Pramāṇa",
+   "page_number": 297,
+   "kind": "reversal",
+   "old": "If one accepts that the very nature of what appears is atoms—since there is no other appearance—then thinking that it must possess a specific shape is what is meant by \"it is seen.\" Is it not the case that the nature of appearance is not atoms?",
+   "new": "If one accepts that the very nature of what appears is atoms—since there is no other appearance—then thinking that it must possess a specific shape is what is meant by \"it is seen.\" Is it not the case that the nature of appearance is atoms?",
+   "how": "\\bis not\\b → is"
+  },
+  {
+   "page_id": "6abed61a896ea18127c8e504",
+   "vol": 181,
+   "section": "Pramāṇa",
+   "page_number": 158,
+   "kind": "reversal",
+   "old": "Harmonious factors are those of a similar class, precisely because they act as the creators of the composition.",
+   "new": "Harmonious factors are not those of a similar class, precisely because they act as the creators of the composition.",
+   "how": "\\bare\\b → are not"
+  },
+  {
+   "skipped": "6abeb406896ea18127c8441d",
+   "kind": "reversal",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abec483896ea18127c8a0ce",
+   "vol": 151,
+   "section": "Vinaya",
+   "page_number": 354,
+   "kind": "reversal",
+   "old": "The phrase \"for those who are ill\" refers to those afflicted by disease.",
+   "new": "The phrase \"for those who are not ill\" refers to those afflicted by disease.",
+   "how": "\\bare\\b → are not"
+  },
+  {
+   "page_id": "6abeb331896ea18127c8395b",
+   "vol": 104,
+   "section": "Madhyamaka",
+   "page_number": 320,
+   "kind": "reversal",
+   "old": "Therefore, since arising through an intrinsic nature is illogical, it is merely an object of observation.",
+   "new": "Therefore, since arising through an intrinsic nature is not illogical, it is merely an object of observation.",
+   "how": "\\bis\\b → is not"
+  },
+  {
+   "page_id": "6abeb20c896ea18127c82c93",
+   "vol": 98,
+   "section": "Madhyamaka",
+   "page_number": 400,
+   "kind": "reversal",
+   "old": "Because they are superimpositions of what does not exist, they are \"imagined.\" This is the imagined nature.",
+   "new": "Because they are superimpositions of what does exist, they are \"imagined.\" This is the imagined nature.",
+   "how": "\\bdoes not\\b → does"
+  },
+  {
+   "skipped": "6abed51b896ea18127c8dec2",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abed51b896ea18127c8dd19",
+   "vol": 178,
+   "section": "Pramāṇa",
+   "page_number": 47,
+   "kind": "agent",
+   "old": "If you say, \"But it does not exist at this current moment,\" then this applies equally to both the past and the future.",
+   "new": "If I say, \"But it does not exist at this current moment,\" then this applies equally to both the past and the future.",
+   "how": "\\b[Yy]ou ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → I $1"
+  },
+  {
+   "page_id": "6abeb247896ea18127c82e31",
+   "vol": 99,
+   "section": "Madhyamaka",
+   "page_number": 152,
+   "kind": "agent",
+   "old": "Out of the four general aspects of the thesis that were set forth, I have already demonstrated that entities do not arise from themselves.",
+   "new": "Out of the four general aspects of the thesis that were set forth, you have already demonstrated that entities do not arise from themselves.",
+   "how": "\\bI ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → you $1"
+  },
+  {
+   "skipped": "6abeb2ee896ea18127c837da",
+   "kind": "agent",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abed914896ea18127c8fafb",
+   "vol": 190,
+   "section": "Pramāṇa",
+   "page_number": 267,
+   "kind": "agent",
+   "old": "If one does not know the object that the opponent is refuting, how can one speak to the object of the reply?",
+   "new": "If one does not know the object that we is refuting, how can one speak to the object of the reply?",
+   "how": "\\bthe opponent\\b → we"
+  },
+  {
+   "page_id": "6abeb4e8896ea18127c84b82",
+   "vol": 111,
+   "section": "Madhyamaka",
+   "page_number": 397,
+   "kind": "agent",
+   "old": "Now, I shall also explain the complete purification of the body.",
+   "new": "Now, you shall also explain the complete purification of the body.",
+   "how": "\\bI ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → you $1"
+  },
+  {
+   "page_id": "6abeb289896ea18127c83235",
+   "vol": 100,
+   "section": "Madhyamaka",
+   "page_number": 604,
+   "kind": "agent",
+   "old": "Therefore, the opponent argues that if things possess this otherness, they are established as distinct entities.",
+   "new": "Therefore, we argues that if things possess this otherness, they are established as distinct entities.",
+   "how": "\\bthe opponent\\b → we"
+  },
+  {
+   "page_id": "6abed914896ea18127c8faa0",
+   "vol": 190,
+   "section": "Pramāṇa",
+   "page_number": 176,
+   "kind": "agent",
+   "old": "The phrase \"as the nature of that\" and so forth refers to the position of the opponent.",
+   "new": "The phrase \"as the nature of that\" and so forth refers to the position of we.",
+   "how": "\\bthe opponent\\b → we"
+  },
+  {
+   "skipped": "6abeb2b4896ea18127c8330b",
+   "kind": "term",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abed96d896ea18127c8fd81",
+   "vol": 191,
+   "section": "Pramāṇa",
+   "page_number": 173,
+   "kind": "term",
+   "old": "The holy words made by a person endowed with wisdom, compassion, and so forth, if well-established in that way, will become the cause for knowing the meaning as it is.",
+   "new": "The holy words made by a person endowed with wisdom, equanimity, and so forth, if well-established in that way, will become the cause for knowing the meaning as it is.",
+   "how": "compassion → equanimity"
+  },
+  {
+   "skipped": "6abece79896ea18127c8bbea",
+   "kind": "term",
+   "why": "no plantable sentence"
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f912",
+   "vol": 189,
+   "section": "Pramāṇa",
+   "page_number": 434,
+   "kind": "term",
+   "old": "The statement that \"the non-existence of created things after they have arisen also depends on another cause\" is a perception of a pervading contradiction.",
+   "new": "The statement that \"the non-existence of created things after they have arisen also depends on another cause\" is a inference of a pervading contradiction.",
+   "how": "perception → inference"
+  },
+  {
+   "page_id": "6abed5e1896ea18127c8e39c",
+   "vol": 180,
+   "section": "Pramāṇa",
+   "page_number": 530,
+   "kind": "term",
+   "old": "It is not that the appearing reflections are nonexistent, for it is shown that the object of perception is said to exist.",
+   "new": "It is not that the appearing reflections are nonexistent, for it is shown that the object of inference is said to exist.",
+   "how": "perception → inference"
+  },
+  {
+   "page_id": "6abed76e896ea18127c8ee80",
+   "vol": 185,
+   "section": "Pramāṇa",
+   "page_number": 62,
+   "kind": "term",
+   "old": "Because other conceptual constructions are formed by mental adherence, they do not appear directly; they are not identical with direct removal, establishment, or satisfaction, because they lack the causal power found in inference.",
+   "new": "Because other conceptual constructions are formed by mental adherence, they do not appear directly; they are not identical with direct removal, establishment, or satisfaction, because they lack the causal power found in direct perception.",
+   "how": "inference → direct perception"
+  },
+  {
+   "page_id": "6abed9ff896ea18127c904a6",
+   "vol": 193,
+   "section": "Pramāṇa",
+   "page_number": 610,
+   "kind": "span",
+   "old": "",
+   "new": "If one refutes this by falsely attributing \"arising immediately after effort,\" what is being said by the phrase \"Because of being that which occurs immediately after effort\"? It means: \"Because it arises immediately after effort.\"",
+   "how": "previous side's last sentences prepended"
+  },
+  {
+   "page_id": "6abeb159896ea18127c82730",
+   "vol": 96,
+   "section": "Madhyamaka",
+   "page_number": 172,
+   "kind": "span",
+   "old": "",
+   "new": "If you think that grasping the impermanent as impermanent is not a distortion, then it must be explained: since not even a slight degree of impermanence exists within the emptiness of intrinsic nature, in its absence, how could grasping it as such not be a distortion?",
+   "how": "previous side's last sentences prepended"
+  },
+  {
+   "page_id": "6abed159896ea18127c8ca1f",
+   "vol": 169,
+   "section": "Jātaka",
+   "page_number": 427,
+   "kind": "span",
+   "old": "",
+   "new": "The King was very pleased and asked: Have you come to beg? The jester, following behind the leader in great fear, said: Go to the ritual house for food.",
+   "how": "previous side's last sentences prepended"
+  },
+  {
+   "page_id": "6abec4f0896ea18127c8a36d",
+   "vol": 152,
+   "section": "Vinaya",
+   "page_number": 487,
+   "kind": "span",
+   "old": "",
+   "new": "The husband replied, \"Good lady, what you say is not wrong. When the girl had bathed and returned, he dressed her in a set of new clothes and said, \"Dear girl, be joyful...\"",
+   "how": "previous side's last sentences prepended"
+  }
+ ]
+}

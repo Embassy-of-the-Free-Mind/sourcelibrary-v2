@@ -1,0 +1,1694 @@
+{
+ "generated": "2026-10-03T10:41:46.303Z",
+ "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-harness/scripts/eval/results/xlref-harness-smoke-2026-10/packet",
+ "seed_bootstrap": 5695,
+ "seed_packet": 5695,
+ "input_sha": "6733ff4599842f64",
+ "n_items": 6,
+ "judges": [
+  "j1",
+  "j2"
+ ],
+ "gate": {
+  "pass": true,
+  "by_judge": {
+   "j1": {
+    "wrong_page": [
+     {
+      "id": "6a09ff48fa20006dbaba8ee1_00114",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     }
+    ],
+    "planted": [
+     {
+      "id": "69b99e8b6ed9e0490990a274_00179",
+      "op": "drop-negation",
+      "from": "does not",
+      "to": "does",
+      "planted_fidelity": 3,
+      "base_fidelity": 4,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     }
+    ],
+    "duplicate": [
+     {
+      "id": "69b99d043a4a443c39c00775_00147",
+      "arm": "served",
+      "fidelity": [
+       4,
+       4
+      ],
+      "tier": [
+       1,
+       1
+      ],
+      "tie": true
+     }
+    ],
+    "missing": [],
+    "summary": {
+     "wrong_page": "1/1 scored ≤ 2",
+     "planted": "1/1 caught (1 located the planted word)",
+     "duplicate": "1/1 tied"
+    },
+    "pass": true
+   },
+   "j2": {
+    "wrong_page": [
+     {
+      "id": "6a09ff48fa20006dbaba8ee1_00114",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     }
+    ],
+    "planted": [
+     {
+      "id": "69b99e8b6ed9e0490990a274_00179",
+      "op": "drop-negation",
+      "from": "does not",
+      "to": "does",
+      "planted_fidelity": 3,
+      "base_fidelity": 4,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     }
+    ],
+    "duplicate": [
+     {
+      "id": "69b99d043a4a443c39c00775_00147",
+      "arm": "served",
+      "fidelity": [
+       4,
+       4
+      ],
+      "tier": [
+       1,
+       1
+      ],
+      "tie": true
+     }
+    ],
+    "missing": [],
+    "summary": {
+     "wrong_page": "1/1 scored ≤ 2",
+     "planted": "1/1 caught (1 located the planted word)",
+     "duplicate": "1/1 tied"
+    },
+    "pass": true
+   }
+  },
+  "problems": [],
+  "n_problems": 0,
+  "forced": false
+ },
+ "measure": "judged against a human reference (fidelity of meaning; the reference guides meaning, not wording)",
+ "arms": {
+  "flash": {
+   "pages": 6,
+   "fidelity": {
+    "mean": 4.417,
+    "ci": [
+     4.083,
+     4.75
+    ],
+    "median": 4.5,
+    "cant_tell": 0,
+    "by_judge": {
+     "j1": 4.5,
+     "j2": 4.333
+    }
+   },
+   "omission": {
+    "rate": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "n": 6
+   },
+   "reversal": {
+    "rate": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "n": 6
+   },
+   "invention_any_but_added_fact": {
+    "rate": 0.417,
+    "ci": [
+     0.083,
+     0.75
+    ],
+    "n": 6
+   },
+   "invention_by_kind": {
+    "boundary": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 6
+    },
+    "unreadable_fill": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 6
+    },
+    "added_fact": {
+     "rate": 0.917,
+     "ci": [
+      0.75,
+      1
+     ],
+     "n": 6
+    },
+    "gloss": {
+     "rate": 0.417,
+     "ci": [
+      0.083,
+      0.75
+     ],
+     "n": 6
+    },
+    "unknown": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 6
+    }
+   },
+   "span": {
+    "same": 12,
+    "starts_later": 0,
+    "ends_earlier": 0,
+    "extends_before": 0,
+    "extends_after": 0,
+    "different": 0,
+    "cant_tell": 0
+   },
+   "defect_classes": {
+    "mistranslation": 4,
+    "T10": 3,
+    "terminology": 2
+   },
+   "reversals": []
+  },
+  "lite": {
+   "pages": 6,
+   "fidelity": {
+    "mean": 4.25,
+    "ci": [
+     3.667,
+     4.75
+    ],
+    "median": 4.5,
+    "cant_tell": 0,
+    "by_judge": {
+     "j1": 4.167,
+     "j2": 4.333
+    }
+   },
+   "omission": {
+    "rate": 0.25,
+    "ci": [
+     0,
+     0.583
+    ],
+    "n": 6
+   },
+   "reversal": {
+    "rate": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "n": 6
+   },
+   "invention_any_but_added_fact": {
+    "rate": 0.083,
+    "ci": [
+     0,
+     0.25
+    ],
+    "n": 6
+   },
+   "invention_by_kind": {
+    "boundary": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 6
+    },
+    "unreadable_fill": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 6
+    },
+    "added_fact": {
+     "rate": 0.25,
+     "ci": [
+      0,
+      0.583
+     ],
+     "n": 6
+    },
+    "gloss": {
+     "rate": 0.083,
+     "ci": [
+      0,
+      0.25
+     ],
+     "n": 6
+    },
+    "unknown": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 6
+    }
+   },
+   "span": {
+    "same": 12,
+    "starts_later": 0,
+    "ends_earlier": 0,
+    "extends_before": 0,
+    "extends_after": 0,
+    "different": 0,
+    "cant_tell": 0
+   },
+   "defect_classes": {
+    "terminology": 4,
+    "mistranslation": 7,
+    "T9": 4,
+    "T10": 1
+   },
+   "reversals": []
+  },
+  "served": {
+   "pages": 6,
+   "fidelity": {
+    "mean": 3.667,
+    "ci": [
+     3,
+     4
+    ],
+    "median": 4,
+    "cant_tell": 0,
+    "by_judge": {
+     "j1": 3.667,
+     "j2": 3.667
+    }
+   },
+   "omission": {
+    "rate": 0.333,
+    "ci": [
+     0,
+     0.667
+    ],
+    "n": 6
+   },
+   "reversal": {
+    "rate": 0.167,
+    "ci": [
+     0,
+     0.5
+    ],
+    "n": 6
+   },
+   "invention_any_but_added_fact": {
+    "rate": 0.417,
+    "ci": [
+     0.083,
+     0.833
+    ],
+    "n": 6
+   },
+   "invention_by_kind": {
+    "boundary": {
+     "rate": 0.333,
+     "ci": [
+      0,
+      0.667
+     ],
+     "n": 6
+    },
+    "unreadable_fill": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 6
+    },
+    "added_fact": {
+     "rate": 0.167,
+     "ci": [
+      0,
+      0.333
+     ],
+     "n": 6
+    },
+    "gloss": {
+     "rate": 0.083,
+     "ci": [
+      0,
+      0.25
+     ],
+     "n": 6
+    },
+    "unknown": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 6
+    }
+   },
+   "span": {
+    "same": 8,
+    "starts_later": 0,
+    "ends_earlier": 0,
+    "extends_before": 0,
+    "extends_after": 4,
+    "different": 0,
+    "cant_tell": 0
+   },
+   "defect_classes": {
+    "mistranslation": 7,
+    "T8": 3,
+    "T9": 4,
+    "T5": 4,
+    "terminology": 2
+   },
+   "reversals": [
+    {
+     "id": "69b99e8b6ed9e0490990a274_00179",
+     "judge": "j1",
+     "candidate": "I sought inner peace and saw nothing.",
+     "source_or_reference": "ajjhattasantim pacinaṃ adassaṃ"
+    },
+    {
+     "id": "69b99e8b6ed9e0490990a274_00179",
+     "judge": "j2",
+     "candidate": "I sought inner peace and saw nothing.",
+     "source_or_reference": "ajjhattasantim pacinaṃ adassaṃ"
+    }
+   ]
+  }
+ },
+ "strata": {
+  "canonical:canonical": {
+   "flash": {
+    "pages": 6,
+    "fidelity_mean": 4.417,
+    "fidelity_ci": [
+     4.083,
+     4.75
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.417
+   },
+   "lite": {
+    "pages": 6,
+    "fidelity_mean": 4.25,
+    "fidelity_ci": [
+     3.667,
+     4.75
+    ],
+    "omission": 0.25,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.083
+   },
+   "served": {
+    "pages": 6,
+    "fidelity_mean": 3.667,
+    "fidelity_ci": [
+     3,
+     4
+    ],
+    "omission": 0.333,
+    "reversal": 0.167,
+    "invention_any_but_added_fact": 0.417
+   }
+  },
+  "style:literal": {
+   "flash": {
+    "pages": 6,
+    "fidelity_mean": 4.417,
+    "fidelity_ci": [
+     4.083,
+     4.75
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.417
+   },
+   "lite": {
+    "pages": 6,
+    "fidelity_mean": 4.25,
+    "fidelity_ci": [
+     3.667,
+     4.75
+    ],
+    "omission": 0.25,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.083
+   },
+   "served": {
+    "pages": 6,
+    "fidelity_mean": 3.667,
+    "fidelity_ci": [
+     3,
+     4
+    ],
+    "omission": 0.333,
+    "reversal": 0.167,
+    "invention_any_but_added_fact": 0.417
+   }
+  },
+  "lang:Pali": {
+   "flash": {
+    "pages": 6,
+    "fidelity_mean": 4.417,
+    "fidelity_ci": [
+     4.083,
+     4.75
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.417
+   },
+   "lite": {
+    "pages": 6,
+    "fidelity_mean": 4.25,
+    "fidelity_ci": [
+     3.667,
+     4.75
+    ],
+    "omission": 0.25,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.083
+   },
+   "served": {
+    "pages": 6,
+    "fidelity_mean": 3.667,
+    "fidelity_ci": [
+     3,
+     4
+    ],
+    "omission": 0.333,
+    "reversal": 0.167,
+    "invention_any_but_added_fact": 0.417
+   }
+  },
+  "track:smoke": {
+   "flash": {
+    "pages": 6,
+    "fidelity_mean": 4.417,
+    "fidelity_ci": [
+     4.083,
+     4.75
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.417
+   },
+   "lite": {
+    "pages": 6,
+    "fidelity_mean": 4.25,
+    "fidelity_ci": [
+     3.667,
+     4.75
+    ],
+    "omission": 0.25,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.083
+   },
+   "served": {
+    "pages": 6,
+    "fidelity_mean": 3.667,
+    "fidelity_ci": [
+     3,
+     4
+    ],
+    "omission": 0.333,
+    "reversal": 0.167,
+    "invention_any_but_added_fact": 0.417
+   }
+  },
+  "fit:usable": {
+   "flash": {
+    "pages": 5,
+    "fidelity_mean": 4.3,
+    "fidelity_ci": [
+     4,
+     4.7
+    ],
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.5
+   },
+   "lite": {
+    "pages": 5,
+    "fidelity_mean": 4.3,
+    "fidelity_ci": [
+     3.6,
+     4.9
+    ],
+    "omission": 0.3,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.1
+   },
+   "served": {
+    "pages": 5,
+    "fidelity_mean": 3.6,
+    "fidelity_ci": [
+     2.8,
+     4
+    ],
+    "omission": 0.4,
+    "reversal": 0.2,
+    "invention_any_but_added_fact": 0.3
+   }
+  },
+  "fit:reference-wrong": {
+   "flash": {
+    "pages": 1,
+    "fidelity_mean": 5,
+    "fidelity_ci": null,
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0
+   },
+   "lite": {
+    "pages": 1,
+    "fidelity_mean": 4,
+    "fidelity_ci": null,
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0
+   },
+   "served": {
+    "pages": 1,
+    "fidelity_mean": 4,
+    "fidelity_ci": null,
+    "omission": 0,
+    "reversal": 0,
+    "invention_any_but_added_fact": 1
+   }
+  }
+ },
+ "pairs": {
+  "flash:lite": {
+   "by_judge": {
+    "j1": {
+     "a_wins": 4,
+     "ties": 1,
+     "b_wins": 1,
+     "cant_tell": 0
+    },
+    "j2": {
+     "a_wins": 3,
+     "ties": 1,
+     "b_wins": 2,
+     "cant_tell": 0
+    }
+   },
+   "pages": {
+    "a_wins": 4,
+    "ties": 0,
+    "b_wins": 2,
+    "cant_tell": 0
+   },
+   "sign_test_p": 0.688,
+   "fidelity_delta": {
+    "mean": 0.167,
+    "ci": [
+     -0.417,
+     0.75
+    ],
+    "n": 6,
+    "note": "flash minus lite"
+   }
+  },
+  "flash:served": {
+   "by_judge": {
+    "j1": {
+     "a_wins": 6,
+     "ties": 0,
+     "b_wins": 0,
+     "cant_tell": 0
+    },
+    "j2": {
+     "a_wins": 5,
+     "ties": 1,
+     "b_wins": 0,
+     "cant_tell": 0
+    }
+   },
+   "pages": {
+    "a_wins": 6,
+    "ties": 0,
+    "b_wins": 0,
+    "cant_tell": 0
+   },
+   "sign_test_p": 0.031,
+   "fidelity_delta": {
+    "mean": 0.75,
+    "ci": [
+     0.25,
+     1.333
+    ],
+    "n": 6,
+    "note": "flash minus served"
+   }
+  },
+  "lite:served": {
+   "by_judge": {
+    "j1": {
+     "a_wins": 3,
+     "ties": 2,
+     "b_wins": 1,
+     "cant_tell": 0
+    },
+    "j2": {
+     "a_wins": 4,
+     "ties": 1,
+     "b_wins": 1,
+     "cant_tell": 0
+    }
+   },
+   "pages": {
+    "a_wins": 4,
+    "ties": 1,
+    "b_wins": 1,
+    "cant_tell": 0
+   },
+   "sign_test_p": 0.375,
+   "fidelity_delta": {
+    "mean": 0.583,
+    "ci": [
+     -0.167,
+     1.333
+    ],
+    "n": 6,
+    "note": "lite minus served"
+   }
+  }
+ },
+ "agreement": {
+  "judges": [
+   "j1",
+   "j2"
+  ],
+  "n": 18,
+  "fidelity_exact": 0.889,
+  "within_1": 1,
+  "weighted_kappa": 0.898
+ },
+ "reference_fit": {
+  "exact": 2,
+  "wider": 5,
+  "narrower": 3,
+  "wrong": 2
+ },
+ "per_page": [
+  {
+   "id": "6a09ff48fa20006dbaba8ee1_00114",
+   "book_id": "6a09ff48fa20006dbaba8ee1",
+   "page_number": 114,
+   "lang": "Pali",
+   "track": "smoke",
+   "canonical": true,
+   "style": "literal",
+   "private": false,
+   "control": "wrong_page",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "arms": {
+    "flash": {
+     "fidelity": 5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "I say this person is like that [cloud]..."
+        },
+        {
+         "kind": "added_fact",
+         "quote": "the text elides the second and third truths"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "I say this person is like that [cloud]..."
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    },
+    "lite": {
+     "fidelity": 4.5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "(and so on)"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'legendary tales' for 'itivuttakam' (sayings, 'thus it was said')"
+        }
+       ],
+       "tier": 1
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    },
+    "served": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "nine-limb list has ten items: 'songs, prose, expositions' adds 'prose' not among 'suttam geyyam veyyākaraṇam'"
+        }
+       ],
+       "tier": 1
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "nine-item list becomes ten: 'discourses, songs, prose, expositions' for 'suttam geyyam veyyākaraṇam' — 'prose' added"
+        }
+       ],
+       "tier": 1
+      }
+     }
+    }
+   },
+   "reasons": {
+    "j1": "[flash] renders all four cloud types and the nine limbs correctly; [served] adds 'prose' to the nine limbs; [lite] gives 'legendary tales' for itivuttakam; [control:wrong_page] translates a different page (Māra's daughters).",
+    "j2": "[lite] and [flash] render all six sections of AN 4.102 with the pe-elisions intact; [served] adds a tenth item ('prose') to the nine-limbed list but is otherwise faithful; [control:wrong_page] is SN 4.25 (Mara's daughters), not this page."
+   }
+  },
+  {
+   "id": "69b99e8b6ed9e0490990a274_00179",
+   "book_id": "69b99e8b6ed9e0490990a274",
+   "page_number": 179,
+   "lang": "Pali",
+   "track": "smoke",
+   "canonical": true,
+   "style": "literal",
+   "private": false,
+   "control": "planted",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "arms": {
+    "flash": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "continues from the previous section where Māgandiya offers his daughter"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "The Brahmin Māgandiya questions the Buddha"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "837 'the one who has reached a conclusion after grasping among doctrines' blurs 'dhammesu niccheyya samuggahītaṃ'"
+        }
+       ],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "continues from the previous section where Māgandiya offers his daughter"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "The Brahmin Māgandiya questions the Buddha"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "837 'the one who has reached a conclusion after grasping among doctrines' — source negates the grasping ('na tassa hoti ... samuggahītaṃ')"
+        }
+       ],
+       "tier": 0
+      }
+     }
+    },
+    "lite": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "837 'he seeks internal peace, having seen through it' vs first-person 'pacinaṃ adassaṃ' (I saw)"
+        },
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "836 'many great men' for 'narindehi' (lords of men, kings)"
+        }
+       ],
+       "tier": 1
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": true,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "836 'views, virtuous conduct, and rebirth' drops 'anujīvitaṃ' (livelihood) and 'kīdisaṃ'"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "837 'he seeks internal peace, having seen through it' — source first person 'pacinaṃ adassaṃ' (searching, I saw)"
+        },
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "839 'being at peace, one does not long for existence' drops 'anissāya' (independent)"
+        }
+       ],
+       "tier": 1
+      }
+     }
+    },
+    "served": {
+     "fidelity": 2,
+     "by_judge": {
+      "j1": {
+       "fidelity": 2,
+       "omission": true,
+       "invention": [
+        {
+         "kind": "boundary",
+         "quote": "I think this is a delusion, others think purity comes from view."
+        }
+       ],
+       "reversal": {
+        "candidate": "I sought inner peace and saw nothing.",
+        "source_or_reference": "ajjhattasantim pacinaṃ adassaṃ"
+       },
+       "span": "extends_after",
+       "defects": [
+        {
+         "class": "T8",
+         "severity": "major",
+         "detail": "837 'I sought inner peace and saw nothing' vs 'pacinaṃ adassaṃ' (searching, I saw)"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "major",
+         "detail": "838 'you call those things attachments' vs 'anuggahāya' (without adopting them)"
+        },
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "836 'what do you say of your view of life' drops 'sīlavatānujīvitaṃ' (precepts, vows, livelihood)"
+        },
+        {
+         "class": "T5",
+         "severity": "major",
+         "detail": "840 carries 'maññe-m-aham momuham eva dhammam' etc. from the next page"
+        }
+       ],
+       "tier": 3
+      },
+      "j2": {
+       "fidelity": 2,
+       "omission": true,
+       "invention": [
+        {
+         "kind": "boundary",
+         "quote": "I think this is a delusion, others think purity comes from view."
+        }
+       ],
+       "reversal": {
+        "candidate": "I sought inner peace and saw nothing.",
+        "source_or_reference": "ajjhattasantim pacinaṃ adassaṃ"
+       },
+       "span": "extends_after",
+       "defects": [
+        {
+         "class": "T8",
+         "severity": "major",
+         "detail": "837 'I sought inner peace and saw nothing' — 'pacinaṃ adassaṃ': searching, I saw (inner peace)"
+        },
+        {
+         "class": "T8",
+         "severity": "major",
+         "detail": "838 'you call those things attachments' — source 'brūsi anuggahāya' (you speak without grasping)"
+        },
+        {
+         "class": "T5",
+         "severity": "major",
+         "detail": "840 continues 'I think this is a delusion' — next page 'maññe-m-aham momuham eva dhammam'"
+        },
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "836 'your view of life, and your becoming' drops 'sīlavata' (precepts and vows)"
+        }
+       ],
+       "tier": 3
+      }
+     }
+    }
+   },
+   "reasons": {
+    "j1": "[flash] tracks 836-840 to the page break; [lite] shifts 837 'adassaṃ' to third person; [control:planted] = [flash] but 840 'does speak' reverses 'no ce'; [served] says 'saw nothing' for 'adassaṃ', 'attachments' for 'anuggahāya', and runs into the next page.",
+    "j2": "Reference runs a couplet past the page into 840. [flash] faithful bar a muddled 837; [control:planted] is [flash] word for word except 840 'does speak' for 'No ce ... na' (reversal); [lite] drops livelihood/'anissāya' and shifts 837 to third person; [served] reverses 837 ('saw nothing') and 838 ('attachments') and pulls in next page's 'momuham' line."
+   }
+  },
+  {
+   "id": "69b99d043a4a443c39c00775_00147",
+   "book_id": "69b99d043a4a443c39c00775",
+   "page_number": 147,
+   "lang": "Pali",
+   "track": "smoke",
+   "canonical": true,
+   "style": "literal",
+   "private": false,
+   "control": "duplicate",
+   "reference_fit": {
+    "j1": "narrower",
+    "j2": "narrower"
+   },
+   "arms": {
+    "flash": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "many beings will indeed walk <gloss>the spiritual path</gloss>"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "The daughters of Mara admit their failure to tempt the Buddha"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "19 'the recruiter of the crowds' for 'gaṇa-saṅgha-vârî' (living with his community)"
+        },
+        {
+         "class": "T10",
+         "severity": "minor",
+         "detail": "summary 'daughters of Mara admit their failure' — the page has no such admission"
+        }
+       ],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "will indeed walk <gloss>the spiritual path</gloss>"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "The daughters of Mara admit their failure to tempt the Buddha"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'Cutting through craving, the recruiter of the crowds' makes craving the 'gaṇa-saṅgha-vârî', which describes the Buddha"
+        },
+        {
+         "class": "T10",
+         "severity": "minor",
+         "detail": "summary 'daughters of Mara admit their failure' — on this page Ragā praises and Mara mocks; no admission"
+        }
+       ],
+       "tier": 0
+      }
+     }
+    },
+    "lite": {
+     "fidelity": 3,
+     "by_judge": {
+      "j1": {
+       "fidelity": 3,
+       "omission": true,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "came up glowing <note>with anxiety or agitation</note>"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "major",
+         "detail": "19 'leads away The homeless multitude, Having severed the snares of the King of Death' vs 'anoko ... nessati maccurâjassa pâran'"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "19 'craving that flows like a river' for 'taṇham gaṇa-saṅgha-vârî'"
+        },
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "uddāna 'this is the Mâra-samyutta' drops 'Mârapañcakan' and 'samattam'"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "22 'strikes their head against a rock' vs 'selam va siras-ûhacca' (lifting a rock with the head)"
+        }
+       ],
+       "tier": 2
+      },
+      "j2": {
+       "fidelity": 3,
+       "omission": true,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "came up glowing <note>with anxiety or agitation</note>"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "major",
+         "detail": "v.19 'leads away The homeless multitude, Having severed the snares of the King of Death' — source 'janatam anoko ... nessati maccurâjassa pâran' (homeless one leads people beyond Death's realm)"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'the craving that flows like a river' — nothing in 'Acchejja taṇham gaṇa-saṅgha-vârî' says river"
+        },
+        {
+         "class": "T10",
+         "severity": "minor",
+         "detail": "note 'with anxiety or agitation' for 'Daddallamânâ' (blazing, shining) is unsupported"
+        },
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "uddāna drops 'Mârapañcakan' and 'samattam': 'this is the Mâra-samyutta' (not 'complete')"
+        }
+       ],
+       "tier": 2
+      }
+     }
+    },
+    "served": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "22 'you are disheartened, you fools <note>referring to Gotama</note>' vs 'nibbijjâpetha Gotamâ'"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "22 'you chew with iron teeth' vs 'ayo-dantehi khâdatha' (chew iron with teeth)"
+        }
+       ],
+       "tier": 1
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "<term>Tathāgatas</term> <gloss>those who have attained the truth</gloss>"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "v.22 last line 'you are disheartened, you fools <note>referring to Gotama</note>' — 'nibbijjâpetha Gotamâ': you leave Gotama disappointed; Gotama made into 'you fools'"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "v.19 'the net of craving, the throng of the hosts' garbles 'taṇham gaṇa-saṅgha-vârî'"
+        }
+       ],
+       "tier": 1
+      }
+     }
+    }
+   },
+   "reasons": {
+    "j1": "[served] = [served#dup] verbatim, losing 'Gotamâ' in 22 ('you fools'); [flash] keeps Gotama but garbles 'gaṇa-saṅgha-vârî' and its summary invents an admission; [lite] makes the multitude 'homeless' and severs 'snares' of the King of Death, and shortens the uddāna. Pali verse read with moderate confidence.",
+    "j2": "Reference stops before the vagga end/uddāna. [flash] keeps the sense of all verses (slip: craving as 'recruiter'; summary invents an admission); [served]=[served#dup] identical, turn 'Gotamâ' into 'you fools' in v.22; [lite] reworks v.19 into 'homeless multitude' and 'snares of the King of Death' and adds a wrong note on daddallamânâ. Footnote apparatus left untranslated by [flash]/[served]/[served#dup] not counted as omission."
+   }
+  },
+  {
+   "id": "69b99e551f30176bf4d37774_00306",
+   "book_id": "69b99e551f30176bf4d37774",
+   "page_number": 306,
+   "lang": "Pali",
+   "track": "smoke",
+   "canonical": true,
+   "style": "literal",
+   "private": false,
+   "control": null,
+   "reference_fit": {
+    "j1": "wrong",
+    "j2": "wrong"
+   },
+   "arms": {
+    "flash": {
+     "fidelity": 5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "the Akanistha heaven, the highest of the Pure Abodes"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "attaining Nirvana in the intermediate state after death"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "the Akanistha heaven, the highest of the Pure Abodes"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "one who will not be reborn in the human realm"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    },
+    "lite": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "<gloss>the attainment of Arahantship</gloss>"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'goes upstream to the Pure Abodes' for 'akaniṭṭhagāmī' (to Akaniṭṭha, the highest Pure Abode) loses the specific realm"
+        }
+       ],
+       "tier": 1
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'goes upstream to the Pure Abodes' for 'uddhamsoto hoti akaniṭṭhagāmī' (bound for Akaniṭṭha)"
+        }
+       ],
+       "tier": 1
+      }
+     }
+    },
+    "served": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "boundary",
+         "quote": "What is the base of power? What is the development of the base of power?"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Thus have I heard."
+        }
+       ],
+       "reversal": null,
+       "span": "extends_after",
+       "defects": [
+        {
+         "class": "T5",
+         "severity": "minor",
+         "detail": "completes Ananda's question 'What is the base of power?...' which is next page's 'katamo iddhipādo... paṭipadāti'; page ends at 'Katamā nu kho'"
+        }
+       ],
+       "tier": 1
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "boundary",
+         "quote": "What is the base of power? What is the development of the base of power?"
+        },
+        {
+         "kind": "boundary",
+         "quote": "Thus have I heard. At Sāvatthī."
+        }
+       ],
+       "reversal": null,
+       "span": "extends_after",
+       "defects": [
+        {
+         "class": "T5",
+         "severity": "major",
+         "detail": "completes Ānanda's questions from page 286 ('katamo iddhipādo· katamā iddhipādabhāvanā') where the page breaks at 'Katamā nu kho'"
+        }
+       ],
+       "tier": 1
+      }
+     }
+    }
+   },
+   "reasons": {
+    "j1": "Reference is SN 46.3 (awakening factors), a parallel passage not this page's iddhipāda suttas 51.25-27, used only for meaning of the seven-fruits formula; [flash] faithful throughout; [served] runs Ānanda's question on past 'Katamā nu kho' into next page's text; [lite] renders akaniṭṭhagāmī as 'to the Pure Abodes'.",
+    "j2": "Reference is SN46.3 (awakening factors), a different sutta sharing the seven-fruits formula; scored against source SN51.25–27. [flash] complete; [lite] says 'Pure Abodes' for akaniṭṭhagāmī; [served] adds 'Thus have I heard' and finishes Ānanda's question from the next page."
+   }
+  },
+  {
+   "id": "69b99e681f30176bf4d3798a_00155",
+   "book_id": "69b99e681f30176bf4d3798a",
+   "page_number": 155,
+   "lang": "Pali",
+   "track": "smoke",
+   "canonical": true,
+   "style": "literal",
+   "private": false,
+   "control": null,
+   "reference_fit": {
+    "j1": "narrower",
+    "j2": "wider"
+   },
+   "arms": {
+    "flash": {
+     "fidelity": 4.5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "The manuscripts from Mandalay and Phayre omit this opening phrase."
+        },
+        {
+         "kind": "added_fact",
+         "quote": "The Siamese manuscript omits the section starting from \"lack of grooming\""
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "The Siamese manuscript omits the section starting from \"lack of grooming\""
+        },
+        {
+         "kind": "added_fact",
+         "quote": "The manuscripts from Mandalay and Phayre omit this opening phrase."
+        },
+        {
+         "kind": "gloss",
+         "quote": "lack of reflection are the obstacle to understanding the teachings"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T10",
+         "severity": "minor",
+         "detail": "expands siglum 'S.' as 'The Siamese manuscript'; in this PTS edition S. is the Sinhalese MSS"
+        }
+       ],
+       "tier": 1
+      }
+     }
+    },
+    "lite": {
+     "fidelity": 5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    },
+    "served": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'Acting in unwholesome ways' for 'Asappāyakiriyā' (unsuitable activity); likewise 'wholesome ways' for 'Sappāyakiriyā'"
+        }
+       ],
+       "tier": 1
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'Acting in unwholesome ways' for asappāyakiriyā (unsuitable activity), and 'wholesome' for sappāyakiriyā"
+        }
+       ],
+       "tier": 1
+      }
+     }
+    }
+   },
+   "reasons": {
+    "j1": "All three carry the ten paripanthā and ten āhārā with their framing sentences; [served] turns 'asappāya/sappāya' (unsuitable/suitable) into 'unwholesome/wholesome'; [flash] additionally expands footnote sigla M/Ph/S into manuscript names (typed, not scored); the reference's located span starts after the page's first sentence, which sits in its [context] lines.",
+    "j2": "All three give the ten paripanthā and ten āhārā correctly in order; [served] has 'unwholesome' for asappāya (unsuitable); [flash] translates part of the apparatus and expands S. as 'Siamese' (wrong siglum); [lite] matches source throughout. Critical apparatus is not scored as omission for any candidate."
+   }
+  },
+  {
+   "id": "69b99e496ed9e04909909f8f_00220",
+   "book_id": "69b99e496ed9e04909909f8f",
+   "page_number": 220,
+   "lang": "Pali",
+   "track": "smoke",
+   "canonical": true,
+   "style": "literal",
+   "private": false,
+   "control": null,
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "arms": {
+    "flash": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "<note>a member of the priestly caste</note>"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'obstructed, secluded, blocked, and enveloped' — 'secluded' for 'nivuṭo' (hindered)"
+        }
+       ],
+       "tier": 1
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "<note>a member of the priestly caste</note>"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'obstructed, secluded, blocked' — 'secluded' for nivuṭo (hindered/covered)"
+        }
+       ],
+       "tier": 1
+      }
+     }
+    },
+    "lite": {
+     "fidelity": 5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 5,
+       "omission": false,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [],
+       "tier": 0
+      }
+     }
+    },
+    "served": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": true,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "hindered by sensual desires and lack of spiritual practice"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "drops the closing formula 'Ime kho, māṇava, pañca kāmaguṇā' after 'associated with sensual desire, and provocative.'"
+        }
+       ],
+       "tier": 2
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": true,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "closing formula 'Ime kho, māṇava, pañca kāmaguṇā' absent; T1 goes from 'and provocative.' straight to 'By these five strands'"
+        }
+       ],
+       "tier": 2
+      }
+     }
+    }
+   },
+   "reasons": {
+    "j1": "Page runs from the five hindrances to 'yāyaṃ pīti'; reference adds context before and two lines from the next page; [lite] faithful throughout; [flash] renders nivuṭo as 'secluded'; [served] omits 'These, young man, are the five strands of sensual pleasure' (Ime kho, māṇava, pañca kāmaguṇā).",
+    "j2": "All three render hindrances, kāmaguṇā, fire simile and the cut-off 'yāyaṃ pīti'; [served] drops the 'Ime kho, māṇava, pañca kāmaguṇā' summary line; [flash] has 'secluded' for nivuṭo; [lite] complete and accurate. Reference runs on into page 204."
+   }
+  }
+ ]
+}
