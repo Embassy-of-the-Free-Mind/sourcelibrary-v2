@@ -563,6 +563,9 @@ async function load(db) {
   for (const f of fs.readdirSync(vdir).filter((x) => x.endsWith('.ids.json')).sort()) {
     const jobId = f.replace('.ids.json', '');
     if (loaded.has(jobId)) continue;
+    // The embedding model is the job's, not the table default: the first run's jobs
+    // used the preview id and later ones the GA id (same vector space, #6170).
+    const embeddingModel = (await db.collection(JOBS).findOne({ _id: jobId }, { projection: { model: 1 } }))?.model || EMBED_MODEL;
     const ids = JSON.parse(fs.readFileSync(path.join(vdir, f), 'utf8'));
     const raw = fs.readFileSync(path.join(vdir, `${jobId}.f32`));
     const all = new Float32Array(raw.buffer, raw.byteOffset, raw.byteLength / 4);
@@ -576,14 +579,14 @@ async function load(db) {
         const p = live.get(x.page_id); const m = meta.get(x.page_id);
         if (!p || !m || p.concept_abstract?.content_hash !== x.content_hash) { skipped++; return; }
         const v = all.subarray((i + j) * EMBED_DIMS, (i + j + 1) * EMBED_DIMS);
-        const vals = [x.page_id, m.book_id, p.page_number, p.concept_abstract.data, x.content_hash, PROMPT_VERSION, MODEL, RUN, `[${Array.from(v).join(',')}]`];
+        const vals = [x.page_id, m.book_id, p.page_number, p.concept_abstract.data, x.content_hash, PROMPT_VERSION, MODEL, RUN, embeddingModel, `[${Array.from(v).join(',')}]`];
         tuples.push(`(${vals.map((val) => { params.push(val); return `$${params.length}`; }).join(', ')})`);
       });
       if (tuples.length) {
-        await client.query(`INSERT INTO page_concepts (page_id, book_id, page_number, abstract, abstract_hash, prompt_version, model, run, embedding)
+        await client.query(`INSERT INTO page_concepts (page_id, book_id, page_number, abstract, abstract_hash, prompt_version, model, run, embedding_model, embedding)
           VALUES ${tuples.join(', ')}
           ON CONFLICT (page_id) DO UPDATE SET book_id = EXCLUDED.book_id, page_number = EXCLUDED.page_number, abstract = EXCLUDED.abstract,
-            abstract_hash = EXCLUDED.abstract_hash, prompt_version = EXCLUDED.prompt_version, model = EXCLUDED.model, run = EXCLUDED.run,
+            abstract_hash = EXCLUDED.abstract_hash, prompt_version = EXCLUDED.prompt_version, model = EXCLUDED.model, run = EXCLUDED.run, embedding_model = EXCLUDED.embedding_model,
             embedding = EXCLUDED.embedding, updated_at = now()`, params);
         written += tuples.length;
       }
