@@ -456,7 +456,12 @@ async function embed(db) {
   const maxRunning = Number(arg('--max-running', 2));
   const maxUsd = Number(arg('--max-usd', 50));
   const jobs = db.collection(JOBS);
-  const inJobs = new Set((await jobs.find({ run: RUN, kind: 'embed', status: { $nin: ['failed', 'create_failed'] } }).project({ page_ids: 1 }).toArray()).flatMap((j) => j.page_ids));
+  // Covered: in an open embedding job, or already holding a vector on disk for its
+  // current abstract. A cancelled request (Batch "The operation was cancelled",
+  // unbilled) has neither, so it goes out again.
+  const inJobs = new Set((await jobs.find({ run: RUN, kind: 'embed', status: 'submitted' }).project({ page_ids: 1 }).toArray()).flatMap((j) => j.page_ids || []));
+  const vdir = path.join(DIR, 'vectors');
+  if (fs.existsSync(vdir)) for (const f of fs.readdirSync(vdir).filter((x) => x.endsWith('.ids.json'))) for (const x of JSON.parse(fs.readFileSync(path.join(vdir, f), 'utf8'))) inJobs.add(`${x.page_id}|${x.content_hash}`);
   let batch = [];
   const flush = async () => {
     if (!batch.length) return true;
@@ -483,7 +488,7 @@ async function embed(db) {
     return true;
   };
   for await (const r of readAbstracts()) {
-    if (r.none || inJobs.has(r.page_id)) continue;
+    if (r.none || inJobs.has(r.page_id) || inJobs.has(`${r.page_id}|${r.content_hash}`)) continue;
     batch.push(r);
     if (batch.length >= jobPages && !(await flush())) return;
   }
