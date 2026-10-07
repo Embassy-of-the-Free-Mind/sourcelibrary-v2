@@ -40,6 +40,8 @@
  *   --book ID     Process a single book
  *   --books-file PATH  Embed every page with text and no row, for a JSON array
  *                 of book ids (translated or not)
+ *   --pages-file PATH  RE-embed exactly these page ids (JSON array), row or no
+ *                 row — the repair lane for wrong vectors (#6175). Works with --batch.
  *   --limit N     Stop after N pages
  *   --dry-run     Count pages without embedding
  *
@@ -128,6 +130,11 @@ const BOOKS_FILE = args.find((_, i, a) => a[i - 1] === '--books-file');
 // translation. For budget-capped backfills, where translated pages are the ones
 // readers and the Librarian search by meaning (#5869).
 const TRANSLATED_ONLY = args.includes('--translated-only');
+// --pages-file PATH: RE-embed exactly these page ids (JSON array), whether or not
+// they already have a row. The repair lane for rows whose vector is wrong — an
+// e5 vector under a Gemini label, a vector of text the page no longer holds
+// (#6175). --books-file cannot do it: it only fills pages with NO row.
+const PAGES_FILE = args.find((_, i, a) => a[i - 1] === '--pages-file');
 const LIMIT = parseInt(args.find((_, i, a) => a[i - 1] === '--limit') || '0') || 0;
 const WORKER_ID = parseInt(args.find((_, i, a) => a[i - 1] === '--worker-id') || '0');
 const WORKER_COUNT = parseInt(args.find((_, i, a) => a[i - 1] === '--worker-count') || '1');
@@ -136,10 +143,10 @@ const COLLECT_MODE = args.includes('--collect');
 const JOB_PAGES = parseInt(args.find((_, i, a) => a[i - 1] === '--job-pages') || '20000');
 const COLLECT_CONCURRENCY = parseInt(args.find((_, i, a) => a[i - 1] === '--collect-concurrency') || '3');
 const MAX_RUNNING = parseInt(args.find((_, i, a) => a[i - 1] === '--max-running') || '0') || 0;
-if (BATCH_MODE && !BOOKS_FILE) {
+if (BATCH_MODE && !BOOKS_FILE && !PAGES_FILE) {
   // A batch job is priced and attributed per book; an open-ended batch --full
   // would enqueue the whole corpus' spend in one go. Name the books.
-  console.error('--batch needs --books-file');
+  console.error('--batch needs --books-file or --pages-file');
   process.exit(1);
 }
 
@@ -203,7 +210,7 @@ let usageTotalChars = 0;   // characters recorded, for the closing summary
 // way would read $0 against its budget however much it spent (#5869). The
 // streaming incremental run keeps one unattributed accumulator — its pages span
 // thousands of books per flush window and it is never envelope-capped by book.
-const ATTRIBUTE_PER_BOOK = Boolean(BOOKS_FILE || BOOK_ID);
+const ATTRIBUTE_PER_BOOK = Boolean(BOOKS_FILE || PAGES_FILE || BOOK_ID);
 const bookUsage = new Map(); // book_id → accumulator
 let bookUsageTexts = 0;
 
@@ -432,7 +439,7 @@ async function submitEmbedJob() {
   await jobs.insertOne({
     _id: jobId, status: 'creating', model: MODEL, dims: DIMS, books_file: BOOKS_FILE || null,
     book_ids: [...job.books.keys()], page_ids: job.pageIds, requests: job.lines.length, bytes: job.bytes,
-    est_usd: +estUsd.toFixed(4), created_at: new Date(),
+    pages_file: PAGES_FILE || null, est_usd: +estUsd.toFixed(4), created_at: new Date(),
   });
   let created;
   try {
@@ -628,7 +635,7 @@ async function getLegacySyncTime() {
 
 const start = Date.now();
 console.log(`Embedding model: ${MODEL} (${DIMS} dims)`);
-console.log(`Mode: ${FULL_MODE ? 'full' : RESTALE ? 'restale' : MISSING_ONLY ? 'missing-only' : BOOKS_FILE ? 'books-file ' + BOOKS_FILE : BOOK_ID ? 'book ' + BOOK_ID : 'incremental'}${WORKER_COUNT > 1 ? ` (worker ${WORKER_ID}/${WORKER_COUNT})` : ''}`);
+console.log(`Mode: ${FULL_MODE ? 'full' : RESTALE ? 'restale' : MISSING_ONLY ? 'missing-only' : PAGES_FILE ? 'pages-file ' + PAGES_FILE : BOOKS_FILE ? 'books-file ' + BOOKS_FILE : BOOK_ID ? 'book ' + BOOK_ID : 'incremental'}${WORKER_COUNT > 1 ? ` (worker ${WORKER_ID}/${WORKER_COUNT})` : ''}`);
 
 /** Books the open scope envelope allows, when the global dial is closed (#4865). */
 let ENVELOPE_IDS = null;
@@ -732,6 +739,25 @@ if (BOOK_ID) {
   globalThis.MISSING_PAGE_IDS = new Set(myRows.map(r => r.page_id));
   pageQuery.book_id = { $in: myBookIds };
   console.log(`Processing ${myRows.length.toLocaleString()} missing pages across ${myBookIds.length.toLocaleString()} books`);
+} else if (PAGES_FILE) {
+  const ids = JSON.parse(fs.readFileSync(PAGES_FILE, 'utf8')).map(String);
+  if (!ids.length) { console.error(`--pages-file ${PAGES_FILE} is empty`); process.exit(1); }
+  const owners = await db.collection('pages').find({ id: { $in: ids } }, { projection: { book_id: 1 } }).toArray();
+  const bookIds = [...new Set(owners.map(p => String(p.book_id)))];
+  // Every listed page is re-embedded, row or no row. Only pages already in an
+  // uncollected Batch job are skipped, so a re-run resumes rather than pays twice.
+  const skip = new Set();
+  if (BATCH_MODE) {
+    const inflight = db.collection(EMBED_JOBS).find(
+      { page_ids: { $in: ids }, $or: [{ status: { $in: ['submitted', 'collecting'] } }, { status: 'creating', created_at: { $gt: new Date(Date.now() - 3600e3) } }] },
+      { projection: { page_ids: 1 } },
+    );
+    for await (const j of inflight) for (const id of j.page_ids || []) skip.add(id);
+  }
+  globalThis.SKIP_PAGE_IDS = skip;
+  pageQuery.id = { $in: ids };
+  pageQuery.book_id = { $in: bookIds };
+  console.log(`${ids.length.toLocaleString()} listed pages across ${bookIds.length.toLocaleString()} books; ${skip.size} already in an uncollected Batch job.`);
 } else if (BOOKS_FILE) {
   let targetIds = JSON.parse(fs.readFileSync(BOOKS_FILE, 'utf8'));
   if (!Array.isArray(targetIds) || !targetIds.length) {
@@ -918,7 +944,7 @@ if (DRY_RUN) {
 // Watermark bookkeeping (#5869). Anything that confines the book set makes the
 // run "scoped": it may read new pages, but it cannot vouch for the pages it
 // did not look at, so it must not move the mark.
-const INCREMENTAL = !FULL_MODE && !RESTALE && !MISSING_ONLY && !BOOKS_FILE && !BOOK_ID;
+const INCREMENTAL = !FULL_MODE && !RESTALE && !MISSING_ONLY && !BOOKS_FILE && !PAGES_FILE && !BOOK_ID;
 const RUN_SCOPED = Boolean(ENVELOPE_IDS) || WORKER_COUNT > 1;
 let maxReadTs = null;
 
@@ -952,7 +978,7 @@ for await (const page of cursor) {
     continue;
   }
   // --books-file: skip pages already in page_translations; embed only the rest.
-  if (BOOKS_FILE && globalThis.SKIP_PAGE_IDS.has(page.id)) {
+  if ((BOOKS_FILE || PAGES_FILE) && globalThis.SKIP_PAGE_IDS.has(page.id)) {
     skipped++;
     processed++;
     continue;
