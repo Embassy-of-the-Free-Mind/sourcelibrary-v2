@@ -91,6 +91,9 @@ const API = 'https://generativelanguage.googleapis.com/v1beta';
 // Project 3 (keys 3/5/7/10 list the same batch jobs). The #5729 embedding backfill
 // runs on TIER3's project, where more than ~3 concurrent embedding jobs get cancelled.
 const KEY = process.env.GEMINI_API_KEY_3 || process.env.GEMINI_API_KEY;
+// Embedding jobs may spread over several projects (--embed-keys); each job records
+// the key it was created with, and every later call on it uses that key.
+const keyOf = (name) => (name ? process.env[name] : null) || KEY;
 const PAGE_MIN_CHARS = 200;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -269,7 +272,8 @@ async function gateOpen(db, bookIds) {
   return outside.length === 0;
 }
 
-async function createJob(kind, model, body, displayName) {
+async function createJob(kind, model, body, displayName, key = KEY) {
+  const KEY = key;
   const fileName = await uploadBatchInputFile(body, displayName, KEY);
   const verb = kind === 'embed' ? 'asyncBatchEmbedContent' : 'batchGenerateContent';
   return createThenDeleteInput({
@@ -289,7 +293,7 @@ async function createJob(kind, model, body, displayName) {
   });
 }
 
-async function batchState(name) {
+async function batchState(name, KEY = keyOf(null)) {
   const r = await (await fetch(`${API}/${name}?key=${KEY}`)).json();
   return { state: r.metadata?.state || r.state || 'UNKNOWN', responsesFile: r.response?.responsesFile || r.metadata?.output?.responsesFile || null, stats: r.metadata?.batchStats || null };
 }
@@ -455,6 +459,7 @@ async function embed(db) {
   const jobPages = Number(arg('--job-pages', 20000));
   const maxRunning = Number(arg('--max-running', 2));
   const maxUsd = Number(arg('--max-usd', 50));
+  const embedKeys = arg('--embed-keys', process.env.CONCEPT_EMBED_KEYS || 'GEMINI_API_KEY_3').split(',');
   const jobs = db.collection(JOBS);
   // Covered: in an open embedding job, or already holding a vector on disk for its
   // current abstract. A cancelled request (Batch "The operation was cancelled",
@@ -465,8 +470,9 @@ async function embed(db) {
   let batch = [];
   const flush = async () => {
     if (!batch.length) return true;
-    const running = await jobs.countDocuments({ run: RUN, kind: 'embed', status: 'submitted' });
-    if (running >= maxRunning) { console.log(`STOP: ${running} embedding jobs open (--max-running ${maxRunning}); collect first`); return false; }
+    const open = await jobs.find({ run: RUN, kind: 'embed', status: 'submitted' }).project({ key_project: 1 }).toArray();
+    const keyName = embedKeys.find((k) => open.filter((j) => (j.key_project || 'GEMINI_API_KEY_3') === k).length < maxRunning);
+    if (!keyName) { console.log(`STOP: ${open.length} embedding jobs open (--max-running ${maxRunning} per project); collect first`); return false; }
     const rows = batch; batch = [];
     const perBook = new Map();
     const lines = rows.map((r) => {
@@ -479,8 +485,8 @@ async function embed(db) {
     if (committed + estUsd > maxUsd) { console.log(`STOP: committed $${committed.toFixed(2)} + $${estUsd.toFixed(2)} > $${maxUsd}`); return false; }
     if (!(await gateOpen(db, [...perBook.keys()]))) { console.log('STOP: spend gate closed'); return false; }
     const jobId = `cae-${RUN}-${Date.now().toString(36)}`;
-    const created = await createJob('embed', EMBED_MODEL, lines.join('\n') + '\n', jobId);
-    await jobs.insertOne({ _id: jobId, run: RUN, kind: 'embed', gemini_name: created.name, model: EMBED_MODEL, status: 'submitted', created_at: new Date(), page_ids: rows.map((r) => r.page_id), pages: rows.length, book_ids: [...perBook.keys()], est_usd: +estUsd.toFixed(4), key_project: 'GEMINI_API_KEY_3' });
+    const created = await createJob('embed', EMBED_MODEL, lines.join('\n') + '\n', jobId, keyOf(keyName));
+    await jobs.insertOne({ _id: jobId, run: RUN, kind: 'embed', gemini_name: created.name, model: EMBED_MODEL, status: 'submitted', created_at: new Date(), page_ids: rows.map((r) => r.page_id), pages: rows.length, book_ids: [...perBook.keys()], est_usd: +estUsd.toFixed(4), key_project: keyName });
     for (const [bookId, b] of perBook) {
       await logUsage({ type: 'embedding', mode: 'batch', model: EMBED_MODEL, book_id: bookId, page_count: b.pages, batch_job_id: `${jobId}:${bookId}`, input_tokens: 0, output_tokens: 0, status: 'submitted', endpoint: `${ENDPOINT}/embed`, cost_usd: +usdForTokens(b.tokens, { batch: true }).toFixed(6) }, db);
     }
@@ -500,7 +506,8 @@ async function embedCollect(db) {
   const vdir = path.join(DIR, 'vectors');
   fs.mkdirSync(vdir, { recursive: true });
   for (const job of await jobs.find({ run: RUN, kind: 'embed', status: 'submitted' }).sort({ created_at: 1 }).toArray()) {
-    const st = await batchState(job.gemini_name);
+    const KEY = keyOf(job.key_project);
+    const st = await batchState(job.gemini_name, KEY);
     if (/FAILED|CANCELLED|EXPIRED/.test(st.state)) {
       await jobs.updateOne({ _id: job._id }, { $set: { status: 'failed', state: st.state } });
       for (const id of job.book_ids) await completeBatchUsage({ batch_job_id: `${job._id}:${id}`, model: EMBED_MODEL, input_tokens: 0, output_tokens: 0, status: 'failed', error_message: st.state, insertIfMissing: false }, db);
