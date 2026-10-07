@@ -10,10 +10,30 @@ writes results/.../refjudge/scores.json (no quotes).
   --round 2      #6121 round 2 (S, A, G38, G35, O)
   --round 6182   #6182 (171 sides × 11 arms, PREREG.md): the same gate/summary/rule code with FP as the
                  floor arm, plus per-stratum scores with by-text bootstrap CIs and rule B (pareto-6182.py)
+  --round 6182xl #6182, every language but Tibetan (365 pages × 9 Gemini arms + the tracks' Opus): #5695's
+                 judge schema (one reversal, boolean omission), so gate, strata and rule B are score-xl.py's
 """
 import collections, glob, itertools, json, random, sys
 
 ROUND = sys.argv[sys.argv.index("--round") + 1] if "--round" in sys.argv else "1"
+if ROUND == "6182xl":  # J1 on every item, J2 on the preregistered subset (J2-subset.json); out-J2s-* are J2's
+    import hashlib, importlib.util
+    OUT, JW = "scripts/eval/results/pareto-6182/xljudge", "/root/pareto-6182/xljudge"
+    key = json.load(open(f"{OUT}/key.json"))
+    subset = json.load(open(f"{JW}/J2-subset.json"))["ids"]
+    assert hashlib.sha256(",".join(subset).encode()).hexdigest().startswith("e3413c8bb1ed6b57"), "J2 subset changed"
+    J = {"J1": {}, "J2": {}}
+    for f in glob.glob(f"{JW}/out-J*-*.jsonl"):
+        j = "J2" if "-J2" in f else "J1"
+        for l in open(f):
+            if l.strip():
+                o = json.loads(l); J[j][o["id"]] = o
+    missing = {"J1": [i for i in key["items"] if i not in J["J1"]], "J2": [i for i in subset if i not in J["J2"]]}
+    assert not any(missing.values()), missing
+    spec = importlib.util.spec_from_file_location("p6182xl", "scripts/eval/pareto-6182/score-xl.py")
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+    m.run(key=key, J=J, OUT=OUT, subset=subset)
+    sys.exit(0)
 P6182 = ROUND == "6182"
 R2 = ROUND == "2" or P6182  # 6182 applies round 2's rule (PREREG.md rule A), FP in A's place
 OUT = {"1": "scripts/eval/results/tengyur-levers-6121/refjudge", "2": "scripts/eval/results/tengyur-models-6121/refjudge",
