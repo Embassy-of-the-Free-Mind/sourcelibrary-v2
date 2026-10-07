@@ -86,6 +86,8 @@ const QUESTIONS: { title: string; refs: Ref[] }[] = [
   {
     title: 'Can you trust the translation you are reading?',
     refs: [
+      { href: '/research/quality', label: 'How page quality is measured (draft paper)' },
+      { href: '/research/page-errors', label: 'What goes wrong on a page (draft paper)' },
       { slug: 'translation-collapse' },
       { slug: 'word-alignment' },
       { slug: 'does-ai-get-religion' },

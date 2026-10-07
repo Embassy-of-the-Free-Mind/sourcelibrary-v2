@@ -202,3 +202,109 @@ export function SkuTable({ skus }: { skus: SkuRow[] }) {
     </div>
   );
 }
+
+/**
+ * Per-book completion: how far each book with any OCR has got, in 1% bins
+ * (index 0..99 = [i%, i+1%), index 100 = complete). The 0% and 100% bins dwarf
+ * everything between, so they are drawn clipped at the top with their true
+ * count printed, and the smoothed curve covers only the in-between range —
+ * smoothing across a spike would smear it into its neighbours.
+ */
+function CompletionPanel({ bins, color, title, noun, total }: { bins: number[]; color: string; title: string; noun: string; total: number }) {
+  const [hover, setHover] = useState<number | null>(null);
+  const W = 1000, H = 190, padL = 56, padR = 8, padT = 22, padB = 24;
+  const iw = W - padL - padR, ih = H - padT - padB;
+  const slot = iw / 101, bw = Math.max(1, slot - 2); // 2px surface gap between bars
+  const interiorMax = Math.max(1, ...bins.slice(1, 100));
+  const step = niceStep((interiorMax * 1.15) / 4);
+  const top = Math.ceil((interiorMax * 1.15) / step) * step;
+  const y = (v: number) => padT + ih - (Math.min(v, top) / top) * ih;
+  const ticks: number[] = [];
+  for (let v = 0; v <= top + 1e-9; v += step) ticks.push(v);
+
+  // Gaussian smoothing (sigma 2 bins) over the interior bins only.
+  const smooth = useMemo(() => {
+    const s = 2, out: number[] = [];
+    for (let i = 1; i < 100; i++) {
+      let a = 0, w = 0;
+      for (let j = Math.max(1, i - 3 * s); j <= Math.min(99, i + 3 * s); j++) {
+        const k = Math.exp(-((i - j) ** 2) / (2 * s * s)); a += bins[j] * k; w += k;
+      }
+      out.push(a / w);
+    }
+    return out;
+  }, [bins]);
+  const cx = (i: number) => padL + i * slot + slot / 2;
+  const path = smooth.map((v, k) => `${k ? 'L' : 'M'}${cx(k + 1).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+  const binLabel = (i: number) => (i === 100 ? 'complete (100%)' : i === 0 ? 'under 1%' : `${i}–${i + 1}%`);
+  const hx = hover != null ? (cx(hover) / W) * 100 : 0;
+
+  return (
+    <div className="relative grid gap-1">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 text-xs">
+        <span className="inline-flex items-center gap-1.5 text-stone-800 font-medium">
+          <i className="inline-block w-2.5 h-2.5 rounded-sm" style={{ background: color }} />{title}
+        </span>
+        <span className="text-stone-500">{total.toLocaleString('en-US')} books · 1% bins · curve smoothed · end bars clipped</span>
+      </div>
+      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${title}: histogram of ${total} books`} className="w-full h-auto block">
+        {ticks.map(v => (
+          <g key={v}>
+            <line x1={padL} x2={W - padR} y1={y(v)} y2={y(v)} stroke={v === 0 ? '#c3c2b7' : '#e1e0d9'} strokeWidth={1} />
+            <text x={padL - 8} y={y(v) + 4} textAnchor="end" fontSize={11} fill="#898781">{v.toLocaleString('en-US')}</text>
+          </g>
+        ))}
+        {bins.map((v, i) => {
+          if (!v) return null;
+          const clipped = v > top;
+          const x = padL + i * slot + 1, yt = y(v), hgt = Math.max(1, padT + ih - yt);
+          return (
+            <g key={i}>
+              <rect x={x} y={yt} width={bw} height={hgt} rx={Math.min(2, bw / 2)} fill={color}
+                fillOpacity={clipped ? 0.9 : hover === i ? 0.75 : 0.35} />
+              {clipped && (
+                <>
+                  <path d={`M${x - 3},${yt + 10} l${bw + 6},-5 M${x - 3},${yt + 15} l${bw + 6},-5`} stroke="#fff" strokeWidth={2.5} />
+                  <text x={i === 0 ? x : x + bw} y={padT - 8} textAnchor={i === 0 ? 'start' : 'end'} fontSize={11} fill="#3d3c38" fontWeight={600}>
+                    {i === 0 ? `${v.toLocaleString('en-US')} under 1% ${noun}` : `${v.toLocaleString('en-US')} complete`}
+                  </text>
+                </>
+              )}
+            </g>
+          );
+        })}
+        <path d={path} fill="none" stroke={color} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
+        {[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map(t => (
+          <text key={t} x={cx(t)} y={H - 6} textAnchor="middle" fontSize={11} fill="#898781">{t}%</text>
+        ))}
+        {bins.map((_, i) => (
+          <rect key={'h' + i} x={padL + i * slot} y={padT} width={slot} height={ih} fill="transparent"
+            onPointerEnter={() => setHover(i)} onPointerLeave={() => setHover(null)} />
+        ))}
+      </svg>
+      {hover != null && (
+        <div className="pointer-events-none absolute top-6 z-10 rounded border border-stone-200 bg-white px-3 py-2 text-xs shadow-md min-w-[170px]"
+          style={{ left: `clamp(0%, calc(${hx}% - 85px), calc(100% - 190px))` }}>
+          <b className="block text-stone-900">{binLabel(hover)} {noun}</b>
+          <div className="flex justify-between gap-4 text-stone-700">
+            <span>Books</span><strong>{bins[hover].toLocaleString('en-US')}</strong>
+          </div>
+          <div className="flex justify-between gap-4 text-stone-500">
+            <span>Share</span><span>{total ? ((bins[hover] / total) * 100).toFixed(1) : 0}%</span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function CompletionHistogram({ ocr, translation, booksWithOcr, nonEnglishWithOcr }: {
+  ocr: number[]; translation: number[]; booksWithOcr: number; nonEnglishWithOcr: number;
+}) {
+  return (
+    <div className="grid gap-4">
+      <CompletionPanel bins={ocr} color={SERIES[0]} title="Share of pages transcribed (OCR)" noun="transcribed" total={booksWithOcr} />
+      <CompletionPanel bins={translation} color={SERIES[2]} title="Share of translatable pages translated (non-English books)" noun="translated" total={nonEnglishWithOcr} />
+    </div>
+  );
+}

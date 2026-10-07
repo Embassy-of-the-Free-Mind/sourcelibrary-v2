@@ -4,7 +4,8 @@ import { useState, useCallback } from 'react';
 import { CheckCircle2, GripVertical, Loader2, ImageIcon, FileText, RefreshCw, LayoutGrid, BookOpenText } from 'lucide-react';
 import type { Page } from '@/lib/types';
 import { AuthCheck } from '@/components/auth/AuthCheck';
-import { useEmbedHref } from '@/lib/EmbedContext';
+import Link from 'next/link';
+import { useEmbed, useEmbedHref } from '@/lib/EmbedContext';
 import { useLocale, useLocalePath } from '@/lib/i18n';
 import { BOOK_STRINGS } from '@/lib/book-i18n';
 
@@ -106,6 +107,11 @@ export default function PagesGrid({
   const fallbackFor = (index: number) =>
     fallbackImages && fallbackImages.length > 0 ? fallbackImages[index % fallbackImages.length] : null;
   const embedHref = useEmbedHref();
+  // Framed (partner embed or reading room): navigate client-side so the frame never
+// makes a history entry of its own — a full page load inside an iframe adds one the
+// host page cannot suppress, and Back then needs two presses (#5266, yam packet).
+// Standalone keeps the plain anchor (no prefetch of hundreds of reader routes).
+const framed = useEmbed();
   // The grid takes its language and its URL prefix from the page it is mounted
   // on: /es/book/… renders Spanish chrome and keeps /es on every page link.
   const t = BOOK_STRINGS[useLocale()];
@@ -216,7 +222,8 @@ export default function PagesGrid({
 
             return (
               <div key={page.id} className="group relative">
-                <a
+                <PageLink
+                  framed={framed}
                   href={localePath(embedHref(`/book/${bookPath || bookId}/page/${page.id}`))}
                 >
                   <div className="bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow relative" style={brightnessStyle}>
@@ -228,7 +235,7 @@ export default function PagesGrid({
                       <TextPageCard natural />
                     )}
                   </div>
-                </a>
+                </PageLink>
                 {/* Set as Cover button — admin and inner circle */}
                 <AuthCheck role="inner_circle">
                   <button
@@ -279,16 +286,23 @@ export default function PagesGrid({
           {readHref && (
             // Not localePath: /es/book/[id]/read does not exist yet (#5115), and
             // the /es prefix would send a Spanish reader to a 404.
-            <a
+            <PageLink
+              framed={framed}
               href={embedHref(readHref)}
               className="inline-flex items-center gap-2 px-6 py-2.5 bg-stone-900 text-white rounded-lg hover:bg-stone-800 transition-colors text-sm font-medium"
             >
               <BookOpenText className="w-4 h-4" />
               {t.readAsOneDocument}
-            </a>
+            </PageLink>
           )}
         </div>
       )}
     </div>
   );
+}
+
+/** A plain anchor standalone; a client-side Link (no prefetch) when framed. */
+function PageLink({ framed, href, className, children }: { framed: boolean; href: string; className?: string; children: React.ReactNode }) {
+  if (framed) return <Link href={href} prefetch={false} className={className}>{children}</Link>;
+  return <a href={href} className={className}>{children}</a>;
 }

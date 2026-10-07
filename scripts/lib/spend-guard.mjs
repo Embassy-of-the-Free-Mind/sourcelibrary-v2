@@ -79,7 +79,7 @@ async function getSupabaseSpend(dayStart) {
   try {
     for (let pageNo = 0; ; pageNo++) {
       if (pageNo >= SUPABASE_MAX_PAGES) {
-        return { usd, rows, costlessRows, error: `>${SUPABASE_MAX_PAGES * 1000} rows today — sum truncated` };
+        return { usd, rows, costlessRows, truncated: true, error: `>${SUPABASE_MAX_PAGES * 1000} rows today — sum truncated` };
       }
       const from = pageNo * 1000;
       const resp = await fetch(
@@ -129,6 +129,8 @@ export async function getTodaySpendUsd(db, now = new Date()) {
     rows: mongo.rows + supa.rows,
     costlessRows: mongo.costlessRows + supa.costlessRows,
     meterError: supa.error,
+    // The pagination cap was hit: `usd` is then a LOWER BOUND on today's spend, not a failed read.
+    meterTruncated: !!supa.truncated,
   };
 }
 
@@ -202,6 +204,9 @@ export function readScopeEnvelopes(control) {
         book_ids: Array.isArray(s.book_ids) ? s.book_ids.filter(Boolean).map(String) : [],
         collections: Array.isArray(s.collections) ? s.collections.filter(Boolean).map(String) : [],
         created_at: s.created_at ? new Date(s.created_at) : null,
+        // Optional: gate LABEL prefixes this envelope opens for. Absent = every worker that asks
+        // the scoped gate may spend it on these books (the original contract).
+        lanes: Array.isArray(s.lanes) && s.lanes.length ? s.lanes.filter(Boolean).map(String) : null,
       });
     }
   }
@@ -312,12 +317,19 @@ export async function budgetAllowsDispatchScoped(db, label, { bypass = false, co
 
   if (budget !== null) {
     const spend = await getTodaySpendUsd(db);
-    if (spend.meterError) {
+    // A truncated sum is a LOWER bound. Once it reaches the dial, the dial is known to be closed,
+    // and the envelope lane below decides: each envelope reads its own per-book meter and fails
+    // closed on its own. Without this, a busy day (>40K usage rows, 2026-10-01: 41,416 by 16:20 UTC,
+    // most of them per-round chained-lane meter rows) closed every envelope until UTC midnight.
+    const knownClosed = spend.meterTruncated && spend.usd >= budget;
+    if (spend.meterError && !knownClosed) {
       // An unreadable meter closes EVERY lane — envelopes read the same stores.
       console.log(`  [spend-guard] ${label}: METER UNREADABLE (${spend.meterError}) — refusing dispatch (all lanes). Partial sum was $${spend.usd.toFixed(2)}.`);
       return { allowed: false, envelopeIds: null };
     }
-    if (spend.usd < budget) {
+    if (knownClosed) {
+      console.log(`  [spend-guard] ${label}: daily meter truncated (${spend.meterError}) at $${spend.usd.toFixed(2)} ≥ $${budget.toFixed(2)} — the dial is reached; envelopes decide.`);
+    } else if (spend.usd < budget) {
       const blind = spend.costlessRows > 0 ? ` (${spend.costlessRows} rows without cost_usd — spend is undercounted)` : '';
       console.log(`  [spend-guard] ${label}: spend $${spend.usd.toFixed(2)} / $${budget.toFixed(2)} today (UTC, both stores), ${spend.rows} calls${blind} → DISPATCH`);
       return { allowed: true, envelopeIds: null };
@@ -333,6 +345,14 @@ export async function budgetAllowsDispatchScoped(db, label, { bypass = false, co
   const open = new Set();
   const parts = [];
   for (const env of envelopes) {
+    // A lane-restricted envelope is a permission on a set of books FOR ONE WORKER. Without it, an
+    // envelope opened for translation paid image extraction more than translation on the same
+    // books (2026-09-30: $2.80 image-extract vs $2.52 chained translation, chained-stalled-2026-09-30),
+    // because spend is attributed by book_id and every scoped worker asks this gate.
+    if (env.lanes && !env.lanes.some((lane) => String(label).startsWith(lane))) {
+      parts.push(`${env.tag}: lane-restricted to ${env.lanes.join(',')}`);
+      continue;
+    }
     const ids = await resolveEnvelopeIds(db, env);
     if (ids.size === 0) { parts.push(`${env.tag}: empty scope`); continue; }
     const s = await getScopeSpendUsd(db, { ids: [...ids], since: env.created_at });

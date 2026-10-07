@@ -153,6 +153,14 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
               My Lists
             </Link>
             <Link
+              href="/rooms"
+              className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+              style={{ color: 'var(--text-primary)' }}
+              onClick={() => setIsOpen(false)}
+            >
+              Reading Rooms
+            </Link>
+            <Link
               href="/reading-history"
               className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
               style={{ color: 'var(--text-primary)' }}
@@ -170,6 +178,17 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
             </Link>
             {isAdmin && (
               <>
+                {/* The one-page library dashboard (#3943): holdings, pipeline,
+                    what's left, spend (allow-listed), readers. First because it
+                    is the page an admin opens to see where things stand. */}
+                <Link
+                  href="/admin"
+                  className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+                  style={{ color: 'var(--text-primary)' }}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Dashboard
+                </Link>
                 <Link
                   href="/analytics"
                   className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
@@ -177,6 +196,27 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
                   onClick={() => setIsOpen(false)}
                 >
                   Analytics
+                </Link>
+                {/* The public view of the same numbers: how complete each
+                    book is, by century and language (#5585). */}
+                <Link
+                  href="/about/progress"
+                  className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+                  style={{ color: 'var(--text-primary)' }}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Progress
+                </Link>
+                {/* The canons for the Eternity working session: what we hold,
+                    each canon, and how we check quality (#5513). Unlisted, so
+                    the menu is the way back to it. */}
+                <Link
+                  href="/research/canon-gap"
+                  className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+                  style={{ color: 'var(--text-primary)' }}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Open Canons
                 </Link>
                 {/* People first. Introductions is what readers WROTE about
                     themselves and who offered to help — it lived only inside
@@ -209,6 +249,16 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
                   onClick={() => setIsOpen(false)}
                 >
                   Feedback
+                </Link>
+                {/* What the headless jobs are doing, which died, and what is
+                    waiting on a decision (#5705). Same admin gate as the page. */}
+                <Link
+                  href="/admin/work"
+                  className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+                  style={{ color: 'var(--text-primary)' }}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Work in flight
                 </Link>
                 {/* Spend (#5225) is allow-listed on the server, narrower than
                     "admin". The JWT can't see that list, but a superadmin role

@@ -1,0 +1,585 @@
+{
+ "seed": 5313,
+ "thresholds": {
+  "served_agrees": 0.7,
+  "fresh_agree": 0.8
+ },
+ "class_sizes": {
+  "hard-page": 47,
+  "served-is-the-outlier": 12,
+  "served-agrees": 229,
+  "unjudged": 39
+ },
+ "pages": [
+  {
+   "n": "01",
+   "packet": 1,
+   "page_id": "69a5e5e985fa13e734e41d53",
+   "role": "hard",
+   "cls": "hard-page",
+   "order": {
+    "A": "L",
+    "B": "served",
+    "C": "F"
+   },
+   "served_vs_best": 0.165,
+   "fresh_vs_fresh": 0.265,
+   "url": "https://sourcelibrary.org/book/69a5e5e985fa13e734e41cba?page=153",
+   "language": "Greek",
+   "garbled": true,
+   "major": true,
+   "leaf": "uncertain"
+  },
+  {
+   "n": "02",
+   "packet": 1,
+   "page_id": "6a3f035697e91e1768f6a146",
+   "role": "control",
+   "cls": "served-agrees",
+   "order": {
+    "A": "served",
+    "B": "L",
+    "C": "F"
+   },
+   "served_vs_best": 0.985,
+   "fresh_vs_fresh": 0.968,
+   "url": "https://sourcelibrary.org/book/6a3f035697e91e1768f6a0b5?page=145",
+   "language": "Greek",
+   "garbled": false,
+   "major": false,
+   "leaf": "match"
+  },
+  {
+   "n": "03",
+   "packet": 1,
+   "page_id": "69b3038c5facc83a9a3d9f51",
+   "role": "outlier",
+   "cls": "served-is-the-outlier",
+   "order": {
+    "A": "L",
+    "B": "F",
+    "C": "served"
+   },
+   "served_vs_best": 0.65,
+   "fresh_vs_fresh": 0.879,
+   "url": "https://sourcelibrary.org/book/69b3038c5facc83a9a3d9e96?page=187",
+   "language": "Latin",
+   "garbled": false,
+   "major": false,
+   "leaf": "match"
+  },
+  {
+   "n": "04",
+   "packet": 1,
+   "page_id": "69e7482f85f786e884a4bc61",
+   "role": "hard",
+   "cls": "hard-page",
+   "order": {
+    "A": "F",
+    "B": "served",
+    "C": "L"
+   },
+   "served_vs_best": 0.69,
+   "fresh_vs_fresh": 0.683,
+   "url": "https://sourcelibrary.org/book/69e7482f85f786e884a4bb0c?page=341",
+   "language": "Tibetan",
+   "garbled": true,
+   "major": false,
+   "leaf": null
+  },
+  {
+   "n": "05",
+   "packet": 1,
+   "page_id": "6991e710ebc7adff9a0b2346",
+   "role": "hard",
+   "cls": "hard-page",
+   "order": {
+    "A": "L",
+    "B": "F",
+    "C": "served"
+   },
+   "served_vs_best": 0.145,
+   "fresh_vs_fresh": 0.154,
+   "url": "https://sourcelibrary.org/book/6991e70febc7adff9a0b2259?page=237",
+   "language": "Italian",
+   "garbled": true,
+   "major": true,
+   "leaf": "match"
+  },
+  {
+   "n": "06",
+   "packet": 1,
+   "page_id": "6991bf50734f402cad4896ed",
+   "role": "hard",
+   "cls": "hard-page",
+   "order": {
+    "A": "served",
+    "B": "L",
+    "C": "F"
+   },
+   "served_vs_best": 0.36,
+   "fresh_vs_fresh": 0.328,
+   "url": "https://sourcelibrary.org/book/6991bf50734f402cad489655?page=152",
+   "language": "Latin",
+   "garbled": false,
+   "major": false,
+   "leaf": "match"
+  },
+  {
+   "n": "07",
+   "packet": 1,
+   "page_id": "69a5e3e5006a409842216989",
+   "role": "hard",
+   "cls": "hard-page",
+   "order": {
+    "A": "served",
+    "B": "F",
+    "C": "L"
+   },
+   "served_vs_best": 0.192,
+   "fresh_vs_fresh": 0.215,
+   "url": "https://sourcelibrary.org/book/69a5e3e5006a40984221691d?page=108",
+   "language": "Greek",
+   "garbled": true,
+   "major": false,
+   "leaf": "match"
+  },
+  {
+   "n": "08",
+   "packet": 1,
+   "page_id": "699066f2249ce014347d20de",
+   "role": "hard",
+   "cls": "hard-page",
+   "order": {
+    "A": "served",
+    "B": "L",
+    "C": "F"
+   },
+   "served_vs_best": 0.379,
+   "fresh_vs_fresh": 0.409,
+   "url": "https://sourcelibrary.org/book/699066f2249ce014347d20d5?page=9",
+   "language": "Sanskrit",
+   "garbled": true,
+   "major": false,
+   "leaf": "match"
+  },
+  {
+   "n": "09",
+   "packet": 1,
+   "page_id": "69ee890f4501bec8965468ed",
+   "role": "control",
+   "cls": "served-agrees",
+   "order": {
+    "A": "F",
+    "B": "served",
+    "C": "L"
+   },
+   "served_vs_best": 0.997,
+   "fresh_vs_fresh": 0.995,
+   "url": "https://sourcelibrary.org/book/69ee890f4501bec8965466a2?page=587",
+   "language": "English",
+   "garbled": false,
+   "major": false,
+   "leaf": "match"
+  },
+  {
+   "n": "10",
+   "packet": 1,
+   "page_id": "69e7abcd5f1a22ab19a9e624",
+   "role": "hard",
+   "cls": "hard-page",
+   "order": {
+    "A": "served",
+    "B": "L",
+    "C": "F"
+   },
+   "served_vs_best": 0.632,
+   "fresh_vs_fresh": 0.497,
+   "url": "https://sourcelibrary.org/book/69e7abcd5f1a22ab19a9e54b?page=217",
+   "language": "Tibetan",
+   "garbled": false,
+   "major": false,
+   "leaf": "uncertain"
+  },
+  {
+   "n": "11",
+   "packet": 2,
+   "page_id": "695004e3f426a210d109a55a",
+   "role": "outlier",
+   "cls": "served-is-the-outlier",
+   "order": {
+    "A": "L",
+    "B": "served",
+    "C": "F"
+   },
+   "served_vs_best": 0.632,
+   "fresh_vs_fresh": 0.836,
+   "url": "https://sourcelibrary.org/book/2948183e-2c47-43dc-b7b9-a466f93a869c?page=35",
+   "language": "Latin",
+   "garbled": false,
+   "major": false,
+   "leaf": "match"
+  },
+  {
+   "n": "12",
+   "packet": 2,
+   "page_id": "69920bc6e0a548a13d88576e",
+   "role": "hard",
+   "cls": "hard-page",
+   "order": {
+    "A": "F",
+    "B": "served",
+    "C": "L"
+   },
+   "served_vs_best": 0.157,
+   "fresh_vs_fresh": 0.038,
+   "url": "https://sourcelibrary.org/book/69920bc6e0a548a13d885667?page=263",
+   "language": "Greek",
+   "garbled": false,
+   "major": false,
+   "leaf": "match"
+  },
+  {
+   "n": "13",
+   "packet": 2,
+   "page_id": "69a99cc41cb97318b417323a",
+   "role": "control",
+   "cls": "served-agrees",
+   "order": {
+    "A": "L",
+    "B": "F",
+    "C": "served"
+   },
+   "served_vs_best": 1,
+   "fresh_vs_fresh": 0.999,
+   "url": "https://sourcelibrary.org/book/69a99cc41cb97318b41731ed?page=77",
+   "language": "English",
+   "garbled": false,
+   "major": false,
+   "leaf": "match"
+  },
+  {
+   "n": "14",
+   "packet": 2,
+   "page_id": "69e75ccc3f15c712bdb8f075",
+   "role": "hard",
+   "cls": "hard-page",
+   "order": {
+    "A": "F",
+    "B": "L",
+    "C": "served"
+   },
+   "served_vs_best": 0.437,
+   "fresh_vs_fresh": 0.366,
+   "url": "https://sourcelibrary.org/book/69e75ccc3f15c712bdb8f04e?page=39",
+   "language": "Japanese",
+   "garbled": true,
+   "major": true,
+   "leaf": "match"
+  },
+  {
+   "n": "15",
+   "packet": 2,
+   "page_id": "695004c9f426a210d1098905",
+   "role": "hard",
+   "cls": "hard-page",
+   "order": {
+    "A": "served",
+    "B": "L",
+    "C": "F"
+   },
+   "served_vs_best": 0.59,
+   "fresh_vs_fresh": 0.494,
+   "url": "https://sourcelibrary.org/book/25dfd63a-8080-4864-aa79-a0fcb1c76102?page=476",
+   "language": "Italian",
+   "garbled": false,
+   "major": false,
+   "leaf": "match"
+  },
+  {
+   "n": "16",
+   "packet": 2,
+   "page_id": "69b51ec447b06ecd5819673a",
+   "role": "outlier",
+   "cls": "served-is-the-outlier",
+   "order": {
+    "A": "L",
+    "B": "F",
+    "C": "served"
+   },
+   "served_vs_best": 0.611,
+   "fresh_vs_fresh": 0.964,
+   "url": "https://sourcelibrary.org/book/69b51ec447b06ecd58196723?page=23",
+   "language": "Latin",
+   "garbled": false,
+   "major": false,
+   "leaf": "match"
+  },
+  {
+   "n": "17",
+   "packet": 2,
+   "page_id": "69dfee8cce6bb8619e07ff47",
+   "role": "hard",
+   "cls": "hard-page",
+   "order": {
+    "A": "served",
+    "B": "L",
+    "C": "F"
+   },
+   "served_vs_best": 0.393,
+   "fresh_vs_fresh": 0.323,
+   "url": "https://sourcelibrary.org/book/69dfee8cce6bb8619e07ff08?page=63",
+   "language": "Tibetan",
+   "garbled": false,
+   "major": false,
+   "leaf": "match"
+  },
+  {
+   "n": "18",
+   "packet": 2,
+   "page_id": "69e961542beefe2f6f72b1c9",
+   "role": "control",
+   "cls": "served-agrees",
+   "order": {
+    "A": "L",
+    "B": "served",
+    "C": "F"
+   },
+   "served_vs_best": 0.996,
+   "fresh_vs_fresh": 1,
+   "url": "https://sourcelibrary.org/book/69e961542beefe2f6f72b0a2?page=295",
+   "language": "Arabic",
+   "garbled": false,
+   "major": false,
+   "leaf": "match"
+  },
+  {
+   "n": "19",
+   "packet": 2,
+   "page_id": "69dbca481040d1d5e20aabbe",
+   "role": "outlier",
+   "cls": "served-is-the-outlier",
+   "order": {
+    "A": "served",
+    "B": "F",
+    "C": "L"
+   },
+   "served_vs_best": 0.602,
+   "fresh_vs_fresh": 0.921,
+   "url": "https://sourcelibrary.org/book/69dbca481040d1d5e20aabb5?page=9",
+   "language": "German",
+   "garbled": false,
+   "major": false,
+   "leaf": "match"
+  },
+  {
+   "n": "20",
+   "packet": 2,
+   "page_id": "69b3e5e9304c1c6b3950a8ec",
+   "role": "hard",
+   "cls": "hard-page",
+   "order": {
+    "A": "L",
+    "B": "F",
+    "C": "served"
+   },
+   "served_vs_best": 0.313,
+   "fresh_vs_fresh": 0.317,
+   "url": "https://sourcelibrary.org/book/69b3e5e9304c1c6b3950a8eb?page=1",
+   "language": "Greek",
+   "garbled": false,
+   "major": false,
+   "leaf": "match"
+  },
+  {
+   "n": "21",
+   "packet": 3,
+   "page_id": "69e41216937ee36cf27c7578",
+   "role": "outlier",
+   "cls": "served-is-the-outlier",
+   "order": {
+    "A": "F",
+    "B": "L",
+    "C": "served"
+   },
+   "served_vs_best": 0.151,
+   "fresh_vs_fresh": 0.973,
+   "url": "https://sourcelibrary.org/book/69e41216937ee36cf27c7554?page=36",
+   "language": "Spanish",
+   "garbled": false,
+   "major": false,
+   "leaf": null
+  },
+  {
+   "n": "22",
+   "packet": 3,
+   "page_id": "69920bbfe0a548a13d885620",
+   "role": "hard",
+   "cls": "hard-page",
+   "order": {
+    "A": "served",
+    "B": "L",
+    "C": "F"
+   },
+   "served_vs_best": 0.155,
+   "fresh_vs_fresh": 0.026,
+   "url": "https://sourcelibrary.org/book/69920bbfe0a548a13d885514?page=268",
+   "language": "Greek",
+   "garbled": false,
+   "major": false,
+   "leaf": "match"
+  },
+  {
+   "n": "23",
+   "packet": 3,
+   "page_id": "69e80690fdad300064d9fb20",
+   "role": "hard",
+   "cls": "hard-page",
+   "order": {
+    "A": "F",
+    "B": "L",
+    "C": "served"
+   },
+   "served_vs_best": 0.388,
+   "fresh_vs_fresh": 0.352,
+   "url": "https://sourcelibrary.org/book/69e80690fdad300064d9f8f3?page=557",
+   "language": "Tibetan",
+   "garbled": false,
+   "major": false,
+   "leaf": null
+  },
+  {
+   "n": "24",
+   "packet": 3,
+   "page_id": "69d5ae55d0bd3547a5656f9e",
+   "role": "hard",
+   "cls": "hard-page",
+   "order": {
+    "A": "F",
+    "B": "L",
+    "C": "served"
+   },
+   "served_vs_best": 0.339,
+   "fresh_vs_fresh": 0.353,
+   "url": "https://sourcelibrary.org/book/69d5ae55d0bd3547a5656f95?page=9",
+   "language": "Japanese",
+   "garbled": false,
+   "major": false,
+   "leaf": "match"
+  },
+  {
+   "n": "25",
+   "packet": 3,
+   "page_id": "699259f54a1ec1b193f10eed",
+   "role": "hard",
+   "cls": "hard-page",
+   "order": {
+    "A": "L",
+    "B": "F",
+    "C": "served"
+   },
+   "served_vs_best": 0.593,
+   "fresh_vs_fresh": 0.775,
+   "url": "https://sourcelibrary.org/book/34cd723e-19ce-4d50-a5aa-f86991e09946?page=51",
+   "language": "Latin",
+   "garbled": true,
+   "major": false,
+   "leaf": "match"
+  },
+  {
+   "n": "26",
+   "packet": 3,
+   "page_id": "6a2032e718654bf8e1903bc2",
+   "role": "hard",
+   "cls": "hard-page",
+   "order": {
+    "A": "L",
+    "B": "served",
+    "C": "F"
+   },
+   "served_vs_best": 0.529,
+   "fresh_vs_fresh": 0.112,
+   "url": "https://sourcelibrary.org/book/6a2032e718654bf8e1903bba?page=8",
+   "language": "Arabic",
+   "garbled": true,
+   "major": false,
+   "leaf": "match"
+  },
+  {
+   "n": "27",
+   "packet": 3,
+   "page_id": "69e7482885f786e884a4ba14",
+   "role": "hard",
+   "cls": "hard-page",
+   "order": {
+    "A": "L",
+    "B": "served",
+    "C": "F"
+   },
+   "served_vs_best": 0.4,
+   "fresh_vs_fresh": 0.475,
+   "url": "https://sourcelibrary.org/book/69e7482885f786e884a4b959?page=187",
+   "language": "Tibetan",
+   "garbled": false,
+   "major": false,
+   "leaf": "match"
+  },
+  {
+   "n": "28",
+   "packet": 3,
+   "page_id": "695981366daada97b36e13a0",
+   "role": "outlier",
+   "cls": "served-is-the-outlier",
+   "order": {
+    "A": "served",
+    "B": "F",
+    "C": "L"
+   },
+   "served_vs_best": 0.631,
+   "fresh_vs_fresh": 0.924,
+   "url": "https://sourcelibrary.org/book/690989d5cf28baa1b4cae1c9?page=55",
+   "language": "Latin",
+   "garbled": false,
+   "major": false,
+   "leaf": "match"
+  },
+  {
+   "n": "29",
+   "packet": 3,
+   "page_id": "69e75abfb3d509fcb7a48ea9",
+   "role": "hard",
+   "cls": "hard-page",
+   "order": {
+    "A": "served",
+    "B": "F",
+    "C": "L"
+   },
+   "served_vs_best": 0.401,
+   "fresh_vs_fresh": 0.329,
+   "url": "https://sourcelibrary.org/book/69e75abfb3d509fcb7a48ea1?page=8",
+   "language": "Japanese",
+   "garbled": true,
+   "major": true,
+   "leaf": null
+  },
+  {
+   "n": "30",
+   "packet": 3,
+   "page_id": "69b3e5b8304c1c6b39509d67",
+   "role": "hard",
+   "cls": "hard-page",
+   "order": {
+    "A": "served",
+    "B": "L",
+    "C": "F"
+   },
+   "served_vs_best": 0.585,
+   "fresh_vs_fresh": 0.424,
+   "url": "https://sourcelibrary.org/book/69b3e5b8304c1c6b39509cc0?page=167",
+   "language": "Hebrew",
+   "garbled": false,
+   "major": false,
+   "leaf": null
+  }
+ ]
+}

@@ -1,0 +1,53 @@
+name: PR tier
+
+# Labels every PR `tier:auto` or `tier:hold` from the paths and diff it touches
+# (scripts/maintenance/pr-tier.mjs, rules in pr-tier-rules.json). auto-merge.yml
+# then merges `tier:auto` PRs when green; `tier:hold` waits for a human.
+#
+# WHY: measured 2026-09-30 — 300 PRs merged in 30 days, all clicked by one
+# person, none reviewed. The hold list (auth, money, deletions, unseen public
+# copy, doctrine) is where a human's eyes matter; everything else was a delay.
+#
+# A hand-applied `tier:hold` or `blocked` label is never downgraded by this job.
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: pr-tier-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  tier:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # Checkout MAIN, not the PR head: pull_request_target runs with a write
+      # token, and the classifier + rules must come from trusted code.
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Classify and label
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/maintenance/pr-tier.mjs --pr ${{ github.event.pull_request.number }} --label || test $? -eq 3
+      # Revert-by-conflict-resolution: lines this PR ADDS that a merge to main
+      # REMOVED in the last 14 days (#5415 — a rebase kept "ours" on a fact line
+      # #5272 had removed). Warn-only comment; never fails the job.
+      - name: Flag re-introduced lines
+        if: always()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git fetch --quiet --shallow-since="15 days ago" origin main
+          node scripts/maintenance/pr-reintroduced-lines.mjs --pr ${{ github.event.pull_request.number }} --comment

@@ -15,6 +15,16 @@
  *   npx tsx scripts/catalog-coverage/archive-acquired.ts --provider wellcome --batch 20
  * Provider mode records completion on the BOOK (there is no queue row) and is
  * idempotent: archiveIiif only fetches pages that lack `archived_photo`.
+ * `--campaign <tag>` does the same keyed on `acquisition_campaign` (#5457).
+ *
+ * Host lanes (#4397) — one process per host, each at its own polite rate, so a
+ * throttled host stalls its own lane and nobody else's:
+ *   npx tsx scripts/catalog-coverage/archive-acquired.ts --campaign acquisition-wave-2026-10 \
+ *     --hosts digi.ub.uni-heidelberg.de --concurrency 2 --page-concurrency 1
+ *   ... --exclude-hosts api.digitale-sammlungen.de      # everything but MDZ
+ *   ... --host-rate www.e-rara.ch=1                     # lower-only per-process cap
+ * The lane wrapper is archive-lane.sh. With no host flag the selection is
+ * exactly what it was (the hourly cron is unchanged).
  */
 import { MongoClient } from 'mongodb';
 import { execFile } from 'child_process';
@@ -22,7 +32,7 @@ import { promisify } from 'util';
 import sharp from 'sharp';
 import { storagePut } from '../../src/lib/storage';
 import {
-  upgradeToFullRes, rateLimitedFetch,
+  upgradeToFullRes, rateLimitedFetch, capDomainLimit,
   fetchIiifInfo, fetchIiifNativeRes, shouldTileStitch, SILENT_CAP_HOSTS,
 } from '../lib/iiif-utils.mjs';
 import { createHostBreaker, classifyFetchError } from '../lib/host-breaker.mjs';
@@ -77,8 +87,24 @@ const BATCH = intArg('batch', 60);
 // Both lanes are idempotent per page (archiveIiif fetches only pages lacking
 // archived_photo), so an overlap costs a duplicate fetch, never a bad write.
 const NEWEST_FIRST = process.argv.includes('--newest-first');
-const hostsIdx = process.argv.indexOf('--hosts');
-const HOSTS: Set<string> | null = hostsIdx > -1 && process.argv[hostsIdx + 1] ? new Set(process.argv[hostsIdx + 1].split(',').map(h => h.trim()).filter(Boolean)) : null;
+const listArg = (name: string): Set<string> | null => {
+  const i = process.argv.indexOf(`--${name}`);
+  return i > -1 && process.argv[i + 1] ? new Set(process.argv[i + 1].split(',').map(h => h.trim()).filter(Boolean)) : null;
+};
+const HOSTS = listArg('hosts');
+// Host lanes (#4397). `--exclude-hosts` is the complement of `--hosts`: a lane
+// that takes "everything except MDZ" without having to name every other host.
+const EXCLUDE_HOSTS = listArg('exclude-hosts');
+const HOST_FILTER = !!(HOSTS || EXCLUDE_HOSTS);
+// `--host-rate host=r[,host=r]` caps a host's request rate for THIS process.
+// Lower-only (capDomainLimit takes the min with DOMAIN_LIMITS), because the
+// limiter is per process: a lane on a host the hourly cron also reaches must
+// take a share of the budget, and a host whose robots.txt asks for less than the
+// table says is honoured here. Raising a rate is a DOMAIN_LIMITS change.
+for (const spec of listArg('host-rate') ?? []) {
+  const [h, r] = spec.split('=');
+  capDomainLimit(h, Number(r));
+}
 
 // A pool width is load-bearing: at 0 or NaN this script archives nothing and
 // says it succeeded. Fail at startup instead — a constructor that throws beats
@@ -309,18 +335,62 @@ async function main() {
   // rows ({ book_id, source }) with sn:null so the queue writes below no-op.
   const provIdx = process.argv.indexOf('--provider');
   const PROVIDER = provIdx > -1 ? process.argv[provIdx + 1] : null;
+  // `--campaign <tag>` is provider mode keyed on `acquisition_campaign` — a wave
+  // imported from several providers at once (#5457 tags its books
+  // `acquisition-wave-2026-10`). The two may be combined.
+  const campIdx = process.argv.indexOf('--campaign');
+  const CAMPAIGN = campIdx > -1 ? process.argv[campIdx + 1] : null;
+  const BOOK_MODE = !!(PROVIDER || CAMPAIGN);
+  const bookModeFilter: Record<string, unknown> = {
+    ...(PROVIDER ? { 'image_source.provider': PROVIDER } : {}),
+    ...(CAMPAIGN ? { acquisition_campaign: CAMPAIGN } : {}),
+    pages_count: { $gt: 0 },
+    archive_status: { $ne: 'archive_complete' },
+  };
+
+  // ── Host lanes (#4397): the host filter belongs to SELECTION ─────────────
+  //
+  // `--hosts` used to be applied after the batch was drawn: take BATCH rows,
+  // then skip the ones on other hosts. A lane whose host is a minority of the
+  // queue therefore drew a batch of mostly other-host rows and finished in
+  // seconds having done almost nothing — sharding that cannot actually shard.
+  // The filter now walks the ordered work list and keeps drawing until it has
+  // BATCH rows ON THIS LANE (bounded by SCAN_CAP so a lane with no work left
+  // costs a bounded scan, not a full one).
+  //
+  // A book's lane is the host of its first un-archived page (the queue's
+  // `source` label is not the host — "iiif" rows point at MDZ, IA, Gallica and
+  // e-rara alike). A book with NO un-archived page left belongs to every lane:
+  // it fetches nothing and only needs its completion recorded.
+  const laneOf = async (bookId: string): Promise<string | null> => {
+    const p0 = await pages.findOne({ book_id: bookId, archived_photo: { $exists: false }, $or: [{ photo: /^https?:/ }, { photo_original: /^https?:/ }] }, { projection: { photo: 1, photo_original: 1 } });
+    return p0 ? hostOf(p0.photo_original || p0.photo || '') : null;
+  };
+  const inLane = (h: string | null) => h == null || ((!HOSTS || HOSTS.has(h)) && !EXCLUDE_HOSTS?.has(h));
+  const SCAN_CAP = intArg('scan-cap', BATCH * 25);
+  let scanned = 0;
+  const draw = async (cursor: AsyncIterable<any>, bookIdOf: (r: any) => string): Promise<any[]> => {
+    const out: any[] = [];
+    for await (const r of cursor) {
+      if (out.length >= BATCH || scanned >= SCAN_CAP) break;
+      scanned++;
+      if (!HOST_FILTER || inLane(await laneOf(bookIdOf(r)))) out.push(r);
+    }
+    return out;
+  };
+
   let todo: any[];
-  if (PROVIDER) {
-    const cand = await books.find(
-      {
-        'image_source.provider': PROVIDER,
-        pages_count: { $gt: 0 },
-        archive_status: { $ne: 'archive_complete' },
-      },
-      { projection: { id: 1 } },
-    ).limit(BATCH).toArray();
+  if (BOOK_MODE) {
+    // Least-recently-touched first. processBook stamps `updated_at` on every
+    // attempt, so a book that could not be finished this run goes to the back —
+    // the same rotation the queue gets from `archive_attempts`, without adding
+    // a field to `books`. Unsorted, provider mode re-drew the same head every
+    // run, which is the stall the queue-mode comment below describes.
+    const cur = books.find(bookModeFilter, { projection: { id: 1 } }).sort({ updated_at: 1 });
+    const cand = await draw(HOST_FILTER ? cur : cur.limit(BATCH), (b: any) => b.id);
+    await cur.close();
     todo = cand.map((b: any) => ({ sn: null, book_id: b.id, source: 'iiif' }));
-    log(`provider mode: ${PROVIDER} — ${todo.length} book(s) not yet archive_complete`);
+    log(`book mode: ${[PROVIDER && `provider ${PROVIDER}`, CAMPAIGN && `campaign ${CAMPAIGN}`].filter(Boolean).join(', ')} — ${todo.length} book(s) not yet archive_complete${HOST_FILTER ? ` on this lane (${scanned} scanned)` : ''}`);
   } else {
     // Least-attempted first. The selection had no sort, so it returned the same
     // head of the queue every hour — and once that head was a set of books on a
@@ -330,9 +400,11 @@ async function main() {
     // goes to the back rather than to the front. Rows written before this field
     // existed sort first (missing < 0 in BSON), which is what we want — an
     // untried book outranks one we have already failed on.
-    todo = await queue.find({ status: 'acquired', book_id: { $exists: true }, archived: { $ne: true } })
-      .sort({ archive_attempts: 1, _id: NEWEST_FIRST ? -1 : 1 })
-      .limit(BATCH).toArray();
+    const cur = queue.find({ status: 'acquired', book_id: { $exists: true }, archived: { $ne: true } })
+      .sort({ archive_attempts: 1, _id: NEWEST_FIRST ? -1 : 1 });
+    todo = await draw(HOST_FILTER ? cur : cur.limit(BATCH), (w: any) => w.book_id);
+    await cur.close();
+    if (HOST_FILTER) log(`queue mode: ${todo.length} row(s) on this lane (${scanned} scanned)`);
   }
   let ok = 0, partial = 0, stalled = 0, hostSkipped = 0;
   // How many runs a book may make zero progress on before it is parked out of
@@ -348,12 +420,11 @@ async function main() {
   async function processBook(w: any) {
     const b = await books.findOne({ id: w.book_id }, { projection: { id: 1, pages_count: 1 } });
     if (!b) { await markQueue(w, { archived: true, archive_note: 'no-book' }); return; }
-    if (HOSTS) {
-      // Not this lane's host: leave the row untouched (no attempt counted, no
-      // note) so the other lane sees it exactly as before.
-      const p0 = await pages.findOne({ book_id: w.book_id, archived_photo: { $exists: false }, $or: [{ photo: /^https?:/ }, { photo_original: /^https?:/ }] }, { projection: { photo: 1, photo_original: 1 } });
-      const h = hostOf(p0?.photo_original || p0?.photo || '');
-      if (!HOSTS.has(h)) { hostSkipped++; return; }
+    if (HOST_FILTER && !inLane(await laneOf(w.book_id))) {
+      // Selection already filtered by lane; this re-check catches a book whose
+      // remaining pages moved host since it was drawn. Leave the row untouched
+      // (no attempt counted, no note) so the other lane sees it exactly as before.
+      hostSkipped++; return;
     }
     const have0 = await pages.countDocuments({ book_id: w.book_id, archived_photo: /^https?:/ });
     if (have0 < (b.pages_count || 0) * 0.99) {
@@ -394,7 +465,7 @@ async function main() {
   }
   let blocked: Error | null = null;
   workTotal = todo.length;
-  log(`starting: ${workTotal} book(s), concurrency ${CONCURRENCY} × ${PAGE_CONCURRENCY} pages${NEWEST_FIRST ? ', newest first' : ''}${HOSTS ? `, hosts ${[...HOSTS].join(',')}` : ''} — heartbeat every 60s`);
+  log(`starting: ${workTotal} book(s), concurrency ${CONCURRENCY} × ${PAGE_CONCURRENCY} pages${NEWEST_FIRST ? ', newest first' : ''}${HOSTS ? `, hosts ${[...HOSTS].join(',')}` : ''}${EXCLUDE_HOSTS ? `, excluding ${[...EXCLUDE_HOSTS].join(',')}` : ''} — heartbeat every 60s`);
   // Books ran in fixed slices of CONCURRENCY behind `await Promise.all(slice)`.
   // A slice does not advance until its SLOWEST book finishes, and its finished
   // workers sit idle in the meantime — so a slice containing one book on a
@@ -458,8 +529,8 @@ async function main() {
 
   await Promise.all(Array.from({ length: Math.min(CONCURRENCY, todo.length) }, () => bookWorker()));
   clearInterval(hb);
-  const remaining = PROVIDER
-    ? await books.countDocuments({ 'image_source.provider': PROVIDER, pages_count: { $gt: 0 }, archive_status: { $ne: 'archive_complete' } })
+  const remaining = BOOK_MODE
+    ? await books.countDocuments(bookModeFilter)
     : await queue.countDocuments({ status: 'acquired', archived: { $ne: true } });
   printSummary('finished');
   log(`un-archived acquired remaining ${remaining}`);

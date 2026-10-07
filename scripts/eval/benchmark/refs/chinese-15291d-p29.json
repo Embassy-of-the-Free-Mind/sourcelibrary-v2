@@ -10,5 +10,8 @@
   "url": "https://cbetaonline.dila.edu.tw/L1600_002",
   "etext_chars": 15920,
   "window_chars": 861,
-  "overlap": 0.776
+  "overlap": 0.776,
+  "licence": "CC-BY-NC-SA-4.0",
+  "licence_url": "https://www.cbeta.org/copyright.php",
+  "licence_checked": "2026-10-01"
 }

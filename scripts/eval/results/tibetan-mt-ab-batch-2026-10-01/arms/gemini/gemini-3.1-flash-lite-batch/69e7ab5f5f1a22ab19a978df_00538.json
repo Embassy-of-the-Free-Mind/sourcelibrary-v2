@@ -1,0 +1,20 @@
+{
+ "id": "69e7ab5f5f1a22ab19a978df_00538",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "The great being also brings the six <term>paramitas</term> <gloss>perfections</gloss> to complete fulfillment. This brings one near to the state of omniscience. Subhuti, furthermore, when a <term>bodhisattva</term> <gloss>enlightenment-being</gloss>, a great being, practices the six perfections, if they see sentient beings born in the four modes—those born from eggs, those born from wombs, those born from heat and moisture, and those born through miraculous transformation—they should contemplate them in this way: \"How can I, in the Buddha-field where I will attain supreme, perfect, and complete enlightenment, ensure that the three modes of birth—from eggs, from wombs, and from heat and moisture—do not arise or exist? Otherwise, all sentient beings should be born through miraculous transformation.\" In this way, one should practice the six perfections. One should purify the Buddha-field. One should bring sentient beings to maturity. By contemplating in this manner, Subhuti, a <term>bodhisattva</term> <gloss>enlightenment-being</gloss>, a great being who practices in this way, brings the six perfections to complete fulfillment. This brings one near to the state of omniscience. Subhuti, furthermore, when a <term>bodhisattva</term> <gloss>enlightenment-being</gloss>, a great being, practices the six perfections, if they see sentient beings who do not possess the five <term>abhijna</term> <gloss>higher knowledges</gloss>, they should contemplate them in this way: \"How can I...\"\n\n<summary>This passage describes the practice of a bodhisattva who seeks to purify their future Buddha-field by ensuring that all sentient beings are born through miraculous transformation rather than the other three modes of birth.</summary>\n<keywords>Bodhisattva, Paramitas, Buddha-field, Sentient Beings, Miraculous Birth, Omniscience</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2571,
+ "outputTokens": 425,
+ "thinkingTokens": 0,
+ "ms": 102237,
+ "cost_usd": 0.000640125,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1120,
+ "job": "batches/crx0ckdkigsuckrtbv86iaudz41zfwz4k307"
+}

@@ -1,0 +1,21 @@
+{
+ "id": "69b99e8b6ed9e0490990a274_00179",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Atthakavagga\n\n836. \"If you do not desire such a jewel, a woman desired by many great men, then tell me, what do you say regarding views, virtuous conduct, and rebirth?\"\n\n837. \"There is no 'this is what I maintain' for him,\" said the Blessed One, \"O Māgandiya, among things grasped by determination. Seeing no support in views, he seeks internal peace, having seen through <note>the nature of</note> it.\"\n\n838. \"Those determinations that have been fabricated,\" said Māgandiya, \"you speak of those indeed as without support, O Sage. How is this meaning of 'internal peace' explained by the wise?\"\n\n839. \"Not by view, not by tradition, not by knowledge,\" said the Blessed One, \"O Māgandiya, nor by virtuous conduct and rites does one say purity is attained. Neither by view, nor by tradition, nor by knowledge, nor by lack of view, lack of tradition, nor lack of knowledge, nor by lack of virtuous conduct, nor by lack of rites, is it attained. Relinquishing these and not grasping, being at peace, one does not long for existence.\"\n\n840. \"If indeed you say that purity is not attained by view, nor by tradition, nor by knowledge, nor by virtuous conduct and rites,\" said Māgandiya,\n\n---\n\n<note>1. Bᵃˡ -am. 2. Bᵃˡ -esi. 3. Bᵃˡ -i. 4. Fsb. diṭṭhī-. 5. Thus Bᵃˡ Pj.; Cᵏᵇ sīlabb-. 6. Bⁱ Māgandiya- throughout. 7. Thus Cᵇ Bᵐ Fsb.; Cᵏ Bᵃˡ ajjhattam santim (compare 919). 8. Bᵃᵐ pavicinam (in Bᵃ bavi-, Bⁱ -vidhinam, Bᵐ -am). 9. Bᵐ addasam. 10. Bᵃˡ vinicchayāni. 11. Cᵏᵇ ce. 12. Fsb. -ī. 13. Cᵏᵇ āhā. 14. Bᵃᵐ Pj. asu-. 15. Bⁱᵐ Fsb. añāṇā (for the sake of meter). 16. Bᵃ na. 17. Bᵃˡ nisa-. 18. Bⁱᵐ na suddhim.</note>\n\n<summary>This page contains verses 836-840 of the Sutta-Nipāta, where the Buddha engages in a dialogue with Māgandiya regarding the nature of purity, internal peace, and the rejection of philosophical views, traditional learning, and ritual conduct.</summary>\n<keywords>Māgandiya, the Buddha, internal peace, purity, views, virtuous conduct, rebirth, Sutta-Nipāta, Atthakavagga</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2518,
+ "outputTokens": 644,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.0007977500000000001,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1456,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

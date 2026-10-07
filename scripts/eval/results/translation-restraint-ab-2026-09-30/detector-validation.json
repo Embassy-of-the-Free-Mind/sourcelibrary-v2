@@ -1,0 +1,87 @@
+{
+  "pages": 311,
+  "base": {
+    "invention": 36,
+    "inventionMajor": 14
+  },
+  "ratioHigh": {
+    "invention": {
+      "flagged": 10,
+      "tp": 4,
+      "precision": 0.4,
+      "recall": 0.11,
+      "positives": 36
+    },
+    "major": {
+      "flagged": 10,
+      "tp": 2,
+      "precision": 0.2,
+      "recall": 0.14,
+      "positives": 14
+    }
+  },
+  "leak": {
+    "invention": {
+      "flagged": 4,
+      "tp": 2,
+      "precision": 0.5,
+      "recall": 0.06,
+      "positives": 36
+    },
+    "major": {
+      "flagged": 4,
+      "tp": 2,
+      "precision": 0.5,
+      "recall": 0.14,
+      "positives": 14
+    }
+  },
+  "drift": {
+    "invention": {
+      "flagged": 7,
+      "tp": 3,
+      "precision": 0.43,
+      "recall": 0.08,
+      "positives": 36
+    },
+    "major": {
+      "flagged": 7,
+      "tp": 1,
+      "precision": 0.14,
+      "recall": 0.07,
+      "positives": 14
+    }
+  },
+  "openEnd": {
+    "invention": {
+      "flagged": 48,
+      "tp": 11,
+      "precision": 0.23,
+      "recall": 0.31,
+      "positives": 36
+    },
+    "major": {
+      "flagged": 48,
+      "tp": 5,
+      "precision": 0.1,
+      "recall": 0.36,
+      "positives": 14
+    }
+  },
+  "any": {
+    "invention": {
+      "flagged": 63,
+      "tp": 16,
+      "precision": 0.25,
+      "recall": 0.44,
+      "positives": 36
+    },
+    "major": {
+      "flagged": 63,
+      "tp": 7,
+      "precision": 0.11,
+      "recall": 0.5,
+      "positives": 14
+    }
+  }
+}

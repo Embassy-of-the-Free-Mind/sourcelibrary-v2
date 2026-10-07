@@ -1,0 +1,234 @@
+{
+  "seed": 20260930,
+  "at": "2026-09-30T07:52:28.466Z",
+  "quota": {
+    "Latin": 60,
+    "English": 36,
+    "German": 36,
+    "Greek": 36,
+    "French": 24,
+    "Italian": 18,
+    "Dutch": 18,
+    "Chinese": 18,
+    "Sanskrit": 12,
+    "Hebrew": 12,
+    "Arabic": 12,
+    "Tibetan": 12,
+    "Korean": 6,
+    "Spanish": 6,
+    "Japanese": 6
+  },
+  "scale": 0.32,
+  "arm_quota": false,
+  "weights": {
+    "Latin": {
+      "books": 6173,
+      "translated_pages": 1733582
+    },
+    "English": {
+      "books": 2166,
+      "translated_pages": 683345
+    },
+    "German": {
+      "books": 2164,
+      "translated_pages": 517606
+    },
+    "Greek": {
+      "books": 1029,
+      "translated_pages": 431994
+    },
+    "French": {
+      "books": 800,
+      "translated_pages": 267603
+    },
+    "Italian": {
+      "books": 539,
+      "translated_pages": 144967
+    },
+    "Dutch": {
+      "books": 526,
+      "translated_pages": 121287
+    },
+    "Chinese": {
+      "books": 891,
+      "translated_pages": 108550
+    },
+    "Sanskrit": {
+      "books": 372,
+      "translated_pages": 88487
+    },
+    "Hebrew": {
+      "books": 226,
+      "translated_pages": 56345
+    },
+    "Arabic": {
+      "books": 212,
+      "translated_pages": 52680
+    },
+    "Tibetan": {
+      "books": 37,
+      "translated_pages": 11467
+    },
+    "Korean": {
+      "books": 251,
+      "translated_pages": 50723
+    },
+    "Spanish": {
+      "books": 73,
+      "translated_pages": 20434
+    },
+    "Japanese": {
+      "books": 140,
+      "translated_pages": 17312
+    }
+  },
+  "visits": {
+    "Latin": {
+      "visits": 25,
+      "taken": 19,
+      "extra": 4,
+      "arms": {
+        "lite": 16,
+        "flash": 3
+      }
+    },
+    "English": {
+      "visits": 17,
+      "taken": 12,
+      "extra": 4,
+      "arms": {
+        "lite": 5,
+        "flash": 7
+      }
+    },
+    "German": {
+      "visits": 17,
+      "taken": 12,
+      "extra": 4,
+      "arms": {
+        "lite": 4,
+        "flash": 8
+      }
+    },
+    "Greek": {
+      "visits": 16,
+      "taken": 12,
+      "extra": 4,
+      "arms": {
+        "lite": 8,
+        "flash": 4
+      }
+    },
+    "French": {
+      "visits": 13,
+      "taken": 8,
+      "extra": 4,
+      "arms": {
+        "lite": 4,
+        "flash": 4
+      }
+    },
+    "Italian": {
+      "visits": 11,
+      "taken": 6,
+      "extra": 4,
+      "arms": {
+        "lite": 3,
+        "flash": 3
+      }
+    },
+    "Dutch": {
+      "visits": 12,
+      "taken": 6,
+      "extra": 4,
+      "arms": {
+        "lite": 4,
+        "flash": 2
+      }
+    },
+    "Chinese": {
+      "visits": 12,
+      "taken": 6,
+      "extra": 4,
+      "arms": {
+        "lite": 1,
+        "flash": 5
+      }
+    },
+    "Sanskrit": {
+      "visits": 9,
+      "taken": 4,
+      "extra": 4,
+      "arms": {
+        "lite": 2,
+        "flash": 2
+      }
+    },
+    "Hebrew": {
+      "visits": 8,
+      "taken": 4,
+      "extra": 4,
+      "arms": {
+        "lite": 3,
+        "flash": 1
+      }
+    },
+    "Arabic": {
+      "visits": 10,
+      "taken": 4,
+      "extra": 4,
+      "arms": {
+        "lite": 1,
+        "flash": 3
+      }
+    },
+    "Tibetan": {
+      "visits": 9,
+      "taken": 4,
+      "extra": 4,
+      "arms": {
+        "lite": 3,
+        "flash": 1
+      }
+    },
+    "Korean": {
+      "visits": 6,
+      "taken": 2,
+      "extra": 4,
+      "arms": {
+        "lite": 0,
+        "flash": 2
+      }
+    },
+    "Spanish": {
+      "visits": 6,
+      "taken": 2,
+      "extra": 4,
+      "arms": {
+        "lite": 1,
+        "flash": 1
+      }
+    },
+    "Japanese": {
+      "visits": 7,
+      "taken": 2,
+      "extra": 4,
+      "arms": {
+        "lite": 2,
+        "flash": 0
+      }
+    }
+  },
+  "exclusions": {
+    "page_type": 1534,
+    "no_candidate_page": 15,
+    "short_ocr": 4,
+    "short_translation": 15
+  },
+  "arms": {},
+  "controls": {
+    "swap": 15,
+    "drop": 15,
+    "repeat": 15
+  }
+}

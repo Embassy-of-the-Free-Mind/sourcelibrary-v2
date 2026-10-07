@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A14064",
+  "edition": "EEBO-TCP A14064 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "69e7833a0fc6fc955e36317c",
+  "page_number": 94,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 108319,
+    "to_char": 109688,
+    "overlap": 0.859,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "Starts 2 Sell bark; ends 8 Ill huswife...Her; small padding",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:23.426Z",
+  "text_location": "repo",
+  "text_sha256": "ebc24b7119f541e06366cb9958cc385d546dbe994a26423f48ece907e34f7c2e",
+  "unit": {
+    "chars": 1369
+  }
+}

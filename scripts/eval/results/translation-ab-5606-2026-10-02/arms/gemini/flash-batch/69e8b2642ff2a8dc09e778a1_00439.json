@@ -1,0 +1,21 @@
+{
+ "id": "69e8b2642ff2a8dc09e778a1_00439",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nThey are unable to distinguish between misfortune and blessing, or to maintain the distinction between auspicious and inauspicious omens. For this reason, the government falls into disorder and the state is endangered. Therefore, the books of the former kings <note>the Sage Kings of ancient China</note> also contain this principle, stating: If a person is arrogant <note>original: \"丌\" (qí), anciently written as \"亓\", meaning pride or arrogance</note> in their conduct, it brings misfortune upon themselves. This means that doing evil will result in punishment, while doing good will result in reward.\n\nMaster Mozi <term>Mozi</term> <gloss>The philosopher Mo Di, founder of Mohism</gloss> addressed Gongmengzi <term>Gongmengzi</term> <gloss>A Confucian scholar who debated with Mozi</gloss>, saying: Regarding funeral rites, if a ruler, parent, wife, or the eldest son <insert>the heir apparent</insert> dies, there is a three-year period of mourning. For uncles, brothers, and clan members, there is five months of mourning. For paternal aunts, sisters, maternal uncles, and nephews, there are all several months of mourning. Furthermore, during the intervals between these mourning periods, one is expected to recite the three hundred poems <note>referring to the Classic of Poetry</note>, play the three hundred poems on stringed instruments, sing the three hundred poems, and dance to the three hundred poems. If one followed your words, how would a superior man find any day to attend to the administration of government? How would the common people find any day to pursue their work?\n\nGongmengzi replied: When the state is in disorder, one should govern it. When it is well-governed, one should practice ritual and music <term>li yue</term> <gloss>The Confucian system of social order and harmony</gloss>. When the state is orderly, one pursues their tasks; when the state is wealthy, one practices ritual and music.\n\nMaster Mozi said: The order of a state <insert>Lu Wenchao notes that five characters meaning \"is due to its being governed, therefore it is orderly\" are missing here</insert> depends on active governance. If governance is abandoned, then the order of the state is also abandoned. If the state is\n\n<summary>Mozi critiques the excessive Confucian mourning and musical rituals, arguing they distract from effective governance and labor. Gongmengzi defends these practices as signs of a prosperous and orderly state.</summary>\n<keywords>Mozi, Gongmengzi, funeral rites, mourning periods, ritual and music, governance, state administration, Mohism, Confucianism</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2082,
+ "outputTokens": 580,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.0013905,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 444,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

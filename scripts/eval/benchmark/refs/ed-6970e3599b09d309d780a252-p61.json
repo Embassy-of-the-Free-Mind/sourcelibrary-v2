@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA historicapolitica/besold7",
+  "edition": "Operis Politici Editio Nova. — Argentorati : Zetzner, 1626.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "10/10",
+    "pb_aligned_pages": "10/10"
+  },
+  "origin": "library",
+  "book_id": "6970e3599b09d309d780a252",
+  "page_number": 61,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 123368,
+    "to_char": 125276,
+    "overlap": 0.734,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts '(Maxaemi)num I. de Carolo IV. dixisse ferunt'; ends 'Inde enim Successoribus præ-'; image is an open book photographed, right edge of page is cropped (last 1-2 letters of each line cut) and fore-edge visible; printed page no. 44 header 'Discursus Politici'; ref padded both ends.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:21.031Z",
+  "text_location": "repo",
+  "text_sha256": "f444a36302db102f43b1b6711b9e68fabb53d8e22bb95cbbbec6efc94e3bc5ab",
+  "unit": {
+    "chars": 1908
+  },
+  "stratum": "latin-period-5126"
+}

@@ -1,0 +1,4376 @@
+{
+  "eebo-tcp-5488": {
+    "stratum": "eebo-tcp-5488",
+    "issue": 5488,
+    "date": "2026-10-03",
+    "refusal_source": "finishReason (meter) / inferred",
+    "cer_refusals": "ref.median_cer / mean_cer count a refusal as CER 1.0 (the pre-#5581 headline); *_answered exclude refused pages",
+    "n_pages": 73,
+    "n_with_ref": 73,
+    "ref_mismatch": [],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3.1-flash-lite": {
+        "pages_run": 73,
+        "empty": 0,
+        "refused": 3,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 73,
+          "median_cer": 0.06,
+          "mean_cer": 0.105,
+          "catastrophic": 3,
+          "median_gap": 0,
+          "median_seq": 0.862,
+          "refused": 3,
+          "n_answered": 70,
+          "median_cer_answered": 0.057,
+          "mean_cer_answered": 0.067,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.003,
+          "n_engines": 3,
+          "ref_median": 0.165,
+          "ref_mean": 0.162
+        },
+        "worst": [
+          {
+            "slug": "ed-69cfa93f80eb0ccd3e739280-p101",
+            "title": "Micrographia: or some Physiological Descriptions of Minute Bodies made by Magnifying Glasses",
+            "year": 1665,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-69de1c99d10d4b0d3f6f3175-p26",
+            "title": "The Decameron (first English, 1620)",
+            "year": 1620,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6ab5a4019e89e2a1f4139282-p94",
+            "title": "Chymical, Medicinal, and Chyrurgical Addresses: Made to Samuel Hartlib, Esquire",
+            "year": 1655,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6a42aecb5207af7c42f5333c-p17",
+            "title": "Linguarum cognatio, seu, De linguis in genere & de variarum linguarum harmonia dissertatio authore Thoma Hayne.",
+            "year": 1648,
+            "cer": 0.248,
+            "gap": 0.092,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-69905e152fd6a039938a0ebe-p46",
+            "title": "Cases of Conscience Concerning Evil Spirits",
+            "year": 1693,
+            "cer": 0.167,
+            "gap": 0.078,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite-b": {
+        "pages_run": 73,
+        "empty": 0,
+        "refused": 2,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 73,
+          "median_cer": 0.056,
+          "mean_cer": 0.091,
+          "catastrophic": 2,
+          "median_gap": 0,
+          "median_seq": 0.863,
+          "refused": 2,
+          "n_answered": 71,
+          "median_cer_answered": 0.056,
+          "mean_cer_answered": 0.066,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.005,
+          "n_engines": 3,
+          "ref_median": 0.161,
+          "ref_mean": 0.162
+        },
+        "paired_vs_ref": {
+          "n": 69,
+          "excluded_refused": 4,
+          "wins": 0,
+          "losses": 0,
+          "ties": 69,
+          "median_delta_cer": 0,
+          "p_sign": 1,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "ed-69aebfdea41a7e10e5a71d19-p27",
+            "title": "An Attempt for the Explication of the Phaenomena",
+            "year": 1661,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6ab5a4019e89e2a1f4139282-p94",
+            "title": "Chymical, Medicinal, and Chyrurgical Addresses: Made to Samuel Hartlib, Esquire",
+            "year": 1655,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6a42aecb5207af7c42f5333c-p17",
+            "title": "Linguarum cognatio, seu, De linguis in genere & de variarum linguarum harmonia dissertatio authore Thoma Hayne.",
+            "year": 1648,
+            "cer": 0.248,
+            "gap": 0.092,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-69905e152fd6a039938a0ebe-p46",
+            "title": "Cases of Conscience Concerning Evil Spirits",
+            "year": 1693,
+            "cer": 0.167,
+            "gap": 0.078,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6958e07cd34d35c8156624c8-p86",
+            "title": "Kalendarium Hortense: The Gardners Almanac",
+            "year": 1666,
+            "cer": 0.14,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "olmocr-2-7b-fp8": {
+        "pages_run": 73,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 73,
+          "median_cer": 0.046,
+          "mean_cer": 0.058,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_seq": 0.944,
+          "refused": 0,
+          "n_answered": 73,
+          "median_cer_answered": 0.046,
+          "mean_cer_answered": 0.058,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.043,
+          "mean": 0.064,
+          "n_engines": 3,
+          "ref_median": 0.063,
+          "ref_mean": 0.087
+        },
+        "paired_vs_ref": {
+          "n": 70,
+          "excluded_refused": 3,
+          "wins": 37,
+          "losses": 27,
+          "ties": 6,
+          "median_delta_cer": 0.002,
+          "p_sign": 0.26,
+          "invention_wins": 39,
+          "invention_losses": 24
+        },
+        "worst": [
+          {
+            "slug": "ed-699fcd429ff0f1d2c4517fff-p28",
+            "title": "The Most Noble, Auncient, and Learned Playe, Called the Philosophers Game",
+            "year": 1563,
+            "cer": 0.296,
+            "gap": 0.011,
+            "invention": 0.37,
+            "has_ref": true,
+            "unsupported": [
+              "philosophers",
+              "superparticular",
+              "particular",
+              "containeth",
+              "thryde",
+              "thus",
+              "cheise",
+              "unto"
+            ]
+          },
+          {
+            "slug": "ed-6a42aecb5207af7c42f5333c-p17",
+            "title": "Linguarum cognatio, seu, De linguis in genere & de variarum linguarum harmonia dissertatio authore Thoma Hayne.",
+            "year": 1648,
+            "cer": 0.196,
+            "gap": 0.006,
+            "invention": 0.162,
+            "has_ref": true,
+            "unsupported": [
+              "opinionem",
+              "historiorum",
+              "promiscisse",
+              "terrarum",
+              "transeisse",
+              "vendissent",
+              "haussissent",
+              "calluisset"
+            ]
+          },
+          {
+            "slug": "ed-69905e152fd6a039938a0ebe-p46",
+            "title": "Cases of Conscience Concerning Evil Spirits",
+            "year": 1693,
+            "cer": 0.163,
+            "gap": 0.069,
+            "invention": 0.067,
+            "has_ref": true,
+            "unsupported": [
+              "strangely",
+              "besotted",
+              "magnus",
+              "thyreus",
+              "demons",
+              "devil's",
+              "daemoniacis"
+            ]
+          },
+          {
+            "slug": "ed-6958e07cd34d35c8156624c8-p86",
+            "title": "Kalendarium Hortense: The Gardners Almanac",
+            "year": 1666,
+            "cer": 0.157,
+            "gap": 0,
+            "invention": 0.043,
+            "has_ref": true,
+            "unsupported": [
+              "month",
+              "larkspur"
+            ]
+          },
+          {
+            "slug": "ed-6a4f71ca1cba01ec54e763c3-p15",
+            "title": "Inquisitio in fidem Christianorum hujus sæculi. Authore Rogero Boyle, S.T.D. Dec. Corc.",
+            "year": 1665,
+            "cer": 0.116,
+            "gap": 0,
+            "invention": 0.109,
+            "has_ref": true,
+            "unsupported": [
+              "naturae",
+              "omnium",
+              "serunt",
+              "profiteuntur",
+              "scientia",
+              "resunditur"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "english-ia-5124": {
+    "stratum": "english-ia-5124",
+    "issue": 5124,
+    "date": "2026-10-03",
+    "refusal_source": "finishReason (meter) / inferred",
+    "cer_refusals": "ref.median_cer / mean_cer count a refusal as CER 1.0 (the pre-#5581 headline); *_answered exclude refused pages",
+    "n_pages": 122,
+    "n_with_ref": 121,
+    "ref_mismatch": [
+      "en-695434-ws146"
+    ],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3.1-flash-lite": {
+        "pages_run": 122,
+        "empty": 0,
+        "refused": 21,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 121,
+          "median_cer": 0.03,
+          "mean_cer": 0.21,
+          "catastrophic": 21,
+          "median_gap": 0,
+          "median_seq": 0.976,
+          "refused": 21,
+          "n_answered": 100,
+          "median_cer_answered": 0.02,
+          "mean_cer_answered": 0.044,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0,
+          "n_engines": 3,
+          "ref_median": 0.02,
+          "ref_mean": 0.057
+        },
+        "worst": [
+          {
+            "slug": "en-695434-ws122",
+            "title": "Ethic Demonstrated in Geometrical Order (White Translation)",
+            "year": 1883,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "en-699079-pg74335p860",
+            "title": "The Ghost-Dance Religion and the Sioux Outbreak of 1890",
+            "year": 1896,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "en-699079-ws170",
+            "title": "Some Chinese Ghosts",
+            "year": 1887,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "en-6991be-ws97",
+            "title": "Arcana Coelestia, Vol. I",
+            "year": 1784,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "en-69924f-ws365",
+            "title": "Ovid: Metamorphoses, Vol. 2 (Books 9-15)",
+            "year": 1916,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite-b": {
+        "pages_run": 122,
+        "empty": 0,
+        "refused": 22,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 121,
+          "median_cer": 0.03,
+          "mean_cer": 0.218,
+          "catastrophic": 22,
+          "median_gap": 0,
+          "median_seq": 0.976,
+          "refused": 22,
+          "n_answered": 99,
+          "median_cer_answered": 0.021,
+          "mean_cer_answered": 0.045,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 1,
+          "median_cer": 0,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 1,
+          "refused": 0,
+          "n_answered": 1,
+          "median_cer_answered": 0,
+          "mean_cer": 0,
+          "mean_cer_answered": 0
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.001,
+          "n_engines": 3,
+          "ref_median": 0.02,
+          "ref_mean": 0.057
+        },
+        "paired_vs_ref": {
+          "n": 95,
+          "excluded_refused": 26,
+          "wins": 0,
+          "losses": 0,
+          "ties": 95,
+          "median_delta_cer": 0,
+          "p_sign": 1,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "en-695434-ws122",
+            "title": "Ethic Demonstrated in Geometrical Order (White Translation)",
+            "year": 1883,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "en-69905c-ws309",
+            "title": "The Quimby Manuscripts",
+            "year": 1921,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "en-699079-pg74335p860",
+            "title": "The Ghost-Dance Religion and the Sioux Outbreak of 1890",
+            "year": 1896,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "en-699079-ws170",
+            "title": "Some Chinese Ghosts",
+            "year": 1887,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "en-69924f-ws365",
+            "title": "Ovid: Metamorphoses, Vol. 2 (Books 9-15)",
+            "year": 1916,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "olmocr-2-7b-fp8": {
+        "pages_run": 122,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 1,
+        "ref": {
+          "n": 121,
+          "median_cer": 0.003,
+          "mean_cer": 0.038,
+          "catastrophic": 2,
+          "median_gap": 0,
+          "median_seq": 0.992,
+          "refused": 0,
+          "n_answered": 121,
+          "median_cer_answered": 0.003,
+          "mean_cer_answered": 0.038,
+          "catastrophic_answered": 2
+        },
+        "proxy_vs_ref_engine": {
+          "n": 1,
+          "median_cer": 0.003,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 0.997,
+          "refused": 0,
+          "n_answered": 1,
+          "median_cer_answered": 0.003,
+          "mean_cer": 0.003,
+          "mean_cer_answered": 0.003
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.014,
+          "n_engines": 3,
+          "ref_median": 0.006,
+          "ref_mean": 0.033
+        },
+        "paired_vs_ref": {
+          "n": 100,
+          "excluded_refused": 21,
+          "wins": 91,
+          "losses": 7,
+          "ties": 2,
+          "median_delta_cer": 0.013,
+          "p_sign": 0,
+          "invention_wins": 60,
+          "invention_losses": 18
+        },
+        "worst": [
+          {
+            "slug": "en-6ab245-pg35895p272",
+            "title": "The gospel of Buddha, compiled from ancient records. Illustrated by O. Kopetzky",
+            "year": 1915,
+            "cer": 0.911,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "en-6aa1d5-ws52",
+            "title": "The eight chapters of Maimonides on ethics (Shemonah perakim);",
+            "year": 1912,
+            "cer": 0.859,
+            "gap": 0,
+            "invention": 0.333,
+            "has_ref": true,
+            "unsupported": [
+              "מוסר",
+              "במכות",
+              "דיטשען",
+              "איבערשטען",
+              "אויסאמען",
+              "נאנך",
+              "פרברעסטען",
+              "חלkat"
+            ]
+          },
+          {
+            "slug": "en-699249-ws259",
+            "title": "The Poetic Edda",
+            "year": 1923,
+            "cer": 0.364,
+            "gap": 0,
+            "invention": 0.016,
+            "has_ref": true,
+            "unsupported": [
+              "hervarar",
+              "saga"
+            ]
+          },
+          {
+            "slug": "en-69ee64-ws183",
+            "title": "Icelandic Poetry, or the Edda of Saemund",
+            "year": 1797,
+            "cer": 0.329,
+            "gap": 0,
+            "invention": 0.09,
+            "has_ref": true,
+            "unsupported": [
+              "slimy",
+              "spires",
+              "shine",
+              "first",
+              "vessel's",
+              "side",
+              "spreading",
+              "smote"
+            ]
+          },
+          {
+            "slug": "en-69bd9b-pg48225p119",
+            "title": "Collected Papers on Analytical Psychology",
+            "year": 1916,
+            "cer": 0.27,
+            "gap": 0.006,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      }
+    }
+  },
+  "german-fraktur": {
+    "stratum": "german-fraktur",
+    "issue": 4800,
+    "date": "2026-10-03",
+    "refusal_source": "finishReason (meter) / inferred",
+    "cer_refusals": "ref.median_cer / mean_cer count a refusal as CER 1.0 (the pre-#5581 headline); *_answered exclude refused pages",
+    "n_pages": 20,
+    "n_with_ref": 0,
+    "ref_mismatch": [],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3-flash-preview": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.015,
+          "catastrophic": 1,
+          "median_gap": 0,
+          "median_bow": 0.935,
+          "refused": 0,
+          "n_answered": 20,
+          "median_cer_answered": 0.015,
+          "mean_cer": 0.093,
+          "mean_cer_answered": 0.093
+        },
+        "invention": {
+          "median": 0.056,
+          "mean": 0.069,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "german-fraktur-3b1f2c-p176",
+            "title": "Handbuch der deutschen Literatur : seit der Mitte des achtzehnten Jahrhunderts bis auf die neueste Zeit. 1,1, Literatur ",
+            "year": 1812,
+            "cer": 0.787,
+            "gap": 0.388,
+            "invention": 0.104,
+            "has_ref": false,
+            "unsupported": [
+              "abschn",
+              "insonderh",
+              "waisenh",
+              "niemeyersche",
+              "waisenhäusern",
+              "rost",
+              "besond",
+              "cassel"
+            ]
+          },
+          {
+            "slug": "german-fraktur-7c6332-p6",
+            "title": "Prognosticon Halbmayerianum, Das ist, Extract und Außzug, deß jenigen was Georg Halbmayer, Astronomus, von dem künfftige",
+            "year": 1631,
+            "cer": 0.433,
+            "gap": 0.232,
+            "invention": 0.054,
+            "has_ref": false,
+            "unsupported": [
+              "vnter",
+              "stats",
+              "vbermuth",
+              "scorpionistn",
+              "förchtn",
+              "vnerschwinglich"
+            ]
+          },
+          {
+            "slug": "german-fraktur-316a06-p13",
+            "title": "Ain schöner christlicher sendbrieff und bericht",
+            "year": 1547,
+            "cer": 0.244,
+            "gap": 0.104,
+            "invention": 0.072,
+            "has_ref": false,
+            "unsupported": [
+              "zůstande",
+              "unterschaiden",
+              "gelittē",
+              "göttliche",
+              "nigkait",
+              "dreyfal",
+              "tigkeit",
+              "schlagendē"
+            ]
+          },
+          {
+            "slug": "german-fraktur-84e53b-p41",
+            "title": "Prognosticon spirituale. Oder Geistlicher Calender unnd Practica",
+            "year": 1613,
+            "cer": 0.13,
+            "gap": 0.103,
+            "invention": 0.171,
+            "has_ref": false,
+            "unsupported": [
+              "gefängnuß",
+              "jhre",
+              "alle",
+              "jhnen",
+              "jesus",
+              "jhren",
+              "sondern",
+              "hertz"
+            ]
+          },
+          {
+            "slug": "german-fraktur-d95833-p8",
+            "title": "Auserwaehlte Meister von der schwarzen Bruderschaft",
+            "year": 1784,
+            "cer": 0.085,
+            "gap": 0.004,
+            "invention": 0.219,
+            "has_ref": false,
+            "unsupported": [
+              "sehr",
+              "ehrwürdiger",
+              "thut",
+              "davon",
+              "nachricht",
+              "drey",
+              "beyden",
+              "alsdann"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.07,
+          "mean": 0.086,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "worst": [
+          {
+            "slug": "german-fraktur-3b1f2c-p176",
+            "title": "Handbuch der deutschen Literatur : seit der Mitte des achtzehnten Jahrhunderts bis auf die neueste Zeit. 1,1, Literatur ",
+            "year": 1812,
+            "invention": 0.321,
+            "has_ref": false,
+            "unsupported": [
+              "abfchn",
+              "infonderh",
+              "befchr",
+              "nebft",
+              "gefch",
+              "erften",
+              "niemeyerfche",
+              "päda"
+            ]
+          },
+          {
+            "slug": "german-fraktur-d95833-p8",
+            "title": "Auserwaehlte Meister von der schwarzen Bruderschaft",
+            "year": 1784,
+            "invention": 0.188,
+            "has_ref": false,
+            "unsupported": [
+              "hochwürdiger",
+              "erfüll",
+              "bescheid",
+              "sodann",
+              "ehrenmeisters",
+              "unermüdeten",
+              "wackern",
+              "zerstöret"
+            ]
+          },
+          {
+            "slug": "german-fraktur-1d3ad7-p25",
+            "title": "Sendtschreiben an einen guten Freundt in Welschlandt",
+            "year": 1618,
+            "invention": 0.153,
+            "has_ref": false,
+            "unsupported": [
+              "vrsachen",
+              "durch",
+              "zogen",
+              "onnd",
+              "kezereyen",
+              "jrthumb",
+              "vnenderliche",
+              "buendtlichkeit"
+            ]
+          },
+          {
+            "slug": "german-fraktur-63274c-p28",
+            "title": "Entwurf einer allerneuesten Beschreibung des Königreichs Böhmen : in welchem von dieses Landes geographischen, physicali",
+            "year": 1757,
+            "invention": 0.124,
+            "has_ref": false,
+            "unsupported": [
+              "lipka",
+              "lübau",
+              "lybau",
+              "martinik",
+              "palsy",
+              "pisnik",
+              "poztagki",
+              "stubigk"
+            ]
+          },
+          {
+            "slug": "german-fraktur-5fa9a3-p39",
+            "title": "Wiederlegunge der Abgötterey und nichtigen Aberglaubens",
+            "year": 1627,
+            "invention": 0.098,
+            "has_ref": false,
+            "unsupported": [
+              "aberglaubigen",
+              "scheinen",
+              "erempel",
+              "lein",
+              "gläu",
+              "erscheis",
+              "nungen",
+              "jung"
+            ]
+          }
+        ]
+      },
+      "olmocr-2-7b-fp8": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.057,
+          "catastrophic": 2,
+          "median_gap": 0,
+          "median_bow": 0.811,
+          "refused": 0,
+          "n_answered": 20,
+          "median_cer_answered": 0.057,
+          "mean_cer": 0.131,
+          "mean_cer_answered": 0.131
+        },
+        "invention": {
+          "median": 0.176,
+          "mean": 0.214,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "german-fraktur-3b1f2c-p176",
+            "title": "Handbuch der deutschen Literatur : seit der Mitte des achtzehnten Jahrhunderts bis auf die neueste Zeit. 1,1, Literatur ",
+            "year": 1812,
+            "cer": 0.799,
+            "gap": 0.398,
+            "invention": 0.152,
+            "has_ref": false,
+            "unsupported": [
+              "niemeyer'sche",
+              "wallenhäusern",
+              "justt",
+              "marienbergser",
+              "ehrl",
+              "stilller",
+              "gedike",
+              "herberg"
+            ]
+          },
+          {
+            "slug": "german-fraktur-d95833-p8",
+            "title": "Auserwaehlte Meister von der schwarzen Bruderschaft",
+            "year": 1784,
+            "cer": 0.507,
+            "gap": 0.057,
+            "invention": 0.708,
+            "has_ref": false,
+            "unsupported": [
+              "feierlichem",
+              "liedes",
+              "dritten",
+              "weispruch",
+              "affeif",
+              "einst",
+              "entnehmen",
+              "dafß"
+            ]
+          },
+          {
+            "slug": "german-fraktur-a6c2ba-p17",
+            "title": "Tractatus De Medicina Universali. Das ist: Von der Universal-Medicin: Wie nemlich dieselbe in denen dreyen Reichen der M",
+            "year": 1678,
+            "cer": 0.207,
+            "gap": 0.082,
+            "invention": 0.131,
+            "has_ref": false,
+            "unsupported": [
+              "natürich",
+              "weisheit",
+              "lunae",
+              "coelum",
+              "metalliche",
+              "metallichen",
+              "nothhestler",
+              "apfelsel"
+            ]
+          },
+          {
+            "slug": "german-fraktur-da46af-p53",
+            "title": "drei ältesten Kunsturkunden der Freimaurer-Bruderschaft, mitgetheilt, bearbeitet und in einem Lehrfragstuck urvergeistig",
+            "year": 1820,
+            "cer": 0.155,
+            "gap": 0.009,
+            "invention": 0.406,
+            "has_ref": false,
+            "unsupported": [
+              "patris",
+              "servitio",
+              "probabiliusque",
+              "faciend",
+              "viso",
+              "d'orvieto",
+              "editur",
+              "rego"
+            ]
+          },
+          {
+            "slug": "german-fraktur-316a06-p13",
+            "title": "Ain schöner christlicher sendbrieff und bericht",
+            "year": 1547,
+            "cer": 0.148,
+            "gap": 0.004,
+            "invention": 0.172,
+            "has_ref": false,
+            "unsupported": [
+              "aigenschaft",
+              "unterscheiden",
+              "sonder",
+              "gelitten",
+              "creuze",
+              "sonderhalt",
+              "doinen",
+              "biete"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "greek": {
+    "stratum": "greek",
+    "issue": 4744,
+    "date": "2026-10-03",
+    "refusal_source": "finishReason (meter) / inferred",
+    "cer_refusals": "ref.median_cer / mean_cer count a refusal as CER 1.0 (the pre-#5581 headline); *_answered exclude refused pages",
+    "n_pages": 14,
+    "n_with_ref": 11,
+    "ref_mismatch": [],
+    "textless": [
+      "greek-cab899-p398",
+      "greek-db4f92-p330",
+      "greek-dc33bd-p19",
+      "greek-dd47d0-p103",
+      "greek-defdb8-p22",
+      "greek-e0177f-p606",
+      "greek-e146e0-p75",
+      "greek-e2727b-p175",
+      "greek-e31359-p688",
+      "greek-e5e533-p236",
+      "greek-e69e14-p141",
+      "greek-e8a2f4-p80",
+      "greek-e92072-p25",
+      "greek-ea6195-p94",
+      "greek-ed9d28-p267",
+      "greek-ee80d6-p88"
+    ],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3-flash-preview": {
+        "pages_run": 14,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 11,
+          "median_cer": 0.115,
+          "mean_cer": 0.126,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_seq": 0.855,
+          "refused": 0,
+          "n_answered": 11,
+          "median_cer_answered": 0.115,
+          "mean_cer_answered": 0.126,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 3,
+          "median_cer": 0.02,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 0.932,
+          "refused": 0,
+          "n_answered": 3,
+          "median_cer_answered": 0.02,
+          "mean_cer": 0.039,
+          "mean_cer_answered": 0.039
+        },
+        "invention": {
+          "median": 0.028,
+          "mean": 0.056,
+          "n_engines": 4,
+          "ref_median": 0.157,
+          "ref_mean": 0.142
+        },
+        "paired_vs_ref": {
+          "n": 11,
+          "excluded_refused": 0,
+          "wins": 10,
+          "losses": 1,
+          "ties": 0,
+          "median_delta_cer": 0.009,
+          "p_sign": 0.012,
+          "invention_wins": 9,
+          "invention_losses": 2
+        },
+        "worst": [
+          {
+            "slug": "greek-f8ec82-p43",
+            "title": "On the Sublime, chiefly from the text of Weiske",
+            "year": 1838,
+            "cer": 0.411,
+            "gap": 0,
+            "invention": 0.027,
+            "has_ref": true,
+            "unsupported": [
+              "τάρφος",
+              "τρέφω"
+            ]
+          },
+          {
+            "slug": "greek-db6c8d-p219",
+            "title": "Petri Victorii commentarii in VIII libros Aristotelis De optimo statu civitatis : positis ante singulas declarationes gr",
+            "year": 1576,
+            "cer": 0.169,
+            "gap": 0,
+            "invention": 0.283,
+            "has_ref": true,
+            "unsupported": [
+              "πεινῆν",
+              "πολίτε",
+              "δοκίμε",
+              "ἀγαθῶ",
+              "τίθεμλμ",
+              "ἀρχικιώ",
+              "ταυτὰ",
+              "πολίτίω"
+            ]
+          },
+          {
+            "slug": "greek-458842-p434",
+            "title": "Origenes: Contra Celsum (Greek Critical Edition)",
+            "year": 1899,
+            "cer": 0.161,
+            "gap": 0.003,
+            "invention": 0.028,
+            "has_ref": true,
+            "unsupported": [
+              "ἐπτέρω",
+              "ἀνήρωτα",
+              "αὑτοῦ",
+              "ἀρχητεκτονικήν"
+            ]
+          },
+          {
+            "slug": "greek-e28801-p756",
+            "title": "Organum : Hoc est libri omnes ad logicam pertinentes, Graece et Latine ; cum triplici indice",
+            "year": 1592,
+            "cer": 0.145,
+            "gap": 0.016,
+            "invention": 0.033,
+            "has_ref": true,
+            "unsupported": [
+              "ἐρωτᾷν"
+            ]
+          },
+          {
+            "slug": "greek-c80c9d-p16",
+            "title": "Anakreontos Tēiou Melē : = Anacreontis Teii odae",
+            "year": 1554,
+            "cer": 0.129,
+            "gap": 0,
+            "invention": 0.118,
+            "has_ref": true,
+            "unsupported": [
+              "κέαται",
+              "κόπῳ",
+              "δαμλύτα",
+              "ἔρος",
+              "ἔκοπτ'",
+              "ἀνέῳξα"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 14,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 11,
+          "median_cer": 0.171,
+          "mean_cer": 0.153,
+          "catastrophic": 0,
+          "median_gap": 0.003,
+          "median_seq": 0.802,
+          "refused": 0,
+          "n_answered": 11,
+          "median_cer_answered": 0.171,
+          "mean_cer_answered": 0.153,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0,
+          "n_engines": 4,
+          "ref_median": 0.178,
+          "ref_mean": 0.186
+        },
+        "worst": [
+          {
+            "slug": "greek-f8ec82-p43",
+            "title": "On the Sublime, chiefly from the text of Weiske",
+            "year": 1838,
+            "cer": 0.39,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-e28801-p756",
+            "title": "Organum : Hoc est libri omnes ad logicam pertinentes, Graece et Latine ; cum triplici indice",
+            "year": 1592,
+            "cer": 0.223,
+            "gap": 0.017,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-db6c8d-p219",
+            "title": "Petri Victorii commentarii in VIII libros Aristotelis De optimo statu civitatis : positis ante singulas declarationes gr",
+            "year": 1576,
+            "cer": 0.196,
+            "gap": 0.019,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-da99cc-p426",
+            "title": "Diogenus Laertiu Peri Biōn, Dogmatōn kai apophthegmatōn tōn en philosophia eudokimēsantōn : biblia deka = Diogenis Laert",
+            "year": 1533,
+            "cer": 0.183,
+            "gap": 0.026,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-e75fda-p53",
+            "title": "Plutarchu Chaerōneōs Peri Tōn areskontōn tois philosophois, physikōn dogmatōn epithymēs, biblia pente",
+            "year": 1531,
+            "cer": 0.18,
+            "gap": 0.024,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite-b": {
+        "pages_run": 14,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 11,
+          "median_cer": 0.171,
+          "mean_cer": 0.153,
+          "catastrophic": 0,
+          "median_gap": 0.003,
+          "median_seq": 0.802,
+          "refused": 0,
+          "n_answered": 11,
+          "median_cer_answered": 0.171,
+          "mean_cer_answered": 0.153,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 3,
+          "median_cer": 0,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 1,
+          "refused": 0,
+          "n_answered": 3,
+          "median_cer_answered": 0,
+          "mean_cer": 0,
+          "mean_cer_answered": 0
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0,
+          "n_engines": 4,
+          "ref_median": 0.178,
+          "ref_mean": 0.186
+        },
+        "paired_vs_ref": {
+          "n": 11,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 11,
+          "median_delta_cer": 0,
+          "p_sign": 1,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "greek-f8ec82-p43",
+            "title": "On the Sublime, chiefly from the text of Weiske",
+            "year": 1838,
+            "cer": 0.39,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-e28801-p756",
+            "title": "Organum : Hoc est libri omnes ad logicam pertinentes, Graece et Latine ; cum triplici indice",
+            "year": 1592,
+            "cer": 0.223,
+            "gap": 0.017,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-db6c8d-p219",
+            "title": "Petri Victorii commentarii in VIII libros Aristotelis De optimo statu civitatis : positis ante singulas declarationes gr",
+            "year": 1576,
+            "cer": 0.196,
+            "gap": 0.019,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-da99cc-p426",
+            "title": "Diogenus Laertiu Peri Biōn, Dogmatōn kai apophthegmatōn tōn en philosophia eudokimēsantōn : biblia deka = Diogenis Laert",
+            "year": 1533,
+            "cer": 0.183,
+            "gap": 0.026,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-e75fda-p53",
+            "title": "Plutarchu Chaerōneōs Peri Tōn areskontōn tois philosophois, physikōn dogmatōn epithymēs, biblia pente",
+            "year": 1531,
+            "cer": 0.18,
+            "gap": 0.024,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "olmocr-2-7b-fp8": {
+        "pages_run": 14,
+        "empty": 1,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 11,
+          "median_cer": 0.48,
+          "mean_cer": 0.943,
+          "catastrophic": 5,
+          "median_gap": 0.009,
+          "median_seq": 0.211,
+          "refused": 0,
+          "n_answered": 11,
+          "median_cer_answered": 0.48,
+          "mean_cer_answered": 0.943,
+          "catastrophic_answered": 5
+        },
+        "proxy_vs_ref_engine": {
+          "n": 3,
+          "median_cer": 0.122,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 0.765,
+          "refused": 0,
+          "n_answered": 3,
+          "median_cer_answered": 0.122,
+          "mean_cer": 0.147,
+          "mean_cer_answered": 0.147
+        },
+        "invention": {
+          "median": 0.545,
+          "mean": 0.546,
+          "n_engines": 4,
+          "ref_median": 0.68,
+          "ref_mean": 0.64
+        },
+        "paired_vs_ref": {
+          "n": 11,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 11,
+          "ties": 0,
+          "median_delta_cer": -0.304,
+          "p_sign": 0.001,
+          "invention_wins": 1,
+          "invention_losses": 10
+        },
+        "worst": [
+          {
+            "slug": "greek-db6c8d-p219",
+            "title": "Petri Victorii commentarii in VIII libros Aristotelis De optimo statu civitatis : positis ante singulas declarationes gr",
+            "year": 1576,
+            "cer": 6.083,
+            "gap": 0,
+            "invention": 0.833,
+            "has_ref": true,
+            "unsupported": [
+              "ἐσούριον",
+              "αλλὰ",
+              "πανταχόθεν",
+              "διασκευάζεις",
+              "οὐδὲ",
+              "συμβουλίων",
+              "πολιτικῆς",
+              "ἀνθρώπων"
+            ]
+          },
+          {
+            "slug": "greek-4fd5df-p390",
+            "title": "Galeni Opera Omnia, Vol. 14 (BIU Santé)",
+            "year": 1821,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-da99cc-p426",
+            "title": "Diogenus Laertiu Peri Biōn, Dogmatōn kai apophthegmatōn tōn en philosophia eudokimēsantōn : biblia deka = Diogenis Laert",
+            "year": 1533,
+            "cer": 0.591,
+            "gap": 0.056,
+            "invention": 0.899,
+            "has_ref": true,
+            "unsupported": [
+              "γυθαγορας",
+              "ἀναρίστῳ",
+              "πόρῳ",
+              "ρώσις",
+              "αὐτοῦ",
+              "σεληνῶν",
+              "λαμπρότατα",
+              "αὐθέωσιν"
+            ]
+          },
+          {
+            "slug": "greek-e75fda-p53",
+            "title": "Plutarchu Chaerōneōs Peri Tōn areskontōn tois philosophois, physikōn dogmatōn epithymēs, biblia pente",
+            "year": 1531,
+            "cer": 0.591,
+            "gap": 0.037,
+            "invention": 0.889,
+            "has_ref": true,
+            "unsupported": [
+              "αὐτοφέρεις",
+              "ἐμπίπτουσι",
+              "σαλανδρι",
+              "βαλάνων",
+              "κατίσθι",
+              "πικραί",
+              "αναξίμανδρος",
+              "ἀκλασίαν"
+            ]
+          },
+          {
+            "slug": "greek-e28801-p756",
+            "title": "Organum : Hoc est libri omnes ad logicam pertinentes, Graece et Latine ; cum triplici indice",
+            "year": 1592,
+            "cer": 0.527,
+            "gap": 0.049,
+            "invention": 0.679,
+            "has_ref": true,
+            "unsupported": [
+              "ογδον",
+              "ἐστιν",
+              "αὐτῶν",
+              "λεκτέου",
+              "μέλοντα",
+              "ὑπάρχηπον",
+              "ἐρωτηματικόν",
+              "παίζει"
+            ]
+          }
+        ]
+      }
+    },
+    "by_class": {
+      "typeset-print": {
+        "n": 14,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 14,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.089,
+            "catastrophic": 0,
+            "median_unsupported": 0.028
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 14,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.171,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 14,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.116,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "olmocr-2-7b-fp8": {
+            "n": 14,
+            "empty": 1,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.367,
+            "catastrophic": 5,
+            "median_unsupported": 0.545
+          }
+        }
+      }
+    }
+  },
+  "greek-ext": {
+    "stratum": "greek-ext",
+    "issue": 4925,
+    "date": "2026-10-03",
+    "refusal_source": "finishReason (meter) / inferred",
+    "cer_refusals": "ref.median_cer / mean_cer count a refusal as CER 1.0 (the pre-#5581 headline); *_answered exclude refused pages",
+    "n_pages": 170,
+    "n_with_ref": 117,
+    "ref_mismatch": [
+      "greek-ext-8336c0-p409",
+      "greek-ext-b491d9-p174",
+      "greek-ext-c65ed9-p345",
+      "greek-ext-e4c86c-p199",
+      "greek-ext-e4e32d-p286",
+      "greek-ext-e59f23-p391",
+      "greek-ext-e72747-p58",
+      "greek-ext-e88de4-p87",
+      "greek-ext-f69fd9-p70",
+      "greek-ext-fbba4c-p156"
+    ],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3-flash-preview": {
+        "pages_run": 170,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 117,
+          "median_cer": 0.084,
+          "mean_cer": 0.109,
+          "catastrophic": 0,
+          "median_gap": 0.005,
+          "median_seq": 0.867,
+          "refused": 0,
+          "n_answered": 117,
+          "median_cer_answered": 0.084,
+          "mean_cer_answered": 0.109,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 53,
+          "median_cer": 0.096,
+          "catastrophic": 6,
+          "median_gap": 0.005,
+          "median_bow": 0.726,
+          "refused": 0,
+          "n_answered": 53,
+          "median_cer_answered": 0.096,
+          "mean_cer": 0.216,
+          "mean_cer_answered": 0.216
+        },
+        "invention": {
+          "median": 0.073,
+          "mean": 0.145,
+          "n_engines": 4,
+          "ref_median": 0.139,
+          "ref_mean": 0.157
+        },
+        "paired_vs_ref": {
+          "n": 117,
+          "excluded_refused": 0,
+          "wins": 105,
+          "losses": 8,
+          "ties": 4,
+          "median_delta_cer": 0.035,
+          "p_sign": 0,
+          "invention_wins": 99,
+          "invention_losses": 12
+        },
+        "worst": [
+          {
+            "slug": "greek-ext-6cea03-p228",
+            "title": "Sophocles and Euripides: Ajax, Electra, Oedipus Tyrannus, Phoenissae",
+            "year": 1505,
+            "cer": 1.969,
+            "gap": 0.016,
+            "invention": 0.942,
+            "has_ref": false,
+            "unsupported": [
+              "ἀρζόος",
+              "ὀνδράσι",
+              "ἀργηκός",
+              "πράξεις",
+              "ὀλίγον",
+              "ἥμαρ",
+              "ἀμνάσει",
+              "φθόνος"
+            ]
+          },
+          {
+            "slug": "greek-ext-88ed68-p222",
+            "title": "Plotini Enneades (Ficino Working Copy)",
+            "year": 1455,
+            "cer": 0.894,
+            "gap": 0.037,
+            "invention": 0.922,
+            "has_ref": false,
+            "unsupported": [
+              "τοιαῦτα",
+              "ἡμῖν",
+              "ἴχνος",
+              "ψυχῆς",
+              "ὑποκειμένῳ",
+              "αὐτὸν",
+              "εἶναί",
+              "μάρτυρες"
+            ]
+          },
+          {
+            "slug": "greek-ext-946843-p157",
+            "title": "Aristophanes, Plutus, Clouds, and Frogs",
+            "year": 1477,
+            "cer": 0.675,
+            "gap": 0.008,
+            "invention": 0.771,
+            "has_ref": false,
+            "unsupported": [
+              "κλῆρον",
+              "χορὸν",
+              "καλλιχορώτατον",
+              "δαίμονες",
+              "ὄλβιοι",
+              "συνιστῶσι",
+              "ξυνάγουσίν",
+              "μετὰ"
+            ]
+          },
+          {
+            "slug": "greek-ext-e7cbe2-p97",
+            "title": "Aristotelis Summi Semper Viri, ... opera quaecunq[ue] impressa hactenus extiterunt omnia :denuo iam collatione vetustiss",
+            "year": 1539,
+            "cer": 0.634,
+            "gap": 0.05,
+            "invention": 0.693,
+            "has_ref": false,
+            "unsupported": [
+              "εὐδημίων",
+              "πανῦργος",
+              "ὅθεν",
+              "πάντοθεν",
+              "πλεονεκτικός",
+              "εὐήθης",
+              "λάβῃ",
+              "ὑπάρχει"
+            ]
+          },
+          {
+            "slug": "greek-ext-beb9cc-p606",
+            "title": "Homer, Iliad",
+            "year": 1450,
+            "cer": 0.541,
+            "gap": 0.031,
+            "invention": 0.796,
+            "has_ref": false,
+            "unsupported": [
+              "νῆας",
+              "πάλιν",
+              "ἔσαντο",
+              "σῶτρον",
+              "ἱέτο",
+              "δυνάμενος",
+              "ἦλθον",
+              "ἀνδρόμεον"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 170,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 117,
+          "median_cer": 0.141,
+          "mean_cer": 0.162,
+          "catastrophic": 1,
+          "median_gap": 0.007,
+          "median_seq": 0.755,
+          "refused": 0,
+          "n_answered": 117,
+          "median_cer_answered": 0.141,
+          "mean_cer_answered": 0.162,
+          "catastrophic_answered": 1
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.02,
+          "n_engines": 4,
+          "ref_median": 0.235,
+          "ref_mean": 0.262
+        },
+        "worst": [
+          {
+            "slug": "greek-ext-a61180-p183",
+            "title": "Athanasius of Alexandria, Works (Vol. 1)",
+            "year": 1550,
+            "invention": 0.991,
+            "has_ref": false,
+            "unsupported": [
+              "ζωηπριθεωθηπριηιζω",
+              "τωμησωαμηνης",
+              "γυστου",
+              "ηγυδο",
+              "θεοτηλος",
+              "επηκέω",
+              "προσαγιασμον",
+              "τοις"
+            ]
+          },
+          {
+            "slug": "greek-ext-665d2e-p83",
+            "title": "Hē  Kainē Diathēkē tou Kyriou ēmōn Iēsou Christou",
+            "year": 1708,
+            "cer": 0.849,
+            "gap": 0.376,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext-42d3fa-p297",
+            "title": "Herodotus, Historiae; Plutarch, Parallel Lives",
+            "year": 1515,
+            "cer": 0.483,
+            "gap": 0.078,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext-f5470c-p42",
+            "title": "Philostratou eis ton Apollōniou tou Tyaneōs bion biblia octō. Eusebiou Kaisareias tou Pamphilou antirrhētikos pros ta Hi",
+            "year": 1502,
+            "invention": 0.474,
+            "has_ref": false,
+            "unsupported": [
+              "προπίνω",
+              "ἐπεῖπε",
+              "κᾀτῇ",
+              "προσμαίνων",
+              "γλυκέα",
+              "βασιλεύς",
+              "κρμηκυταλύοντα",
+              "σορῶς"
+            ]
+          },
+          {
+            "slug": "greek-ext-e5674a-p163",
+            "title": "Theseus",
+            "year": 1789,
+            "cer": 0.448,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite-b": {
+        "pages_run": 170,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 1,
+        "ref": {
+          "n": 117,
+          "median_cer": 0.135,
+          "mean_cer": 0.161,
+          "catastrophic": 1,
+          "median_gap": 0.008,
+          "median_seq": 0.768,
+          "refused": 0,
+          "n_answered": 117,
+          "median_cer_answered": 0.135,
+          "mean_cer_answered": 0.161,
+          "catastrophic_answered": 1
+        },
+        "proxy_vs_ref_engine": {
+          "n": 53,
+          "median_cer": 0,
+          "catastrophic": 1,
+          "median_gap": 0,
+          "median_bow": 1,
+          "refused": 0,
+          "n_answered": 53,
+          "median_cer_answered": 0,
+          "mean_cer": 0.028,
+          "mean_cer_answered": 0.028
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.016,
+          "n_engines": 4,
+          "ref_median": 0.235,
+          "ref_mean": 0.26
+        },
+        "paired_vs_ref": {
+          "n": 117,
+          "excluded_refused": 0,
+          "wins": 10,
+          "losses": 3,
+          "ties": 104,
+          "median_delta_cer": 0,
+          "p_sign": 0.092,
+          "invention_wins": 7,
+          "invention_losses": 6
+        },
+        "worst": [
+          {
+            "slug": "greek-ext-665d2e-p83",
+            "title": "Hē  Kainē Diathēkē tou Kyriou ēmōn Iēsou Christou",
+            "year": 1708,
+            "cer": 0.849,
+            "gap": 0.376,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext-f5470c-p42",
+            "title": "Philostratou eis ton Apollōniou tou Tyaneōs bion biblia octō. Eusebiou Kaisareias tou Pamphilou antirrhētikos pros ta Hi",
+            "year": 1502,
+            "cer": 0.596,
+            "gap": 0.028,
+            "invention": 0.276,
+            "has_ref": false,
+            "unsupported": [
+              "ῥωμαίοισι",
+              "προῄειν",
+              "τάρχας",
+              "βασιλεῖ",
+              "προσημαίνων",
+              "γλυναῖος",
+              "μηκηταλύοντας",
+              "ἐπέστη"
+            ]
+          },
+          {
+            "slug": "greek-ext-42d3fa-p297",
+            "title": "Herodotus, Historiae; Plutarch, Parallel Lives",
+            "year": 1515,
+            "cer": 0.483,
+            "gap": 0.078,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext-a61180-p183",
+            "title": "Athanasius of Alexandria, Works (Vol. 1)",
+            "year": 1550,
+            "cer": 0.448,
+            "gap": 0,
+            "invention": 0.59,
+            "has_ref": false,
+            "unsupported": [
+              "ζωηριθεῖσα",
+              "ἀμβροτῆς",
+              "ἐπιλάμψει",
+              "προσαγιάσμον",
+              "προσελάμβε",
+              "πνεῦμα",
+              "συμπληρῶν",
+              "ἁγιασ"
+            ]
+          },
+          {
+            "slug": "greek-ext-e5674a-p163",
+            "title": "Theseus",
+            "year": 1789,
+            "cer": 0.448,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "olmocr-2-7b-fp8": {
+        "pages_run": 170,
+        "empty": 20,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 9,
+        "ref": {
+          "n": 117,
+          "median_cer": 0.46,
+          "mean_cer": 0.588,
+          "catastrophic": 53,
+          "median_gap": 0.015,
+          "median_seq": 0.311,
+          "refused": 0,
+          "n_answered": 117,
+          "median_cer_answered": 0.46,
+          "mean_cer_answered": 0.588,
+          "catastrophic_answered": 53
+        },
+        "proxy_vs_ref_engine": {
+          "n": 53,
+          "median_cer": 0.779,
+          "catastrophic": 32,
+          "median_gap": 0.008,
+          "median_bow": 0.124,
+          "refused": 0,
+          "n_answered": 53,
+          "median_cer_answered": 0.779,
+          "mean_cer": 0.933,
+          "mean_cer_answered": 0.933
+        },
+        "invention": {
+          "median": 0.718,
+          "mean": 0.682,
+          "n_engines": 4,
+          "ref_median": 0.723,
+          "ref_mean": 0.699
+        },
+        "paired_vs_ref": {
+          "n": 117,
+          "excluded_refused": 0,
+          "wins": 1,
+          "losses": 116,
+          "ties": 0,
+          "median_delta_cer": -0.274,
+          "p_sign": 0,
+          "invention_wins": 11,
+          "invention_losses": 106
+        },
+        "worst": [
+          {
+            "slug": "greek-ext-da33f7-p186",
+            "title": "Ars sacra philosophorum",
+            "year": 1491,
+            "cer": 4.09,
+            "gap": 0.003,
+            "invention": 0.929,
+            "has_ref": false,
+            "unsupported": [
+              "χαμαίθου",
+              "λόγου",
+              "μέσου",
+              "θερινῆς",
+              "ὁμίλου",
+              "ἡμισεοῦν",
+              "λάβοντες",
+              "πολλῶν"
+            ]
+          },
+          {
+            "slug": "greek-ext-87a10a-p280",
+            "title": "Organon organōn, ē hē tēs philosophías cheir",
+            "year": 1545,
+            "cer": 3.199,
+            "gap": 0.042,
+            "invention": 0.6,
+            "has_ref": true,
+            "unsupported": [
+              "ἐκεῖνο",
+              "ἀνεγκαίων",
+              "αὐτῶν",
+              "ληφθῆναι",
+              "μέρη",
+              "μέσου",
+              "ἐσαὶ",
+              "παντὶμ"
+            ]
+          },
+          {
+            "slug": "greek-ext-c662c8-p151",
+            "title": "Ta  De Enestin En Tē De Tē Biblō Tu Agiu Dionysiu ... : = Hæc Insvnt In Hoc Libro Sancti Dionysii",
+            "year": 1516,
+            "cer": 3.139,
+            "gap": 0,
+            "invention": 0.5,
+            "has_ref": false,
+            "unsupported": [
+              "νοῦς",
+              "ὁμολογεῖσιν"
+            ]
+          },
+          {
+            "slug": "greek-ext-2779bb-p372",
+            "title": "Eklogai ek ton Dionos (Dio Cassius Excerpts)",
+            "year": 1542,
+            "cer": 3.045,
+            "gap": 0,
+            "invention": 0.9,
+            "has_ref": false,
+            "unsupported": [
+              "χειλια",
+              "τους",
+              "διονυσιους",
+              "κορινθιοι",
+              "αποροι",
+              "γονιδιωνι",
+              "οαδοφυει",
+              "τουι"
+            ]
+          },
+          {
+            "slug": "greek-ext-ea62de-p146",
+            "title": "Epitome logices Aristotelis",
+            "year": 1548,
+            "cer": 3.013,
+            "gap": 0.005,
+            "invention": 0.455,
+            "has_ref": false,
+            "unsupported": [
+              "ἴμαν",
+              "ἄλλων",
+              "σίμιλον",
+              "ἔχουν",
+              "κακεῖνο"
+            ]
+          }
+        ]
+      }
+    },
+    "by_class": {
+      "manuscript": {
+        "n": 18,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 18,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.314,
+            "catastrophic": 5,
+            "median_unsupported": 0.375
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 18,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.152,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 18,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.082,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "olmocr-2-7b-fp8": {
+            "n": 18,
+            "empty": 6,
+            "refused": 0,
+            "loop": 3,
+            "median_cer": 0.874,
+            "catastrophic": 14,
+            "median_unsupported": 0.865
+          }
+        }
+      },
+      "typeset-print": {
+        "n": 152,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 152,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.083,
+            "catastrophic": 1,
+            "median_unsupported": 0.065
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 152,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.138,
+            "catastrophic": 1,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 152,
+            "empty": 0,
+            "refused": 0,
+            "loop": 1,
+            "median_cer": 0.096,
+            "catastrophic": 2,
+            "median_unsupported": 0
+          },
+          "olmocr-2-7b-fp8": {
+            "n": 152,
+            "empty": 14,
+            "refused": 0,
+            "loop": 6,
+            "median_cer": 0.458,
+            "catastrophic": 71,
+            "median_unsupported": 0.7
+          }
+        }
+      }
+    }
+  },
+  "greek-ext2": {
+    "stratum": "greek-ext2",
+    "issue": 4925,
+    "date": "2026-10-03",
+    "refusal_source": "finishReason (meter) / inferred",
+    "cer_refusals": "ref.median_cer / mean_cer count a refusal as CER 1.0 (the pre-#5581 headline); *_answered exclude refused pages",
+    "n_pages": 10,
+    "n_with_ref": 8,
+    "ref_mismatch": [],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3-flash-preview": {
+        "pages_run": 10,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 8,
+          "median_cer": 0.098,
+          "mean_cer": 0.093,
+          "catastrophic": 0,
+          "median_gap": 0.016,
+          "median_seq": 0.827,
+          "refused": 0,
+          "n_answered": 8,
+          "median_cer_answered": 0.098,
+          "mean_cer_answered": 0.093,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 2,
+          "median_cer": 0.324,
+          "catastrophic": 1,
+          "median_gap": 0.011,
+          "median_bow": 0.516,
+          "refused": 0,
+          "n_answered": 2,
+          "median_cer_answered": 0.324,
+          "mean_cer": 0.324,
+          "mean_cer_answered": 0.324
+        },
+        "invention": {
+          "median": 0.131,
+          "mean": 0.206,
+          "n_engines": 4,
+          "ref_median": 0.197,
+          "ref_mean": 0.183
+        },
+        "paired_vs_ref": {
+          "n": 8,
+          "excluded_refused": 0,
+          "wins": 7,
+          "losses": 1,
+          "ties": 0,
+          "median_delta_cer": 0.113,
+          "p_sign": 0.07,
+          "invention_wins": 7,
+          "invention_losses": 1
+        },
+        "worst": [
+          {
+            "slug": "greek-ext2-947ec1-p88",
+            "title": "Plato, Cratylus and Florilegium Profanum",
+            "year": 1501,
+            "cer": 0.573,
+            "gap": 0.022,
+            "invention": 0.853,
+            "has_ref": false,
+            "unsupported": [
+              "αὐτοῖς",
+              "κέρδος",
+              "δίκης",
+              "ἐπίδειξον",
+              "ἀδικεῖν",
+              "πλουτεῖν",
+              "ἐστὶ",
+              "κακὸν"
+            ]
+          },
+          {
+            "slug": "greek-ext2-e2bfa2-p180",
+            "title": "Joannis Gramatici In primos quattuor Aristotelis de naturali auscultatione libros commentaria",
+            "year": 1535,
+            "cer": 0.122,
+            "gap": 0.038,
+            "invention": 0.127,
+            "has_ref": true,
+            "unsupported": [
+              "μίας",
+              "ὑποτιθείσης",
+              "φθείρεσθαι",
+              "εἴγε",
+              "ποιοῦντων",
+              "ἴσον",
+              "ὑπεροχὴν",
+              "κράσις"
+            ]
+          },
+          {
+            "slug": "greek-ext2-ec8fdb-p90",
+            "title": "Georgii Gemisti, qui & Pletho dicitur, ex Diodori, & Plutarchi historiis de iis, quae post pugnam ad Mantineam gesta sun",
+            "year": 1503,
+            "cer": 0.116,
+            "gap": 0.032,
+            "invention": 0.195,
+            "has_ref": true,
+            "unsupported": [
+              "πᾶσα",
+              "οἶσθε",
+              "λέξεων",
+              "οὔτε",
+              "ἱκετεύουσιν",
+              "ἕτετε",
+              "καταζεύξαντες",
+              "στρατόπεδον"
+            ]
+          },
+          {
+            "slug": "greek-ext2-ebeffe-p100",
+            "title": "In Topica Aristotelis Commentarii",
+            "year": 1513,
+            "cer": 0.11,
+            "gap": 0.022,
+            "invention": 0.135,
+            "has_ref": true,
+            "unsupported": [
+              "ἀλεξάνδρου",
+              "μόνον",
+              "ταυτὸν",
+              "αἰσθητικὸν",
+              "φεστέρας",
+              "δόξας",
+              "παρακελεύεται",
+              "ἐρειδόμενος"
+            ]
+          },
+          {
+            "slug": "greek-ext2-835422-p79",
+            "title": "Psaltērion",
+            "year": 1520,
+            "cer": 0.099,
+            "gap": 0.007,
+            "invention": 0.021,
+            "has_ref": true,
+            "unsupported": [
+              "δαΐδ",
+              "χιλιὰς",
+              "ἐβαθύνθησαν"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 10,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 8,
+          "median_cer": 0.224,
+          "mean_cer": 0.2,
+          "catastrophic": 0,
+          "median_gap": 0.03,
+          "median_seq": 0.552,
+          "refused": 0,
+          "n_answered": 8,
+          "median_cer_answered": 0.224,
+          "mean_cer_answered": 0.2,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.039,
+          "n_engines": 4,
+          "ref_median": 0.448,
+          "ref_mean": 0.433
+        },
+        "worst": [
+          {
+            "slug": "greek-ext2-925253-p299",
+            "title": "Vitae Parallelae",
+            "year": 1519,
+            "cer": 0.267,
+            "gap": 0.033,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-e51278-p628",
+            "title": "Plutarchu Tu Chairōneōs Ēthika Syngrammata :En Hois Myria Sphalmata Katōrthōtai = Plvtarchi Chaeronei Moralia Opvscvla :",
+            "year": 1542,
+            "cer": 0.261,
+            "gap": 0.014,
+            "invention": 0.389,
+            "has_ref": true,
+            "unsupported": [
+              "ῥυομένην",
+              "ὠθουμένους",
+              "ἐσῶτας",
+              "σκωπτικοὺς",
+              "ἄρκαλουῶντας",
+              "ἀρτεμῖν",
+              "μαρχλω",
+              "ἀνθρώπω"
+            ]
+          },
+          {
+            "slug": "greek-ext2-ec8fdb-p90",
+            "title": "Georgii Gemisti, qui & Pletho dicitur, ex Diodori, & Plutarchi historiis de iis, quae post pugnam ad Mantineam gesta sun",
+            "year": 1503,
+            "cer": 0.252,
+            "gap": 0.048,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-ebeffe-p100",
+            "title": "In Topica Aristotelis Commentarii",
+            "year": 1513,
+            "cer": 0.225,
+            "gap": 0.043,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-e2bfa2-p180",
+            "title": "Joannis Gramatici In primos quattuor Aristotelis de naturali auscultatione libros commentaria",
+            "year": 1535,
+            "cer": 0.222,
+            "gap": 0.048,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite-b": {
+        "pages_run": 10,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 8,
+          "median_cer": 0.224,
+          "mean_cer": 0.196,
+          "catastrophic": 0,
+          "median_gap": 0.03,
+          "median_seq": 0.552,
+          "refused": 0,
+          "n_answered": 8,
+          "median_cer_answered": 0.224,
+          "mean_cer_answered": 0.196,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 2,
+          "median_cer": 0,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 1,
+          "refused": 0,
+          "n_answered": 2,
+          "median_cer_answered": 0,
+          "mean_cer": 0,
+          "mean_cer_answered": 0
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.034,
+          "n_engines": 4,
+          "ref_median": 0.448,
+          "ref_mean": 0.427
+        },
+        "paired_vs_ref": {
+          "n": 8,
+          "excluded_refused": 0,
+          "wins": 1,
+          "losses": 0,
+          "ties": 7,
+          "median_delta_cer": 0,
+          "p_sign": 1,
+          "invention_wins": 1,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "greek-ext2-925253-p299",
+            "title": "Vitae Parallelae",
+            "year": 1519,
+            "cer": 0.267,
+            "gap": 0.033,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-ec8fdb-p90",
+            "title": "Georgii Gemisti, qui & Pletho dicitur, ex Diodori, & Plutarchi historiis de iis, quae post pugnam ad Mantineam gesta sun",
+            "year": 1503,
+            "cer": 0.252,
+            "gap": 0.048,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-e51278-p628",
+            "title": "Plutarchu Tu Chairōneōs Ēthika Syngrammata :En Hois Myria Sphalmata Katōrthōtai = Plvtarchi Chaeronei Moralia Opvscvla :",
+            "year": 1542,
+            "cer": 0.228,
+            "gap": 0.019,
+            "invention": 0.344,
+            "has_ref": true,
+            "unsupported": [
+              "γυμνῶν",
+              "ὀθωνεί",
+              "σκληρικοὺς",
+              "ρούς",
+              "ἀρκαλοῦντες",
+              "φρονοῦντες",
+              "ἀρτεμῶν",
+              "ἀνθρώπων"
+            ]
+          },
+          {
+            "slug": "greek-ext2-ebeffe-p100",
+            "title": "In Topica Aristotelis Commentarii",
+            "year": 1513,
+            "cer": 0.225,
+            "gap": 0.043,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-e2bfa2-p180",
+            "title": "Joannis Gramatici In primos quattuor Aristotelis de naturali auscultatione libros commentaria",
+            "year": 1535,
+            "cer": 0.222,
+            "gap": 0.048,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "olmocr-2-7b-fp8": {
+        "pages_run": 10,
+        "empty": 3,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 8,
+          "median_cer": 0.883,
+          "mean_cer": 0.819,
+          "catastrophic": 7,
+          "median_gap": 0.024,
+          "median_seq": 0.064,
+          "refused": 0,
+          "n_answered": 8,
+          "median_cer_answered": 0.883,
+          "mean_cer_answered": 0.819,
+          "catastrophic_answered": 7
+        },
+        "proxy_vs_ref_engine": {
+          "n": 2,
+          "median_cer": 0.751,
+          "catastrophic": 2,
+          "median_gap": 0.034,
+          "median_bow": 0.151,
+          "refused": 0,
+          "n_answered": 2,
+          "median_cer_answered": 0.751,
+          "mean_cer": 0.751,
+          "mean_cer_answered": 0.751
+        },
+        "invention": {
+          "median": 0.863,
+          "mean": 0.844,
+          "n_engines": 4,
+          "ref_median": 0.884,
+          "ref_mean": 0.882
+        },
+        "paired_vs_ref": {
+          "n": 8,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 8,
+          "ties": 0,
+          "median_delta_cer": -0.639,
+          "p_sign": 0.008,
+          "invention_wins": 2,
+          "invention_losses": 6
+        },
+        "worst": [
+          {
+            "slug": "greek-ext2-925253-p299",
+            "title": "Vitae Parallelae",
+            "year": 1519,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-947ec1-p88",
+            "title": "Plato, Cratylus and Florilegium Profanum",
+            "year": 1501,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-e2bfa2-p180",
+            "title": "Joannis Gramatici In primos quattuor Aristotelis de naturali auscultatione libros commentaria",
+            "year": 1535,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-ext2-e0caa7-p61",
+            "title": "Platonicae quaestiones",
+            "year": 1552,
+            "cer": 0.896,
+            "gap": 0.027,
+            "invention": 0.724,
+            "has_ref": true,
+            "unsupported": [
+              "quaestiones",
+              "αλλὰ",
+              "προσενέχοντες",
+              "εἶναι",
+              "ἀφράζων",
+              "πρᾶξις",
+              "πρᾶξιντας",
+              "ταῖς"
+            ]
+          },
+          {
+            "slug": "greek-ext2-e51278-p628",
+            "title": "Plutarchu Tu Chairōneōs Ēthika Syngrammata :En Hois Myria Sphalmata Katōrthōtai = Plvtarchi Chaeronei Moralia Opvscvla :",
+            "year": 1542,
+            "cer": 0.89,
+            "gap": 0.041,
+            "invention": 0.88,
+            "has_ref": true,
+            "unsupported": [
+              "γραφείν",
+              "σπατικὴν",
+              "τέχνης",
+              "πολλὰ",
+              "ἐκλαυσάμενος",
+              "ἐλαύνων",
+              "ἐπικλήσεως",
+              "ἀπολυμένος"
+            ]
+          }
+        ]
+      }
+    },
+    "by_class": {
+      "manuscript": {
+        "n": 1,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 1,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.573,
+            "catastrophic": 1,
+            "median_unsupported": 0.853
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 1,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": null,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 1,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "olmocr-2-7b-fp8": {
+            "n": 1,
+            "empty": 1,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 1,
+            "catastrophic": 1,
+            "median_unsupported": null
+          }
+        }
+      },
+      "typeset-print": {
+        "n": 9,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 9,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.097,
+            "catastrophic": 0,
+            "median_unsupported": 0.127
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 9,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.224,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "n": 9,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.222,
+            "catastrophic": 0,
+            "median_unsupported": 0
+          },
+          "olmocr-2-7b-fp8": {
+            "n": 9,
+            "empty": 2,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.875,
+            "catastrophic": 8,
+            "median_unsupported": 0.863
+          }
+        }
+      }
+    }
+  },
+  "latin-1700s": {
+    "stratum": "latin-1700s",
+    "issue": 4800,
+    "date": "2026-10-03",
+    "refusal_source": "finishReason (meter) / inferred",
+    "cer_refusals": "ref.median_cer / mean_cer count a refusal as CER 1.0 (the pre-#5581 headline); *_answered exclude refused pages",
+    "n_pages": 20,
+    "n_with_ref": 0,
+    "ref_mismatch": [],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3-flash-preview": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 1,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 19,
+          "median_cer": 0.023,
+          "catastrophic": 2,
+          "median_gap": 0,
+          "median_bow": 0.892,
+          "refused": 0,
+          "n_answered": 19,
+          "median_cer_answered": 0.023,
+          "mean_cer": 0.097,
+          "mean_cer_answered": 0.097
+        },
+        "invention": {
+          "median": 0.034,
+          "mean": 0.071,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "latin-1700s-504b6f-p128",
+            "title": "Propria sanctorum officia imperialium monasteriorum S. Gregorii Mag. in Petri-domo et SS. Cyrilli et Georgii martyrum ad",
+            "year": 1718,
+            "cer": 0.752,
+            "gap": 0.314,
+            "invention": 0.105,
+            "has_ref": false,
+            "unsupported": [
+              "festa",
+              "augusti",
+              "præfidem",
+              "vinctũ",
+              "clariffima",
+              "tribuisti",
+              "fraudâsti",
+              "prævenisti"
+            ]
+          },
+          {
+            "slug": "latin-1700s-682475-p3",
+            "title": "Theologiae naturalis pars prima : sistens brevem delineationem argumentorum pro existentia Dei militantium, nec non obie",
+            "year": 1735,
+            "cer": 0.678,
+            "gap": 0.018,
+            "invention": 0.682,
+            "has_ref": false,
+            "unsupported": [
+              "theologiæ",
+              "pars",
+              "prima",
+              "sistens",
+              "brevem",
+              "objectionum",
+              "alibi",
+              "temperantur"
+            ]
+          },
+          {
+            "slug": "latin-1700s-25e233-p21",
+            "title": "Dissertatio inauguralis medica sistens morbos circa Tobinium familiares cum casibus nonnullis et observationibus rariori",
+            "year": 1751,
+            "cer": 0.07,
+            "gap": 0,
+            "invention": 0.117,
+            "has_ref": false,
+            "unsupported": [
+              "podagrae",
+              "haereditaria",
+              "diaetae",
+              "repente",
+              "aestate",
+              "fuisset",
+              "ipsa",
+              "materiae"
+            ]
+          },
+          {
+            "slug": "latin-1700s-64dc5f-p136",
+            "title": "Georgii Ludovici Boehmeri Potent. M. Britanniae Regi Et Principi Electori Brunsv. Luner. A Consiliis Iustitiae Intimis E",
+            "year": 1789,
+            "cer": 0.058,
+            "gap": 0,
+            "invention": 0.045,
+            "has_ref": false,
+            "unsupported": [
+              "holsatiae",
+              "sambte",
+              "potest",
+              "simult"
+            ]
+          },
+          {
+            "slug": "latin-1700s-2763b9-p13",
+            "title": "Missae propriae sanctorum metropolitanae ecclesiae et archi-dioecesis salisburgensis jussu et auctoritate celsissimi et ",
+            "year": 1759,
+            "cer": 0.048,
+            "gap": 0,
+            "invention": 0.064,
+            "has_ref": false,
+            "unsupported": [
+              "consolatio",
+              "coronâsti",
+              "constituisti",
+              "secundùm",
+              "discipulis",
+              "persequentur",
+              "possunt",
+              "sanctifica"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 1,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.118,
+          "mean": 0.168,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "worst": [
+          {
+            "slug": "latin-1700s-682475-p3",
+            "title": "Theologiae naturalis pars prima : sistens brevem delineationem argumentorum pro existentia Dei militantium, nec non obie",
+            "year": 1735,
+            "invention": 0.647,
+            "has_ref": false,
+            "unsupported": [
+              "theologiae",
+              "systema",
+              "brevium",
+              "oppositionum",
+              "aevi",
+              "impugnari",
+              "solent",
+              "adjuvante"
+            ]
+          },
+          {
+            "slug": "latin-1700s-504b6f-p128",
+            "title": "Propria sanctorum officia imperialium monasteriorum S. Gregorii Mag. in Petri-domo et SS. Cyrilli et Georgii martyrum ad",
+            "year": 1718,
+            "invention": 0.418,
+            "has_ref": false,
+            "unsupported": [
+              "fefta",
+              "augufti",
+              "fubi",
+              "cerentur",
+              "chrifti",
+              "poffet",
+              "chriftianam",
+              "revirtute"
+            ]
+          },
+          {
+            "slug": "latin-1700s-2763b9-p13",
+            "title": "Missae propriae sanctorum metropolitanae ecclesiae et archi-dioecesis salisburgensis jussu et auctoritate celsissimi et ",
+            "year": 1759,
+            "invention": 0.309,
+            "has_ref": false,
+            "unsupported": [
+              "confolationis",
+              "confolatur",
+              "noftra",
+              "poffimus",
+              "ipfi",
+              "confolari",
+              "preffura",
+              "funt"
+            ]
+          },
+          {
+            "slug": "latin-1700s-64dc5f-p136",
+            "title": "Georgii Ludovici Boehmeri Potent. M. Britanniae Regi Et Principi Electori Brunsv. Luner. A Consiliis Iustitiae Intimis E",
+            "year": 1789,
+            "invention": 0.292,
+            "has_ref": false,
+            "unsupported": [
+              "fimul",
+              "conftituitur",
+              "fucceffionis",
+              "caufa",
+              "gefamte",
+              "vafallus",
+              "poffeffor",
+              "coinueftiti"
+            ]
+          },
+          {
+            "slug": "latin-1700s-25e233-p21",
+            "title": "Dissertatio inauguralis medica sistens morbos circa Tobinium familiares cum casibus nonnullis et observationibus rariori",
+            "year": 1751,
+            "invention": 0.272,
+            "has_ref": false,
+            "unsupported": [
+              "fanguinis",
+              "copiofiorem",
+              "appulfum",
+              "affertum",
+              "experientiff",
+              "noftra",
+              "difpofitio",
+              "fpirituofos"
+            ]
+          }
+        ]
+      },
+      "olmocr-2-7b-fp8": {
+        "pages_run": 20,
+        "empty": 1,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 19,
+          "median_cer": 0.068,
+          "catastrophic": 3,
+          "median_gap": 0,
+          "median_bow": 0.748,
+          "refused": 0,
+          "n_answered": 19,
+          "median_cer_answered": 0.068,
+          "mean_cer": 0.229,
+          "mean_cer_answered": 0.229
+        },
+        "invention": {
+          "median": 0.134,
+          "mean": 0.221,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "latin-1700s-276705-p95",
+            "title": "Iac. Theod. Klein ... Stemmata Avivm Qvadraginta Tabvlis Aeneis ornata : Accedunt Nomenclatores, Polono-Latinvs et Latin",
+            "year": 1759,
+            "cer": 1.761,
+            "gap": 0,
+            "invention": 0.909,
+            "has_ref": false,
+            "unsupported": [
+              "sturion",
+              "illustrations",
+              "bird",
+              "feet",
+              "skulls",
+              "labeled",
+              "with",
+              "letters"
+            ]
+          },
+          {
+            "slug": "latin-1700s-d3a64d-p196",
+            "title": "Opera mechanica, geometrica, astronomica et miscellanea",
+            "year": 1751,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "christiani",
+              "hugenii",
+              "12abp",
+              "13aab",
+              "aacd",
+              "animadvertemus",
+              "duas",
+              "esse"
+            ]
+          },
+          {
+            "slug": "latin-1700s-682475-p3",
+            "title": "Theologiae naturalis pars prima : sistens brevem delineationem argumentorum pro existentia Dei militantium, nec non obie",
+            "year": 1735,
+            "cer": 0.944,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "latin-1700s-504b6f-p128",
+            "title": "Propria sanctorum officia imperialium monasteriorum S. Gregorii Mag. in Petri-domo et SS. Cyrilli et Georgii martyrum ad",
+            "year": 1718,
+            "cer": 0.763,
+            "gap": 0.277,
+            "invention": 0.168,
+            "has_ref": false,
+            "unsupported": [
+              "amplius",
+              "coepit",
+              "praesidem",
+              "nefaria",
+              "vincu",
+              "foetidum",
+              "clarissima",
+              "animae"
+            ]
+          },
+          {
+            "slug": "latin-1700s-9906ad-p94",
+            "title": "Exercitatio philologica, exhibens synopticam descriptionem veteris Hierosolymae",
+            "year": 1718,
+            "cer": 0.094,
+            "gap": 0.003,
+            "invention": 0.349,
+            "has_ref": false,
+            "unsupported": [
+              "supra",
+              "descriptos",
+              "ascendimus",
+              "ipsum",
+              "propylaum",
+              "universum",
+              "thalmudistarum",
+              "sententia"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "latin-pre1700": {
+    "stratum": "latin-pre1700",
+    "issue": 4800,
+    "date": "2026-10-03",
+    "refusal_source": "finishReason (meter) / inferred",
+    "cer_refusals": "ref.median_cer / mean_cer count a refusal as CER 1.0 (the pre-#5581 headline); *_answered exclude refused pages",
+    "n_pages": 20,
+    "n_with_ref": 0,
+    "ref_mismatch": [],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3-flash-preview": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.045,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 0.831,
+          "refused": 0,
+          "n_answered": 20,
+          "median_cer_answered": 0.045,
+          "mean_cer": 0.042,
+          "mean_cer_answered": 0.042
+        },
+        "invention": {
+          "median": 0.07,
+          "mean": 0.077,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "latin-pre1700-c79f6d-p67",
+            "title": "Pausaniae historici praeclarissimi Commentariorum Graeciam describentium, Attica &amp; Corinthiaca",
+            "year": 1541,
+            "cer": 0.146,
+            "gap": 0.043,
+            "invention": 0.067,
+            "has_ref": false,
+            "unsupported": [
+              "pavsani",
+              "lychnũ",
+              "assiduè",
+              "ellychniũ",
+              "καρπασίῳ",
+              "aspectu",
+              "equidem",
+              "concesserunt"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-3b3ace-p140",
+            "title": "Alphonsi Pisani, Societatis Iesv, De Continentia Et Abstinentia: Vel, de Apostolico coelibatu, ieiunio, & ciborum delect",
+            "year": 1579,
+            "cer": 0.092,
+            "gap": 0.013,
+            "invention": 0.077,
+            "has_ref": false,
+            "unsupported": [
+              "sobria",
+              "gesimam",
+              "fere",
+              "dominicae",
+              "primae",
+              "quadragesimae",
+              "moderate"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-c30bd1-p25",
+            "title": "Syntagma eorum, quae nomine illustrissimi Principis ac Domini, D. Christophori Ducis Virtembergensis &amp; Teccensis, &a",
+            "year": 1553,
+            "cer": 0.075,
+            "gap": 0.01,
+            "invention": 0.159,
+            "has_ref": false,
+            "unsupported": [
+              "cœlestia",
+              "ecclesiæ",
+              "sicubi",
+              "uideãtur",
+              "rasu",
+              "tellitio",
+              "pissimis",
+              "sima"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-767838-p246",
+            "title": "Phrases Latinae linguae, tabulis delineatæ",
+            "year": 1636,
+            "cer": 0.068,
+            "gap": 0,
+            "invention": 0.052,
+            "has_ref": false,
+            "unsupported": [
+              "postulat",
+              "sententiæ",
+              "constat",
+              "præstare",
+              "servetia",
+              "titi"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-8454e4-p310",
+            "title": "Caussa Helvetica orthodoxae fidei : disputatio Helvetiorum in Baden superiori, coram duodecim cantonum oratoribus &amp; ",
+            "year": 1528,
+            "cer": 0.065,
+            "gap": 0,
+            "invention": 0.222,
+            "has_ref": false,
+            "unsupported": [
+              "seueritatẽ",
+              "exposcens",
+              "iustũ",
+              "atqꝫ",
+              "tantí",
+              "præsenti",
+              "cõpressione",
+              "absterreret"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.128,
+          "mean": 0.167,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "worst": [
+          {
+            "slug": "latin-pre1700-c30bd1-p25",
+            "title": "Syntagma eorum, quae nomine illustrissimi Principis ac Domini, D. Christophori Ducis Virtembergensis &amp; Teccensis, &a",
+            "year": 1553,
+            "invention": 0.507,
+            "has_ref": false,
+            "unsupported": [
+              "effet",
+              "scholaftica",
+              "sophiftica",
+              "fomnia",
+              "funt",
+              "cœleftia",
+              "ecclefiæ",
+              "facramentorum"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-8454e4-p310",
+            "title": "Caussa Helvetica orthodoxae fidei : disputatio Helvetiorum in Baden superiori, coram duodecim cantonum oratoribus &amp; ",
+            "year": 1528,
+            "invention": 0.388,
+            "has_ref": false,
+            "unsupported": [
+              "feueritatẽ",
+              "expofcens",
+              "iuftũ",
+              "batum",
+              "conclufionibus",
+              "chriftiano",
+              "ipfa",
+              "lucefcat"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-3b3ace-p140",
+            "title": "Alphonsi Pisani, Societatis Iesv, De Continentia Et Abstinentia: Vel, de Apostolico coelibatu, ieiunio, & ciborum delect",
+            "year": 1579,
+            "invention": 0.348,
+            "has_ref": false,
+            "unsupported": [
+              "genefi",
+              "quadragefima",
+              "nufquam",
+              "hodiè",
+              "concifiones",
+              "difcurfus",
+              "conftantinopolis",
+              "honeftam"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-517be1-p4",
+            "title": "De transactionibus theses LXIV",
+            "year": 1582,
+            "invention": 0.326,
+            "has_ref": false,
+            "unsupported": [
+              "tranfigens",
+              "caufæ",
+              "tranfigendo",
+              "poteft",
+              "fubfecuto",
+              "reftitutio",
+              "præftet",
+              "abfq"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-c79f6d-p67",
+            "title": "Pausaniae historici praeclarissimi Commentariorum Graeciam describentium, Attica &amp; Corinthiaca",
+            "year": 1541,
+            "invention": 0.291,
+            "has_ref": false,
+            "unsupported": [
+              "effe",
+              "lychnū",
+              "femel",
+              "infequentis",
+              "fufficit",
+              "affiduè",
+              "inπαπυρίς",
+              "ellychniū"
+            ]
+          }
+        ]
+      },
+      "olmocr-2-7b-fp8": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.068,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 0.74,
+          "refused": 0,
+          "n_answered": 20,
+          "median_cer_answered": 0.068,
+          "mean_cer": 0.077,
+          "mean_cer_answered": 0.077
+        },
+        "invention": {
+          "median": 0.197,
+          "mean": 0.203,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "latin-pre1700-c79f6d-p67",
+            "title": "Pausaniae historici praeclarissimi Commentariorum Graeciam describentium, Attica &amp; Corinthiaca",
+            "year": 1541,
+            "cer": 0.144,
+            "gap": 0.008,
+            "invention": 0.182,
+            "has_ref": false,
+            "unsupported": [
+              "coelo",
+              "uetum",
+              "certe",
+              "aurereum",
+              "deae",
+              "diein",
+              "noctuque",
+              "assidue"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-8454e4-p310",
+            "title": "Caussa Helvetica orthodoxae fidei : disputatio Helvetiorum in Baden superiori, coram duodecim cantonum oratoribus &amp; ",
+            "year": 1528,
+            "cer": 0.133,
+            "gap": 0.004,
+            "invention": 0.43,
+            "has_ref": false,
+            "unsupported": [
+              "mvrneri",
+              "severitate",
+              "expositens",
+              "effecerio",
+              "iustitiae",
+              "uterit",
+              "partii",
+              "sineae"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-c139bb-p260",
+            "title": "Mechanicorum libri octo",
+            "year": 1684,
+            "cer": 0.131,
+            "gap": 0,
+            "invention": 0.307,
+            "has_ref": false,
+            "unsupported": [
+              "secundus",
+              "hujusmodi",
+              "librae",
+              "romanae",
+              "fere",
+              "quae",
+              "solitarium",
+              "conspectum"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-0b0df1-p100",
+            "title": "Summa de virtutibus et vitiis",
+            "year": 1497,
+            "cer": 0.128,
+            "gap": 0.005,
+            "invention": 0.46,
+            "has_ref": false,
+            "unsupported": [
+              "creatī",
+              "obbus",
+              "sanctīs",
+              "paulopostulātī",
+              "deīs",
+              "odiit",
+              "apūs",
+              "sērum"
+            ]
+          },
+          {
+            "slug": "latin-pre1700-3b3ace-p140",
+            "title": "Alphonsi Pisani, Societatis Iesv, De Continentia Et Abstinentia: Vel, de Apostolico coelibatu, ieiunio, & ciborum delect",
+            "year": 1579,
+            "cer": 0.112,
+            "gap": 0,
+            "invention": 0.1,
+            "has_ref": false,
+            "unsupported": [
+              "clarmor",
+              "civitas",
+              "sobriam",
+              "matrem",
+              "familias",
+              "quadragesimam",
+              "quadragesimæ",
+              "utilitas"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "longs-en-fr": {
+    "stratum": "longs-en-fr",
+    "issue": 4800,
+    "date": "2026-10-03",
+    "refusal_source": "finishReason (meter) / inferred",
+    "cer_refusals": "ref.median_cer / mean_cer count a refusal as CER 1.0 (the pre-#5581 headline); *_answered exclude refused pages",
+    "n_pages": 20,
+    "n_with_ref": 0,
+    "ref_mismatch": [],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3-flash-preview": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 1,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.039,
+          "catastrophic": 1,
+          "median_gap": 0,
+          "median_bow": 0.925,
+          "refused": 0,
+          "n_answered": 20,
+          "median_cer_answered": 0.039,
+          "mean_cer": 0.086,
+          "mean_cer_answered": 0.086
+        },
+        "invention": {
+          "median": 0.025,
+          "mean": 0.037,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "longs-en-fr-84dace-p128",
+            "title": "Medicina practica, or, practical physick. Shewing the method of curing the most usual diseases",
+            "year": 1692,
+            "cer": 0.736,
+            "gap": 0.355,
+            "invention": 0.008,
+            "has_ref": false,
+            "unsupported": [
+              "possetdrink"
+            ]
+          },
+          {
+            "slug": "longs-en-fr-80e1bd-p13",
+            "title": "Le reading del mon Seignior Coke, sur lestatute de 27. E. 1. appelle lestatute de Finibus Levatis.",
+            "year": 1662,
+            "cer": 0.265,
+            "gap": 0.067,
+            "invention": 0.113,
+            "has_ref": false,
+            "unsupported": [
+              "division",
+              "conusee",
+              "suer",
+              "mesme",
+              "descriptio",
+              "ascun",
+              "divisio",
+              "clamaverunt"
+            ]
+          },
+          {
+            "slug": "longs-en-fr-233d4f-p395",
+            "title": "Employment for the Microscope",
+            "year": 1753,
+            "cer": 0.195,
+            "gap": 0.039,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "longs-en-fr-a37a7b-p102",
+            "title": "Ars Conjectandi",
+            "year": 1713,
+            "cer": 0.08,
+            "gap": 0,
+            "invention": 0.097,
+            "has_ref": false,
+            "unsupported": [
+              "posteà",
+              "ingeniosisimo",
+              "occultiùs",
+              "præsens",
+              "propos",
+              "promiscuè",
+              "quæstiones",
+              "summæ"
+            ]
+          },
+          {
+            "slug": "longs-en-fr-58c0d1-p92",
+            "title": "A new light of alchymie. Of the nature of things. Chymicall dictionary",
+            "year": 1650,
+            "cer": 0.065,
+            "gap": 0,
+            "invention": 0.092,
+            "has_ref": false,
+            "unsupported": [
+              "subsistér",
+              "simpathie",
+              "causez",
+              "prêster",
+              "connoissance",
+              "prêstre",
+              "separoit",
+              "sepaf"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.05,
+          "mean": 0.145,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "worst": [
+          {
+            "slug": "longs-en-fr-80e1bd-p13",
+            "title": "Le reading del mon Seignior Coke, sur lestatute de 27. E. 1. appelle lestatute de Finibus Levatis.",
+            "year": 1662,
+            "invention": 0.375,
+            "has_ref": false,
+            "unsupported": [
+              "fecunda",
+              "chefun",
+              "divifion",
+              "deftre",
+              "defcriptio",
+              "file",
+              "conufee",
+              "poffeffion"
+            ]
+          },
+          {
+            "slug": "longs-en-fr-a37a7b-p102",
+            "title": "Ars Conjectandi",
+            "year": 1713,
+            "invention": 0.339,
+            "has_ref": false,
+            "unsupported": [
+              "folutionem",
+              "dediffet",
+              "ipfemet",
+              "pofteà",
+              "lipf",
+              "fecuto",
+              "folutionis",
+              "ingeniofiffimo"
+            ]
+          },
+          {
+            "slug": "longs-en-fr-58c0d1-p92",
+            "title": "A new light of alchymie. Of the nature of things. Chymicall dictionary",
+            "year": 1650,
+            "invention": 0.326,
+            "has_ref": false,
+            "unsupported": [
+              "univerfel",
+              "pofé",
+              "fans",
+              "fubfifter",
+              "feul",
+              "preftre",
+              "fageffe",
+              "l'efprit"
+            ]
+          },
+          {
+            "slug": "longs-en-fr-f2d6ce-p178",
+            "title": "Traité de l'harmonie réduite à ses principes naturels",
+            "year": 1722,
+            "invention": 0.31,
+            "has_ref": false,
+            "unsupported": [
+              "felon",
+              "progreffion",
+              "baffe",
+              "forte",
+              "fans",
+              "fonger",
+              "enfeigne",
+              "compofition"
+            ]
+          },
+          {
+            "slug": "longs-en-fr-84dace-p128",
+            "title": "Medicina practica, or, practical physick. Shewing the method of curing the most usual diseases",
+            "year": 1692,
+            "invention": 0.302,
+            "has_ref": false,
+            "unsupported": [
+              "fuccefs",
+              "cafe",
+              "thefe",
+              "poffet",
+              "alfo",
+              "confour",
+              "fider",
+              "petus"
+            ]
+          }
+        ]
+      },
+      "olmocr-2-7b-fp8": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.067,
+          "catastrophic": 2,
+          "median_gap": 0,
+          "median_bow": 0.809,
+          "refused": 0,
+          "n_answered": 20,
+          "median_cer_answered": 0.067,
+          "mean_cer": 0.146,
+          "mean_cer_answered": 0.146
+        },
+        "invention": {
+          "median": 0.09,
+          "mean": 0.135,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "longs-en-fr-84dace-p128",
+            "title": "Medicina practica, or, practical physick. Shewing the method of curing the most usual diseases",
+            "year": 1692,
+            "cer": 0.746,
+            "gap": 0.36,
+            "invention": 0.008,
+            "has_ref": false,
+            "unsupported": [
+              "posset"
+            ]
+          },
+          {
+            "slug": "longs-en-fr-55aa53-p31",
+            "title": "Mercury, or The Secret and Swift Messenger",
+            "year": 1641,
+            "cer": 0.526,
+            "gap": 0.078,
+            "invention": 0.716,
+            "has_ref": false,
+            "unsupported": [
+              "messenger",
+              "ghosts",
+              "do'st",
+              "abide",
+              "visits",
+              "partake",
+              "same",
+              "disease"
+            ]
+          },
+          {
+            "slug": "longs-en-fr-233d4f-p395",
+            "title": "Employment for the Microscope",
+            "year": 1753,
+            "cer": 0.292,
+            "gap": 0.094,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "longs-en-fr-80e1bd-p13",
+            "title": "Le reading del mon Seignior Coke, sur lestatute de 27. E. 1. appelle lestatute de Finibus Levatis.",
+            "year": 1662,
+            "cer": 0.258,
+            "gap": 0.014,
+            "invention": 0.185,
+            "has_ref": false,
+            "unsupported": [
+              "conussee",
+              "furer",
+              "meisme",
+              "aucun",
+              "praedictus",
+              "praditium",
+              "manervium",
+              "iudem"
+            ]
+          },
+          {
+            "slug": "longs-en-fr-13d8e0-p170",
+            "title": "Satyres et autres Oeuvres",
+            "year": 1642,
+            "cer": 0.234,
+            "gap": 0,
+            "invention": 0.092,
+            "has_ref": false,
+            "unsupported": [
+              "impvssance",
+              "matresse",
+              "l'allasie",
+              "avec",
+              "r'entre",
+              "l'espere"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "ref-ws": {
+    "stratum": "ref-ws",
+    "date": "2026-10-03",
+    "refusal_source": "finishReason (meter) / inferred",
+    "cer_refusals": "median_cer_windowed / mean_acc_windowed are over ALIGNED pages (refusals excluded, as before #5581); *_refusals_as_1 add each refused page at CER 1.0",
+    "n_pages": 120,
+    "ref_engine": "gemini-3.1-flash-lite",
+    "languages": {
+      "German": {
+        "n": 30,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "pages_run": 30,
+            "aligned": 29,
+            "refused": 1,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.002,
+            "mean_cer_windowed": 0.005,
+            "mean_acc_windowed": 0.995,
+            "mean_acc_upper": 0.998,
+            "median_cer_refusals_as_1": 0.002,
+            "mean_cer_refusals_as_1": 0.038,
+            "catastrophic": 1,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 29,
+              "excluded_refused": 1,
+              "wins": 21,
+              "losses": 2,
+              "ties": 6,
+              "median_delta_cer": 0.003,
+              "p_sign": 0,
+              "ref_engine_aligned": 29,
+              "both_unaligned": 1
+            }
+          },
+          "gemini-3.1-flash-lite": {
+            "pages_run": 30,
+            "aligned": 29,
+            "refused": 1,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.005,
+            "mean_cer_windowed": 0.015,
+            "mean_acc_windowed": 0.985,
+            "mean_acc_upper": 0.994,
+            "median_cer_refusals_as_1": 0.005,
+            "mean_cer_refusals_as_1": 0.047,
+            "catastrophic": 1,
+            "catastrophic_answered": 0
+          },
+          "gemini-3.1-flash-lite-b": {
+            "pages_run": 30,
+            "aligned": 23,
+            "refused": 7,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.005,
+            "mean_cer_windowed": 0.015,
+            "mean_acc_windowed": 0.985,
+            "mean_acc_upper": 0.994,
+            "median_cer_refusals_as_1": 0.008,
+            "mean_cer_refusals_as_1": 0.245,
+            "catastrophic": 7,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 23,
+              "excluded_refused": 7,
+              "wins": 0,
+              "losses": 0,
+              "ties": 23,
+              "median_delta_cer": 0,
+              "p_sign": 1,
+              "ref_engine_aligned": 29,
+              "both_unaligned": 1
+            }
+          },
+          "olmocr-2-7b-fp8": {
+            "pages_run": 30,
+            "aligned": 29,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.017,
+            "mean_cer_windowed": 0.029,
+            "mean_acc_windowed": 0.971,
+            "mean_acc_upper": 0.982,
+            "median_cer_refusals_as_1": 0.017,
+            "mean_cer_refusals_as_1": 0.029,
+            "catastrophic": 1,
+            "catastrophic_answered": 1,
+            "paired_vs_ref": {
+              "n": 28,
+              "excluded_refused": 1,
+              "wins": 4,
+              "losses": 24,
+              "ties": 0,
+              "median_delta_cer": -0.013,
+              "p_sign": 0,
+              "ref_engine_aligned": 29,
+              "both_unaligned": 0
+            }
+          }
+        }
+      },
+      "Greek": {
+        "n": 25,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "pages_run": 25,
+            "aligned": 22,
+            "refused": 1,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.003,
+            "mean_cer_windowed": 0.005,
+            "mean_acc_windowed": 0.995,
+            "mean_acc_upper": 0.996,
+            "median_cer_refusals_as_1": 0.003,
+            "mean_cer_refusals_as_1": 0.048,
+            "catastrophic": 3,
+            "catastrophic_answered": 2,
+            "paired_vs_ref": {
+              "n": 21,
+              "excluded_refused": 1,
+              "wins": 9,
+              "losses": 5,
+              "ties": 7,
+              "median_delta_cer": 0,
+              "p_sign": 0.424,
+              "ref_engine_aligned": 21,
+              "both_unaligned": 3
+            }
+          },
+          "gemini-3.1-flash-lite": {
+            "pages_run": 25,
+            "aligned": 21,
+            "refused": 1,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.004,
+            "mean_cer_windowed": 0.01,
+            "mean_acc_windowed": 0.99,
+            "mean_acc_upper": 0.996,
+            "median_cer_refusals_as_1": 0.005,
+            "mean_cer_refusals_as_1": 0.055,
+            "catastrophic": 4,
+            "catastrophic_answered": 3
+          },
+          "gemini-3.1-flash-lite-b": {
+            "pages_run": 25,
+            "aligned": 21,
+            "refused": 1,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.004,
+            "mean_cer_windowed": 0.01,
+            "mean_acc_windowed": 0.99,
+            "mean_acc_upper": 0.996,
+            "median_cer_refusals_as_1": 0.005,
+            "mean_cer_refusals_as_1": 0.055,
+            "catastrophic": 4,
+            "catastrophic_answered": 3,
+            "paired_vs_ref": {
+              "n": 21,
+              "excluded_refused": 1,
+              "wins": 0,
+              "losses": 0,
+              "ties": 21,
+              "median_delta_cer": 0,
+              "p_sign": 1,
+              "ref_engine_aligned": 21,
+              "both_unaligned": 4
+            }
+          },
+          "olmocr-2-7b-fp8": {
+            "pages_run": 25,
+            "aligned": 20,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.055,
+            "mean_cer_windowed": 0.07,
+            "mean_acc_windowed": 0.93,
+            "mean_acc_upper": 0.948,
+            "median_cer_refusals_as_1": 0.055,
+            "mean_cer_refusals_as_1": 0.07,
+            "catastrophic": 5,
+            "catastrophic_answered": 5,
+            "paired_vs_ref": {
+              "n": 17,
+              "excluded_refused": 1,
+              "wins": 0,
+              "losses": 16,
+              "ties": 1,
+              "median_delta_cer": -0.035,
+              "p_sign": 0,
+              "ref_engine_aligned": 21,
+              "both_unaligned": 1
+            }
+          }
+        }
+      },
+      "Latin": {
+        "n": 65,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "pages_run": 65,
+            "aligned": 58,
+            "refused": 3,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.007,
+            "mean_cer_windowed": 0.036,
+            "mean_acc_windowed": 0.964,
+            "mean_acc_upper": 0.975,
+            "median_cer_refusals_as_1": 0.007,
+            "mean_cer_refusals_as_1": 0.083,
+            "catastrophic": 8,
+            "catastrophic_answered": 5,
+            "paired_vs_ref": {
+              "n": 53,
+              "excluded_refused": 3,
+              "wins": 31,
+              "losses": 7,
+              "ties": 15,
+              "median_delta_cer": 0.001,
+              "p_sign": 0,
+              "ref_engine_aligned": 53,
+              "both_unaligned": 7
+            }
+          },
+          "gemini-3.1-flash-lite": {
+            "pages_run": 65,
+            "aligned": 53,
+            "refused": 3,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.011,
+            "mean_cer_windowed": 0.057,
+            "mean_acc_windowed": 0.943,
+            "mean_acc_upper": 0.967,
+            "median_cer_refusals_as_1": 0.016,
+            "mean_cer_refusals_as_1": 0.108,
+            "catastrophic": 14,
+            "catastrophic_answered": 11
+          },
+          "gemini-3.1-flash-lite-b": {
+            "pages_run": 65,
+            "aligned": 51,
+            "refused": 5,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.014,
+            "mean_cer_windowed": 0.06,
+            "mean_acc_windowed": 0.94,
+            "mean_acc_upper": 0.965,
+            "median_cer_refusals_as_1": 0.02,
+            "mean_cer_refusals_as_1": 0.144,
+            "catastrophic": 16,
+            "catastrophic_answered": 11,
+            "paired_vs_ref": {
+              "n": 51,
+              "excluded_refused": 5,
+              "wins": 0,
+              "losses": 0,
+              "ties": 51,
+              "median_delta_cer": 0,
+              "p_sign": 1,
+              "ref_engine_aligned": 53,
+              "both_unaligned": 12
+            }
+          },
+          "olmocr-2-7b-fp8": {
+            "pages_run": 65,
+            "aligned": 53,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.02,
+            "mean_cer_windowed": 0.036,
+            "mean_acc_windowed": 0.964,
+            "mean_acc_upper": 0.976,
+            "median_cer_refusals_as_1": 0.02,
+            "mean_cer_refusals_as_1": 0.036,
+            "catastrophic": 12,
+            "catastrophic_answered": 12,
+            "paired_vs_ref": {
+              "n": 48,
+              "excluded_refused": 3,
+              "wins": 10,
+              "losses": 34,
+              "ties": 4,
+              "median_delta_cer": -0.005,
+              "p_sign": 0,
+              "ref_engine_aligned": 53,
+              "both_unaligned": 7
+            }
+          }
+        }
+      }
+    }
+  }
+}

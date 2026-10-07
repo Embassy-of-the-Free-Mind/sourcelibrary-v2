@@ -1,0 +1,21 @@
+{
+ "id": "69b99d0e6ed9e04909908946_00387",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Aṅguttara-Nikāya. XI.\n\nJust as, venerable sir, a dust-cloth wipes clean things and wipes dirty things, wipes away excrement and wipes away urine, wipes away spittle and wipes away pus, and wipes away blood, yet the dust-cloth is not thereby troubled or disgusted: even so, venerable sir, I dwell with a mind like a dust-cloth, extensive, exalted, measureless, without enmity, and without ill-will. Whoever, venerable sir, has not established mindfulness of the body regarding his own body, he might offend a fellow practitioner here and depart on his travels without seeking forgiveness.\n\nJust as, venerable sir, a low-caste boy or a low-caste girl, carrying a basket <note>original: \"kaḷopihattho\"</note> and wearing rags, enters a village or town having adopted a humble attitude: even so, venerable sir, I dwell with a mind like a low-caste boy, extensive, exalted, measureless, without enmity, and without ill-will. Whoever, venerable sir, has not established mindfulness of the body regarding his own body, he might offend a fellow practitioner here and depart on his travels without seeking forgiveness.\n\nJust as, venerable sir, a bull with broken horns, gentle, well-tamed, and well-trained, wandering from street to street and from crossroads to crossroads, does not harm anyone with its foot or its horns: even so, venerable sir, I dwell with a mind like a bull with broken horns, extensive, exalted, measureless, without enmity, and without ill-will. Whoever, venerable sir, has not established mindfulness of the body regarding his own body, he might offend a fellow practitioner here and depart on his travels without seeking forgiveness.\n\nJust as, venerable sir, a woman or a man, whether young or in the prime of life, fond of decoration, having washed their head, with a corpse of a snake <note>original: \"ahikuṇapena\"</note> or...\n\n<summary>The Buddha describes three similes—the dust-cloth, the low-caste youth, and the hornless bull—to illustrate the cultivation of a mind that is patient, humble, and non-violent toward others.</summary>\n<keywords>Buddhism, mindfulness, Sutta, equanimity, non-violence, Pali Canon</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2732,
+ "outputTokens": 495,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.0007127500000000001,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2122,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

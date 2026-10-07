@@ -1,0 +1,186 @@
+{
+ "reader": "claude-opus-5.5, read-from-image (contact sheets, labels hidden), 2026-10-01",
+ "draw": "30 census pages, random.Random(5547).sample",
+ "rows": [
+  {
+   "slug": "chinese-cohort-5547-e45762-p36",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-5eb975-p83",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-5e4028-p33",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-49e771-p110",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-e4dafe-p36",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-486346-p62",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-df43ad-p72",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-1eba3d-p45",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-1e2cbe-p66",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-48860f-p67",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-1c1895-p37",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-e30b3a-p42",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "error"
+  },
+  {
+   "slug": "chinese-cohort-5547-8f277f-p15",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-5dbe2e-p116",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-15d3af-p133",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-49f991-p114",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-2191b7-p93",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-1c20ef-p30",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-e42f49-p69",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-e5b35f-p112",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-1e2899-p41",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-21ea01-p107",
+   "mine": "illustration",
+   "subagent": "illustration",
+   "classifier": "illustration"
+  },
+  {
+   "slug": "chinese-cohort-5547-160c1b-p96",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-1b8cfd-p34",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-1f98fe-p119",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-e54ac9-p54",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-1ccdad-p29",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-1cfdf0-p35",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-e3e37a-p139",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  },
+  {
+   "slug": "chinese-cohort-5547-5e77a8-p132",
+   "mine": "manuscript-regular",
+   "subagent": "manuscript-regular",
+   "classifier": "woodblock-regular"
+  }
+ ]
+}

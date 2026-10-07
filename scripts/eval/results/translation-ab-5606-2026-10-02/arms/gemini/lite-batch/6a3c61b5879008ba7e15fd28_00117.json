@@ -1,0 +1,21 @@
+{
+ "id": "6a3c61b5879008ba7e15fd28_00117",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page: 論語註疏大全 (Great Compendium of Commentaries on the Analects)</meta>\n\nTo say it covers one person or one event, or covers one era, is entirely incorrect. Master Feng of Houzhai says: judging from the account of his revising and casting the penal laws, the things he did not fully address were indeed numerous. Judging from the words of the Spring and Autumn period, the principles of the gentleman were truly few. The sage’s words of praise do not overflow with flattery, and his words of censure do not overflow with malice. The Collected Commentaries on “making use of the people” rely solely on the facts of the matter and cannot be concealed.\n\nHu says: The three-year mourning period is the legacy of affection left behind by the teachings of Confucius’s disciple. The produce of the fields and the planting of crops, and upon his death, are the legacy of affection left by the teachings of my disciples. Zichan’s spirit resides entirely in the character for righteousness (<term>yi</term> <gloss>righteousness/duty</gloss>). As for the people’s perception of his kindness (<term>hui</term> <gloss>kindness/favor</gloss>), they do not realize that when he began to govern, it was directed solely at the single act of helping others.\n\n○ The Master said: Yan Pingzhong was good at interacting with others; the longer he knew them, the more he respected them.\n\nYan Pingzhong was a great officer of the state of Qi whose name was Ying. Master Cheng says: When people interact for a long time, their respect tends to decline, yet he was able to maintain it over time.\n\n<summary>This passage discusses the ethical legacy of historical figures Zichan and Yan Pingzhong, emphasizing the nature of their governance, their lasting influence, and their consistent character in social interactions.</summary>\n<keywords>Zichan, Yan Pingzhong, Confucius, righteousness, governance, respect, virtue</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2030,
+ "outputTokens": 427,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.0005740000000000001,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 387,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

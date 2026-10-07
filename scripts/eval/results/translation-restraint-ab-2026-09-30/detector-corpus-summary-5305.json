@@ -1,0 +1,367 @@
+{
+  "pages": 3000,
+  "ratioHigh": 57,
+  "leak": 42,
+  "drift": 71,
+  "openEnd": 434,
+  "any": 531,
+  "byLang": {
+    "German": {
+      "pages": 454,
+      "any": 48
+    },
+    "Arabic": {
+      "pages": 29,
+      "any": 5
+    },
+    "Latin": {
+      "pages": 1042,
+      "any": 196
+    },
+    "English": {
+      "pages": 392,
+      "any": 48
+    },
+    "French": {
+      "pages": 202,
+      "any": 20
+    },
+    "Greek": {
+      "pages": 150,
+      "any": 31
+    },
+    "Sanskrit": {
+      "pages": 55,
+      "any": 8
+    },
+    "Russian": {
+      "pages": 32,
+      "any": 3
+    },
+    "Armenian": {
+      "pages": 5,
+      "any": 0
+    },
+    "Tibetan": {
+      "pages": 8,
+      "any": 5
+    },
+    "Old English": {
+      "pages": 1,
+      "any": 0
+    },
+    "Italian": {
+      "pages": 82,
+      "any": 16
+    },
+    "Greek-Latin": {
+      "pages": 4,
+      "any": 0
+    },
+    "Unknown": {
+      "pages": 11,
+      "any": 2
+    },
+    "Hebrew": {
+      "pages": 34,
+      "any": 12
+    },
+    "und": {
+      "pages": 13,
+      "any": 1
+    },
+    "Japanese": {
+      "pages": 28,
+      "any": 13
+    },
+    "Chinese": {
+      "pages": 158,
+      "any": 68
+    },
+    "Sumerian": {
+      "pages": 56,
+      "any": 1
+    },
+    "Korean": {
+      "pages": 29,
+      "any": 9
+    },
+    "Egyptian": {
+      "pages": 2,
+      "any": 1
+    },
+    "Swahili": {
+      "pages": 1,
+      "any": 0
+    },
+    "Ottoman Turkish": {
+      "pages": 1,
+      "any": 1
+    },
+    "Dutch": {
+      "pages": 68,
+      "any": 9
+    },
+    "Egyptian hieroglyphs": {
+      "pages": 8,
+      "any": 4
+    },
+    "Yiddish": {
+      "pages": 1,
+      "any": 1
+    },
+    "Hebrew and Judeo-Arabic": {
+      "pages": 6,
+      "any": 2
+    },
+    "Yucatec Maya": {
+      "pages": 1,
+      "any": 0
+    },
+    "Cakchiquel / English": {
+      "pages": 1,
+      "any": 1
+    },
+    "Spanish": {
+      "pages": 14,
+      "any": 2
+    },
+    "Sanskrit-English": {
+      "pages": 1,
+      "any": 0
+    },
+    "Ancient Greek": {
+      "pages": 2,
+      "any": 1
+    },
+    "Syriac": {
+      "pages": 10,
+      "any": 2
+    },
+    "Portuguese": {
+      "pages": 2,
+      "any": 0
+    },
+    "English, Prakrit, Sanskrit": {
+      "pages": 1,
+      "any": 0
+    },
+    "Akkadian": {
+      "pages": 1,
+      "any": 0
+    },
+    "e": {
+      "pages": 1,
+      "any": 0
+    },
+    "Bengali": {
+      "pages": 2,
+      "any": 1
+    },
+    "Low German": {
+      "pages": 1,
+      "any": 0
+    },
+    "Welsh": {
+      "pages": 1,
+      "any": 0
+    },
+    "Pali": {
+      "pages": 3,
+      "any": 0
+    },
+    "Hebrew and Aramaic": {
+      "pages": 1,
+      "any": 0
+    },
+    "Old Spanish": {
+      "pages": 1,
+      "any": 0
+    },
+    "Old French": {
+      "pages": 3,
+      "any": 0
+    },
+    "Multiple": {
+      "pages": 2,
+      "any": 0
+    },
+    "Danish": {
+      "pages": 4,
+      "any": 1
+    },
+    "Swedish": {
+      "pages": 1,
+      "any": 0
+    },
+    "Hindi": {
+      "pages": 4,
+      "any": 3
+    },
+    "Javanese": {
+      "pages": 3,
+      "any": 3
+    },
+    "Arabic-English": {
+      "pages": 2,
+      "any": 1
+    },
+    "Hebrew, Aramaic, and Judeo-Arabic": {
+      "pages": 2,
+      "any": 0
+    },
+    "Greek-English": {
+      "pages": 1,
+      "any": 0
+    },
+    "Latin-German": {
+      "pages": 6,
+      "any": 1
+    },
+    "Greek/Latin": {
+      "pages": 1,
+      "any": 0
+    },
+    "Hausa": {
+      "pages": 1,
+      "any": 0
+    },
+    "Irish/English": {
+      "pages": 1,
+      "any": 0
+    },
+    "Classical Chinese": {
+      "pages": 9,
+      "any": 4
+    },
+    "Malay": {
+      "pages": 2,
+      "any": 1
+    },
+    "Maori": {
+      "pages": 1,
+      "any": 0
+    },
+    "Middle English": {
+      "pages": 2,
+      "any": 0
+    },
+    "Tamil": {
+      "pages": 3,
+      "any": 1
+    },
+    "Ge'ez": {
+      "pages": 2,
+      "any": 0
+    },
+    "Arabic, Ottoman Turkish, Persian, Latin, Ternate (a Papuan language), French and Dutch.": {
+      "pages": 1,
+      "any": 0
+    },
+    "Aromanian (in Greek alphabet), Greek": {
+      "pages": 1,
+      "any": 0
+    },
+    "Telugu": {
+      "pages": 1,
+      "any": 0
+    },
+    "Persian": {
+      "pages": 8,
+      "any": 2
+    },
+    "Greek-French": {
+      "pages": 1,
+      "any": 0
+    },
+    "Urdu": {
+      "pages": 1,
+      "any": 0
+    },
+    "Latin/German/English": {
+      "pages": 1,
+      "any": 0
+    },
+    "Hawaiian": {
+      "pages": 1,
+      "any": 0
+    },
+    "German-English": {
+      "pages": 1,
+      "any": 1
+    },
+    "Hebrew, Judeo-Persian, and Aramaic": {
+      "pages": 1,
+      "any": 0
+    },
+    "Chinese-Latin": {
+      "pages": 1,
+      "any": 0
+    },
+    "Occitan": {
+      "pages": 1,
+      "any": 0
+    },
+    "lat": {
+      "pages": 1,
+      "any": 0
+    },
+    "Nahuatl": {
+      "pages": 2,
+      "any": 0
+    },
+    "German/Arabic": {
+      "pages": 1,
+      "any": 0
+    },
+    "Ardhamagadhi Prakrit": {
+      "pages": 1,
+      "any": 1
+    },
+    "Finnish": {
+      "pages": 1,
+      "any": 0
+    },
+    "Middle Dutch": {
+      "pages": 1,
+      "any": 1
+    },
+    "Maya hieroglyphs / French": {
+      "pages": 1,
+      "any": 0
+    },
+    "Law French": {
+      "pages": 1,
+      "any": 0
+    },
+    "Middle High German": {
+      "pages": 1,
+      "any": 0
+    },
+    "Norwegian": {
+      "pages": 1,
+      "any": 0
+    },
+    "Latin-English": {
+      "pages": 1,
+      "any": 0
+    },
+    "Provençal": {
+      "pages": 1,
+      "any": 0
+    },
+    "Uzbek": {
+      "pages": 1,
+      "any": 0
+    },
+    "German/Latin": {
+      "pages": 1,
+      "any": 0
+    },
+    "Demotic": {
+      "pages": 1,
+      "any": 0
+    }
+  },
+  "seed": 5305
+}

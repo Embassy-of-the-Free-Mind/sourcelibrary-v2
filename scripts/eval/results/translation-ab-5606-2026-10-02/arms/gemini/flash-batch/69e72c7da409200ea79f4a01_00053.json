@@ -1,0 +1,21 @@
+{
+ "id": "69e72c7da409200ea79f4a01_00053",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>The text continues the philosophical exploration of the distinction between physical form and inner nature, specifically focusing on the \"Yellow Emperor\" chapter of the Liezi.</meta>\n\nIf they lack the heart of a beast, even if they possess the physical form of a beast, they will be treated with kinship because of their nature. On the other hand, those who are described as having horns, divided teeth, spread claws, those who fly above or crawl below, are called birds and beasts <note>original: 禽獸 <term>qinshou</term></note>; yet they do not necessarily lack a human heart. Although some possess a human heart, they are treated with distance because of their physical appearance. \n\n<term>Paoxi</term> <gloss>Fuxi</gloss>, <term>Nuwa</term>, <term>Shennong</term>, and the Lord of Xia <note>Yu the Great</note> had bodies like snakes, faces like humans, heads like oxen, or noses like tigers. These figures had appearances that were not human, yet they possessed the virtue of great sages. In contrast, <term>Jie</term> of Xia, <term>Zhou</term> of Yin, <term>Huan</term> of Lu, and <term>Mu</term> of Chu all had appearances and sensory organs <note>the seven apertures of the head</note> identical to other humans, yet they possessed the hearts of birds and beasts. If the common people rely solely on physical appearance to seek supreme wisdom, they will never come close to finding it.\n\n<margin>These two points are acceptable.</margin>\n<margin>Liezi: Yellow Emperor.</margin>\n\nThe <term>Huangdi</term> <gloss>Yellow Emperor</gloss> fought against <term>Yandi</term> <gloss>the Flame Emperor</gloss> in the wilderness of <term>Banquan</term>. He led bears, grizzly bears, wolves, leopards, <term>pixiu</term> <gloss>fabulous fierce beasts</gloss>, and tigers as his forward scouts, while eagles, black eagles, falcons, and kites served as his banners. This is an example of using power to command birds and beasts. <term>Yao</term> appointed <term>Kui</term> to oversee music. When the stone chimes were struck and patted, all the beasts were led to dance. When the <term>Xiaoshao</term> <gloss>the music of Shun</gloss> was played nine times, the <term>fenghuang</term> <gloss>phoenixes</gloss> came to pay court.\n\n<summary>This page argues that true nature is independent of physical form, citing sages with animal features and tyrants with human features. It also describes legendary rulers like the Yellow Emperor and Yao who could command and harmonize with animals.</summary>\n<keywords>Liezi, Yellow Emperor, Sage Kings, physical appearance vs. inner virtue, Fuxi, Shennong, animal symbolism, Banquan battle</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2103,
+ "outputTokens": 644,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.00149175,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 423,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

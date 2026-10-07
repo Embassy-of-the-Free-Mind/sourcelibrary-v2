@@ -1,0 +1,21 @@
+{
+ "id": "69e7491f85f786e884a4dc2f_00182",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from the previous page where Karna vows to defeat the Pandavas</meta>\n\nI will certainly defeat all the assembled Pandavas today. 58\n\nDuryodhana said:\nI will do all of this just as you think best, Karna. O son of a charioteer <note>original: \"sūtaja\", referring to Karna's foster-caste</note>, the chariots with their quivers attached will follow you closely. 59\nLet carts carry for you the <term>nārācas</term> <gloss>iron-tipped arrows</gloss> and <term>ardhapaksas</term> <gloss>half-feathered arrows</gloss>.\n\n<column-break/>\n\nWe and all the other kings will follow you, Karna. 60\n\nSanjaya said:\nO Great King, having spoken thus, your powerful son, the King <note>Duryodhana</note>, approached the King of Madra <note>Shalya</note> and spoke these words. 61\n\n->Thus ends the twenty-second chapter in the Book of Karna of the glorious Mahabharata. 22<-\n\n---\n\n## 23\n\nSanjaya said:\nO Great King, your son, having approached the King of Madra with humility, spoke these words out of affection. 1\nO you who are devoted to truth, O highly fortunate one, you who increase the sorrow of your enemies.\n\n---\n\n<note>The remainder of the page consists of critical apparatus including textual variants and scholarly notes.</note>\n\n<summary>Duryodhana agrees to provide Karna with logistical support and full military backing before approaching Shalya, the King of Madra, with a humble request.</summary>\n<keywords>Duryodhana, Karna, Shalya, logistics, military preparation, King of Madra, Mahabharata, Karna Parva</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2196,
+ "outputTokens": 402,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.001152,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 998,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

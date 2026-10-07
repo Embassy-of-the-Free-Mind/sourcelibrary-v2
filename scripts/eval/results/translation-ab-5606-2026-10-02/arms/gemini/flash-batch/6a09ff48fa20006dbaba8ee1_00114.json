@@ -1,0 +1,21 @@
+{
+ "id": "6a09ff48fa20006dbaba8ee1_00114",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "# THE CLOUD CHAPTER <note>original: Valāhakavagga</note>\n\n102.\n\n1. Monks <note>original: bhikkhave</note>, there are these four types of clouds. Which four?\nThe one that thunders but does not rain <note>original: gajjitā no vassitā</note>... <note>the text elides the intermediate types here</note> ...and the one that both thunders and rains.\nThese, monks, are the four types of clouds.\n\n2. In the same way, monks, these four people who resemble clouds are found existing in the world. Which four?\nThe one who thunders but does not rain... and the one who both thunders and rains.\n\n3. And how, monks, is a person one who thunders but does not rain?\nIn this case, monks, a certain person masters the Teaching <note>original: dhammam</note>, namely: the discourses <note>original: suttam</note>, the mixed prose and verse <note>original: geyyam</note>, the explanations <note>original: veyyākaraṇam</note>, the verses <note>original: gātham</note>, the inspired utterances <note>original: udānam</note>, the \"as it was said\" quotations <note>original: itivuttakam</note>, the birth stories <note>original: jātakam</note>, the marvelous qualities <note>original: abbhutadhammam</note>, and the interpretations <note>original: vedallam</note>. Yet he does not understand as it really is: \"This is suffering\" <note>original: dukkhan</note>... <note>the text elides the second and third truths</note> ...he does not understand as it really is: \"This is the practice leading to the cessation of suffering\" <note>original: dukkhanirodhagāminī paṭipadā</note>.\nThus, monks, a person is one who thunders but does not rain. I say this person is like that cloud which thunders but does not rain.\n\n4. And how, monks, is a person one who rains but does not thunder?\nIn this case, monks, a certain person does not master the Teaching, namely: the discourses... the interpretations. Yet he understands as it really is: \"This is suffering\"... he understands as it really is: \"This is the practice leading to the cessation of suffering.\" Thus, monks, a person is one who rains but does not thunder. I say this person is like that [cloud]...\n\n5. And how, monks, is a person one who neither thunders nor rains?\nIn this case, monks, a certain person does not master the Teaching, namely: the discourses... the interpretations. He does not understand as it really is: \"This is suffering\"... he does not understand as it really is: \"This is the practice leading to the cessation of suffering.\" Thus, monks, a person is one who neither thunders nor rains. I say this person is like that [cloud]...\n\n6. And how, monks, is a person one who both thunders and rains?\nIn this case, monks, a certain person masters the Teaching, namely: the discourses... the interpretations. He understands as it really is: \"This is suffering\"... he understands as it really is: \"This is the practice leading to the cessation of suffering.\" Thus, monks, a person is one who both thunders and rains. Just as that cloud, monks, both thunders and rains, I say this person is like that.\n\n<summary>The Buddha uses a metaphor of four types of clouds to categorize individuals based on their theoretical knowledge of the scriptures versus their actual realization of the Four Noble Truths.</summary>\n<keywords>Four Noble Truths, clouds, metaphor, scripture, realization, Anguttara Nikaya, Buddhist psychology, suffering</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2654,
+ "outputTokens": 835,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.0019160000000000002,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2262,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

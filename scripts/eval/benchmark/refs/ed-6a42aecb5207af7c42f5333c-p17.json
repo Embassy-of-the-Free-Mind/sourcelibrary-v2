@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A43130",
+  "edition": "EEBO-TCP A43130 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6a42aecb5207af7c42f5333c",
+  "page_number": 17,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 14517,
+    "to_char": 15808,
+    "overlap": 0.695,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "Starts half-line early at commento se Linguam; ends tenebras nebulas",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:34.741Z",
+  "text_location": "repo",
+  "text_sha256": "a7dc207af33552ad41e3a03581a5191ef6ba1548fb16b191f70c9819cf8a56fe",
+  "unit": {
+    "chars": 1291
+  }
+}

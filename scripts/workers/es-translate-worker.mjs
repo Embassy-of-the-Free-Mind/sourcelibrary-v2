@@ -39,6 +39,10 @@ import pg from 'pg';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { logUsage, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
 import { embedBookPageTexts } from '../lib/embed-book-page-texts.mjs';
+import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
+
+// Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
+startWorkerBeacon(import.meta.url);
 
 const args = process.argv.slice(2);
 const getArg = (n, d) => { const m = args.find(a => a.startsWith(`--${n}=`)); return m ? m.split('=')[1] : d; };

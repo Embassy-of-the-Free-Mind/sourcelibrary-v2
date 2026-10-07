@@ -240,6 +240,16 @@ export default function DevelopersPage() {
           (see the snippets above). Pick whichever path fits.
         </p>
 
+        <div className="bg-white border border-border-light rounded-xl p-5 mb-6 flex flex-col md:flex-row md:items-center gap-3">
+          <p className="text-sm text-secondary flex-1">
+            Not a developer? The <Link href="/connect" className="text-accent-rust hover:underline font-medium">step-by-step setup guide</Link> covers
+            Claude, ChatGPT, Claude Code and Cursor, with a video.
+          </p>
+          <Link href="/connect" className="inline-block px-4 py-2 bg-accent-rust text-white rounded-full text-sm font-medium hover:opacity-90 transition-opacity whitespace-nowrap">
+            Open the guide &rarr;
+          </Link>
+        </div>
+
         {/* Remote MCP URL */}
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-8">
           <h3 className="text-sm font-semibold text-amber-900 mb-1">Remote MCP Server (Streamable HTTP)</h3>
@@ -291,7 +301,7 @@ export default function DevelopersPage() {
               </span>
             </div>
             <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
-{`claude mcp add source-library https://sourcelibrary.org/api/mcp`}
+{`claude mcp add --transport http source-library https://sourcelibrary.org/api/mcp`}
             </pre>
           </div>
 

@@ -1,0 +1,21 @@
+{
+ "id": "69e72c60a409200ea79f46f6_00141",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "# The subtleties of the principles in the Northern section\n\n<margin>Feeding at the breast</margin>\nThe child feeding at the breast of its dead mother, after a short while, looks as if it has lost her, and <margin>This means that at the blink of an eye, the mother is gone</margin>\nrising, it does not see her. It does not find anyone who resembles her. That which you loved in your mother was <margin>The stiffening of the body no longer resembles her</margin>\n<margin>If the form is not worth loving, then there is nothing left to love</margin>\nnot her physical form, but that which moved her form. When men die in battle, they are buried; <margin>When they die in battle, there is no value in physical strength, therefore one does not provide them with concubines</margin>\nyet one does not provide them with concubines to be killed as funerary offerings. The fetus, in its repeated states, has no conscious intention; to love it is to lose <margin>Repeatedly returning to the foundation/root</margin>\n<margin>Another metaphor: To select concubines without exhausting their complete form, so as to avoid inflicting harm on the supreme nobility</margin>\nits foundation. Those who are the concubines of the Son of Heaven do not have their nails trimmed, nor their ears pierced. Those who take <margin>They are not placed in official labor, for fear of callousing their hands and feet, which would make them unfit for the intimate duties of the newlywed</margin>\nwives are stopped at the outer gates. Even when one is not permitted to employ them again, if the form is complete, it is still sufficient to move <margin>Those whose form is complete are still sufficient to move others</margin>\nthe mind.\nThe mind below is again this.\n\n<meta>De Chong Fu (The Sign of Virtue Complete)</meta>\n<meta>Richuan Tang (Sun and River Hall)</meta>\n\n<summary>This passage discusses the distinction between physical form and the underlying essence of life, using the metaphors of a nursing infant and the treatment of imperial concubines to argue that true worth resides in the wholeness of the individual rather than external utility.</summary>\n<keywords>Zhuangzi, De Chong Fu, physical form, essence of life, internal nature, wholeness</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2188,
+ "outputTokens": 509,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.00065525,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 633,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

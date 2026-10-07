@@ -5,6 +5,7 @@
   "license": "AGPL-3.0-or-later",
   "scripts": {
     "dev": "next dev",
+    "local": "SL_LOCAL=1 next dev --hostname 127.0.0.1 --port 3000",
     "prebuild": "node scripts/build-lamejs-bundle.js",
     "build": "next build",
     "start": "next start",
@@ -84,7 +85,7 @@
     "remark-gfm": "^4.0.1",
     "replicate": "^1.4.0",
     "resend": "^6.29.0",
-    "sharp": "^0.35.3",
+    "sharp": "^0.35.5",
     "sonner": "^2.0.8",
     "stripe": "^20.4.1",
     "tailwind-merge": "^3.7.0",
@@ -94,6 +95,7 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
+    "@huggingface/transformers": "4.3.0",
     "@playwright/test": "^1.63.0",
     "@tailwindcss/postcss": "^4",
     "@types/aws-lambda": "^8.10.163",
@@ -107,6 +109,7 @@
     "@types/react-dom": "^19",
     "@types/react-window": "^2.0.0",
     "@vitest/coverage-v8": "^4.1.11",
+    "@xenova/transformers": "^2.17.2",
     "babel-plugin-react-compiler": "1.0.0",
     "baseline-browser-mapping": "^2.11.26",
     "commander": "^15.0.0",
@@ -126,7 +129,6 @@
     "tsx": "^4.23.15",
     "twitter-api-v2": "^1.29.1",
     "typescript": "^5",
-    "vitest": "^4.1.11",
-    "@xenova/transformers": "^2.17.2"
+    "vitest": "^4.1.11"
   }
 }

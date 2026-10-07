@@ -31,6 +31,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
+
+      # The audit's book-ownership check imports `mongodb`. With no install it
+      # printed "NOT CHECKED (Cannot find package 'mongodb')" on every run —
+      # including the green ones before 2026-09-30 — so that half never ran.
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
 
       - name: Resolve target URL
         id: target

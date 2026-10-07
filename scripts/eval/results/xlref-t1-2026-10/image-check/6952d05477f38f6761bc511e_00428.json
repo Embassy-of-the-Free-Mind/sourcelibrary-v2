@@ -1,0 +1,27 @@
+{
+ "id": "6952d05477f38f6761bc511e_00428",
+ "image_legible": true,
+ "ocr_word_errors": 0,
+ "ocr_words_approx": 230,
+ "ocr_errors": [],
+ "page_cause": "none",
+ "causes": [
+  {
+   "finding": "minor: 'like an Iron Magnet drawing the spirit of nourishment in its stead' for 'Magnetis Ferri spiritum nutrimenti loco trahentis'",
+   "cause": "translation",
+   "image": "instar Magnetis Ferri spiritum nutrimenti loco trahentis",
+   "ocr": "inſtar Ma-gnetis Ferri ſpiritum nutrimenti loco trahentis",
+   "english": "like an Iron Magnet drawing the spirit of nourishment in its stead"
+  },
+  {
+   "finding": "minor terminology: 'Knotgrass' for 'Persicaria' (reference: arsemart)",
+   "cause": "none",
+   "image": "sicuti apparet in Persicaria, Solidagine maiore",
+   "ocr": "ſicuti apparet in Perſicaria, Solidagine maiore",
+   "english": "as appears in Knotgrass, Greater Goldenrod"
+  }
+ ],
+ "share_of_served_error_from_ocr": "none",
+ "fixed_transcription_written": false,
+ "note": "Random page, no real error. OCR agrees with the image in body and margin, including the print's own 'cumpromiscuis' and 'inferiorioribus'. Image is only 1000px wide; the italic body is clear, the small marginal italic is readable but tight."
+}

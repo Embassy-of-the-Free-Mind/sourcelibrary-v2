@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "book_id": "6955d3d828a09ca65927ed03",
+    "title": "The Origine of Formes and Qualities",
+    "published": "1688",
+    "source": "EEBO-TCP A29017",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 8,
+    "skips": {},
+    "median_char_acc": 0.9651,
+    "median_char_acc_windowed": 0.9651,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6955d3d8-p26",
+      "page": 26,
+      "overlap": 1,
+      "probe_words": 153,
+      "ref_chars": 981,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.044,
+      "char_acc": 0.9646,
+      "char_acc_windowed": 0.9646
+    },
+    {
+      "slug": "ed-6955d3d8-p43",
+      "page": 43,
+      "overlap": 1,
+      "probe_words": 148,
+      "ref_chars": 941,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.124,
+      "char_acc": 0.9712,
+      "char_acc_windowed": 0.9712
+    },
+    {
+      "slug": "ed-6955d3d8-p71",
+      "page": 71,
+      "overlap": 1,
+      "probe_words": 160,
+      "ref_chars": 947,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.09,
+      "char_acc": 0.9694,
+      "char_acc_windowed": 0.9694
+    },
+    {
+      "slug": "ed-6955d3d8-p87",
+      "page": 87,
+      "overlap": 1,
+      "probe_words": 166,
+      "ref_chars": 982,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.111,
+      "char_acc": 0.955,
+      "char_acc_windowed": 0.9524
+    },
+    {
+      "slug": "ed-6955d3d8-p93",
+      "page": 93,
+      "overlap": 1,
+      "probe_words": 155,
+      "ref_chars": 956,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.103,
+      "char_acc": 0.9555,
+      "char_acc_windowed": 0.9555
+    },
+    {
+      "slug": "ed-6955d3d8-p103",
+      "page": 103,
+      "overlap": 1,
+      "probe_words": 157,
+      "ref_chars": 987,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.089,
+      "char_acc": 0.9413,
+      "char_acc_windowed": 0.9413
+    },
+    {
+      "slug": "ed-6955d3d8-p106",
+      "page": 106,
+      "overlap": 1,
+      "probe_words": 163,
+      "ref_chars": 961,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.095,
+      "char_acc": 0.9651,
+      "char_acc_windowed": 0.9651
+    },
+    {
+      "slug": "ed-6955d3d8-p147",
+      "page": 147,
+      "overlap": 1,
+      "probe_words": 152,
+      "ref_chars": 940,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.089,
+      "char_acc": 0.9685,
+      "char_acc_windowed": 0.9685
+    }
+  ]
+}

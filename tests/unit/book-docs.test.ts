@@ -67,6 +67,18 @@ describe('makeBookDoc', () => {
     expect(() => makeBookDoc({ title: 'X', hide_reason: 'dup' })).toThrow(/retired.*hide_reason/s);
   });
 
+  it("stamps content_type 'book' on a record with no resource_type (#5292c)", () => {
+    expect(makeBookDoc({ title: 'X' }).content_type).toBe('book');
+    expect(makeBookDoc({ title: 'X', content_type: null }).content_type).toBe('book');
+  });
+
+  it('leaves content_type alone for artwork records and explicit caller values', () => {
+    const art = makeBookDoc({ title: 'Melencolia I', resource_type: 'print' });
+    expect('content_type' in art).toBe(false);
+    expect(makeBookDoc({ title: 'X', resource_type: 'print', content_type: 'artwork' }).content_type).toBe('artwork');
+    expect(makeBookDoc({ title: 'X', content_type: 'text' }).content_type).toBe('text');
+  });
+
   it('throws on a non-object input', () => {
     expect(() => makeBookDoc(null as never)).toThrow(/plain object/);
     expect(() => makeBookDoc(['title'] as never)).toThrow(/plain object/);

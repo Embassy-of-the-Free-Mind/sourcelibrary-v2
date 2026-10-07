@@ -34,6 +34,8 @@ const FIX_GALLERY_CROPS = process.argv.includes('--fix-gallery-crops');
 const DRY_RUN = process.argv.includes('--dry-run');
 const LIMIT = parseInt(process.argv.find(a => a.startsWith('--limit='))?.split('=')[1] || '0') || 0;
 
+let embeddingModel = 'Xenova/clip-vit-base-patch32';
+
 // Batch settings
 const BATCH_SIZE = 10; // Images per batch to CLIP server
 const PG_BATCH = 50;   // Rows per INSERT
@@ -42,7 +44,11 @@ async function main() {
   // Check CLIP server health
   try {
     const health = await fetch(`${CLIP_URL}/health`).then(r => r.json());
-    console.log(`CLIP server: ${health.model} (${health.dims} dims)`);
+    // Stamp every row with the space it was embedded in: v2 and v4 runtimes
+    // give different vectors for the same image (#5099). A server predating the
+    // runtime switch reports no embedding_model and is v2.
+    embeddingModel = health.embedding_model || health.model;
+    console.log(`CLIP server: ${health.model} (${health.dims} dims, runtime ${health.runtime || 'v2'})`);
   } catch (e) {
     console.error(`Cannot reach CLIP server at ${CLIP_URL}: ${e.message}`);
     console.error('Start it with: node scripts/workers/clip-server.mjs');
@@ -320,9 +326,7 @@ async function flushToPostgres(client, rows) {
   const params = [];
   let paramIdx = 1;
 
-  // Model identifier as reported by clip-server.mjs:25 (MODEL_ID) / :87 (/health endpoint).
-  // Kept inline so this script is self-contained even when the CLIP server is unreachable.
-  const CLIP_MODEL = 'Xenova/clip-vit-base-patch32';
+  const CLIP_MODEL = embeddingModel;
 
   for (const row of rows) {
     const embeddingStr = `[${row._embedding.join(',')}]`;

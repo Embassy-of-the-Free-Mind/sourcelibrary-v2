@@ -43,6 +43,13 @@ export interface ExampleRow {
   title: string; url: string; lang: string; source: string; note?: string; pages: number;
   ocr: number; translation: number; images: number; other: number; total: number;
 }
+/** One edition language (books.language, first listed), from the ops lang-projection.py. */
+export interface LanguageRow {
+  language: string; books: number; live_books?: number; hidden_books?: number; pages: number;
+  pages_ocr: number; pages_translated: number; books_done: number; books_started: number;
+  ocr_pages_needed: number; translation_pages_needed: number;
+  low_usd: number; high_usd: number; live_low_usd?: number; live_high_usd?: number;
+}
 export interface OutputMonth { month: string; ocr_pages: number; translated_pages: number }
 export interface HoursMonth { hours: number; active_days: number; prompts: number }
 export interface Person { name: string; role: string; monthly_usd: number | null; note?: string }
@@ -53,6 +60,7 @@ export interface Person { name: string; role: string; monthly_usd: number | null
  * except `findings` / `checks_findings`, whose items may carry `<b>` and `<a>`.
  */
 export interface SpendNarrative {
+  languages_intro?: string;
   findings_as_of?: string;
   findings?: string[];
   still_unknown?: string;
@@ -100,6 +108,10 @@ export interface SpendData {
     pages_ocr_total: number;
     measured?: string;
   } | null;
+  /** Progress and remaining cost by language; absent in documents pushed before 2026-09-29. */
+  languages?: LanguageRow[] | null;
+  /** Per-book completion histograms, 1% bins (index 100 = complete), over books with any OCR. */
+  completion?: { ocr: number[]; translation: number[]; books_with_ocr: number; non_english_with_ocr: number } | null;
   text?: SpendNarrative;
 }
 
@@ -178,6 +190,39 @@ export async function getSpendReport(): Promise<SpendReportDoc | null> {
     .findOne({ _id: SPEND_REPORT_ID } as Record<string, unknown>);
   if (!doc || !doc.data) return null;
   return doc;
+}
+
+/** The daily paid-vs-got ledger row (#5499), written by scripts/audit/paid-vs-got.mjs --apply. */
+export const PAID_VS_GOT_TYPE = 'paid_vs_got_daily';
+export interface PaidVsGotLane {
+  lane: string; paid_usd: number; batch_usd: number; estimate_usd: number;
+  pages_written: number | null; per_1k_usd: number | null; waste_usd: number; waste_pct: number;
+}
+export interface PaidVsGotDoc {
+  _id: string;
+  day: string;
+  generated_at: Date | string;
+  verdict: { status: 'PASS' | 'WARN' | 'FAIL'; fails: string[]; warns: string[] };
+  headline: PaidVsGotLane[];
+  collection?: { open: number; at_gemini: number; oldest_h: number };
+}
+
+/** The most recent ledger row, or null (never written, or unreadable — the section then hides). */
+export async function getLatestPaidVsGot(): Promise<PaidVsGotDoc | null> {
+  try {
+    const db = await getDb();
+    const [doc] = await db
+      .collection<PaidVsGotDoc>(OPS_REPORTS_COLLECTION)
+      .find({ type: PAID_VS_GOT_TYPE } as Record<string, unknown>, {
+        projection: { day: 1, generated_at: 1, verdict: 1, headline: 1, 'collection.open': 1, 'collection.at_gemini': 1, 'collection.oldest_h': 1 },
+      })
+      .sort({ day: -1 })
+      .limit(1)
+      .toArray();
+    return doc && Array.isArray(doc.headline) ? doc : null;
+  } catch {
+    return null;
+  }
 }
 
 /** Strip the people-only sections for viewers not on that list. Never mutates. */

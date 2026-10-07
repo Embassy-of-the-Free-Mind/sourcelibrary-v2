@@ -18,6 +18,7 @@
  */
 import fs from 'fs';
 import path from 'path';
+import { execFileSync } from 'child_process';
 import { fileURLToPath } from 'url';
 
 const DIR = path.dirname(fileURLToPath(import.meta.url));
@@ -103,7 +104,18 @@ if (process.argv.includes('--check')) {
   const cur = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : '';
   if (cur !== md) { console.error('INDEX.md is stale — run: node scripts/eval/build-index.mjs'); process.exit(1); }
   console.log('INDEX.md is current');
+} else if (process.argv.includes('--print')) {
+  process.stdout.write(md);
 } else {
+  // INDEX.md is regenerated on main after each merge (eval-ledgers-regenerate.yml,
+  // #5436). Regenerating it in a PR is what made it the second-hottest conflict
+  // file in the repo — two PRs each rewriting the same table. Refuse off main.
+  let branch = '';
+  try { branch = execFileSync('git', ['branch', '--show-current'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch { /* not a repo */ }
+  if (branch && branch !== 'main' && !process.argv.includes('--force')) {
+    console.error(`refusing to write INDEX.md on branch '${branch}': main regenerates it after merge. Use --print to view, --force to override.`);
+    process.exit(2);
+  }
   fs.writeFileSync(OUT, md);
   console.log(`wrote ${path.relative(process.cwd(), OUT)} — ${rows.length} scripts, ${libExports.length} lib modules`);
 }

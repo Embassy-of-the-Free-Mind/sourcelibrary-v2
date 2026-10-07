@@ -1,0 +1,1162 @@
+{
+ "run_id": "fingerprint-5549-2026-10-01",
+ "measure": "agreement",
+ "seed": 5549,
+ "cutoffs": {
+  "gemini-3.1-flash-lite": "2025-01-31",
+  "gemini-3-flash-preview": "2025-01-31",
+  "claude-haiku": "2025-02-28"
+ },
+ "models": {
+  "claude-haiku": {
+   "usd": 0,
+   "cells": {
+    "archive-control · after model cutoff · not predictable": {
+     "n": 4,
+     "books": 2,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.49
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 0,
+     "correct_rate": 0,
+     "correct_wilson": [
+      0,
+      0.49
+     ],
+     "other": 4
+    },
+    "archive-control · after model cutoff": {
+     "n": 4,
+     "books": 2,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.49
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 0,
+     "correct_rate": 0,
+     "correct_wilson": [
+      0,
+      0.49
+     ],
+     "other": 4
+    },
+    "archive-control · before model cutoff · not predictable": {
+     "n": 36,
+     "books": 17,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.096
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 5,
+     "correct_rate": 0.139,
+     "correct_wilson": [
+      0.061,
+      0.287
+     ],
+     "other": 31
+    },
+    "archive-control · before model cutoff": {
+     "n": 42,
+     "books": 18,
+     "ours": 2,
+     "ours_rate": 0.048,
+     "ours_wilson": [
+      0.013,
+      0.158
+     ],
+     "ours_book_boot": [
+      0,
+      0.121
+     ],
+     "correct": 5,
+     "correct_rate": 0.119,
+     "correct_wilson": [
+      0.052,
+      0.25
+     ],
+     "other": 35
+    },
+    "archive-control · misread not sequence-predictable": {
+     "n": 40,
+     "books": 19,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.088
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 5,
+     "correct_rate": 0.125,
+     "correct_wilson": [
+      0.055,
+      0.261
+     ],
+     "other": 35
+    },
+    "archive-control · public >= 30 days": {
+     "n": 46,
+     "books": 20,
+     "ours": 2,
+     "ours_rate": 0.043,
+     "ours_wilson": [
+      0.012,
+      0.145
+     ],
+     "ours_book_boot": [
+      0,
+      0.111
+     ],
+     "correct": 5,
+     "correct_rate": 0.109,
+     "correct_wilson": [
+      0.047,
+      0.23
+     ],
+     "other": 39
+    },
+    "archive-control": {
+     "n": 46,
+     "books": 20,
+     "ours": 2,
+     "ours_rate": 0.043,
+     "ours_wilson": [
+      0.012,
+      0.145
+     ],
+     "ours_book_boot": [
+      0,
+      0.111
+     ],
+     "correct": 5,
+     "correct_rate": 0.109,
+     "correct_wilson": [
+      0.047,
+      0.23
+     ],
+     "other": 39
+    },
+    "ours · after model cutoff · not predictable": {
+     "n": 9,
+     "books": 8,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.299
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 0,
+     "correct_rate": 0,
+     "correct_wilson": [
+      0,
+      0.299
+     ],
+     "other": 9
+    },
+    "ours · after model cutoff": {
+     "n": 13,
+     "books": 9,
+     "ours": 3,
+     "ours_rate": 0.231,
+     "ours_wilson": [
+      0.082,
+      0.503
+     ],
+     "ours_book_boot": [
+      0,
+      0.429
+     ],
+     "correct": 0,
+     "correct_rate": 0,
+     "correct_wilson": [
+      0,
+      0.228
+     ],
+     "other": 10
+    },
+    "ours · misread not sequence-predictable": {
+     "n": 9,
+     "books": 8,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.299
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 0,
+     "correct_rate": 0,
+     "correct_wilson": [
+      0,
+      0.299
+     ],
+     "other": 9
+    },
+    "ours · public >= 30 days": {
+     "n": 13,
+     "books": 9,
+     "ours": 3,
+     "ours_rate": 0.231,
+     "ours_wilson": [
+      0.082,
+      0.503
+     ],
+     "ours_book_boot": [
+      0,
+      0.429
+     ],
+     "correct": 0,
+     "correct_rate": 0,
+     "correct_wilson": [
+      0,
+      0.228
+     ],
+     "other": 10
+    },
+    "ours": {
+     "n": 13,
+     "books": 9,
+     "ours": 3,
+     "ours_rate": 0.231,
+     "ours_wilson": [
+      0.082,
+      0.503
+     ],
+     "ours_book_boot": [
+      0,
+      0.429
+     ],
+     "correct": 0,
+     "correct_rate": 0,
+     "correct_wilson": [
+      0,
+      0.228
+     ],
+     "other": 10
+    },
+    "ours-shared-with-archive · after model cutoff · not predictable": {
+     "n": 9,
+     "books": 5,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.299
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 1,
+     "correct_rate": 0.111,
+     "correct_wilson": [
+      0.02,
+      0.435
+     ],
+     "other": 8
+    },
+    "ours-shared-with-archive · after model cutoff": {
+     "n": 9,
+     "books": 5,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.299
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 1,
+     "correct_rate": 0.111,
+     "correct_wilson": [
+      0.02,
+      0.435
+     ],
+     "other": 8
+    },
+    "ours-shared-with-archive · misread not sequence-predictable": {
+     "n": 9,
+     "books": 5,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.299
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 1,
+     "correct_rate": 0.111,
+     "correct_wilson": [
+      0.02,
+      0.435
+     ],
+     "other": 8
+    },
+    "ours-shared-with-archive · public < 30 days": {
+     "n": 7,
+     "books": 3,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.354
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 1,
+     "correct_rate": 0.143,
+     "correct_wilson": [
+      0.026,
+      0.513
+     ],
+     "other": 6
+    },
+    "ours-shared-with-archive · public >= 30 days": {
+     "n": 2,
+     "books": 2,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.658
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 0,
+     "correct_rate": 0,
+     "correct_wilson": [
+      0,
+      0.658
+     ],
+     "other": 2
+    },
+    "ours-shared-with-archive": {
+     "n": 9,
+     "books": 5,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.299
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 1,
+     "correct_rate": 0.111,
+     "correct_wilson": [
+      0.02,
+      0.435
+     ],
+     "other": 8
+    }
+   }
+  },
+  "gemini-3-flash-preview": {
+   "usd": 0.0133,
+   "cells": {
+    "archive-control · after model cutoff · not predictable": {
+     "n": 4,
+     "books": 2,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.49
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 0,
+     "correct_rate": 0,
+     "correct_wilson": [
+      0,
+      0.49
+     ],
+     "other": 4
+    },
+    "archive-control · after model cutoff": {
+     "n": 4,
+     "books": 2,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.49
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 0,
+     "correct_rate": 0,
+     "correct_wilson": [
+      0,
+      0.49
+     ],
+     "other": 4
+    },
+    "archive-control · before model cutoff · not predictable": {
+     "n": 36,
+     "books": 17,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.096
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 11,
+     "correct_rate": 0.306,
+     "correct_wilson": [
+      0.18,
+      0.469
+     ],
+     "other": 25
+    },
+    "archive-control · before model cutoff": {
+     "n": 42,
+     "books": 18,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.084
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 13,
+     "correct_rate": 0.31,
+     "correct_wilson": [
+      0.191,
+      0.46
+     ],
+     "other": 29
+    },
+    "archive-control · misread not sequence-predictable": {
+     "n": 40,
+     "books": 19,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.088
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 11,
+     "correct_rate": 0.275,
+     "correct_wilson": [
+      0.161,
+      0.428
+     ],
+     "other": 29
+    },
+    "archive-control · public >= 30 days": {
+     "n": 46,
+     "books": 20,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.077
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 13,
+     "correct_rate": 0.283,
+     "correct_wilson": [
+      0.173,
+      0.425
+     ],
+     "other": 33
+    },
+    "archive-control": {
+     "n": 46,
+     "books": 20,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.077
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 13,
+     "correct_rate": 0.283,
+     "correct_wilson": [
+      0.173,
+      0.425
+     ],
+     "other": 33
+    },
+    "ours · after model cutoff · not predictable": {
+     "n": 9,
+     "books": 8,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.299
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 0,
+     "correct_rate": 0,
+     "correct_wilson": [
+      0,
+      0.299
+     ],
+     "other": 9
+    },
+    "ours · after model cutoff": {
+     "n": 13,
+     "books": 9,
+     "ours": 3,
+     "ours_rate": 0.231,
+     "ours_wilson": [
+      0.082,
+      0.503
+     ],
+     "ours_book_boot": [
+      0,
+      0.385
+     ],
+     "correct": 0,
+     "correct_rate": 0,
+     "correct_wilson": [
+      0,
+      0.228
+     ],
+     "other": 10
+    },
+    "ours · misread not sequence-predictable": {
+     "n": 9,
+     "books": 8,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.299
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 0,
+     "correct_rate": 0,
+     "correct_wilson": [
+      0,
+      0.299
+     ],
+     "other": 9
+    },
+    "ours · public >= 30 days": {
+     "n": 13,
+     "books": 9,
+     "ours": 3,
+     "ours_rate": 0.231,
+     "ours_wilson": [
+      0.082,
+      0.503
+     ],
+     "ours_book_boot": [
+      0,
+      0.385
+     ],
+     "correct": 0,
+     "correct_rate": 0,
+     "correct_wilson": [
+      0,
+      0.228
+     ],
+     "other": 10
+    },
+    "ours": {
+     "n": 13,
+     "books": 9,
+     "ours": 3,
+     "ours_rate": 0.231,
+     "ours_wilson": [
+      0.082,
+      0.503
+     ],
+     "ours_book_boot": [
+      0,
+      0.385
+     ],
+     "correct": 0,
+     "correct_rate": 0,
+     "correct_wilson": [
+      0,
+      0.228
+     ],
+     "other": 10
+    },
+    "ours-shared-with-archive · after model cutoff · not predictable": {
+     "n": 9,
+     "books": 5,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.299
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 3,
+     "correct_rate": 0.333,
+     "correct_wilson": [
+      0.121,
+      0.646
+     ],
+     "other": 6
+    },
+    "ours-shared-with-archive · after model cutoff": {
+     "n": 9,
+     "books": 5,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.299
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 3,
+     "correct_rate": 0.333,
+     "correct_wilson": [
+      0.121,
+      0.646
+     ],
+     "other": 6
+    },
+    "ours-shared-with-archive · misread not sequence-predictable": {
+     "n": 9,
+     "books": 5,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.299
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 3,
+     "correct_rate": 0.333,
+     "correct_wilson": [
+      0.121,
+      0.646
+     ],
+     "other": 6
+    },
+    "ours-shared-with-archive · public < 30 days": {
+     "n": 7,
+     "books": 3,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.354
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 3,
+     "correct_rate": 0.429,
+     "correct_wilson": [
+      0.158,
+      0.75
+     ],
+     "other": 4
+    },
+    "ours-shared-with-archive · public >= 30 days": {
+     "n": 2,
+     "books": 2,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.658
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 0,
+     "correct_rate": 0,
+     "correct_wilson": [
+      0,
+      0.658
+     ],
+     "other": 2
+    },
+    "ours-shared-with-archive": {
+     "n": 9,
+     "books": 5,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.299
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 3,
+     "correct_rate": 0.333,
+     "correct_wilson": [
+      0.121,
+      0.646
+     ],
+     "other": 6
+    }
+   }
+  },
+  "gemini-3.1-flash-lite": {
+   "usd": 0.0067,
+   "cells": {
+    "archive-control · after model cutoff · not predictable": {
+     "n": 4,
+     "books": 2,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.49
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 0,
+     "correct_rate": 0,
+     "correct_wilson": [
+      0,
+      0.49
+     ],
+     "other": 4
+    },
+    "archive-control · after model cutoff": {
+     "n": 4,
+     "books": 2,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.49
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 0,
+     "correct_rate": 0,
+     "correct_wilson": [
+      0,
+      0.49
+     ],
+     "other": 4
+    },
+    "archive-control · before model cutoff · not predictable": {
+     "n": 36,
+     "books": 17,
+     "ours": 1,
+     "ours_rate": 0.028,
+     "ours_wilson": [
+      0.005,
+      0.142
+     ],
+     "ours_book_boot": [
+      0,
+      0.079
+     ],
+     "correct": 11,
+     "correct_rate": 0.306,
+     "correct_wilson": [
+      0.18,
+      0.469
+     ],
+     "other": 24
+    },
+    "archive-control · before model cutoff": {
+     "n": 42,
+     "books": 18,
+     "ours": 2,
+     "ours_rate": 0.048,
+     "ours_wilson": [
+      0.013,
+      0.158
+     ],
+     "ours_book_boot": [
+      0,
+      0.103
+     ],
+     "correct": 13,
+     "correct_rate": 0.31,
+     "correct_wilson": [
+      0.191,
+      0.46
+     ],
+     "other": 27
+    },
+    "archive-control · misread not sequence-predictable": {
+     "n": 40,
+     "books": 19,
+     "ours": 1,
+     "ours_rate": 0.025,
+     "ours_wilson": [
+      0.004,
+      0.129
+     ],
+     "ours_book_boot": [
+      0,
+      0.073
+     ],
+     "correct": 11,
+     "correct_rate": 0.275,
+     "correct_wilson": [
+      0.161,
+      0.428
+     ],
+     "other": 28
+    },
+    "archive-control · public >= 30 days": {
+     "n": 46,
+     "books": 20,
+     "ours": 2,
+     "ours_rate": 0.043,
+     "ours_wilson": [
+      0.012,
+      0.145
+     ],
+     "ours_book_boot": [
+      0,
+      0.095
+     ],
+     "correct": 13,
+     "correct_rate": 0.283,
+     "correct_wilson": [
+      0.173,
+      0.425
+     ],
+     "other": 31
+    },
+    "archive-control": {
+     "n": 46,
+     "books": 20,
+     "ours": 2,
+     "ours_rate": 0.043,
+     "ours_wilson": [
+      0.012,
+      0.145
+     ],
+     "ours_book_boot": [
+      0,
+      0.095
+     ],
+     "correct": 13,
+     "correct_rate": 0.283,
+     "correct_wilson": [
+      0.173,
+      0.425
+     ],
+     "other": 31
+    },
+    "ours · after model cutoff · not predictable": {
+     "n": 9,
+     "books": 8,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.299
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 0,
+     "correct_rate": 0,
+     "correct_wilson": [
+      0,
+      0.299
+     ],
+     "other": 9
+    },
+    "ours · after model cutoff": {
+     "n": 13,
+     "books": 9,
+     "ours": 3,
+     "ours_rate": 0.231,
+     "ours_wilson": [
+      0.082,
+      0.503
+     ],
+     "ours_book_boot": [
+      0,
+      0.429
+     ],
+     "correct": 1,
+     "correct_rate": 0.077,
+     "correct_wilson": [
+      0.014,
+      0.333
+     ],
+     "other": 9
+    },
+    "ours · misread not sequence-predictable": {
+     "n": 9,
+     "books": 8,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.299
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 0,
+     "correct_rate": 0,
+     "correct_wilson": [
+      0,
+      0.299
+     ],
+     "other": 9
+    },
+    "ours · public >= 30 days": {
+     "n": 13,
+     "books": 9,
+     "ours": 3,
+     "ours_rate": 0.231,
+     "ours_wilson": [
+      0.082,
+      0.503
+     ],
+     "ours_book_boot": [
+      0,
+      0.429
+     ],
+     "correct": 1,
+     "correct_rate": 0.077,
+     "correct_wilson": [
+      0.014,
+      0.333
+     ],
+     "other": 9
+    },
+    "ours": {
+     "n": 13,
+     "books": 9,
+     "ours": 3,
+     "ours_rate": 0.231,
+     "ours_wilson": [
+      0.082,
+      0.503
+     ],
+     "ours_book_boot": [
+      0,
+      0.429
+     ],
+     "correct": 1,
+     "correct_rate": 0.077,
+     "correct_wilson": [
+      0.014,
+      0.333
+     ],
+     "other": 9
+    },
+    "ours-shared-with-archive · after model cutoff · not predictable": {
+     "n": 9,
+     "books": 5,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.299
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 1,
+     "correct_rate": 0.111,
+     "correct_wilson": [
+      0.02,
+      0.435
+     ],
+     "other": 8
+    },
+    "ours-shared-with-archive · after model cutoff": {
+     "n": 9,
+     "books": 5,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.299
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 1,
+     "correct_rate": 0.111,
+     "correct_wilson": [
+      0.02,
+      0.435
+     ],
+     "other": 8
+    },
+    "ours-shared-with-archive · misread not sequence-predictable": {
+     "n": 9,
+     "books": 5,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.299
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 1,
+     "correct_rate": 0.111,
+     "correct_wilson": [
+      0.02,
+      0.435
+     ],
+     "other": 8
+    },
+    "ours-shared-with-archive · public < 30 days": {
+     "n": 7,
+     "books": 3,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.354
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 1,
+     "correct_rate": 0.143,
+     "correct_wilson": [
+      0.026,
+      0.513
+     ],
+     "other": 6
+    },
+    "ours-shared-with-archive · public >= 30 days": {
+     "n": 2,
+     "books": 2,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.658
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 0,
+     "correct_rate": 0,
+     "correct_wilson": [
+      0,
+      0.658
+     ],
+     "other": 2
+    },
+    "ours-shared-with-archive": {
+     "n": 9,
+     "books": 5,
+     "ours": 0,
+     "ours_rate": 0,
+     "ours_wilson": [
+      0,
+      0.299
+     ],
+     "ours_book_boot": [
+      0,
+      0
+     ],
+     "correct": 1,
+     "correct_rate": 0.111,
+     "correct_wilson": [
+      0.02,
+      0.435
+     ],
+     "other": 8
+    }
+   }
+  }
+ },
+ "items": 68
+}

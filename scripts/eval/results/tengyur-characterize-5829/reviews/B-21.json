@@ -1,0 +1,99 @@
+[
+{"id": "PNH66", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "ལས་ཞེས་པ་ནི་གྱུར་པའོ།", "english": "Action refers to what has been transformed.",
+   "why": "ལས here is the ablative 'from' of the root verse (the deity transformed from the syllable), glossed as 'transformed', not 'action' (karma)."},
+  {"type": "gloss", "confidence": "medium",
+   "tibetan": "ནག་པོ་ཆེན་པོ་ནི་ཤིན་ཏུ་གནག་པའོ།", "english": "the Great Black One [note: original: \"Mahakala\"] is extremely dark",
+   "why": "nag po chen po is glossed as a colour ('very black'), describing the deity's complexion, not the name Mahākāla."}
+ ],
+ "note": "A careful rendering of a Hevajra commentary passage; only the gloss of two root-text words is off."},
+{"id": "PHYRX", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "དེ་ཉིད་ཡང་དག་པའི་མཐའ་ཡིན་ཏེ", "english": "Precisely that is the pinnacle of existence",
+   "why": "ཡང་དག་པའི་མཐའ is bhūtakoṭi, 'the limit of reality', not bhavāgra 'the pinnacle of existence'.",
+   "fix": {"find": "Precisely that is the pinnacle of existence", "replace": "Precisely that is the limit of reality (bhūtakoṭi)"}}
+ ],
+ "note": "Sound Yogācāra exposition of the three natures and three samādhis; one technical term rendered as a different, misleading term."},
+{"id": "PCWAZ", "score": 2, "verdict": "work",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "ཡེབ་རྔམ་#བྱ་བའི་ཕྱིར་ནད་ཀྱིས་སྲན་ཚོད་དང་སྲན་ཚོད་མ་གཡོགས་པར་མི་བྱ།",
+   "english": "do not eat without first assessing the amount of lentils or pulse provided for the illness",
+   "why": "This is the śaikṣa rule: out of greed (to get more), do not cover the curry/sauce [with rice], unless ill; nothing about assessing portions for an illness.",
+   "fix": {"find": "do not eat without first assessing the amount of lentils or pulse provided for the illness [note: this refers to eating balanced portions suitable for one's health]", "replace": "do not cover the curry [with rice], or [the rice with] curry, unless one is ill"}},
+  {"type": "term", "confidence": "high",
+   "tibetan": "འཕྲོག་པའི་#དྲག་པོར་རྒྱུན་བཟློག་སྟེ་མི་བཅུ་ཞེས་པའི་བར་དུ་སྨོས་པ་རྣམས་ནི",
+   "english": "Not in a place of violent robbery where the current of safety is reversed. These instructions up to the word \"ten\"",
+   "why": "The rule is 'do not draw [water] against the current of a violent, sweeping stream'; མི་བཅུ is 'do not draw (water)', not the number ten.",
+   "fix": {"find": "Not in a place of violent robbery where the current of safety is reversed. These instructions up to the word \"ten\"", "replace": "Do not draw [water] against the current of a violent, sweeping stream. These instructions up to \"do not draw\""}},
+  {"type": "agent", "confidence": "high",
+   "tibetan": "མདུན་དུ་སོང་ལ་ཕྱིས་#སྦྱིན་འོངས་པས་མ་ཡིན།",
+   "english": "Do not teach while walking in front to one who is following behind.",
+   "why": "The roles are reversed: one coming behind should not teach Dharma to one who walks in front.",
+   "fix": {"find": "Do not teach while walking in front to one who is following behind.", "replace": "One who follows behind should not teach to one who walks in front."}},
+  {"type": "addition", "confidence": "medium",
+   "tibetan": "ཅང་ཁ་ཆེས་ཧ་ཅང་བསིལ་ཆེས་#པ་ལ་སོགས་པ་ཟས་ལ་ཁམ་ཆུ་མ་ཟེར་ཅིག་པའོ།",
+   "english": "do not complain that the food is too hot or too cold, and do not spit while eating",
+   "why": "The Tibetan says 'too bitter, too cold' etc. and has only 'do not grumble about the food'; 'do not spit while eating' is not there and 'hot' is not ཁ."}
+ ],
+ "note": "The plain rules are mostly right, but three Vinaya rules are mistranslated (one with roles reversed) and the explanatory gloss misreads 'do not draw' as 'ten'."},
+{"id": "P8LXT", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "སྲེད་པས་བྱིས་པ་ཀུན་ཏུ་སྦྱོང་བར་བྱེད་དེ", "english": "craving causes the childish being to be fully purified [note: or prepared for rebirth]",
+   "why": "In context (cf. སྲེད་པའི་ཀུན་ཏུ་སྦྱོར་བ on the next side) craving binds/yokes the immature being to those destinies; 'purified' inverts the sense."}
+ ],
+ "note": "A faithful rendering of the Yogācārabhūmi-type list of differences between the receptacle and birth cycles; one verb misread."},
+{"id": "PPHF2", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "gloss", "confidence": "medium",
+   "tibetan": "ཛི་ན་ཛིཀ་ཅེས་བྱ་བ་སྟེ་རྣམ་པར་སྣང་མཛད་དོ།", "english": "(Jinajik) Victor of Victors",
+   "why": "The commentary (previous side) explains Jinajik as 'he who produces the Victors' / 'victor over birth', not 'Victor of Victors'."},
+  {"type": "gloss", "confidence": "medium",
+   "tibetan": "ཨཱ་རོ་ལྀཀ་ཅེས་བཤད་པ་ཡིན", "english": "(Arolik) the seed syllable or name associated with the Lotus Family",
+   "why": "Ārolik is a name of the Lotus-family Buddha (Amitābha), not a seed syllable; the note is misleading."}
+ ],
+ "note": "Good rendering of the Nāmasaṃgīti-type etymologies of the five Buddhas; two explanatory glosses are loose."},
+{"id": "PPHZK", "score": 5, "verdict": "light",
+ "errors": [],
+ "note": "A faithful rendering of terse pramāṇa sub-commentary, with lemmata and argument structure kept."},
+{"id": "PFIP4", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "དེ་ནས་རང་མཚན་བརྗོད་ནས།", "english": "having uttered the self-characteristics",
+   "why": "རང་མཚན here is 'one's own name' (the vajra-name then uttered), not the epistemological 'self-characteristic'.",
+   "fix": {"find": "having uttered the self-characteristics", "replace": "having uttered one's own name"}},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "འདི་ཉིད་ནི་ལས་དང་པོ་དང་ཅུང་ཟད་ཡེ་ཤེས་དབང་དུ་གྱུར་པར་འགྱུར་བའི་མཚན་མ་ཡང་ཡིན་ནོ།", "english": "This very act is the sign of the first action and of slightly coming under the power of primordial wisdom.",
+   "why": "ལས་དང་པོ refers to the beginner (ādikarmika) stage, not a 'first action'."}
+ ],
+ "note": "Generally accurate tantric ritual commentary; one technical term mistaken in the naming rite."},
+{"id": "P8YU8", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "ས་བརྒྱད་པ་ཐོབ་པ་དེ་བཞིན་དུ་དེ་དག་ལེགས་པར་ཡོངས་སུ་འདྲིས་པར་བྱས་ནས་བསྲབས་#པའི་ས་ནོན་པ་མ་ཡིན་ཏེ",
+   "english": "Although they have attained the eighth stage and have become thoroughly familiar with it in that way, they have not reached the \"Stage of Thinning\"",
+   "why": "The comparison is: as one who reaches the eighth stage is irreversible, so these, having become well familiarised, [stand on that level] and not on the 'thinned' stages (2–7); the English says eighth-stage bodhisattvas have not reached a lower stage, which is incoherent."},
+  {"type": "gloss", "confidence": "medium",
+   "tibetan": "བསྲབས་#པའི་ས", "english": "[note: original: བསྲབས་པའི་ས་ (rab-pé-sa); refers to the Tanu-bhumi, where afflictions are thinned]",
+   "why": "The phonetic 'rab-pé-sa' is wrong (bsrabs pa'i sa, 'sab-pé-sa')."}
+ ],
+ "note": "Accurate on the signs of irreversibility; the comparison with the eighth stage is garbled."},
+{"id": "PKZHS", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "དབུགས་དབྱུང་དྲུག་བསྡུས་ཟབ་པ་ཡང་དག་ནི།", "english": "A deep and perfect distillation of the six types of relief",
+   "why": "དབུགས་དབྱུང here is ucchvāsa, the textual sections/chapters (six sections drawn from the Māyājāla), not 'relief'."}
+ ],
+ "note": "Opening of a Nāmasaṃgīti maṇḍala rite, rendered well apart from one term in the verse."},
+{"id": "P21P4", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "ཕྱག་རྒྱ་རྣམས་ཀྱིས་རང་གི་གཟུགས་བརྙན་དུ་རྒྱས་བཏབ་པས", "english": "are sealed as the reflections of the (mudras) symbolic hand gestures or seals",
+   "why": "The mudrās are the agent: they seal all beings as their own image (reflection), rather than beings being the reflections of the mudrās."}
+ ],
+ "note": "A faithful rendering of the maṇḍala-feast and entry passage; one case relation shifted."}
+]

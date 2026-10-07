@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA historicapolitica/wassenberg1",
+  "edition": "Florus Germanicus: Sive Everhardi Wassenbergii Embricensis Commentariorum De Bello, Inter invictissimos Imperatores Ferd — Hamburg: Bernard Balduin, 1641.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "same-text",
+    "text_match_pages": "14/17",
+    "pb_aligned_pages": "2/14"
+  },
+  "origin": "library",
+  "book_id": "6a42b1d25207af7c42f57a9c",
+  "page_number": 25,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 66212,
+    "to_char": 67287,
+    "overlap": 0.841,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'praehenderent, jussit, conventicula prohiberent'; ends 'Septem- [catchword viro-]'. Ref ends with 'Septemvirorum' plus next page's marginal 'moritur. A. 1619. 20. Mar'; marginal glosses inserted mid-sentence rather than separated.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:18:22.499Z",
+  "text_location": "repo",
+  "text_sha256": "2a2921c22e64b5d6f8ef938ef5bc15cb5b8e31f7419fe02329765a8892fdbff0",
+  "unit": {
+    "chars": 1075
+  },
+  "stratum": "latin-period-5126"
+}

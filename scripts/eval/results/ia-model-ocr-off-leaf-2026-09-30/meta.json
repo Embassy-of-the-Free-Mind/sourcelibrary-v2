@@ -1,0 +1,13 @@
+{
+  "frame": "IA books with pages_ocr > 0",
+  "frame_books": 31187,
+  "seed": "5309",
+  "opts": {
+    "window": 8,
+    "minScore": 0.3,
+    "minMargin": 0.15,
+    "minTokens": 40,
+    "farMinScore": 0.5
+  },
+  "updated_at": "2026-09-30T10:33:10.325Z"
+}

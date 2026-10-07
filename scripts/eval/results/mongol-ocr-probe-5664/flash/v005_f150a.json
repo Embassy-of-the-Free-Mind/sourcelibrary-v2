@@ -1,0 +1,42 @@
+{
+ "key": "v005_f150a",
+ "page": {
+  "key": "v005_f150a",
+  "vol": 5,
+  "book_id": "6ac029849a86d56c1aa16dca",
+  "page_number": 299,
+  "page_label": "f. 150a",
+  "bdrc_canvas": "I1PD1102730302.jpg",
+  "ligeti": "Mng1.80",
+  "mng_span": "Ca dandr a 121b–194b",
+  "toh": "D442",
+  "skt": "Guhyasamāja-tantra",
+  "derge_vol": 81,
+  "derge_file": "081_རྒྱུད་འབུམ།_ཅ.txt"
+ },
+ "model": "gemini-3-flash-preview",
+ "ocr_prompt": {
+  "name": "Standard OCR",
+  "version": "19.1",
+  "content_hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "translation_prompt": {
+  "name": "Standard Translation",
+  "version": "13",
+  "hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Manchu</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<page-num>299</page-num>\n<warning>Handwritten Manchu script. The text is oriented vertically, reading from left to right across the page. The transcription follows the vertical columns as they appear from left to right.</warning>\n\n<margin>\n秘\n密\n經\n第\n五\n卷\n上\n一\n百\n五\n十\n</margin>\n\n<unclear>17 lines of Manchu script, not transcribed</unclear>\n\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">The text is enclosed within a double-line rectangular border. The page number '299' is written in red ink in the upper left margin, outside the border.</image-desc>\n\n<vocab>Manchu script, vertical writing, Buddhist canon, Qing dynasty manuscript</vocab>",
+  "finishReason": "STOP",
+  "inputTokens": 4279,
+  "outputTokens": 221,
+  "cost_usd": 0.0028025
+ },
+ "translation": {
+  "text": "<meta>The source language is identified as Manchu, not Mongolian as previously suggested in the prompt instructions. This page appears to be from a Manchu translation of a Buddhist canonical text.</meta>\n\n<margin>Secret Sutra, Volume Five, Part One, Page 150</margin>\n\n<unclear>17 lines of Manchu script, not transcribed</unclear>\n\n<note>The text is enclosed within a double-line rectangular border. The page number 299 is written in red ink in the upper left margin, outside the border.</note>\n\n<summary>This page contains a portion of the fifth volume of the Secret Sutra written in Manchu script. It features marginal Chinese notations indicating the volume and page number within a traditional Buddhist textual structure.</summary>\n<keywords>Manchu script, Secret Sutra, Buddhist canon, Qing dynasty, manuscript, vertical writing</keywords>",
+  "finishReason": "STOP",
+  "inputTokens": 1951,
+  "outputTokens": 190,
+  "cost_usd": 0.0015455
+ }
+}

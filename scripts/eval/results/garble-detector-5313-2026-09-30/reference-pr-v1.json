@@ -1,0 +1,500 @@
+{
+ "verdict_version": "garble-verdict@1",
+ "thresholds": {
+  "oov_quantile": "p98",
+  "oov_margin": 0.2,
+  "filler": 0.08,
+  "repeat": 0.35,
+  "loop": 0.3
+ },
+ "measure": "judged",
+ "reference": "Opus judge flag garble_passthrough, main pages only, one page per book",
+ "runs": [
+  "translation-corpus-audit-2026-09-30",
+  "translation-corpus-audit-monthly-2026-09"
+ ],
+ "all": {
+  "label": "all",
+  "n": 327,
+  "judged": 316,
+  "positives": 32,
+  "tp": 6,
+  "fp": 19,
+  "fn": 25,
+  "unjudged_positives": 1,
+  "precision": 0.24,
+  "recall_of_judged": 0.194,
+  "recall_of_all": 0.188
+ },
+ "major_only": {
+  "label": "major garble only",
+  "n": 327,
+  "judged": 316,
+  "positives": 15,
+  "tp": 4,
+  "fp": 21,
+  "fn": 11,
+  "unjudged_positives": 0,
+  "precision": 0.16,
+  "recall_of_judged": 0.267,
+  "recall_of_all": 0.267
+ },
+ "caution": {
+  "label": "pageReadCaution alone (#5315)",
+  "flagged": 7,
+  "tp": 1,
+  "fp": 6,
+  "recall": 0.031
+ },
+ "union": {
+  "label": "caution OR detector",
+  "flagged": 32,
+  "tp": 7,
+  "fp": 25,
+  "precision": 0.219,
+  "recall": 0.219
+ },
+ "unjudged_reasons": {
+  "too_few_units": 11
+ },
+ "flagged": [
+  {
+   "id": "b7a736005f",
+   "language": "French",
+   "garbled": false,
+   "reasons": [
+    "filler"
+   ],
+   "url": "https://sourcelibrary.org/book/69e759d7095c302d3fdde368?page=38"
+  },
+  {
+   "id": "f5bb314eb3",
+   "language": "Arabic",
+   "garbled": false,
+   "reasons": [
+    "filler"
+   ],
+   "url": "https://sourcelibrary.org/book/6a20331218654bf8e190411e?page=26"
+  },
+  {
+   "id": "4ea7568f14",
+   "language": "Tibetan",
+   "garbled": false,
+   "reasons": [
+    "repeat"
+   ],
+   "url": "https://sourcelibrary.org/book/69e7ab555f1a22ab19a96c7a?page=265"
+  },
+  {
+   "id": "0f0d15a7d9",
+   "language": "Chinese",
+   "garbled": false,
+   "reasons": [
+    "filler"
+   ],
+   "url": "https://sourcelibrary.org/book/6992ceb8673ee1e40e3216b0?page=71"
+  },
+  {
+   "id": "edf34dac1e",
+   "language": "Latin",
+   "garbled": false,
+   "reasons": [
+    "repeat"
+   ],
+   "url": "https://sourcelibrary.org/book/69f32e3c876dd827cbc439d4?page=320"
+  },
+  {
+   "id": "9be3ef3067",
+   "language": "Tibetan",
+   "garbled": false,
+   "reasons": [
+    "repeat"
+   ],
+   "url": "https://sourcelibrary.org/book/69e7ab665f1a22ab19a98264?page=312"
+  },
+  {
+   "id": "cf03cb80e8",
+   "language": "Greek",
+   "garbled": true,
+   "reasons": [
+    "filler"
+   ],
+   "url": "https://sourcelibrary.org/book/6993881c74305116d72cf2f3?page=174"
+  },
+  {
+   "id": "04fd772f8b",
+   "language": "Italian",
+   "garbled": true,
+   "reasons": [
+    "filler",
+    "repeat"
+   ],
+   "url": "https://sourcelibrary.org/book/6991e70febc7adff9a0b2259?page=237"
+  },
+  {
+   "id": "170d34fd47",
+   "language": "Tibetan",
+   "garbled": false,
+   "reasons": [
+    "oov"
+   ],
+   "url": "https://sourcelibrary.org/book/69e7484085f786e884a4c10f?page=34"
+  },
+  {
+   "id": "a487f49e50",
+   "language": "Chinese",
+   "garbled": false,
+   "reasons": [
+    "repeat"
+   ],
+   "url": "https://sourcelibrary.org/book/69d5ae474dc55b8478de136d?page=12"
+  },
+  {
+   "id": "52e056e34f",
+   "language": "Chinese",
+   "garbled": false,
+   "reasons": [
+    "filler"
+   ],
+   "url": "https://sourcelibrary.org/book/69af0ea2067c0c26ee26e607?page=63"
+  },
+  {
+   "id": "839b77f72b",
+   "language": "Tibetan",
+   "garbled": false,
+   "reasons": [
+    "repeat"
+   ],
+   "url": "https://sourcelibrary.org/book/69e7abcd5f1a22ab19a9e54b?page=217"
+  },
+  {
+   "id": "f4f7331295",
+   "language": "Hebrew",
+   "garbled": true,
+   "reasons": [
+    "oov"
+   ],
+   "url": "https://sourcelibrary.org/book/69c7b0ec25ec2ba5ccd7f3f3?page=51"
+  },
+  {
+   "id": "72ab6df3fb",
+   "language": "Latin",
+   "garbled": false,
+   "reasons": [
+    "oov"
+   ],
+   "url": "https://sourcelibrary.org/book/69b2f3d7a9a500a45e5e8d46?page=85"
+  },
+  {
+   "id": "7c972fdf5f",
+   "language": "Latin",
+   "garbled": false,
+   "reasons": [
+    "filler"
+   ],
+   "url": "https://sourcelibrary.org/book/69f33a14876dd827cbc57a69?page=2"
+  },
+  {
+   "id": "d1dc063067",
+   "language": "Sanskrit",
+   "garbled": true,
+   "reasons": [
+    "filler"
+   ],
+   "url": "https://sourcelibrary.org/book/69de130a8a46d0c97eedc10d?page=8"
+  },
+  {
+   "id": "f2c3bdefc9",
+   "language": "Sanskrit",
+   "garbled": true,
+   "reasons": [
+    "filler"
+   ],
+   "url": "https://sourcelibrary.org/book/69d91e423a50087f7bd9afc5?page=85"
+  },
+  {
+   "id": "0591b803f6",
+   "language": "Arabic",
+   "garbled": true,
+   "reasons": [
+    "oov"
+   ],
+   "url": "https://sourcelibrary.org/book/6a2032e718654bf8e1903bba?page=8"
+  },
+  {
+   "id": "fd398eac82",
+   "language": "Tibetan",
+   "garbled": false,
+   "reasons": [
+    "filler",
+    "repeat"
+   ],
+   "url": "https://sourcelibrary.org/book/69e7482885f786e884a4b959?page=187"
+  },
+  {
+   "id": "e37dde5963",
+   "language": "Japanese",
+   "garbled": false,
+   "reasons": [
+    "filler"
+   ],
+   "url": "https://sourcelibrary.org/book/69e8069cfdad300064d9fc55?page=45"
+  },
+  {
+   "id": "8b87517412",
+   "language": "Chinese",
+   "garbled": false,
+   "reasons": [
+    "repeat"
+   ],
+   "url": "https://sourcelibrary.org/book/69c6613f01a26ccff09f4f81?page=31"
+  },
+  {
+   "id": "70af840905",
+   "language": "Sanskrit",
+   "garbled": false,
+   "reasons": [
+    "repeat"
+   ],
+   "url": "https://sourcelibrary.org/book/6990666f2ec9f7db5717a544?page=54"
+  },
+  {
+   "id": "959dcf8ad2",
+   "language": "Chinese",
+   "garbled": false,
+   "reasons": [
+    "oov",
+    "filler"
+   ],
+   "url": "https://sourcelibrary.org/book/6a0a4efc7cd8e1e3d0f49dfe?page=25"
+  },
+  {
+   "id": "621637f802",
+   "language": "English",
+   "garbled": false,
+   "reasons": [
+    "filler"
+   ],
+   "url": "https://sourcelibrary.org/book/69906140322e01b1349a4374?page=152"
+  },
+  {
+   "id": "cc0930cc20",
+   "language": "Tibetan",
+   "garbled": false,
+   "reasons": [
+    "repeat"
+   ],
+   "url": "https://sourcelibrary.org/book/69e80690fdad300064d9f8f3?page=557"
+  }
+ ],
+ "missed": [
+  {
+   "id": "38fbfe04ed",
+   "language": "Latin",
+   "judged": true,
+   "why": null,
+   "oov": 0.028106508875739646,
+   "url": "https://sourcelibrary.org/book/34cd723e-19ce-4d50-a5aa-f86991e09946?page=51"
+  },
+  {
+   "id": "84ac5ad2ef",
+   "language": "German",
+   "judged": true,
+   "why": null,
+   "oov": 0.008333333333333333,
+   "url": "https://sourcelibrary.org/book/69bda0a2f6d63c9197489271?page=575"
+  },
+  {
+   "id": "dffe86faa0",
+   "language": "Latin",
+   "judged": true,
+   "why": null,
+   "oov": 0.014218009478672985,
+   "url": "https://sourcelibrary.org/book/69dbcbdc1040d1d5e20bb0df?page=158"
+  },
+  {
+   "id": "48b134e2d6",
+   "language": "Tibetan",
+   "judged": true,
+   "why": null,
+   "oov": 0.08333333333333333,
+   "url": "https://sourcelibrary.org/book/69e7483885f786e884a4bd19?page=555"
+  },
+  {
+   "id": "b8c9b3f722",
+   "language": "Japanese",
+   "judged": true,
+   "why": null,
+   "oov": 0.050359712230215826,
+   "url": "https://sourcelibrary.org/book/69e75ccc3f15c712bdb8f04e?page=39"
+  },
+  {
+   "id": "b555628e1b",
+   "language": "Greek",
+   "judged": true,
+   "why": null,
+   "oov": 0.10625,
+   "url": "https://sourcelibrary.org/book/69a5e3e5006a40984221691d?page=108"
+  },
+  {
+   "id": "276dffd044",
+   "language": "Arabic",
+   "judged": true,
+   "why": null,
+   "oov": 0.10227272727272728,
+   "url": "https://sourcelibrary.org/book/69e80646fdad300064d9e91e?page=299"
+  },
+  {
+   "id": "a548f0df73",
+   "language": "Greek",
+   "judged": true,
+   "why": null,
+   "oov": 0.06666666666666667,
+   "url": "https://sourcelibrary.org/book/6993895dce15387065946a95?page=331"
+  },
+  {
+   "id": "e163c51e42",
+   "language": "Korean",
+   "judged": true,
+   "why": null,
+   "oov": 0.20098039215686275,
+   "url": "https://sourcelibrary.org/book/69f33dcd876dd827cbc5c954?page=43"
+  },
+  {
+   "id": "546d7ba8f0",
+   "language": "Latin",
+   "judged": true,
+   "why": null,
+   "oov": 0.037037037037037035,
+   "url": "https://sourcelibrary.org/book/69dbc86f1040d1d5e20998a1?page=356"
+  },
+  {
+   "id": "eed8aeb7a2",
+   "language": "Hebrew",
+   "judged": true,
+   "why": null,
+   "oov": 0.12429378531073447,
+   "url": "https://sourcelibrary.org/book/69c1bc118522835be84615e9?page=20"
+  },
+  {
+   "id": "4932d87c92",
+   "language": "Arabic",
+   "judged": true,
+   "why": null,
+   "oov": 0.05405405405405406,
+   "url": "https://sourcelibrary.org/book/69ea3ea1300d991d0f1d3bd6?page=104"
+  },
+  {
+   "id": "aeb42759e7",
+   "language": "Greek",
+   "judged": true,
+   "why": null,
+   "oov": 0.15254237288135594,
+   "url": "https://sourcelibrary.org/book/699439cd6879ff0184cb9235?page=109"
+  },
+  {
+   "id": "b4dae784fd",
+   "language": "French",
+   "judged": true,
+   "why": null,
+   "oov": 0.03770739064856712,
+   "url": "https://sourcelibrary.org/book/69f32f7f876dd827cbc45808?page=193"
+  },
+  {
+   "id": "9229dc2916",
+   "language": "Japanese",
+   "judged": true,
+   "why": null,
+   "oov": 0.025839793281653745,
+   "url": "https://sourcelibrary.org/book/6a08a3b48fae3d3f19b7903d?page=10"
+  },
+  {
+   "id": "692c7b0934",
+   "language": "Tibetan",
+   "judged": true,
+   "why": null,
+   "oov": 0.006172839506172839,
+   "url": "https://sourcelibrary.org/book/69e747e985f786e884a49f74?page=972"
+  },
+  {
+   "id": "9f3c4b81cf",
+   "language": "Greek",
+   "judged": false,
+   "why": "too_few_units",
+   "oov": null,
+   "url": "https://sourcelibrary.org/book/6a3eb56b5598be95b4ffddeb?page=328"
+  },
+  {
+   "id": "dea55ea366",
+   "language": "Korean",
+   "judged": true,
+   "why": null,
+   "oov": 0.0963855421686747,
+   "url": "https://sourcelibrary.org/book/69f33b96876dd827cbc58f61?page=117"
+  },
+  {
+   "id": "1c9d1945e6",
+   "language": "French",
+   "judged": true,
+   "why": null,
+   "oov": 0,
+   "url": "https://sourcelibrary.org/book/69b4c0646248be021e01efc5?page=42"
+  },
+  {
+   "id": "897246fdea",
+   "language": "Sanskrit",
+   "judged": true,
+   "why": null,
+   "oov": 0.26108374384236455,
+   "url": "https://sourcelibrary.org/book/699066f2249ce014347d20d5?page=9"
+  },
+  {
+   "id": "03e5f6510e",
+   "language": "Chinese",
+   "judged": true,
+   "why": null,
+   "oov": 0.24313725490196078,
+   "url": "https://sourcelibrary.org/book/6992cad3d4d545ae73feeb78?page=1"
+  },
+  {
+   "id": "38e3a0869b",
+   "language": "Greek",
+   "judged": true,
+   "why": null,
+   "oov": 0.032388663967611336,
+   "url": "https://sourcelibrary.org/book/69a5e5e985fa13e734e41cba?page=153"
+  },
+  {
+   "id": "4527f0ad49",
+   "language": "Arabic",
+   "judged": true,
+   "why": null,
+   "oov": 0.16326530612244897,
+   "url": "https://sourcelibrary.org/book/69f3288faeeee0fa38c64a0d?page=138"
+  },
+  {
+   "id": "7310f86844",
+   "language": "Tibetan",
+   "judged": true,
+   "why": null,
+   "oov": 0.061224489795918366,
+   "url": "https://sourcelibrary.org/book/69e7482f85f786e884a4bb0c?page=341"
+  },
+  {
+   "id": "f9fcf4bf8b",
+   "language": "Hebrew",
+   "judged": true,
+   "why": null,
+   "oov": 0.0784313725490196,
+   "url": "https://sourcelibrary.org/book/69c1bbbb8522835be8460594?page=1"
+  },
+  {
+   "id": "3c80e935d4",
+   "language": "Japanese",
+   "judged": true,
+   "why": null,
+   "oov": 0.10734463276836158,
+   "url": "https://sourcelibrary.org/book/69e75abfb3d509fcb7a48ea1?page=8"
+  }
+ ]
+}

@@ -24,6 +24,8 @@ export interface MiniBook {
   thumbnail_blob?: string;
   image_display?: string;
   image_thumb?: string;
+  /** Readers' hearts — set only by a likes-ranked shelf; the card shows a ♥ count. */
+  like_count?: number;
   /** Optional full link target (e.g. straight into the Spanish reader); defaults to the book page. */
   href?: string;
 }

@@ -1,0 +1,119 @@
+{
+  "summary": {
+    "book_id": "6958e07cd34d35c8156624c8",
+    "title": "Kalendarium Hortense: The Gardners Almanac",
+    "published": "1666",
+    "source": "EEBO-TCP A38792",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "guard-refused": 1
+    },
+    "median_char_acc": 0.9169,
+    "median_char_acc_windowed": 0.9195,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6958e07c-p9",
+      "page": 9,
+      "overlap": 0.865,
+      "probe_words": 75,
+      "ref_chars": 520,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.198,
+      "char_acc": 0.9169,
+      "char_acc_windowed": 0.9117
+    },
+    {
+      "slug": "ed-6958e07c-p26",
+      "page": 26,
+      "overlap": 0.759,
+      "probe_words": 30,
+      "ref_chars": 294,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.543,
+      "char_acc": 0.8692,
+      "char_acc_windowed": 0.8645,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-6958e07c-p28",
+      "page": 28,
+      "overlap": 0.992,
+      "probe_words": 121,
+      "ref_chars": 741,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.079,
+      "char_acc": 0.0925,
+      "char_acc_windowed": 0.9195
+    },
+    {
+      "slug": "ed-6958e07c-p72",
+      "page": 72,
+      "overlap": 0.993,
+      "probe_words": 137,
+      "ref_chars": 798,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.105,
+      "char_acc": 0.9422,
+      "char_acc_windowed": 0.9406
+    },
+    {
+      "slug": "ed-6958e07c-p86",
+      "page": 86,
+      "overlap": 0.963,
+      "probe_words": 81,
+      "ref_chars": 568,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.146,
+      "char_acc": 0.9621,
+      "char_acc_windowed": 0.9293
+    },
+    {
+      "slug": "ed-6958e07c-p92",
+      "page": 92,
+      "overlap": 0.914,
+      "probe_words": 71,
+      "ref_chars": 557,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.175,
+      "char_acc": 0.8929,
+      "char_acc_windowed": 0.8903
+    },
+    {
+      "slug": "ed-6958e07c-p98",
+      "page": 98,
+      "overlap": 0.906,
+      "probe_words": 128,
+      "ref_chars": 841,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.145,
+      "char_acc": 0.9397,
+      "char_acc_windowed": 0.9382
+    },
+    {
+      "slug": "ed-6958e07c-p108",
+      "page": 108,
+      "overlap": 0.732,
+      "probe_words": 58,
+      "ref_chars": 523,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.324,
+      "char_acc": 0.907,
+      "char_acc_windowed": 0.902
+    }
+  ]
+}

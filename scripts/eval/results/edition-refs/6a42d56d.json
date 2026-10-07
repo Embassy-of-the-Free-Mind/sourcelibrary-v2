@@ -1,0 +1,74 @@
+{
+  "summary": {
+    "book_id": "6a42d56d1894955eb725e97f",
+    "title": "Conclave Ignati: Sive Eius in Nuperis Inferni Comitiis Inthronisatio : Ubi varia De Jesuitarum Indole, De novo inferno creando, De Ecclesia Lunatica institue[n]da, per Satyram congesta sunt , [John Donne] Accessit Et Apologia Pro Jesuitis : Omnia Duobus A",
+    "published": "1611",
+    "source": "EEBO-TCP A20623",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 1,
+    "skips": {
+      "probe-too-short": 3,
+      "no-window": 4
+    },
+    "median_char_acc": 0.9386,
+    "median_char_acc_windowed": 0.935,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a42d56d-p2",
+      "page": 2,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a42d56d-p6",
+      "page": 6,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a42d56d-p9",
+      "page": 9,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a42d56d-p14",
+      "page": 14,
+      "skipped": "no-window",
+      "overlap": 0.2
+    },
+    {
+      "slug": "ed-6a42d56d-p15",
+      "page": 15,
+      "skipped": "no-window",
+      "overlap": 0.091
+    },
+    {
+      "slug": "ed-6a42d56d-p16",
+      "page": 16,
+      "skipped": "no-window",
+      "overlap": 0.147
+    },
+    {
+      "slug": "ed-6a42d56d-p17",
+      "page": 17,
+      "skipped": "no-window",
+      "overlap": 0.063
+    },
+    {
+      "slug": "ed-6a42d56d-p22",
+      "page": 22,
+      "overlap": 0.612,
+      "probe_words": 131,
+      "ref_chars": 1012,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.253,
+      "char_acc": 0.9386,
+      "char_acc_windowed": 0.935
+    }
+  ]
+}

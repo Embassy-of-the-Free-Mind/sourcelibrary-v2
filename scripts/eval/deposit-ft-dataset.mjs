@@ -14,6 +14,9 @@
  *   ... --publish            # actually publish (mints the DOI) — requires human sign-off first
  *   ZENODO_SANDBOX=true ...  # rehearse against sandbox.zenodo.org
  *
+ * Refuses a directory without the benchmark canary (CANARY.txt, #5524) —
+ * export-ft-dataset.mjs writes it; see scripts/lib/dataset-canary.mjs.
+ *
  * Reuses the Zenodo record API flow of scripts/batch/batch-mint-doi.mjs
  * (create draft → init/upload/commit files → publish).
  */
@@ -21,6 +24,7 @@
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { gzipSync } from 'node:zlib';
+import { assertCanary } from '../lib/dataset-canary.mjs';
 
 /** Files above this size are uploaded gzipped (Zenodo uploads time out on large plain files). */
 const GZIP_THRESHOLD = 2 * 1024 * 1024;
@@ -39,6 +43,13 @@ const PUBLISH = args.includes('--publish');
 
 if (!DIR) {
   console.error('Usage: deposit-ft-dataset.mjs --dir <snapshot dir> [--publish]');
+  process.exit(1);
+}
+// Checked before the token so the refusal needs no credentials (and is testable).
+try {
+  assertCanary(resolve(DIR));
+} catch (e) {
+  console.error(e.message);
   process.exit(1);
 }
 if (!process.env.ZENODO_ACCESS_TOKEN) {

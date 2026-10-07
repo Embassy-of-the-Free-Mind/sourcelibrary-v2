@@ -1,0 +1,20 @@
+{
+ "id": "69e7abe75f1a22ab19aa00d4_00566",
+ "arm": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nA Sanskrit manuscript was obtained from the hand of the great master of the <term>Mandala</term> <gloss>sacred circle</gloss>, Chodrak Palzangpo. Based on his command to restore the missing parts and translate the conclusion, the following sections were completed:\n\nIn the tenth <term>bampo</term> <gloss>section or volume</gloss>, from the line \"Accomplishing all the purposes of activities\" until the line \"Performing the supreme recitation of the secret mantra.\"\n\nIn the twelfth <term>bampo</term>, from the line \"Blessed One, however, for the sake of a special purpose\" until the line \"The body of the <term>vidyadhara</term> <gloss>knowledge-holder</gloss> will become ablaze.\"\n\nIn the thirteenth <term>bampo</term>, from the line \"Merely hearing this ritual of the mandala\" until the line \"One should carve it to the height of a man.\"\n\nIn the fourteenth <term>bampo</term>, from the line \"Having fully empowered the lotus, water, and white mustard seeds with recitations\" until the line \"One should wash with a white cloth seven times.\"\n\nAt the junction of the fourteenth and fifteenth <term>bampo</term>, from the line \"Eight silver incense burners\" until the line \"In all other various places, one performs all the activities as they are intended.\"\n\n<summary>This page documents the editorial history of a Tantric text, noting specific passages translated and restored from a Sanskrit manuscript provided by the master Chodrak Palzangpo. It lists the precise starting and ending phrases for additions made across the tenth through fifteenth sections of the work.</summary>\n<keywords>Chodrak Palzangpo, Sanskrit manuscript, translation history, bampo, mantra recitation, mandala ritual, vidyadhara</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2337,
+ "outputTokens": 404,
+ "thinkingTokens": 0,
+ "ms": 203757,
+ "cost_usd": 0.00119025,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 792,
+ "job": "batches/m3tgb80kdfd0p59ncbwgvg1drix1ghy12b7v"
+}

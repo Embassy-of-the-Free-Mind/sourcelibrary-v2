@@ -45,6 +45,14 @@
  * Keep --reason at its default: WITHHOLD_LANES (scripts/lib/stale-translation.mjs)
  * keys on `ocr.pipeline` = this value to withhold the English made from the text this
  * overwrites (the hourly withhold sweep acts on every rewritten page).
+ *
+ * --leaf-ledger=<pages.jsonl> --leafdir=<raw leaf reads> (#5260, per-leaf reads only): a page
+ * whose ledger row has two or more leaves gets a `<leaf-break/>` line at each seam before it is
+ * written (scripts/lib/leaf-break.mjs insertLeafBreaks — the seam is mapped from the ledger's
+ * per-leaf line counts through the raw read onto the served text). A page whose seam cannot be
+ * placed is written WITHOUT the marker and recorded (`leaf: <reason>`), never skipped: the
+ * reading is right, only the seam is unknown. Pages already served without the marker are the
+ * backfill's job (scripts/maintenance/backfill-leaf-break-markers.mjs).
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -55,6 +63,7 @@ import { contentHash } from '../lib/translate-core.mjs';
 import { STALE_OCR_FIELDS } from '../lib/syriac-kraken-lane.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
+import { insertLeafBreaks, foreignTags, LEAF_BREAK } from '../lib/leaf-break.mjs';
 
 const ARG = (n, d) => {
   const a = process.argv.find((x) => x.startsWith(`${n}=`));
@@ -70,6 +79,33 @@ if (!VERDICTS || !TEXTDIR) { console.error('--verdicts and --textdir required');
 
 const MODEL = ARG('--model', 'bdrc-woodblock-easter2');
 const MIN_SYL = 20;
+
+// Per-leaf seams (#5260): ledger stem → leaf line counts, loaded once; empty without the flag.
+const LEAF_LEDGER = ARG('--leaf-ledger', null);
+const LEAFDIR = ARG('--leafdir', null);
+if ((LEAF_LEDGER && !LEAFDIR) || (!LEAF_LEDGER && LEAFDIR)) { console.error('--leaf-ledger and --leafdir go together'); process.exit(1); }
+const leafLinesByStem = new Map();
+if (LEAF_LEDGER) {
+  for (const line of fs.readFileSync(LEAF_LEDGER, 'utf8').split('\n')) {
+    if (!line.startsWith('{')) continue;
+    const r = JSON.parse(line);
+    if (Array.isArray(r.leaf) && r.leaf.length >= 2) leafLinesByStem.set(r.id, r.leaf.map((l) => l.lines));
+  }
+}
+/** The served text with its leaf seams marked, or the text unchanged plus the reason it could not be. */
+function withLeafSeams(stem, text) {
+  if (!LEAF_LEDGER) return { text, leaf: null };
+  const leafLines = leafLinesByStem.get(stem);
+  if (!leafLines) return { text, leaf: 'single-leaf-or-no-row' };
+  const rawFile = path.join(LEAFDIR, `${stem}.txt`);
+  if (!fs.existsSync(rawFile)) return { text, leaf: 'no-raw-leaf-file' };
+  const r = insertLeafBreaks({ served: text, raw: fs.readFileSync(rawFile, 'utf8').trim(), leafLines });
+  if (!r.text) return { text, leaf: r.reason };
+  // Write-time tag check: this lane's text carries no model tags; the marker is the only one allowed.
+  const foreign = foreignTags(r.text);
+  if (foreign.length) return { text, leaf: `foreign-tags:${foreign.slice(0, 3).join(',')}` };
+  return { text: r.text, leaf: `marked:${r.seams.length}`, seams: r.seams, leafLines };
+}
 const ISSUE = 4523;
 const SWEEP = 'tibetan-reocr-4523';
 const BOOK_EVENT = 'tibetan_reocr_applied';
@@ -187,14 +223,20 @@ for (const [bookId, verdicts] of byBook) {
     if (v.verdict !== 'SERVE') { totals.skipped++; rec({ book: bookId, page: v.page, status: 'unknown-verdict', verdict: v.verdict }); continue; }
     const f = path.join(TEXTDIR, `${bookId}_${String(v.page).padStart(5, '0')}.txt`);
     if (!fs.existsSync(f)) { totals.skipped++; rec({ book: bookId, page: v.page, status: 'serve-no-text-file' }); continue; }
-    const text = fs.readFileSync(f, 'utf8').trim();
-    if (text.split('་').length < MIN_SYL) { totals.skipped++; rec({ book: bookId, page: v.page, status: 'serve-too-short' }); continue; }
-    // Degeneration-loop guard (#4850) — never promote a looping read to SERVE.
-    if (loopVerdict(text).refuse) {
+    const stem = `${bookId}_${String(v.page).padStart(5, '0')}`;
+    const plain = fs.readFileSync(f, 'utf8').trim();
+    if (plain.split('་').length < MIN_SYL) { totals.skipped++; rec({ book: bookId, page: v.page, status: 'serve-too-short' }); continue; }
+    // Degeneration-loop guard (#4850) — never promote a looping read to SERVE. Judged on the
+    // plain read; the seam marker added next is not text.
+    if (loopVerdict(plain).refuse) {
       totals.loopRefused++;
       rec({ book: bookId, page: v.page, status: 'SKIP-repetition-loop' });
       continue;
     }
+    // Leaf seams (#5260): `<leaf-break/>` between the leaves when the ledger says where they are.
+    const seamed = withLeafSeams(stem, plain);
+    const text = seamed.text;
+    if (seamed.leaf && !seamed.leaf.startsWith('marked:')) rec({ book: bookId, page: v.page, status: 'serve-without-leaf-marker', leaf: seamed.leaf });
     // Idempotent re-run: a page that already carries this exact text from this model
     // under this lane gets no second revision snapshot and no rewrite.
     if (p.ocr?.pipeline === REASON && p.ocr?.data === text && p.ocr?.model === MODEL && !p.ocr?.unreadable) {
@@ -202,7 +244,7 @@ for (const [bookId, verdicts] of byBook) {
       continue;
     }
     if (p.ocr?.data) serveIds.push(p.id);
-    servePlan.push({ page: p, text, v });
+    servePlan.push({ page: p, text, v, seamed });
   }
 
   if (!APPLY) {
@@ -240,12 +282,16 @@ for (const [bookId, verdicts] of byBook) {
   let wroteMark = 0;
   // the previous model's prompt/job/failure fields and the unreadable flag (all in the list)
   const unsetServe = STALE_OCR_FIELDS;
-  for (const { page, text, v } of servePlan) {
+  for (const { page, text, v, seamed } of servePlan) {
+    // The seam's provenance rides inside the engine block that describes this text (#5260).
+    const engine = seamed?.seams
+      ? { ...ENGINE_BLOCK, leaf_seams: { marker: LEAF_BREAK, count: seamed.seams.length, at_lines: seamed.seams, leaf_lines: seamed.leafLines, source: `${path.basename(LEAF_LEDGER)} per-leaf line counts, mapped through ${path.basename(LEAFDIR)}`, issue: 5260, at: now } }
+      : ENGINE_BLOCK;
     const set = {
       'ocr.data': text, 'ocr.language': 'Tibetan', 'ocr.model': MODEL,
       'ocr.source': 'bdrc', 'ocr.pipeline': REASON, 'ocr.updated_at': now,
       'ocr.content_hash': contentHash(text),
-      'ocr.engine': ENGINE_BLOCK,
+      'ocr.engine': engine,
       'ocr.verdict': verdictBlock(v, now),
       updated_at: now,
     };

@@ -42,12 +42,15 @@
  * network and no spend.
  */
 import {
-  translationPromptHeader,
   buildTranslationPrompt,
+  buildBlockTranslationPrompt,
+  LEAF_BREAK_ONLY,
+  dropLeafSeamBreaches,
   sanitizeTranslationTags,
   assessTranslationHealth,
   isTranslatablePage,
   translatablePageFilter,
+  sameLanguageReason,
   writePageTranslation,
   syncBookTranslationCounters,
   getTranslateModelForBook,
@@ -56,9 +59,11 @@ import {
 } from './translate-core.mjs';
 import { codeVersion, host, notRecorded, NOT_RECORDED } from './write-provenance.mjs';
 import { isHeld } from './pipeline-hold.mjs';
+import { ocrTrustGate } from './ocr-trust-gate.mjs';
 import { dropDriftedPages, translationProse } from './block-drift.mjs';
 import { echoedSource, readingLength } from './page-integrity.mjs';
 import { sumBatchResponseUsage } from '../workers/lib/supabase-usage-logger.mjs';
+import { parseFolioMarkedText } from './folio-markers.mjs';
 import { costOf, BATCH_MULTIPLIER } from './model-pricing.mjs';
 
 // ── Constants (mirrors of production where noted) ──────────────────────────
@@ -127,20 +132,31 @@ export function maxOutputTokensFor(pages) {
 /**
  * The block prompt with NO continuity seed. A block of one uses the single-page prompt
  * (buildTranslationPrompt without a previous translation), as the realtime worker does; a
- * longer block uses the worker's multi-page wording byte for byte.
+ * longer block uses translate-core's block prompt (buildBlockTranslationPrompt, which since
+ * 2026-09-25 IS the worker's multi-page wording — this file carried a byte-identical copy of it
+ * until #5260, and the copy is gone so the two cannot drift).
+ *
+ * `LEAF_BREAK_ONLY` (#5260): a page carrying `<leaf-break/>` gets the leaf note and the leaf
+ * rule; every other page — and this lane's page-break behaviour, which was never measured with
+ * the #5103 devices — is byte-identical to what was sent before.
  */
-export function blockPrompt({ prompts, book, pages }) {
+/**
+ * Folio markers (#5678): `TRANSLATE_FOLIO_MARKERS=1` asks a multi-page block for ONE continuous
+ * English text with `<pb n="N"/>` where each source page begins (translate-core
+ * FOLIO_MARKER_RULE), and parseBlockResponse then splits it into page spans. OFF by default:
+ * unset, every prompt and every parse is byte-identical to before. Measured on the Tengyur pilot
+ * only (scripts/eval/experiments/2026-10-03-folio-markers-5678.md); no lane runs with it on.
+ */
+export function folioMarkersEnabled(env = process.env) {
+  return env.TRANSLATE_FOLIO_MARKERS === '1';
+}
+
+export function blockPrompt({ prompts, book, pages, folioMarkers = folioMarkersEnabled() }) {
   if (pages.length === 1) {
-    const { prompt, promptRef, isEnglish } = buildTranslationPrompt({ prompts, book, ocrText: pages[0].ocr.data });
+    const { prompt, promptRef, isEnglish } = buildTranslationPrompt({ prompts, book, ocrText: pages[0].ocr.data, pageBreak: LEAF_BREAK_ONLY });
     return { prompt, promptRef, isEnglish };
   }
-  const { prompt: header, promptRef, isEnglish } = translationPromptHeader({ prompts, book });
-  let prompt = header;
-  const verb = isEnglish ? 'modernize' : 'translate';
-  prompt += `\n\n**IMPORTANT: You will receive ${pages.length} consecutive pages. ${isEnglish ? 'Modernize' : 'Translate'} each one separately. Wrap each translation in XML tags with the page number:**\n`;
-  prompt += `\`\`\`\n${pages.map(p => `<translation page="${p.page_number}">...${verb}d text...</translation>`).join('\n')}\n\`\`\`\n`;
-  prompt += `\n**Pages to ${verb}:**\n`;
-  for (const p of pages) prompt += `\n--- Page ${p.page_number} ---\n${p.ocr.data}\n`;
+  const { prompt, promptRef, isEnglish } = buildBlockTranslationPrompt({ prompts, book, pages, pageBreak: LEAF_BREAK_ONLY, ...(folioMarkers ? { folioMarkers: true } : {}) });
   return { prompt, promptRef, isEnglish };
 }
 
@@ -151,12 +167,23 @@ export function blockPrompt({ prompts, book, pages }) {
  * boundary whose opening clause landed on the previous page drops both its pages. A block of
  * one takes the whole response.
  */
-export function parseBlockResponse(responseText, pages, { onDrift } = {}) {
+export function parseBlockResponse(responseText, pages, { onDrift, folioMarkers = folioMarkersEnabled() } = {}) {
   const out = new Map();
   if (!responseText) return out;
   if (pages.length === 1) {
     const text = sanitizeTranslationTags(String(responseText).trim());
     if (text) out.set(pages[0].page_number, text);
+    return out;
+  }
+  // Folio markers (#5678): each page takes its own span, the markers read by position. A page the
+  // parse could not place is left undrafted (back to the queue), and so is the page before it, whose
+  // span ran on over it: never a neighbour's words. A rejected block leaves every page undrafted.
+  if (folioMarkers) {
+    const parsed = parseFolioMarkedText(responseText, pages.map((p) => p.page_number));
+    const overrun = new Set(parsed.overrun);
+    for (const pg of parsed.pages) {
+      if (pg.span && !overrun.has(pg.page_number)) out.set(pg.page_number, sanitizeTranslationTags(pg.span));
+    }
     return out;
   }
   const tooShort = (p, text) => !!p && (p.ocr?.data || '').length > 100 && text.length < (p.ocr?.data || '').length * 0.15;
@@ -179,6 +206,9 @@ export function parseBlockResponse(responseText, pages, { onDrift } = {}) {
   // undrafted, so they are not written from this block and go back to the queue.
   const { drifted } = dropDriftedPages(pages, out);
   if (drifted.length && onDrift) onDrift(drifted);
+  // A leaf seam the block bridged (#5260): undrafted, back to the queue, same as a drift.
+  const { breached } = dropLeafSeamBreaches(pages, out);
+  if (breached.length && onDrift) onDrift(breached.map((b) => ({ prev: b.page, next: b.page, kind: 'leaf-seam', fragment: `${b.ocr} seam(s) in source, ${b.tr} in translation` })));
   return out;
 }
 
@@ -348,10 +378,18 @@ export function estimateRunUsd({ prompts, book, blocks, model }) {
  * The pages the realtime worker would translate for this book, in order: the canonical
  * translatable filter, no translation yet, not health-blocked, and every page re-checked
  * with isTranslatablePage (blank-from-OCR, empty body, looping source #4850).
+ *
+ * Page-level targeting (opt-in, both default off so the gap-fill and the #5309 driver are
+ * unchanged): `pageIds` narrows the queue to those pages; `excludeWithheld` skips pages carrying
+ * `translation_withheld` — a repair lane (#5309, #4523) owns those, and a finish pass that
+ * translated them would race it. The #5309 driver deliberately translates withheld pages, which
+ * is why this is not the default.
  */
-export async function selectPages(db, bookId, { limit = MAX_PAGES_PER_RUN } = {}) {
+export async function selectPages(db, bookId, { limit = MAX_PAGES_PER_RUN, pageIds = null, excludeWithheld = false } = {}) {
   const docs = await db.collection('pages').find({
     book_id: bookId,
+    ...(pageIds ? { id: { $in: [...pageIds] } } : {}),
+    ...(excludeWithheld ? { translation_withheld: { $exists: false } } : {}),
     ...translatablePageFilter(),
     'translation.health_blocked': { $exists: false },
     $or: [
@@ -366,6 +404,8 @@ export async function selectPages(db, bookId, { limit = MAX_PAGES_PER_RUN } = {}
   for (const p of docs) {
     const v = isTranslatablePage(p);
     if (!v.ok) { excluded[v.reason] = (excluded[v.reason] || 0) + 1; continue; }
+    // #5154: an English page is never sent to be "translated" into English
+    if (sameLanguageReason({ page: p })) { excluded.same_language = (excluded.same_language || 0) + 1; continue; }
     pages.push(p);
     if (pages.length >= limit) break;
   }
@@ -432,15 +472,20 @@ function meterComplete(deps, db, { run, jobName, pageCount, kind, responses, sta
  * Plan a run for one book without touching Gemini: the blocks, the seams, the refusals.
  * Returns { ok, reason?, book, pages, blocks, excluded, model }.
  */
-export async function planRun(db, bookId, { limit = MAX_PAGES_PER_RUN } = {}) {
+export async function planRun(db, bookId, { limit = MAX_PAGES_PER_RUN, pageIds = null, excludeWithheld = false, recordRefusal = false } = {}) {
   const book = await db.collection('books').findOne({ id: bookId });
   if (!book) return { ok: false, reason: 'book-not-found' };
   if (isHeld(book)) return { ok: false, reason: `book-held (${book.pipeline_auto.hold.reason})`, book };
+  if (sameLanguageReason({ book })) return { ok: false, reason: 'english-book (not translated, #5154)', book };
+  // #5700: a book in a stratum whose OCR was measured untrusted is not translated until re-read.
+  // A bare plan is read-only; the submit path passes recordRefusal so its refusal is recorded.
+  const trust = await ocrTrustGate(db, book, { lane: 'seam', record: recordRefusal });
+  if (!trust.ok) return { ok: false, reason: trust.reason, book };
   // The realtime lane owns a book in translate_submitted; running both would pay twice.
   if (book.pipeline_auto?.status === 'translate_submitted') return { ok: false, reason: 'realtime-lane-owns-book (pipeline_auto.status=translate_submitted)', book };
   const open = await db.collection(RUNS_COLLECTION).findOne({ book_id: bookId, phase: { $nin: TERMINAL_PHASES } });
   if (open) return { ok: false, reason: `open-run ${open.id} (${open.phase})`, book };
-  const { pages, excluded } = await selectPages(db, bookId, { limit });
+  const { pages, excluded } = await selectPages(db, bookId, { limit, pageIds, excludeWithheld });
   if (pages.length === 0) return { ok: false, reason: 'nothing-to-translate', book, excluded };
   const blocks = planBlocks(pages);
   return { ok: true, book, pages, blocks, excluded, model: getTranslateModelForBook(book) };
@@ -453,7 +498,7 @@ export async function planRun(db, bookId, { limit = MAX_PAGES_PER_RUN } = {}) {
  */
 export async function startRun(db, bookId, deps, { prompts, approvedUsd, shadow = false, limit } = {}) {
   const log = deps.log || console.log;
-  const plan = await planRun(db, bookId, { limit });
+  const plan = await planRun(db, bookId, { limit, recordRefusal: true });
   if (!plan.ok) return plan;
   const { book, blocks, model } = plan;
   const estimate = estimateRunUsd({ prompts, book, blocks, model });
@@ -668,6 +713,7 @@ export async function writeRun(db, run, deps) {
       if (contentHash(page.ocr?.data || '') !== ref.ocr_hash) { counts.ocr_changed++; continue; }
       if (page.translation?.data) { counts.already_translated++; continue; }
       if (!isTranslatablePage(page).ok) { counts.not_translatable++; continue; }
+      if (sameLanguageReason({ book, page })) { counts.same_language = (counts.same_language || 0) + 1; continue; }
 
       let text = draft;
       if (seamIds.has(ref.id)) {

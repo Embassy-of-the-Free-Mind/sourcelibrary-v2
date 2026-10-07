@@ -30,7 +30,9 @@
  *   MERGE_READY  mergeable, checks green, not a draft — the pile to review first
  *   SUPERSEDED   every changed file already matches main; likely close, not merge
  *   NEEDS_WORK   a blocking review or a `blocked` label — do not merge yet
- *   CONFLICTING  needs a rebase before anything else can happen
+ *   CONFLICTING  needs a rebase before anything else can happen — read from the
+ *                `needs-rebase` label (pr-needs-rebase.yml, #5415); the row lists
+ *                the files that collided, from that workflow's comment
  *   CHECKS_RED   a required check is failing (note: Vercel's FIRST result is
  *                unreliable here — see CLAUDE.md; this reads `test` and `DCO`)
  *   DRAFT        author has not marked it ready
@@ -61,6 +63,20 @@ const sh = (cmd) => {
 // (the deployment is often still Building when GitHub reports it), so treating
 // it as blocking would misclassify healthy PRs. See CLAUDE.md, PR Conventions.
 const GATING_CHECKS = new Set(['test', 'DCO']);
+const NEEDS_REBASE = 'needs-rebase';
+const NEEDS_REBASE_MARKER = '<!-- pr-needs-rebase -->';
+
+/**
+ * The files that collided, as pr-needs-rebase.mjs wrote them into its one
+ * comment ("- `path` — #NNNN, #MMMM"). Only fetched for CONFLICTING rows.
+ */
+function overlapFromComment(number) {
+  const raw = sh(`gh pr view ${number} --json comments`);
+  if (!raw.trim()) return [];
+  const c = (JSON.parse(raw).comments || []).reverse().find((x) => (x.body || '').includes(NEEDS_REBASE_MARKER));
+  if (!c) return [];
+  return [...c.body.matchAll(/^- `([^`]+)`(?: — (.+))?$/gm)].map((m) => ({ file: m[1], merges: m[2] || '' }));
+}
 
 function loadPRs() {
   const raw = sh('gh pr list --state open --limit 200 --json number,title,createdAt,updatedAt,isDraft,mergeable,mergeStateStatus,headRefName,author,labels,statusCheckRollup,reviewDecision');
@@ -83,6 +99,10 @@ function loadPRs() {
  * rather than blocking forever.
  */
 function resolveMergeable(pr, { attempts = 3, waitMs = 1500 } = {}) {
+  // `needs-rebase` is applied by pr-needs-rebase.yml within the hour of the merge
+  // that caused the conflict (#5415) and removed when the PR merges clean, so the
+  // label is the durable answer and saves the per-PR GraphQL wait.
+  if ((pr.labels || []).some((l) => l.name === NEEDS_REBASE)) return { ...pr, mergeable: 'CONFLICTING' };
   if (pr.mergeable !== 'UNKNOWN') return pr;
   for (let i = 0; i < attempts; i++) {
     const raw = sh(`gh pr view ${pr.number} --json mergeable,mergeStateStatus`);
@@ -162,6 +182,7 @@ function main() {
       state: classify(pr, superseded),
       failing: gatingFailures(pr).map((c) => c.name),
       labels: (pr.labels || []).map((l) => l.name),
+      overlap: pr.mergeable === 'CONFLICTING' ? overlapFromComment(pr.number) : [],
     };
   });
 
@@ -183,6 +204,7 @@ function main() {
     console.log(`\n${state}`);
     for (const r of group) {
       const flags = [
+        r.labels.includes('tier:auto') ? 'tier:auto (auto-merge.yml will merge when green)' : r.labels.includes('tier:hold') ? 'tier:hold (Derek merges)' : 'untiered',
         `${r.ageDays}d old`,
         r.idleDays !== r.ageDays ? `${r.idleDays}d idle` : null,
         r.failing.length ? `failing: ${r.failing.join(',')}` : null,
@@ -190,6 +212,7 @@ function main() {
       ].filter(Boolean).join(', ');
       console.log(`  #${r.number}  ${r.title.slice(0, 62)}`);
       console.log(`      ${flags}  [${r.branch}]`);
+      for (const o of r.overlap.slice(0, 6)) console.log(`      collides: ${o.file}${o.merges ? '  (' + o.merges + ')' : ''}`);
     }
   }
 

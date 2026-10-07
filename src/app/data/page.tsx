@@ -49,6 +49,11 @@ function formatNumber(n: number): string {
   return n.toLocaleString('en-US');
 }
 
+/** A figure the fallback cannot supply is `null` and renders as a dash, never as 0. */
+function formatFigure(n: number | null | undefined): string {
+  return n == null ? '—' : formatNumber(n);
+}
+
 function pct(part: number, whole: number): string {
   if (whole === 0) return '0%';
   return `${((part / whole) * 100).toFixed(1)}%`;
@@ -73,7 +78,7 @@ interface LibraryData {
   totalBooks: number;
   totalPages: number;
   totalTranslated: number;
-  totalIllustrations: number;
+  totalIllustrations: number | null;
   firstTranslations: number;
   languages: Array<{ language: string; count: number }>;
   centuries: Array<{ century: number; label: string; count: number }>;
@@ -85,19 +90,22 @@ interface LibraryData {
   pipelineStatuses?: Array<{ status: string; count: number }>;
   hasSummary?: number;
   hasIndex?: number;
-  hasChapters?: number;
-  hasSourceDates?: number;
-  hasEditions?: number;
+  hasChapters?: number | null;
+  hasSourceDates?: number | null;
+  hasEditions?: number | null;
   ocrTiers?: Array<{ tier: string; count: number }>;
   translationTiers?: Array<{ tier: string; count: number }>;
-  emptyShells?: number;
+  emptyShells?: number | null;
+  /** Set by the fallbacks: data_page_snapshot was missing, so some figures are unknown (null). */
+  snapshotMissing?: boolean;
 }
 
 const EMPTY_DATA: LibraryData = {
   totalBooks: 0, totalPages: 0, totalTranslated: 0,
-  totalIllustrations: 0, firstTranslations: 0,
+  totalIllustrations: null, firstTranslations: 0,
   languages: [], centuries: [], categories: [],
   providers: [], collections: [],
+  snapshotMissing: true,
 };
 
 /**
@@ -124,15 +132,16 @@ async function fetchLibraryData(): Promise<LibraryData> {
       totalPages: d.canon?.total_pages ?? 0,
       totalOcr: d.coverage?.ocr_pages ?? 0,
       totalTranslated: d.coverage?.translated_pages ?? 0,
-      totalIllustrations: 0,
+      // dashboard_snapshot does not carry these: unknown, not zero.
+      totalIllustrations: null,
       firstTranslations: d.canon?.first_translations ?? 0,
       hiddenCount: d.invisible?.total_books ?? 0,
       hasSummary: d.enrichment?.with_summary ?? 0,
       hasIndex: d.enrichment?.with_index ?? 0,
-      hasChapters: 0,
-      hasSourceDates: 0,
-      hasEditions: 0,
-      emptyShells: 0,
+      hasChapters: null,
+      hasSourceDates: null,
+      hasEditions: null,
+      emptyShells: null,
       languages: [],
       centuries: [],
       categories: [],
@@ -141,6 +150,7 @@ async function fetchLibraryData(): Promise<LibraryData> {
       pipelineStatuses: [],
       ocrTiers: [],
       translationTiers: [],
+      snapshotMissing: true,
     };
   }
 
@@ -181,7 +191,7 @@ export default async function DataPage({
         { value: formatNumber(data.totalPages), label: 'Total pages' },
         { value: formatNumber(data.totalOcr ?? 0), label: 'Pages with OCR', sub: pct(data.totalOcr ?? 0, data.totalPages) },
         { value: formatNumber(data.totalTranslated), label: 'Pages translated', sub: pct(data.totalTranslated, data.totalPages) },
-        { value: formatNumber(data.totalIllustrations), label: 'Illustrations catalogued' },
+        { value: formatFigure(data.totalIllustrations), label: 'Illustrations catalogued' },
         { value: formatNumber(data.firstTranslations), label: 'First-ever translations' },
       ]
     : [
@@ -189,7 +199,7 @@ export default async function DataPage({
         { value: formatNumber(data.totalPages), label: 'Digitised pages' },
         { value: formatNumber(data.totalTranslated), label: 'Pages translated' },
         { value: String(uniqueLanguages), label: 'Languages' },
-        { value: formatNumber(data.totalIllustrations), label: 'Illustrations catalogued' },
+        { value: formatFigure(data.totalIllustrations), label: 'Illustrations catalogued' },
         { value: formatNumber(data.firstTranslations), label: 'First-ever translations' },
       ];
 
@@ -228,6 +238,11 @@ export default async function DataPage({
             </div>
           ))}
         </div>
+        {data.snapshotMissing && (
+          <p className="text-faint text-sm mt-4">
+            The collection snapshot is missing right now, so figures marked “—” are unknown until it is rebuilt.
+          </p>
+        )}
       </section>
 
       {/* ── Pipeline Status (admin only) ── */}
@@ -271,9 +286,9 @@ export default async function DataPage({
               {[
                 { label: 'Reading summary', count: data.hasSummary ?? 0 },
                 { label: 'AI index', count: data.hasIndex ?? 0 },
-                { label: 'Chapters', count: data.hasChapters ?? 0 },
-                { label: 'Original source dates', count: data.hasSourceDates ?? 0 },
-                { label: 'Published editions', count: data.hasEditions ?? 0 },
+                { label: 'Chapters', count: data.hasChapters },
+                { label: 'Original source dates', count: data.hasSourceDates },
+                { label: 'Published editions', count: data.hasEditions },
               ].map((e) => (
                 <div
                   key={e.label}
@@ -281,7 +296,7 @@ export default async function DataPage({
                 >
                   <span className="text-sm text-secondary">{e.label}</span>
                   <span className="text-sm font-medium tabular-nums">
-                    {formatNumber(e.count)}{' '}
+                    {formatFigure(e.count)}{' '}
                     <span className="text-faint">/ {formatNumber(data.totalBooks)}</span>
                   </span>
                 </div>

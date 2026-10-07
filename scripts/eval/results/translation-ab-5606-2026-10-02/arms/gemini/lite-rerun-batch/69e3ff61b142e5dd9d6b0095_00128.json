@@ -1,0 +1,21 @@
+{
+ "id": "69e3ff61b142e5dd9d6b0095_00128",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page: Verse 8 concludes a sequence of praise, and verse 5 begins a new section where Radha addresses the moon.</meta>\n\nCanto 7] Provided with the <term>Rasikapriya</term> <gloss>a commentary on the aesthetic flavor</gloss> and <term>Rasamanjari</term> <gloss>a collection of aesthetic essence</gloss> commentaries 103\n\nMay the play of Hari, sung by Sri Jayadeva,\nCause the impurities of the <term>Kali Yuga</term> <gloss>the current age of darkness</gloss> to be pacified. (8)\nThis moon, mirroring the luster of Murari’s <note>original: \"Murari\" is a name for Krishna, meaning \"Enemy of the demon Mura\"</note> lotus-like face, pale from separation, even while suppressing pain,\nDeeply expands the suffering of love in the heart, for it is a close friend of the Love-god. (5)\n\n<note>The commentator notes the <term>rati</term> <gloss>love-play</gloss> within this context is characterized by the <term>dhira</term> <gloss>steady/composed</gloss> heroine. Regarding verse 8: This composition by Sri Jayadeva, detailing the reverse-love play, should destroy the sins of the <term>Kali</term> age. Regarding the <term>Sangitaraja</term> <gloss>King of Musicology</gloss>: Where the <term>Sri Raga</term> <gloss>a musical mode</gloss> is the melody and the beat is rapid, where the attributes of Vasudeva are described along with the actions of love, where the arrangement of the words and the melody are precise, such a work is known as a <term>prabandha</term> <gloss>literary composition</gloss>. The verse is identified as the fourteenth composition, titled <term>Harimitachampaka-shekhara</term>.</note>\n\nNow, Radha, afflicted by separation, addresses the moon—<term>Viraha</term> <gloss>separation</gloss>, etc. \n\"O friend, this moon expands the excessive suffering of love in my heart. It is the close companion of <term>Manobhava</term> <gloss>the Love-god/Kamadeva</gloss>. It reflects the luster of Murari’s lotus-face, which became pale due to separation. Thus, even while concealing the pain, it brings about suffering. The implication is: even if its appearance, resembling the face of my beloved, momentarily destroys my pain, its nature as a friend of desire only increases it. I cannot remain, knowing him to be elsewhere.\"\n\n<note>Regarding verse 8: The sports of Hari, as sung by Jayadeva, shall eliminate the sins of the listeners and readers of the <term>Kali</term> age. Regarding verse 5: 'O' is an expression of lamentation. The moon expands the <term>madanavyatha</term> <gloss>suffering of love</gloss>. It is described as pale because of the separation from the lotus-face of Krishna. The sight of the moon, which reminds one of Krishna's face, creates excessive suffering. Why does it cause harm? Because it is the friend of the Love-god. Because I did not follow Krishna when he was near, the Love-god has become my enemy by order of my disobedience. The moon, wishing to assist the Love-god, inflicts this pain. As the moon is born from the mind, and the Love-god is also 'mind-born', they are brotherly in their alliance. The <term>Shruti</term> <gloss>Vedic scripture</gloss> states: 'The moon was born from the mind.' The term <term>vedana</term> refers here to the pain of knowledge and sorrow.</note>\n\n<note>A small symbol representing the Google logo is present on the page.</note>\n\n<summary>This page contains verse 8 of the Gita Govinda and the beginning of verse 5 from the next section, accompanied by Sanskrit commentaries that analyze the aesthetic themes of divine separation and the influence of the moon on the lover's anguish.</summary>\n<keywords>Gita Govinda, Jayadeva, Radha, Krishna, Sanskrit, Rasa-manjari, Rasikapriya, commentary, poetry, Indian philosophy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2899,
+ "outputTokens": 941,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.001068125,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2716,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

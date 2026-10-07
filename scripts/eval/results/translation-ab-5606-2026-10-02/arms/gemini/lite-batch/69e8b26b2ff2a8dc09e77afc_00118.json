@@ -1,0 +1,21 @@
+{
+ "id": "69e8b26b2ff2a8dc09e77afc_00118",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "荀子 正論\n\nIn ancient times, the Son of Heaven had a thousand officials, and the feudal lords had a hundred officials. Because of these thousand officials, orders were carried out throughout the states of the Middle Kingdom; such a ruler was called a King. Because of these hundred officials, orders were carried out within their own borders; even if a state was not secure, it did not reach the point of collapse, being replaced, or perishing <note>original note: 遂 (sui) is read as 墜 (zhui), meaning to let one's enterprise fall.</note>, and such a ruler was called a Lord. This is the case after the descendants of the Sage Kings have possessed the world and hold the registers of the state, serving as the ancestral house of the world. However, if they are untalented and not centered <note>original note: 不中 (bu zhong) means not centered or upright.</note>, then internally the hundred surnames will suffer, and externally the feudal lords will rebel. Those near them within their borders will not be unified, and those far away, the feudal lords, will not listen. Their orders will not be carried out within their own borders; in extreme cases, the feudal lords will encroach upon them, diminish their territory, and attack them. If things reach this state, even if they have not yet perished, I say they have lost the world. \n\nWhen the Sage Kings have passed away and those who hold the registers are weak and unable to secure <note>original note: 罷 (pi) is read as weak and unable to handle affairs; 縣 (xuan) means to secure or fasten.</note> the world, the world has no lord. If among the feudal lords there is one whose virtue is clear and whose prestige has accumulated, the people within the seas will all wish for him to be their lord and teacher. If there is a tyrannical state that is uniquely extravagant and unrestrained, how then can one not punish it <note>original note: 暴國 (bao guo) refers to states like those of Jie and Zhou; 獨侈 (du chi) refers to being unrestrained; 安 (an) is similar to \"then\".</note>? One must not harm the innocent people, but punish the ruler of the tyrannical state as if punishing a solitary fellow <note>original note: 獨夫 (du fu) refers to a person whom the whole world refuses to help, as if he were a man standing alone.</note>. If one can do this, it can be said that one is able to use the world. Being able to use the world is what is called being a King. \n\nTang and Wu did not seize the world; they cultivated their Way, practiced their righteousness, shared the common benefits of the world, and eliminated the common harms of the world, and so the world returned to them <note>original note: This implies the world gave its allegiance of its own accord.</note>. Jie and Zhou did not cast away the world; they turned against the virtues of Yu and Tang, threw the distinctions of ritual and righteousness into chaos, behaved like beasts, accumulated their evils, and exhausted those beneath them.\n\n<summary>This passage defines the distinction between a true King and a mere Lord, arguing that legitimacy is based on virtue and the welfare of the people rather than inherited position alone. It concludes by contrasting the righteous success of Tang and Wu with the self-destructive tyranny of Jie and Zhou.</summary>\n<keywords>Xunzi, Correct Argument, Kingly Way, Tang and Wu, Jie and Zhou, Ritual and Righteousness</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2236,
+ "outputTokens": 751,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.0008427500000000001,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 576,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

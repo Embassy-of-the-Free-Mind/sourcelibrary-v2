@@ -1,0 +1,4732 @@
+{
+ "family": "F2",
+ "judged": {
+  "J1": 63,
+  "J2": 63
+ },
+ "items": 63,
+ "controls": {
+  "DUP-J1": {
+   "n": 5,
+   "tied": 5,
+   "same_grade": 5
+  },
+  "DUP-J2": {
+   "n": 5,
+   "tied": 5,
+   "same_grade": 5
+  },
+  "NEG-J1": {
+   "n": 5,
+   "fake_le2": 5
+  },
+  "NEG-J2": {
+   "n": 5,
+   "fake_le2": 5
+  },
+  "PLANT-J1": {
+   "n": 5,
+   "inversion_flagged": 4,
+   "ranked_below": 4,
+   "caught": 4
+  },
+  "PLANT-J2": {
+   "n": 5,
+   "inversion_flagged": 5,
+   "ranked_below": 5,
+   "caught": 5
+  }
+ },
+ "arms": {
+  "B": {
+   "stats": {
+    "n": 48,
+    "fidelity_median": 4.0,
+    "fidelity_mean": 4.26,
+    "ge4": 44,
+    "ge4_share": 0.917,
+    "ge4_ci": [
+     0.804,
+     0.967
+    ],
+    "inversion_pages_either": 2,
+    "inversion_pages_both": 2,
+    "inversions_per_100_either": 4.2,
+    "inversions_per_100_both": 4.2,
+    "omission_judgements": 9,
+    "omission_share": 0.094,
+    "inventions_by_type": {
+     "boundary": 2,
+     "added_fact": 6,
+     "unreadable_fill": 1,
+     "gloss": 17
+    },
+    "span_bad_judgements": 1,
+    "span_share": 0.01,
+    "span_by_type": {
+     "runs_over": 1
+    }
+   },
+   "B_same_pages": null,
+   "vs_B": null,
+   "by_text": {
+    "small texts": {
+     "arm": {
+      "n": 8,
+      "fidelity_median": 4.75,
+      "fidelity_mean": 4.562,
+      "ge4": 8,
+      "ge4_share": 1.0,
+      "ge4_ci": [
+       0.676,
+       1.0
+      ],
+      "inversion_pages_either": 0,
+      "inversion_pages_both": 0,
+      "inversions_per_100_either": 0.0,
+      "inversions_per_100_both": 0.0,
+      "omission_judgements": 0,
+      "omission_share": 0.0,
+      "inventions_by_type": {
+       "gloss": 2,
+       "added_fact": 1,
+       "boundary": 1
+      },
+      "span_bad_judgements": 1,
+      "span_share": 0.062,
+      "span_by_type": {
+       "runs_over": 1
+      }
+     },
+     "B": {
+      "n": 8,
+      "fidelity_median": 4.75,
+      "fidelity_mean": 4.562,
+      "ge4": 8,
+      "ge4_share": 1.0,
+      "ge4_ci": [
+       0.676,
+       1.0
+      ],
+      "inversion_pages_either": 0,
+      "inversion_pages_both": 0,
+      "inversions_per_100_either": 0.0,
+      "inversions_per_100_both": 0.0,
+      "omission_judgements": 0,
+      "omission_share": 0.0,
+      "inventions_by_type": {
+       "gloss": 2,
+       "added_fact": 1,
+       "boundary": 1
+      },
+      "span_bad_judgements": 1,
+      "span_share": 0.062,
+      "span_by_type": {
+       "runs_over": 1
+      }
+     },
+     "vs_B": null
+    },
+    "toh1183": {
+     "arm": {
+      "n": 9,
+      "fidelity_median": 4,
+      "fidelity_mean": 4.278,
+      "ge4": 9,
+      "ge4_share": 1.0,
+      "ge4_ci": [
+       0.701,
+       1.0
+      ],
+      "inversion_pages_either": 0,
+      "inversion_pages_both": 0,
+      "inversions_per_100_either": 0.0,
+      "inversions_per_100_both": 0.0,
+      "omission_judgements": 2,
+      "omission_share": 0.111,
+      "inventions_by_type": {
+       "boundary": 1,
+       "added_fact": 2,
+       "unreadable_fill": 1,
+       "gloss": 1
+      },
+      "span_bad_judgements": 0,
+      "span_share": 0.0,
+      "span_by_type": {}
+     },
+     "B": {
+      "n": 9,
+      "fidelity_median": 4,
+      "fidelity_mean": 4.278,
+      "ge4": 9,
+      "ge4_share": 1.0,
+      "ge4_ci": [
+       0.701,
+       1.0
+      ],
+      "inversion_pages_either": 0,
+      "inversion_pages_both": 0,
+      "inversions_per_100_either": 0.0,
+      "inversions_per_100_both": 0.0,
+      "omission_judgements": 2,
+      "omission_share": 0.111,
+      "inventions_by_type": {
+       "boundary": 1,
+       "added_fact": 2,
+       "unreadable_fill": 1,
+       "gloss": 1
+      },
+      "span_bad_judgements": 0,
+      "span_share": 0.0,
+      "span_by_type": {}
+     },
+     "vs_B": null
+    },
+    "toh1189": {
+     "arm": {
+      "n": 10,
+      "fidelity_median": 4.0,
+      "fidelity_mean": 3.95,
+      "ge4": 7,
+      "ge4_share": 0.7,
+      "ge4_ci": [
+       0.397,
+       0.892
+      ],
+      "inversion_pages_either": 0,
+      "inversion_pages_both": 0,
+      "inversions_per_100_either": 0.0,
+      "inversions_per_100_both": 0.0,
+      "omission_judgements": 2,
+      "omission_share": 0.1,
+      "inventions_by_type": {
+       "gloss": 9,
+       "added_fact": 3
+      },
+      "span_bad_judgements": 0,
+      "span_share": 0.0,
+      "span_by_type": {}
+     },
+     "B": {
+      "n": 10,
+      "fidelity_median": 4.0,
+      "fidelity_mean": 3.95,
+      "ge4": 7,
+      "ge4_share": 0.7,
+      "ge4_ci": [
+       0.397,
+       0.892
+      ],
+      "inversion_pages_either": 0,
+      "inversion_pages_both": 0,
+      "inversions_per_100_either": 0.0,
+      "inversions_per_100_both": 0.0,
+      "omission_judgements": 2,
+      "omission_share": 0.1,
+      "inventions_by_type": {
+       "gloss": 9,
+       "added_fact": 3
+      },
+      "span_bad_judgements": 0,
+      "span_share": 0.0,
+      "span_by_type": {}
+     },
+     "vs_B": null
+    },
+    "toh3808": {
+     "arm": {
+      "n": 21,
+      "fidelity_median": 4,
+      "fidelity_mean": 4.286,
+      "ge4": 20,
+      "ge4_share": 0.952,
+      "ge4_ci": [
+       0.773,
+       0.992
+      ],
+      "inversion_pages_either": 2,
+      "inversion_pages_both": 2,
+      "inversions_per_100_either": 9.5,
+      "inversions_per_100_both": 9.5,
+      "omission_judgements": 5,
+      "omission_share": 0.119,
+      "inventions_by_type": {
+       "gloss": 5
+      },
+      "span_bad_judgements": 0,
+      "span_share": 0.0,
+      "span_by_type": {}
+     },
+     "B": {
+      "n": 21,
+      "fidelity_median": 4,
+      "fidelity_mean": 4.286,
+      "ge4": 20,
+      "ge4_share": 0.952,
+      "ge4_ci": [
+       0.773,
+       0.992
+      ],
+      "inversion_pages_either": 2,
+      "inversion_pages_both": 2,
+      "inversions_per_100_either": 9.5,
+      "inversions_per_100_both": 9.5,
+      "omission_judgements": 5,
+      "omission_share": 0.119,
+      "inventions_by_type": {
+       "gloss": 5
+      },
+      "span_bad_judgements": 0,
+      "span_share": 0.0,
+      "span_by_type": {}
+     },
+     "vs_B": null
+    }
+   }
+  },
+  "C": {
+   "stats": {
+    "n": 6,
+    "fidelity_median": 4.5,
+    "fidelity_mean": 4.5,
+    "ge4": 6,
+    "ge4_share": 1.0,
+    "ge4_ci": [
+     0.61,
+     1.0
+    ],
+    "inversion_pages_either": 0,
+    "inversion_pages_both": 0,
+    "inversions_per_100_either": 0.0,
+    "inversions_per_100_both": 0.0,
+    "omission_judgements": 2,
+    "omission_share": 0.167,
+    "inventions_by_type": {
+     "gloss": 1,
+     "boundary": 1
+    },
+    "span_bad_judgements": 3,
+    "span_share": 0.25,
+    "span_by_type": {
+     "ends_early": 2,
+     "runs_over": 1
+    }
+   },
+   "B_same_pages": {
+    "n": 6,
+    "fidelity_median": 4.75,
+    "fidelity_mean": 4.583,
+    "ge4": 6,
+    "ge4_share": 1.0,
+    "ge4_ci": [
+     0.61,
+     1.0
+    ],
+    "inversion_pages_either": 0,
+    "inversion_pages_both": 0,
+    "inversions_per_100_either": 0.0,
+    "inversions_per_100_both": 0.0,
+    "omission_judgements": 0,
+    "omission_share": 0.0,
+    "inventions_by_type": {
+     "gloss": 2,
+     "added_fact": 1,
+     "boundary": 1
+    },
+    "span_bad_judgements": 1,
+    "span_share": 0.083,
+    "span_by_type": {
+     "runs_over": 1
+    }
+   },
+   "vs_B": {
+    "pages": 6,
+    "judgements": {
+     "tie": 8,
+     "B": 2,
+     "C": 2
+    },
+    "net_pref": 0.0,
+    "both_judges": {
+     "tie/B": 2,
+     "tie/C": 2,
+     "tie/tie": 2
+    },
+    "fid_diff_mean": -0.083,
+    "pages_higher": 0,
+    "pages_lower": 1,
+    "sign_test_p": 1.0
+   },
+   "by_text": {
+    "small texts": {
+     "arm": {
+      "n": 6,
+      "fidelity_median": 4.5,
+      "fidelity_mean": 4.5,
+      "ge4": 6,
+      "ge4_share": 1.0,
+      "ge4_ci": [
+       0.61,
+       1.0
+      ],
+      "inversion_pages_either": 0,
+      "inversion_pages_both": 0,
+      "inversions_per_100_either": 0.0,
+      "inversions_per_100_both": 0.0,
+      "omission_judgements": 2,
+      "omission_share": 0.167,
+      "inventions_by_type": {
+       "gloss": 1,
+       "boundary": 1
+      },
+      "span_bad_judgements": 3,
+      "span_share": 0.25,
+      "span_by_type": {
+       "ends_early": 2,
+       "runs_over": 1
+      }
+     },
+     "B": {
+      "n": 6,
+      "fidelity_median": 4.75,
+      "fidelity_mean": 4.583,
+      "ge4": 6,
+      "ge4_share": 1.0,
+      "ge4_ci": [
+       0.61,
+       1.0
+      ],
+      "inversion_pages_either": 0,
+      "inversion_pages_both": 0,
+      "inversions_per_100_either": 0.0,
+      "inversions_per_100_both": 0.0,
+      "omission_judgements": 0,
+      "omission_share": 0.0,
+      "inventions_by_type": {
+       "gloss": 2,
+       "added_fact": 1,
+       "boundary": 1
+      },
+      "span_bad_judgements": 1,
+      "span_share": 0.083,
+      "span_by_type": {
+       "runs_over": 1
+      }
+     },
+     "vs_B": {
+      "pages": 6,
+      "judgements": {
+       "tie": 8,
+       "B": 2,
+       "C": 2
+      },
+      "net_pref": 0.0,
+      "both_judges": {
+       "tie/B": 2,
+       "tie/C": 2,
+       "tie/tie": 2
+      },
+      "fid_diff_mean": -0.083,
+      "pages_higher": 0,
+      "pages_lower": 1,
+      "sign_test_p": 1.0
+     }
+    }
+   }
+  },
+  "E": {
+   "stats": {
+    "n": 48,
+    "fidelity_median": 4.0,
+    "fidelity_mean": 4.292,
+    "ge4": 45,
+    "ge4_share": 0.938,
+    "ge4_ci": [
+     0.832,
+     0.979
+    ],
+    "inversion_pages_either": 2,
+    "inversion_pages_both": 2,
+    "inversions_per_100_either": 4.2,
+    "inversions_per_100_both": 4.2,
+    "omission_judgements": 7,
+    "omission_share": 0.073,
+    "inventions_by_type": {
+     "boundary": 2,
+     "added_fact": 6,
+     "unreadable_fill": 1,
+     "gloss": 17
+    },
+    "span_bad_judgements": 1,
+    "span_share": 0.01,
+    "span_by_type": {
+     "runs_over": 1
+    }
+   },
+   "B_same_pages": {
+    "n": 48,
+    "fidelity_median": 4.0,
+    "fidelity_mean": 4.26,
+    "ge4": 44,
+    "ge4_share": 0.917,
+    "ge4_ci": [
+     0.804,
+     0.967
+    ],
+    "inversion_pages_either": 2,
+    "inversion_pages_both": 2,
+    "inversions_per_100_either": 4.2,
+    "inversions_per_100_both": 4.2,
+    "omission_judgements": 9,
+    "omission_share": 0.094,
+    "inventions_by_type": {
+     "boundary": 2,
+     "added_fact": 6,
+     "unreadable_fill": 1,
+     "gloss": 17
+    },
+    "span_bad_judgements": 1,
+    "span_share": 0.01,
+    "span_by_type": {
+     "runs_over": 1
+    }
+   },
+   "vs_B": {
+    "pages": 48,
+    "judgements": {
+     "tie": 88,
+     "E": 6,
+     "B": 2
+    },
+    "net_pref": 0.042,
+    "both_judges": {
+     "tie/tie": 44,
+     "E/E": 3,
+     "B/B": 1
+    },
+    "fid_diff_mean": 0.031,
+    "pages_higher": 2,
+    "pages_lower": 1,
+    "sign_test_p": 1.0
+   },
+   "by_text": {
+    "small texts": {
+     "arm": {
+      "n": 8,
+      "fidelity_median": 4.75,
+      "fidelity_mean": 4.562,
+      "ge4": 8,
+      "ge4_share": 1.0,
+      "ge4_ci": [
+       0.676,
+       1.0
+      ],
+      "inversion_pages_either": 0,
+      "inversion_pages_both": 0,
+      "inversions_per_100_either": 0.0,
+      "inversions_per_100_both": 0.0,
+      "omission_judgements": 0,
+      "omission_share": 0.0,
+      "inventions_by_type": {
+       "gloss": 2,
+       "added_fact": 1,
+       "boundary": 1
+      },
+      "span_bad_judgements": 1,
+      "span_share": 0.062,
+      "span_by_type": {
+       "runs_over": 1
+      }
+     },
+     "B": {
+      "n": 8,
+      "fidelity_median": 4.75,
+      "fidelity_mean": 4.562,
+      "ge4": 8,
+      "ge4_share": 1.0,
+      "ge4_ci": [
+       0.676,
+       1.0
+      ],
+      "inversion_pages_either": 0,
+      "inversion_pages_both": 0,
+      "inversions_per_100_either": 0.0,
+      "inversions_per_100_both": 0.0,
+      "omission_judgements": 0,
+      "omission_share": 0.0,
+      "inventions_by_type": {
+       "gloss": 2,
+       "added_fact": 1,
+       "boundary": 1
+      },
+      "span_bad_judgements": 1,
+      "span_share": 0.062,
+      "span_by_type": {
+       "runs_over": 1
+      }
+     },
+     "vs_B": {
+      "pages": 8,
+      "judgements": {
+       "tie": 16
+      },
+      "net_pref": 0.0,
+      "both_judges": {
+       "tie/tie": 8
+      },
+      "fid_diff_mean": 0.0,
+      "pages_higher": 0,
+      "pages_lower": 0,
+      "sign_test_p": null
+     }
+    },
+    "toh1183": {
+     "arm": {
+      "n": 9,
+      "fidelity_median": 4,
+      "fidelity_mean": 4.278,
+      "ge4": 9,
+      "ge4_share": 1.0,
+      "ge4_ci": [
+       0.701,
+       1.0
+      ],
+      "inversion_pages_either": 0,
+      "inversion_pages_both": 0,
+      "inversions_per_100_either": 0.0,
+      "inversions_per_100_both": 0.0,
+      "omission_judgements": 0,
+      "omission_share": 0.0,
+      "inventions_by_type": {
+       "boundary": 1,
+       "added_fact": 2,
+       "unreadable_fill": 1,
+       "gloss": 1
+      },
+      "span_bad_judgements": 0,
+      "span_share": 0.0,
+      "span_by_type": {}
+     },
+     "B": {
+      "n": 9,
+      "fidelity_median": 4,
+      "fidelity_mean": 4.278,
+      "ge4": 9,
+      "ge4_share": 1.0,
+      "ge4_ci": [
+       0.701,
+       1.0
+      ],
+      "inversion_pages_either": 0,
+      "inversion_pages_both": 0,
+      "inversions_per_100_either": 0.0,
+      "inversions_per_100_both": 0.0,
+      "omission_judgements": 2,
+      "omission_share": 0.111,
+      "inventions_by_type": {
+       "boundary": 1,
+       "added_fact": 2,
+       "unreadable_fill": 1,
+       "gloss": 1
+      },
+      "span_bad_judgements": 0,
+      "span_share": 0.0,
+      "span_by_type": {}
+     },
+     "vs_B": {
+      "pages": 9,
+      "judgements": {
+       "tie": 16,
+       "E": 2
+      },
+      "net_pref": 0.111,
+      "both_judges": {
+       "tie/tie": 8,
+       "E/E": 1
+      },
+      "fid_diff_mean": 0.0,
+      "pages_higher": 0,
+      "pages_lower": 0,
+      "sign_test_p": null
+     }
+    },
+    "toh1189": {
+     "arm": {
+      "n": 10,
+      "fidelity_median": 4.0,
+      "fidelity_mean": 4.05,
+      "ge4": 8,
+      "ge4_share": 0.8,
+      "ge4_ci": [
+       0.49,
+       0.943
+      ],
+      "inversion_pages_either": 0,
+      "inversion_pages_both": 0,
+      "inversions_per_100_either": 0.0,
+      "inversions_per_100_both": 0.0,
+      "omission_judgements": 2,
+      "omission_share": 0.1,
+      "inventions_by_type": {
+       "gloss": 9,
+       "added_fact": 3
+      },
+      "span_bad_judgements": 0,
+      "span_share": 0.0,
+      "span_by_type": {}
+     },
+     "B": {
+      "n": 10,
+      "fidelity_median": 4.0,
+      "fidelity_mean": 3.95,
+      "ge4": 7,
+      "ge4_share": 0.7,
+      "ge4_ci": [
+       0.397,
+       0.892
+      ],
+      "inversion_pages_either": 0,
+      "inversion_pages_both": 0,
+      "inversions_per_100_either": 0.0,
+      "inversions_per_100_both": 0.0,
+      "omission_judgements": 2,
+      "omission_share": 0.1,
+      "inventions_by_type": {
+       "gloss": 9,
+       "added_fact": 3
+      },
+      "span_bad_judgements": 0,
+      "span_share": 0.0,
+      "span_by_type": {}
+     },
+     "vs_B": {
+      "pages": 10,
+      "judgements": {
+       "tie": 18,
+       "E": 2
+      },
+      "net_pref": 0.1,
+      "both_judges": {
+       "tie/tie": 9,
+       "E/E": 1
+      },
+      "fid_diff_mean": 0.1,
+      "pages_higher": 1,
+      "pages_lower": 0,
+      "sign_test_p": 1.0
+     }
+    },
+    "toh3808": {
+     "arm": {
+      "n": 21,
+      "fidelity_median": 4,
+      "fidelity_mean": 4.31,
+      "ge4": 20,
+      "ge4_share": 0.952,
+      "ge4_ci": [
+       0.773,
+       0.992
+      ],
+      "inversion_pages_either": 2,
+      "inversion_pages_both": 2,
+      "inversions_per_100_either": 9.5,
+      "inversions_per_100_both": 9.5,
+      "omission_judgements": 5,
+      "omission_share": 0.119,
+      "inventions_by_type": {
+       "gloss": 5
+      },
+      "span_bad_judgements": 0,
+      "span_share": 0.0,
+      "span_by_type": {}
+     },
+     "B": {
+      "n": 21,
+      "fidelity_median": 4,
+      "fidelity_mean": 4.286,
+      "ge4": 20,
+      "ge4_share": 0.952,
+      "ge4_ci": [
+       0.773,
+       0.992
+      ],
+      "inversion_pages_either": 2,
+      "inversion_pages_both": 2,
+      "inversions_per_100_either": 9.5,
+      "inversions_per_100_both": 9.5,
+      "omission_judgements": 5,
+      "omission_share": 0.119,
+      "inventions_by_type": {
+       "gloss": 5
+      },
+      "span_bad_judgements": 0,
+      "span_share": 0.0,
+      "span_by_type": {}
+     },
+     "vs_B": {
+      "pages": 21,
+      "judgements": {
+       "tie": 38,
+       "E": 2,
+       "B": 2
+      },
+      "net_pref": 0.0,
+      "both_judges": {
+       "tie/tie": 19,
+       "E/E": 1,
+       "B/B": 1
+      },
+      "fid_diff_mean": 0.024,
+      "pages_higher": 1,
+      "pages_lower": 1,
+      "sign_test_p": 1.0
+     }
+    }
+   }
+  },
+  "X3": {
+   "stats": {
+    "n": 40,
+    "fidelity_median": 5.0,
+    "fidelity_mean": 4.838,
+    "ge4": 39,
+    "ge4_share": 0.975,
+    "ge4_ci": [
+     0.871,
+     0.996
+    ],
+    "inversion_pages_either": 1,
+    "inversion_pages_both": 1,
+    "inversions_per_100_either": 2.5,
+    "inversions_per_100_both": 2.5,
+    "omission_judgements": 0,
+    "omission_share": 0.0,
+    "inventions_by_type": {
+     "gloss": 12,
+     "added_fact": 1
+    },
+    "span_bad_judgements": 0,
+    "span_share": 0.0,
+    "span_by_type": {}
+   },
+   "B_same_pages": {
+    "n": 40,
+    "fidelity_median": 4.0,
+    "fidelity_mean": 4.338,
+    "ge4": 38,
+    "ge4_share": 0.95,
+    "ge4_ci": [
+     0.835,
+     0.986
+    ],
+    "inversion_pages_either": 2,
+    "inversion_pages_both": 2,
+    "inversions_per_100_either": 5.0,
+    "inversions_per_100_both": 5.0,
+    "omission_judgements": 6,
+    "omission_share": 0.075,
+    "inventions_by_type": {
+     "boundary": 1,
+     "added_fact": 6,
+     "unreadable_fill": 1,
+     "gloss": 10
+    },
+    "span_bad_judgements": 0,
+    "span_share": 0.0,
+    "span_by_type": {}
+   },
+   "vs_B": {
+    "pages": 40,
+    "judgements": {
+     "X3": 48,
+     "tie": 25,
+     "B": 7
+    },
+    "net_pref": 0.512,
+    "both_judges": {
+     "X3/X3": 21,
+     "tie/tie": 9,
+     "X3/tie": 2,
+     "tie/B": 2,
+     "tie/X3": 3,
+     "B/B": 2,
+     "B/X3": 1
+    },
+    "fid_diff_mean": 0.5,
+    "pages_higher": 25,
+    "pages_lower": 2,
+    "sign_test_p": 0.0
+   },
+   "by_text": {
+    "small texts": {
+     "arm": {
+      "n": 6,
+      "fidelity_median": 5.0,
+      "fidelity_mean": 4.917,
+      "ge4": 6,
+      "ge4_share": 1.0,
+      "ge4_ci": [
+       0.61,
+       1.0
+      ],
+      "inversion_pages_either": 0,
+      "inversion_pages_both": 0,
+      "inversions_per_100_either": 0.0,
+      "inversions_per_100_both": 0.0,
+      "omission_judgements": 0,
+      "omission_share": 0.0,
+      "inventions_by_type": {
+       "gloss": 3
+      },
+      "span_bad_judgements": 0,
+      "span_share": 0.0,
+      "span_by_type": {}
+     },
+     "B": {
+      "n": 6,
+      "fidelity_median": 4.75,
+      "fidelity_mean": 4.583,
+      "ge4": 6,
+      "ge4_share": 1.0,
+      "ge4_ci": [
+       0.61,
+       1.0
+      ],
+      "inversion_pages_either": 0,
+      "inversion_pages_both": 0,
+      "inversions_per_100_either": 0.0,
+      "inversions_per_100_both": 0.0,
+      "omission_judgements": 0,
+      "omission_share": 0.0,
+      "inventions_by_type": {
+       "added_fact": 1
+      },
+      "span_bad_judgements": 0,
+      "span_share": 0.0,
+      "span_by_type": {}
+     },
+     "vs_B": {
+      "pages": 6,
+      "judgements": {
+       "tie": 5,
+       "X3": 5,
+       "B": 2
+      },
+      "net_pref": 0.25,
+      "both_judges": {
+       "tie/tie": 2,
+       "X3/tie": 1,
+       "B/B": 1,
+       "X3/X3": 2
+      },
+      "fid_diff_mean": 0.333,
+      "pages_higher": 3,
+      "pages_lower": 1,
+      "sign_test_p": 0.625
+     }
+    },
+    "toh1183": {
+     "arm": {
+      "n": 8,
+      "fidelity_median": 5.0,
+      "fidelity_mean": 5,
+      "ge4": 8,
+      "ge4_share": 1.0,
+      "ge4_ci": [
+       0.676,
+       1.0
+      ],
+      "inversion_pages_either": 0,
+      "inversion_pages_both": 0,
+      "inversions_per_100_either": 0.0,
+      "inversions_per_100_both": 0.0,
+      "omission_judgements": 0,
+      "omission_share": 0.0,
+      "inventions_by_type": {},
+      "span_bad_judgements": 0,
+      "span_share": 0.0,
+      "span_by_type": {}
+     },
+     "B": {
+      "n": 8,
+      "fidelity_median": 4.0,
+      "fidelity_mean": 4.312,
+      "ge4": 8,
+      "ge4_share": 1.0,
+      "ge4_ci": [
+       0.676,
+       1.0
+      ],
+      "inversion_pages_either": 0,
+      "inversion_pages_both": 0,
+      "inversions_per_100_either": 0.0,
+      "inversions_per_100_both": 0.0,
+      "omission_judgements": 0,
+      "omission_share": 0.0,
+      "inventions_by_type": {
+       "boundary": 1,
+       "added_fact": 2,
+       "unreadable_fill": 1,
+       "gloss": 1
+      },
+      "span_bad_judgements": 0,
+      "span_share": 0.0,
+      "span_by_type": {}
+     },
+     "vs_B": {
+      "pages": 8,
+      "judgements": {
+       "X3": 11,
+       "tie": 5
+      },
+      "net_pref": 0.688,
+      "both_judges": {
+       "X3/X3": 5,
+       "tie/tie": 2,
+       "X3/tie": 1
+      },
+      "fid_diff_mean": 0.688,
+      "pages_higher": 6,
+      "pages_lower": 0,
+      "sign_test_p": 0.0312
+     }
+    },
+    "toh1189": {
+     "arm": {
+      "n": 8,
+      "fidelity_median": 4.75,
+      "fidelity_mean": 4.625,
+      "ge4": 8,
+      "ge4_share": 1.0,
+      "ge4_ci": [
+       0.676,
+       1.0
+      ],
+      "inversion_pages_either": 0,
+      "inversion_pages_both": 0,
+      "inversions_per_100_either": 0.0,
+      "inversions_per_100_both": 0.0,
+      "omission_judgements": 0,
+      "omission_share": 0.0,
+      "inventions_by_type": {
+       "gloss": 2
+      },
+      "span_bad_judgements": 0,
+      "span_share": 0.0,
+      "span_by_type": {}
+     },
+     "B": {
+      "n": 8,
+      "fidelity_median": 4.0,
+      "fidelity_mean": 4.188,
+      "ge4": 7,
+      "ge4_share": 0.875,
+      "ge4_ci": [
+       0.529,
+       0.978
+      ],
+      "inversion_pages_either": 0,
+      "inversion_pages_both": 0,
+      "inversions_per_100_either": 0.0,
+      "inversions_per_100_both": 0.0,
+      "omission_judgements": 2,
+      "omission_share": 0.125,
+      "inventions_by_type": {
+       "gloss": 6,
+       "added_fact": 3
+      },
+      "span_bad_judgements": 0,
+      "span_share": 0.0,
+      "span_by_type": {}
+     },
+     "vs_B": {
+      "pages": 8,
+      "judgements": {
+       "X3": 10,
+       "tie": 6
+      },
+      "net_pref": 0.625,
+      "both_judges": {
+       "X3/X3": 5,
+       "tie/tie": 3
+      },
+      "fid_diff_mean": 0.438,
+      "pages_higher": 4,
+      "pages_lower": 0,
+      "sign_test_p": 0.125
+     }
+    },
+    "toh3808": {
+     "arm": {
+      "n": 18,
+      "fidelity_median": 5.0,
+      "fidelity_mean": 4.833,
+      "ge4": 17,
+      "ge4_share": 0.944,
+      "ge4_ci": [
+       0.742,
+       0.99
+      ],
+      "inversion_pages_either": 1,
+      "inversion_pages_both": 1,
+      "inversions_per_100_either": 5.6,
+      "inversions_per_100_both": 5.6,
+      "omission_judgements": 0,
+      "omission_share": 0.0,
+      "inventions_by_type": {
+       "gloss": 7,
+       "added_fact": 1
+      },
+      "span_bad_judgements": 0,
+      "span_share": 0.0,
+      "span_by_type": {}
+     },
+     "B": {
+      "n": 18,
+      "fidelity_median": 4.25,
+      "fidelity_mean": 4.333,
+      "ge4": 17,
+      "ge4_share": 0.944,
+      "ge4_ci": [
+       0.742,
+       0.99
+      ],
+      "inversion_pages_either": 2,
+      "inversion_pages_both": 2,
+      "inversions_per_100_either": 11.1,
+      "inversions_per_100_both": 11.1,
+      "omission_judgements": 4,
+      "omission_share": 0.111,
+      "inventions_by_type": {
+       "gloss": 3
+      },
+      "span_bad_judgements": 0,
+      "span_share": 0.0,
+      "span_by_type": {}
+     },
+     "vs_B": {
+      "pages": 18,
+      "judgements": {
+       "tie": 9,
+       "B": 5,
+       "X3": 22
+      },
+      "net_pref": 0.472,
+      "both_judges": {
+       "tie/tie": 2,
+       "tie/B": 2,
+       "X3/X3": 9,
+       "tie/X3": 3,
+       "B/B": 1,
+       "B/X3": 1
+      },
+      "fid_diff_mean": 0.5,
+      "pages_higher": 12,
+      "pages_lower": 1,
+      "sign_test_p": 0.0034
+     }
+    }
+   }
+  }
+ },
+ "judge_agreement": {
+  "B": {
+   "exact": 39,
+   "within1": 48,
+   "n": 48
+  },
+  "C": {
+   "exact": 6,
+   "within1": 6,
+   "n": 6
+  },
+  "E": {
+   "exact": 5,
+   "within1": 7,
+   "n": 7
+  },
+  "X3": {
+   "exact": 35,
+   "within1": 40,
+   "n": 40
+  }
+ },
+ "inversion_list": [
+  {
+   "id": "F2-024",
+   "toh": "toh3808",
+   "folio": "100a",
+   "vol": 93,
+   "page_number": 198,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arm": "B",
+   "judges": 2,
+   "quotes": [
+    {
+     "candidate": "the Blessed One taught the following to show the faults of abiding: Furthermore, when a bodhisattva mahasattva practices",
+     "tibetan": "བཅོམ་ལྡན་འདས་གཞན་ཡང་བྱང་ཆུབ་སེམས་དཔའ་སེམས་དཔའ་ཆེན་པོ",
+     "reference": "Furthermore, Lord, when bodhisattva great beings practicing",
+     "why": "wrong speaker: the sutra line is addressed to the Lord (vocative), T1 makes the Blessed One its speaker"
+    },
+    {
+     "candidate": "Regarding this, the Blessed One said: In this way, form is without any grasping.",
+     "tibetan": "བཅོམ་ལྡན་འདས་འདི་ལྟར་གཟུགས་ནི་ཡོངས་སུ་གཟུང་བ་མ་མཆིས",
+     "reference": "it says, It is because, Lord, form is not fully grasped",
+     "why": "wrong speaker again: vocative 'Lord' turned into the Blessed One speaking"
+    },
+    {
+     "candidate": "After thus showing the practice of not abiding, the Blessed One taught the following",
+     "tibetan": "བཅོམ་ལྡན་འདས་གཞན་ཡང་བྱང་ཆུབ་སེམས་དཔའ་...",
+     "reference": "it says, “Furthermore, Lord, when bodhisattva great beings…",
+     "why": "wrong speaker: the Lord is addressed (vocative), not the speaker"
+    }
+   ]
+  },
+  {
+   "id": "F2-027",
+   "toh": "toh3808",
+   "folio": "161a",
+   "vol": 93,
+   "page_number": 320,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arm": "B",
+   "judges": 2,
+   "quotes": [
+    {
+     "candidate": "Then, the Elder Subhuti addressed the Blessed One, saying \"This Prajnaparamita...\"",
+     "tibetan": "བཅོམ་ལྡན་འདས་གནས་བརྟན་རབ་འབྱོར་འདི་ནི་ཤེས་རབ་",
+     "reference": "The elder Pūrṇa ... says: \"Lord, tasked with the perfection of wisdom… this elder Subhūti thinks",
+     "why": "makes Subhūti the speaker; the line is Pūrṇa's words about Subhūti"
+    },
+    {
+     "candidate": "Then, the Elder Subhuti addressed the Blessed One, saying \"This Prajnaparamita...\"",
+     "tibetan": "བཅོམ་ལྡན་འདས་གནས་བརྟན་རབ་འབྱོར་འདི་ནི་ཤེས་རབ་",
+     "reference": "The elder Pūrṇa ... says: “Lord, ... this elder Subhūti thinks",
+     "why": "wrong speaker: the words are addressed by Pūrṇa about Subhūti, not spoken by Subhūti"
+    }
+   ]
+  },
+  {
+   "id": "F2-029",
+   "toh": "toh3808",
+   "folio": "176a",
+   "vol": 93,
+   "page_number": 350,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arm": "X3",
+   "judges": 2,
+   "quotes": [
+    {
+     "candidate": "In the past, when I, the Blessed One, was a bodhisattva, the great śrāvakas ... taught me correctly",
+     "tibetan": "སྔོན་བདག་གི་བཅོམ་ལྡན་འདས་བྱང་ཆུབ་སེམས་དཔར་གྱུར་པའི་ཚེ",
+     "reference": "earlier when our Lord was in the form of a bodhisattva, the great śrāvakas ... taught him",
+     "why": "wrong speaker: a śrāvaka speaks of 'my/our Lord'; T2 makes the Blessed One the speaker and the one taught"
+    },
+    {
+     "candidate": "In the past, when I, the Blessed One, was a bodhisattva ... I shall acknowledge what the śrāvakas of the past did for me.",
+     "tibetan": "སྔོན་བདག་གི་བཅོམ་ལྡན་འདས་བྱང་ཆུབ་སེམས་དཔར་གྱུར་པའི་ཚེ",
+     "reference": "earlier when our Lord was in the form of a bodhisattva",
+     "why": "wrong speaker: a śrāvaka speaks of 'our Lord'; T2 makes the Buddha the speaker"
+    }
+   ]
+  },
+  {
+   "id": "F2-032",
+   "toh": "toh3808",
+   "folio": "225b",
+   "vol": 93,
+   "page_number": 449,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arm": "E",
+   "judges": 2,
+   "quotes": [
+    {
+     "candidate": "a second type of retrogression pertaining to the eighth stage is also taught",
+     "tibetan": "ས་བརྒྱད་པ་ལ་ཕྱིར་ལྡོག་པར་འགྱུར་བ་གཉིས་པ་ཡང་བསྟན་ཏོ",
+     "reference": "it also teaches a second not turning back from progress toward full awakening that happens at the eighth level",
+     "why": "the concessive 'although one becomes irreversible at the first level' requires a second irreversibility at the eighth; T2 turns it into retrogression"
+    },
+    {
+     "candidate": "a second type of retrogression pertaining to the eighth stage is also taught",
+     "tibetan": "ས་བརྒྱད་པ་ལ་ཕྱིར་#ལྡོག་པར་འགྱུར་བ་གཉིས་པ་ཡང་བསྟན་ཏོ",
+     "reference": "it also teaches a second not turning back from progress toward full awakening that happens at the eighth level",
+     "why": "after 'one becomes non-retrogressive at the first level, but...', the second kind is irreversibility; T2 makes it retrogression"
+    }
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "id": "F2-001",
+   "toh": "toh1183",
+   "stratum": "toh1183",
+   "folio": "12b",
+   "page_id": "6abe8368433559215a997cc6",
+   "vol": 3,
+   "page_number": 23,
+   "book_id": "6abe8366433559215a997cad",
+   "arms": {
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-002",
+   "toh": "toh1183",
+   "stratum": "toh1183",
+   "folio": "18b",
+   "page_id": "6abe8368433559215a997cd2",
+   "vol": 3,
+   "page_number": 35,
+   "book_id": "6abe8366433559215a997cad",
+   "arms": {
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "B": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-003",
+   "toh": "toh1183",
+   "stratum": "toh1183",
+   "folio": "28a",
+   "page_id": "6abe8368433559215a997ce5",
+   "vol": 3,
+   "page_number": 54,
+   "book_id": "6abe8366433559215a997cad",
+   "arms": {
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [
+       "added_fact",
+       "boundary"
+      ],
+      [
+       "added_fact",
+       "unreadable_fill",
+       "gloss"
+      ]
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-004",
+   "toh": "toh1183",
+   "stratum": "toh1183",
+   "folio": "30b",
+   "page_id": "6abe8368433559215a997cea",
+   "vol": 3,
+   "page_number": 59,
+   "book_id": "6abe8366433559215a997cad",
+   "arms": {
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    },
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-005",
+   "toh": "toh1183",
+   "stratum": "toh1183",
+   "folio": "33b",
+   "page_id": "6abe8368433559215a997cf0",
+   "vol": 3,
+   "page_number": 65,
+   "book_id": "6abe8366433559215a997cad",
+   "arms": {
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-006",
+   "toh": "toh1183",
+   "stratum": "toh1183",
+   "folio": "40a",
+   "page_id": "6abe8368433559215a997cfd",
+   "vol": 3,
+   "page_number": 78,
+   "book_id": "6abe8366433559215a997cad",
+   "arms": {
+    "B": {
+     "fid": [
+      4,
+      5
+     ],
+     "fid_mean": 4.5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      0
+     ]
+    },
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-007",
+   "toh": "toh1183",
+   "stratum": "toh1183",
+   "folio": "47a",
+   "page_id": "6abe8368433559215a997d0b",
+   "vol": 3,
+   "page_number": 92,
+   "book_id": "6abe8366433559215a997cad",
+   "arms": {
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    },
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-008",
+   "toh": "toh1183",
+   "stratum": "toh1183",
+   "folio": "59a",
+   "page_id": "6abe8368433559215a997d23",
+   "vol": 3,
+   "page_number": 116,
+   "book_id": "6abe8366433559215a997cad",
+   "arms": {
+    "E": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      true,
+      true
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-009",
+   "toh": "toh1183",
+   "stratum": "toh1183",
+   "folio": "60a",
+   "page_id": "6abe8368433559215a997d25",
+   "vol": 3,
+   "page_number": 118,
+   "book_id": "6abe8366433559215a997cad",
+   "arms": {
+    "B": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-010",
+   "toh": "toh1189",
+   "stratum": "toh1189",
+   "folio": "221a",
+   "page_id": "6abe83c2433559215a9980b5",
+   "vol": 4,
+   "page_number": 440,
+   "book_id": "6abe83b7433559215a997efb",
+   "arms": {
+    "B": {
+     "fid": [
+      3,
+      3
+     ],
+     "fid_mean": 3,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [
+       "gloss"
+      ],
+      [
+       "gloss"
+      ]
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "E": {
+     "fid": [
+      3,
+      3
+     ],
+     "fid_mean": 3,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [
+       "gloss"
+      ],
+      [
+       "gloss"
+      ]
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-011",
+   "toh": "toh1189",
+   "stratum": "toh1189",
+   "folio": "222b",
+   "page_id": "6abe83c2433559215a9980b8",
+   "vol": 4,
+   "page_number": 443,
+   "book_id": "6abe83b7433559215a997efb",
+   "arms": {
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [
+       "gloss"
+      ],
+      [
+       "gloss"
+      ]
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    },
+    "X3": {
+     "fid": [
+      4,
+      5
+     ],
+     "fid_mean": 4.5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-012",
+   "toh": "toh1189",
+   "stratum": "toh1189",
+   "folio": "230b",
+   "page_id": "6abe83c2433559215a9980c8",
+   "vol": 4,
+   "page_number": 459,
+   "book_id": "6abe83b7433559215a997efb",
+   "arms": {
+    "B": {
+     "fid": [
+      3,
+      3
+     ],
+     "fid_mean": 3,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [
+       "gloss"
+      ],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    },
+    "E": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [
+       "gloss"
+      ],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-013",
+   "toh": "toh1189",
+   "stratum": "toh1189",
+   "folio": "231b",
+   "page_id": "6abe83c2433559215a9980ca",
+   "vol": 4,
+   "page_number": 461,
+   "book_id": "6abe83b7433559215a997efb",
+   "arms": {
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [
+       "added_fact",
+       "added_fact",
+       "gloss"
+      ],
+      [
+       "added_fact",
+       "added_fact",
+       "added_fact",
+       "gloss",
+       "added_fact"
+      ]
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    },
+    "X3": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      [
+       "gloss"
+      ]
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-014",
+   "toh": "toh1189",
+   "stratum": "toh1189",
+   "folio": "243a",
+   "page_id": "6abe83c2433559215a9980e1",
+   "vol": 4,
+   "page_number": 484,
+   "book_id": "6abe83b7433559215a997efb",
+   "arms": {
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-015",
+   "toh": "toh1189",
+   "stratum": "toh1189",
+   "folio": "257b",
+   "page_id": "6abe83c2433559215a9980fe",
+   "vol": 4,
+   "page_number": 513,
+   "book_id": "6abe83b7433559215a997efb",
+   "arms": {
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      true,
+      true
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    },
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [
+       "gloss"
+      ],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-016",
+   "toh": "toh1189",
+   "stratum": "toh1189",
+   "folio": "259a",
+   "page_id": "6abe83c2433559215a998101",
+   "vol": 4,
+   "page_number": 516,
+   "book_id": "6abe83b7433559215a997efb",
+   "arms": {
+    "B": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-017",
+   "toh": "toh1189",
+   "stratum": "toh1189",
+   "folio": "268b",
+   "page_id": "6abe83c2433559215a998114",
+   "vol": 4,
+   "page_number": 535,
+   "book_id": "6abe83b7433559215a997efb",
+   "arms": {
+    "B": {
+     "fid": [
+      4,
+      5
+     ],
+     "fid_mean": 4.5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "X3": {
+     "fid": [
+      4,
+      5
+     ],
+     "fid_mean": 4.5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-018",
+   "toh": "toh1189",
+   "stratum": "toh1189",
+   "folio": "277a",
+   "page_id": "6abe83c2433559215a998125",
+   "vol": 4,
+   "page_number": 552,
+   "book_id": "6abe83b7433559215a997efb",
+   "arms": {
+    "B": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-019",
+   "toh": "toh1189",
+   "stratum": "toh1189",
+   "folio": "294a",
+   "page_id": "6abe83c2433559215a998147",
+   "vol": 4,
+   "page_number": 586,
+   "book_id": "6abe83b7433559215a997efb",
+   "arms": {
+    "B": {
+     "fid": [
+      3,
+      3
+     ],
+     "fid_mean": 3,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [
+       "gloss",
+       "added_fact"
+      ],
+      [
+       "gloss"
+      ]
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    },
+    "X3": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-020",
+   "toh": "toh3808",
+   "stratum": "toh3808",
+   "folio": "28b",
+   "page_id": "6abeafd9896ea18127c821c7",
+   "vol": 93,
+   "page_number": 55,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arms": {
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "B": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-021",
+   "toh": "toh3808",
+   "stratum": "toh3808",
+   "folio": "86a",
+   "page_id": "6abeafd9896ea18127c8223a",
+   "vol": 93,
+   "page_number": 170,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arms": {
+    "B": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      [
+       "gloss"
+      ]
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      1
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-022",
+   "toh": "toh3808",
+   "stratum": "toh3808",
+   "folio": "88a",
+   "page_id": "6abeafd9896ea18127c8223e",
+   "vol": 93,
+   "page_number": 174,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arms": {
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    },
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      [
+       "added_fact"
+      ]
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-023",
+   "toh": "toh3808",
+   "stratum": "toh3808",
+   "folio": "94b",
+   "page_id": "6abeafd9896ea18127c8224b",
+   "vol": 93,
+   "page_number": 187,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arms": {
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [
+       "gloss"
+      ],
+      [
+       "gloss"
+      ]
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-024",
+   "toh": "toh3808",
+   "stratum": "toh3808",
+   "folio": "100a",
+   "page_id": "6abeafd9896ea18127c82256",
+   "vol": 93,
+   "page_number": 198,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arms": {
+    "B": {
+     "fid": [
+      4,
+      3
+     ],
+     "fid_mean": 3.5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [
+       {
+        "candidate": "the Blessed One taught the following to show the faults of abiding: Furthermore, when a bodhisattva mahasattva practices",
+        "tibetan": "བཅོམ་ལྡན་འདས་གཞན་ཡང་བྱང་ཆུབ་སེམས་དཔའ་སེམས་དཔའ་ཆེན་པོ",
+        "reference": "Furthermore, Lord, when bodhisattva great beings practicing",
+        "why": "wrong speaker: the sutra line is addressed to the Lord (vocative), T1 makes the Blessed One its speaker"
+       },
+       {
+        "candidate": "Regarding this, the Blessed One said: In this way, form is without any grasping.",
+        "tibetan": "བཅོམ་ལྡན་འདས་འདི་ལྟར་གཟུགས་ནི་ཡོངས་སུ་གཟུང་བ་མ་མཆིས",
+        "reference": "it says, It is because, Lord, form is not fully grasped",
+        "why": "wrong speaker again: vocative 'Lord' turned into the Blessed One speaking"
+       }
+      ],
+      [
+       {
+        "candidate": "After thus showing the practice of not abiding, the Blessed One taught the following",
+        "tibetan": "བཅོམ་ལྡན་འདས་གཞན་ཡང་བྱང་ཆུབ་སེམས་དཔའ་...",
+        "reference": "it says, “Furthermore, Lord, when bodhisattva great beings…",
+        "why": "wrong speaker: the Lord is addressed (vocative), not the speaker"
+       },
+       {
+        "candidate": "Regarding this, the Blessed One said: In this way, form is without any grasping.",
+        "tibetan": "བཅོམ་ལྡན་འདས་འདི་ལྟར་གཟུགས་ནི་ཡོངས་སུ་གཟུང་བ་མ་མཆིས",
+        "reference": "it says, “It is because, Lord, form is not fully grasped,”",
+        "why": "wrong speaker: vocative 'Lord' turned into the Blessed One speaking"
+       }
+      ]
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      2
+     ]
+    },
+    "E": {
+     "fid": [
+      5,
+      4
+     ],
+     "fid_mean": 4.5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      1
+     ]
+    },
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-025",
+   "toh": "toh3808",
+   "stratum": "toh3808",
+   "folio": "109a",
+   "page_id": "6abeafd9896ea18127c82268",
+   "vol": 93,
+   "page_number": 216,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arms": {
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "B": {
+     "fid": [
+      5,
+      4
+     ],
+     "fid_mean": 4.5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      1
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-026",
+   "toh": "toh3808",
+   "stratum": "toh3808",
+   "folio": "155a",
+   "page_id": "6abeafd9896ea18127c822c4",
+   "vol": 93,
+   "page_number": 308,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arms": {
+    "B": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-027",
+   "toh": "toh3808",
+   "stratum": "toh3808",
+   "folio": "161a",
+   "page_id": "6abeafd9896ea18127c822d0",
+   "vol": 93,
+   "page_number": 320,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arms": {
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [
+       {
+        "candidate": "Then, the Elder Subhuti addressed the Blessed One, saying \"This Prajnaparamita...\"",
+        "tibetan": "བཅོམ་ལྡན་འདས་གནས་བརྟན་རབ་འབྱོར་འདི་ནི་ཤེས་རབ་",
+        "reference": "The elder Pūrṇa ... says: \"Lord, tasked with the perfection of wisdom… this elder Subhūti thinks",
+        "why": "makes Subhūti the speaker; the line is Pūrṇa's words about Subhūti"
+       }
+      ],
+      [
+       {
+        "candidate": "Then, the Elder Subhuti addressed the Blessed One, saying \"This Prajnaparamita...\"",
+        "tibetan": "བཅོམ་ལྡན་འདས་གནས་བརྟན་རབ་འབྱོར་འདི་ནི་ཤེས་རབ་",
+        "reference": "The elder Pūrṇa ... says: “Lord, ... this elder Subhūti thinks",
+        "why": "wrong speaker: the words are addressed by Pūrṇa about Subhūti, not spoken by Subhūti"
+       }
+      ]
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    },
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-028",
+   "toh": "toh3808",
+   "stratum": "toh3808",
+   "folio": "172b",
+   "page_id": "6abeafd9896ea18127c822e7",
+   "vol": 93,
+   "page_number": 343,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arms": {
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      true
+     ],
+     "inv_types": [
+      [
+       "gloss"
+      ],
+      [
+       "gloss"
+      ]
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "E": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      true
+     ],
+     "inv_types": [
+      [
+       "gloss"
+      ],
+      [
+       "gloss"
+      ]
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-029",
+   "toh": "toh3808",
+   "stratum": "toh3808",
+   "folio": "176a",
+   "page_id": "6abeafd9896ea18127c822ee",
+   "vol": 93,
+   "page_number": 350,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arms": {
+    "B": {
+     "fid": [
+      5,
+      4
+     ],
+     "fid_mean": 4.5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "X3": {
+     "fid": [
+      3,
+      3
+     ],
+     "fid_mean": 3,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [
+       "gloss"
+      ],
+      [
+       "gloss"
+      ]
+     ],
+     "inversions": [
+      [
+       {
+        "candidate": "In the past, when I, the Blessed One, was a bodhisattva, the great śrāvakas ... taught me correctly",
+        "tibetan": "སྔོན་བདག་གི་བཅོམ་ལྡན་འདས་བྱང་ཆུབ་སེམས་དཔར་གྱུར་པའི་ཚེ",
+        "reference": "earlier when our Lord was in the form of a bodhisattva, the great śrāvakas ... taught him",
+        "why": "wrong speaker: a śrāvaka speaks of 'my/our Lord'; T2 makes the Blessed One the speaker and the one taught"
+       }
+      ],
+      [
+       {
+        "candidate": "In the past, when I, the Blessed One, was a bodhisattva ... I shall acknowledge what the śrāvakas of the past did for me.",
+        "tibetan": "སྔོན་བདག་གི་བཅོམ་ལྡན་འདས་བྱང་ཆུབ་སེམས་དཔར་གྱུར་པའི་ཚེ",
+        "reference": "earlier when our Lord was in the form of a bodhisattva",
+        "why": "wrong speaker: a śrāvaka speaks of 'our Lord'; T2 makes the Buddha the speaker"
+       }
+      ]
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-030",
+   "toh": "toh3808",
+   "stratum": "toh3808",
+   "folio": "195a",
+   "page_id": "6abeafd9896ea18127c82314",
+   "vol": 93,
+   "page_number": 388,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arms": {
+    "B": {
+     "fid": [
+      5,
+      4
+     ],
+     "fid_mean": 4.5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      1
+     ]
+    },
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-031",
+   "toh": "toh3808",
+   "stratum": "toh3808",
+   "folio": "198b",
+   "page_id": "6abeafd9896ea18127c8231b",
+   "vol": 93,
+   "page_number": 395,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arms": {
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      true,
+      true
+     ],
+     "inv_types": [
+      [
+       "gloss"
+      ],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-032",
+   "toh": "toh3808",
+   "stratum": "toh3808",
+   "folio": "225b",
+   "page_id": "6abeafd9896ea18127c82351",
+   "vol": 93,
+   "page_number": 449,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arms": {
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "E": {
+     "fid": [
+      3,
+      4
+     ],
+     "fid_mean": 3.5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [
+       {
+        "candidate": "a second type of retrogression pertaining to the eighth stage is also taught",
+        "tibetan": "ས་བརྒྱད་པ་ལ་ཕྱིར་ལྡོག་པར་འགྱུར་བ་གཉིས་པ་ཡང་བསྟན་ཏོ",
+        "reference": "it also teaches a second not turning back from progress toward full awakening that happens at the eighth level",
+        "why": "the concessive 'although one becomes irreversible at the first level' requires a second irreversibility at the eighth; T2 turns it into retrogression"
+       }
+      ],
+      [
+       {
+        "candidate": "a second type of retrogression pertaining to the eighth stage is also taught",
+        "tibetan": "ས་བརྒྱད་པ་ལ་ཕྱིར་#ལྡོག་པར་འགྱུར་བ་གཉིས་པ་ཡང་བསྟན་ཏོ",
+        "reference": "it also teaches a second not turning back from progress toward full awakening that happens at the eighth level",
+        "why": "after 'one becomes non-retrogressive at the first level, but...', the second kind is irreversibility; T2 makes it retrogression"
+       }
+      ]
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-033",
+   "toh": "toh3808",
+   "stratum": "toh3808",
+   "folio": "231a",
+   "page_id": "6abeafd9896ea18127c8235c",
+   "vol": 93,
+   "page_number": 460,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arms": {
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-034",
+   "toh": "toh3808",
+   "stratum": "toh3808",
+   "folio": "234b",
+   "page_id": "6abeafd9896ea18127c82363",
+   "vol": 93,
+   "page_number": 467,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arms": {
+    "B": {
+     "fid": [
+      5,
+      4
+     ],
+     "fid_mean": 4.5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      1
+     ]
+    },
+    "X3": {
+     "fid": [
+      4,
+      5
+     ],
+     "fid_mean": 4.5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-035",
+   "toh": "toh3808",
+   "stratum": "toh3808",
+   "folio": "256a",
+   "page_id": "6abeafd9896ea18127c8238e",
+   "vol": 93,
+   "page_number": 510,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arms": {
+    "X3": {
+     "fid": [
+      4,
+      5
+     ],
+     "fid_mean": 4.5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [
+       "gloss"
+      ],
+      [
+       "gloss"
+      ]
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-036",
+   "toh": "toh3808",
+   "stratum": "toh3808",
+   "folio": "264b",
+   "page_id": "6abeafd9896ea18127c8239f",
+   "vol": 93,
+   "page_number": 527,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arms": {
+    "B": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      true
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [
+       "gloss",
+       "gloss"
+      ],
+      [
+       "gloss",
+       "gloss",
+       "gloss"
+      ]
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      1
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-037",
+   "toh": "toh3808",
+   "stratum": "toh3808",
+   "folio": "265a",
+   "page_id": "6abeafd9896ea18127c823a0",
+   "vol": 93,
+   "page_number": 528,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arms": {
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "B": {
+     "fid": [
+      5,
+      4
+     ],
+     "fid_mean": 4.5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      1
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-038",
+   "toh": "toh3808",
+   "stratum": "toh3808",
+   "folio": "267a",
+   "page_id": "6abeafd9896ea18127c823a4",
+   "vol": 93,
+   "page_number": 532,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arms": {
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-039",
+   "toh": "toh3808",
+   "stratum": "toh3808",
+   "folio": "286a",
+   "page_id": "6abeafd9896ea18127c823ca",
+   "vol": 93,
+   "page_number": 570,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arms": {
+    "E": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-040",
+   "toh": "toh3808",
+   "stratum": "toh3808",
+   "folio": "287b",
+   "page_id": "6abeafd9896ea18127c823cd",
+   "vol": 93,
+   "page_number": 573,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "arms": {
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      true,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    },
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-041",
+   "toh": "toh3990",
+   "stratum": "small texts",
+   "folio": "66b",
+   "page_id": "6abeb58b896ea18127c84ef4",
+   "vol": 113,
+   "page_number": 131,
+   "book_id": "6abeb583896ea18127c84e6f",
+   "arms": {
+    "B": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [
+       "gloss"
+      ],
+      [
+       "gloss"
+      ]
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-042",
+   "toh": "toh4377",
+   "stratum": "small texts",
+   "folio": "300b",
+   "page_id": "6abee362a43718d234bf220d",
+   "vol": 207,
+   "page_number": 598,
+   "book_id": "6abee360a43718d234bf1fb5",
+   "arms": {
+    "B": {
+     "fid": [
+      4,
+      5
+     ],
+     "fid_mean": 4.5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      0
+     ]
+    },
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "C": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-043",
+   "toh": "toh4377",
+   "stratum": "small texts",
+   "folio": "301a",
+   "page_id": "6abee362a43718d234bf220e",
+   "vol": 207,
+   "page_number": 599,
+   "book_id": "6abee360a43718d234bf1fb5",
+   "arms": {
+    "C": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [
+       "gloss"
+      ],
+      [
+       "gloss"
+      ]
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      1
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-044",
+   "toh": "toh4377",
+   "stratum": "small texts",
+   "folio": "301b",
+   "page_id": "6abee362a43718d234bf220f",
+   "vol": 207,
+   "page_number": 600,
+   "book_id": "6abee360a43718d234bf1fb5",
+   "arms": {
+    "B": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "X3": {
+     "fid": [
+      4,
+      5
+     ],
+     "fid_mean": 4.5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      [
+       "gloss"
+      ]
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    },
+    "C": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      [
+       "gloss"
+      ]
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      1
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-045",
+   "toh": "toh4377",
+   "stratum": "small texts",
+   "folio": "302a",
+   "page_id": "6abee362a43718d234bf2210",
+   "vol": 207,
+   "page_number": 601,
+   "book_id": "6abee360a43718d234bf1fb5",
+   "arms": {
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      [
+       "added_fact"
+      ]
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      2
+     ]
+    },
+    "C": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      true,
+      true
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      [
+       "ends_early"
+      ],
+      [
+       "ends_early"
+      ]
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-046",
+   "toh": "toh4377",
+   "stratum": "small texts",
+   "folio": "302b",
+   "page_id": "6abee362a43718d234bf2211",
+   "vol": 207,
+   "page_number": 602,
+   "book_id": "6abee360a43718d234bf1fb5",
+   "arms": {
+    "B": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [
+       "boundary"
+      ],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      [
+       "runs_over"
+      ],
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "C": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [
+       "boundary"
+      ],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      [
+       "runs_over"
+      ],
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-047",
+   "toh": "toh4377",
+   "stratum": "small texts",
+   "folio": "303a",
+   "page_id": "6abee362a43718d234bf2212",
+   "vol": 207,
+   "page_number": 603,
+   "book_id": "6abee360a43718d234bf1fb5",
+   "arms": {
+    "B": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "C": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    },
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "F2-048",
+   "toh": "toh4400a",
+   "stratum": "small texts",
+   "folio": "338b",
+   "page_id": "6abee362a43718d234bf2259",
+   "vol": 207,
+   "page_number": 674,
+   "book_id": "6abee360a43718d234bf1fb5",
+   "arms": {
+    "B": {
+     "fid": [
+      4,
+      4
+     ],
+     "fid_mean": 4,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      1,
+      1
+     ]
+    },
+    "X3": {
+     "fid": [
+      5,
+      5
+     ],
+     "fid_mean": 5,
+     "omit": [
+      false,
+      false
+     ],
+     "inv_types": [
+      [],
+      []
+     ],
+     "inversions": [
+      [],
+      []
+     ],
+     "span": [
+      "same",
+      "same"
+     ],
+     "pos": [
+      0,
+      0
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -26,6 +26,7 @@
  */
 
 import { LATIN_SCRIPT_LANGUAGES, MODEL_FLASH, MODEL_LITE } from './translate-core.mjs';
+import { toLanguageCodes, codeFamily } from './language-normalize.mjs';
 
 // Re-exported under OCR-phase names so call sites read honestly. There is one
 // pair of models, not two — these ARE translate-core's constants.
@@ -49,6 +50,89 @@ export const OCR_MODEL_LITE = MODEL_LITE;
  */
 export const OCR_LITE_ONLY = process.env.OCR_LITE_ONLY !== '0';
 
+/**
+ * The first exception to OCR_LITE_ONLY: Greek reads on flash (#5575). FLASH_OCR_FROM below
+ * extends it to Persian, Sanskrit, Pali, Arabic and Ge'ez (2026-10-04).
+ *
+ * Derek, 2026-10-02, on the DECISIONS-PENDING row "Read Greek and Chinese OCR
+ * with Flash again (Batch)": yes for new pages and for the visible and held
+ * Greek backlog; NOT for the hidden Greek backlog (~1.8M pp), which waits for
+ * #4884 because many books catalogued Greek are Latin on the page. Chinese was
+ * taken out of scope the same day, pending PaddleOCR-VL vs Flash on non-Siku
+ * Quanshu pages (#5574) — do not add it here without that comparison.
+ * Evidence: Greek median CER 6.6% on flash vs 11% on lite, 176 referenced
+ * books; cost basis on #5575 (~2x per page on Batch).
+ *
+ * The test reads only fields the router already reads or that every book row
+ * carries — no new field:
+ * - the FIRST language of `books.language` is in the Greek family, read through
+ *   the pinned normaliser's closed vocabulary (toLanguageCodes / codeFamily,
+ *   the code API `routing_lane` will use): "Greek", "grc", "Byzantine Greek",
+ *   "Modern Greek" and "Greek, Latin" qualify; "Latin, Greek" (a Latin book
+ *   with Greek in it) and "Judeo-Greek" (Hebrew script) do not;
+ * - and the book is visible, or was created on or after the decision date
+ *   ("new pages"). A HIDDEN book created before it is the unapproved backlog
+ *   and stays on lite. Held books keep their hold (no worker selects them); a
+ *   visible held book reads on flash when it is released.
+ *
+ * A caller that does not project `visible` and `created_at` falls back to lite:
+ * the cheap direction. Every projection that feeds getOcrModelForBook carries
+ * `language`, `image_source.provider`, `visible` and `created_at`.
+ */
+export const GREEK_FLASH_FROM = new Date('2026-10-02T00:00:00Z');
+
+/**
+ * The same exception, extended to the scripts where lite OCR is measured to hurt the
+ * English (#5700 A5, job reocr-lift-5700, PR #5760; routing doc
+ * .claude/docs/ocr-engine-routing.md). A flash re-read of a lite-read page lifted judged
+ * translation fidelity by Persian +1.00, Sanskrit +0.75, Pali +0.58, Arabic +0.39 (1–5
+ * scale, against published translations). Ge'ez failed the #4729 agreement bar
+ * (0.47, 9/20 catastrophic). The scope is the same as Greek: visible books, and books
+ * created on or after the decision. The hidden backlog of these scripts (~300K pages)
+ * is a separate spend decision.
+ *
+ * Deliberately NOT here: Chinese (waits for #5574, Paddle vs flash off SKQS), Tibetan
+ * and Syriac (own lanes; Gemini is not their reader), Japanese (NDL lane for cursive;
+ * typeset unmeasured), Hebrew and everything unmeasured. Add a family only with a
+ * measured cell, and cite it.
+ *
+ * Keyed by language FAMILY (codeFamily of the first language), so "Judeo-Arabic"
+ * (Hebrew script, family jrb) and "Latin, Arabic" do not qualify.
+ */
+export const FLASH_OCR_FROM = Object.freeze({
+  grc: GREEK_FLASH_FROM,
+  fas: new Date('2026-10-04T00:00:00Z'),
+  san: new Date('2026-10-04T00:00:00Z'),
+  pli: new Date('2026-10-04T00:00:00Z'),
+  ara: new Date('2026-10-04T00:00:00Z'),
+  gez: new Date('2026-10-04T00:00:00Z'),
+});
+
+/**
+ * Families whose HIDDEN backlog also reads on flash. Persian only (Derek 2026-10-04, after #5795):
+ * labels held on 93% of hidden pages and flash read 9 of the 10 hardest pages to lite's 0, with
+ * nothing invented. It missed the preregistered rule by one looping flash page in 30; a loop is
+ * refused at write time by the collector's loop guard (ocr-loop-guard.mjs), so it is not served.
+ * Sanskrit, Arabic and Pali failed on labels or legibility and wait for #4884 / better scans.
+ */
+export const FLASH_OCR_INCLUDES_HIDDEN = Object.freeze(new Set(['fas']));
+
+export function isFlashOcrBook(book) {
+  const first = toLanguageCodes(book?.language).codes[0];
+  const family = first ? codeFamily(first) : undefined;
+  const from = family ? FLASH_OCR_FROM[family] : undefined;
+  if (!from) return false;
+  if (book?.visible === true || FLASH_OCR_INCLUDES_HIDDEN.has(family)) return true;
+  const created = book?.created_at ? new Date(book.created_at) : null;
+  return !!created && !Number.isNaN(created.getTime()) && created >= from;
+}
+
+/** Greek alone — kept for the #5575 call sites and tests. */
+export function isGreekFlashOcrBook(book) {
+  const first = toLanguageCodes(book?.language).codes[0];
+  return !!first && codeFamily(first) === 'grc' && isFlashOcrBook(book);
+}
+
 /** Model for the recitation escalation tier that used to be flash-preview. */
 export function ocrEscalationModel() {
   return OCR_LITE_ONLY ? OCR_MODEL_LITE : OCR_MODEL_FLASH;
@@ -57,7 +141,7 @@ export function ocrEscalationModel() {
 /**
  * THE model routing for OCR. Mirrors getModelForBook in
  * src/lib/types/ai-models.ts — except under OCR_LITE_ONLY (above), when every
- * book routes to flash-lite.
+ * book routes to flash-lite except the measured scripts in FLASH_OCR_FROM (isFlashOcrBook).
  *
  * It does NOT mirror translation routing any more. Since #4759,
  * getTranslateModelForBook (translate-core.mjs) sends non-Latin scripts to
@@ -72,7 +156,7 @@ export function ocrEscalationModel() {
  * - Unknown/null language: full flash (safer default)
  */
 export function getOcrModelForBook(book, { liteOnly = OCR_LITE_ONLY } = {}) {
-  if (liteOnly) return OCR_MODEL_LITE;
+  if (liteOnly) return isFlashOcrBook(book) ? OCR_MODEL_FLASH : OCR_MODEL_LITE;
   if (book?.image_source?.provider === 'bph') return OCR_MODEL_FLASH;
   const lang = (book?.language || '').toLowerCase().trim();
   if (!lang || !LATIN_SCRIPT_LANGUAGES.has(lang)) return OCR_MODEL_FLASH;

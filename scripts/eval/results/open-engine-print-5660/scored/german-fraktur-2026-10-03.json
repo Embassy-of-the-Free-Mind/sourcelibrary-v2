@@ -1,0 +1,2278 @@
+{
+  "summary": {
+    "stratum": "german-fraktur",
+    "issue": 4800,
+    "date": "2026-10-03",
+    "refusal_source": "finishReason (meter) / inferred",
+    "cer_refusals": "ref.median_cer / mean_cer count a refusal as CER 1.0 (the pre-#5581 headline); *_answered exclude refused pages",
+    "n_pages": 20,
+    "n_with_ref": 0,
+    "ref_mismatch": [],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3-flash-preview": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.015,
+          "catastrophic": 1,
+          "median_gap": 0,
+          "median_bow": 0.935,
+          "refused": 0,
+          "n_answered": 20,
+          "median_cer_answered": 0.015,
+          "mean_cer": 0.093,
+          "mean_cer_answered": 0.093
+        },
+        "invention": {
+          "median": 0.072,
+          "mean": 0.088,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "german-fraktur-3b1f2c-p176",
+            "title": "Handbuch der deutschen Literatur : seit der Mitte des achtzehnten Jahrhunderts bis auf die neueste Zeit. 1,1, Literatur ",
+            "year": 1812,
+            "cer": 0.787,
+            "gap": 0.388,
+            "invention": 0.214,
+            "has_ref": false,
+            "unsupported": [
+              "abschn",
+              "insonderh",
+              "beschr",
+              "waisenh",
+              "nebst",
+              "gesch",
+              "ersten",
+              "niemeyersche"
+            ]
+          },
+          {
+            "slug": "german-fraktur-7c6332-p6",
+            "title": "Prognosticon Halbmayerianum, Das ist, Extract und Außzug, deß jenigen was Georg Halbmayer, Astronomus, von dem künfftige",
+            "year": 1631,
+            "cer": 0.433,
+            "gap": 0.232,
+            "invention": 0.071,
+            "has_ref": false,
+            "unsupported": [
+              "vnter",
+              "stats",
+              "monarchey",
+              "vbermuth",
+              "scorpionistn",
+              "secht",
+              "förchtn",
+              "vnerschwinglich"
+            ]
+          },
+          {
+            "slug": "german-fraktur-316a06-p13",
+            "title": "Ain schöner christlicher sendbrieff und bericht",
+            "year": 1547,
+            "cer": 0.244,
+            "gap": 0.104,
+            "invention": 0.087,
+            "has_ref": false,
+            "unsupported": [
+              "zůstande",
+              "unterschaiden",
+              "gelittē",
+              "göttliche",
+              "nigkait",
+              "dreyfal",
+              "tigkeit",
+              "errette"
+            ]
+          },
+          {
+            "slug": "german-fraktur-84e53b-p41",
+            "title": "Prognosticon spirituale. Oder Geistlicher Calender unnd Practica",
+            "year": 1613,
+            "cer": 0.13,
+            "gap": 0.103,
+            "invention": 0.18,
+            "has_ref": false,
+            "unsupported": [
+              "geistlich",
+              "prognosticon",
+              "gefängnuß",
+              "jhre",
+              "alle",
+              "völckern",
+              "jhnen",
+              "jesus"
+            ]
+          },
+          {
+            "slug": "german-fraktur-d95833-p8",
+            "title": "Auserwaehlte Meister von der schwarzen Bruderschaft",
+            "year": 1784,
+            "cer": 0.085,
+            "gap": 0.004,
+            "invention": 0.219,
+            "has_ref": false,
+            "unsupported": [
+              "sehr",
+              "ehrwürdiger",
+              "thut",
+              "davon",
+              "nachricht",
+              "drey",
+              "beyden",
+              "alsdann"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.075,
+          "mean": 0.08,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "worst": [
+          {
+            "slug": "german-fraktur-d95833-p8",
+            "title": "Auserwaehlte Meister von der schwarzen Bruderschaft",
+            "year": 1784,
+            "invention": 0.205,
+            "has_ref": false,
+            "unsupported": [
+              "hochwürdiger",
+              "erfüll",
+              "bescheid",
+              "beiden",
+              "sodann",
+              "ehrenmeisters",
+              "orden",
+              "unermüdeten"
+            ]
+          },
+          {
+            "slug": "german-fraktur-3b1f2c-p176",
+            "title": "Handbuch der deutschen Literatur : seit der Mitte des achtzehnten Jahrhunderts bis auf die neueste Zeit. 1,1, Literatur ",
+            "year": 1812,
+            "invention": 0.17,
+            "has_ref": false,
+            "unsupported": [
+              "unauch",
+              "terhaltt",
+              "tzen",
+              "deutfehe",
+              "jüberlin",
+              "licher",
+              "frey",
+              "geberg"
+            ]
+          },
+          {
+            "slug": "german-fraktur-1d3ad7-p25",
+            "title": "Sendtschreiben an einen guten Freundt in Welschlandt",
+            "year": 1618,
+            "invention": 0.16,
+            "has_ref": false,
+            "unsupported": [
+              "vrsachen",
+              "durch",
+              "zogen",
+              "kezereyen",
+              "jrthumb",
+              "vnenderliche",
+              "buendtlichkeit",
+              "vnnd"
+            ]
+          },
+          {
+            "slug": "german-fraktur-63274c-p28",
+            "title": "Entwurf einer allerneuesten Beschreibung des Königreichs Böhmen : in welchem von dieses Landes geographischen, physicali",
+            "year": 1757,
+            "invention": 0.157,
+            "has_ref": false,
+            "unsupported": [
+              "zubrzy",
+              "lipka",
+              "lübau",
+              "lybau",
+              "martinik",
+              "millesund",
+              "nostiz",
+              "palsy"
+            ]
+          },
+          {
+            "slug": "german-fraktur-84e53b-p41",
+            "title": "Prognosticon spirituale. Oder Geistlicher Calender unnd Practica",
+            "year": 1613,
+            "invention": 0.11,
+            "has_ref": false,
+            "unsupported": [
+              "geiftlich",
+              "prognofticon",
+              "gefängniß",
+              "völkern",
+              "herz",
+              "widerfahren",
+              "gestirn",
+              "feindseli"
+            ]
+          }
+        ]
+      },
+      "paddleocr-vl-1.6": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 1,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.095,
+          "catastrophic": 2,
+          "median_gap": 0.005,
+          "median_bow": 0.702,
+          "refused": 0,
+          "n_answered": 20,
+          "median_cer_answered": 0.095,
+          "mean_cer": 0.27,
+          "mean_cer_answered": 0.27
+        },
+        "invention": {
+          "median": 0.378,
+          "mean": 0.394,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "german-fraktur-d95833-p8",
+            "title": "Auserwaehlte Meister von der schwarzen Bruderschaft",
+            "year": 1784,
+            "cer": 2.635,
+            "gap": 0.007,
+            "invention": 0.955,
+            "has_ref": false,
+            "unsupported": [
+              "form",
+              "based",
+              "point",
+              "curve",
+              "find",
+              "zehnte",
+              "abschluss",
+              "erheurend"
+            ]
+          },
+          {
+            "slug": "german-fraktur-3b1f2c-p176",
+            "title": "Handbuch der deutschen Literatur : seit der Mitte des achtzehnten Jahrhunderts bis auf die neueste Zeit. 1,1, Literatur ",
+            "year": 1812,
+            "cer": 0.778,
+            "gap": 0.418,
+            "invention": 0.096,
+            "has_ref": false,
+            "unsupported": [
+              "dagogik",
+              "nebt",
+              "schriftüb",
+              "bauetzen",
+              "hanover",
+              "rheinbeck",
+              "schultness",
+              "landfchullehrer"
+            ]
+          },
+          {
+            "slug": "german-fraktur-63274c-p28",
+            "title": "Entwurf einer allerneuesten Beschreibung des Königreichs Böhmen : in welchem von dieses Landes geographischen, physicali",
+            "year": 1757,
+            "cer": 0.25,
+            "gap": 0.009,
+            "invention": 0.867,
+            "has_ref": false,
+            "unsupported": [
+              "rünigl",
+              "rönigsed",
+              "rönigsfeld",
+              "rorjenski",
+              "rottulinski",
+              "rbuen",
+              "belafy",
+              "rustofd"
+            ]
+          },
+          {
+            "slug": "german-fraktur-316a06-p13",
+            "title": "Ain schöner christlicher sendbrieff und bericht",
+            "year": 1547,
+            "cer": 0.238,
+            "gap": 0.089,
+            "invention": 0.413,
+            "has_ref": false,
+            "unsupported": [
+              "züstande",
+              "aigenschaft",
+              "vaster",
+              "sonst",
+              "gelitre",
+              "creuge",
+              "gestoben",
+              "verchen"
+            ]
+          },
+          {
+            "slug": "german-fraktur-7c6332-p6",
+            "title": "Prognosticon Halbmayerianum, Das ist, Extract und Außzug, deß jenigen was Georg Halbmayer, Astronomus, von dem künfftige",
+            "year": 1631,
+            "cer": 0.183,
+            "gap": 0.043,
+            "invention": 0.363,
+            "has_ref": false,
+            "unsupported": [
+              "prognosticiet",
+              "christl",
+              "indsetet",
+              "anff",
+              "hauptdruck",
+              "sezt",
+              "beträbte",
+              "dismal"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "pages": [
+    {
+      "slug": "german-fraktur-18398f-p26",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "... Theil Der Bücher vnd Schrifften, deß Edlen, Hochgelehrten vnnd Bewehrten Philosophi vnnd Medici, Philippi Theophrast",
+      "year": 1603,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 2835,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.023,
+          "acc": 0.977,
+          "seq": 0.932,
+          "bow": 0.932,
+          "gap": 0,
+          "len_ratio": 1.012,
+          "invention": 0.072,
+          "invention_indep": 0.072,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "dieser",
+            "distillatio",
+            "setzen",
+            "fürtreffentlich",
+            "bereitung",
+            "anzunemmen",
+            "verstandẽ",
+            "reinigeste"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.932,
+            "paddleocr-vl-1.6": 0.677
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 2802,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.067,
+          "invention_indep": 0.067,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "jefes",
+            "distillat",
+            "sehen",
+            "bereittung",
+            "jedlich",
+            "verstande",
+            "reinigete",
+            "gesondert"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.932,
+            "paddleocr-vl-1.6": 0.679
+          }
+        },
+        "paddleocr-vl-1.6": {
+          "n_content": 2811,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.105,
+          "acc": 0.895,
+          "seq": 0.671,
+          "bow": 0.679,
+          "gap": 0.007,
+          "len_ratio": 1.003,
+          "invention": 0.468,
+          "invention_indep": 0.468,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "erdrich",
+            "feser",
+            "proces",
+            "distillabist",
+            "selbigen",
+            "geführt",
+            "elenensen",
+            "gebidungsfegen"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.677,
+            "gemini-3.1-flash-lite": 0.679
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-1d3ad7-p25",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Sendtschreiben an einen guten Freundt in Welschlandt",
+      "year": 1618,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1572,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.032,
+          "acc": 0.968,
+          "seq": 0.821,
+          "bow": 0.821,
+          "gap": 0,
+          "len_ratio": 1.003,
+          "invention": 0.122,
+          "invention_indep": 0.122,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ursachen",
+            "unnd",
+            "ketzereyen",
+            "irrthumb",
+            "unenderliche",
+            "unendtlichkeit",
+            "schutzer",
+            "unterworffen"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.821,
+            "paddleocr-vl-1.6": 0.604
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1568,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.16,
+          "invention_indep": 0.16,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "vrsachen",
+            "durch",
+            "zogen",
+            "kezereyen",
+            "jrthumb",
+            "vnenderliche",
+            "buendtlichkeit",
+            "vnnd"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.821,
+            "paddleocr-vl-1.6": 0.65
+          }
+        },
+        "paddleocr-vl-1.6": {
+          "n_content": 1563,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.085,
+          "acc": 0.915,
+          "seq": 0.643,
+          "bow": 0.65,
+          "gap": 0.007,
+          "len_ratio": 0.997,
+          "invention": 0.47,
+          "invention_indep": 0.47,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "protestfremdten",
+            "holland",
+            "brfachen",
+            "feiner",
+            "rajestät",
+            "keskerepen",
+            "irzthumb",
+            "vncnderliche"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.604,
+            "gemini-3.1-flash-lite": 0.65
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-316a06-p13",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Ain schöner christlicher sendbrieff und bericht",
+      "year": 1547,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1477,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.244,
+          "acc": 0.756,
+          "seq": 0.834,
+          "bow": 0.938,
+          "gap": 0.104,
+          "len_ratio": 1,
+          "invention": 0.087,
+          "invention_indep": 0.087,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "zůstande",
+            "unterschaiden",
+            "gelittē",
+            "göttliche",
+            "nigkait",
+            "dreyfal",
+            "tigkeit",
+            "errette"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.938,
+            "paddleocr-vl-1.6": 0.724
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1477,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.065,
+          "invention_indep": 0.065,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "zustande",
+            "gelitte",
+            "erzette",
+            "schlagende",
+            "nigkeit",
+            "dreyfals",
+            "tigkeitdurch",
+            "züerzet"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.938,
+            "paddleocr-vl-1.6": 0.752
+          }
+        },
+        "paddleocr-vl-1.6": {
+          "n_content": 1460,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.238,
+          "acc": 0.762,
+          "seq": 0.663,
+          "bow": 0.752,
+          "gap": 0.089,
+          "len_ratio": 0.988,
+          "invention": 0.413,
+          "invention_indep": 0.413,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "züstande",
+            "aigenschaft",
+            "vaster",
+            "sonst",
+            "gelitre",
+            "creuge",
+            "gestoben",
+            "verchen"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.724,
+            "gemini-3.1-flash-lite": 0.752
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-3b1f2c-p176",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Handbuch der deutschen Literatur : seit der Mitte des achtzehnten Jahrhunderts bis auf die neueste Zeit. 1,1, Literatur ",
+      "year": 1812,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 2741,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.787,
+          "acc": 0.213,
+          "seq": 0.405,
+          "bow": 0.793,
+          "gap": 0.388,
+          "len_ratio": 1,
+          "invention": 0.214,
+          "invention_indep": 0.214,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "abschn",
+            "insonderh",
+            "beschr",
+            "waisenh",
+            "nebst",
+            "gesch",
+            "ersten",
+            "niemeyersche"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.793,
+            "paddleocr-vl-1.6": 0.888
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 2741,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.17,
+          "invention_indep": 0.17,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "unauch",
+            "terhaltt",
+            "tzen",
+            "deutfehe",
+            "jüberlin",
+            "licher",
+            "frey",
+            "geberg"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.793,
+            "paddleocr-vl-1.6": 0.833
+          }
+        },
+        "paddleocr-vl-1.6": {
+          "n_content": 2736,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.778,
+          "acc": 0.222,
+          "seq": 0.415,
+          "bow": 0.833,
+          "gap": 0.418,
+          "len_ratio": 0.998,
+          "invention": 0.096,
+          "invention_indep": 0.096,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "dagogik",
+            "nebt",
+            "schriftüb",
+            "bauetzen",
+            "hanover",
+            "rheinbeck",
+            "schultness",
+            "landfchullehrer"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.888,
+            "gemini-3.1-flash-lite": 0.833
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-5fa9a3-p39",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Wiederlegunge der Abgötterey und nichtigen Aberglaubens",
+      "year": 1627,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1530,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.01,
+          "acc": 0.99,
+          "seq": 0.934,
+          "bow": 0.934,
+          "gap": 0,
+          "len_ratio": 0.996,
+          "invention": 0.04,
+          "invention_indep": 0.04,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "abergläubigen",
+            "exempel",
+            "gläube",
+            "gläubet",
+            "zuwidern"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.934,
+            "paddleocr-vl-1.6": 0.773
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1536,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.098,
+          "invention_indep": 0.098,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "aberglaubigen",
+            "scheinen",
+            "erempel",
+            "gläu",
+            "erscheis",
+            "nungen",
+            "jung",
+            "fraw"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.934,
+            "paddleocr-vl-1.6": 0.764
+          }
+        },
+        "paddleocr-vl-1.6": {
+          "n_content": 1534,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.06,
+          "acc": 0.94,
+          "seq": 0.755,
+          "bow": 0.764,
+          "gap": 0.01,
+          "len_ratio": 0.999,
+          "invention": 0.264,
+          "invention_indep": 0.264,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "abberglaubigen",
+            "sbrauch",
+            "ephes",
+            "leuffel",
+            "krempel",
+            "betrieblich",
+            "christl",
+            "erren"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.773,
+            "gemini-3.1-flash-lite": 0.764
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-63274c-p28",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Entwurf einer allerneuesten Beschreibung des Königreichs Böhmen : in welchem von dieses Landes geographischen, physicali",
+      "year": 1757,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 745,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.027,
+          "acc": 0.973,
+          "seq": 0.862,
+          "bow": 0.862,
+          "gap": 0,
+          "len_ratio": 1.008,
+          "invention": 0.157,
+          "invention_indep": 0.157,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "zubrzi",
+            "libka",
+            "lützau",
+            "lyßau",
+            "martiniß",
+            "millesimo",
+            "nostiß",
+            "palfy"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.862,
+            "paddleocr-vl-1.6": 0.22
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 739,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.157,
+          "invention_indep": 0.157,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "zubrzy",
+            "lipka",
+            "lübau",
+            "lybau",
+            "martinik",
+            "millesund",
+            "nostiz",
+            "palsy"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.862,
+            "paddleocr-vl-1.6": 0.22
+          }
+        },
+        "paddleocr-vl-1.6": {
+          "n_content": 725,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.25,
+          "acc": 0.75,
+          "seq": 0.211,
+          "bow": 0.22,
+          "gap": 0.009,
+          "len_ratio": 0.981,
+          "invention": 0.867,
+          "invention_indep": 0.867,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "rünigl",
+            "rönigsed",
+            "rönigsfeld",
+            "rorjenski",
+            "rottulinski",
+            "rbuen",
+            "belafy",
+            "rustofd"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.22,
+            "gemini-3.1-flash-lite": 0.22
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-64c667-p75",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Allgemeines Adelsarchiv der österreichischen Monarchie : welches in alphabetischer Ordnung alle reichsfürstliche Häuser,",
+      "year": 1789,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 2880,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.023,
+          "acc": 0.977,
+          "seq": 0.931,
+          "bow": 0.935,
+          "gap": 0.004,
+          "len_ratio": 1.006,
+          "invention": 0.064,
+          "invention_indep": 0.064,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "kaufsinstrumenten",
+            "advocationis",
+            "praesentibus",
+            "bubassio",
+            "advocatiae",
+            "villae",
+            "cuccius",
+            "quae"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.935,
+            "paddleocr-vl-1.6": 0.767
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 2864,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.072,
+          "invention_indep": 0.072,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "kaufinstrumenten",
+            "advocatiæ",
+            "armaniæ",
+            "präsentibus",
+            "bubalio",
+            "villæ",
+            "euceius",
+            "ottacuecius"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.935,
+            "paddleocr-vl-1.6": 0.763
+          }
+        },
+        "paddleocr-vl-1.6": {
+          "n_content": 2873,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.058,
+          "acc": 0.942,
+          "seq": 0.763,
+          "bow": 0.763,
+          "gap": 0,
+          "len_ratio": 1.003,
+          "invention": 0.301,
+          "invention_indep": 0.301,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ottaf",
+            "marchifats",
+            "atténs",
+            "entsproffen",
+            "óborich",
+            "deuen",
+            "raufsinstrumenten",
+            "gaftaldioni"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.767,
+            "gemini-3.1-flash-lite": 0.763
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-6ca8d2-p237",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Sprichwörter der germanischen und romanischen Sprachen",
+      "year": 1872,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 2735,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.004,
+          "acc": 0.996,
+          "seq": 0.983,
+          "bow": 0.983,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.027,
+          "invention_indep": 0.027,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "d'êgo",
+            "veūl",
+            "sůht",
+            "gėner",
+            "lėkt",
+            "gesån"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.983,
+            "paddleocr-vl-1.6": 0.942
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 2734,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.027,
+          "invention_indep": 0.027,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "d'ëgo",
+            "veul",
+            "sûht",
+            "gêner",
+            "lèkt",
+            "gesân"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.983,
+            "paddleocr-vl-1.6": 0.94
+          }
+        },
+        "paddleocr-vl-1.6": {
+          "n_content": 2765,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.067,
+          "acc": 0.933,
+          "seq": 0.912,
+          "bow": 0.94,
+          "gap": 0.028,
+          "len_ratio": 1.011,
+          "invention": 0.078,
+          "invention_indep": 0.078,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "contra",
+            "curing",
+            "contrá",
+            "d'égol",
+            "n'éstrouplé",
+            "unn'ammazzò",
+            "tödte",
+            "s'veul"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.942,
+            "gemini-3.1-flash-lite": 0.94
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-7c6332-p6",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Prognosticon Halbmayerianum, Das ist, Extract und Außzug, deß jenigen was Georg Halbmayer, Astronomus, von dem künfftige",
+      "year": 1631,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1013,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.433,
+          "acc": 0.567,
+          "seq": 0.71,
+          "bow": 0.942,
+          "gap": 0.232,
+          "len_ratio": 0.998,
+          "invention": 0.071,
+          "invention_indep": 0.071,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "vnter",
+            "stats",
+            "monarchey",
+            "vbermuth",
+            "scorpionistn",
+            "secht",
+            "förchtn",
+            "vnerschwinglich"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.942,
+            "paddleocr-vl-1.6": 0.671
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1015,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.071,
+          "invention_indep": 0.071,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "herzvnter",
+            "ståts",
+            "monarchen",
+            "endy",
+            "obermuth",
+            "scorpionisten",
+            "förcht",
+            "vnverschwinglich"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.942,
+            "paddleocr-vl-1.6": 0.668
+          }
+        },
+        "paddleocr-vl-1.6": {
+          "n_content": 997,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.183,
+          "acc": 0.817,
+          "seq": 0.626,
+          "bow": 0.668,
+          "gap": 0.043,
+          "len_ratio": 0.982,
+          "invention": 0.363,
+          "invention_indep": 0.363,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "prognosticiet",
+            "christl",
+            "indsetet",
+            "anff",
+            "hauptdruck",
+            "sezt",
+            "beträbte",
+            "dismal"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.671,
+            "gemini-3.1-flash-lite": 0.668
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-7d6c62-p74",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Zwiefache Apologia, und Christliche Verantwortung auf die fünf lästerlichen Hauptpuncte Davids Gilberti von Utrecht, ins",
+      "year": 1676,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1042,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0,
+          "acc": 1,
+          "seq": 0.957,
+          "bow": 0.957,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.038,
+          "invention_indep": 0.038,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "vorbringet",
+            "sonnenklar",
+            "seelen",
+            "verdorbenem"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.957,
+            "paddleocr-vl-1.6": 0.735
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1042,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.019,
+          "invention_indep": 0.019,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "kehrt",
+            "rechtigkeit"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.957,
+            "paddleocr-vl-1.6": 0.748
+          }
+        },
+        "paddleocr-vl-1.6": {
+          "n_content": 1047,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.085,
+          "acc": 0.915,
+          "seq": 0.748,
+          "bow": 0.748,
+          "gap": 0,
+          "len_ratio": 1.005,
+          "invention": 0.376,
+          "invention_indep": 0.376,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "gewicht",
+            "qing",
+            "gefloffen",
+            "dabin",
+            "gebet",
+            "weift",
+            "durchgehendst",
+            "feel"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.735,
+            "gemini-3.1-flash-lite": 0.748
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-84e53b-p41",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Prognosticon spirituale. Oder Geistlicher Calender unnd Practica",
+      "year": 1613,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1053,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.13,
+          "acc": 0.87,
+          "seq": 0.714,
+          "bow": 0.817,
+          "gap": 0.103,
+          "len_ratio": 1.013,
+          "invention": 0.18,
+          "invention_indep": 0.18,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "geistlich",
+            "prognosticon",
+            "gefängnuß",
+            "jhre",
+            "alle",
+            "völckern",
+            "jhnen",
+            "jesus"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.817,
+            "paddleocr-vl-1.6": 0.506
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1040,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.11,
+          "invention_indep": 0.11,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "geiftlich",
+            "prognofticon",
+            "gefängniß",
+            "völkern",
+            "herz",
+            "widerfahren",
+            "gestirn",
+            "feindseli"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.817,
+            "paddleocr-vl-1.6": 0.589
+          }
+        },
+        "paddleocr-vl-1.6": {
+          "n_content": 962,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.156,
+          "acc": 0.844,
+          "seq": 0.584,
+          "bow": 0.589,
+          "gap": 0.005,
+          "len_ratio": 0.925,
+          "invention": 0.38,
+          "invention_indep": 0.38,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "beistlich",
+            "prognoficon",
+            "ficdurch",
+            "mancherlen",
+            "wird",
+            "gefängnungs",
+            "winkel",
+            "diefer"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.506,
+            "gemini-3.1-flash-lite": 0.589
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-85655d-p18",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Ein altes, sehr schönes und herrliches Tractätlein von dem Gebenedeyeten Stein",
+      "year": 1682,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1056,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.016,
+          "acc": 0.984,
+          "seq": 0.953,
+          "bow": 0.953,
+          "gap": 0,
+          "len_ratio": 1.006,
+          "invention": 0.085,
+          "invention_indep": 0.085,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "füsse",
+            "snhlische",
+            "zuempfahen",
+            "deßgleichen",
+            "grün",
+            "rasis",
+            "schnödeste",
+            "denen"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.953,
+            "paddleocr-vl-1.6": 0.703
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1050,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.077,
+          "invention_indep": 0.077,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "füße",
+            "enlische",
+            "empfahen",
+            "desgleichen",
+            "ralis",
+            "schnöbeste",
+            "desnen",
+            "unvollkommenen"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.953,
+            "paddleocr-vl-1.6": 0.704
+          }
+        },
+        "paddleocr-vl-1.6": {
+          "n_content": 952,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.157,
+          "acc": 0.843,
+          "seq": 0.704,
+          "bow": 0.704,
+          "gap": 0,
+          "len_ratio": 0.907,
+          "invention": 0.383,
+          "invention_indep": 0.383,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "belches",
+            "bateru",
+            "aller",
+            "liebste",
+            "umbfazgen",
+            "feinem",
+            "rohlet",
+            "schwarg"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.703,
+            "gemini-3.1-flash-lite": 0.704
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-98a276-p134",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Elvcidarivs Major. oder Erleuchtung über die Reformation der ganzen weiten Welt : F.C.R. auß ihrer Chymischen Hochzeit, ",
+      "year": 1751,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 901,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.008,
+          "acc": 0.992,
+          "seq": 0.961,
+          "bow": 0.961,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.02,
+          "invention_indep": 0.02,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "vertreibn",
+            "unfix"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.961,
+            "paddleocr-vl-1.6": 0.734
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 901,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.01,
+          "invention_indep": 0.01,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "irdischen"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.961,
+            "paddleocr-vl-1.6": 0.763
+          }
+        },
+        "paddleocr-vl-1.6": {
+          "n_content": 893,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.07,
+          "acc": 0.93,
+          "seq": 0.763,
+          "bow": 0.763,
+          "gap": 0,
+          "len_ratio": 0.991,
+          "invention": 0.271,
+          "invention_indep": 0.271,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "bürkt",
+            "bunder",
+            "glorificitem",
+            "alleörper",
+            "gemeinseler",
+            "ihes",
+            "sern",
+            "mobl"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.734,
+            "gemini-3.1-flash-lite": 0.763
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-a6c2ba-p17",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Tractatus De Medicina Universali. Das ist: Von der Universal-Medicin: Wie nemlich dieselbe in denen dreyen Reichen der M",
+      "year": 1678,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1367,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.006,
+          "acc": 0.994,
+          "seq": 0.967,
+          "bow": 0.967,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0.05,
+          "invention_indep": 0.05,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "natu",
+            "rlich",
+            "trockenheit",
+            "opffer",
+            "gifftiger",
+            "essentificatus",
+            "lebendige"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.967,
+            "paddleocr-vl-1.6": 0.673
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1366,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.021,
+          "invention_indep": 0.021,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "effen",
+            "fificatus",
+            "lebensdige"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.967,
+            "paddleocr-vl-1.6": 0.692
+          }
+        },
+        "paddleocr-vl-1.6": {
+          "n_content": 1353,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.064,
+          "acc": 0.936,
+          "seq": 0.692,
+          "bow": 0.692,
+          "gap": 0,
+          "len_ratio": 0.99,
+          "invention": 0.372,
+          "invention_indep": 0.372,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "spagprischen",
+            "weisheit",
+            "rima",
+            "burt",
+            "magnefia",
+            "cælum",
+            "philofophorum",
+            "concentrirfe"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.673,
+            "gemini-3.1-flash-lite": 0.692
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-cf5272-p326",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Georg Ernst Stahls, Königl. Preußischen Hoff-Raths und Leib-Medici, Chymia Rationalis Et Experimentalis; Oder: Gründlich",
+      "year": 1729,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1193,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.005,
+          "acc": 0.995,
+          "seq": 0.905,
+          "bow": 0.905,
+          "gap": 0,
+          "len_ratio": 1.003,
+          "invention": 0.091,
+          "invention_indep": 0.091,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "giesset",
+            "gummatosische",
+            "stantien",
+            "saltzes",
+            "sistenz",
+            "reitung",
+            "äusserli",
+            "tröpffelen"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.905,
+            "paddleocr-vl-1.6": 0.734
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1190,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.089,
+          "invention_indep": 0.089,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "gieset",
+            "gummatofische",
+            "menge",
+            "salkes",
+            "consistenz",
+            "bereitung",
+            "äusserliche",
+            "tröpfelen"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.905,
+            "paddleocr-vl-1.6": 0.761
+          }
+        },
+        "paddleocr-vl-1.6": {
+          "n_content": 1187,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.073,
+          "acc": 0.927,
+          "seq": 0.761,
+          "bow": 0.761,
+          "gap": 0,
+          "len_ratio": 0.997,
+          "invention": 0.384,
+          "invention_indep": 0.384,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "aberot",
+            "gießt",
+            "merchten",
+            "gummatostische",
+            "beip",
+            "hieren",
+            "größeren",
+            "renge"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.734,
+            "gemini-3.1-flash-lite": 0.761
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-cf8300-p110",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Bedencken uber Esaiæ Stiefels Büchlein: Von dreyerley Zustandt des Menschen, unnd dessen newen Geburt",
+      "year": 1639,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 922,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.003,
+          "acc": 0.997,
+          "seq": 0.984,
+          "bow": 0.984,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0.021,
+          "invention_indep": 0.021,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "concordantz",
+            "außgeführt"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.984,
+            "paddleocr-vl-1.6": 0.688
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 921,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.011,
+          "invention_indep": 0.011,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "außgeführet"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.984,
+            "paddleocr-vl-1.6": 0.699
+          }
+        },
+        "paddleocr-vl-1.6": {
+          "n_content": 922,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.097,
+          "acc": 0.903,
+          "seq": 0.694,
+          "bow": 0.699,
+          "gap": 0.005,
+          "len_ratio": 1.001,
+          "invention": 0.358,
+          "invention_indep": 0.358,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "gendschreiben",
+            "gnadenberzheissung",
+            "22benn",
+            "anti",
+            "christ",
+            "code",
+            "ergrieffen",
+            "getödt"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.688,
+            "gemini-3.1-flash-lite": 0.699
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-d95833-p8",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Auserwaehlte Meister von der schwarzen Bruderschaft",
+      "year": 1784,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1358,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.085,
+          "acc": 0.915,
+          "seq": 0.881,
+          "bow": 0.885,
+          "gap": 0.004,
+          "len_ratio": 1.009,
+          "invention": 0.219,
+          "invention_indep": 0.219,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "sehr",
+            "ehrwürdiger",
+            "thut",
+            "davon",
+            "nachricht",
+            "drey",
+            "beyden",
+            "alsdann"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.885,
+            "paddleocr-vl-1.6": 0.026
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1346,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.205,
+          "invention_indep": 0.205,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "hochwürdiger",
+            "erfüll",
+            "bescheid",
+            "beiden",
+            "sodann",
+            "ehrenmeisters",
+            "orden",
+            "unermüdeten"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.885,
+            "paddleocr-vl-1.6": 0.023
+          }
+        },
+        "paddleocr-vl-1.6": {
+          "n_content": 4236,
+          "empty": false,
+          "refused": false,
+          "loop": true,
+          "cer": 2.635,
+          "acc": 0,
+          "seq": 0.016,
+          "bow": 0.023,
+          "gap": 0.007,
+          "len_ratio": 3.147,
+          "invention": 0.955,
+          "invention_indep": 0.955,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "form",
+            "based",
+            "point",
+            "curve",
+            "find",
+            "zehnte",
+            "abschluss",
+            "erheurend"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.026,
+            "gemini-3.1-flash-lite": 0.023
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-da46af-p53",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "drei ältesten Kunsturkunden der Freimaurer-Bruderschaft, mitgetheilt, bearbeitet und in einem Lehrfragstuck urvergeistig",
+      "year": 1820,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1828,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.003,
+          "acc": 0.997,
+          "seq": 0.978,
+          "bow": 0.978,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0.024,
+          "invention_indep": 0.024,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "orvietto",
+            "cosi",
+            "erstwesentliche",
+            "institutus"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.978,
+            "paddleocr-vl-1.6": 0.877
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1827,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.018,
+          "invention_indep": 0.018,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "città",
+            "hofpitalariorum",
+            "inftitutus"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.978,
+            "paddleocr-vl-1.6": 0.88
+          }
+        },
+        "paddleocr-vl-1.6": {
+          "n_content": 1819,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.024,
+          "acc": 0.976,
+          "seq": 0.88,
+          "bow": 0.88,
+          "gap": 0,
+          "len_ratio": 0.996,
+          "invention": 0.168,
+          "invention_indep": 0.168,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "fascichi",
+            "divino",
+            "continueatur",
+            "qualquer",
+            "intoitum",
+            "ipsum",
+            "sopran",
+            "dell'archivio"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.877,
+            "gemini-3.1-flash-lite": 0.88
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-e30c70-p138",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Briefe an einen Freund in der Schweiz",
+      "year": 1786,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1053,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.002,
+          "acc": 0.998,
+          "seq": 0.921,
+          "bow": 0.921,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.07,
+          "invention_indep": 0.07,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ferner",
+            "gemäldes",
+            "verlieren",
+            "geplaudert",
+            "geheimnisse",
+            "witzelnden",
+            "vernunftkopfe",
+            "geredet"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.921,
+            "paddleocr-vl-1.6": 0.677
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1053,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.078,
+          "invention_indep": 0.078,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "gemäl",
+            "gehö",
+            "lieren",
+            "geplau",
+            "dert",
+            "geheim",
+            "zelnden",
+            "vernunft"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.921,
+            "paddleocr-vl-1.6": 0.67
+          }
+        },
+        "paddleocr-vl-1.6": {
+          "n_content": 1042,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.093,
+          "acc": 0.907,
+          "seq": 0.67,
+          "bow": 0.67,
+          "gap": 0,
+          "len_ratio": 0.99,
+          "invention": 0.441,
+          "invention_indep": 0.441,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "řdriftausleger",
+            "fersner",
+            "feyn",
+            "laffen",
+            "find",
+            "folchen",
+            "ritteln",
+            "ordensmeifter"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.677,
+            "gemini-3.1-flash-lite": 0.67
+          }
+        }
+      }
+    },
+    {
+      "slug": "german-fraktur-f3879c-p65",
+      "substratum": "german-1500-1899",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Die Entlarffte Alchymia, Worinnen gründlich die bißherige, unter so vielen Rätzeln, gleich unter einer Larffen, verborge",
+      "year": 1713,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 774,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.014,
+          "acc": 0.986,
+          "seq": 0.916,
+          "bow": 0.916,
+          "gap": 0,
+          "len_ratio": 0.999,
+          "invention": 0.104,
+          "invention_indep": 0.104,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "quecksilber",
+            "fixitæt",
+            "obwohlen",
+            "adæquata",
+            "causa",
+            "dadurch",
+            "extremitæt",
+            "queck"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.916,
+            "paddleocr-vl-1.6": 0.654
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 775,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.079,
+          "invention_indep": 0.079,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "qvecksilber",
+            "wohlen",
+            "adæquatæ",
+            "causæ",
+            "extremitet",
+            "qveck"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.916,
+            "paddleocr-vl-1.6": 0.675
+          }
+        },
+        "paddleocr-vl-1.6": {
+          "n_content": 778,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.126,
+          "acc": 0.874,
+          "seq": 0.675,
+          "bow": 0.675,
+          "gap": 0,
+          "len_ratio": 1.004,
+          "invention": 0.474,
+          "invention_indep": 0.474,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "fubtil",
+            "befannt",
+            "filber",
+            "darvon",
+            "geber",
+            "flücho",
+            "biertens",
+            "verpfüret"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.654,
+            "gemini-3.1-flash-lite": 0.675
+          }
+        }
+      }
+    }
+  ]
+}

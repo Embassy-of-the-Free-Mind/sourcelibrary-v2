@@ -129,6 +129,12 @@ describe('upgradeToFullRes — IIIF Image API 3.0 says `max`, not `full`', () =>
     expect(upgradeToFullRes(KYOTO_V3_SIZED)).toBe('https://rmda.kulib.kyoto-u.ac.jp/iiif/3/abc/full/max/0/default.jpg');
   });
 
+  it('treats the DLCS /iiif-img/v3/ path as v3 (TU Delft, #3186)', () => {
+    const dlcs = 'https://dlc.services/iiif-img/v3/7/6/3e0da597-95bb-4c9a-85aa-4cc557b015b2/full/1000,/0/default.jpg';
+    expect(upgradeToFullRes(dlcs)).toBe(dlcs.replace('/full/1000,/', '/full/max/'));
+    expect(repairIiifV3Size(dlcs.replace('/full/1000,/', '/full/full/'))).toBe(dlcs.replace('/full/1000,/', '/full/max/'));
+  });
+
   it('never emits the v2 keyword on a v3 path', () => {
     for (const url of [IA_V3_FULL, IA_V3_MAX, KYOTO_V3_SIZED, 'https://iiif.archive.org/iiif/3/abc$5/full/pct:50/0/default.jpg']) {
       expect(upgradeToFullRes(url), url).not.toMatch(/\/iiif\/3\/[^ ]*\/full\/full\//);

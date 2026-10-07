@@ -1,0 +1,21 @@
+{
+ "id": "69e8b27f2ff2a8dc09e77ed7_00048",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "# 45 Recto\n\nThe perfected beings <term>Siddhas</term> <gloss>those endowed with supernatural powers</gloss>, the liberated, and those possessing auspicious brilliance, the Rudras, the Adityas, the Vasus, the Sadhyas, the Vishvadevas, and the Maruts. The glorious Gandharvas, the Yakshas, the assemblies of the learned, and the mothers of the deities who are present here. <note>verse 22</note> Thus, by the two circles <note>likely referring to cosmological diagrams or mandalas</note>, may the manifestation of the Rudra-net be established here within this world, overcoming all obstacles. <note>verse 23</note> Having praised the form of the protector, bringing joy and vast protection, and having worshipped the deities with music and hymns, one attains the Self. Thus I bow to the Lord Vishnu. <note>verse 24</note> Seeing the auspicious omens and the fire of time <note>a reference to *kalanala*, the fire of dissolution</note>.\n\n<column-break/>\n\n# 45 Verso\n\nThose signs, once observed, shall not bring joy to him who does not understand. Here, Sudama, always devoted, [whose] fame is without end, without rival. The playful assembly, the joy of the lineage, desiring battle, Sudama, always devoted, [whose] fame is without end, without rival. The verses composed by the scholar, these are the arts. Fame without end, without rival. Now, the sacrifice is established. <note>verse 21</note> Just as Nandin is the light of the Rudras. <note>verse 22</note> Here, Sudama, always devoted, [whose] fame is without end, without rival. The wise ones, the leaders, and those who are vast, these are the paths. <note>verse 23</note> Here, Sudama, always devoted, [whose] fame is without end, without rival.\n\n<note>A circular hole is positioned in the center of the palm leaf, serving as a passage for the binding cord used to secure the manuscript folios.</note>\n\n<summary>This page contains a series of invocations to various classes of Vedic deities and celestial beings, followed by ritual instructions and repetitive verses praising a figure named Sudama in the context of sacrifice and devotion.</summary>\n<keywords>Siddhas, Rudras, Adityas, Sudama, ritual sacrifice, devotion, Vedic deities, mandalas</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2317,
+ "outputTokens": 546,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.0006991250000000001,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1190,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

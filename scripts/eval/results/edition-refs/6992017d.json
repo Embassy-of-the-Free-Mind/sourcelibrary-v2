@@ -1,0 +1,113 @@
+{
+  "summary": {
+    "book_id": "6992017d7c226bdd25f99444",
+    "title": "The Forbidden Fruit, or a Treatise of the Tree of Knowledge",
+    "published": "1640",
+    "source": "EEBO-TCP A01210",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 6,
+    "skips": {
+      "probe-too-short": 1,
+      "guard-refused": 1
+    },
+    "median_char_acc": 0.9608,
+    "median_char_acc_windowed": 0.9563,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6992017d-p2",
+      "page": 2,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6992017d-p9",
+      "page": 9,
+      "overlap": 1,
+      "probe_words": 234,
+      "ref_chars": 1290,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.095,
+      "char_acc": 0.9749,
+      "char_acc_windowed": 0.972
+    },
+    {
+      "slug": "ed-6992017d-p17",
+      "page": 17,
+      "overlap": 0.473,
+      "probe_words": 114,
+      "ref_chars": 587,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.412,
+      "char_acc": 0.7551,
+      "char_acc_windowed": 0.6757,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-6992017d-p26",
+      "page": 26,
+      "overlap": 1,
+      "probe_words": 188,
+      "ref_chars": 1117,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.104,
+      "char_acc": 0.9608,
+      "char_acc_windowed": 0.9563
+    },
+    {
+      "slug": "ed-6992017d-p28",
+      "page": 28,
+      "overlap": 1,
+      "probe_words": 192,
+      "ref_chars": 1083,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.114,
+      "char_acc": 0.9532,
+      "char_acc_windowed": 0.9509
+    },
+    {
+      "slug": "ed-6992017d-p43",
+      "page": 43,
+      "overlap": 0.886,
+      "probe_words": 79,
+      "ref_chars": 439,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.141,
+      "char_acc": 0.9116,
+      "char_acc_windowed": 0.878
+    },
+    {
+      "slug": "ed-6992017d-p48",
+      "page": 48,
+      "overlap": 0.857,
+      "probe_words": 161,
+      "ref_chars": 889,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.174,
+      "char_acc": 0.8881,
+      "char_acc_windowed": 0.875
+    },
+    {
+      "slug": "ed-6992017d-p144",
+      "page": 144,
+      "overlap": 0.976,
+      "probe_words": 182,
+      "ref_chars": 1056,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.126,
+      "char_acc": 0.9608,
+      "char_acc_windowed": 0.9572
+    }
+  ]
+}

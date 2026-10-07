@@ -16,6 +16,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { makeRng } from './lib/paired-stats.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const args = Object.fromEntries(process.argv.slice(2).map(a => {
@@ -23,9 +24,9 @@ const args = Object.fromEntries(process.argv.slice(2).map(a => {
 }));
 const REF = args.ref || 'gemini-3.5-flash-lite';
 
-// Deterministic PRNG so the bootstrap CI is reproducible.
-let seed = 0x5eed;
-const rand = () => (seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x80000000;
+// Deterministic PRNG so the bootstrap CI is reproducible. The generator is the shared one: the LCG
+// that stood here lost its low bits to double rounding and cycled after ~13.7K draws (#5373).
+const rand = makeRng(0x5eed);
 
 const obsDir = path.join(__dirname, 'observations');
 const seen = new Set(); const rows = [];

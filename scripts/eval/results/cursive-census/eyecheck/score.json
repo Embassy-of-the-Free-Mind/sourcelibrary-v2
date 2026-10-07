@@ -1,0 +1,14 @@
+{
+ "n": 60,
+ "unsure": 0,
+ "missing": [],
+ "confusion": {
+  "classifier cursive / eye cursive": 28,
+  "classifier cursive / eye regular": 2,
+  "classifier regular / eye cursive": 0,
+  "classifier regular / eye regular": 30
+ },
+ "agreement": 0.9666666666666667,
+ "precision_cursive": 0.9333333333333333,
+ "recall_cursive": 1
+}

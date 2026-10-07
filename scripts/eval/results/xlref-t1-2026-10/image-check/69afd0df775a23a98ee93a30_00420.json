@@ -1,0 +1,123 @@
+{
+ "id": "69afd0df775a23a98ee93a30_00420",
+ "image_legible": true,
+ "ocr_word_errors": 16,
+ "ocr_words_approx": 780,
+ "ocr_errors": [
+  {
+   "image": "(WRONG IMAGE) 0420.jpg shows fol. 205r 'recentis cinis cum rosaceo. Seuũ bubulũ ...'",
+   "ocr": "'na succida appositu. Olympias thebana ...' = the text printed on 0425.jpg (fol. 207v)",
+   "effect_on_english": "none on the English itself, but the page's stored image and its OCR/translation are 5 images apart; all readings below are checked against 0425.jpg"
+  },
+  {
+   "image": "Dolores earũ iecur. Carnesq; lupi edisse parituris ꝓdest",
+   "ocr": "Dolores earu etiā cōtra illita noxia ualeat. Et n/ pdest (eye-skip: next line's end repeated)",
+   "effect_on_english": "wolf's liver / eating wolf's flesh lost: 'effective against harmful applications to alleviate their pains. And it is not useless'"
+  },
+  {
+   "image": "Eun/dem uero suꝑuenire ꝑnitiosum ē",
+   "ocr": "Et n/dem uero supuenire pnitiolum ē",
+   "effect_on_english": "'it is truly a small thing to mention that it supervenes' (should be: his coming in is dangerous)"
+  },
+  {
+   "image": "Vuluas suffitu corrigit. Vngulæ asininæ suffitæ",
+   "ocr": "Vultus suffigit. Vugulæ asininæ suffitæ",
+   "effect_on_english": "'It stiffens the face.'"
+  },
+  {
+   "image": "Vuluas ꝓcidētes butyrũ infusum sistit",
+   "ocr": "Vultus pcidētes butyro infusum sistit",
+   "effect_on_english": "'It stops the face from drooping if infused with butter' (prolapse of the womb)"
+  },
+  {
+   "image": "Lyen bubulus in melle edit̃. Et illinit̃ ad lyenis dolores",
+   "ocr": "Lyen uituli in melle ediē. Et illiniē ad lyenis dolorē",
+   "effect_on_english": "'Calf spleen is to be eaten in honey' (ox spleen)"
+  },
+  {
+   "image": "in nouẽ dies friuolo qdẽ loco",
+   "ocr": "in nouē dies fritolo loco",
+   "effect_on_english": "'a frivolous jest' dropped"
+  },
+  {
+   "image": "adipe ſ̃pentium (serpentium)",
+   "ocr": "adipe spentium",
+   "effect_on_english": "'the fat of geese' for serpents' fat"
+  },
+  {
+   "image": "Itē corn⁹ ceruini đcocto. Melius si recentia",
+   "ocr": "Itē corn⁹ ceruini docto. Melias si recentia",
+   "effect_on_english": "'Likewise, stag horn, as taught'"
+  },
+  {
+   "image": "tritũ ſ̃uatur ad uuluas (seruatur)",
+   "ocr": "tritū fuatur ad uuluas",
+   "effect_on_english": "'is used for the womb' (is kept)"
+  },
+  {
+   "image": "aut spergat̃ potiõi: uł si grauidæ",
+   "ocr": "aut spergat potiōi: ut si grauisdæ",
+   "effect_on_english": "'in case it torments pregnant women' (even if)"
+  },
+  {
+   "image": "cũ melle linũt sanguinẽ ubi euulsos pilos",
+   "ocr": "cū melle linit sanguine ubi euulsos pilos",
+   "effect_on_english": "'smeared with honey, it is used on blood' (they smear the blood)"
+  }
+ ],
+ "page_cause": "translation",
+ "causes": [
+  {
+   "finding": "'if the loins of a buck are pricked' for the woman's loins rubbed (lumbi perungantur mulieri)",
+   "cause": "translation",
+   "image": "si sanguine hircini lumbi pungant̃ mulieri tediũ ueneris fieri",
+   "ocr": "si sanguine hircini lumbi punganē mulieri tediū ueneris fieri",
+   "english": "if the loins of a buck are pricked with the blood"
+  },
+  {
+   "finding": "'goat urine mixed with spikenard is a drink of love, because of the fragrance' reverses 'Idem amoris [taedium]'",
+   "cause": "translation",
+   "image": "Idẽ amoris pota hirci urina ammixto ꝓꝑ fastigiũ nardo",
+   "ocr": "Idē amoris pota hirci urina ammixto pp fastigiū nardo",
+   "english": "goat urine mixed with spikenard is a drink of love"
+  },
+  {
+   "finding": "'the fat of geese' for adipe serpentium",
+   "cause": "ocr_abbrev",
+   "image": "adipe ſ̃pentium",
+   "ocr": "adipe spentium",
+   "english": "the fat of geese"
+  },
+  {
+   "finding": "'it is truly a small thing to mention that it supervenes' for superuenire pernitiosum est",
+   "cause": "ocr_misread",
+   "image": "Eundem uero suꝑuenire ꝑnitiosum ē",
+   "ocr": "Et n/dem uero supuenire pnitiolum ē",
+   "english": "it is truly a small thing to mention that it supervenes"
+  },
+  {
+   "finding": "'a hare's uterus, removed' for conceptum leporis utero exemptum (fetus)",
+   "cause": "translation",
+   "image": "Conceptũ leporis utero exemptũ iis quæ parere desierint",
+   "ocr": "Conceptū leporis utero exemptū iis quæ parere desierint",
+   "english": "a hare's uterus, removed and given to those"
+  },
+  {
+   "finding": "drops 'friuolo loco' (a frivolous jest)",
+   "cause": "ocr_misread",
+   "image": "friuolo qdẽ loco",
+   "ocr": "fritolo loco",
+   "english": "grants grace to the body for nine days. Yet"
+  },
+  {
+   "finding": "'applied to the udder' for the nurse's breast; Valeriana note on panace",
+   "cause": "translation",
+   "image": "coagulo illito ubere sistit̃ infantiũ alu⁹ ... modice panace",
+   "ocr": "coagulo illito ubere sistiē infantiū alu⁹ ... modice panace",
+   "english": "If a hare's rennet is applied to the udder"
+  }
+ ],
+ "share_of_served_error_from_ocr": "some",
+ "fixed_transcription_written": true,
+ "note": "IMAGE/TEXT MISMATCH: pages/…/0420.jpg is fol. 205r (Pliny 28.48-50, ears/teeth/face); the OCR stored for page 420 is the text of 0425.jpg (fol. 207v) - verified there, and 0426 continues 'quoque descriptum uirus'. The two judge-major errors (buck's loins, drink of love) sit where OCR = print (edition itself reads hircini/fastigium for ricini/fastidium); the OCR additionally has an eye-skip line (iecur. Carnesque lupi edisse parituris) and Vuluas→Vultus twice. Fixed transcription was made from 0425.jpg."
+}

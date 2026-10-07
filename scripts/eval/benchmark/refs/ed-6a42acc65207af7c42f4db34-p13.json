@@ -1,0 +1,46 @@
+{
+  "source": "EEBO-TCP A07382",
+  "edition": "Clauis apocalyptica ex innatis et insitis visionum characteribus eruta et demonstrata. Ad eorum usum — 17766 (1627)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/textcreationpartnership/A07382",
+  "same_edition": {
+    "evidence": "catalogue-number",
+    "text_match_pages": "13/13",
+    "pb_aligned_pages": "13/13"
+  },
+  "origin": "library",
+  "book_id": "6a42acc65207af7c42f4db34",
+  "page_number": 13,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 16367,
+    "to_char": 17679,
+    "overlap": 0.956,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'git tempora Prophetiae Sigillorum'; ends 'contemporat Bestiae & Babyloni finientibus.' then catchword 'PARS' (ref gives 'PARS ALTERA. PEregi' as padding). Printed page number 11; image shows a sliver of the facing page at left edge; Greek words omitted by the ref.",
+    "leaf_language": "mixed (Latin with a few Greek words)",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:56.170Z",
+  "text_location": "repo",
+  "text_sha256": "2277fc16b5f6bdea76084201a9e1025407f30edfeb0f5ebe2ddca56f2b72bb0c",
+  "unit": {
+    "chars": 1312
+  },
+  "stratum": "latin-period-5126"
+}

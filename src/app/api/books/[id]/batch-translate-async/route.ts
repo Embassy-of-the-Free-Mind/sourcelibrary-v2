@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { assertLaneGuards } from '@/lib/lane-guards';
 import { loopVerdict } from '@/lib/ocr-loop-guard';
 import { GoogleGenAI } from '@google/genai';
 import { getDb } from '@/lib/mongodb';
@@ -8,7 +9,7 @@ import { getTranslationPrompt } from '@/lib/prompts';
 import { PROMPT_VERSION, SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { createRevision } from '@/lib/page-revisions';
 import { isTruncatedCandidate } from '@/lib/truncated-response';
-import { findHumanEditedPageIds, findPendingBatchJob, CLEAR_STALE_UNSET, hasNoTranslatableBody } from '@/lib/translate-write';
+import { findHumanEditedPageIds, findPendingBatchJob, CLEAR_STALE_UNSET, hasNoTranslatableBody, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate } from '@/lib/translate-write';
 import { withAuth } from '@/lib/auth-helpers';
 import { batchJobProvenance, engineFromBatchJob, notRecorded, translationProvenance, contentHash, codeVersion, host } from '@/lib/write-provenance';
 
@@ -60,6 +61,8 @@ export const POST = withAuth(async (request, session, context) => {
     } = body;
 
     const db = await getDb();
+    // Observe only (#5480): records a held book or an active pause in audit_log, never refuses.
+    await assertLaneGuards(db, { route: '/api/books/[id]/batch-translate-async', bookIds: [bookId], actor: session?.user?.email ?? undefined });
 
     // Get book
     const book = await db.collection('books').findOne({ id: bookId });
@@ -389,7 +392,7 @@ export const GET = withAuth(async (request, session, context) => {
 
           // Extract text from nested response structure
           const candidate = response.response?.candidates?.[0];
-          const text = candidate?.content?.parts?.[0]?.text;
+          let text = candidate?.content?.parts?.[0]?.text;
 
           // The provider says this answer was cut off. A truncated translation
           // has text and a non-refusal finishReason, so it matched no branch
@@ -400,6 +403,27 @@ export const GET = withAuth(async (request, session, context) => {
             console.warn(`[batch-translate] TRUNCATED (${candidate?.finishReason}): refusing page ${pageId} (${text.length} chars)`);
             failCount++;
             continue;
+          }
+
+          // The page's text inside its continuity <meta> is text no reader sees (#5376).
+          // Refuse it; the page is stamped with the reason and the text kept as evidence.
+          if (text && hidesPageInMeta(text)) {
+            console.warn(`[batch-translate] HIDDEN META: refusing page ${pageId} (${text.length} chars)`);
+            await recordRefusedTranslation(db, { id: pageId, book_id: bookId }, text, HIDDEN_META_REASON, { jobId: jobName, model: jobDoc.model });
+            failCount++;
+            continue;
+          }
+
+          // A script in the English that is in neither the source nor the book's language (#5734):
+          // the Korean 그-for-"that" is repaired; anything else is refused, stamped and kept.
+          if (text) {
+            const stray = await strayScriptGate(db, { id: pageId, book_id: bookId }, text, { language: jobDoc.source_language, targetLanguage: jobDoc.target_language, jobId: jobName, model: jobDoc.model });
+            if (stray.refused) {
+              console.warn(`[batch-translate] STRAY SCRIPT: refusing page ${pageId}`);
+              failCount++;
+              continue;
+            }
+            text = stray.text;
           }
 
           if (text) {

@@ -93,6 +93,7 @@ export interface FooterStrings {
   vision: string;
   census: string;
   progress: string;
+  models: string;
   research: string;
   researchNotes: string;
   privacy: string;
@@ -105,6 +106,7 @@ export interface FooterStrings {
   support: string;
   donate: string;
   sponsorship: string;
+  connect: string;
   developers: string;
   giveFeedback: string;
   checkPages: string;
@@ -217,6 +219,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     vision: 'Our Vision',
     census: 'Translation Census',
     progress: 'Progress',
+    models: 'AI models',
     research: 'Research',
     researchNotes: 'Research Notes',
     privacy: 'Privacy',
@@ -228,6 +231,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     support: 'Support',
     donate: 'Donate',
     sponsorship: 'Corporate Sponsorship',
+    connect: 'Connect to Claude & ChatGPT',
     developers: 'Developers',
     giveFeedback: 'Give Feedback',
     checkPages: 'Check a few pages',
@@ -248,6 +252,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     vision: 'Nuestra visión',
     census: 'Censo de traducciones',
     progress: 'Progreso',
+    models: 'Modelos de IA',
     research: 'Investigación',
     researchNotes: 'Notas de investigación',
     privacy: 'Privacidad',
@@ -259,6 +264,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     support: 'Apoyar',
     donate: 'Donar',
     sponsorship: 'Patrocinio corporativo',
+    connect: 'Conectar con Claude y ChatGPT',
     developers: 'Desarrolladores',
     giveFeedback: 'Enviar comentarios',
     checkPages: 'Revisar algunas páginas',

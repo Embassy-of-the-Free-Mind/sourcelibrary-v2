@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA poemata/hayne1",
+  "edition": "Almansor, sive ludus literarius : Comoedia: Ex Recensione autoris, secundo edita. — Leipzig: Abraham Lamberg, 1588.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "13/14",
+    "pb_aligned_pages": "12/13"
+  },
+  "origin": "library",
+  "book_id": "6a4e46a4dc886f1f5abb5d80",
+  "page_number": 9,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 5719,
+    "to_char": 6835,
+    "overlap": 0.836,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'ILLVSTRISSIMI PRINCIPIS AC DOMINI' (dedication heading, then verse 'Qvid facilem pariat'); ends 'Diuitis haud fallax, spaciosis area campis' + catchword 'Apparent'; ref padded with 'Hayneccius ibidem Rector.' and 'Apparent contra duri'.",
+    "leaf_language": "lat",
+    "page_type": "verse",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:19.026Z",
+  "text_location": "repo",
+  "text_sha256": "9cd427a87c12cbfc5bdee63c0d9408a3f45ad692b96a41d667cffd88f255d992",
+  "unit": {
+    "chars": 1116
+  },
+  "stratum": "latin-period-5126"
+}

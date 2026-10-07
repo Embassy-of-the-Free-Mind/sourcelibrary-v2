@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import {
-  getSpendReport, redactForViewer, requireSpendViewer,
-  type SpendData, type SpendNarrative, type Grade,
+  getLatestPaidVsGot, getSpendReport, redactForViewer, requireSpendViewer,
+  type SpendData, type SpendNarrative, type Grade, type LanguageRow, type PaidVsGotDoc,
 } from '@/lib/spend-report';
-import { DailyChart, MonthlyChart, SkuTable } from './SpendCharts';
+import { CompletionHistogram, DailyChart, MonthlyChart, SkuTable } from './SpendCharts';
+import { daysBefore, gcpWindow, type GcpWindow } from '@/lib/spend-windows';
 
 /**
  * /admin/spend — what Source Library costs, what it produced, what the backlog
@@ -52,11 +53,11 @@ const GRADE_CLASS: Record<Grade, string> = {
   export: 'text-blue-700',
 };
 
-function Section({ title, intro, children }: { title: string; intro?: string; children: ReactNode }) {
+function Section({ title, intro, id, children }: { title: string; intro?: string; id?: string; children: ReactNode }) {
   return (
-    <section className="grid gap-3">
+    <section id={id} className="grid gap-3 content-start min-w-0 scroll-mt-4">
       <h2 className="text-base font-semibold text-stone-900">{title}</h2>
-      {intro && <p className="text-sm text-stone-600 max-w-3xl leading-snug">{rich(intro)}</p>}
+      {intro && <p className="text-xs text-stone-500 max-w-3xl leading-snug">{rich(intro)}</p>}
       {children}
     </section>
   );
@@ -64,7 +65,7 @@ function Section({ title, intro, children }: { title: string; intro?: string; ch
 
 function Tiles({ tiles }: { tiles: { v: string; l: string; n?: string }[] }) {
   return (
-    <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
+    <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))' }}>
       {tiles.map(t => (
         <div key={t.l} className="rounded border border-stone-200 bg-white px-4 py-3 grid gap-0.5 content-start">
           <div className="text-2xl font-semibold text-stone-900 tabular-nums">{t.v}</div>
@@ -91,6 +92,20 @@ function Table({ head, children }: { head: string[]; children: ReactNode }) {
   );
 }
 
+function KpiGroup({ title, tiles }: { title: string; tiles: { v: string; l: string; n?: string }[] }) {
+  return (
+    <div className="grid gap-2 content-start min-w-0">
+      <div className="text-xs uppercase tracking-wider text-stone-500">{title}</div>
+      <Tiles tiles={tiles} />
+    </div>
+  );
+}
+
+const NAV = [
+  ['paid-vs-got', 'Paid vs got'], ['charts', 'Charts'], ['output', 'Output'], ['languages', 'By language'], ['vendors', 'By vendor'], ['sku', 'By SKU'],
+  ['unit-costs', 'Unit costs'], ['roadmap', 'Roadmap'], ['notes', 'Notes'],
+] as const;
+
 function Findings({ items }: { items?: string[] }) {
   if (!items?.length) return null;
   return (
@@ -102,7 +117,7 @@ function Findings({ items }: { items?: string[] }) {
 
 export default async function SpendPage() {
   const viewer = await requireSpendViewer();
-  const doc = await getSpendReport();
+  const [doc, ledger] = await Promise.all([getSpendReport(), getLatestPaidVsGot()]);
 
   if (!doc) {
     return (
@@ -128,6 +143,12 @@ export default async function SpendPage() {
   const gcpAll = months.reduce((a, m) => a + mval(m, 'Google Cloud'), 0);
   const curGcp = D.daily.filter(d => d.day >= cur.month + '-01').reduce((a, d) => a + d.byDriver.reduce((x, y) => x + y, 0), 0);
   const dayOfMonth = Math.max(1, Number(D.gcpTo.slice(8)));
+  const gcp90 = gcpWindow(months, D.daily, D.gcpFrom, D.gcpTo, daysBefore(D.gcpTo, 89));
+  const gcpYtd = gcpWindow(months, D.daily, D.gcpFrom, D.gcpTo, D.gcpTo.slice(0, 4) + '-01-01');
+  const windowNote = (w: GcpWindow) =>
+    [w.ledger > 0.5 ? `${fmt0.format(w.daily)} daily export + ${fmt0.format(w.ledger)} from monthly invoices` : 'All from the daily export',
+     w.estimatedMonths.length ? `includes estimates for ${w.estimatedMonths.map(monthName).join(', ')}` : '']
+      .filter(Boolean).join(' · ');
   const generated = typeof doc.generated_at === 'string' ? doc.generated_at : doc.generated_at?.toISOString?.() ?? D.generated;
 
   const P = D.projection;
@@ -139,42 +160,53 @@ export default async function SpendPage() {
   const gcpBill = (m: string) => months.find(x => x.month === m)?.vendors['Google Cloud']?.v ?? 0;
 
   return (
-    <main className="px-6 py-8 max-w-6xl mx-auto grid gap-8 bg-stone-50">
-      <header className="grid gap-1">
-        <div className="text-xs uppercase tracking-wider text-stone-500">
-          Billed spend, all vendors · data to {dayName(D.gcpTo)} {D.gcpTo.slice(0, 4)} · generated {String(generated).slice(0, 10)} by {doc.generated_by}
+    <main className="px-6 py-6 max-w-7xl mx-auto grid gap-8 bg-stone-50">
+      <header className="grid gap-2">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+          <h1 className="text-2xl font-semibold text-stone-900">Source Library spend</h1>
+          <div className="text-xs text-stone-500">
+            Data to {dayName(D.gcpTo)} {D.gcpTo.slice(0, 4)} · generated {String(generated).slice(0, 10)} by {doc.generated_by} · private
+          </div>
         </div>
-        <h1 className="text-2xl font-semibold text-stone-900">Source Library spend</h1>
-        <p className="text-sm text-stone-600 max-w-3xl">
-          Monthly figures from settled invoices, attributed to the service month. Daily Google Cloud detail comes from the
-          BigQuery billing export, which reaches back to {dayName(D.gcpFrom)} {D.gcpFrom.slice(0, 4)}. Private: shown only to named accounts.
-        </p>
+        <nav className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+          {NAV.filter(([id]) => id !== 'paid-vs-got' || ledger).map(([id, label]) => <a key={id} href={`#${id}`} className="text-accent-rust hover:underline">{label}</a>)}
+        </nav>
       </header>
 
-      <Tiles tiles={[
-        { v: fmt0.format(grand), l: 'Identified to date', n: 'Settled invoices plus estimates where marked' },
-        { v: fmt0.format(gcpAll), l: 'Google Cloud (Gemini) to date', n: grand ? Math.round(gcpAll / grand * 100) + '% of everything' : undefined },
-        { v: fmt0.format(mtot(lastSettled)), l: `${monthName(lastSettled.month)} total, last invoiced month`,
-          n: `Google ${fmt0.format(mval(lastSettled, 'Google Cloud'))} · Vercel ${fmt0.format(mval(lastSettled, 'Vercel'))}` },
-        { v: fmt0.format(curGcp), l: `Google Cloud ${monthName(cur.month)} to ${dayName(D.gcpTo)}`,
-          n: `Run rate ${fmt0.format(curGcp / dayOfMonth)}/day → ~${fmt0.format(curGcp / dayOfMonth * 30)} for the month` },
-      ]} />
+      <div className="grid gap-6 lg:grid-cols-2">
+        <KpiGroup title="Google Cloud (Gemini)" tiles={[
+          { v: fmt0.format(curGcp), l: `${monthName(cur.month)} to ${dayName(D.gcpTo)}`,
+            n: `Run rate ${fmt0.format(curGcp / dayOfMonth)}/day → ~${fmt0.format(curGcp / dayOfMonth * 30)} for the month` },
+          { v: fmt0.format(gcp90.total), l: `Last 90 days (${dayName(gcp90.from)} – ${dayName(gcp90.to)})`,
+            n: `${fmt0.format(gcp90.total / 90)}/day · ${windowNote(gcp90)}` },
+          { v: fmt0.format(gcpYtd.total), l: `${D.gcpTo.slice(0, 4)} to date`, n: windowNote(gcpYtd) },
+        ]} />
+        <KpiGroup title="All vendors" tiles={[
+          { v: fmt0.format(grand), l: 'Identified to date', n: 'Settled invoices plus estimates where marked' },
+          { v: fmt0.format(mtot(lastSettled)), l: `${monthName(lastSettled.month)}, last invoiced month`,
+            n: `Google ${fmt0.format(mval(lastSettled, 'Google Cloud'))} · Vercel ${fmt0.format(mval(lastSettled, 'Vercel'))}` },
+          { v: grand ? Math.round(gcpAll / grand * 100) + '%' : '·', l: 'Google Cloud share', n: `${fmt0.format(gcpAll)} of ${fmt0.format(grand)} to date` },
+        ]} />
+      </div>
 
-      {(T.findings?.length || T.still_unknown) && (
-        <Section title={`What the numbers say${T.findings_as_of ? ` (${T.findings_as_of})` : ''}`}>
-          <Findings items={T.findings} />
-          {T.per_book_denominator ? (
-            <p className="text-sm text-stone-700 max-w-3xl">
-              Spread over everything spent so far, each of the {int(T.per_book_denominator)} books that are at least 90% translated
-              has cost about <b>{fmt2.format(grand / T.per_book_denominator)}</b> all-in.
-            </p>
-          ) : null}
-          {T.still_unknown && <p className="text-sm text-stone-600 max-w-3xl">{rich(T.still_unknown)}</p>}
+      {ledger && <PaidVsGotSection doc={ledger} />}
+
+      <div id="charts" className="grid gap-6 lg:grid-cols-2 scroll-mt-4">
+        <Section title="Monthly, all vendors">
+          <div className="rounded border border-stone-200 bg-white p-3">
+            <MonthlyChart months={months} vendors={VEND} />
+          </div>
         </Section>
-      )}
+        <Section title={`Google Cloud, daily since ${dayName(D.gcpFrom)}`}>
+          <div className="rounded border border-stone-200 bg-white p-3">
+            <DailyChart daily={D.daily} drivers={D.drivers} projects={D.projects} />
+          </div>
+        </Section>
+      </div>
 
+      <div className="grid gap-6 lg:grid-cols-2">
       {O && (
-        <Section title="What the money produced" intro={T.output_intro}>
+        <Section id="output" title="What the money produced" intro={T.output_intro}>
           <Tiles tiles={[
             { v: int(O.books_90pct_translated), l: 'Books at least 90% translated', n: `of ${int(O.books_any_translation)} with any translation` },
             { v: int(O.pages_translated_total), l: 'Pages translated', n: "all books, from each book's counter" },
@@ -197,10 +229,48 @@ export default async function SpendPage() {
         </Section>
       )}
 
-      <Section title="Monthly, by vendor">
-        <div className="rounded border border-stone-200 bg-white p-3">
-          <MonthlyChart months={months} vendors={VEND} />
-        </div>
+      {D.phases && phaseCols.length > 0 && (
+        <Section title="Google Cloud by pipeline stage" intro={T.phase_intro}>
+          {(() => {
+            const ph = D.phases;
+            const stages = [...new Set(phaseCols.flatMap(c => Object.keys(ph[c.key] ?? {})))]
+              .sort((x, y) => phaseCols.reduce((a, c) => a + (ph[c.key]?.[y] ?? 0) - (ph[c.key]?.[x] ?? 0), 0));
+            const totals = phaseCols.map(c => Object.values(ph[c.key] ?? {}).reduce((a, b) => a + b, 0) || 1);
+            return (
+              <Table head={['Stage', ...phaseCols.flatMap(c => [c.label, 'Share'])]}>
+                {stages.map(s => (
+                  <tr key={s}>
+                    <td className={TDW}>{s}</td>
+                    {phaseCols.map((c, i) => (
+                      <PhaseCells key={c.key} v={ph[c.key]?.[s] ?? 0} total={totals[i]} />
+                    ))}
+                  </tr>
+                ))}
+                <tr className="font-semibold">
+                  <td className={TDW}>Total</td>
+                  {phaseCols.map((c, i) => <PhaseCells key={c.key} v={totals[i]} total={totals[i]} />)}
+                </tr>
+              </Table>
+            );
+          })()}
+        </Section>
+      )}
+
+      </div>
+
+      {D.languages?.length ? <LanguageSection rows={D.languages} intro={T.languages_intro} /> : null}
+
+      {D.completion ? (
+        <Section id="completion" title="How far along each book is"
+          intro="Books with at least one transcribed page. Each bar is one percentage point of a book's pages (for translation, of its translatable pages); the line is the same data smoothed. The 0% and 100% bars run off the top — their true counts are printed.">
+          <div className="rounded border border-stone-200 bg-white p-3">
+            <CompletionHistogram ocr={D.completion.ocr} translation={D.completion.translation}
+              booksWithOcr={D.completion.books_with_ocr} nonEnglishWithOcr={D.completion.non_english_with_ocr} />
+          </div>
+        </Section>
+      ) : null}
+
+      <Section id="vendors" title="Monthly, by vendor">
         <Table head={['Vendor', ...months.map(m => monthName(m.month)), 'Total']}>
           {VEND.map(v => {
             let sum = 0;
@@ -232,13 +302,7 @@ export default async function SpendPage() {
         </p>
       </Section>
 
-      <Section title="Google Cloud, daily">
-        <div className="rounded border border-stone-200 bg-white p-3">
-          <DailyChart daily={D.daily} drivers={D.drivers} projects={D.projects} />
-        </div>
-      </Section>
-
-      <Section title="Google Cloud, by SKU">
+      <Section id="sku" title="Google Cloud, by SKU">
         <div className="rounded border border-stone-200 bg-white p-3">
           <SkuTable skus={D.skus} />
         </div>
@@ -246,7 +310,7 @@ export default async function SpendPage() {
 
       {P && (
         <>
-          <Section title="What a book costs now, by kind of book" intro={T.per_book_intro}>
+          <Section id="unit-costs" title="What a book costs now, by kind of book" intro={T.per_book_intro}>
             <Table head={['Kind of book', 'How it is processed', 'AI cost per book']}>
               {P.per_book.map(r => (
                 <tr key={r.category}>
@@ -258,7 +322,7 @@ export default async function SpendPage() {
             </Table>
           </Section>
 
-          {(P.checks?.examples?.length || T.checks_findings?.length) ? (
+          {P.checks?.examples?.length ? (
             <Section title="Checked against real books and the bill" intro={T.checks_intro}>
               {P.checks?.examples?.length ? (
                 <Table head={['Book', 'Pages', 'OCR', 'Translation', 'Images', 'Index, summary, other', 'Total', 'Per page']}>
@@ -279,11 +343,10 @@ export default async function SpendPage() {
                   ))}
                 </Table>
               ) : null}
-              <Findings items={T.checks_findings} />
             </Section>
           ) : null}
 
-          <Section title="Roadmap: what the unprocessed backlog will cost" intro={T.backlog_intro}>
+          <Section id="roadmap" title="Roadmap: what the unprocessed backlog will cost" intro={T.backlog_intro}>
             <Table head={['Status', 'Kind of book', 'Books', 'Pages to OCR', 'Pages to translate', 'Projected cost']}>
               {[...P.backlog]
                 .sort((a, b) => (a.lane > b.lane ? 1 : a.lane < b.lane ? -1 : 0) || b.high_usd - a.high_usd)
@@ -334,33 +397,35 @@ export default async function SpendPage() {
         </>
       )}
 
-      {D.phases && phaseCols.length > 0 && (
-        <Section title="Google Cloud by pipeline stage" intro={T.phase_intro}>
-          {(() => {
-            const ph = D.phases;
-            const stages = [...new Set(phaseCols.flatMap(c => Object.keys(ph[c.key] ?? {})))]
-              .sort((x, y) => phaseCols.reduce((a, c) => a + (ph[c.key]?.[y] ?? 0) - (ph[c.key]?.[x] ?? 0), 0));
-            const totals = phaseCols.map(c => Object.values(ph[c.key] ?? {}).reduce((a, b) => a + b, 0) || 1);
-            return (
-              <Table head={['Stage', ...phaseCols.flatMap(c => [c.label, 'Share'])]}>
-                {stages.map(s => (
-                  <tr key={s}>
-                    <td className={TDW}>{s}</td>
-                    {phaseCols.map((c, i) => (
-                      <PhaseCells key={c.key} v={ph[c.key]?.[s] ?? 0} total={totals[i]} />
-                    ))}
-                  </tr>
-                ))}
-                <tr className="font-semibold">
-                  <td className={TDW}>Total</td>
-                  {phaseCols.map((c, i) => <PhaseCells key={c.key} v={totals[i]} total={totals[i]} />)}
-                </tr>
-              </Table>
-            );
-          })()}
+      <div className="grid gap-8 border-t border-stone-200 pt-6">
+        {T.checks_findings?.length ? (
+          <Section title="How the unit costs were checked">
+            <Findings items={T.checks_findings} />
+          </Section>
+        ) : null}
+      {(T.findings?.length || T.still_unknown) && (
+        <Section id="notes" title={`What the numbers say${T.findings_as_of ? ` (${T.findings_as_of})` : ''}`}>
+          <Findings items={T.findings} />
+          {T.per_book_denominator ? (
+            <p className="text-sm text-stone-700 max-w-3xl">
+              Spread over everything spent so far, each of the {int(T.per_book_denominator)} books that are at least 90% translated
+              has cost about <b>{fmt2.format(grand / T.per_book_denominator)}</b> all-in.
+            </p>
+          ) : null}
+          {T.still_unknown && <p className="text-sm text-stone-600 max-w-3xl">{rich(T.still_unknown)}</p>}
         </Section>
       )}
 
+      <Section id={T.findings?.length || T.still_unknown ? undefined : 'notes'} title="What this does and does not include">
+        <ul className="grid gap-1.5 text-sm text-stone-600 max-w-3xl list-disc pl-5">
+          {(T.notes ?? []).map((n, i) => <li key={i}>{rich(n)}</li>)}
+          {D.monthly.excluded.map((x, i) => <li key={'x' + i}>Excluded: {x}</li>)}
+        </ul>
+        <p className="text-xs text-stone-500">
+          Refresh: in the private ops repo run <code className="font-mono bg-stone-100 px-1 rounded">costs/spend-dashboard/build-data.py --push</code> (see its README).
+          Data generated {D.generated}.
+        </p>
+      </Section>
       {viewer.canSeePeople && D.hours && (
         <Section title="Hands-on time" intro={T.hours_intro}>
           <Table head={['Month', 'Hours', 'Active days', 'Prompts typed']}>
@@ -401,17 +466,94 @@ export default async function SpendPage() {
         </Section>
       )}
 
-      <Section title="What this does and does not include">
-        <ul className="grid gap-1.5 text-sm text-stone-600 max-w-3xl list-disc pl-5">
-          {(T.notes ?? []).map((n, i) => <li key={i}>{rich(n)}</li>)}
-          {D.monthly.excluded.map((x, i) => <li key={'x' + i}>Excluded: {x}</li>)}
-        </ul>
-        <p className="text-xs text-stone-500">
-          Refresh: in the private ops repo run <code className="font-mono bg-stone-100 px-1 rounded">costs/spend-dashboard/build-data.py --push</code> (see its README).
-          Data generated {D.generated}.
-        </p>
-      </Section>
+      </div>
     </main>
+  );
+}
+
+const LANG_TOP = 15;
+const langNum = ['books', 'live_books', 'books_done', 'ocr_pages_needed', 'translation_pages_needed',
+  'low_usd', 'high_usd', 'live_low_usd', 'live_high_usd'] as const;
+type LangSum = { language: string } & Record<(typeof langNum)[number], number>;
+
+function sumLanguages(language: string, rows: LanguageRow[]): LangSum {
+  const out = { language } as LangSum;
+  for (const k of langNum) out[k] = rows.reduce((a, r) => a + (r[k] ?? 0), 0);
+  return out;
+}
+
+/** Books readable in English, and what finishing the rest costs, by edition language. */
+function LanguageSection({ rows, intro }: { rows: LanguageRow[]; intro?: string }) {
+  const sorted = [...rows].sort((a, b) => b.books - a.books);
+  const rest = sorted.slice(LANG_TOP);
+  const shown: LangSum[] = [
+    ...sorted.slice(0, LANG_TOP).map(r => sumLanguages(r.language, [r])),
+    ...(rest.length ? [sumLanguages(`${rest.length} other languages`, rest)] : []),
+  ];
+  const total = sumLanguages('Total', sorted);
+  const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+  const row = (r: LangSum, bold = false) => (
+    <tr key={r.language} className={bold ? 'font-semibold' : undefined}>
+      <td className={TD}>{cap(r.language)}</td>
+      <td className={`${TD} text-right`}>{int(r.books)}</td>
+      <td className={`${TD} text-right`}>{int(r.live_books)}</td>
+      <td className={`${TD} text-right`}>{int(r.books_done)}</td>
+      <td className={`${TD} text-right`}>{r.books ? Math.round(r.books_done / r.books * 100) + '%' : '·'}</td>
+      <td className={`${TD} text-right`}>{int(r.ocr_pages_needed)}</td>
+      <td className={`${TD} text-right`}>{int(r.translation_pages_needed)}</td>
+      <td className={`${TD} text-right`}>{rng0(r.low_usd, r.high_usd)}</td>
+      <td className={`${TD} text-right`}>{rng0(r.live_low_usd, r.live_high_usd)}</td>
+    </tr>
+  );
+  return (
+    <Section id="languages" title="By language: what is done, what remains"
+      intro={intro ?? 'Done = readable in English: at least 90% of translatable pages translated (blanks, bookplates and text-free plates excluded; English books: transcribed). Cost to finish uses the same per-page rates as the roadmap; "live" is books readers can already open.'}>
+      <Tiles tiles={[
+        { v: `${int(total.books_done)} of ${int(total.books)}`, l: 'Books readable in English', n: `${Math.round(total.books_done / (total.books || 1) * 100)}% of books with pages` },
+        { v: rng0(total.low_usd, total.high_usd), l: 'AI cost to finish everything', n: `${int(total.ocr_pages_needed)} pages to transcribe, ${int(total.translation_pages_needed)} to translate` },
+        { v: rng0(total.live_low_usd, total.live_high_usd), l: 'AI cost to finish live books only', n: `${int(total.live_books)} books readers can open today` },
+      ]} />
+      <Table head={['Language', 'Books', 'Live', 'Done', '% done', 'Pages to transcribe', 'Pages to translate', 'Cost to finish, all', 'Live books only']}>
+        {shown.map(r => row(r))}
+        {row(total, true)}
+      </Table>
+    </Section>
+  );
+}
+
+const VERDICT_CLASS: Record<PaidVsGotDoc['verdict']['status'], string> = {
+  PASS: 'text-stone-700',
+  WARN: 'text-amber-700',
+  FAIL: 'text-red-700',
+};
+
+/** Yesterday's ledger from scripts/audit/paid-vs-got.mjs (#5499): one ops_reports row, one table. */
+function PaidVsGotSection({ doc }: { doc: PaidVsGotDoc }) {
+  const v = doc.verdict;
+  const c = doc.collection;
+  const intro = `Gemini spend on ${dayName(doc.day)} from collected usage rows (actual tokens), against pages written that day by page provenance. ` +
+    'Waste is pages paid more than once plus collected batches that wrote no page. Submit estimate is what the spend dial saw at submit.';
+  return (
+    <Section id="paid-vs-got" title={`Paid vs got, ${dayName(doc.day)}`} intro={intro}>
+      <p className={`text-sm ${VERDICT_CLASS[v.status] ?? ''}`}>
+        <b>{v.status}</b>
+        {[...v.fails, ...v.warns].length ? ` · ${[...v.fails, ...v.warns].join(' · ')}` : ''}
+        {c ? ` · ${int(c.open)} batches open (${int(c.at_gemini)} at Gemini), oldest ${c.oldest_h.toFixed(1)} h` : ''}
+      </p>
+      <Table head={['Lane', 'Paid', 'Of which batch', 'Submit estimate', 'Pages written', 'Per 1,000 pages', 'Waste']}>
+        {doc.headline.map(h => (
+          <tr key={h.lane}>
+            <td className={TD}>{h.lane}</td>
+            <td className={`${TD} text-right`}>{fmt2.format(h.paid_usd)}</td>
+            <td className={`${TD} text-right`}>{fmt2.format(h.batch_usd)}</td>
+            <td className={`${TD} text-right text-stone-500`}>{h.estimate_usd ? fmt2.format(h.estimate_usd) : '·'}</td>
+            <td className={`${TD} text-right`}>{h.pages_written == null ? '·' : int(h.pages_written)}</td>
+            <td className={`${TD} text-right`}>{h.per_1k_usd == null ? '·' : fmt2.format(h.per_1k_usd)}</td>
+            <td className={`${TD} text-right`}>{h.waste_usd ? `${fmt2.format(h.waste_usd)} (${h.waste_pct.toFixed(1)}%)` : '·'}</td>
+          </tr>
+        ))}
+      </Table>
+    </Section>
   );
 }
 

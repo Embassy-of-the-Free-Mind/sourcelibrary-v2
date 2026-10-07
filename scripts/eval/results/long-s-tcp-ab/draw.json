@@ -1,0 +1,1286 @@
+{
+ "seed": 5488,
+ "per_book": 2,
+ "pages": 142,
+ "books": 72,
+ "draw": [
+  {
+   "tcp": "A01210",
+   "book": "6992017d7c226bdd25f99444",
+   "cell": "English 1600-1699",
+   "page": 132,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 107795,
+   "to_char": 108907
+  },
+  {
+   "tcp": "A01210",
+   "book": "6992017d7c226bdd25f99444",
+   "cell": "English 1600-1699",
+   "page": 153,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 129207,
+   "to_char": 130260
+  },
+  {
+   "tcp": "A03932",
+   "book": "6a425634dfbbb4d07aa5382e",
+   "cell": "Latin 1600-1699",
+   "page": 20,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 16631,
+   "to_char": 17110
+  },
+  {
+   "tcp": "A03932",
+   "book": "6a425634dfbbb4d07aa5382e",
+   "cell": "Latin 1600-1699",
+   "page": 24,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 19397,
+   "to_char": 20521
+  },
+  {
+   "tcp": "A04640",
+   "book": "6a08fd2e25e3a402b23b3bca",
+   "cell": "English 1600-1699",
+   "page": 107,
+   "production_model": "gemini-3.1-flash-lite",
+   "from_char": 177650,
+   "to_char": 179491
+  },
+  {
+   "tcp": "A04640",
+   "book": "6a08fd2e25e3a402b23b3bca",
+   "cell": "English 1600-1699",
+   "page": 51,
+   "production_model": "mineru-pipeline",
+   "from_char": 80314,
+   "to_char": 82137
+  },
+  {
+   "tcp": "A05389",
+   "book": "699fcd429ff0f1d2c4517fff",
+   "cell": "English 1500-1599",
+   "page": 17,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 8882,
+   "to_char": 9560
+  },
+  {
+   "tcp": "A05389",
+   "book": "699fcd429ff0f1d2c4517fff",
+   "cell": "English 1500-1599",
+   "page": 14,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 7828,
+   "to_char": 8387
+  },
+  {
+   "tcp": "A06769",
+   "book": "6a425310343d756d34e34ea7",
+   "cell": "Latin 1600-1699",
+   "page": 12,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 10998,
+   "to_char": 12420
+  },
+  {
+   "tcp": "A06769",
+   "book": "6a425310343d756d34e34ea7",
+   "cell": "Latin 1600-1699",
+   "page": 13,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 12379,
+   "to_char": 13733
+  },
+  {
+   "tcp": "A06791",
+   "book": "6a8f6267e408ab73f484d28b",
+   "cell": "English 1600-1699",
+   "page": 18,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 11169,
+   "to_char": 12108
+  },
+  {
+   "tcp": "A06791",
+   "book": "6a8f6267e408ab73f484d28b",
+   "cell": "English 1600-1699",
+   "page": 22,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 14554,
+   "to_char": 15303
+  },
+  {
+   "tcp": "A06991",
+   "book": "6a08fd6325e3a402b23b3e15",
+   "cell": "English 1600-1699",
+   "page": 52,
+   "production_model": "gemini-3.1-flash-lite",
+   "from_char": 76447,
+   "to_char": 78248
+  },
+  {
+   "tcp": "A06991",
+   "book": "6a08fd6325e3a402b23b3e15",
+   "cell": "English 1600-1699",
+   "page": 55,
+   "production_model": "gemini-3.1-flash-lite",
+   "from_char": 81544,
+   "to_char": 83399
+  },
+  {
+   "tcp": "A09875",
+   "book": "699061933d9181cce82fb5aa",
+   "cell": "English 1600-1699",
+   "page": 50,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 50210,
+   "to_char": 51959
+  },
+  {
+   "tcp": "A09875",
+   "book": "699061933d9181cce82fb5aa",
+   "cell": "English 1600-1699",
+   "page": 129,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 152720,
+   "to_char": 153111
+  },
+  {
+   "tcp": "A14064",
+   "book": "69e7833a0fc6fc955e36317c",
+   "cell": "English 1500-1599",
+   "page": 10,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 7090,
+   "to_char": 8225
+  },
+  {
+   "tcp": "A14064",
+   "book": "69e7833a0fc6fc955e36317c",
+   "cell": "English 1500-1599",
+   "page": 114,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 132635,
+   "to_char": 134035
+  },
+  {
+   "tcp": "A14289",
+   "book": "6a506fd980b7658fae261d6e",
+   "cell": "Latin 1600-1699",
+   "page": 19,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 16542,
+   "to_char": 17929
+  },
+  {
+   "tcp": "A14289",
+   "book": "6a506fd980b7658fae261d6e",
+   "cell": "Latin 1600-1699",
+   "page": 8,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 7212,
+   "to_char": 8202
+  },
+  {
+   "tcp": "A14696",
+   "book": "6990619d3d9181cce82fb688",
+   "cell": "English 1500-1599",
+   "page": 11,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 9335,
+   "to_char": 10283
+  },
+  {
+   "tcp": "A14696",
+   "book": "6990619d3d9181cce82fb688",
+   "cell": "English 1500-1599",
+   "page": 5,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 3038,
+   "to_char": 4462
+  },
+  {
+   "tcp": "A16248",
+   "book": "69de1c99d10d4b0d3f6f3175",
+   "cell": "English 1600-1699",
+   "page": 772,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 978304,
+   "to_char": 981074
+  },
+  {
+   "tcp": "A16248",
+   "book": "69de1c99d10d4b0d3f6f3175",
+   "cell": "English 1600-1699",
+   "page": 645,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 670444,
+   "to_char": 673302
+  },
+  {
+   "tcp": "A16649",
+   "book": "6a437b6257a09c2c0fcb48d7",
+   "cell": "Latin 1600-1699",
+   "page": 9,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 706,
+   "to_char": 955
+  },
+  {
+   "tcp": "A16649",
+   "book": "6a437b6257a09c2c0fcb48d7",
+   "cell": "Latin 1600-1699",
+   "page": 14,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 1570,
+   "to_char": 1787
+  },
+  {
+   "tcp": "A17030",
+   "book": "6990619a3d9181cce82fb669",
+   "cell": "English 1600-1699",
+   "page": 3,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 222,
+   "to_char": 1015
+  },
+  {
+   "tcp": "A17030",
+   "book": "6990619a3d9181cce82fb669",
+   "cell": "English 1600-1699",
+   "page": 4,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 958,
+   "to_char": 2662
+  },
+  {
+   "tcp": "A20623",
+   "book": "6a42d56d1894955eb725e97f",
+   "cell": "Latin 1600-1699",
+   "page": 23,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 5592,
+   "to_char": 6527
+  },
+  {
+   "tcp": "A20623",
+   "book": "6a42d56d1894955eb725e97f",
+   "cell": "Latin 1600-1699",
+   "page": 13,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 663,
+   "to_char": 1372
+  },
+  {
+   "tcp": "A20813",
+   "book": "6a42eff906e6ead3ac54bab4",
+   "cell": "English 1500-1599",
+   "page": 7,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 1564,
+   "to_char": 2318
+  },
+  {
+   "tcp": "A20813",
+   "book": "6a42eff906e6ead3ac54bab4",
+   "cell": "English 1500-1599",
+   "page": 18,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 9614,
+   "to_char": 10737
+  },
+  {
+   "tcp": "A26641",
+   "book": "6a4376a3e296c55144956689",
+   "cell": "Latin 1600-1699",
+   "page": 19,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 34790,
+   "to_char": 37090
+  },
+  {
+   "tcp": "A26641",
+   "book": "6a4376a3e296c55144956689",
+   "cell": "Latin 1600-1699",
+   "page": 8,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 10370,
+   "to_char": 12739
+  },
+  {
+   "tcp": "A26733",
+   "book": "0425b5da-2769-41ae-93dd-76624ba8236a",
+   "cell": "English 1600-1699",
+   "page": 148,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 102534,
+   "to_char": 103312
+  },
+  {
+   "tcp": "A26733",
+   "book": "0425b5da-2769-41ae-93dd-76624ba8236a",
+   "cell": "English 1600-1699",
+   "page": 187,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 128657,
+   "to_char": 129457
+  },
+  {
+   "tcp": "A28529",
+   "book": "69526046ab34727b1f04660c",
+   "cell": "English 1600-1699",
+   "page": 386,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 665286,
+   "to_char": 666438
+  },
+  {
+   "tcp": "A28529",
+   "book": "69526046ab34727b1f04660c",
+   "cell": "English 1600-1699",
+   "page": 247,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 211161,
+   "to_char": 214597
+  },
+  {
+   "tcp": "A28933",
+   "book": "69bf60fd065df5d87d778bb3",
+   "cell": "English 1600-1699",
+   "page": 81,
+   "production_model": "gemini-3.1-flash-lite-preview",
+   "from_char": 80131,
+   "to_char": 81334
+  },
+  {
+   "tcp": "A28933",
+   "book": "69bf60fd065df5d87d778bb3",
+   "cell": "English 1600-1699",
+   "page": 222,
+   "production_model": "gemini-3.1-flash-lite-preview",
+   "from_char": 220122,
+   "to_char": 221337
+  },
+  {
+   "tcp": "A29017",
+   "book": "6955d3d828a09ca65927ed03",
+   "cell": "English 1600-1699",
+   "page": 398,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 358396,
+   "to_char": 359329
+  },
+  {
+   "tcp": "A29017",
+   "book": "6955d3d828a09ca65927ed03",
+   "cell": "English 1600-1699",
+   "page": 273,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 243900,
+   "to_char": 244877
+  },
+  {
+   "tcp": "A29060",
+   "book": "6a4f71ca1cba01ec54e763c3",
+   "cell": "Latin 1600-1699",
+   "page": 13,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 5407,
+   "to_char": 6081
+  },
+  {
+   "tcp": "A29060",
+   "book": "6a4f71ca1cba01ec54e763c3",
+   "cell": "Latin 1600-1699",
+   "page": 5,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 1032,
+   "to_char": 1592
+  },
+  {
+   "tcp": "A29861",
+   "book": "69906537726f64800c10a08c",
+   "cell": "English 1600-1699",
+   "page": 5,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 740,
+   "to_char": 1464
+  },
+  {
+   "tcp": "A29861",
+   "book": "69906537726f64800c10a08c",
+   "cell": "English 1600-1699",
+   "page": 3,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 368,
+   "to_char": 788
+  },
+  {
+   "tcp": "A30883",
+   "book": "6991e175b53cae6bb602470e",
+   "cell": "English 1600-1699",
+   "page": 57,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 37895,
+   "to_char": 38745
+  },
+  {
+   "tcp": "A30883",
+   "book": "6991e175b53cae6bb602470e",
+   "cell": "English 1600-1699",
+   "page": 76,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 52354,
+   "to_char": 53182
+  },
+  {
+   "tcp": "A34111",
+   "book": "93c0e5f5-40e5-4f9a-b07b-1d67ed2d05a2",
+   "cell": "Latin 1600-1699",
+   "page": 27,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 953,
+   "to_char": 1580
+  },
+  {
+   "tcp": "A34111",
+   "book": "93c0e5f5-40e5-4f9a-b07b-1d67ed2d05a2",
+   "cell": "Latin 1600-1699",
+   "page": 314,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 152462,
+   "to_char": 152797
+  },
+  {
+   "tcp": "A36017",
+   "book": "6a42ec4006e6ead3ac544b8f",
+   "cell": "Latin 1600-1699",
+   "page": 12,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 8861,
+   "to_char": 9360
+  },
+  {
+   "tcp": "A36017",
+   "book": "6a42ec4006e6ead3ac544b8f",
+   "cell": "Latin 1600-1699",
+   "page": 18,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 18312,
+   "to_char": 18583
+  },
+  {
+   "tcp": "A37157",
+   "book": "6991e7dec91ce7d733e50228",
+   "cell": "English 1600-1699",
+   "page": 4,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 1354,
+   "to_char": 3256
+  },
+  {
+   "tcp": "A37157",
+   "book": "6991e7dec91ce7d733e50228",
+   "cell": "English 1600-1699",
+   "page": 12,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 13934,
+   "to_char": 15745
+  },
+  {
+   "tcp": "A38792",
+   "book": "6958e07cd34d35c8156624c8",
+   "cell": "English 1600-1699",
+   "page": 49,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 25461,
+   "to_char": 26081
+  },
+  {
+   "tcp": "A38792",
+   "book": "6958e07cd34d35c8156624c8",
+   "cell": "English 1600-1699",
+   "page": 72,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 39386,
+   "to_char": 40166
+  },
+  {
+   "tcp": "A41072",
+   "book": "6a58ec9ac6cd8f987106886f",
+   "cell": "English 1600-1699",
+   "page": 10,
+   "production_model": "gemini-2.5-flash",
+   "from_char": 19659,
+   "to_char": 22453
+  },
+  {
+   "tcp": "A41072",
+   "book": "6a58ec9ac6cd8f987106886f",
+   "cell": "English 1600-1699",
+   "page": 8,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 14077,
+   "to_char": 16914
+  },
+  {
+   "tcp": "A41308",
+   "book": "6a4ad920d6371d99e766879c",
+   "cell": "English 1600-1699",
+   "page": 66,
+   "production_model": "gemini-3.1-flash-lite",
+   "from_char": 54869,
+   "to_char": 55900
+  },
+  {
+   "tcp": "A41308",
+   "book": "6a4ad920d6371d99e766879c",
+   "cell": "English 1600-1699",
+   "page": 116,
+   "production_model": "gemini-3.1-flash-lite",
+   "from_char": 106064,
+   "to_char": 107158
+  },
+  {
+   "tcp": "A41730",
+   "book": "6a42c12297284560a2b0a9e3",
+   "cell": "English 1600-1699",
+   "page": 1,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 11,
+   "to_char": 592
+  },
+  {
+   "tcp": "A42103",
+   "book": "6a4270ed62d175ca9e4e1aa5",
+   "cell": "Latin 1600-1699",
+   "page": 14,
+   "production_model": "gemini-2.5-flash",
+   "from_char": 13640,
+   "to_char": 14909
+  },
+  {
+   "tcp": "A42103",
+   "book": "6a4270ed62d175ca9e4e1aa5",
+   "cell": "Latin 1600-1699",
+   "page": 21,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 22143,
+   "to_char": 23520
+  },
+  {
+   "tcp": "A42256",
+   "book": "6a430a2a22c0c8edb0f8c8d4",
+   "cell": "Latin 1600-1699",
+   "page": 8,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 7652,
+   "to_char": 9197
+  },
+  {
+   "tcp": "A42256",
+   "book": "6a430a2a22c0c8edb0f8c8d4",
+   "cell": "Latin 1600-1699",
+   "page": 23,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 29235,
+   "to_char": 30784
+  },
+  {
+   "tcp": "A42318",
+   "book": "69568595be7c607c5f03b9e4",
+   "cell": "English 1600-1699",
+   "page": 13,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 17559,
+   "to_char": 19685
+  },
+  {
+   "tcp": "A42318",
+   "book": "69568595be7c607c5f03b9e4",
+   "cell": "English 1600-1699",
+   "page": 30,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 51043,
+   "to_char": 52779
+  },
+  {
+   "tcp": "A43130",
+   "book": "6a42aecb5207af7c42f5333c",
+   "cell": "Latin 1600-1699",
+   "page": 16,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 13386,
+   "to_char": 14581
+  },
+  {
+   "tcp": "A43130",
+   "book": "6a42aecb5207af7c42f5333c",
+   "cell": "Latin 1600-1699",
+   "page": 21,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 18672,
+   "to_char": 19548
+  },
+  {
+   "tcp": "A43281",
+   "book": "69b18619c4be2cdd0edc524e",
+   "cell": "English 1600-1699",
+   "page": 4,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 910,
+   "to_char": 1964
+  },
+  {
+   "tcp": "A43281",
+   "book": "69b18619c4be2cdd0edc524e",
+   "cell": "English 1600-1699",
+   "page": 6,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 2860,
+   "to_char": 3876
+  },
+  {
+   "tcp": "A43282",
+   "book": "69b18625c4be2cdd0edc549e",
+   "cell": "English 1600-1699",
+   "page": 217,
+   "production_model": "gemini-3.1-flash-lite",
+   "from_char": 244541,
+   "to_char": 245238
+  },
+  {
+   "tcp": "A43282",
+   "book": "69b18625c4be2cdd0edc549e",
+   "cell": "English 1600-1699",
+   "page": 197,
+   "production_model": "gemini-3.1-flash-lite",
+   "from_char": 219813,
+   "to_char": 221119
+  },
+  {
+   "tcp": "A43366",
+   "book": "6a4300764e06bc233ecf660a",
+   "cell": "Latin 1600-1699",
+   "page": 1,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 11,
+   "to_char": 227
+  },
+  {
+   "tcp": "A43366",
+   "book": "6a4300764e06bc233ecf660a",
+   "cell": "Latin 1600-1699",
+   "page": 23,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 31350,
+   "to_char": 33193
+  },
+  {
+   "tcp": "A44021",
+   "book": "6a426869aedf4c943f91eac4",
+   "cell": "Latin 1600-1699",
+   "page": 12,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 10835,
+   "to_char": 12098
+  },
+  {
+   "tcp": "A44021",
+   "book": "6a426869aedf4c943f91eac4",
+   "cell": "Latin 1600-1699",
+   "page": 4,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 1021,
+   "to_char": 2325
+  },
+  {
+   "tcp": "A44313",
+   "book": "69aebfdee997cc01b0cab897",
+   "cell": "English 1600-1699",
+   "page": 64,
+   "production_model": "gemini-3.1-flash-lite-preview",
+   "from_char": 127779,
+   "to_char": 130089
+  },
+  {
+   "tcp": "A44313",
+   "book": "69aebfdee997cc01b0cab897",
+   "cell": "English 1600-1699",
+   "page": 85,
+   "production_model": "gemini-3.1-flash-lite-preview",
+   "from_char": 176143,
+   "to_char": 178549
+  },
+  {
+   "tcp": "A44314",
+   "book": "69aebfdea41a7e10e5a71d19",
+   "cell": "English 1600-1699",
+   "page": 20,
+   "production_model": "gemini-3.1-flash-lite-preview",
+   "from_char": 14752,
+   "to_char": 15896
+  },
+  {
+   "tcp": "A44314",
+   "book": "69aebfdea41a7e10e5a71d19",
+   "cell": "English 1600-1699",
+   "page": 33,
+   "production_model": "gemini-3.1-flash-lite-preview",
+   "from_char": 29473,
+   "to_char": 30641
+  },
+  {
+   "tcp": "A44315",
+   "book": "69906056ef12272ffdc8cdee",
+   "cell": "English 1600-1699",
+   "page": 41,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 43881,
+   "to_char": 46296
+  },
+  {
+   "tcp": "A44315",
+   "book": "69906056ef12272ffdc8cdee",
+   "cell": "English 1600-1699",
+   "page": 4,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 582,
+   "to_char": 1295
+  },
+  {
+   "tcp": "A44317",
+   "book": "69906059ef12272ffdc8cef1",
+   "cell": "English 1600-1699",
+   "page": 7,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 1086,
+   "to_char": 1760
+  },
+  {
+   "tcp": "A44317",
+   "book": "69906059ef12272ffdc8cef1",
+   "cell": "English 1600-1699",
+   "page": 23,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 35603,
+   "to_char": 37912
+  },
+  {
+   "tcp": "A44321",
+   "book": "69aebfeb36a4ffb2dcfb62e3",
+   "cell": "English 1600-1699",
+   "page": 102,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 156602,
+   "to_char": 158482
+  },
+  {
+   "tcp": "A44321",
+   "book": "69aebfeb36a4ffb2dcfb62e3",
+   "cell": "English 1600-1699",
+   "page": 42,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 47677,
+   "to_char": 49755
+  },
+  {
+   "tcp": "A44322",
+   "book": "695595ec7bd6d2cd1d620aba",
+   "cell": "English 1600-1699",
+   "page": 33,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 52913,
+   "to_char": 54847
+  },
+  {
+   "tcp": "A44322",
+   "book": "695595ec7bd6d2cd1d620aba",
+   "cell": "English 1600-1699",
+   "page": 43,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 70632,
+   "to_char": 72439
+  },
+  {
+   "tcp": "A45747",
+   "book": "6ab5a4019e89e2a1f4139282",
+   "cell": "English 1600-1699",
+   "page": 120,
+   "production_model": "gemini-3.1-flash-lite",
+   "from_char": 98996,
+   "to_char": 99602
+  },
+  {
+   "tcp": "A45747",
+   "book": "6ab5a4019e89e2a1f4139282",
+   "cell": "English 1600-1699",
+   "page": 184,
+   "production_model": "gemini-3.1-flash-lite",
+   "from_char": 151697,
+   "to_char": 152381
+  },
+  {
+   "tcp": "A45756",
+   "book": "6ab5a4089e89e2a1f4139348",
+   "cell": "English 1600-1699",
+   "page": 131,
+   "production_model": "gemini-3.1-flash-lite",
+   "from_char": 255423,
+   "to_char": 257243
+  },
+  {
+   "tcp": "A45756",
+   "book": "6ab5a4089e89e2a1f4139348",
+   "cell": "English 1600-1699",
+   "page": 190,
+   "production_model": "gemini-3.1-flash-lite",
+   "from_char": 373180,
+   "to_char": 374835
+  },
+  {
+   "tcp": "A48884",
+   "book": "6a4a26ba9dda7124b26753a5",
+   "cell": "English 1600-1699",
+   "page": 38,
+   "production_model": "gemini-3.1-flash-lite",
+   "from_char": 58574,
+   "to_char": 60570
+  },
+  {
+   "tcp": "A48884",
+   "book": "6a4a26ba9dda7124b26753a5",
+   "cell": "English 1600-1699",
+   "page": 15,
+   "production_model": "gemini-3.1-flash-lite",
+   "from_char": 14257,
+   "to_char": 16251
+  },
+  {
+   "tcp": "A49864",
+   "book": "6991d67a8c1030b12444b537",
+   "cell": "English 1600-1699",
+   "page": 24,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 41974,
+   "to_char": 43960
+  },
+  {
+   "tcp": "A49864",
+   "book": "6991d67a8c1030b12444b537",
+   "cell": "English 1600-1699",
+   "page": 27,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 47875,
+   "to_char": 49895
+  },
+  {
+   "tcp": "A49865",
+   "book": "6991d66e8c1030b12444b4a3",
+   "cell": "English 1600-1699",
+   "page": 34,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 75924,
+   "to_char": 78595
+  },
+  {
+   "tcp": "A49865",
+   "book": "6991d66e8c1030b12444b4a3",
+   "cell": "English 1600-1699",
+   "page": 46,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 107992,
+   "to_char": 110986
+  },
+  {
+   "tcp": "A49866",
+   "book": "6991d65e8c1030b12444ae97",
+   "cell": "English 1600-1699",
+   "page": 422,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 441064,
+   "to_char": 441933
+  },
+  {
+   "tcp": "A49866",
+   "book": "6991d65e8c1030b12444ae97",
+   "cell": "English 1600-1699",
+   "page": 208,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 222854,
+   "to_char": 224012
+  },
+  {
+   "tcp": "A49867",
+   "book": "6991d6648c1030b12444b0ec",
+   "cell": "English 1600-1699",
+   "page": 369,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 375872,
+   "to_char": 376979
+  },
+  {
+   "tcp": "A49867",
+   "book": "6991d6648c1030b12444b0ec",
+   "cell": "English 1600-1699",
+   "page": 63,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 60801,
+   "to_char": 61771
+  },
+  {
+   "tcp": "A49873",
+   "book": "6991d6778c1030b12444b4d4",
+   "cell": "English 1600-1699",
+   "page": 66,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 51086,
+   "to_char": 51979
+  },
+  {
+   "tcp": "A49873",
+   "book": "6991d6778c1030b12444b4d4",
+   "cell": "English 1600-1699",
+   "page": 54,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 41158,
+   "to_char": 42041
+  },
+  {
+   "tcp": "A50919",
+   "book": "69e748a685f786e884a4c8c5",
+   "cell": "English 1600-1699",
+   "page": 8,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 5078,
+   "to_char": 6520
+  },
+  {
+   "tcp": "A50919",
+   "book": "69e748a685f786e884a4c8c5",
+   "cell": "English 1600-1699",
+   "page": 312,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 428498,
+   "to_char": 430080
+  },
+  {
+   "tcp": "A51386",
+   "book": "69aebe60c0472fef6455a8f2",
+   "cell": "English 1600-1699",
+   "page": 6,
+   "production_model": "gemini-3.1-flash-lite",
+   "from_char": 8795,
+   "to_char": 10577
+  },
+  {
+   "tcp": "A51386",
+   "book": "69aebe60c0472fef6455a8f2",
+   "cell": "English 1600-1699",
+   "page": 14,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 22572,
+   "to_char": 24953
+  },
+  {
+   "tcp": "A51598",
+   "book": "6a8f6229ddd2f57fe0f810c4",
+   "cell": "English 1600-1699",
+   "page": 25,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 15682,
+   "to_char": 16444
+  },
+  {
+   "tcp": "A51598",
+   "book": "6a8f6229ddd2f57fe0f810c4",
+   "cell": "English 1600-1699",
+   "page": 23,
+   "production_model": "gemini-2.5-flash",
+   "from_char": 14324,
+   "to_char": 15020
+  },
+  {
+   "tcp": "A53049",
+   "book": "69905cfcaaa7f10ed4cfd289",
+   "cell": "English 1600-1699",
+   "page": 84,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 103227,
+   "to_char": 104796
+  },
+  {
+   "tcp": "A53049",
+   "book": "69905cfcaaa7f10ed4cfd289",
+   "cell": "English 1600-1699",
+   "page": 245,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 338283,
+   "to_char": 339824
+  },
+  {
+   "tcp": "A54028",
+   "book": "6a58ecd0c6cd8f987106893f",
+   "cell": "English 1600-1699",
+   "page": 13,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 27093,
+   "to_char": 29201
+  },
+  {
+   "tcp": "A54028",
+   "book": "6a58ecd0c6cd8f987106893f",
+   "cell": "English 1600-1699",
+   "page": 12,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 24624,
+   "to_char": 27126
+  },
+  {
+   "tcp": "A54621",
+   "book": "6991e194339ebc850994a230",
+   "cell": "English 1600-1699",
+   "page": 17,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 8086,
+   "to_char": 8385
+  },
+  {
+   "tcp": "A54621",
+   "book": "6991e194339ebc850994a230",
+   "cell": "English 1600-1699",
+   "page": 54,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 43030,
+   "to_char": 44207
+  },
+  {
+   "tcp": "A55474",
+   "book": "6991d6508c1030b12444acd8",
+   "cell": "English 1600-1699",
+   "page": 71,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 116845,
+   "to_char": 118590
+  },
+  {
+   "tcp": "A55474",
+   "book": "6991d6508c1030b12444acd8",
+   "cell": "English 1600-1699",
+   "page": 61,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 99608,
+   "to_char": 101582
+  },
+  {
+   "tcp": "A57495",
+   "book": "69de0cf180210ba13d79fa39",
+   "cell": "English 1600-1699",
+   "page": 118,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 138562,
+   "to_char": 139904
+  },
+  {
+   "tcp": "A57495",
+   "book": "69de0cf180210ba13d79fa39",
+   "cell": "English 1600-1699",
+   "page": 91,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 102706,
+   "to_char": 103854
+  },
+  {
+   "tcp": "A60284",
+   "book": "69906319ef12272ffdc8f380",
+   "cell": "English 1600-1699",
+   "page": 105,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 118078,
+   "to_char": 119328
+  },
+  {
+   "tcp": "A60284",
+   "book": "69906319ef12272ffdc8f380",
+   "cell": "English 1600-1699",
+   "page": 256,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 282414,
+   "to_char": 283693
+  },
+  {
+   "tcp": "A61366",
+   "book": "69ee46ef6dd925d126f40e22",
+   "cell": "English 1600-1699",
+   "page": 150,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 212405,
+   "to_char": 216459
+  },
+  {
+   "tcp": "A61366",
+   "book": "69ee46ef6dd925d126f40e22",
+   "cell": "English 1600-1699",
+   "page": 20,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 52010,
+   "to_char": 55087
+  },
+  {
+   "tcp": "A61373",
+   "book": "6990618a322e01b1349a5136",
+   "cell": "English 1600-1699",
+   "page": 13,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 21750,
+   "to_char": 24314
+  },
+  {
+   "tcp": "A61373",
+   "book": "6990618a322e01b1349a5136",
+   "cell": "English 1600-1699",
+   "page": 57,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 129868,
+   "to_char": 132379
+  },
+  {
+   "tcp": "A62554",
+   "book": "6a43851557a09c2c0fcc0005",
+   "cell": "Latin 1600-1699",
+   "page": 17,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 20609,
+   "to_char": 22321
+  },
+  {
+   "tcp": "A65140",
+   "book": "6a48d985df05f7ea342b77fb",
+   "cell": "Latin 1600-1699",
+   "page": 15,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 12453,
+   "to_char": 13563
+  },
+  {
+   "tcp": "A65140",
+   "book": "6a48d985df05f7ea342b77fb",
+   "cell": "Latin 1600-1699",
+   "page": 20,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 17552,
+   "to_char": 18597
+  },
+  {
+   "tcp": "A66059",
+   "book": "6a3d29e1af872ba37a51ab17",
+   "cell": "English 1600-1699",
+   "page": 28,
+   "production_model": "gemini-3.1-flash-lite",
+   "from_char": 19835,
+   "to_char": 20717
+  },
+  {
+   "tcp": "A66059",
+   "book": "6a3d29e1af872ba37a51ab17",
+   "cell": "English 1600-1699",
+   "page": 6,
+   "production_model": "gemini-3.1-flash-lite",
+   "from_char": 2281,
+   "to_char": 3125
+  },
+  {
+   "tcp": "A66685",
+   "book": "6a58ecbfc6cd8f98710688e0",
+   "cell": "English 1600-1699",
+   "page": 16,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 32539,
+   "to_char": 35057
+  },
+  {
+   "tcp": "A66685",
+   "book": "6a58ecbfc6cd8f98710688e0",
+   "cell": "English 1600-1699",
+   "page": 18,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 36419,
+   "to_char": 39045
+  },
+  {
+   "tcp": "A67819",
+   "book": "6a43001a4e06bc233ecf5ef6",
+   "cell": "Latin 1600-1699",
+   "page": 8,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 1324,
+   "to_char": 1746
+  },
+  {
+   "tcp": "A67819",
+   "book": "6a43001a4e06bc233ecf5ef6",
+   "cell": "Latin 1600-1699",
+   "page": 18,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 5273,
+   "to_char": 5812
+  },
+  {
+   "tcp": "A68340",
+   "book": "6a4308144e06bc233ed03513",
+   "cell": "English 1500-1599",
+   "page": 21,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 27421,
+   "to_char": 28828
+  },
+  {
+   "tcp": "A68340",
+   "book": "6a4308144e06bc233ed03513",
+   "cell": "English 1500-1599",
+   "page": 22,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 28765,
+   "to_char": 30571
+  },
+  {
+   "tcp": "A93958",
+   "book": "6a4a4551c0f3ec200c7de18c",
+   "cell": "English 1600-1699",
+   "page": 6,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 4638,
+   "to_char": 6200
+  },
+  {
+   "tcp": "A93958",
+   "book": "6a4a4551c0f3ec200c7de18c",
+   "cell": "English 1600-1699",
+   "page": 25,
+   "production_model": "gemini-2.5-flash",
+   "from_char": 35178,
+   "to_char": 37508
+  },
+  {
+   "tcp": "N00531",
+   "book": "69905e152fd6a039938a0ebe",
+   "cell": "English 1600-1699",
+   "page": 11,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 10196,
+   "to_char": 11664
+  },
+  {
+   "tcp": "N00531",
+   "book": "69905e152fd6a039938a0ebe",
+   "cell": "English 1600-1699",
+   "page": 47,
+   "production_model": "gemini-3-flash-preview",
+   "from_char": 62117,
+   "to_char": 63344
+  }
+ ]
+}

@@ -16,7 +16,7 @@
  *
  *   node --env-file=.env.production.local \
  *     scripts/email/build-translation-check-invites.mjs \
- *     --language=Latin --emails=a@x.org,b@y.org [--out=invites.json]
+ *     --language=Latin --emails=a@x.org,b@y.org [--out=invites.json] [--campaign="Judge calibration"]
  *
  * One page per person. Not five: the ask has to be small enough to say yes to,
  * and a reader who wants another can have one.
@@ -57,8 +57,17 @@ const mintToken = (itemId, invitee) => {
 
 const client = new MongoClient(process.env.MONGODB_URI);
 await client.connect();
+// --campaign narrows the pool to one campaign (substring match on stratum.campaign),
+// e.g. --campaign="Judge calibration" deals out only the corpus-audit pages, whose
+// machine-judge verdicts a reader's verdict is then compared against.
+const CAMPAIGN = argOf('campaign', '');
 const candidates = await client.db('bookstore').collection('review_candidates')
-  .find({ queue: 'translation-check', 'stratum.language': LANGUAGE })
+  .find({
+    queue: 'translation-check',
+    'stratum.language': LANGUAGE,
+    ...(CAMPAIGN ? { 'stratum.campaign': { $regex: CAMPAIGN.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') } } : {}),
+  })
+  .sort({ created_at: 1, item_id: 1 })
   .toArray();
 await client.close();
 

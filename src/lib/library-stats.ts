@@ -15,7 +15,8 @@ export interface LibraryStats {
   books: number;
   languages: number;
   illustrations: number;
-  translatedToEnglish: number;
+  /** Named view `readable_in_english` (translation-state.md). */
+  readableInEnglish: number;
   firstTranslations: number;
 }
 
@@ -29,6 +30,7 @@ export async function getLibraryStats(): Promise<LibraryStats | null> {
           totalBooks: 1,
           languageCount: 1,
           illustrationCount: 1,
+          readableInEnglish: 1,
           translatedToEnglish: 1,
           firstTranslationCount: 1,
         },
@@ -40,7 +42,8 @@ export async function getLibraryStats(): Promise<LibraryStats | null> {
       books: Number(cached.totalBooks) || 0,
       languages: Number(cached.languageCount) || 0,
       illustrations: Number(cached.illustrationCount) || 0,
-      translatedToEnglish: Number(cached.translatedToEnglish) || 0,
+      // `translatedToEnglish` is the pre-#5286 key, kept as an alias for one release.
+      readableInEnglish: Number(cached.readableInEnglish ?? cached.translatedToEnglish) || 0,
       firstTranslations: Number(cached.firstTranslationCount) || 0,
     };
   } catch {

@@ -1,0 +1,81 @@
+walked 2639 of 31187 frame books (seed 5309) | status {"ok":2560,"no_xml":79}
+model pages by verdict: {"plate":41962,"short":9466,"aligned":106824,"low":110192,"shifted":12355,"ambiguous":367,"far":248,"no_leaf_url":536,"no_leaf_text":579}
+decided pages by offset: {"0":106824,"1":6,"2":16,"4":4,"6":2,"8":1,"-7":76,"-5":163,"-4":18,"-3":2265,"-2":312,"-1":9492}
+books with a run, by the offset of their longest run: {"6":1,"-7":1,"-5":3,"-3":13,"-2":3,"-1":64}
+
+stratum                      | books | decid | with a run ≥2: n rate (95% Wilson) | decided | shifted: n rate (95% book bootstrap) | pages in runs / of them translated
+ALL                          |  2560 |   775 |   82 10.6% (8.6%–12.9%) |  118631 |  12344 10.41% (7.40%–13.88%) | 18019 / 16960
+live (visible, pages > 0)    |  1948 |   515 |   67 13.0% (10.4%–16.2%) |  104739 |  11358 10.84% (7.28%–14.74%) | 16790 / 16322
+not live                     |   612 |   260 |   15 5.8% (3.5%–9.3%) |   13892 |    986 7.10% (2.55%–12.81%) | 1229 / 638
+has bulk_jp2 pages           |  1682 |   452 |   81 17.9% (14.7%–21.7%) |   68039 |  12306 18.09% (12.72%–24.00%) | 17980 / 16922
+no bulk_jp2 pages            |   878 |   323 |    1 0.3% (0.1%–1.7%) |   50592 |     38 0.08% (0.03%–0.14%) | 39 / 38
+held ia-wrong-leaf-4790      |     9 |     9 |    9 100.0% (70.1%–100.0%) |     530 |    516 97.36% (96.55%–100.00%) | 522 / 357
+not held                     |  2551 |   766 |   73 9.5% (7.6%–11.8%) |  118101 |  11828 10.02% (6.92%–13.39%) | 17497 / 16603
+lang chinese                 |  1071 |     2 |    0 0.0% (0.0%–65.8%) |     338 |      0 0.00% (0.00%–0.00%) | 0 / 0
+lang latin                   |   806 |   238 |   12 5.0% (2.9%–8.6%) |   22678 |   1898 8.37% (3.20%–14.30%) | 3854 / 3705
+lang english                 |   350 |   312 |   44 14.1% (10.7%–18.4%) |   46748 |   4597 9.83% (5.33%–15.20%) | 6699 / 6111
+lang greek                   |    75 |    47 |    4 8.5% (3.4%–19.9%) |   11099 |    722 6.51% (0.53%–14.38%) | 925 / 830
+lang german                  |    64 |    45 |    4 8.9% (3.5%–20.7%) |    7581 |    162 2.14% (0.06%–5.07%) | 162 / 162
+lang sanskrit                |    34 |    14 |    2 14.3% (4.0%–39.9%) |    1266 |    112 8.85% (0.00%–35.43%) | 661 / 649
+lang french                  |    34 |    29 |    3 10.3% (3.6%–26.4%) |    6746 |    806 11.95% (0.03%–28.87%) | 1136 / 1129
+lang russian                 |    31 |    30 |    2 6.7% (1.8%–21.3%) |   10183 |     23 0.23% (0.01%–0.73%) | 27 / 4
+lang italian                 |    28 |    15 |    2 13.3% (3.7%–37.9%) |    3153 |   1212 38.44% (0.00%–70.75%) | 1234 / 1233
+lang dutch                   |     6 |     6 |    0 0.0% (0.0%–39.0%) |     845 |      0 0.00% (0.00%–0.00%) | 0 / 0
+lang japanese                |     5 |     0 |    0 – (–––) |       0 |      0 – (–––) | 0 / 0
+lang arabic                  |     4 |     1 |    0 0.0% (0.0%–79.3%) |       9 |      0 0.00% (0.00%–0.00%) | 0 / 0
+
+OCR run (source|model)                        | pages | decided | shifted | share of decided
+batch_api|gemini-3-flash-preview              | 114277 | 50499 | 3784 | 7.49%
+ai|gemini-3-flash-preview                     | 86142 | 27692 | 252 | 0.91%
+batch_api|gemini-3.1-flash-lite-preview       | 54657 | 26027 | 6701 | 25.75%
+batch_api|gemini-3.1-flash-lite               | 12941 | 10027 | 824 | 8.22%
+pipeline_preview|gemini-3.1-flash-lite-preview | 5571 | 1845 | 559 | 30.30%
+pipeline_preview|gemini-3.1-flash-lite        | 2830 | 1407 | 110 | 7.82%
+pipeline_preview|gemini-3-flash-preview       | 1824 | 0 | 0 | –
+ai|gemini-3.1-flash-lite                      | 1154 | 874 | 68 | 7.78%
+kraken|kraken/omnisyr                         | 1151 | 0 | 0 | –
+ai|gemini-3.1-flash-lite-preview              | 943 | 100 | 0 | 0.00%
+ai|gemini-2.5-flash                           | 729 | 586 | 11 | 1.88%
+batch_api|gemini-2.5-flash                    | 107 | 81 | 46 | 56.79%
+model|gemini-3.1-flash-lite-preview           | 89 | 17 | 0 | 0.00%
+system|gemini-3.1-flash-lite-preview          | 68 | 0 | 0 | –
+
+ARCHIVE-TEXT LANE (ia_djvu pages, #4790 residue):
+ia_djvu text (free lane)     |   110 |    85 |    9 10.6% (5.7%–18.9%) |   15821 |    955 6.04% (1.22%–14.79%) | 956 / 0
+  6a4a32da9ae8c432ae15ff63 The Writings of George Washington (Fitzpat | in runs 583 | runs 16–615@-3
+  6a3e765a28fae891bf27d0cc The Path — Vol-VIII No-10                  | in runs 71 | runs 26–96@-1
+  6a3e767b28fae891bf27d5b4 The Path — Vol-IV No-5                     | in runs 54 | runs 26–80@-1
+  6a3e76f728fae891bf27e4da The Path — Vol-II No-1                     | in runs 53 | runs 26–78@-1
+  6a3e76f028fae891bf27e440 The Path — Vol-I No-8                      | in runs 44 | runs 13–68@-1
+  6a3e772828fae891bf27ea51 The Path — Vol-VI No-10                    | in runs 41 | runs 14–64@-1
+  6a3e773f28fae891bf27ec10 The Path — Vol-V No-10                     | in runs 39 | runs 26–64@-1
+  6a3e76ed28fae891bf27e3fd The Path — Vol-V No-4                      | in runs 39 | runs 26–64@-1
+  6a08f5db50bd891addfb9c74 The Diary of Samuel Pepys, Vol. III (Wheat | in runs 30 | runs 26–391@-3
+
+books with a run: 85 | one contiguous run: 52 | several runs: 33 | books whose only off-leaf pages are lone pages: 39 (64 pages)
+image side (books / pages in runs): {"text_wrong_on_screen":{"books":29,"span":8642},"ambiguous":{"books":6,"span":1398},"consistent_on_screen":{"books":50,"span":7915}}
+
+projection to the 31187-book frame: 212187 pages in shifted runs (95% book bootstrap 143999–286025); 94.1% of them carry a translation
+  text_wrong_on_screen   books 29 (3.7% of decidable, CI 2.6%–5.3%) | pages walked 8642 (8372 translated) | projected 102129 (57210–158901)
+  consistent_on_screen   books 50 (6.5% of decidable, CI 4.9%–8.4%) | pages walked 7915 (7289 translated) | projected 93537 (49008–147178)
+  ambiguous              books 6 (0.8% of decidable, CI 0.4%–1.7%) | pages walked 1398 (1244 translated) | projected 16521 (2104–36529)
+
+largest shifted books:
+  69e80572fdad300064d9d810 english  The Book of Household Management           | in runs 1158/1185 | runs 26–1184@-1 | bulk 1185 | text_wrong_on_screen
+  69ee64bd7b983848aff5885b danish   Det Første Forsøg paa Norges Naturlige His | in runs 979/1016 | runs 32–1010@-1 | bulk 1016 | text_wrong_on_screen
+  6a084f1615c643eb1af437ea latin    Sicvti antiquarvm lectionvm commentarios c | in runs 942/959 | runs 12–954@-1 | bulk 959 | consistent_on_screen
+  69ef2b4685daccce30f2e066 latin    Syntagma Musicum, Tomus I: Musicae Artis A | in runs 908/1156 | runs 40–931@-1 1085–1100@-3 | bulk 1156 | text_wrong_on_screen
+  69e961ab2beefe2f6f72c3b6 english  The Principal Navigations, Voyages, Traffi | in runs 897/1191 | runs 30–32@-1 55–949@-3 | bulk 1191 | consistent_on_screen
+  69d149ec1c2a66dc094b3258 english  The Works of Plato, vol. 1                 | in runs 675/687 | runs 11–12@-1 13–13@-2 14–132@-1 133–133@-2 … | bulk 687 | consistent_on_screen
+  6a4438deaa50a8e8f5051b57 italian  Istorie fiorentine, Volume 1               | in runs 647/663 | runs 12–308@-1 310–664@-3 | bulk 663 | ambiguous
+  69e80677fdad300064d9f438 sanskrit अष्टाङ्गहृदय (Aṣṭāṅgahṛdayam)              | in runs 642/683 | runs 38–679@-1 | bulk 683 | consistent_on_screen
+  6a4438e6aa50a8e8f5051df6 italian  Istorie fiorentine, Volume 2               | in runs 586/600 | runs 12–348@-1 349–603@-3 | bulk 600 | consistent_on_screen
+  69e01012c47b5c9f88212c12 maori    Ko Nga Moteatea me Nga Hakirara o Nga Maor | in runs 576/590 | runs 10–114@-1 115–585@-3 | bulk 590 | consistent_on_screen
+  69ee4f376dd925d126f4338c english  Rude Stone Monuments in All Countries: The | in runs 560/589 | runs 26–586@-1 | bulk 589 | text_wrong_on_screen
+  69d8ca29a09828f83ddc9e05 french   Traité des Champignons                     | in runs 483/513 | runs 14–496@-1 | bulk 513 | consistent_on_screen
+  69e41fa64fc48a88423e04c0 english  Chats on Japanese Prints                   | in runs 431/461 | runs 26–458@-1 | bulk 461 | text_wrong_on_screen
+  6a0850c115c643eb1af489a9 latin    M. T. Ciceronis De philosophia volumen pri | in runs 422/441 | runs 10–434@-1 | bulk 441 | consistent_on_screen
+  69af22b77c27d4b637fee823 latin    Lactantius Opera Omnia, Vol. I (CSEL 19)   | in runs 389/884 | runs 7–7@-1 13–14@-1 16–16@-1 19–19@-1 … | bulk 884 | text_wrong_on_screen
+
+→ /root/tq7-out/walk.summary.json
+AFTER_DONE

@@ -22,5 +22,8 @@
   "window_words": 51,
   "window_chars": 364,
   "overlap": 0.17,
-  "reason": "work identified but window overlap 0.17 < 0.35 (probe too noisy, or the page is commentary/paratext around the work)"
+  "reason": "work identified but window overlap 0.17 < 0.35 (probe too noisy, or the page is commentary/paratext around the work)",
+  "licence": "CC-BY-SA-4.0",
+  "licence_url": "https://github.com/PerseusDL/canonical-greekLit",
+  "licence_checked": "2026-10-01"
 }

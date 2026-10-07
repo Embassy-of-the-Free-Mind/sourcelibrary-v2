@@ -1,8 +1,76 @@
+---
+description: "Wrap up the session: commit, push, reap, hand off."
+# Wrap-up is routine; don't spend scarce Fable quota on it. Applies to this command's turn only.
+model: opus
+---
 Wrap up the session: commit, push, reap, hand off.
 
 "gnite" means **this window is closing** — not that every window is. Other Claude
 sessions are usually still running, and that's fine: every step below is safe to run
 concurrently with them. No new work, no questions, no strategic advice.
+
+**Closing the window kills everything that lives only in it.** Finishing is the point of
+gnite: work in flight is either done, or handed to something that outlives the window,
+before you say goodnight. "No new work" means don't *start* anything — not "stop mid-task".
+
+## 0. Inventory what is in flight — nothing dies silently
+
+List every open loop this window owns, then settle each one:
+
+- **Background tasks and monitors started here** (`run_in_background` Bash, Monitor, a
+  build/CI watcher, a `/loop`). They die with the window. If the result matters, get it
+  now if it's minutes away (a build finishing, a check going green); otherwise move it to
+  something durable — `claude --bg`, a Hetzner cron, a scheduled agent — that writes its
+  result to an issue or file, never to this chat.
+- **Promises made in this chat** ("I'll tell you when CI is green", "I'll ping when the
+  build is Ready"). Keep it now, or turn it into a durable owner and say who that is.
+- **Half-done work**: an open PR not yet green (babysit it to green or hand it off),
+  a merge whose production build isn't verified, a data push not read back, a
+  paid job not reconciled.
+- **Background sessions (`claude --bg`) keep running — never stop, reap, or wait on them.**
+  List them (`claude agents`) and name each in the goodnight with where it reports.
+
+Then give every loose end exactly **one** owner — a handoff file alone is not one
+(September 2026: 214 ops handoffs, 98 saying "not run / blocked / awaiting", and 81
+background sessions dead mid-task that nobody noticed; inventory #5354):
+
+- **Finish it now** if it is under ~15 minutes (merge the green PR, apply the label,
+  run the one command). This is the default.
+- **An active issue** — open or update one, with the definition of done and the next
+  command to run, and put `Owner: #<issue>` on any handoff you write.
+- **A dispatched session** — `claude --bg "Read <handoff> and execute to done"`, and
+  check its `state.json` two minutes later; a `blocked` there is not a dispatch.
+- **A decision row** in the ops `DECISIONS-PENDING.md`, with a recommended default,
+  if it is above the spend floor or on the hold list.
+
+What you may not do is close with "next steps" in prose and no owner. The goodnight
+never hides an open loop.
+
+## 0. Exposure — what closing the tab, sleeping, or powering off would lose
+
+Derek closes the lid a lot, and he decides whether to from this answer, so it comes
+FIRST. Run the machine-wide report, then add what only this session can see:
+
+```
+bash ~/.claude/scripts/gnite-exposure.sh "$(git rev-parse --show-toplevel)"
+```
+
+The script lists background Claude sessions working on this laptop, detached
+`nohup` jobs, and every worktree with uncommitted or unpushed work. It cannot see
+this session's own background tasks, monitors, or subagents — list those yourself.
+Then answer, one line each, with counts:
+
+- **close this tab →** this session's background tasks, monitors and subagents die;
+  everything else survives.
+- **sleep the laptop →** background sessions stall (the `bg-resume` sweep revives the
+  ones that died on sleep, a limit, or the network within ~30 min of waking); detached
+  jobs pause, and one holding a remote stream may drop.
+- **power off →** every background session and detached job dies; uncommitted files and
+  unpushed commits stay on this disk only, invisible to every other machine.
+
+Cloud sessions (`claude --cloud`) and Hetzner sessions are never at risk from the
+laptop. If the script is missing (another machine), say so and answer from `claude
+agents` and `git status` instead.
 
 ## 1. Commit and push whatever is here
 
@@ -12,6 +80,15 @@ concurrently with them. No new work, no questions, no strategic advice.
   open a PR (`gh pr create --base main`).
 - **Never leave uncommitted work in a worktree** — it's invisible to every other session,
   and the reaper will keep the worktree around rather than touch it.
+- **If this branch's PR carries `needs-rebase`, rebase it before wrapping**:
+  `gh pr view --json labels -q '[.labels[].name]'`; if the label is there, `git fetch origin &&
+  git rebase origin/main`, resolve (`main` wins every line you did not set out to change, then
+  re-read the whole hunk for facts that now disagree with their neighbours), push with
+  `--force-with-lease`, and check `npx tsc --noEmit`. If the conflict is in `scripts/eval/EXPERIMENTS.md`
+  or `INDEX.md`, take main's version whole and move your entry into a new file under
+  `scripts/eval/experiments/` — those two are generated on main now (#5436). A PR that conflicts on the day it is opened is
+  the opener's job; left overnight it waits for a sweep, and 32 PRs since August were closed that
+  way instead of finished (#5415).
 
 ## 2. Reap dead worktrees
 
@@ -124,4 +201,5 @@ up something big, file an issue rather than starting work.
 
 ## 5. Say goodnight
 
-A short summary of where we left off and what's next. That's all.
+A short summary of where we left off and what's next, plus **what is still running and who
+owns it** (from step 0) — or "nothing left in flight". That's all.

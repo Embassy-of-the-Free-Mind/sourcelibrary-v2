@@ -3,7 +3,7 @@
 import { createElement, useRef, useState } from 'react';
 import Link from 'next/link';
 import SiteHeader from '@/components/layout/SiteHeader';
-import type { VisionContent } from './content';
+import type { EditComment, VisionContent } from './content';
 
 // ── markdown-lite: **bold**, *italic*, [label](url) ──
 function formatInline(text: string): React.ReactNode {
@@ -56,6 +56,18 @@ function clone<T>(o: T): T {
   return JSON.parse(JSON.stringify(o)) as T;
 }
 
+function getByPath(obj: unknown, path: string): string {
+  let cur: unknown = obj;
+  for (const part of path.split('.')) {
+    if (cur == null || typeof cur !== 'object') return '';
+    cur = (cur as Record<string, unknown>)[part];
+  }
+  return typeof cur === 'string' ? cur : '';
+}
+
+/** The JSON the toolbar copies: the content plus reviewer comments (never rendered). */
+type VisionExport = VisionContent & { _comments?: EditComment[] };
+
 function setByPath(obj: unknown, path: string, value: string) {
   const parts = path.split('.');
   let cur: Record<string, unknown> = obj as Record<string, unknown>;
@@ -79,6 +91,11 @@ export default function VisionView({
   const [showPaste, setShowPaste] = useState(false);
   const [pasteText, setPasteText] = useState('');
   const [pasteError, setPasteError] = useState('');
+  // Reviewer comments (edit mode only). `activePath` is the last field the reviewer clicked into.
+  const [comments, setComments] = useState<EditComment[]>([]);
+  const [activePath, setActivePath] = useState<string | null>(null);
+  const [showComment, setShowComment] = useState(false);
+  const [commentDraft, setCommentDraft] = useState('');
 
   const editClass = editable
     ? ' outline-none rounded-sm transition-colors cursor-text hover:bg-accent-gold/10 focus:bg-white focus:ring-2 focus:ring-accent-rust/40'
@@ -113,8 +130,12 @@ export default function VisionView({
       as,
       {
         key: `${version}:${path}`,
-        className: className + (dark ? editClassDark : editClass),
+        className:
+          className +
+          (dark ? editClassDark : editClass) +
+          (comments.some((c) => c.path === path) ? ' ring-1 ring-accent-gold/70' : ''),
         lang,
+        onFocus: () => setActivePath(path),
         contentEditable: true,
         suppressContentEditableWarning: true,
         'data-path': path,
@@ -127,7 +148,9 @@ export default function VisionView({
 
   const doCopy = async () => {
     try {
-      await navigator.clipboard.writeText(JSON.stringify(draftRef.current, null, 2));
+      const out: VisionExport = { ...draftRef.current };
+      if (comments.length) out._comments = comments;
+      await navigator.clipboard.writeText(JSON.stringify(out, null, 2));
       setCopied(true);
       window.setTimeout(() => setCopied(false), 1600);
     } catch {
@@ -137,12 +160,13 @@ export default function VisionView({
 
   const doLoad = () => {
     try {
-      const parsed = JSON.parse(pasteText) as VisionContent;
+      const { _comments, ...parsed } = JSON.parse(pasteText) as VisionExport;
       if (!parsed || typeof parsed !== 'object' || !parsed.hero || !parsed.plan) {
         throw new Error('That JSON does not look like vision content (missing hero/plan).');
       }
       setContent(parsed);
       draftRef.current = clone(parsed);
+      setComments(Array.isArray(_comments) ? _comments : []);
       setVersion((v) => v + 1);
       setShowPaste(false);
       setPasteText('');
@@ -155,8 +179,21 @@ export default function VisionView({
   const doReset = () => {
     setContent(initial);
     draftRef.current = clone(initial);
+    setComments([]);
     setVersion((v) => v + 1);
   };
+
+  const activeExcerpt = activePath ? getByPath(draftRef.current, activePath).slice(0, 80) : '';
+
+  const doSaveComment = () => {
+    const text = commentDraft.trim();
+    if (!activePath || !text) return;
+    setComments((cs) => [...cs, { path: activePath, excerpt: activeExcerpt, text }]);
+    setCommentDraft('');
+    setShowComment(false);
+  };
+
+  const quote = content.quote;
 
   return (
     <div className={`min-h-screen bg-cream${editable ? ' pb-28' : ''}`}>
@@ -164,8 +201,8 @@ export default function VisionView({
 
       {editable && (
         <div className="bg-accent-rust text-white text-sm text-center px-4 py-2">
-          Edit mode — change any text below, then <strong>Copy JSON</strong> and send it to Derek.
-          Nothing is saved automatically.
+          Edit mode — change any text below, or click into a paragraph and press <strong>Add comment</strong>.
+          Then <strong>Copy JSON</strong> and send it back. Nothing is saved automatically.
         </div>
       )}
 
@@ -219,70 +256,84 @@ export default function VisionView({
             F({ as: 'p', path: `bodyBeforeQuote.${i}`, value: p, className: 'mb-6' })
           )}
 
-          {/* Pico pull-quote */}
+          {/* Optional pull-quote */}
+          {quote && (
           <figure className="my-12 pl-8 border-l-2 border-accent-rust">
             {F({
               as: 'blockquote',
               path: 'quote.en',
-              value: content.quote.en,
+              value: quote.en,
               className: 'font-serif text-2xl md:text-[1.75rem] text-primary leading-snug',
             })}
             {F({
               as: 'p',
               path: 'quote.la',
-              value: content.quote.la,
+              value: quote.la,
               lang: 'la',
               className: 'font-serif italic text-lg md:text-xl text-muted leading-snug mt-3',
             })}
             <figcaption className="mt-4 text-sm tracking-wide uppercase text-muted">
               {editable ? (
                 <span>
-                  {F({ as: 'span', path: 'quote.source', value: content.quote.source })} &mdash;{' '}
-                  {F({ as: 'span', path: 'quote.linkLabel', value: content.quote.linkLabel })}
+                  {F({ as: 'span', path: 'quote.source', value: quote.source })} &mdash;{' '}
+                  {F({ as: 'span', path: 'quote.linkLabel', value: quote.linkLabel })}
                 </span>
               ) : (
                 <a
-                  href={content.quote.url}
+                  href={quote.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-accent-rust underline"
                 >
-                  {formatInline(content.quote.source)} &mdash; {content.quote.linkLabel}
+                  {formatInline(quote.source)} &mdash; {quote.linkLabel}
                 </a>
               )}
             </figcaption>
           </figure>
+          )}
 
           {content.bodyBeforeImage1.map((p, i) =>
             F({ as: 'p', path: `bodyBeforeImage1.${i}`, value: p, className: 'mb-6' })
           )}
 
-          {/* Image 1 — links to the source page */}
+          {/* Image 1 — links to the source page when it has one */}
           <figure className="my-12 -mx-2 md:-mx-8">
-            <Link
-              href={content.image1.href}
-              className="block group"
-              aria-label="Read this page on Source Library"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
+            {content.image1.href ? (
+              <Link
+                href={content.image1.href}
+                className="block group"
+                aria-label="Read this page on Source Library"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={content.image1.src}
+                  alt={content.image1.alt}
+                  className="w-full h-auto rounded-lg border border-primary/10 shadow-sm transition group-hover:opacity-95"
+                  loading="lazy"
+                />
+              </Link>
+            ) : (
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={content.image1.src}
                 alt={content.image1.alt}
-                className="w-full h-auto rounded-lg border border-primary/10 shadow-sm transition group-hover:opacity-95"
+                className="w-full max-w-md mx-auto h-auto rounded-lg border border-primary/10 shadow-sm"
                 loading="lazy"
               />
-            </Link>
+            )}
             {F({
               as: 'figcaption',
               path: 'image1.caption',
               value: content.image1.caption,
               className: 'mt-3 text-sm text-muted italic text-center block',
             })}
-            <div className="text-center mt-1">
-              <Link href={content.image1.href} className="text-sm text-accent-rust hover:underline">
-                Read this page &rarr;
-              </Link>
-            </div>
+            {content.image1.href && (
+              <div className="text-center mt-1">
+                <Link href={content.image1.href} className="text-sm text-accent-rust hover:underline">
+                  Read this page &rarr;
+                </Link>
+              </div>
+            )}
           </figure>
 
           {content.bodyAfterImage1.map((p, i) =>
@@ -298,9 +349,84 @@ export default function VisionView({
 
           {content.bodyBuild.map((p, i) => F({ as: 'p', path: `bodyBuild.${i}`, value: p, className: 'mb-6' }))}
 
-          {/* Photo collage */}
-          <figure className="my-12 -mx-2 md:-mx-8">
-            <div className="grid grid-cols-2 gap-2 md:gap-3">
+          {/* ── Where we will be in 2031 ── */}
+          <section aria-labelledby="vision-2031" className="mt-12">
+            {F({
+              as: 'h2',
+              path: 'vision.heading',
+              value: content.vision.heading,
+              className: 'font-serif text-2xl md:text-3xl text-primary leading-snug mb-3',
+            })}
+            {F({ as: 'p', path: 'vision.intro', value: content.vision.intro, className: 'mb-5' })}
+            <ul className="space-y-3 mb-2 pl-0 list-none">
+              {content.vision.items.map((item, i) => (
+                <li key={i} className="flex gap-3">
+                  <span aria-hidden="true" className="mt-[0.7em] h-1.5 w-1.5 shrink-0 rounded-full bg-accent-rust" />
+                  {F({ as: 'span', path: `vision.items.${i}`, value: item, className: 'block' })}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* ── The plan, year by year ── */}
+          <section aria-labelledby="plan-phases" className="mt-12">
+            {F({
+              as: 'h2',
+              path: 'phases.heading',
+              value: content.phases.heading,
+              className: 'font-serif text-2xl md:text-3xl text-primary leading-snug mb-3',
+            })}
+            {F({ as: 'p', path: 'phases.intro', value: content.phases.intro, className: 'mb-6' })}
+            <ol className="list-none pl-0 space-y-8">
+              {content.phases.items.map((ph, i) => (
+                <li key={i} className="border-t border-primary/10 pt-6">
+                  <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-3">
+                    {F({
+                      as: 'span',
+                      path: `phases.items.${i}.years`,
+                      value: ph.years,
+                      className: 'text-xs uppercase tracking-widest text-accent-rust',
+                    })}
+                    {F({
+                      as: 'h3',
+                      path: `phases.items.${i}.title`,
+                      value: ph.title,
+                      className: 'font-serif text-xl md:text-2xl text-primary leading-snug',
+                    })}
+                    {F({
+                      as: 'span',
+                      path: `phases.items.${i}.cost`,
+                      value: ph.cost,
+                      className: 'ml-auto font-serif text-muted whitespace-nowrap',
+                    })}
+                  </div>
+                  {ph.body.map((para, j) =>
+                    F({ as: 'p', path: `phases.items.${i}.body.${j}`, value: para, className: 'mb-4' })
+                  )}
+                  {F({
+                    as: 'p',
+                    path: `phases.items.${i}.promise`,
+                    value: ph.promise,
+                    className: 'font-serif italic text-primary border-l-2 border-accent-rust pl-4',
+                  })}
+                </li>
+              ))}
+            </ol>
+            {F({
+              as: 'p',
+              path: 'phases.footnote',
+              value: content.phases.footnote,
+              className: 'mt-8 text-muted text-sm leading-relaxed',
+            })}
+          </section>
+
+          {/* Photo collage — flush with the text column, so its edges line up with the paragraphs */}
+          <figure className="my-12">
+            <div
+              className={`grid gap-2 md:gap-3 ${
+                content.montage.images.length === 3 ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-2'
+              }`}
+            >
               {content.montage.images.map((im, i) => (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -366,7 +492,7 @@ export default function VisionView({
         </article>
 
         {/* ── The plan ── */}
-        <section className="mt-24 max-w-[68ch]">
+        <section className="mt-24 font-body text-[1.0625rem] md:text-lg max-w-[68ch]">
           {F({
             as: 'h2',
             path: 'plan.heading',
@@ -407,7 +533,7 @@ export default function VisionView({
 
         {/* ── Ways to take part ── */}
         {content.ways && (
-          <section className="mt-20 max-w-[68ch]">
+          <section className="mt-20 font-body text-[1.0625rem] md:text-lg max-w-[68ch]">
             {F({
               as: 'h2',
               path: 'ways.heading',
@@ -453,7 +579,7 @@ export default function VisionView({
         )}
 
         {/* ── CTA ── */}
-        <section className="mt-20 max-w-[68ch] border-t border-primary/10 pt-12">
+        <section className="mt-20 font-body text-[1.0625rem] md:text-lg max-w-[68ch] border-t border-primary/10 pt-12">
           {F({
             as: 'h2',
             path: 'cta.heading',
@@ -535,9 +661,66 @@ export default function VisionView({
               </div>
             </div>
           )}
+          {showComment && (
+            <div className="max-w-[var(--container-wide)] mx-auto px-6 py-4 border-b border-white/10">
+              <label className="block text-xs uppercase tracking-widest text-white/60 mb-2">
+                {activePath ? (
+                  <>
+                    Comment on{' '}
+                    <span className="text-white/90 normal-case tracking-normal">“{activeExcerpt}…”</span>
+                  </>
+                ) : (
+                  'Click into a paragraph first, then add a comment'
+                )}
+              </label>
+              <textarea
+                value={commentDraft}
+                onChange={(e) => setCommentDraft(e.target.value)}
+                rows={3}
+                autoFocus
+                className="w-full rounded bg-black/30 border border-white/15 p-3 text-sm text-white/90 focus:outline-none focus:ring-2 focus:ring-accent-rust/50"
+                placeholder="e.g. this number feels high, check it against the spend page"
+              />
+              <div className="flex gap-3 mt-3">
+                <button
+                  onClick={doSaveComment}
+                  disabled={!activePath || !commentDraft.trim()}
+                  className="px-4 py-2 rounded bg-accent-rust hover:bg-accent-rust/90 disabled:opacity-40 text-sm font-medium"
+                >
+                  Save comment
+                </button>
+                <button
+                  onClick={() => {
+                    setShowComment(false);
+                    setCommentDraft('');
+                  }}
+                  className="px-4 py-2 rounded bg-white/10 hover:bg-white/20 text-sm"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+          {comments.length > 0 && (
+            <ul className="max-w-[var(--container-wide)] mx-auto px-6 py-3 border-b border-white/10 space-y-1 text-sm">
+              {comments.map((c, i) => (
+                <li key={`${c.path}:${i}`} className="flex items-baseline gap-3">
+                  <span className="text-white/50 truncate max-w-[24ch]" title={c.path}>“{c.excerpt}…”</span>
+                  <span className="text-white/90 flex-1">{c.text}</span>
+                  <button
+                    onClick={() => setComments((cs) => cs.filter((_, j) => j !== i))}
+                    className="text-white/50 hover:text-white"
+                    aria-label="Remove comment"
+                  >
+                    ×
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
           <div className="max-w-[var(--container-wide)] mx-auto px-6 py-3 flex items-center gap-3 flex-wrap">
             <span className="text-sm text-white/70">
-              Editing locally — copy the JSON and send it to Derek.
+              Editing locally — copy the JSON (edits + comments) and send it back.
             </span>
             <div className="flex-1" />
             <button
@@ -545,6 +728,13 @@ export default function VisionView({
               className="px-4 py-2 rounded bg-accent-rust hover:bg-accent-rust/90 text-sm font-semibold"
             >
               {copied ? 'Copied ✓' : 'Copy JSON'}
+            </button>
+            <button
+              onClick={() => setShowComment((v) => !v)}
+              className="px-4 py-2 rounded bg-white/10 hover:bg-white/20 text-sm"
+              title={activePath ? `Comment on ${activePath}` : 'Click into a paragraph first'}
+            >
+              Add comment{comments.length ? ` (${comments.length})` : ''}
             </button>
             <button
               onClick={() => setShowPaste((s) => !s)}

@@ -1,0 +1,21 @@
+{
+ "id": "69bd014bf403a9ca2380f091_00054",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Pārājikapāḷi—The First Defeat\n\n17. Or, if a <term>sāmaṇeru</term> <gloss>novice monk</gloss>, being restless, dissatisfied, wanting to give up, finding the training rules shameful, loathsome, or desiring the lay life—[ellipses]—finding them difficult to practice, says, \"I have a mother, she will provide for me,\" and causes distraction; or, \"I have a father, he will provide for me,\" and causes distraction; or, \"I have a brother, he will provide for me,\" and causes distraction; or, \"I have a sister, she will provide for me,\" and causes distraction; or, \"I have a son, he will provide for me,\" and causes distraction; or, \"I have a daughter, she will provide for me,\" and causes distraction; or, \"I have a wife, she will provide for me,\" and causes distraction; or, \"I have relatives, they will provide for me,\" and causes distraction; or, \"I have friends, they will provide for me,\" and causes distraction; or, \"I have a village, I will live from that,\" and causes distraction; or, \"I have a town, I will live from that,\" and causes distraction; or, \"I have fields, I will live from that,\" and causes distraction; or, \"I have property, I will live from that,\" and causes distraction; or, \"I have silver, I will live from that,\" and causes distraction; or, \"I have gold, I will live from that,\" and causes distraction; [ellipses] or, \"I have a craft, I will live from that,\" and causes distraction. In this way, monks, there is an expression of weakness, and the training is cast aside.\n\n18. Or, if a <term>sāmaṇeru</term> <gloss>novice monk</gloss>, being restless, dissatisfied, wanting to give up, finding the training rules shameful, loathsome, or desiring the lay life—[ellipses]—finding them difficult to practice, says, \"It is difficult,\" and causes distraction; or, \"It is tiresome,\" and causes distraction; \"It is unbearable,\" and causes distraction; or, \"It is not easy,\" and causes distraction; or, \"I am unable,\" and causes distraction; or, \"I do not wish to,\" and causes distraction; or, \"I do not find joy,\" and causes distraction; [ellipses] or, \"I do not find pleasure,\" and causes distraction. In this way, monks, there is an expression of weakness, and the training is cast aside.\n\n19. And how, monks, is there an expression of weakness and the training is officially renounced? Here, monks, a monk <note>referring to the novice context</note> who is restless, dissatisfied, wanting to give up, finding the training rules shameful, loathsome, or desiring the lay life—[ellipses]—finding them difficult to practice, says, \"I renounce the Buddha,\" and causes distraction. In this way, monks, there is an expression of weakness, and the training is officially renounced.\n\n<summary>This page details specific verbal expressions of restlessness and dissatisfaction made by a novice monk that lead to the abandonment of monastic training. It contrasts statements of intent to rely on lay support with the formal renunciation of the Buddha, which constitutes a complete rejection of the monastic path.</summary>\n<keywords>Sāmaṇeru, Vinaya, Sikkhapada, Renunciation, Monastic Discipline, Lay Life</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3070,
+ "outputTokens": 771,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.000962,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2172,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

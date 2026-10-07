@@ -1,0 +1,21 @@
+{
+ "id": "69e72c65a409200ea79f47bd_00106",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<header>Tianxinyan, Volume 2</header>\n\n<margin>Already the proof of being exhausted by frugality.</margin>\n<margin>Retreating is also regret.</margin>\n<margin>Method of writing: Circle.</margin>\n<margin>Not reaching.</margin>\n<margin>Method of writing: Circle.</margin>\n<margin>Always like this.</margin>\n<margin>Not because one considers it proper to act, and thus acts; \"fú\" <gloss>to wear/to submit</gloss> is like the \"fú\" <gloss>to wear/to keep in mind</gloss> in \"taking it to heart.\"</margin>\n<margin>And if one contends with them again, then disaster will follow.</margin>\n<margin>Method of phrasing: Circle.</margin>\n<margin>What I practice.</margin>\n<margin>Appearance of walking sideways.</margin>\n\nDrinking, the <term>Laozi</term> <gloss>Old Master</gloss> remained indifferent and did not respond. The next day, Shicheng Qi saw him again and said, \n<note>Discussion</note>\nFormerly I found fault with you. Now my heart has changed and settled. Why is this? Laozi said, As for those who are clever, wise, or holy, I consider myself free from such things. Before, if you called me an ox, I accepted it as an ox. If you called me a horse, I accepted it as a horse. If one possesses the reality, and others give it a name, if one does not accept it, one will suffer disaster again. My \"submission\" is constant; I do not \"submit\" because I have something to submit to. Shicheng Qi held his actions in check, avoiding shadows and walking carefully.\n\n<summary>This passage records an interaction between Laozi and Shicheng Qi, where Laozi explains his indifference to external labels and his philosophy of non-contention.</summary>\n<keywords>Laozi, Shicheng Qi, non-contention, reality, names, philosophy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2121,
+ "outputTokens": 452,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.0006041250000000001,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 552,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

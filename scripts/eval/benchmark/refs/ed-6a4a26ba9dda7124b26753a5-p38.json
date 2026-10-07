@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A48884",
+  "edition": "EEBO-TCP A48884 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6a4a26ba9dda7124b26753a5",
+  "page_number": 38,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 58574,
+    "to_char": 60570,
+    "overlap": 1,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "Starts 'ferent; how can we'; ends at Civil Power.",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:40.508Z",
+  "text_location": "repo",
+  "text_sha256": "bbc806f18731eff94805b57a940cbe15778bedcde24f98f45b6d05909e9b41a3",
+  "unit": {
+    "chars": 1996
+  }
+}

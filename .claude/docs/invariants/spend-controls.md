@@ -53,10 +53,20 @@ priced. Scales with in-flight batch size.
 
 ## Judgment, which no check asserts
 
+- **Batch API unless the caller says realtime (#5244).** A hand-run OCR job goes through
+  `scripts/batch/bulk-reocr-local.mjs`, which prices each job at submit on Supabase
+  `gemini_usage` so the dial sees it; `realtime-ocr.mjs` (~2×) needs `--realtime`.
 - **Presence of a guard is not coverage by it.** The first version of
   `spend-perimeter.mjs` passed `translate-worker` because the *file* mentioned
   `budgetAllowsDispatch` — in a helper off the spending path. Hours later that
   worker drained a queue through the ceiling. Check the **path**, not the file.
+- **Translation has TWO dispatchers — orchestrator Phase 4 and `translate-worker`
+  `selfDispatch()` — and a routing rule must be applied to both (#5429).** #5411 sent
+  priority < 90 to the chained Batch lane in Phase 4 only; self-dispatch kept feeding
+  realtime at ~4× the price until #5430 gave it the same floor (`LANE_FILTER`) and #5431
+  made it skip books with an open run (`scripts/workers/lib/self-dispatch-lane.mjs`). **Tell:** a routing flip whose per-page
+  bill does not move (split `gemini_usage` by endpoint: `hetzner/translate-worker` vs
+  `hetzner/translate-batch-chained`).
 - **A per-call cost is a rate, not an amount.** "Preview OCR is not free… ~$2.73"
   was written three weeks before the same code cost $392. Multiply by the
   acquisition rate before calling something negligible.
@@ -80,6 +90,7 @@ priced. Scales with in-flight batch size.
   on runaway-heavy days, and ~110 rows/day carry no `cost_usd` at all — the guard
   prints that count every cycle. **A $5 computed dial is not a $5 invoice.**
   Treat the ceiling as a strong brake, not an accounting system.
-- **Phase 2's cross-book pool routes every small book to flash-lite regardless of
-  script** — the defect #4436 fixed for preview only. See `language-fields.md`
-  for why that matters on non-Latin scripts.
+- **Phase 2's cross-book pool used to route every small book to flash-lite regardless
+  of script** (#4436 fixed preview first). Since #5575 Pass 1 partitions by
+  `getOcrModelForBook` like Pass 2; any new pool must do the same. See
+  `language-fields.md` for why that matters on non-Latin scripts.

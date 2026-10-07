@@ -20,6 +20,10 @@
  *   LEAKED      a held book whose pages gained a TRANSLATION after `held_at`, or whose status
  *               changed after it (audit_log `pipeline_status_changed` newer than the hold). The
  *               derived lane ran on a held book. Must be 0.
+ *   OPEN_CHAINED a held book with an OPEN chained translation run (translate_batch_runs, mode
+ *               'chained', phase not terminal). The chained lane re-reads the hold each round and
+ *               parks (#5424), so an open run on a held book means that check was bypassed or the
+ *               lane's ticker is not running; either way rounds may still go out. Must be 0.
  *   RELEASABLE  informational: a held book whose release condition looks met — for reason
  *               `ia-wrong-leaf-4790`, an `ia_ocr_leaf_repair` book_event newer than the hold.
  *               Lift it with hold-pipeline-books.mjs --release-held.
@@ -32,6 +36,8 @@
  */
 import { MongoClient } from 'mongodb';
 import { HOLD_STATUS } from '../lib/pipeline-hold.mjs';
+import { MODE as CHAINED_MODE, TERMINAL_PHASES as CHAINED_TERMINAL } from '../lib/translate-batch-chained.mjs';
+import { RUNS_COLLECTION } from '../lib/translate-batch-seam.mjs';
 const JSON_OUT = process.argv.includes('--json');
 const log = (...a) => { if (!JSON_OUT) console.log(...a); };
 let mongo;
@@ -69,15 +75,26 @@ try {
     }
   }
 
-  const summary = { held: marked.length, by_reason: byReason, clobbered: clobbered.length, orphaned: orphaned.length, leaked: leaked.length, releasable: releasable.length };
+  // OPEN_CHAINED: a chained run still open on a held book (#5424). `marked` was read before the
+  // per-book loop above, which takes minutes; a book released meanwhile (and enrolled at once, the
+  // repair lanes' pattern) must not be reported, so the hold is re-read now for each candidate.
+  const candidates = await db.collection(RUNS_COLLECTION)
+    .find({ mode: CHAINED_MODE, phase: { $nin: CHAINED_TERMINAL }, book_id: { $in: [...markedIds] } }, { projection: { id: 1, book_id: 1, phase: 1 } })
+    .toArray();
+  const stillHeld = new Set(await B.distinct('id', { id: { $in: candidates.map((r) => r.book_id) }, 'pipeline_auto.hold': { $exists: true } }));
+  const openChained = candidates.filter((r) => stillHeld.has(r.book_id));
+  const titleOf = new Map(marked.map((b) => [b.id, (b.title || '').slice(0, 44)]));
+
+  const summary = { held: marked.length, by_reason: byReason, clobbered: clobbered.length, orphaned: orphaned.length, leaked: leaked.length, open_chained: openChained.length, releasable: releasable.length };
   log(`pipeline holds: ${marked.length} book(s) — ${Object.entries(byReason).map(([k, v]) => `${k}: ${v}`).join(', ') || 'none'}`);
   for (const b of clobbered) log(`  CLOBBERED ${b.id} ${(b.title || '').slice(0, 44)} — status '${b.pipeline_auto.status}' with hold ${b.pipeline_auto.hold.reason}`);
   for (const b of orphaned) log(`  ORPHANED  ${b.id} ${(b.title || '').slice(0, 44)} — status held, no marker`);
   for (const l of leaked) log(`  LEAKED    ${l.id} ${l.title} — ${l.translated_after} page(s) translated after hold, ${l.status_changes_after} status change(s) after hold`);
+  for (const r of openChained) log(`  OPEN_CHAINED ${r.book_id} ${titleOf.get(r.book_id)} — chained run ${r.id} is ${r.phase}; park it (phase 'parked') and find why the per-round hold check did not`);
   for (const r of releasable) log(`  RELEASABLE ${r.id} ${r.title} — leaf repair recorded since the hold; lift with hold-pipeline-books.mjs --release-held --book ${r.id}`);
-  const drift = clobbered.length + orphaned.length + leaked.length;
+  const drift = clobbered.length + orphaned.length + leaked.length + openChained.length;
   log(drift ? `DRIFT: ${drift} fault(s)` : 'clean');
-  if (JSON_OUT) console.log(JSON.stringify({ ...summary, clobbered_ids: clobbered.map((b) => b.id), orphaned_ids: orphaned.map((b) => b.id), leaked, releasable }));
+  if (JSON_OUT) console.log(JSON.stringify({ ...summary, clobbered_ids: clobbered.map((b) => b.id), orphaned_ids: orphaned.map((b) => b.id), leaked, open_chained: openChained.map((r) => ({ run: r.id, book_id: r.book_id, phase: r.phase })), releasable }));
   await mongo.close();
   process.exit(drift ? 1 : 0);
 } catch (e) {

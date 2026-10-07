@@ -1,0 +1,714 @@
+[
+ {
+  "book_id": "6a3c6523af3c49b59c5caf81",
+  "title": "御定佩文韻府·卷一百六之一 (vol 727)",
+  "work": "KR3k0059",
+  "witness": "WYG",
+  "pages_read": 165,
+  "text_pages": 162,
+  "aligned": 158,
+  "aligned_share_of_text_pages": 0.975,
+  "offset_steps": 0,
+  "juans_spanned": 1,
+  "anchor_per_juan_predicts": "157/157",
+  "single_anchor_predicts": "157/157",
+  "unaligned_examples": [
+   {
+    "page": 2,
+    "dice": 0.512,
+    "pb": "KR3k0059_WYG_877-79b"
+   },
+   {
+    "page": 3,
+    "dice": 0.44,
+    "pb": "KR3k0059_WYG_877-79b"
+   },
+   {
+    "page": 163,
+    "dice": 0.111,
+    "pb": "KR3k0059_WYG_001-1a"
+   },
+   {
+    "page": 165,
+    "dice": 0.129,
+    "pb": "KR3k0059_WYG_000-5b"
+   }
+  ],
+  "steps_at": []
+ },
+ {
+  "book_id": "6a3c6f7d01fe4f593c1ccdad",
+  "title": "孟子注疏·卷十二上~卷十三下 (vol 16)",
+  "work": "KR1h0003",
+  "witness": "WYG",
+  "pages_read": 189,
+  "text_pages": 185,
+  "aligned": 180,
+  "aligned_share_of_text_pages": 0.973,
+  "offset_steps": 1,
+  "juans_spanned": 2,
+  "anchor_per_juan_predicts": "178/178",
+  "single_anchor_predicts": "90/179",
+  "unaligned_examples": [
+   {
+    "page": 2,
+    "dice": 0.389,
+    "pb": "KR1h0003_WYG_012-22b"
+   },
+   {
+    "page": 95,
+    "dice": 0.015,
+    "pb": "KR1h0003_WYG_000-9a"
+   },
+   {
+    "page": 96,
+    "dice": 0.294,
+    "pb": "KR1h0003_WYG_003-30b"
+   },
+   {
+    "page": 188,
+    "dice": 0.483,
+    "pb": "KR1h0003_WYG_010-41b"
+   },
+   {
+    "page": 189,
+    "dice": 0.015,
+    "pb": "KR1h0003_WYG_000-9a"
+   }
+  ],
+  "steps_at": [
+   {
+    "page": 97,
+    "from": 1009,
+    "to": 1007,
+    "pb": "KR1h0003_WYG_013-1a"
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c782301fe4f593c206f84",
+  "title": "釋氏稽古略·卷三 (vol 3)",
+  "work": "KR6r0014",
+  "witness": "WYG",
+  "pages_read": 246,
+  "text_pages": 245,
+  "aligned": 242,
+  "aligned_share_of_text_pages": 0.988,
+  "offset_steps": 0,
+  "juans_spanned": 1,
+  "anchor_per_juan_predicts": "241/241",
+  "single_anchor_predicts": "241/241",
+  "unaligned_examples": [
+   {
+    "page": 2,
+    "dice": 0.124,
+    "pb": "KR6r0014_WYG_000-1a"
+   },
+   {
+    "page": 5,
+    "dice": 0.527,
+    "pb": "KR6r0014_WYG_003-2a"
+   },
+   {
+    "page": 193,
+    "dice": 0.52,
+    "pb": "KR6r0014_WYG_003-96a"
+   }
+  ],
+  "steps_at": []
+ },
+ {
+  "book_id": "6a3c724401fe4f593c1ddcd0",
+  "title": "周官集注·卷六 (vol 6)",
+  "work": "KR1d0021",
+  "witness": "WYG",
+  "pages_read": 146,
+  "text_pages": 145,
+  "aligned": 144,
+  "aligned_share_of_text_pages": 0.993,
+  "offset_steps": 0,
+  "juans_spanned": 1,
+  "anchor_per_juan_predicts": "143/143",
+  "single_anchor_predicts": "143/143",
+  "unaligned_examples": [
+   {
+    "page": 2,
+    "dice": 0.141,
+    "pb": "KR1d0021_WYG_000-1a"
+   }
+  ],
+  "steps_at": []
+ },
+ {
+  "book_id": "6a3cb7f93dce6cfad7489e24",
+  "title": "詩集傳名物鈔·卷一 (vol 9)",
+  "work": "KR1c0027",
+  "witness": "WYG",
+  "pages_read": 123,
+  "text_pages": 119,
+  "aligned": 114,
+  "aligned_share_of_text_pages": 0.958,
+  "offset_steps": 0,
+  "juans_spanned": 2,
+  "anchor_per_juan_predicts": "112/112",
+  "single_anchor_predicts": "113/113",
+  "unaligned_examples": [
+   {
+    "page": 2,
+    "dice": 0.343,
+    "pb": "KR1c0027_WYG_002-57b"
+   },
+   {
+    "page": 3,
+    "dice": 0.295,
+    "pb": "KR1c0027_WYG_000-1a"
+   },
+   {
+    "page": 4,
+    "dice": 0.446,
+    "pb": "KR1c0027_WYG_000-1b"
+   },
+   {
+    "page": 5,
+    "dice": 0.567,
+    "pb": "KR1c0027_WYG_000-2a"
+   },
+   {
+    "page": 123,
+    "dice": 0.022,
+    "pb": "KR1c0027_WYG_000-2a"
+   }
+  ],
+  "steps_at": []
+ },
+ {
+  "book_id": "6a3c74a539b4508b04e5814c",
+  "title": "春秋繁露·卷七~卷十一 (vol 2)",
+  "work": "KR1e0122",
+  "witness": "WYG",
+  "pages_read": 141,
+  "text_pages": 133,
+  "aligned": 131,
+  "aligned_share_of_text_pages": 0.985,
+  "offset_steps": 1,
+  "juans_spanned": 5,
+  "anchor_per_juan_predicts": "126/126",
+  "single_anchor_predicts": "64/130",
+  "unaligned_examples": [
+   {
+    "page": 2,
+    "dice": 0.211,
+    "pb": "KR1e0122_WYG_000-1a"
+   },
+   {
+    "page": 71,
+    "dice": 0.204,
+    "pb": "KR1e0122_WYG_000-1a"
+   }
+  ],
+  "steps_at": [
+   {
+    "page": 72,
+    "from": 151,
+    "to": 150,
+    "pb": "KR1e0122_WYG_009-1a"
+   }
+  ]
+ },
+ {
+  "book_id": "6a3cbdd0ec254ff6cadfa73d",
+  "title": "證治準繩·卷四十三 (vol 40)",
+  "work": "KR3e0078",
+  "witness": "WYG",
+  "pages_read": 130,
+  "text_pages": 128,
+  "aligned": 127,
+  "aligned_share_of_text_pages": 0.992,
+  "offset_steps": 0,
+  "juans_spanned": 1,
+  "anchor_per_juan_predicts": "126/126",
+  "single_anchor_predicts": "126/126",
+  "unaligned_examples": [
+   {
+    "page": 2,
+    "dice": 0.192,
+    "pb": "KR3e0078_WYG_053-1a"
+   }
+  ],
+  "steps_at": []
+ },
+ {
+  "book_id": "6a3c621340c88a541d8f277f",
+  "title": "西清古鑑·卷十七~卷十八 (vol 14)",
+  "work": "KR3h0089",
+  "witness": "WYG",
+  "pages_read": 140,
+  "text_pages": 60,
+  "aligned": 54,
+  "aligned_share_of_text_pages": 0.9,
+  "offset_steps": 17,
+  "juans_spanned": 2,
+  "anchor_per_juan_predicts": "5/52",
+  "single_anchor_predicts": "3/53",
+  "unaligned_examples": [
+   {
+    "page": 2,
+    "dice": 0.217,
+    "pb": "KR3h0089_WYG_040-1a"
+   },
+   {
+    "page": 52,
+    "dice": 0.087,
+    "pb": "KR3h0089_WYG_041-1a"
+   },
+   {
+    "page": 68,
+    "dice": 0.332,
+    "pb": "KR3h0089_WYG_020-33b"
+   },
+   {
+    "page": 118,
+    "dice": 0.578,
+    "pb": "KR3h0089_WYG_021-13b"
+   },
+   {
+    "page": 126,
+    "dice": 0.588,
+    "pb": "KR3h0089_WYG_021-17b"
+   },
+   {
+    "page": 128,
+    "dice": 0.586,
+    "pb": "KR3h0089_WYG_021-18b"
+   }
+  ],
+  "steps_at": [
+   {
+    "page": 11,
+    "from": 1224,
+    "to": 1222,
+    "pb": "KR3h0089_WYG_020-5a"
+   },
+   {
+    "page": 15,
+    "from": 1222,
+    "to": 1220,
+    "pb": "KR3h0089_WYG_020-7a"
+   },
+   {
+    "page": 19,
+    "from": 1220,
+    "to": 1218,
+    "pb": "KR3h0089_WYG_020-9a"
+   },
+   {
+    "page": 23,
+    "from": 1218,
+    "to": 1216,
+    "pb": "KR3h0089_WYG_020-11a"
+   },
+   {
+    "page": 27,
+    "from": 1216,
+    "to": 1214,
+    "pb": "KR3h0089_WYG_020-13a"
+   },
+   {
+    "page": 30,
+    "from": 1214,
+    "to": 1213,
+    "pb": "KR3h0089_WYG_020-14b"
+   },
+   {
+    "page": 35,
+    "from": 1213,
+    "to": 1212,
+    "pb": "KR3h0089_WYG_020-17a"
+   },
+   {
+    "page": 39,
+    "from": 1212,
+    "to": 1210,
+    "pb": "KR3h0089_WYG_020-19a"
+   },
+   {
+    "page": 42,
+    "from": 1210,
+    "to": 1209,
+    "pb": "KR3h0089_WYG_020-20b"
+   },
+   {
+    "page": 49,
+    "from": 1209,
+    "to": 1208,
+    "pb": "KR3h0089_WYG_020-24a"
+   },
+   {
+    "page": 53,
+    "from": 1208,
+    "to": 1206,
+    "pb": "KR3h0089_WYG_020-26a"
+   },
+   {
+    "page": 57,
+    "from": 1206,
+    "to": 1204,
+    "pb": "KR3h0089_WYG_020-28a"
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c763f01fe4f593c1f9c80",
+  "title": "漢上易傳·卷一 (vol 16)",
+  "work": "KR1a0024",
+  "witness": "WYG",
+  "pages_read": 180,
+  "text_pages": 175,
+  "aligned": 169,
+  "aligned_share_of_text_pages": 0.966,
+  "offset_steps": 1,
+  "juans_spanned": 2,
+  "anchor_per_juan_predicts": "167/167",
+  "single_anchor_predicts": "6/168",
+  "unaligned_examples": [
+   {
+    "page": 3,
+    "dice": 0.41,
+    "pb": "KR1a0024_WYG_013-1a"
+   },
+   {
+    "page": 4,
+    "dice": 0.222,
+    "pb": "KR1a0024_WYG_000-1a"
+   },
+   {
+    "page": 5,
+    "dice": 0.366,
+    "pb": "KR1a0024_WYG_000-2b"
+   },
+   {
+    "page": 6,
+    "dice": 0.331,
+    "pb": "KR1a0024_WYG_000-3a"
+   },
+   {
+    "page": 178,
+    "dice": 0.054,
+    "pb": "KR1a0024_WYG_001-1b"
+   },
+   {
+    "page": 180,
+    "dice": 0.07,
+    "pb": "KR1a0024_WYG_000-3a"
+   }
+  ],
+  "steps_at": [
+   {
+    "page": 16,
+    "from": -3,
+    "to": 0,
+    "pb": "KR1a0024_WYG_001-1a"
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c775401fe4f593c2014eb",
+  "title": "葉八白易傳·卷三~卷四 (vol 2)",
+  "work": "KR1a0102",
+  "witness": "WYG",
+  "pages_read": 171,
+  "text_pages": 169,
+  "aligned": 167,
+  "aligned_share_of_text_pages": 0.988,
+  "offset_steps": 1,
+  "juans_spanned": 2,
+  "anchor_per_juan_predicts": "165/165",
+  "single_anchor_predicts": "80/166",
+  "unaligned_examples": [
+   {
+    "page": 2,
+    "dice": 0.174,
+    "pb": "KR1a0102_WYG_003-41b"
+   },
+   {
+    "page": 85,
+    "dice": 0.164,
+    "pb": "KR1a0102_WYG_003-41b"
+   }
+  ],
+  "steps_at": [
+   {
+    "page": 86,
+    "from": 158,
+    "to": 157,
+    "pb": "KR1a0102_WYG_004-1a"
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c6e5001fe4f593c1c1895",
+  "title": "周官總義·卷八~卷十一 (vol 4)",
+  "work": "KR1d0009",
+  "witness": "WYG",
+  "pages_read": 163,
+  "text_pages": 161,
+  "aligned": 159,
+  "aligned_share_of_text_pages": 0.988,
+  "offset_steps": 2,
+  "juans_spanned": 4,
+  "anchor_per_juan_predicts": "155/155",
+  "single_anchor_predicts": "29/158",
+  "unaligned_examples": [
+   {
+    "page": 32,
+    "dice": 0.155,
+    "pb": "KR1d0009_WYG_018-1a"
+   },
+   {
+    "page": 107,
+    "dice": 0.154,
+    "pb": "KR1d0009_WYG_018-1a"
+   }
+  ],
+  "steps_at": [
+   {
+    "page": 33,
+    "from": 375,
+    "to": 374,
+    "pb": "KR1d0009_WYG_009-1a"
+   },
+   {
+    "page": 108,
+    "from": 374,
+    "to": 372,
+    "pb": "KR1d0009_WYG_011-1a"
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c6f4c01fe4f593c1cafd9",
+  "title": "經稗·卷一~卷二 (vol 1)",
+  "work": "KR1g0025",
+  "witness": "WYG",
+  "pages_read": 197,
+  "text_pages": 193,
+  "aligned": 72,
+  "aligned_share_of_text_pages": 0.373,
+  "offset_steps": 0,
+  "juans_spanned": 2,
+  "anchor_per_juan_predicts": "70/70",
+  "single_anchor_predicts": "71/71",
+  "unaligned_examples": [
+   {
+    "page": 2,
+    "dice": 0.108,
+    "pb": "KR1g0025_WYG_001-1a"
+   },
+   {
+    "page": 35,
+    "dice": 0.055,
+    "pb": "KR1g0025_WYG_001-1a"
+   },
+   {
+    "page": 36,
+    "dice": 0.031,
+    "pb": "KR1g0025_WYG_001-16a"
+   },
+   {
+    "page": 77,
+    "dice": 0.033,
+    "pb": "KR1g0025_WYG_001-4a"
+   },
+   {
+    "page": 78,
+    "dice": 0.04,
+    "pb": "KR1g0025_WYG_001-35a"
+   },
+   {
+    "page": 79,
+    "dice": 0.042,
+    "pb": "KR1g0025_WYG_001-35a"
+   },
+   {
+    "page": 80,
+    "dice": 0.068,
+    "pb": "KR1g0025_WYG_001-33b"
+   },
+   {
+    "page": 81,
+    "dice": 0.066,
+    "pb": "KR1g0025_WYG_001-30a"
+   }
+  ],
+  "steps_at": []
+ },
+ {
+  "book_id": "6a3c68e2af3c49b59c5dd4a8",
+  "title": "普濟方·卷三十二~卷三十三 (vol 23)",
+  "work": "KR3e0067",
+  "witness": "WYG",
+  "pages_read": 232,
+  "text_pages": 230,
+  "aligned": 228,
+  "aligned_share_of_text_pages": 0.991,
+  "offset_steps": 1,
+  "juans_spanned": 2,
+  "anchor_per_juan_predicts": "226/226",
+  "single_anchor_predicts": "90/227",
+  "unaligned_examples": [
+   {
+    "page": 94,
+    "dice": 0.203,
+    "pb": "KR3e0067_WYG_007-1a"
+   },
+   {
+    "page": 232,
+    "dice": 0.462,
+    "pb": "KR3e0067_WYG_033-69b"
+   }
+  ],
+  "steps_at": [
+   {
+    "page": 95,
+    "from": 3233,
+    "to": 3232,
+    "pb": "KR3e0067_WYG_033-1a"
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c629c40c88a541d8f4f2c",
+  "title": "御定佩文韻府·卷二十之五 (vol 84)",
+  "work": "KR3k0059",
+  "witness": "WYG",
+  "pages_read": 128,
+  "text_pages": 126,
+  "aligned": 124,
+  "aligned_share_of_text_pages": 0.984,
+  "offset_steps": 0,
+  "juans_spanned": 1,
+  "anchor_per_juan_predicts": "123/123",
+  "single_anchor_predicts": "123/123",
+  "unaligned_examples": [
+   {
+    "page": 2,
+    "dice": 0.25,
+    "pb": "KR3k0059_WYG_171-78b"
+   },
+   {
+    "page": 3,
+    "dice": 0.31,
+    "pb": "KR3k0059_WYG_001-1a"
+   }
+  ],
+  "steps_at": []
+ },
+ {
+  "book_id": "6a3cb8b93dce6cfad748fe8e",
+  "title": "義門讀書記·卷四十一~卷四十二 (vol 17)",
+  "work": "KR3j0076",
+  "witness": "WYG",
+  "pages_read": 137,
+  "text_pages": 135,
+  "aligned": 133,
+  "aligned_share_of_text_pages": 0.985,
+  "offset_steps": 1,
+  "juans_spanned": 2,
+  "anchor_per_juan_predicts": "131/131",
+  "single_anchor_predicts": "68/132",
+  "unaligned_examples": [
+   {
+    "page": 2,
+    "dice": 0.239,
+    "pb": "KR3j0076_WYG_041-35b"
+   },
+   {
+    "page": 73,
+    "dice": 0.235,
+    "pb": "KR3j0076_WYG_042-32b"
+   }
+  ],
+  "steps_at": [
+   {
+    "page": 74,
+    "from": 2202,
+    "to": 2201,
+    "pb": "KR3j0076_WYG_042-1a"
+   }
+  ]
+ },
+ {
+  "book_id": "6a3c643e39b4508b04e256b2",
+  "title": "御定佩文韻府·卷四十七之四 (vol 491)",
+  "work": "KR3k0059",
+  "witness": "WYG",
+  "pages_read": 105,
+  "text_pages": 103,
+  "aligned": 98,
+  "aligned_share_of_text_pages": 0.951,
+  "offset_steps": 0,
+  "juans_spanned": 1,
+  "anchor_per_juan_predicts": "97/97",
+  "single_anchor_predicts": "97/97",
+  "unaligned_examples": [
+   {
+    "page": 2,
+    "dice": 0.465,
+    "pb": "KR3k0059_WYG_396-55b"
+   },
+   {
+    "page": 3,
+    "dice": 0.194,
+    "pb": "KR3k0059_WYG_396-55b"
+   },
+   {
+    "page": 4,
+    "dice": 0.267,
+    "pb": "KR3k0059_WYG_396-55b"
+   },
+   {
+    "page": 103,
+    "dice": 0.138,
+    "pb": "KR3k0059_WYG_404-50b"
+   },
+   {
+    "page": 105,
+    "dice": 0.138,
+    "pb": "KR3k0059_WYG_000-5b"
+   }
+  ],
+  "steps_at": []
+ },
+ {
+  "book_id": "6a3c625240c88a541d8f36f3",
+  "title": "御定佩文韻府·卷四之二 (vol 8)",
+  "work": "KR3k0059",
+  "witness": "WYG",
+  "pages_read": 120,
+  "text_pages": 118,
+  "aligned": 115,
+  "aligned_share_of_text_pages": 0.975,
+  "offset_steps": 0,
+  "juans_spanned": 1,
+  "anchor_per_juan_predicts": "114/114",
+  "single_anchor_predicts": "114/114",
+  "unaligned_examples": [
+   {
+    "page": 2,
+    "dice": 0.245,
+    "pb": "KR3k0059_WYG_001-1a"
+   },
+   {
+    "page": 3,
+    "dice": 0.466,
+    "pb": "KR3k0059_WYG_001-1a"
+   },
+   {
+    "page": 53,
+    "dice": 0.141,
+    "pb": "KR3k0059_WYG_001-1a"
+   }
+  ],
+  "steps_at": []
+ }
+]

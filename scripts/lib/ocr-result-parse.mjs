@@ -100,6 +100,33 @@ export function extractScriptType(ocrText) {
 }
 
 /**
+ * The page-level fields an OCR transcription carries in its own tags, as a
+ * `$set`-ready object holding only the fields that parsed (#4195 item 4).
+ *
+ * Why one function and not three calls per writer: `script_type` was parsed by
+ * `extractScriptType` here and in the TS canonical from the day the prompt asked
+ * for `<script>`, but only the realtime Lambda writer ever lifted it. Every Batch
+ * collector called `extractPageType` + `extractColumns` and stopped, so the tag
+ * sat in `ocr.data` while `pages.script_type` stayed empty for most of the volume.
+ * A new lifted tag is added HERE, once, and every writer picks it up.
+ * `tests/unit/ocr-tag-lift-callers.test.ts` fails if a writer goes back to
+ * calling `extractColumns` directly.
+ *
+ * Writers with their own page-type rule (the digitizer-insert override) spread
+ * this first and overwrite `page_type` after.
+ */
+export function liftOcrTags(ocrText) {
+  const pageType = extractPageType(ocrText);
+  const columns = extractColumns(ocrText);
+  const scriptType = extractScriptType(ocrText);
+  return {
+    ...(pageType ? { page_type: pageType } : {}),
+    ...(columns ? { columns } : {}),
+    ...(scriptType ? { script_type: scriptType } : {}),
+  };
+}
+
+/**
  * Parse the `<detected-images>` JSON block into DetectedImage-shaped objects.
  * Returns `[]` when the block is absent, is not a JSON array, or fails to parse.
  *

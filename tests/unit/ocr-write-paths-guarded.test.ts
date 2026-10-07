@@ -30,9 +30,11 @@ const WRITE_LINE = /(?:'ocr\.data':\s*(?!null\b|undefined\b|''|\{|regexFilter)[A
 
 /** Files that write the field but not a model's reading of a page image. */
 const ALLOWED: Record<string, string> = {
+  'scripts/import/sefaria-fit-5560.mjs': 'a published Sefaria e-text (not a model reading), cannot loop; written only where a Kraken read of the image verifies it (#5560)',
   'scripts/lib/ocr-loop-guard.mjs': 'the guard itself',
   'scripts/lib/blank-page-guard.mjs': 'the sibling guard; writes only page_revisions',
   'scripts/lib/syriac-kraken-lane.mjs': 'builds the $set for scripts/workers/syriac-kraken-lane.mjs, which runs loopVerdict on the text before calling it (#4883)',
+  'scripts/lib/ndl-koten-lane.mjs': 'builds the $set for scripts/workers/ndl-koten-lane.mjs, which runs loopVerdict on the text before calling it (#4925)',
   'scripts/import/ia-ocr-ingest.mjs': "Internet Archive's delivered OCR, not a model read — gated by scripts/lib/ia-ocr-gate.mjs (#4780)",
   'scripts/import/cdli-atf-source.mjs': "CDLI's published ATF transliteration; formulaic repetition is the genre (#4851)",
   'scripts/import/import-oraec.mjs': 'ORAEC corpus dump, a published edition',
@@ -42,6 +44,7 @@ const ALLOWED: Record<string, string> = {
   'scripts/maintenance/dehyphenate-ia-ocr.mjs': 'rewrites stored text, joining hyphenated line breaks',
   'scripts/maintenance/repair-ia-ocr-leaf-offset.mjs': 'moves stored text between pages (#3368); introduces no new text',
   'scripts/maintenance/fix-h13-stragglers.mjs': 'moves stored text; introduces no new text',
+  'scripts/maintenance/backfill-leaf-break-markers.mjs': 'inserts the <leaf-break/> marker between the stored leaf reads of a page (#5260); introduces no new text, and the text was loop-screened when apply-reocr-verdicts.mjs served it',
   'scripts/split-book.mjs': 'splits stored text across new page docs',
   'scripts/migration/backfill-ocr-near-complete.mjs': 'backfills counters from stored text',
   'scripts/tmp-recitation-retry.mjs': "writes the marker '[RECITATION_BLOCKED]', not a transcription",

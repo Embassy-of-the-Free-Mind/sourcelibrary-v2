@@ -22,7 +22,7 @@ export default async function AboutPage() {
     // (scripts/lib/language-count.mjs). ~105 as of 2026-06-26, so 100+ is a
     // defensible floor.
     { value: '100+', label: 'languages' },
-    { value: fmt(stats.translatedToEnglish), label: 'translated to English', href: '/search?has_translation=true' },
+    { value: fmt(stats.readableInEnglish), label: 'readable in English', href: '/search?has_translation=true' },
     { value: fmt(stats.firstTranslationCount), label: 'first-ever English translations', href: '/search?first_translation=true' },
     { value: fmt(stats.illustrationCount), label: 'illustrations cataloged', href: '/gallery' },
   ];
@@ -193,7 +193,7 @@ export default async function AboutPage() {
           </li>
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1">•</span>
-            <span><strong>API & MCP:</strong> <Link href="/developers" className="text-accent-rust hover:underline">Programmatic access</Link> for researchers and AI systems</span>
+            <span><strong>API & MCP:</strong> <Link href="/developers" className="text-accent-rust hover:underline">Programmatic access</Link> for researchers and AI systems &mdash; or <Link href="/connect" className="text-accent-rust hover:underline">connect it to Claude or ChatGPT</Link> in a minute</span>
           </li>
         </ul>
 

@@ -10,7 +10,7 @@ import { engineFromBatchJob, notRecorded, ocrProvenance, translationProvenance }
 
 /** Provenance identity of this route (#4613). */
 const ROUTE_CALL_SITE = 'src/app/api/batch-save/route.ts';
-import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
+import { CLEAR_STALE_UNSET, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate } from '@/lib/translate-write';
 
 export const maxDuration = 300;
 
@@ -106,7 +106,7 @@ export const POST = withAuth(async (request, session) => {
           }
 
           const candidate = result.response?.candidates?.[0];
-          const text = candidate?.content?.parts?.[0]?.text;
+          let text = candidate?.content?.parts?.[0]?.text;
           if (!text) {
             failed++;
             continue;
@@ -154,6 +154,21 @@ export const POST = withAuth(async (request, session) => {
               }
             );
           } else {
+            // The page's text inside its continuity <meta> is text no reader sees (#5376).
+            if (hidesPageInMeta(text)) {
+              console.warn(`[batch-save] HIDDEN META: refusing page ${pageId} (${text.length} chars)`);
+              await recordRefusedTranslation(db, { id: pageId!, book_id: job.book_id }, text, HIDDEN_META_REASON, { jobId: job.id, model: job.model });
+              failed++;
+              continue;
+            }
+            // A script in the English that is in neither the source nor the book's language (#5734).
+            const stray = await strayScriptGate(db, { id: pageId!, book_id: job.book_id }, text, { language: job.language, jobId: job.id, model: job.model });
+            if (stray.refused) {
+              console.warn(`[batch-save] STRAY SCRIPT: refusing page ${pageId}`);
+              failed++;
+              continue;
+            }
+            text = stray.text;
             await createRevision(pageId!, 'translation', job.id);
             await db.collection('pages').updateOne(
               { id: pageId },

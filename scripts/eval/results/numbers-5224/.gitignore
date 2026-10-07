@@ -1,0 +1,4 @@
+# Bulky run artifacts live in R2, not the public repo (see ARTIFACTS.md).
+/texts/
+/crops/
+/sheets/

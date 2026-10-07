@@ -1,0 +1,21 @@
+{
+ "id": "69ea3e63300d991d0f1d3186_00160",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "# 44 Section: The Superintendent of Courtesans\n\nBy the King’s order, a courtesan refusing to associate with a man shall receive one thousand lashes with a whip <note>original: \"shifa-sahasram\"</note>; or she shall pay a fine of five thousand <term>panas</term> <gloss>the standard copper coin of the era</gloss>.\n\nIf she harbors hatred toward a man after receiving payment, she shall be fined twice the amount of the payment.\n\nIf she prevents a man from staying or withholds his dues, she shall pay eight times the amount of the payment, unless the man suffers from disease or personal defects.\n\nIf a courtesan causes the death of a man out of excessive passion, she shall be burned alive or drowned in water.\n\nAnyone who steals the jewelry or the payment of a courtesan shall be fined eight times the value.\n\nA courtesan shall report her earnings, her future income, and the identity of her clients to the authorities.\n\nBy these rules, the conduct of the wives of actors, dancers, singers, musicians, storytellers, bards, rope-dancers, jugglers, and wandering performers, as well as secret prostitutes, is explained.\n\nThose among them who are traveling performers shall pay five <term>panas</term> as a performance tax for each show.\n\nProstitutes who live by their beauty <term>rupajiva</term> <gloss>those not in the state service but living independently</gloss> shall pay one-fifteenth of their monthly income to the state.\n\nThe teachers shall instruct the courtesans, female slaves, and stage performers in the arts of singing, playing instruments, recitation, dancing, acting, writing, painting, playing the lute <term>veena</term>, flute, and drum, reading the thoughts of others, preparation of perfumes and garlands, the art of seduction, massage, and the specialized knowledge of the courtesan's craft.\n\nThe state shall provide a livelihood for these teachers from the royal treasury. The sons of courtesans and chief stage performers shall be trained as lead performers and in all types of rhythmic timing <term>tala</term>.\n\nWomen who are skilled in signs and foreign languages shall be employed to detect foreign spies, to assassinate enemies, or to cause negligence among the enemy's forces, while appearing to be relatives or servants.\n\nThus ends the twenty-seventh chapter, The Superintendent of Courtesans, in the section concerning the Activity of Superintendents. It is the forty-eighth chapter from the beginning of the work.\n\n---\n\n<note>The footnotes indicate variations in the original manuscript: \"to men,\" \"jewelry and wealth,\" and \"all rhythmic errors.\"</note>\n\n<summary>This page details the legal regulations, fines, and professional training for courtesans and performers under the supervision of the state. It highlights the use of specialized women in espionage and state intelligence.</summary>\n<keywords>Superintendent of Courtesans, fines, performing arts, state intelligence, Ganikadhyaksha, Arthashastra, Kautilya</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2342,
+ "outputTokens": 649,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.001559,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1284,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

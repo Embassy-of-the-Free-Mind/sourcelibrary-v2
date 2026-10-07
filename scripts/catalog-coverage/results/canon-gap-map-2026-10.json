@@ -1,0 +1,1995 @@
+{
+  "issue": 5513,
+  "generated_at": "2026-10-01T14:36:23.653Z",
+  "script": "scripts/catalog-coverage/canon-gap-map.mjs",
+  "method": {
+    "base_chars": "non-whitespace, non-combining-mark code points after stripping tags/markers; the same function counts corpora and our pages",
+    "cost": "untranslated base chars × measured $/M base chars of the chained Batch translation lane for that language (rates{}); upper bound where English coverage is unknown",
+    "score": "untranslated size in thousands of English words (base chars × English words per source char, measured on our own translated pages of that language) × licence factor × pairing factor",
+    "licence_factor": {
+      "open": 1,
+      "open-nc": 0.75,
+      "reference-only": 0.25,
+      "unverified": 0.25,
+      "restricted": 0
+    },
+    "pairing_factor": {
+      "yes": 1,
+      "partial": 0.6,
+      "no": 0.3,
+      "unknown": 0.3
+    },
+    "holdings": "Mongo bookstore.books via indexed language / collections / id queries; live = visible:true && pages_count>0; hidden = all other matches. Title-matched: a floor, and editions are not checked unless the method says so"
+  },
+  "rates": {
+    "tibetan": {
+      "lane": "chained Batch, gemini-3-flash-preview",
+      "books_metered": 102,
+      "pages_metered": 6305,
+      "usd_metered": 9.16,
+      "usd_per_page": 0.001454,
+      "sample_pages_for_chars": 936,
+      "base_chars_per_page": 1748.5,
+      "usd_per_million_chars": 0.831,
+      "english_words_per_source_char": 0.3579,
+      "source": "Supabase gemini_usage, endpoint 'hetzner/translate-batch-chained', type translation, mode batch, last 45 days, books joined to books.language; chars from the same books' translated pages"
+    },
+    "chinese": {
+      "lane": "chained Batch, gemini-3.1-flash-lite",
+      "books_metered": 61,
+      "pages_metered": 8515,
+      "usd_metered": 2.89,
+      "usd_per_page": 0.000339,
+      "sample_pages_for_chars": 1115,
+      "base_chars_per_page": 303.6,
+      "usd_per_million_chars": 1.118,
+      "english_words_per_source_char": 0.7795,
+      "source": "Supabase gemini_usage, endpoint 'hetzner/translate-batch-chained', type translation, mode batch, last 45 days, books joined to books.language; chars from the same books' translated pages"
+    },
+    "sanskrit": {
+      "lane": "chained Batch, gemini-3.1-flash-lite",
+      "books_metered": 18,
+      "pages_metered": 3815,
+      "usd_metered": 1.81,
+      "usd_per_page": 0.000474,
+      "sample_pages_for_chars": 709,
+      "base_chars_per_page": 1220.9,
+      "usd_per_million_chars": 0.389,
+      "english_words_per_source_char": 0.2715,
+      "source": "Supabase gemini_usage, endpoint 'hetzner/translate-batch-chained', type translation, mode batch, last 45 days, books joined to books.language; chars from the same books' translated pages"
+    },
+    "pali": {
+      "lane": "chained Batch, gemini-3.1-flash-lite",
+      "books_metered": 3,
+      "pages_metered": 947,
+      "usd_metered": 0.53,
+      "usd_per_page": 0.000555,
+      "sample_pages_for_chars": 120,
+      "base_chars_per_page": 1400.5,
+      "usd_per_million_chars": 0.396,
+      "english_words_per_source_char": 0.2372,
+      "source": "Supabase gemini_usage, endpoint 'hetzner/translate-batch-chained', type translation, mode batch, last 45 days, books joined to books.language; chars from the same books' translated pages"
+    },
+    "hebrew": {
+      "lane": "chained Batch, gemini-3.1-flash-lite",
+      "books_metered": 23,
+      "pages_metered": 747,
+      "usd_metered": 0.56,
+      "usd_per_page": 0.000746,
+      "sample_pages_for_chars": 909,
+      "base_chars_per_page": 1677.3,
+      "usd_per_million_chars": 0.444,
+      "english_words_per_source_char": 0.3429,
+      "source": "Supabase gemini_usage, endpoint 'hetzner/translate-batch-chained', type translation, mode batch, last 45 days, books joined to books.language; chars from the same books' translated pages"
+    },
+    "arabic": {
+      "lane": "chained Batch, gemini-3.1-flash-lite",
+      "books_metered": 36,
+      "pages_metered": 3141,
+      "usd_metered": 1.77,
+      "usd_per_page": 0.000564,
+      "sample_pages_for_chars": 798,
+      "base_chars_per_page": 1292.6,
+      "usd_per_million_chars": 0.436,
+      "english_words_per_source_char": 0.2766,
+      "source": "Supabase gemini_usage, endpoint 'hetzner/translate-batch-chained', type translation, mode batch, last 45 days, books joined to books.language; chars from the same books' translated pages"
+    },
+    "persian": {
+      "lane": "chained Batch, gemini-3.1-flash-lite",
+      "books_metered": 4,
+      "pages_metered": 988,
+      "usd_metered": 0.83,
+      "usd_per_page": 0.00084,
+      "sample_pages_for_chars": 128,
+      "base_chars_per_page": 1872,
+      "usd_per_million_chars": 0.449,
+      "english_words_per_source_char": 0.3508,
+      "source": "Supabase gemini_usage, endpoint 'hetzner/translate-batch-chained', type translation, mode batch, last 45 days, books joined to books.language; chars from the same books' translated pages"
+    }
+  },
+  "measurement": {
+    "bytes_fetched": 32979382,
+    "bytes_from_cache": 593560750,
+    "http_calls": 1371,
+    "gb_fetched_this_run": 0.033,
+    "gb_downloaded_total": 0.627,
+    "note": "gb_downloaded_total = everything this script downloaded (this run + its own cache from earlier runs); the ~2 GB budget applies to it",
+    "model_calls": 0,
+    "spend_usd": 0
+  },
+  "total_draft_usd": 1511,
+  "total_scope": "derge-tengyur + derge-kangyur + cbeta + pali-mula + pali-atthakatha + pali-tika + gretil-buddhist + gretil-vedanta + gretil-gaudiya + sefaria-zohar + sefaria-lurianic + sefaria-cordovero + openiti-sufi + ganjoor + kanripo (excl. KR6). Excludes the Chan subset and the Sefaria/OpenITI whole-corpus figures (contained in other rows), Tripitaka Koreana (same text as CBETA T) and the Mongolian Kanjur (no typed text).",
+  "ranking_top5": [
+    {
+      "id": "kanripo",
+      "score": 392458,
+      "untranslated_english_words_est": 654097131,
+      "licence": "open",
+      "pairing": "partial",
+      "usd": 938
+    },
+    {
+      "id": "cbeta",
+      "score": 95897,
+      "untranslated_english_words_est": 213105160,
+      "licence": "open-nc",
+      "pairing": "partial",
+      "usd": 306
+    },
+    {
+      "id": "derge-tengyur",
+      "score": 55611,
+      "untranslated_english_words_est": 55611161,
+      "licence": "open",
+      "pairing": "yes",
+      "usd": 129
+    },
+    {
+      "id": "derge-kangyur",
+      "score": 11617,
+      "untranslated_english_words_est": 11617360,
+      "licence": "open",
+      "pairing": "yes",
+      "usd": 27
+    },
+    {
+      "id": "openiti-sufi",
+      "score": 8412,
+      "untranslated_english_words_est": 18693554,
+      "licence": "open-nc",
+      "pairing": "partial",
+      "usd": 29
+    }
+  ],
+  "rows": [
+    {
+      "id": "derge-tengyur",
+      "corpus": "Derge Tengyur",
+      "tradition": "Tibetan Buddhist (Indian śāstra in Tibetan)",
+      "partner": "Nālandā Restored (Eternity; per #5497)",
+      "lang": "tibetan",
+      "source": {
+        "name": "Esukhia digital Derge Tengyur",
+        "url": "https://github.com/Esukhia/derge-tengyur",
+        "sha": "174653137d62af481f53c6ae3dc842bf8629323e"
+      },
+      "licence": {
+        "label": "Public domain",
+        "url": "https://raw.githubusercontent.com/Esukhia/derge-tengyur/master/README.md",
+        "quote": "This work is a mechanical reproduction of a Public domain work, and as such is also in the Public domain.",
+        "verified": true,
+        "http_status": 200,
+        "open": "open",
+        "note": null
+      },
+      "size": {
+        "texts": 3396,
+        "texts_source": "84000 catalogue (toh > 1108)",
+        "folio_sides_84000": 132006,
+        "folio_sides_markers_est": 127242,
+        "base_chars": 156477180,
+        "bytes": 617471152,
+        "method": "git tree API sizes (213 files, 617 MB); 14 evenly spaced files downloaded and counted; chars and [Nb] folio-side markers scaled by total/sample bytes (×15.32)"
+      },
+      "english": {
+        "fraction": 0.007,
+        "published_pages": 918,
+        "in_progress_pages": 6657,
+        "source": "https://read.84000.co/section/lobby.json — the 84000 Reading Room catalogue (per-text toh, num_pages, publication_status); toh ≤ 1108 = Kangyur, > 1108 = Tengyur",
+        "note": "page-weighted (84000 num_pages = Degé folio sides)"
+      },
+      "holdings": {
+        "live_books": 0,
+        "live_pages": 0,
+        "live_pages_translated": 0,
+        "hidden_books": 0,
+        "hidden_pages": 0,
+        "method": "language=Tibetan, title/source matches Derge Tengyur (bstan 'gyur + sde dge, BDRC W23703, Esukhia)",
+        "other_editions": {
+          "live_books": 0,
+          "live_pages": 0,
+          "live_pages_translated": 0,
+          "hidden_books": 0,
+          "hidden_pages": 0,
+          "method": "any Tengyur edition by title"
+        }
+      },
+      "pairing": {
+        "status": "yes",
+        "source": "BDRC W23703 (Derge Tengyur scans), AccessOpen",
+        "url": "https://library.bdrc.io/show/bdr:W23703"
+      },
+      "cost": {
+        "rate_key": "tibetan",
+        "lane": "chained Batch, gemini-3-flash-preview",
+        "usd_per_million_chars": 0.831,
+        "untranslated_base_chars": 155381840,
+        "page_equivalents": 88866,
+        "english_words_est": 55611161,
+        "usd": 129,
+        "bound": "untranslated share only",
+        "per_page_measured_usd": 191,
+        "cross_check_frames_usd": 315,
+        "cross_check": "131088 untranslated 84000 pages × measured $0.001454/page = per_page_measured_usd; × $0.0024/page-frame (brief's figure) = cross_check_frames_usd. The per-char figure is lower because a Degé folio side (1185 chars) is shorter than our average Tibetan page (1748.5), and per-request prompt overhead does not shrink with the page"
+      },
+      "score": 55611
+    },
+    {
+      "id": "derge-kangyur",
+      "corpus": "Derge Kangyur",
+      "tradition": "Tibetan Buddhist (canonical sūtra/tantra)",
+      "partner": "unknown (84000 is the established English partner)",
+      "lang": "tibetan",
+      "source": {
+        "name": "Esukhia digital Derge Kangyur",
+        "url": "https://github.com/Esukhia/derge-kangyur",
+        "sha": "a582cf471b7c85a101035071078032f106a8e536"
+      },
+      "licence": {
+        "label": "Public domain",
+        "url": "https://raw.githubusercontent.com/Esukhia/derge-kangyur/master/README.md",
+        "quote": "This work is a mechanical reproduction of a Public Domain work, and as such is also in the Public Domain.",
+        "verified": true,
+        "http_status": 200,
+        "open": "open",
+        "note": null
+      },
+      "size": {
+        "texts": 1145,
+        "texts_source": "84000 catalogue (toh ≤ 1108)",
+        "folio_sides_84000": 66230,
+        "folio_sides_markers_est": 66275,
+        "base_chars": 75051546,
+        "bytes": 300157458,
+        "method": "git tree API sizes (103 files, 300 MB); 10 evenly spaced files downloaded and counted; chars and [Nb] folio-side markers scaled by total/sample bytes (×10.68)"
+      },
+      "english": {
+        "fraction": 0.5675,
+        "published_pages": 37586,
+        "in_progress_pages": 26741,
+        "source": "https://read.84000.co/section/lobby.json — the 84000 Reading Room catalogue (per-text toh, num_pages, publication_status); toh ≤ 1108 = Kangyur, > 1108 = Tengyur",
+        "note": "page-weighted; a further 26741 pages are \"In Progress\" at 84000 — a draft there competes with funded human work"
+      },
+      "holdings": {
+        "live_books": 0,
+        "live_pages": 0,
+        "live_pages_translated": 0,
+        "hidden_books": 0,
+        "hidden_pages": 0,
+        "method": "language=Tibetan, title/source matches Derge Kangyur (bka' 'gyur + sde dge, BDRC W22084, Esukhia)",
+        "other_editions": {
+          "live_books": 210,
+          "live_pages": 93347,
+          "live_pages_translated": 541,
+          "hidden_books": 5,
+          "hidden_pages": 2252,
+          "method": "any Kangyur edition by title (e.g. BL Thadrak manuscript Kanjur)"
+        }
+      },
+      "pairing": {
+        "status": "yes",
+        "source": "BDRC W22084 (Derge Kangyur scans), AccessOpen",
+        "url": "https://library.bdrc.io/show/bdr:W22084"
+      },
+      "cost": {
+        "rate_key": "tibetan",
+        "lane": "chained Batch, gemini-3-flash-preview",
+        "usd_per_million_chars": 0.831,
+        "untranslated_base_chars": 32459794,
+        "page_equivalents": 18564,
+        "english_words_est": 11617360,
+        "usd": 27,
+        "bound": "untranslated share only",
+        "per_page_measured_usd": 42,
+        "cross_check_frames_usd": 69,
+        "excluding_in_progress_usd": 2
+      },
+      "score": 11617
+    },
+    {
+      "id": "cbeta",
+      "corpus": "CBETA (whole Chinese Buddhist canon)",
+      "tradition": "Chinese Buddhist",
+      "partner": "unknown",
+      "lang": "chinese",
+      "source": {
+        "name": "CBETA XML P5",
+        "url": "https://github.com/cbeta-org/xml-p5"
+      },
+      "licence": {
+        "label": "CC BY-NC-SA 4.0 (core; Category B collections excluded; non-profit use only)",
+        "url": "https://www.cbeta.org/copyright.php",
+        "quote": "核心授權 ：除下方「二、底本來源與授權分類」中特別註明不適用之文獻外，本資料庫未特別說明處皆採用「Creative Commons 姓名標示-非商業性-相同方式分享 4.0 國際授權條款」釋出。",
+        "verified": true,
+        "http_status": 200,
+        "open": "open-nc",
+        "note": null
+      },
+      "size": {
+        "texts": 4792,
+        "base_chars": 273386992,
+        "cjk_chars": 211310018,
+        "t_plus_x": {
+          "texts": 3687,
+          "base_chars": 196483030
+        },
+        "excluded_category_b": [
+          "Y",
+          "LC",
+          "TX",
+          "YP"
+        ],
+        "method": "CBETA API word-count report https://cbdata.dila.edu.tw/stable/download/stat/cbeta-word-count.csv (chars_no_spaces per work); rows with an 'alt' (partial duplicate) and the four non-CC Category B collections excluded"
+      },
+      "english": {
+        "fraction": null,
+        "source": null,
+        "floor": "4 full + 0 partial of 5397 works evidenced in the SL works catalog (recall floor, not a coverage figure)",
+        "note": "unknown — BDK English Tripiṭaka (bdkamerica.org/tripitaka-list) lists its volumes by title only, without Taishō numbers or sizes, so no measured share"
+      },
+      "holdings": {
+        "live_books": 78,
+        "live_pages": 9118,
+        "live_pages_translated": 4998,
+        "hidden_books": 3,
+        "hidden_pages": 739,
+        "method": "Chinese-language books in buddhist-canon / chinese-buddhist-texts / zen-chan, SAT Daizōkyō scans, metadata.cbeta_id, or works-catalog cbeta holdings"
+      },
+      "pairing": {
+        "status": "partial",
+        "source": "SL works catalog: 63/5397 CBETA works have a matched scan (other editions); Taishō print is ©",
+        "url": null
+      },
+      "cost": {
+        "rate_key": "chinese",
+        "lane": "chained Batch, gemini-3.1-flash-lite",
+        "usd_per_million_chars": 1.118,
+        "untranslated_base_chars": 273386992,
+        "page_equivalents": 900484,
+        "english_words_est": 213105160,
+        "usd": 306,
+        "bound": "upper bound — English coverage unknown, whole corpus priced"
+      },
+      "score": 95897
+    },
+    {
+      "id": "cbeta-chan",
+      "corpus": "CBETA — Chan subset (景德傳燈錄, 祖堂集, 五燈會元, 語錄 in T47–48 and X)",
+      "tradition": "Chan / Zen",
+      "partner": "unknown",
+      "lang": "chinese",
+      "subset_of": "cbeta",
+      "source": {
+        "name": "CBETA XML P5",
+        "url": "https://github.com/cbeta-org/xml-p5"
+      },
+      "licence": {
+        "label": "CC BY-NC-SA 4.0 (core; Category B collections excluded; non-profit use only)",
+        "url": "https://www.cbeta.org/copyright.php",
+        "quote": "核心授權 ：除下方「二、底本來源與授權分類」中特別註明不適用之文獻外，本資料庫未特別說明處皆採用「Creative Commons 姓名標示-非商業性-相同方式分享 4.0 國際授權條款」釋出。",
+        "verified": true,
+        "http_status": 200,
+        "open": "open-nc",
+        "note": null
+      },
+      "size": {
+        "texts": 137,
+        "base_chars": 8186972,
+        "titles": [
+          "B0144 祖堂集",
+          "T1985 鎮州臨濟慧照禪師語錄",
+          "T1986A 筠州洞山悟本禪師語錄",
+          "T1986B 瑞州洞山良价禪師語錄",
+          "T1987A 撫州曹山元證禪師語錄",
+          "T1987B 撫州曹山本寂禪師語錄",
+          "T1988 雲門匡真禪師廣錄",
+          "T1989 潭州溈山靈祐禪師語錄",
+          "T1990 袁州仰山慧寂禪師語錄",
+          "T1991 金陵清涼院文益禪師語錄",
+          "T1992 汾陽無德禪師語錄",
+          "T1993 黃龍慧南禪師語錄",
+          "T1994A 楊岐方會和尚語錄",
+          "T1995 法演禪師語錄",
+          "T1996 明覺禪師語錄",
+          "T1997 圓悟佛果禪師語錄",
+          "T1998A 大慧普覺禪師語錄",
+          "T1999 密菴和尚語錄",
+          "T2000 虛堂和尚語錄",
+          "T2001 宏智禪師廣錄",
+          "T2002A 如淨和尚語錄",
+          "T2002B 天童山景德寺如淨禪師續語錄",
+          "T2076 景德傳燈錄",
+          "X1179 省菴法師語錄",
+          "X1182 徹悟禪師語錄",
+          "X1224 諸方門人參問語錄",
+          "X1277 高峰龍泉院因師集賢語錄",
+          "X1314 古尊宿語錄目錄",
+          "X1315 古尊宿語錄",
+          "X1316 古尊宿語要目錄",
+          "X1317 續古尊宿語要目錄",
+          "X1318 續古尊宿語要",
+          "X1319 御選語錄",
+          "X1320 四家語錄（序．引．跋）",
+          "X1321 馬祖道一禪師廣錄（四家語錄卷一）",
+          "X1322 百丈懷海禪師語錄（四家語錄卷二）",
+          "X1323 百丈懷海禪師廣錄（四家語錄卷三）",
+          "X1326 五家語錄（序）",
+          "X1333 雪峰義存禪師語錄（真覺禪師語錄）",
+          "X1335 善慧大士語錄",
+          "X1336 龐居士語錄",
+          "X1338 石霜楚圓禪師語錄",
+          "X1339 瑯琊慧覺禪師語錄（序）",
+          "X1342 雲菴克文禪師語錄（敘．疏．附錄）",
+          "X1343 寶覺祖心禪師語錄（黃龍四家錄第二）",
+          "X1344 死心悟新禪師語錄（黃龍四家錄第三）",
+          "X1345 超宗慧方禪師語錄（黃龍四家錄第四）",
+          "X1346 雪峰慧空禪師語錄",
+          "X1347 長靈守卓禪師語錄",
+          "X1350 保寧仁勇禪師語錄",
+          "X1351 白雲守端禪師語錄",
+          "X1352 白雲守端禪師廣錄",
+          "X1353 開福道寧禪師語錄",
+          "X1354 月林師觀禪師語錄",
+          "X1355 無門慧開禪師語錄",
+          "X1356 普菴印肅禪師語錄",
+          "X1358 虎丘紹隆禪師語錄",
+          "X1359 應菴曇華禪師語錄",
+          "X1360 瞎堂慧遠禪師廣錄",
+          "X1361 濟顛道濟禪師語錄",
+          "X1362 普覺宗杲禪師語錄",
+          "X1363 西山亮禪師語錄",
+          "X1364 率菴梵琮禪師語錄",
+          "X1365 北磵居簡禪師語錄",
+          "X1366 物初大觀禪師語錄",
+          "X1367 笑隱大訢禪師語錄",
+          "X1368 偃溪廣聞禪師語錄",
+          "X1369 大川普濟禪師語錄",
+          "X1370 淮海原肇禪師語錄",
+          "X1371 介石智朋禪師語錄",
+          "X1372 無文道燦禪師語錄",
+          "X1374 龍源介清禪師語錄",
+          "X1375 曹源道生禪師語錄",
+          "X1376 痴絕道冲禪師語錄",
+          "X1377 松源崇嶽禪師語錄",
+          "X1378 無明慧性禪師語錄",
+          "X1379 運菴普巖禪師語錄",
+          "X1381 破菴祖先禪師語錄",
+          "X1382 無準師範禪師語錄",
+          "X1383 無準和尚奏對語錄",
+          "X1384 絕岸可湘禪師語錄",
+          "X1385 樵隱悟逸禪師語錄",
+          "X1386 石田法薰禪師語錄",
+          "X1387 劍關子益禪師語錄",
+          "X1388 環溪惟一禪師語錄",
+          "X1389 希叟紹曇禪師語錄",
+          "X1390 希叟紹曇禪師廣錄",
+          "X1391 西巖了慧禪師語錄",
+          "X1392 月磵禪師語錄",
+          "X1393 平石如砥禪師語錄",
+          "X1394 斷橋妙倫禪師語錄",
+          "X1395 方山文寶禪師語錄",
+          "X1396 無見先覩禪師語錄",
+          "X1397 雪巖祖欽禪師語錄",
+          "X1398 海印昭如禪師語錄",
+          "X1399 石屋清洪禪師語錄",
+          "X1400 高峰原妙禪師語錄",
+          "X1403 天如惟則禪師語錄",
+          "X1404 兀菴普寧禪師語錄",
+          "X1405 石溪心月禪師語錄",
+          "X1407 虛舟普度禪師語錄",
+          "X1409 月江正印禪師語錄",
+          "X1410 曇芳守忠禪師語錄",
+          "X1411 橫川行珙禪師語錄",
+          "X1412 古林清茂禪師語錄",
+          "X1414 了菴清欲禪師語錄",
+          "X1415 穆菴文康禪師語錄",
+          "X1416 恕中無慍禪師語錄",
+          "X1417 了堂惟一禪師語錄",
+          "X1418 呆菴普莊禪師語錄",
+          "X1419 元叟行端禪師語錄",
+          "X1420 楚石梵琦禪師語錄",
+          "X1421 愚菴智及禪師語錄",
+          "X1422 南石文琇禪師語錄",
+          "X1423 投子義青禪師語錄",
+          "X1424 投子義青禪師語錄",
+          "X1425 丹霞子淳禪師語錄",
+          "X1426 真歇清了禪師語錄",
+          "X1428 淨慈慧暉禪師語錄",
+          "X1431 雲外雲岫禪師語錄",
+          "X1432 無明慧經禪師語錄",
+          "X1433 晦臺元鏡禪師語錄",
+          "X1434 見如元謐禪師語錄",
+          "X1435 無異元來禪師廣錄",
+          "X1436 博山無異大禪語錄集要",
+          "X1437 永覺元賢禪師廣錄",
+          "X1438 為霖道霈禪師秉拂語錄",
+          "X1443 宗寶道獨禪師語錄",
+          "X1444 湛然圓澄禪師語錄",
+          "X1445 玄沙師備禪師廣錄",
+          "X1446 玄沙師備禪師語錄",
+          "X1447 薦福承古禪師語錄",
+          "X1448 法昌倚遇禪師語錄",
+          "X1449 吳山淨端禪師語錄",
+          "X1451 慈受懷深禪師廣錄",
+          "X1454 雲谷和尚語錄",
+          "X1565 五燈會元"
+        ],
+        "method": "CBETA API word-count report https://cbdata.dila.edu.tw/stable/download/stat/cbeta-word-count.csv (chars_no_spaces per work); rows with an 'alt' (partial duplicate) and the four non-CC Category B collections excluded; titles 景德傳燈錄/祖堂集/五燈會元 exactly, plus 語錄/廣錄/語要 titles in T47–T48 or the X canon"
+      },
+      "english": {
+        "fraction": null,
+        "source": null,
+        "note": "unknown — several classics (Linji lu, Blue Cliff, Platform Sūtra) are translated, but there is no bibliography mapped to these work ids"
+      },
+      "holdings": {
+        "live_books": 39,
+        "live_pages": 7020,
+        "live_pages_translated": 1098,
+        "hidden_books": 5,
+        "hidden_pages": 2596,
+        "method": "Chinese-language books whose title contains 景德傳燈錄 / 祖堂集 / 五燈會元 / 語錄 / 廣錄 / 語要, or in zen-chan"
+      },
+      "pairing": {
+        "status": "partial",
+        "source": "as CBETA",
+        "url": null
+      },
+      "cost": {
+        "rate_key": "chinese",
+        "lane": "chained Batch, gemini-3.1-flash-lite",
+        "usd_per_million_chars": 1.118,
+        "untranslated_base_chars": 8186972,
+        "page_equivalents": 26966,
+        "english_words_est": 6381745,
+        "usd": 9,
+        "bound": "upper bound — English coverage unknown, whole corpus priced"
+      },
+      "score": 2872
+    },
+    {
+      "id": "pali-mula",
+      "corpus": "Pali Chaṭṭha Saṅgāyana — root texts (mūla)",
+      "tradition": "Theravāda",
+      "partner": "unknown",
+      "lang": "pali",
+      "source": {
+        "name": "VRI CSCD tipitaka-xml",
+        "url": "https://github.com/vipassanatech/tipitaka-xml",
+        "sha": "05d5d3c7cede65195bebf7e99b1943db80057cc5"
+      },
+      "licence": {
+        "label": "free for non-commercial use, attribution (VRI)",
+        "url": "https://raw.githubusercontent.com/vipassanatech/tipitaka-xml/main/README.md",
+        "quote": "These files are made freely available for non-commericial use. Please attribute Vipassana Research Institute when incorporating these files into your projects.",
+        "verified": true,
+        "http_status": 200,
+        "open": "open-nc",
+        "note": null
+      },
+      "size": {
+        "texts": 61,
+        "texts_unit": "VRI files (books/volumes)",
+        "base_chars": 23436212,
+        "bytes": 73997268,
+        "method": "all romn/*.{mul,att,tik,nrf}.xml downloaded (UTF-16) and counted; <note> variant readings excluded"
+      },
+      "english": {
+        "fraction": 0.522,
+        "source": "github.com/suttacentral/bilara-data (branch published): root/pli/ms segment files with a translation/en file of the same uid, weighted by root-file bytes",
+        "by_pitaka": {
+          "abhidhamma": {
+            "files": 1102,
+            "bytes": 11192917,
+            "en_files": 0,
+            "en_bytes": 0
+          },
+          "sutta": {
+            "files": 5764,
+            "bytes": 22786236,
+            "en_files": 4269,
+            "en_bytes": 14502593
+          },
+          "vinaya": {
+            "files": 422,
+            "bytes": 6788863,
+            "en_files": 422,
+            "en_bytes": 6788863
+          }
+        },
+        "note": "SuttaCentral only — PTS and other print translations (e.g. the whole Abhidhamma) are not counted, so this understates English coverage"
+      },
+      "holdings": {
+        "live_books": 26,
+        "live_pages": 9076,
+        "live_pages_translated": 2237,
+        "hidden_books": 31,
+        "hidden_pages": 11283,
+        "method": "language=Pali (any edition; not matched to the VRI CSCD edition)"
+      },
+      "pairing": {
+        "status": "unknown",
+        "source": "no open scan of the CSCD (Chaṭṭha Saṅgāyana) print checked",
+        "url": null
+      },
+      "cost": {
+        "rate_key": "pali",
+        "lane": "chained Batch, gemini-3.1-flash-lite",
+        "usd_per_million_chars": 0.396,
+        "untranslated_base_chars": 11202509,
+        "page_equivalents": 7999,
+        "english_words_est": 2657235,
+        "usd": 4,
+        "bound": "untranslated share only"
+      },
+      "score": 598
+    },
+    {
+      "id": "pali-atthakatha",
+      "corpus": "Pali Chaṭṭha Saṅgāyana — commentaries (aṭṭhakathā)",
+      "tradition": "Theravāda",
+      "partner": "unknown",
+      "lang": "pali",
+      "source": {
+        "name": "VRI CSCD tipitaka-xml",
+        "url": "https://github.com/vipassanatech/tipitaka-xml",
+        "sha": "05d5d3c7cede65195bebf7e99b1943db80057cc5"
+      },
+      "licence": {
+        "label": "free for non-commercial use, attribution (VRI)",
+        "url": "https://raw.githubusercontent.com/vipassanatech/tipitaka-xml/main/README.md",
+        "quote": "These files are made freely available for non-commericial use. Please attribute Vipassana Research Institute when incorporating these files into your projects.",
+        "verified": true,
+        "http_status": 200,
+        "open": "open-nc",
+        "note": null
+      },
+      "size": {
+        "texts": 49,
+        "texts_unit": "VRI files",
+        "base_chars": 28281229,
+        "bytes": 81656140,
+        "method": "all romn/*.{mul,att,tik,nrf}.xml downloaded (UTF-16) and counted; <note> variant readings excluded"
+      },
+      "english": {
+        "fraction": null,
+        "source": null,
+        "note": "unknown — SuttaCentral carries no aṭṭhakathā; PTS translations of some exist, no bibliography measured"
+      },
+      "holdings": {
+        "live_books": 26,
+        "live_pages": 9076,
+        "live_pages_translated": 2237,
+        "hidden_books": 31,
+        "hidden_pages": 11283,
+        "method": "shared with root texts row (Pali books are not split by layer)"
+      },
+      "pairing": {
+        "status": "unknown",
+        "source": "not checked",
+        "url": null
+      },
+      "cost": {
+        "rate_key": "pali",
+        "lane": "chained Batch, gemini-3.1-flash-lite",
+        "usd_per_million_chars": 0.396,
+        "untranslated_base_chars": 28281229,
+        "page_equivalents": 20194,
+        "english_words_est": 6708308,
+        "usd": 11,
+        "bound": "upper bound — English coverage unknown, whole corpus priced"
+      },
+      "score": 1509
+    },
+    {
+      "id": "pali-tika",
+      "corpus": "Pali Chaṭṭha Saṅgāyana — sub-commentaries (ṭīkā)",
+      "tradition": "Theravāda",
+      "partner": "unknown",
+      "lang": "pali",
+      "source": {
+        "name": "VRI CSCD tipitaka-xml",
+        "url": "https://github.com/vipassanatech/tipitaka-xml",
+        "sha": "05d5d3c7cede65195bebf7e99b1943db80057cc5"
+      },
+      "licence": {
+        "label": "free for non-commercial use, attribution (VRI)",
+        "url": "https://raw.githubusercontent.com/vipassanatech/tipitaka-xml/main/README.md",
+        "quote": "These files are made freely available for non-commericial use. Please attribute Vipassana Research Institute when incorporating these files into your projects.",
+        "verified": true,
+        "http_status": 200,
+        "open": "open-nc",
+        "note": null
+      },
+      "size": {
+        "texts": 22,
+        "texts_unit": "VRI files",
+        "base_chars": 10464046,
+        "bytes": 30275356,
+        "anya_other_texts": {
+          "files": 85,
+          "bytes": 75604468,
+          "base_chars": 23489120
+        },
+        "method": "all romn/*.{mul,att,tik,nrf}.xml downloaded (UTF-16) and counted; <note> variant readings excluded"
+      },
+      "english": {
+        "fraction": null,
+        "source": null,
+        "note": "unknown"
+      },
+      "holdings": {
+        "live_books": 26,
+        "live_pages": 9076,
+        "live_pages_translated": 2237,
+        "hidden_books": 31,
+        "hidden_pages": 11283,
+        "method": "shared with root texts row"
+      },
+      "pairing": {
+        "status": "unknown",
+        "source": "not checked",
+        "url": null
+      },
+      "cost": {
+        "rate_key": "pali",
+        "lane": "chained Batch, gemini-3.1-flash-lite",
+        "usd_per_million_chars": 0.396,
+        "untranslated_base_chars": 10464046,
+        "page_equivalents": 7472,
+        "english_words_est": 2482072,
+        "usd": 4,
+        "bound": "upper bound — English coverage unknown, whole corpus priced"
+      },
+      "score": 558
+    },
+    {
+      "id": "gretil-buddhist",
+      "corpus": "GRETIL Sanskrit — Buddhist",
+      "tradition": "Indian Buddhist (Sanskrit)",
+      "partner": "unknown",
+      "lang": "sanskrit",
+      "source": {
+        "name": "GRETIL (GitHub mirror INDOLOGY/GRETIL-mirror)",
+        "url": "https://github.com/INDOLOGY/GRETIL-mirror",
+        "sha": "0baf718d8e450821eb0403c03aacc9a4a82316d7"
+      },
+      "licence": {
+        "label": "per file; most files say 'for reference purposes only… terms of usage as for source file'",
+        "url": "https://raw.githubusercontent.com/INDOLOGY/GRETIL-mirror/main/gretil.sub.uni-goettingen.de/gretil/1_sanskr/4_rellit/vaisn/ruphbr_u.htm",
+        "quote": "THIS GRETIL TEXT FILE IS FOR REFERENCE PURPOSES ONLY! COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE.",
+        "verified": true,
+        "http_status": 200,
+        "open": "reference-only",
+        "note": "quote is the standard GRETIL file header (example file shown); per-subset counts of files carrying it are in size.measured",
+        "subset_files_reference_only": 385,
+        "subset_files_cc_notice": 0
+      },
+      "size": {
+        "texts": 385,
+        "base_chars": 41716748,
+        "method": "git tree API: 3367 Sanskrit .htm files → 3133 after merging transliteration variants; subsets downloaded and counted; whole Sanskrit section = merged bytes × measured chars/byte of the three subsets (0.697)"
+      },
+      "english": {
+        "fraction": null,
+        "source": null,
+        "floor": "0 full + 0 partial of 891 works evidenced in the SL works catalog (recall floor, not a coverage figure)",
+        "note": "unknown — no bibliography mapped to GRETIL file ids"
+      },
+      "holdings": {
+        "live_books": 32,
+        "live_pages": 8950,
+        "live_pages_translated": 6353,
+        "hidden_books": 63,
+        "hidden_pages": 18673,
+        "method": "Sanskrit books in buddhism collections or Buddhist title terms"
+      },
+      "pairing": {
+        "status": "unknown",
+        "source": "SL works catalog: 188/891 GRETIL works have a matched IA scan (edition not checked)",
+        "url": null
+      },
+      "cost": {
+        "rate_key": "sanskrit",
+        "lane": "chained Batch, gemini-3.1-flash-lite",
+        "usd_per_million_chars": 0.389,
+        "untranslated_base_chars": 41716748,
+        "page_equivalents": 34169,
+        "english_words_est": 11326097,
+        "usd": 16,
+        "bound": "upper bound — English coverage unknown, whole corpus priced"
+      },
+      "score": 849
+    },
+    {
+      "id": "gretil-vedanta",
+      "corpus": "GRETIL Sanskrit — Vedānta",
+      "tradition": "Vedānta",
+      "partner": "unknown",
+      "lang": "sanskrit",
+      "source": {
+        "name": "GRETIL (GitHub mirror INDOLOGY/GRETIL-mirror)",
+        "url": "https://github.com/INDOLOGY/GRETIL-mirror",
+        "sha": "0baf718d8e450821eb0403c03aacc9a4a82316d7"
+      },
+      "licence": {
+        "label": "per file; most files say 'for reference purposes only… terms of usage as for source file'",
+        "url": "https://raw.githubusercontent.com/INDOLOGY/GRETIL-mirror/main/gretil.sub.uni-goettingen.de/gretil/1_sanskr/4_rellit/vaisn/ruphbr_u.htm",
+        "quote": "THIS GRETIL TEXT FILE IS FOR REFERENCE PURPOSES ONLY! COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE.",
+        "verified": true,
+        "http_status": 200,
+        "open": "reference-only",
+        "note": "quote is the standard GRETIL file header (example file shown); per-subset counts of files carrying it are in size.measured",
+        "subset_files_reference_only": 50,
+        "subset_files_cc_notice": 0
+      },
+      "size": {
+        "texts": 50,
+        "base_chars": 14453577,
+        "method": "git tree API: 3367 Sanskrit .htm files → 3133 after merging transliteration variants; subsets downloaded and counted; whole Sanskrit section = merged bytes × measured chars/byte of the three subsets (0.697)"
+      },
+      "english": {
+        "fraction": null,
+        "source": null,
+        "floor": "0 full + 0 partial of 891 works evidenced in the SL works catalog (recall floor, not a coverage figure)",
+        "note": "unknown — no bibliography mapped to GRETIL file ids"
+      },
+      "holdings": {
+        "live_books": 13,
+        "live_pages": 4627,
+        "live_pages_translated": 3627,
+        "hidden_books": 46,
+        "hidden_pages": 8217,
+        "method": "Sanskrit books in vedanta-darshana or Vedānta title terms"
+      },
+      "pairing": {
+        "status": "unknown",
+        "source": "SL works catalog: 188/891 GRETIL works have a matched IA scan (edition not checked)",
+        "url": null
+      },
+      "cost": {
+        "rate_key": "sanskrit",
+        "lane": "chained Batch, gemini-3.1-flash-lite",
+        "usd_per_million_chars": 0.389,
+        "untranslated_base_chars": 14453577,
+        "page_equivalents": 11838,
+        "english_words_est": 3924146,
+        "usd": 6,
+        "bound": "upper bound — English coverage unknown, whole corpus priced"
+      },
+      "score": 294
+    },
+    {
+      "id": "gretil-gaudiya",
+      "corpus": "GRETIL Sanskrit — Gauḍīya Vaiṣṇava",
+      "tradition": "Gauḍīya Vaiṣṇava",
+      "partner": "unknown",
+      "lang": "sanskrit",
+      "source": {
+        "name": "GRETIL (GitHub mirror INDOLOGY/GRETIL-mirror)",
+        "url": "https://github.com/INDOLOGY/GRETIL-mirror",
+        "sha": "0baf718d8e450821eb0403c03aacc9a4a82316d7"
+      },
+      "licence": {
+        "label": "per file; most files say 'for reference purposes only… terms of usage as for source file'",
+        "url": "https://raw.githubusercontent.com/INDOLOGY/GRETIL-mirror/main/gretil.sub.uni-goettingen.de/gretil/1_sanskr/4_rellit/vaisn/ruphbr_u.htm",
+        "quote": "THIS GRETIL TEXT FILE IS FOR REFERENCE PURPOSES ONLY! COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE.",
+        "verified": true,
+        "http_status": 200,
+        "open": "reference-only",
+        "note": "quote is the standard GRETIL file header (example file shown); per-subset counts of files carrying it are in size.measured",
+        "subset_files_reference_only": null
+      },
+      "size": {
+        "texts": 18,
+        "base_chars": 3253596,
+        "titles": [
+          "Brahma-Samhita: Adhyaya 5 (with Jiva's comm.)",
+          "Prabodhananda Sarasvati Gosvami: Caitanyacandramrta",
+          "Dhyanacandra Gosvami: Gauragovindarcanasmaranapaddhati",
+          "Dhyanacandra Gosvami: Radhakrsnastakaliyalilasmaranakramapaddhati",
+          "Bhaktivinoda: Harinamacintamani",
+          "Gopalabhatta: Haribhaktivilasa, 1-11",
+          "Jiva Gosvamin: Radhakrsnarcanadipika",
+          "Krsnadasa: Bhavanasarasamgraha, Lila's 1 & 2",
+          "Rupa Gosvami: Laghubhagavatamrta",
+          "Raghunathadasa Gosvami: Muktacarita",
+          "Rupa Gosvamin: Haribhaktirasamrtasindhu",
+          "Radhakrsnadasa Gosvami: Sadhanadipika",
+          "Jiva Gosvami: Satsamdarbha 1",
+          "Jiva Gosvami: Satsamdarbha 2",
+          "Jiva Gosvami: Satsamdarbha 3",
+          "Jiva Gosvami: Satsamdarbha 4",
+          "Jiva Gosvami: Satsamdarbha 5",
+          "Jiva Gosvami: Satsamdarbha 6"
+        ],
+        "method": "git tree API: 3367 Sanskrit .htm files → 3133 after merging transliteration variants; subsets downloaded and counted; whole Sanskrit section = merged bytes × measured chars/byte of the three subsets (0.697)"
+      },
+      "english": {
+        "fraction": null,
+        "source": null,
+        "floor": "0 full + 0 partial of 891 works evidenced in the SL works catalog (recall floor, not a coverage figure)",
+        "note": "unknown — no bibliography mapped to GRETIL file ids"
+      },
+      "holdings": {
+        "live_books": 1,
+        "live_pages": 353,
+        "live_pages_translated": 352,
+        "hidden_books": 5,
+        "hidden_pages": 1321,
+        "method": "Sanskrit books with Gauḍīya author/title terms"
+      },
+      "pairing": {
+        "status": "unknown",
+        "source": "SL works catalog: 188/891 GRETIL works have a matched IA scan (edition not checked)",
+        "url": null
+      },
+      "cost": {
+        "rate_key": "sanskrit",
+        "lane": "chained Batch, gemini-3.1-flash-lite",
+        "usd_per_million_chars": 0.389,
+        "untranslated_base_chars": 3253596,
+        "page_equivalents": 2665,
+        "english_words_est": 883351,
+        "usd": 1,
+        "bound": "upper bound — English coverage unknown, whole corpus priced"
+      },
+      "score": 66
+    },
+    {
+      "id": "sefaria-zohar",
+      "corpus": "Sefaria Kabbalah — Zohar (Zohar, Zohar Chadash, Tikkunei Zohar)",
+      "tradition": "Kabbalah",
+      "partner": "unknown",
+      "lang": "hebrew",
+      "source": {
+        "name": "Sefaria export (GCS sefaria-export)",
+        "url": "https://github.com/Sefaria/Sefaria-Export"
+      },
+      "licence": {
+        "label": "per version (Sefaria API); Hebrew text merged into the export: includes versions with licence \"unknown\"",
+        "url": "https://www.sefaria.org/api/texts/versions/{title}",
+        "quote": "see subsets[].he_licences (quoted per version from the API)",
+        "verified": true,
+        "open": "unverified",
+        "note": "every Hebrew version used by the Zohar / Lurianic / Cordovero subsets is listed with its licence string; check before import",
+        "merged_versions": [
+          {
+            "title": "Tikkunei Zohar",
+            "merged_he": [
+              {
+                "version": "Constantinople, 1740",
+                "license": "CC-BY-NC"
+              },
+              {
+                "version": "Tikkunei Zohar - Vocalized",
+                "license": "Public Domain"
+              }
+            ]
+          },
+          {
+            "title": "Zohar Chadash",
+            "merged_he": [
+              {
+                "version": "Zohar Chadash",
+                "license": "Public Domain"
+              }
+            ]
+          },
+          {
+            "title": "Zohar",
+            "merged_he": [
+              {
+                "version": "Vocalized Zohar, Israel 2013",
+                "license": "unknown"
+              }
+            ]
+          }
+        ],
+        "versions": [
+          {
+            "title": "Tikkunei Zohar",
+            "he": [
+              "Constantinople, 1740: CC-BY-NC",
+              "Tikkunei Zohar - Vocalized: Public Domain",
+              "Hebrew Wikipedia: unknown"
+            ],
+            "en": [
+              "Tiqqunei ha-Zohar, trans. by David Solomon. Margalya Press; Melbourne, 2024: CC-BY-NC",
+              "Rabbi Dr. David Mevorach Seidenberg, from \"Kabbalah and Ecology\": unknown",
+              "Sefaria Community Translation: CC0"
+            ]
+          },
+          {
+            "title": "Zohar Chadash",
+            "he": [
+              "Zohar Chadash: Public Domain"
+            ],
+            "en": [
+              "Sefaria Community Translation: CC0"
+            ]
+          },
+          {
+            "title": "Zohar",
+            "he": [
+              "Vocalized Zohar, Israel 2013: unknown",
+              "Sulam Edition, Jerusalem 1945: unknown",
+              "Hebrew Translation: unknown"
+            ],
+            "en": [
+              "The Zohar; London, Soncino Press, 1933: Public Domain",
+              "Zohar : Volume 1 : Daf 33b: unknown",
+              "user27343: unknown",
+              "The Soul of Life, translated by Leonard Moskowitz, Teaneck, NJ 2012 [Rev. 1.5]: unknown",
+              "Scholem, Gershom: unknown",
+              "Rabbi Dr. David Mevorach Seidenberg, from \"Kabbalah and Ecology\": unknown",
+              "Ira Robinson: unknown",
+              "Danny Strassman's translation: unknown",
+              "Ami Silver, 2020: unknown",
+              "Sefaria Community Translation: CC0",
+              "Publicado em 5784, Saymon Pires da Silva [pt]: unknown",
+              "Français [fr]: unknown"
+            ]
+          }
+        ]
+      },
+      "size": {
+        "texts": 3,
+        "titles": [
+          "Tikkunei Zohar",
+          "Zohar Chadash",
+          "Zohar"
+        ],
+        "base_chars": 5646664,
+        "method": "GCS bucket sefaria-export txt/Kabbalah listing (70 Hebrew merged.txt, 123.0 MB); the three subsets downloaded and counted (nikud not counted); whole category = bytes × measured chars/byte (0.360). English share = segments with English ÷ segments with Hebrew, from /api/counts/{title}"
+      },
+      "english": {
+        "fraction": 0.54,
+        "source": "https://www.sefaria.org/api/counts/{title} (segments with English ÷ segments with Hebrew)",
+        "ai_translations_counted": [],
+        "note": "segment-weighted"
+      },
+      "holdings": {
+        "live_books": 15,
+        "live_pages": 8678,
+        "live_pages_translated": 5379,
+        "hidden_books": 8,
+        "hidden_pages": 5862,
+        "method": "Zohar / Tikkunei Zohar by title"
+      },
+      "pairing": {
+        "status": "partial",
+        "source": "Hebrew version sources point to scans (HebrewBooks/NLI/IA) for: Zohar",
+        "url": null
+      },
+      "cost": {
+        "rate_key": "hebrew",
+        "lane": "chained Batch, gemini-3.1-flash-lite",
+        "usd_per_million_chars": 0.444,
+        "untranslated_base_chars": 2597465,
+        "page_equivalents": 1549,
+        "english_words_est": 890671,
+        "usd": 1,
+        "bound": "untranslated share only"
+      },
+      "score": 134
+    },
+    {
+      "id": "sefaria-lurianic",
+      "corpus": "Sefaria Kabbalah — Lurianic corpus (Arizal & Chaim Vital, 11 titles)",
+      "tradition": "Kabbalah",
+      "partner": "unknown",
+      "lang": "hebrew",
+      "source": {
+        "name": "Sefaria export (GCS sefaria-export)",
+        "url": "https://github.com/Sefaria/Sefaria-Export"
+      },
+      "licence": {
+        "label": "per version (Sefaria API); Hebrew text merged into the export: all PD / CC0 / CC-BY",
+        "url": "https://www.sefaria.org/api/texts/versions/{title}",
+        "quote": "see subsets[].he_licences (quoted per version from the API)",
+        "verified": true,
+        "open": "open",
+        "note": "every Hebrew version used by the Zohar / Lurianic / Cordovero subsets is listed with its licence string; check before import",
+        "merged_versions": [
+          {
+            "title": "Pri Etz Chaim",
+            "merged_he": [
+              {
+                "version": "Pri Etz Chaim",
+                "license": "Public Domain"
+              }
+            ]
+          },
+          {
+            "title": "Sefer Etz Chaim",
+            "merged_he": [
+              {
+                "version": "Sefer Etz Chaim",
+                "license": "Public Domain"
+              }
+            ]
+          },
+          {
+            "title": "Sha'ar HaGilgulim",
+            "merged_he": [
+              {
+                "version": "Shaar HaGilgulim",
+                "license": "Public Domain"
+              }
+            ]
+          },
+          {
+            "title": "Sha'ar HaHakdamot",
+            "merged_he": [
+              {
+                "version": "Jerusalem, 1909",
+                "license": "Public Domain"
+              }
+            ]
+          },
+          {
+            "title": "Sha'ar HaKavanot",
+            "merged_he": [
+              {
+                "version": "Shaar HaKavanot",
+                "license": "Public Domain"
+              }
+            ]
+          },
+          {
+            "title": "Sha'ar HaMitzvot",
+            "merged_he": [
+              {
+                "version": "Jerusalem, 1872",
+                "license": "Public Domain"
+              }
+            ]
+          },
+          {
+            "title": "Sha'ar HaPesukim",
+            "merged_he": [
+              {
+                "version": "Shaar HaPesukim",
+                "license": "Public Domain"
+              }
+            ]
+          },
+          {
+            "title": "Sha'ar Ma'amarei Rashbi",
+            "merged_he": [
+              {
+                "version": "Shaar Maamarei Rashbi",
+                "license": "Public Domain"
+              }
+            ]
+          },
+          {
+            "title": "Sha'ar Ma'amarei Razal",
+            "merged_he": [
+              {
+                "version": "Shaar Maamarei Razal",
+                "license": "Public Domain"
+              }
+            ]
+          },
+          {
+            "title": "Sha'ar Ruach HaKodesh",
+            "merged_he": [
+              {
+                "version": "Jerusalem, 1863",
+                "license": "Public Domain"
+              }
+            ]
+          },
+          {
+            "title": "Sha'arei Kedusha",
+            "merged_he": [
+              {
+                "version": "Shaarei Kedusha",
+                "license": "Public Domain"
+              }
+            ]
+          }
+        ],
+        "versions": [
+          {
+            "title": "Pri Etz Chaim",
+            "he": [
+              "Pri Etz Chaim: Public Domain"
+            ],
+            "en": [
+              "Sefaria Community Translation: CC0"
+            ]
+          },
+          {
+            "title": "Sefer Etz Chaim",
+            "he": [
+              "Sefer Etz Chaim: Public Domain"
+            ],
+            "en": [
+              "Sefaria Community Translation: CC0",
+              "Publicado em 5784, Saymon Pires da Silva [pt]: unknown"
+            ]
+          },
+          {
+            "title": "Sha'ar HaGilgulim",
+            "he": [
+              "Shaar HaGilgulim: Public Domain"
+            ],
+            "en": [
+              "Sefaria Community Translation: CC0"
+            ]
+          },
+          {
+            "title": "Sha'ar HaHakdamot",
+            "he": [
+              "Jerusalem, 1909: Public Domain"
+            ],
+            "en": []
+          },
+          {
+            "title": "Sha'ar HaKavanot",
+            "he": [
+              "Shaar HaKavanot: Public Domain"
+            ],
+            "en": [
+              "Sefaria Community Translation: CC0"
+            ]
+          },
+          {
+            "title": "Sha'ar HaMitzvot",
+            "he": [
+              "Jerusalem, 1872: Public Domain"
+            ],
+            "en": []
+          },
+          {
+            "title": "Sha'ar HaPesukim",
+            "he": [
+              "Shaar HaPesukim: Public Domain"
+            ],
+            "en": [
+              "Sefaria Community Translation: CC0"
+            ]
+          },
+          {
+            "title": "Sha'ar Ma'amarei Rashbi",
+            "he": [
+              "Shaar Maamarei Rashbi: Public Domain"
+            ],
+            "en": []
+          },
+          {
+            "title": "Sha'ar Ma'amarei Razal",
+            "he": [
+              "Shaar Maamarei Razal: Public Domain"
+            ],
+            "en": []
+          },
+          {
+            "title": "Sha'ar Ruach HaKodesh",
+            "he": [
+              "Jerusalem, 1863: Public Domain"
+            ],
+            "en": [
+              "Sefaria Community Translation: CC0"
+            ]
+          },
+          {
+            "title": "Sha'arei Kedusha",
+            "he": [
+              "Shaarei Kedusha: Public Domain"
+            ],
+            "en": [
+              "Gates of Holiness, translated by Rabbi Amiram Markel, 2013: CC-BY",
+              "Sefaria Community Translation: CC0"
+            ]
+          }
+        ]
+      },
+      "size": {
+        "texts": 11,
+        "titles": [
+          "Pri Etz Chaim",
+          "Sefer Etz Chaim",
+          "Sha'ar HaGilgulim",
+          "Sha'ar HaHakdamot",
+          "Sha'ar HaKavanot",
+          "Sha'ar HaMitzvot",
+          "Sha'ar HaPesukim",
+          "Sha'ar Ma'amarei Rashbi",
+          "Sha'ar Ma'amarei Razal",
+          "Sha'ar Ruach HaKodesh",
+          "Sha'arei Kedusha"
+        ],
+        "base_chars": 7404033,
+        "method": "GCS bucket sefaria-export txt/Kabbalah listing (70 Hebrew merged.txt, 123.0 MB); the three subsets downloaded and counted (nikud not counted); whole category = bytes × measured chars/byte (0.360). English share = segments with English ÷ segments with Hebrew, from /api/counts/{title}"
+      },
+      "english": {
+        "fraction": 0.052,
+        "source": "https://www.sefaria.org/api/counts/{title} (segments with English ÷ segments with Hebrew)",
+        "ai_translations_counted": [],
+        "note": "segment-weighted"
+      },
+      "holdings": {
+        "live_books": 7,
+        "live_pages": 3186,
+        "live_pages_translated": 1018,
+        "hidden_books": 2,
+        "hidden_pages": 0,
+        "method": "Lurianic corpus by title (Etz Chaim, Vital, Shemonah She`arim …)"
+      },
+      "pairing": {
+        "status": "partial",
+        "source": "Hebrew version sources point to scans (HebrewBooks/NLI/IA) for: Sha'ar HaHakdamot, Sha'ar HaMitzvot, Sha'ar Ruach HaKodesh",
+        "url": null
+      },
+      "cost": {
+        "rate_key": "hebrew",
+        "lane": "chained Batch, gemini-3.1-flash-lite",
+        "usd_per_million_chars": 0.444,
+        "untranslated_base_chars": 7019023,
+        "page_equivalents": 4185,
+        "english_words_est": 2406823,
+        "usd": 3,
+        "bound": "untranslated share only"
+      },
+      "score": 1444
+    },
+    {
+      "id": "sefaria-cordovero",
+      "corpus": "Sefaria Kabbalah — Cordovero (Ramak)",
+      "tradition": "Kabbalah",
+      "partner": "unknown",
+      "lang": "hebrew",
+      "source": {
+        "name": "Sefaria export (GCS sefaria-export)",
+        "url": "https://github.com/Sefaria/Sefaria-Export"
+      },
+      "licence": {
+        "label": "per version (Sefaria API); Hebrew text merged into the export: all PD / CC0 / CC-BY",
+        "url": "https://www.sefaria.org/api/texts/versions/{title}",
+        "quote": "see subsets[].he_licences (quoted per version from the API)",
+        "verified": true,
+        "open": "open",
+        "note": "every Hebrew version used by the Zohar / Lurianic / Cordovero subsets is listed with its licence string; check before import",
+        "merged_versions": [
+          {
+            "title": "Ohr Ne'erav",
+            "merged_he": [
+              {
+                "version": "Or Neerav -- grimoar",
+                "license": "Public Domain"
+              },
+              {
+                "version": "Or Neerav, Furth 1701.",
+                "license": "Public Domain"
+              }
+            ]
+          },
+          {
+            "title": "Pardes Rimmonim",
+            "merged_he": [
+              {
+                "version": "Pardes Rimonim, Koretz, 1780.",
+                "license": "Public Domain"
+              },
+              {
+                "version": "Pardes Rimonim",
+                "license": "Public Domain"
+              }
+            ]
+          }
+        ],
+        "versions": [
+          {
+            "title": "Ohr Ne'erav",
+            "he": [
+              "Or Neerav -- grimoar: Public Domain",
+              "Or Neerav, Furth 1701.: Public Domain"
+            ],
+            "en": [
+              "Moses Cordovero's Introduction to Kabbalah, Annotated trans. of Or ne'erav, Ira Robinson, 1994.: CC-BY",
+              "Sefaria Community Translation: CC0",
+              "YU Torah miTzion Beit Midrash: unknown",
+              "Ohr Ne'erav; Translated to Turkish by Gökhan (Aryeh) Duran, 2026 [tr]: n/a"
+            ]
+          },
+          {
+            "title": "Pardes Rimmonim",
+            "he": [
+              "Pardes Rimonim: Public Domain",
+              "Pardes Rimonim, Koretz, 1780.: Public Domain",
+              "oi: n/a"
+            ],
+            "en": [
+              "Sefaria Community Translation: CC0",
+              "Jardín de Granadas [es]: unknown",
+              "AI Pardes: unknown"
+            ]
+          }
+        ]
+      },
+      "size": {
+        "texts": 2,
+        "titles": [
+          "Ohr Ne'erav",
+          "Pardes Rimmonim"
+        ],
+        "base_chars": 1809914,
+        "method": "GCS bucket sefaria-export txt/Kabbalah listing (70 Hebrew merged.txt, 123.0 MB); the three subsets downloaded and counted (nikud not counted); whole category = bytes × measured chars/byte (0.360). English share = segments with English ÷ segments with Hebrew, from /api/counts/{title}"
+      },
+      "english": {
+        "fraction": 0.301,
+        "source": "https://www.sefaria.org/api/counts/{title} (segments with English ÷ segments with Hebrew)",
+        "ai_translations_counted": [
+          "Pardes Rimmonim"
+        ],
+        "note": "English includes versions titled as AI/machine translations for: Pardes Rimmonim — human coverage is lower"
+      },
+      "holdings": {
+        "live_books": 3,
+        "live_pages": 728,
+        "live_pages_translated": 340,
+        "hidden_books": 1,
+        "hidden_pages": 1160,
+        "method": "Cordovero by title (Pardes Rimonim, Tomer Devorah, Or Ne`erav)"
+      },
+      "pairing": {
+        "status": "partial",
+        "source": "Hebrew version sources point to scans (HebrewBooks/NLI/IA) for: Ohr Ne'erav",
+        "url": null
+      },
+      "cost": {
+        "rate_key": "hebrew",
+        "lane": "chained Batch, gemini-3.1-flash-lite",
+        "usd_per_million_chars": 0.444,
+        "untranslated_base_chars": 1265130,
+        "page_equivalents": 754,
+        "english_words_est": 433813,
+        "usd": 1,
+        "bound": "untranslated share only"
+      },
+      "score": 260
+    },
+    {
+      "id": "openiti-sufi",
+      "corpus": "OpenITI — Sufi subset (incl. Ibn ʿArabī)",
+      "tradition": "Sufism (Arabic/Persian)",
+      "partner": "unknown",
+      "lang": "arabic",
+      "source": {
+        "name": "OpenITI (kitab-metadata-automation)",
+        "url": "https://github.com/OpenITI"
+      },
+      "licence": {
+        "label": "CC BY-NC-SA 4.0 (Zenodo record of the OpenITI release)",
+        "url": "https://zenodo.org/api/records/3082463/versions/latest",
+        "quote": "\"license\": {\"id\": \"cc-by-nc-sa-4.0\"}",
+        "verified": true,
+        "http_status": 200,
+        "open": "open-nc",
+        "note": null
+      },
+      "size": {
+        "texts": 84,
+        "base_chars": 67583348,
+        "openiti_char_length": 65951491,
+        "calibration": {
+          "sample_texts": 12,
+          "base_chars_per_openiti_char": 1.025
+        },
+        "tokens": 16043782,
+        "by_language_chars": {
+          "ara": 65951491
+        },
+        "ibn_arabi": {
+          "books": 7,
+          "chars": 9471810,
+          "tokens": 2277563,
+          "by_language": {
+            "ara": 9471810
+          },
+          "base_chars": 9706174,
+          "titles": [
+            "0638IbnCarabi.Diwan",
+            "0638IbnCarabi.FususHikam",
+            "0638IbnCarabi.FutuhatMakkiyya",
+            "0638IbnCarabi.Isra",
+            "0638IbnCarabi.MasailLiIdah",
+            "0638IbnCarabi.Tafsir",
+            "0638IbnCarabi.TajTarajim"
+          ]
+        },
+        "whole_openiti": {
+          "books": 8790,
+          "chars": 4492877321,
+          "tokens": 1080340381,
+          "by_language": {
+            "ara": 4492877321
+          },
+          "base_chars": 4604045915
+        },
+        "method": "OpenITI kitab-metadata-automation OpenITI_Github_clone_metadata_light.csv, primary (status=pri) version per book, its char_length; converted to base chars with a ratio measured on 12 downloaded Sufi texts (mARkdown markers stripped); Sufi = genre tags GAL@sufism / GAL@mysticism / _TASAWWUF / JK@التصوف / LMN@tasawwuf, plus every 0638IbnCarabi work"
+      },
+      "english": {
+        "fraction": null,
+        "source": null,
+        "floor": "19 full + 3 partial of 8791 works evidenced in the SL works catalog (recall floor, not a coverage figure)",
+        "note": "unknown — partial English exists for some (e.g. Fuṣūṣ al-ḥikam), no bibliography measured"
+      },
+      "holdings": {
+        "live_books": 126,
+        "live_pages": 23383,
+        "live_pages_translated": 20838,
+        "hidden_books": 35,
+        "hidden_pages": 4868,
+        "method": "Arabic/Persian books in sufism collections, Ibn ʿArabī title terms, or works-catalog openiti holdings"
+      },
+      "pairing": {
+        "status": "partial",
+        "source": "SL works catalog: 4010/8791 OpenITI works matched to an IA scan by title (~93% precision, edition not checked); OpenITI texts themselves come from born-digital libraries",
+        "url": null
+      },
+      "cost": {
+        "rate_key": "arabic",
+        "lane": "chained Batch, gemini-3.1-flash-lite",
+        "usd_per_million_chars": 0.436,
+        "untranslated_base_chars": 67583348,
+        "page_equivalents": 52285,
+        "english_words_est": 18693554,
+        "usd": 29,
+        "bound": "upper bound — English coverage unknown, whole corpus priced"
+      },
+      "score": 8412
+    },
+    {
+      "id": "ganjoor",
+      "corpus": "Ganjoor (Persian poetry)",
+      "tradition": "Persian classical poetry (incl. Rūmī, Ḥāfiẓ, ʿAṭṭār)",
+      "partner": "unknown",
+      "lang": "persian",
+      "source": {
+        "name": "ganjoor/ganjoor-data",
+        "url": "https://github.com/ganjoor/ganjoor-data"
+      },
+      "licence": {
+        "label": "unverified",
+        "url": "https://github.com/ganjoor/ganjoor-data",
+        "quote": null,
+        "verified": false,
+        "open": "unverified",
+        "note": "ganjoor/ganjoor-data has no LICENSE file and the GitHub API reports none; the RMuseum API spec (api.ganjoor.net/swagger) has no licence field; no licence sentence found on ganjoor.net"
+      },
+      "size": {
+        "texts": 135319,
+        "poets": 240,
+        "base_chars": 77616813,
+        "method": "ganjoor/ganjoor-data manifest.json (135319 poems); 250 poems sampled from 10 random id shards, verse text counted, scaled by poem count"
+      },
+      "english": {
+        "fraction": null,
+        "source": null,
+        "note": "unknown"
+      },
+      "holdings": {
+        "live_books": 23,
+        "live_pages": 6905,
+        "live_pages_translated": 5946,
+        "hidden_books": 31,
+        "hidden_pages": 17651,
+        "method": "Persian books in persian-literary-tradition or with classical poetry title terms (any edition)"
+      },
+      "pairing": {
+        "status": "partial",
+        "source": "Ganjoor records paper sources (scanned manuscripts/prints) per poet via its API `paperSources`; not measured per poem",
+        "url": "https://api.ganjoor.net/api/ganjoor/poet/2"
+      },
+      "cost": {
+        "rate_key": "persian",
+        "lane": "chained Batch, gemini-3.1-flash-lite",
+        "usd_per_million_chars": 0.449,
+        "untranslated_base_chars": 77616813,
+        "page_equivalents": 41462,
+        "english_words_est": 27227978,
+        "usd": 35,
+        "bound": "upper bound — English coverage unknown, whole corpus priced"
+      },
+      "score": 4084
+    },
+    {
+      "id": "mongolian-kanjur",
+      "corpus": "Mongolian Kanjur (BDRC)",
+      "tradition": "Mongolian Buddhist",
+      "partner": "unknown",
+      "lang": "tibetan",
+      "source": {
+        "name": "BDRC W4CZ5370 (scans only — no open typed text found)",
+        "url": "https://library.bdrc.io/show/bdr:MW4CZ5370"
+      },
+      "licence": {
+        "label": "BDRC adm:access AccessOpen (scans); no open typed text found",
+        "url": "https://purl.bdrc.io/admindata/W4CZ5370.jsonld",
+        "quote": "AccessOpen",
+        "verified": true,
+        "open": "unverified",
+        "note": "access status ≠ a reuse licence; BDRC asks attribution"
+      },
+      "size": {
+        "texts": null,
+        "volumes": 108,
+        "images": 79992,
+        "base_chars": null,
+        "method": "BDRC IIIF collection wio:bdr:MW4CZ5370 (108 volume manifests); canvases counted in 6 sampled volumes, scaled"
+      },
+      "english": {
+        "fraction": null,
+        "source": null,
+        "note": "unknown; content parallels the Tibetan Kangyur (largely translated from it), so English for the same texts exists via 84000"
+      },
+      "holdings": {
+        "live_books": 0,
+        "live_pages": 0,
+        "live_pages_translated": 0,
+        "hidden_books": 0,
+        "hidden_pages": 0,
+        "method": "language=Mongolian or Mongolian Kanjur by title/source"
+      },
+      "pairing": {
+        "status": "yes",
+        "source": "BDRC W4CZ5370, AccessOpen",
+        "url": "https://library.bdrc.io/show/bdr:W4CZ5370"
+      },
+      "cost": {
+        "rate_key": "tibetan",
+        "lane": "chained Batch, gemini-3-flash-preview",
+        "usd_per_million_chars": 0.831,
+        "untranslated_base_chars": null,
+        "page_equivalents": null,
+        "english_words_est": null,
+        "usd": null,
+        "bound": "upper bound — English coverage unknown, whole corpus priced",
+        "note": "no typed text → outside the \"typed canon\" pattern; would need OCR of ~79992 images first (Mongolian script OCR unmeasured)"
+      },
+      "score": null
+    },
+    {
+      "id": "tripitaka-koreana",
+      "corpus": "Tripitaka Koreana / K-Tripitaka",
+      "tradition": "Korean (Chinese-language) Buddhist canon",
+      "partner": "unknown",
+      "lang": "chinese",
+      "source": {
+        "name": "K-Tripitaka (Research Institute of Tripitaka Koreana) — unreachable; proxy via CBETA",
+        "url": "https://kb.sutra.re.kr/"
+      },
+      "licence": {
+        "label": "unverified",
+        "url": "https://kb.sutra.re.kr/",
+        "quote": null,
+        "verified": false,
+        "open": "unverified",
+        "note": "K-Tripitaka site (Research Institute of Tripitaka Koreana) did not answer from this host (connection failed); licence unverified. CBETA carries only its K-canon supplement under its own licence."
+      },
+      "size": {
+        "texts": 1599,
+        "base_chars": 71108493,
+        "k_with_taisho_equivalent": 1467,
+        "method": "Lancaster, The Korean Buddhist Canon: A Descriptive Catalogue (digital ed., acmuller.net) — K 1–1514 + KS 1–85; Taishō→K concordance (index-taisho.html) mapped onto CBETA chars_no_spaces of the matching T works, plus CBETA K-canon works. A proxy: the K-Tripitaka e-text itself was unreachable from this host."
+      },
+      "english": {
+        "fraction": null,
+        "source": null,
+        "note": "unknown (same texts as the Taishō equivalents)"
+      },
+      "holdings": {
+        "live_books": 0,
+        "live_pages": 0,
+        "live_pages_translated": 0,
+        "hidden_books": 0,
+        "hidden_pages": 0,
+        "method": "Korean/Chinese books with Tripitaka Koreana / 高麗 / 海印寺 title terms"
+      },
+      "pairing": {
+        "status": "unknown",
+        "source": "woodblock rubbing images on the K-Tripitaka site — not reachable to verify",
+        "url": null
+      },
+      "cost": {
+        "rate_key": "chinese",
+        "lane": "chained Batch, gemini-3.1-flash-lite",
+        "usd_per_million_chars": 1.118,
+        "untranslated_base_chars": 71108493,
+        "page_equivalents": 234218,
+        "english_words_est": 55429070,
+        "usd": 79,
+        "bound": "upper bound — English coverage unknown, whole corpus priced",
+        "note": "NOT additive with CBETA: the Taishō is largely edited from the Koryŏ canon, so this is the same text priced twice"
+      },
+      "score": 4157
+    },
+    {
+      "id": "kanripo",
+      "corpus": "Kanripo (Kanseki Repository), excl. KR6 Buddhist section (= CBETA)",
+      "tradition": "Chinese classics, histories, masters, belles-lettres, Daoism, Buddhism",
+      "partner": "unknown",
+      "lang": "chinese",
+      "source": {
+        "name": "Kanseki Repository",
+        "url": "https://github.com/kanripo"
+      },
+      "licence": {
+        "label": "CC BY-SA 4.0 (Kanripo GitHub organisation profile)",
+        "url": "https://api.github.com/orgs/kanripo",
+        "quote": "Licensed as CC BY SA 4.0.",
+        "verified": true,
+        "http_status": 200,
+        "open": "open",
+        "note": null
+      },
+      "size": {
+        "texts": 5298,
+        "base_chars": 839123965,
+        "whole_incl_kr6": {
+          "works": 10148,
+          "base_chars": 1232262446
+        },
+        "sections": {
+          "KR1": {
+            "works": 733,
+            "juan": 10156,
+            "works_without_extent": 37,
+            "sample_works": 38,
+            "mean_chars": 175846,
+            "chars_per_juan": 12216,
+            "base_chars_est": 130568583,
+            "base_chars_est_by_mean": 128894809
+          },
+          "KR2": {
+            "works": 581,
+            "juan": 20834,
+            "works_without_extent": 21,
+            "sample_works": 40,
+            "mean_chars": 173976,
+            "chars_per_juan": 8394,
+            "base_chars_est": 178544060,
+            "base_chars_est_by_mean": 101079809
+          },
+          "KR3": {
+            "works": 888,
+            "juan": 16112,
+            "works_without_extent": 19,
+            "sample_works": 40,
+            "mean_chars": 207041,
+            "chars_per_juan": 9918,
+            "base_chars_est": 163734895,
+            "base_chars_est_by_mean": 183852608
+          },
+          "KR4": {
+            "works": 1374,
+            "juan": 26667,
+            "works_without_extent": 99,
+            "sample_works": 39,
+            "mean_chars": 145071,
+            "chars_per_juan": 11414,
+            "base_chars_est": 318731860,
+            "base_chars_est_by_mean": 199327765
+          },
+          "KR5": {
+            "works": 1722,
+            "juan": 426,
+            "works_without_extent": 1675,
+            "sample_works": 40,
+            "mean_chars": 27770,
+            "chars_per_juan": 2418,
+            "base_chars_est": 47544567,
+            "base_chars_est_by_mean": 47819682
+          },
+          "KR6": {
+            "works": 4850,
+            "juan": 16824,
+            "works_without_extent": 581,
+            "sample_works": 8,
+            "mean_chars": 53777,
+            "chars_per_juan": 21511,
+            "base_chars_est": 393138481,
+            "base_chars_est_by_mean": 260816025
+          }
+        },
+        "method": "KR-Catalog work ids and :EXTENT: juan counts per section; 40 works sampled per section (8 for KR6, which mirrors CBETA), every .txt in the default branch downloaded and counted; section total = measured chars per juan × catalogue juan (+ sample mean × works lacking an EXTENT). The per-work mean estimate is kept alongside; the two differ where a few very long works dominate"
+      },
+      "english": {
+        "fraction": null,
+        "source": null,
+        "floor": "62 full + 3 partial of 10141 works evidenced in the SL works catalog (recall floor, not a coverage figure)",
+        "note": "unknown (the Siku census #2234 put the imperial canon at ~1–2% translated — a sample, not a measure of Kanripo)"
+      },
+      "holdings": {
+        "live_books": 166,
+        "live_pages": 32359,
+        "live_pages_translated": 26900,
+        "hidden_books": 4,
+        "hidden_pages": 3938,
+        "method": "works-catalog work_holdings for kanripo works (build-holdings.mjs title-auto match; a floor)"
+      },
+      "pairing": {
+        "status": "partial",
+        "source": "SL works catalog: 2318/10141 Kanripo works have a matched scan (IA-CADAL / Harvard-Yenching; edition not checked)",
+        "url": null
+      },
+      "cost": {
+        "rate_key": "chinese",
+        "lane": "chained Batch, gemini-3.1-flash-lite",
+        "usd_per_million_chars": 1.118,
+        "untranslated_base_chars": 839123965,
+        "page_equivalents": 2763913,
+        "english_words_est": 654097131,
+        "usd": 938,
+        "bound": "upper bound — English coverage unknown, whole corpus priced",
+        "usd_whole_incl_kr6": 1378,
+        "note": "KR6 (Buddhist, 4,850 works) mirrors CBETA and is excluded here so the row adds to CBETA without double counting"
+      },
+      "score": 392458
+    }
+  ],
+  "context": {
+    "gretil_whole_sanskrit": {
+      "texts": 3133,
+      "base_chars_est": 231580783,
+      "usd": 90,
+      "note": "English coverage unknown → upper bound"
+    },
+    "sefaria_kabbalah_whole": {
+      "titles": 70,
+      "base_chars_est": 44219244,
+      "english_titles": 55,
+      "usd_upper": 20,
+      "note": "English share for the whole category not measured (subsets only)"
+    },
+    "openiti_whole": {
+      "books": 8790,
+      "base_chars": 4604045915,
+      "usd_upper": 2007
+    }
+  },
+  "works_catalog": {
+    "gretil": {
+      "works": 891,
+      "with_scan_source": 188,
+      "translation_status": {
+        "unknown": 891
+      }
+    },
+    "cbeta": {
+      "works": 5397,
+      "with_scan_source": 63,
+      "translation_status": {
+        "unknown": 5393,
+        "full": 4
+      }
+    },
+    "sefaria": {
+      "works": 6592,
+      "with_scan_source": 0,
+      "translation_status": {
+        "unknown": 6592
+      }
+    },
+    "kanripo": {
+      "works": 10141,
+      "with_scan_source": 2318,
+      "translation_status": {
+        "partial": 3,
+        "unknown": 10076,
+        "full": 62
+      }
+    },
+    "openiti": {
+      "works": 8791,
+      "with_scan_source": 4010,
+      "translation_status": {
+        "unknown": 8769,
+        "full": 19,
+        "partial": 3
+      }
+    }
+  },
+  "english_sources": {
+    "84000": {
+      "records": 4541,
+      "by_status": {
+        "Kangyur": {
+          "In Progress": {
+            "texts": 508,
+            "pages": 26741
+          },
+          "Published": {
+            "texts": 595,
+            "pages": 37586
+          },
+          "Not Begun": {
+            "texts": 41,
+            "pages": 1899
+          },
+          "Application Pending": {
+            "texts": 1,
+            "pages": 4
+          }
+        },
+        "Tengyur": {
+          "Not Begun": {
+            "texts": 3315,
+            "pages": 123041
+          },
+          "In Progress": {
+            "texts": 57,
+            "pages": 6657
+          },
+          "Application Pending": {
+            "texts": 7,
+            "pages": 1390
+          },
+          "Published": {
+            "texts": 17,
+            "pages": 918
+          }
+        }
+      },
+      "total": {
+        "Kangyur": {
+          "texts": 1145,
+          "pages": 66230
+        },
+        "Tengyur": {
+          "texts": 3396,
+          "pages": 132006
+        }
+      },
+      "source": "https://read.84000.co/section/lobby.json — the 84000 Reading Room catalogue (per-text toh, num_pages, publication_status); toh ≤ 1108 = Kangyur, > 1108 = Tengyur"
+    },
+    "suttacentral": {
+      "by_pitaka": {
+        "abhidhamma": {
+          "files": 1102,
+          "bytes": 11192917,
+          "en_files": 0,
+          "en_bytes": 0
+        },
+        "sutta": {
+          "files": 5764,
+          "bytes": 22786236,
+          "en_files": 4269,
+          "en_bytes": 14502593
+        },
+        "vinaya": {
+          "files": 422,
+          "bytes": 6788863,
+          "en_files": 422,
+          "en_bytes": 6788863
+        }
+      },
+      "english_fraction_by_root_bytes": 0.522,
+      "source": "github.com/suttacentral/bilara-data (branch published): root/pli/ms segment files with a translation/en file of the same uid, weighted by root-file bytes"
+    }
+  }
+}

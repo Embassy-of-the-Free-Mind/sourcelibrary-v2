@@ -1,0 +1,21 @@
+{
+ "id": "6a3c61b5879008ba7e15fd28_00117",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "To explain a person or an event with a single phrase is in both cases incorrect. Feng of Houzhai <note>referring to Feng Jue, a scholar of the Song dynasty</note> says: from the perspective of his establishing the casting of the penal statutes, there is much that remains unsaid regarding his integrity. Regarding the words of the Spring and Autumn period, there is certainly very little concerning the way of the noble person. The Sage's words of praise do not overflow with flattery, and his words of censure do not exaggerate malice. The <term>Jizhu</term> <gloss>Collected Commentaries</gloss> on \"employing the people with justice\" merely traces the facts, yet it cannot entirely obscure them. Master Hu says: the three-year mourning period is the legacy of the affection taught by the disciples of Confucius. The cultivation of fields and property, and upon his death, the legacy of the affection taught by our disciples—the spirit of Zichan rests entirely on the word \"justice.\" The people spoke of his kindness, but they did not know that his governance began by focusing specifically on the matter of aiding individuals.\n\n○ The Master said: Yan Pingzhong was skilled at associating with others; the longer he knew them, the more he respected them.\n\nYan Pingzhong was a grand officer of Qi, whose personal name was Ying. Master Cheng said: when people associate for a long time, their respect tends to decline; to be able to maintain respect over a long period\n\n<summary>This passage discusses the historical assessment of the statesman Zichan, emphasizing the necessity of nuanced judgment over reductive characterizations, and introduces a commentary on the character of Yan Pingzhong.</summary>\n<keywords>Zichan, Confucius, Yan Pingzhong, governance, justice, respect, classical commentary</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2030,
+ "outputTokens": 381,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.0005395,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 387,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

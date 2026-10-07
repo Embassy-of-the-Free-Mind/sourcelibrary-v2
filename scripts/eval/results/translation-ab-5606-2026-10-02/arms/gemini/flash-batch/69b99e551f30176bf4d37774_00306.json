@@ -1,0 +1,21 @@
+{
+ "id": "69b99e551f30176bf4d37774_00306",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "25. (5) Fruits 1. <note>original: \"Phalā 1\"</note>\n\n2. Monks, there are these four bases of power <term>iddhipādā</term> <gloss>pathways to spiritual success or potency</gloss>. These are the four bases of power.\n\n3. Monks, because these four bases of power have been developed and cultivated <note>original: \"bhāvitattā bahulikatattā\"</note>, one of two fruits <note>original: \"phalānam\"</note> may be expected: final knowledge <term>aññā</term> <gloss>highest realization or arahantship</gloss> in this very life, or, if there is a residue of clinging remaining, the state of a non-returner <term>anāgāmitā</term> <gloss>one who will not be reborn in the human realm</gloss>.\n\n26. (6) Fruits 2.\n\n2. Monks, there are these four bases of power. These are the four bases of power.\n\n3. Monks, because these four bases of power have been developed and cultivated, seven fruits and seven benefits <note>original: \"satta phalā sattānisamsā\"</note> may be expected. What are the seven fruits and seven benefits?\n\n4. One attains final knowledge early in this very life. If not early in this very life, then one attains final knowledge at the time of death. If not at the time of death, then with the total destruction of the five lower fetters <term>orambhāgiyānam samyojanānam</term> <gloss>the bonds that tie a being to the sensual world</gloss>, one becomes:\nan attainer of final liberation in the interval <term>antarāparinibbāyī</term> <gloss>attaining Nirvana in the intermediate state after death</gloss>;\nan attainer of final liberation upon landing <term>upahaccaparinibbāyī</term> <gloss>attaining Nirvana shortly after rebirth in a higher realm</gloss>;\nan attainer of final liberation without exertion <term>asaṅkhāraparinibbāyī</term>;\nan attainer of final liberation with exertion <term>sasaṅkhāraparinibbāyī</term>;\nor one who is bound upstream, heading toward the Highest Realm <term>uddhamsoto akaniṭṭhagāmī</term> <gloss>the Akanistha heaven, the highest of the Pure Abodes</gloss>.\n\n5. Monks, because these four bases of power have been developed and cultivated, these seven fruits and seven benefits may be expected.\n\n27. (7) Ananda 1.\n\n1. The setting was at Savatthi. <note>original: \"Sāvatthi nidānam\"</note>\n\n2. Then the Venerable Ananda approached the Blessed One <term>Bhagavā</term>. Having approached and paid respects... <note>original: \"pe\" indicates a repetitive formula is omitted here</note> ...sitting to one side, the Venerable Ananda said this to the Blessed One: \"What, Lord, are the...\"\n\n<summary>This page describes the spiritual rewards of practicing the four bases of power, ranging from immediate enlightenment to various stages of non-returning. It begins a dialogue between the Buddha and his attendant Ananda regarding these practices.</summary>\n<keywords>four bases of power, iddhipada, fruits of practice, enlightenment, non-returner, Ananda, Savatthi, Nirvana</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2620,
+ "outputTokens": 772,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.001813,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1884,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A50919",
+  "edition": "EEBO-TCP A50919 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "69e748a685f786e884a4c8c5",
+  "page_number": 68,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 87319,
+    "to_char": 88819,
+    "overlap": 0.996,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "Paradise Lost; Thy sovran sentence to forfeit and enthrall. Few words padding.",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:43.969Z",
+  "text_location": "repo",
+  "text_sha256": "d09ba8b645c6be710d72b6567f7981994303efd64030560875312b704eac22a8",
+  "unit": {
+    "chars": 1500
+  }
+}

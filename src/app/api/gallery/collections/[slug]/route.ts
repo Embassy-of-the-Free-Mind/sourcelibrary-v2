@@ -135,7 +135,22 @@ async function resolveImages(db: any, imageIds: string[]) {
     .find({ id: { $in: imageIds } })
     .toArray();
 
-  const docMap = new Map<string, any>(docs.map((d: any) => [d.id, d]));
+  // image_ids is a list frozen when the gallery was seeded, so hiding or taking
+  // down a book afterwards leaves its images in it. Gate on the BOOK, not on
+  // gallery_images.book_visible: that copy drifts in both directions (#4058).
+  // Measured 2026-09-30: this route served 47 images from non-public books,
+  // 7 of them rights-class removals (#5303).
+  const bookIds = [...new Set(docs.map((d: any) => d.book_id).filter(Boolean))];
+  const publicBooks = new Set(
+    (await db
+      .collection('books')
+      .find({ id: { $in: bookIds }, visible: true }, { projection: { _id: 0, id: 1 } })
+      .toArray()).map((b: any) => b.id),
+  );
+
+  const docMap = new Map<string, any>(
+    docs.filter((d: any) => publicBooks.has(d.book_id)).map((d: any) => [d.id, d]),
+  );
 
   // Return in order of image_ids, skip any that weren't found
   return imageIds

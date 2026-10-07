@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { getReadDb } from '@/lib/mongodb';
 import { posts as blogPostList } from '@/app/blog/page';
+import { canonWorkForWorkId } from '@/lib/canon-works';
 
 // Next.js sitemap with generateSitemaps() for multi-file output.
 // Google handles chunked sitemaps much better for large sites (10K+ URLs).
@@ -68,12 +69,30 @@ async function safeQuery<T>(
   }
 }
 
-export async function generateSitemaps() {
+// The build calls generateSitemaps() once per prerendered chunk, not once per
+// build: one build log on 2026-10-01 shows 61 book-count runs, each fetching
+// ~58K book docs (~9 s, so most hit maxTimeMS and fell back to 10,000 books,
+// silently dropping every book chunk past the second). Memoise per process;
+// the TTL keeps a warm runtime instance from serving stale counts (#5545).
+const SITEMAP_IDS_TTL_MS = 60 * 60 * 1000;
+let sitemapIdsCache: { at: number; ids: Promise<{ id: number }[]> } | null = null;
+
+export function generateSitemaps() {
+  if (!sitemapIdsCache || Date.now() - sitemapIdsCache.at > SITEMAP_IDS_TTL_MS) {
+    const ids = computeSitemapIds();
+    sitemapIdsCache = { at: Date.now(), ids };
+    // A rejected promise must not be served for an hour.
+    ids.catch(() => { sitemapIdsCache = null; });
+  }
+  return sitemapIdsCache.ids;
+}
+
+async function computeSitemapIds() {
   // Count books to determine how many chunks we need
   const bookCount = await safeQuery('book-count', async (db) => {
     return db.collection('books').countDocuments(
-      { visible: true, slug: { $exists: true, $ne: null }, pages_ocr: { $gt: 0 } },
-      { maxTimeMS: 10000 }
+      { visible: true, slug: { $exists: true, $ne: null }, pages_count: { $gt: 0 } },
+      { maxTimeMS: 30000 }
     );
   }, 10000);
 
@@ -197,6 +216,7 @@ function staticPages(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/census`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
     { url: `${BASE_URL}/about/progress`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
     { url: `${BASE_URL}/developers`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${BASE_URL}/connect`, lastModified: new Date('2026-09-29'), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE_URL}/gallery`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.7 },
     { url: `${BASE_URL}/collections`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
     { url: `${BASE_URL}/libraries`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
@@ -250,7 +270,9 @@ async function getBooks(chunkIndex: number): Promise<MetadataRoute.Sitemap> {
         visible: true,
         // Only include books with slugs — hex IDs are bad for SEO
         slug: { $exists: true, $ne: null },
-        pages_ocr: { $gt: 0 },
+        // Canonical live filter (same as /api/books/library): every readable
+        // book is listed, including untranslated and short ones.
+        pages_count: { $gt: 0 },
       },
       {
         projection: { slug: 1, updated_at: 1, pages_ocr: 1, pages_translated: 1, is_first_translation: 1, read_count: 1 },
@@ -262,7 +284,7 @@ async function getBooks(chunkIndex: number): Promise<MetadataRoute.Sitemap> {
     ).toArray();
 
     return books
-      .filter((book) => book.slug && (book.pages_ocr > 3 || book.pages_translated > 0))
+      .filter((book) => book.slug)
       .map((book) => {
         let lastModified: Date;
         try {
@@ -293,22 +315,49 @@ async function getBooks(chunkIndex: number): Promise<MetadataRoute.Sitemap> {
 // (`/book/<slug>/page/<id>`) so no per-page book join is needed here.
 async function getIndexablePages(chunkIndex: number): Promise<MetadataRoute.Sitemap> {
   return safeQuery('indexable-pages', async (db) => {
-    // sort by _id so skip/limit pagination is stable across chunks; served by
-    // the seo_indexable_id_partial compound index (a single-field index on
-    // seo_indexable alone makes the planner full-scan in _id order → timeout).
-    const pages = await db.collection('pages').find(
-      { seo_indexable: true, seo_url: { $exists: true, $ne: null } },
+    // Two steps, so the skip walks index keys and never page documents (#5545).
+    // A filter on seo_url (not in the index) puts the SKIP above the FETCH:
+    // chunk k fetched k×5000 full page docs just to discard them, ~15M fetches
+    // per build across ~80 chunks, which evicted Atlas's cache for readers.
+    // Step 1 is covered by seo_indexable_id_partial (keys only): find the
+    // chunk's first _id. Step 2 fetches only that chunk's 5,000 docs.
+    const pagesColl = db.collection('pages');
+    const [start] = await pagesColl.find(
+      { seo_indexable: true },
       {
-        projection: { _id: 0, seo_url: 1, updated_at: 1 },
+        projection: { _id: 1 },
         sort: { _id: 1 },
         skip: chunkIndex * PAGES_PER_CHUNK,
+        limit: 1,
+        hint: 'seo_indexable_id_partial',
+        maxTimeMS: 30000,
+      }
+    ).toArray();
+    if (!start) return [];
+    const pages = await pagesColl.find(
+      { seo_indexable: true, _id: { $gte: start._id } },
+      {
+        projection: { _id: 0, seo_url: 1, updated_at: 1, book_id: 1 },
+        sort: { _id: 1 },
         limit: PAGES_PER_CHUNK,
+        hint: 'seo_indexable_id_partial',
         maxTimeMS: 60000,
       }
     ).toArray();
 
+    // Drop pages whose parent book is no longer public. seo_indexable is set
+    // once by flag-indexable-pages.mjs and never cleared, so pages of books
+    // later hidden (e.g. hidden_reason 'duplicate') stayed listed while their
+    // /book/<slug>/page/<id> URL 404s (~2.5% of this chunk range, #2266).
+    const bookIds = [...new Set(pages.map((p) => p.book_id).filter((b): b is string => typeof b === 'string'))];
+    const liveBooks = await db.collection('books').find(
+      { id: { $in: bookIds }, visible: true },
+      { projection: { _id: 0, id: 1 }, maxTimeMS: 30000 }
+    ).toArray();
+    const liveBookIds = new Set(liveBooks.map((b) => b.id as string));
+
     return pages
-      .filter((p) => typeof p.seo_url === 'string' && p.seo_url.startsWith('/book/'))
+      .filter((p) => typeof p.seo_url === 'string' && p.seo_url.startsWith('/book/') && liveBookIds.has(p.book_id))
       .map((p) => {
         let lastModified: Date;
         try {
@@ -454,16 +503,29 @@ async function getLanguages(): Promise<MetadataRoute.Sitemap> {
   }, [] as MetadataRoute.Sitemap);
 }
 
+// List each work once, at the URL its page declares as <link rel=canonical>
+// (generateMetadata in src/app/work/[id]/page.tsx). Raw work_id forms such as
+// `kr:KR6q0012` redirect to a canon slug or canonicalise to the editions'
+// work_slug; listing them put ~2.8K redirecting URLs in the sitemap (#2266).
 async function getWorks(): Promise<MetadataRoute.Sitemap> {
   return safeQuery('works', async (db) => {
     const works = await db.collection('books').aggregate([
       { $match: { work_id: { $exists: true, $ne: null }, visible: true } },
-      { $group: { _id: '$work_id', count: { $sum: 1 } } },
+      // $min skips null/missing: a work_slug if any edition carries one.
+      { $group: { _id: '$work_id', count: { $sum: 1 }, work_slug: { $min: '$work_slug' } } },
       { $match: { count: { $gte: 2 } } },
     ], { maxTimeMS: 10000 }).toArray();
 
-    return works.map((w) => ({
-      url: `${BASE_URL}/work/${w._id}`,
+    const paths = new Set<string>();
+    for (const w of works) {
+      const workId = String(w._id);
+      const canon = canonWorkForWorkId(workId);
+      const slug = canon ? canon.slug : (typeof w.work_slug === 'string' && w.work_slug ? w.work_slug : workId);
+      paths.add(`/work/${encodeURIComponent(slug)}`);
+    }
+
+    return [...paths].sort().map((path) => ({
+      url: `${BASE_URL}${path}`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.5,

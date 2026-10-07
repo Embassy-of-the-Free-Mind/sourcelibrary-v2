@@ -1,0 +1,171 @@
+{
+ "reference": {
+  "source": "https://github.com/brunogml/rKTs/tree/master/etexts/Gpb",
+  "edition": "snga 'gyur rgyud 'bum phyogs bsgrigs (rKTs sigla Gpb), BDRC bdr:W1KG14783",
+  "licence": "CC0-1.0 (rKTs repository README)",
+  "volumes": 56,
+  "sides": 37170,
+  "lines": 235099,
+  "ewts_warnings": 2191
+ },
+ "controls": {
+  "positive_noise05": {
+   "n": 50,
+   "median": 0.972,
+   "q1": 0.966,
+   "q3": 0.977,
+   "ge09": 50,
+   "share_ge09": 1.0,
+   "lt05": 0
+  },
+  "positive_noise05_hit_rate": 1.0,
+  "positive_noise05_span2": {
+   "n": 50,
+   "median": 0.971,
+   "q1": 0.964,
+   "q3": 0.975,
+   "ge09": 46,
+   "share_ge09": 0.92,
+   "lt05": 0
+  },
+  "chance_shuffle": {
+   "n": 245,
+   "median": 0.161,
+   "q1": 0.132,
+   "q3": 0.189,
+   "ge09": 0,
+   "share_ge09": 0.0,
+   "lt05": 245
+  },
+  "negative_kanjur_vs_nyingma": {
+   "n": 20,
+   "median": 0.199,
+   "q1": 0.186,
+   "q3": 0.243,
+   "ge09": 0,
+   "share_ge09": 0.0,
+   "lt05": 20,
+   "retrieval_lt005": 20,
+   "share_off_index": 1.0
+  }
+ },
+ "bridge_bl_other_2026-10-01": {
+  "n": 25,
+  "median": 0.149,
+  "q1": 0.0,
+  "q3": 0.236,
+  "ge09": 2,
+  "share_ge09": 0.08,
+  "lt05": 22,
+  "retrieval_lt005": 22,
+  "share_off_index": 0.88
+ },
+ "nyingma_all_one_per_book_per_class": {
+  "n": 245,
+  "median": 0.583,
+  "q1": 0.225,
+  "q3": 0.831,
+  "ge09": 38,
+  "share_ge09": 0.155,
+  "lt05": 113,
+  "retrieval_lt005": 133,
+  "share_off_index": 0.543
+ },
+ "nyingma_by_served_verdict": {
+  "MARK_UNRELIABLE": {
+   "n": 86,
+   "median": 0.249,
+   "q1": 0.157,
+   "q3": 0.368,
+   "ge09": 0,
+   "share_ge09": 0.0,
+   "lt05": 76,
+   "retrieval_lt005": 79,
+   "share_off_index": 0.919
+  },
+  "NO_VERDICT": {
+   "n": 40,
+   "median": 0.76,
+   "q1": 0.458,
+   "q3": 0.833,
+   "ge09": 3,
+   "share_ge09": 0.075,
+   "lt05": 10,
+   "retrieval_lt005": 16,
+   "share_off_index": 0.4
+  },
+  "SERVE": {
+   "n": 95,
+   "median": 0.833,
+   "q1": 0.691,
+   "q3": 0.924,
+   "ge09": 35,
+   "share_ge09": 0.368,
+   "lt05": 5,
+   "retrieval_lt005": 14,
+   "share_off_index": 0.147
+  },
+  "UNREADABLE_OTHER": {
+   "n": 24,
+   "median": 0.237,
+   "q1": 0.0,
+   "q3": 0.398,
+   "ge09": 0,
+   "share_ge09": 0.0,
+   "lt05": 22,
+   "retrieval_lt005": 24,
+   "share_off_index": 1.0
+  }
+ },
+ "too_short": 0,
+ "worst_serve": [
+  [
+   0.0,
+   0.0,
+   "https://sourcelibrary.org/book/69e786c96846fc56c490ed72?page=8",
+   "rnying ma rgyud 'bum dkar chag"
+  ],
+  [
+   0.1495,
+   0.0128,
+   "https://sourcelibrary.org/book/69e786fa6846fc56c4911496?page=193",
+   "rNying ma rgyud 'bum Khi"
+  ],
+  [
+   0.1807,
+   0.0062,
+   "https://sourcelibrary.org/book/6a14e150311a9edd4621ef4c?page=160",
+   "Tshamdrak rNying rgyud Khi"
+  ],
+  [
+   0.4486,
+   0.0201,
+   "https://sourcelibrary.org/book/69e786d86846fc56c490f1f8?page=76",
+   "rNying ma rgyud 'bum Da"
+  ],
+  [
+   0.499,
+   0.0407,
+   "https://sourcelibrary.org/book/69e787094a6785cfd60ca250?page=65",
+   "rNying ma rgyud 'bum Di"
+  ],
+  [
+   0.5047,
+   0.0439,
+   "https://sourcelibrary.org/book/69e786fd4a6785cfd60c9764?page=333",
+   "rNying ma rgyud 'bum Ngi"
+  ],
+  [
+   0.512,
+   0.0956,
+   "https://sourcelibrary.org/book/6a14e1352f45ee330c2746a6?page=76",
+   "Tshamdrak rNying rgyud Tsa"
+  ],
+  [
+   0.5276,
+   0.0775,
+   "https://sourcelibrary.org/book/69e7870c4a6785cfd60ca3d2?page=94",
+   "rNying ma rgyud 'bum Ni"
+  ]
+ ]
+}

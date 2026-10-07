@@ -6,6 +6,10 @@ advancing `pipeline_auto.status` from anywhere, adding a guard that asserts some
 
 *Added 2026-08-08 from #3740 / PR #3765.*
 
+**Successor design:** `../pipeline-next-step.md` (#5469) — one derived `nextStep(book)` that
+phases select on, an exit for every blocked reason, and a lane registry. Until its cutovers
+land, the rules below govern every status write.
+
 ---
 
 **`pipeline_auto.status` is what every phase selects on.** Written ahead of its output, a
@@ -106,6 +110,25 @@ the OCR count is still growing, or the state machine is an infinite loop.
 The 13,329 existing books are NOT repaired by that fix — finalize only revisits
 `cover_selected`. Requeuing them queues ~$8,000 of OCR and translation behind the next
 open valve, which is actuation two hops upstream of the spend and belongs to a human.
+
+## No post-OCR status on a preview sample, from ANY writer (#4719)
+
+Fixing finalize (above) left every phase BEFORE it free to advance a stub. On
+2026-10-01 the ~26K `chapters_complete` backlog drained into image extraction: 947
+preview-only books reached `images_complete` in ten hours, each one paying for a stage
+run over 25 pages. Phase 9 then sent them back. **A guard at the last step makes a
+book pay for every step in between.**
+
+`scripts/lib/preview-stub-guard.mjs` applies `decideFinalize` to every write of a
+post-OCR *completion* status. It runs in `setPipelineStatus` and in the batch
+collector's write-backs (`guardedStatusSet`), which bypass the helper. On a hit the book
+goes to `archive_complete` with `reentered_reason` and a `reentry_history` entry. It
+recounts before acting, because a stored `pages_ocr` can lag the OCR that just landed.
+`*_submitted` statuses are not guarded: a job is already in flight. Writers still
+outside it (translate-worker, enrich-worker, realtime-ocr, the orchestrator's
+health-probe `updateMany` rollback) are what `scripts/audit/preview-stub-terminal.mjs`
+exists to catch: it exits 1 when a stub enters a post-OCR status. A raw
+`'pipeline_auto.status': '<post-OCR>'` write is a writer the guard cannot see.
 
 ## A bulk OCR rewrite of finished books queues their retranslation (#4523, 2026-09-25)
 

@@ -40,6 +40,7 @@
  */
 
 import { isTranslationReadable, type TranslationCoverageBook } from './first-translation/derive';
+import { translationVerdict } from './translation-completeness';
 
 /** An authored entry in `collections.further_reading`. */
 export interface FurtherReadingRef {
@@ -114,9 +115,16 @@ export function furtherReadingStatus(book: TranslationCoverageBook): FurtherRead
 
   const pages = book.pages_count ?? 0;
   const ocr = book.pages_ocr ?? 0;
-  const fullyTranscribed = pages <= 0 || ocr >= pages;
 
-  if (fullyTranscribed && isTranslationReadable(book)) {
+  // The stamped rung decides when present (#5287); it already requires the
+  // whole book to be transcribed before it can reach `readable`.
+  const verdict = translationVerdict(book);
+  if (verdict === 'complete') return { kind: 'translated', label: 'Complete', readable: true };
+  if (verdict === 'translated') return { kind: 'translated', label: 'Translated', readable: true };
+
+  // Unstamped fallback: the pre-ladder conjunction of the two bars (#4653).
+  const fullyTranscribed = pages <= 0 || ocr >= pages;
+  if (verdict === null && fullyTranscribed && isTranslationReadable(book)) {
     return { kind: 'translated', label: 'Translated', readable: true };
   }
 

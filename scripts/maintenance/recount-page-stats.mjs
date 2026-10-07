@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 /**
- * Recount books.pages_count / pages_ocr / pages_translated from the `pages`
- * collection.
+ * Recount a book's six page counters (pages_count, pages_ocr, pages_translated,
+ * pages_translatable, pages_blank, pages_archived) from the `pages` collection.
+ * The write goes through recountBook() in scripts/lib/page-counts.mjs — the one
+ * writer (#5325, .claude/docs/page-counts.md). This script's own job is the
+ * `ocr.text_free` stamp that the pipeline reads, and the dry-run diff.
  *
  * Why this exists: those three fields are denormalised counters, written by
  * whichever worker last touched the book (collect-batch-results, batch-collector,
@@ -42,7 +45,10 @@
  */
 
 import { MongoClient } from 'mongodb';
-import { buildVisiblePageCountPipeline, isTextFreeIllustration, countVisiblePageStats } from '../lib/page-counts.mjs';
+import {
+  buildVisiblePageCountPipeline, isTextFreeIllustration, countVisiblePageStats,
+  recountBook, pageCountersFromStats, PAGE_COUNTERS,
+} from '../lib/page-counts.mjs';
 
 /**
  * The NEVER_TRANSLATED_PAGE_TYPES this repo shipped with before #4685 — a fixed
@@ -94,7 +100,7 @@ const query = STALE
 
 const candidates = await books
   .find(query)
-  .project({ _id: 1, id: 1, slug: 1, title: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translatable: 1 })
+  .project({ _id: 1, id: 1, slug: 1, title: 1, ...Object.fromEntries(PAGE_COUNTERS.map(c => [c, 1])) })
   .toArray();
 
 console.log(`Scanning ${candidates.length} book(s)…`);
@@ -125,39 +131,24 @@ for (const book of candidates) {
   const [counts] = await pages.aggregate(buildVisiblePageCountPipeline(bookId)).toArray();
   if (!counts) continue;
 
-  const same =
-    (book.pages_count ?? 0) === counts.total &&
-    (book.pages_ocr ?? 0) === counts.with_ocr &&
-    (book.pages_translated ?? 0) === counts.with_translation &&
-    (book.pages_translatable ?? null) === counts.translatable;
-  if (same) continue;
+  const recount = pageCountersFromStats(counts);
+  const moved = PAGE_COUNTERS.filter(c => (book[c] ?? null) !== recount[c]);
+  if (moved.length === 0) continue;
 
   drifted++;
   console.log(
-    `${book.slug}\n  pages       ${book.pages_count ?? 0} → ${counts.total}` +
-      `\n  ocr         ${book.pages_ocr ?? 0} → ${counts.with_ocr}` +
-      `\n  translated  ${book.pages_translated ?? 0} → ${counts.with_translation}` +
-      `\n  translatable ${book.pages_translatable ?? '—'} → ${counts.translatable}` +
+    `${book.slug}` +
+      moved.map(c => `\n  ${c.padEnd(19)} ${book[c] ?? '—'} → ${recount[c]}`).join('') +
       (counts.translatable > 0
-        ? `   (${((100 * counts.translated_translatable) / counts.translatable).toFixed(1)}% of translatable` +
+        ? `\n  (${((100 * counts.translated_translatable) / counts.translatable).toFixed(1)}% of translatable` +
           `, vs ${((100 * counts.with_translation) / Math.max(counts.total, 1)).toFixed(1)}% of all pages)`
         : ''),
   );
 
   if (APPLY) {
-    const res = await books.updateOne(
-      { _id: book._id },
-      {
-        $set: {
-          pages_count: counts.total,
-          pages_ocr: counts.with_ocr,
-          pages_translated: counts.with_translation,
-          pages_translatable: counts.translatable,
-          updated_at: new Date(),
-        },
-      },
-    );
-    written += res.modifiedCount;
+    // The one writer (#5325): all six counters together, never a subset.
+    const res = await recountBook(db, bookId, { reason: 'recount-page-stats' });
+    if (res.changed.length > 0) written++;
   }
 }
 

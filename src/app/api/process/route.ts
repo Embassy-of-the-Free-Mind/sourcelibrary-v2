@@ -4,11 +4,13 @@ import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { performOCR, performOCRWithBuffer, performTranslation, generateSummary, TokenUsage } from '@/lib/ai';
 import { getOcrPrompt, getTranslationPrompt, getSummaryPrompt, type PromptLookupResult } from '@/lib/prompts';
 import { withAuth } from '@/lib/auth-helpers';
+import { assertLaneGuards } from '@/lib/lane-guards';
 import { createRevision } from '@/lib/page-revisions';
-import { isHumanEditedTranslation } from '@/lib/translate-write';
+import { isHumanEditedTranslation, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON } from '@/lib/translate-write';
+import { strayScriptVerdict, STRAY_SCRIPT_REASON } from '@/lib/stray-script';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { getTriggerSource } from '@/lib/cron-auth';
-import { DEFAULT_MODEL, PROMPT_VERSION, extractPageType, extractColumns } from '@/lib/types';
+import { DEFAULT_MODEL, PROMPT_VERSION, liftOcrTags } from '@/lib/types';
 import { extractTranslationMetadata, propagateOcrWarnings } from '@/lib/translation-metadata';
 import { geminiEngine, imageInput, translationInput, ocrProvenance, translationProvenance, notRecorded, NOT_RECORDED, codeVersion, host } from '@/lib/write-provenance';
 import type { AICallRecord } from '@/lib/ai';
@@ -64,6 +66,8 @@ export const POST = withAuth(async (request: NextRequest) => {
     }
 
     const db = await getDb();
+    // Observe only (#5480): records a held book or an active pause in audit_log, never refuses.
+    if (autoSave && pageId) await assertLaneGuards(db, { route: '/api/process', pageIds: [pageId] });
 
     // Get previous page context if provided
     let previousPage: { ocr?: string; translation?: string; summary?: string } | undefined;
@@ -79,6 +83,10 @@ export const POST = withAuth(async (request: NextRequest) => {
     }
 
     const results: { ocr?: string; translation?: string; summary?: string } = {};
+
+    // Set when the translation carries a script that is in neither the source nor the book's language (#5734).
+
+    let strayRefused = false;
     const metadata: {
       ocr?: { inputTokens: number; outputTokens: number; costUsd: number; durationMs: number; imageUrl?: string; call?: AICallRecord };
       translation?: { inputTokens: number; outputTokens: number; costUsd: number; durationMs: number; call?: AICallRecord; sourceText?: string };
@@ -301,6 +309,11 @@ export const POST = withAuth(async (request: NextRequest) => {
       );
       // Propagate OCR quality warnings to translation so readers see them on both sides
       results.translation = propagateOcrWarnings(textToTranslate, translationResult.text);
+      // #5734: the Korean 그-for-"that" is repaired; any other script in the English that is in
+      // neither the source nor the book's language is refused below, like the hidden page.
+      const stray = strayScriptVerdict(results.translation, { ocr: textToTranslate, language, targetLanguage });
+      results.translation = stray.text;
+      strayRefused = stray.refuse;
       totalUsage.inputTokens += translationResult.usage.inputTokens;
       totalUsage.outputTokens += translationResult.usage.outputTokens;
       totalUsage.totalTokens += translationResult.usage.totalTokens;
@@ -362,6 +375,17 @@ export const POST = withAuth(async (request: NextRequest) => {
       });
     }
 
+    // The page's text inside its continuity <meta> is text no reader sees (#5376): the result
+    // goes back to the caller, flagged, but is not saved as the page's translation.
+    const refusedReason = !results.translation ? null
+      : hidesPageInMeta(results.translation) ? HIDDEN_META_REASON
+      : strayRefused ? STRAY_SCRIPT_REASON : null;
+    const translationRefused = !!refusedReason;
+    if (refusedReason && autoSave && pageId && !translationProtected) {
+      const refusedPage = await db.collection('pages').findOne({ id: pageId, tenantId }, { projection: { book_id: 1 } });
+      if (refusedPage) await recordRefusedTranslation(db, { id: pageId, book_id: refusedPage.book_id }, results.translation!, refusedReason, { model });
+    }
+
     // Auto-save to database if requested
     if (autoSave && pageId) {
       const updateData: Record<string, unknown> = { updated_at: new Date() };
@@ -395,17 +419,10 @@ export const POST = withAuth(async (request: NextRequest) => {
           processing_ms: metadata.ocr?.durationMs,
           image_url: metadata.ocr?.imageUrl,
         };
-        const pageType = extractPageType(results.ocr);
-        if (pageType) {
-          updateData['page_type'] = pageType;
-        }
-        const cols = extractColumns(results.ocr);
-        if (cols) {
-          updateData['columns'] = cols;
-        }
+        Object.assign(updateData, liftOcrTags(results.ocr)); // page_type, columns, script_type — whichever parsed
       }
 
-      if (results.translation && promptRefs.translation && !translationProtected) {
+      if (results.translation && promptRefs.translation && !translationProtected && !translationRefused) {
         const translationPromptRef = promptRefs.translation.reference;
         const translationEngine = geminiEngine({
           call_site: 'src/app/api/process/route.ts', api: 'realtime', model,
@@ -459,7 +476,7 @@ export const POST = withAuth(async (request: NextRequest) => {
       );
 
       // Update book counts if translation was processed
-      if (results.translation && !translationProtected) {
+      if (results.translation && !translationProtected && !translationRefused) {
         const page = await db.collection('pages').findOne({ id: pageId, tenantId });
         if (page?.book_id) {
           const bookId = page.book_id;
@@ -512,6 +529,7 @@ export const POST = withAuth(async (request: NextRequest) => {
       ...results,
       usage: totalUsage,
       ...(translationProtected && { translationProtected: true }),
+      ...(translationRefused && { translationRefused: refusedReason }),
     });
   } catch (error) {
     console.error('Error processing:', error);

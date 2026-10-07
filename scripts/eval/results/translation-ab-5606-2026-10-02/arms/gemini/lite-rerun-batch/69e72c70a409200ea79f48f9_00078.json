@@ -1,0 +1,21 @@
+{
+ "id": "69e72c70a409200ea79f48f9_00078",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<margin>\n<note>Implies a sense of leading or drawing someone out.</note>\n</margin>\n<margin>\n<note>He also knows that Qiu <note>Confucius's personal name</note> knows him; this is a method of character analysis.</note>\n</margin>\n<margin>\n<note>Method of character analysis.</note>\n</margin>\n<margin>\n<note>He took his wife and left.</note>\n</margin>\n<margin>\n<note>A place name; one who guards the frontier.</note>\n</margin>\n<margin>\n<note>Zi Mou, a disciple of Confucius.</note>\n</margin>\n<margin>\n<note>Where the soil clods are large and the grass roots are thriving.</note>\n</margin>\n<margin>\n<note>Lu <note>the state of Lu</note>.</note>\n</margin>\n<margin>\n<note>Perhaps a good sort of person, or a place with shallow soil.</note>\n</margin>\n\nZilu asked to go and summon him. Confucius said, \"Enough. He knows that I am focused on him. He knows that my journey to Chu will inevitably result in the King of Chu summoning him. He will surely think of me as a sycophant. For such a person, the very thought of a sycophant is shameful, let alone seeing one in person. Why then should he remain?\" Zilu went to check, and his room was already empty. \n\nThe Guardian of Changwu asked Zi Mou, \"When you administer government, do not be reckless. When you govern the people, do not be overly simplistic. Formerly...\"\n\n<summary>Confucius explains to Zilu why he should not attempt to recruit a hermit who views him as a mere sycophant, followed by the beginning of a discourse on governance given to Zi Mou by the Guardian of Changwu.</summary>\n<keywords>Confucius, Zilu, hermits, governance, Zi Mou, political integrity</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2161,
+ "outputTokens": 445,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.000603875,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 622,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA poemata/bider1",
+  "edition": "Epigrammatum libri tres. — Paris: Cramoisy, 1621.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "same-text",
+    "text_match_pages": "17/18",
+    "pb_aligned_pages": "5/17"
+  },
+  "origin": "library",
+  "book_id": "6a4f92c0d7f4f9119ff22b41",
+  "page_number": 9,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 6204,
+    "to_char": 6863,
+    "overlap": 0.904,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts with heading 'Benevolo Lectori bene.' then 'Epigrammata, quae adolescenti'; ends 'Quis enim cordatus, in-' (signature A 2, catchword 'Poeta'); scan is narrow with the left edge clipped and heavy noise.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:08.090Z",
+  "text_location": "repo",
+  "text_sha256": "734419ef25685e688d9d355843a604925b87777b8287806943c74030f69ba1f8",
+  "unit": {
+    "chars": 659
+  },
+  "stratum": "latin-period-5126"
+}

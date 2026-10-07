@@ -43,11 +43,30 @@ Every score row (§5) carries `measure`, one of:
 | `agreement` | **another engine's** output on the same leaf | "agreement with X" only | errors both engines share; **recitation** (engines agree on memorised text, #5093) |
 | `stability` | the **same engine's** repeat read | "repeat stability" only | anything systematic (a model that always misreads ſ as f is perfectly stable) |
 | `preference` | a **blind judge's** pairwise verdict (translation, §8) | "preferred by judge J on task T" | fidelity to source unless the judge packet is source-grounded (#5104) |
+| `judged` | a **source-grounded judge's** absolute rating of one candidate against the source text it was shown, no reference (`scripts/eval/translation-corpus-audit/JUDGE-PROMPT.md`) | "rated faithful by judge J" | anything outside the text it was shown: the page image, so a wrong leaf or an OCR misread rendered faithfully; and errors in scripts the judge itself reads poorly. Its own validity is unmeasured until a human reference exists (`translation-corpus-audit/HUMAN-CALIBRATION.md`) |
 
 Rules:
 - A surface (dashboard cell, EXPERIMENTS entry, issue comment, paper table) prints the `measure` word next to the number. Today the page (`src/app/platform/(protected)/admin/ocr-evidence/page.tsx`) says "Median error" and "Proxy" in a footnote and never "accuracy" or "agreement"; `benchmark-dashboard-data.mjs` will emit `measure` per cell, the page renders it, and a cell without it fails the JSON build (#5119).
 - `agreement` and `stability` are **screening** signals: they can send pages to a human or to a reference queue; they cannot close a decision. The `.claude/docs/ocr-quality-measurement-loop.md` stability loop stays exactly that.
 - The word *quality* appears in prose only with a citation to an `accuracy` cell.
+- `judged` may gate a decision where a preregistration fixes the rule in advance and the judge's controls pass (quality round 1, #5438), but the number is still reported as a judge rating, and the decision carries the judge's unmeasured error.
+
+### 2.1 The reader's chain: which study covers which link
+
+Added 2026-10-01. A reader asks one thing of a served page: *does this English say what is printed on this leaf?* That answer has three links, and each study covers only some of them. Before quoting any study as "quality", name the link it measured.
+
+| Link | Typical failure | Accuracy (reference) | Screen (agreement, stability) | Judged | Human reader of the original |
+|---|---|---|---|---|---|
+| 1. Leaf: the image shown is the leaf transcribed | wrong leaf (#4790, #5311) | none | three-read signature, 7 of 7 (#5313) | **blind**: the judge sees no image | yes |
+| 2. Transcription: the text is what the leaf says | misread, garble, recitation | `/platform/admin/ocr-evidence`; decision-grade in a few strata only (`scripts/eval/DECISIONS.md`) | two-read screen (#5313); the stability paper (#4916) | partly: only garble the translation passed through | yes |
+| 3. Translation: the English says what the text says | omission, invention, inversion | Tibetan vs 84000 only (§8) | none | corpus audit + monthly rerun (#5274); quality round 1 (#5438) | yes |
+
+What follows from the table:
+
+- **Only a human reader spans all three links.** The judge spans link 3 and a little of link 2. So the volunteer lane (`translation-corpus-audit/HUMAN-CALIBRATION.md`) asks readers the whole-chain question, and comparing their answers with the judge's ratings on the same pages is how the judge gets checked.
+- **The judge now gates publication.** Quality round 1 ships a stratum when the judge rates ≤ 10% of n ≥ 20 pages with a major defect. At that n, an observed 2 of 20 has a 95% interval of about 3–30%, before any judge error. Calibrating the judge is therefore on the critical path of what readers see, not an extra for the paper.
+- **"By eye" in these studies is a model reading the image** (labelled `read-from-image`). It is a stronger check than text alone, and it is still not a human reference.
+- Metadata (title, author, date against the title page) is a fourth link for the book rather than the page; round 1 checks it by eye on 5 books per stratum, and nothing else measures it.
 
 ## 3. One page registry across every study
 
@@ -77,6 +96,10 @@ A registry row has two sets of stratum fields and both are required:
 
 - A stratum file is sealed once (`sealed_at`, `seed`, `draw_rule`) as today (`scripts/eval/benchmark/*.json`, `benchmark-seal.mjs`). A sealed page is never re-drawn; a defective page (wrong leaf, blank, unreadable scan) is **marked** `excluded: <reason>` and a spare is promoted, so the history stays.
 - Every registry row carries `reserve: true|false`. Reserve rows' **reference text** is never exported, never posted in an issue, never deposited (HF/Zenodo, `deposit-*` scripts), and never used in a training or fine-tuning set; only scores leave. The dataset exporters (`export-eval-dataset.mjs`, `scripts/eval/dataset/`) and the `/licensing` corpus export must read this flag — that is the enforcement #3499 lacks, tracked as its own follow-up.
+- **Canary (#5524).** What we *do* publish carries the canary defined once in `scripts/lib/dataset-canary.mjs`, in each dataset version's `README.md` and a `CANARY.txt` beside it — never in jsonl rows, which would break parsers and `checksums.txt`. Both publish paths (`dataset/hf/publish.sh`, `deposit-ft-dataset.mjs`) refuse a directory without it; `tests/unit/dataset-canary.test.ts` pins the refusal. It is not the Trithemian provenance mark (`src/lib/steganographia.ts`): that mark is invisible, keyed text in served translations that proves where a copy came from; the canary is a public, visible string that lets anyone test whether a model trained on our benchmark data, and lets trainers filter it out.
+  - **Every row carries it**, not only the README: a JSONL file taken alone (the usual unit a training pipeline ingests) must still carry the canary. New bundles add a `canary` field per row (`build-quality-dataset.mjs`); v0.1–v0.4 carry it only in README and `CANARY.txt`.
+  - **Do not repeat the GUID in prose**: docs, issues, PR bodies and briefs point to `dataset-canary.mjs`. Every extra copy outside the data weakens the test, because a model that completes the GUID may have seen the copy and not the data.
+  - **What it can show is limited.** Completing the GUID proves a model saw some document containing it; failing proves nothing. The sealed reserve above is the real guard. A fingerprint test (our own unique OCR misreads, continued from a prefix; #5549) found no power yet. Our served text postdates every current model's training cutoff, and the positive control did not fire: models did not reproduce Archive OCR misreads that had been public for years. Re-run it when a model with a 2026 cutoff ships (same items, about $0.02).
 - `published_text: <date>|null` records when a page's *transcription* became public on the site, so a future study can segment "possibly in training corpora" from "not".
 
 ### 3.5 Registry layout
@@ -117,7 +140,7 @@ reference_error_rate {n_hand_read, errors, by, at} | null
 Rules that follow:
 - **No reference without a leaf-identity check.** `leaf_check.status != ok` keeps the page out of every accuracy cell (Praetorius #4732; the 197 held IA books #3368; the offset calibration that hid #3368). The check is a human looking at image and text once, or the pairing script (`reocr-pairing-check.mjs`) with its result recorded.
 - **A reference unit must be a leaf-sized unit.** `unit.chars` above `max_width` for the script (the registry's `max_width`) is rejected: one Derge "page" was a whole volume and turned alignment into subsequence matching.
-- **Licence is a field, not a footnote.** `unknown` or `NC` licences are usable for scoring and blocked from any export.
+- **Licence is a field, not a footnote.** `unknown` or `NC` licences are usable for scoring and blocked from any export. `in-copyright` (a modern edition or translation, #5488) goes further: its text never enters this public repo. The record here carries `text_location: private` + `text_sha256`, the text lives in the private ops repo, and `lib/private-refs.mjs` loads and hash-checks it; `tests/unit/private-refs-guard.test.ts` fails CI on a leak.
 - **Model-made references record their refusals.** `finish_reason` and length ratio are kept; RECITATION refusals cluster on the cleanest print, so a model-made reference set is biased hard and the bias is measured per band, not dropped.
 - **Non-canonical first** (`non_canonical`, `memorization_risk` already exist on `dataset/v0.x` references and `ground-truth/` entries; the registry adopts those names). Where a language's e-texts are scripture (Syriac, Hebrew, Tibetan, Pali, Sanskrit), the acquisition queue (§4.2) prefers pages the source *does not* cover — apparatus, commentary, colophons, later authors — and references them by hand.
 - **Reference error rate is measured, not assumed.** 20 hand-read pages per source give `reference_error_rate`; an engine cannot be scored below the reference's own error.
@@ -207,14 +230,14 @@ Translation shares the registry (same books, same interior-page rule, same reser
 A run is **done** when all four are true, and the EXPERIMENTS entry links each:
 
 1. Outputs and scores are on `main` in the store (§5), with `run_id` and cost.
-2. `scripts/eval/EXPERIMENTS.md` has an entry in its existing format (date · question · design · result · replicated? · artifact), plus `run_id`, sample in books, `measure`, grade, decision taken or deferred, and cost.
+2. `scripts/eval/experiments/<date>-<slug>.md` exists — one new file per entry, in the existing format (date · question · design · result · replicated? · artifact); `EXPERIMENTS.md` is generated from these on `main` and is never edited in a PR (#5436) — plus `run_id`, sample in books, `measure`, grade, decision taken or deferred, and cost.
 3. The dashboard JSON is regenerated (`benchmark-dashboard-data.mjs`) and the cell shows the run.
 4. The issue has the result posted, with the cell id.
 5. `scripts/eval/DECISIONS.md` (the ledger: one row per stratum × question — evidence, rule output, who decided and when, applied-in PR, re-measure trigger) has the row added or updated in the same PR. `EXPERIMENTS.md` is what was measured; `DECISIONS.md` is what we now do.
 
 Checks (follow-up issues; design here):
 - **Stranded-results check** (weekly, Hetzner or Actions): for every worktree in `.claude/worktrees/`, untracked or unpushed files under `scripts/eval/results/` or `scripts/eval/store/` older than 3 days → one issue comment on the run's issue, or a new `eval` issue if none. Two paid studies sat two weeks in dead worktrees.
-- **Conflict-marker check**: CI fails on `^(<<<<<<<|=======|>>>>>>>|\|\|\|\|\|\|\|)` in `EXPERIMENTS.md` and in `scripts/eval/store/**`.
+- **Conflict-marker check**: CI fails on `^(<<<<<<<|=======|>>>>>>>|\|\|\|\|\|\|\|)` in `scripts/eval/experiments/**`, `EXPERIMENTS.md` and `scripts/eval/store/**` (`tests/unit/no-conflict-markers.test.ts` sweeps every tracked text file). **Generated-ledger check**: a PR that hand-edits `EXPERIMENTS.md` or `INDEX.md` fails CI (`scripts/audit/append-only-ledgers.mjs --pr`); the weekly `append-only-ledgers.yml` flags the next file that acquires the append-to-one-tail shape (#5436).
 - **Store schema check**: every appended line validates against §5 (required fields, `measure` enum, `outcome` enum, `book_id` uniqueness per stratum).
 - **Zero-output check**: a `run_id` with no `outcome: text` rows is marked `failed` in the run index.
 - **Checkpoint rule**: any corpus walk feeding the store writes a checkpoint every 100K items and materialises its id list before slow work.
@@ -227,6 +250,17 @@ Checks (follow-up issues; design here):
 4. The change lands in its own PR, citing the cell id in the commit; the routing constant's comment cites it too. The ledger row in `scripts/eval/DECISIONS.md` moves from PENDING to DECIDED with the date and the PR.
 5. After the change, the stability loop watches the affected stratum for 30 days (a free signal; not a quality claim).
 6. The store is never read by a production lane; a job that wants to act on eval evidence goes through steps 2–4. Writing to a store a job reads is actuation (`ingest_is_actuation`).
+
+### 10.1 Before changing an OCR or translation prompt (2026-10-04, #5700)
+
+Most prompt clauses measured **no effect**: the restraint line #5349, v14 items 3–7, seam-only #5675, and v20 #5681. The wins were structural: the v19.1 blank/show-through rule, one page per request (#5497), and routing and gates. So:
+
+1. **Name the error class** (`page-error-taxonomy.md`) and **pick the lever first**: routing by script (#5737), gate, re-OCR, open edition, prompt, or a person. A prompt is the right lever only when the engine can read the page and is misled by its instructions. Lite on Tibetan cursive invents text under any prompt.
+2. **The regression set and the example-text lint run before any A/B** (#5686). A fix lost between versions (v17's specimen removal came back in v18–v19.1) is caught there, not in production.
+3. **Before a default flips, run a by-eye spot check on scripts outside the A/B pool.** One page per book: open the image and compare against the old prompt and the candidate. In 2026-10, 12 pages found what no A/B had covered (a recited psalm, Tibetan invention).
+4. **Every gate or flag ships with a counter that does not depend on an unindexed `pages` field**, and its first refusals are read by eye (#5685, #5733).
+5. **Bump the version on every change to what is sent**, including request shape and page-break rules. `PAGE_BREAK_SCOPED` changed the live translation request with no bump, and pages still say v13 (#5672).
+6. After deploy, the change is judged by the reader-level score (#5274): did the error class it named fall?
 
 ## 11. Gap table (measured 2026-09-25)
 
@@ -348,7 +382,7 @@ Reading the table:
 | `scripts/eval/dataset/v0.*`, `observations/` (#3235) | a **view** over the store, exported by `export-eval-dataset.mjs` honouring `reserve` and `licence` (its licence policy — include / pointer-only with `reference_sha256` — is kept) | no data moves; `build-observations.mjs` re-scores at build time today and keeps doing so from store outputs; `v0.4-difficulty` stays reference-free by design |
 | `ground-truth/` (55 pinned library pages), `ground-truth-ws/` (121 external), `reference-works/*.json` | reference records (`origin: library` / `external`), `leaf_check: unchecked` until read | index builder; the `_note` and `page_class` fields carry over |
 | Translation A/B packets (`translation-*-ab.mjs`, judge outputs) | store `outputs` (arm texts, `context_given`) + `scores` with `measure: preference`, `against.judge_packet_id`, same-arm tie rate per packet | converter per script; packets without pinned text hashes are imported with `text_hash: null` and marked `unpinned` |
-| `EXPERIMENTS.md` (2,034 lines) | unchanged, plus a `run_id` per entry going forward | back-fill `run_id` only where the converter can match a results file |
+| `EXPERIMENTS.md` (3,064 lines on 2026-10-01) | split into one file per entry under `scripts/eval/experiments/` and GENERATED on main (#5436); a `run_id` per entry going forward | back-fill `run_id` only where the converter can match a results file |
 | `PREREGISTRATION-*.md` (8) | unchanged; new ones add the §7 A-vs-A arm and the §3 sizing line | template update |
 
 Order: index builder → reference schema fill → results converter → dashboard reads the store → dataset exporter reads the store → checks. Each is one PR; none reruns a model.

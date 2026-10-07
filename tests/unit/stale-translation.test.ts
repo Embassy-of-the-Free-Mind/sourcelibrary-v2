@@ -22,7 +22,7 @@
 import { describe, it, expect } from 'vitest';
 // @ts-expect-error — scripts-side module, no types
 import {
-  staleTranslationReason, translationStaleness, withholdUpdate, restoreUpdate,
+  staleTranslationReason, translationStaleness, withholdUpdate, withholdPin, restoreUpdate,
   WITHHOLD_REASONS, WITHHOLD_LANES, STALE_CANDIDATE_FILTER, STALE_MARGIN_MS, STALE_REASONS,
   unverifiedScriptShare, UNVERIFIED_SCRIPT_CANDIDATE_FILTER,
 } from '../../scripts/lib/stale-translation.mjs';
@@ -146,6 +146,12 @@ describe('staleTranslationReason', () => {
 });
 
 describe('withholdUpdate / restoreUpdate', () => {
+  it('withholdPin pins on whichever translation shape the page has', () => {
+    expect(withholdPin({ translation: { data: 'old', model: 'm' } })).toEqual({ 'translation.data': 'old' });
+    // A legacy bare string: pinning on translation.data would match nothing and silently skip.
+    expect(withholdPin({ translation: 'old' })).toEqual({ translation: 'old' });
+  });
+
   it('keeps the metadata and does NOT keep the text on the page', () => {
     // The load-bearing assertion of this whole mechanism. The reader
     // serialises the ENTIRE page document into its RSC flight payload
@@ -304,6 +310,16 @@ describe('staleTranslationReason — arm 4, unverified Tibetan/Syriac Gemini OCR
     expect(staleTranslationReason(gem(TIB, { model: 'kraken' }), COHORT)).toBe(null);
     // And without the arm, cohort mode does nothing.
     expect(staleTranslationReason(gem('नमो'), { cohortScript: 'tibetan' })).toBe(null);
+  });
+
+  it('cohort mode: a Samaritan cohort withholds every Gemini read, whatever script it invented (#5645)', () => {
+    const COHORT = { unverifiedScriptArm: true, cohortScript: 'samaritan' };
+    // What Gemini wrote for Samaritan pages: Ulfilan Gothic, and pointed Masoretic Genesis.
+    for (const wrong of ['𐌹𐌽𐌿𐌷 𐌸𐌹𐍃 𐌱𐌹𐌻𐌴𐌹𐌸 𐌼𐌰𐌽𐌽𐌰', 'וַיֹּאמֶר אֱלֹהִים יִקָּווּ הַמַּיִם']) {
+      expect(staleTranslationReason(gem(wrong), COHORT)).toBe(WITHHOLD_REASONS.UNVERIFIED_SCRIPT_OCR);
+      expect(staleTranslationReason(gem(wrong), ARM)).toBe(null);
+    }
+    expect(staleTranslationReason(gem('ࠀࠁࠂ', { model: 'kraken' }), COHORT)).toBe(null);
   });
 
   it('cohort mode refuses a script it does not know', () => {

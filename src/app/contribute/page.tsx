@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { getReadDb } from '@/lib/mongodb';
+import { READABLE_IN_ENGLISH_FILTER } from '@/lib/page-counts';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { readFreshDashboardSnapshot } from '@/lib/dashboard-snapshot';
 import { meteredReaderEnabled } from '@/lib/free-preview';
@@ -40,7 +41,7 @@ async function getStats() {
       : await Promise.all([
         db.collection('books').countDocuments({ visible: true, pages_count: { $gt: 0 } }, { maxTimeMS: 30000 }),
         db.collection('books').countDocuments(
-          { visible: true, pages_count: { $gt: 0 }, is_fully_translated: true },
+          { visible: true, pages_count: { $gt: 0 }, ...READABLE_IN_ENGLISH_FILTER },
           { maxTimeMS: 30000 },
         ),
       ]);
@@ -130,7 +131,7 @@ export default async function ParticipatePage() {
             </div>
             <div>
               <div className="text-2xl md:text-3xl font-semibold text-primary">{stats.translatedCount.toLocaleString('en-US')}</div>
-              <div className="text-sm text-muted mt-0.5">books with translations</div>
+              <div className="text-sm text-muted mt-0.5">books readable in English</div>
             </div>
             <div>
               <div className="text-2xl md:text-3xl font-semibold text-primary">{formatNumber(stats.galleryCount)}+</div>

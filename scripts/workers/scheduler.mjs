@@ -22,7 +22,10 @@ import { execSync, spawn } from 'child_process';
 import { existsSync, readFileSync, writeFileSync, openSync, closeSync, appendFileSync, statSync } from 'fs';
 import { shouldBypassPause, hasScope } from './lib/selective-unpause.mjs';
 import { drainStalledImageJobs, NO_RESULTS_MARK } from './lib/image-job-drain.mjs';
-import { heartbeatIsStale } from './lib/worker-heartbeat.mjs';
+import { heartbeatIsStale, startWorkerBeacon } from './lib/worker-heartbeat.mjs';
+
+// Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
+startWorkerBeacon(import.meta.url);
 
 // ── Config ──
 

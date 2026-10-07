@@ -1,0 +1,119 @@
+{
+  "summary": {
+    "book_id": "6a58ec9ac6cd8f987106886f",
+    "title": "Women's Speaking Justified, Proved and Allowed of by the Scriptures",
+    "published": "1666",
+    "source": "EEBO-TCP A41072",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "guard-refused": 1
+    },
+    "median_char_acc": 0.9659,
+    "median_char_acc_windowed": 0.963,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a58ec9a-p1",
+      "page": 1,
+      "overlap": 1,
+      "probe_words": 169,
+      "ref_chars": 969,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.018,
+      "char_acc": 0.9659,
+      "char_acc_windowed": 0.9388
+    },
+    {
+      "slug": "ed-6a58ec9a-p2",
+      "page": 2,
+      "overlap": 1,
+      "probe_words": 147,
+      "ref_chars": 969,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.025,
+      "char_acc": 0.9644,
+      "char_acc_windowed": 0.963
+    },
+    {
+      "slug": "ed-6a58ec9a-p3",
+      "page": 3,
+      "overlap": 1,
+      "probe_words": 417,
+      "ref_chars": 2356,
+      "engine": "gemini-2.5-flash",
+      "aligned": true,
+      "guard_wer": 0.052,
+      "char_acc": 0.9874,
+      "char_acc_windowed": 0.9874
+    },
+    {
+      "slug": "ed-6a58ec9a-p6",
+      "page": 6,
+      "overlap": 1,
+      "probe_words": 489,
+      "ref_chars": 2745,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.032,
+      "char_acc": 0.9864,
+      "char_acc_windowed": 0.9859
+    },
+    {
+      "slug": "ed-6a58ec9a-p8",
+      "page": 8,
+      "overlap": 1,
+      "probe_words": 519,
+      "ref_chars": 2858,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.047,
+      "char_acc": 0.9876,
+      "char_acc_windowed": 0.9867
+    },
+    {
+      "slug": "ed-6a58ec9a-p9",
+      "page": 9,
+      "overlap": 1,
+      "probe_words": 439,
+      "ref_chars": 2324,
+      "engine": "gemini-2.5-flash",
+      "aligned": true,
+      "guard_wer": 0.182,
+      "char_acc": 0.9068,
+      "char_acc_windowed": 0.857
+    },
+    {
+      "slug": "ed-6a58ec9a-p10",
+      "page": 10,
+      "overlap": 1,
+      "probe_words": 495,
+      "ref_chars": 2798,
+      "engine": "gemini-2.5-flash",
+      "aligned": true,
+      "guard_wer": 0.113,
+      "char_acc": 0.9108,
+      "char_acc_windowed": 0.8925
+    },
+    {
+      "slug": "ed-6a58ec9a-p16",
+      "page": 16,
+      "overlap": 0.888,
+      "probe_words": 1695,
+      "ref_chars": 5643,
+      "engine": "gemini-2.5-flash",
+      "aligned": false,
+      "guard_wer": 0.663,
+      "char_acc": 0.5887,
+      "char_acc_windowed": 0.3524,
+      "skipped": "guard-refused"
+    }
+  ]
+}

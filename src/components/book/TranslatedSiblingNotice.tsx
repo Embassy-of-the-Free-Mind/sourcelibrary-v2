@@ -1,6 +1,7 @@
 import { getReadDb } from '@/lib/mongodb';
 import Link from 'next/link';
 import { Languages } from 'lucide-react';
+import { isReadableInEnglish, translationPercent, TRANSLATION_STATE_PROJECTION, type TranslationStateSource } from '@/lib/translation-completeness';
 
 /**
  * Reader-routing notice for effectively-untranslated books: when a sibling
@@ -24,7 +25,7 @@ interface TranslatedSiblingNoticeProps {
   showCrossLink: boolean;
 }
 
-interface SiblingEdition {
+interface SiblingEdition extends TranslationStateSource {
   id?: string;
   slug?: string;
   title?: string;
@@ -32,6 +33,8 @@ interface SiblingEdition {
   language?: string;
   pages_count?: number;
   pages_translated?: number;
+  pages_translatable?: number | null;
+  pages_blank?: number | null;
 }
 
 export default async function TranslatedSiblingNotice({
@@ -45,18 +48,28 @@ export default async function TranslatedSiblingNotice({
   const siblings = (await db.collection('books').find(
     { work_id: workId, id: { $ne: bookId }, visible: true, pages_translated: { $gt: 0 } },
     {
-      projection: { _id: 0, id: 1, slug: 1, title: 1, year: 1, language: 1, pages_count: 1, pages_translated: 1 },
+      projection: {
+        _id: 0, id: 1, slug: 1, title: 1, year: 1, language: 1,
+        pages_count: 1, pages_translated: 1, pages_translatable: 1, pages_blank: 1,
+        ...TRANSLATION_STATE_PROJECTION,
+      },
       limit: 20,
       maxTimeMS: 3000,
     },
   ).toArray().catch(() => [])) as SiblingEdition[];
 
-  // Best sibling = highest translated fraction; only offer editions that are
-  // actually readable in English (>=50%, the page's own hasTranslations bar).
-  const ratio = (b: SiblingEdition) => (b.pages_translated ?? 0) / Math.max(1, b.pages_count ?? 0);
+  // Best sibling = highest translated share; only offer editions that are
+  // actually readable in English. A stamped sibling must be in the
+  // `readable_in_english` view (#5287); an unstamped one keeps the pre-ladder
+  // >=50% bar (the book page's own unstamped hasTranslations fallback).
+  const pct = (b: SiblingEdition) => translationPercent(b);
+  const offerable = (b: SiblingEdition) => {
+    const readable = isReadableInEnglish(b);
+    return readable !== null ? readable : (b.pages_translated ?? 0) / Math.max(1, b.pages_count ?? 0) >= 0.5;
+  };
   const best = siblings
-    .filter((b) => ratio(b) >= 0.5)
-    .sort((a, b) => ratio(b) - ratio(a))[0];
+    .filter(offerable)
+    .sort((a, b) => pct(b) - pct(a))[0];
   if (!best) return null;
 
   return (

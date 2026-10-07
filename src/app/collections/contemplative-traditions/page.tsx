@@ -338,6 +338,13 @@ export default async function ContemplativeTraditionsPage() {
           </Link>
         </div>
       </div>
+      {/* Crawl path to every member: the full A–Z list (#2266). */}
+      <p className="max-w-4xl mx-auto px-6 md:px-12 my-8 text-sm text-center">
+        <Link href="/collections/contemplative-traditions/catalog" className="underline hover:opacity-70">
+          All books in this collection, as a list
+        </Link>
+      </p>
+
     </div>
   );
 }

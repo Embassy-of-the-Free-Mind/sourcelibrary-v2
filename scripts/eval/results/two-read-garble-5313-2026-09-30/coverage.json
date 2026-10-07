@@ -1,0 +1,53 @@
+{
+ "at": "2026-09-30T12:24:54.810Z",
+ "live_filter": "books: visible && pages_count > 0",
+ "model_read_sources": [
+  "batch_api",
+  "ai",
+  "pipeline_preview",
+  "realtime_api_sequential",
+  "mineru",
+  "ia_djvu"
+ ],
+ "live": {
+  "books": 42189,
+  "pages": 8834622,
+  "pages_ocr": 5818420,
+  "pages_translated": 4628175,
+  "note": "pages_ocr / pages_translated are the books' own counters, not a page scan"
+ },
+ "internet_archive": {
+  "books": 23662,
+  "pages": 5482337,
+  "ocr": 3320137,
+  "translated": 2746539,
+  "share_of_translated": 0.593
+ },
+ "page_revisions_ocr_rows_by_source": {
+  "batch_api": 388835,
+  "ia_djvu": 134343,
+  "ai": 113008,
+  "bdrc": 103440,
+  "shift-repair-erara-2026-07": 56413,
+  "pipeline_preview": 26322,
+  "shift-repair-bulkjp2-2026-08": 2638,
+  "unknown": 1979,
+  "(null)": 1263,
+  "blank-guard-refused-2026-08": 577,
+  "loop-guard-refused-2026-09": 184,
+  "quarantine-fabricated-2026-08": 49,
+  "mineru": 26,
+  "manual": 12,
+  "reocr-contamination-repair-3362": 3,
+  "reocr-download-failure-fix-2026-07": 2,
+  "system": 1
+ },
+ "page_revisions": {
+  "pages_with_a_prior_model_read": 520388,
+  "of_which_in_live_books": 428511,
+  "live_books_touched": 6567,
+  "share_of_live_pages_with_ocr": 0.0736,
+  "share_of_live_translated_pages_upper_bound": 0.0926,
+  "caveat": "an UPPER bound on usable second reads: includes byte-identical snapshots and pairs from different leaves (page-revisions-corpus.md: ~40% of pairs carry different printed page numbers)"
+ }
+}

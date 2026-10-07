@@ -1,0 +1,27 @@
+{
+ "run_id": "engine-contest-5870",
+ "issue": 5870,
+ "population": {
+  "source": "the #5700 A5 pilot pages judged in scripts/eval/results/reocr-lift-2026-10/lift.json (a corrected transcription, a usable Flash re-read, the served OCR is the image's leaf)",
+  "groups": {
+   "greek-print-le1699": "script Greek, lift.json manuscript=false, enriched book.year <= 1699 (Kraken greek-cllg passed the cost-lane rule only for 1450-1699, DECISIONS.md 2026-09-21)",
+   "arabic-script-print": "script Persian or Arabic, lift.json manuscript=false (Persian pages read with persian_best, Arabic with arabic_best)"
+  },
+  "excluded": "manuscripts (greek-cllg reads minuscule hands worse than Flash, #5619), Rashi/Hebrew, Sanskrit (Google Cloud Vision needs a key nobody has created: no arm), Pali (no open engine named)",
+  "served_engine": "both Lite-read and Flash-read pages: the comparison is between two fresh reads of the same image, so the served read does not enter it"
+ },
+ "arms": {
+  "kraken": "Kraken 7.1 on Hetzner CPU, nice -n 19, timeout 900 s per page, default blla baseline segmenter. Greek: greek-cllg (ppocr_v6_tau090.safetensors, sha256 c3228d34fb46693c2061aa0b1b030dfcce18b4fb24ff98dfb5c0cee24b8c3637, CC-BY-4.0, DOI 10.5281/zenodo.22232579), `segment -bl ocr`, the #4744 invocation. Persian: persian_best.mlmodel (OpenITI, B. Kiessling, CC0-1.0, DOI 10.5281/zenodo.7051644, sha256 1125bed95e5e0a08f4645547842e58e4bb8e573ce8de0b893b60db3713df7876). Arabic: arabic_best.mlmodel (OpenITI, B. Kiessling, CC0-1.0, DOI 10.5281/zenodo.7050296, sha256 673064a58bde5bb0d5dbbe72c9e4c14cfba97065e8145ea982d64576fe7f89e1). Arabic script: `segment -bl -d horizontal-rl ocr --base-dir R`, as the Syriac lane runs it. Image: the A5 request image (getPageSource, fetchImageBase64, 1500 px JPEG), sha256 pinned in sealed.json.",
+  "flash": "gemini-3-flash-preview, the A5 `reocr` read, STORED in reocr-lift-2026-10/reocr.jsonl; reused, not re-run"
+ },
+ "translation": "gemini-3.1-flash-lite, prompt `Standard Translation` v13 (content_hash 516510147237b6a79d9d3f6e797bba7f, the A5 prompt; asserted before every call), one page per request, no neighbour context, temperature 0, thinking off, Batch API. The flash arm's English is A5's stored `lite-reocr`; the served arm's is A5's `lite-ocr` (shown to the judges as a third candidate, not in the rule).",
+ "judging": "translation-vs-reference/ harness, two blind Opus judges (subagents), gate controls (wrong page, planted change, duplicate) before the main packet, ties allowed. Source shown to the judges: the by-eye corrected transcription.",
+ "a_vs_a_floor": "reused from A5 (lift.json a_vs_a): Lite +0.03 [-0.17, 0.22], 29 pages; not re-measured here",
+ "baseline": "flash",
+ "candidate": "kraken",
+ "seed": 5870,
+ "rules": ["scripts/eval/routing-eval/rules/translation-lift-v1.json"],
+ "results_dir": "scripts/eval/results/engine-contest-5870",
+ "work_dir": "/root/engine-contest-5870-work",
+ "spend": { "envelope": "engine-contest-5870", "cap_usd": 5, "gemini_calls": "Lite translations of the Kraken reads only (about 26)" }
+}

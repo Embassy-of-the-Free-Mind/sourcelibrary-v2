@@ -10,7 +10,7 @@ import type { BookSearchFilters } from '@/lib/atlas-search';
 import type { SearchResult } from '@/lib/api-client/types/search';
 import { searchBooksCatalog } from '@/lib/books-catalog';
 import { searchBookIds } from '@/lib/books-catalog';
-import { semanticBookSearch, semanticArtworkSearch } from '@/lib/semantic-search';
+import { semanticBookSearch, semanticArtworkSearch, semanticSiteSearch, type SemanticSiteResult } from '@/lib/semantic-search';
 import { filterVisibleArtworks } from '@/lib/artwork-visibility';
 import { isArtworkRecord } from '@/lib/artwork-record';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
@@ -22,6 +22,7 @@ import { logSearchEvent } from '@/lib/search-event-log';
 import { assessMatchQuality } from '@/lib/search/match-quality';
 import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
 import { fetchWorkFanouts } from '@/lib/search/work-fanout';
+import { stemmedQueryRegex } from '@/lib/search/word-forms';
 
 const ENTITIES_SEARCH_INDEX = 'entities_search';
 const GALLERY_SEARCH_INDEX = 'gallery_search';
@@ -224,6 +225,18 @@ export async function GET(request: NextRequest) {
 
     const emptyLexicalArtworks: ArtworkSearchResult[] = [];
 
+    // Site lane (#1180): the site's own writing — blog essays, collection
+    // intros, editorial pages — from `site_pages`. Main site only: a tenant's
+    // reading room never shows SL-wide pages. Started before the book lanes so
+    // it shares their query embedding (getQueryEmbedding caches the promise).
+    const emptySite: { results: SemanticSiteResult[] } = { results: [] };
+    const siteResultPromise = tenantContext.id
+      ? Promise.resolve(emptySite)
+      : withTimeout(
+          semanticSiteSearch(matchQuery, 6).then(results => ({ results })).catch(() => emptySite),
+          emptySite, 'site', 4000,
+        );
+
     const [booksResultRaw, indexResult, galleryResult, visualResult, semanticResultRaw, artworkResult, lexicalArtworkResult, collectionsResult] = await Promise.all([
       withTimeout(searchBooks(query, limit, searchFilters, library), emptyBooks, 'books'),
       // Skip index/entity search for quoted phrases — autocomplete returns loose single-word noise
@@ -306,9 +319,10 @@ export async function GET(request: NextRequest) {
           .catch(() => emptyLexicalArtworks),
         emptyLexicalArtworks, 'artworks-lexical', 3000,
       ),
-      // Collection search: match collection names/descriptions (~300 docs, fast)
+      // Collection search: match collection names/descriptions (~300 docs, fast).
+      // Stemmed so "botanical" finds the Botany collection (#5517).
       withTimeout(
-        searchCollections(db, queryRegex, matchQuery).catch(() => emptyCollections),
+        searchCollections(db, stemmedQueryRegex(matchQuery), matchQuery).catch(() => emptyCollections),
         emptyCollections, 'collections', 2000,
       ),
     ]);
@@ -626,7 +640,14 @@ export async function GET(request: NextRequest) {
     // Honest-failure flag (#4281): lanes merge by rank, so a set of stray
     // token matches renders exactly like a real answer. If no result across
     // any lane contains ALL the query's tokens, say so instead of bluffing.
+    // A collection already shown as a card is not repeated as a site link.
+    const shownCollectionUrls = new Set(collectionsWithTenantSlug.results.map((c: any) => `/collections/${c.slug}`));
+    const siteResult = {
+      results: (await siteResultPromise).results.filter(r => !shownCollectionUrls.has(r.url)).slice(0, 3),
+    };
+
     const matchQuality = assessMatchQuality(query, [
+      ...siteResult.results.map(r => [r.title, r.snippet].join(' ')),
       ...scopedBooks.results.map((r: any) => [r.title, r.display_title, r.author, r.summary].filter(Boolean).join(' ')),
       ...scopedIndex.results.map((r: any) => [r.term, r.book_title].filter(Boolean).join(' ')),
       ...scopedGallery.results.map((r: any) => [r.description, r.bookTitle].filter(Boolean).join(' ')),
@@ -646,6 +667,7 @@ export async function GET(request: NextRequest) {
       semantic: scopedSemantic,
       artworks: filteredArtworks,
       collections: collectionsWithTenantSlug,
+      site: siteResult,
     }, {
       headers: {
         'Cache-Control': 'no-store',

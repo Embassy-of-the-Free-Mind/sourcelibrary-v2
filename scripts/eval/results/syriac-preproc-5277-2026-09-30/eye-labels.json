@@ -1,0 +1,17 @@
+{
+  "_prior_art": "PRIOR ART: scripts/eval/results/ocr-preprocessing-2026-09-29-r3.json — round-3 results on GT pages; it has no library pages and no by-eye capture labels, which this file holds.",
+  "_what": "By-eye capture class of the 40 drawn library manuscript pages (#5277); key = row index of lib-draw.jsonl. Labelled 2026-09-30 from contact-sheet THUMBNAILS (~520 px tall, image opened); pages 1, 8, 9 and 22 were also opened as full-resolution arm crops. Classes: dark = dark/stained low-contrast parchment (the reading difficulty of Jerusalem SMMJ 36); clean = light leaf with legible ink (the ONB Syr. 1 kind); bilevel = an already-binarised microfilm scan; blank = cover or blank leaf. No library page is a dark spread photographed on black, which is the Jerusalem capture.",
+  "labels": {
+    "0": "clean", "1": "dark", "2": "clean", "3": "clean", "4": "clean", "5": "clean", "6": "clean", "7": "clean",
+    "8": "clean", "9": "dark", "10": "dark", "11": "clean", "12": "clean", "13": "clean", "14": "clean", "15": "clean",
+    "16": "clean", "17": "clean", "18": "clean", "19": "clean", "20": "clean", "21": "dark", "22": "bilevel", "23": "clean",
+    "24": "bilevel", "25": "bilevel", "26": "clean", "27": "clean", "28": "clean", "29": "clean", "30": "blank", "31": "clean",
+    "32": "clean", "33": "clean", "34": "clean", "35": "blank", "36": "clean", "37": "clean", "38": "dark", "39": "dark"
+  },
+  "notes": {
+    "1": "stained two-page spread on grey: flatten removes the stain gradient; sauvola gives a clean binarisation (full-res crop)",
+    "8": "faded brown ink on light parchment: flatten keeps the ink evenly; sauvola ERASES most of it (full-res crop)",
+    "9": "dark stained leaf: flatten evens the stain, ink stays legible; sauvola legible with speckle (full-res crop)",
+    "22": "bilevel microfilm: flatten turns the white ground grey with halos; sauvola is close to identity (full-res crop)"
+  }
+}

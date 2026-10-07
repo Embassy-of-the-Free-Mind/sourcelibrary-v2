@@ -1,6 +1,6 @@
 {
   "regions": ["fra1"],
-  "ignoreCommand": "git diff HEAD^ HEAD --quiet -- src/ public/ next.config.ts vercel.json package.json package-lock.json",
+  "ignoreCommand": "P=${VERCEL_GIT_PREVIOUS_SHA:-HEAD^}; git cat-file -e \"$P^{commit}\" 2>/dev/null || exit 1; git diff --quiet \"$P\" HEAD -- src/ public/ next.config.ts vercel.json package.json package-lock.json",
   "crons": [
     {
       "path": "/api/cron/warm",

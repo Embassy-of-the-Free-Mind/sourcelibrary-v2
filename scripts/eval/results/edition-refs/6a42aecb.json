@@ -1,0 +1,111 @@
+{
+  "summary": {
+    "book_id": "6a42aecb5207af7c42f5333c",
+    "title": "Linguarum cognatio, seu, De linguis in genere & de variarum linguarum harmonia dissertatio authore Thoma Hayne.",
+    "published": "1648",
+    "source": "EEBO-TCP A43130",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "probe-too-short": 1
+    },
+    "median_char_acc": 0.9179,
+    "median_char_acc_windowed": 0.8335,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a42aecb-p2",
+      "page": 2,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a42aecb-p6",
+      "page": 6,
+      "overlap": 0.75,
+      "probe_words": 141,
+      "ref_chars": 1189,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.2,
+      "char_acc": 0.9323,
+      "char_acc_windowed": 0.9262
+    },
+    {
+      "slug": "ed-6a42aecb-p7",
+      "page": 7,
+      "overlap": 0.581,
+      "probe_words": 152,
+      "ref_chars": 1276,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.297,
+      "char_acc": 0.9035,
+      "char_acc_windowed": 0.83
+    },
+    {
+      "slug": "ed-6a42aecb-p11",
+      "page": 11,
+      "overlap": 0.618,
+      "probe_words": 167,
+      "ref_chars": 1222,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.33,
+      "char_acc": 0.9179,
+      "char_acc_windowed": 0.8183
+    },
+    {
+      "slug": "ed-6a42aecb-p17",
+      "page": 17,
+      "overlap": 0.78,
+      "probe_words": 178,
+      "ref_chars": 1409,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.288,
+      "char_acc": 0.8574,
+      "char_acc_windowed": 0.8237
+    },
+    {
+      "slug": "ed-6a42aecb-p18",
+      "page": 18,
+      "overlap": 0.708,
+      "probe_words": 147,
+      "ref_chars": 1224,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.286,
+      "char_acc": 0.8759,
+      "char_acc_windowed": 0.8335
+    },
+    {
+      "slug": "ed-6a42aecb-p21",
+      "page": 21,
+      "overlap": 0.655,
+      "probe_words": 112,
+      "ref_chars": 898,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.258,
+      "char_acc": 0.9407,
+      "char_acc_windowed": 0.9186
+    },
+    {
+      "slug": "ed-6a42aecb-p22",
+      "page": 22,
+      "overlap": 0.581,
+      "probe_words": 138,
+      "ref_chars": 1172,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.326,
+      "char_acc": 0.9319,
+      "char_acc_windowed": 0.916
+    }
+  ]
+}

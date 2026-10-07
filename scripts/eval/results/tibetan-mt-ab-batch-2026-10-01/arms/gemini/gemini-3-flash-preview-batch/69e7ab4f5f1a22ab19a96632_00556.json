@@ -1,0 +1,20 @@
+{
+ "id": "69e7ab4f5f1a22ab19a96632_00556",
+ "arm": "gemini-3-flash-preview",
+ "text": "There is the emptiness of the endless. There is the emptiness of that which is not to be discarded. There is the emptiness of nature. There is the emptiness of all phenomena. There is the emptiness of self-characteristics. There is the emptiness of the unobservable. There is the emptiness of non-existence. There is the emptiness of intrinsic nature. There is the emptiness of the intrinsic nature of non-existence. There are the applications of mindfulness. There are the right abandonments. There are the bases of miraculous power. There are the faculties. There are the powers. There are the branches of enlightenment. There is the noble eightfold path. There are the noble truths. There are the concentrations. There are the immeasurables. There are the formless absorptions. There are the eight liberations. There are the nine serial attainments. There are the doors of liberation: emptiness, signlessness, and wishlessness. There are the higher cognitions. There are the meditative concentrations. There are the doors of the <term>dharani</term> <gloss>incantations or mnemonic formulas</gloss>. The <term>Tathagata</term> <gloss>the Thus Gone One, an epithet for the Buddha</gloss>\n\n<summary>This page lists various categories of emptiness and the fundamental qualities and paths of Buddhist practice, including the thirty-seven factors of enlightenment and the doors of liberation. It establishes the presence of these spiritual attainments within the framework of the Perfection of Wisdom teachings.</summary>\n<keywords>emptiness, mindfulness, eightfold path, enlightenment, dharani, Tathagata, Buddhist philosophy, Prajnaparamita</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2393,
+ "outputTokens": 345,
+ "thinkingTokens": 0,
+ "ms": 203757,
+ "cost_usd": 0.00111575,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 875,
+ "job": "batches/m3tgb80kdfd0p59ncbwgvg1drix1ghy12b7v"
+}

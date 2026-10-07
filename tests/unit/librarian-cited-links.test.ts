@@ -68,12 +68,21 @@ describe('findCitedBookLinks', () => {
 });
 
 describe('findCitedCollectionSlugs', () => {
+  // A collection can be live in English and 404 under /es (stricter Spanish
+  // rule), so /es links are reported separately for their own existence check.
+  it('lists /es collection links in `spanish` as well as `plural`', () => {
+    const text = 'Ver https://sourcelibrary.org/es/collections/alchemists-studio y https://sourcelibrary.org/collections/mycology';
+    expect(findCitedCollectionSlugs(text)).toEqual({
+      plural: ['alchemists-studio', 'mycology'], singular: [], spanish: ['alchemists-studio'],
+    });
+  });
+
   it('separates plural (real route) from singular (not a route) collection links', () => {
     const text = [
       'Real collection: https://sourcelibrary.org/collections/x',
       'Fabricated singular: https://sourcelibrary.org/collection/y',
     ].join('\n');
-    expect(findCitedCollectionSlugs(text)).toEqual({ plural: ['x'], singular: ['y'] });
+    expect(findCitedCollectionSlugs(text)).toEqual({ plural: ['x'], singular: ['y'], spanish: [] });
   });
 
   it('does not double-count a plural collection link as a singular hit', () => {
@@ -81,7 +90,7 @@ describe('findCitedCollectionSlugs', () => {
     // by "s", not "/" — the singular pattern requires "/collection/" as a
     // contiguous literal, so it must not also fire on the plural URL.
     const text = 'https://sourcelibrary.org/collections/x';
-    expect(findCitedCollectionSlugs(text)).toEqual({ plural: ['x'], singular: [] });
+    expect(findCitedCollectionSlugs(text)).toEqual({ plural: ['x'], singular: [], spanish: [] });
   });
 });
 

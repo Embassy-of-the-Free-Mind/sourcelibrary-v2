@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "book_id": "69aebfeb36a4ffb2dcfb62e3",
+    "title": "Lectures and Collections",
+    "published": "1678",
+    "source": "EEBO-TCP A44321",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 8,
+    "skips": {},
+    "median_char_acc": 0.983,
+    "median_char_acc_windowed": 0.9815,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-69aebfeb-p83",
+      "page": 83,
+      "overlap": 1,
+      "probe_words": 226,
+      "ref_chars": 1334,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.056,
+      "char_acc": 0.983,
+      "char_acc_windowed": 0.9047
+    },
+    {
+      "slug": "ed-69aebfeb-p86",
+      "page": 86,
+      "overlap": 1,
+      "probe_words": 337,
+      "ref_chars": 1979,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.057,
+      "char_acc": 0.9781,
+      "char_acc_windowed": 0.9781
+    },
+    {
+      "slug": "ed-69aebfeb-p88",
+      "page": 88,
+      "overlap": 1,
+      "probe_words": 371,
+      "ref_chars": 2104,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.05,
+      "char_acc": 0.9753,
+      "char_acc_windowed": 0.9742
+    },
+    {
+      "slug": "ed-69aebfeb-p93",
+      "page": 93,
+      "overlap": 1,
+      "probe_words": 264,
+      "ref_chars": 1640,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.082,
+      "char_acc": 0.9818,
+      "char_acc_windowed": 0.9818
+    },
+    {
+      "slug": "ed-69aebfeb-p100",
+      "page": 100,
+      "overlap": 1,
+      "probe_words": 333,
+      "ref_chars": 1982,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.074,
+      "char_acc": 0.9771,
+      "char_acc_windowed": 0.9759
+    },
+    {
+      "slug": "ed-69aebfeb-p105",
+      "page": 105,
+      "overlap": 1,
+      "probe_words": 349,
+      "ref_chars": 2052,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.071,
+      "char_acc": 0.9899,
+      "char_acc_windowed": 0.9899
+    },
+    {
+      "slug": "ed-69aebfeb-p114",
+      "page": 114,
+      "overlap": 1,
+      "probe_words": 357,
+      "ref_chars": 2030,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.058,
+      "char_acc": 0.984,
+      "char_acc_windowed": 0.9815
+    },
+    {
+      "slug": "ed-69aebfeb-p115",
+      "page": 115,
+      "overlap": 1,
+      "probe_words": 352,
+      "ref_chars": 1977,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.039,
+      "char_acc": 0.9855,
+      "char_acc_windowed": 0.9855
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+ "commit": "939cbfaf617eb8fd7e54cf1daeb66fb5a92749ec",
+ "host": "sl-ndl-koten",
+ "gpu": "NVIDIA L4",
+ "pages_out": 1087,
+ "infer_secs": 1953,
+ "secs_per_page": 1.8
+}

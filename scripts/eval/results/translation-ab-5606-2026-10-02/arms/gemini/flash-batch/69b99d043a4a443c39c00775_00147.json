@@ -1,0 +1,21 @@
+{
+ "id": "69b99d043a4a443c39c00775_00147",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "19. Then Passion <term>Ragā</term>, the daughter of Mara, spoke this verse in the presence of the Blessed One:\n\nCutting through craving <term>taṇhā</term>, the recruiter of the crowds,\nmany beings will indeed walk <note>the editor notes a variant reading: cross over</note> <gloss>the spiritual path</gloss>.\nIndeed, this homeless one <note>referring to the Buddha</note> will pull many people away,\nsnatching them across to the far shore, beyond the King of Death.\n\n20. <note>The Buddha replies:</note>\nGreat heroes, the <term>Tathāgatas</term> <gloss>Those who have thus gone</gloss>, lead indeed by the true Dhamma.\nWhen beings are being led by the Dhamma, what envy can there be in those who truly understand?\n\n21. Then Craving <term>Taṇhā</term>, Discontent <term>Arati</term>, and Passion <term>Ragā</term>, the daughters of Mara, approached Mara the Evil One.\n\n22. Mara the Evil One saw Craving, Discontent, and Passion, his daughters, coming from afar. Seeing them, he addressed them in verses:\n\nFools! You try to crush a mountain with the stalks of water lilies.\nYou dig into a mountain with your fingernails. You chew iron with your teeth.\nAs if lifting a rock with your head, you seek a foothold in the abyss.\nAs if attacking a tree stump with your chest, you go away frustrated by Gotama.\n\n23. Blazing with beauty they came: Craving, Discontent, and Passion.\nThe Teacher swept them away right there, like the wind blows away a fallen tuft of cotton.\n\n->The Third Chapter<-\n\n->Its Summary Table<-\n\nThe Many <term>Sambahulā</term>, Samiddhi, Godhika, the Seven Years, and the Daughters; this Mara-pentad was taught by the Buddha-Teacher. The Connected Discourses of Mara <term>Māra-saṃyutta</term> are complete.\n\n<summary>The daughters of Mara admit their failure to tempt the Buddha, leading Mara to mock their foolishness before the chapter concludes with a summary of the section's contents.</summary>\n<keywords>Mara, Taṇhā, Arati, Ragā, Buddha, Dhamma, Māra-saṃyutta, Pali Canon</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2584,
+ "outputTokens": 528,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.001438,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1776,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

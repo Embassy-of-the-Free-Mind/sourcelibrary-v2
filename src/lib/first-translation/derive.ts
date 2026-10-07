@@ -24,6 +24,7 @@ import {
   type LegacyDisposition,
 } from './types';
 import { evaluatePrior, type CitedPriorInput } from '../ft-prior-guard';
+import { storedRung, isReadableRung, type TranslationStateSource } from '../translation-completeness';
 
 /**
  * Map a legacy `translations_found[]` entry (untyped Mongo shape) to the
@@ -173,7 +174,7 @@ export function isFirstTranslation(book: FirstTranslationBook): boolean {
  * been shown to be thin, and demoting on absent data is the #17 hazard in
  * miniature.
  */
-export interface TranslationCoverageBook {
+export interface TranslationCoverageBook extends TranslationStateSource {
   pages_translated?: number | null;
   pages_ocr?: number | null;
   pages_blank?: number | null;
@@ -208,6 +209,12 @@ export const FIRST_TRANSLATION_READABLE_MIN = 0.9;
  * counts are missing.
  */
 export function isTranslationReadable(book: TranslationCoverageBook): boolean {
+  // The stamped rung answers first (#5287). It carries the coverage clause this
+  // gate's own arithmetic lacks: a 25-page preview fully translated is
+  // `transcribing`, not readable (#5063).
+  const rung = storedRung(book);
+  if (rung !== null) return isReadableRung(rung);
+  // Unstamped fallback: the pre-ladder arithmetic, unchanged.
   const coverage = translationCoverage(book);
   if (coverage === null) return true;
   return coverage >= FIRST_TRANSLATION_READABLE_MIN;

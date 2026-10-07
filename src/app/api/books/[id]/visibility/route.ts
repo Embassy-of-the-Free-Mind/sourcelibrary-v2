@@ -3,15 +3,25 @@ import { revalidatePath } from 'next/cache';
 import { getDb } from '@/lib/mongodb';
 import { withCuratorAuth } from '@/lib/auth-helpers';
 import { purgeCloudflareUrls } from '@/lib/cloudflare-cache';
+import {
+  setPublication, mapLegacyReason, bookRefFilter, PUBLICATION_REASONS,
+  type PublicationOpts, type PublicationReason,
+} from '@/lib/publication';
 
 /**
  * POST /api/books/[id]/visibility
  *
- * Toggle book visibility for curation.
- * Body: { hidden: boolean, reason?: string }
+ * Toggle book visibility for curation, through the publication writer (#5340).
+ * Body: { hidden: boolean, reason?: string, issue?: number, override?: 'rights-cleared' }
+ *   hidden: false → state public
+ *   hidden: true  → state hidden; `reason` may be an enum value or legacy free
+ *                   text (mapped by the reviewed table, text kept in `note`). A
+ *                   rights-class reason is a takedown and needs `issue`.
+ * Leaving takedown needs { override: 'rights-cleared', issue } — the writer refuses otherwise.
  */
 export const POST = withCuratorAuth(async (
   request: NextRequest,
+  session,
 ) => {
   try {
     // Extract book ID from URL path: /api/books/[id]/visibility
@@ -19,7 +29,7 @@ export const POST = withCuratorAuth(async (
     const pathParts = url.pathname.split('/');
     const id = pathParts[pathParts.indexOf('books') + 1];
     const body = await request.json();
-    const { hidden, reason } = body;
+    const { hidden, reason, issue, override } = body;
 
     if (typeof hidden !== 'boolean') {
       return NextResponse.json(
@@ -29,33 +39,39 @@ export const POST = withCuratorAuth(async (
     }
 
     const db = await getDb();
+    const by = `route:/api/books/[id]/visibility${session?.user?.email ? ` (${session.user.email})` : ''}`;
 
-    const update: Record<string, unknown> = {
-      hidden,
-      visible: !hidden,
-      updated_at: new Date(),
-    };
-
-    if (hidden && reason) {
-      update.hidden_reason = reason;
+    let opts: PublicationOpts;
+    if (!hidden) {
+      opts = { state: 'public', by, issue, override };
+    } else {
+      const enumReason = (PUBLICATION_REASONS as readonly string[]).includes(reason)
+        ? (reason as PublicationReason) : null;
+      const mapped = enumReason ? null : mapLegacyReason(reason);
+      opts = {
+        state: mapped?.state === 'takedown' ? 'takedown' : 'hidden',
+        reason: enumReason ?? mapped?.reason ?? 'curation',
+        note: mapped?.note ?? null,
+        by,
+        issue,
+        override,
+      };
     }
 
-    if (!hidden) {
-      // When un-hiding, clear the reason
-      await db.collection('books').updateOne(
-        { id },
-        { $set: update, $unset: { hidden_reason: '' } }
-      );
-    } else {
-      await db.collection('books').updateOne(
-        { id },
-        { $set: update }
-      );
+    let result;
+    try {
+      result = await setPublication(db, id, opts);
+    } catch (err) {
+      // A refused transition (takedown without an issue, leaving takedown without override).
+      return NextResponse.json({ error: (err as Error).message }, { status: 409 });
+    }
+    if (result.status === 'not_found') {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
     const book = await db.collection('books').findOne(
-      { id },
-      { projection: { id: 1, slug: 1, title: 1, hidden: 1, hidden_reason: 1 } }
+      bookRefFilter(id),
+      { projection: { id: 1, slug: 1, title: 1, hidden: 1, hidden_reason: 1, publication: 1 } }
     );
 
     if (!book) {
@@ -90,6 +106,7 @@ export const POST = withCuratorAuth(async (
       title: book.title,
       hidden: book.hidden,
       hidden_reason: book.hidden_reason,
+      publication: book.publication,
     });
   } catch (error) {
     console.error('Visibility toggle error:', error);

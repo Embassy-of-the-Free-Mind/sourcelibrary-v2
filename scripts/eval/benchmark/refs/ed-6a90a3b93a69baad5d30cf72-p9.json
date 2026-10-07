@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA poemata/del1",
+  "edition": "Delitiae poetarum Germanorum huius superiorisque aevi illustrium / Collectore A. F. G. G.. - Bd. 1: [4] Bl., 869 S., [8] — Frankfurt (Main): Jacob Fischer, 1612 (Excudebat Nicolaus Hoffmannus).",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "4/9",
+    "pb_aligned_pages": "4/4"
+  },
+  "origin": "library",
+  "book_id": "6a90a3b93a69baad5d30cf72",
+  "page_number": 9,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 2,
+    "to_char": 738,
+    "overlap": 0.845,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'NOBILISSIMO, AMPLISSIMO viro, Dn. GEORGIO REMO' (dedication heading, ornamental headpiece, decorated Q); ends 'verum nõ tã a-' with catchword 'liqua'; dark Google scan with library stamps and signature mark; ref pads 'aliqua virtutis eruditionisque, quam'.",
+    "leaf_language": "lat",
+    "page_type": "front-matter",
+    "abbreviations": "many",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:53.006Z",
+  "text_location": "repo",
+  "text_sha256": "f6f9d6197b38a063aaa0542932180f610b3bd3942a1615cbdc4af531f2dbdbe8",
+  "unit": {
+    "chars": 736
+  },
+  "stratum": "latin-period-5126"
+}

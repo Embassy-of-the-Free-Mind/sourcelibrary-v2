@@ -1,0 +1,112 @@
+{
+  "summary": {
+    "book_id": "6990619a3d9181cce82fb669",
+    "title": "The Witches of Northamptonshire",
+    "published": "1612",
+    "source": "EEBO-TCP A17030",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "no-window": 1
+    },
+    "median_char_acc": 0.9728,
+    "median_char_acc_windowed": 0.9641,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6990619a-p2",
+      "page": 2,
+      "skipped": "no-window",
+      "overlap": 0.105
+    },
+    {
+      "slug": "ed-6990619a-p9",
+      "page": 9,
+      "overlap": 0.976,
+      "probe_words": 176,
+      "ref_chars": 1071,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.108,
+      "char_acc": 0.9776,
+      "char_acc_windowed": 0.9622
+    },
+    {
+      "slug": "ed-6990619a-p14",
+      "page": 14,
+      "overlap": 0.924,
+      "probe_words": 276,
+      "ref_chars": 1695,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.114,
+      "char_acc": 0.9628,
+      "char_acc_windowed": 0.9584
+    },
+    {
+      "slug": "ed-6990619a-p16",
+      "page": 16,
+      "overlap": 0.893,
+      "probe_words": 129,
+      "ref_chars": 824,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.157,
+      "char_acc": 0.9741,
+      "char_acc_windowed": 0.9695
+    },
+    {
+      "slug": "ed-6990619a-p17",
+      "page": 17,
+      "overlap": 1,
+      "probe_words": 277,
+      "ref_chars": 1576,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.113,
+      "char_acc": 0.9714,
+      "char_acc_windowed": 0.969
+    },
+    {
+      "slug": "ed-6990619a-p22",
+      "page": 22,
+      "overlap": 0.964,
+      "probe_words": 285,
+      "ref_chars": 1622,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.134,
+      "char_acc": 0.9728,
+      "char_acc_windowed": 0.9673
+    },
+    {
+      "slug": "ed-6990619a-p26",
+      "page": 26,
+      "overlap": 0.875,
+      "probe_words": 206,
+      "ref_chars": 1309,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.134,
+      "char_acc": 0.9793,
+      "char_acc_windowed": 0.8876
+    },
+    {
+      "slug": "ed-6990619a-p28",
+      "page": 28,
+      "overlap": 0.977,
+      "probe_words": 176,
+      "ref_chars": 1036,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.138,
+      "char_acc": 0.9701,
+      "char_acc_windowed": 0.9641
+    }
+  ]
+}

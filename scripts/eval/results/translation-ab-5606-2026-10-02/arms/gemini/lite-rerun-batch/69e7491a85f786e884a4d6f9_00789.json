@@ -1,0 +1,21 @@
+{
+ "id": "69e7491a85f786e884a4d6f9_00789",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Srimad Valmiki Ramayana, Yuddhakanda\n\n730\n\nBears, lions, boars, buffaloes, elephants, and deer, terrified by that sound, fled in all ten directions. \nUpon the peak of Trikuta—lofty, touching the sky, covered on all sides with flowers, and shining like great silver— \nWhich was one hundred yojanas wide, clear, beautiful to behold, smooth, magnificent, and vast, and unreachable even by birds; \nWhich was difficult to ascend even by thought, let alone by the deeds of men—upon that peak was situated Lanka, protected by Ravana. \nOne hundred yojanas wide and thirty yojanas long, that city was adorned with high gateways resembling white clouds. \nIt was radiant with golden and silver walls, and Lanka was greatly embellished with palaces and celestial mansions. \nLike the sky when the clouds vanish after the heat, the palace, adorned with a thousand pillars, appeared to scrape the sky as it shone like the peak of Mount Kailasa. That sanctuary of the lord of the demons served as the ornament of the city. \nIt was always guarded by a hundred demons, and it appeared pleasant, filled with forests, and graced by mountains. \nIt was beautified by gardens variegated with various minerals, resonant with diverse birds, and inhabited by various classes of beings. \nCovered in various flowers and served by various demons, that prosperous city, surrounded by the ocean, was beheld by Rama, the elder brother of Lakshmana, along with the monkeys. Seeing that city, crowded with great houses, the heroic elder brother of Lakshmana was filled with wonder at the city, which was like that of the immortals.\n\nRama beheld that city, filled with jewels, possessing many provisions, adorned with rows of palaces, and having prominent gates with great mechanisms, along with his mighty army. 29\n\nThus ends the thirty-ninth chapter in the Yuddhakanda of the glorious Ramayana, the first poem by the sage Valmiki, consisting of twenty-four thousand verses, titled \"The Sight of Lanka.\"\n\n---\n\n### Fortieth Chapter\n**The Combat Between Ravana and Sugriva**\n\nThen Rama, surrounded by Sugriva and the leaders of the monkeys, ascended the two-yojana plateau of Suvela. 1\nHaving stayed there for a moment, looking at the ten directions, he beheld Lanka, which was built by Vishvakarma upon the beautiful peak of Trikuta, well-laid out and shining with pleasant forests. Standing upon the peak of the gateway, he saw the lord of the demons, who was difficult to approach. 3\nHe was surrounded by white chowries, adorned with a victory umbrella, anointed with red sandalwood, and decorated with jeweled ornaments. 4\nHe resembled a dark cloud and was dressed in golden-trimmed garments. His chest was scarred and prominent, similar to the tusks of the elephant Airavata. 5\nHe was wrapped in a red cloth, the color of a rabbit's blood <note>a shade of reddish-brown</note>, appearing like a mass of clouds in the sky surrounded by the glow of twilight. 6\nAs the monkey chiefs watched, and as Raghava <note>Rama</note> also looked on, Sugriva suddenly sprang up upon seeing the lord of the demons. 7\n\n<note>1. This half-verse is missing in recension K.</note>\n\n<summary>This page describes Rama’s awe at the architecture of the city of Lanka atop Mount Trikuta, followed by the beginning of the fortieth chapter where the army ascends Mount Suvela and Sugriva challenges the demon king Ravana.</summary>\n<keywords>Rama, Lanka, Ravana, Sugriva, Trikuta, Suvela, Yuddhakanda, Architecture, Military encounter</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2716,
+ "outputTokens": 810,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.0009469999999999999,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2240,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}
