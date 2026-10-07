@@ -20,6 +20,7 @@ import { logSearchEvent } from '@/lib/search-event-log';
 import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
 import { fetchWorkFanouts } from '@/lib/search/work-fanout';
 import { rollupTerms, countMatchingPagesByBook, bestPagePerBook, compareEvidence } from '@/lib/search/page-rollup';
+import { searchCanonTexts } from '@/lib/search/canon-texts';
 
 export const preferredRegion = 'fra1';
 
@@ -650,11 +651,26 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // skipped or abstained) the order is the lane's own.
     const pagesOf = (p: { book_id?: unknown }) => matchPagesByBook.get(p.book_id as string) ?? 0;
     const rrfPageDocs = [...pageDocs].sort((a, b) => pagesOf(b) - pagesOf(a));
+
+    // Canon texts (#6145): the texts inside multi-text canon volumes (Derge Tengyur), matched on their
+    // catalogue entries (author, Sanskrit/Tibetan title, Tohoku number) and returned as the text's
+    // opening page. Not a passage, so not on the MCP passage contract (pages_only) or one book.
+    // Same book filters as the keyword lane, applied in the query.
+    let canonDocs: SearchResult[] = [];
+    if (!bookId && !pagesOnly && !isLocalizedSearch) {
+      try {
+        canonDocs = await searchCanonTexts(db as any, matchQuery, buildBookFilters(), 5);
+      } catch (err) {
+        console.warn('[search] Canon text lane failed:', err instanceof Error ? err.message : String(err));
+        degradedLanes.push('canon');
+      }
+    }
     const rrf = rrfScores([
       bookDocs.map(b => (b as any).id as string),                              // keyword book lane
       rrfPageDocs.map(p => `${p.book_id}-p${p.page_number}`),                     // keyword page lane
       semanticDocs.map(s => (s as any).book_id as string),                    // semantic book lane
       semanticPageDocs.map(s => `${(s as any).book_id}-p${(s as any).page_number}`), // semantic page lane
+      canonDocs.map(c => c.id),                                                // canon-text lane
     ], rrfK);
 
     // Process book results
@@ -898,6 +914,14 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       }
     }
 
+    // Canon-text rows go in after every lane, and a lane that surfaced the same opening page as
+    // ordinary text loses it to the catalogue row (which names the text and its author).
+    if (canonDocs.length) {
+      const canonIds = new Set(canonDocs.map(c => c.id));
+      for (let i = results.length - 1; i >= 0; i--) if (canonIds.has(results[i].id)) results.splice(i, 1);
+      for (const c of canonDocs) results.push({ ...c, _canon: true } as SearchResult);
+    }
+
     // Sort results
     if (sortBy === 'date_asc' || sortBy === 'date_desc') {
       const dir = sortBy === 'date_asc' ? 1 : -1;
@@ -925,6 +949,10 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       const ladderCompare = (a: SearchResult, b: SearchResult): number => {
         // 1. Books before pages
         if (a.type !== b.type) return a.type === 'book' ? -1 : 1;
+        // 1b. Among pages, a canon text's catalogue row (it names the text) before passages.
+        const aCanon = (a as any)._canon ? 1 : 0;
+        const bCanon = (b as any)._canon ? 1 : 0;
+        if (aCanon !== bCanon) return bCanon - aCanon;
 
         // 2. Title/author match (strongest signal)
         // Check both title and display_title, and for multi-word queries
@@ -1079,7 +1107,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // Apply offset and strip transient fields
     const paginatedResults = dedupedResults.slice(offset, offset + limit)
       .map(r => {
-        const { _work_id, _work_id_aliases, _duplicate_of, _text_role, _match_pages, ...clean } = r as any;
+        const { _work_id, _work_id_aliases, _duplicate_of, _text_role, _match_pages, _canon, ...clean } = r as any;
         const fanout = fanoutByResultId.get(r.id);
         return (fanout ? { ...clean, work_group: fanout } : clean) as SearchResult;
       });
