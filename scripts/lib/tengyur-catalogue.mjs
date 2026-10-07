@@ -152,7 +152,10 @@ export function parseWork(doc, rid) {
     creators,
     parallels: arr(node.workHasParallelsIn).map((r) => idOf(r)?.replace(/^bdr:/, '')).filter(Boolean),
     language: idOf(node.language)?.replace(/^bdr:/, '') || null,
-    iast: [lit(node['skos:prefLabel'], 'sa-x-iast'), ...arr(node['skos:altLabel']).filter((x) => x?.['@language'] === 'sa-x-iast').map((x) => x['@value'])].filter(Boolean),
+    // BDRC sometimes files a Tibetan EWTS string under sa-x-iast (WA23226, the Mūlamadhyamakakārikā,
+    // has "dbu ama rtsa ba shes rab/" first): an EWTS shad "/" marks it, so those are skipped.
+    iast: [...arr(node['skos:prefLabel']), ...arr(node['skos:altLabel'])]
+      .filter((x) => x?.['@language'] === 'sa-x-iast').map((x) => x['@value']).filter((v) => v && !v.includes('/')),
     sameAs: arr(node['owl:sameAs']).map(idOf).filter(Boolean),
   };
 }

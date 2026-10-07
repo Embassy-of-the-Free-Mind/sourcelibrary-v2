@@ -68,3 +68,11 @@ describe('parseOutline', () => {
     expect(m.get('D2199')).toMatchObject({ work: 'WA0RT1042', title_ewts: 'rdo rje/', location: { volume: 50, page: 161 } });
   });
 });
+
+describe('parseWork', () => {
+  it('skips an EWTS string BDRC filed as sa-x-iast (WA23226)', async () => {
+    const { parseWork } = await import('../../scripts/lib/tengyur-catalogue.mjs');
+    const w = parseWork({ '@graph': [{ '@id': 'bdr:WA23226', 'skos:prefLabel': [{ '@language': 'sa-x-iast', '@value': 'dbu ama rtsa ba shes rab/' }, { '@language': 'sa-x-iast', '@value': 'prajñā-nāma-mūlamadhyamakakārikā' }] }] }, 'WA23226');
+    expect(w.iast).toEqual(['prajñā-nāma-mūlamadhyamakakārikā']);
+  });
+});
