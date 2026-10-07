@@ -40,7 +40,8 @@ const NEG_CHARS = {
 }[SCRIPT];
 if (!NEG_CHARS) throw new Error(`--script must be devanagari, tibetan or latin, not ${SCRIPT}`);
 
-const strip = (s) => s.replace(/<[^>]+>/g, ' ').replace(/->|<-/g, ' ');
+// Centring markers first: `<-` would otherwise open a "tag" running to the next `>` (#5105).
+const strip = (s) => s.replace(/->|<-/g, ' ').replace(/<[^>]+>/g, ' ');
 const toks = (s) => strip(s).split(/[\s।॥།,;:()\[\]\-—"“”'‘’०-९0-9.*|]+/).filter((t) => [...t].length >= 4);
 
 /** Pure insertion/deletion of ≤ 2 code points between a and b, or null. */
