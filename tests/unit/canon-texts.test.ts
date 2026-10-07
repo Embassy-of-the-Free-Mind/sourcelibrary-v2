@@ -33,3 +33,19 @@ describe('wordPattern', () => {
     expect(m('Nagarjuna', 'santideva')).toBe(false);
   });
 });
+
+describe('queryNamesAuthor', () => {
+  it('prefers the person the thesaurus calls by the bare name (Dharmakīrti I over II/III)', async () => {
+    const { queryNamesAuthor, canonQueryWords } = await import('@/lib/search/canon-texts');
+    const w = canonQueryWords('Dharmakirti');
+    expect(queryNamesAuthor(w, [{ name: 'Dharmakīrti I', author_id: 'dharmakirti' }])).toBe(true);
+    expect(queryNamesAuthor(w, [{ name: 'Dharmakīrti III', author_id: 'dharmakirti-iii' }])).toBe(false);
+    expect(queryNamesAuthor(w, [{ name: 'Dharmakīrti II', author_id: 'dharmakirti-of-suvarnadvipa-gser-gling-pa' }])).toBe(false);
+    expect(queryNamesAuthor(w, [{ name: 'Dharmakīrti I' }])).toBe(false);
+  });
+  it('accepts the reader spellings the lane already accepts', async () => {
+    const { queryNamesAuthor, canonQueryWords } = await import('@/lib/search/canon-texts');
+    expect(queryNamesAuthor(canonQueryWords('Chandrakirti'), [{ author_id: 'candrakirti' }])).toBe(true);
+    expect(queryNamesAuthor(canonQueryWords('Shantideva'), [{ author_id: 'santideva' }])).toBe(true);
+  });
+});

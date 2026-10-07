@@ -9,7 +9,7 @@
  * The Gemini model is much better for Latin, Greek, Arabic, Sanskrit.
  *
  * COST — THIS IS BILLED, AND AT THIS SCALE IT IS THE LARGEST SINGLE EMBEDDING
- * SPEND IN THE REPO. gemini-embedding-2-preview is $0.20 per 1M input tokens on
+ * SPEND IN THE REPO. gemini-embedding-2 is $0.20 per 1M input tokens on
  * the paid tier, and every GEMINI_API_KEY* in the env is a paid key. At the
  * measured 4.29 chars/token (see .claude/docs/embeddings.md) a FULL 3.9M-page
  * pass is roughly **$180**. This header used to say "Cost: $0 (free tier)";
@@ -82,12 +82,13 @@ import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
 import fs from 'node:fs';
 import crypto from 'node:crypto';
-import { cleanPageText, buildPageEmbeddingRow, PAGE_EMBEDDING_COLUMNS } from '../lib/page-embedding-text.mjs';
+import { cleanPageText, pageEmbeddingInput, buildPageEmbeddingRow, PAGE_EMBEDDING_COLUMNS } from '../lib/page-embedding-text.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage, estimateUsd, estimateTextTokens, usdForTokens, FLUSH_EVERY_TEXTS } from '../lib/embedding-usage.mjs';
 import { pageSourceTs, incrementalSourceFilter, nextWatermark, readWatermark, writeWatermark } from '../lib/embed-watermark.mjs';
 import { createThenDeleteInput, uploadBatchInputFile, streamBatchResponses } from '../lib/gemini-batch-input-file.mjs';
 import { logUsage, completeBatchUsage, calculateUsageCost } from './lib/supabase-usage-logger.mjs';
+import { GEMINI_TEXT_MODEL, GEMINI_TEXT_MODELS } from '../lib/vector-truth.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -150,7 +151,8 @@ if (BATCH_MODE && !BOOKS_FILE) {
 const EMBED_BATCH_SIZE = 50; // Gemini batchEmbedContents limit is 100, use 50 for safety
 const UPSERT_BATCH_SIZE = 10; // Small batches for Supabase — HNSW index updates are expensive
 const DIMS = 768;
-const MODEL = 'gemini-embedding-2-preview';
+// gemini-embedding-2 since #6170 (bit-identical to -2-preview; see GEMINI_TEXT_MODELS).
+const MODEL = GEMINI_TEXT_MODEL;
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:batchEmbedContents?key=${GEMINI_KEY}`;
 
 // Circuit breaker: abort if too many consecutive Supabase failures
@@ -287,7 +289,9 @@ async function embedBatch(items) {
   // Counted only on success — a 429 retried above was not billed for a result.
   recordUsage(items);
   await flushEmbedUsage();
-  return data.embeddings.map(e => e.values);
+  const vectors = data.embeddings.map(e => e.values);
+  vectors.model = MODEL; // the model this request called — buildPageEmbeddingRow requires it (#6175)
+  return vectors;
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────
@@ -313,27 +317,26 @@ const PAGE_PROJECTION = {
   'translation.updated_at': 1,
   'ocr.updated_at': 1,
   updated_at: 1, // fallback for the mongo_updated_at watermark when sub-doc timestamps are missing
-  translation_summary: 1,
-  translation_keywords: 1,
 };
 
 /**
  * The text this worker embeds for a page, or null when it has none worth
- * embedding. Translation (or OCR) plus the compact, high-signal summary and
- * keywords that sharpen the vector for concept-level matching. ONE function
- * for the realtime stream and the batch collector, which rebuilds the text to
- * check it still matches what was submitted.
+ * embedding. ONE function for the realtime stream and the batch collector,
+ * which rebuilds the text to check it still matches what was submitted.
+ *
+ * It is the SHARED composer (`pageEmbeddingInput`), the one enrich Phase 6
+ * uses. This worker used to prepend the page's `translation_summary` and
+ * `translation_keywords`, and because the row's `translation` column is the
+ * composed text, the AI's description of the page was stored as its quotable
+ * snippet — the #2232 misquote class, alive in one writer (#6175: 58 of 148
+ * summary-bearing pages sampled). The 20-character floor is this worker's own
+ * and is kept: a stub translation falls back to the OCR, as before.
  */
 function composeEmbedText(page) {
+  const input = pageEmbeddingInput(page);
+  if (input && input.text.length >= 20) return input;
   const ocrText = cleanText(page.ocr?.data);
-  const translationText = cleanText(page.translation?.data);
-  if (ocrText.length < 20 && translationText.length < 20) return null;
-  let text = translationText.length >= 20 ? translationText : ocrText;
-  const meta = [];
-  if (page.translation_summary) meta.push(page.translation_summary);
-  if (page.translation_keywords?.length) meta.push(`Keywords: ${page.translation_keywords.join(', ')}`);
-  if (meta.length) text = meta.join('\n') + '\n\n' + text;
-  return { text, hasTranslation: translationText.length >= 20 };
+  return ocrText.length >= 20 ? { text: ocrText, hasTranslation: false } : null;
 }
 
 // Book metadata cache
@@ -392,7 +395,7 @@ async function addToEmbedJob(item) {
 
 /** Embedding jobs still queued or running at Gemini (submitted, not yet finished). */
 async function runningEmbedJobs() {
-  const open = await db.collection(EMBED_JOBS).find({ status: 'submitted', model: MODEL }, { projection: { gemini_name: 1 } }).toArray();
+  const open = await db.collection(EMBED_JOBS).find({ status: 'submitted', model: { $in: GEMINI_TEXT_MODELS } }, { projection: { gemini_name: 1 } }).toArray();
   let running = 0;
   for (const j of open) {
     const r = await (await fetch(`${BATCH_API}/${j.gemini_name}?key=${GEMINI_KEY}`)).json().catch(() => ({}));
@@ -566,7 +569,7 @@ async function collectEmbedJob(job, report) {
       const composed = composeEmbedText(page);
       if (!composed || textHash(composed.text) !== hash) { counts.changed++; continue; }
       const book = await getBook(page.book_id);
-      rows.set(pageId, buildPageEmbeddingRow({ page, book, text: composed.text, hasTranslation: composed.hasTranslation, embedding: values }));
+      rows.set(pageId, buildPageEmbeddingRow({ page, book, text: composed.text, hasTranslation: composed.hasTranslation, embedding: values, model: job.model }));
       b.pages++;
     }
     for (let attempt = 1; ; attempt++) {
@@ -1124,6 +1127,7 @@ async function processBatch(items) {
       text: item.text,
       hasTranslation: item.hasTranslation,
       embedding: embeddings[i],
+      model: embeddings.model,
     }));
 
     // Upsert in small sub-batches to avoid overwhelming Supabase
