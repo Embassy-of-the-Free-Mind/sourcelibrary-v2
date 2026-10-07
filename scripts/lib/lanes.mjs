@@ -181,6 +181,7 @@ export const LANES = [
  * metadata, display fields, counters or markers, and never advance a book's next step. Each says why.
  */
 export const EXEMPT = [
+  { file: 'scripts/maintenance/backfill-printed-page-4291.mjs', reason: 'metadata: pages.printed_page fitted per book, no step work (#4291); daily cron --ocr-since=26h' },
   { file: 'scripts/workers/sync-worker.mjs', reason: 'the stamp writer: counters, translation_state and pipeline_next (#5477); does no step work' },
   { file: 'scripts/workers/scheduler.mjs', reason: 'launcher; its stalled-image-job drain clears job bookkeeping, not steps' },
   { file: 'scripts/analysis/assign-work-slugs.mjs', reason: 'metadata: books.work_slug' },
