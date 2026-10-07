@@ -7,6 +7,7 @@ import folio from '../../../../scripts/catalog-coverage/results/canon-gap-folio-
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
 import { IMPROVEMENTS } from './improvements';
 import FolioPipeline, { type CritiqueGate, type FolioSnapshot } from './FolioPipeline';
+import { LanguageFunnel } from './LanguageFunnel';
 import { CanonBars, RoutesDiagram, StatusBoard, STATUS_STYLE, TengyurProgress, TraditionProgress, QualityLoop, short, type CanonBar, type TraditionProgressRow } from './diagrams';
 
 // Built for the Eternity Foundation working session (#5513): read once, seated, as a
@@ -178,6 +179,7 @@ const CONTENTS = [
   ['gap', 'How much is in English'],
   ['cost', 'Why typed text matters'],
   ['tengyur', 'The Derge Tengyur'],
+  ['languages', 'The whole written record'],
   ['method', 'Method and caveats'],
 ] as const;
 
@@ -455,6 +457,17 @@ export default function CanonGapPage() {
               scored about the same but put English for the wrong passage beside the woodblock 15 times, against once.
             </li>
           </ul>
+        </Section>
+
+        <Section id="languages" title="The whole written record, language by language">
+          <p>
+            The canons above are the part of each tradition that someone has already typed in. Behind them is
+            everything else that survives in the same languages. For each language the figure below shows four
+            numbers, each from a source you can open: how much is estimated to survive, how much has been catalogued,
+            how much has been scanned, and how much can be read in English. Where a bar is missing, we found no
+            figure we could cite.
+          </p>
+          <LanguageFunnel n={7} />
         </Section>
 
         <Section id="method" title="Method and caveats">
