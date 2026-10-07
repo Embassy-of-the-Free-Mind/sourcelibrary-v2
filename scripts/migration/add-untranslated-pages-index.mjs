@@ -41,8 +41,11 @@ const GiB = 1024 ** 3;
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const sql = fs.readFileSync(path.join(here, 'add-untranslated-pages-index.sql'), 'utf8');
-const fnStart = sql.indexOf('CREATE OR REPLACE FUNCTION');
-const indexSql = sql.slice(sql.indexOf('CREATE INDEX CONCURRENTLY'), fnStart).trim();
+// Anchored to line start: the header comment mentions CREATE INDEX CONCURRENTLY too.
+const indexStart = sql.search(/^CREATE INDEX CONCURRENTLY/m);
+const fnStart = sql.search(/^CREATE OR REPLACE FUNCTION/m);
+if (indexStart < 0 || fnStart < indexStart) throw new Error('add-untranslated-pages-index.sql: statements not found in the expected order');
+const indexSql = sql.slice(indexStart, fnStart).trim();
 const fnSql = sql.slice(fnStart).trim();
 
 const summary = { started_at: new Date().toISOString() };
