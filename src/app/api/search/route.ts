@@ -487,6 +487,19 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           const countsPromise = terms
             ? withinBudget(countMatchingPagesByBook(db, terms, Array.isArray(filteredBookIds) ? filteredBookIds : undefined)).catch(() => null)
             : Promise.resolve([]);
+          // The liveness check needs only the counts, so it starts as soon as
+          // they land — alongside the main page search, not after it (#6092).
+          // Every book-level filter applies here, as it does in the book
+          // lane: a filter is only as strong as its weakest lane
+          // (search-filters-and-lanes.md). Rejects on a Mongo error.
+          const livePromise = countsPromise.then(counts => (counts && counts.length > 0)
+            ? withinBudget(db.collection('books')
+                .find({ id: { $in: counts.map(c => c.book_id) }, ...buildBookFilters(), hidden: { $ne: true } })
+                .project({ id: 1 })
+                .maxTimeMS(3000)
+                .toArray())
+            : null);
+          livePromise.catch(() => {}); // handled below; never an unhandled rejection
 
           const { variants, topicWords } = await expandNameQuery(query);
           const [mainPages, variantPages, counts] = await Promise.all([
@@ -514,14 +527,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           if (counts.length === 0) return pages;
 
           try {
-            // Every book-level filter applies here, as it does in the book
-            // lane: a filter is only as strong as its weakest lane
-            // (search-filters-and-lanes.md).
-            const live = await withinBudget(db.collection('books')
-              .find({ id: { $in: counts.map(c => c.book_id) }, ...buildBookFilters(), hidden: { $ne: true } })
-              .project({ id: 1 })
-              .maxTimeMS(3000)
-              .toArray());
+            const live = await livePromise;
             if (live === null) { degradedLanes.push('page_rollup'); return pages; }
             const liveIds = new Set(live.map(b => b.id as string));
             for (const c of counts) if (liveIds.has(c.book_id)) matchPagesByBook.set(c.book_id, c.pages);
