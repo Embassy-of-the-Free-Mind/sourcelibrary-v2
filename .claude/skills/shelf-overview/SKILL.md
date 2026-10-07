@@ -36,8 +36,19 @@ to the scratchpad, not to your context.
 - Each book gets one random translated page from each quarter of the book: start, two middles, end.
 - A page number below 1 is itself a finding.
 
-## 3. Review: one Opus subagent per stratum, at most 6
-Use the Agent tool with `model: "opus"`, `run_in_background: true`. The prompt is exactly:
+## 3. Review: one Opus reviewer per stratum, at most 6. Run them from the script, not from this session
+`scripts/eval/spot-check/run-reviewers.sh <dir>/packets <scratchpad>/overview` (add `CURATION-ADDENDUM.md` as a third
+argument for the curation check). It launches the prompt below as headless `claude -p --model opus` calls in
+parallel, retries a call that ends without its file, and writes `meta/` with each call's cost. Then run
+`python3 scripts/eval/spot-check/run-cost.py <scratchpad>/overview`.
+- Measured on #6174: $0.15–0.20 per page.
+- Agreement with session-run reviews is the same as two script runs agreeing with each other (κ 0.85–0.92).
+- Run it under `nohup`, or as a Hetzner job, and leave this window quiet while it runs.
+- To measure reviewer consistency on a new shelf, run it twice and compare with
+  `scripts/eval/spot-check/review-agreement.py A=<dir1>/reviews B=<dir2>/reviews`.
+  The pattern is in `2026-10-07-script-run-reviewers-6174.md`.
+
+Fallback when `claude -p` is unavailable: the Agent tool with `model: "opus"`, `run_in_background: true`. The prompt is exactly:
 > Your instructions are the full text of two files, read in this order and followed exactly (skip the leading
 > `<!-- … -->` comments): 1. `<repo>/scripts/eval/spot-check/REVIEWER.md` 2. `<repo>/scripts/eval/spot-check/OVERVIEW-ADDENDUM.md`.
 > The taxonomy is at `<repo>/.claude/docs/page-error-taxonomy.md`.
@@ -76,7 +87,8 @@ Rules:
   (`feedback_demo_links_checked_by_eye`: open two pages yourself first).
 - Commit `<dir>` and open a PR (`tier:auto` expected).
 
-Budget: 6 Opus reviewers ≈ 1.2M subagent tokens, $0 API. Stay within 8 agents a session.
+Budget: 6 Opus reviewers for 96 pages ≈ $15–19 API-equivalent, about 0.6–0.75 of a weekly point (#6174), $0 API.
+Stay within 8 agents a session.
 
 ## Hand-picked variant: the curation check (a worklist, NOT a rate)
 Use this when the question is only "which of THESE books can we show <partner>?" and someone has already chosen the
