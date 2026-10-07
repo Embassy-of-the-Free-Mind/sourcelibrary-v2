@@ -3,6 +3,7 @@ import { withAdminAuth } from '@/lib/auth-helpers';
 import { getDb } from '@/lib/mongodb';
 import { purgeAIQueues } from '@/lib/sqs-client';
 import { PAUSE_KEYS, PAUSE_ALIASES, classifyPauseEntry, pausedKeys, validatePauseKeys, type PauseKey } from '@/lib/pause';
+import { collectableBatchJobsFilter, unsubmittedBatchJobsFilter } from '../../../../../scripts/lib/batch-job-filters.mjs';
 
 export const maxDuration = 60;
 
@@ -43,18 +44,22 @@ const validKeysError = (unknown: unknown[]) =>
  *
  * Kill switch for runaway processing.
  *
- * FULL STOP (no body): cancels every pending/processing job and batch job, clears
- * book.job refs, parks the translate_batch_runs runs about to SUBMIT (round_ready,
- * round_submitting — never one already at Gemini, see PARKABLE_RUN_PHASES), purges the SQS AI queues,
- * and sets BOTH `paused: true` and `paused_phases` to every pause key. Both, because a
- * selective-unpause scope bypasses the global flag (29 scopes were set on 2026-10-01, so
- * the flag alone stopped none of their books) and a step pause is absolute (#5492).
+ * FULL STOP (no body): cancels every pending/processing Lambda job and every batch job
+ * that never reached Gemini (no job name — a submitted one is paid work and is LEFT for the
+ * collector, #5496 review B1), clears book.job refs, parks the translate_batch_runs runs
+ * about to SUBMIT (round_ready, round_submitting — never one already at Gemini, see
+ * PARKABLE_RUN_PHASES), purges the SQS AI queues, and sets BOTH `paused: true` and
+ * `paused_phases` to every pause key. Both, because a selective-unpause scope bypasses the
+ * global flag (29 scopes were set on 2026-10-01, so the flag alone stopped none of their
+ * books) and a step pause is absolute (#5492).
  *
  * TARGETED STOP (body `{ "paused_phases": ["translate", ...] }`): validates every entry
  * against scripts/lib/pause.mjs (via src/lib/pause.ts) and rejects unknown ones with a 400
  * listing the valid keys. Adds the keys to `paused_phases` without setting the global
- * flag. Jobs are cancelled and queues purged as before; open batch translation runs are
- * parked only when `translate` is among the keys.
+ * flag. It cancels no jobs, clears no book refs and purges no queue: those are not keyed
+ * by step, so doing them for `['embeddings']` would stop OCR and translation work the stop
+ * never named (#5496 review B1). The named lanes stop through their own key checks; open
+ * batch translation runs are parked only when `translate` is among the keys.
  *
  * Query params:
  *   ?dry_run=true          — show what would be cancelled without doing it
@@ -160,16 +165,20 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
   const result = {
     lambda_jobs_cancelled: 0,
     batch_jobs_cancelled: 0,
+    batch_jobs_left_for_collector: 0,
     book_refs_cleared: 0,
     translate_batch_runs_parked: 0,
     dry_run: dryRun,
   };
 
+  // Steps 1, 2, 4 and the purge are not keyed by step, so only a FULL stop runs them: a
+  // targeted stop for one key must not cancel or purge another lane's work (#5496 review B1).
+
   // 1. Count/cancel active Lambda jobs (jobs collection)
   const activeJobsFilter = {
     status: { $in: ['pending', 'processing'] },
   };
-  const activeJobCount = await db.collection('jobs').countDocuments(activeJobsFilter);
+  const activeJobCount = fullStop ? await db.collection('jobs').countDocuments(activeJobsFilter) : 0;
   result.lambda_jobs_cancelled = activeJobCount;
 
   if (!dryRun && activeJobCount > 0) {
@@ -186,12 +195,17 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
     );
   }
 
-  // 2. Count/cancel active batch jobs (batch_jobs collection)
-  const activeBatchFilter = {
-    status: { $in: ['pending', 'processing'] },
-  };
-  const activeBatchCount = await db.collection('batch_jobs').countDocuments(activeBatchFilter);
+  // 2. Count/cancel batch jobs that never reached Gemini.
+  // A batch_jobs row is inserted AFTER its job is submitted, with the job's name.
+  // Such a row is paid work: marking it 'cancelled' here (Mongo only — nothing is
+  // cancelled at Gemini) took it out of batch-collector's selection for good,
+  // resume never restored it, and Phase 8.5 rolled the book back after 48 h into
+  // a second paid dispatch (#4839, #5492). A stop must never abandon paid work,
+  // so submitted rows stay as they are and keep being collected.
+  const activeBatchFilter = unsubmittedBatchJobsFilter();
+  const activeBatchCount = fullStop ? await db.collection('batch_jobs').countDocuments(activeBatchFilter) : 0;
   result.batch_jobs_cancelled = activeBatchCount;
+  result.batch_jobs_left_for_collector = await db.collection('batch_jobs').countDocuments(collectableBatchJobsFilter());
 
   if (!dryRun && activeBatchCount > 0) {
     await db.collection('batch_jobs').updateMany(
@@ -231,7 +245,7 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
 
   // 4. Clear book.job references (so UI doesn't show stale progress)
   const bookJobFilter = { job: { $exists: true } };
-  const bookJobCount = await db.collection('books').countDocuments(bookJobFilter);
+  const bookJobCount = fullStop ? await db.collection('books').countDocuments(bookJobFilter) : 0;
   result.book_refs_cleared = bookJobCount;
 
   if (!dryRun && bookJobCount > 0) {
@@ -264,7 +278,7 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
   const skipPurge = url.searchParams.get('skip_purge') === 'true';
   let queuesPurged: { purged: string[]; errors: string[] } | null = null;
 
-  if (!dryRun && !skipPurge) {
+  if (!dryRun && !skipPurge && fullStop) {
     try {
       queuesPurged = await purgeAIQueues();
     } catch (err) {
@@ -281,6 +295,6 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
     global_pause: fullStop,
     message: dryRun
       ? 'Dry run — no changes made'
-      : `Emergency stop activated${fullStop ? '' : ` for ${pausedPhases!.join(', ')}`}. ${activeJobCount} jobs + ${activeBatchCount} batch jobs cancelled, ${result.translate_batch_runs_parked} batch translation runs parked.${queuesPurged ? ` Queues purged: ${queuesPurged.purged.join(', ') || 'none'}.` : ''} Call with ?resume=true (or ?resume=true&key=<key>) to re-enable.`,
+      : `Emergency stop activated${fullStop ? '' : ` for ${pausedPhases!.join(', ')}`}. ${activeJobCount} jobs + ${activeBatchCount} unsubmitted batch jobs cancelled; ${result.batch_jobs_left_for_collector} submitted batch jobs left for the collector; ${result.translate_batch_runs_parked} batch translation runs parked.${queuesPurged ? ` Queues purged: ${queuesPurged.purged.join(', ') || 'none'}.` : ''} Call with ?resume=true (or ?resume=true&key=<key>) to re-enable.`,
   });
 });

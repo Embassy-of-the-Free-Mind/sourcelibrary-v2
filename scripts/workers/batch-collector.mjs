@@ -43,6 +43,7 @@ import { SCAN_QUALITY_VERSION, parseImageExtractionResponse, computeBookScanQual
 import { reconcileBatchState as reconcileBatchStateLib, probeBatchJob, GHOST_ERROR } from './lib/batch-reconcile.mjs';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
 import { LONG_S_GLYPH_VARIANT, foldLongS } from '../lib/ocr-long-s-retry.mjs';
+import { collectableBatchJobsFilter } from '../lib/batch-job-filters.mjs';
 
 // Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
 startWorkerBeacon(import.meta.url);
@@ -1342,13 +1343,8 @@ async function run() {
   const pendingJobs = await db.collection('batch_jobs')
     .find({
       $or: [
-        {
-          status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
-          $or: [
-            { job_name: { $exists: true, $nin: [null, ''] } },
-            { gemini_job_name: { $exists: true, $nin: [null, ''] } },
-          ],
-        },
+        // Shared with the emergency-stop route, which must never cancel these (#5492).
+        collectableBatchJobsFilter(),
         {
           // Recovery: pick up "saved" jobs with 0 completed AND 0 failed pages
           // (metadata.key bug). Jobs with failed_pages > 0 already ran but all
