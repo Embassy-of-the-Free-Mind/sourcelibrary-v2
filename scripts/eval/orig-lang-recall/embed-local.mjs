@@ -17,6 +17,10 @@
  * Both truncate at 512 tokens — e5's limit; bge-m3 takes 8K but is held to the
  * same window so the two differ by model, not by how much text they read.
  *
+ * `--subset FILE` (a JSON array of pool indices) embeds only those rows — bge-m3
+ * runs ~4x slower than e5-base, so it is scored on a fixed sub-pool that every
+ * arm is also scored on.
+ *
  * Writes <dir>/vec-<model>.jsonl (one { i, v } per pool row, resumable) and
  * <dir>/q-<model>.json (query vectors keyed by qid).
  *
@@ -32,6 +36,8 @@ const arg = (k, d) => { const i = args.indexOf(k); return i === -1 ? d : args[i 
 const MODEL = arg('--model', 'e5-base');
 const DIR = arg('--dir');
 const BATCH = Number(arg('--batch', 8));
+// --subset FILE: embed only these pool indices (score.mjs --subset reads the same file).
+const SUBSET = arg('--subset');
 if (!DIR) { console.error('--dir required'); process.exit(1); }
 
 const SPECS = {
@@ -84,7 +90,8 @@ const vecFile = path.join(DIR, `vec-${MODEL}.jsonl`);
 const done = new Set(fs.existsSync(vecFile)
   ? fs.readFileSync(vecFile, 'utf8').trim().split('\n').filter(Boolean).map((l) => JSON.parse(l).i)
   : []);
-const todo = pool.map((r, i) => i).filter((i) => !done.has(i));
+const wanted = SUBSET ? JSON.parse(fs.readFileSync(SUBSET, 'utf8')) : pool.map((r, i) => i);
+const todo = wanted.filter((i) => !done.has(i));
 console.log(`${MODEL}: ${pool.length} pool pages, ${done.size} done, ${todo.length} to embed`);
 const t0 = Date.now();
 for (let k = 0; k < todo.length; k += BATCH) {
