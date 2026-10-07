@@ -1,0 +1,21 @@
+{
+ "id": "69ef251c85daccce30f2b1f2_00309",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Srimad Bhagavad Gita\n\n[Chapter 9, Verses 30-31]\n\nShri Dhara’s Commentary—If You grant liberation only to Your devotees and not to others, does this not mean You possess the partiality caused by attachment and aversion? To this He replies: \"I am the same.\" I am equal toward all beings. Therefore, there is no one whom I hold dear or whom I hate. Although this is true, those who worship Me, they are in Me as My devotees, and I am in them as their benefactor. The meaning is this: Just as fire removes the distress of darkness and cold only for those who approach it, without any partiality, or just as the <term>kalpavriksha</term> <gloss>wish-fulfilling tree</gloss> does, similarly, although I favor My devotees, I have no partiality. Rather, this is the greatness of devotion to Me. 29\n\nMadhusudana’s Commentary—Furthermore, the greatness of devotion to Me is such that, even while being equal, it creates a sense of partiality. Hear of that greatness:\n\n> Even if a person of extremely wicked conduct worships Me, being exclusively devoted to Me, he must be considered righteous, for he has resolved correctly. 30\n\nWhoever, even if they have been of extremely wicked conduct, like Ajamila and others, worships Me with exclusive devotion—having served Me due to the dawn of some good fortune—that person, though previously wicked, must be considered righteous. This is because their resolve is firm and proper. 30\n\nShri Dhara’s Commentary—Moreover, demonstrating that the influence of devotion to Me is beyond logic, He says: \"Even if.\" Even a person of extremely wicked conduct, if they worship only Lord Narayana and do not engage in the worship of other deities, must be considered righteous or excellent. This is because they have made a proper resolution: \"I will achieve the purpose of life by worshipping the Supreme Lord alone.\" 30\n\nMadhusudana’s Commentary—Because of this very correct resolution, having abandoned wicked conduct:\n\n> He quickly becomes a soul of righteousness and attains eternal peace. O son of Kunti, declare it boldly: My devotee is never lost. 31\n\nEven one who has long been unrighteous, through the greatness of devotion to Me, quickly becomes righteous. That is, having abandoned wicked behavior, their mind becomes fixed on righteousness and they become virtuous. Furthermore, they attain eternal peace, which is the cessation of the desire for sense objects, as they reach total detachment. One might think: \"If My devotee does not quickly abandon their previously practiced wicked conduct, they might not become righteous, and thus they would surely perish.\" To this, the Lord, moved by compassion for His devotee, speaks as if with a firm oath: \"Do not consider this surprising, O son of Kunti; such is the certain greatness of devotion to Me. Therefore, even in the presence of skeptics, make this declaration. Proclaim it with confidence and pride: A devotee of Mine, Vasudeva, even if they have been of very wicked conduct, even if they are in mortal danger, even if they are unable to perform rare practices, even if they are prayed for by others, or even if they are very foolish and without refuge, does not perish. Rather, they are surely fulfilled.\"\n\n<summary>This page explains the Lord's impartiality despite the special grace granted to devotees, emphasizing that sincere, exclusive devotion transforms even the most wicked individual into a righteous person.</summary>\n<keywords>Devotion, Impartiality, Wickedness, Righteousness, Vasudeva, Grace, Liberation</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2740,
+ "outputTokens": 781,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.00092825,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2151,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

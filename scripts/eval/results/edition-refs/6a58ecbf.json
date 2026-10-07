@@ -1,0 +1,111 @@
+{
+  "summary": {
+    "book_id": "6a58ecbfc6cd8f98710688e0",
+    "title": "The Law of Freedom in a Platform, or True Magistracy Restored",
+    "published": "1652",
+    "source": "EEBO-TCP A66685",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "probe-too-short": 1
+    },
+    "median_char_acc": 0.9826,
+    "median_char_acc_windowed": 0.9707,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a58ecbf-p2",
+      "page": 2,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a58ecbf-p6",
+      "page": 6,
+      "overlap": 1,
+      "probe_words": 466,
+      "ref_chars": 2816,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.046,
+      "char_acc": 0.9833,
+      "char_acc_windowed": 0.9824
+    },
+    {
+      "slug": "ed-6a58ecbf-p9",
+      "page": 9,
+      "overlap": 1,
+      "probe_words": 530,
+      "ref_chars": 2811,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.032,
+      "char_acc": 0.9815,
+      "char_acc_windowed": 0.9702
+    },
+    {
+      "slug": "ed-6a58ecbf-p14",
+      "page": 14,
+      "overlap": 1,
+      "probe_words": 364,
+      "ref_chars": 2134,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.057,
+      "char_acc": 0.9826,
+      "char_acc_windowed": 0.9707
+    },
+    {
+      "slug": "ed-6a58ecbf-p15",
+      "page": 15,
+      "overlap": 1,
+      "probe_words": 379,
+      "ref_chars": 2251,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.044,
+      "char_acc": 0.9801,
+      "char_acc_windowed": 0.9729
+    },
+    {
+      "slug": "ed-6a58ecbf-p16",
+      "page": 16,
+      "overlap": 1,
+      "probe_words": 444,
+      "ref_chars": 2546,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.057,
+      "char_acc": 0.9855,
+      "char_acc_windowed": 0.9725
+    },
+    {
+      "slug": "ed-6a58ecbf-p17",
+      "page": 17,
+      "overlap": 1,
+      "probe_words": 57,
+      "ref_chars": 368,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.082,
+      "char_acc": 0.9556,
+      "char_acc_windowed": 0.9556
+    },
+    {
+      "slug": "ed-6a58ecbf-p22",
+      "page": 22,
+      "overlap": 1,
+      "probe_words": 510,
+      "ref_chars": 2846,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.051,
+      "char_acc": 0.9864,
+      "char_acc_windowed": 0.8522
+    }
+  ]
+}

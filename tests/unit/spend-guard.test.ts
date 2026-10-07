@@ -82,7 +82,7 @@ describe('getTodaySpendUsd', () => {
   });
   it('empty day → zeros', async () => {
     const { db } = makeDbStub({});
-    expect(await getTodaySpendUsd(db)).toEqual({ usd: 0, rows: 0, costlessRows: 0, meterError: null });
+    expect(await getTodaySpendUsd(db)).toEqual({ usd: 0, rows: 0, costlessRows: 0, meterError: null, meterTruncated: false });
   });
   it('SUMS both stores — the stores are mutually exclusive per row (#3826)', async () => {
     const { db } = makeDbStub({ spendUsd: 9, rows: 10 });
@@ -216,6 +216,45 @@ describe('budgetAllowsDispatchScoped — a second ceiling, never an absence of o
     expect(g.allowed).toBe(false);
   });
 
+  it('a lane-restricted envelope opens only for gate labels with its prefix', async () => {
+    const control = envControl({ allow_scopes: { lane: { book_ids: ['b1', 'b2'], budget_usd: 10, lanes: ['translate-batch-chained'], created_at: new Date('2026-09-01T00:00:00Z') } } });
+    const mine = await budgetAllowsDispatchScoped(makeScopedDbStub({ dailyUsd: 21, scopeUsd: 3, control }), 'translate-batch-chained b1');
+    expect(mine.allowed).toBe(true);
+    expect([...mine.envelopeIds!].sort()).toEqual(['b1', 'b2']);
+    // Negative control: the same envelope, asked by another worker, stays shut.
+    const other = await budgetAllowsDispatchScoped(makeScopedDbStub({ dailyUsd: 21, scopeUsd: 3, control }), 'image-extract-worker');
+    expect(other.allowed).toBe(false);
+    expect(readScopeEnvelopes(control)[0].lanes).toEqual(['translate-batch-chained']);
+    expect(readScopeEnvelopes(envControl())[0].lanes).toBeNull();
+  });
+
+  it('meter_endpoints narrows a LANED envelope\'s meter to its own writer\'s rows (#5729)', async () => {
+    const seen: { mongo: unknown[]; supa: unknown[] } = { mongo: [], supa: [] };
+    _setSupabaseScopeSpendReaderForTests(async (_ids: string[], _since: Date, endpoints: string[] | null) => {
+      seen.supa.push(endpoints);
+      return { usd: 0, rows: 0, error: null };
+    });
+    const scoped = {
+      book_ids: ['b1'], budget_usd: 10, created_at: new Date('2026-09-01T00:00:00Z'),
+      lanes: ['embed-gemini'], meter_endpoints: ['worker/embed-gemini'],
+    };
+    const db = makeScopedDbStub({ dailyUsd: 21, scopeUsd: 3, control: envControl({ allow_scopes: { lane: scoped } }) });
+    const orig = db.collection;
+    db.collection = (name: string) => {
+      const c = orig(name);
+      return { ...c, aggregate: (p: Array<{ $match?: Record<string, unknown> }>) => { if (p[0]?.$match?.book_id) seen.mongo.push(p[0].$match.endpoint); return c.aggregate(p); } };
+    };
+    const g = await budgetAllowsDispatchScoped(db, 'embed-gemini');
+    expect(g.allowed).toBe(true);
+    expect(seen.mongo).toEqual([{ $in: ['worker/embed-gemini'] }]);
+    expect(seen.supa).toEqual([['worker/embed-gemini']]);
+    // Negative control: without lanes, meter_endpoints is ignored — any worker may spend an
+    // unlaned envelope, so its meter must keep counting every endpoint.
+    const unlaned = readScopeEnvelopes({ allow_scopes: { x: { ...scoped, lanes: undefined } } });
+    expect(unlaned[0].meter_endpoints).toBeNull();
+    expect(readScopeEnvelopes(envControl())[0].meter_endpoints).toBeNull();
+  });
+
   it('dial UNSET (default-closed) + envelope with room → scoped dispatch (an envelope is an explicit bounded grant)', async () => {
     const db = makeScopedDbStub({ scopeUsd: 3, control: envControl({ daily_budget_usd: null }) });
     const g = await budgetAllowsDispatchScoped(db, 'test');
@@ -227,6 +266,22 @@ describe('budgetAllowsDispatchScoped — a second ceiling, never an absence of o
     supaStub(0, 0, 'Supabase read error: fetch failed');
     const db = makeScopedDbStub({ dailyUsd: 0, scopeUsd: 0, control: envControl() });
     const g = await budgetAllowsDispatchScoped(db, 'test');
+    expect(g.allowed).toBe(false);
+  });
+
+  it('a TRUNCATED daily meter already over the dial is a closed dial, not an unreadable one: envelopes decide', async () => {
+    _setSupabaseSpendReaderForTests(async () => ({ usd: 464, rows: 40000, costlessRows: 0, truncated: true, error: '>40000 rows today — sum truncated' }));
+    const open = await budgetAllowsDispatchScoped(makeScopedDbStub({ scopeUsd: 3, control: envControl() }), 'test');
+    expect(open.allowed).toBe(true);
+    expect([...open.envelopeIds!].sort()).toEqual(['b1', 'b2']);
+    // The envelope's own ceiling still holds.
+    const spent = await budgetAllowsDispatchScoped(makeScopedDbStub({ scopeUsd: 10, control: envControl() }), 'test');
+    expect(spent.allowed).toBe(false);
+  });
+
+  it('a TRUNCATED daily meter still UNDER the dial fails closed (the true sum is unknown)', async () => {
+    _setSupabaseSpendReaderForTests(async () => ({ usd: 1, rows: 40000, costlessRows: 0, truncated: true, error: '>40000 rows today — sum truncated' }));
+    const g = await budgetAllowsDispatchScoped(makeScopedDbStub({ scopeUsd: 3, control: envControl() }), 'test');
     expect(g.allowed).toBe(false);
   });
 

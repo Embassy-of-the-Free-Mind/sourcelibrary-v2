@@ -1,0 +1,21 @@
+{
+ "id": "6a3067d0c4fd77fb5b9f8378_00057",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "# Chapter One\n\n<margin>-12b]</margin>\n\nAs in the <term>Āryaratnakūṭasūtra</term> <gloss>The Noble Heap of Jewels Sūtra</gloss>: Then those five hundred monks, not understanding the teaching of the Dharma <gloss>truth/doctrine</gloss> of the Blessed One, not penetrating it, and not finding faith in it, rose from their seats and departed. Then the Blessed One created two monks on the path along which those monks were traveling.\n\nThen those five hundred monks approached the path where those two created monks were. Having approached, they said to them, \"Where are you going, venerable ones?\" The created ones replied, \"We are going to the forest dwellings; there we shall dwell in the happiness of meditative touch <note>a state of profound meditative absorption</note>. For the Dharma the Blessed One teaches, we do not descend into, do not penetrate, do not find faith in; we are uneasy and fall into terror.\" Then those five hundred monks said this, \"We also, venerable ones, do not descend into the Blessed One's teaching of the Dharma, do not penetrate it, do not find faith in it; we are uneasy and fall into terror. Therefore, we shall dwell in the forest dwellings in the happiness of meditative touch.\" The created ones replied, \"Therefore, venerable ones, we shall associate together and will not dispute. For the Dharma of a <term>śramaṇa</term> <gloss>ascetic/monk</gloss> has non-dispute as its highest goal.\" <unclear>******</unclear> \"For the sake of abandoning what have you, venerable ones, undertaken this practice?\" They replied, \"We have undertaken this for the sake of abandoning attachment, hatred, and delusion.\"\n\n<summary>This page recounts an episode from the Āryaratnakūṭasūtra where five hundred monks, unable to grasp the Buddha's teaching, encounter two created figures who advise them to practice non-dispute and the abandonment of mental defilements.</summary>\n<keywords>Āryaratnakūṭasūtra, Dharma, meditation, non-dispute, renunciation, monks</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2877,
+ "outputTokens": 463,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.000706875,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2403,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

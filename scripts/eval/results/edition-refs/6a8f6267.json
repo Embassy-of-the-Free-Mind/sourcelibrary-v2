@@ -1,0 +1,111 @@
+{
+  "summary": {
+    "book_id": "6a8f6267e408ab73f484d28b",
+    "title": "The Canker of England's Common Wealth",
+    "published": "1601",
+    "source": "EEBO-TCP A06791",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "probe-too-short": 1
+    },
+    "median_char_acc": 0.9485,
+    "median_char_acc_windowed": 0.8842,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a8f6267-p2",
+      "page": 2,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a8f6267-p6",
+      "page": 6,
+      "overlap": 1,
+      "probe_words": 164,
+      "ref_chars": 932,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.135,
+      "char_acc": 0.9424,
+      "char_acc_windowed": 0.941
+    },
+    {
+      "slug": "ed-6a8f6267-p9",
+      "page": 9,
+      "overlap": 1,
+      "probe_words": 153,
+      "ref_chars": 894,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.18,
+      "char_acc": 0.9556,
+      "char_acc_windowed": 0.75
+    },
+    {
+      "slug": "ed-6a8f6267-p14",
+      "page": 14,
+      "overlap": 1,
+      "probe_words": 150,
+      "ref_chars": 973,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.123,
+      "char_acc": 0.9482,
+      "char_acc_windowed": 0.9482
+    },
+    {
+      "slug": "ed-6a8f6267-p15",
+      "page": 15,
+      "overlap": 1,
+      "probe_words": 159,
+      "ref_chars": 925,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.109,
+      "char_acc": 0.9544,
+      "char_acc_windowed": 0.7597
+    },
+    {
+      "slug": "ed-6a8f6267-p16",
+      "page": 16,
+      "overlap": 1,
+      "probe_words": 168,
+      "ref_chars": 972,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.139,
+      "char_acc": 0.9485,
+      "char_acc_windowed": 0.8842
+    },
+    {
+      "slug": "ed-6a8f6267-p17",
+      "page": 17,
+      "overlap": 0.789,
+      "probe_words": 150,
+      "ref_chars": 990,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.171,
+      "char_acc": 0.9382,
+      "char_acc_windowed": 0.8956
+    },
+    {
+      "slug": "ed-6a8f6267-p22",
+      "page": 22,
+      "overlap": 0.878,
+      "probe_words": 123,
+      "ref_chars": 769,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.2,
+      "char_acc": 0.961,
+      "char_acc_windowed": 0.8133
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "summary": {
+    "book_id": "6a4376a3e296c55144956689",
+    "title": "Artis logicæ compendium.",
+    "published": "1691",
+    "source": "EEBO-TCP A26641",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "no-window": 1
+    },
+    "median_char_acc": 0.9569,
+    "median_char_acc_windowed": 0.949,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a4376a3-p2",
+      "page": 2,
+      "skipped": "no-window",
+      "overlap": 0
+    },
+    {
+      "slug": "ed-6a4376a3-p6",
+      "page": 6,
+      "overlap": 0.858,
+      "probe_words": 297,
+      "ref_chars": 2410,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.141,
+      "char_acc": 0.9569,
+      "char_acc_windowed": 0.9543
+    },
+    {
+      "slug": "ed-6a4376a3-p9",
+      "page": 9,
+      "overlap": 0.768,
+      "probe_words": 310,
+      "ref_chars": 2367,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.176,
+      "char_acc": 0.9662,
+      "char_acc_windowed": 0.952
+    },
+    {
+      "slug": "ed-6a4376a3-p14",
+      "page": 14,
+      "overlap": 0.518,
+      "probe_words": 319,
+      "ref_chars": 1489,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.271,
+      "char_acc": 0.9176,
+      "char_acc_windowed": 0.8177
+    },
+    {
+      "slug": "ed-6a4376a3-p15",
+      "page": 15,
+      "overlap": 0.973,
+      "probe_words": 314,
+      "ref_chars": 2500,
+      "engine": "gemini-2.5-flash",
+      "aligned": true,
+      "guard_wer": 0.114,
+      "char_acc": 0.9491,
+      "char_acc_windowed": 0.9466
+    },
+    {
+      "slug": "ed-6a4376a3-p16",
+      "page": 16,
+      "overlap": 0.865,
+      "probe_words": 308,
+      "ref_chars": 2362,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.148,
+      "char_acc": 0.9545,
+      "char_acc_windowed": 0.9073
+    },
+    {
+      "slug": "ed-6a4376a3-p17",
+      "page": 17,
+      "overlap": 0.934,
+      "probe_words": 254,
+      "ref_chars": 2071,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.127,
+      "char_acc": 0.9736,
+      "char_acc_windowed": 0.9706
+    },
+    {
+      "slug": "ed-6a4376a3-p22",
+      "page": 22,
+      "overlap": 1,
+      "probe_words": 186,
+      "ref_chars": 1480,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.15,
+      "char_acc": 0.9687,
+      "char_acc_windowed": 0.949
+    }
+  ]
+}

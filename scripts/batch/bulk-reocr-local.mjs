@@ -31,7 +31,7 @@
  * Control:
  *   --model=lite|flash Force the model. Default: the OCR router's choice per book
  *                      (scripts/lib/ocr-routing.mjs — flash-lite for everything while
- *                      OCR_LITE_ONLY is on).
+ *                      OCR_LITE_ONLY is on, except visible/new Greek, #5575).
  *   --max-chunk-mb=N   Byte cap per file-based job's JSONL (default 40). Chunks are bounded by
  *                      bytes first and pages second (#3974: a page-count bound overflowed V8's
  *                      string limit on large scans and silently dropped the chunk).
@@ -56,6 +56,7 @@ import { readPageIdsFile, readBookIdsFile, chunkByBytes } from '../lib/ocr-targe
 import { getOcrModelForBook, OCR_MODEL_FLASH, OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
 import { batchJobProvenance, contentHash, codeVersion } from '../lib/write-provenance.mjs';
 import { logUsage, estimateBatchCostUsd } from '../workers/lib/supabase-usage-logger.mjs';
+import { createThenDeleteInput } from '../lib/gemini-batch-input-file.mjs';
 
 // --- Config ---
 const CALL_SITE = 'scripts/batch/bulk-reocr-local.mjs';
@@ -302,7 +303,7 @@ const PAGE_PROJECTION = {
   cropped_photo: 1, crop: 1, split_from_spread: 1,
 };
 const BOOK_PROJECTION = {
-  _id: 0, id: 1, title: 1, display_title: 1, language: 1, original_language: 1,
+  _id: 0, id: 1, title: 1, display_title: 1, language: 1, original_language: 1, visible: 1, created_at: 1,
   read_count: 1, pages_count: 1, image_source: 1, 'pipeline_auto.status': 1,
   'pipeline_auto.hold': 1, 'pipeline_auto.ocr_generation': 1,
 };
@@ -525,7 +526,12 @@ async function main() {
             const jsonlContent = chunk.items.map(item => JSON.stringify(requestOf(item))).join('\n');
             console.log(`  Batch ${n + 1}/${chunks.length}: ${chunk.items.length} pages, ${(Buffer.byteLength(jsonlContent) / 1048576).toFixed(1)} MB JSONL, uploading...`);
             const fileResult = await uploadBatchFile(jsonlContent, displayName);
-            batchJob = await createBatchJob(model, { file_name: fileResult.name }, displayName);
+            // Delete the input as soon as create returns (#5544): left for the hourly sweep,
+            // this lane's inputs filled the project's 20 GiB File API quota for every lane.
+            batchJob = await createThenDeleteInput({
+              fileName: fileResult.name, apiKey: getBatchApiKey(),
+              create: () => createBatchJob(model, { file_name: fileResult.name }, displayName),
+            });
           } else {
             console.log(`  Batch ${n + 1}/${chunks.length}: ${chunk.items.length} pages, inline...`);
             batchJob = await createBatchJob(model, { requests: { requests: chunk.items.map(requestOf) } }, displayName);

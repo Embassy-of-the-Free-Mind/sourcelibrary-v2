@@ -1,0 +1,359 @@
+[
+ {
+  "slot": 9,
+  "stratum": "chan-zen",
+  "book_id": "69bd0afdb01b17638a098546",
+  "book_url": "https://sourcelibrary.org/book/69bd0afdb01b17638a098546",
+  "tradition": "chan-zen",
+  "book": {
+   "id": "69bd0afdb01b17638a098546",
+   "title": "禪宗頌古聯珠通集 (Anthology of Chan Verse Commentaries on Koans, 40 juan)",
+   "display_title": "Anthology of Chan Verse Commentaries on Koans",
+   "author": "Faying & Puhui (Song-Yuan)",
+   "language": "Chinese",
+   "published": "1597",
+   "pages_count": 956,
+   "pages_ocr": 952,
+   "pages_translated": 938,
+   "image_source": {
+    "provider": "loc"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 956,
+   "distinct_page_numbers": 956,
+   "duplicate_records": 0,
+   "pages_with_ocr": 952,
+   "pages_translated": 950,
+   "with_printed_number": 204,
+   "printed_backsteps": 67,
+   "printed_repeats": 165,
+   "pages_count_field": 956,
+   "pages_translated_field": 938
+  },
+  "run": [
+   76,
+   389,
+   543,
+   836
+  ],
+  "pages": [
+   {
+    "page_number": 76,
+    "page_id": "69bd0afdb01b17638a098592",
+    "image_url": "https://images.sourcelibrary.org/archived/69bd0afdb01b17638a098546-0076.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<header>選佛譜</header>\n<meta>The image shows a two-page spread from a woodblock printed book. The text is written in Traditional Chinese, arranged in vertical columns.</meta>\n\n百一由旬摩頂歸片心思見普賢師堂堂現在紅蓮\n座落落分明白象兒沙劫智悲方滿日微塵行願正\n圓時佛功德海重宣說愁見波濤轉渺瀰 <gloss>佛國白</gloss>\n打鼓弄琵琶還他一會家木童能撫掌石女解煎茶\n雲散天邊月春來樹上華善財參徧處黑豆未生芽\n<gloss>延慶忠</gloss>\n\n<margin>增收</margin>善財歷百十城參五十三位善知識後到毗盧\n樓閣前日是解空無相無作之所住處 <gloss>云云</gloss> 見\n樓閣門閉善財暫時斂念曰大慈大悲願樓閣\n門開令我得入尋時彌勒領諸眷屬至善財前\n彈指一下樓閣門開善財得入入已還閉見百\n千萬億樓閣一一樓閣有一彌勒領諸眷屬并\n有一善財面在前立彌勒復彈指云善男子起\n法性如是 頌曰\n\n<column-break/>\n\n妙意童真末後收善財到此罷南遊豁然頓入毗盧\n藏悔向他山見比丘 <gloss>張無盡</gloss>\n\n妙峯孤頂無知識百十城遊喪善財樓閣若還彈指\n現分明有眼不曾開 <gloss>或菴體</gloss>\n\n五十三人一縷穿小兒雖小膽如天茫茫煙水無重\n數買得風光不用錢 <gloss>北磵簡</gloss>\n\n<vocab>善財, 彌勒, 毗盧, 樓閣, 普賢, 佛國, 延慶忠, 張無盡, 或菴體, 北磵簡</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "After a hundred and one *yojanas*, he touched his crown and returned; with a single thought, he saw the Samantabhadra master.\nMajestic, he is present on the red lotus seat;\nClearly, he is the white elephant child.\nWhen the wisdom and compassion of the sand-kalpas are full,\nWhen the vows and practices of the minute particles are perfect,\nThe Buddha's ocean of virtue is proclaimed again;\nI worry to see the waves churning and vast. <gloss>Foguo Bai</gloss>\n\nBeating the drum and playing the *pipa* <note>a four-stringed plucked lute</note>, he returns to his own assembly.\nThe wooden boy can clap his hands; the stone woman knows how to boil tea.\nClouds scatter, the moon appears at the edge of the sky; spring comes, flowers bloom on the trees.\nSudhana has visited everywhere; the black beans have not yet sprouted. <gloss>Yanqing Zhong</gloss>\n\n<margin>Added sequel</margin> Sudhana traveled through one hundred and ten cities, visiting fifty-three good teachers. Finally, he arrived in front of the Vairochana Tower. The previous day was the place where one dwells in the emptiness, the signless, and the effortless <note>terms for the realization of non-attachment</note>. He saw the tower gate closed. Sudhana, for a moment, gathered his thoughts and said, \"With great compassion, I pray that the tower gate opens and lets me enter.\" Maitreya, leading his retinue, arrived before Sudhana. With a snap of his fingers, the tower gate opened. Sudhana entered. Once inside, the gate closed again. He saw hundreds of thousands of billions of towers; in each tower, there was a Maitreya leading a retinue, and a Sudhana standing face to face before them. Maitreya snapped his fingers again and said, \"Good man, arise. The nature of Dharma is like this.\"\n\nA Verse says:\n\nThe wondrous intention of the child is collected at the very end.\nSudhana stops his southern journey here.\nSuddenly he enters the Vairochana Treasury;\nHe regrets having gone to other mountains to see monks. <gloss>Zhang Wujin</gloss>\n\nOn the lone peak of Mount Miaofeng, there is no teacher.\nTraveling to one hundred and ten cities was a waste for Sudhana.\nIf the tower were revealed by a snap of the fingers,\nClearly, one has eyes but has never opened them. <gloss>Huotian Ti</gloss>\n\nFifty-three people, strung on a single thread.\nThough the child is small, his courage is like the sky.\nVast is the misty water, without number;\nBuying the scenery costs no money at all. <gloss>Beijian Jian</gloss>\n\n<summary>The page concludes Sudhana's journey at the Vairochana Tower, illustrating the realization of the non-dual, infinite nature of reality through Maitreya's guidance.</summary>\n<keywords>Sudhana, Maitreya, Vairochana Tower, Non-duality, Chan realization</keywords>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 389,
+    "page_id": "69bd0afdb01b17638a0986cb",
+    "image_url": "https://images.sourcelibrary.org/archived/69bd0afdb01b17638a098546-0389.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<header>撰述 公古聯珠通集卷十</header>\n<meta>Catchword: 支那. Page number in margin: 頁二百九十五.</meta>\n\n水至今長暎夕陽斜 ->孤雲權<-\n三寸離鈎械一橈百千毛竅冷颼颼雖然兩手親分付要在渠儂自點頭 ->無緊派<-\n夾嶠當年錯用心貪他香餌被他擒點頭三下無言說水闊山遙恨轉深 ->浙翁琰<-\n了無錐地可容身却泛孤舟據要津不獨夾山遭毒手至今賺殺一船人 ->笑翁堪<-\n合頭著語酬船子恰如掘地覓青天直饒橈下通明徹也是華亭破漏船 ->蘇臺辯<-\n無相無瑕便倒戈只因輕信智頭陀若還不到華亭上鐵鑄船橈奈汝何 ->南叟蕑<-\n朱涇深處泛扁舟伶俐闍黎上直鈎劈口一橈空宇宙遠山疊疊水悠悠 ->葛廬覃<-\n笑中棄却竹林寺將謂華亭有幾多窮性命於橈下喪細思成敗是蕭何 ->末宗本<-\n三十餘年在藥山鬼家活計豈能傳當時不得夾山老你且耐煩撐破船 ->清溪徹<-\n\n<column-break/>\n\n船子囑夾山曰汝向去直須藏身處沒踪跡沒踪跡處莫藏身吾二十年在藥山祗明斯事汝今既得他後莫住城隍聚落但向深山裏钁頭\n\n<vocab>船子, 夾山, 藥山, 華亭, 闍黎, 蕭何, 禪宗, 語錄</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "...water, until today shining long in the slanting evening sun. <gloss>Guyun Quan</gloss>\nThree inches from the hook, a shackle; one oar, and hundreds of thousands of pores feel a cold chill. Although both hands personally entrust it, it requires that fellow to nod his head himself. <gloss>Wujin Pai</gloss>\nJiashan in those years misused his mind. Greedy for the scented bait, he was captured by him. Nodding three times without a word; the water is wide, the mountains are distant, the resentment grows deeper. <gloss>Zheweng Yan</gloss>\nWith no place the size of an awl to contain his body, he instead drifts in a lone boat, occupying the crucial ferry. Not only did Jiashan suffer the poisonous hand, until today he has tricked to death a boatload of people. <gloss>Xiaoweng Kan</gloss>\nMatching words to respond to the boatman is just like digging in the ground to seek the blue sky. Even if the oar were to thoroughly illuminate, it is still a leaky boat in Huating. <gloss>Sutai Bian</gloss>\nNo appearance and no flaw, then surrender. It is only because he lightly believed the wise wandering monk. If he had not arrived at Huating, what could the iron-cast boat oar do to you? <gloss>Nansou Jian</gloss>\nIn the depths of the Zhu River, a flat boat drifts. The clever wandering monk holds the straight hook. One oar to the mouth empties the universe. The distant mountains are layered, and the water is serene. <gloss>Gelu Tan</gloss>\nIn the laughter, he abandoned the Bamboo Grove Temple, thinking that Huating had much to offer. Exhausting life under the oar; thinking carefully, success and failure are just like Xiao He <note>a reference to the Han dynasty figure, implying fickle fortunes</note>. <gloss>Mozong Ben</gloss>\nMore than thirty years at Yaoshan, how could the life-activities of the ghost family be transmitted? At that time, if you had not obtained old Jiashan, you would just have to be patient and pole a broken boat. <gloss>Qingxi Che</gloss>\n\n<column-break/>\n\nChuanzi instructed Jiashan, \"From here on, you must go to a place where you hide your body and leave no traces. In the place where there are no traces, do not hide your body. I spent twenty years at Yaoshan only to clarify this matter. Now that you have obtained it, later do not reside in cities or crowded villages. Just go into the deep mountains and take a mattock <note>a digging tool, symbolizing a reclusive life of labor</note>...\"\n\n<summary>Further poetic reflections on the transmission between Chuanzi and Jiashan, followed by Chuanzi's final instructions to his successor.</summary>\n<keywords>Transmission, Hiding traces, Yaoshan, Huating, Chan practice</keywords>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 543,
+    "page_id": "69bd0afdb01b17638a098765",
+    "image_url": "https://images.sourcelibrary.org/archived/69bd0afdb01b17638a098546-0543.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<page-num>25</page-num>\n<header>德山</header>\n<sig>二十三</sig>\n<meta>The page is from a Buddhist text, likely a collection of Chan (Zen) dialogues or koans.</meta>\n\n浦如教而問師便打浦接住送一送師便歸方丈浦回舉似臨濟濟曰我從來疑著這漢雖然如是你還識德山麼浦擬議濟便打\n<gloss>增目</gloss>\n單于自負藝過人小將教詔去佢真到彼果然贏小捷回來未免全身\n<gloss>海印信</gloss>\n<gloss>佛鑑勤</gloss>\n壁若金籠鸚鵡兒背如紅玉一青衣雖然學得人言語問著元來總不知\n\n<column-break/>\n\n德山因僧來參便乃閉却門僧打門師曰誰曰師子師開門僧繞入禮拜師驀頭騎曰者畜生許多時向甚處去來 頌曰\n<gloss>增目</gloss>\n見兔放鷹因邪打正脚未跨門直須猛省\n<gloss>木庵永</gloss>\n德山上堂大眾及盡知也直得三世諸佛口挂壁上猶有一人呵呵大咲若識此人參學事畢\n<gloss>或作圓明密語</gloss>\n投子青云然雖如是德山大侶藏盡楚天月猶存漢地星乃頌曰\n雙盲入暗路崎嶇日落樓蘆暫得甦爭似石人眠半夜免教舜讓守林居須知花綻非干木無脚行時早觸途昨朝風起長安道元是崑崙進國圖收把斷襟喉風磨雲拭水冷天秋錦鱗莫謂無滋味釣盡滄浪月一釣\n<note>天童覺</note>\n\n<vocab>德山, 臨濟, 禪宗, 頌, 參學, 投子青</vocab>",
+    "ocr_engine": "pipeline_preview",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation": "# Deshan\n\n<meta>The text discusses the encounter between the monk Luopu, his master Linji, and the master Deshan.</meta>\n\nLuopu followed the instructions and asked. The master immediately struck. Luopu caught the staff and gave it a push. The master then returned to the abbot's quarters. Luopu returned and reported this to Linji. Linji said, \"I have always suspected this fellow. However, do you recognize Deshan?\" Luopu hesitated, and Linji struck him.\n<gloss>Added note</gloss>\nThe Xiongnu warrior prides himself on his skills, thinking he surpasses others. The young general goes to give orders. When he actually reaches the enemy, he wins a small battle, but upon returning, he cannot save his whole body <note>a metaphor for losing one's essence through arrogance</note>.\n<gloss>Haiyin Xin</gloss>\n<gloss>Fojian Qin</gloss>\nLike a parrot in a golden cage, its back is like red jade, a green-clad servant. Although it has learned human speech, when you ask it something, it actually knows nothing at all.\n\n<column-break/>\n\nDeshan had a monk come to pay respects, and he shut the door. The monk knocked on the door. The master asked, \"Who is it?\" He replied, \"A lion.\" The master opened the door. The monk circled in and bowed. The master jumped on his head and rode him, saying, \"You animal, where have you been for so long?\"\nVerse:\n<gloss>Added note</gloss>\nSeeing a rabbit, one releases the hawk; by means of the false, one strikes the true. Before your feet have crossed the threshold, you must awaken suddenly.\n<gloss>Mu'an Yong</gloss>\nDeshan ascended the hall and said, \"The great assembly knows it all. Even if the Buddhas of the three periods had their mouths hung on the wall, there would still be one person laughing loudly. If you recognize this person, your studies are complete.\"\n<gloss>Or written as the secret words of Yuanming</gloss>\nTouzi Qingyun said: Even so, the great companions of Deshan have hidden everything. The moon in the Chu sky still contains the stars of the Han land. He composed a verse:\nThe two blind men enter the dark, the road is rugged. The sun sets, the reeds provide a moment's rest. How can it compare to the stone man sleeping at midnight, avoiding the need for the emperor to guard the forest retreat? You must know that the blossoming of flowers is not related to the wood. When the legless one walks, he has already touched the path. Yesterday the wind rose on the Chang'an road; originally it was a map of the Kunlun frontier. I hold the throat, the wind grinds the clouds, the water is cold, the sky is autumn. Do not say the colorful scales have no flavor; he fished out the moon of the Canglang with one cast.\n<note>Tiandong Jue</note>\n\n<summary>This page presents dialogues regarding Deshan's aggressive teaching methods and metaphors for enlightenment.</summary>\n<keywords>Deshan, Linji, Chan Buddhism, Verse, Study, Touzi Qing</keywords>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 836,
+    "page_id": "69bd0afdb01b17638a09888a",
+    "image_url": "https://images.sourcelibrary.org/archived/69bd0afdb01b17638a098546-0836.jpg",
+    "ocr": "<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<page-num>35</page-num>\n<header>頌古聯珠通集卷三十五</header>\n<sig>支那</sig>\n\n眼中滴血 懶菴需\n室內一盞明燈等閒一樣樣滅自然不辨東西免得證龜成鱉 退菴奇\n禪宗頌古聯珠通集卷三十五\n\n<column-break/>\n\n禪宗頌古聯珠通集卷三十六\n宋池州報恩光孝禪寺沙門法應集\n元紹興天衣萬壽禪寺沙門普會續集\n祖師機緣\n六祖下第八世之餘 南嶽下後第七世\n襄州洞山守初禪師 嗣雲門 初參雲門門問近離甚麼處師曰棲霞門曰夏在什麼處師曰湖南曰什麼時離湖南師曰秋曰放汝三十棒\n師曰過在什麼處曰江西湖南便恁麼師於言下頓省 五燈會元收曰初參雲門門問近離甚麼處師曰查度曰夏在甚麼處師曰湖\n\n<image-desc size=\"small\" type=\"symbol\" significance=\"low\">Red seal impression on the left page</image-desc>\n<image-desc size=\"small\" type=\"symbol\" significance=\"low\">Red seal impression on the left page</image-desc>\n\n<vocab>禪宗, 頌古聯珠通集, 洞山守初, 雲門文偃, 祖師機緣, 湖南, 江西</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation": "# Anthology of Linked Pearls on Chan Verse Commentaries, Volume 35\n<sig>Zhina</sig>\n\nDropping blood from the eyes. \n<margin>Lan’an Xu</margin>\nA single bright lamp inside the room, quietly extinguished, naturally one does not distinguish between east and west. This avoids \"proving a turtle is a soft-shelled turtle.\" \n<margin>Tui’an Qi</margin>\n\nAnthology of Linked Pearls on Chan Verse Commentaries, Volume 35\n\n<column-break/>\n\nAnthology of Linked Pearls on Chan Verse Commentaries, Volume 36\nCompiled by the monk Faying of the Baoen Guangxiao Chan Monastery in Chizhou, Song Dynasty.\nContinued by the monk Puhui of the Tianyi Wanshou Chan Monastery in Shaoxing, Yuan Dynasty.\n\n**Recorded Sayings of the Ancestral Masters**\nEighth generation after the Sixth Patriarch; seventh generation after Nanyang [Huizhong].\n\nChan Master Shouchu of Dongshan in Xiangzhou, a dharma heir of Yunmen. \nWhen he first visited Yunmen, the master asked, \"Where did you just come from?\"\nThe master replied, \"Xixia.\"\n[Yunmen] asked, \"Where were you during the summer?\"\nThe master replied, \"Hunan.\"\n[Yunmen] asked, \"When did you leave Hunan?\"\nThe master replied, \"In the autumn.\"\n[Yunmen] said, \"I give you thirty blows.\"\n\nThe master asked, \"What was my fault?\"\n[Yunmen] replied, \"Jiangxi and Hunan, just like that.\"\nAt these words, the master was suddenly enlightened. \nThe *Wudeng Huiyuan* <note>original: \"Record of the Flourishing of the Five Lamps\"</note> records: \"First visiting Yunmen, the master was asked, 'Where did you just come from?' The master said, 'Chadu.' [Yunmen] asked, 'Where were you during the summer?' The master said, 'Hu...'\"\n\n<note>A red seal impression appears in the left margin.</note>\n<note>A red seal impression appears in the left margin.</note>\n\n<summary>This page introduces the thirty-sixth volume of the Anthology, focusing on the interactions between Dongshan Shouchu and Yunmen Wenyan, specifically the \"thirty blows\" koan.</summary>\n<keywords>Chan, Anthology of Linked Pearls, Dongshan Shouchu, Yunmen Wenyan, Enlightenment</keywords>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 10,
+  "stratum": "chan-zen",
+  "book_id": "6a3c798c01fe4f593c2107fe",
+  "book_url": "https://sourcelibrary.org/book/6a3c798c01fe4f593c2107fe",
+  "tradition": "chan-zen",
+  "book": {
+   "id": "6a3c798c01fe4f593c2107fe",
+   "title": "石門文字禪·卷二十九~卷三十 (vol 11)",
+   "display_title": "Zen Literature of the Stone Gate",
+   "author": "德洪",
+   "language": "Chinese",
+   "published": "1773",
+   "pages_count": 122,
+   "pages_ocr": 122,
+   "pages_translated": 120,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 122,
+   "distinct_page_numbers": 122,
+   "duplicate_records": 0,
+   "pages_with_ocr": 122,
+   "pages_translated": 120,
+   "with_printed_number": 34,
+   "printed_backsteps": 8,
+   "printed_repeats": 13,
+   "pages_count_field": 122,
+   "pages_translated_field": 120
+  },
+  "run": [
+   26,
+   45,
+   69,
+   94
+  ],
+  "pages": [
+   {
+    "page_number": 26,
+    "page_id": "6a3c798d01fe4f593c2108d0",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c798c01fe4f593c2107fe/26.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>卷二十九</page-num>\n\n說于前。某讀漢傳見司馬長卿之還成都家四壁立。又讀唐帖見顏魯公從李侯乞米。嗚呼漢唐人物如長卿魯公者。可謂碩大而秀傑者且屋廬不完。饘粥不給。況下者乎。然兩人者風流餘烈。可以想見。以某之不肖。驚鈍聲遺。沉下。蓋其智愚之不移。貴賤之相遠。無可企羨。然猶有羨於長卿魯公者。羨其當耳。長卿固倦遊而歸。所累者文君。身而猶有四壁。可誇。如某干祿而祿未及。親今親皆老。無以為養。弟妹職職。及婚嫁。二十餘口。伏\n\n<vocab>司馬長卿, 顏魯公, 李侯, 漢唐, 貧困</vocab>",
+    "ocr_engine": "pipeline_preview",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "<meta>continues from previous page: If I may receive your cleared severity and harmony, then I request to finish my—</meta>\nexplanation in your presence. I have read in the *History of the Han Dynasty* <note>original: \"Han Chuan\"</note> how Sima Changqing <note>Sima Xiangru, a famous poet</note> returned to his home in Chengdu to find only four bare walls standing. I have also seen in the Tang Dynasty calligraphy rubbings how Yan Lugong <note>Yan Zhenqing, a noted official and calligrapher</note> begged for rice from Lord Li. Alas! Even figures of the Han and Tang like Changqing and Lugong, who could be called grand, eminent, and heroic, still had broken houses and insufficient gruel. How much more so for those of lesser status! Yet the lingering excellence of these two men’s characters can still be imagined. As for my own unworthiness, my reputation is dull and forgotten, and I have sunk to the bottom. This is because the gap between wisdom and folly cannot be shifted, and the distance between the noble and the lowly is vast; there is no use in envying them. However, I still find something to envy in Changqing and Lugong: I envy that they were alone in their plight. Changqing was indeed weary of travel when he returned, and his only burden was his wife, Wenjun; he still had those \"four walls\" to boast of. But in my case, I have sought a government salary and not yet attained it, while my parents are now both old and I have no means to support them. My younger brothers and sisters are numerous, reaching the age for marriage—more than twenty mouths in total. All these responsibilities are\n\n<summary>The author compares his own poverty and family burdens to the historical hardships of Sima Xiangru and Yan Zhenqing, noting that his situation is more dire due to his large family.</summary>\n<keywords>Sima Xiangru, Yan Zhenqing, poverty, filial piety, Han Dynasty, Tang Dynasty</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 45,
+    "page_id": "6a3c798d01fe4f593c2108e3",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c798c01fe4f593c2107fe/45.jpg",
+    "ocr": "肩仍袂已至者忘去方來者如歸余嘗與林敏功子仁過馬仁寺以律名而禪規不減諸方廩無餘粟食堂仰山歎曰此人它日道行吳越但遇風則止為山問有續之者乎對曰將此深心奉塵剎是則名為報佛恩故世稱念法華為仰山後身庸詎知文非逢公邪子仁曰彼以荷擔大法此方從事有為仰山逢公若是班乎余曰昔普淨禪師不務說法庵於王城之東日浴萬眾曰\n\n<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>二十三</page-num>\n<header>石門文字禪</header>\n<vocab>禪師, 法華, 仰山, 普淨, 佛恩</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "shoulders and touched sleeves; those who had arrived forgot about leaving, and those just coming felt as if they had returned home. \n\nI once visited Ma-ren Temple with Lin Min-gong and Zi-ren. Although it was known for its adherence to the <term>Vinaya</term> <gloss>monastic rules</gloss>, its Chan regulations were no less strict than elsewhere. The granaries had no surplus grain. In the dining hall, Yangshan sighed and said: \"This man's spiritual practice will one day reach the Wu and Yue regions. He will only stop when he encounters the 'wind' <note>a reference to a prophecy or a specific location</note>.\" \n\nI asked: \"Is there anyone who can continue his work?\" \n\nHe replied: \"To offer this deep heart to the infinite lands is called repaying the Buddha's kindness.\" \n\nThus, the world claims that Nian Fahua is the reincarnation of Yangshan. How can one know that Wen is not the reincarnation of Master Feng? \n\nZi-ren said: \"He shoulders the Great Dharma and engages in worldly activities here. Are Yangshan and Master Feng of the same rank?\" \n\nI said: \"In the past, Chan Master Pujing did not focus on preaching the Dharma. He stayed in a hut east of the royal city and bathed ten thousand people daily, saying:",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 69,
+    "page_id": "6a3c798d01fe4f593c2108fb",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c798c01fe4f593c2107fe/69.jpg",
+    "ocr": "壽七十八臘五十二荼毗之日五色成燄白光上騰煙所及處舍利分布道俗千餘人皆得之餘者尚不可勝數塔於獨秀峯之下師純誠慈愛出於天性氣韻邁往超然奇逸見人無親疎貴賤溫顏軟語禮敬如一主持叢林法度甚嚴有犯令者必罰無赦以故五坐道場為諸方所法得游戲三昧有樂說之辯詞鋒智刃所伐邪林如墮雲崩石開發正見光明顯露如青天白日人人自以謂臻奧至於入室投機則如銅崖鐵壁不可攀緣\n\n<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>六</page-num>\n<header>石門文字禪</header>\n<meta>catchword: 次</meta>\n<vocab>壽, 臘, 荼毗, 舍利, 獨秀峯, 叢林, 三昧, 辯, 邪林, 正見</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "He was seventy-eight years old and had been a monk for fifty-two years. On the day of his <term>cremation</term> <gloss>ritual burning</gloss>, the flames turned five colors and a white light leaped upward. Wherever the smoke reached, <term>sarira</term> <gloss>sacred relics</gloss> were distributed. Over a thousand people, both monastics and laity, obtained them, and those remaining were beyond counting. A stupa was built for him at the foot of <term>Duxiu Feng</term> <gloss>Solitary Beauty Peak</gloss>. \n\nThe Master was pure, sincere, and compassionate by nature. His refined spirit was extraordinary and elegantly transcendent. He treated everyone, whether strangers or kin, noble or humble, with a warm face and soft words, showing equal respect to all. He presided over the <term>Conglin</term> <gloss>monastic community</gloss> with very strict discipline; those who violated orders were certainly punished without pardon. For this reason, the five seats of the practice centers he held became models for all directions. He attained the <term>Samadhi of Playful Joy</term> and possessed the eloquence of joyful preaching. His sharp wit and wisdom cut down the forest of heterodoxy like falling clouds or collapsing rocks. He opened up the Right View, which shone as clearly as the sun in a blue sky. Everyone felt they had reached the profound depths. However, when entering his room for private instruction, he was like a bronze cliff or an iron wall, impossible to scale.\n\n<summary>The miraculous events of Master Zhenjing's cremation and a description of his dual character: compassionate and polite in person, yet strict in discipline and profound in teaching.</summary>\n<keywords>sarira, cremation, Duxiu Feng, Samadhi, Right View, Chan instruction</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 94,
+    "page_id": "6a3c798d01fe4f593c210914",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c798c01fe4f593c2107fe/94.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<page-num>卷三十</page-num>\n\n舒州民柯夢者遇異僧於歲山下以杖指松根令夢鏤之得瑞石一篆文皆識聖宋國祚無疆夢進其石于京師太宗皇帝遣中使置齋於鍾山詔自今不可以名斥以顯尊異賜號道林真覺大師\n\n祭文\n\n祭雲庵和尚文\n我生九歲則知有師寤寐悅慕想見形儀識師新豐等父母慈欣然摩頂使執軍持長游大梁薙髮而歸省於\n\n<column-break/>\n\n<vocab>舒州, 柯夢, 歲山, 瑞石, 聖宋, 太宗皇帝, 鍾山, 道林真覺大師, 祭文, 雲庵和尚, 新豐, 大梁</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "<column-break/>\n## Volume 30\n\nA commoner from Shuzhou named Ke Meng encountered an extraordinary monk at the foot of Mount Sui. The monk pointed his staff at a pine root and told Meng to carve into it. Meng discovered a \"prophetic stone\" with a seal script inscription that recognized the \"National Destiny of the Sacred Song Dynasty as Boundless.\" Meng presented the stone at the capital. Emperor Taizong sent an imperial envoy to offer a vegetarian feast at Mount Zhong. He issued a decree that from then on, the Master should not be addressed by his name to show extraordinary respect, and bestowed upon him the title Great Master Daolin Zhenjue <gloss>True Enlightenment of the Path Forest</gloss>.\n\n# Sacrificial Writings\n\n### Sacrificial Writing for Master Yun'an\nWhen I was nine years old, I knew of the Master. In my waking and sleeping hours, I admired him and envisioned his form. I met the Master at Xinfeng; like a father or mother, he rejoiced and rubbed my head. He allowed me to carry his <term>kundika</term> <gloss>water ritual flask</gloss>. I traveled far to Daliang, where I shaved my head and returned to visit him at \n\n<column-break/>\n\n<summary>A miraculous stone is found foretelling the Song Dynasty's longevity, leading Emperor Taizong to grant Master Baozhi a new honorary title. The author begins a memorial for Master Yun'an, recalling their first meeting.</summary>\n<keywords>Ke Meng, Emperor Taizong, Daolin Zhenjue, sacrificial writing, Master Yun'an, Xinfeng</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 11,
+  "stratum": "chan-zen",
+  "book_id": "69e009f82dfba6e52bfaa2f4",
+  "book_url": "https://sourcelibrary.org/book/69e009f82dfba6e52bfaa2f4",
+  "tradition": "chan-zen",
+  "book": {
+   "id": "69e009f82dfba6e52bfaa2f4",
+   "title": "Jikji (직지심체요절, Anthology of Great Buddhist Priests' Zen Teachings)",
+   "display_title": null,
+   "author": "Baegun Gyeonghan (白雲景閑)",
+   "language": "Classical Chinese",
+   "original_language": "Classical Chinese",
+   "published": "1377",
+   "pages_count": 86,
+   "pages_ocr": 86,
+   "pages_translated": 82,
+   "image_source": {
+    "provider": "gallica"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 86,
+   "distinct_page_numbers": 86,
+   "duplicate_records": 0,
+   "pages_with_ocr": 86,
+   "pages_translated": 82,
+   "with_printed_number": 27,
+   "printed_backsteps": 3,
+   "printed_repeats": 4,
+   "pages_count_field": 86,
+   "pages_translated_field": 82
+  },
+  "run": [
+   20,
+   28,
+   55,
+   86
+  ],
+  "pages": [
+   {
+    "page_number": 20,
+    "page_id": "69e009f92dfba6e52bfaa308",
+    "image_url": "https://images.sourcelibrary.org/archived/69e009f82dfba6e52bfaa2f4/20.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<meta>The text is a page from a Buddhist Chan (Zen) text, likely a record of a master's teachings or a biographical account.</meta>\n\n徹道眼入般若性海始得久立珍重\n雪峯與巖頭同至澧州鰲山鎮阻雪頭每日打\n睡師一向坐禪一日喚云師兄且起來頭云作\n什麼師云今生不著便共文璅漢行脚到處\n彼他帶累今日與師兄到此又只管打睡頭喝云\n瞳眠去瞳眠去每日牀上坐恰似七村裏土地相\n似他時後日魔魅人家男女去在師自點肯云某\n甲這裏未穩在不敢自謾頭曰我將謂你他後\n向孤峯頂上盤結草庵播揚大教猶作者介語話\n師云甲其實未穩在頭云若實如此據你見處\n一一通來是則與你證明不是則與你刻却師\n\n<vocab>徹道, 般若, 性海, 雪峯, 巖頭, 澧州, 鰲山, 坐禪, 行脚, 孤峯, 草庵, 大教</vocab>",
+    "ocr_engine": "pipeline_preview",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation": "<meta>continues from previous page: ...you must understand</meta>\n\n...the way, enter the ocean of the nature of <term>Prajna</term> <gloss>wisdom</gloss>, and only then will you be able to stand for a long time. Take care.\"\n\n<term>Xuefeng</term> and <term>Yantou</term> arrived together at the <term>Ao Mountains</term> in <term>Lizhou</term> and were blocked by snow. <term>Yantou</term> slept every day. The master <term>Xuefeng</term> sat in <term>zazen</term> <gloss>seated meditation</gloss> continuously. One day, he called out, \"Brother, please wake up!\" <term>Yantou</term> said, \"What are you doing?\" The master said, \"In this life, I have not attained ease. I have traveled on foot with you, a fellow seeker, to many places, and have been burdened by you. Today, we have reached this place, and you just keep on sleeping!\" \n\n<term>Yantou</term> shouted, \"Go to sleep! Go to sleep! Every day sitting on the bed is just like the local deity in the village. In the future, you will go off to bewitch the men and women of people's families!\" The master himself reflected and said, \"My understanding here is not yet stable; I do not dare to deceive myself.\" <term>Yantou</term> said, \"I had thought that later you would go to the top of a lonely peak, build a grass hut, and spread the great teaching. Yet you are still making such talk!\" The master said, \"I truly am not yet stable.\" <term>Yantou</term> said, \"If it is really like this, according to your view, explain it to me one by one. If it is correct, I will certify it for you; if it is not, I will cut it away.\" The master...\n\n<summary>This page describes the interactions between Xuefeng and Yantou as they are snowbound, focusing on Xuefeng's honest admission of his lack of realization and Yantou's challenge to his understanding.</summary>\n<keywords>Xuefeng, Yantou, Ao Mountains, Zazen, Grass Hut, Great Teaching</keywords>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 28,
+    "page_id": "69e009f92dfba6e52bfaa310",
+    "image_url": "https://images.sourcelibrary.org/archived/69e009f82dfba6e52bfaa2f4/28.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n\n不可充飢便燒於之禮<note>The text contains red ink punctuation marks (dots) used for reading guidance in Classical Chinese texts.</note>\n師洞山良价禪師問雲巖和尚百年後忽有人問還貌得師真不如何祗對巖良久云只這是師\n佇思巖云承當者箇事大須審細師猶涉疑後因過水觀影大悟前旨乃有偈曰切忌從他覓迢\n迢與我疎我今獨自往處處得逢渠我今不是渠應須恁麼會方得契如如\n洞山問僧世間是甚麼物最苦僧云地獄最苦師云不然向此衣線下不明大事始是苦\n令遵禪師問翠微如何是西來的意微云待無人時向汝道師良久曰無人也請師說微下禪\n\n<image-desc size=\"small\" type=\"symbol\" significance=\"low\">Crescent moon-shaped punctuation mark used to denote the beginning of a new section or paragraph.</image-desc>\n\n<vocab>洞山良价, 雲巖和尚, 禪師, 翠微, 佛法, 禪宗, 公案</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation": "<note>...cannot satisfy hunger, burn them all.</note>\n\nChan Master <term>Dongshan Liangjie</term> asked the monk <term>Yunyan</term>, \"A hundred years from now, if someone suddenly asks me if I can paint a portrait of the master's true self, how should I respond?\" <term>Yunyan</term> was silent for a long time and said, \"Just this.\" The Master pondered. <term>Yunyan</term> said, \"Taking on this matter requires very careful examination.\" The Master still harbored doubts. Later, while crossing a river, he saw his reflection and had a great enlightenment regarding the previous intention. He then had a verse:\n\"Avoid seeking it from others,\nFor it is far from me.\nNow I go alone,\nAnd meet it everywhere.\nI am not it now,\nYet it is indeed me.\nOnly when you understand in this way,\nCan you truly attain suchness.\"\n\n<term>Dongshan</term> asked a monk, \"What is the most bitter thing in the world?\" The monk said, \"Hell is the most bitter.\" The Master said, \"Not so. To not understand the Great Matter <note>the fundamental nature of mind</note> under these robes and threads is what is truly bitter.\"\n\nChan Master <term>Lingzun</term> asked <term>Cuiwei</term>, \"What is the meaning of the coming from the West?\" <term>Cuiwei</term> said, \"Wait until there is no one here, then I will tell you.\" After a long time, the Master said, \"There is no one here. Please, Master, speak.\" <term>Cuiwei</term> went down into the Chan...",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 55,
+    "page_id": "69e009f92dfba6e52bfaa32b",
+    "image_url": "https://images.sourcelibrary.org/archived/69e009f82dfba6e52bfaa2f4/55.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>二十七</page-num>\n<meta>catchword: 直拍下</meta>\n\n不知身本同虛身本與影不殊不得一有一無若\n欲存一捨一永與真理相疎更若愛聖憎凡生死\n海裏浮沉煩惱因心故有無心煩惱何居不勞分\n別取捨自然得道須臾夢時夢中造作覺時竟\n竟都無歡思覺時與夢顛倒二見不殊改迷取\n覺求利何異販賣商徒動靜兩亡常寂自然契\n合真如若言眾生異佛迢迢與佛恒殊佛與眾\n生不二自然究竟無餘\n法性本來常寂蕩蕩無有邊畔安心取捨之間\n被他一境回換斂容入定坐禪攝境安心竟觀機\n關木人修道何時得達彼岸諸法本空無著真\n\n<vocab>Jikji, Buddhism, Zen, Baegun Gyeonghan, Enlightenment, Dharma, Meditation</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation": "...you do not know that the body is fundamentally the same as emptiness. The body and the shadow are fundamentally no different. Do not have one existence or one non-existence. If you want to keep one and discard the other, you will forever be distant from the true principle. If you further love the sage and hate the ordinary, you will drift and sink in the sea of birth and death. Afflictions exist because of the mind; if there is no mind, where would the afflictions dwell? Do not labor to differentiate or grasp and discard; naturally, you will attain the Dao in an instant. When dreaming, one creates things in the dream; when awake, there is absolutely nothing. The thinking while awake and the dream are inverted; the two views are not different. To change from confusion to awakening and seek profit is no different from a peddling merchant. When movement and stillness are both forgotten, constant silence naturally accords with true suchness. If one says that sentient beings are different from the Buddha, it is far and eternally distinct from the Buddha. The Buddha and sentient beings are not two; it is naturally complete without remainder.\n\nThe nature of Dharma is fundamentally always silent, vast, and without boundaries. If the mind grasps between grasping and discarding, it is replaced by that one state. Restrain your appearance, enter <term>dhyana</term> <gloss>meditation</gloss>, sit in Zen, control your environment, and settle your mind. If you carefully examine the mechanism, it is like a wooden person. How can one ever reach the other shore in cultivating the Dao? All phenomena are fundamentally empty, and there is no true attachment.",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 86,
+    "page_id": "69e009f92dfba6e52bfaa34a",
+    "image_url": "https://images.sourcelibrary.org/archived/69e009f82dfba6e52bfaa2f4/86.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>handwritten</script>\n<page-type>spine</page-type>\n<warning>Handwritten East Asian calligraphy on the spine of a bound volume.</warning>\n\n<image-desc size=\"medium\" type=\"symbol\" significance=\"high\">The spine of the Jikji manuscript, showing the title written vertically in black ink on the paper binding, with a red thread binding at the bottom.</image-desc>\n\n直指心體要節\n\n<vocab>Jikji, Baegun Gyeonghan, Buddhist, Zen, Anthology, Calligraphy</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation": "<note>The spine of the Jikji manuscript displays the title written vertically in black ink, featuring a red thread binding at the bottom.</note>\n\n<term>Jikji Simche Yojeol</term> <gloss>Anthology of Great Buddhist Priests' Zen Teachings on the Direct Pointing to the Human Heart</gloss>\n\n<summary>This page presents the spine title of the Jikji, identifying the work as the core anthology of Zen teachings by Baegun Gyeonghan.</summary>\n<keywords>Jikji, Baegun Gyeonghan, Zen Buddhism, Calligraphy, Manuscript</keywords>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 12,
+  "stratum": "chan-zen",
+  "book_id": "69aebb9a6059efb05d4fdcc0",
+  "book_url": "https://sourcelibrary.org/book/69aebb9a6059efb05d4fdcc0",
+  "tradition": "chan-zen",
+  "book": {
+   "author": "Huineng (惠能)",
+   "display_title": null,
+   "id": "69aebb9a6059efb05d4fdcc0",
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "language": "Chinese",
+   "pages_count": 44,
+   "pages_ocr": 44,
+   "pages_translated": 44,
+   "published": "Unknown",
+   "title": "六祖大師法寶壇經 (Platform Sutra of the Sixth Patriarch)",
+   "catalog_metadata": {
+    "collections": [
+     "booksbylanguage_chinese",
+     "booksbylanguage"
+    ]
+   },
+   "original_language": "Chinese",
+   "visible": true
+  },
+  "structure": {
+   "page_records": 44,
+   "distinct_page_numbers": 44,
+   "duplicate_records": 0,
+   "pages_with_ocr": 44,
+   "pages_translated": 44,
+   "with_printed_number": 1,
+   "printed_backsteps": 0,
+   "printed_repeats": 0,
+   "pages_count_field": 44,
+   "pages_translated_field": 44
+  },
+  "run": [
+   7,
+   22,
+   29,
+   41
+  ],
+  "pages": [
+   {
+    "page_number": 7,
+    "page_id": "69dfe30b2e48086c70daabcb",
+    "image_url": "https://images.sourcelibrary.org/archived/69aebb9a6059efb05d4fdcc0/7.jpg",
+    "ocr": "唯論見性。不論禪定解脫。宗曰。何不論禪定解脫。謂曰。為是二法。不是佛法。佛法是不二之法。宗又問。如何是佛法不二之法。能曰。法師講涅槃經。經明見佛性。是佛法不二之法。如涅槃經高貴德王菩薩白佛言。犯四重禁。作五逆罪。及一闡提等。當斷善根佛性否。佛言。善根有二。一者常。二者無常。佛性非常非無常。是故不斷。名為不二。一者善。二者不善。佛性非善非不善。是名不二。蘊之與界。凡夫見二。智者了達其性無二。無二之性。即是佛性。印宗聞說。歡喜合掌言。某甲講經。猶如瓦礫。仁者論義。猶如真金。於是為能剃髮。願事為師。能遂於菩提樹下開東山法門。能於東山得法。辛苦受盡。命似懸絲。今日得與史君官僚僧尼道俗同此一會。莫非累劫之因。亦是過去生中供養諸佛。同種善根。方始得聞如上頓教得法之因。教是先聖所傳。不是惠能自智。願聞先聖教者。各令淨心。聞了各自除疑。如先世聖人無別。師復告眾曰。善知識。菩提般若之智。世人本自有之。只緣心迷。不能自悟。須假大善知識示導見性。當知愚人智人。佛性本無差別。只緣迷悟不同。所以有愚有智。吾今為說摩訶般若波羅蜜法。使汝等各得智慧。志心諦聽。吾為汝說。善知識。世人終日口念般若。不識自性般若。猶如說食不飽。口但說空。萬劫不得見性。終無有益。善知識。摩訶般若波羅蜜是梵語。此言大智慧到彼岸。此須心行。不在口念。口念心不行。\n\n<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<vocab>見性, 禪定, 解脫, 佛法, 不二之法, 涅槃經, 佛性, 善根, 摩訶般若波羅蜜, 善知識</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "We only discuss seeing one's true nature <note>original: \"見性\", the core realization in Zen</note>. We do not discuss meditative concentration <term>dhyana</term> <gloss>meditative absorption</gloss> or liberation. \n\nYinzong asked: Why do you not discuss meditative concentration and liberation? \n\nHuineng replied: Because these are two separate things, and thus not the Buddha-Dharma. The Buddha-Dharma is a teaching of non-duality <note>original: \"不二之法\", the principle that reality is not composed of opposing pairs</note>. \n\nYinzong asked again: What is this Buddha-Dharma of non-duality? \n\nHuineng said: Master, you lecture on the Nirvana Sutra. This sutra clarifies that seeing the Buddha-nature is the Buddha-Dharma of non-duality. As the Nirvana Sutra states, the Bodhisattva Noble Virtue King asked the Buddha: If someone commits the four gravest sins, the five heinous crimes, or is an <term>icchantika</term> <gloss>one who lacks the seeds of enlightenment</gloss>, do they cut off their roots of goodness and their Buddha-nature? \n\nThe Buddha replied: There are two kinds of roots of goodness. The first is permanent, and the second is impermanent. However, the Buddha-nature is neither permanent nor impermanent. Therefore, it is never cut off. This is called non-duality. Furthermore, there is good and there is not-good. The Buddha-nature is neither good nor not-good. This is called non-duality. Ordinary people see the physical aggregates and the sensory realms as two separate things. The wise realize that their nature is not two. This nature of non-duality is the Buddha-nature.\n\nUpon hearing this, Yinzong rejoiced and joined his palms in reverence. He said: My lecturing on the sutras is like common rubble, while your discussion of the meaning is like pure gold. \n\nThereupon, he shaved Huineng’s head and requested to serve him as a disciple. Huineng then opened the Dharma Gate of the East Mountain <note>the lineage of the Fifth Patriarch Hongren</note> under a Bodhi tree. \n\nHuineng continued: I received the Dharma at East Mountain and endured extreme hardships. My life hung by a thread. That I am able to meet with the Prefect, the officials, monks, nuns, and laypeople in this assembly today is due to causes from many kalpas <gloss>eons</gloss> ago. It is also because you made offerings to many Buddhas in past lives and planted shared roots of goodness that you are now able to hear this sudden teaching <note>original: \"頓教\", the doctrine of immediate enlightenment</note> and the causes of my receiving the Dharma. This teaching was passed down by the ancient sages; it is not my own personal wisdom. Those who wish to hear the teaching of the ancient sages should each purify their minds. After hearing it, each of you will resolve your own doubts, becoming no different from the sages of past generations.\n\nThe Master then addressed the assembly: Good friends, the wisdom of <term>Bodhi-Prajna</term> <gloss>enlightened wisdom</gloss> is something people of this world inherently possess. It is only because the mind is deluded that they cannot realize it themselves. They must rely on a great spiritual friend to show them the way and guide them to see their nature. You should know that there is no difference in the Buddha-nature of an ignorant person and a wise person. It is only because of the difference between delusion and awakening that some are ignorant and some are wise. I shall now speak to you of the Great <term>Prajna Paramita</term> <gloss>Perfection of Wisdom</gloss> so that each of you may attain wisdom. Listen carefully with a sincere heart, and I will speak for you.\n\nGood friends, people of the world recite <term>Prajna</term> <gloss>wisdom</gloss> with their mouths all day long, but they do not recognize the <term>Prajna</term> of their own nature. This is like talking about food but never becoming full. If you only speak of emptiness with your mouth, you will not see your nature even after ten thousand kalpas. In the end, there is no benefit. \n\nGood friends, <term>Maha Prajna Paramita</term> is a Sanskrit term. In our language, it means \"Great Wisdom that reaches the Other Shore.\" This must be practiced in the heart; it does not consist of oral recitation. If the mouth recites it but the heart does not practice it, it is of no use.\n\n<summary>Huineng explains the principle of non-duality through the Nirvana Sutra and begins his public teaching on the Great Perfection of Wisdom, emphasizing internal practice over mere recitation.</summary>\n<keywords>Huineng, Yinzong, non-duality, Buddha-nature, Nirvana Sutra, Prajna Paramita, sudden teaching, East Mountain Dharma Gate</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "batch_api"
+   },
+   {
+    "page_number": 22,
+    "page_id": "69dfe30b2e48086c70daabda",
+    "image_url": "https://images.sourcelibrary.org/archived/69aebb9a6059efb05d4fdcc0/22.jpg",
+    "ocr": "多。迷人不能省覺。念念起惡。常行惡道。迴一念善。智慧即生。此名自性化身佛。何名圓滿報身。譬如一燈能除千年暗。一智能滅萬年愚。莫思向前。已過不可得。常思於後。念念圓明。自見本性。善惡雖殊。本性無二。無二之性。名為實性。於實性中。不染善惡。此名圓滿報身。自性起一念惡。滅萬劫善因。自性起一念善。得恆沙惡盡。直至無上菩提。念念自見。不失本念。名為報身。善知識。從法身思量。即是化身佛。念念自性自見。即是報身佛。自悟自修自性功德。是真歸依。皮肉是色身。色身是舍宅。不言歸依也。但悟自性三身。即識自性佛。吾有一無相頌。若能誦持。言下令汝積劫迷罪一時消滅。頌曰。迷人修福不修道。只言修福便是道。布施供養福無邊。心中三惡元來造。擬將修福欲滅罪。後世得福罪還在。但向心中除罪緣。各自性中真懺悔。忽悟大乘真懺悔。除邪行正即無罪。學道常於自性觀。即與諸佛同一類。吾祖惟傳此頓法。普願見性同一體。若欲當來覓法身。離諸法相心中洗。努力自見莫悠悠。後念忽絕一世休。若悟大乘得見性。虔恭合掌至心求。師言。善知識。總須誦取。依此修行。言下見性。雖去吾千里。如常在吾邊。於此言下不悟。即對面千里。何勤遠來。珍重好去。一眾聞法。靡不開悟。歡喜奉行。\n\n<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<vocab>六祖大師法寶壇經, 自性, 化身佛, 報身, 實性, 歸依, 無相頌, 頓法, 見性, 懺悔</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "There are many such people. Deluded people cannot awaken themselves. Their every thought gives rise to evil, and they constantly walk the paths of evil. Yet, if they turn back a single thought toward goodness, wisdom is immediately born. This is called the <term>Nirmanakaya</term> <gloss>Transformation Body</gloss> of one's own nature.\n\nWhat is the <term>Sambhogakaya</term> <gloss>Reward Body</gloss>? Just as a single lamp can dispel a thousand years of darkness, a single flash of wisdom can extinguish ten thousand years of ignorance. Do not dwell on what came before; the past is gone and cannot be recovered. Always think of what comes after. Let every thought be perfect and bright, and you will see your own original nature. Although good and evil differ, the original nature is not two. This non-dual nature is called the true nature. Within this true nature, one is not stained by either good or evil. This is called the <term>Sambhogakaya</term> <gloss>Reward Body</gloss>.\n\nIf a single evil thought arises from one's own nature, it destroys the good causes of ten thousand <term>kalpas</term> <gloss>aeons</gloss>. If a single good thought arises from one's own nature, it ends evils as numerous as the sands of the Ganges River, leading directly to supreme <term>Bodhi</term> <gloss>Enlightenment</gloss>. To see for oneself in every thought and never lose the original thought is called the Reward Body.\n\nLearned friends, to deliberate from the <term>Dharmakaya</term> <gloss>Truth Body</gloss> is the Transformation Body Buddha. When every thought sees into its own nature, that is the Reward Body Buddha. To realize and cultivate the merit of one's own nature for oneself is the true refuge. The skin and flesh are the physical body; the physical body is merely a house and is not spoken of as a refuge. Simply realize the three bodies of your own nature, and you will recognize the Buddha of your own nature.\n\nI have a Verse of Formlessness. If you can recite and maintain it, it will cause the deluded sins accumulated over many aeons to vanish the moment the words are spoken. The verse says:\n\nDeluded people cultivate blessings but not the Way,\nClaiming that cultivating blessings is the Way itself.\nWhile the blessings from charity and offerings are limitless,\nThe three evils remain rooted in the mind.\nBy attempting to use the cultivation of blessings to wipe out sins,\nOne receives blessings in future lives, but the sins remain.\nOne must simply remove the conditions of sin from within the mind,\nAnd practice true repentance within one's own nature.\nA sudden realization of the <term>Mahayana</term> <gloss>Great Vehicle</gloss> true repentance,\nRemoving the false and practicing the right, leaves one without sin.\nThose who study the Way should constantly observe their own nature;\nThey are then of the same kind as all Buddhas.\nOur ancestors transmitted only this sudden teaching,\nWishing that all might see their nature and become one substance.\nIf you wish to seek the Truth Body in the future,\nLeave all appearances of phenomena and wash your heart within.\nStrive to see it for yourself; do not drift aimlessly.\nIf the next thought is suddenly cut off, this life is over.\nIf you realize the Great Vehicle and see your nature,\nJoin your palms in reverence and seek it with a sincere heart.\n\nThe Master said: Learned friends, you must all recite this and practice according to it. If you see your nature upon hearing these words, then even if you are a thousand miles from me, it will be as if you are always by my side. If you do not realize it upon hearing these words, then even if we are face to face, we are a thousand miles apart. Why bother coming from so far? Take care and go well.\n\nThe entire assembly heard the Dharma, and there were none who did not achieve awakening. They rejoiced and practiced accordingly.\n\n<summary>The Sixth Patriarch explains the Reward Body of Buddha and provides the Verse of Formlessness to guide practitioners in seeing their true nature rather than merely seeking external blessings. He emphasizes that true repentance and sudden enlightenment come from within the mind.</summary>\n<keywords>Huineng, Platform Sutra, Reward Body, Transformation Body, Verse of Formlessness, Repentance, Buddha-nature, Sudden Enlightenment</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "batch_api"
+   },
+   {
+    "page_number": 29,
+    "page_id": "69dfe30b2e48086c70daabe1",
+    "image_url": "https://images.sourcelibrary.org/archived/69aebb9a6059efb05d4fdcc0/29.jpg",
+    "ocr": "人。通達無取捨。以知五蘊法。及以蘊中我。外現眾色像。一一音聲相。平等如夢幻。不起凡聖見。不作涅槃解。二邊三際斷。常應諸根用。而不起用想。分別一切法。不起分別想。劫火燒海底。風鼓山相擊。真常寂滅樂。涅槃相如是。吾今強言說。令汝捨邪見。汝勿隨言解。許汝知少分。志道聞偈大悟。踴躍作禮而退。行思禪師。姓劉氏。吉州安城人也。聞曹溪法席盛化。徑來參禮。遂問曰。當何所務。即不落階級。師曰。汝曾作甚麼來。曰。聖諦亦不為。師曰。落何階級。曰。聖諦尚不為。何階級之有。師深器之。令思首眾。一日。師謂曰。汝當分化一方。無令斷絕。思既得法。遂回吉州青原山。弘法紹化。諡號弘濟禪師。懷讓禪師。金州杜氏子也。初謁嵩山安國師。安發之曹溪參扣。讓至。禮拜。師曰。甚處來。曰。嵩山。師曰。甚麼物恁麼來。曰。說似一物即不中。師曰。還可修證否。曰。修證即不無。污染即不得。師曰。只此不污染。諸佛之所護念。汝既如是。吾亦如是。西天般若多羅讖。汝足下出一馬駒。踏殺天下人。應在汝心。不須速說。讓豁然契會。遂執侍左右十五載。日益玄奧。後往南嶽。大闡禪宗。永嘉玄覺禪師。少習經論。精天台止觀法門。因看維摩經。發明心地。偶師弟子玄策相訪。與其劇談。出言暗合諸祖。策云。仁者得法師誰。曰。我聽方等經論。各有師承。後於維摩經悟佛心宗。未有證明者。策云。威音王已前即得。\n\n<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<vocab>六祖大師法寶壇經, 行思禪師, 懷讓禪師, 永嘉玄覺禪師, 曹溪, 涅槃, 聖諦, 維摩經, 佛心宗</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "A person who is thoroughly realized has no sense of grasping or rejecting. By knowing the <term>five skandhas</term> <gloss>the five aggregates of form, sensation, perception, mental formations, and consciousness</gloss> and the self within those aggregates, they see that all external forms and every sound are equal, like a dream or an illusion. They do not give rise to views of \"ordinary\" or \"holy,\" nor do they form intellectual interpretations of <term>Nirvana</term> <gloss>the state of liberation from suffering and rebirth</gloss>. The two extremes <note>such as existence and non-existence</note> and the three periods of time <note>past, present, and future</note> are cut off. They constantly respond to the functions of the sensory organs, yet they do not give rise to the thought of \"functioning.\" They distinguish all phenomena, yet do not give rise to the thought of \"distinction.\" Even when the fires at the end of an eon burn the seabed, or the winds lash the mountains against one another, the joy of true, eternal, and peaceful extinction remains. Such is the nature of Nirvana. I now speak of it under constraint to make you abandon false views. Do not follow my words with literal interpretations, and I will allow that you have understood a small portion. Zhidao heard this verse and attained great awakening. Overjoyed, he bowed and withdrew.\n\nZen Master Xingsi was born to the Liu family in Ancheng, Jizhou. Hearing that the Dharma seat at Caoxi was flourishing, he went directly to pay his respects. He asked, \"What must one do so as not to fall into stages or ranks?\" The Master <note>Huineng, the Sixth Patriarch</note> asked, \"What have you been doing?\" Xingsi replied, \"I do not even practice the Holy Truths.\" The Master asked, \"Then what stage have you fallen into?\" Xingsi replied, \"If I do not even practice the Holy Truths, what stage could there be?\" The Master deeply appreciated his capacity and made Xingsi the leader of the assembly. One day, the Master told him, \"You should go and teach in your own region so that the lineage is not cut off.\" Having received the Dharma, Xingsi returned to Mount Qingyuan in Jizhou to spread the teachings. He was posthumously titled Zen Master Hongji.\n\nZen Master Huairang was the son of the Du family in Jinzhou. He first visited National Teacher Anguo at Mount Song. Anguo sent him to Caoxi to consult the Master. When Huairang arrived and bowed, the Master asked, \"Where do you come from?\" Huairang replied, \"From Mount Song.\" The Master asked, \"What is this thing that has come here?\" Huairang replied, \"To say it is like a thing would be off the mark.\" The Master asked, \"Can it still be cultivated and realized?\" Huairang replied, \"It is not that there is no cultivation or realization, but it cannot be defiled.\" The Master said, \"Just this 'not being defiled' is what all Buddhas protect and keep in mind. You are like this, and I am like this too. Prajnatara of India predicted that a young horse would emerge from under your feet and trample the people of the world. This will happen in your heart; there is no need to speak of it quickly.\" Huairang suddenly understood. He served the Master for fifteen years, growing deeper in the profound mysteries every day. Later, he went to Nanyue and greatly promoted the Zen school.\n\nZen Master Xuanjue of Yongjia studied the sutras and commentaries in his youth and was an expert in the Tiantai school's <term>Samatha-Vipasyana</term> <gloss>calm abiding and insight</gloss> methods. While reading the Vimalakirti Sutra, he realized the ground of his mind. By chance, the Master's disciple Xuance visited him and had a deep discussion. Xuanjue's words were in secret agreement with the Patriarchs. Xuance asked, \"Who was your teacher when you attained the Dharma?\" Xuanjue said, \"I listened to the <term>Vaipulya</term> <gloss>extensive or Mahayana</gloss> sutras and commentaries, and each had a teacher. Later, I realized the Buddha-mind school through the Vimalakirti Sutra, but I have no one to verify it.\" Xuance said, \"Before the time of the King of Awesome Sound <note>the first Buddha of the remote past</note>, that would have been fine.\"\n\n<summary>This page records the Sixth Patriarch Huineng's instructions on the nature of Nirvana and his initial encounters with three major disciples: Xingsi, Huairang, and Xuanjue. These meetings emphasize direct realization over intellectual study and formal stages of practice.</summary>\n<keywords>Huineng, Xingsi, Huairang, Xuanjue, Nirvana, Vimalakirti Sutra, Zen lineage, Mount Qingyuan, Nanyue, Caoxi</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "batch_api"
+   },
+   {
+    "page_number": 41,
+    "page_id": "69dfe30b2e48086c70daabed",
+    "image_url": "https://images.sourcelibrary.org/archived/69aebb9a6059efb05d4fdcc0/41.jpg",
+    "ocr": "而能建立。皆是本心生萬種法。故經云心生種種法生。心滅種種法滅。若欲成就種智。須達一相三昧。一行三昧。若於一切處而不住相。於彼相中不生憎愛。亦無取捨。不念利益壞等事。安閒恬靜。虛融澹泊。此名一相三昧。若於一切處行住坐臥。純一直心。不動道場。真成淨土。此名一行三昧。若人具二三昧。如地有種。含藏長養。成熟其實。一相一行亦復如是。我今說法。猶如時雨。普潤大地。汝等佛性。譬諸種子。遇茲霑洽。悉得發生。承吾旨者。決獲菩提。依吾行者。定證妙果。聽吾偈曰。心地含諸種。普雨悉皆萌。頓悟花情已。菩提果自成。師說偈已。曰。其法無二。其心亦然。其道清淨。亦無諸相。汝等慎勿觀靜及空其心。此心本淨。無可取捨。各自努力。隨緣好去。爾時。徒眾作禮而退。大師七月八日忽謂門人曰。吾欲歸新州。汝等速理舟楫。大眾哀留甚堅。師曰。諸佛出現。猶示涅槃。有來必去。理亦常然。吾此形骸。歸必有所。眾曰。師從此去。早晚可回。師曰。葉落歸根。來時無口。又問曰。正法眼藏傳何人。師曰。有道者得。無心者通。又問。後莫有難否。師曰。吾滅後五六年。當有一人來取吾首。聽吾記曰。頭上養親。口裡須餐。遇滿之難。楊柳為官。又云。吾去七十年。有二菩薩從東方來。一出家、一在家。同時興化。建立吾宗。締緝伽藍。昌隆法嗣。問曰。未知從上佛祖應現已來。傳授幾代。願垂開示。師云。古佛應世已無\n\n<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<vocab>一相三昧, 一行三昧, 佛性, 菩提, 涅槃, 正法眼藏, 佛祖</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "And thus they are established. All things are the original mind producing ten thousand kinds of phenomena. Therefore, the sutra says: when the mind arises, various phenomena arise; when the mind ceases, various phenomena cease. If you wish to achieve the <term>All-Knowledge</term> <gloss>the wisdom of a Buddha</gloss>, you must attain the <term>Samadhi of One Appearance</term> <gloss>a state of meditative concentration on the non-duality of all things</gloss> and the <term>Samadhi of One Practice</term> <gloss>the constant practice of maintaining a straightforward mind</gloss>. If, in all places, you do not cling to appearances, and within those appearances you do not give rise to resentment or love, nor have any grasping or rejection, and do not dwell on matters of profit, loss, or destruction, but remain peaceful, quiet, empty, harmonious, and indifferent, this is called the Samadhi of One Appearance. If, in all places, whether walking, standing, sitting, or lying down, you maintain a pure and straightforward mind, without moving from the <term>Bodhimaṇḍa</term> <gloss>place of enlightenment</gloss>, truly becoming the Pure Land, this is called the Samadhi of One Practice. If a person possesses these two samadhis, it is like the earth having seeds: they are contained, nourished, and their fruits are matured. The Samadhi of One Appearance and One Practice are just like this. My current teaching of the Law is like a timely rain, universally moistening the great earth. Your Buddha-nature is like the seeds; meeting this moisture, they all begin to grow. Those who receive my instructions will certainly attain <term>Bodhi</term> <gloss>enlightenment</gloss>. Those who follow my practice will surely realize the wonderful fruit. Listen to my verse:\n\nThe mind-ground contains all seeds,\nUnder the universal rain, all sprout.\nOnce the flower of sudden enlightenment is realized,\nThe fruit of Bodhi naturally matures.\n\nAfter the Master spoke the verse, he said: The Law is not dual, and the mind is the same. The Way is pure and without any appearances. You must be careful not to contemplate stillness or empty your minds. This mind is originally pure; there is nothing to grasp or reject. Each of you must exert yourselves and go well according to circumstances. At that time, the disciples bowed and withdrew.\n\nOn the eighth day of the seventh month, the Grand Master suddenly said to his followers: I wish to return to Xinzhou. You must quickly prepare the boats and oars. The assembly pleaded with him to stay with great sincerity. The Master said: Even when Buddhas appear in the world, they still manifest <term>Nirvana</term> <gloss>the passing away of a Buddha</gloss>. Whatever comes must go; this is a constant principle. This physical body of mine must have a place to return to. The assembly asked: After the Master leaves this time, when will you return? The Master said: Fallen leaves return to their roots; when I came, I had no mouth <note>This is a Zen metaphor suggesting that the ultimate truth cannot be spoken, or that his return is beyond words</note>.\n\nThey asked again: To whom has the <term>Treasury of the True Dharma Eye</term> <gloss>the core essence of the Buddha's teaching</gloss> been transmitted? The Master said: Those who have the Way obtain it; those who are without mind understand it. They asked further: Will there be any difficulties in the future? The Master said: Five or six years after my passing, a person will come to take my head. Listen to my prophecy:\n\nTo support the parents upon the head,\nThere must be food in the mouth.\nEncountering the difficulty of Man,\nYang and Liu will be the officials. <note>This cryptic prophecy refers to a historical attempt to steal the Sixth Patriarch's head by a monk hired by a rival school, involving officials named Yang and Liu</note>\n\nHe also said: Seventy years after my departure, two <term>Bodhisattvas</term> <gloss>enlightened beings</gloss> will come from the East, one a monk and one a layman. They will spread the teachings at the same time, establishing my school, repairing the <term>Sangharamas</term> <gloss>monasteries</gloss>, and making the lineage flourish.\n\nThey asked: We do not know how many generations have passed since the ancient Buddhas and Patriarchs first appeared. We pray you will provide an explanation. The Master said: The ancient Buddhas who responded to the world are already beyond count.\n\n<summary>The Sixth Patriarch Huineng explains the Samadhis of One Appearance and One Practice, delivers a final verse on enlightenment, and prepares for his death and return to Xinzhou while prophesying future events of the Zen lineage.</summary>\n<keywords>Huineng, Samadhi, Buddha-nature, Bodhi, Nirvana, Xinzhou, Treasury of the True Dharma Eye, prophecy, Zen lineage</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "batch_api"
+   }
+  ]
+ }
+]

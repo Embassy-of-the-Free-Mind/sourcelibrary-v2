@@ -31,7 +31,7 @@ Users ──> Vercel (Next.js 16) ──> MongoDB Atlas (bookstore)
 | Service | Purpose | Key Config |
 |---------|---------|------------|
 | **Vercel** | Next.js hosting, 7 crons | Project: `sourcelibrary-v2` |
-| **MongoDB Atlas** | Primary database | DB: `bookstore`, ~17K live + ~24.5K warehouse books |
+| **MongoDB Atlas** | Primary database | DB: `bookstore`, `books` holds live + hidden books; `books_warehouse` is almost entirely a duplicate of rows also in `books` (see Collections) |
 | **Supabase Postgres** | Analytics, browse cache, catalog, search | pgvector, pg_trgm, pg_cron |
 | **AWS Lambda** (eu-central-1) | AI processing workers | 4 functions, SQS-triggered |
 | **AWS SQS** (eu-central-1) | Job queues (FIFO) | 4 queues: OCR, translation, images, write |
@@ -127,7 +127,7 @@ Routes: `/artwork/[slug]`, `/artist/[name]`, `/api/artwork/`. Collections suppor
 | Collection | Purpose | Key Fields |
 |------------|---------|------------|
 | `books` | Book metadata (~17K live) | `id`, `title`, `author`, `slug`, `pages_count`, `pages_ocr`, `pages_translated` |
-| `books_warehouse` | Archived books (~24.5K) | Same schema, moved for Atlas perf |
+| `books_warehouse` | Archived book records (22,543 on 2026-10-05) | Same schema. **Not extra holdings:** 22,539 of them also exist in `books` under the same `id` (restored or re-imported), so counting `books` (live + hidden) already covers them; only 4 are warehouse-only. Never add the two collections together. |
 | `pages` | Individual pages (~3.1M live) | `book_id`, `ocr.data`, `translation.data`, `detected_images`, `page_type` |
 | `pages_warehouse` | Archived pages (~6.4M) | Same schema |
 | `deleted_books` | Soft-deleted books | Same as books, recoverable |
@@ -332,7 +332,7 @@ scripts/                    # Operational scripts
 7. **Hetzner for heavy crons** — Pipeline orchestration moved off Vercel to reduce costs/timeouts. Unified scheduler manages all workers.
 8. **Supabase for read-heavy paths** — Browse, analytics, search, and libraries queries hit Supabase for speed. MongoDB remains source of truth; Supabase mirrors derived data via sync crons.
 9. **Model routing by source** — BPH books get `gemini-3-flash-preview` (premium), all others get `gemini-3.1-flash-lite` (50% cheaper). See `src/lib/types/ai-models.ts`.
-10. **Two quality systems on image extraction** — One Gemini call emits both `gallery_quality` (per illustration, curatorial: "worth showing?") and `scan_quality` (per page, technical: "how cleanly digitized?"). They look similar but answer different questions. Design + extension plan in `.claude/docs/automated-image-quality-system.md`. Public-facing version: `/blog/what-makes-a-good-scan`. The live prompt + rubric live in `scripts/workers/image-extract-worker.mjs:117` and `scripts/workers/pipeline-orchestrator.mjs:1836`; `prompts/image-extraction/image-extraction-v0.md` is an out-of-date archive.
+10. **Two quality systems on image extraction** — One Gemini call emits both `gallery_quality` (per illustration, curatorial: "worth showing?") and `scan_quality` (per page, technical: "how cleanly digitized?"). They look similar but answer different questions. Design + extension plan in `.claude/docs/automated-image-quality-system.md`. Public-facing version: `/blog/what-makes-a-good-scan`. The live prompt + rubric live in `scripts/lib/image-extraction-request.mjs` (`IMAGE_EXTRACTION_PROMPT`; the realtime worker and the orchestrator batch path both import it); `prompts/image-extraction/image-extraction-v0.md` is an out-of-date archive.
 
 ## Known Dead Code & Duplicates
 

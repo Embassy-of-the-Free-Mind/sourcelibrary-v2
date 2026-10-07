@@ -1,0 +1,422 @@
+{
+ "C842": {
+  "kind": "REAL",
+  "vol": 113,
+  "page": 138,
+  "book_id": "6abeb583896ea18127c84e6f",
+  "folio": "f. 70a"
+ },
+ "C860": {
+  "kind": "REAL",
+  "vol": 113,
+  "page": 139,
+  "book_id": "6abeb583896ea18127c84e6f",
+  "folio": "f. 70b"
+ },
+ "C781": {
+  "kind": "REAL",
+  "vol": 113,
+  "page": 226,
+  "book_id": "6abeb583896ea18127c84e6f",
+  "folio": "f. 114a"
+ },
+ "C211": {
+  "kind": "REAL",
+  "vol": 113,
+  "page": 234,
+  "book_id": "6abeb583896ea18127c84e6f",
+  "folio": "f. 118a"
+ },
+ "C154": {
+  "kind": "REAL",
+  "vol": 113,
+  "page": 235,
+  "book_id": "6abeb583896ea18127c84e6f",
+  "folio": "f. 118b"
+ },
+ "C487": {
+  "kind": "REAL",
+  "vol": 113,
+  "page": 257,
+  "book_id": "6abeb583896ea18127c84e6f",
+  "folio": "f. 129b"
+ },
+ "C560": {
+  "kind": "REAL",
+  "vol": 113,
+  "page": 299,
+  "book_id": "6abeb583896ea18127c84e6f",
+  "folio": "f. 150b"
+ },
+ "C609": {
+  "kind": "REAL",
+  "vol": 113,
+  "page": 309,
+  "book_id": "6abeb583896ea18127c84e6f",
+  "folio": "f. 155b"
+ },
+ "C131": {
+  "kind": "REAL",
+  "vol": 33,
+  "page": 15,
+  "book_id": "6abe932b6a920ffd924d73b0",
+  "folio": "f. 8b"
+ },
+ "C626": {
+  "kind": "REAL",
+  "vol": 33,
+  "page": 49,
+  "book_id": "6abe932b6a920ffd924d73b0",
+  "folio": "f. 25b"
+ },
+ "C394": {
+  "kind": "REAL",
+  "vol": 33,
+  "page": 71,
+  "book_id": "6abe932b6a920ffd924d73b0",
+  "folio": "f. 36b"
+ },
+ "C273": {
+  "kind": "REAL",
+  "vol": 33,
+  "page": 92,
+  "book_id": "6abe932b6a920ffd924d73b0",
+  "folio": "f. 47a"
+ },
+ "C257": {
+  "kind": "REAL",
+  "vol": 33,
+  "page": 178,
+  "book_id": "6abe932b6a920ffd924d73b0",
+  "folio": "f. 90a"
+ },
+ "C622": {
+  "kind": "REAL",
+  "vol": 33,
+  "page": 200,
+  "book_id": "6abe932b6a920ffd924d73b0",
+  "folio": "f. 101a"
+ },
+ "C419": {
+  "kind": "REAL",
+  "vol": 33,
+  "page": 216,
+  "book_id": "6abe932b6a920ffd924d73b0",
+  "folio": "f. 109a"
+ },
+ "C690": {
+  "kind": "REAL",
+  "vol": 33,
+  "page": 299,
+  "book_id": "6abe932b6a920ffd924d73b0",
+  "folio": "f. 150b"
+ },
+ "C619": {
+  "kind": "REAL",
+  "vol": 96,
+  "page": 5,
+  "book_id": "6abeb158896ea18127c82682",
+  "folio": "f. 3a"
+ },
+ "C804": {
+  "kind": "REAL",
+  "vol": 96,
+  "page": 6,
+  "book_id": "6abeb158896ea18127c82682",
+  "folio": "f. 3b"
+ },
+ "C739": {
+  "kind": "REAL",
+  "vol": 96,
+  "page": 32,
+  "book_id": "6abeb158896ea18127c82682",
+  "folio": "f. 16b"
+ },
+ "C297": {
+  "kind": "REAL",
+  "vol": 96,
+  "page": 50,
+  "book_id": "6abeb158896ea18127c82682",
+  "folio": "f. 26a"
+ },
+ "C161": {
+  "kind": "REAL",
+  "vol": 96,
+  "page": 79,
+  "book_id": "6abeb158896ea18127c82682",
+  "folio": "f. 40b"
+ },
+ "C315": {
+  "kind": "REAL",
+  "vol": 96,
+  "page": 115,
+  "book_id": "6abeb158896ea18127c82682",
+  "folio": "f. 58b"
+ },
+ "C687": {
+  "kind": "REAL",
+  "vol": 96,
+  "page": 167,
+  "book_id": "6abeb158896ea18127c82682",
+  "folio": "f. 84b"
+ },
+ "C989": {
+  "kind": "REAL",
+  "vol": 96,
+  "page": 189,
+  "book_id": "6abeb158896ea18127c82682",
+  "folio": "f. 95b"
+ },
+ "C919": {
+  "kind": "REAL",
+  "vol": 174,
+  "page": 23,
+  "book_id": "6abed3fc896ea18127c8d272",
+  "folio": "f. 12a"
+ },
+ "C621": {
+  "kind": "REAL",
+  "vol": 174,
+  "page": 33,
+  "book_id": "6abed3fc896ea18127c8d272",
+  "folio": "f. 17a"
+ },
+ "C171": {
+  "kind": "REAL",
+  "vol": 174,
+  "page": 46,
+  "book_id": "6abed3fc896ea18127c8d272",
+  "folio": "f. 23b"
+ },
+ "C726": {
+  "kind": "REAL",
+  "vol": 174,
+  "page": 97,
+  "book_id": "6abed3fc896ea18127c8d272",
+  "folio": "f. 49a"
+ },
+ "C218": {
+  "kind": "REAL",
+  "vol": 174,
+  "page": 197,
+  "book_id": "6abed3fc896ea18127c8d272",
+  "folio": "f. 99a"
+ },
+ "C568": {
+  "kind": "REAL",
+  "vol": 174,
+  "page": 208,
+  "book_id": "6abed3fc896ea18127c8d272",
+  "folio": "f. 104b"
+ },
+ "C808": {
+  "kind": "REAL",
+  "vol": 174,
+  "page": 219,
+  "book_id": "6abed3fc896ea18127c8d272",
+  "folio": "f. 110a"
+ },
+ "C896": {
+  "kind": "REAL",
+  "vol": 174,
+  "page": 232,
+  "book_id": "6abed3fc896ea18127c8d272",
+  "folio": "f. 116b"
+ },
+ "C866": {
+  "kind": "REAL",
+  "vol": 157,
+  "page": 1,
+  "book_id": "6abec7fa896ea18127c8ac69",
+  "folio": "f. 1b"
+ },
+ "C302": {
+  "kind": "REAL",
+  "vol": 157,
+  "page": 10,
+  "book_id": "6abec7fa896ea18127c8ac69",
+  "folio": "f. 6a"
+ },
+ "C234": {
+  "kind": "REAL",
+  "vol": 157,
+  "page": 11,
+  "book_id": "6abec7fa896ea18127c8ac69",
+  "folio": "f. 6b"
+ },
+ "C566": {
+  "kind": "REAL",
+  "vol": 157,
+  "page": 26,
+  "book_id": "6abec7fa896ea18127c8ac69",
+  "folio": "f. 14a"
+ },
+ "C286": {
+  "kind": "REAL",
+  "vol": 157,
+  "page": 28,
+  "book_id": "6abec7fa896ea18127c8ac69",
+  "folio": "f. 15a"
+ },
+ "C598": {
+  "kind": "REAL",
+  "vol": 157,
+  "page": 68,
+  "book_id": "6abec7fa896ea18127c8ac69",
+  "folio": "f. 35a"
+ },
+ "C386": {
+  "kind": "REAL",
+  "vol": 157,
+  "page": 77,
+  "book_id": "6abec7fa896ea18127c8ac69",
+  "folio": "f. 39b"
+ },
+ "C548": {
+  "kind": "REAL",
+  "vol": 157,
+  "page": 82,
+  "book_id": "6abec7fa896ea18127c8ac69",
+  "folio": "f. 42a"
+ },
+ "C649": {
+  "kind": "NEG",
+  "vol": 113,
+  "page": 194,
+  "book_id": "6abeb583896ea18127c84e6f",
+  "folio": "f. 98a",
+  "english_from_page": 9
+ },
+ "C974": {
+  "kind": "PLANT",
+  "vol": 113,
+  "page": 138,
+  "book_id": "6abeb583896ea18127c84e6f",
+  "folio": "f. 70a",
+  "plant": {
+   "type": "inversion",
+   "find": "This is not possible in a town because of the many immediate distractions.",
+   "replace": "This is quite possible in a town, despite the many immediate distractions."
+  }
+ },
+ "C407": {
+  "kind": "DUP",
+  "vol": 113,
+  "page": 139,
+  "book_id": "6abeb583896ea18127c84e6f",
+  "folio": "f. 70b",
+  "dup_of_page": 139
+ },
+ "C342": {
+  "kind": "NEG",
+  "vol": 33,
+  "page": 254,
+  "book_id": "6abe932b6a920ffd924d73b0",
+  "folio": "f. 128a",
+  "english_from_page": 77
+ },
+ "C631": {
+  "kind": "PLANT",
+  "vol": 33,
+  "page": 15,
+  "book_id": "6abe932b6a920ffd924d73b0",
+  "folio": "f. 8b",
+  "plant": {
+   "type": "inversion (swap)",
+   "find": "\"Great\" refers to the relative truth. \"<term>Vajra</term> <gloss>adamantine/diamond</gloss>\" refers to the ultimate truth.",
+   "replace": "\"Great\" refers to the ultimate truth. \"<term>Vajra</term> <gloss>adamantine/diamond</gloss>\" refers to the relative truth."
+  }
+ },
+ "C434": {
+  "kind": "DUP",
+  "vol": 33,
+  "page": 49,
+  "book_id": "6abe932b6a920ffd924d73b0",
+  "folio": "f. 25b",
+  "dup_of_page": 49
+ },
+ "C275": {
+  "kind": "NEG",
+  "vol": 96,
+  "page": 121,
+  "book_id": "6abeb158896ea18127c82682",
+  "folio": "f. 61b",
+  "english_from_page": 156
+ },
+ "C799": {
+  "kind": "PLANT",
+  "vol": 96,
+  "page": 5,
+  "book_id": "6abeb158896ea18127c82682",
+  "folio": "f. 3a",
+  "plant": {
+   "type": "inversion",
+   "find": "It is not suitable to say that the motion and the goer are the same entity.",
+   "replace": "It is suitable to say that the motion and the goer are the same entity."
+  }
+ },
+ "C559": {
+  "kind": "DUP",
+  "vol": 96,
+  "page": 6,
+  "book_id": "6abeb158896ea18127c82682",
+  "folio": "f. 3b",
+  "dup_of_page": 6
+ },
+ "C207": {
+  "kind": "NEG",
+  "vol": 174,
+  "page": 109,
+  "book_id": "6abed3fc896ea18127c8d272",
+  "folio": "f. 55a",
+  "english_from_page": 162
+ },
+ "C243": {
+  "kind": "PLANT",
+  "vol": 174,
+  "page": 23,
+  "book_id": "6abed3fc896ea18127c8d272",
+  "folio": "f. 12a",
+  "plant": {
+   "type": "inversion",
+   "find": "Those are not capable of [proving] impermanence.",
+   "replace": "Those are fully capable of [proving] impermanence."
+  }
+ },
+ "C672": {
+  "kind": "DUP",
+  "vol": 174,
+  "page": 33,
+  "book_id": "6abed3fc896ea18127c8d272",
+  "folio": "f. 17a",
+  "dup_of_page": 33
+ },
+ "C973": {
+  "kind": "NEG",
+  "vol": 157,
+  "page": 55,
+  "book_id": "6abec7fa896ea18127c8ac69",
+  "folio": "f. 28b",
+  "english_from_page": 12
+ },
+ "C961": {
+  "kind": "PLANT",
+  "vol": 157,
+  "page": 1,
+  "book_id": "6abec7fa896ea18127c8ac69",
+  "folio": "f. 1b",
+  "plant": {
+   "type": "added fact",
+   "find": "To the Buddha, the Lord of Discipline, I prostrate,",
+   "replace": "To the Buddha, the Lord of Discipline, who taught it on Vulture Peak, I prostrate,"
+  }
+ },
+ "C269": {
+  "kind": "DUP",
+  "vol": 157,
+  "page": 10,
+  "book_id": "6abec7fa896ea18127c8ac69",
+  "folio": "f. 6a",
+  "dup_of_page": 10
+ }
+}

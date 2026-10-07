@@ -19,6 +19,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import {
   enrolChainedRun, tickChained, planNextRound, packJobs, selectAutoCandidates, AUTO_STATUSES, PHASE, MAX_STRIKES, MAX_REQUESTS_PER_JOB, looksCollapsed,
+  phase4Lane, phase4ExcludedBookIds, enrolForPhase4,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/translate-batch-chained.mjs';
@@ -130,11 +131,12 @@ const CANCELLED = { code: 1, message: 'The operation was cancelled.' };
  * the page's text. Tests override per page via `textFor` / `drop` / `state` / `error`.
  */
 function makeGemini({
-  text = (n: number) => textFor(n),
+  text = (n: number, _round?: number) => textFor(n),
   drop = (_n: number, _round: number): boolean => false,
   state = (_round: number): string => 'JOB_STATE_SUCCEEDED',
   error = (_round: number): any => null,
   finish = (_round: number): string => 'STOP',
+  blockBody = (_nums: number[], _round: number): string | null => null,  // override a block's whole response
 } = {}) {
   const submitted: Array<{ model: string; requests: any[]; displayName: string; name: string }> = [];
   return {
@@ -161,13 +163,13 @@ function makeGemini({
         const nums = [...prompt.matchAll(/--- Page (\d+) ---/g)].map(m => Number(m[1]));
         if (nums.length) {
           const tag = prompt.includes('Folium') ? 'BK2 ' : '';
-          const body = nums.filter(n => !drop(n, round)).map(n => `<translation page="${n}">${tag}${text(n)}</translation>`).join('\n');
+          const body = blockBody(nums, round) ?? nums.filter(n => !drop(n, round)).map(n => `<translation page="${n}">${tag}${text(n, round)}</translation>`).join('\n');
           return batchResponse(key, body, finish(round));
         }
         // Single page: the page whose OCR opens the "text to translate" section.
         const m = prompt.match(/Pagina (\d+)\./);
         const n = m ? Number(m[1]) : 0;
-        return batchResponse(key, drop(n, round) ? '' : text(n), finish(round));
+        return batchResponse(key, drop(n, round) ? '' : text(n, round), finish(round));
       }).reverse();
       return { state: st, responses };
     },
@@ -270,6 +272,26 @@ describe('each round sends the prompt the realtime worker would send', () => {
     expect(run.counts).toMatchObject({ written: 20, single_fallbacks: 8 });
   });
 
+  it('a block with MORE entries than pages (9 for 8, labels shifted) writes nothing by label; its pages go single-page (#5426)', async () => {
+    // Round 2 (block p9–16) answers the 69b6307b shape: an extra entry, then page N labelled with page N−1's text.
+    const gemini = makeGemini({
+      blockBody: (nums, round) => (round === 2
+        ? [`<translation page="${nums[0]}">Continued from the previous page.</translation>`, ...nums.map(n => `<translation page="${n + 1}">${textFor(n)}</translation>`)].join('\n')
+        : null),
+    });
+    const deps = makeDeps(gemini);
+    await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1 });
+    await tick(db, deps); // round 1 written; block p9–16 submitted
+    await tick(db, deps); // round 2 collected: over-full → discarded, eight singles submitted
+    let run = await runOf(db);
+    expect(run.rounds[1]).toMatchObject({ kind: 'block', discarded: 'over-block', returned: 9, written: 0, fallback: 8 });
+    for (let n = 9; n <= 16; n++) expect(pageText(db, `p${n}`)).toBeUndefined();
+    expect(run.pending_single.map((p: Doc) => p.page_number)).toEqual([9, 10, 11, 12, 13, 14, 15, 16]);
+    await tick(db, deps); // the singles come back right
+    run = await runOf(db);
+    for (let n = 9; n <= 16; n++) expect(pageText(db, `p${n}`)).toBe(textFor(n));
+  });
+
   it('in a round of singles, a page whose request errored stays pending while the others are written', async () => {
     const gemini = makeGemini({ drop: (n, round) => (round === 1 && n === 5) || (round === 2 && n === 3) });
     const deps = makeDeps(gemini);
@@ -364,6 +386,34 @@ describe('guards at the write', () => {
     expect((await runOf(db)).counts).toMatchObject({ written: 7, unhealthy: 1 });
   });
 
+  it('a block whose first entry echoes its source is discarded whole: the shifted siblings are never written (#4681 echo-shift)', async () => {
+    // The 2026-10-01 shape: entry 1 = page 1's own Latin, entries 2..8 = the English of the page BEFORE each.
+    // The count matches, so neither the short-block guard nor the positional fallback can see it.
+    // Real Latin prose for page 1 (the fixture's word list has no function words, and the echo tier
+    // only judges prose-like text): the 1700s page the defect was found on.
+    const ECHO = 'peccatum homicidii, nisi homicidio jam secuto; in dubio autem, num fetus ille fuerit mas, an femina, irregularitas incurritur. '
+      + 'Quaeritur: quaenam ex verbis absolutionis pertineant ad essentiam formae, et sint necessaria ad valorem sacramenti? '
+      + 'Resp. Quamvis doctores inter se pugnent, et alii scripserint haec verba esse solum de necessitate praecepti, tamen negari non potest '
+      + 'major probabilitas sententiae dicentis verba illa spectare quoque ad essentiam formae, nam ea est plurium opinio.';
+    pageDoc(db, 1).ocr.data = ECHO;
+    // Round 1 (the block) comes back echoed-and-shifted; the single-page re-sends come back right.
+    const gemini = makeGemini({ text: (n, round) => (round === 1 ? (n === 1 ? ECHO : textFor(n - 1)) : textFor(n)) });
+    const deps = makeDeps(gemini);
+    await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1 }); // submits round 1 = block p1–8
+    await tick(db, deps); // collect round 1: discarded whole; submit round 2 = eight singles
+    let run = await runOf(db);
+    expect(run.rounds[0]).toMatchObject({ kind: 'block', discarded: 'echo-shift', echoed: [1], written: 0, fallback: 8 });
+    for (let n = 1; n <= 8; n++) expect(pageDoc(db, n).translation?.data).toBeUndefined();
+    expect(pageDoc(db, 1).translation?.health_blocked).toBeUndefined(); // not refused: re-sent single-page like the rest
+    expect(run.counts).toMatchObject({ written: 0, unhealthy: 0, single_fallbacks: 8 });
+    expect(run.round.kind).toBe('single');
+    expect(run.round.units).toHaveLength(8);
+    await tick(db, deps); // collect the singles: each page gets ITS OWN translation
+    run = await runOf(db);
+    for (let n = 2; n <= 8; n++) expect(pageText(db, `p${n}`)).toBe(textFor(n));
+    expect(run.counts).toMatchObject({ written: 8, unhealthy: 0 });
+  });
+
   it('a closed dial leaves the run ready and submits nothing; an estimate over the approval refuses enrolment', async () => {
     const gemini = makeGemini();
     const closed = makeDeps(gemini, { budgetAllows: vi.fn(async () => false) });
@@ -385,6 +435,127 @@ describe('guards at the write', () => {
     expect((await enrolChainedRun(db, 'bk1', makeDeps(makeGemini()), { prompts: PROMPTS, approvedUsd: 1 })).reason).toMatch(/book-held/);
     db.data.books[0].pipeline_auto = { status: 'translate_submitted' };
     expect((await enrolChainedRun(db, 'bk1', makeDeps(makeGemini()), { prompts: PROMPTS, approvedUsd: 1 })).reason).toMatch(/realtime-lane-owns-book/);
+  });
+});
+
+// ── The OCR trust gate (#5700, scripts/lib/ocr-trust-gate.mjs) ─────────────────
+describe('a book whose OCR is not trusted is refused at enrol and parked at its next round', () => {
+  const gateBook = () => { db.data.books[0].language = 'Persian'; };   // a gated stratum with no year or hand condition
+  const reread = () => { for (const p of db.data.pages) { p.ocr.model = 'gemini-3.1-pro-preview'; p.ocr.updated_at = new Date('2026-10-20T00:00:00Z'); } };
+
+  it('enrol refuses with the stratum in the reason, sends nothing, creates no run', async () => {
+    gateBook();
+    const gemini = makeGemini();
+    const res = await enrolChainedRun(db, 'bk1', makeDeps(gemini), { prompts: PROMPTS, approvedUsd: 1 });
+    expect(res.ok).toBe(false);
+    expect(res.reason).toMatch(/^ocr-untrusted \(persian; re-read 0\/20 pages, #5700\)$/);
+    expect(gemini.submitted).toHaveLength(0);
+    expect(db.data[RUNS_COLLECTION] || []).toHaveLength(0);
+  });
+
+  it('negative control: the same book in an ungated language enrols', async () => {
+    db.data.books[0].language = 'Hebrew';
+    expect((await enrolChainedRun(db, 'bk1', makeDeps(makeGemini()), { prompts: PROMPTS, approvedUsd: 1, submit: false })).ok).toBe(true);
+  });
+
+  it('a run enrolled before the gate parks at its next round, with the stratum; what it wrote stays', async () => {
+    const gemini = makeGemini();
+    const deps = makeDeps(gemini);
+    expect((await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1 })).ok).toBe(true);
+    gateBook();
+    const sent = gemini.submitted.length;
+    // The round already in flight was paid for: it is collected and written. Nothing new is sent.
+    const notes = await tick(db, deps);
+    expect(notes[0].note).toMatch(/parked: ocr-untrusted \(persian/);
+    expect(gemini.submitted).toHaveLength(sent);
+    expect(await runOf(db)).toMatchObject({ phase: PHASE.PARKED, parked_for_ocr_trust: 'persian', round: null });
+    const written = db.data.pages.filter((p: Doc) => p.translation?.data).length;
+    expect(written).toBeGreaterThan(0);
+    expect(written).toBeLessThan(N_PAGES);
+    await tick(db, deps, 2);                                // terminal: later ticks leave it alone
+    expect(gemini.submitted).toHaveLength(sent);
+    expect(db.data.pages.filter((p: Doc) => p.translation?.data).length).toBe(written);
+  });
+
+  it('the way out: once the pages were re-read by a better reader after the gate date, the book enrols', async () => {
+    gateBook();
+    reread();
+    const res = await enrolChainedRun(db, 'bk1', makeDeps(makeGemini()), { prompts: PROMPTS, approvedUsd: 1, submit: false });
+    expect(res.ok).toBe(true);
+  });
+
+  it('the operator override enrols a gated book, is stamped on the run, and survives the per-round check', async () => {
+    gateBook();
+    const gemini = makeGemini();
+    const deps = makeDeps(gemini);
+    const res = await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1, allowUntrustedOcr: true });
+    expect(res.ok).toBe(true);
+    expect(res.run.ocr_trust_override).toBe('persian');
+    await tick(db, deps);                                   // round 1 collected; round 2 submitted, not parked
+    expect((await runOf(db)).phase).not.toBe(PHASE.PARKED);
+    expect(gemini.submitted.length).toBeGreaterThan(1);
+  });
+
+  it('enrolForPhase4 skips an untrusted book instead of handing it to the realtime lane', async () => {
+    gateBook();
+    const routed = await enrolForPhase4(db, db.data.books[0], { prompts: PROMPTS, pageCount: 20, deps: makeDeps(makeGemini()) });
+    expect(routed.lane).toBe('skip');
+    expect(routed.reason).toMatch(/^ocr-untrusted/);
+  });
+});
+
+// ── A hold placed AFTER enrol (#5424) ──────────────────────────────────────
+describe('a hold placed after enrol stops the run at the next step', () => {
+  const HOLD = { reason: 'stranded-text-5309', issue: 5309, held_at: new Date('2026-10-01T00:00:00Z'), held_from_status: 'complete', release: 'OCR replaced' };
+  const holdBook = () => { db.data.books[0].pipeline_auto = { status: 'held', hold: HOLD }; };
+
+  it('before a round is submitted: nothing is sent, the run parks, and it is terminal (the next tick leaves it alone)', async () => {
+    const gemini = makeGemini();
+    const deps = makeDeps(gemini);
+    expect((await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1, submit: false })).ok).toBe(true);
+    holdBook();
+    const notes = await tick(db, deps);
+    expect(notes[0].note).toBe('parked: book-held (stranded-text-5309)');
+    expect(gemini.submitted).toHaveLength(0);
+    expect(deps.logUsage).not.toHaveBeenCalled();
+    const run = await runOf(db);
+    expect(run).toMatchObject({ phase: PHASE.PARKED, parked_reason: 'book-held (stranded-text-5309)', parked_for_hold: 'stranded-text-5309' });
+    await tick(db, deps, 2);
+    expect(gemini.submitted).toHaveLength(0);
+  });
+
+  it('at collect: no page is written, the round is metered, its texts stay on the run, and no next round goes out', async () => {
+    const gemini = makeGemini();
+    const writePage = vi.fn(async () => ({ written: true }));
+    const deps = makeDeps(gemini, { writePage });
+    await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1 });  // round 1 submitted
+    holdBook();
+    await tick(db, deps);
+    expect(writePage).not.toHaveBeenCalled();
+    for (let n = 1; n <= 8; n++) expect(pageText(db, `p${n}`)).toBeUndefined();
+    expect(gemini.submitted).toHaveLength(1);
+    expect(deps.completeBatchUsage).toHaveBeenCalledTimes(1);
+    expect((deps.completeBatchUsage as any).mock.calls[0][0]).toMatchObject({ status: 'success', input_tokens: 2000 });
+    const run = await runOf(db);
+    expect(run).toMatchObject({ phase: PHASE.PARKED, parked_for_hold: 'stranded-text-5309', round: null });
+    expect(run.rounds.at(-1)).toMatchObject({ n: 1, outcome: 'held', written: 0 });
+    expect(run.held_texts).toHaveLength(1);
+    expect(run.held_texts[0].page_ids).toEqual(['p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8']);
+    expect(run.held_texts[0].text).toContain('TRANSLATION 3');
+  });
+
+  it('after release the book enrols afresh, and the new queue skips what the old run wrote', async () => {
+    const gemini = makeGemini();
+    const deps = makeDeps(gemini);
+    await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1 });
+    await tick(db, deps);                                   // p1–8 written, round 2 submitted
+    holdBook();
+    await tick(db, deps);                                   // round 2 collected under the hold → parked
+    expect(pageText(db, 'p9')).toBeUndefined();
+    db.data.books[0].pipeline_auto = { status: 'complete' }; // released
+    const again = await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1, submit: false });
+    expect(again.ok).toBe(true);
+    expect(again.run.queue.map((r: Doc) => r.page_number)).toEqual([9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]);
   });
 });
 
@@ -587,5 +758,137 @@ describe('selectAutoCandidates', () => {
     expect(out.map((b: Doc) => b.id)).toEqual(['a', 'c']);
     expect(d.seen.pipeline[0].$match.pages_count).toEqual({ $gt: 25 });
     expect(d.seen.pipeline[0].$match.$and[0].language.$not.test('Classical Chinese')).toBe(true);
+  });
+});
+
+describe('Phase 4 routing (#4681): priority < 90 goes to the chained lane, reader requests stay realtime', () => {
+  it('phase4Lane: reader requests realtime, everything else chained, PHASE4_TRANSLATE_LANE=realtime reverts', () => {
+    expect(phase4Lane({ processing_priority: 100 }, {})).toBe('realtime');
+    expect(phase4Lane({ processing_priority: 90 }, {})).toBe('realtime');
+    expect(phase4Lane({ processing_priority: 50 }, {})).toBe('chained');
+    expect(phase4Lane({}, {})).toBe('chained');
+    expect(phase4Lane({ processing_priority: 50 }, { PHASE4_TRANSLATE_LANE: 'realtime' })).toBe('realtime');
+  });
+
+  it('phase4ExcludedBookIds keeps out open runs and parked runs, and a run ended in the last day only if it did not write its whole queue', async () => {
+    let q: Doc = {};
+    const d = { collection: () => ({ distinct: async (_f: string, query: Doc) => { q = query; return ['x']; } }) };
+    expect(await phase4ExcludedBookIds(d, { now: new Date('2026-10-01T00:00:00Z') })).toEqual(['x']);
+    const [open, parked, recent] = q.$or;
+    expect(open.phase.$nin).toEqual(expect.arrayContaining(['complete', 'parked', 'failed']));
+    expect(parked).toEqual({ mode: 'chained', phase: 'parked', parked_for_hold: { $exists: false }, parked_for_ocr_trust: { $exists: false } });
+    expect(recent.updated_at.$gte.toISOString()).toBe('2026-09-30T00:00:00.000Z');
+    expect(JSON.stringify(recent.$expr)).toContain('counts.written');
+  });
+
+  const estimateOf = async () => (await enrolChainedRun(makeDb({ books: [BOOK], pages: PAGES, page_revisions: [], [RUNS_COLLECTION]: [] }), 'bk1', {}, { prompts: PROMPTS, approvedUsd: 0, submit: false })).estimate;
+
+  it('enrols without submitting (the tick packs it into a shared job) and spends nothing', async () => {
+    const res = await enrolForPhase4(db, BOOK, { prompts: PROMPTS, pageCount: 300 });
+    expect(res.lane).toBe('chained');
+    expect(res.run.phase).toBe(PHASE.READY);
+    expect(res.run.approved_usd).toBe(0.36);
+    expect(db.data[RUNS_COLLECTION]).toHaveLength(1);
+  });
+
+  it('approves at the lane\'s own estimate when it is above pages × $0.0012 but under the realtime price', async () => {
+    const est = await estimateOf();
+    const pageCount = Math.ceil(est / 0.0018);
+    expect(pageCount * 0.0012).toBeLessThan(est);
+    const res = await enrolForPhase4(db, BOOK, { prompts: PROMPTS, pageCount });
+    expect(res.lane).toBe('chained');
+    expect(res.run.approved_usd).toBe(est);
+  });
+
+  it('sends the book realtime when the batch estimate is above the realtime price', async () => {
+    const est = await estimateOf();
+    const pageCount = Math.max(1, Math.floor(est / 0.003));
+    const res = await enrolForPhase4(db, BOOK, { prompts: PROMPTS, pageCount });
+    expect(res.lane).toBe('realtime');
+    expect(db.data[RUNS_COLLECTION]).toHaveLength(0);
+  });
+
+  it('dispatches neither lane for a held book or one with an open run', async () => {
+    const held = makeDb({ books: [{ ...BOOK, pipeline_auto: { status: 'held', hold: { reason: 'wrong leaf' } } }], pages: PAGES, page_revisions: [], [RUNS_COLLECTION]: [] });
+    expect((await enrolForPhase4(held, BOOK, { prompts: PROMPTS, pageCount: 20 })).lane).toBe('skip');
+    await enrolForPhase4(db, BOOK, { prompts: PROMPTS, pageCount: 300 });
+    const again = await enrolForPhase4(db, BOOK, { prompts: PROMPTS, pageCount: 300 });
+    expect(again).toMatchObject({ lane: 'skip' });
+    expect(again.reason).toMatch(/^open-run/);
+  });
+});
+
+// ── Page-level targeting (eternity finish pass, #5513) ─────────────────────
+describe('enrol can be narrowed to named pages and kept off withheld pages', () => {
+  const withhold = (n: number) => { pageDoc(db, n).translation_withheld = { reason: 'withhold-stale-translation-4523', withheld_at: new Date() }; };
+
+  it('by default a withheld page is queued (the #5309 driver relies on it)', async () => {
+    withhold(2);
+    const res = await enrolChainedRun(db, 'bk1', makeDeps(makeGemini()), { prompts: PROMPTS, approvedUsd: 1, submit: false });
+    expect(res.run.queue.map((q: Doc) => q.id)).toContain('p2');
+  });
+
+  it('excludeWithheld drops withheld pages from the queue', async () => {
+    withhold(2); withhold(5);
+    const res = await enrolChainedRun(db, 'bk1', makeDeps(makeGemini()), { prompts: PROMPTS, approvedUsd: 1, submit: false, excludeWithheld: true });
+    const ids = res.run.queue.map((q: Doc) => q.id);
+    expect(ids).not.toContain('p2');
+    expect(ids).not.toContain('p5');
+    expect(ids).toHaveLength(N_PAGES - 2);
+  });
+
+  it('pageIds queues only those pages, still minus withheld ones', async () => {
+    withhold(4);
+    const res = await enrolChainedRun(db, 'bk1', makeDeps(makeGemini()), { prompts: PROMPTS, approvedUsd: 1, submit: false, pageIds: ['p3', 'p4', 'p9'], excludeWithheld: true });
+    expect(res.run.queue.map((q: Doc) => q.id)).toEqual(['p3', 'p9']);
+  });
+
+  it('an empty page list enrols nothing', async () => {
+    const res = await enrolChainedRun(db, 'bk1', makeDeps(makeGemini()), { prompts: PROMPTS, approvedUsd: 1, submit: false, pageIds: [] });
+    expect(res).toMatchObject({ ok: false, reason: 'nothing-to-translate' });
+  });
+});
+
+describe('enrol dryRun', () => {
+  it('prices the queue and writes nothing', async () => {
+    const gemini = makeGemini();
+    const res = await enrolChainedRun(db, 'bk1', makeDeps(gemini), { prompts: PROMPTS, dryRun: true, pageIds: ['p1', 'p2'] });
+    expect(res).toMatchObject({ ok: true, dryRun: true });
+    expect(res.pages.map((p: Doc) => p.id)).toEqual(['p1', 'p2']);
+    expect(res.estimate).toBeGreaterThan(0);
+    expect(db.data[RUNS_COLLECTION]).toHaveLength(0);
+    expect(gemini.submitted).toHaveLength(0);
+  });
+});
+
+describe('noContext (context_mode none, #5497 arm B): one request per page, unseeded, no adjacent OCR', () => {
+  it('sends every page in round 1 as its own bare single-page prompt, writes them all, and a failed page alone goes again', async () => {
+    const gemini = makeGemini({ drop: (n, round) => round === 1 && n === 7 });
+    const deps = makeDeps(gemini);
+    const res = await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1, noContext: true });
+    expect(res.ok).toBe(true);
+    expect(res.run.context_mode).toBe('none');
+    expect(gemini.submitted).toHaveLength(1);
+    expect(gemini.submitted[0].requests).toHaveLength(N_PAGES);
+    expect(gemini.prompt(0, 4)).toBe(buildTranslationPrompt({ prompts: PROMPTS, book: BOOK, ocrText: ocrFor(5), pageBreak: PAGE_BREAK_SCOPED }).prompt);
+    let run = await runOf(db);
+    expect(run.round.units.every((u: Doc) => !u.context.previous_translation && !u.context.prev_ocr && !u.context.next_ocr && u.context.mode === 'none')).toBe(true);
+
+    await tick(db, deps); // round 1 collected: p7 empty, the rest written; round 2 = p7 alone, still unseeded
+    run = await runOf(db);
+    expect(run.round.units.map((u: Doc) => u.pages[0].page_number)).toEqual([7]);
+    expect(run.round.units[0].context.previous_translation).toBe(false); // p6 is stored, but no seed in this mode
+    expect(gemini.prompt(1, 0)).toBe(buildTranslationPrompt({ prompts: PROMPTS, book: BOOK, ocrText: ocrFor(7), pageBreak: PAGE_BREAK_SCOPED }).prompt);
+    await tick(db, deps, 2);
+    run = await runOf(db);
+    expect(run.phase).toBe(PHASE.COMPLETE);
+    for (let n = 1; n <= N_PAGES; n++) expect(pageText(db, `p${n}`)).toBe(textFor(n));
+  });
+
+  it('the default (no flag) is unchanged: round 1 is still a block', async () => {
+    const gemini = makeGemini();
+    await enrolChainedRun(db, 'bk1', makeDeps(gemini), { prompts: PROMPTS, approvedUsd: 1 });
+    expect(gemini.submitted[0].requests).toHaveLength(1);
+    expect((await runOf(db)).context_mode).toBeUndefined();
   });
 });

@@ -1,0 +1,111 @@
+{
+  "summary": {
+    "book_id": "69aec1f00767ad23dd0affb0",
+    "title": "An Essay towards a Real Character and a Philosophical Language",
+    "published": "1668",
+    "source": "EEBO-TCP A66045",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "probe-too-short": 1
+    },
+    "median_char_acc": 0.9625,
+    "median_char_acc_windowed": 0.9465,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-69aec1f00767ad23dd0affb0-p26",
+      "page": 26,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-69aec1f00767ad23dd0affb0-p28",
+      "page": 28,
+      "overlap": 1,
+      "probe_words": 492,
+      "ref_chars": 3155,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.032,
+      "char_acc": 0.9796,
+      "char_acc_windowed": 0.9733
+    },
+    {
+      "slug": "ed-69aec1f00767ad23dd0affb0-p48",
+      "page": 48,
+      "overlap": 1,
+      "probe_words": 317,
+      "ref_chars": 2055,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.025,
+      "char_acc": 0.9922,
+      "char_acc_windowed": 0.9176
+    },
+    {
+      "slug": "ed-69aec1f00767ad23dd0affb0-p57",
+      "page": 57,
+      "overlap": 1,
+      "probe_words": 377,
+      "ref_chars": 2946,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.047,
+      "char_acc": 0.9625,
+      "char_acc_windowed": 0.9616
+    },
+    {
+      "slug": "ed-69aec1f00767ad23dd0affb0-p64",
+      "page": 64,
+      "overlap": 1,
+      "probe_words": 404,
+      "ref_chars": 3157,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.098,
+      "char_acc": 0.9242,
+      "char_acc_windowed": 0.8798
+    },
+    {
+      "slug": "ed-69aec1f00767ad23dd0affb0-p93",
+      "page": 93,
+      "overlap": 1,
+      "probe_words": 495,
+      "ref_chars": 3031,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.024,
+      "char_acc": 0.9778,
+      "char_acc_windowed": 0.9465
+    },
+    {
+      "slug": "ed-69aec1f00767ad23dd0affb0-p342",
+      "page": 342,
+      "overlap": 1,
+      "probe_words": 391,
+      "ref_chars": 2694,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.048,
+      "char_acc": 0.9593,
+      "char_acc_windowed": 0.9475
+    },
+    {
+      "slug": "ed-69aec1f00767ad23dd0affb0-p562",
+      "page": 562,
+      "overlap": 0.529,
+      "probe_words": 495,
+      "ref_chars": 1706,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.184,
+      "char_acc": 0.9226,
+      "char_acc_windowed": 0.2958
+    }
+  ]
+}

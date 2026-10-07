@@ -4,7 +4,7 @@ PRIOR ART: `scripts/lib/page-counts.mjs` (+ TS twin `src/lib/page-counts.ts`) �
 
 **Read this when:** writing any of `pages_count`, `pages_ocr`, `pages_translated`, `pages_translatable`, `pages_blank`, `pages_archived` on a `books` document; adding a job that creates, hides, splits, OCRs, translates, clears or archives pages; dividing by one of those counters on a surface; or investigating a count that disagrees with what the reader shows.
 
-**Status:** design, 2026-09-30. Tracking issue #4499 (writer burn-down), umbrella #5302. The migration steps below are #5325–#5329 and #5331, linked from both. Until step 2 lands, two definitions of `pages_ocr` and `pages_blank` are live and alternate every two hours (see "Why this exists").
+**Status:** design, 2026-09-30. Tracking issue #4499 (writer burn-down), umbrella #5302. The migration steps below are #5325–#5329 and #5331, linked from both. Step 2 (#5326) ended the two alternating definitions of `pages_ocr` and `pages_blank` (see "Why this exists"): the reconciler now counts with `PAGE_COUNT_ACCUMULATORS` and writes all six counters through `recountSet()`.
 
 ---
 
@@ -73,7 +73,7 @@ These are built from the counters. `translation-state.md` owns their use, and th
 | **remaining** | `max(0, translatable − pages_translated)` | backlog pricing |
 | **archive progress** | `pages_archived / pages_count` | archive selectors, watchdog |
 
-`translation_percent` (stored) has had no writer since the `sync-page-counts` cron was archived (`src/lib/translation-percent.ts` header). It is not a quantity. `translation-state.md` step 7 deletes it.
+`translation_percent` (stored) has had no writer since the `sync-page-counts` cron was archived (header of the retired `src/lib/translation-percent.ts`, #5287). It is not a quantity. `translation-state.md` step 7 deletes it.
 
 ## The single writer
 
@@ -104,6 +104,7 @@ These are built from the counters. `translation-state.md` owns their use, and th
 - It uses the shared accumulator and writes all six counters on mismatch. That includes `pages_translatable`, which it does not write today. Its first run after step 2 therefore writes the 10,282 missing and the stale-high ones. It is a data write by a cron, so it is decision 2.
 - It logs a per-counter mismatch tally (`count 3, ocr 12, translatable 40…`) instead of one number. A reconciler that fixes a lot of one counter is reporting a broken job-time writer, and today nobody can tell which counter it fixed.
 - It stays pause-exempt. The counters describe pages that exist whether or not the pipeline runs.
+- `--dry-run --counts-only` prints the same tally and writes nothing. That is how the first-run tally on the #5326 PR was made. A missing counter is a mismatch, not a zero (`diffPageCounters()`), and that is how the 10,282 books get their `pages_translatable`.
 
 ## Freshness
 
@@ -175,6 +176,8 @@ Measured 2026-09-30 on a 300-book random sample of 42,009 live books. `pages_cou
 Found by scanning every tracked `.mjs/.ts/.tsx/.js/.py` file outside `tests/` and `.claude/` for an update object (`$set`, `$setOnInsert`, `$inc`) or insert that names one of the six counters. That list was cross-checked with a line scan for counter keys in hoisted objects, which added the 5 writers marked "hoisted" and 6 creation routes. All 32 files in `tests/fixtures/page-counter-writers-baseline.json` are in the table. Lambdas (`scripts/aws-lambda/`) write no counter. "Canonical module" means the file imports `page-counts` today. That tells you the counting rule is shared, not that the file writes all six counters together.
 
 Groups: **Reconciler** 1 · **Manual recount** 1 · **Request path** 19 · **Worker / batch** 9 · **Archive counter** 10 · **One-off script** 27 · **Book creation** 77 · **Not live** 12. Live writers with a private count: 44.
+
+**Found after this table was written** (#5325, by the widened shape guard, which sees hoisted update objects): `scripts/lib/translate-core.mjs` (`syncBookTranslationCounters()`, hoisted `$set` of count/ocr/translated — a subset, canonical module; step 3) is missing from the table. `scripts/workers/batch-split-bph.mjs` (126) and `src/lib/uploads/utils.ts` (144) are listed as creation only but ALSO `$set` counters after the fact through a hoisted object — `uploads/utils.ts` with `countDocuments` over ALL pages, soft-hidden included. All three are in the guard's baseline (69 files, `tests/fixtures/page-counter-writers-baseline.json`), which is the live inventory from here on; `recount-page-stats.mjs` (2) left it in #5325.
 
 | # | file | writes | group | in #4499 baseline | today | becomes |
 |---:|---|---|---|:-:|---|---|

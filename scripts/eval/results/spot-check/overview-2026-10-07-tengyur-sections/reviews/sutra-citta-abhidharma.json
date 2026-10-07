@@ -1,0 +1,394 @@
+[
+  {
+    "book_id": "6abeba78896ea18127c874fa",
+    "slot": 17,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། འི (Derge Tengyur, vol. 132)",
+    "tradition": "sutra-citta-abhidharma",
+    "shelf_fit": "fits",
+    "shelf_note": "A Sems-tsam (Cittamātra) volume of the Derge Tengyur; the pages read are Abhidharma/Yogācāra commentary (kinds of conduct, the classification of sound, five aspects of tarka, kinds of fear and grief), squarely in this shelf.",
+    "rights_flag": null,
+    "structure_note": "Each image is one side of one pecha folio from the 1982–85 Delhi photo-reprint of the Derge xylograph (margin number = record number + 1 on all four pages, a constant offset from a front-matter record, not a defect). 441 records, 440 with text and translation; one record (probably the cover) has neither. catalog_metadata is empty and there is no author or work title: the volume carries only its section and volume letter, so a reader cannot tell which treatise they are in. The 'OCR' is the Esukhia digital Derge e-text aligned to the folio, not a read of the scan; it keeps the e-text's '#' marks and '(variant,reading)' notes, e.g. 'འབྱེད་པར་(བྱད་,བྱེད་)པ'.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 101,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "ཕུང་པོའི་ལྷག་མ་དང་བཅས་པས་#ཕུང་པོའི་ལྷག་མ་མེད་པའི་མྱ་ངན་ལས་འདས་པའི་དབྱིངས་སོ",
+            "english": "<note>original: \"sopadhisesa\" and \"nirupadhisesa-nirvana\"</note>",
+            "problem": "the note labels Sanskrit reconstructions as the 'original' of a Tibetan text",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "e-text '#' markers appear in the transcription pane ('ཁོ་ནར་#རིག་པར་བྱའོ', 'ཆོས་ཀྱིས་#གོས་')",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 155,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "དེའི་ཕྱིར་ཆེ་ཆུང་དུ་འབྱུང་ཞིང་འགྲོ་བ་མ་ཡིན་ནོ",
+            "english": "Therefore, it arises in greater or lesser intensity but does not travel",
+            "problem": "the negation covers both verbs (sound does not arise growing and shrinking and travel, it pervades at once); the English asserts the first half",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "དགའ་བའི་སྒྲ་འུ་རུ་རུ་ནི་སྒྲ་བོ་ཆེ་ཞེས་བྱའོ",
+            "english": "the loud, joyous sound made by a proud elephant is called a great sound",
+            "problem": "the onomatopoeia 'u ru ru' is dropped",
+            "severity": "minor",
+            "class": "T9"
+          }
+        ],
+        "other": [
+          {
+            "note": "variant notes in the transcription pane: '(བྱད་,བྱེད་)', '(བདག་,བ་དག་)'",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 313,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "སྔ་མའི་#འཕེན་པས་ཡོངས་བཟུང་ནས#",
+            "english": "By being <insert>sustained by the former impulse</insert>",
+            "problem": "the e-text's '#' marks are turned into <insert> tags, which tells the reader these words are later insertions; nothing on the folio says so",
+            "severity": "minor",
+            "class": "D1"
+          },
+          {
+            "source": "རིགས་པའི་ཚད་མ་རྣམ་པ་གསུམ་གྱིས་ཡོངས་སུ་གཟུང་བ",
+            "english": "<note>... though the text here emphasizes the first two for the logician</note>",
+            "problem": "invented interpretive gloss; the page says no such thing",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "nested <note>original: <term>jnana</term></note>",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 398,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription matches all four folios line for line (it is the Esukhia e-text aligned to the scan), and the English follows the Tibetan closely with only small slips. The weakness is identification: the reader is given no work title.",
+    "fit_to_show": "show",
+    "showcase_pages": [
+      101,
+      398
+    ],
+    "reader_summary": "A Derge Tengyur Cittamātra volume holding Abhidharma-style commentary (types of conduct, sound, reasoning, fear and grief). The Tibetan text is the right text for each folio, taken from a digital edition rather than read from the scan. The English is a careful, mostly literal rendering that can be relied on. Its notes sometimes add Sanskrit 'originals' and glosses of their own."
+  },
+  {
+    "book_id": "6abeb92e896ea18127c86894",
+    "slot": 18,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཙི (Derge Tengyur, vol. 126)",
+    "tradition": "sutra-citta-abhidharma",
+    "shelf_fit": "fits",
+    "shelf_note": "Sems-tsam volume. The pages are a commentary on the Mahāyānasūtrālaṃkāra (root verses on the pāramitās, the four pratisaṃvid, the eighth bhūmi, the signs of a bodhisattva), probably Sthiramati's; it belongs here.",
+    "rights_flag": null,
+    "structure_note": "Single folio sides from the Delhi Derge reprint, margin number = record + 1 throughout. 531 records, 530 with text and translation. No author, work title or catalog_metadata.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 6,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "verse lines wrapped in '->…<-' arrows ('->Therefore, this action is pure; to go beyond,<-')",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 198,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཚིག་དང་པོ་གཉིས་ཀྱིས་སྟོན་ཏེ",
+            "english": "they are shown by the first two of the second pair",
+            "problem": "'of the second pair' is added; the source says only 'by the first two words/terms'",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "'->…<-' arrows around verse lines; opening <meta> summary",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 394,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ཞེས་བྱ་བ་ལ་བྱང་ཆུབ་སེམས་དཔའ་ཕ་རོལ་ཏུ་ཕྱིན་པ་",
+            "english": "for the bodhisattva <unclear>one line missing or cut off in the original transcription</unclear> the perfections",
+            "problem": "the translator says a line is missing; nothing is missing, the sentence simply runs on to the next folio. The reader is told the transcription is defective when it is not",
+            "severity": "moderate",
+            "class": "T15"
+          },
+          {
+            "source": "དེ་བཞིན་གཤེགས་པ་ཐམས་ཅད་དང་། བདག་ཉིད་དུ་རྣམ་པར་མི་རྟོག་པའི་ཡེ་ཤེས་ལྷུན་གྱིས་གྲུབ་པ་ཐོབ་པ་མི་འདྲ་བ་མེད་དེ",
+            "english": "have no difference from all the Tathagatas in attaining the spontaneously accomplished non-conceptual wisdom of selfhood",
+            "problem": "'bdag nyid' here means themselves (no difference between the Tathāgatas and oneself), not a 'wisdom of selfhood', which is a doctrinally jarring phrase for this text",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "false editorial claim in the English: '<unclear>one line missing or cut off in the original transcription</unclear>'",
+            "severity": "moderate",
+            "class": "T15"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 519,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription is right on every folio and the English is mostly faithful. One page ends with an invented claim that a line of the transcription is missing, and misparses 'bdag nyid' into a 'wisdom of selfhood'.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      6,
+      519
+    ],
+    "reader_summary": "A Derge Tengyur Cittamātra volume that appears to be a commentary on the Mahāyānasūtrālaṃkāra. The Tibetan is the correct text for each folio. The English is usable and mostly literal, but the translator sometimes adds editorial remarks that are not true (a 'missing line') and sometimes misparses a phrase. Check a key passage against the Tibetan before citing it."
+  },
+  {
+    "book_id": "6abec12d896ea18127c894f6",
+    "slot": 19,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཇུ (Derge Tengyur, vol. 146)",
+    "tradition": "sutra-citta-abhidharma",
+    "shelf_fit": "fits",
+    "shelf_note": "Mngon-pa (Abhidharma) volume. The pages are an Abhidharmakośa companion that quotes sūtras at length (dependent origination to Ānanda, Vatsagotra's undeclared questions, karma and rebirth, the five degenerations); this is consistent with Śamathadeva's Upāyikā. It fits.",
+    "rights_flag": null,
+    "structure_note": "Single folio sides, Delhi Derge reprint. 573 records, 572 with text and translation. No author, work title or catalog_metadata. OCR carries e-text variant notation, e.g. '(བཅུན་,བཙུན་)', '{བརྫུན་,རྫུན་}'.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 60,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "བཙུན་པ་འདི་ཙམ་གྱིས་...",
+            "english": "<note>Ananda asks:</note> ... <note>The Buddha replies:</note>",
+            "problem": "speaker labels added as notes; correct by context but not on the page",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 201,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "དགའ་བྱེད་དེ་བཞིན་ནོ། ... དགའ་བྱེད་སེམས་ཅན་རྣམས་ཉམས་པར་བྱས་ཤིང",
+            "english": "The Buddha replied: \"Ananda, so it is. ... O Ananda, sentient beings are diminished.",
+            "problem": "the interlocutor is dGa' byed (not Kun dga' bo, Ānanda); the name is replaced twice, and 'The Buddha replied' is supplied",
+            "severity": "moderate",
+            "class": "other:name substituted"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 313,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 533,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "{བརྫུན་,རྫུན་}",
+            "english": "<unclear>lying</unclear>",
+            "problem": "an e-text variant note is rendered as uncertainty; the reading is clear",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Transcription right on all four folios. The English is a clean, faithful rendering of the embedded sūtra passages. The one slip is that a named interlocutor (dGa' byed) is turned into Ānanda.",
+    "fit_to_show": "show",
+    "showcase_pages": [
+      60,
+      313,
+      533
+    ],
+    "reader_summary": "A Derge Tengyur Abhidharma volume, a Kośa companion built largely from sūtra quotations. The Tibetan is the correct text for each folio, and the English reads as a reliable, literal translation of the quoted sūtras. It occasionally adds speaker labels and once substitutes Ānanda for another named monk."
+  },
+  {
+    "book_id": "6abeb782896ea18127c85d77",
+    "slot": 20,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། དི (Derge Tengyur, vol. 120)",
+    "tradition": "sutra-citta-abhidharma",
+    "shelf_fit": "fits",
+    "shelf_note": "Mdo-'grel (sūtra commentary) volume. The pages hold a Saṃdhinirmocana commentary that cites the Vijñaptimātratāsiddhi (p.103, p.163; consistent with Wŏnch'ŭk) and a commentary on the Lotus Sūtra (Śāriputra address, the parable of the lost son; p.415, p.538). Both belong to this shelf.",
+    "rights_flag": null,
+    "structure_note": "Single folio sides, Delhi Derge reprint, margin number = record + 1. 603 records, 602 with text and translation. The volume holds at least two different commentaries under one volume title, with no work titles, author or catalog_metadata, so the reader cannot see where one work ends and the next begins. Heavy e-text '#' marking in the OCR (p.163, p.415).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 103,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "{གོ་རིམས་,གོ་རིམ་}བཞིན་དུ",
+            "english": "according to the proper order <gloss>reading {go rims, go rim} as sequence</gloss>",
+            "problem": "the e-text variant apparatus leaks into the English",
+            "severity": "minor",
+            "class": "D1"
+          },
+          {
+            "source": "རིགས་ཀྱི་བུ་མདོར་བསྡུ་ན་རྣམ་པ་བཞིར་རིག་པར་བྱའོ",
+            "english": "<note>original: \"mndor bsddu na rnam pa bzhir rig par bya'o\"</note>",
+            "problem": "garbled Wylie in a note (mdor bsdu)",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 163,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "many '#' marks in the transcription pane ('ཁ་ཅིག་ལ་#ནི', 'ཡོད་དོ#')",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 415,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 538,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "བདུན་ཅུ་རྩ་གསུམ་གྱིས་ནི་...བསྟན། ཚིགས་བཅད་བཅུ་གསུམ་གྱིས་ནི་...",
+            "english": "Seventy-three verses teach ... Specifically, thirteen verses demonstrate",
+            "problem": "'Specifically' makes the 13 verses a subset of the 73; the source lists them in parallel",
+            "severity": "minor",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Transcription right on every folio. The English is faithful and handles the Lotus Sūtra parable structure and its verse counts correctly. The only problems are e-text apparatus leaking into the English and the missing work titles in a volume that holds more than one work.",
+    "fit_to_show": "show",
+    "showcase_pages": [
+      163,
+      415,
+      538
+    ],
+    "reader_summary": "A Derge Tengyur sūtra-commentary volume holding a Saṃdhinirmocana commentary and a Lotus Sūtra commentary, neither named on the site. The Tibetan is the correct text for each folio. The English is a trustworthy, readable translation, and its verse counts and parable glosses check out against the Tibetan."
+  }
+]

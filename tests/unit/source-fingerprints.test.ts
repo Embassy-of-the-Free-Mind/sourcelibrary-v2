@@ -48,6 +48,18 @@ describe('sourceFingerprints — the cross-form catch', () => {
     expect(deriveSourceIdentifiers(IA_MANIFEST_V3)).not.toContain('ia:3');
   });
 
+  it('matches one e-rara object across its v20 / v21 manifest URLs (#5811)', () => {
+    // Becher, Närrische Weißheit: imported twice, once per e-rara API version.
+    const v20 = sourceFingerprints({ image_source: { provider: 'e-rara', iiif_manifest: 'https://www.e-rara.ch/i3f/v20/19571363/manifest' } });
+    const v21 = sourceFingerprints({ image_source: { provider: 'iiif', iiif_manifest: 'https://www.e-rara.ch/i3f/v21/19571363/manifest' } });
+    expect(v20).toContain('e-rara:19571363');
+    expect(v21.some((f) => v20.includes(f))).toBe(true);
+    // and it meets the provider/identifier form of the same object
+    expect(sourceFingerprints({ image_source: { provider: 'e-rara', identifier: '19571363' } })).toEqual(['e-rara:19571363']);
+    // a page canvas is not a manifest
+    expect(deriveSourceIdentifiers('https://www.e-rara.ch/i3f/v20/19571364/full/full/0/default.jpg')).toEqual([]);
+  });
+
   it('collapses trivially different spellings of one manifest URL', () => {
     expect(normalizeSourceUrl('https://www.e-rara.ch/i3f/v20/1139486/manifest.json'))
       .toBe(normalizeSourceUrl('http://e-rara.ch/i3f/v20/1139486/manifest/'));

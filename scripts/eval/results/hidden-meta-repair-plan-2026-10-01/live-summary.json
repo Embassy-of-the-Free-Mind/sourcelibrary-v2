@@ -1,0 +1,53 @@
+{
+ "candidates": 15473,
+ "books": 3922,
+ "found": 15473,
+ "missing": 0,
+ "same": 15053,
+ "changed": 420,
+ "unwrapped": 107,
+ "human": 0,
+ "hiddenPage": 1,
+ "stillText": 15055,
+ "nowBare": 0,
+ "byClass": {
+  "own-text": {
+   "candidates": 10413,
+   "stillText": 10160,
+   "unwrapped": 98,
+   "human": 0
+  },
+  "undecided": {
+   "candidates": 1600,
+   "stillText": 1555,
+   "unwrapped": 3,
+   "human": 0
+  },
+  "copied-previous": {
+   "candidates": 2331,
+   "stillText": 2247,
+   "unwrapped": 6,
+   "human": 0
+  },
+  "not-this-page": {
+   "candidates": 481,
+   "stillText": 474,
+   "unwrapped": 0,
+   "human": 0
+  },
+  "description": {
+   "candidates": 575,
+   "stillText": 547,
+   "unwrapped": 0,
+   "human": 0
+  },
+  "duplicate-of-body": {
+   "candidates": 73,
+   "stillText": 72,
+   "unwrapped": 0,
+   "human": 0
+  }
+ },
+ "generated": "2026-10-01T07:25:59.838Z",
+ "minShare": 0.2
+}

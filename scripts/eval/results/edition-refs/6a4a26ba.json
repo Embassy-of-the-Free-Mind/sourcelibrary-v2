@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "book_id": "6a4a26ba9dda7124b26753a5",
+    "title": "A Letter Concerning Toleration",
+    "published": "1689",
+    "source": "EEBO-TCP A48884",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 8,
+    "skips": {},
+    "median_char_acc": 0.9797,
+    "median_char_acc_windowed": 0.9782,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a4a26ba-p8",
+      "page": 8,
+      "overlap": 0.889,
+      "probe_words": 48,
+      "ref_chars": 337,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.232,
+      "char_acc": 0.8063,
+      "char_acc_windowed": 0.8063
+    },
+    {
+      "slug": "ed-6a4a26ba-p15",
+      "page": 15,
+      "overlap": 1,
+      "probe_words": 348,
+      "ref_chars": 1993,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.066,
+      "char_acc": 0.985,
+      "char_acc_windowed": 0.9825
+    },
+    {
+      "slug": "ed-6a4a26ba-p23",
+      "page": 23,
+      "overlap": 1,
+      "probe_words": 338,
+      "ref_chars": 1986,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.068,
+      "char_acc": 0.9801,
+      "char_acc_windowed": 0.9782
+    },
+    {
+      "slug": "ed-6a4a26ba-p30",
+      "page": 30,
+      "overlap": 1,
+      "probe_words": 349,
+      "ref_chars": 2061,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.058,
+      "char_acc": 0.9753,
+      "char_acc_windowed": 0.9734
+    },
+    {
+      "slug": "ed-6a4a26ba-p38",
+      "page": 38,
+      "overlap": 1,
+      "probe_words": 345,
+      "ref_chars": 2002,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.079,
+      "char_acc": 0.987,
+      "char_acc_windowed": 0.9821
+    },
+    {
+      "slug": "ed-6a4a26ba-p39",
+      "page": 39,
+      "overlap": 1,
+      "probe_words": 346,
+      "ref_chars": 2010,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.094,
+      "char_acc": 0.9761,
+      "char_acc_windowed": 0.9742
+    },
+    {
+      "slug": "ed-6a4a26ba-p53",
+      "page": 53,
+      "overlap": 1,
+      "probe_words": 344,
+      "ref_chars": 2009,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.051,
+      "char_acc": 0.9765,
+      "char_acc_windowed": 0.9753
+    },
+    {
+      "slug": "ed-6a4a26ba-p61",
+      "page": 61,
+      "overlap": 1,
+      "probe_words": 292,
+      "ref_chars": 1770,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.063,
+      "char_acc": 0.9797,
+      "char_acc_windowed": 0.9783
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+PRIOR ART: none — a calibration of the first reader (Sonnet, w1–w9.jsonl) by a second model eye (Fable) on four sheets; .txt so merge() never joins it. Looked in scripts/eval/*adjudicat* and ft-gold-annotator-brief.md.
+{"sheet":"sheet-010","pos":1,"printed":"350","by":"model-eye-2","agrees":true}
+{"sheet":"sheet-010","pos":2,"printed":"1905","by":"model-eye-2","agrees":true}
+{"sheet":"sheet-010","pos":3,"printed":"1896","by":"model-eye-2","agrees":true,"note":"printed 1896–7"}
+{"sheet":"sheet-010","pos":4,"printed":"none","by":"model-eye-2","agrees":true,"note":"table columns; ambiguous between"}
+{"sheet":"sheet-010","pos":5,"printed":"18871889","by":"model-eye-2","agrees":true}
+{"sheet":"sheet-010","pos":6,"printed":"76","by":"model-eye-2","agrees":true}
+{"sheet":"sheet-010","pos":7,"printed":"18971899","by":"model-eye-2","agrees":true}
+{"sheet":"sheet-010","pos":8,"printed":"200","by":"model-eye-2","agrees":true}
+{"sheet":"sheet-050","pos":1,"printed":"86","by":"model-eye-2","agrees":true}
+{"sheet":"sheet-050","pos":2,"printed":"41","by":"model-eye-2","agrees":true}
+{"sheet":"sheet-050","pos":3,"printed":"18851887","by":"model-eye-2","agrees":true}
+{"sheet":"sheet-050","pos":4,"printed":"181","by":"model-eye-2","agrees":true}
+{"sheet":"sheet-050","pos":5,"printed":"1851","by":"model-eye-2","agrees":true}
+{"sheet":"sheet-050","pos":6,"printed":"1890","by":"model-eye-2","agrees":true}
+{"sheet":"sheet-050","pos":7,"printed":"14000","by":"model-eye-2","agrees":true}
+{"sheet":"sheet-050","pos":8,"printed":"none","by":"model-eye-2","agrees":true,"note":"two boxes in different table columns"}
+{"sheet":"sheet-090","pos":1,"printed":"547","by":"model-eye-2","agrees":true,"note":"ambiguous: index list, 547 lies between the boxes"}
+{"sheet":"sheet-090","pos":2,"printed":"10","by":"model-eye-2","agrees":true}
+{"sheet":"sheet-090","pos":3,"printed":"1806","by":"model-eye-2","agrees":true}
+{"sheet":"sheet-090","pos":4,"printed":"110","by":"model-eye-2","agrees":false,"note":"box is on φ(110) in the denominator; first reader gave 111"}
+{"sheet":"sheet-090","pos":5,"printed":"18611865","by":"model-eye-2","agrees":true}
+{"sheet":"sheet-090","pos":6,"printed":"51","by":"model-eye-2","agrees":true}
+{"sheet":"sheet-090","pos":7,"printed":"21","by":"model-eye-2","agrees":true}
+{"sheet":"sheet-090","pos":8,"printed":"18","by":"model-eye-2","agrees":true}
+{"sheet":"sheet-130","pos":1,"printed":"1836","by":"model-eye-2","agrees":true,"note":"the #5186 case: Archive read 1886"}
+{"sheet":"sheet-130","pos":2,"printed":"8","by":"model-eye-2","agrees":true,"note":"printed 8½"}
+{"sheet":"sheet-130","pos":3,"printed":"125000","by":"model-eye-2","agrees":true}
+{"sheet":"sheet-130","pos":4,"printed":"223","by":"model-eye-2","agrees":true}
+{"sheet":"sheet-130","pos":5,"printed":"3","by":"model-eye-2","agrees":true,"note":"footnote number"}
+{"sheet":"sheet-130","pos":7,"printed":"1880","by":"model-eye-2","agrees":true}
+{"sheet":"sheet-130","pos":8,"printed":"1630","by":"model-eye-2","agrees":true}

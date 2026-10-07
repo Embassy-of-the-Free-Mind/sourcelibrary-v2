@@ -1,0 +1,111 @@
+{
+  "summary": {
+    "book_id": "69b18619c4be2cdd0edc524e",
+    "title": "The Paradoxal Discourses",
+    "published": "1685",
+    "source": "EEBO-TCP A43281",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "probe-too-short": 1
+    },
+    "median_char_acc": 0.9365,
+    "median_char_acc_windowed": 0.9361,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-69b18619-p2",
+      "page": 2,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-69b18619-p6",
+      "page": 6,
+      "overlap": 1,
+      "probe_words": 176,
+      "ref_chars": 1026,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.12,
+      "char_acc": 0.9365,
+      "char_acc_windowed": 0.9353
+    },
+    {
+      "slug": "ed-69b18619-p9",
+      "page": 9,
+      "overlap": 1,
+      "probe_words": 185,
+      "ref_chars": 1093,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.048,
+      "char_acc": 0.9449,
+      "char_acc_windowed": 0.9449
+    },
+    {
+      "slug": "ed-69b18619-p14",
+      "page": 14,
+      "overlap": 0.557,
+      "probe_words": 72,
+      "ref_chars": 369,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.079,
+      "char_acc": 0.9596,
+      "char_acc_windowed": 0.9596
+    },
+    {
+      "slug": "ed-69b18619-p15",
+      "page": 15,
+      "overlap": 0.638,
+      "probe_words": 59,
+      "ref_chars": 312,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.061,
+      "char_acc": 0.9361,
+      "char_acc_windowed": 0.9361
+    },
+    {
+      "slug": "ed-69b18619-p16",
+      "page": 16,
+      "overlap": 0.6,
+      "probe_words": 56,
+      "ref_chars": 222,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.114,
+      "char_acc": 0.8827,
+      "char_acc_windowed": 0.8827
+    },
+    {
+      "slug": "ed-69b18619-p17",
+      "page": 17,
+      "overlap": 1,
+      "probe_words": 86,
+      "ref_chars": 608,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.118,
+      "char_acc": 0.921,
+      "char_acc_windowed": 0.921
+    },
+    {
+      "slug": "ed-69b18619-p22",
+      "page": 22,
+      "overlap": 1,
+      "probe_words": 263,
+      "ref_chars": 1475,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.092,
+      "char_acc": 0.9729,
+      "char_acc_windowed": 0.9729
+    }
+  ]
+}

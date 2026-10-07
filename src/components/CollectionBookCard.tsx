@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Check, X } from 'lucide-react';
+import { Check, Heart, X } from 'lucide-react';
 import { cn, getBookThumbnailUrl, getBookCardUrl } from '@/lib/utils';
 import { bookCoverResponsiveLoader } from '@/lib/book-cover-loader';
 import { isPublishedFirstTranslation } from '@/lib/book';
@@ -15,6 +15,8 @@ import PlaceholderCover from '@/components/book/PlaceholderCover';
 import { useLocale, useLocalePath, type Locale } from '@/lib/i18n';
 import { localizedTitle, originalTitleIfDifferent, type LocalizedBookMap, hasLocalizedEdition } from '@/lib/localized';
 import { languageToBcp47, titleLang } from '@/lib/language-code';
+import { translationPercent, translationVerdict, type StoredTranslationState } from '@/lib/translation-completeness';
+import PreviewBadge from '@/components/book/PreviewBadge';
 
 export interface CollectionBook {
   bookId?: string;
@@ -32,6 +34,11 @@ export interface CollectionBook {
   pages_ocr?: number;
   pages_translated?: number;
   pages_translated_es?: number;
+  /** Translation denominator inputs — see src/lib/translation-completeness.ts. */
+  pages_translatable?: number | null;
+  pages_blank?: number | null;
+  /** The stamped translation rung (#5287). Absent = unstamped: the card falls back to the percentage. */
+  translation_state?: StoredTranslationState | null;
   /** Per-language title glosses — see src/lib/localized.ts. */
   localized?: LocalizedBookMap | null;
   thumbnail?: string;
@@ -49,6 +56,12 @@ export interface CollectionBook {
   published?: string;
   translation_percent?: number;
   resource_type?: string;
+  /** True when this is a partial scan / preview of a larger work — shows the
+   *  "Preview" badge on the cover. Mirrors `books.preview`. */
+  preview?: boolean;
+  /** Readers' hearts. Only a surface that ranks by likes sets it; the card
+   *  then shows a ♥ count on the cover. Absent everywhere else. */
+  like_count?: number;
 }
 
 /** The card's few words of chrome, so a Spanish surface can render it in Spanish. */
@@ -57,6 +70,10 @@ export interface CollectionBookCardLabels {
   pages: string;
   ocr: string;
   translated: string;
+  /** Rung `complete` (#5287): every translatable page is translated. */
+  complete: string;
+  /** An English original, readable as printed (no translation needed). */
+  inEnglish: string;
   editedBy: string;
   /** Tag shown when the book has a Spanish edition. */
 }
@@ -66,6 +83,8 @@ export const CARD_LABELS_EN: CollectionBookCardLabels = {
   pages: 'pages',
   ocr: 'OCR',
   translated: 'Translated',
+  complete: 'Complete',
+  inEnglish: 'In English',
   editedBy: 'edited by',
 };
 
@@ -74,6 +93,8 @@ export const CARD_LABELS_ES: CollectionBookCardLabels = {
   pages: 'páginas',
   ocr: 'OCR',
   translated: 'Traducido',
+  complete: 'Completo',
+  inEnglish: 'En inglés',
   editedBy: 'editado por',
 };
 
@@ -100,8 +121,9 @@ function pctOf(n?: number, d?: number): number {
 }
 
 // One status item: tick at 100%, cross at 0%, else the percentage. (book design.md)
-function Status({ label, pctValue, doneClass }: { label: string; pctValue: number; doneClass: string }) {
-  if (pctValue >= 100) return <span className={`inline-flex items-center gap-1 ${doneClass}`}><Check className="w-3 h-3" /> {label}</span>;
+// `done` overrides the percentage when the stamped rung has already decided.
+function Status({ label, pctValue, doneClass, done }: { label: string; pctValue: number; doneClass: string; done?: boolean }) {
+  if (done === true || (done === undefined && pctValue >= 100)) return <span className={`inline-flex items-center gap-1 ${doneClass}`}><Check className="w-3 h-3" /> {label}</span>;
   if (pctValue <= 0) return <span className="inline-flex items-center gap-1 text-muted"><X className="w-3 h-3" /> {label}</span>;
   return <span className="text-muted">{pctValue}% {label}</span>;
 }
@@ -166,7 +188,16 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
   const artworkHref = embedHref(`${bookUrlPrefix || ''}/artwork/${encodeURIComponent(slug)}`);
 
   const ocrPct = pctOf(book.pages_ocr, pageCount);
-  const translatedPct = pctOf(book.pages_translated, pageCount);
+  // The one translation formula (#4505): blank leaves are skipped on both sides, so a
+  // book whose every readable page is translated gets its tick. Falls back to
+  // pages_count when the surface did not project pages_translatable / pages_blank.
+  const translatedPct = translationPercent({
+    pages_count: pageCount,
+    pages_translated: book.pages_translated,
+    pages_translatable: book.pages_translatable,
+    pages_blank: book.pages_blank,
+  });
+  const verdict = translationVerdict(book);
   const byline = getEffectiveByline({ ...book, author: book.author || '' });
 
   return (
@@ -223,8 +254,23 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
             at, and on /es the page already sorts into "in Spanish" and
             "not yet", so the heading above the grid has said it. Stacked over
             First Translation it read as the more important of the two. */}
-        {(isPublishedFirstTranslation(book) || book.has_doi) && (
+        {(book.like_count ?? 0) > 0 && (
+          <span
+            className="absolute top-2 left-2 z-10 inline-flex items-center gap-1 text-[11px] font-medium text-white px-2 py-1 backdrop-blur-sm"
+            style={{ background: 'rgba(20,16,12,0.5)' }}
+            aria-label={`${book.like_count} ${book.like_count === 1 ? 'like' : 'likes'}`}
+          >
+            <Heart className="w-3 h-3 fill-current" aria-hidden /> {book.like_count!.toLocaleString(lang === 'es' ? 'es-ES' : 'en-US')}
+          </span>
+        )}
+
+        {(isPublishedFirstTranslation(book) || book.has_doi || book.preview) && (
           <div className="absolute top-2 right-2 z-10 flex flex-col gap-1.5 items-end">
+            {book.preview && (
+              <span className="text-[10px] font-medium text-white px-2 py-1 backdrop-blur-sm" style={{ background: 'rgba(120,90,30,0.72)' }}>
+                <PreviewBadge lang={lang} />
+              </span>
+            )}
             {isPublishedFirstTranslation(book) && (
               <span className="text-[10px] font-medium text-white px-2 py-1 backdrop-blur-sm" style={{ background: 'rgba(20,16,12,0.5)' }}>
                 {labels.firstTranslation}
@@ -265,7 +311,16 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
         {!isArtwork && pageCount > 0 && (
           <div className="flex items-center gap-3 mt-auto pt-3 text-[11px]">
             <Status label={labels.ocr} pctValue={ocrPct} doneClass="text-status-info" />
-            <Status label={labels.translated} pctValue={translatedPct} doneClass="text-status-success" />
+            {/* The stamped rung decides the verdict (#5287): "Translated" from
+                `readable`, "Complete" only at `complete`, "In English" for a
+                transcribed English original; below that, the percentage.
+                Unstamped (verdict null) falls back to tick-at-100%. */}
+            <Status
+              label={verdict === 'complete' ? labels.complete : verdict === 'english_original' ? labels.inEnglish : labels.translated}
+              pctValue={translatedPct}
+              doneClass="text-status-success"
+              done={verdict === null ? undefined : verdict !== 'none'}
+            />
           </div>
         )}
       </div>

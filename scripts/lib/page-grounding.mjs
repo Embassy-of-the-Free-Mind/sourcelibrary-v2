@@ -23,6 +23,8 @@
  * `tests/unit/page-grounding.test.ts` pins both).
  */
 
+import { stripMarkupTags } from './strip-markup-tags.mjs';
+
 // Mirror of SKIP_MARKUP_RULES in src/lib/image-extraction-filter.ts — drop
 // drop-caps, stamps, ornaments etc. so they don't pose as the illustration.
 const TRIVIAL_RULES = [
@@ -82,7 +84,7 @@ function firstSummary(...sources) {
 /** Strip all tags and collapse whitespace — the page's readable body text. */
 export function strippedBody(text) {
   if (!text) return '';
-  return text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  return stripMarkupTags(text).replace(/\s+/g, ' ').trim();
 }
 
 /**

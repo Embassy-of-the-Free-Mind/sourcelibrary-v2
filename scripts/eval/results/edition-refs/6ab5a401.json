@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "book_id": "6ab5a4019e89e2a1f4139282",
+    "title": "Chymical, Medicinal, and Chyrurgical Addresses: Made to Samuel Hartlib, Esquire",
+    "published": "1655",
+    "source": "EEBO-TCP A45747",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 8,
+    "skips": {},
+    "median_char_acc": 0.9641,
+    "median_char_acc_windowed": 0.964,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6ab5a401-p26",
+      "page": 26,
+      "overlap": 0.994,
+      "probe_words": 160,
+      "ref_chars": 1102,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.099,
+      "char_acc": 0.9483,
+      "char_acc_windowed": 0.9483
+    },
+    {
+      "slug": "ed-6ab5a401-p43",
+      "page": 43,
+      "overlap": 1,
+      "probe_words": 180,
+      "ref_chars": 1023,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.13,
+      "char_acc": 0.9656,
+      "char_acc_windowed": 0.9656
+    },
+    {
+      "slug": "ed-6ab5a401-p53",
+      "page": 53,
+      "overlap": 1,
+      "probe_words": 165,
+      "ref_chars": 935,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.117,
+      "char_acc": 0.963,
+      "char_acc_windowed": 0.963
+    },
+    {
+      "slug": "ed-6ab5a401-p76",
+      "page": 76,
+      "overlap": 1,
+      "probe_words": 186,
+      "ref_chars": 1007,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.057,
+      "char_acc": 0.964,
+      "char_acc_windowed": 0.964
+    },
+    {
+      "slug": "ed-6ab5a401-p94",
+      "page": 94,
+      "overlap": 1,
+      "probe_words": 192,
+      "ref_chars": 1026,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.086,
+      "char_acc": 0.9641,
+      "char_acc_windowed": 0.9641
+    },
+    {
+      "slug": "ed-6ab5a401-p99",
+      "page": 99,
+      "overlap": 1,
+      "probe_words": 187,
+      "ref_chars": 1048,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.124,
+      "char_acc": 0.9612,
+      "char_acc_windowed": 0.9612
+    },
+    {
+      "slug": "ed-6ab5a401-p127",
+      "page": 127,
+      "overlap": 1,
+      "probe_words": 176,
+      "ref_chars": 1018,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.099,
+      "char_acc": 0.9668,
+      "char_acc_windowed": 0.9656
+    },
+    {
+      "slug": "ed-6ab5a401-p162",
+      "page": 162,
+      "overlap": 1,
+      "probe_words": 171,
+      "ref_chars": 998,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.109,
+      "char_acc": 0.9645,
+      "char_acc_windowed": 0.9632
+    }
+  ]
+}

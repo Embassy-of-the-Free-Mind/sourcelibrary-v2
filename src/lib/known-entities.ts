@@ -1,5 +1,6 @@
 import { LIBRARY_PARTNERS } from '@/lib/library-partners';
 import type { Collection } from '@/lib/api-client/types/collections';
+import SITE_FEATURES from '@/lib/site-features.json';
 
 /**
  * Known-entity search capture (issue #2790).
@@ -7,7 +8,7 @@ import type { Collection } from '@/lib/api-client/types/collections';
  * Some queries name a *place in the library*, not a topic — "internet archive" is
  * a library partner, "alchemy" may be a collection. Without this, the query is
  * handed straight to the LLM, which guesses at a topic. matchKnownEntity() does a
- * cheap, exact, case-insensitive lookup against three registries and returns a
+ * cheap, exact, case-insensitive lookup against four registries and returns a
  * direct entry so the results page can surface a "go here" card above the AI
  * narration. BESPOKE_ENTITIES is empty today (it held the SHWEP reading room until
  * that page was taken down); keep it for the next hand-maintained landing page.
@@ -15,7 +16,7 @@ import type { Collection } from '@/lib/api-client/types/collections';
  * Matching is deliberately STRICT — only an exact normalized or slugified match
  * qualifies — so generic words ("history", "the") never resolve to a collection.
  */
-export type KnownEntityKind = 'reading-room' | 'collection' | 'library';
+export type KnownEntityKind = 'reading-room' | 'collection' | 'library' | 'feature';
 
 export interface KnownEntity {
   title: string;
@@ -40,7 +41,7 @@ export interface MatchOptions {
 
 /**
  * Resolve a query to a known library destination, or null. Order: bespoke pages
- * → collections → library partners. Exact normalized/slug match only.
+ * → collections → library partners → site features. Exact normalized/slug match only.
  */
 export function matchKnownEntity(query: string, opts: MatchOptions = {}): KnownEntity | null {
   const q = norm(query);
@@ -73,6 +74,17 @@ export function matchKnownEntity(query: string, opts: MatchOptions = {}): KnownE
         href: `/libraries/${p.slug}`,
         kind: 'library',
       };
+    }
+  }
+
+  // Site features (#1180): tools like /identify or /ngrams, named by what a
+  // reader would type. Last, so a collection or partner of the same name wins.
+  // The same registry is embedded into `site_pages` (scripts/workers/
+  // embed-site-pages.mjs), so a phrasing ("identify a book from a photo")
+  // finds the page by meaning where an exact alias does not.
+  for (const f of SITE_FEATURES) {
+    if (f.aliases.some((a) => norm(a) === q || slugify(a) === qs)) {
+      return { title: f.title, description: f.description, href: f.href, kind: 'feature' };
     }
   }
 

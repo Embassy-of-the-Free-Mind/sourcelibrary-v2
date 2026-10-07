@@ -14,7 +14,6 @@
 0 7 * * * cd /root/sourcelibrary && flock -n /tmp/sl-health.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/pipeline-health-alert.mjs" >> /var/log/sourcelibrary/health-alert.log 2>&1
 0 8 * * * cd /root/sourcelibrary && bash -c "set -a; source .env.production.local; set +a; node scripts/workers/daily-health-snapshot.mjs" >> /var/log/sourcelibrary/daily-snapshot.log 2>&1
 0 8 * * * /root/moltbook-poster.sh
-0 8 * * * /usr/local/bin/oura-digest >> /var/log/oura-digest.log 2>&1
 15 1,3,5,7,9,11,13,15,17,19,21,23 * * * cd /root/sourcelibrary && flock -n /tmp/sl-enrichment-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrichment-snapshot.mjs" >> /var/log/sourcelibrary/enrichment-snapshot.log 2>&1
 15 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-prewarm.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/prewarm-browse.mjs" >> /var/log/sourcelibrary/prewarm-browse.log 2>&1
 */2 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-scheduler.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/scheduler.mjs" >> /var/log/sourcelibrary/scheduler.log 2>&1
@@ -24,8 +23,8 @@
 30 5 * * * cd /root/sourcelibrary && bash -c "set -a; source .env.production.local; set +a; curl -s -X POST https://sourcelibrary.org/api/admin/cache-probe -H "Authorization: Bearer $CRON_SECRET"" >> /var/log/sourcelibrary/cache-probe.log 2>&1
 45 1,3,5,7,9,11,13,15,17,19,21,23 * * * cd /root/sourcelibrary && flock -n /tmp/sl-books-catalog-sync.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/sync-books-catalog.mjs" >> /var/log/sourcelibrary/books-catalog-sync.log 2>&1
 */5 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-uptime.lock bash -c "set -a; source .env.production.local; set +a; node scripts/uptime-monitor.mjs" >> /var/log/sourcelibrary/uptime-monitor.log 2>&1
+*/15 * * * * f=/root/sourcelibrary/scripts/workers/disk-alarm.sh; [ -x $f ] || f=/root/disk-alarm.sh; $f >> /var/log/sourcelibrary/disk-alarm.log 2>&1 # root-disk alarm, ntfy once per crossing of 85% (#5534)
 */5 * * * * echo "$(date -u +'\%Y-\%m-\%dT\%H:\%M:\%SZ') $(uptime | sed 's/.*load average: //')" >> /var/log/sourcelibrary/cpu-load.log
-*/5 * * * * /root/oura/healthcheck.sh
 # All pipeline workers managed by unified scheduler (issue #646)
 # ── Daily maintenance (early morning, staggered) ──
 # Heavy jobs staggered across 2-hour windows to avoid Atlas contention
@@ -106,11 +105,17 @@
 0 4 * * * /root/sourcelibrary/scripts/workers/backup-bph-catalog.sh
 30 2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-work-id-mint.lock bash -c "set -a; source .env.production.local; set +a; node scripts/analysis/mint-local-work-ids.mjs --apply --include-anon --include-parts --include-hidden && node scripts/analysis/assign-work-slugs.mjs --apply" >> /var/log/sourcelibrary/work-id-mint.log 2>&1
 # Refresh book locations[] (publication/author/tradition) before the map-cache rebuild at 05:45
-15 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-geocode.lock bash -c "set -a; source .env.production.local; set +a; node scripts/enrichment/geocode-publication-places.mjs && node scripts/enrichment/backfill-author-locations.mjs --write-books && node scripts/enrichment/geocode-origin-by-tradition.mjs" >> /var/log/sourcelibrary/geocode-locations.log 2>&1
+15 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-geocode.lock bash -c "set -a; source .env.production.local; set +a; node scripts/enrichment/geocode-publication-places.mjs --ustc --ia --title-pages && node scripts/enrichment/backfill-author-locations.mjs --write-books && node scripts/enrichment/geocode-origin-by-tradition.mjs" >> /var/log/sourcelibrary/geocode-locations.log 2>&1
 # Thesaurus-grounded author locations (canonical authors path); file-guarded until PR #2783 merges + box pulls
 30 5 * * * cd /root/sourcelibrary && [ -f scripts/enrichment/backfill-thesaurus-author-locations.mjs ] && flock -n /tmp/sl-thesaurus-loc.lock bash -c "set -a; source .env.production.local; set +a; node scripts/enrichment/backfill-thesaurus-author-locations.mjs --write-books" >> /var/log/sourcelibrary/geocode-locations.log 2>&1
 0 9 * * * cd /root/sourcelibrary && flock -n /tmp/sl-newsletter-refresh.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/refresh-newsletter-audience.mjs" >> /var/log/sourcelibrary/newsletter-refresh.log 2>&1
 45 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-metrics-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/analytics/snapshot-metrics.mjs" >> /var/log/sourcelibrary/metrics-snapshot.log 2>&1
+# Library dashboard breakdowns for /admin (#3943): languages, ladder, next step, pipeline series. ~70 s, read-only.
+55 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-library-dashboard.lock bash -c "set -a; source .env.production.local; set +a; node scripts/analytics/snapshot-library-dashboard.mjs" >> /var/log/sourcelibrary/library-dashboard.log 2>&1
+# Snapshots that only a button or a one-off seed used to write (#5501): /admin/canon daily; /timeline decades and /gallery facets weekly. Read-only apart from one system_config upsert each.
+5 6 * * * cd /root/sourcelibrary && flock -n /tmp/sl-canon-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/cron-caller.mjs /api/admin/canon" >> /var/log/sourcelibrary/canon-snapshot.log 2>&1
+15 6 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-timeline-overview.lock bash -c "set -a; source .env.production.local; set +a; node scripts/seed-timeline-filters.mjs" >> /var/log/sourcelibrary/timeline-overview.log 2>&1
+20 6 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-gallery-filters.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/refresh-gallery-filters.mjs" >> /var/log/sourcelibrary/gallery-filters.log 2>&1
 # On-mission acquisition: daily bounded batch (USTC gap -> IA/e-rara -> verify -> import hidden)
 # e-rara IIIF catalog refresh: weekly
 0 2 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-erara.lock bash -c "set -a; source .env.production.local; set +a; node scripts/catalog-coverage/harvest-erara-catalog.mjs" >> /var/log/sourcelibrary/erara-harvest.log 2>&1
@@ -144,43 +149,44 @@
 */20 * * * * /root/sourcelibrary/scripts/catalog-coverage/acquire-catchup.sh >> /var/log/sourcelibrary/acquire.log 2>&1
 0 6 * * 0 /root/sourcelibrary/scripts/workers/backup-corpus-text.sh
 */30 * * * * bash /root/tibetan-reocr/relaunch.sh >> /root/tibetan-reocr/relaunch.log 2>&1 # tibetan-reocr-4523 (remove when re-OCR done)
-# Syriac Kraken lane (#4883): re-transcribe every Syriac page with the open Kraken models on
-# this box's CPU (no Gemini, no cost), looped pages first; apply + release run under the same
-# tick. Runs from /root/sourcelibrary since 2026-09-25 (PR #4928 merged; the branch worktree is retired).
-# variable so it runs from /root/sourcelibrary. Touch /root/syriac-kraken/PAUSE to pause.
-*/30 * * * * bash /root/sourcelibrary/scripts/workers/syriac-kraken-relaunch.sh >> /root/syriac-kraken/relaunch.log 2>&1 # syriac-kraken-4883 (remove when the lane is done)
+*/30 * * * * bash /root/tibetan-eval/launch_repair.sh >> /root/tibetan-eval/repair-relaunch.log 2>&1 # gutter-repair-4534 (remove when repair done)
+*/30 * * * * bash /root/tibetan-eval/relaunch_reacquire.sh # reacquire-bl-4646 (remove when reacquire-done.txt complete)
 # Withhold stale translations (#4523). Every apply pass of the re-OCR lane puts
 # more pages into the state where the English on the page was made from a
 # transcription we have since replaced — so the takedown has to be a STANDING
 # sweep over a re-derived predicate, not a one-off over a frozen id list. Runs
-# 20 minutes after the half-hourly re-OCR relaunch above, so an apply pass and
-# its cleanup do not race; the sweep is idempotent and resumable, so a missed
-# run costs nothing but latency. The `[ -f ]` guard lets these lines be
-# installed on the box BEFORE the PR merges: they no-op until the auto-pull
-# brings the scripts, then start working on their own.
+# 20 minutes after the half-hourly re-OCR relaunch, so an apply pass and its
+# cleanup do not race; the sweep is idempotent and resumable, so a missed run
+# costs nothing but latency. The `[ -f ]` guard makes it a no-op until the
+# auto-pull brings the scripts.
 20 * * * * cd /root/sourcelibrary && [ -f scripts/maintenance/withhold-stale-translations.mjs ] && flock -n /tmp/sl-withhold-stale-tr.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/withhold-stale-translations.mjs --apply" >> /var/log/sourcelibrary/withhold-stale-translations.log 2>&1
 # …and the reconciliation the sweep cannot do for itself: LEAKED / ORPHANED /
 # UNBACKED, plus the Supabase side. Exit 2 means UNKNOWN, which is not PASS.
 50 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/withheld-translation-drift.mjs ] && flock -n /tmp/sl-withhold-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/withheld-translation-drift.mjs" >> /var/log/sourcelibrary/withhold-stale-translations.log 2>&1
-# Stale-translation marker (#4927). This daily sweep re-derives the verdict
-# (ocr.updated_at newer than translation.updated_at beyond the margin) for every
-# page whose OCR changed in the last 26h and for every page already carrying the
-# marker, so a re-OCR'd page is flagged within a day and a retranslated page is
-# cleared. Flagging only — it never withholds; the hourly withhold sweep above
-# is scoped to WITHHOLD_LANES. Runs before the 08:00 health snapshot.
-# ACTUATION: the marker is read by translate-worker's page selection and by
-# realtime-translate.mjs --stale — both paid lanes behind the daily spend dial.
-30 7 * * * cd /root/sourcelibrary && [ -f scripts/maintenance/mark-stale-translations.mjs ] && flock -n /tmp/sl-mark-stale-tr.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/mark-stale-translations.mjs --apply --since-hours=26" >> /var/log/sourcelibrary/mark-stale-translations.log 2>&1
-
-# Pipeline HOLD reconciliation (#4790, scripts/lib/pipeline-hold.mjs): a held book is a status no
-# lane selects plus a marker the status writers refuse. This finds the writer nobody guarded —
-# CLOBBERED (marker, wrong status) / ORPHANED / LEAKED (translated after the hold) — and lists
-# RELEASABLE books whose release condition has been met. Exit 1 = drift, 2 = UNKNOWN (not PASS).
-55 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/pipeline-hold-drift.mjs ] && flock -n /tmp/sl-hold-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/pipeline-hold-drift.mjs" >> /var/log/sourcelibrary/pipeline-hold.log 2>&1
 # Daily meter-gap detector (#4599, PR #4821): billed realtime output tokens vs our
 # usage rows over the trailing 7 days; exit 3 + one email/day above 10%. Gated on the
 # read-only service-account key so the line is inert wherever the key is absent.
 30 8 * * * cd /root/sourcelibrary && [ -f /root/.gcp/spend-reconcile.json ] && flock -n /tmp/sl-spend-gap.lock bash -c "set -a; source .env.production.local; set +a; GOOGLE_SERVICE_ACCOUNT_JSON=/root/.gcp/spend-reconcile.json node scripts/audit/spend-reconcile.mjs --days=7 --check-gap --alert" >> /var/log/sourcelibrary/spend-gap.log 2>&1
+# Paid-vs-got daily ledger (#5499): yesterday's Gemini spend by lane from COLLECTED usage rows
+# against pages written (page provenance), open batches by age (FAIL past 40 h; Gemini expires
+# them at 48 h), duplicate/repeat/paid-for-nothing waste, and on Mondays the invoice vs metered
+# vs attributed. Read-only except one ops_reports row (paid-vs-got-<day>, shown on /admin/spend)
+# and, on FAIL, one deduped GitHub issue. Exit 1 = FAIL, 2 = could not measure. No model call.
+10 6 * * * cd /root/sourcelibrary && [ -f scripts/audit/paid-vs-got.mjs ] && flock -n /tmp/sl-paid-vs-got.lock bash -c "set -a; source .env.production.local; set +a; GOOGLE_SERVICE_ACCOUNT_JSON=/root/.gcp/spend-reconcile.json node scripts/audit/paid-vs-got.mjs --apply" >> /var/log/sourcelibrary/paid-vs-got.log 2>&1
+# Daily spend check (#5743): ONE verdict over (a) paid-vs-got for yesterday, (b) machines the lease watchdog
+# flags + RunPod pods past the deadline in their name, (c) budget envelopes (paid with no pages, near cap, stored
+# spend), (d) the dial in force that day vs the invoice. Writes one ops_reports row (spend-daily-<day>), shown as the
+# "spend check" line on /admin/work; emails only on FAIL (7-day cooldown per failure set). Exit 1 = FAIL, 2 = a
+# source unreadable. No model call. Runs after paid-vs-got (06:10), whose row it reads.
+0 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/spend-daily.mjs ] && flock -n /tmp/sl-spend-daily.lock bash -c "set -a; source .env.production.local; set +a; GOOGLE_SERVICE_ACCOUNT_JSON=/root/.gcp/spend-reconcile.json node scripts/audit/spend-daily.mjs --apply" >> /var/log/sourcelibrary/spend-daily.log 2>&1
+# Weekly spend cut list (#5743), Mondays 06:30: a headless claude job (subscription; no API spend) runs
+# spend-daily.mjs --week and posts ONE comment on #5743, at most 5 numbered cuts with recommended defaults, which
+# /admin/work lists under WAITING ON YOU. It never stops, deletes or changes anything. Brief: scripts/audit/spend-weekly-brief.md
+30 6 * * 1 [ -f /root/sourcelibrary/scripts/audit/spend-weekly-brief.md ] && /root/bin/claude-job.sh start waste-review-weekly-$(date -u +\%Y\%m\%d) /root/sourcelibrary/scripts/audit/spend-weekly-brief.md >> /var/log/sourcelibrary/spend-weekly.log 2>&1
+# /about/models page counts (#5601): which engine's text every page carries, from page provenance.
+# A checkpointed walk over pages on a secondary (~1 h); writes one ops_reports row (model-usage).
+# Exit 3 = an engine wrote pages in the last 30 days that the page does not describe. No model call.
+40 3 * * 3 cd /root/sourcelibrary && [ -f scripts/audit/model-usage-snapshot.mjs ] && flock -n /tmp/sl-model-usage.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/model-usage-snapshot.mjs --apply" >> /var/log/sourcelibrary/model-usage.log 2>&1
 
 # GPU lease watchdog (#4909): stops rented Scaleway GPUs whose lease-until tag has passed, via the
 # provider API (a guest poweroff is "stopped in place" and still billed); nags on untagged running GPUs.
@@ -188,8 +194,45 @@
 */10 * * * * cd /root/sourcelibrary && [ -f scripts/maintenance/gpu-lease-watchdog.mjs ] && [ -f /root/.scaleway.env ] && flock -n /tmp/sl-gpu-lease.lock bash -c "set -a; source .env.production.local; source /root/.scaleway.env; set +a; node scripts/maintenance/gpu-lease-watchdog.mjs --apply" >> /var/log/sourcelibrary/gpu-lease-watchdog.log 2>&1
 # Monday 08:10 — volumes that bill while their instance is stopped/archived, with approximate cost
 10 8 * * 1 cd /root/sourcelibrary && [ -f scripts/maintenance/gpu-lease-watchdog.mjs ] && [ -f /root/.scaleway.env ] && flock -n /tmp/sl-gpu-lease.lock bash -c "set -a; source .env.production.local; source /root/.scaleway.env; set +a; node scripts/maintenance/gpu-lease-watchdog.mjs --apply --weekly" >> /var/log/sourcelibrary/gpu-lease-watchdog.log 2>&1
-# Weekly CLIP index integrity audit (#5195): drift / orphans / missing-from-index. Installed live 2026-09-28.
+# Hetzner pass of the same watchdog (#5736), hourly: FLAGS (email digest per 6 h + /admin/work) servers with
+# no lease-until label, an expired one, or CPU < 5 % over 24 h. Never stops or deletes (a stopped Hetzner
+# server still bills). Not guarded on /root/.hcloud.env existing: a missing token must flag, not skip.
+# Own lock and state file (hetzner-state.json), so it never clobbers the Scaleway pass. Guarded on the
+# rule module so the line is inert until #5736 is on main.
+25 * * * * cd /root/sourcelibrary && [ -f scripts/lib/infra-lease.mjs ] && flock -w 600 /tmp/sl-hetzner-lease.lock bash -c "set -a; source .env.production.local; [ -f /root/.hcloud.env ] && source /root/.hcloud.env; set +a; node scripts/maintenance/gpu-lease-watchdog.mjs --hetzner --apply" >> /var/log/sourcelibrary/hetzner-lease-watchdog.log 2>&1
+*/30 * * * * bash /root/sourcelibrary/scripts/workers/syriac-kraken-relaunch.sh >> /root/syriac-kraken/relaunch.log 2>&1 # syriac-kraken-4883 (remove when the lane is done)
+30 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-subject-index.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/build-gallery-subject-index.mjs" >> /var/log/sourcelibrary/subject-index.log 2>&1
+# provenance coverage audit (#4613): every page written in the window carries its engine block + content_hash
+40 7 * * * cd /root/sourcelibrary && flock -n /tmp/sl-provenance.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/provenance-coverage.mjs --days=2" >> /var/log/sourcelibrary/provenance-coverage.log 2>&1
+# pipeline-hold drift audit (committed in crontab.production since #4919 but never installed; installed 2026-09-28)
+55 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/pipeline-hold-drift.mjs ] && flock -n /tmp/sl-hold-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/pipeline-hold-drift.mjs --alert" >> /var/log/sourcelibrary/pipeline-hold.log 2>&1
+# pipeline_next daily audit + flow snapshot (#5478): recompute nextStep() over every book with pages_count > 0,
+# compare with the stored books.pipeline_next and pipeline_auto.status, write ops_reports pipeline-next-<day>
+# (type pipeline_next_daily, read by /admin/pipeline). Runs after the 06:00 sync-worker stamp pass. Read-only on
+# books/pages; on FAIL one deduped GitHub issue. Exit 1 = FAIL, 2 = could not measure. ~35 s, no model call.
+45 6 * * * cd /root/sourcelibrary && [ -f scripts/audit/pipeline-next-step-audit.mjs ] && flock -n /tmp/sl-pipeline-next-audit.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/pipeline-next-step-audit.mjs --apply" >> /var/log/sourcelibrary/pipeline-next-audit.log 2>&1
+# mark-stale-translations.mjs --apply (#4927): installed 2026-09-30 (was absent 2026-09-19..30 despite the template)
 45 4 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-clip-index.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/clip-index-integrity.mjs" >> /var/log/sourcelibrary/clip-index-integrity.log 2>&1
+# installed 2026-09-30 per DECIDED (#4927 marker; read by the paid translate lanes)
+30 7 * * * cd /root/sourcelibrary && [ -f scripts/maintenance/mark-stale-translations.mjs ] && flock -n /tmp/sl-mark-stale-tr.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/mark-stale-translations.mjs --apply --since-hours=26" >> /var/log/sourcelibrary/mark-stale-translations.log 2>&1
 # Monthly translation corpus audit, stage 1 = the draw (#5301, runbook scripts/eval/translation-corpus-audit/MONTHLY.md).
 # No model call, no spend; pushes branch eval/tca-<YYYY-MM>. Stage 2 (the judge) is a claude.ai routine on the 2nd.
 30 4 1 * * [ -f /root/sourcelibrary/scripts/eval/translation-corpus-audit/monthly-draw.sh ] && flock -n /tmp/sl-tca-monthly.lock bash /root/sourcelibrary/scripts/eval/translation-corpus-audit/monthly-draw.sh >> /var/log/sourcelibrary/tca-monthly.log 2>&1
+# Chained Batch translation lane (#4681): every 5 min one tick collects finished rounds and submits
+# the next ones in shared Batch jobs; hourly, up to 40 gap-fill books are enrolled (at most 60 open runs).
+# Every round asks the dial / scope envelopes at submit (a queue is stored spend). Both lines share one
+# lock, so a manual --loop run under `flock /tmp/sl-translate-chained.lock` pauses them.
+*/5 * * * * cd /root/sourcelibrary && [ -f scripts/lib/translate-batch-chained.mjs ] && flock -n /tmp/sl-translate-chained.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/translate-batch-worker.mjs --chained --tick" >> /var/log/sourcelibrary/translate-batch-chained.log 2>&1
+23 * * * * cd /root/sourcelibrary && [ -f scripts/lib/translate-batch-chained.mjs ] && flock -w 240 /tmp/sl-translate-chained.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/translate-batch-worker.mjs --chained --enrol-auto --limit=40 --max-open=60" >> /var/log/sourcelibrary/translate-batch-chained.log 2>&1
+# Batch API enrichment backfill (#2141): summary + index + chapters for live translated books that are
+# already PAST the realtime enrich lane's statuses (5,631 such books on 2026-10-07 — translation outran
+# enrichment because the scheduler's enrich-worker only selects translate_complete). Every 15 min a
+# collect-only tick (--limit=0) writes finished rounds and submits each book's next round; every hour up to
+# 200 new books are admitted, all three rounds priced up front, capped at $10 per admission (Derek sped this
+# up on the live crontab 2026-10-07; was every 6 h, 40 books, $2.50). The dial / envelopes still gate it.
+# Submission asks the dial / scope envelopes under label 'enrich-worker-batch'; collecting is free.
+# Both lines share one lock. Guarded on the lane module so the lines are inert until #6129 is on main.
+*/15 * * * * cd /root/sourcelibrary && [ -f scripts/workers/lib/enrich-batch-lane.mjs ] && flock -n /tmp/sl-enrich-batch.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrich-worker.mjs --batch --limit=0" >> /var/log/sourcelibrary/enrich-batch.log 2>&1
+40 * * * * cd /root/sourcelibrary && [ -f scripts/workers/lib/enrich-batch-lane.mjs ] && flock -w 600 /tmp/sl-enrich-batch.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrich-worker.mjs --batch --limit=200 --max-usd=10" >> /var/log/sourcelibrary/enrich-batch.log 2>&1
+# #5705 work board (/admin/work): push this box's claude-job state + the GitHub side to ops_reports every 10 min. Script lands on main with the #5705 PR; until then this logs 'Cannot find module'.
+*/10 * * * * flock -n /tmp/sl-work-board.lock bash -c 'cd /root/sourcelibrary && node --env-file=.env.production.local scripts/maintenance/work-board-push.mjs --box hetzner; node --env-file=.env.production.local scripts/maintenance/work-board-push.mjs --github' >> /var/log/sourcelibrary/work-board.log 2>&1

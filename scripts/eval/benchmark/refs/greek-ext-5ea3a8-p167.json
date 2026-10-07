@@ -39,5 +39,8 @@
       "kraken-greek-cllg:0.05"
     ],
     "letters_after": 2542
-  }
+  },
+  "licence": "CC-BY-SA-4.0",
+  "licence_url": "https://github.com/PerseusDL/canonical-greekLit",
+  "licence_checked": "2026-10-01"
 }

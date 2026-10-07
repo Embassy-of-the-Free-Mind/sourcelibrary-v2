@@ -1,0 +1,72 @@
+{
+ "v001_f280a": {
+  "toh": "D417",
+  "derge_span": "1b.1]..13b.4",
+  "n_sides": 25,
+  "frac": 0.17105263157894737,
+  "target_side": 7
+ },
+ "v005_f150a": {
+  "toh": "D442",
+  "derge_span": "90a.1..148a.",
+  "n_sides": 117,
+  "frac": 0.3904109589041096,
+  "target_side": 225
+ },
+ "v011_f224a": {
+  "toh": "D501",
+  "derge_span": "177a...181a.",
+  "n_sides": 9,
+  "frac": 0.4166666666666667,
+  "target_side": 357
+ },
+ "v047_f193a": {
+  "toh": "D16",
+  "derge_span": "121a...133a]",
+  "n_sides": 24,
+  "frac": 0.029411764705882353,
+  "target_side": 243
+ },
+ "v049_f2a": {
+  "toh": "D50",
+  "derge_span": "1b.1]..70b]",
+  "n_sides": 138,
+  "frac": 0.005649717514124294,
+  "target_side": 4
+ },
+ "v061_f2a": {
+  "toh": "D95",
+  "derge_span": "1b.1]..217a]",
+  "n_sides": 431,
+  "frac": 0.001610305958132045,
+  "target_side": 4
+ },
+ "v066_f2a": {
+  "toh": "D113",
+  "derge_span": "1b.1]..181a]",
+  "n_sides": 359,
+  "frac": 0.002150537634408602,
+  "target_side": 4
+ },
+ "v077_f392a": {
+  "toh": "D200",
+  "derge_span": "303a...",
+  "n_sides": 11,
+  "frac": 0.42857142857142855,
+  "target_side": 610
+ },
+ "v087_f393a": {
+  "toh": "D300",
+  "derge_span": "304b...",
+  "n_sides": 2,
+  "frac": 0.5,
+  "target_side": 609
+ },
+ "v098_f3a": {
+  "toh": "D2",
+  "derge_span": "1b.1]..21a]",
+  "n_sides": 39,
+  "frac": null,
+  "target_side": null
+ }
+}

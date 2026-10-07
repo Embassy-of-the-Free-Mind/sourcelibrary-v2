@@ -33036,7 +33036,7 @@
        "ties": 16,
        "median_gain": 0,
        "ci95": [
-        -0.0054,
+        -0.0051,
         0
        ],
        "sign_p": 0.324,
@@ -33111,7 +33111,7 @@
        "ties": 16,
        "median_gain": 0,
        "ci95": [
-        -0.0054,
+        -0.0051,
         0
        ],
        "sign_p": 0.324,
@@ -41859,7 +41859,7 @@
        "ties": 16,
        "median_gain": -0.0024,
        "ci95": [
-        -0.0082,
+        -0.008,
         0
        ],
        "sign_p": 0.0009,
@@ -41873,7 +41873,7 @@
        "ties": 19,
        "median_gain": -0.0003,
        "ci95": [
-        -0.003,
+        -0.0028,
         0
        ],
        "sign_p": 0.0248,
@@ -41991,7 +41991,7 @@
        "median_gain": 0,
        "ci95": [
         -0.0009,
-        0.0015
+        0.0021
        ],
        "sign_p": 0.7201,
        "counts": false,
@@ -42009,7 +42009,7 @@
        "ties": 8,
        "median_gain": -0.0062,
        "ci95": [
-        -0.0147,
+        -0.0106,
         -0.0012
        ],
        "sign_p": 0.0002,
@@ -42037,7 +42037,7 @@
        "ties": 16,
        "median_gain": 0,
        "ci95": [
-        -0.0006,
+        0,
         0
        ],
        "sign_p": 0.7111,
@@ -51001,5 +51001,10 @@
     }
    ]
   }
+ },
+ "ci95_recomputed": {
+  "at": "2026-09-30",
+  "issue": 5373,
+  "note": "gemini-3.1-flash-lite strata: ci95 of the paired median gain recomputed from the stored rows with the fixed generator (the old LCG cycled); the decision rule (A/A floor + sign test) does not read it"
  }
 }

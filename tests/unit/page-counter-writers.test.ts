@@ -1,56 +1,53 @@
 /**
- * Every LIVE writer of the book page counters must use the canonical module.
+ * Only `page-counts` writes a book page counter (#5325, `.claude/docs/page-counts.md`).
  *
- * This is the check that three separate incidents wanted and did not have. The rule
- * — count visible pages only, exclude blank placeholders from the numerator — has
- * been written down, centralised in `page-counts`, and pinned by
- * `page-counts.test.ts` since #3293. None of that helps a writer that never calls it,
- * and on 2026-08-31 three did not:
+ * The six counters — pages_count, pages_ocr, pages_translated, pages_translatable,
+ * pages_blank, pages_archived — have one writer: `recountBook()` in
+ * `scripts/lib/page-counts.mjs` and its twin `src/lib/page-counts.ts`, which `$set`
+ * all six together from one aggregation. Every other file that writes one is in
+ * `tests/fixtures/page-counter-writers-baseline.json`, and that list may shrink and
+ * must not grow. Burning it down is #5327 (live writers), #5328 (creation), #5329
+ * (one-off scripts); the reconciler leaves it in #5326.
  *
- *  - `recount-page-stats.mjs` had a private pipeline whose numerator counted blank
- *    placeholders; it wrote 3–10 too many translated pages onto six books.
- *  - `job-completion.ts` had one that ALSO dropped the `page_number > 0` filter. On
- *    60 random live books it disagreed 30% of the time; on "Phantasms of the Living,
- *    Vol. I" (663 visible pages, 1,514 soft-hidden) it would have written
- *    `pages_translated: 2175` against `pages_count: 663`.
- *  - `batch-translate-async/route.ts` would have left `pages_translatable` stale
- *    while updating its three siblings.
+ * WHY THE RULE CHANGED. The first version of this guard (#4442, 2026-08-31) asked only
+ * that a writer IMPORT the module. That caught the three private pipelines of that
+ * day, but an importing file could still write any subset it liked, and 29 did: on
+ * 2026-09-30 two definitions of `pages_ocr` and `pages_blank` were alternating on live
+ * books every two hours. It also looked at four of the six counters and at inline
+ * `$set` only, so it could not see `$inc` (the orchestrator) or a hoisted update
+ * object (four archive workers, `archive-images/route.ts`). All three are seen now.
  *
- * A doc cannot catch that; a list can. This test enumerates the request-path and
- * worker files that write these counters and asserts each one imports the module.
+ * ADDING A WRITER: don't. Call `recountBook(db, bookId, { reason })` after your page
+ * writes. A new book declares `initialPageCounters(n)` at insert (#5328).
  *
- * ADDING A WRITER: import `page-counts` and use `buildVisiblePageCountPipeline` (or
- * `countVisiblePageStats` if you already hold the pages).
- *
- * The pre-existing divergent writers are captured in
- * `tests/fixtures/page-counter-writers-baseline.json` — a ratchet that may shrink and
- * must not grow (#4499). If a file genuinely writes a counter without deriving it —
- * zeroing on clear, say — it still belongs in the baseline with that noted, because
- * "does not derive" is a claim someone should be able to re-check.
- *
- * Negative control, run 2026-08-31: adding a file that `$set`s `pages_translated`
- * without importing the module turns both assertions red and names the file.
+ * WHAT IT SEES (shapes, each with a negative control recorded in the #5325 PR):
+ *   1. an inline update object — `$set` / `$setOnInsert` / `$inc: { pages_ocr: … }`
+ *   2. a hoisted one — `$set: update` or `{ $set }` or `$set: { ...update }`, where
+ *      `update` is declared as an object literal naming a counter, or is assigned
+ *      one later (`update.pages_archived = n`, `update['pages_archived'] = n`)
+ * WHAT IT DOES NOT SEE: inserts (book creation, #5328), and a counter key built at
+ * run time. Scratch, archived and migration scripts are not live writers.
  */
 import { describe, it, expect } from 'vitest';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
-const COUNTERS = ['pages_count', 'pages_ocr', 'pages_translated', 'pages_translatable'];
+const COUNTERS = [
+  'pages_count', 'pages_ocr', 'pages_translated', 'pages_translatable', 'pages_blank', 'pages_archived',
+];
+
+/** The only files allowed to write a counter. */
+const WRITERS = new Set(['scripts/lib/page-counts.mjs', 'src/lib/page-counts.ts']);
 
 /** Scratch, archived and one-off migration scripts are not live writers. */
 const SKIP_PATH = /node_modules|\.next|\.claude|_archived|\/_tmp|\/tmp-|scripts\/migration\//;
 
-/**
- * The known-divergent writers, captured 2026-08-31. A RATCHET, not an approval: the
- * test below asserts this list never grows. Burning it down is #4499.
- *
- * Two of these were confirmed to carry the exact defect (`detect-ghost-pages.ts`
- * counts `translation.data` without excluding blank placeholders); the rest are
- * unreviewed and are listed as suspects, not as absolved.
- */
 const BASELINE: string[] = JSON.parse(
   readFileSync('tests/fixtures/page-counter-writers-baseline.json', 'utf8'),
 ).files;
+
+/** Current size of the baseline. Lower it when a file leaves; never raise it. */
+const BASELINE_CEILING = 68;
 
 function walk(dir: string, out: string[] = []): string[] {
   for (const e of readdirSync(dir)) {
@@ -84,59 +81,138 @@ function readBraces(src: string, open: number): string | null {
   return null;
 }
 
-function counterWriters(): { file: string; counters: string[]; usesLib: boolean }[] {
-  const files = [...walk('scripts'), ...walk('src')];
-  const rows: { file: string; counters: string[]; usesLib: boolean }[] = [];
-  for (const file of files) {
-    const src = readFileSync(file, 'utf8');
-    if (!/collection\(\s*['"]books['"]\s*\)/.test(src)) continue;
-    const hits = new Set<string>();
-    const re = /\$set(?:OnInsert)?\s*:\s*\{/g;
-    let m: RegExpExecArray | null;
-    while ((m = re.exec(src))) {
-      const body = readBraces(src, m.index + m[0].length - 1);
+/** Counter keys named in an object-literal body (`pages_ocr:` or `'pages_ocr':`). */
+function countersIn(body: string): string[] {
+  return COUNTERS.filter(c => new RegExp(`(^|[^\\w.$])['"]?${c}['"]?\\s*:`).test(body));
+}
+
+const ESC = (s: string) => s.replace(/[$]/g, '\\$');
+const UPDATE_OP = /(?<![\w$])\$(?:set|setOnInsert|inc)\b/g;
+
+/**
+ * Which counters a file writes, and in which shapes. Exported for the negative
+ * controls, which feed it a violating source string.
+ */
+function scanSource(src: string): { counters: string[]; shapes: string[] } {
+  const counters = new Set<string>();
+  const shapes = new Set<string>();
+  const hoisted = new Set<string>();
+
+  let m: RegExpExecArray | null;
+  UPDATE_OP.lastIndex = 0;
+  while ((m = UPDATE_OP.exec(src))) {
+    const op = m[0];
+    const rest = src.slice(m.index + op.length);
+    // `$set: { … }` — inline, plus any `...ident` spread inside it
+    const inline = /^\s*:\s*\{/.exec(rest);
+    if (inline) {
+      const body = readBraces(src, m.index + op.length + inline[0].length - 1);
       if (!body) continue;
-      for (const c of COUNTERS) {
-        if (new RegExp(`(^|[^\\w.])${c}\\s*:`).test(body)) hits.add(c);
+      const hit = countersIn(body);
+      if (hit.length) {
+        hit.forEach(c => counters.add(c));
+        shapes.add(op === '$inc' ? '$inc' : 'inline');
+      }
+      for (const s of body.matchAll(/\.\.\.\s*([A-Za-z_$][\w$]*)/g)) hoisted.add(s[1]);
+      continue;
+    }
+    // `$set: update`
+    const ident = /^\s*:\s*([A-Za-z_$][\w$]*)/.exec(rest);
+    if (ident) { hoisted.add(ident[1]); continue; }
+    // `{ $set }` / `{ $set, … }` — shorthand for a variable named `$set`
+    if (/^\s*[,}]/.test(rest) && /[{,]\s*$/.test(src.slice(Math.max(0, m.index - 40), m.index))) hoisted.add(op);
+  }
+
+  for (const name of hoisted) {
+    const n = ESC(name);
+    const decl = new RegExp(`(?:const|let|var)\\s+${n}\\s*(?::[^=]+)?=\\s*\\{`, 'g');
+    while ((m = decl.exec(src))) {
+      const body = readBraces(src, m.index + m[0].length - 1);
+      const hit = body ? countersIn(body) : [];
+      if (hit.length) { hit.forEach(c => counters.add(c)); shapes.add('hoisted'); }
+    }
+    for (const c of COUNTERS) {
+      if (new RegExp(`(?<![\\w$])${n}\\s*(?:\\.${c}|\\[\\s*['"]${c}['"]\\s*\\])\\s*=(?!=)`).test(src)) {
+        counters.add(c); shapes.add('hoisted');
       }
     }
-    if (hits.size) rows.push({ file, counters: [...hits], usesLib: /page-counts/.test(src) });
+  }
+  return { counters: [...counters], shapes: [...shapes] };
+}
+
+function counterWriters(): { file: string; counters: string[]; shapes: string[] }[] {
+  const rows: { file: string; counters: string[]; shapes: string[] }[] = [];
+  for (const file of [...walk('scripts'), ...walk('src')]) {
+    if (WRITERS.has(file)) continue;
+    const src = readFileSync(file, 'utf8');
+    if (!/['"]books['"]/.test(src)) continue;
+    const { counters, shapes } = scanSource(src);
+    if (counters.length) rows.push({ file, counters, shapes });
   }
   return rows;
 }
 
-describe('book page-counter writers', () => {
-  it('every live writer derives its counters from the canonical module', () => {
+describe('book page-counter writers (#5325)', () => {
+  const rows = counterWriters();
+
+  it('no file outside page-counts writes a counter, except the baseline', () => {
     const known = new Set(BASELINE);
-    const novel = counterWriters()
-      .filter(r => !r.usesLib)
+    const novel = rows
       .filter(r => !known.has(r.file))
-      .map(r => `${r.file} (writes ${r.counters.join(', ')})`);
+      .map(r => `${r.file} (writes ${r.counters.join(', ')} via ${r.shapes.join(', ')})`);
 
     expect(novel, [
-      'NEW files recompute book page counters without importing the canonical module.',
-      'A private count WILL drift — three did, and one would have written',
-      'pages_translated: 2175 onto a 663-page book. Use buildVisiblePageCountPipeline',
-      'or countVisiblePageStats instead.',
+      'NEW files write book page counters outside recountBook().',
+      'Every private writer writes its own subset, and on 2026-09-30 two definitions of',
+      'pages_ocr and pages_blank were alternating on live books. Call',
+      'recountBook(db, bookId, { reason }) from page-counts after your page writes.',
       '',
       ...novel,
     ].join('\n')).toEqual([]);
   });
 
   it('the baseline shrinks or holds — never grows', () => {
-    // The ratchet. A file leaving the baseline (fixed) is fine; the list gaining one
-    // without the fixture being edited in the same commit is the regression.
-    const stillDivergent = counterWriters().filter(r => !r.usesLib).map(r => r.file);
-    const notInBaseline = stillDivergent.filter(f => !BASELINE.includes(f));
-    expect(notInBaseline).toEqual([]);
-    expect(BASELINE.length).toBeLessThanOrEqual(32);
+    // A file that stopped writing must leave the baseline in the same commit, so the
+    // list stays a true inventory rather than a list of permissions.
+    const live = new Set(rows.map(r => r.file));
+    const stale = BASELINE.filter(f => !live.has(f));
+    expect(stale, 'these no longer write a counter — remove them from the baseline and lower BASELINE_CEILING').toEqual([]);
+    expect(BASELINE.length).toBeLessThanOrEqual(BASELINE_CEILING);
+    expect(new Set(BASELINE).size).toBe(BASELINE.length);
   });
 
-  it('finds writers at all (guards against the matcher silently matching nothing)', () => {
-    // Without this, a broken matcher would make the test above pass vacuously — the
-    // exact failure mode that let three divergent writers exist under a green suite.
-    const rows = counterWriters();
-    expect(rows.length).toBeGreaterThan(5);
-    expect(rows.some(r => r.usesLib)).toBe(true);
+  it('finds writers in every shape (guards against a matcher that silently matches nothing)', () => {
+    // Without this, a broken matcher passes the first test vacuously — the exact
+    // failure that let 29 subset-writers exist under a green suite.
+    expect(rows.length).toBeGreaterThan(40);
+    const shapes = new Set(rows.flatMap(r => r.shapes));
+    expect([...shapes].sort()).toEqual(['$inc', 'hoisted', 'inline']);
+    const counters = new Set(rows.flatMap(r => r.counters));
+    expect([...counters].sort()).toEqual([...COUNTERS].sort());
+  });
+
+  describe('negative controls: one violating source per shape is caught', () => {
+    it('inline $set', () => {
+      expect(scanSource(`await db.collection('books').updateOne({ id }, { $set: { pages_ocr: n, updated_at: new Date() } });`))
+        .toEqual({ counters: ['pages_ocr'], shapes: ['inline'] });
+    });
+    it('$inc', () => {
+      expect(scanSource(`books.updateOne({ id }, { $inc: { pages_count: -1 } });`))
+        .toEqual({ counters: ['pages_count'], shapes: ['$inc'] });
+    });
+    it('hoisted update object, by name, by shorthand, by spread and by assignment', () => {
+      expect(scanSource(`const update = { pages_archived: done, archive_status: 'ok' };\nawait books.updateOne({ id }, { $set: update });`))
+        .toEqual({ counters: ['pages_archived'], shapes: ['hoisted'] });
+      expect(scanSource(`const $set = { 'pages_blank': b };\nawait books.updateOne({ id }, { $set });`))
+        .toEqual({ counters: ['pages_blank'], shapes: ['hoisted'] });
+      expect(scanSource(`const counts = { pages_translated: t };\nawait books.updateOne({ id }, { $set: { ...counts, x: 1 } });`))
+        .toEqual({ counters: ['pages_translated'], shapes: ['hoisted'] });
+      expect(scanSource(`const upd = {};\nif (ok) upd.pages_translatable = n;\nawait books.updateOne({ id }, { $set: upd });`))
+        .toEqual({ counters: ['pages_translatable'], shapes: ['hoisted'] });
+    });
+    it('does not flag reads: a projection, a query filter, a sort', () => {
+      expect(scanSource(`books.find({ pages_count: { $gt: 0 } }).project({ pages_ocr: 1 }).sort({ pages_translated: -1 });`))
+        .toEqual({ counters: [], shapes: [] });
+    });
   });
 });

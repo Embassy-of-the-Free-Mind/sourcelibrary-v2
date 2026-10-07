@@ -1,3 +1,5 @@
+import { storedRung, isReadableRung, type StoredTranslationState } from './translation-completeness';
+
 function isNonEmptyText(value?: string | null) {
   return typeof value === 'string' && value.trim().length > 0;
 }
@@ -30,6 +32,7 @@ export function shouldShowTranslationRequestCta({
   bookPagesTranslated,
   bookPagesCount,
   bookLanguage,
+  bookTranslationState,
 }: {
   ocrText?: string | null;
   translationText?: string | null;
@@ -40,6 +43,8 @@ export function shouldShowTranslationRequestCta({
   bookPagesCount?: number | null;
   /** The book's own language. An English book has nothing to translate into. */
   bookLanguage?: string | null;
+  /** `books.translation_state` (#5287). When stamped, its rung replaces the page arithmetic below. */
+  bookTranslationState?: StoredTranslationState | null;
 }) {
   if (!isNonEmptyText(ocrText)) return false;
   // 2,447 public books are already in English. Offering to translate one is
@@ -48,6 +53,11 @@ export function shouldShowTranslationRequestCta({
   if (hasExistingTranslationContent({ translationText, translationData, translationUpdatedAt, modernizedText })) {
     return false;
   }
+
+  // A book at rung `readable`/`complete` is done; a missing page there is a gap,
+  // not a translation request. Unstamped books fall back to the counters.
+  const rung = storedRung({ translation_state: bookTranslationState });
+  if (rung !== null) return !isReadableRung(rung);
 
   const translatedPages = Number(bookPagesTranslated ?? 0);
   const totalPages = Number(bookPagesCount ?? 0);

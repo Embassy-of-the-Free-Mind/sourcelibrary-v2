@@ -1,0 +1,20 @@
+{
+ "id": "69e7aaf75f1a22ab19a907e7_00001",
+ "arm": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>superior to all the three realms <note>the realms of desire, form, and formlessness</note>, he dwelt within the palace of the essence of the <term>dharmadhatu</term> <gloss>the sphere of ultimate reality</gloss> which is free from conceptual elaboration. He was together with a great assembly of monks and a great gathering of <term>bodhisattvas</term> <gloss>beings dedicated to awakening</gloss>, such as: the <term>bodhisattva mahasattva</term> <gloss>great heroic being of awakening</gloss> Non-Conceptuality, and Non-Conceptual Radiance, and Non-Conceptual Moon, and Non-Conceptual Hero, and the one skilled in teaching the Non-Conceptual Dharma, and Non-Conceptual Essence, and Non-Conceptual <unclear>text ends mid-word</unclear>\n\n<summary>This page describes the Buddha residing in the ultimate sphere of reality, surrounded by a great assembly of monks and specifically named bodhisattvas characterized by non-conceptual wisdom.</summary>\n<keywords>Buddha, dharmadhatu, bodhisattva, non-conceptuality, three realms, assembly</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2078,
+ "outputTokens": 254,
+ "thinkingTokens": 0,
+ "ms": 203757,
+ "cost_usd": 0.0009005,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 415,
+ "job": "batches/m3tgb80kdfd0p59ncbwgvg1drix1ghy12b7v"
+}

@@ -1,0 +1,154 @@
+{
+ "redraw_2026-10-01": {
+  "bl-kanjur": {
+   "n": 100,
+   "median": 0.947,
+   "q1": 0.904,
+   "q3": 0.972,
+   "ge09": 76,
+   "lt05": 3
+  },
+  "bl-other": {
+   "n": 25,
+   "median": 0.174,
+   "q1": 0.0,
+   "q3": 0.252,
+   "ge09": 1,
+   "lt05": 23
+  },
+  "print": {
+   "n": 15,
+   "median": 0.0,
+   "q1": 0.0,
+   "q3": 0.296,
+   "ge09": 0,
+   "lt05": 14
+  },
+  "control_noise05": {
+   "n": 50,
+   "median": 0.968,
+   "q1": 0.963,
+   "q3": 0.978,
+   "ge09": 50,
+   "lt05": 0
+  },
+  "chance_shuffle": {
+   "n": 140,
+   "median": 0.247,
+   "q1": 0.212,
+   "q3": 0.276,
+   "ge09": 0,
+   "lt05": 140
+  },
+  "kanjur_pages_below_book_median_lines": {
+   "n": 100,
+   "short": 5,
+   "rate": 0.05,
+   "two_or_more_short": 2
+  },
+  "kanjur_identity_short_vs_full": {
+   "short": {
+    "n": 5,
+    "median": 0.888,
+    "q1": 0.827,
+    "q3": 0.909,
+    "ge09": 2,
+    "lt05": 0
+   },
+   "full": {
+    "n": 95,
+    "median": 0.949,
+    "q1": 0.912,
+    "q3": 0.973,
+    "ge09": 74,
+    "lt05": 3
+   }
+  },
+  "arms": {
+   "bdrc-yigdzin-v1": 99,
+   "gemini-3.1-flash-lite-preview": 1
+  },
+  "leaf_break_pages": 42,
+  "overlap_books_with_0930": 41,
+  "worst_kanjur": [
+   [
+    0.289,
+    "https://sourcelibrary.org/book/69e7aae15f1a22ab19a8edd5?page=176",
+    14,
+    14
+   ],
+   [
+    0.298,
+    "https://sourcelibrary.org/book/6a14e173311a9edd462215c9?page=152",
+    18,
+    18
+   ],
+   [
+    0.438,
+    "https://sourcelibrary.org/book/69e7ab465f1a22ab19a95c5b?page=266",
+    14,
+    14
+   ],
+   [
+    0.596,
+    "https://sourcelibrary.org/book/69e7ab0d5f1a22ab19a92183?page=192",
+    10,
+    14
+   ],
+   [
+    0.625,
+    "https://sourcelibrary.org/book/69e7abdd5f1a22ab19a9fade?page=410",
+    14,
+    14
+   ],
+   [
+    0.644,
+    "https://sourcelibrary.org/book/69e7ab145f1a22ab19a9287b?page=236",
+    14,
+    14
+   ]
+  ]
+ },
+ "draw_2026-09-30": {
+  "bl-kanjur": {
+   "n": 65,
+   "median": 0.95,
+   "q1": 0.917,
+   "q3": 0.971,
+   "ge09": 53,
+   "lt05": 2
+  },
+  "bl-other": {
+   "n": 25,
+   "median": 0.208,
+   "q1": 0.14,
+   "q3": 0.282,
+   "ge09": 0,
+   "lt05": 24
+  },
+  "print": {
+   "n": 15,
+   "median": 0.258,
+   "q1": 0.0,
+   "q3": 0.345,
+   "ge09": 0,
+   "lt05": 15
+  },
+  "control_noise05": {
+   "n": 40,
+   "median": 0.968,
+   "q1": 0.964,
+   "q3": 0.976,
+   "ge09": 40,
+   "lt05": 0
+  },
+  "chance_shuffle": {
+   "n": 105,
+   "median": 0.252,
+   "q1": 0.213,
+   "q3": 0.29,
+   "ge09": 0,
+   "lt05": 104
+  }
+ }
+}

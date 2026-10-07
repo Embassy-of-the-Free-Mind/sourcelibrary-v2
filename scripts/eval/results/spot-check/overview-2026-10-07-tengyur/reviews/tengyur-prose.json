@@ -1,0 +1,481 @@
+[
+  {
+    "book_id": "6abeb2b1896ea18127c8327d",
+    "slot": 5,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཟ (Derge Tengyur, vol. 101)",
+    "tradition": "tengyur-prose",
+    "shelf_fit": "fits",
+    "shelf_note": "Madhyamaka (dbu ma) volume of the Derge Tengyur; all four pages are prose commentary (refutation of Sāṃkhya, causality, Buddha-qualities, Madhyamaka critique of pramāṇa). Belongs on a Tengyur prose shelf.",
+    "rights_flag": null,
+    "structure_note": "681 records, 680 with OCR and 680 translated (one page without text, likely the cover or title leaf). Scan numbers in the left margin run one ahead of page_number (image 143 for page 142, 671 for 670): a constant offset, not a defect. No printed_backsteps or repeats. The book is visible:false.",
+    "on_sight_defect": false,
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      142,
+      372
+    ],
+    "reader_summary": "A Madhyamaka commentary volume of the Derge Tengyur. The Tibetan is the Esukhia etext and matches the leaf line for line on all four pages checked, so the transcription is of the right text. The English follows the argument closely; on the denser logic pages it garbles some syllogistic steps and mistranslates a few analogies, so a specialist should check it against the Tibetan before quoting it.",
+    "pages": [
+      {
+        "page_number": 142,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "ཕ་རོལ་...གཞུང་མི་འཐད་པར་སུན་དབྱུང་བའི་ཕྱིར",
+            "english": "To refute the invalidity of their system",
+            "problem": "awkward: means 'to refute their system as untenable'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 305,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "མར་མེ་གཅིག་གིས་དུས་གཅིག་ཏུ་སྣང་བ་དང་མུན་པའི་བྱ་བ་མི་མཐུན་པ་གཉིས་བྱེད་པར་མི་རིགས་པ",
+            "english": "two contradictory actions—producing light and clearing darkness",
+            "problem": "the source pairs light and darkness as the contradictory actions; 'producing light and clearing darkness' are not contradictory, so the analogy no longer works",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 372,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཀུན་ནས་ཉོན་མོངས་པ་དང་། རྣམ་པར་བྱང་བ་དང་། ལྡང་བ",
+            "english": "afflictions, purification, and stability",
+            "problem": "ལྡང་བ is 'emergence' (from absorption), not 'stability'",
+            "severity": "minor"
+          },
+          {
+            "source": "(list of 18 unshared qualities)",
+            "english": "numbered 1–18 with 'regarding the present' left unnumbered",
+            "problem": "translator-added numbering does not fit the source list (19 items as written)",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "summary adds 'within the Madhyamika framework of conventional truth', which the page does not say",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 670,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "{གོ་རིམས་,གོ་རིམ་}",
+            "image": "one reading only",
+            "problem": "the etext's variant-reading braces appear in the transcription",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ཡན་ལག་ཚང་བའི་ཚིག་ཁྱད་པར་ཅན་སྒྲུབ་པ་མ་ཡིན་པ་ཉིད་ཕྱོགས་སུ་བྱས་པ་ལ་ཡང་ཡན་ལག་ཚང་བ་ཡིན་པའི་ཕྱིར། དཔེར་ན་རྟོག་གེ་ཕྱི་མས་གནོད་པར་གྱུར་པ་བཞིན་ནོ་ཞེས་བཀག་པ་ཁོ་ནའི་ཕྱིར",
+            "english": "This is because even when such a statement is made the subject of a thesis, it is shown to be invalid, just as something invalidated by later reasoning is invalid, precisely because it possesses the nature of having parts.",
+            "problem": "the source gives a counter-syllogism (thesis: such a statement is not a proof; reason: it has complete members; example: one invalidated by later reasoning). The English blurs it, so the structure of the argument is lost",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "ཕྱོགས་སྔ་མ་ཁོང་ནས་དབྱུང་བ",
+            "english": "this internal position of the opponents",
+            "problem": "means 'anticipated objection' (pūrvapakṣa)",
+            "severity": "minor"
+          },
+          {
+            "source": "སུན་འབྱིན་པའི་གསལ་བ་དང་དེ་ཁོ་ན་ཡང",
+            "english": "specific instances of refutation and the reality of the thing itself",
+            "problem": "དེ་ཁོ་ན here is the genuine refutation (as opposed to pseudo-refutation), not 'the reality of the thing itself'",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The Tibetan is right on every page. The English is good on expository pages and weaker on dense pramāṇa argument, with no serious errors in the four pages."
+  },
+  {
+    "book_id": "6abea98e6a920ffd924dd984",
+    "slot": 6,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ག (Derge Tengyur, vol. 82)",
+    "tradition": "tengyur-prose",
+    "shelf_fit": "fits",
+    "shelf_note": "Prajñāpāramitā (sher phyin) volume of the Tengyur. All four pages are long verbatim runs of Perfection of Wisdom sutra text (Śāriputra–Subhūti dialogue, Ānanda and the smile) as quoted within a commentary. This is expected for this section.",
+    "rights_flag": null,
+    "structure_note": "629 records, 628 with OCR and 628 translated (one leaf without text). Margin leaf numbers run one ahead of page_number, a constant offset. Nothing else stands out. The book is visible:false.",
+    "on_sight_defect": true,
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      171,
+      376
+    ],
+    "reader_summary": "A Prajñāpāramitā volume of the Tengyur, mostly sutra text quoted at length. The Tibetan matches the leaf on all four pages but carries stray '#' etext markers. The English is faithful and plain. One page adds invented markdown headings ('# Continuing from the previous section'), and some technical terms are rendered loosely.",
+    "pages": [
+      {
+        "page_number": 106,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "བྱའོ་#ཞེས་བྱ་བ་ནས / འདི་དག་#ཐམས་ཅད / བྱེད་པ་ན#།",
+            "image": "no such marks on the leaf",
+            "problem": "etext '#' markers inside the transcription",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཉེ་བར་འཁྲུག་པ",
+            "english": "exhaustion",
+            "problem": "upāyāsa is 'distress/despair'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "invented markdown headings '# Continuing from the previous section' and '# On the nature of striving'. The first is also wrong: the passage is an abbreviation ('…up to…'), not a continuation from a previous page",
+            "severity": "moderate",
+            "class": "T16"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 171,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "དགོད་#དོ། / མྱང་#ངོ་། / སུམ་བརྒྱས་#གོས",
+            "image": "no such marks",
+            "problem": "etext '#' markers in the transcription",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "སངས་རྒྱས་བཅོམ་ལྡན་འདས་རྣམས",
+            "english": "the Buddhas and the Bhagavans",
+            "problem": "one group (the Buddha-Bhagavans), split into two",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 376,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "བར་ཡང་#བྱང་ཆུབ / དེ་#དེ",
+            "image": "no such marks",
+            "problem": "etext '#' markers",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཁོངས་སུ་མ་གཏོགས་པ / ཁོངས་སུ་ཆུད་པ་མེད",
+            "english": "not included within any category",
+            "problem": "means 'not included (in the three realms)', aparyāpanna; 'any category' is a guess",
+            "severity": "minor"
+          },
+          {
+            "source": "གཟུགས་ཀྱང་གཟུགས་མེད་པ་ལ་ཆགས་པ་མེད་པ་ཡིན་ནམ",
+            "english": "is it that form is without attachment because there is no form?",
+            "problem": "the source asks whether form is unattached to the absence of form, not whether this is because form is absent; the series is recast as causal",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 521,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "བསྒྲུབས་པ#། / ཚོར་བ་#དེ་བཞིན / ཉིད་#གཞན",
+            "image": "no such marks",
+            "problem": "etext '#' markers",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "པ་དེ་བཞིན་ཉིད་མ་ནོར་བ་...རྟག་ཅིང་བརྟན་ལ་...དངོས་པོ་ཞིག་ཡིན་ཏེ། དངོས་པོ་མེད་པ་མ་ཡིན་ན་ནི",
+            "english": "Suchness, unerring Suchness, unaltered Suchness; it is the non-erroneous reality just as it is. It would have to be an entity characterized as permanent…",
+            "problem": "the page opens mid-conditional ('if mental contact were suchness…'). The English drops the 'if' for the opening clauses, so they read as an assertion",
+            "severity": "moderate",
+            "class": "T6"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The Tibetan is right on every page (with '#' etext noise) and the English is faithful. The invented headings on page 106 are the visible blemish."
+  },
+  {
+    "book_id": "6abe998b6a920ffd924d8554",
+    "slot": 7,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། དི (Derge Tengyur, vol. 42)",
+    "tradition": "tengyur-prose",
+    "shelf_fit": "fits",
+    "shelf_note": "Tantra commentary (rgyud 'grel) volume. Pages 203, 260 and 436 are prose commentary. Page 57 is a verse sādhana (refuge, bodhicitta, maṇḍala visualisation), so the volume is not prose throughout. It is still on the right Tengyur shelf.",
+    "rights_flag": null,
+    "structure_note": "461 records, 460 with OCR and 460 translated (one leaf without text). The margin numbers run one ahead of page_number, a constant offset. Nothing else stands out. The book is visible:false.",
+    "on_sight_defect": false,
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      57,
+      436
+    ],
+    "reader_summary": "A volume of tantric commentaries and sādhanas from the Tengyur. The Tibetan transcription matches the leaf on all four pages. The English is readable and mostly faithful. It misattributes a few points in technical passages (what is the 'seed', what abides 'within beings') and adds Sanskrit back-reconstructions labelled 'original:', which the Tibetan does not give.",
+    "pages": [
+      {
+        "page_number": 57,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "བྷྲཱུཾ་གྱི་འཁོར་ལོ་ལས་བྱུང་རིག་བཅས་པའི། །རྣམ་སྣང་མཛད་ཡན་ལག་ལས་ཡང་དག་བྱུང་།",
+            "english": "Is the One Who Manifests Vairocana together with his awareness-consort, / Arising from the wheel of the syllable Bhrum and its components.",
+            "problem": "the second line says it arises from Vairocana's limbs; the English makes Vairocana the subject and 'components' the wheel's. The grammar is loose but the sense is close",
+            "severity": "minor"
+          },
+          {
+            "source": "མ་ལུས་པ་ལས་ངེས་གྲོལ",
+            "english": "Fully liberated from every remnant of existence",
+            "problem": "'of existence' supplied; the line is the tail of a verse begun on the previous page",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 203,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "དེ་ལྟ་བུ་སེམས་ཅན་ཐམས་ཅད་ལ་མི་སླུ་བའི་ཚུལ་དུ་གནས་ཀྱང",
+            "english": "Although this state exists within all sentient beings in an infallible manner",
+            "problem": "the source says Vajradhara abides in a way that does not deceive all beings; 'exists within all sentient beings' adds a buddha-nature claim",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "notes labelled 'original: \"tattva\"', 'original: \"vidya-abhisheka\"', 'original: \"mahatman\"' present Sanskrit back-reconstructions as the original wording of a Tibetan text",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 260,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "དེ་ཡང་རྡོ་རྗེ་འཆང་བ་སངས་རྒྱས་ཐམས་ཅད་ཀྱི་རང་བཞིན་དེ་འགྲུབ་པར་བྱེད་པའི་ས་བོན་ཏེ",
+            "english": "Furthermore, Vajradhara … is the seed that causes the realization of the nature of all Buddhas",
+            "problem": "HŪṂ is the seed that accomplishes Vajradhara, the nature of all buddhas. The English makes Vajradhara the seed",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "the 'original: \"dbyings\"', 'original: \"phung po\"' notes repeat Tibetan words as glosses; harmless but cluttered",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 436,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "དཔལ་བདེ་མཆོག་གི་རྒྱུད་ཕྱི་མ",
+            "english": "the Explanatory Tantra of the Glorious Chakrasamvara",
+            "problem": "རྒྱུད་ཕྱི་མ is the Later (Uttara) Tantra, a different text-type from an explanatory tantra (bshad rgyud)",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The Tibetan is right on every page and the English is usable. Several moderate misattributions in technical tantric passages mean a specialist should check it before citing."
+  },
+  {
+    "book_id": "6abeac51896ea18127c80b90",
+    "slot": 8,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཇི (Derge Tengyur, vol. 38)",
+    "tradition": "tengyur-prose",
+    "shelf_fit": "fits",
+    "shelf_note": "Tantra-commentary volume containing Guhyasamāja commentaries (page 451 has the colophon of a root-tantra commentary and the opening of the Uttaratantra commentary). Prose throughout on these pages.",
+    "rights_flag": null,
+    "structure_note": "487 records, 486 with OCR but only 483 translated: three pages with text lack a translation. The margin numbers run one ahead of page_number, a constant offset. Nothing else stands out. The book is visible:false.",
+    "on_sight_defect": false,
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      39,
+      451
+    ],
+    "reader_summary": "Guhyasamāja commentaries from the Derge Tengyur. The Tibetan matches the leaf on all four pages. The English tracks the commentary well, including the colophon and the chapter transition. It misreads some technical terms ('seeker' for the melted form, 'nine bodies'), and on one page it may reverse a reply in an argument. One page puts a translated sentence inside a <meta> wrapper.",
+    "pages": [
+      {
+        "page_number": 39,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "བཞིན་{བཟངས་,བཟང་}ཤིན་ཏུ",
+            "image": "one reading only",
+            "problem": "the etext's variant-reading braces appear in the transcription",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "བུད་མེད་རྣམས་དགུ་སྐུ་ལས་བཏོན་ནས",
+            "english": "the women are emanated from the nine bodies",
+            "problem": "nine women are emitted from the body; 'nine bodies' misparses the number",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 170,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "མཚན་མ་མེད་པའི་རྣམ་པར་གསལ་བས",
+            "english": "clearly appear in a formless manner",
+            "problem": "'signless', not 'formless'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "the first translated sentence ('It is explained as \"transcending the Vajra-holder.\"') sits inside a <meta> wrapper and will be lost or shown as meta",
+            "severity": "moderate",
+            "class": "T3"
+          },
+          {
+            "note": "'->…<-' centring markers around the verse lines",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 263,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "དེ་ལྟར་བསྐྱེད་པ་དེའི་སྐྱེ་མཆེད་ཉེ་བར་སྒྲུབ་པར་བྱིན་གྱིས་རློབ་པ་ཡིན་པས་གཞན་སྒྲིབ་ཅིང་མེད་པར་འགྱུར་བ་ཡིན་ནོ",
+            "english": "so it does not obscure or eliminate the others",
+            "problem": "the source has no negation ('…the others are obscured and become absent'). The English inserts 'does not', which may reverse the reply. Low confidence on the intended sense",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "དཀྱིལ་འཁོར་མཆོག་གི་རྒྱལ་པོ་འབའ་ཞིག་གི་སྐབས་སུ",
+            "english": "applied only to the <note>original: \"Supreme King of Mandalas\"</note>",
+            "problem": "the term itself is moved into a note, so the sentence reads 'only to the [note]'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 451,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཞུ་བའི་གཟུགས་སུ་གྱུར་པ",
+            "english": "transformed into the form of a seeker",
+            "problem": "ཞུ་བ here is 'melted' (the melted form), not 'seeker'",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "རྒྱུད་ཕྱི་མ",
+            "english": "Uttaratantra (gloss: Explanatory Tantra)",
+            "problem": "Uttaratantra is the 'Later Tantra'; the gloss conflates it with an explanatory tantra",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The Tibetan is right on every page and the English is mostly sound. A handful of moderate term misreads and a possibly reversed reply on page 263 mean it should be checked before quoting."
+  }
+]

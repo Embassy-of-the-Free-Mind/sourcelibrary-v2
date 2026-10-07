@@ -1,5 +1,6 @@
 import type { Db } from 'mongodb';
 import { supabaseAdmin } from '@/lib/supabase';
+import { READABLE_IN_ENGLISH_FILTER } from '@/lib/page-counts';
 
 /**
  * The `/admin` dashboard rollup: `system_config.dashboard_snapshot`.
@@ -174,10 +175,10 @@ export async function computeDashboardSnapshot(db: Db): Promise<DashboardSnapsho
       { $match: { status: { $in: ['processing', 'queued'] } } },
       { $group: { _id: '$status', count: { $sum: 1 } } },
     ], { maxTimeMS: 5000 }).toArray(),
-    books.countDocuments({
-      ...notHidden, pages_ocr: { $gte: 1 },
-      $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
-    }),
+    // The ladder's `readable_in_english` view — the same set the homepage,
+    // /census, /contribute and /about/progress count (#5501). This used its own
+    // rule (`pages_translated >= 0.9 * pages_ocr`), which disagreed with both.
+    books.countDocuments({ ...notHidden, ...READABLE_IN_ENGLISH_FILTER }),
     books.countDocuments({
       ...notHidden, is_first_translation: true, pages_ocr: { $gte: 10 },
       $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },

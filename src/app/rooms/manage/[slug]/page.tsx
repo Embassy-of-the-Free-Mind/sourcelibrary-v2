@@ -20,6 +20,10 @@ function errorMessage(err: unknown): string {
 
 const SITE = 'https://sourcelibrary.org';
 
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 export default function ManageRoomPage() {
   const params = useParams<{ slug: string }>();
   const router = useRouter();
@@ -79,8 +83,16 @@ export default function ManageRoomPage() {
   }
 
   const roomUrl = room ? `${SITE}/rooms/${room.slug}` : '';
+  // The frame, a fallback link, and the host script (public/rooms/embed.js)
+  // that sizes the frame, lifts it for the reader and keeps ?room=… in the
+  // host page's address. The inline style is what shows if the script cannot run.
+  const name = room ? escapeHtml(room.name) : '';
   const snippet = room
-    ? `<iframe src="${roomUrl}" title="${room.name.replace(/"/g, '&quot;')}" style="width:100%;height:90vh;border:0" loading="lazy" allow="fullscreen"></iframe>`
+    ? [
+        `<iframe class="sl-room" src="${roomUrl}" data-room="${room.slug}" title="${name}" style="display:block;width:100%;height:90vh;min-height:560px;border:0" loading="lazy" allow="fullscreen"></iframe>`,
+        `<p style="margin:8px 0 0;font-size:13px;opacity:.75"><a class="sl-room-open" href="${roomUrl}" target="_blank" rel="noopener">Open ${name} in its own window</a></p>`,
+        `<script src="${SITE}/rooms/embed.js" defer></script>`,
+      ].join('\n')
     : '';
 
   async function copy() {
@@ -119,7 +131,7 @@ export default function ManageRoomPage() {
                 {justCreated ? 'Your room is live. Put it on your site.' : 'Put it on your site'}
               </h2>
               <p className="text-sm mb-4" style={{ color: 'var(--text-secondary)' }}>
-                Paste this where the room should appear. It works on WordPress, Ghost, Squarespace, Webflow and any page you can add HTML to.
+                Paste this where the room should appear. It shows the shelf at its full height, opens a book to fill the window, and keeps your page&apos;s address in step so Back and refresh return readers to the same page. It works on WordPress, Ghost, Squarespace, Webflow and any page you can add HTML to.
                 {room.allowed_origins && room.allowed_origins.length === 0 ? (
                   <> Add your site&apos;s hostname under <em>Your website</em> below first, or the browser will refuse to show it.</>
                 ) : null}

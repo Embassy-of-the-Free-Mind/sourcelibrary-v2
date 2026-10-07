@@ -154,7 +154,7 @@ export default function ArchiveOcrAgainstProofreadPagesPage() {
                 <tr><td className={TD}>Before 1880, number-dense (22)</td><td className={TD}>6.4%</td><td className={TD}>4.0%</td><td className={TD}>11 / 1 / 7</td><td className={TD}>3 of 265 / 0 of 194</td><td className={TD}>3</td></tr>
                 <tr><td className={TD}>1880&ndash;1930, prose (41)</td><td className={TD}>0.62%</td><td className={TD}>0.34%</td><td className={TD}>16 / 1 / 19</td><td className={TD}>0 of 12 / 0 of 12</td><td className={TD}>5</td></tr>
                 <tr><td className={TD}>1880&ndash;1930, number-dense (34)</td><td className={TD}>3.5%</td><td className={TD}>4.9%</td><td className={TD}>15 / 2 / 10</td><td className={TD}>9 of 599 / 0 of 534</td><td className={TD}>7</td></tr>
-                <tr><td className={TD}><strong>All (122)</strong></td><td className={TD}><strong>3.95%</strong> [2.2, 6.2]</td><td className={TD}><strong>2.62%</strong> [1.1, 4.5]</td><td className={TD}><strong>57 / 5 / 43</strong></td><td className={TD}><strong>13 of 886</strong> (1.5% [0.6, 2.5]) / <strong>0 of 750</strong></td><td className={TD}>17 (14%)</td></tr>
+                <tr><td className={TD}><strong>All (122)</strong></td><td className={TD}><strong>3.95%</strong> [2.3, 6.1]</td><td className={TD}><strong>2.62%</strong> [1.2, 4.6]</td><td className={TD}><strong>57 / 5 / 43</strong></td><td className={TD}><strong>13 of 886</strong> (1.5% [0.6, 2.7]) / <strong>0 of 750</strong></td><td className={TD}>17 (14%)</td></tr>
               </tbody>
             </table>
           </div>
@@ -200,7 +200,7 @@ export default function ArchiveOcrAgainstProofreadPagesPage() {
           <p className={P}>
             This finding is preliminary, and the numbers should be read with their intervals. Across the
             122 pages the Archive&apos;s text does this to 13 of the 886 numbers printed, or 1.5 percent
-            with a 95 percent interval from 0.6 to 2.5, on nine different pages. On the 105 pages both
+            with a 95 percent interval from 0.6 to 2.7, on nine different pages. On the 105 pages both
             readers produced, the count is 10 against 0. Ten events is a small base. Our reader produced
             no silent misread that survived the image check on any of its 750 numbers, and zero observed
             in 750 does not show that its rate is zero; it bounds the rate below about 0.4 percent at 95

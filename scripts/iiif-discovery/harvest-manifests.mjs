@@ -32,6 +32,10 @@
  *   --limit=N             cap candidates this run
  *   --refetch             re-harvest even if manifest_cache exists
  *   --drop-restricted     mark non-open candidates 'skipped' (default: keep, flagged)
+ *   --oai-id-re=<regex>   only candidates whose oai_id matches (e.g. Vatican fonds by shelfmark)
+ *   --max-year=N          only candidates with date_earliest <= N (undated rows are excluded)
+ *   --delay-ms=N          pause between manifests (default 100; honour a host's robots crawl-delay)
+ *   --contact-ua          send a contact-carrying user agent instead of the browser string
  */
 
 import { chromium } from 'playwright';
@@ -46,7 +50,14 @@ const COLLECTION = args.collection || null;
 const LIMIT = parseInt(args.limit) || 100000;
 const REFETCH = 'refetch' in args;
 const DROP_RESTRICTED = 'drop-restricted' in args;
-const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
+const OAI_ID_RE = args['oai-id-re'] ? new RegExp(args['oai-id-re']) : null;
+const MAX_YEAR = parseInt(args['max-year']) || null;
+const DELAY_MS = parseInt(args['delay-ms']) || null;
+// A wave that runs for hours against one institution should say who it is (#4361's
+// rule for IA). The browser string stays the default for the sources that need it.
+const UA = 'contact-ua' in args
+  ? 'SourceLibrary/1.0 (https://sourcelibrary.org; j.d.lomas@tudelft.nl)'
+  : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
 const CHALLENGE_RE = /bobcmn|support id is|failureConfig/i;
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -82,12 +93,62 @@ async function fetchBrowser(page, url) {
   return { error: 'challenged' };
 }
 
+// Vatican dates are "Sec. XII in.", "sec. XV-XVI", or a year. parseDateRange's roman branch
+// matches only after a bare "s." and reads "XII" as XI, so it is not reused here.
+const ROMAN = { I: 1, V: 5, X: 10, L: 50 };
+const romanToInt = r => [...r.toUpperCase()].reduce((acc, ch, i, a) => acc + (ROMAN[ch] < (ROMAN[a[i + 1]] || 0) ? -ROMAN[ch] : ROMAN[ch]), 0);
+function vaticanDate(text) {
+  if (!text) return { earliest: null, latest: null };
+  const y = text.match(/\b(1[0-9]{3}|[5-9][0-9]{2})\b/g);
+  if (y) { const n = y.map(Number); return { earliest: Math.min(...n), latest: Math.max(...n) }; }
+  const c = text.match(/sec(?:olo|\.)?\s*([IVXL]+)\b(?:\s*[-–]\s*([IVXL]+)\b)?/i);
+  if (!c) return { earliest: null, latest: null };
+  const a = romanToInt(c[1]), b = c[2] ? romanToInt(c[2]) : a;
+  return a > 0 && b >= a && b <= 21 ? { earliest: (a - 1) * 100 + 1, latest: b * 100 } : { earliest: null, latest: null };
+}
+const VATICAN_LANG = { latino: 'Latin', greco: 'Greek', ebraico: 'Hebrew', arabo: 'Arabic', siriaco: 'Syriac', copto: 'Coptic', armeno: 'Armenian', etiopico: "Ge'ez", "ge'ez": "Ge'ez", georgiano: 'Georgian', turco: 'Ottoman Turkish', persiano: 'Persian', italiano: 'Italian', francese: 'French', tedesco: 'German', spagnolo: 'Spanish', cinese: 'Chinese', samaritano: 'Samaritan', sanscrito: 'Sanskrit', tamil: 'Tamil', malayalam: 'Malayalam', 'slavo ecclesiastico': 'Church Slavonic', paleoslavo: 'Church Slavonic', karshuni: 'Garshuni', garshuni: 'Garshuni', aramaico: 'Aramaic', 'giudeo-arabo': 'Judeo-Arabic' };
+// Most oriental fonds are single-language by construction; used only when the manifest names none.
+// Mixed fonds (Vat.estr.or, Vat.ind, Borg.ind, Barb.or) are deliberately absent: Unknown beats a guess.
+const VATICAN_FONDS_LANG = [
+  [/^(Vat|Borg)\.sir\./, 'Syriac'], [/^(Vat|Borg|Pap\.Vat)\.copt\./, 'Coptic'], [/^(Vat|Borg)\.ar\./, 'Arabic'], [/^Sbath\./, 'Arabic'],
+  [/^(Vat|Borg)\.arm\./, 'Armenian'], [/^(Vat|Borg|Cerulli)\.et\./, "Ge'ez"], [/^Vat\.iber\./, 'Georgian'],
+  [/^(Vat|P\.I\.O)\.slav\./, 'Church Slavonic'], [/^(Vat|Borg)\.turc\./, 'Ottoman Turkish'], [/^(Vat|Borg|Cerulli)\.pers\./, 'Persian'],
+  [/^(Vat|Urb|Borg)\.ebr\./, 'Hebrew'], [/^Neofiti\./, 'Hebrew'], [/^Vat\.sam\./, 'Samaritan'], [/^Borg\.cin\./, 'Chinese'], [/^Borg\.tonch\./, 'Vietnamese'],
+];
+function vaticanEnrich(c, m) {
+  const md = m.metadata || [];
+  const get = l => { const v = md.find(x => String(extractLabel(x.label) || '').toLowerCase() === l)?.value; return v == null ? null : (Array.isArray(v) ? v.map(x => extractLabel(x) || x).join('; ') : extractLabel(v) || String(v)); };
+  const out = {};
+  const shelf = get('shelfmark') || extractLabel(m.label) || c.title;
+  // The shelfmark goes INTO the title, always. Each manuscript is unique, but two copies of one text
+  // with no author and a century date share an edition_key (title|author|year), and the acquisition
+  // gate would decline the second as a duplicate. Heidelberg titles already carry theirs ("Cod. Pal.
+  // germ. 1: …"); this gives Vatican the same shape.
+  const work = (get('title') || (c.title && c.title !== shelf ? c.title : '')).replace(/\s+/g, ' ').trim();
+  if (shelf) out.title = work && !work.includes(shelf) ? `${work.slice(0, 400)} (${shelf})` : (work || shelf);
+  if (shelf) out['metadata.shelfmark'] = shelf;
+  const author = get('other name') || get('author');
+  if (author && (!c.author || c.author === 'Unknown')) out.author = author.slice(0, 300);
+  const lang = get('language') || VATICAN_FONDS_LANG.find(([re]) => re.test(shelf || ''))?.[1];
+  if (lang && (!c.language || c.language === 'Unknown')) {
+    const names = lang.split(/[;,]/).map(x => x.trim()).filter(Boolean);
+    const mapped = names.map(n => VATICAN_LANG[n.toLowerCase()] || n);
+    out.language = mapped[0];
+    if (mapped.length > 1) out.languages = mapped;
+  }
+  const date = get('date');
+  if (date && !c.date_text) { const d = vaticanDate(date); out.date_text = date; out.date_earliest = d.earliest; out.date_latest = d.latest; }
+  return out;
+}
+
 const { client, db } = await getScriptClient({ noTimeout: true });
 const col = db.collection('import_candidates');
 const filter = { status: 'discovered' };
 if (SOURCE) filter.source = SOURCE;
 if (COLLECTION) filter.categories = COLLECTION;
 if (!REFETCH) filter['manifest_cache.harvested_at'] = { $exists: false };
+if (OAI_ID_RE) filter.oai_id = OAI_ID_RE;
+if (MAX_YEAR) filter.date_earliest = { $lte: MAX_YEAR };
 
 const cands = await col.find(filter).limit(LIMIT).toArray();
 const fetcher = fetcherFor(SOURCE);
@@ -100,7 +161,7 @@ let cached = 0, restricted = 0, errors = 0, idx = 0;
 for (const c of cands) {
   idx++;
   const res = fetcher === 'browser' ? await fetchBrowser(page, c.manifest_url) : await fetchPlain(c.manifest_url);
-  if (res.error) { errors++; if (errors <= 8) console.log(`  [err ${idx}/${cands.length}] ${c.source_id || c.manifest_url} → ${res.error}`); await sleep(fetcher === 'browser' ? 1200 : 200); continue; }
+  if (res.error) { errors++; if (errors <= 8) console.log(`  [err ${idx}/${cands.length}] ${c.source_id || c.manifest_url} → ${res.error}`); await sleep(DELAY_MS ?? (fetcher === 'browser' ? 1200 : 200)); continue; }
 
   const m = res.manifest;
   const pages = manifestToPages(m);
@@ -116,11 +177,14 @@ for (const c of cands) {
   if (blank(c.author) && meta.author) enrich.author = meta.author;
   if (blank(c.language) && meta.language) enrich.language = meta.language;
   if (!c.date_text && meta.date_text) { enrich.date_text = meta.date_text; enrich.date_earliest = meta.date_earliest; enrich.date_latest = meta.date_latest; }
+  // Vatican rows are shelfmark-only: the candidate title IS the shelfmark, and so is the manifest
+  // label, so the blank-title rule above never fires. The work title lives in metadata 'Title'.
+  if (c.source === 'vatican') Object.assign(enrich, vaticanEnrich(c, m));
 
   if (!rights.open && DROP_RESTRICTED) {
     restricted++;
     await col.updateOne({ _id: c._id }, { $set: { status: 'skipped', skip_reason: `rights:${rights.label}`, 'manifest_cache.rights': rights.label, 'manifest_cache.harvested_at': new Date() } });
-    await sleep(fetcher === 'browser' ? 700 : 100); continue;
+    await sleep(DELAY_MS ?? (fetcher === 'browser' ? 700 : 100)); continue;
   }
 
   await col.updateOne({ _id: c._id }, {
@@ -134,7 +198,7 @@ for (const c of cands) {
   cached++;
   if (!rights.open) restricted++;
   if (cached <= 3 || cached % 50 === 0) console.log(`  cached [${cached}] ${String(label).slice(0, 50)} — ${pages.length}pp, ${rights.label}`);
-  await sleep(fetcher === 'browser' ? 700 : 100);
+  await sleep(DELAY_MS ?? (fetcher === 'browser' ? 700 : 100));
 }
 
 console.log(`\n[harvest-manifests] done: ${cached} cached, ${restricted} restricted-rights, ${errors} errors`);

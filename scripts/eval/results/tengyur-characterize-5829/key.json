@@ -1,0 +1,3023 @@
+{
+ "PNT3O": {
+  "type": "SAMPLE",
+  "page_id": "6abecb12896ea18127c8b3e1",
+  "book_id": "6abecb0a896ea18127c8b28a",
+  "vol": 160,
+  "section": "Vinaya",
+  "page_number": 341,
+  "folio": "171b",
+  "text_toh": "D4119",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "P93N5": {
+  "type": "SAMPLE",
+  "page_id": "6abeb58b896ea18127c84e8d",
+  "book_id": "6abeb583896ea18127c84e6f",
+  "vol": 113,
+  "section": "Sūtra commentary",
+  "page_number": 28,
+  "folio": "15a",
+  "text_toh": "D3983",
+  "opens_text": true,
+  "colophon": true,
+  "verse_share": 0
+ },
+ "PDCCR": {
+  "type": "SAMPLE",
+  "page_id": "6abeb289896ea18127c831df",
+  "book_id": "6abeb286896ea18127c82fd7",
+  "vol": 100,
+  "section": "Madhyamaka",
+  "page_number": 518,
+  "folio": "260a",
+  "text_toh": "D3859",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.03
+ },
+ "P54V2": {
+  "type": "SAMPLE",
+  "page_id": "6abed81b896ea18127c8f4e6",
+  "book_id": "6abed7f8896ea18127c8f2ca",
+  "vol": 187,
+  "section": "Pramāṇa",
+  "page_number": 538,
+  "folio": "270a",
+  "text_toh": "D4228",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PDS7S": {
+  "type": "SAMPLE",
+  "page_id": "6abeab106a920ffd924ddfed",
+  "book_id": "6abeab0e6a920ffd924ddeaa",
+  "vol": 85,
+  "section": "Prajñāpāramitā",
+  "page_number": 321,
+  "folio": "161b",
+  "text_toh": "D3791",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.16
+ },
+ "PH4G8": {
+  "type": "SAMPLE",
+  "page_id": "6abeadc9896ea18127c81804",
+  "book_id": "6abeadc8896ea18127c81736",
+  "vol": 87,
+  "section": "Prajñāpāramitā",
+  "page_number": 204,
+  "folio": "103a",
+  "text_toh": "D3796",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "P61G6": {
+  "type": "SAMPLE",
+  "page_id": "6abe8cd86a920ffd924d5989",
+  "book_id": "6abe8cd66a920ffd924d56d8",
+  "vol": 21,
+  "section": "Tantra commentary",
+  "page_number": 687,
+  "folio": "344b",
+  "text_toh": "D1449",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.03
+ },
+ "PJ6U4": {
+  "type": "SAMPLE",
+  "page_id": "6abed51b896ea18127c8df02",
+  "book_id": "6abed518896ea18127c8dce8",
+  "vol": 178,
+  "section": "Pramāṇa",
+  "page_number": 536,
+  "folio": "269a",
+  "text_toh": "D4221",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.21
+ },
+ "P2DCT": {
+  "type": "PLANT",
+  "page_id": "6abe92d16a920ffd924d738d",
+  "book_id": "6abe92d06a920ffd924d7166",
+  "vol": 32,
+  "section": "Tantra commentary",
+  "page_number": 549,
+  "folio": "275b",
+  "plant_kind": "agent",
+  "plant": {
+   "old": "It is said: I am indeed all the Buddhas, and I am all the Bodhisattvas themselves.",
+   "new": "It is said: You are indeed all the Buddhas, and I am all the Bodhisattvas themselves.",
+   "how": "\\bI am\\b → you are"
+  }
+ },
+ "PW956": {
+  "type": "SAMPLE",
+  "page_id": "6abea23a6a920ffd924db3e3",
+  "book_id": "6abea2356a920ffd924db35a",
+  "vol": 63,
+  "section": "Tantra commentary",
+  "page_number": 135,
+  "folio": "68b",
+  "text_toh": "D2533",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.15
+ },
+ "PUPWI": {
+  "type": "HUMAN",
+  "page_id": "6abe8368433559215a997cb1",
+  "book_id": "6abe8366433559215a997cad",
+  "vol": 3,
+  "section": "Tantra commentary",
+  "page_number": 2,
+  "folio": "2a",
+  "toh": "toh1183"
+ },
+ "PWL11": {
+  "type": "SAMPLE",
+  "page_id": "6abeace4896ea18127c80eb3",
+  "book_id": "6abeace1896ea18127c80d7a",
+  "vol": 52,
+  "section": "Tantra commentary",
+  "page_number": 311,
+  "folio": "156b",
+  "text_toh": "D2292",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.93
+ },
+ "PPXFE": {
+  "type": "J5797",
+  "page_id": "6abe8368433559215a997ce8",
+  "book_id": "6abe8366433559215a997cad",
+  "vol": 3,
+  "section": "Tantra commentary",
+  "page_number": 57,
+  "folio": "29b",
+  "toh": "toh1183",
+  "j5797": {
+   "id": "Q010",
+   "reversed_either": false,
+   "reversed_both": false,
+   "fid": [
+    5,
+    5
+   ],
+   "inversions": [
+    [],
+    []
+   ]
+  }
+ },
+ "PA344": {
+  "type": "SAMPLE",
+  "page_id": "6abe8c716a920ffd924d5574",
+  "book_id": "6abe8c706a920ffd924d545a",
+  "vol": 20,
+  "section": "Tantra commentary",
+  "page_number": 280,
+  "folio": "141a",
+  "text_toh": "D1419",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PYRRC": {
+  "type": "SAMPLE",
+  "page_id": "6abe92d16a920ffd924d72e7",
+  "book_id": "6abe92d06a920ffd924d7166",
+  "vol": 32,
+  "section": "Tantra commentary",
+  "page_number": 383,
+  "folio": "192b",
+  "text_toh": "D1793",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.12
+ },
+ "PFWZX": {
+  "type": "SAMPLE",
+  "page_id": "6abe8c716a920ffd924d569e",
+  "book_id": "6abe8c706a920ffd924d545a",
+  "vol": 20,
+  "section": "Tantra commentary",
+  "page_number": 578,
+  "folio": "290a",
+  "text_toh": "D1419",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PCVKM": {
+  "type": "PLANT",
+  "page_id": "6abe8cd86a920ffd924d581f",
+  "book_id": "6abe8cd66a920ffd924d56d8",
+  "vol": 21,
+  "section": "Tantra commentary",
+  "page_number": 325,
+  "folio": "163b",
+  "plant_kind": "term",
+  "plant": {
+   "old": "Holding precious flasks filled with the water of wisdom, they bestow the initiation upon oneself and the mandala...",
+   "new": "Holding precious flasks filled with the water of faith, they bestow the initiation upon oneself and the mandala...",
+   "how": "wisdom → faith"
+  }
+ },
+ "P672E": {
+  "type": "SAMPLE",
+  "page_id": "6abecc48896ea18127c8b6aa",
+  "book_id": "6abecc3d896ea18127c8b4b8",
+  "vol": 161,
+  "section": "Vinaya",
+  "page_number": 496,
+  "folio": "249a",
+  "text_toh": "D4119",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PRPUI": {
+  "type": "HUMAN",
+  "page_id": "6abe8368433559215a997cba",
+  "book_id": "6abe8366433559215a997cad",
+  "vol": 3,
+  "section": "Tantra commentary",
+  "page_number": 11,
+  "folio": "6b",
+  "toh": "toh1183"
+ },
+ "PG76Z": {
+  "type": "SAMPLE",
+  "page_id": "6abe9d686a920ffd924d9680",
+  "book_id": "6abe9d656a920ffd924d9632",
+  "vol": 50,
+  "section": "Tantra commentary",
+  "page_number": 76,
+  "folio": "39a",
+  "text_toh": "D2183",
+  "opens_text": true,
+  "colophon": true,
+  "verse_share": 0.84
+ },
+ "PLBN7": {
+  "type": "SAMPLE",
+  "page_id": "6abed340896ea18127c8d088",
+  "book_id": "6abed33b896ea18127c8cfde",
+  "vol": 172,
+  "section": "Jātaka",
+  "page_number": 168,
+  "folio": "85a",
+  "text_toh": "D4156",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.93
+ },
+ "PS533": {
+  "type": "SAMPLE",
+  "page_id": "6abe8c716a920ffd924d54fa",
+  "book_id": "6abe8c706a920ffd924d545a",
+  "vol": 20,
+  "section": "Tantra commentary",
+  "page_number": 158,
+  "folio": "80a",
+  "text_toh": "D1419",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.49
+ },
+ "PFZZF": {
+  "type": "SAMPLE",
+  "page_id": "6abeb750896ea18127c85d5d",
+  "book_id": "6abeb74e896ea18127c85b55",
+  "vol": 119,
+  "section": "Sūtra commentary",
+  "page_number": 518,
+  "folio": "260a",
+  "text_toh": "D4016",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "P176H": {
+  "type": "SAMPLE",
+  "page_id": "6abed42d896ea18127c8d7ea",
+  "book_id": "6abed42c896ea18127c8d54f",
+  "vol": 175,
+  "section": "Pramāṇa",
+  "page_number": 665,
+  "folio": "333a",
+  "text_toh": "D4218",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PWNEG": {
+  "type": "PLANT",
+  "page_id": "6abe97506a920ffd924d7fad",
+  "book_id": "6abe974b6a920ffd924d7dd6",
+  "vol": 39,
+  "section": "Tantra commentary",
+  "page_number": 469,
+  "folio": "235b",
+  "plant_kind": "reversal",
+  "plant": {
+   "old": "Here too, the ritual procedure is like that of the calming ritual.",
+   "new": "Here too, the ritual procedure is not like that of the calming ritual.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "PTJO9": {
+  "type": "J5797",
+  "page_id": "6abe8368433559215a997cfc",
+  "book_id": "6abe8366433559215a997cad",
+  "vol": 3,
+  "section": "Tantra commentary",
+  "page_number": 77,
+  "folio": "39b",
+  "toh": "toh1183",
+  "j5797": {
+   "id": "Q014",
+   "reversed_either": false,
+   "reversed_both": false,
+   "fid": [
+    4,
+    4
+   ],
+   "inversions": [
+    [],
+    []
+   ]
+  }
+ },
+ "P996K": {
+  "type": "HUMAN",
+  "page_id": "6abeafd9896ea18127c8223d",
+  "book_id": "6abeafd3896ea18127c8218e",
+  "vol": 93,
+  "section": "Prajñāpāramitā",
+  "page_number": 173,
+  "folio": "87b",
+  "toh": "toh3808"
+ },
+ "PYHWA": {
+  "type": "HUMAN",
+  "page_id": "6abe8368433559215a997cb2",
+  "book_id": "6abe8366433559215a997cad",
+  "vol": 3,
+  "section": "Tantra commentary",
+  "page_number": 3,
+  "folio": "2b",
+  "toh": "toh1183"
+ },
+ "PY8X2": {
+  "type": "SAMPLE",
+  "page_id": "6abe87b16a920ffd924d4465",
+  "book_id": "6abe87926a920ffd924d444c",
+  "vol": 12,
+  "section": "Tantra commentary",
+  "page_number": 23,
+  "folio": "12b",
+  "text_toh": "D1347",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.04
+ },
+ "P4RL1": {
+  "type": "SAMPLE",
+  "page_id": "6abecd20896ea18127c8b98e",
+  "book_id": "6abecd0e896ea18127c8b6de",
+  "vol": 162,
+  "section": "Vinaya",
+  "page_number": 686,
+  "folio": "344a",
+  "text_toh": "D4120",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PQGFQ": {
+  "type": "SAMPLE",
+  "page_id": "6abe8a1c6a920ffd924d504c",
+  "book_id": "6abe8a146a920ffd924d4e02",
+  "vol": 16,
+  "section": "Tantra commentary",
+  "page_number": 584,
+  "folio": "293a",
+  "text_toh": "D1404",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.21
+ },
+ "PA3VV": {
+  "type": "SAMPLE",
+  "page_id": "6abeb3d8896ea18127c840e1",
+  "book_id": "6abeb3d6896ea18127c83fed",
+  "vol": 107,
+  "section": "Madhyamaka",
+  "page_number": 242,
+  "folio": "122a",
+  "text_toh": "D3886",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PXICJ": {
+  "type": "J5797",
+  "page_id": "6abeafd9896ea18127c821c7",
+  "book_id": "6abeafd3896ea18127c8218e",
+  "vol": 93,
+  "section": "Prajñāpāramitā",
+  "page_number": 55,
+  "folio": "28b",
+  "toh": "toh3808",
+  "j5797": {
+   "id": "Q054",
+   "reversed_either": false,
+   "reversed_both": false,
+   "fid": [
+    5,
+    5
+   ],
+   "inversions": [
+    [],
+    []
+   ]
+  }
+ },
+ "PDXW6": {
+  "type": "SAMPLE",
+  "page_id": "6abea6af6a920ffd924dc20f",
+  "book_id": "6abea6ac6a920ffd924dc1ad",
+  "vol": 71,
+  "section": "Tantra commentary",
+  "page_number": 96,
+  "folio": "49a",
+  "text_toh": "D2671",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.63
+ },
+ "PFIP4": {
+  "type": "SAMPLE",
+  "page_id": "6abe99bd6a920ffd924d88c5",
+  "book_id": "6abe99ba6a920ffd924d8724",
+  "vol": 43,
+  "section": "Tantra commentary",
+  "page_number": 415,
+  "folio": "208b",
+  "text_toh": "D1873",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.03
+ },
+ "P4EQG": {
+  "type": "SAMPLE",
+  "page_id": "6abedba5896ea18127c90afc",
+  "book_id": "6abedb94896ea18127c90961",
+  "vol": 196,
+  "section": "Grammar & sciences",
+  "page_number": 409,
+  "folio": "205b",
+  "text_toh": "D4289",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.05
+ },
+ "P202B": {
+  "type": "SAMPLE",
+  "page_id": "6abeda60896ea18127c90606",
+  "book_id": "6abeda5a896ea18127c904b8",
+  "vol": 194,
+  "section": "Grammar & sciences",
+  "page_number": 332,
+  "folio": "167a",
+  "text_toh": "D4280",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.03
+ },
+ "PL8QY": {
+  "type": "SAMPLE",
+  "page_id": "6abea3ff6a920ffd924dba94",
+  "book_id": "6abea3fd6a920ffd924dba05",
+  "vol": 66,
+  "section": "Tantra commentary",
+  "page_number": 141,
+  "folio": "71b",
+  "text_toh": "D2601",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.57
+ },
+ "PYMGV": {
+  "type": "SAMPLE",
+  "page_id": "6abe83c2433559215a99805b",
+  "book_id": "6abe83b7433559215a997efb",
+  "vol": 4,
+  "section": "Tantra commentary",
+  "page_number": 350,
+  "folio": "176a",
+  "text_toh": "D1187",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.05
+ },
+ "PBEC9": {
+  "type": "SAMPLE",
+  "page_id": "6abeba0d896ea18127c87024",
+  "book_id": "6abeba0b896ea18127c87016",
+  "vol": 130,
+  "section": "Cittamātra",
+  "page_number": 12,
+  "folio": "7a",
+  "text_toh": "D4038",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PRUPW": {
+  "type": "SAMPLE",
+  "page_id": "6abe9cd76a920ffd924d94de",
+  "book_id": "6abe9cd56a920ffd924d937e",
+  "vol": 49,
+  "section": "Tantra commentary",
+  "page_number": 350,
+  "folio": "176a",
+  "text_toh": "D2129",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.98
+ },
+ "POWNP": {
+  "type": "SAMPLE",
+  "page_id": "6abeab98896ea18127c80a9c",
+  "book_id": "6abeab96896ea18127c8080a",
+  "vol": 17,
+  "section": "Tantra commentary",
+  "page_number": 656,
+  "folio": "329a",
+  "text_toh": "D1410",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.11
+ },
+ "PFSRW": {
+  "type": "HUMAN",
+  "page_id": "6abeafd9896ea18127c822f4",
+  "book_id": "6abeafd3896ea18127c8218e",
+  "vol": 93,
+  "section": "Prajñāpāramitā",
+  "page_number": 356,
+  "folio": "179a",
+  "toh": "toh3808"
+ },
+ "PNH66": {
+  "type": "J5797",
+  "page_id": "6abe83c2433559215a9980d9",
+  "book_id": "6abe83b7433559215a997efb",
+  "vol": 4,
+  "section": "Tantra commentary",
+  "page_number": 476,
+  "folio": "239a",
+  "toh": "toh1189",
+  "j5797": {
+   "id": "Q178",
+   "reversed_either": true,
+   "reversed_both": false,
+   "fid": [
+    4,
+    4
+   ],
+   "inversions": [
+    [],
+    [
+     {
+      "candidate": "If you ask how to make offerings to the Dombini, it is by embracing her neck.",
+      "tibetan": "གཡུང་མོ་ཞེས་བྱ་བ་ལ་ཇི་ལྟར་མཆོད་ཅེ་ན། མགུལ་ནས་འཁྱུད་པའོ།",
+      "reference": "Ḍombī also performs worship. How does she do this? By embracing his neck",
+      "why": "agent/patient swapped: Ḍombī worships by embracing the deity"
+     }
+    ]
+   ]
+  }
+ },
+ "P1M3H": {
+  "type": "J5797",
+  "page_id": "6abe83c2433559215a99811f",
+  "book_id": "6abe83b7433559215a997efb",
+  "vol": 4,
+  "section": "Tantra commentary",
+  "page_number": 546,
+  "folio": "274a",
+  "toh": "toh1189",
+  "j5797": {
+   "id": "Q043",
+   "reversed_either": false,
+   "reversed_both": false,
+   "fid": [
+    4,
+    4
+   ],
+   "inversions": [
+    [],
+    []
+   ]
+  }
+ },
+ "PSBEB": {
+  "type": "SAMPLE",
+  "page_id": "6abeb406896ea18127c84345",
+  "book_id": "6abeb404896ea18127c84235",
+  "vol": 108,
+  "section": "Madhyamaka",
+  "page_number": 270,
+  "folio": "136a",
+  "text_toh": "D3897",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "P3NTL": {
+  "type": "HUMAN",
+  "page_id": "6abeafd9896ea18127c823c3",
+  "book_id": "6abeafd3896ea18127c8218e",
+  "vol": 93,
+  "section": "Prajñāpāramitā",
+  "page_number": 563,
+  "folio": "282b",
+  "toh": "toh3808"
+ },
+ "PHYZ7": {
+  "type": "SAMPLE",
+  "page_id": "6abecd20896ea18127c8b999",
+  "book_id": "6abecd0e896ea18127c8b6de",
+  "vol": 162,
+  "section": "Vinaya",
+  "page_number": 697,
+  "folio": "349b",
+  "text_toh": "D4120",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "P58XH": {
+  "type": "HUMAN",
+  "page_id": "6abe83c2433559215a9980b6",
+  "book_id": "6abe83b7433559215a997efb",
+  "vol": 4,
+  "section": "Tantra commentary",
+  "page_number": 441,
+  "folio": "221b",
+  "toh": "toh1189"
+ },
+ "P2P4K": {
+  "type": "SAMPLE",
+  "page_id": "6abed3fd896ea18127c8d549",
+  "book_id": "6abed3fc896ea18127c8d272",
+  "vol": 174,
+  "section": "Pramāṇa",
+  "page_number": 725,
+  "folio": "363a",
+  "text_toh": "D4216",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.15
+ },
+ "PJQXF": {
+  "type": "PLANT",
+  "page_id": "6abea3686a920ffd924db939",
+  "book_id": "6abea35a6a920ffd924db7de",
+  "vol": 65,
+  "section": "Tantra commentary",
+  "page_number": 345,
+  "folio": "173a",
+  "plant_kind": "agent",
+  "plant": {
+   "old": "At the site of the master, join the two feet and the two palms of the hands.",
+   "new": "At the site of the student, join the two feet and the two palms of the hands.",
+   "how": "\\bthe master\\b → the student"
+  }
+ },
+ "PFA5W": {
+  "type": "SAMPLE",
+  "page_id": "6abeb629896ea18127c85314",
+  "book_id": "6abeb628896ea18127c852a1",
+  "vol": 115,
+  "section": "Sūtra commentary",
+  "page_number": 113,
+  "folio": "57b",
+  "text_toh": "D3995",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.11
+ },
+ "PS64I": {
+  "type": "SAMPLE",
+  "page_id": "6abe9efa6a920ffd924da14c",
+  "book_id": "6abe9ef86a920ffd924d9fa4",
+  "vol": 55,
+  "section": "Tantra commentary",
+  "page_number": 422,
+  "folio": "212a",
+  "text_toh": "D2503",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PRG8O": {
+  "type": "J5797",
+  "page_id": "6abeafd9896ea18127c822ba",
+  "book_id": "6abeafd3896ea18127c8218e",
+  "vol": 93,
+  "section": "Prajñāpāramitā",
+  "page_number": 298,
+  "folio": "150a",
+  "toh": "toh3808",
+  "j5797": {
+   "id": "Q293",
+   "reversed_either": false,
+   "reversed_both": false,
+   "fid": [
+    5,
+    5
+   ],
+   "inversions": [
+    [],
+    []
+   ]
+  }
+ },
+ "P8LXT": {
+  "type": "SAMPLE",
+  "page_id": "6abeba44896ea18127c87382",
+  "book_id": "6abeba43896ea18127c8725a",
+  "vol": 131,
+  "section": "Cittamātra",
+  "page_number": 294,
+  "folio": "148a",
+  "text_toh": "D4039",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.03
+ },
+ "PAQPC": {
+  "type": "SAMPLE",
+  "page_id": "6abed81b896ea18127c8f4b7",
+  "book_id": "6abed7f8896ea18127c8f2ca",
+  "vol": 187,
+  "section": "Pramāṇa",
+  "page_number": 491,
+  "folio": "246b",
+  "text_toh": "D4228",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.04
+ },
+ "PBJQ2": {
+  "type": "SAMPLE",
+  "page_id": "6abed81b896ea18127c8f3b1",
+  "book_id": "6abed7f8896ea18127c8f2ca",
+  "vol": 187,
+  "section": "Pramāṇa",
+  "page_number": 229,
+  "folio": "115b",
+  "text_toh": "D4227",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PLZFY": {
+  "type": "SAMPLE",
+  "page_id": "6abebd8c896ea18127c87f88",
+  "book_id": "6abebd37896ea18127c87e7c",
+  "vol": 136,
+  "section": "Cittamātra",
+  "page_number": 266,
+  "folio": "134a",
+  "text_toh": "D4061",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.04
+ },
+ "POA2E": {
+  "type": "J5797",
+  "page_id": "6abeafd9896ea18127c82256",
+  "book_id": "6abeafd3896ea18127c8218e",
+  "vol": 93,
+  "section": "Prajñāpāramitā",
+  "page_number": 198,
+  "folio": "100a",
+  "toh": "toh3808",
+  "j5797": {
+   "id": "Q070",
+   "reversed_either": true,
+   "reversed_both": false,
+   "fid": [
+    4,
+    4
+   ],
+   "inversions": [
+    [],
+    [
+     {
+      "candidate": "Regarding this, the Blessed One said: In this way, form is not something to be grasped.",
+      "tibetan": "བཅོམ་ལྡན་འདས་འདི་ལྟར་གཟུགས་ནི་ཡོངས་སུ་གཟུང་བ་མ་མཆིས་",
+      "reference": "it says, “It is because, Lord, form is not fully grasped,”",
+      "why": "Vocative 'Lord' turned into the speaker."
+     }
+    ]
+   ]
+  }
+ },
+ "PY9W7": {
+  "type": "SAMPLE",
+  "page_id": "6abea6dd6a920ffd924dc664",
+  "book_id": "6abea6da6a920ffd924dc443",
+  "vol": 72,
+  "section": "Tantra commentary",
+  "page_number": 543,
+  "folio": "272b",
+  "text_toh": "D2692",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.03
+ },
+ "PDDTF": {
+  "type": "SAMPLE",
+  "page_id": "6abeb120896ea18127c82525",
+  "book_id": "6abeb11e896ea18127c82406",
+  "vol": 95,
+  "section": "Prajñāpāramitā",
+  "page_number": 285,
+  "folio": "143b",
+  "text_toh": "D3815",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "P8YU8": {
+  "type": "J5797",
+  "page_id": "6abeafd9896ea18127c82375",
+  "book_id": "6abeafd3896ea18127c8218e",
+  "vol": 93,
+  "section": "Prajñāpāramitā",
+  "page_number": 485,
+  "folio": "243b",
+  "toh": "toh3808",
+  "j5797": {
+   "id": "Q333",
+   "reversed_either": true,
+   "reversed_both": true,
+   "fid": [
+    4,
+    4
+   ],
+   "inversions": [
+    [
+     {
+      "candidate": "Although they have attained the eighth stage and have become thoroughly familiar with it in that way, they have not reached the \"Stage of Thinning\"",
+      "tibetan": "ས་བརྒྱད་པ་ཐོབ་པ་དེ་བཞིན་དུ་དེ་དག་ལེགས་པར་ཡོངས་སུ་འདྲིས་པར་བྱས་ནས་བསྲབས་པའི་ས་ནོན་པ་མ་ཡིན་ཏེ",
+      "reference": "Those without mastery do not, like those who have reached the eighth level, having achieved mastery of them, passing beyond the Tanū level, become irreversible",
+      "why": "the negation belongs to those without mastery; T2 assigns non-maturity to those who HAVE reached the eighth level"
+     }
+    ],
+    [
+     {
+      "candidate": "Although they have attained the eighth stage and have become thoroughly familiar with it in that way, they have not reached the \"Stage of Thinning\"",
+      "tibetan": "ས་བརྒྱད་པ་ཐོབ་པ་དེ་བཞིན་དུ་དེ་དག་ལེགས་པར་ཡོངས་སུ་འདྲིས་པར་བྱས་ནས་བསྲབས་པའི་ས་ནོན་པ་མ་ཡིན་ཏེ",
+      "reference": "Those without mastery do not, like those who have reached the eighth level, “having achieved mastery” of them, “passing beyond the Tanū level,” become irreversible.",
+      "why": "the non-attainment belongs to those without mastery, contrasted with eighth-level bodhisattvas; T2 makes the eighth-level attainers the ones who fall short"
+     }
+    ]
+   ]
+  }
+ },
+ "PPHF2": {
+  "type": "SAMPLE",
+  "page_id": "6abe97506a920ffd924d8028",
+  "book_id": "6abe974b6a920ffd924d7dd6",
+  "vol": 39,
+  "section": "Tantra commentary",
+  "page_number": 592,
+  "folio": "297a",
+  "text_toh": "D1847",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.08
+ },
+ "PGH4W": {
+  "type": "SAMPLE",
+  "page_id": "6abedf79a43718d234bf12d7",
+  "book_id": "6abedf77a43718d234bf11b2",
+  "vol": 124,
+  "section": "Cittamātra",
+  "page_number": 291,
+  "folio": "146b",
+  "text_toh": "D4029",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PV0DI": {
+  "type": "HUMAN",
+  "page_id": "6abee362a43718d234bf2210",
+  "book_id": "6abee360a43718d234bf1fb5",
+  "vol": 207,
+  "section": "Miscellaneous",
+  "page_number": 601,
+  "folio": "302a",
+  "toh": "toh4377"
+ },
+ "PD5AS": {
+  "type": "SAMPLE",
+  "page_id": "6abea10d6a920ffd924dac72",
+  "book_id": "6abea1016a920ffd924daaec",
+  "vol": 60,
+  "section": "Tantra commentary",
+  "page_number": 388,
+  "folio": "195a",
+  "text_toh": "D2512",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PYO7D": {
+  "type": "SAMPLE",
+  "page_id": "6abeb289896ea18127c83076",
+  "book_id": "6abeb286896ea18127c82fd7",
+  "vol": 100,
+  "section": "Madhyamaka",
+  "page_number": 157,
+  "folio": "79b",
+  "text_toh": "D3859",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.1
+ },
+ "P9M6I": {
+  "type": "PLANT",
+  "page_id": "6abeb58b896ea18127c84fd4",
+  "book_id": "6abeb583896ea18127c84e6f",
+  "vol": 113,
+  "section": "Sūtra commentary",
+  "page_number": 355,
+  "folio": "178b",
+  "plant_kind": "term",
+  "plant": {
+   "old": "How one remembers is through the distinct causes of conventional designations, such as: \"In such and such a place, my name was this.\" ",
+   "new": "How one remembers is through the distinct causes of ultimate designations, such as: \"In such and such a place, my name was this.\" ",
+   "how": "conventional → ultimate"
+  }
+ },
+ "PCPIJ": {
+  "type": "SAMPLE",
+  "page_id": "6abec2d3896ea18127c89ca8",
+  "book_id": "6abec2d0896ea18127c89b7e",
+  "vol": 149,
+  "section": "Abhidharma",
+  "page_number": 296,
+  "folio": "149a",
+  "text_toh": "D4100",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.12
+ },
+ "PTV2W": {
+  "type": "SAMPLE",
+  "page_id": "6abed51b896ea18127c8deb6",
+  "book_id": "6abed518896ea18127c8dce8",
+  "vol": 178,
+  "section": "Pramāṇa",
+  "page_number": 460,
+  "folio": "231a",
+  "text_toh": "D4221",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.06
+ },
+ "P8EWL": {
+  "type": "J5797",
+  "page_id": "6abe8368433559215a997cb3",
+  "book_id": "6abe8366433559215a997cad",
+  "vol": 3,
+  "section": "Tantra commentary",
+  "page_number": 4,
+  "folio": "3a",
+  "toh": "toh1183",
+  "j5797": {
+   "id": "Q001",
+   "reversed_either": true,
+   "reversed_both": false,
+   "fid": [
+    4,
+    5
+   ],
+   "inversions": [
+    [
+     {
+      "candidate": "having understood that this is difficult to find, the Blessed One spoke to the retinue",
+      "tibetan": "འདི་ནི་རྙེད་པར་དཀའ་བར་གྱུར་པའོ་ཞེས་དད་པར་གྱུར་པས་ཤེས་ནས་སྤྲོ་བར་གྱུར་པའི་འཁོར་རྣམས་",
+      "reference": "the assembly, who had become delighted through their faith and knowledge that Hevajra is difficult to find",
+      "why": "the knowing that it is hard to find belongs to the assembly, not the Blessed One"
+     }
+    ],
+    []
+   ]
+  }
+ },
+ "PJT3R": {
+  "type": "SAMPLE",
+  "page_id": "6abeba44896ea18127c87374",
+  "book_id": "6abeba43896ea18127c8725a",
+  "vol": 131,
+  "section": "Cittamātra",
+  "page_number": 280,
+  "folio": "141a",
+  "text_toh": "D4039",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "P5L4V": {
+  "type": "SAMPLE",
+  "page_id": "6abe91a96a920ffd924d6dbb",
+  "book_id": "6abe91a66a920ffd924d6b5d",
+  "vol": 29,
+  "section": "Tantra commentary",
+  "page_number": 604,
+  "folio": "303a",
+  "text_toh": "D1784a",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "P95SY": {
+  "type": "HUMAN",
+  "page_id": "6abe8368433559215a997d0b",
+  "book_id": "6abe8366433559215a997cad",
+  "vol": 3,
+  "section": "Tantra commentary",
+  "page_number": 92,
+  "folio": "47a",
+  "toh": "toh1183"
+ },
+ "P114X": {
+  "type": "SAMPLE",
+  "page_id": "6abeb406896ea18127c8438b",
+  "book_id": "6abeb404896ea18127c84235",
+  "vol": 108,
+  "section": "Madhyamaka",
+  "page_number": 340,
+  "folio": "171a",
+  "text_toh": "D3897",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.03
+ },
+ "P0JLB": {
+  "type": "SAMPLE",
+  "page_id": "6abe8f0e6a920ffd924d6086",
+  "book_id": "6abe8f0c6a920ffd924d5eab",
+  "vol": 24,
+  "section": "Tantra commentary",
+  "page_number": 473,
+  "folio": "237b",
+  "text_toh": "D1607",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.12
+ },
+ "PBU5P": {
+  "type": "J5797",
+  "page_id": "6abeafd9896ea18127c82397",
+  "book_id": "6abeafd3896ea18127c8218e",
+  "vol": 93,
+  "section": "Prajñāpāramitā",
+  "page_number": 519,
+  "folio": "260b",
+  "toh": "toh3808",
+  "j5797": {
+   "id": "Q340",
+   "reversed_either": true,
+   "reversed_both": false,
+   "fid": [
+    4,
+    4
+   ],
+   "inversions": [
+    [],
+    [
+     {
+      "candidate": "Because of possessing roots of virtue in such a way, the Bodhisattva also attains the state of all-knowingness",
+      "tibetan": "དེ་ལྟར་དགེ་བའི་རྩ་བ་དང་ལྡན་པའི་ཕྱིར་བྱང་ཆུབ་སེམས་དཔའ་ཡང་རྣམ་པ་ཐམས་ཅད་མཁྱེན་པ་ཉིད་ཐོབ་པར་[མི་ནུས]",
+      "reference": "even bodhisattva great beings who have ... planted wholesome roots ... will not be able to gain the knowledge of all aspects",
+      "why": "the sentence completes with 'mi nus' on the next side; candidate turns 'even those with wholesome roots cannot attain' into 'because of roots they attain'"
+     }
+    ]
+   ]
+  }
+ },
+ "PRWW7": {
+  "type": "SAMPLE",
+  "page_id": "6abeb711896ea18127c85a8c",
+  "book_id": "6abeb70e896ea18127c8590d",
+  "vol": 118,
+  "section": "Sūtra commentary",
+  "page_number": 381,
+  "folio": "191b",
+  "text_toh": "D4016",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PW13C": {
+  "type": "SAMPLE",
+  "page_id": "6abe98e96a920ffd924d8509",
+  "book_id": "6abe98e76a920ffd924d82e0",
+  "vol": 41,
+  "section": "Tantra commentary",
+  "page_number": 551,
+  "folio": "276b",
+  "text_toh": "D1852",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.58
+ },
+ "PAUM2": {
+  "type": "J5797",
+  "page_id": "6abeafd9896ea18127c823a1",
+  "book_id": "6abeafd3896ea18127c8218e",
+  "vol": 93,
+  "section": "Prajñāpāramitā",
+  "page_number": 529,
+  "folio": "265b",
+  "toh": "toh3808",
+  "j5797": {
+   "id": "Q342",
+   "reversed_either": false,
+   "reversed_both": false,
+   "fid": [
+    5,
+    4
+   ],
+   "inversions": [
+    [],
+    []
+   ]
+  }
+ },
+ "PM853": {
+  "type": "J5797",
+  "page_id": "6abe8368433559215a997cb6",
+  "book_id": "6abe8366433559215a997cad",
+  "vol": 3,
+  "section": "Tantra commentary",
+  "page_number": 7,
+  "folio": "4b",
+  "toh": "toh1183",
+  "j5797": {
+   "id": "Q108",
+   "reversed_either": false,
+   "reversed_both": false,
+   "fid": [
+    5,
+    5
+   ],
+   "inversions": [
+    [],
+    []
+   ]
+  }
+ },
+ "P7KMP": {
+  "type": "SAMPLE",
+  "page_id": "6abea9906a920ffd924ddb5a",
+  "book_id": "6abea98e6a920ffd924dd984",
+  "vol": 82,
+  "section": "Prajñāpāramitā",
+  "page_number": 468,
+  "folio": "235a",
+  "text_toh": "D3790",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "POH1L": {
+  "type": "SAMPLE",
+  "page_id": "6abedcc8896ea18127c913ee",
+  "book_id": "6abedcc7896ea18127c91204",
+  "vol": 199,
+  "section": "Grammar & sciences",
+  "page_number": 488,
+  "folio": "244b",
+  "text_toh": "D4311",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "P8ZEZ": {
+  "type": "SAMPLE",
+  "page_id": "6abed4cf896ea18127c8dad6",
+  "book_id": "6abed4cd896ea18127c8dab2",
+  "vol": 177,
+  "section": "Pramāṇa",
+  "page_number": 34,
+  "folio": "18a",
+  "text_toh": "D4220",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.05
+ },
+ "PYEYV": {
+  "type": "SAMPLE",
+  "page_id": "6abed1b1896ea18127c8cd46",
+  "book_id": "6abed1ac896ea18127c8ca6c",
+  "vol": 170,
+  "section": "Jātaka",
+  "page_number": 728,
+  "folio": "365a",
+  "text_toh": "D4155",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.37
+ },
+ "PCP6C": {
+  "type": "SAMPLE",
+  "page_id": "6abeace4896ea18127c80fce",
+  "book_id": "6abeace1896ea18127c80d7a",
+  "vol": 52,
+  "section": "Tantra commentary",
+  "page_number": 594,
+  "folio": "298a",
+  "text_toh": "D2335",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PON55": {
+  "type": "SAMPLE",
+  "page_id": "6abed25c896ea18127c8ce4a",
+  "book_id": "6abed259896ea18127c8cd4a",
+  "vol": 171,
+  "section": "Jātaka",
+  "page_number": 254,
+  "folio": "128a",
+  "text_toh": "D4155",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.41
+ },
+ "PI9RS": {
+  "type": "PLANT",
+  "page_id": "6abeb711896ea18127c85a6e",
+  "book_id": "6abeb70e896ea18127c8590d",
+  "vol": 118,
+  "section": "Sūtra commentary",
+  "page_number": 351,
+  "folio": "176b",
+  "plant_kind": "reversal",
+  "plant": {
+   "old": "Undoubtedly, the nature of reality is exactly like that.",
+   "new": "Undoubtedly, the nature of reality is not exactly like that.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "P2BOU": {
+  "type": "SAMPLE",
+  "page_id": "6abeb331896ea18127c83a6d",
+  "book_id": "6abeb325896ea18127c83819",
+  "vol": 104,
+  "section": "Madhyamaka",
+  "page_number": 594,
+  "folio": "298a",
+  "text_toh": "D3870",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PHVA1": {
+  "type": "SAMPLE",
+  "page_id": "6abea56c6a920ffd924dbe41",
+  "book_id": "6abea5606a920ffd924dbcb1",
+  "vol": 69,
+  "section": "Tantra commentary",
+  "page_number": 398,
+  "folio": "200a",
+  "text_toh": "D2663",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.17
+ },
+ "P1559": {
+  "type": "HUMAN",
+  "page_id": "6abee362a43718d234bf2259",
+  "book_id": "6abee360a43718d234bf1fb5",
+  "vol": 207,
+  "section": "Miscellaneous",
+  "page_number": 674,
+  "folio": "338b",
+  "toh": "toh4400a"
+ },
+ "PUSG6": {
+  "type": "SAMPLE",
+  "page_id": "6abed914896ea18127c8fc42",
+  "book_id": "6abed90a896ea18127c8f9ee",
+  "vol": 190,
+  "section": "Pramāṇa",
+  "page_number": 594,
+  "folio": "298a",
+  "text_toh": "D4256",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.06
+ },
+ "POEPW": {
+  "type": "SAMPLE",
+  "page_id": "6abeb289896ea18127c83029",
+  "book_id": "6abeb286896ea18127c82fd7",
+  "vol": 100,
+  "section": "Madhyamaka",
+  "page_number": 80,
+  "folio": "41a",
+  "text_toh": "D3859",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PQ3WC": {
+  "type": "HUMAN",
+  "page_id": "6abee362a43718d234bf2211",
+  "book_id": "6abee360a43718d234bf1fb5",
+  "vol": 207,
+  "section": "Miscellaneous",
+  "page_number": 602,
+  "folio": "302b",
+  "toh": "toh4377"
+ },
+ "P4U2D": {
+  "type": "SAMPLE",
+  "page_id": "6abe981b6a920ffd924d811b",
+  "book_id": "6abe98196a920ffd924d8054",
+  "vol": 40,
+  "section": "Tantra commentary",
+  "page_number": 197,
+  "folio": "99b",
+  "text_toh": "D1848",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.17
+ },
+ "PF9P1": {
+  "type": "SAMPLE",
+  "page_id": "6abeafd9896ea18127c8239f",
+  "book_id": "6abeafd3896ea18127c8218e",
+  "vol": 93,
+  "section": "Prajñāpāramitā",
+  "page_number": 527,
+  "folio": "264b",
+  "text_toh": "D3808",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "P81W7": {
+  "type": "PLANT",
+  "page_id": "6abea1596a920ffd924daf9b",
+  "book_id": "6abea14b6a920ffd924dadae",
+  "vol": 61,
+  "section": "Tantra commentary",
+  "page_number": 491,
+  "folio": "246b",
+  "plant_kind": "term",
+  "plant": {
+   "old": "Because it is the complete transformation into primordial wisdom as it has been described, it is wisdom.",
+   "new": "Because it is the complete transformation into primordial faith as it has been described, it is wisdom.",
+   "how": "wisdom → faith"
+  }
+ },
+ "PJY3T": {
+  "type": "SAMPLE",
+  "page_id": "6abe94eb6a920ffd924d7a59",
+  "book_id": "6abe94e86a920ffd924d7940",
+  "vol": 36,
+  "section": "Tantra commentary",
+  "page_number": 279,
+  "folio": "140b",
+  "text_toh": "D1829",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "P71UJ": {
+  "type": "SAMPLE",
+  "page_id": "6abe9d9f6a920ffd924d99da",
+  "book_id": "6abe9d9d6a920ffd924d9828",
+  "vol": 51,
+  "section": "Tantra commentary",
+  "page_number": 432,
+  "folio": "217a",
+  "text_toh": "D2257",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.05
+ },
+ "PWU94": {
+  "type": "J5797",
+  "page_id": "6abeafd9896ea18127c82383",
+  "book_id": "6abeafd3896ea18127c8218e",
+  "vol": 93,
+  "section": "Prajñāpāramitā",
+  "page_number": 499,
+  "folio": "250b",
+  "toh": "toh3808",
+  "j5797": {
+   "id": "Q091",
+   "reversed_either": false,
+   "reversed_both": false,
+   "fid": [
+    5,
+    5
+   ],
+   "inversions": [
+    [],
+    []
+   ]
+  }
+ },
+ "PHP44": {
+  "type": "SAMPLE",
+  "page_id": "6abebea4896ea18127c8852c",
+  "book_id": "6abebe9a896ea18127c8849e",
+  "vol": 139,
+  "section": "Abhidharma",
+  "page_number": 140,
+  "folio": "71a",
+  "text_toh": "D4086",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PQEP2": {
+  "type": "SAMPLE",
+  "page_id": "6abeb964896ea18127c86c6b",
+  "book_id": "6abeb963896ea18127c86aaa",
+  "vol": 127,
+  "section": "Cittamātra",
+  "page_number": 447,
+  "folio": "224b",
+  "text_toh": "D4035",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.35
+ },
+ "PX2FB": {
+  "type": "PLANT",
+  "page_id": "6abeb58b896ea18127c84ee4",
+  "book_id": "6abeb583896ea18127c84e6f",
+  "vol": 113,
+  "section": "Sūtra commentary",
+  "page_number": 115,
+  "folio": "58b",
+  "plant_kind": "term",
+  "plant": {
+   "old": "what his body is, what he relies upon, what his activity is, what his method is, where he dwells and acts for the sake of others without attachment, what things he is attached to, what his abandonment is, what his wisdom is, and in which bodies",
+   "new": "what his body is, what he relies upon, what his activity is, what his method is, where he dwells and acts for the sake of others without attachment, what things he is attached to, what his abandonment is, what his faith is, and in which bodies",
+   "how": "wisdom → faith"
+  }
+ },
+ "PV85C": {
+  "type": "SAMPLE",
+  "page_id": "6abe8fd96a920ffd924d624b",
+  "book_id": "6abe8fd66a920ffd924d60bd",
+  "vol": 25,
+  "section": "Tantra commentary",
+  "page_number": 396,
+  "folio": "199a",
+  "text_toh": "D1623",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.06
+ },
+ "PFG9L": {
+  "type": "SAMPLE",
+  "page_id": "6abeafa2896ea18127c82026",
+  "book_id": "6abeafa0896ea18127c81f94",
+  "vol": 92,
+  "section": "Prajñāpāramitā",
+  "page_number": 144,
+  "folio": "73a",
+  "text_toh": "D3807",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PP5GW": {
+  "type": "J5797",
+  "page_id": "6abe83c2433559215a9980c6",
+  "book_id": "6abe83b7433559215a997efb",
+  "vol": 4,
+  "section": "Tantra commentary",
+  "page_number": 457,
+  "folio": "229b",
+  "toh": "toh1189",
+  "j5797": {
+   "id": "Q171",
+   "reversed_either": true,
+   "reversed_both": true,
+   "fid": [
+    4,
+    3
+   ],
+   "inversions": [
+    [
+     {
+      "candidate": "it is without the subtle and complete syllable Hum, without vowels, without the moon, and without the bindu",
+      "tibetan": "ཕྲ་མོ་མ་ལུས་པའི་ཧཱུཾ་དང་དབྱངས་དང་ཟླ་བ་དང་ཐིག་ལེ་མེད་པ་དང་",
+      "reference": "namely the subtle syllable hūṁ, either as a whole or without the vowel and the anunāsika",
+      "why": "the mudrā IS the subtle hūṁ; T1 negates the syllable itself"
+     }
+    ],
+    [
+     {
+      "candidate": "The term \"generation stage\" is used here because it is well known to worldly people",
+      "tibetan": "བསྐྱེད་པའི་རིམ་པའི་སྒྲས་འདིར་འཇིག་རྟེན་པ་ལ་གྲགས་པས་ [next side: མ་ཡིན་གྱི་]",
+      "reference": "The term “stage of the arisen” here has a technical sense, not a common one.",
+      "why": "The clause continues 'is NOT [used] in the worldly sense'; T1 closes it as an affirmed reason, stating the opposite."
+     },
+     {
+      "candidate": "it is without the subtle and complete syllable Hum, without vowels, without the moon, and without the bindu",
+      "tibetan": "ཕྲ་མོ་མ་ལུས་པའི་ཧཱུཾ་དང་དབྱངས་དང་ཟླ་བ་དང་ཐིག་ལེ་མེད་པ་དང་།",
+      "reference": "namely the subtle syllable hūṁ, either as a whole or without the vowel and the anunāsika",
+      "why": "The mudrā IS the subtle hūṁ (whole, or without vowel/moon); T1 says it is without the hūṁ."
+     }
+    ]
+   ]
+  }
+ },
+ "P52RY": {
+  "type": "PLANT",
+  "page_id": "6abebf76896ea18127c88aab",
+  "book_id": "6abebf71896ea18127c88a86",
+  "vol": 142,
+  "section": "Abhidharma",
+  "page_number": 35,
+  "folio": "18b",
+  "plant_kind": "reversal",
+  "plant": {
+   "old": "First, regarding essence, it is expressed as being \"possessed of the very basis upon which that basis is obtained,\" which refers to its essential nature.",
+   "new": "First, regarding essence, it is not expressed as being \"possessed of the very basis upon which that basis is obtained,\" which refers to its essential nature.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "PHFZE": {
+  "type": "SAMPLE",
+  "page_id": "6abeb159896ea18127c82814",
+  "book_id": "6abeb158896ea18127c82682",
+  "vol": 96,
+  "section": "Madhyamaka",
+  "page_number": 400,
+  "folio": "201a",
+  "text_toh": "D3842",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.06
+ },
+ "PDR0K": {
+  "type": "J5797",
+  "page_id": "6abeafd9896ea18127c822af",
+  "book_id": "6abeafd3896ea18127c8218e",
+  "vol": 93,
+  "section": "Prajñāpāramitā",
+  "page_number": 287,
+  "folio": "144b",
+  "toh": "toh3808",
+  "j5797": {
+   "id": "Q075",
+   "reversed_either": true,
+   "reversed_both": false,
+   "fid": [
+    4,
+    5
+   ],
+   "inversions": [
+    [
+     {
+      "candidate": "there is no non-engagement; this is the fifth unshared quality",
+      "tibetan": "ཐ་དད་པའི་འདུ་ཤེས་མི་འཇུག་སྟེ",
+      "reference": "they do not discriminate a difference",
+      "why": "source says the notion of difference does not arise; T1's double negative asserts engagement"
+     }
+    ],
+    []
+   ]
+  }
+ },
+ "PWPCY": {
+  "type": "PLANT",
+  "page_id": "6abe92d16a920ffd924d718c",
+  "book_id": "6abe92d06a920ffd924d7166",
+  "vol": 32,
+  "section": "Tantra commentary",
+  "page_number": 36,
+  "folio": "19a",
+  "plant_kind": "reversal",
+  "plant": {
+   "old": "Once the sign of stability is found, one should emanate and reabsorb the deities of the Jewel family.",
+   "new": "Once the sign of stability is not found, one should emanate and reabsorb the deities of the Jewel family.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "PTWAW": {
+  "type": "SAMPLE",
+  "page_id": "6abe981b6a920ffd924d828f",
+  "book_id": "6abe98196a920ffd924d8054",
+  "vol": 40,
+  "section": "Tantra commentary",
+  "page_number": 569,
+  "folio": "285b",
+  "text_toh": "D1851",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.03
+ },
+ "PU41C": {
+  "type": "SAMPLE",
+  "page_id": "6abe9be46a920ffd924d9023",
+  "book_id": "6abe9bd76a920ffd924d8fdc",
+  "vol": 47,
+  "section": "Tantra commentary",
+  "page_number": 69,
+  "folio": "35b",
+  "text_toh": "D1926",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.92
+ },
+ "PTWHY": {
+  "type": "SAMPLE",
+  "page_id": "6abed25c896ea18127c8cdf5",
+  "book_id": "6abed259896ea18127c8cd4a",
+  "vol": 171,
+  "section": "Jātaka",
+  "page_number": 169,
+  "folio": "85b",
+  "text_toh": "D4155",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.43
+ },
+ "PU8HF": {
+  "type": "J5797",
+  "page_id": "6abe8368433559215a997d1f",
+  "book_id": "6abe8366433559215a997cad",
+  "vol": 3,
+  "section": "Tantra commentary",
+  "page_number": 112,
+  "folio": "57a",
+  "toh": "toh1183",
+  "j5797": {
+   "id": "Q161",
+   "reversed_either": false,
+   "reversed_both": false,
+   "fid": [
+    4,
+    4
+   ],
+   "inversions": [
+    [],
+    []
+   ]
+  }
+ },
+ "POGJD": {
+  "type": "SAMPLE",
+  "page_id": "6abe8c716a920ffd924d55cc",
+  "book_id": "6abe8c706a920ffd924d545a",
+  "vol": 20,
+  "section": "Tantra commentary",
+  "page_number": 368,
+  "folio": "185a",
+  "text_toh": "D1419",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.36
+ },
+ "PFODA": {
+  "type": "SAMPLE",
+  "page_id": "6abec769896ea18127c8a9e4",
+  "book_id": "6abec767896ea18127c8a9dc",
+  "vol": 156,
+  "section": "Vinaya",
+  "page_number": 6,
+  "folio": "4a",
+  "text_toh": "D4112",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.07
+ },
+ "PSKAW": {
+  "type": "PLANT",
+  "page_id": "6abeb785896ea18127c85faf",
+  "book_id": "6abeb782896ea18127c85d77",
+  "vol": 120,
+  "section": "Sūtra commentary",
+  "page_number": 566,
+  "folio": "284a",
+  "plant_kind": "reversal",
+  "plant": {
+   "old": "The section from, Then, monks, until, it will certainly emerge, contains the petitions made by the gods.",
+   "new": "The section from, Then, monks, until, it will not certainly emerge, contains the petitions made by the gods.",
+   "how": "\\bwill\\b → will not"
+  }
+ },
+ "PHLHK": {
+  "type": "J5797",
+  "page_id": "6abe83c2433559215a9980bc",
+  "book_id": "6abe83b7433559215a997efb",
+  "vol": 4,
+  "section": "Tantra commentary",
+  "page_number": 447,
+  "folio": "224b",
+  "toh": "toh1189",
+  "j5797": {
+   "id": "Q167",
+   "reversed_either": true,
+   "reversed_both": true,
+   "fid": [
+    4,
+    4
+   ],
+   "inversions": [
+    [
+     {
+      "candidate": "Being filled by that, one satisfies the Bodhisattvas in each and every moment.",
+      "tibetan": "བྱང་ཆུབ་སེམས་དཔའ་རྣམས་དང་ལྷན་ཅིག་སྐད་ཅིག་སོ་སོ་ལ་ཚིམ་པ",
+      "reference": "together with the bodhisattvas, he is satisfied by them in every instant",
+      "why": "he is satisfied together with the bodhisattvas; T2 makes him the one satisfying them (agent/patient)"
+     }
+    ],
+    [
+     {
+      "candidate": "Being filled by that, one satisfies the Bodhisattvas in each and every moment.",
+      "tibetan": "དེ་ཉིད་ཀྱིས་བྱང་ཆུབ་སེམས་དཔའ་རྣམས་དང་ལྷན་ཅིག་སྐད་ཅིག་སོ་སོ་ལ་ཚིམ་པ་",
+      "reference": "together with the bodhisattvas, he is satisfied by them in every instant",
+      "why": "he is satisfied together with the bodhisattvas; candidate makes him the one who satisfies them"
+     }
+    ]
+   ]
+  }
+ },
+ "P5KFJ": {
+  "type": "SAMPLE",
+  "page_id": "6abec1e9896ea18127c89880",
+  "book_id": "6abec1df896ea18127c89736",
+  "vol": 147,
+  "section": "Abhidharma",
+  "page_number": 328,
+  "folio": "165a",
+  "text_toh": "D4095",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.16
+ },
+ "PANA5": {
+  "type": "SAMPLE",
+  "page_id": "6abed96d896ea18127c8ff10",
+  "book_id": "6abed95d896ea18127c8fcd2",
+  "vol": 191,
+  "section": "Pramāṇa",
+  "page_number": 572,
+  "folio": "287a",
+  "text_toh": "D4267",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PHYRX": {
+  "type": "HUMAN",
+  "page_id": "6abe83c2433559215a9980c0",
+  "book_id": "6abe83b7433559215a997efb",
+  "vol": 4,
+  "section": "Tantra commentary",
+  "page_number": 451,
+  "folio": "226b",
+  "toh": "toh1189"
+ },
+ "PEAGP": {
+  "type": "HUMAN",
+  "page_id": "6abeafd9896ea18127c82226",
+  "book_id": "6abeafd3896ea18127c8218e",
+  "vol": 93,
+  "section": "Prajñāpāramitā",
+  "page_number": 150,
+  "folio": "76a",
+  "toh": "toh3808"
+ },
+ "P1RPH": {
+  "type": "PLANT",
+  "page_id": "6abe825259b86b7d32a65be4",
+  "book_id": "6abe825059b86b7d32a6597a",
+  "vol": 102,
+  "section": "Madhyamaka",
+  "page_number": 616,
+  "folio": "310a",
+  "plant_kind": "agent",
+  "plant": {
+   "old": "At this point, some respond by saying: \"Does the cause produce the effect by meeting it, or without meeting it?\" Since you have said this, the same challenge and investigation applies to you as well.",
+   "new": "At this point, some respond by saying: \"Does the cause produce the effect by meeting it, or without meeting it?\" Since I have said this, the same challenge and investigation applies to you as well.",
+   "how": "\\b[Yy]ou ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → I $1"
+  }
+ },
+ "PBBKO": {
+  "type": "SAMPLE",
+  "page_id": "6abea6af6a920ffd924dc24a",
+  "book_id": "6abea6ac6a920ffd924dc1ad",
+  "vol": 71,
+  "section": "Tantra commentary",
+  "page_number": 155,
+  "folio": "78b",
+  "text_toh": "D2672",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.18
+ },
+ "PPHZK": {
+  "type": "SAMPLE",
+  "page_id": "6abed76e896ea18127c8efad",
+  "book_id": "6abed76c896ea18127c8ee40",
+  "vol": 185,
+  "section": "Pramāṇa",
+  "page_number": 363,
+  "folio": "182b",
+  "text_toh": "D4226",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PE3FB": {
+  "type": "SAMPLE",
+  "page_id": "6abe9f766a920ffd924da5a9",
+  "book_id": "6abe9f6f6a920ffd924da3c8",
+  "vol": 57,
+  "section": "Tantra commentary",
+  "page_number": 479,
+  "folio": "240b",
+  "text_toh": "D2510",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PJ4CZ": {
+  "type": "SAMPLE",
+  "page_id": "6abed582896ea18127c8e040",
+  "book_id": "6abed57e896ea18127c8df52",
+  "vol": 179,
+  "section": "Pramāṇa",
+  "page_number": 236,
+  "folio": "119a",
+  "text_toh": "D4221",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.28
+ },
+ "PCID5": {
+  "type": "PLANT",
+  "page_id": "6abedf79a43718d234bf1282",
+  "book_id": "6abedf77a43718d234bf11b2",
+  "vol": 124,
+  "section": "Cittamātra",
+  "page_number": 206,
+  "folio": "104a",
+  "plant_kind": "agent",
+  "plant": {
+   "old": "I have established a meaning that was difficult to understand,\" and thus they do not become arrogant.",
+   "new": "You have established a meaning that was difficult to understand,\" and thus they do not become arrogant.",
+   "how": "\\bI ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → you $1"
+  }
+ },
+ "PYVSG": {
+  "type": "SAMPLE",
+  "page_id": "6abe902b6a920ffd924d6586",
+  "book_id": "6abe90286a920ffd924d6333",
+  "vol": 26,
+  "section": "Tantra commentary",
+  "page_number": 593,
+  "folio": "297b",
+  "text_toh": "D1659",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.28
+ },
+ "P06QV": {
+  "type": "SAMPLE",
+  "page_id": "6abea1ea6a920ffd924db26f",
+  "book_id": "6abea1d86a920ffd924db084",
+  "vol": 62,
+  "section": "Tantra commentary",
+  "page_number": 489,
+  "folio": "245b",
+  "text_toh": "D2531",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PTVZA": {
+  "type": "SAMPLE",
+  "page_id": "6abe9a396a920ffd924d89e2",
+  "book_id": "6abe9a356a920ffd924d88dc",
+  "vol": 44,
+  "section": "Tantra commentary",
+  "page_number": 260,
+  "folio": "131a",
+  "text_toh": "D1883",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.94
+ },
+ "PX9B8": {
+  "type": "HUMAN",
+  "page_id": "6abeafd9896ea18127c82354",
+  "book_id": "6abeafd3896ea18127c8218e",
+  "vol": 93,
+  "section": "Prajñāpāramitā",
+  "page_number": 452,
+  "folio": "227a",
+  "toh": "toh3808"
+ },
+ "PEAH2": {
+  "type": "SAMPLE",
+  "page_id": "6abec815896ea18127c8ad91",
+  "book_id": "6abec7fa896ea18127c8ac69",
+  "vol": 157,
+  "section": "Vinaya",
+  "page_number": 294,
+  "folio": "148a",
+  "text_toh": "D4114",
+  "opens_text": false,
+  "colophon": true,
+  "verse_share": 0
+ },
+ "PLPNQ": {
+  "type": "SAMPLE",
+  "page_id": "6abeb406896ea18127c84248",
+  "book_id": "6abeb404896ea18127c84235",
+  "vol": 108,
+  "section": "Madhyamaka",
+  "page_number": 17,
+  "folio": "9b",
+  "text_toh": "D3891",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.03
+ },
+ "P8KH3": {
+  "type": "SAMPLE",
+  "page_id": "6abe92696a920ffd924d705c",
+  "book_id": "6abe92686a920ffd924d6fbd",
+  "vol": 31,
+  "section": "Tantra commentary",
+  "page_number": 157,
+  "folio": "79b",
+  "text_toh": "D1790",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PW0FO": {
+  "type": "SAMPLE",
+  "page_id": "6abed7ae896ea18127c8f0fe",
+  "book_id": "6abed7ad896ea18127c8f0d2",
+  "vol": 186,
+  "section": "Pramāṇa",
+  "page_number": 42,
+  "folio": "22a",
+  "text_toh": "D4226",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PQQ49": {
+  "type": "SAMPLE",
+  "page_id": "6abea3ff6a920ffd924dba2d",
+  "book_id": "6abea3fd6a920ffd924dba05",
+  "vol": 66,
+  "section": "Tantra commentary",
+  "page_number": 38,
+  "folio": "20a",
+  "text_toh": "D2593",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.21
+ },
+ "P50HQ": {
+  "type": "SAMPLE",
+  "page_id": "6abec54e896ea18127c8a56f",
+  "book_id": "6abec54c896ea18127c8a3f6",
+  "vol": 153,
+  "section": "Vinaya",
+  "page_number": 375,
+  "folio": "188b",
+  "text_toh": "D4106",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PX592": {
+  "type": "SAMPLE",
+  "page_id": "6abe9a396a920ffd924d8a04",
+  "book_id": "6abe9a356a920ffd924d88dc",
+  "vol": 44,
+  "section": "Tantra commentary",
+  "page_number": 294,
+  "folio": "148a",
+  "text_toh": "D1884",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.06
+ },
+ "PT7VJ": {
+  "type": "SAMPLE",
+  "page_id": "6abea23a6a920ffd924db4dc",
+  "book_id": "6abea2356a920ffd924db35a",
+  "vol": 63,
+  "section": "Tantra commentary",
+  "page_number": 384,
+  "folio": "193a",
+  "text_toh": "D2534",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "P8GP9": {
+  "type": "SAMPLE",
+  "page_id": "6abed3fd896ea18127c8d43a",
+  "book_id": "6abed3fc896ea18127c8d272",
+  "vol": 174,
+  "section": "Pramāṇa",
+  "page_number": 454,
+  "folio": "227b",
+  "text_toh": "D4211",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PG4I5": {
+  "type": "SAMPLE",
+  "page_id": "6abed25c896ea18127c8cd79",
+  "book_id": "6abed259896ea18127c8cd4a",
+  "vol": 171,
+  "section": "Jātaka",
+  "page_number": 45,
+  "folio": "23b",
+  "text_toh": "D4155",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.35
+ },
+ "PR8FR": {
+  "type": "SAMPLE",
+  "page_id": "6abeba44896ea18127c87400",
+  "book_id": "6abeba43896ea18127c8725a",
+  "vol": 131,
+  "section": "Cittamātra",
+  "page_number": 420,
+  "folio": "211a",
+  "text_toh": "D4039",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "P5YSD": {
+  "type": "SAMPLE",
+  "page_id": "6abead0f896ea18127c81141",
+  "book_id": "6abead0e896ea18127c80fe0",
+  "vol": 67,
+  "section": "Tantra commentary",
+  "page_number": 351,
+  "folio": "176b",
+  "text_toh": "D2626",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PTFM3": {
+  "type": "PLANT",
+  "page_id": "6abecd20896ea18127c8b855",
+  "book_id": "6abecd0e896ea18127c8b6de",
+  "vol": 162,
+  "section": "Vinaya",
+  "page_number": 373,
+  "folio": "187b",
+  "plant_kind": "reversal",
+  "plant": {
+   "old": "This is because both truth and falsehood are connected to perception, rather than being connected to the objective reality of the matter.",
+   "new": "This is not because both truth and falsehood are connected to perception, rather than being connected to the objective reality of the matter.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "PC1FO": {
+  "type": "SAMPLE",
+  "page_id": "6abe981b6a920ffd924d8104",
+  "book_id": "6abe98196a920ffd924d8054",
+  "vol": 40,
+  "section": "Tantra commentary",
+  "page_number": 174,
+  "folio": "88a",
+  "text_toh": "D1848",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.03
+ },
+ "PECE2": {
+  "type": "SAMPLE",
+  "page_id": "6abe9b0f6a920ffd924d8d0f",
+  "book_id": "6abe9b0d6a920ffd924d8b20",
+  "vol": 45,
+  "section": "Tantra commentary",
+  "page_number": 493,
+  "folio": "247b",
+  "text_toh": "D1915",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.03
+ },
+ "PFS4H": {
+  "type": "SAMPLE",
+  "page_id": "6abeb247896ea18127c82e0d",
+  "book_id": "6abeb246896ea18127c82d97",
+  "vol": 99,
+  "section": "Madhyamaka",
+  "page_number": 116,
+  "folio": "59a",
+  "text_toh": "D3859",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "P43YX": {
+  "type": "SAMPLE",
+  "page_id": "6abe99bd6a920ffd924d87f1",
+  "book_id": "6abe99ba6a920ffd924d8724",
+  "vol": 43,
+  "section": "Tantra commentary",
+  "page_number": 203,
+  "folio": "102b",
+  "text_toh": "D1871",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PHYN5": {
+  "type": "SAMPLE",
+  "page_id": "6abe91ff6a920ffd924d6efc",
+  "book_id": "6abe91fc6a920ffd924d6de7",
+  "vol": 30,
+  "section": "Tantra commentary",
+  "page_number": 275,
+  "folio": "138b",
+  "text_toh": "D1785",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.05
+ },
+ "PJ1PR": {
+  "type": "SAMPLE",
+  "page_id": "6abed47c896ea18127c8d9b5",
+  "book_id": "6abed47a896ea18127c8d820",
+  "vol": 176,
+  "section": "Pramāṇa",
+  "page_number": 403,
+  "folio": "202b",
+  "text_toh": "D4220",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.03
+ },
+ "PKJHT": {
+  "type": "PLANT",
+  "page_id": "6abecf0f896ea18127c8bd62",
+  "book_id": "6abecf09896ea18127c8bcf6",
+  "vol": 164,
+  "section": "Vinaya",
+  "page_number": 106,
+  "folio": "54a",
+  "plant_kind": "term",
+  "plant": {
+   "old": "If that monk dies in the interval between being counted and actually carrying the gains away, or even while the items are being arranged for distribution, the portion intended for the deceased monk must be returned to the original source from which the gains came.",
+   "new": "If that novice dies in the interval between being counted and actually carrying the gains away, or even while the items are being arranged for distribution, the portion intended for the deceased monk must be returned to the original source from which the gains came.",
+   "how": "monk → novice"
+  }
+ },
+ "PNGPL": {
+  "type": "SAMPLE",
+  "page_id": "6abeca68896ea18127c8b186",
+  "book_id": "6abeca4e896ea18127c8b081",
+  "vol": 159,
+  "section": "Vinaya",
+  "page_number": 259,
+  "folio": "130a",
+  "text_toh": "D4118",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "P9I78": {
+  "type": "SAMPLE",
+  "page_id": "6abed340896ea18127c8d00e",
+  "book_id": "6abed33b896ea18127c8cfde",
+  "vol": 172,
+  "section": "Jātaka",
+  "page_number": 46,
+  "folio": "24a",
+  "text_toh": "D4156",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.86
+ },
+ "PKZHS": {
+  "type": "SAMPLE",
+  "page_id": "6abea3686a920ffd924db7e2",
+  "book_id": "6abea35a6a920ffd924db7de",
+  "vol": 65,
+  "section": "Tantra commentary",
+  "page_number": 2,
+  "folio": "1b",
+  "text_toh": "D2543",
+  "opens_text": true,
+  "colophon": false,
+  "verse_share": 0.37
+ },
+ "PXAXP": {
+  "type": "SAMPLE",
+  "page_id": "6abedb35896ea18127c908b2",
+  "book_id": "6abedb29896ea18127c906e6",
+  "vol": 195,
+  "section": "Grammar & sciences",
+  "page_number": 458,
+  "folio": "230b",
+  "text_toh": "D4286",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "P4TDS": {
+  "type": "PLANT",
+  "page_id": "6abe932d6a920ffd924d73f5",
+  "book_id": "6abe932b6a920ffd924d73b0",
+  "vol": 33,
+  "section": "Tantra commentary",
+  "page_number": 67,
+  "folio": "34b",
+  "plant_kind": "reversal",
+  "plant": {
+   "old": "The \"meditative absorption of single-minded recollection\" is the defining characteristic of the meditative absorption of yoga, which is the first branch of application.",
+   "new": "The \"meditative absorption of single-minded recollection\" is not the defining characteristic of the meditative absorption of yoga, which is the first branch of application.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "P1265": {
+  "type": "J5797",
+  "page_id": "6abeafd9896ea18127c8230b",
+  "book_id": "6abeafd3896ea18127c8218e",
+  "vol": 93,
+  "section": "Prajñāpāramitā",
+  "page_number": 379,
+  "folio": "190b",
+  "toh": "toh3808",
+  "j5797": {
+   "id": "Q313",
+   "reversed_either": true,
+   "reversed_both": true,
+   "fid": [
+    4,
+    4
+   ],
+   "inversions": [
+    [
+     {
+      "candidate": "those entities, those objects of focus, those roots of virtue, and that merit produced from rejoicing do not perish or cease",
+      "tibetan": "བསོད་ནམས་བྱས་པའི་དངོས་པོ་དེ་ཡང་ཟད་ཅིང་འགག་པ་མེད་དེ། རྣམ་པར་གྱུར་པ",
+      "reference": "are extinguished, stopped, nonexistent, and have run out",
+      "why": "ཟད་ཅིང་འགག་པ་མེད་ is 'extinguished, stopped, nonexistent'; rendered as not perishing"
+     }
+    ],
+    [
+     {
+      "candidate": "that merit produced from rejoicing do not perish or cease",
+      "tibetan": "བསོད་ནམས་བྱས་པའི་དངོས་པོ་དེ་ཡང་ཟད་ཅིང་འགག་པ་མེད་དེ།",
+      "reference": "bases of meritorious action arisen from rejoicing are extinguished, stopped, nonexistent, and have run out",
+      "why": "negates the extinction that the sutra quote affirms, parallel to the preceding clause about the thought"
+     }
+    ]
+   ]
+  }
+ },
+ "P7PCR": {
+  "type": "SAMPLE",
+  "page_id": "6abe9e9d6a920ffd924d9bf0",
+  "book_id": "6abe9e9a6a920ffd924d9ab6",
+  "vol": 53,
+  "section": "Tantra commentary",
+  "page_number": 312,
+  "folio": "157a",
+  "text_toh": "D2475",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.99
+ },
+ "PH4SB": {
+  "type": "SAMPLE",
+  "page_id": "6abec148896ea18127c896ee",
+  "book_id": "6abec12d896ea18127c894f6",
+  "vol": 146,
+  "section": "Abhidharma",
+  "page_number": 502,
+  "folio": "252a",
+  "text_toh": "D4094",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.13
+ },
+ "PVOMJ": {
+  "type": "SAMPLE",
+  "page_id": "6abedcc8896ea18127c91301",
+  "book_id": "6abedcc7896ea18127c91204",
+  "vol": 199,
+  "section": "Grammar & sciences",
+  "page_number": 251,
+  "folio": "126a",
+  "text_toh": "D4311",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PXNXG": {
+  "type": "HUMAN",
+  "page_id": "6abeafd9896ea18127c82197",
+  "book_id": "6abeafd3896ea18127c8218e",
+  "vol": 93,
+  "section": "Prajñāpāramitā",
+  "page_number": 7,
+  "folio": "4b",
+  "toh": "toh3808"
+ },
+ "P8QRH": {
+  "type": "SAMPLE",
+  "page_id": "6abe92696a920ffd924d7020",
+  "book_id": "6abe92686a920ffd924d6fbd",
+  "vol": 31,
+  "section": "Tantra commentary",
+  "page_number": 97,
+  "folio": "49b",
+  "text_toh": "D1790",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.39
+ },
+ "PBCYQ": {
+  "type": "SAMPLE",
+  "page_id": "6abe9a396a920ffd924d8a8a",
+  "book_id": "6abe9a356a920ffd924d88dc",
+  "vol": 44,
+  "section": "Tantra commentary",
+  "page_number": 428,
+  "folio": "215a",
+  "text_toh": "D1891",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PCWAZ": {
+  "type": "SAMPLE",
+  "page_id": "6abecf0f896ea18127c8be1b",
+  "book_id": "6abecf09896ea18127c8bcf6",
+  "vol": 164,
+  "section": "Vinaya",
+  "page_number": 291,
+  "folio": "146b",
+  "text_toh": "D4121",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "P1WX1": {
+  "type": "SAMPLE",
+  "page_id": "6abec073896ea18127c89400",
+  "book_id": "6abec068896ea18127c89270",
+  "vol": 145,
+  "section": "Abhidharma",
+  "page_number": 398,
+  "folio": "200a",
+  "text_toh": "D4093",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "P8I41": {
+  "type": "HUMAN",
+  "page_id": "6abe83c2433559215a998147",
+  "book_id": "6abe83b7433559215a997efb",
+  "vol": 4,
+  "section": "Tantra commentary",
+  "page_number": 586,
+  "folio": "294a",
+  "toh": "toh1189"
+ },
+ "PQD0U": {
+  "type": "SAMPLE",
+  "page_id": "6abeafa2896ea18127c8202f",
+  "book_id": "6abeafa0896ea18127c81f94",
+  "vol": 92,
+  "section": "Prajñāpāramitā",
+  "page_number": 153,
+  "folio": "77b",
+  "text_toh": "D3807",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.04
+ },
+ "PDJD9": {
+  "type": "SAMPLE",
+  "page_id": "6abed7ae896ea18127c8f1e5",
+  "book_id": "6abed7ad896ea18127c8f0d2",
+  "vol": 186,
+  "section": "Pramāṇa",
+  "page_number": 273,
+  "folio": "137b",
+  "text_toh": "D4226",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.04
+ },
+ "PJ6MO": {
+  "type": "SAMPLE",
+  "page_id": "6abeba79896ea18127c875dd",
+  "book_id": "6abeba78896ea18127c874fa",
+  "vol": 132,
+  "section": "Cittamātra",
+  "page_number": 225,
+  "folio": "113b",
+  "text_toh": "D4043",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "POK7J": {
+  "type": "SAMPLE",
+  "page_id": "6abebcec896ea18127c87d2e",
+  "book_id": "6abebc98896ea18127c87c30",
+  "vol": 135,
+  "section": "Cittamātra",
+  "page_number": 252,
+  "folio": "127a",
+  "text_toh": "D4054",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.04
+ },
+ "P67ST": {
+  "type": "SAMPLE",
+  "page_id": "6abeb20c896ea18127c82c75",
+  "book_id": "6abeb20a896ea18127c82b01",
+  "vol": 98,
+  "section": "Madhyamaka",
+  "page_number": 370,
+  "folio": "186a",
+  "text_toh": "D3856",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.25
+ },
+ "P2M2I": {
+  "type": "SAMPLE",
+  "page_id": "6abe88b26a920ffd924d48e8",
+  "book_id": "6abe88866a920ffd924d46a0",
+  "vol": 13,
+  "section": "Tantra commentary",
+  "page_number": 582,
+  "folio": "292a",
+  "text_toh": "D1352",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "POL15": {
+  "type": "PLANT",
+  "page_id": "6abe89356a920ffd924d49a7",
+  "book_id": "6abe89136a920ffd924d4900",
+  "vol": 14,
+  "section": "Tantra commentary",
+  "page_number": 165,
+  "folio": "83b",
+  "plant_kind": "term",
+  "plant": {
+   "old": "Those sentient beings are transformed into the deities of the mandala, possessing three faces, six arms, and so forth.",
+   "new": "Those sentient beings are transformed into the deities of the stupa, possessing three faces, six arms, and so forth.",
+   "how": "mandala → stupa"
+  }
+ },
+ "P2X1E": {
+  "type": "HUMAN",
+  "page_id": "6abeafd9896ea18127c821ce",
+  "book_id": "6abeafd3896ea18127c8218e",
+  "vol": 93,
+  "section": "Prajñāpāramitā",
+  "page_number": 62,
+  "folio": "32a",
+  "toh": "toh3808"
+ },
+ "PKE7U": {
+  "type": "HUMAN",
+  "page_id": "6abeafd9896ea18127c821b8",
+  "book_id": "6abeafd3896ea18127c8218e",
+  "vol": 93,
+  "section": "Prajñāpāramitā",
+  "page_number": 40,
+  "folio": "21a",
+  "toh": "toh3808"
+ },
+ "PY939": {
+  "type": "SAMPLE",
+  "page_id": "6abed72a896ea18127c8ee34",
+  "book_id": "6abed724896ea18127c8ec34",
+  "vol": 184,
+  "section": "Pramāṇa",
+  "page_number": 510,
+  "folio": "256a",
+  "text_toh": "D4226",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.07
+ },
+ "PZJH1": {
+  "type": "SAMPLE",
+  "page_id": "6abedf79a43718d234bf1229",
+  "book_id": "6abedf77a43718d234bf11b2",
+  "vol": 124,
+  "section": "Cittamātra",
+  "page_number": 117,
+  "folio": "59b",
+  "text_toh": "D4029",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PSDKL": {
+  "type": "SAMPLE",
+  "page_id": "6abe8dbe6a920ffd924d5bcc",
+  "book_id": "6abe8dbb6a920ffd924d59c0",
+  "vol": 22,
+  "section": "Tantra commentary",
+  "page_number": 522,
+  "folio": "262a",
+  "text_toh": "D1503",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.88
+ },
+ "PQ3IK": {
+  "type": "PLANT",
+  "page_id": "6abe94eb6a920ffd924d79f3",
+  "book_id": "6abe94e86a920ffd924d7940",
+  "vol": 36,
+  "section": "Tantra commentary",
+  "page_number": 177,
+  "folio": "89b",
+  "plant_kind": "agent",
+  "plant": {
+   "old": "Om, you are the nature of all the Tathagatas; you are the holder of all vajras; you are that nature!",
+   "new": "Om, I am the nature of all the Tathagatas; you are the holder of all vajras; you are that nature!",
+   "how": "\\b[Yy]ou are\\b → I am"
+  }
+ },
+ "PLHLC": {
+  "type": "SAMPLE",
+  "page_id": "6abeb3d8896ea18127c8416b",
+  "book_id": "6abeb3d6896ea18127c83fed",
+  "vol": 107,
+  "section": "Madhyamaka",
+  "page_number": 380,
+  "folio": "191a",
+  "text_toh": "D3887",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "P1TAS": {
+  "type": "SAMPLE",
+  "page_id": "6abed0ed896ea18127c8c639",
+  "book_id": "6abed0ea896ea18127c8c5c8",
+  "vol": 168,
+  "section": "Jātaka",
+  "page_number": 111,
+  "folio": "56b",
+  "text_toh": "D4150",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.59
+ },
+ "P9BVW": {
+  "type": "SAMPLE",
+  "page_id": "6abeb8ee896ea18127c866e0",
+  "book_id": "6abeb8ed896ea18127c8665b",
+  "vol": 125,
+  "section": "Cittamātra",
+  "page_number": 131,
+  "folio": "66a",
+  "text_toh": "D4034",
+  "opens_text": false,
+  "colophon": true,
+  "verse_share": 0.09
+ },
+ "POGFV": {
+  "type": "PLANT",
+  "page_id": "6abeb6dd896ea18127c85901",
+  "book_id": "6abeb6dc896ea18127c856f1",
+  "vol": 117,
+  "section": "Sūtra commentary",
+  "page_number": 526,
+  "folio": "264a",
+  "plant_kind": "agent",
+  "plant": {
+   "old": "I declare that a sentient being who possesses faith and interest in all phenomena as being pure from the very beginning will not go to the lower realms.",
+   "new": "You declare that a sentient being who possesses faith and interest in all phenomena as being pure from the very beginning will not go to the lower realms.",
+   "how": "\\bI ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → you $1"
+  }
+ },
+ "P2BMN": {
+  "type": "SAMPLE",
+  "page_id": "6abea10d6a920ffd924dac3a",
+  "book_id": "6abea1016a920ffd924daaec",
+  "vol": 60,
+  "section": "Tantra commentary",
+  "page_number": 332,
+  "folio": "167a",
+  "text_toh": "D2512",
+  "opens_text": false,
+  "colophon": true,
+  "verse_share": 0
+ },
+ "P909W": {
+  "type": "SAMPLE",
+  "page_id": "6abeb6dd896ea18127c85708",
+  "book_id": "6abeb6dc896ea18127c856f1",
+  "vol": 117,
+  "section": "Sūtra commentary",
+  "page_number": 21,
+  "folio": "11b",
+  "text_toh": "D4010",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.09
+ },
+ "P247I": {
+  "type": "SAMPLE",
+  "page_id": "6abea9906a920ffd924dda63",
+  "book_id": "6abea98e6a920ffd924dd984",
+  "vol": 82,
+  "section": "Prajñāpāramitā",
+  "page_number": 221,
+  "folio": "111b",
+  "text_toh": "D3790",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.29
+ },
+ "PU5SV": {
+  "type": "SAMPLE",
+  "page_id": "6abedbe3896ea18127c90db4",
+  "book_id": "6abedbe1896ea18127c90bc1",
+  "vol": 197,
+  "section": "Grammar & sciences",
+  "page_number": 497,
+  "folio": "249b",
+  "text_toh": "D4300",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.03
+ },
+ "P7ZXH": {
+  "type": "SAMPLE",
+  "page_id": "6abebfd7896ea18127c88dae",
+  "book_id": "6abebfd1896ea18127c88d1c",
+  "vol": 143,
+  "section": "Abhidharma",
+  "page_number": 144,
+  "folio": "73a",
+  "text_toh": "D4092",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.03
+ },
+ "P4TD7": {
+  "type": "PLANT",
+  "page_id": "6abebeff896ea18127c88819",
+  "book_id": "6abebeed896ea18127c8866a",
+  "vol": 140,
+  "section": "Abhidharma",
+  "page_number": 429,
+  "folio": "215b",
+  "plant_kind": "agent",
+  "plant": {
+   "old": "If you ask: should we also discuss other specific karmic actions, such as being born from heat and moisture, becoming a woman, or those that lead to a certain eighth existence?",
+   "new": "If I ask: should we also discuss other specific karmic actions, such as being born from heat and moisture, becoming a woman, or those that lead to a certain eighth existence?",
+   "how": "\\b[Yy]ou ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → I $1"
+  }
+ },
+ "PICC1": {
+  "type": "SAMPLE",
+  "page_id": "6abed7ae896ea18127c8f22e",
+  "book_id": "6abed7ad896ea18127c8f0d2",
+  "vol": 186,
+  "section": "Pramāṇa",
+  "page_number": 346,
+  "folio": "174a",
+  "text_toh": "D4226",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.03
+ },
+ "PX9AO": {
+  "type": "J5797",
+  "page_id": "6abe83c2433559215a99813a",
+  "book_id": "6abe83b7433559215a997efb",
+  "vol": 4,
+  "section": "Tantra commentary",
+  "page_number": 573,
+  "folio": "287b",
+  "toh": "toh1189",
+  "j5797": {
+   "id": "Q218",
+   "reversed_either": false,
+   "reversed_both": false,
+   "fid": [
+    4,
+    5
+   ],
+   "inversions": [
+    [],
+    []
+   ]
+  }
+ },
+ "P9MFY": {
+  "type": "J5797",
+  "page_id": "6abeafd9896ea18127c822fc",
+  "book_id": "6abeafd3896ea18127c8218e",
+  "vol": 93,
+  "section": "Prajñāpāramitā",
+  "page_number": 364,
+  "folio": "183a",
+  "toh": "toh3808",
+  "j5797": {
+   "id": "Q308",
+   "reversed_either": true,
+   "reversed_both": true,
+   "fid": [
+    4,
+    4
+   ],
+   "inversions": [
+    [
+     {
+      "candidate": "a Bodhisattva who practices according to worldly conduct remains close to complete discipline",
+      "tibetan": "འཇིག་རྟེན་པའི་སྤྱད་པ་ལ་སྤྱོད་པའི་བྱང་ཆུབ་སེམས་དཔའ་སྤྱད་པ་སྤྱོད་པར་ཡོངས་སུ་འདུལ་བར་ཉེ་བར་གནས་པར་འགྱུར་རོ",
+      "reference": "it is \"made available\" to \"bodhisattvas… practicing the ordinary\" practices to fully guide them",
+      "why": "the perfection of wisdom is what is made available to guide the bodhisattva; T1 makes the bodhisattva the one who 'remains close'"
+     }
+    ],
+    [
+     {
+      "candidate": "a Bodhisattva ... who practices according to worldly conduct remains close to complete discipline",
+      "tibetan": "འཇིག་རྟེན་པའི་སྤྱད་པ་ལ་སྤྱོད་པའི་བྱང་ཆུབ་སེམས་དཔའ་སྤྱད་པ་སྤྱོད་པར་ཡོངས་སུ་འདུལ་བར་ཉེ་བར་གནས་པར་འགྱུར་རོ",
+      "reference": "it is \"made available\" to \"bodhisattvas… practicing the ordinary\" practices to fully guide them",
+      "why": "makes the bodhisattva the one who 'remains close' instead of the perfection of wisdom being made available to guide the bodhisattva"
+     }
+    ]
+   ]
+  }
+ },
+ "PE0TU": {
+  "type": "SAMPLE",
+  "page_id": "6abe95d86a920ffd924d7c31",
+  "book_id": "6abe95d56a920ffd924d7baa",
+  "vol": 37,
+  "section": "Tantra commentary",
+  "page_number": 133,
+  "folio": "67b",
+  "text_toh": "D1840",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.03
+ },
+ "P7CEM": {
+  "type": "SAMPLE",
+  "page_id": "6abeac55896ea18127c80d53",
+  "book_id": "6abeac51896ea18127c80b90",
+  "vol": 38,
+  "section": "Tantra commentary",
+  "page_number": 449,
+  "folio": "225b",
+  "text_toh": "D1845",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PHMXK": {
+  "type": "SAMPLE",
+  "page_id": "6abea23a6a920ffd924db503",
+  "book_id": "6abea2356a920ffd924db35a",
+  "vol": 63,
+  "section": "Tantra commentary",
+  "page_number": 423,
+  "folio": "212b",
+  "text_toh": "D2534",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PMJSH": {
+  "type": "SAMPLE",
+  "page_id": "6abec029896ea18127c88fd5",
+  "book_id": "6abec01d896ea18127c88fb8",
+  "vol": 144,
+  "section": "Abhidharma",
+  "page_number": 27,
+  "folio": "14b",
+  "text_toh": "D4093",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PQLX4": {
+  "type": "SAMPLE",
+  "page_id": "6abed51b896ea18127c8de10",
+  "book_id": "6abed518896ea18127c8dce8",
+  "vol": 178,
+  "section": "Pramāṇa",
+  "page_number": 294,
+  "folio": "148a",
+  "text_toh": "D4221",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.12
+ },
+ "P2P6F": {
+  "type": "SAMPLE",
+  "page_id": "6abea6dd6a920ffd924dc472",
+  "book_id": "6abea6da6a920ffd924dc443",
+  "vol": 72,
+  "section": "Tantra commentary",
+  "page_number": 45,
+  "folio": "23b",
+  "text_toh": "D2690",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "P21P4": {
+  "type": "SAMPLE",
+  "page_id": "6abea0c66a920ffd924da9af",
+  "book_id": "6abea0b56a920ffd924da906",
+  "vol": 59,
+  "section": "Tantra commentary",
+  "page_number": 167,
+  "folio": "84b",
+  "text_toh": "D2512",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PX8MT": {
+  "type": "SAMPLE",
+  "page_id": "6abeba44896ea18127c87317",
+  "book_id": "6abeba43896ea18127c8725a",
+  "vol": 131,
+  "section": "Cittamātra",
+  "page_number": 187,
+  "folio": "94b",
+  "text_toh": "D4038",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PHIFH": {
+  "type": "HUMAN",
+  "page_id": "6abe9be46a920ffd924d915c",
+  "book_id": "6abe9bd76a920ffd924d8fdc",
+  "vol": 47,
+  "section": "Tantra commentary",
+  "page_number": 382,
+  "folio": "193a",
+  "toh": "toh1996"
+ },
+ "P2ANJ": {
+  "type": "SAMPLE",
+  "page_id": "6abeafa2896ea18127c82011",
+  "book_id": "6abeafa0896ea18127c81f94",
+  "vol": 92,
+  "section": "Prajñāpāramitā",
+  "page_number": 123,
+  "folio": "62b",
+  "text_toh": "D3807",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PMOV6": {
+  "type": "SAMPLE",
+  "page_id": "6abec769896ea18127c8ab6b",
+  "book_id": "6abec767896ea18127c8a9dc",
+  "vol": 156,
+  "section": "Vinaya",
+  "page_number": 397,
+  "folio": "199b",
+  "text_toh": "D4113",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.03
+ },
+ "PZUE2": {
+  "type": "SAMPLE",
+  "page_id": "6abea6af6a920ffd924dc2d3",
+  "book_id": "6abea6ac6a920ffd924dc1ad",
+  "vol": 71,
+  "section": "Tantra commentary",
+  "page_number": 292,
+  "folio": "147a",
+  "text_toh": "D2677",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.28
+ },
+ "PQAA5": {
+  "type": "SAMPLE",
+  "page_id": "6abebab4896ea18127c878e1",
+  "book_id": "6abebaa5896ea18127c876b6",
+  "vol": 133,
+  "section": "Cittamātra",
+  "page_number": 553,
+  "folio": "277b",
+  "text_toh": "D4047",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "P0AP9": {
+  "type": "SAMPLE",
+  "page_id": "6abedcc8896ea18127c91403",
+  "book_id": "6abedcc7896ea18127c91204",
+  "vol": 199,
+  "section": "Grammar & sciences",
+  "page_number": 509,
+  "folio": "255a",
+  "text_toh": "D4311",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "PDAY6": {
+  "type": "SAMPLE",
+  "page_id": "6abeca68896ea18127c8b162",
+  "book_id": "6abeca4e896ea18127c8b081",
+  "vol": 159,
+  "section": "Vinaya",
+  "page_number": 223,
+  "folio": "112a",
+  "text_toh": "D4118",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0.03
+ },
+ "PHRXK": {
+  "type": "SAMPLE",
+  "page_id": "6abeaad46a920ffd924ddc3b",
+  "book_id": "6abeaad26a920ffd924ddbfc",
+  "vol": 84,
+  "section": "Prajñāpāramitā",
+  "page_number": 61,
+  "folio": "31b",
+  "text_toh": "D3790",
+  "opens_text": false,
+  "colophon": false,
+  "verse_share": 0
+ },
+ "P4FWG": {
+  "type": "HUMAN",
+  "page_id": "6abe83c2433559215a9980cf",
+  "book_id": "6abe83b7433559215a997efb",
+  "vol": 4,
+  "section": "Tantra commentary",
+  "page_number": 466,
+  "folio": "234a",
+  "toh": "toh1189"
+ }
+}

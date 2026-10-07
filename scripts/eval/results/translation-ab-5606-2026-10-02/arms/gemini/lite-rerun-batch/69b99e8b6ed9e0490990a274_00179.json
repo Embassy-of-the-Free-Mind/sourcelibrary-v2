@@ -1,0 +1,21 @@
+{
+ "id": "69b99e8b6ed9e0490990a274_00179",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Atthakavagga\n\n836. \"If you do not desire such a jewel as this woman, who is sought by many kings, then tell me, what do you say regarding the views held, the life lived by the virtuous, and the arising of existence?\"\n\n837. \"There is no 'This I declare' for him,\" said the Blessed One, \"O Māgandiya, regarding doctrines grasped and settled. Perceiving no support in views, he seeks internal peace, having seen nothingness.\"\n\n838. \"Those evaluations that are imagined,\" said Māgandiya, \"you, Sage, declare them as 'without support.' This meaning of 'internal peace,' how is it explained by the wise?\"\n\n839. \"Not by view, not by what is heard, not by knowledge, O Māgandiya,\" said the Blessed One, \"nor even by virtue and practice does one declare purity. Not by view, not by what is heard, not by ignorance, nor by absence of virtue or absence of practice; having abandoned these, without support, without craving for existence, one is at peace.\"\n\n840. \"If, indeed, not by view, not by what is heard, not by knowledge,\" said Māgandiya, \"nor even by virtue and practice one declares purity,\"\n\n<note>The footnotes below describe textual variations between manuscript editions.\n1. Bᵃˡ reads -am. 2. Bᵃˡ reads -esi.\n3. Bᵃˡ reads -i. 4. Fsb. reads diṭṭhī-.\n5. So Bᵃˡ Pj.; Cᵏᵇ reads sīlabb-.\n6. Bⁱ reads Māgandiya- throughout.\n7. So Cᵇ Bᵐ Fsb.; Cᵏ Bᵃˡ reads ajjhattam santim (compare 919).\n8. Bᵃᵐ reads pavicinam (in Bᵃ bavi-, Bⁱ -vidhinam, Bᵐ -am).\n9. Bᵐ reads addasam. 10. Bᵃˡ reads vinicchayāni.\n11. Cᵏᵇ reads ce. 12. Fsb. reads -ī.\n* to * Bᵐ reads visuddhim.\n13. Cᵏᵇ reads āhā. 14. Bᵃᵐ Pj. read asu-.\n15. Bⁱᵐ Fsb. read añāṇā (for metrical reasons).\n16. Bᵃ reads na. 17. Bᵃˡ reads nisa-.\n18. Bⁱᵐ reads na suddhim.</note>\n\n<summary>This page contains verses 836 to 840 of the Atthakavagga, featuring a dialogue between the Buddha and Māgandiya regarding the nature of views, virtuous practice, and the attainment of internal peace independent of dogmatic attachment.</summary>\n<keywords>Atthakavagga, Māgandiya, Buddha, views, purity, internal peace, virtue</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2518,
+ "outputTokens": 647,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.0007999999999999999,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1456,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

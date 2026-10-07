@@ -1,0 +1,879 @@
+[
+ {
+  "cid": "A01",
+  "stratum": "audit-5274",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69568909be7c607c5f03c44d",
+  "page": 184,
+  "title": "Hieronymi Mercurialis De arte gymnastica libri sex",
+  "url": "https://sourcelibrary.org/book/69568909be7c607c5f03c44d?page=184",
+  "note": null,
+  "audit_id": "d6e06822f0",
+  "judge_flag": [
+   "running header 'L I B E R' rendered 'BOOK THREE'; the number is not on the page"
+  ]
+ },
+ {
+  "cid": "A02",
+  "stratum": "audit-5274",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69938dc8d5a98fd66f42ed1b",
+  "page": 346,
+  "title": "Die Homerischen Hymnen (Gemoll Edition)",
+  "url": "https://sourcelibrary.org/book/69938dc8d5a98fd66f42ed1b?page=346",
+  "note": null,
+  "audit_id": "05645dc5a2",
+  "judge_flag": [
+   "note on 'Ein wertloses Machwerk' -> 'The editor Gemoll considers this hymn of poor literary quality': the name Gemoll is not on the page"
+  ]
+ },
+ {
+  "cid": "A03",
+  "stratum": "audit-5274",
+  "model": "gemini-3-flash-preview",
+  "book_id": "6959111fecb01322b3068b03",
+  "page": 61,
+  "title": "Problemas y secretos maravillosos de las Indias",
+  "url": "https://sourcelibrary.org/book/6959111fecb01322b3068b03?page=61",
+  "note": null,
+  "audit_id": "0ab88f055a",
+  "judge_flag": [
+   "<meta> calls the cold 'the third cause'; source says only 'por vltima causa'"
+  ]
+ },
+ {
+  "cid": "A04",
+  "stratum": "audit-5274",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69a99cc41cb97318b41731ed",
+  "page": 77,
+  "title": "Select Works of Porphyry",
+  "url": "https://sourcelibrary.org/book/69a99cc41cb97318b41731ed?page=77",
+  "note": null,
+  "audit_id": "ee9968755a",
+  "judge_flag": [
+   "Header expanded to 'ON ABSTINENCE FROM [ANIMAL FOOD.—BOOK II.]' and 'useless to them' glossed as 'useless to the plants... such as their fruit'"
+  ]
+ },
+ {
+  "cid": "A05",
+  "stratum": "audit-5274",
+  "model": "gemini-3.1-flash-lite-preview",
+  "book_id": "69aec87bf24f28c970822580",
+  "page": 90,
+  "title": "Wonderful Machines of the Far West, Vol. 1",
+  "url": "https://sourcelibrary.org/book/69aec87bf24f28c970822580?page=90",
+  "note": null,
+  "audit_id": "b5743d8a92",
+  "judge_flag": [
+   "header '奇器圖說' rendered 'Wonderful Machines of the Far West' — 'of the Far West' (遠西) is not on this page"
+  ]
+ },
+ {
+  "cid": "A06",
+  "stratum": "audit-5274",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69907c595f855ec553e74a1b",
+  "page": 16,
+  "title": "Prashna Deepakam",
+  "url": "https://sourcelibrary.org/book/69907c595f855ec553e74a1b?page=16",
+  "note": null,
+  "audit_id": "49666cd5c1",
+  "judge_flag": [
+   "note adds Dikpala doctrine ('Indra for the East and Yama for the South') and the meta names the work 'Prashna Deepak', neither on the page"
+  ]
+ },
+ {
+  "cid": "A07",
+  "stratum": "audit-5274",
+  "model": "gemini-3-flash-preview",
+  "book_id": "6a98dda1579bbfb416991fe6",
+  "page": 4,
+  "title": "改訂日本粘菌目録",
+  "url": "https://sourcelibrary.org/book/6a98dda1579bbfb416991fe6?page=4",
+  "note": null,
+  "audit_id": "640eeb7244",
+  "judge_flag": [
+   "notes expand one-character locality abbreviations as fact: '鉉' → 'Genpuku-ji', '札' → 'Sapporo', '瀬' → 'Setokanayama', '安' → 'Anto'"
+  ]
+ },
+ {
+  "cid": "A-S1",
+  "stratum": "SEED",
+  "model": "seed",
+  "book_id": null,
+  "page": null,
+  "title": "Procli In Platonis Timaeum Commentarius",
+  "url": null,
+  "note": null,
+  "audit_id": null,
+  "judge_flag": [
+   "note asserts: 'Proclus, the 4th-century Neoplatonist who headed the Platonic school at Alexandria'"
+  ]
+ },
+ {
+  "cid": "A08",
+  "stratum": "audit-5274",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69f33dcd876dd827cbc5c954",
+  "page": 43,
+  "title": "Songae sich'o",
+  "url": "https://sourcelibrary.org/book/69f33dcd876dd827cbc5c954?page=43",
+  "note": null,
+  "audit_id": "e163c51e42",
+  "judge_flag": [
+   "<note> names 浮園 as 'the author's nickname, Ch'oe Hyang-wŏn' and dates 庚子 'likely 1840'; neither name nor date is in the source"
+  ]
+ },
+ {
+  "cid": "A09",
+  "stratum": "audit-5274",
+  "model": "gemini-3-flash-preview",
+  "book_id": "6992ce7877d26f93217773a6",
+  "page": 17,
+  "title": "武備志(六十三)",
+  "url": "https://sourcelibrary.org/book/6992ce7877d26f93217773a6?page=17",
+  "note": null,
+  "audit_id": "cd25001770",
+  "judge_flag": [
+   "headings 'Treatise on Armament Technology, Volume 139 / Divination of the Sun (Part II) / Page 9' and '...ent.' have no counterpart in the source"
+  ]
+ },
+ {
+  "cid": "A10",
+  "stratum": "audit-5274",
+  "model": "gemini-3.1-flash-lite-preview",
+  "book_id": "69d7e24ce08c70307b76611e",
+  "page": 350,
+  "title": "Yogini Hridaya",
+  "url": "https://sourcelibrary.org/book/69d7e24ce08c70307b76611e?page=350",
+  "note": null,
+  "audit_id": "a827fdf979",
+  "judge_flag": [
+   "'<note>The illustration description: An image depicts the meditative hierarchy of the guru lineages…</note>' — the source has no image"
+  ]
+ },
+ {
+  "cid": "A11",
+  "stratum": "audit-5274",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69c8940c6c6f3cc53c85c03f",
+  "page": 394,
+  "title": "The Celtic druids",
+  "url": "https://sourcelibrary.org/book/69c8940c6c6f3cc53c85c03f?page=394",
+  "note": null,
+  "audit_id": "6b893e00bd",
+  "judge_flag": [
+   "'by אָסַר asr, ais' rendered 'by asr (אָסַר) and ais (אִישׁ)' — Hebrew אִישׁ added, and 'asr, asr (אָסַר אָסַר)' supplies Hebrew not in the source"
+  ]
+ },
+ {
+  "cid": "A12",
+  "stratum": "audit-5274",
+  "model": "gemini-3-flash-preview",
+  "book_id": "25dfd63a-8080-4864-aa79-a0fcb1c76102",
+  "page": 476,
+  "title": "Comento sopra la Commedia di Dante",
+  "url": "https://sourcelibrary.org/book/25dfd63a-8080-4864-aa79-a0fcb1c76102?page=476",
+  "note": null,
+  "audit_id": "77e17c0733",
+  "judge_flag": [
+   "added <meta> 'This page follows the dramatic earthquake and the collective singing of the \"Gloria\" by the souls on the terrace of Avarice' — context not on this page"
+  ]
+ },
+ {
+  "cid": "A-S2",
+  "stratum": "SEED",
+  "model": "seed",
+  "book_id": null,
+  "page": null,
+  "title": "Geronimo's Story of His Life",
+  "url": null,
+  "note": null,
+  "audit_id": null,
+  "judge_flag": [
+   "note asserts: 'Geronimo surrendered to General George Custer in 1886'"
+  ]
+ },
+ {
+  "cid": "A13",
+  "stratum": "audit-5274",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69c727966a0f3d112faf6ed1",
+  "page": 199,
+  "title": "Le pelerinage de l'homme",
+  "url": "https://sourcelibrary.org/book/69c727966a0f3d112faf6ed1?page=199",
+  "note": null,
+  "audit_id": "7cf97b9e44",
+  "judge_flag": [
+   "woodcut <note> names one figure 'representing Chastity' — no Chastity in the source text or image description"
+  ]
+ },
+ {
+  "cid": "A14",
+  "stratum": "audit-5274",
+  "model": "gemini-3.1-flash-lite-preview",
+  "book_id": "69a99ce86c7545e2236e12de",
+  "page": 757,
+  "title": "Suidae Lexicon",
+  "url": "https://sourcelibrary.org/book/69a99ce86c7545e2236e12de?page=757",
+  "note": null,
+  "audit_id": "e19901a027",
+  "judge_flag": [
+   "<summary>/<keywords> claim the page covers 'comic poets, historical figures (Nicostratus, Nicon)' and 'Nicophon'; none appear on the page"
+  ]
+ },
+ {
+  "cid": "A15",
+  "stratum": "audit-5274",
+  "model": "gemini-3.1-flash-lite",
+  "book_id": "6a08f9349c1b82475e159a8d",
+  "page": 153,
+  "title": "Geronimo's Story of His Life — taken down by S.M. Barrett, 1906 first edition",
+  "url": "https://sourcelibrary.org/book/6a08f9349c1b82475e159a8d?page=153",
+  "note": null,
+  "audit_id": "134c51dfa7",
+  "judge_flag": [
+   "'Judge McCormick and wife' -> 'Judge McCormick (often known as McComas) and his wife' adds a claim not on the page"
+  ]
+ },
+ {
+  "cid": "A16",
+  "stratum": "audit-5274",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69c86bfe6c6f3cc53c856bb8",
+  "page": 191,
+  "title": "Belle and the dragon. An elfin comedy",
+  "url": "https://sourcelibrary.org/book/69c86bfe6c6f3cc53c856bb8?page=191",
+  "note": null,
+  "audit_id": "4b76768eb2",
+  "judge_flag": [
+   "note on 'Oxford Slouch': 'The \"Old Serpent\" character, referred to here by his nickname...' asserts an identity the page does not carry"
+  ]
+ },
+ {
+  "cid": "A17",
+  "stratum": "audit-5274",
+  "model": "gemini-3-flash-preview",
+  "book_id": "699066f2249ce014347d20d5",
+  "page": 9,
+  "title": "Navagraha Nyasa Vidhi (Nine Planets Ritual)",
+  "url": "https://sourcelibrary.org/book/699066f2249ce014347d20d5?page=9",
+  "note": null,
+  "audit_id": "897246fdea",
+  "judge_flag": [
+   "<meta> asserts 'Having concluded the rites for Jupiter on the previous page' with no counterpart on the page"
+  ]
+ },
+ {
+  "cid": "A18",
+  "stratum": "audit-5274",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69b51ec247b06ecd58196708",
+  "page": 5,
+  "title": "Dav. Lipsi Antipathiae singulares, sive de naturali, sed mirabili cibi et potus fastidio, odio, abstinentia, dissertatio",
+  "url": "https://sourcelibrary.org/book/69b51ec247b06ecd58196708?page=5",
+  "note": null,
+  "audit_id": "4c9937a086",
+  "judge_flag": [
+   "note on 'CORNERI NOSTRI' asserts 'Johannes Cornerus, the official ... who was unable to attend due to illness' — first name, office and illness are not on this page"
+  ]
+ },
+ {
+  "cid": "A-S3",
+  "stratum": "SEED",
+  "model": "seed",
+  "book_id": null,
+  "page": null,
+  "title": "皇極經世書",
+  "url": null,
+  "note": null,
+  "audit_id": null,
+  "judge_flag": [
+   "note asserts: 'Shao Yong, the Ming-dynasty philosopher who wrote the Huangji jingshi'"
+  ]
+ },
+ {
+  "cid": "A19",
+  "stratum": "audit-5274",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69a5e5e985fa13e734e41cba",
+  "page": 153,
+  "title": "Procli In Platonis Timaeum Commentarius (Grec 1841)",
+  "url": "https://sourcelibrary.org/book/69a5e5e985fa13e734e41cba?page=153",
+  "note": null,
+  "audit_id": "38e3a0869b",
+  "judge_flag": [
+   "heading 'Commentary on Plato's Timaeus' and meta claim about 'immortality of the soul' as Proclus's argument are not on the page"
+  ]
+ },
+ {
+  "cid": "A20",
+  "stratum": "audit-5274",
+  "model": "gemini-3-flash-preview",
+  "book_id": "6a0a4efc7cd8e1e3d0f49dfe",
+  "page": 25,
+  "title": "皇極經世書 (Huangji Jingshi Shu, juan slice 17 of 24) — Shao Yong Neo-Confucian cosmic numerology, Siku Quanshu",
+  "url": "https://sourcelibrary.org/book/6a0a4efc7cd8e1e3d0f49dfe?page=25",
+  "note": null,
+  "audit_id": "959dcf8ad2",
+  "judge_flag": [
+   "summary names the tables 'Singing of the Pitch-Pipes', not on the page"
+  ]
+ },
+ {
+  "cid": "A21",
+  "stratum": "audit-5274",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69906140322e01b1349a4374",
+  "page": 152,
+  "title": "A Dialogue Concerning Witches and Witchcraftes",
+  "url": "https://sourcelibrary.org/book/69906140322e01b1349a4374?page=152",
+  "note": null,
+  "audit_id": "621637f802",
+  "judge_flag": [
+   "source 'Fenton, S. G. Esq., Belfast' rendered 'Samuel G. Fenton' — first name 'Samuel' not in source",
+   "biographical <note>s (e.g. Furnivall 'co-creator of the Oxford English Dictionary', Getty 'secretary of the Belfast Harbour Commissioners') assert identifications the list does not carry"
+  ]
+ },
+ {
+  "cid": "T01",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e787134a6785cfd60ca8b9",
+  "page": 95,
+  "title": "rNying ma rgyud 'bum Bi",
+  "url": "https://sourcelibrary.org/book/69e787134a6785cfd60ca8b9?page=95",
+  "note": "Tibetan: *bras bu gsum*; Sanskrit: *triphala*",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T02",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7ab285f1a22ab19a93de3",
+  "page": 34,
+  "title": "Thadrak Kanjur Kanjur 'Dul ba Tha",
+  "url": "https://sourcelibrary.org/book/69e7ab285f1a22ab19a93de3?page=34",
+  "note": "Tibetan: phung po, original Sanskrit: skandhas",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T03",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7ac955f1a22ab19aa9713",
+  "page": 24,
+  "title": "Phurdrup Gonpa Thor bu dPag bsam khri shing",
+  "url": "https://sourcelibrary.org/book/69e7ac955f1a22ab19aa9713?page=24",
+  "note": "Tibetan: dGa' ba'i sde; Sanskrit: Harisena",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T04",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7ac425f1a22ab19aa607c",
+  "page": 69,
+  "title": "Neyphug Thor bu Pad gling bka' 'bum",
+  "url": "https://sourcelibrary.org/book/69e7ac425f1a22ab19aa607c?page=69",
+  "note": "Dri med 'od zer, also known as Longchenpa",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T05",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7aad45f1a22ab19a8e058",
+  "page": 187,
+  "title": "Thadrak Kanjur rGyud 'bum Tsa",
+  "url": "https://sourcelibrary.org/book/69e7aad45f1a22ab19a8e058?page=187",
+  "note": "Tibetan: Ban de Chos grub; also known as Facheng, a famous 9th-century translator",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T41",
+  "stratum": "SEED",
+  "model": "seed",
+  "book_id": null,
+  "page": null,
+  "title": "Kanjur mDo sde",
+  "url": null,
+  "note": "Shariputra, the Buddha's disciple foremost in supernatural powers",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T06",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7abbe5f1a22ab19a9d4d8",
+  "page": 45,
+  "title": "Neyphug Kanjur mDo sde Sha",
+  "url": "https://sourcelibrary.org/book/69e7abbe5f1a22ab19a9d4d8?page=45",
+  "note": "likely Purana Kashyapa, a non-Buddhist teacher",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T07",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e788e54a6785cfd60d215c",
+  "page": 72,
+  "title": "bod yul gyi rdo rje 'chang sgra sgyur mar pa lotsa ba'i rnam par thar pa ngo mtshar 'kha' 'gro'i sprin phung",
+  "url": "https://sourcelibrary.org/book/69e788e54a6785cfd60d215c?page=72",
+  "note": "the text likely refers to his son, Dharma Dode, or a deity",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T08",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7ab345f1a22ab19a94976",
+  "page": 30,
+  "title": "Thadrak Kanjur Phal chen Kha",
+  "url": "https://sourcelibrary.org/book/69e7ab345f1a22ab19a94976?page=30",
+  "note": "referring to the wheel of a Chakravartin king",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T09",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7ac255f1a22ab19aa45d5",
+  "page": 1,
+  "title": "Kanjur dKon brtsegs Ga",
+  "url": "https://sourcelibrary.org/book/69e7ac255f1a22ab19aa45d5?page=1",
+  "note": "Sanskrit: Arya Bodhisattva Pitaka Nama Mahayana Sutra",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T10",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e788a14a6785cfd60d13f3",
+  "page": 32,
+  "title": "ston pa tham cad mkhyen pa'i 'khrung rabs kyi 'phreng ba'am skyes rabs",
+  "url": "https://sourcelibrary.org/book/69e788a14a6785cfd60d13f3?page=32",
+  "note": "the king of the gods, also known as Indra",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T42",
+  "stratum": "SEED",
+  "model": "seed",
+  "book_id": null,
+  "page": null,
+  "title": "Thor bu",
+  "url": null,
+  "note": "Dri med 'od zer, also known as Longchenpa, the great 16th-century Nyingma master",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T11",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7ac2c5f1a22ab19aa4d48",
+  "page": 37,
+  "title": "Kanjur Shes rab khri pa",
+  "url": "https://sourcelibrary.org/book/69e7ac2c5f1a22ab19aa4d48?page=37",
+  "note": "Tibetan: Sha ra dwa ti'i bu; the son of Sharadvati, a name for Shariputra",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T12",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7ac245f1a22ab19aa444c",
+  "page": 92,
+  "title": "Kanjur dKon brtsegs Kha",
+  "url": "https://sourcelibrary.org/book/69e7ac245f1a22ab19aa444c?page=92",
+  "note": "The personal name of the disciple Shariputra",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T13",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7ac145f1a22ab19aa33d0",
+  "page": 147,
+  "title": "Kanjur 'Bum Da",
+  "url": "https://sourcelibrary.org/book/69e7ac145f1a22ab19aa33d0?page=147",
+  "note": "Tibetan: thog ma dang tha ma med pa stong pa nyid; Sanskrit: anavarāgra-śūnyatā",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T14",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7ac205f1a22ab19aa3fa6",
+  "page": 2,
+  "title": "Kanjur Phal chen Ga",
+  "url": "https://sourcelibrary.org/book/69e7ac205f1a22ab19aa3fa6?page=2",
+  "note": "Sanskrit: Jinaputra; a title for Bodhisattvas",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T15",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e76176cc48e59ad74efdb0",
+  "page": 211,
+  "title": "Pad gling rnam thar",
+  "url": "https://sourcelibrary.org/book/69e76176cc48e59ad74efdb0?page=211",
+  "note": "term: Rigdzin Chenpo, refers to Pema Lingpa",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T16",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7618acc48e59ad74f0417",
+  "page": 183,
+  "title": "Dam tshig rab 'byed zhes bya ba",
+  "url": "https://sourcelibrary.org/book/69e7618acc48e59ad74f0417?page=183",
+  "note": "the non-Buddhist teachers contemporary with the Buddha",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T17",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7abb05f1a22ab19a9c661",
+  "page": 151,
+  "title": "Neyphug Kanjur mDo sde Tsha",
+  "url": "https://sourcelibrary.org/book/69e7abb05f1a22ab19a9c661?page=151",
+  "note": "These are the five most heinous crimes in Buddhism: killing one's father, mother, or an Arhat; wounding a Buddha; or causing a schism in the Sangha.",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T18",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7616acc48e59ad74ef999",
+  "page": 7,
+  "title": "Legs sbyar smra ba'I sgron me sogs",
+  "url": "https://sourcelibrary.org/book/69e7616acc48e59ad74ef999?page=7",
+  "note": "the famous translator Pang Lotsawa Lodro Tenpa",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T19",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7ac685f1a22ab19aa72f0",
+  "page": 87,
+  "title": "Phurdrup Gonpa bKa' brgyad Ca",
+  "url": "https://sourcelibrary.org/book/69e7ac685f1a22ab19aa72f0?page=87",
+  "note": "This is the famous Ye Dharma formula summarizing the Buddhist view of causality.",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T20",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e76132cc48e59ad74ee251",
+  "page": 46,
+  "title": "O rgyan rNamm thar bKa’ thang",
+  "url": "https://sourcelibrary.org/book/69e76132cc48e59ad74ee251?page=46",
+  "note": "Jivaka is the famous doctor of the Buddha",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T21",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7ab225f1a22ab19a93749",
+  "page": 169,
+  "title": "Thadrak Kanjur Kanjur 'Dul ba Cha",
+  "url": "https://sourcelibrary.org/book/69e7ab225f1a22ab19a93749?page=169",
+  "note": "Varshakara was a chief minister of Magadha",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T22",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7aae45f1a22ab19a8f1d1",
+  "page": 45,
+  "title": "Thadrak Kanjur mDo sde Ka",
+  "url": "https://sourcelibrary.org/book/69e7aae45f1a22ab19a8f1d1?page=45",
+  "note": "Tibetan: mu stegs can; Sanskrit: tīrthika",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T43",
+  "stratum": "SEED",
+  "model": "seed",
+  "book_id": null,
+  "page": null,
+  "title": "Kanjur",
+  "url": null,
+  "note": "Tibetan: sangs rgyas; Sanskrit: Dharma",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T23",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e78fe39adaf7b110e39b0e",
+  "page": 156,
+  "title": "Bum Ca",
+  "url": "https://sourcelibrary.org/book/69e78fe39adaf7b110e39b0e?page=156",
+  "note": "A leading disciple of the Buddha, known for his wisdom",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T24",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7ab155f1a22ab19a92a2c",
+  "page": 9,
+  "title": "Thadrak Kanjur mDo sde AH",
+  "url": "https://sourcelibrary.org/book/69e7ab155f1a22ab19a92a2c?page=9",
+  "note": "Tibetan: bsod nams stobs; Sanskrit: Punyabala",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T44",
+  "stratum": "SEED",
+  "model": "seed",
+  "book_id": null,
+  "page": null,
+  "title": "mDo sde",
+  "url": null,
+  "note": "Tushita is the heaven of the Thirty-Three gods, ruled by Indra",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T25",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7ab235f1a22ab19a938ee",
+  "page": 45,
+  "title": "Thadrak Kanjur Kanjur 'Dul ba Ja",
+  "url": "https://sourcelibrary.org/book/69e7ab235f1a22ab19a938ee?page=45",
+  "note": "Tibetan: 'Dul ba rnam par 'byེད་པ; Sanskrit: Vinaya-vibhanga",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T26",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7ac765f1a22ab19aa7e2c",
+  "page": 90,
+  "title": "Phurdrup Gonpa dGongs 'dus Ca",
+  "url": "https://sourcelibrary.org/book/69e7ac765f1a22ab19aa7e2c?page=90",
+  "note": "refers to the 8,000 verse Prajnaparamita Sutra",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T27",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7ac045f1a22ab19aa24b0",
+  "page": 89,
+  "title": "Kanjur 'Bum Ka",
+  "url": "https://sourcelibrary.org/book/69e7ac045f1a22ab19aa24b0?page=89",
+  "note": "the son of Sharadvati, also known as Shariputra",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T28",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7965680b52390feb195ab",
+  "page": 23,
+  "title": "myur mdzad ye shes kyi mgon po phyag drug pa’i gtor chog bskang gso cha lag dang bcas pa",
+  "url": "https://sourcelibrary.org/book/69e7965680b52390feb195ab?page=23",
+  "note": "This is the \"Sealed Command of Auspiciousness\" composed by the Great Siddha Drubchen Nyungpo.",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T29",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7ac155f1a22ab19aa3557",
+  "page": 1,
+  "title": "Kanjur 'Bum Na",
+  "url": "https://sourcelibrary.org/book/69e7ac155f1a22ab19aa3557?page=1",
+  "note": "A primary disciple of the Buddha, known for his insight into emptiness",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T30",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e76200cc48e59ad74f2b83",
+  "page": 361,
+  "title": "Kun bzang dgongs 'dus kyi chos skor",
+  "url": "https://sourcelibrary.org/book/69e76200cc48e59ad74f2b83?page=361",
+  "note": "The 8th-century Indian master who established Buddhism in Tibet",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T31",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7ab0c5f1a22ab19a91faa",
+  "page": 18,
+  "title": "Thadrak Kanjur mDo sde La",
+  "url": "https://sourcelibrary.org/book/69e7ab0c5f1a22ab19a91faa?page=18",
+  "note": "The \"Conflict-Free\" (Tibetan: 'thab bral) refers to the Yamadeva realm, the third heaven of the desire realm",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T32",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7abb55f1a22ab19a9cb7e",
+  "page": 76,
+  "title": "Neyphug Kanjur mDo sde Zha",
+  "url": "https://sourcelibrary.org/book/69e7abb55f1a22ab19a9cb7e?page=76",
+  "note": "Tibetan: 'Jig rten 'dzin; Sanskrit: Lokeshvara or Jagaddhara",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T33",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7aba55f1a22ab19a9b8a4",
+  "page": 3,
+  "title": "Neyphug Kanjur mDo sde Tha",
+  "url": "https://sourcelibrary.org/book/69e7aba55f1a22ab19a9b8a4?page=3",
+  "note": "Shariputra, the Buddha's disciple known for wisdom",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T45",
+  "stratum": "SEED",
+  "model": "seed",
+  "book_id": null,
+  "page": null,
+  "title": "bKa' gdams",
+  "url": null,
+  "note": "Atisha, the Bengali master who came to Tibet in 1042 at the invitation of the kings of Guge",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T34",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7abc95f1a22ab19a9e04a",
+  "page": 53,
+  "title": "Neyphug Kanjur mDo sde Ngi",
+  "url": "https://sourcelibrary.org/book/69e7abc95f1a22ab19a9e04a?page=53",
+  "note": "The king or deity Musulundha/Mucilinda acting as a teacher",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T35",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7ac015f1a22ab19aa2104",
+  "page": 3,
+  "title": "Kanjur 'Dul ba Da",
+  "url": "https://sourcelibrary.org/book/69e7ac015f1a22ab19aa2104?page=3",
+  "note": "the Buddha's disciple specialized in monastic discipline",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T36",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7ab585f1a22ab19a970a0",
+  "page": 97,
+  "title": "Thadrak Kanjur 'Bum Tha",
+  "url": "https://sourcelibrary.org/book/69e7ab585f1a22ab19a970a0?page=97",
+  "note": "the son of Śāradvatī; another name for Sāriputra",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T37",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7ab5f5f1a22ab19a978df",
+  "page": 104,
+  "title": "Thadrak Kanjur Nyi khri Kha (EAP310-1-1-102)",
+  "url": "https://sourcelibrary.org/book/69e7ab5f5f1a22ab19a978df?page=104",
+  "note": "the king of gods, also addressed as Kaushika",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T38",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e7ac0a5f1a22ab19aa2abe",
+  "page": 10,
+  "title": "Kanjur 'Bum Ca",
+  "url": "https://sourcelibrary.org/book/69e7ac0a5f1a22ab19aa2abe?page=10",
+  "note": "Tibetan: ming dang gzugs; Sanskrit: namarupa",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T39",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e786b24a6785cfd60c8e7b",
+  "page": 123,
+  "title": "rNying ma rgyud 'bum Cha",
+  "url": "https://sourcelibrary.org/book/69e786b24a6785cfd60c8e7b?page=123",
+  "note": "likely Garab Dorje's father or a master in the lineage",
+  "audit_id": null,
+  "judge_flag": null
+ },
+ {
+  "cid": "T40",
+  "stratum": "tibetan-4523",
+  "model": "gemini-3-flash-preview",
+  "book_id": "69e76212cc48e59ad74f316e",
+  "page": 61,
+  "title": "rDzogs chen yang tig nag po gser gyi bru gcig (EAP039-1-4-87)",
+  "url": "https://sourcelibrary.org/book/69e76212cc48e59ad74f316e?page=61",
+  "note": "Sanskrit: <term>Samdhinirmocana Sutra</term>",
+  "audit_id": null,
+  "judge_flag": null
+ }
+]

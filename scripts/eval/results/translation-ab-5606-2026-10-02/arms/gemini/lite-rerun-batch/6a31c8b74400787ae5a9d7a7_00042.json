@@ -1,0 +1,21 @@
+{
+ "id": "6a31c8b74400787ae5a9d7a7_00042",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Malavaggo\n\n250 For whom this <term>asava</term> <gloss>intoxicant/taint</gloss> is cut off, uprooted, and pulled out, he truly attains <term>samadhi</term> <gloss>concentration</gloss> by day or by night.\n8 The Story of the Young Monk Tissa, III 357\n\n251 There is no fire like lust, no hold like hatred, no net like delusion, no river like craving.\n9 The Story of the Five Lay Followers, III 360\n\n252 The faults of others are easy to see, but one's own are difficult to see. A person winnows the faults of others like chaff, but hides his own faults like a crafty gambler hiding a losing die.\n10 The Story of the Banker Meṇḍaka, III 363\n\n253 For one who constantly observes the faults of others and is always finding fault, his taints grow; he is far from the destruction of taints.\n11 The Story of the Monk Who Found Fault, III 376\n\n254 There is no footprint in the sky, there is no <term>samana</term> <gloss>ascetic</gloss> outside this path. Mankind delights in the world of multiplicity, but the <term>Tathagatas</term> <gloss>the enlightened ones</gloss> are free from multiplicity.\n\n255 There is no footprint in the sky, there is no <term>samana</term> <gloss>ascetic</gloss> outside this path. There is no permanence in the <term>sankharas</term> <gloss>conditioned phenomena</gloss>, there is no wavering in the Buddhas.\n12 The Story of the Wanderer Subhadda, III 377\n\nXVIII THE CHAPTER ON STAINS EIGHTEENTH\n\n<summary>This page contains verses 250 through 255 of the Dhammapada, which focus on the nature of mental stains, the difficulty of self-reflection, and the state of the enlightened. These verses are accompanied by references to their traditional narratives found in the commentary.</summary>\n<keywords>Stains, Malavaggo, Taints, Samadhi, Craving, Faults, Tathagata, Conditioned Phenomena, Dhammapada</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2349,
+ "outputTokens": 507,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.000673875,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1199,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

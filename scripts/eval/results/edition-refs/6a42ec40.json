@@ -1,0 +1,97 @@
+{
+  "summary": {
+    "book_id": "6a42ec4006e6ead3ac544b8f",
+    "title": "Poemata varii argumenti, partim E Georgio Herberto Latinè (utcunque) reddita, partim conscripta, a Wilh. Dillingham, S.T.D. Cantabrigiensi. Adscitis etiam aliis aliorum.",
+    "published": "1678",
+    "source": "EEBO-TCP A36017",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 5,
+    "skips": {
+      "probe-too-short": 3
+    },
+    "median_char_acc": 0.9308,
+    "median_char_acc_windowed": 0.8793,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a42ec40-p2",
+      "page": 2,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a42ec40-p6",
+      "page": 6,
+      "overlap": 0.567,
+      "probe_words": 33,
+      "ref_chars": 361,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.308,
+      "char_acc": 0.8644,
+      "char_acc_windowed": 0.7331
+    },
+    {
+      "slug": "ed-6a42ec40-p9",
+      "page": 9,
+      "overlap": 0.684,
+      "probe_words": 20,
+      "ref_chars": 190,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.115,
+      "char_acc": 0.8529,
+      "char_acc_windowed": 0.8529
+    },
+    {
+      "slug": "ed-6a42ec40-p14",
+      "page": 14,
+      "overlap": 0.979,
+      "probe_words": 195,
+      "ref_chars": 1459,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.059,
+      "char_acc": 0.9593,
+      "char_acc_windowed": 0.9575
+    },
+    {
+      "slug": "ed-6a42ec40-p15",
+      "page": 15,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a42ec40-p16",
+      "page": 16,
+      "overlap": 0.576,
+      "probe_words": 100,
+      "ref_chars": 512,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.1,
+      "char_acc": 0.9308,
+      "char_acc_windowed": 0.9231
+    },
+    {
+      "slug": "ed-6a42ec40-p17",
+      "page": 17,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a42ec40-p22",
+      "page": 22,
+      "overlap": 0.484,
+      "probe_words": 97,
+      "ref_chars": 734,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.097,
+      "char_acc": 0.9671,
+      "char_acc_windowed": 0.8793
+    }
+  ]
+}

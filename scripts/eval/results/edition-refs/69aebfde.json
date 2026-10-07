@@ -1,0 +1,111 @@
+{
+  "summary": {
+    "book_id": "69aebfdea41a7e10e5a71d19",
+    "title": "An Attempt for the Explication of the Phaenomena",
+    "published": "1661",
+    "source": "EEBO-TCP A44314",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "probe-too-short": 1
+    },
+    "median_char_acc": 0.966,
+    "median_char_acc_windowed": 0.9603,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-69aebfde-p2",
+      "page": 2,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-69aebfde-p9",
+      "page": 9,
+      "overlap": 1,
+      "probe_words": 135,
+      "ref_chars": 832,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.065,
+      "char_acc": 0.9684,
+      "char_acc_windowed": 0.9494
+    },
+    {
+      "slug": "ed-69aebfde-p16",
+      "page": 16,
+      "overlap": 1,
+      "probe_words": 198,
+      "ref_chars": 1175,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.081,
+      "char_acc": 0.966,
+      "char_acc_windowed": 0.966
+    },
+    {
+      "slug": "ed-69aebfde-p17",
+      "page": 17,
+      "overlap": 1,
+      "probe_words": 189,
+      "ref_chars": 1149,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.089,
+      "char_acc": 0.9603,
+      "char_acc_windowed": 0.9603
+    },
+    {
+      "slug": "ed-69aebfde-p27",
+      "page": 27,
+      "overlap": 0.885,
+      "probe_words": 209,
+      "ref_chars": 1197,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.176,
+      "char_acc": 0.936,
+      "char_acc_windowed": 0.936
+    },
+    {
+      "slug": "ed-69aebfde-p31",
+      "page": 31,
+      "overlap": 1,
+      "probe_words": 202,
+      "ref_chars": 1192,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.075,
+      "char_acc": 0.9722,
+      "char_acc_windowed": 0.9722
+    },
+    {
+      "slug": "ed-69aebfde-p48",
+      "page": 48,
+      "overlap": 0.827,
+      "probe_words": 200,
+      "ref_chars": 1326,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.208,
+      "char_acc": 0.9726,
+      "char_acc_windowed": 0.9533
+    },
+    {
+      "slug": "ed-69aebfde-p53",
+      "page": 53,
+      "overlap": 1,
+      "probe_words": 207,
+      "ref_chars": 1171,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.115,
+      "char_acc": 0.9636,
+      "char_acc_windowed": 0.9625
+    }
+  ]
+}

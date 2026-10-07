@@ -200,10 +200,59 @@ export async function runGemini(model, imageBuffer, prompt, opts = {}) {
 
 // Fable 5 / Opus 4.7+ / Sonnet 5 reject sampling params (400) and have thinking
 // always-on or adaptive — the temperature knob only exists on older models.
-const NO_SAMPLING_RE = /claude-(fable|mythos)-|claude-opus-4-[78]|claude-sonnet-5/;
+const NO_SAMPLING_RE = /claude-(fable|mythos)-|claude-opus-4-[78]|claude-opus-5|claude-sonnet-5/;
+
+// Thinking on the 5.5 models (#6011): Opus 5.5 cannot disable thinking (a disabled config is a 400), so an
+// OCR arm runs it at effort `low` and meters the thinking it bills; Sonnet 5.5 turns it off with
+// `between_tools`. opts.effort overrides. No refusal fallback is ever requested: a fallback would let
+// another model answer, and the arm would no longer be the model it is named after.
+function claudeThinkingParams(model, opts) {
+  if (/^claude-opus-5-5/.test(model)) return { output_config: { effort: opts.effort || 'low' } };
+  if (/^claude-sonnet-5-5/.test(model)) return opts.effort ? { output_config: { effort: opts.effort } } : { thinking: { type: 'between_tools' } };
+  return {};
+}
+
+// Claude through OpenRouter (CLAUDE_ROUTE=openrouter), for a box whose ANTHROPIC_API_KEY is unusable.
+// Same model, provider pinned to Anthropic with no provider fallback; OpenRouter's billed usage.cost wins.
+const OPENROUTER_CLAUDE = { 'claude-opus-5-5': 'anthropic/claude-opus-5.5', 'claude-sonnet-5-5': 'anthropic/claude-sonnet-5.5' };
+async function runClaudeOpenRouter(model, imageBuffer, prompt, opts = {}) {
+  const { maxTokens = 8000 } = opts;
+  const orModel = OPENROUTER_CLAUDE[model];
+  if (!orModel) throw new Error(`no OpenRouter id for ${model}`);
+  if (!process.env.OPENROUTER_API_KEY) throw new Error('OPENROUTER_API_KEY not set');
+  // OpenRouter refuses to disable reasoning on either 5.5 model ("Reasoning is mandatory for this endpoint",
+  // 2026-10-06), so both run adaptive thinking at effort `low` there; the thinking tokens are metered.
+  const reasoning = { effort: opts.effort || 'low' };
+  const start = Date.now();
+  const resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}` },
+    body: JSON.stringify({
+      model: orModel, max_tokens: maxTokens, reasoning, usage: { include: true },
+      provider: { order: ['anthropic'], allow_fallbacks: false },
+      messages: [{ role: 'user', content: [{ type: 'text', text: prompt }, { type: 'image_url', image_url: { url: `data:image/jpeg;base64,${imageBuffer.toString('base64')}` } }] }],
+    }),
+  });
+  if (!resp.ok) throw new Error(`OpenRouter ${resp.status}: ${(await resp.text()).slice(0, 200)}`);
+  const data = await resp.json();
+  if (data.error) throw new Error(`OpenRouter error: ${JSON.stringify(data.error).slice(0, 200)}`);
+  const ch = data.choices?.[0] || {};
+  const u = data.usage || {};
+  const inputTokens = u.prompt_tokens || 0, outputTokens = u.completion_tokens || 0;
+  const native = ch.native_finish_reason || ch.finish_reason || 'unknown';
+  return {
+    text: ch.message?.content || '', model, inputTokens, outputTokens,
+    thinkingTokens: u.completion_tokens_details?.reasoning_tokens || 0,
+    costUsd: typeof u.cost === 'number' ? u.cost : calcCost(model, inputTokens, outputTokens),
+    durationMs: Date.now() - start,
+    finishReason: native === 'refusal' || ch.finish_reason === 'content_filter' ? 'refusal' : native,
+    route: `openrouter:${data.provider || 'anthropic'}`,
+  };
+}
 
 export async function runClaude(model, imageBuffer, prompt, opts = {}) {
   const { temperature = 0, maxTokens = 8000 } = opts;
+  if (process.env.CLAUDE_ROUTE === 'openrouter') return runClaudeOpenRouter(model, imageBuffer, prompt, opts);
   const client = getAnthropic();
   const b64 = imageBuffer.toString('base64');
 
@@ -212,6 +261,7 @@ export async function runClaude(model, imageBuffer, prompt, opts = {}) {
     model,
     max_tokens: maxTokens,
     ...(NO_SAMPLING_RE.test(model) ? {} : { temperature }),
+    ...claudeThinkingParams(model, opts),
     messages: [{
       role: 'user',
       content: [
@@ -279,7 +329,8 @@ export async function runMistralOcr(model, imageBuffer, _prompt, _opts = {}) {
     outputTokens: 0,
     costUsd: pagesProcessed * MISTRAL_OCR_USD_PER_PAGE,
     durationMs,
-    finishReason: text.trim() ? 'stop' : 'refusal',
+    // The OCR endpoint has no refusal: an empty page is empty (#6011 prereg), not a refusal.
+    finishReason: text.trim() ? 'stop' : 'empty',
   };
 }
 

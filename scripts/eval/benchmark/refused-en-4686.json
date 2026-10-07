@@ -1,0 +1,500 @@
+{
+  "stratum": "refused-en-4686",
+  "issue": 4686,
+  "seed": 4686,
+  "sealed_at": "2026-10-06T10:12:06.164Z",
+  "draw_rule": "pages with ocr.recitation_blocked:true and no ocr.data in the 4 hidden Phil Trans volumes (k = 4, 4, 4, 5 equal page-number bins, one seeded pick per bin) and every such page in the 2 Birch volumes; vol. 4 p. 9 excluded (throughput probe). See scripts/eval/kraken-refused-4686/draw.mjs.",
+  "max_width": null,
+  "n": 20,
+  "spares": 4,
+  "spare_rule": "a drawn page with no printed text (plate or blank leaf, by eye) is replaced by its book's spare; the replacement is recorded here (retired / promoted).",
+  "substrata": [
+    {
+      "name": "Gemini RECITATION-refused English print",
+      "n": null,
+      "reference": "blind by-eye full-page transcription of the leaf (model-eye, Claude), made before any engine output was read; see PREREGISTRATION-kraken-refused-4686.md"
+    }
+  ],
+  "pages": [
+    {
+      "slug": "rf-6ac39a92693fbfc19e37bb27-p11",
+      "book_id": "6ac39a92693fbfc19e37bb27",
+      "page_id": "6ac39a92693fbfc19e37bb34",
+      "page_number": 11,
+      "substratum": "English 1600s",
+      "book_short": "PT4",
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 4 (1669)",
+      "year": 1669,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "philosophicaltra4166roya",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac39a92693fbfc19e37bb27/11.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-05T13:19:31.998Z"
+      },
+      "spare": false
+    },
+    {
+      "slug": "rf-6ac39a92693fbfc19e37bb27-p134",
+      "book_id": "6ac39a92693fbfc19e37bb27",
+      "page_id": "6ac39a92693fbfc19e37bbaf",
+      "page_number": 134,
+      "substratum": "English 1600s",
+      "book_short": "PT4",
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 4 (1669)",
+      "year": 1669,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "philosophicaltra4166roya",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac39a92693fbfc19e37bb27/134.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-05T13:39:34.610Z"
+      },
+      "spare": false
+    },
+    {
+      "slug": "rf-6ac39a92693fbfc19e37bb27-p194",
+      "book_id": "6ac39a92693fbfc19e37bb27",
+      "page_id": "6ac39a92693fbfc19e37bbeb",
+      "page_number": 194,
+      "substratum": "English 1600s",
+      "book_short": "PT4",
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 4 (1669)",
+      "year": 1669,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "philosophicaltra4166roya",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac39a92693fbfc19e37bb27/194.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-05T13:39:34.610Z"
+      },
+      "spare": false
+    },
+    {
+      "slug": "rf-6ac39a92693fbfc19e37bb27-p211",
+      "book_id": "6ac39a92693fbfc19e37bb27",
+      "page_id": "6ac39a92693fbfc19e37bbfc",
+      "page_number": 211,
+      "substratum": "English 1600s",
+      "book_short": "PT4",
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 4 (1669)",
+      "year": 1669,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "philosophicaltra4166roya",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac39a92693fbfc19e37bb27/211.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-05T13:39:34.610Z"
+      },
+      "spare": false
+    },
+    {
+      "slug": "rf-6ac39a92693fbfc19e37bb27-p181",
+      "book_id": "6ac39a92693fbfc19e37bb27",
+      "page_id": "6ac39a92693fbfc19e37bbde",
+      "page_number": 181,
+      "substratum": "English 1600s",
+      "book_short": "PT4",
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 4 (1669)",
+      "year": 1669,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "philosophicaltra4166roya",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac39a92693fbfc19e37bb27/181.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-05T13:39:34.610Z"
+      },
+      "spare": true
+    },
+    {
+      "slug": "rf-6ac39ad74bd5d854980237ff-p50",
+      "book_id": "6ac39ad74bd5d854980237ff",
+      "page_id": "6ac39ad74bd5d85498023833",
+      "page_number": 50,
+      "substratum": "English 1600s",
+      "book_short": "PT5",
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 5 (1670)",
+      "year": 1670,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "philosophicaltra5167roya",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac39ad74bd5d854980237ff/50.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-06T02:35:29.767Z"
+      },
+      "spare": false
+    },
+    {
+      "slug": "rf-6ac39ad74bd5d854980237ff-p211",
+      "book_id": "6ac39ad74bd5d854980237ff",
+      "page_id": "6ac39ad74bd5d854980238d4",
+      "page_number": 211,
+      "substratum": "English 1600s",
+      "book_short": "PT5",
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 5 (1670)",
+      "year": 1670,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "philosophicaltra5167roya",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac39ad74bd5d854980237ff/211.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-06T02:35:29.767Z"
+      },
+      "spare": false
+    },
+    {
+      "slug": "rf-6ac39ad74bd5d854980237ff-p265",
+      "book_id": "6ac39ad74bd5d854980237ff",
+      "page_id": "6ac39ad74bd5d8549802390a",
+      "page_number": 265,
+      "substratum": "English 1600s",
+      "book_short": "PT5",
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 5 (1670)",
+      "year": 1670,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "philosophicaltra5167roya",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac39ad74bd5d854980237ff/265.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-06T02:35:29.767Z"
+      },
+      "spare": false
+    },
+    {
+      "slug": "rf-6ac39ad74bd5d854980237ff-p290",
+      "book_id": "6ac39ad74bd5d854980237ff",
+      "page_id": "6ac39ad74bd5d85498023923",
+      "page_number": 290,
+      "substratum": "English 1600s",
+      "book_short": "PT5",
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 5 (1670)",
+      "year": 1670,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "philosophicaltra5167roya",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac39ad74bd5d854980237ff/290.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-06T02:35:29.767Z"
+      },
+      "spare": false
+    },
+    {
+      "slug": "rf-6ac39ad74bd5d854980237ff-p306",
+      "book_id": "6ac39ad74bd5d854980237ff",
+      "page_id": "6ac39ad74bd5d85498023933",
+      "page_number": 306,
+      "substratum": "English 1600s",
+      "book_short": "PT5",
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 5 (1670)",
+      "year": 1670,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "philosophicaltra5167roya",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac39ad74bd5d854980237ff/306.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-06T02:35:29.767Z"
+      },
+      "spare": true
+    },
+    {
+      "slug": "rf-6ac39abdb102376559ba75ed-p70",
+      "book_id": "6ac39abdb102376559ba75ed",
+      "page_id": "6ac39abdb102376559ba7635",
+      "page_number": 70,
+      "substratum": "English 1600s",
+      "book_short": "PT6",
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 6 (1671)",
+      "year": 1671,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "philosophicaltra6167roya",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac39abdb102376559ba75ed/70.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-05T13:51:15.943Z"
+      },
+      "spare": false
+    },
+    {
+      "slug": "rf-6ac39abdb102376559ba75ed-p211",
+      "book_id": "6ac39abdb102376559ba75ed",
+      "page_id": "6ac39abdb102376559ba76c2",
+      "page_number": 211,
+      "substratum": "English 1600s",
+      "book_short": "PT6",
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 6 (1671)",
+      "year": 1671,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "philosophicaltra6167roya",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac39abdb102376559ba75ed/211.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-05T13:51:15.943Z"
+      },
+      "spare": false
+    },
+    {
+      "slug": "rf-6ac39abdb102376559ba75ed-p326",
+      "book_id": "6ac39abdb102376559ba75ed",
+      "page_id": "6ac39abdb102376559ba7735",
+      "page_number": 326,
+      "substratum": "English 1600s",
+      "book_short": "PT6",
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 6 (1671)",
+      "year": 1671,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "philosophicaltra6167roya",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac39abdb102376559ba75ed/326.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-05T13:51:15.943Z"
+      },
+      "spare": false
+    },
+    {
+      "slug": "rf-6ac39abdb102376559ba75ed-p476",
+      "book_id": "6ac39abdb102376559ba75ed",
+      "page_id": "6ac39abdb102376559ba77cb",
+      "page_number": 476,
+      "substratum": "English 1600s",
+      "book_short": "PT6",
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 6 (1671)",
+      "year": 1671,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "philosophicaltra6167roya",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac39abdb102376559ba75ed/476.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-05T13:51:15.943Z"
+      },
+      "spare": false
+    },
+    {
+      "slug": "rf-6ac39abdb102376559ba75ed-p327",
+      "book_id": "6ac39abdb102376559ba75ed",
+      "page_id": "6ac39abdb102376559ba7736",
+      "page_number": 327,
+      "substratum": "English 1600s",
+      "book_short": "PT6",
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 6 (1671)",
+      "year": 1671,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "philosophicaltra6167roya",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac39abdb102376559ba75ed/327.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-05T13:51:15.943Z"
+      },
+      "spare": true
+    },
+    {
+      "slug": "rf-6ac391b421755a8abfd8e653-p36",
+      "book_id": "6ac391b421755a8abfd8e653",
+      "page_id": "6ac391b521755a8abfd8e679",
+      "page_number": 36,
+      "substratum": "English 1600s",
+      "book_short": "PT11-12",
+      "title": "Philosophical Transactions of the Royal Society of London, Vols. 11-12 (1676-1678)",
+      "year": 1676,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "philosophicaltra1112roya",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac391b421755a8abfd8e653/36.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-05T12:57:35.160Z"
+      },
+      "spare": false
+    },
+    {
+      "slug": "rf-6ac391b421755a8abfd8e653-p172",
+      "book_id": "6ac391b421755a8abfd8e653",
+      "page_id": "6ac391b521755a8abfd8e701",
+      "page_number": 172,
+      "substratum": "English 1600s",
+      "book_short": "PT11-12",
+      "title": "Philosophical Transactions of the Royal Society of London, Vols. 11-12 (1676-1678)",
+      "year": 1676,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "philosophicaltra1112roya",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac391b421755a8abfd8e653/172.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-05T12:57:35.160Z"
+      },
+      "spare": false
+    },
+    {
+      "slug": "rf-6ac391b421755a8abfd8e653-p315",
+      "book_id": "6ac391b421755a8abfd8e653",
+      "page_id": "6ac391b521755a8abfd8e790",
+      "page_number": 315,
+      "substratum": "English 1600s",
+      "book_short": "PT11-12",
+      "title": "Philosophical Transactions of the Royal Society of London, Vols. 11-12 (1676-1678)",
+      "year": 1676,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "philosophicaltra1112roya",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac391b421755a8abfd8e653/315.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-05T12:57:35.160Z"
+      },
+      "spare": false
+    },
+    {
+      "slug": "rf-6ac391b421755a8abfd8e653-p407",
+      "book_id": "6ac391b421755a8abfd8e653",
+      "page_id": "6ac391b521755a8abfd8e7ec",
+      "page_number": 407,
+      "substratum": "English 1600s",
+      "book_short": "PT11-12",
+      "title": "Philosophical Transactions of the Royal Society of London, Vols. 11-12 (1676-1678)",
+      "year": 1676,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "philosophicaltra1112roya",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac391b421755a8abfd8e653/407.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-05T12:57:35.160Z"
+      },
+      "spare": false
+    },
+    {
+      "slug": "rf-6ac391b421755a8abfd8e653-p532",
+      "book_id": "6ac391b421755a8abfd8e653",
+      "page_id": "6ac391b521755a8abfd8e869",
+      "page_number": 532,
+      "substratum": "English 1600s",
+      "book_short": "PT11-12",
+      "title": "Philosophical Transactions of the Royal Society of London, Vols. 11-12 (1676-1678)",
+      "year": 1676,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "philosophicaltra1112roya",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac391b421755a8abfd8e653/532.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-05T12:57:35.160Z"
+      },
+      "spare": false
+    },
+    {
+      "slug": "rf-6ac391b421755a8abfd8e653-p481",
+      "book_id": "6ac391b421755a8abfd8e653",
+      "page_id": "6ac391b521755a8abfd8e836",
+      "page_number": 481,
+      "substratum": "English 1600s",
+      "book_short": "PT11-12",
+      "title": "Philosophical Transactions of the Royal Society of London, Vols. 11-12 (1676-1678)",
+      "year": 1676,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "philosophicaltra1112roya",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac391b421755a8abfd8e653/481.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-05T12:57:35.160Z"
+      },
+      "spare": true
+    },
+    {
+      "slug": "rf-6ac2798b02c7f994f85066f6-p29",
+      "book_id": "6ac2798b02c7f994f85066f6",
+      "page_id": "6ac2798b02c7f994f8506715",
+      "page_number": 29,
+      "substratum": "English 1700s",
+      "book_short": "Birch-I",
+      "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. I",
+      "year": 1756,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "bub_gb_e2EVAAAAQAAJ",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac2798b02c7f994f85066f6/29.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-04T17:21:42.719Z"
+      },
+      "spare": false
+    },
+    {
+      "slug": "rf-6ac2798d02c7f994f8506911-p287",
+      "book_id": "6ac2798d02c7f994f8506911",
+      "page_id": "6ac2798d02c7f994f8506a32",
+      "page_number": 287,
+      "substratum": "English 1700s",
+      "book_short": "Birch-II",
+      "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+      "year": 1756,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "bub_gb_lWEVAAAAQAAJ",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac2798d02c7f994f8506911/287.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-04T17:21:42.719Z"
+      },
+      "spare": false
+    },
+    {
+      "slug": "rf-6ac2798d02c7f994f8506911-p352",
+      "book_id": "6ac2798d02c7f994f8506911",
+      "page_id": "6ac2798d02c7f994f8506a73",
+      "page_number": 352,
+      "substratum": "English 1700s",
+      "book_short": "Birch-II",
+      "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+      "year": 1756,
+      "language": "English",
+      "provider": "Internet Archive",
+      "ia_identifier": "bub_gb_lWEVAAAAQAAJ",
+      "image_url": "https://images.sourcelibrary.org/archived/6ac2798d02c7f994f8506911/352.jpg",
+      "gemini": {
+        "recitation_blocked": true,
+        "recitation_count": 3,
+        "last_recitation_at": "2026-10-04T17:21:42.719Z"
+      },
+      "spare": false
+    }
+  ]
+}

@@ -157,10 +157,12 @@ function distinctQueryQuota(
  * Anonymous search gate: N distinct queries per hour, then sign-in. Exempts
  * signed-in users, SEO crawlers, and internal warmers.
  */
+export const ANON_SEARCHES_PER_HOUR = 10;
+
 export async function anonSearchGate(
   request: Request,
   query: string,
-  limit = 5,
+  limit = ANON_SEARCHES_PER_HOUR,
 ): Promise<GateResult> {
   if (await isExempt(request)) return { allowed: true };
   const result = distinctQueryQuota(getClientIp(request), query, limit, 3600);

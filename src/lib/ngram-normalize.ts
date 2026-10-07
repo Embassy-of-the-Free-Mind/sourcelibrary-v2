@@ -8,6 +8,8 @@
  * See the .mjs original for the normalization rationale.
  */
 
+import { stripMarkupTags } from './strip-markup-tags';
+
 export interface NgramCorpus {
   id: string;
   label: string;
@@ -54,9 +56,7 @@ const LIGATURES: Array<[RegExp, string]> = [
 
 export function stripApparatusTags(text: string): string {
   if (!text) return '';
-  return text
-    .replace(/<(header|catchword|sig|page-num)>[\s\S]*?<\/\1>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ');
+  return stripMarkupTags(text.replace(/<(header|catchword|sig|page-num)>[\s\S]*?<\/\1>/gi, ' '));
 }
 
 export function tokenize(text: string, corpus: string): string[] {

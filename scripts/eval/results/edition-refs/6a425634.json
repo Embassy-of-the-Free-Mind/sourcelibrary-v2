@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "book_id": "6a425634dfbbb4d07aa5382e",
+    "title": "Guil. Barclayi Amoeniorum artium, & medicinæ doctoris Sylvæ tres.",
+    "published": "1620",
+    "source": "EEBO-TCP A03932",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 8,
+    "skips": {},
+    "median_char_acc": 0.9351,
+    "median_char_acc_windowed": 0.892,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a425634-p2",
+      "page": 2,
+      "overlap": 0.686,
+      "probe_words": 52,
+      "ref_chars": 567,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.295,
+      "char_acc": 0.9209,
+      "char_acc_windowed": 0.8744
+    },
+    {
+      "slug": "ed-6a425634-p6",
+      "page": 6,
+      "overlap": 0.82,
+      "probe_words": 90,
+      "ref_chars": 796,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.2,
+      "char_acc": 0.8995,
+      "char_acc_windowed": 0.8959
+    },
+    {
+      "slug": "ed-6a425634-p9",
+      "page": 9,
+      "overlap": 0.731,
+      "probe_words": 79,
+      "ref_chars": 591,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.165,
+      "char_acc": 0.9904,
+      "char_acc_windowed": 0.9084
+    },
+    {
+      "slug": "ed-6a425634-p14",
+      "page": 14,
+      "overlap": 0.829,
+      "probe_words": 189,
+      "ref_chars": 1363,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.221,
+      "char_acc": 0.9573,
+      "char_acc_windowed": 0.9503
+    },
+    {
+      "slug": "ed-6a425634-p15",
+      "page": 15,
+      "overlap": 0.796,
+      "probe_words": 163,
+      "ref_chars": 1221,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.268,
+      "char_acc": 0.9406,
+      "char_acc_windowed": 0.8504
+    },
+    {
+      "slug": "ed-6a425634-p16",
+      "page": 16,
+      "overlap": 0.849,
+      "probe_words": 75,
+      "ref_chars": 647,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.274,
+      "char_acc": 0.8885,
+      "char_acc_windowed": 0.8885
+    },
+    {
+      "slug": "ed-6a425634-p17",
+      "page": 17,
+      "overlap": 0.877,
+      "probe_words": 115,
+      "ref_chars": 907,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.141,
+      "char_acc": 0.9351,
+      "char_acc_windowed": 0.7722
+    },
+    {
+      "slug": "ed-6a425634-p22",
+      "page": 22,
+      "overlap": 0.551,
+      "probe_words": 108,
+      "ref_chars": 901,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.302,
+      "char_acc": 0.9139,
+      "char_acc_windowed": 0.892
+    }
+  ]
+}

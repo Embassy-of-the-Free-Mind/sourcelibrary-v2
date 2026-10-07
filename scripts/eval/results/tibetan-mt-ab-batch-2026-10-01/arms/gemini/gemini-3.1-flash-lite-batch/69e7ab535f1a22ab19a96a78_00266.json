@@ -1,0 +1,20 @@
+{
+ "id": "69e7ab535f1a22ab19a96a78_00266",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "Through the complete purification of the six sense spheres <note>original: \"skye mched drug\"</note>, the seer is completely purified. Thus, the seer and the six sense spheres are not two; they cannot be made into two, they are not separate, and they are not distinct. Through the complete purification of the seer, contact is completely purified. Through the complete purification of contact, the seer is completely purified. Thus, the seer and contact are not two; they cannot be made into two, they are not separate, and they are not distinct. Through the complete purification of the seer, feeling is completely purified. Through the complete purification of feeling, the seer is completely purified. Thus, the seer and feeling are not two; they cannot be made into two, they are not separate, and they are not distinct. Through the complete purification of the seer, craving is completely purified. Through the complete purification of the seer, grasping is completely purified. Thus, grasping and craving are not two; they cannot be made into two, they are not separate, and they are not distinct. Through the complete purification of the seer, grasping is completely purified. Through the complete purification of grasping, the seer is completely purified. Thus, the seer and grasping are not two; they cannot be made into two, they are not separate, and they are not distinct. Through the complete purification of the seer, existence is completely purified. Through the complete purification of existence, they are not two; they cannot be made into two, they are not separate, and they are not distinct. Through the complete purification of the seer, the perfection of patience <note>original: \"bzod pa'i pha rol tu phyin pa\"</note> is completely purified. Through the complete purification of the perfection of patience, the seer is completely purified. Thus, the seer and the perfection of patience are not two; they cannot be made into two, they are not separate, and they are not distinct. Through the complete purification of the seer, the perfection of diligence <note>original: \"brtson 'grus kyi pha rol tu phyin pa\"</note> is completely purified. Thus, they are not two; they cannot be made into two, they are not separate, and they are not distinct. Through the complete purification of the seer, the seer is completely purified. Thus, the seer and the perfection of diligence are not two. Through the complete purification of the seer, the perfection of meditative concentration <note>original: \"bsam gtan gyi pha rol tu phyin pa\"</note> is completely purified. Through the complete purification of the perfection of meditative concentration, the seer is completely purified. Thus, through the complete purification of the seer, the perfection of wisdom <note>original: \"shes rab kyi pha rol tu phyin pa\"</note> is completely purified. The perfection of meditative concentration is completely purified; they are not two, they cannot be made into two, they are not separate, and they are not distinct. Through the complete purification of the seer, the seer is completely purified.\n\n<summary>This text explains the non-dual nature of the seer and various phenomena, including the six sense spheres, mental states, and the perfections, asserting that their purification leads to an inseparable, non-dual state.</summary>\n<keywords>non-duality, six sense spheres, seer, perfections, purification, emptiness</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3313,
+ "outputTokens": 703,
+ "thinkingTokens": 0,
+ "ms": 102237,
+ "cost_usd": 0.0009413749999999999,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2257,
+ "job": "batches/crx0ckdkigsuckrtbv86iaudz41zfwz4k307"
+}

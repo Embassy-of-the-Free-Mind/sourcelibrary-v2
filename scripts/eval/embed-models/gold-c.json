@@ -1,0 +1,187 @@
+{
+ "frozen": "2026-10-07",
+ "issue": 6172,
+ "method": "Seeded draw (6172) of one translated page from each of 28 distractor books in pool T (Latin/German/French/Italian, 2 spares per language); 8 skipped as non-substantive or redundant (anagram poem, title page, verse, biography fragment, legal/shooting-match duplicates). OCR and translation read in full (read-from-text, AI reader). form=orig: query in the page language with its own period spellings, not copied verbatim; form=en: English query carrying a Latin/German/French term from the page. Relevant set = that one page.",
+ "queries": [
+  {
+   "qid": "c01",
+   "form": "orig",
+   "lang": "Latin",
+   "query": "an vir possit esse simul virgo et pater per daemonem incubum qui semen furatur",
+   "book_id": "69dbcc2f0f8c5edf20f47439",
+   "page_number": 270,
+   "title": "Quaestiones de duodecim quodlibet"
+  },
+  {
+   "qid": "c02",
+   "form": "orig",
+   "lang": "Latin",
+   "query": "febris quartana ex atra bile diuturnior quam tertiana, autumno et aetate media",
+   "book_id": "69de1f62a297dce7d44bfb38",
+   "page_number": 23,
+   "title": "De natura hominis. Add: De victu; De tuenda valetudine; Medicinae lex; Iusiurandum; Demonstratio quod artes sunt; Invect"
+  },
+  {
+   "qid": "c03",
+   "form": "orig",
+   "lang": "Latin",
+   "query": "quomodo ignis aerem illustrat et a fumis terrenis purgat, de quatuor elementis",
+   "book_id": "6836f8ee811c8ab472a49e36",
+   "page_number": 15,
+   "title": "Tractatus duo. De natura elementorum. De quinta essentia"
+  },
+  {
+   "qid": "c04",
+   "form": "orig",
+   "lang": "Latin",
+   "query": "stipulatio de seruo mortuo non valet; mora et poena rei impossibilis",
+   "book_id": "69f339bc876dd827cbc5625e",
+   "page_number": 302,
+   "title": "Primum volumen[-volumen XVII] tractatuum ex variis iuris interpretibus collectorum, Vols. 11-12"
+  },
+  {
+   "qid": "c05",
+   "form": "orig",
+   "lang": "Latin",
+   "query": "gradus ignis in opere albo et rubeo, eclipsis solis et lunae",
+   "book_id": "6974b644457dd8909910b9ed",
+   "page_number": 82,
+   "title": "Arcanum hermeticae philosophiae opus"
+  },
+  {
+   "qid": "c06",
+   "form": "orig",
+   "lang": "German",
+   "query": "der mensch ist ain vmbgekerter baum, das har die wurtzel, die arm die este",
+   "book_id": "69dbcc0b1040d1d5e20bc020",
+   "page_number": 13,
+   "title": "Speculum animae peccatricis [German] Ein köstlicher geistlicher Spiegel der armen sündigen Seele"
+  },
+  {
+   "qid": "c07",
+   "form": "orig",
+   "lang": "German",
+   "query": "wie viel Eisen-Feil sich im Aqua fort solviret und von der Præcipitation des Martis",
+   "book_id": "69c8231f6c6f3cc53c84af44",
+   "page_number": 356,
+   "title": "Collegium physico-chymicum experimentale, oder Laboratorium chymicum"
+  },
+  {
+   "qid": "c08",
+   "form": "orig",
+   "lang": "German",
+   "query": "der Kabalist soll für sich allein arbeiten wegen Sympathie oder Antipathie einer fremden Person",
+   "book_id": "69c802546c6f3cc53c8446a0",
+   "page_number": 160,
+   "title": "Teleskop des Zoroasters oder Schlüssel zur grossen wahrsagenden Kabala der Magier"
+  },
+  {
+   "qid": "c09",
+   "form": "orig",
+   "lang": "French",
+   "query": "le Trévisan conseille un feu lent & foible plûtôt que fort, de peur de tout perdre",
+   "book_id": "697b079611cc8928b55ea388",
+   "page_number": 248,
+   "title": "Les fables égyptiennes et grecques"
+  },
+  {
+   "qid": "c10",
+   "form": "orig",
+   "lang": "Italian",
+   "query": "come trouare una alteza con la hasta et lo instrumento, et el partidor",
+   "book_id": "69f338f5876dd827cbc545e7",
+   "page_number": 43,
+   "title": "Maniere diverse di mesurare le distanze & le altezze"
+  },
+  {
+   "qid": "c11",
+   "form": "en",
+   "lang": "Latin",
+   "query": "Hermagoras and the three kinds of rhetorical matter: genus iudiciale, deliberativum, demonstrativum",
+   "book_id": "69dbc98b1040d1d5e20a4165",
+   "page_number": 18,
+   "title": "De inventione, sive Rhetorica vetus (Comm: C. Marius Victorinus). Add: Pseudo- Cicero, Rhetorica ad Herennium (with anon"
+  },
+  {
+   "qid": "c12",
+   "form": "en",
+   "lang": "Latin",
+   "query": "the soul withdraws inlocaliter from the senses, so that one reads a page aloud without understanding it",
+   "book_id": "69942bf5b2f6748db4abc741",
+   "page_number": 137,
+   "title": "Claudiani Mamerti Opera (CSEL XI)"
+  },
+  {
+   "qid": "c13",
+   "form": "en",
+   "lang": "Latin",
+   "query": "Galen on the natural dispositions complexio, virtus and operatio, and temperies versus intemperies",
+   "book_id": "69b52c7c3dd6d94230280bb8",
+   "page_number": 23,
+   "title": "Galeni Ars medica"
+  },
+  {
+   "qid": "c14",
+   "form": "en",
+   "lang": "Latin",
+   "query": "Jerome: fiunt, non nascuntur Christiani, in the letter on raising a little girl for Christ",
+   "book_id": "69af451e004a024aaf215f49",
+   "page_number": 301,
+   "title": "Corpus Scriptorum Ecclesiasticorum Latinorum, Vol. LV: Augustini Epistulae Pars II"
+  },
+  {
+   "qid": "c15",
+   "form": "en",
+   "lang": "German",
+   "query": "Michael invoked as Orion in Greek magic papyri, identified with Horus, and the Drachentöter",
+   "book_id": "6992545ed5d1c6dbb2bcc97f",
+   "page_number": 133,
+   "title": "Abraxas: Studien zur Religionsgeschichte"
+  },
+  {
+   "qid": "c16",
+   "form": "en",
+   "lang": "German",
+   "query": "the duty of a true Freemason to relieve a brother in misery with his Schärflein",
+   "book_id": "6970e36e9b09d309d780a292",
+   "page_number": 45,
+   "title": "Allgemeine Grundregeln der Freymaurer. Nebst einer Rede über den Zweck der Maurerey"
+  },
+  {
+   "qid": "c17",
+   "form": "en",
+   "lang": "German",
+   "query": "model letter for a New Year wish (Neu Jahrs-Wünschung) with salutatio, narratio and valediction",
+   "book_id": "69b51dcf768235dc659882e2",
+   "page_number": 112,
+   "title": "Viridarium Epistolicum"
+  },
+  {
+   "qid": "c18",
+   "form": "en",
+   "lang": "German",
+   "query": "Cartesius and the certainty of I think therefore I am as something merely negative",
+   "book_id": "69e75395095c302d3fddb585",
+   "page_number": 515,
+   "title": "Georg Büchners sämmtliche Werke"
+  },
+  {
+   "qid": "c19",
+   "form": "en",
+   "lang": "French",
+   "query": "the vertu transmutative must be sought in the perfect bodies, gold and silver, after Arnald of Villanova",
+   "book_id": "6a1008eef717292950967088",
+   "page_number": 424,
+   "title": "Bibliothèque des philosophes chimiques / Tome second."
+  },
+  {
+   "qid": "c20",
+   "form": "en",
+   "lang": "Italian",
+   "query": "testimonies of the Sibyls for Christ, read by Lactantius in the Sibylline books",
+   "book_id": "6990500f7d19f3f2aac1dbee",
+   "page_number": 91,
+   "title": "Della Cristiana Religione"
+  }
+ ]
+}

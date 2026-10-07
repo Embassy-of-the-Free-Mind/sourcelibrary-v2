@@ -100,7 +100,7 @@ for (const [rawId, sources] of [...found.entries()].sort()) {
   const oid = toOid(rawId);
   if (oid) or.push({ _id: oid });
   const book = await db.collection('books').findOne({ $or: or }, {
-    projection: { id: 1, title: 1, display_title: 1, processing_priority: 1, hidden_reason: 1 },
+    projection: { id: 1, title: 1, display_title: 1, processing_priority: 1, processing_priority_breakdown: 1, hidden_reason: 1 },
   });
   const src = [...sources].join(', ');
   if (!book) {
@@ -118,14 +118,18 @@ for (const [rawId, sources] of [...found.entries()].sort()) {
     (book.hidden_reason ? '  [note: hidden_reason set — prioritized but hidden-book gates still apply]' : ''));
   boarded++;
   if (!APPLY) continue;
+  // Some books carry the breakdown as a bare string (e.g. a cohort label from a
+  // 2026-08 sweep). A dotted $set into a string throws, so fold it into the map.
+  const note = `reader translation request (${src}) — boarded by board-reader-requests.mjs`;
+  const prior = book.processing_priority_breakdown;
+  const breakdownSet = (prior == null || (typeof prior === 'object' && !Array.isArray(prior)))
+    ? { 'processing_priority_breakdown.reader_request': note }
+    : { processing_priority_breakdown: { legacy: prior, reader_request: note } };
   await db.collection('books').updateOne(
     { _id: book._id },
     {
       $max: { processing_priority: PRIORITY },
-      $set: {
-        'processing_priority_breakdown.reader_request': `reader translation request (${src}) — boarded by board-reader-requests.mjs`,
-        updated_at: new Date(),
-      },
+      $set: { ...breakdownSet, updated_at: new Date() },
     },
   );
 }

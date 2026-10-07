@@ -1,0 +1,473 @@
+{
+ "generated_at": "2026-10-01T20:37:17.429Z",
+ "box": {
+  "host": "sl-zh-paddle-5547",
+  "gpu": "NVIDIA L4",
+  "workers": 2,
+  "paddle_version": "3.2.1",
+  "paddleocr_version": "3.7.0",
+  "paddlex_version": "3.7.2",
+  "vl_model": "PaddleOCRVL() default pipeline",
+  "pages_out": 3422,
+  "infer_secs": 10810,
+  "wall_secs_per_page": 3.16
+ },
+ "time_box": {
+  "books_drawn": 30,
+  "books_complete": 17,
+  "pages_read": 3422,
+  "bench_pages_read": 540,
+  "book_pages_read": 2882,
+  "book_pages_in_complete_books": 2713
+ },
+ "throughput": {
+  "infer_wall_secs": 10810,
+  "wall_secs_per_page": 3.16,
+  "worker_secs_per_page_median": 5.08,
+  "worker_secs_p90": 10.91,
+  "workers": 2
+ },
+ "failures": {
+  "error_pages": 6,
+  "empty_pages_books": 92,
+  "loop_pages_books": 0,
+  "bench": {
+   "pages": 540,
+   "empty": 15,
+   "error": 1,
+   "loop": 0
+  },
+  "loop_pages": []
+ },
+ "cost": {
+  "eur_per_hour": 0.7875,
+  "billed_minutes": 233,
+  "eur_billed": 3.06,
+  "eur_per_page_at_wall": 0.000691,
+  "eur_per_page_billed": 0.000894
+ },
+ "writer_dry_run": [
+  {
+   "book_id": "6a3c6523af3c49b59c5caf81",
+   "page": "00004",
+   "chars": 116,
+   "loop_guard": {
+    "refuse": false,
+    "reason": "body_too_short",
+    "share": 0,
+    "period": 0,
+    "reps": 0,
+    "chars": 0,
+    "body": 0
+   },
+   "provenance_missing": {
+    "missing": [],
+    "markers": []
+   }
+  },
+  {
+   "book_id": "6a3c6f7d01fe4f593c1ccdad",
+   "page": "00004",
+   "chars": 261,
+   "loop_guard": {
+    "refuse": false,
+    "reason": "body_too_short",
+    "share": 0,
+    "period": 0,
+    "reps": 0,
+    "chars": 0,
+    "body": 261
+   },
+   "provenance_missing": {
+    "missing": [],
+    "markers": []
+   }
+  },
+  {
+   "book_id": "6a3c782301fe4f593c206f84",
+   "page": "00004",
+   "chars": 264,
+   "loop_guard": {
+    "refuse": false,
+    "reason": "body_too_short",
+    "share": 0,
+    "period": 0,
+    "reps": 0,
+    "chars": 0,
+    "body": 264
+   },
+   "provenance_missing": {
+    "missing": [],
+    "markers": []
+   }
+  },
+  {
+   "book_id": "6a3c724401fe4f593c1ddcd0",
+   "page": "00004",
+   "chars": 156,
+   "loop_guard": {
+    "refuse": false,
+    "reason": "body_too_short",
+    "share": 0,
+    "period": 0,
+    "reps": 0,
+    "chars": 0,
+    "body": 156
+   },
+   "provenance_missing": {
+    "missing": [],
+    "markers": []
+   }
+  },
+  {
+   "book_id": "6a3cb7f93dce6cfad7489e24",
+   "page": "00004",
+   "chars": 153,
+   "loop_guard": {
+    "refuse": false,
+    "reason": "body_too_short",
+    "share": 0,
+    "period": 0,
+    "reps": 0,
+    "chars": 0,
+    "body": 153
+   },
+   "provenance_missing": {
+    "missing": [],
+    "markers": []
+   }
+  }
+ ],
+ "books": [
+  {
+   "book_id": "6a3c6523af3c49b59c5caf81",
+   "title": "御定佩文韻府·卷一百六之一 (vol 727)",
+   "expected": 165,
+   "read": 165,
+   "complete": true,
+   "empty": 2,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 58882
+  },
+  {
+   "book_id": "6a3c6f7d01fe4f593c1ccdad",
+   "title": "孟子注疏·卷十二上~卷十三下 (vol 16)",
+   "expected": 189,
+   "read": 189,
+   "complete": true,
+   "empty": 2,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 42936
+  },
+  {
+   "book_id": "6a3c782301fe4f593c206f84",
+   "title": "釋氏稽古略·卷三 (vol 3)",
+   "expected": 246,
+   "read": 246,
+   "complete": true,
+   "empty": 1,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 65113
+  },
+  {
+   "book_id": "6a3c724401fe4f593c1ddcd0",
+   "title": "周官集注·卷六 (vol 6)",
+   "expected": 146,
+   "read": 146,
+   "complete": true,
+   "empty": 1,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 20607
+  },
+  {
+   "book_id": "6a3cb7f93dce6cfad7489e24",
+   "title": "詩集傳名物鈔·卷一 (vol 9)",
+   "expected": 123,
+   "read": 123,
+   "complete": true,
+   "empty": 2,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 16937
+  },
+  {
+   "book_id": "6a3c74a539b4508b04e5814c",
+   "title": "春秋繁露·卷七~卷十一 (vol 2)",
+   "expected": 141,
+   "read": 141,
+   "complete": true,
+   "empty": 6,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 22778
+  },
+  {
+   "book_id": "6a3cbdd0ec254ff6cadfa73d",
+   "title": "證治準繩·卷四十三 (vol 40)",
+   "expected": 130,
+   "read": 130,
+   "complete": true,
+   "empty": 1,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 22617
+  },
+  {
+   "book_id": "6a3c621340c88a541d8f277f",
+   "title": "西清古鑑·卷十七~卷十八 (vol 14)",
+   "expected": 140,
+   "read": 140,
+   "complete": true,
+   "empty": 56,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 4107
+  },
+  {
+   "book_id": "6a3c763f01fe4f593c1f9c80",
+   "title": "漢上易傳·卷一 (vol 16)",
+   "expected": 180,
+   "read": 180,
+   "complete": true,
+   "empty": 4,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 27008
+  },
+  {
+   "book_id": "6a3c775401fe4f593c2014eb",
+   "title": "葉八白易傳·卷三~卷四 (vol 2)",
+   "expected": 171,
+   "read": 171,
+   "complete": true,
+   "empty": 1,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 27499
+  },
+  {
+   "book_id": "6a3c6e5001fe4f593c1c1895",
+   "title": "周官總義·卷八~卷十一 (vol 4)",
+   "expected": 163,
+   "read": 163,
+   "complete": true,
+   "empty": 2,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 23336
+  },
+  {
+   "book_id": "6a3c6f4c01fe4f593c1cafd9",
+   "title": "經稗·卷一~卷二 (vol 1)",
+   "expected": 197,
+   "read": 197,
+   "complete": true,
+   "empty": 3,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 29081
+  },
+  {
+   "book_id": "6a3c68e2af3c49b59c5dd4a8",
+   "title": "普濟方·卷三十二~卷三十三 (vol 23)",
+   "expected": 232,
+   "read": 232,
+   "complete": true,
+   "empty": 2,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 32243
+  },
+  {
+   "book_id": "6a3c629c40c88a541d8f4f2c",
+   "title": "御定佩文韻府·卷二十之五 (vol 84)",
+   "expected": 128,
+   "read": 128,
+   "complete": true,
+   "empty": 2,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 44115
+  },
+  {
+   "book_id": "6a3cb8b93dce6cfad748fe8e",
+   "title": "義門讀書記·卷四十一~卷四十二 (vol 17)",
+   "expected": 137,
+   "read": 137,
+   "complete": true,
+   "empty": 1,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 15830
+  },
+  {
+   "book_id": "6a3c643e39b4508b04e256b2",
+   "title": "御定佩文韻府·卷四十七之四 (vol 491)",
+   "expected": 105,
+   "read": 105,
+   "complete": true,
+   "empty": 1,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 30994
+  },
+  {
+   "book_id": "6a3c625240c88a541d8f36f3",
+   "title": "御定佩文韻府·卷四之二 (vol 8)",
+   "expected": 120,
+   "read": 120,
+   "complete": true,
+   "empty": 2,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 38150
+  },
+  {
+   "book_id": "6a3c6327879008ba7e1665c5",
+   "title": "御定佩文韻府·卷九十之二~卷九十之三 (vol 219)",
+   "expected": 221,
+   "read": 169,
+   "complete": false,
+   "empty": 3,
+   "error": 5,
+   "loop": 0,
+   "han_chars": 58519
+  },
+  {
+   "book_id": "6a3c6fb139b4508b04e4c75a",
+   "title": "孟子傳·卷四~卷六 (vol 10)",
+   "expected": 144,
+   "read": 0,
+   "complete": false,
+   "empty": 0,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 0
+  },
+  {
+   "book_id": "6a3c6eb701fe4f593c1c54c2",
+   "title": "春秋正傳·卷二十五~卷二十六 (vol 11)",
+   "expected": 180,
+   "read": 0,
+   "complete": false,
+   "empty": 0,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 0
+  },
+  {
+   "book_id": "6a3c69c539b4508b04e3e37a",
+   "title": "普濟方·卷三百四十一~卷三百四十二 (vol 239)",
+   "expected": 226,
+   "read": 0,
+   "complete": false,
+   "empty": 0,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 0
+  },
+  {
+   "book_id": "6a3cbab03dce6cfad749dcb8",
+   "title": "名賢氏族言行類稿·卷五十三~卷五十六 (vol 22)",
+   "expected": 232,
+   "read": 0,
+   "complete": false,
+   "empty": 0,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 0
+  },
+  {
+   "book_id": "6a3c74d501fe4f593c1f2cb9",
+   "title": "萬姓統譜·卷八十八~卷九十 (vol 31)",
+   "expected": 168,
+   "read": 0,
+   "complete": false,
+   "empty": 0,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 0
+  },
+  {
+   "book_id": "6a3c6b3739b4508b04e41d84",
+   "title": "說略·卷十六~卷十七 (vol 8)",
+   "expected": 139,
+   "read": 0,
+   "complete": false,
+   "empty": 0,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 0
+  },
+  {
+   "book_id": "6a3c60e540c88a541d8ebbdc",
+   "title": "御定駢字類編·卷七十五 — Imperial Parallel Characters (vol 257)",
+   "expected": 117,
+   "read": 0,
+   "complete": false,
+   "empty": 0,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 0
+  },
+  {
+   "book_id": "6a3c75e039b4508b04e5e3e8",
+   "title": "傳信適用方·卷下 (vol 2)",
+   "expected": 142,
+   "read": 0,
+   "complete": false,
+   "empty": 0,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 0
+  },
+  {
+   "book_id": "6a3c5e9840c88a541d8e3bb5",
+   "title": "御定康熙字典·卷七 (vol 42)",
+   "expected": 141,
+   "read": 0,
+   "complete": false,
+   "empty": 0,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 0
+  },
+  {
+   "book_id": "6a3c7a6501fe4f593c216fad",
+   "title": "續名醫類案·卷十七 (vol 10)",
+   "expected": 113,
+   "read": 0,
+   "complete": false,
+   "empty": 0,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 0
+  },
+  {
+   "book_id": "6a3c6af4af3c49b59c5ebb13",
+   "title": "欽定協紀辨方書·卷二十九~卷三十 (vol 21)",
+   "expected": 135,
+   "read": 0,
+   "complete": false,
+   "empty": 0,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 0
+  },
+  {
+   "book_id": "6a3c793701fe4f593c20df47",
+   "title": "藝文類聚·卷十五~卷十六 (vol 8)",
+   "expected": 121,
+   "read": 0,
+   "complete": false,
+   "empty": 0,
+   "error": 0,
+   "loop": 0,
+   "han_chars": 0
+  }
+ ]
+}

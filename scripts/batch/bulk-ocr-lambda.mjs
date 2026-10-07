@@ -121,7 +121,7 @@ async function main() {
 
   const books = await db.collection('books')
     .find(bookQuery, {
-      projection: { id: 1, title: 1, language: 1, 'image_source.provider': 1, pages_count: 1, pages_ocr: 1, job: 1, _id: 0 },
+      projection: { id: 1, title: 1, language: 1, visible: 1, created_at: 1, 'image_source.provider': 1, pages_count: 1, pages_ocr: 1, job: 1, _id: 0 },
     })
     .sort({ pages_count: 1 })
     .toArray();

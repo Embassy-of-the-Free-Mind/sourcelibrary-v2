@@ -1,0 +1,46 @@
+{
+  "source": "EEBO-TCP A32705",
+  "edition": "Oeconomia animalis novis in medicina hypothesibus superstructa, & mechanice explicata / autore Gualt — C3685 (1659)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/textcreationpartnership/A32705",
+  "same_edition": {
+    "evidence": "catalogue-number",
+    "text_match_pages": "7/14",
+    "pb_aligned_pages": "7/7"
+  },
+  "origin": "library",
+  "book_id": "6a4263b1744db9e3105b1125",
+  "page_number": 23,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 6331,
+    "to_char": 7074,
+    "overlap": 0.5,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'milia Fautor, & cujus, in caeteris omnibus' ends 'quantum satis esset / per-' (catchword); ref pads 'insignis quidem Hippocraticae familiae' and 'perlegendis omnibus, quae'. Image has a sliver of the facing page at right edge but single page; italic main text, roman for proper names.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:16.070Z",
+  "text_location": "repo",
+  "text_sha256": "d5e05e2bfc8f3086e2ef2b30c36acbbbc9f049be576c06a71f7e774177f5561f",
+  "unit": {
+    "chars": 743
+  },
+  "stratum": "latin-period-5126"
+}

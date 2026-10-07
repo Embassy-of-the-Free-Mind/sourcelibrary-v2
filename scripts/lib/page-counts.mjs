@@ -12,6 +12,11 @@
  * worker, realtime translate) must count visible pages only. This module is
  * the single source of that rule so the convention can't drift per-writer
  * again. Pinned by tests/unit/page-counts.test.ts.
+ *
+ * It is also the single WRITER of the six counters: recountBook() below, which
+ * `$set`s all six together (#5325). Design, decisions and the inventory of
+ * writers still to convert: .claude/docs/page-counts.md. The shape guard that
+ * keeps new writers out: tests/unit/page-counter-writers.test.ts.
  */
 
 /** Match fragment selecting only visible (renderable) pages. */
@@ -40,6 +45,18 @@ export function hasTranslation(page) {
 /** True iff the page is a blank leaf (flyleaf, endpaper, empty verso). */
 export function isBlankPage(page) {
   return (page?.page_type ?? '') === 'blank';
+}
+
+/**
+ * True iff a page carries a non-empty `archived_photo` — the `pages_archived`
+ * counter. A `failed:*` marker counts too, exactly as the reconciler
+ * (`sync-worker.mjs`) has always counted it: a `$regexMatch` per page was judged
+ * too costly for a rare value. Changing that is a definition change, not a
+ * refactor — it would move the stored counter on every book carrying one.
+ */
+export function isArchivedPage(page) {
+  const photo = page?.archived_photo;
+  return typeof photo === 'string' && photo !== '';
 }
 
 /**
@@ -203,90 +220,83 @@ const TRANSLATABLE_COND = {
   ],
 };
 
+/** Mongo twin of `typeof field === 'string' && field !== ''` — hasOcr/hasTranslation's test. */
+const nonEmptyString = (field) => ({
+  $and: [
+    { $eq: [{ $type: field }, 'string'] },
+    { $gt: [{ $strLenCP: field }, 0] },
+  ],
+});
+
+/** Mirrors hasOcr(). Attempted-but-not-legible pages keep `data` for provenance but are not served (#4523). */
+const HAS_OCR_COND = { $and: [nonEmptyString('$ocr.data'), { $ne: ['$ocr.unreadable', true] }] };
+
+/** Mirrors hasTranslation(). */
+const HAS_TRANSLATION_COND = nonEmptyString('$translation.data');
+
+/** Mirrors isBlankPage(). */
+const IS_BLANK_COND = { $eq: [{ $ifNull: ['$page_type', ''] }, 'blank'] };
+
+/**
+ * The `$group` body for every page-count aggregation — per book and corpus-wide.
+ * One object, so the per-book recount and the reconciler cannot count differently
+ * (#5325; five private copies existed before this). Each accumulator has a JS
+ * predicate twin, and `countVisiblePageStats()` is built from those twins;
+ * `tests/integration/page-counts-parity.test.ts` runs both on the same edge pages.
+ *
+ *   total                    → pages_count         isVisiblePage (the $match)
+ *   with_ocr                 → pages_ocr           hasOcr
+ *   with_translation         → pages_translated    isTranslatedPage
+ *   translatable             → pages_translatable  isTranslatablePageForCount
+ *   translated_translatable  → (not stored)        translatable && hasTranslation
+ *   blank                    → pages_blank         isBlankPage && hasOcr
+ *   archived                 → pages_archived      isArchivedPage
+ *
+ * `blank` is `page_type: 'blank'` only (design decision 3, `.claude/docs/page-counts.md`).
+ * It is subtracted from the denominator that `with_translation` is divided by, so the
+ * two must exclude the SAME set (#3747): `with_translation` excludes `blank` and
+ * nothing else. The other never-translated types (exlibris, bookplate, digitizer
+ * notices and inserts) leave the denominator through `translatable`, not `blank`.
+ */
+export const PAGE_COUNT_ACCUMULATORS = Object.freeze({
+  total: { $sum: 1 },
+  with_ocr: { $sum: { $cond: [HAS_OCR_COND, 1, 0] } },
+  // Blank leaves carry the placeholder "[Blank page — no translatable content]",
+  // not a translation. Counting them is what put the Blue Qur'an at 1000%.
+  with_translation: {
+    $sum: { $cond: [{ $and: [HAS_TRANSLATION_COND, { $not: [IS_BLANK_COND] }] }, 1, 0] },
+  },
+  // The honest denominator (#4442) and its matching numerator. A numerator must
+  // exclude whatever its denominator excludes — getting that wrong is what produced
+  // a 105.6% reading on Hugh of Santalla while the field was being written.
+  translatable: { $sum: { $cond: [TRANSLATABLE_COND, 1, 0] } },
+  translated_translatable: {
+    $sum: { $cond: [{ $and: [TRANSLATABLE_COND, HAS_TRANSLATION_COND] }, 1, 0] },
+  },
+  blank: { $sum: { $cond: [{ $and: [IS_BLANK_COND, HAS_OCR_COND] }, 1, 0] } },
+  archived: { $sum: { $cond: [nonEmptyString('$archived_photo'), 1, 0] } },
+});
+
 /**
  * Aggregation pipeline that returns
- * { total, with_ocr, with_translation, translatable, translated_translatable, blank }
- * for the VISIBLE pages of one book. Used by the batch collectors and the recount.
+ * { total, with_ocr, with_translation, translatable, translated_translatable, blank, archived }
+ * for the VISIBLE pages of one book.
  */
 export function buildVisiblePageCountPipeline(bookId) {
   return [
     { $match: { book_id: bookId, ...VISIBLE_PAGE_MATCH } },
-    {
-      $group: {
-        _id: null,
-        total: { $sum: 1 },
-        with_ocr: {
-          $sum: {
-            $cond: [
-              { $and: [
-                { $ne: ['$ocr.data', null] },
-                { $ne: ['$ocr.data', ''] },
-                { $ifNull: ['$ocr.data', false] },
-                // Attempted-but-not-legible pages retain `data` for provenance
-                // but are not served (#4523) — not counted as OCR'd.
-                { $ne: ['$ocr.unreadable', true] },
-              ] },
-              1, 0,
-            ],
-          },
-        },
-        // Mirrors isTranslatedPage(): blank leaves carry a placeholder, not a
-        // translation, and must not count here — they are already excluded
-        // from the denominator via `pages_blank`.
-        with_translation: {
-          $sum: {
-            $cond: [
-              { $and: [
-                { $ne: ['$translation.data', null] },
-                { $ne: ['$translation.data', ''] },
-                { $ifNull: ['$translation.data', false] },
-                { $ne: [{ $ifNull: ['$page_type', ''] }, 'blank'] },
-              ] },
-              1, 0,
-            ],
-          },
-        },
-        // The honest denominator and ITS matching numerator (#4442). Mirrors
-        // isTranslatablePageForCount(). `translatable` is what could ever be
-        // translated; `translated_translatable` is how much of that has been —
-        // and it is deliberately NOT `with_translation`, because a numerator
-        // must exclude whatever its denominator excludes. Getting that wrong is
-        // what produced the Blue Qur'an's 1000% above, and a 105.6% reading on
-        // Hugh of Santalla while this was being written.
-        translatable: {
-          $sum: { $cond: [TRANSLATABLE_COND, 1, 0] },
-        },
-        // Pages that legitimately carry no translation — the `pages_blank` counter.
-        // Named for the historical field; the set is every never-translated type that
-        // nonetheless has OCR, which is what the translation job has always recorded.
-        blank: {
-          $sum: {
-            $cond: [
-              { $and: [
-                { $in: [{ $ifNull: ['$page_type', ''] }, NEVER_TRANSLATED_PAGE_TYPES] },
-                { $ne: ['$ocr.data', null] },
-                { $ne: ['$ocr.data', ''] },
-                { $ifNull: ['$ocr.data', false] },
-              ] },
-              1, 0,
-            ],
-          },
-        },
-        translated_translatable: {
-          $sum: {
-            $cond: [
-              { $and: [
-                TRANSLATABLE_COND,
-                { $ne: ['$translation.data', null] },
-                { $ne: ['$translation.data', ''] },
-                { $ifNull: ['$translation.data', false] },
-              ] },
-              1, 0,
-            ],
-          },
-        },
-      },
-    },
+    { $group: { _id: null, ...PAGE_COUNT_ACCUMULATORS } },
+  ];
+}
+
+/**
+ * The same counts for every book at once, grouped by `book_id` (`_id` of each row).
+ * For the reconciler (#5326), which walks the whole `pages` collection every 2 h.
+ */
+export function buildCorpusPageCountPipeline() {
+  return [
+    { $match: { ...VISIBLE_PAGE_MATCH } },
+    { $group: { _id: '$book_id', ...PAGE_COUNT_ACCUMULATORS } },
   ];
 }
 
@@ -304,8 +314,115 @@ export function countVisiblePageStats(pages) {
     with_translation: visible.filter(isTranslatedPage).length,
     translatable: translatable.length,
     translated_translatable: translatable.filter(hasTranslation).length,
-    blank: visible.filter(p => NEVER_TRANSLATED_PAGE_TYPES.includes(p?.page_type ?? '') && hasOcr(p)).length,
+    blank: visible.filter(p => isBlankPage(p) && hasOcr(p)).length,
+    archived: visible.filter(isArchivedPage).length,
   };
+}
+
+/** The six stored counters, in the order they are documented. */
+export const PAGE_COUNTERS = Object.freeze([
+  'pages_count', 'pages_ocr', 'pages_translated', 'pages_translatable', 'pages_blank', 'pages_archived',
+]);
+
+/** Map an aggregation row (or countVisiblePageStats() result) onto the six stored counters. */
+export function pageCountersFromStats(stats) {
+  return {
+    pages_count: stats?.total ?? 0,
+    pages_ocr: stats?.with_ocr ?? 0,
+    pages_translated: stats?.with_translation ?? 0,
+    pages_translatable: stats?.translatable ?? 0,
+    pages_blank: stats?.blank ?? 0,
+    pages_archived: stats?.archived ?? 0,
+  };
+}
+
+/**
+ * The counters a NEW book declares at insert, before any page has been processed:
+ * every page is pending, so every page is translatable and nothing else has
+ * happened yet. Honest, not a guess — the first job or the reconciler recounts it.
+ * Used by book creation via makeBookDoc() (#5328).
+ */
+export function initialPageCounters(n) {
+  const pages = Math.max(0, Math.trunc(Number(n) || 0));
+  return {
+    pages_count: pages,
+    pages_ocr: 0,
+    pages_translated: 0,
+    pages_translatable: pages,
+    pages_blank: 0,
+    pages_archived: 0,
+  };
+}
+
+/**
+ * Stored counters vs a recount, for one book. `book` is the stored document (or any
+ * object carrying the six fields), `stats` an aggregation row or null for a book with
+ * no visible pages. A MISSING counter is a mismatch, not a zero: that is how the
+ * reconciler fills `pages_translatable` on the books created without it (#5326).
+ */
+export function diffPageCounters(book, stats) {
+  const after = pageCountersFromStats(stats);
+  const before = Object.fromEntries(PAGE_COUNTERS.map(c => [c, book?.[c] ?? null]));
+  const changed = PAGE_COUNTERS.filter(c => before[c] !== after[c]);
+  return { before, after, changed };
+}
+
+/**
+ * The `$set` body for a recount: all six counters together, plus `page_counts_at`.
+ * Shared by recountBook() and the reconciler (sync-worker.mjs), so neither can write
+ * a subset. Literal keys, so the field audits see every counter written here.
+ */
+export function recountSet(after, now) {
+  return {
+    pages_count: after.pages_count,
+    pages_ocr: after.pages_ocr,
+    pages_translated: after.pages_translated,
+    pages_translatable: after.pages_translatable,
+    pages_blank: after.pages_blank,
+    pages_archived: after.pages_archived,
+    page_counts_at: now,
+  };
+}
+
+/**
+ * THE writer of a book's page counters (#5325, `.claude/docs/page-counts.md`).
+ *
+ * Recounts the book's visible pages with buildVisiblePageCountPipeline() and
+ * `$set`s all six counters together, plus `page_counts_at`. Never a subset, never
+ * `$inc`: each private writer that counted its own subset is how two definitions
+ * of `pages_ocr` and `pages_blank` came to alternate on live books every two hours.
+ *
+ * `bookId` is the book's string `id`, the value `pages.book_id` carries. The book
+ * is addressed by `id`, never `_id`, which is re-minted on restore.
+ *
+ * A book with no visible pages is written as zeros — that is its true count.
+ * `updated_at` is bumped only when a counter moved, so a no-op recount does not
+ * make the catalog sync re-read the book; `page_counts_at` is stamped every time,
+ * because it records when the count was last verified, not when it last changed.
+ *
+ * Does not stamp `ocr.text_free` (recount-page-stats.mjs does, before calling this)
+ * and does not write translation flags (the reconciler derives those).
+ *
+ * @param {import('mongodb').Db} db
+ * @param {string} bookId
+ * @param {{ reason: string, now?: Date }} opts  `reason` names the caller, for logs.
+ * @returns {Promise<{ matched: boolean, reason: string, before: object|null, after: object, changed: string[] }>}
+ */
+export async function recountBook(db, bookId, { reason, now = new Date() } = {}) {
+  if (typeof bookId !== 'string' || bookId === '') throw new Error('recountBook: bookId must be a non-empty string');
+  if (typeof reason !== 'string' || reason === '') throw new Error('recountBook: pass { reason } naming the caller');
+
+  const books = db.collection('books');
+  const projection = Object.fromEntries(PAGE_COUNTERS.map(c => [c, 1]));
+  const book = await books.findOne({ id: bookId }, { projection });
+  const [row] = await db.collection('pages').aggregate(buildVisiblePageCountPipeline(bookId)).toArray();
+  const { before, after, changed } = diffPageCounters(book, row);
+  if (!book) return { matched: false, reason, before: null, after, changed: [] };
+
+  const $set = recountSet(after, now);
+  if (changed.length) $set.updated_at = now;
+  await books.updateOne({ id: bookId }, { $set });
+  return { matched: true, reason, before, after, changed };
 }
 
 /**
@@ -400,4 +517,147 @@ export function computeTranslationMetrics(counts) {
     : 0;
 
   return { translation_pct, is_fully_translated, over_90_translated };
+}
+
+/**
+ * Rule version for `books.translation_state`. Bump it whenever the rule below
+ * changes: sync-worker compares the stored version and re-stamps every book on
+ * its next pass, so no backfill script is ever needed (single writer).
+ */
+export const TRANSLATION_STATE_VERSION = 1;
+
+/** The ladder, lowest first. A book sits on exactly one rung. */
+export const TRANSLATION_RUNGS = ['no_pages', 'no_text', 'transcribing', 'transcribed', 'translating', 'readable', 'complete'];
+
+/** Share of translatable pages that makes a book `readable` (the existing 90% bar, not a new one). */
+export const READABLE_MIN_TRANSLATED = 0.9;
+
+const ENGLISH_LANGUAGE_TOKENS = new Set(['english', 'en', 'eng']);
+
+/**
+ * True iff the edition's own language is English — the FIRST language named in
+ * `books.language` ("English and Hebrew" counts, "Latin; English" does not).
+ * `books.language` is the EDITION's language, not the source's
+ * (.claude/docs/invariants/language-fields.md), which is exactly the question
+ * here: can a reader read this edition without a translation? Same tokeniser as
+ * the ops spend dashboard (`lang-tally.mjs`), so the two agree on who is English.
+ */
+export function isEnglishOriginal(language) {
+  const first = String(language ?? '').toLowerCase()
+    .split(/[;,/&+]| and /)[0]
+    .trim()
+    .replace(/\s*\(.*\)$/, '');
+  return ENGLISH_LANGUAGE_TOKENS.has(first);
+}
+
+/**
+ * The translation-state ladder for one book (#5284, design:
+ * .claude/docs/translation-state.md). ONE rung per book, stored as
+ * `books.translation_state` by sync-worker and read by every surface, so "how
+ * many books are translated" has one answer instead of seven.
+ *
+ *   no_pages     pages_count 0, or content_type 'artwork' — out of every denominator
+ *   no_text      pages_ocr 0
+ *   transcribing pages_ocr < 0.9 · whole      (a preview-only book lands here, #5063)
+ *   transcribed  coverage met, nothing translated
+ *   translating  coverage met, 0 < translated < 0.9 · translatable
+ *   readable     coverage met, translated >= 0.9 · translatable
+ *   complete     coverage met, translated >= translatable
+ *
+ *   whole        = pages_count − pages_blank                 (what a reader expects)
+ *   translatable = pages_translatable when stamped (#4442), else whole
+ *
+ * The fallback denominator is never smaller than the exact one, so an
+ * unrecounted book can only read LOWER than it will once recounted — the safe
+ * direction. A book with nothing translatable (all plates) and nothing
+ * translated is `transcribed`, never `complete`: 0 ≥ 0 is not a finished book.
+ *
+ * Pure function of the counters. Inputs are returned alongside the rung so a
+ * wrong rung can be traced to the number that produced it; `computed_at` is the
+ * writer's to add. Mirror: src/lib/page-counts.ts (parity-tested).
+ */
+export function computeTranslationState(counts, { language, content_type } = {}) {
+  const pagesCount = Math.max(0, counts?.pages_count ?? 0);
+  const ocr = Math.max(0, counts?.pages_ocr ?? 0);
+  const translated = Math.max(0, counts?.pages_translated ?? 0);
+  const pagesBlank = Math.max(0, counts?.pages_blank ?? 0);
+
+  const whole = Math.max(0, pagesCount - pagesBlank);
+  const exact = typeof counts?.pages_translatable === 'number' && counts.pages_translatable >= 0;
+  const translatable = exact ? counts.pages_translatable : whole;
+  const coverage = ocr >= FULL_TRANSLATION_MIN_OCR_COVERAGE * whole;
+
+  let rung;
+  if (pagesCount === 0 || content_type === 'artwork') rung = 'no_pages';
+  else if (ocr === 0) rung = 'no_text';
+  else if (!coverage) rung = 'transcribing';
+  else if (translated === 0) rung = 'transcribed';
+  else if (translated >= translatable) rung = 'complete';
+  else if (translated >= READABLE_MIN_TRANSLATED * translatable) rung = 'readable';
+  else rung = 'translating';
+
+  return {
+    rung,
+    english_original: isEnglishOriginal(language),
+    translated,
+    translatable,
+    whole,
+    ocr,
+    exact,
+    version: TRANSLATION_STATE_VERSION,
+  };
+}
+
+// ── Named views over the ladder (#5286, translation-state.md § Named views) ──
+// Every headline count reads one of these BY NAME; never re-type the rule in a
+// caller. Mirror: src/lib/page-counts.ts (parity-tested). Both forms read the
+// stored `translation_state`, so a book sync-worker has not stamped yet is in
+// no view — translationStateStampCoverage() is the read-side check for that.
+
+/** `readable_in_english` rungs for a non-English edition. */
+export const READABLE_RUNGS = Object.freeze(['readable', 'complete']);
+/** Extra rungs at which an English original is already readable (its text IS English). */
+export const ENGLISH_ORIGINAL_READABLE_RUNGS = Object.freeze(['transcribed', 'translating']);
+
+/** `readable_in_english` as a Mongo query filter (spread it beside `visible`/`pages_count`). */
+export const READABLE_IN_ENGLISH_FILTER = Object.freeze({
+  $or: [
+    { 'translation_state.rung': { $in: [...READABLE_RUNGS] } },
+    { 'translation_state.english_original': true, 'translation_state.rung': { $in: [...ENGLISH_ORIGINAL_READABLE_RUNGS] } },
+  ],
+});
+
+/** `readable_in_english` as an aggregation boolean (for `$cond` inside a `$group`). */
+export const READABLE_IN_ENGLISH_EXPR = Object.freeze({
+  $or: [
+    { $in: [{ $ifNull: ['$translation_state.rung', null] }, [...READABLE_RUNGS]] },
+    {
+      $and: [
+        { $eq: ['$translation_state.english_original', true] },
+        { $in: [{ $ifNull: ['$translation_state.rung', null] }, [...ENGLISH_ORIGINAL_READABLE_RUNGS]] },
+      ],
+    },
+  ],
+});
+
+/** True iff a stored state is in `readable_in_english` (the JS form of the filter above). */
+export function isReadableInEnglish(state) {
+  if (!state?.rung) return false;
+  return READABLE_RUNGS.includes(state.rung) ||
+    (state.english_original === true && ENGLISH_ORIGINAL_READABLE_RUNGS.includes(state.rung));
+}
+
+/**
+ * Share of books matching `filter` that carry a stamped `translation_state`.
+ * A view counted before sync-worker has stamped the corpus reads as a collapse
+ * (0 on 2026-10-01, the morning step 1 merged), so a headline writer checks
+ * this and refuses to publish a view below `min` instead of writing the hole.
+ */
+export async function translationStateStampCoverage(books, filter, { min = 0.99 } = {}) {
+  const [total, stamped] = await Promise.all([
+    books.countDocuments(filter),
+    books.countDocuments({ ...filter, 'translation_state.rung': { $type: 'string' } }),
+  ]);
+  const share = total ? stamped / total : 1;
+  return { total, stamped, share, ok: share >= min };
 }

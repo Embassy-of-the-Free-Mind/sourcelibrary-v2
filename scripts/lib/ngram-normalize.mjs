@@ -10,6 +10,8 @@
 // Both the indexed text and the user's query pass through the same pipeline, so
 // a reader can type "verbum" or "уerbum"-era spellings and land on one series.
 
+import { stripMarkupTags } from './strip-markup-tags.mjs';
+
 /** Corpora the viewer exposes. `en` is the cross-language corpus: every page's
  * English translation (plus original OCR of English-language books that have no
  * modernized layer), keyed by the edition's publication year. The rest are
@@ -63,9 +65,7 @@ const LIGATURES = [
  * unclear/insert) are body text: strip only the tag, keep the content. */
 export function stripApparatusTags(text) {
   if (!text) return '';
-  return text
-    .replace(/<(header|catchword|sig|page-num)>[\s\S]*?<\/\1>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ');
+  return stripMarkupTags(text.replace(/<(header|catchword|sig|page-num)>[\s\S]*?<\/\1>/gi, ' '));
 }
 
 /**

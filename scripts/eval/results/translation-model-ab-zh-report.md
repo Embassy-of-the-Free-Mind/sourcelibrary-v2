@@ -57,15 +57,15 @@ Second judge pass over 20 pages (labels re-shuffled): arm-vs-lite direction agre
 
 Instrument note: `verified-note rate` checks that the phrase inside `<note>original: "…"</note>` occurs verbatim in the OCR. A model that writes the citation in pinyin ("Zuo Zhuan") instead of characters (左傳) scores ~0 here without having fabricated anything — read it as a citation-FORMAT measure, and read fabrication from the blind judge.
 
-Paired deltas vs lite (bootstrap 95% CI on the page-wise difference; ** = CI excludes 0):
+Paired deltas vs lite (bootstrap 95% CI on the page-wise difference; ** = CI excludes 0; intervals recomputed 2026-09-30, #5373, no ** changed):
 
 | arm | Δ prose chars | Δ untranslated share | Δ notes/page | Δ verified rate | Δ invented tags |
 |---|---|---|---|---|---|
-| gemini-3-flash-preview | 155.067 ** [97.750, 219.283] n=60 | -0.003 ** [-0.006, -0.001] n=60 | 0.200 [-1.150, 1.350] n=60 | -0.950 ** [-1.000, -0.850] n=4 | 0.000 [0.000, 0.000] n=60 |
-| gemini-2.5-flash | 1081.183 [-263.683, 3723.617] n=60 | 0.047 ** [0.009, 0.090] n=60 | -0.317 [-1.800, 1.367] n=60 | — | 0.017 [0.000, 0.050] n=60 |
-| deepseek/deepseek-v4.1-flash | -377.817 ** [-604.717, -177.367] n=60 | 0.161 ** [0.086, 0.257] n=60 | -0.933 ** [-2.133, -0.217] n=60 | — | 0.067 [0.000, 0.167] n=60 |
-| qwen/qwen3.8-flash | 70.483 [-97.783, 253.867] n=60 | 0.054 ** [0.015, 0.110] n=60 | -0.567 [-1.883, 0.300] n=60 | 0.000 [—, —] n=1 | 0.817 [0.000, 2.450] n=60 |
-| deepseek/deepseek-v4-pro-0813 | -263.559 ** [-490.441, -56.610] n=59 | 0.194 ** [0.102, 0.284] n=59 | -0.576 [-1.864, 0.407] n=59 | 0.000 [—, —] n=1 | 0.153 [0.000, 0.458] n=59 |
+| gemini-3-flash-preview | 155.067 ** [96.800, 216.300] n=60 | -0.003 ** [-0.006, -0.001] n=60 | 0.200 [-1.150, 1.367] n=60 | -0.950 ** [-1.000, -0.850] n=4 | 0.000 [0.000, 0.000] n=60 |
+| gemini-2.5-flash | 1081.183 [-278.383, 3713.233] n=60 | 0.047 ** [0.011, 0.095] n=60 | -0.317 [-1.767, 1.317] n=60 | — | 0.017 [0.000, 0.050] n=60 |
+| deepseek/deepseek-v4.1-flash | -377.817 ** [-592.050, -183.800] n=60 | 0.161 ** [0.087, 0.241] n=60 | -0.933 ** [-2.067, -0.183] n=60 | — | 0.067 [0.000, 0.167] n=60 |
+| qwen/qwen3.8-flash | 70.483 [-87.283, 235.400] n=60 | 0.054 ** [0.011, 0.108] n=60 | -0.567 [-1.783, 0.367] n=60 | 0.000 [—, —] n=1 | 0.817 [0.000, 2.450] n=60 |
+| deepseek/deepseek-v4-pro-0813 | -263.559 ** [-486.542, -67.186] n=59 | 0.194 ** [0.108, 0.293] n=59 | -0.576 [-1.831, 0.407] n=59 | 0.000 [—, —] n=1 | 0.153 [0.000, 0.441] n=59 |
 
 ## Cost actually spent
 

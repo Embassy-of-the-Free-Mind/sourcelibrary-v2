@@ -1,0 +1,21 @@
+{
+ "id": "69b99e856ed9e0490990a0b5_00301",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "One is full of longing, coveting the wealth and property of others, thinking, \"O, if only what belongs to another were mine!\" One is malicious in mind, with corrupt intentions, thinking, \"May these beings be killed, or slaughtered, or destroyed, or perish, or may they cease to exist!\" One holds wrong view, with a perverted perspective, thinking, \"There is no merit in giving, no merit in sacrifice, no merit in offerings; there is no fruit or result of good and bad actions; there is no this world, no other world; there is no special debt to mother or father; there are no spontaneously born beings; there are no ascetics and brahmins in the world who have reached the highest goal and practice rightly, and who, having realized this world and the other world by their own direct knowledge, make them known.\"\n\nMonks, one possessed of these ten qualities is cast into hell as if led there by his own actions.\n\n3. Monks, one possessed of ten qualities is placed in heaven as if led there by his own actions. What are the ten?\n\n4. In this case, monks, someone gives up killing living beings and abstains from it. Having laid aside the rod and the sword, such a person is conscientious, merciful, and dwells with compassion for the welfare of all living beings. Giving up taking what is not given, they abstain from theft. They do not take with intent to steal the wealth and property of others, whether in the village or the forest. Giving up sexual misconduct, they abstain from it. They do not have sexual relations with those protected by their mother, father, brother, sister, or relatives, nor those protected by the Law <note>original: \"dhamma\"</note>, nor those who have a husband, nor those subject to punishment, nor even those adorned with a garland of flowers <note>referring to those betrothed or engaged</note>. Giving up false speech, they abstain from lying. When called to a council, a public gathering, a meeting of relatives, a guild, or a royal court, and asked to testify: \"Come, good man, tell us what you know,\" if they do not know, they say, \"I do not know,\" and if they know, they say, \"I know.\" If they did not see, they say, \"I did not see,\" and if they saw, they say, \"I saw.\" They do not deliberately tell a lie for their own sake, for the sake of another, or for the sake of some worldly gain.\n\n<summary>This page describes the ten unwholesome actions that lead to rebirth in hell and begins the list of ten wholesome actions that lead to heaven. The text specifically details wrong views and the first four precepts of moral conduct.</summary>\n<keywords>Ten Wholesome Actions, Ten Unwholesome Actions, Karma, Precepts, Ethics, Rebirth, Right View, Wrong View</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2703,
+ "outputTokens": 616,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.00159975,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2254,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

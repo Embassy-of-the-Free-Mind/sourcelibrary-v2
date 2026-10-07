@@ -11,6 +11,7 @@ Source Library has **six embedding stores** in Supabase, indexing different thin
 | `artwork_embeddings` | **3072 (halfvec)** | `gemini-embedding-2-preview` | One row per artwork (title + author + summary + subjects + figures + symbols) | `scripts/migration/backfill-artwork-embeddings.mjs` + `scripts/workers/image-embeddings-cron.mjs` | `match_artworks_semantic` | `src/lib/semantic-search.ts` artwork retrieval |
 | `gallery_text_embeddings` | 768 (vector) | `gemini-embedding-2-preview` | One row per gallery image (museum description text) | `scripts/workers/image-embeddings-cron.mjs` | `match_gallery_text` | `src/lib/embeddings.ts`, `src/app/api/gallery/{route,similar/route}.ts` |
 | `clip_embeddings` | 512 (vector) | CLIP visual | One row per image (artwork covers, gallery extractions) | `scripts/backfill-clip-embeddings.mjs` + `scripts/workers/image-embeddings-cron.mjs` | `match_gallery_text` (CLIP text→image) | gallery similar-image queries |
+| `site_pages` | 768 (vector) | `gemini-embedding-2-preview` | One row per ~1,600-char chunk of the site's OWN writing: blog essays, collection intros (from Mongo), editorial pages (#1180) | `scripts/workers/embed-site-pages.mjs` (hash-diffed; prunes vanished pages, refuses a >20% prune) | `match_site_pages` (best chunk per URL; NULL tenant = main site only) | "From the site" lane in `/api/search/unified` → `/search` |
 | `page_texts` | 768 (vector) | `gemini-embedding-2-preview` | One row per translated page **per language** (`page_id, lang`) | `scripts/workers/embed-page-texts.mjs --lang=<iso>` (bulk) + `es-translate-worker.mjs` (inline) | `match_page_texts`, `match_page_texts_in_books`, `search_page_texts` (lexical) | Spanish/localized page search: `/api/search?lang=es`, `/api/books/:id/search?lang=es` |
 
 Approximate current row counts (May 2026): pages ~3.9M, books 33,828, artworks 19,731, gallery_text 116,641, clip 151,957.
@@ -132,6 +133,20 @@ Baseline at 2026-05-26 (after first cleanup pass): 338 truly orphaned rows total
 ### CLIP index truth (#5195)
 `clip_embeddings` is a CACHE of `gallery_images` (gallery rows) and `books` (covers, artworks). Its `book_id`/`title`/`author` are denormalised at embed time and are NOT rewritten when a book is re-minted, merged, or re-split — measured 2026-09-28: 3,711 gallery rows named the wrong book, 31,210 named a gallery row that no longer exists. The read side hydrates `book_id` from the gallery row (PR #5196) so a visitor can no longer be sent to a 404, but every other reader of the index trusts it. Standing detector: `scripts/audit/clip-index-integrity.mjs` (weekly on Hetzner, log `/var/log/sourcelibrary/clip-index-integrity.log`) — drift, classified orphans, and the missing-from-index gap in one run, exit 1 above threshold. Repair: `scripts/maintenance/clip-index-repair.mjs` (dry-run by default; `--apply` rewrites drift and logs one `sweep_log` row per book; orphan deletion is a separate, gated lane that needs a listed file and an OK). Both share `scripts/lib/clip-index-scan.mjs` so they cannot disagree on what drift is.
 
+### CLIP runtime and the v4 re-embed (#5099)
+The CLIP vectors depend on the transformers RUNTIME, not only the model file:
+`@xenova/transformers` 2.17 and `@huggingface/transformers` 4.3.0 put the same image
+at median cosine 0.991–0.993 (ONNX Runtime int8 kernels changed), and a v4 query
+against v2 rows changes the top hit on half of text→image queries. So a runtime
+change is a re-embed, never a package bump. `clip-server.mjs` takes
+`CLIP_RUNTIME=v2|v4` (a systemd drop-in on the box), `/health` reports it, and
+writers stamp `embedding_model` with it. The migration runs as a shadow column:
+`clip-embeddings-v4-shadow.sql` → `scripts/maintenance/clip-v4-shadow-reembed.mjs`
+(v4 server on :3458) → `scripts/audit/clip-v4-shadow-verify.mjs` +
+`scripts/eval/clip-index-recall.mjs --column=embedding_v4` →
+`clip-embeddings-v4-cutover.sql` + the drop-in flip, with `-rollback.sql` as the
+undo while v2 is still installed.
+
 ### Re-embedding
 - Page-level: `node scripts/workers/embed-gemini.mjs --book <id>` re-embeds a specific book.
 - Book-level: enrich-worker Phase 6.5 handles it during enrichment. To force, re-run enrichment for the book.
@@ -166,6 +181,45 @@ which keeps walking the graph until enough rows survive the filter. A
 fenced exact pre-filter (`OFFSET 0` + `enable_indexscan = off`) is correct on any
 version but costs a scan of everything the predicate admits — 47.6s measured for
 an `exclude_languages` query. Migration: `scripts/migration/fix-semantic-language-prefilter.sql`.
+
+### Tenant scope: a book set, decided once (#4330, #2753)
+
+**No embedding table has a tenant column**, and `match_semantic` accepts
+`filter_tenant_id` and ignores it. Until 2026-10-06 every vector lane ranked the
+whole library and each caller filtered afterwards in Mongo — except
+`/api/search/semantic`, `/api/gallery?visual=true` and `?semantic=true`, which
+did not filter at all and served the global corpus on partner subdomains. The
+lanes that did filter were pure and starved: BPH got 20% of its true top-15
+pages, and nothing at all for 2 of 5 queries.
+
+The scope is now a value. `resolveSearchScope(request)` in
+`src/lib/tenant-search-scope.ts` returns `global`, `tenant` (the tenant's
+visible book ids, from `books.tenantId`) or `closed` (a tenant signal that
+could not be resolved — returns nothing, never global). The `semantic*Search`
+functions and `matchClip` / `matchGalleryText` REQUIRE one; a raw
+`.rpc('match_…')` anywhere else fails `tests/unit/embedding-rpc-scope-guard.test.ts`.
+
+Under a tenant the wrappers call the `*_in_books` functions in
+`scripts/migration/add-scoped-embedding-rpcs.sql`, which select by `book_id`
+first and rank inside a fenced subquery, so the vector index cannot turn the
+scope into a post-filter. Three things to know:
+
+- **`match_pages_in_books` is not safe for a large id list.** Given a tenant's
+  ~2,000 ids the planner answers it through HNSW and filters afterwards: 10 rows
+  in 150 ms on-topic, ZERO off-topic. It is fine for the one-book case it was
+  written for. Tenant page search uses `match_pages_in_scope`.
+- **Pages are bounded work, not exact.** An exact scan of a tenant's 226K–830K
+  page vectors did not finish in 90 s. `match_pages_in_scope` ranks the pages of
+  the nearest few books in scope exactly and unions one HNSW pass. Measured
+  recall@15 against exact truth: Bhutan 67%, BPH 84%
+  (`scripts/audit/scoped-page-recall.mjs`). Exact recall needs a tenant column
+  plus a partial index per tenant — ~1.05M updates on `page_translations`.
+- **A missing function or a statement timeout falls back** to the global RPC
+  cut to the book set. Closed either way; the migration is what buys recall.
+
+Purity is checked over HTTP, per route, with a control arm:
+`scripts/audit/search-tenant-purity.mjs <slug>` (the real subdomain) or
+`--local=http://localhost:3111` (before a merge).
 
 ### Index health
 The HNSW index has to be present and the planner has to choose it — `CREATE INDEX` succeeds silently even when it produces an unusable index above the dim cap. Always `EXPLAIN ANALYZE` a real `match_*` query after touching a vector column or index. See `lesson_pgvector_hnsw_dim_cap.md` and `lesson_silent_probe_failures.md`.

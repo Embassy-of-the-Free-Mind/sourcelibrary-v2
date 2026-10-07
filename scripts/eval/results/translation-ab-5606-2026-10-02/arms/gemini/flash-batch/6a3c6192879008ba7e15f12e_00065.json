@@ -1,0 +1,21 @@
+{
+ "id": "6a3c6192879008ba7e15f12e_00065",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "Question: What were the causes and conditions <note>original: \"因緣\" <gloss>nidana; primary causes and environmental conditions</gloss></note> for composing this treatise?\n\nThe answer contains three parts: the statement of the number, the explanation of their characteristics, and a concluding summary.\n\nAnswer: There are eight types of causes and conditions. What are these eight?\n\nRegarding the explanation of characteristics: the first is general, while the remaining seven are specific. The reason for this is that the general condition covers both the primary and secondary objectives, while the specific ones are for the sake of those individuals ready to receive the teaching <note>original: \"當機\" <gloss>those whose capacity matches the teaching</gloss></note>.\n\n1. The general characteristic of the causes and conditions: namely, to cause all sentient beings to leave behind all suffering and attain ultimate happiness.\n\nRegarding \"leaving behind all suffering\" in the general characteristic: it means causing sentient beings <note>original: \"有情\" <gloss>sentient beings; those with consciousness</gloss></note> to leave behind the three types of suffering <note>The suffering of pain, the suffering of change, and the suffering of conditioned existence.</note> and the two types of death <note>Physical death and the \"death\" of transformative rebirth experienced by advanced practitioners.</note>.\n\nRegarding \"attaining ultimate happiness\": it means causing them to attain the happiness of Supreme Enlightenment <note>term: \"無上菩提\" <gloss>Anuttara-samyak-sambodhi</gloss></note> and Great Nirvana <note>term: \"大涅槃\" <gloss>Mahaparinirvana</gloss></note>.\n\nRegarding \"not seeking worldly fame or profit\": there are two interpretations. First, it means not wishing to have them seek the benefits or happiness of future lives as humans or heavenly beings <note>original: \"人天\" <gloss>the higher realms of rebirth within samsara</gloss></note>.\n\n<summary>This page introduces the eight motivations for writing the Awakening of Faith in the Mahayana, focusing on the primary goal of leading sentient beings from all forms of suffering toward ultimate enlightenment rather than worldly gains.</summary>\n<keywords>Eight Causes and Conditions, sentient beings, three types of suffering, two types of death, Supreme Enlightenment, Nirvana, fame and profit</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1975,
+ "outputTokens": 496,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.0012377500000000001,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 309,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

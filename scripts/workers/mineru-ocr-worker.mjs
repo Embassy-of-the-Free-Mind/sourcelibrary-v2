@@ -42,6 +42,10 @@ import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { execFileSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
+import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
+
+// Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
+startWorkerBeacon(import.meta.url);
 
 const MINERU = process.env.MINERU_BIN || '/root/mineru-eval/venv/bin/mineru';
 const WORKDIR = process.env.MINERU_WORKDIR || '/root/mineru-eval/worker-tmp';

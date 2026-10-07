@@ -81,14 +81,14 @@
         "gemini-3.1-flash-lite-b": 0.171
       },
       "ref_median_cer_ci95": [
-        0.159,
+        0.158,
         0.188
       ],
       "delta": {
         "median": -0.068,
         "ci95": [
           -0.093,
-          -0.057
+          -0.056
         ],
         "wins": 55,
         "losses": 1,
@@ -180,14 +180,14 @@
         "gemini-3.1-flash-lite-b": 0.107
       },
       "ref_median_cer_ci95": [
-        0.077,
-        0.122
+        0.08,
+        0.14
       ],
       "delta": {
         "median": -0.018,
         "ci95": [
           -0.024,
-          -0.009
+          -0.01
         ],
         "wins": 46,
         "losses": 6,

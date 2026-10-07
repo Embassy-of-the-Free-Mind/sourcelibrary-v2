@@ -1,0 +1,17 @@
+## 2026-10-01 · What does a given character error rate or judge rating look like on a real page? (#5576)
+
+PRIOR ART: `src/app/research/quality/page.tsx` SPECIMENS (one crop per defect TYPE, not per level); `scripts/eval/results/benchmark/*.json` (per-page CER, no excerpts); the 2026-09-30 translation corpus audit (`results/translation-corpus-audit-2026-09-30/`, verdicts and items). None shows a level side by side with the scan. No new measurement here; every number is from those runs.
+
+**Design.** OCR: from the benchmark pages scored against a reference for `gemini-3.1-flash-lite`, one page near each of 0.5, 2, 5, 10 and 20% CER, five different scripts. Engine reads pulled from `hetzner:/root/ocr-bench/images/<stratum>/out/gemini-3.1-flash-lite/`. A letter-level diff (scorer folding: NFC, lower case, ſ→s, letters and digits only; Hebrew points dropped) chose a window whose local error rate is near the page's; each marked difference was then checked on the scan by eye and labelled `wrong`, `missing` or `variant` (the reference differs, the scan agrees with the engine). Translation: one served page per Opus fidelity rating 5, 4, 3, 2, with the judge's named defect, the scan opened by eye. Output: `src/data/quality-error-ladder.json`, rendered by `src/app/research/quality/ErrorLadder.tsx`.
+
+**Rungs (all read from image).** OCR: Latin, Agricola *De re metallica* 1657, 0.5% · Hebrew, Biblia Hebraica 1720 (Gen. 1), 2% · Armenian, Eznik 1826, 4.2% · Classical Chinese, 劉氏春秋意林 woodblock, 9.7% · Greek, [Plutarch] *Placita* 1531, 18%. Translation: Latin (Avianus 1731) 5 · Latin page in a German book (*Elucidarius Chymicus* 1617) 4 · Greek (Pindar 1513) 3 · Chinese (農政全書) 2.
+
+**Result.**
+- **A measured CER includes the reference's own spellings and edition differences, and at the low and middle rungs that is most of it.** In the excerpts, the only Latin difference (u/v), both Armenian differences (աւ/օ, and a typo in the e-text) and two of three Chinese differences (母/毋, 己/已) side with the engine on the scan. Real misreads seen: Hebrew drops יְהִי at a line end (2%); Chinese reads the rare name character 鱄 as 鱣; Greek reads the καί sign plus a ligatured verb as the non-word ἐπὶ πᾶσκυάζειν.
+- **Reference windows can spill onto the neighbouring page.** On both Chinese pages examined (`chinese-ext-4c9dfb-p36`, `chinese-ext-dbbedb-p66`) the Kanripo window starts 7–8 characters before the leaf, all charged as errors; on 4c9dfb it also ends 7 characters after. 4c9dfb was dropped as a rung for this reason: about 8 of its 9.8 points are window spill and variant glyphs. The same page shows the engine inventing 金丹已成 at the head of the leaf.
+- **A ground-truth label is wrong.** `ground-truth/latin-la-agricola-metallica-p406.json` describes the 1556 Froben edition, but book `69b6a4c6080b19f98fd20d95` page 404 is the 1657 Basel printing (printed p. 386). Same text; the reference still fits.
+- Holley (2009, D-Lib 15(3/4)) verified: good 98–99% accurate, average 90–98%, poor below 90%, with her caveat that there was no consensus on characters vs words.
+
+**Rights.** IA scans public domain; BSB/MDZ scans are NoC-NC 1.0 (used non-commercially, credited); e-rara Agricola record says licence unknown (public-domain work, credited); the Harvard woodblock record has no `image_source` on our side, credited as Harvard Library public domain following the SPECIMENS precedent, not separately verified.
+
+*Replicated?* No (no new run). *Artifact:* the two files above; PR for #5576.

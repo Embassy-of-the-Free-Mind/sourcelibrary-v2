@@ -1,0 +1,21 @@
+{
+ "id": "69e72c6ba409200ea79f484e_00102",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "莊子說苑卷三\n\n<margin>This is the conduct of the perfected person, who does not seek fame or recognition. Why, then, do you take pleasure in hearing about it?</margin>\nblamed him, saying, \"The perfected person does not seek fame; why are you so pleased?\" Confucius replied, \"Excellent! You have declined it.\" <margin>Does not value ostentation</margin>\nHe gave up social associations, left his disciples, and fled to the great marshes. He wore furs and coarse hemp, eating chestnuts and acorns. <margin>Does not value fine flavors</margin>\n<margin>Does not give rise to a discriminatory mind, and therefore does not disturb the flocks of birds and beasts.</margin>\nEntering the realm of beasts, he did not disturb their herds; entering the realm of birds, he did not disrupt their formations. Since birds and beasts did not hate him, how much more would humans? <margin>Even creatures of different kinds did not hate him</margin>\n<margin>Name: The Recluse</margin>\nConfucius asked Zisang Hu, saying, \"I have been twice driven from Lu, had the tree cut down over me in Song, had my footprints erased in Wei, suffered poverty in Shang and Zhou, and was besieged between Chen and Cai. Since I have faced these various hardships, my relatives and kin have grown distant, and my followers and friends have scattered. Why is this?\" Zisang Hu\n\n<note>A printer's mark or seal appears in the top right corner of the page.</note>\n\n<summary>This page discusses the virtues of the \"perfected person\" who rejects worldly fame and lives in harmony with nature, contrasting this with Confucius's own history of political exile and misfortune.</summary>\n<keywords>Confucius, Zisang Hu, perfected person, recluse, exile, harmony with nature, social alienation</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2124,
+ "outputTokens": 404,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.0005685,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 596,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

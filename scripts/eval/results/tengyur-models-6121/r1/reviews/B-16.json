@@ -1,0 +1,223 @@
+[
+ {
+  "id": "Q68UZ",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "དོན་དུ་རྟོགས་པའི་དོན་ལ་འགྱུར་ཏེ",
+    "english": "This occurs for the meaning understood as the object",
+    "why": "དོན་དུ་རྟོགས་པ is the meaning understood by implication (arthāt), as opposed to the literal word; 'understood as the object' loses the point of the objection."
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "ལྟ་བ་བཞིན་དུ་མི་སྒྲུབ་པའི་ཕྱིར་ཁྱད་པར་དུ་བྱ་བའོ",
+    "english": "Not making it a particular in that way is for the sake of making it a particular because it does not prove it as it is.",
+    "why": "The Tibetan says: because without such a qualification it does not prove [the thesis] as it is, it must be qualified; rendering ཁྱད་པར་དུ་བྱ ('qualify') as 'make a particular' turns the sentence into a self-contradiction."
+   }
+  ],
+  "note": "Follows the Tibetan closely but renders ཁྱད་པར་དུ་བྱ ('qualify, specify') as 'make a particular' throughout, which obscures a dense argument about qualifying the statement of similarity."
+ },
+ {
+  "id": "QMA6J",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ཡོངས་སུ་གནས་པས་ནི་ཚངས་པར་སྤྱོད་པ་སྟེ",
+    "english": "\"residing completely\" refers to the holy life",
+    "why": "ཡོངས་སུ་གནས་པ here is the Vinaya technical term pārivāsika, a monk under probation (as the next side, where he expels a monk, confirms), not 'residing completely'."
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "གསོལ་བ་དང་བཞིའི་ལས",
+    "english": "In a ritual of motion with four actions",
+    "why": "This is the jñapticaturtha karman, an act with the motion as fourth (motion plus three proclamations), not a motion with four actions; likewise གསོལ་བ་དང་གཉིས་ is motion plus one proclamation."
+   }
+  ],
+  "note": "A sound rendering of the karmavācanā completion rule and the Upāli boundary passage; the Vinaya procedural terms are rendered loosely."
+ },
+ {
+  "id": "Q9WBE",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "དོན་མ་ཡིན་པ་མི་ཆུང་བ་སྟོབ་པ་ལ་མཁས་པའི་ཁ་ན་མ་ཐོ་བ་ཐུན་མོང་མ་ཡིན་པ",
+    "english": "gather extraordinary, non-common faults of the wise",
+    "why": "མཁས་པ here qualifies the misdeeds as 'apt at bringing no small harm', unshared by others; they are not 'faults of the wise'."
+   }
+  ],
+  "note": "A faithful and readable translation of the buffalo-sacrifice and butcher's-son illustrations and the verse on pride; one misparsed compound in the opening sentence."
+ },
+ {
+  "id": "QH493",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "Both the Sanskrit and the Tibetan verses of the bilingual Avadānakalpalatā side are accurately and elegantly rendered."
+ },
+ {
+  "id": "Q12T6",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "addition",
+    "confidence": "medium",
+    "tibetan": "རྣམ་འགྲེལ་འདི",
+    "english": "this (Pramāṇavārttika) Commentary on Valid Cognition, Dharmakīrti's chief work on logic set out",
+    "why": "The Tibetan has only 'this Vārttika'; the unmarked glosses here and on ཤ་པ ('a kind of tree, the stock example of a reason based on identity') are run into the sentence and make it hard to parse."
+   }
+  ],
+  "note": "The argument on the reason's indeterminate capacity to make known and the objection about conjunction is rendered accurately; unmarked explanatory glosses clutter one passage."
+ },
+ {
+  "id": "QSYMO",
+  "score": 3,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "reversal",
+    "confidence": "high",
+    "tibetan": "གནོད་པ་ལས་",
+    "english": "away from what is not harmful",
+    "why": "The Tibetan says one should turn both oneself and others away from what is harmful.",
+    "fix": {
+     "find": "away from what is not harmful",
+     "replace": "away from what is harmful"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "མཐར་ཕྱིན་པའི་འབྲས་བུ་ལྷག་མ་ལུས་པ",
+    "english": "the remainderless state [note: referring to nirvana with remainder]",
+    "why": "ལྷག་མ་ལུས་པ means 'with remainder' (sopadhiśeṣa nirvāṇa), the first of the two nirvāṇas; 'remainderless' says the opposite and contradicts the note.",
+    "fix": {
+     "find": "the remainderless state [note: referring to nirvana with remainder]",
+     "replace": "nirvana with remainder"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "ཀླུ་འཇོག་པོའི",
+    "english": "the (Naga) serpent deity Jogpo",
+    "why": "ཀླུ་འཇོག་པོ is the nāga king Takṣaka; the name is left as an untranslated Tibetan word.",
+    "fix": {
+     "find": "the (Naga) serpent deity Jogpo",
+     "replace": "the Naga king Takshaka"
+    }
+   }
+  ],
+  "note": "The introduction on purpose and connection reads well, but it reverses the closing instruction about harm and mislabels the nirvāṇa with remainder."
+ },
+ {
+  "id": "Q8I49",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "gloss",
+    "confidence": "medium",
+    "tibetan": "བདག་ལ་གནོད་པར་བྱེད་པ་དགག་པའི་ཆེད་དུ",
+    "english": "to refute the position that harms the [note: proper view of the] self",
+    "why": "The consequence that follows is an objection against the selflessness thesis (if there are no beings, for whom compassion?), so the phrase means refuting what harms our [position]; the note points the reader the wrong way."
+   }
+  ],
+  "note": "An accurate rendering of the three-times analysis of mind and the plantain-tree example; one misleading note at the transition."
+ },
+ {
+  "id": "QZ8VS",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ཞི་བའི་ལག་པས་འཕངས་པའི་ཞོ་རྫིའུ",
+    "english": "hurled by the tranquil hand",
+    "why": "ཞི་བ (and ཞི་བ་ཉིད་ཀྱིས above) is most likely a personal name (Śānta/Śāntā) in the story of the curd pot thrown at someone's head, not 'tranquil'."
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "མཉམ་པ་ཉིད་ཐོབ་པར་གྱུར་པའོ",
+    "english": "equanimity is attained",
+    "why": "མཉམ་པ་ཉིད is sameness or equality of mind between the parties, not equanimity (བཏང་སྙོམས)."
+   }
+  ],
+  "note": "Lexical glosses on the Vinayavastu are mostly rendered correctly; a probable proper name is translated as an adjective."
+ },
+ {
+  "id": "QD45B",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "རང་ཉིད་ཀྱི་སྒྲའི་དོན་ནི་བདག་ཉིད་ཅེས་བྱ་བ་ཡིན་ཏེ",
+    "english": "\"by one's own soul\"",
+    "why": "བདག་ཉིད here is simply the reflexive 'oneself' glossing svayam, not a soul.",
+    "fix": {
+     "find": "\"by one's own soul\"",
+     "replace": "\"oneself\""
+    }
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "རི་བོང་གི་རྭ་ལ་སོགས་པ་མེད་པ་ལ་མཐོང་བ་འདིས་ནི",
+    "english": "since things like a rabbit's horns are seen to be non-existent, this line of reasoning",
+    "why": "The point is that this reason (being unproduced) is seen to occur in non-existents such as a hare's horn, and so it proves the subject, space, to be non-existent; the English loses the reason's occurrence in the non-existent."
+   },
+   {
+    "type": "reversal",
+    "confidence": "medium",
+    "tibetan": "བསྟན་བཅོས་ཁས་བླངས་པར་བྱ་བ་མ་ཡིན་པ་ཁོ་ན་ཡིན་ལ",
+    "english": "during a debate the treatise itself is not the primary thing being accepted",
+    "why": "The Tibetan says flatly that during debate a treatise is not to be accepted at all, and that even if it has been accepted only what one oneself intends is the probandum."
+   }
+  ],
+  "note": "The overall argument on svayam in the thesis definition comes through, but the key gloss is mistranslated and two steps of the argument are blurred."
+ },
+ {
+  "id": "Q9UG1",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "དེ་བཞིན་གཤེགས་དག་མཆོག་ཏུ་གསལ་མཛད་པ",
+    "english": "the Tathagatas [note: the Buddhas], who bring supreme light, performed",
+    "why": "It is the Buddha himself (Skt. tathāgataḥ, singular) who honoured his father Śuddhodana's body and built the stūpa; དག is honorific and does not mean several Buddhas.",
+    "fix": {
+     "find": "the Tathagatas [note: the Buddhas], who bring supreme light, performed",
+     "replace": "the Tathagata [note: the Buddha], who brings supreme light, performed"
+    }
+   }
+  ],
+  "note": "A good rendering of the Tibetan verses (the Sanskrit is only transliterated); the one real slip turns the Buddha's honouring of his father into an act of several Buddhas."
+ }
+]

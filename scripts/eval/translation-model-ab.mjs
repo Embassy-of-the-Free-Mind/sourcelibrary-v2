@@ -523,6 +523,11 @@ function phaseScore() {
 function phaseJudgePacket() {
   const { pages, arms } = loadPages();
   const usable = pages.map((p) => ({ ...p, delivered: arms.filter((a) => p.arms[a] && !p.arms[a].refusal) })).filter((p) => p.delivered.length >= 2);
+  // The label order comes from the seeded stream, and the generator changed on 2026-09-30 (#5373): a rebuild no
+  // longer reproduces a packet built before that date, so it must not overwrite a key a judge has read against.
+  for (const keyName of ['judge-key.json', 'judge-key-pass2.json']) {
+    if (fs.existsSync(P(keyName))) throw new Error(`${P(keyName)} exists — a rebuilt packet invalidates judged verdicts; move it aside deliberately`);
+  }
   const write = (list, seedOffset, packetName, keyName) => {
     resetSeed(Number(arg('seed', 0x5eed)) + seedOffset);
     const packet = [], key = [];

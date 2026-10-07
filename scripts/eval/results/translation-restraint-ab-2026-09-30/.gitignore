@@ -1,0 +1,2 @@
+# PRIOR ART: results/translation-corpus-audit-2026-09-30/.gitignore — same rule: judge packets are derivable (--packets) and stay out of git.
+packets/

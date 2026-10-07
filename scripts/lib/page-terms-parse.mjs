@@ -20,6 +20,7 @@
  */
 
 import { skeletonMatch } from './translit-skeleton.mjs';
+import { stripMarkupTags } from './strip-markup-tags.mjs';
 
 const MAX_TERM = 80;
 const MAX_GLOSS = 160;
@@ -164,8 +165,7 @@ export function quoteVerified(tier) {
 }
 
 function clean(s) {
-  return String(s || '')
-    .replace(/<[^>]+>/g, ' ')
+  return stripMarkupTags(s)
     .replace(/\s+/g, ' ')
     .replace(/^[\s"'“”‘’«»,;:.]+|[\s"'“”‘’«»,;:.]+$/g, '')
     .trim();
@@ -174,7 +174,7 @@ function clean(s) {
 /** The plain text (tags stripped, whitespace collapsed) immediately before index `idx`. */
 function contextBefore(text, idx) {
   const raw = text.slice(Math.max(0, idx - CONTEXT_CHARS * 2), idx);
-  const plain = raw.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  const plain = stripMarkupTags(raw).replace(/\s+/g, ' ').trim();
   return plain.length > CONTEXT_CHARS ? plain.slice(-CONTEXT_CHARS) : plain || null;
 }
 

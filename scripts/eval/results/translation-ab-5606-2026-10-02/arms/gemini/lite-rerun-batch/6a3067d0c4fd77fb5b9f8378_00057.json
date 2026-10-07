@@ -1,0 +1,21 @@
+{
+ "id": "6a3067d0c4fd77fb5b9f8378_00057",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "# Chapter One\n\n<meta>continues from previous page</meta>\nAs it is said in the <term>Āryaratnakūṭasūtra</term> <gloss>The Noble Sutra of the Heap of Jewels</gloss>: Then, those five hundred monks, not comprehending, not penetrating, and not having faith in the teaching of the Dharma <gloss>the truth/law of the Buddha</gloss> as presented by the Blessed One, rose from their seats and departed. Then, at that time, the Blessed One manifested two monks on the path along which those monks were traveling.\n\nThose five hundred monks approached the path where the two manifested <term>nirmitaka</term> <gloss>magically created</gloss> monks were walking. Having approached, they said to them, \"Where are you going, venerable ones?\" The two manifested ones replied, \"We are going to the forest retreats. There, we will dwell in the pleasant contact of meditative absorption <term>dhyāna</term> <gloss>meditation</gloss>. For the Dharma that the Blessed One teaches, we do not comprehend, we do not penetrate, we do not have faith in it; we feel anxious and fall into distress.\" Then those five hundred monks said, \"We also, venerable ones, do not comprehend, do not penetrate, and do not have faith in the Blessed One's teaching of the Dharma; we feel anxious and fall into distress. Therefore, we too will dwell in the forest retreats, abiding in the pleasant contact of meditative absorption.\" The two manifested ones replied, \"Therefore, venerable ones, let us join together and not engage in dispute. For the qualities of a renunciant <term>śramaṇa</term> <gloss>monk/ascetic</gloss> are supreme in non-dispute.\" <unclear>******</unclear> \"For the sake of abandoning what have you set out, venerable ones?\" They replied, \"We have set out for the sake of abandoning attachment, hatred, and delusion.\"\n\n<summary>This passage from the Āryaratnakūṭasūtra illustrates a dialogue between five hundred monks, who are struggling with the Buddha's teachings, and two emanated figures who guide them toward the practice of meditative retreat and the cessation of conflict.</summary>\n<keywords>Āryaratnakūṭasūtra, Dharma, dhyāna, nirmitaka, śramaṇa, non-dispute, renunciation</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2877,
+ "outputTokens": 516,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.0007466249999999999,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2403,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

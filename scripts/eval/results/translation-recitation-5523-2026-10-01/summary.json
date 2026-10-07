@@ -1,0 +1,254 @@
+{
+  "run_id": "translation-recitation-5523-2026-10-01",
+  "issue": 5523,
+  "measure": "agreement",
+  "against": "published public-domain English translation (Project Gutenberg)",
+  "seed": 5523,
+  "cost_usd": 0,
+  "label": "bibliographic disposition (translation_found + PD e-text vs confirmed_first); membership posteriors are not stored per book",
+  "recitation_line_words": 12,
+  "known": {
+    "n_books": 36,
+    "run_ge_12": {
+      "k": 4,
+      "n": 36,
+      "rate": 0.1111,
+      "ci95_wilson": [
+        0.0441,
+        0.2532
+      ]
+    },
+    "run_words": {
+      "median": 7.5,
+      "max": 17
+    },
+    "share8_whole": {
+      "mean": 0.0085,
+      "ci95_boot": [
+        0.0043,
+        0.0133
+      ],
+      "median": 0.0009,
+      "max": 0.0503
+    }
+  },
+  "unknown_vs_matched_text": {
+    "n_books": 35,
+    "run_ge_12": {
+      "k": 0,
+      "n": 35,
+      "rate": 0,
+      "ci95_wilson": [
+        0,
+        0.0989
+      ]
+    },
+    "run_words": {
+      "median": 4,
+      "max": 8
+    },
+    "share8_whole": {
+      "mean": 0,
+      "ci95_boot": [
+        0,
+        0.0001
+      ],
+      "median": 0,
+      "max": 0.0007
+    }
+  },
+  "known_vs_other_work": {
+    "n_books": 36,
+    "run_ge_12": {
+      "k": 0,
+      "n": 36,
+      "rate": 0,
+      "ci95_wilson": [
+        0,
+        0.0964
+      ]
+    },
+    "run_words": {
+      "median": 4,
+      "max": 6
+    },
+    "share8_whole": {
+      "mean": 0,
+      "ci95_boot": [
+        0,
+        0
+      ],
+      "median": 0,
+      "max": 0
+    }
+  },
+  "known_located_only": {
+    "n_books": 28,
+    "run_ge_12": {
+      "k": 4,
+      "n": 28,
+      "rate": 0.1429,
+      "ci95_wilson": [
+        0.057,
+        0.3149
+      ]
+    },
+    "run_words": {
+      "median": 8.5,
+      "max": 17
+    },
+    "share8_whole": {
+      "mean": 0.0107,
+      "ci95_boot": [
+        0.0055,
+        0.0166
+      ],
+      "median": 0.0038,
+      "max": 0.0503
+    },
+    "note": "pages whose best-window coverage exceeds the wrong-work p95 (0.1067)"
+  },
+  "diff_share8_known_minus_unknown": {
+    "delta": 0.008475305515313841,
+    "ci": [
+      0.004407346238191005,
+      0.013365887765583263
+    ],
+    "decisive": true
+  },
+  "human_vs_human": {
+    "n_books": 56,
+    "run_ge_12": {
+      "k": 11,
+      "n": 56,
+      "rate": 0.1964,
+      "ci95_wilson": [
+        0.1134,
+        0.3184
+      ]
+    },
+    "run_words": {
+      "median": 8,
+      "max": 21
+    },
+    "share8_whole": {
+      "mean": 0.0174,
+      "ci95_boot": [
+        0.0108,
+        0.025
+      ],
+      "median": 0.0034,
+      "max": 0.1365
+    },
+    "works": [
+      "Boccaccio, Decameron",
+      "Dante, Commedia",
+      "Machiavelli, Il Principe",
+      "Marcus Aurelius, Meditations",
+      "Plato, Phaedo",
+      "Plutarch, Parallel Lives",
+      "Thomas à Kempis, Imitatio Christi"
+    ],
+    "note": "8 x 300-word spans of translation A vs the whole of an independent PD translation B of the same work"
+  },
+  "served_vs_second_translation": [
+    {
+      "slug": "rec-476067-p638",
+      "work": "Boccaccio, Decameron",
+      "run_vs_a": 5,
+      "run_vs_b": 5,
+      "share8_vs_a": 0,
+      "share8_vs_b": 0,
+      "b": [
+        3726,
+        13102
+      ]
+    },
+    {
+      "slug": "rec-42ec85-p448",
+      "work": "Dante, Commedia",
+      "run_vs_a": 9,
+      "run_vs_b": 9,
+      "share8_vs_a": 0.0127,
+      "share8_vs_b": 0.0169,
+      "b": [
+        1995,
+        1996,
+        1997
+      ]
+    },
+    {
+      "slug": "rec-25a62a-p29",
+      "work": "Machiavelli, Il Principe",
+      "run_vs_a": 11,
+      "run_vs_b": 15,
+      "share8_vs_a": 0.0503,
+      "share8_vs_b": 0.0503,
+      "b": [
+        57037
+      ]
+    },
+    {
+      "slug": "rec-db06a3-p335",
+      "work": "Marcus Aurelius, Meditations",
+      "run_vs_a": 5,
+      "run_vs_b": 4,
+      "share8_vs_a": 0,
+      "share8_vs_b": 0,
+      "b": [
+        2680
+      ]
+    },
+    {
+      "slug": "rec-9639fe-p235",
+      "work": "Plato, Phaedo",
+      "run_vs_a": 4,
+      "run_vs_b": 5,
+      "share8_vs_a": 0,
+      "share8_vs_b": 0,
+      "b": [
+        13726
+      ]
+    },
+    {
+      "slug": "rec-963d92-p559",
+      "work": "Plutarch, Parallel Lives",
+      "run_vs_a": 9,
+      "run_vs_b": 7,
+      "share8_vs_a": 0.0017,
+      "share8_vs_b": 0,
+      "b": [
+        14033,
+        14114,
+        14140,
+        44315
+      ]
+    },
+    {
+      "slug": "rec-067a81-p232",
+      "work": "Thomas à Kempis, Imitatio Christi",
+      "run_vs_a": 6,
+      "run_vs_b": 6,
+      "share8_vs_a": 0,
+      "share8_vs_b": 0,
+      "b": [
+        60377
+      ]
+    }
+  ],
+  "positive_controls": {
+    "verbatim": {
+      "n": 36,
+      "run_median": 250,
+      "share8_median": 1,
+      "located": 36
+    },
+    "noise10": {
+      "n": 36,
+      "run_median": 33.5,
+      "share8_median": 0.4321,
+      "located": 36
+    }
+  },
+  "located_coverage_line": 0.1067
+}

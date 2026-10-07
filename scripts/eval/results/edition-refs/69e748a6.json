@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "book_id": "69e748a685f786e884a4c8c5",
+    "title": "Paradise Lost",
+    "published": "1667",
+    "source": "EEBO-TCP A50919",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 8,
+    "skips": {},
+    "median_char_acc": 0.9651,
+    "median_char_acc_windowed": 0.9465,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-69e748a6-p26",
+      "page": 26,
+      "overlap": 0.978,
+      "probe_words": 238,
+      "ref_chars": 1491,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.061,
+      "char_acc": 0.9482,
+      "char_acc_windowed": 0.9465
+    },
+    {
+      "slug": "ed-69e748a6-p28",
+      "page": 28,
+      "overlap": 0.902,
+      "probe_words": 125,
+      "ref_chars": 827,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.115,
+      "char_acc": 0.9381,
+      "char_acc_windowed": 0.9238
+    },
+    {
+      "slug": "ed-69e748a6-p43",
+      "page": 43,
+      "overlap": 0.974,
+      "probe_words": 232,
+      "ref_chars": 1456,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.067,
+      "char_acc": 0.9673,
+      "char_acc_windowed": 0.9645
+    },
+    {
+      "slug": "ed-69e748a6-p45",
+      "page": 45,
+      "overlap": 0.931,
+      "probe_words": 234,
+      "ref_chars": 1503,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.056,
+      "char_acc": 0.9698,
+      "char_acc_windowed": 0.9333
+    },
+    {
+      "slug": "ed-69e748a6-p68",
+      "page": 68,
+      "overlap": 0.996,
+      "probe_words": 248,
+      "ref_chars": 1532,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.063,
+      "char_acc": 0.9721,
+      "char_acc_windowed": 0.9651
+    },
+    {
+      "slug": "ed-69e748a6-p77",
+      "page": 77,
+      "overlap": 0.987,
+      "probe_words": 244,
+      "ref_chars": 1518,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.056,
+      "char_acc": 0.9587,
+      "char_acc_windowed": 0.9483
+    },
+    {
+      "slug": "ed-69e748a6-p134",
+      "page": 134,
+      "overlap": 0.68,
+      "probe_words": 233,
+      "ref_chars": 1461,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.205,
+      "char_acc": 0.9296,
+      "char_acc_windowed": 0.9287
+    },
+    {
+      "slug": "ed-69e748a6-p220",
+      "page": 220,
+      "overlap": 0.881,
+      "probe_words": 106,
+      "ref_chars": 727,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.142,
+      "char_acc": 0.9651,
+      "char_acc_windowed": 0.8934
+    }
+  ]
+}

@@ -126,8 +126,8 @@ User's reading list in three states: Currently Reading, Want to Read, Completed.
 **About** (`/about`)
 Mission statement, partnership with the Embassy of the Free Mind and TU Delft, project background.
 
-**About: Processing** (`/about/processing`)
-How the pipeline works — eight stages from import through publication, with live stats.
+**How it works** (`/how-it-works`; `/about/processing` 308s here since #6074)
+For a library or partner: the line (find, read, translate, connect, publish), the checks that loop over published pages, and one real page followed through it in a film.
 
 **About: Research** (`/about/research`)
 The scholarly methodology and research basis.

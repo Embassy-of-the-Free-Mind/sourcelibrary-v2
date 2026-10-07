@@ -314,7 +314,33 @@ function resolveSized(page: PageImageFields, size: 'display' | 'thumb'): string 
 }
 
 /** Resolve a large (zoom/magnifier) URL — IIIF-native at high width, else proxy. */
+/**
+ * Internet Archive's own master for a page, when `photo` is an IA BookReader
+ * page URL and the page shows that leaf unaltered (no split, crop or
+ * enhancement — those are edits of the master and must keep resolving to it).
+ *
+ * Why: our R2 copy of many IA books was stored well below IA's resolution
+ * (#5679: 37 of 59 sampled under 60% of the master, e.g. 645px vs 1934px), so
+ * zoom ran out of detail long before the scan did. The BookReader endpoint
+ * serves the master whatever size is asked for, which is right for `hires`
+ * and wrong for every smaller tier — hence used here only.
+ *
+ * `photo` is the leaf of record and R2 was archived from it, so this is the
+ * same leaf. NOT `iiif.archive.org/iiif/<id>$<n>`: its index is offset from
+ * BookReader's `n` by 0 or 1 depending on the item (measured 2026-10-03), so a
+ * fixed mapping shows a neighbouring page on a large share of books.
+ */
+function iaMasterUrl(page: PageImageFields): string | null {
+  if (isArchiveFailed(page.archived_photo)) return null;
+  if (page.split_from_spread || cropRegion(page)) return null;
+  if (isUsableImageUrl(page.cropped_photo) || isUsableImageUrl(page.enhanced_photo)) return null;
+  const m = String(page.photo || '').match(/^https:\/\/archive\.org\/download\/([^/?#]+)\/page\/n(\d+)\//);
+  return m ? `https://archive.org/download/${m[1]}/page/n${m[2]}/full/full/0/default.jpg` : null;
+}
+
 function resolveHires(page: PageImageFields): string | null {
+  const ia = iaMasterUrl(page);
+  if (ia) return ia;
   const base = getPageSource(page);
   if (!base || !isBrowserSafe(base)) return null;
   const crop = cropRegion(page);

@@ -1,0 +1,112 @@
+{
+  "summary": {
+    "book_id": "6a4270ed62d175ca9e4e1aa5",
+    "title": "Dissertatio, quæ complectitur nova experimenta utilesque observationes circa aquam marinam, secundem eorum artem, quibus regium diploma concessum est, dulcoratam. Serenissimo principi Carlo II. Magnæ Brittanniæ regi humillimè oblata. Offerebat Nehemias Grew, M.D. & Societatis Regiæ Londinensis, utriusque socius.",
+    "published": "1684",
+    "source": "EEBO-TCP A42103",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "no-window": 1
+    },
+    "median_char_acc": 0.9567,
+    "median_char_acc_windowed": 0.9505,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a4270ed-p2",
+      "page": 2,
+      "skipped": "no-window",
+      "overlap": 0.286
+    },
+    {
+      "slug": "ed-6a4270ed-p6",
+      "page": 6,
+      "overlap": 0.817,
+      "probe_words": 167,
+      "ref_chars": 1361,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.194,
+      "char_acc": 0.9488,
+      "char_acc_windowed": 0.9488
+    },
+    {
+      "slug": "ed-6a4270ed-p9",
+      "page": 9,
+      "overlap": 1,
+      "probe_words": 178,
+      "ref_chars": 1208,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.134,
+      "char_acc": 0.96,
+      "char_acc_windowed": 0.96
+    },
+    {
+      "slug": "ed-6a4270ed-p14",
+      "page": 14,
+      "overlap": 0.895,
+      "probe_words": 174,
+      "ref_chars": 1279,
+      "engine": "gemini-2.5-flash",
+      "aligned": true,
+      "guard_wer": 0.192,
+      "char_acc": 0.9571,
+      "char_acc_windowed": 0.9505
+    },
+    {
+      "slug": "ed-6a4270ed-p15",
+      "page": 15,
+      "overlap": 0.943,
+      "probe_words": 161,
+      "ref_chars": 1176,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.198,
+      "char_acc": 0.969,
+      "char_acc_windowed": 0.968
+    },
+    {
+      "slug": "ed-6a4270ed-p16",
+      "page": 16,
+      "overlap": 0.94,
+      "probe_words": 153,
+      "ref_chars": 1235,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.172,
+      "char_acc": 0.9412,
+      "char_acc_windowed": 0.9403
+    },
+    {
+      "slug": "ed-6a4270ed-p17",
+      "page": 17,
+      "overlap": 0.781,
+      "probe_words": 165,
+      "ref_chars": 1296,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.227,
+      "char_acc": 0.9567,
+      "char_acc_windowed": 0.9558
+    },
+    {
+      "slug": "ed-6a4270ed-p22",
+      "page": 22,
+      "overlap": 0.964,
+      "probe_words": 197,
+      "ref_chars": 1349,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.195,
+      "char_acc": 0.9489,
+      "char_acc_windowed": 0.9489
+    }
+  ]
+}

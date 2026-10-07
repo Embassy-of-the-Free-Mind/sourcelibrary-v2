@@ -1,0 +1,6560 @@
+{
+  "at": "2026-10-02T12:41:02.272Z",
+  "reference": "Opus judge garble_passthrough flag, #5274 main pages (n=311); measure: judged",
+  "step1": {
+    "positives": {
+      "n": 29,
+      "scan_quality_poor": 0.034,
+      "scan_quality_fair": 0.034,
+      "scan_quality_good": 0.552,
+      "scan_quality_missing": 0.379,
+      "any_warning": 0.517,
+      "warning_about_legibility": 0.034,
+      "any_unclear": 0.207,
+      "any_self_report": 0.241
+    },
+    "major_positives": {
+      "n": 14,
+      "scan_quality_poor": 0,
+      "scan_quality_fair": 0,
+      "scan_quality_good": 0.571,
+      "scan_quality_missing": 0.429,
+      "any_warning": 0.429,
+      "warning_about_legibility": 0,
+      "any_unclear": 0.143,
+      "any_self_report": 0.143
+    },
+    "negatives": {
+      "n": 282,
+      "scan_quality_poor": 0,
+      "scan_quality_fair": 0.011,
+      "scan_quality_good": 0.387,
+      "scan_quality_missing": 0.603,
+      "any_warning": 0.103,
+      "warning_about_legibility": 0.018,
+      "any_unclear": 0.046,
+      "any_self_report": 0.046
+    },
+    "by_ocr_prompt_version": {
+      "12": {
+        "pages": 44,
+        "positives": 6,
+        "positives_with_scan_quality_tag": 6,
+        "positives_with_any_self_report": 0
+      },
+      "14": {
+        "pages": 2,
+        "positives": 0,
+        "positives_with_scan_quality_tag": 0,
+        "positives_with_any_self_report": 0
+      },
+      "16": {
+        "pages": 1,
+        "positives": 0,
+        "positives_with_scan_quality_tag": 0,
+        "positives_with_any_self_report": 0
+      },
+      "v5.2026-02": {
+        "pages": 132,
+        "positives": 7,
+        "positives_with_scan_quality_tag": 1,
+        "positives_with_any_self_report": 4
+      },
+      "v3.2026-02": {
+        "pages": 25,
+        "positives": 4,
+        "positives_with_scan_quality_tag": 0,
+        "positives_with_any_self_report": 1
+      },
+      "v5.1.2026-03": {
+        "pages": 15,
+        "positives": 0,
+        "positives_with_scan_quality_tag": 0,
+        "positives_with_any_self_report": 0
+      },
+      "unrecorded": {
+        "pages": 6,
+        "positives": 0,
+        "positives_with_scan_quality_tag": 0,
+        "positives_with_any_self_report": 0
+      },
+      "v10": {
+        "pages": 71,
+        "positives": 9,
+        "positives_with_scan_quality_tag": 8,
+        "positives_with_any_self_report": 1
+      },
+      "ocr-changed-since-audit": {
+        "pages": 9,
+        "positives": 2,
+        "positives_with_scan_quality_tag": 2,
+        "positives_with_any_self_report": 0
+      },
+      "v4.2026-02": {
+        "pages": 2,
+        "positives": 0,
+        "positives_with_scan_quality_tag": 0,
+        "positives_with_any_self_report": 0
+      },
+      "spread-v2+ocr-v10": {
+        "pages": 3,
+        "positives": 0,
+        "positives_with_scan_quality_tag": 0,
+        "positives_with_any_self_report": 0
+      },
+      "v14-lacuna": {
+        "pages": 1,
+        "positives": 1,
+        "positives_with_scan_quality_tag": 1,
+        "positives_with_any_self_report": 1
+      }
+    },
+    "rows": [
+      {
+        "id": "c84a0bf94f",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "da7157baf5",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "af60597502",
+        "pos": false,
+        "major": false,
+        "language": "Dutch",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "75a373b782",
+        "pos": false,
+        "major": false,
+        "language": "Italian",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "8a200bcdd0",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "d6e06822f0",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "38fbfe04ed",
+        "pos": true,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "f1ff79e4a8",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "1dfa95a297",
+        "pos": false,
+        "major": false,
+        "language": "Italian",
+        "ocr_model": "gemini-3.1-flash-lite",
+        "prompt_version": "v5.1.2026-03",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "d3b98a3e8a",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "ia-ocr/0.0.14",
+        "prompt_version": "unrecorded",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "29909e6010",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "84ac5ad2ef",
+        "pos": true,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "51c095230c",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "81a1b7ca6d",
+        "pos": false,
+        "major": false,
+        "language": "Hebrew",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "f13abd2742",
+        "pos": false,
+        "major": false,
+        "language": "Hebrew",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "afaea82d91",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "14",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "94cc937e29",
+        "pos": false,
+        "major": false,
+        "language": "Tibetan",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "e7cb94194c",
+        "pos": false,
+        "major": false,
+        "language": "Italian",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "d2e5324f7f",
+        "pos": false,
+        "major": false,
+        "language": "French",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.1.2026-03",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "4b1192a20e",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "71507fd82c",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "dffe86faa0",
+        "pos": true,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "bdbbd661f2",
+        "pos": false,
+        "major": false,
+        "language": "Italian",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.1.2026-03",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "6f55c650cb",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "8aee308d14",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "9311bc4223",
+        "pos": false,
+        "major": false,
+        "language": "Italian",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "1a16f0539d",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "7c34ba73d6",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "48a0320b00",
+        "pos": false,
+        "major": false,
+        "language": "Japanese",
+        "ocr_model": "gemini-3.1-flash-lite",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "57d8fa14fe",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "13a65259a4",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "48b134e2d6",
+        "pos": true,
+        "major": true,
+        "language": "Tibetan",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "5e23c3a0df",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.1.2026-03",
+        "scan_quality": "fair",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "c8fdcd01ed",
+        "pos": false,
+        "major": false,
+        "language": "Tibetan",
+        "ocr_model": "bdrc-yigdzin-v1",
+        "prompt_version": "unrecorded",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "cb0f4433d2",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3.1-flash-lite",
+        "prompt_version": "v5.1.2026-03",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "309e4fc630",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.1.2026-03",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "b7a736005f",
+        "pos": false,
+        "major": false,
+        "language": "French",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "4190b6a92b",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "dfef911982",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "027bfd8b0f",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3.1-flash-lite",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "825ee6879c",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "8deac5a747",
+        "pos": false,
+        "major": false,
+        "language": "Dutch",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "4d082246ce",
+        "pos": false,
+        "major": false,
+        "language": "Chinese",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "f5bb314eb3",
+        "pos": false,
+        "major": false,
+        "language": "Arabic",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "c8ca92cbf6",
+        "pos": false,
+        "major": false,
+        "language": "Chinese",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "e54d971577",
+        "pos": false,
+        "major": false,
+        "language": "Sanskrit",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "7d3ba22257",
+        "pos": false,
+        "major": false,
+        "language": "Korean",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "c60f5e7356",
+        "pos": false,
+        "major": false,
+        "language": "French",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "4b4d01bf24",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "ocr-changed-since-audit",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "9242725390",
+        "pos": false,
+        "major": false,
+        "language": "Dutch",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "ef3536ee63",
+        "pos": false,
+        "major": false,
+        "language": "Chinese",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "6fd359fff7",
+        "pos": false,
+        "major": false,
+        "language": "Arabic",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "7157f39f99",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 18
+      },
+      {
+        "id": "2c0f3b187c",
+        "pos": false,
+        "major": false,
+        "language": "Italian",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "4c8bf4c991",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "1cc475c4d4",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "c025e07386",
+        "pos": false,
+        "major": false,
+        "language": "Dutch",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "f422ecc341",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "e798ba1123",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "8f04299e0d",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "b8c9b3f722",
+        "pos": true,
+        "major": true,
+        "language": "Japanese",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "ocr-changed-since-audit",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "c7ac0b62c7",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "ffa669cd9c",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "a37196c72c",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "0fdc55aa66",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "fefd2c45b1",
+        "pos": false,
+        "major": false,
+        "language": "Arabic",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "da0be9a076",
+        "pos": false,
+        "major": false,
+        "language": "Korean",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "fair",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "4ea7568f14",
+        "pos": false,
+        "major": false,
+        "language": "Tibetan",
+        "ocr_model": "bdrc-yigdzin-v1",
+        "prompt_version": "unrecorded",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "0f39191f66",
+        "pos": false,
+        "major": false,
+        "language": "Arabic",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 1
+      },
+      {
+        "id": "132727d934",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "57b581b5b9",
+        "pos": false,
+        "major": false,
+        "language": "Dutch",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "fe4687018e",
+        "pos": false,
+        "major": false,
+        "language": "Chinese",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "05645dc5a2",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "0f0d15a7d9",
+        "pos": false,
+        "major": false,
+        "language": "Chinese",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "9a0ea36320",
+        "pos": false,
+        "major": false,
+        "language": "French",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.1.2026-03",
+        "scan_quality": "fair",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "2b9f2f974d",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "1280fc970b",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "999d034cc0",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": true,
+        "warning_read_harm": true,
+        "unclear": 5
+      },
+      {
+        "id": "506f84ee10",
+        "pos": false,
+        "major": false,
+        "language": "French",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "44ccc0930c",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "b555628e1b",
+        "pos": true,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 10
+      },
+      {
+        "id": "f4d71f2bc4",
+        "pos": false,
+        "major": false,
+        "language": "Dutch",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "edf34dac1e",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "0ab88f055a",
+        "pos": false,
+        "major": false,
+        "language": "Spanish",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "d5a438269d",
+        "pos": false,
+        "major": false,
+        "language": "Sanskrit",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "f1e377b0a2",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "3df3c6d365",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "276dffd044",
+        "pos": true,
+        "major": false,
+        "language": "Arabic",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "8b51228c45",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "26be858866",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "c60148b353",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.1.2026-03",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "ee9968755a",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "fc56e69820",
+        "pos": false,
+        "major": false,
+        "language": "Arabic",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "21fa383cbe",
+        "pos": false,
+        "major": false,
+        "language": "Hebrew",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": true,
+        "warning_read_harm": true,
+        "unclear": 23
+      },
+      {
+        "id": "4de0ad8da3",
+        "pos": false,
+        "major": false,
+        "language": "Tibetan",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "2da7310f86",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "eab59a26ac",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "61d9ea9855",
+        "pos": false,
+        "major": false,
+        "language": "Chinese",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.1.2026-03",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "7810178ef3",
+        "pos": false,
+        "major": false,
+        "language": "Spanish",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "740bb56281",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "a4a3ea8d60",
+        "pos": false,
+        "major": false,
+        "language": "Chinese",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "1d05e3067a",
+        "pos": false,
+        "major": false,
+        "language": "Italian",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "9be3ef3067",
+        "pos": false,
+        "major": false,
+        "language": "Tibetan",
+        "ocr_model": "bdrc-woodblock-easter2",
+        "prompt_version": "unrecorded",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "8bbd53f236",
+        "pos": false,
+        "major": false,
+        "language": "Dutch",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "06a1c09f2f",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "c111d02137",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "1aca834c63",
+        "pos": false,
+        "major": false,
+        "language": "Dutch",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "b5743d8a92",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "cf03cb80e8",
+        "pos": true,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 41
+      },
+      {
+        "id": "bbad675645",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "04fd772f8b",
+        "pos": true,
+        "major": true,
+        "language": "Italian",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "cd6bed0375",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "3d886a5ac0",
+        "pos": false,
+        "major": false,
+        "language": "Hebrew",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 1
+      },
+      {
+        "id": "49666cd5c1",
+        "pos": false,
+        "major": false,
+        "language": "Sanskrit",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": true,
+        "warning_read_harm": true,
+        "unclear": 1
+      },
+      {
+        "id": "640eeb7244",
+        "pos": false,
+        "major": false,
+        "language": "Japanese",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "16",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "bc90d0af1a",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": true,
+        "warning_read_harm": true,
+        "unclear": 385
+      },
+      {
+        "id": "a548f0df73",
+        "pos": true,
+        "major": true,
+        "language": "Greek",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "478045207a",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "ed9643dcf5",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "efb59025b3",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "b55313274f",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "e163c51e42",
+        "pos": true,
+        "major": true,
+        "language": "Korean",
+        "ocr_model": "gemini-3.1-flash-lite",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "170d34fd47",
+        "pos": false,
+        "major": false,
+        "language": "Tibetan",
+        "ocr_model": "bdrc-woodblock-easter2",
+        "prompt_version": "unrecorded",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "05adc15c3b",
+        "pos": false,
+        "major": false,
+        "language": "Arabic",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 1
+      },
+      {
+        "id": "f6ea7fd16d",
+        "pos": false,
+        "major": false,
+        "language": "Dutch",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "fda13f0cdb",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "492738f765",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "dc2f63e95e",
+        "pos": false,
+        "major": false,
+        "language": "Italian",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "98e748c799",
+        "pos": false,
+        "major": false,
+        "language": "Italian",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "03287f0b70",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "0b25f62f8f",
+        "pos": false,
+        "major": false,
+        "language": "Sanskrit",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "97757f9def",
+        "pos": false,
+        "major": false,
+        "language": "French",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "ee2d1aa7ca",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "6b6ebc2804",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3.1-flash-lite",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "76fbeaa6de",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "8486dac03c",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "a487f49e50",
+        "pos": false,
+        "major": false,
+        "language": "Chinese",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "missing",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "7765f57a99",
+        "pos": false,
+        "major": false,
+        "language": "Korean",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "52e056e34f",
+        "pos": false,
+        "major": false,
+        "language": "Chinese",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "01f49617a3",
+        "pos": false,
+        "major": false,
+        "language": "Chinese",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "f824bbf297",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "0ef91a06a0",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "546d7ba8f0",
+        "pos": true,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "f40df9c7b3",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "125e0aa84d",
+        "pos": false,
+        "major": false,
+        "language": "French",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "eed8aeb7a2",
+        "pos": true,
+        "major": true,
+        "language": "Hebrew",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 1
+      },
+      {
+        "id": "963714013b",
+        "pos": false,
+        "major": false,
+        "language": "Hebrew",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "6562939ea3",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "d83260e0c0",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "839b77f72b",
+        "pos": false,
+        "major": false,
+        "language": "Tibetan",
+        "ocr_model": "bdrc-woodblock-easter2",
+        "prompt_version": "unrecorded",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "71fc6920fe",
+        "pos": false,
+        "major": false,
+        "language": "Tibetan",
+        "ocr_model": "bdrc-woodblock-easter2",
+        "prompt_version": "v10",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "3860aeacb7",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "81593b1d9b",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "9a741d85ad",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "fa112e3509",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "8ccab60b13",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "630e34eb2f",
+        "pos": false,
+        "major": false,
+        "language": "Dutch",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "8b5d244adf",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "f4f7331295",
+        "pos": true,
+        "major": true,
+        "language": "Hebrew",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 1
+      },
+      {
+        "id": "9b9709c639",
+        "pos": false,
+        "major": false,
+        "language": "Dutch",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "673eeb90f6",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "14",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "6c6b6292e6",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "d78d92acd9",
+        "pos": false,
+        "major": false,
+        "language": "Italian",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "63cb959823",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "7c3e825a3b",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "72ab6df3fb",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "e063f4df03",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "ed62156f5a",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "a893f930eb",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "4932d87c92",
+        "pos": true,
+        "major": false,
+        "language": "Arabic",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "566775d4de",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "fd864c3447",
+        "pos": false,
+        "major": false,
+        "language": "French",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "3df47a3908",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "cd25001770",
+        "pos": false,
+        "major": false,
+        "language": "Chinese",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "506f8ac2ed",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "6ab9cd42d6",
+        "pos": false,
+        "major": false,
+        "language": "Italian",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "3c80e935d4",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "eed4b0b704",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "a827fdf979",
+        "pos": false,
+        "major": false,
+        "language": "Sanskrit",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "59d67eacf9",
+        "pos": false,
+        "major": false,
+        "language": "French",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "6418fa9d4a",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "0a29385853",
+        "pos": false,
+        "major": false,
+        "language": "Spanish",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "116c712e63",
+        "pos": false,
+        "major": false,
+        "language": "Italian",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.1.2026-03",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "53142d1d03",
+        "pos": false,
+        "major": false,
+        "language": "Hebrew",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "4fc6e45cef",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "e3e582b5ac",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v4.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 1
+      },
+      {
+        "id": "e5885344f0",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "05b1da1988",
+        "pos": false,
+        "major": false,
+        "language": "Spanish",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "ocr-changed-since-audit",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "e9c19bd7e6",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "720a2ea998",
+        "pos": false,
+        "major": false,
+        "language": "French",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "aeb42759e7",
+        "pos": true,
+        "major": true,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "7c972fdf5f",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "6b893e00bd",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "e3338e9477",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "cbd3c39f3b",
+        "pos": false,
+        "major": false,
+        "language": "Sanskrit",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "b4f8c7de68",
+        "pos": false,
+        "major": false,
+        "language": "Italian",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "20e180e99d",
+        "pos": false,
+        "major": false,
+        "language": "French",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "spread-v2+ocr-v10",
+        "scan_quality": "missing",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "10ed56dc82",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "d1dc063067",
+        "pos": true,
+        "major": true,
+        "language": "Sanskrit",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "77e17c0733",
+        "pos": false,
+        "major": false,
+        "language": "Italian",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "1db528758b",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "dd988aedf0",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "f2c3bdefc9",
+        "pos": true,
+        "major": true,
+        "language": "Sanskrit",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "79cd4a55fc",
+        "pos": false,
+        "major": false,
+        "language": "Arabic",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "7cf97b9e44",
+        "pos": false,
+        "major": false,
+        "language": "French",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "ac521c2678",
+        "pos": false,
+        "major": false,
+        "language": "Dutch",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "98cb63e9c6",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3.1-flash-lite",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "b4dae784fd",
+        "pos": true,
+        "major": true,
+        "language": "French",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "76b7874a39",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "235c55d9cd",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "9229dc2916",
+        "pos": true,
+        "major": true,
+        "language": "Japanese",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "ocr-changed-since-audit",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "33b8e7a032",
+        "pos": false,
+        "major": false,
+        "language": "Dutch",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "c9c8b8527f",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "4f155e9559",
+        "pos": false,
+        "major": false,
+        "language": "Japanese",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "ocr-changed-since-audit",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "47134f09ff",
+        "pos": false,
+        "major": false,
+        "language": "Hebrew",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "162afcee50",
+        "pos": false,
+        "major": false,
+        "language": "Sanskrit",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "b8060dc51b",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "2ef4513968",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "0591b803f6",
+        "pos": true,
+        "major": false,
+        "language": "Arabic",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "fair",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 1
+      },
+      {
+        "id": "1804d610f3",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "13cd540a3d",
+        "pos": false,
+        "major": false,
+        "language": "Italian",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "ac2b0ec936",
+        "pos": false,
+        "major": false,
+        "language": "Hebrew",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "3fbf3a82db",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "fd398eac82",
+        "pos": false,
+        "major": false,
+        "language": "Tibetan",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "3a46561567",
+        "pos": false,
+        "major": false,
+        "language": "Dutch",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "5f900fb966",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "bcd5552766",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "61fe87fe40",
+        "pos": false,
+        "major": false,
+        "language": "French",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "fa9771a365",
+        "pos": false,
+        "major": false,
+        "language": "Chinese",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "74a5587687",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "0b1479907c",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "02ec073c0c",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "ocr-changed-since-audit",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "f46c65b0a3",
+        "pos": false,
+        "major": false,
+        "language": "Dutch",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "fbff9b3277",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "485571afa2",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "8ad1bca178",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "c0d7470bd8",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "7160a277f7",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "d1d4fc7662",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "6905cf444d",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "661e6e67b3",
+        "pos": false,
+        "major": false,
+        "language": "French",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 1
+      },
+      {
+        "id": "20074f3b7a",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "8597e3e7b3",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "02a91ca8b5",
+        "pos": false,
+        "major": false,
+        "language": "French",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "692c7b0934",
+        "pos": true,
+        "major": false,
+        "language": "Tibetan",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "3b63cb3e17",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "9f3c4b81cf",
+        "pos": true,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v14-lacuna",
+        "scan_quality": "poor",
+        "warning": true,
+        "warning_read_harm": true,
+        "unclear": 0
+      },
+      {
+        "id": "dea55ea366",
+        "pos": true,
+        "major": false,
+        "language": "Korean",
+        "ocr_model": "gemini-3.1-flash-lite",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "40d19cba36",
+        "pos": false,
+        "major": false,
+        "language": "Spanish",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "ocr-changed-since-audit",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "1c9d1945e6",
+        "pos": true,
+        "major": false,
+        "language": "French",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "missing",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "f4b029fb24",
+        "pos": false,
+        "major": false,
+        "language": "Chinese",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "a49d3d3155",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "e7fe261d55",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "spread-v2+ocr-v10",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "ca3b660d08",
+        "pos": false,
+        "major": false,
+        "language": "Dutch",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "6caa0693e3",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "1ec31d2575",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "d9f45e5b0a",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3.1-flash-lite",
+        "prompt_version": "ocr-changed-since-audit",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "e19901a027",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "f30e26de8d",
+        "pos": false,
+        "major": false,
+        "language": "French",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.1.2026-03",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "cc2ccd2177",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "c433548389",
+        "pos": false,
+        "major": false,
+        "language": "French",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.1.2026-03",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "71bec7e30e",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "e37dde5963",
+        "pos": false,
+        "major": false,
+        "language": "Japanese",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "242760d6a6",
+        "pos": false,
+        "major": false,
+        "language": "Dutch",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "018aef589b",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.1.2026-03",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "90ee75163d",
+        "pos": false,
+        "major": false,
+        "language": "French",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "da99026acc",
+        "pos": false,
+        "major": false,
+        "language": "Sanskrit",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "134c51dfa7",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "ocr-changed-since-audit",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "203b7be7ee",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "spread-v2+ocr-v10",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "a95051158c",
+        "pos": false,
+        "major": false,
+        "language": "French",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "0eaa606375",
+        "pos": false,
+        "major": false,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "4b76768eb2",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "da8dd70621",
+        "pos": false,
+        "major": false,
+        "language": "French",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": true,
+        "warning_read_harm": true,
+        "unclear": 1
+      },
+      {
+        "id": "94ec645ba9",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3.1-flash-lite",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "897246fdea",
+        "pos": true,
+        "major": false,
+        "language": "Sanskrit",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 4
+      },
+      {
+        "id": "5ec8fcf710",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "08137c018d",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "2460c77abe",
+        "pos": false,
+        "major": false,
+        "language": "Italian",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "e067b05d32",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "545f9fcf4b",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "86096a7c82",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.1.2026-03",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "8b87517412",
+        "pos": false,
+        "major": false,
+        "language": "Chinese",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "888095e8dd",
+        "pos": false,
+        "major": false,
+        "language": "Hebrew",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "3f9b717dc1",
+        "pos": false,
+        "major": false,
+        "language": "Arabic",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "de1cb7dcd9",
+        "pos": false,
+        "major": false,
+        "language": "Chinese",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "03e5f6510e",
+        "pos": true,
+        "major": true,
+        "language": "Chinese",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "ab55f30fa8",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "4c9937a086",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "e375252344",
+        "pos": false,
+        "major": false,
+        "language": "Hebrew",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 1
+      },
+      {
+        "id": "5f722adf89",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "a695f2a367",
+        "pos": false,
+        "major": false,
+        "language": "Korean",
+        "ocr_model": "gemini-3.1-flash-lite",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 1
+      },
+      {
+        "id": "2f13c22b47",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "38e3a0869b",
+        "pos": true,
+        "major": true,
+        "language": "Greek",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "c96f5a9355",
+        "pos": false,
+        "major": false,
+        "language": "Italian",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "000e297cf3",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "70af840905",
+        "pos": false,
+        "major": false,
+        "language": "Sanskrit",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "4527f0ad49",
+        "pos": true,
+        "major": false,
+        "language": "Arabic",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "959dcf8ad2",
+        "pos": false,
+        "major": false,
+        "language": "Chinese",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.1.2026-03",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "92b38e931a",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "589aeb7a7e",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "fcf9259dc1",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "1bdf80efdb",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "9f59eb58c5",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "621637f802",
+        "pos": false,
+        "major": false,
+        "language": "English",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "344b07fc3b",
+        "pos": false,
+        "major": false,
+        "language": "Latin",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "12",
+        "scan_quality": "good",
+        "warning": true,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "97dc3fc109",
+        "pos": false,
+        "major": false,
+        "language": "Spanish",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "d359402bc4",
+        "pos": false,
+        "major": false,
+        "language": "French",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "32de2c9eaa",
+        "pos": false,
+        "major": false,
+        "language": "Chinese",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v3.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "10c9429971",
+        "pos": false,
+        "major": false,
+        "language": "French",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v5.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "fdc537040e",
+        "pos": false,
+        "major": false,
+        "language": "German",
+        "ocr_model": "gemini-3-flash-preview",
+        "prompt_version": "v4.2026-02",
+        "scan_quality": "missing",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      },
+      {
+        "id": "20a6a43282",
+        "pos": false,
+        "major": false,
+        "language": "Dutch",
+        "ocr_model": "gemini-3.1-flash-lite-preview",
+        "prompt_version": "v10",
+        "scan_quality": "good",
+        "warning": false,
+        "warning_read_harm": false,
+        "unclear": 0
+      }
+    ]
+  },
+  "step2": {
+    "method": "char-trigram (add-0.1) per catalogue language; score = page bits/char − language median of held-out clean pages; <unclear> removed",
+    "sample_pages": 4500,
+    "judged": 289,
+    "unjudged": 22,
+    "unjudged_positives": 1,
+    "auc": 0.521,
+    "auc_major": 0.478,
+    "operating_points": [
+      {
+        "threshold_bits": 0.5,
+        "flagged": 33,
+        "tp": 5,
+        "precision": 0.15,
+        "recall": 0.18,
+        "recall_major": 0.21
+      },
+      {
+        "threshold_bits": 1,
+        "flagged": 17,
+        "tp": 3,
+        "precision": 0.18,
+        "recall": 0.11,
+        "recall_major": 0.14
+      },
+      {
+        "threshold_bits": 1.5,
+        "flagged": 7,
+        "tp": 3,
+        "precision": 0.43,
+        "recall": 0.11,
+        "recall_major": 0.14
+      },
+      {
+        "threshold_bits": 2,
+        "flagged": 5,
+        "tp": 3,
+        "precision": 0.6,
+        "recall": 0.11,
+        "recall_major": 0.14
+      },
+      {
+        "threshold_bits": 3,
+        "flagged": 2,
+        "tp": 1,
+        "precision": 0.5,
+        "recall": 0.04,
+        "recall_major": 0.07
+      }
+    ],
+    "baselines": {
+      "Latin": {
+        "held_pages": 59,
+        "p50": 3.054,
+        "p95": 4.28
+      },
+      "English": {
+        "held_pages": 62,
+        "p50": 2.852,
+        "p95": 3.22
+      },
+      "German": {
+        "held_pages": 57,
+        "p50": 2.844,
+        "p95": 3.139
+      },
+      "Greek": {
+        "held_pages": 57,
+        "p50": 3.207,
+        "p95": 4.313
+      },
+      "French": {
+        "held_pages": 54,
+        "p50": 2.878,
+        "p95": 3.294
+      },
+      "Italian": {
+        "held_pages": 48,
+        "p50": 2.846,
+        "p95": 3.123
+      },
+      "Dutch": {
+        "held_pages": 58,
+        "p50": 2.835,
+        "p95": 3.514
+      },
+      "Chinese": {
+        "held_pages": 35,
+        "p50": 11.603,
+        "p95": 11.691
+      },
+      "Sanskrit": {
+        "held_pages": 53,
+        "p50": 3.835,
+        "p95": 7.897
+      },
+      "Hebrew": {
+        "held_pages": 63,
+        "p50": 3.565,
+        "p95": 4.01
+      },
+      "Arabic": {
+        "held_pages": 52,
+        "p50": 3.38,
+        "p95": 7.533
+      },
+      "Tibetan": {
+        "held_pages": 62,
+        "p50": 2.559,
+        "p95": 4.29
+      },
+      "Korean": {
+        "held_pages": 51,
+        "p50": 11.641,
+        "p95": 11.775
+      },
+      "Spanish": {
+        "held_pages": 51,
+        "p50": 2.955,
+        "p95": 3.313
+      },
+      "Japanese": {
+        "held_pages": 43,
+        "p50": 10.031,
+        "p95": 11.037
+      }
+    },
+    "positive_control": {
+      "Latin": {
+        "garbled_mean_excess": 1.21,
+        "clean_mean_excess": 0.36,
+        "auc_garbled_vs_clean": 0.844
+      },
+      "English": {
+        "garbled_mean_excess": 1.14,
+        "clean_mean_excess": 0.03,
+        "auc_garbled_vs_clean": 1
+      },
+      "German": {
+        "garbled_mean_excess": 1.1,
+        "clean_mean_excess": 0.04,
+        "auc_garbled_vs_clean": 1
+      },
+      "Greek": {
+        "garbled_mean_excess": 1.43,
+        "clean_mean_excess": 0.23,
+        "auc_garbled_vs_clean": 1
+      },
+      "French": {
+        "garbled_mean_excess": 1.04,
+        "clean_mean_excess": -0.02,
+        "auc_garbled_vs_clean": 0.963
+      },
+      "Italian": {
+        "garbled_mean_excess": 0.97,
+        "clean_mean_excess": -0.01,
+        "auc_garbled_vs_clean": 1
+      },
+      "Dutch": {
+        "garbled_mean_excess": 0.94,
+        "clean_mean_excess": -0.02,
+        "auc_garbled_vs_clean": 1
+      },
+      "Chinese": {
+        "garbled_mean_excess": -0.01,
+        "clean_mean_excess": -0.06,
+        "auc_garbled_vs_clean": 0.673
+      },
+      "Sanskrit": {
+        "garbled_mean_excess": 1.86,
+        "clean_mean_excess": 0.89,
+        "auc_garbled_vs_clean": 0.781
+      },
+      "Hebrew": {
+        "garbled_mean_excess": 0.81,
+        "clean_mean_excess": 0.09,
+        "auc_garbled_vs_clean": 0.918
+      },
+      "Arabic": {
+        "garbled_mean_excess": 1,
+        "clean_mean_excess": 0.09,
+        "auc_garbled_vs_clean": 1
+      },
+      "Tibetan": {
+        "garbled_mean_excess": 1.82,
+        "clean_mean_excess": 0.61,
+        "auc_garbled_vs_clean": 0.798
+      },
+      "Korean": {
+        "garbled_mean_excess": -0.15,
+        "clean_mean_excess": -0.28,
+        "auc_garbled_vs_clean": 0.566
+      },
+      "Spanish": {
+        "garbled_mean_excess": 0.93,
+        "clean_mean_excess": -0.02,
+        "auc_garbled_vs_clean": 1
+      },
+      "Japanese": {
+        "garbled_mean_excess": -0.19,
+        "clean_mean_excess": -0.43,
+        "auc_garbled_vs_clean": 0.609
+      }
+    },
+    "rows": [
+      {
+        "id": "c84a0bf94f",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.199
+      },
+      {
+        "id": "da7157baf5",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.508
+      },
+      {
+        "id": "af60597502",
+        "language": "Dutch",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.083
+      },
+      {
+        "id": "75a373b782",
+        "language": "Italian",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.363
+      },
+      {
+        "id": "8a200bcdd0",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.058
+      },
+      {
+        "id": "d6e06822f0",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.295
+      },
+      {
+        "id": "38fbfe04ed",
+        "language": "Latin",
+        "pos": true,
+        "major": false,
+        "judged": true,
+        "excess": 0.352
+      },
+      {
+        "id": "f1ff79e4a8",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.109
+      },
+      {
+        "id": "1dfa95a297",
+        "language": "Italian",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.276
+      },
+      {
+        "id": "d3b98a3e8a",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.029
+      },
+      {
+        "id": "29909e6010",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.003
+      },
+      {
+        "id": "84ac5ad2ef",
+        "language": "German",
+        "pos": true,
+        "major": false,
+        "judged": true,
+        "excess": -0.162
+      },
+      {
+        "id": "51c095230c",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.137
+      },
+      {
+        "id": "81a1b7ca6d",
+        "language": "Hebrew",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.071
+      },
+      {
+        "id": "f13abd2742",
+        "language": "Hebrew",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.021
+      },
+      {
+        "id": "afaea82d91",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.589
+      },
+      {
+        "id": "94cc937e29",
+        "language": "Tibetan",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.346
+      },
+      {
+        "id": "e7cb94194c",
+        "language": "Italian",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.212
+      },
+      {
+        "id": "d2e5324f7f",
+        "language": "French",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.066
+      },
+      {
+        "id": "4b1192a20e",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.091
+      },
+      {
+        "id": "71507fd82c",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.115
+      },
+      {
+        "id": "dffe86faa0",
+        "language": "Latin",
+        "pos": true,
+        "major": false,
+        "judged": true,
+        "excess": -0.061
+      },
+      {
+        "id": "bdbbd661f2",
+        "language": "Italian",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.091
+      },
+      {
+        "id": "6f55c650cb",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.169
+      },
+      {
+        "id": "8aee308d14",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.017
+      },
+      {
+        "id": "9311bc4223",
+        "language": "Italian",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 1.078
+      },
+      {
+        "id": "1a16f0539d",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 1.311
+      },
+      {
+        "id": "7c34ba73d6",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.189
+      },
+      {
+        "id": "48a0320b00",
+        "language": "Japanese",
+        "pos": false,
+        "major": false,
+        "judged": false,
+        "excess": null
+      },
+      {
+        "id": "57d8fa14fe",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.369
+      },
+      {
+        "id": "13a65259a4",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.058
+      },
+      {
+        "id": "48b134e2d6",
+        "language": "Tibetan",
+        "pos": true,
+        "major": true,
+        "judged": true,
+        "excess": -0.102
+      },
+      {
+        "id": "5e23c3a0df",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.215
+      },
+      {
+        "id": "c8fdcd01ed",
+        "language": "Tibetan",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.088
+      },
+      {
+        "id": "cb0f4433d2",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.092
+      },
+      {
+        "id": "309e4fc630",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.085
+      },
+      {
+        "id": "b7a736005f",
+        "language": "French",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.102
+      },
+      {
+        "id": "4190b6a92b",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.172
+      },
+      {
+        "id": "dfef911982",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.522
+      },
+      {
+        "id": "027bfd8b0f",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.094
+      },
+      {
+        "id": "825ee6879c",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.199
+      },
+      {
+        "id": "8deac5a747",
+        "language": "Dutch",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.214
+      },
+      {
+        "id": "4d082246ce",
+        "language": "Chinese",
+        "pos": false,
+        "major": false,
+        "judged": false,
+        "excess": null
+      },
+      {
+        "id": "f5bb314eb3",
+        "language": "Arabic",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.066
+      },
+      {
+        "id": "c8ca92cbf6",
+        "language": "Chinese",
+        "pos": false,
+        "major": false,
+        "judged": false,
+        "excess": null
+      },
+      {
+        "id": "e54d971577",
+        "language": "Sanskrit",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.37
+      },
+      {
+        "id": "7d3ba22257",
+        "language": "Korean",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.024
+      },
+      {
+        "id": "c60f5e7356",
+        "language": "French",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.009
+      },
+      {
+        "id": "4b4d01bf24",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.023
+      },
+      {
+        "id": "9242725390",
+        "language": "Dutch",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.22
+      },
+      {
+        "id": "ef3536ee63",
+        "language": "Chinese",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.056
+      },
+      {
+        "id": "6fd359fff7",
+        "language": "Arabic",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 1.034
+      },
+      {
+        "id": "7157f39f99",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.005
+      },
+      {
+        "id": "2c0f3b187c",
+        "language": "Italian",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.031
+      },
+      {
+        "id": "4c8bf4c991",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.305
+      },
+      {
+        "id": "1cc475c4d4",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.161
+      },
+      {
+        "id": "c025e07386",
+        "language": "Dutch",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.006
+      },
+      {
+        "id": "f422ecc341",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.069
+      },
+      {
+        "id": "e798ba1123",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.266
+      },
+      {
+        "id": "8f04299e0d",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.066
+      },
+      {
+        "id": "b8c9b3f722",
+        "language": "Japanese",
+        "pos": true,
+        "major": true,
+        "judged": true,
+        "excess": -0.054
+      },
+      {
+        "id": "c7ac0b62c7",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.069
+      },
+      {
+        "id": "ffa669cd9c",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.215
+      },
+      {
+        "id": "a37196c72c",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.06
+      },
+      {
+        "id": "0fdc55aa66",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.047
+      },
+      {
+        "id": "fefd2c45b1",
+        "language": "Arabic",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.078
+      },
+      {
+        "id": "da0be9a076",
+        "language": "Korean",
+        "pos": false,
+        "major": false,
+        "judged": false,
+        "excess": null
+      },
+      {
+        "id": "4ea7568f14",
+        "language": "Tibetan",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.005
+      },
+      {
+        "id": "0f39191f66",
+        "language": "Arabic",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.905
+      },
+      {
+        "id": "132727d934",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 1.796
+      },
+      {
+        "id": "57b581b5b9",
+        "language": "Dutch",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.031
+      },
+      {
+        "id": "fe4687018e",
+        "language": "Chinese",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.04
+      },
+      {
+        "id": "05645dc5a2",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.917
+      },
+      {
+        "id": "0f0d15a7d9",
+        "language": "Chinese",
+        "pos": false,
+        "major": false,
+        "judged": false,
+        "excess": null
+      },
+      {
+        "id": "9a0ea36320",
+        "language": "French",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.064
+      },
+      {
+        "id": "2b9f2f974d",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.266
+      },
+      {
+        "id": "1280fc970b",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.205
+      },
+      {
+        "id": "999d034cc0",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.499
+      },
+      {
+        "id": "506f84ee10",
+        "language": "French",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.074
+      },
+      {
+        "id": "44ccc0930c",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 1.159
+      },
+      {
+        "id": "b555628e1b",
+        "language": "Greek",
+        "pos": true,
+        "major": false,
+        "judged": true,
+        "excess": -0.04
+      },
+      {
+        "id": "f4d71f2bc4",
+        "language": "Dutch",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.146
+      },
+      {
+        "id": "edf34dac1e",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.261
+      },
+      {
+        "id": "0ab88f055a",
+        "language": "Spanish",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.223
+      },
+      {
+        "id": "d5a438269d",
+        "language": "Sanskrit",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.643
+      },
+      {
+        "id": "f1e377b0a2",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.105
+      },
+      {
+        "id": "3df3c6d365",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": false,
+        "excess": null
+      },
+      {
+        "id": "276dffd044",
+        "language": "Arabic",
+        "pos": true,
+        "major": false,
+        "judged": true,
+        "excess": 0.124
+      },
+      {
+        "id": "8b51228c45",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.065
+      },
+      {
+        "id": "26be858866",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.062
+      },
+      {
+        "id": "c60148b353",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.671
+      },
+      {
+        "id": "ee9968755a",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.183
+      },
+      {
+        "id": "fc56e69820",
+        "language": "Arabic",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.02
+      },
+      {
+        "id": "21fa383cbe",
+        "language": "Hebrew",
+        "pos": false,
+        "major": false,
+        "judged": false,
+        "excess": null
+      },
+      {
+        "id": "4de0ad8da3",
+        "language": "Tibetan",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.27
+      },
+      {
+        "id": "2da7310f86",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.183
+      },
+      {
+        "id": "eab59a26ac",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.046
+      },
+      {
+        "id": "61d9ea9855",
+        "language": "Chinese",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.053
+      },
+      {
+        "id": "7810178ef3",
+        "language": "Spanish",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.11
+      },
+      {
+        "id": "740bb56281",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": false,
+        "excess": null
+      },
+      {
+        "id": "a4a3ea8d60",
+        "language": "Chinese",
+        "pos": false,
+        "major": false,
+        "judged": false,
+        "excess": null
+      },
+      {
+        "id": "1d05e3067a",
+        "language": "Italian",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.039
+      },
+      {
+        "id": "9be3ef3067",
+        "language": "Tibetan",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.237
+      },
+      {
+        "id": "8bbd53f236",
+        "language": "Dutch",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.104
+      },
+      {
+        "id": "06a1c09f2f",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.874
+      },
+      {
+        "id": "c111d02137",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.134
+      },
+      {
+        "id": "1aca834c63",
+        "language": "Dutch",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.091
+      },
+      {
+        "id": "b5743d8a92",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": false,
+        "excess": null
+      },
+      {
+        "id": "cf03cb80e8",
+        "language": "Greek",
+        "pos": true,
+        "major": false,
+        "judged": true,
+        "excess": 2.879
+      },
+      {
+        "id": "bbad675645",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.012
+      },
+      {
+        "id": "04fd772f8b",
+        "language": "Italian",
+        "pos": true,
+        "major": true,
+        "judged": true,
+        "excess": 2.138
+      },
+      {
+        "id": "cd6bed0375",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.607
+      },
+      {
+        "id": "3d886a5ac0",
+        "language": "Hebrew",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.09
+      },
+      {
+        "id": "49666cd5c1",
+        "language": "Sanskrit",
+        "pos": false,
+        "major": false,
+        "judged": false,
+        "excess": null
+      },
+      {
+        "id": "640eeb7244",
+        "language": "Japanese",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -2.175
+      },
+      {
+        "id": "bc90d0af1a",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.344
+      },
+      {
+        "id": "a548f0df73",
+        "language": "Greek",
+        "pos": true,
+        "major": true,
+        "judged": true,
+        "excess": -0.295
+      },
+      {
+        "id": "478045207a",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.078
+      },
+      {
+        "id": "ed9643dcf5",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.041
+      },
+      {
+        "id": "efb59025b3",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.336
+      },
+      {
+        "id": "b55313274f",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.014
+      },
+      {
+        "id": "e163c51e42",
+        "language": "Korean",
+        "pos": true,
+        "major": true,
+        "judged": true,
+        "excess": -0.003
+      },
+      {
+        "id": "170d34fd47",
+        "language": "Tibetan",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 2.11
+      },
+      {
+        "id": "05adc15c3b",
+        "language": "Arabic",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.013
+      },
+      {
+        "id": "f6ea7fd16d",
+        "language": "Dutch",
+        "pos": false,
+        "major": false,
+        "judged": false,
+        "excess": null
+      },
+      {
+        "id": "fda13f0cdb",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.14
+      },
+      {
+        "id": "492738f765",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.125
+      },
+      {
+        "id": "dc2f63e95e",
+        "language": "Italian",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.084
+      },
+      {
+        "id": "98e748c799",
+        "language": "Italian",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.097
+      },
+      {
+        "id": "03287f0b70",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.07
+      },
+      {
+        "id": "0b25f62f8f",
+        "language": "Sanskrit",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.117
+      },
+      {
+        "id": "97757f9def",
+        "language": "French",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.127
+      },
+      {
+        "id": "ee2d1aa7ca",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.002
+      },
+      {
+        "id": "6b6ebc2804",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.175
+      },
+      {
+        "id": "76fbeaa6de",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.092
+      },
+      {
+        "id": "8486dac03c",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.205
+      },
+      {
+        "id": "a487f49e50",
+        "language": "Chinese",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.074
+      },
+      {
+        "id": "7765f57a99",
+        "language": "Korean",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.038
+      },
+      {
+        "id": "52e056e34f",
+        "language": "Chinese",
+        "pos": false,
+        "major": false,
+        "judged": false,
+        "excess": null
+      },
+      {
+        "id": "01f49617a3",
+        "language": "Chinese",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.039
+      },
+      {
+        "id": "f824bbf297",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.132
+      },
+      {
+        "id": "0ef91a06a0",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.359
+      },
+      {
+        "id": "546d7ba8f0",
+        "language": "Latin",
+        "pos": true,
+        "major": false,
+        "judged": true,
+        "excess": 0.014
+      },
+      {
+        "id": "f40df9c7b3",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.157
+      },
+      {
+        "id": "125e0aa84d",
+        "language": "French",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.189
+      },
+      {
+        "id": "eed8aeb7a2",
+        "language": "Hebrew",
+        "pos": true,
+        "major": true,
+        "judged": true,
+        "excess": 0.131
+      },
+      {
+        "id": "963714013b",
+        "language": "Hebrew",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.049
+      },
+      {
+        "id": "6562939ea3",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.088
+      },
+      {
+        "id": "d83260e0c0",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 1.696
+      },
+      {
+        "id": "839b77f72b",
+        "language": "Tibetan",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.08
+      },
+      {
+        "id": "71fc6920fe",
+        "language": "Tibetan",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.039
+      },
+      {
+        "id": "3860aeacb7",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.014
+      },
+      {
+        "id": "81593b1d9b",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.583
+      },
+      {
+        "id": "9a741d85ad",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.06
+      },
+      {
+        "id": "fa112e3509",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.195
+      },
+      {
+        "id": "8ccab60b13",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.14
+      },
+      {
+        "id": "630e34eb2f",
+        "language": "Dutch",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.111
+      },
+      {
+        "id": "8b5d244adf",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.11
+      },
+      {
+        "id": "f4f7331295",
+        "language": "Hebrew",
+        "pos": true,
+        "major": true,
+        "judged": true,
+        "excess": 0.625
+      },
+      {
+        "id": "9b9709c639",
+        "language": "Dutch",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.248
+      },
+      {
+        "id": "673eeb90f6",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.184
+      },
+      {
+        "id": "6c6b6292e6",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.014
+      },
+      {
+        "id": "d78d92acd9",
+        "language": "Italian",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.052
+      },
+      {
+        "id": "63cb959823",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.833
+      },
+      {
+        "id": "7c3e825a3b",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.176
+      },
+      {
+        "id": "72ab6df3fb",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 3.696
+      },
+      {
+        "id": "e063f4df03",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.176
+      },
+      {
+        "id": "ed62156f5a",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.422
+      },
+      {
+        "id": "a893f930eb",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.946
+      },
+      {
+        "id": "4932d87c92",
+        "language": "Arabic",
+        "pos": true,
+        "major": false,
+        "judged": true,
+        "excess": 0.189
+      },
+      {
+        "id": "566775d4de",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.002
+      },
+      {
+        "id": "fd864c3447",
+        "language": "French",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.08
+      },
+      {
+        "id": "3df47a3908",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.079
+      },
+      {
+        "id": "cd25001770",
+        "language": "Chinese",
+        "pos": false,
+        "major": false,
+        "judged": false,
+        "excess": null
+      },
+      {
+        "id": "506f8ac2ed",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.234
+      },
+      {
+        "id": "6ab9cd42d6",
+        "language": "Italian",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.078
+      },
+      {
+        "id": "3c80e935d4",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.004
+      },
+      {
+        "id": "eed4b0b704",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.144
+      },
+      {
+        "id": "a827fdf979",
+        "language": "Sanskrit",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.223
+      },
+      {
+        "id": "59d67eacf9",
+        "language": "French",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 1.322
+      },
+      {
+        "id": "6418fa9d4a",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.59
+      },
+      {
+        "id": "0a29385853",
+        "language": "Spanish",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.198
+      },
+      {
+        "id": "116c712e63",
+        "language": "Italian",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.041
+      },
+      {
+        "id": "53142d1d03",
+        "language": "Hebrew",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.279
+      },
+      {
+        "id": "4fc6e45cef",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.173
+      },
+      {
+        "id": "e3e582b5ac",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.383
+      },
+      {
+        "id": "e5885344f0",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.199
+      },
+      {
+        "id": "05b1da1988",
+        "language": "Spanish",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.222
+      },
+      {
+        "id": "e9c19bd7e6",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.336
+      },
+      {
+        "id": "720a2ea998",
+        "language": "French",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.091
+      },
+      {
+        "id": "aeb42759e7",
+        "language": "Greek",
+        "pos": true,
+        "major": true,
+        "judged": true,
+        "excess": -0.06
+      },
+      {
+        "id": "7c972fdf5f",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.185
+      },
+      {
+        "id": "6b893e00bd",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.313
+      },
+      {
+        "id": "e3338e9477",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.085
+      },
+      {
+        "id": "cbd3c39f3b",
+        "language": "Sanskrit",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.101
+      },
+      {
+        "id": "b4f8c7de68",
+        "language": "Italian",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.044
+      },
+      {
+        "id": "20e180e99d",
+        "language": "French",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.197
+      },
+      {
+        "id": "10ed56dc82",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.282
+      },
+      {
+        "id": "d1dc063067",
+        "language": "Sanskrit",
+        "pos": true,
+        "major": true,
+        "judged": true,
+        "excess": 4.027
+      },
+      {
+        "id": "77e17c0733",
+        "language": "Italian",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.017
+      },
+      {
+        "id": "1db528758b",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.264
+      },
+      {
+        "id": "dd988aedf0",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.175
+      },
+      {
+        "id": "f2c3bdefc9",
+        "language": "Sanskrit",
+        "pos": true,
+        "major": true,
+        "judged": true,
+        "excess": -0.04
+      },
+      {
+        "id": "79cd4a55fc",
+        "language": "Arabic",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.574
+      },
+      {
+        "id": "7cf97b9e44",
+        "language": "French",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.194
+      },
+      {
+        "id": "ac521c2678",
+        "language": "Dutch",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.075
+      },
+      {
+        "id": "98cb63e9c6",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.395
+      },
+      {
+        "id": "b4dae784fd",
+        "language": "French",
+        "pos": true,
+        "major": true,
+        "judged": true,
+        "excess": 0.137
+      },
+      {
+        "id": "76b7874a39",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.098
+      },
+      {
+        "id": "235c55d9cd",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.473
+      },
+      {
+        "id": "9229dc2916",
+        "language": "Japanese",
+        "pos": true,
+        "major": true,
+        "judged": true,
+        "excess": -1.116
+      },
+      {
+        "id": "33b8e7a032",
+        "language": "Dutch",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.04
+      },
+      {
+        "id": "c9c8b8527f",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.358
+      },
+      {
+        "id": "4f155e9559",
+        "language": "Japanese",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -1.036
+      },
+      {
+        "id": "47134f09ff",
+        "language": "Hebrew",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.372
+      },
+      {
+        "id": "162afcee50",
+        "language": "Sanskrit",
+        "pos": false,
+        "major": false,
+        "judged": false,
+        "excess": null
+      },
+      {
+        "id": "b8060dc51b",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.079
+      },
+      {
+        "id": "2ef4513968",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.612
+      },
+      {
+        "id": "0591b803f6",
+        "language": "Arabic",
+        "pos": true,
+        "major": false,
+        "judged": true,
+        "excess": 0.598
+      },
+      {
+        "id": "1804d610f3",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.006
+      },
+      {
+        "id": "13cd540a3d",
+        "language": "Italian",
+        "pos": false,
+        "major": false,
+        "judged": false,
+        "excess": null
+      },
+      {
+        "id": "ac2b0ec936",
+        "language": "Hebrew",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.481
+      },
+      {
+        "id": "3fbf3a82db",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": false,
+        "excess": null
+      },
+      {
+        "id": "fd398eac82",
+        "language": "Tibetan",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.16
+      },
+      {
+        "id": "3a46561567",
+        "language": "Dutch",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.631
+      },
+      {
+        "id": "5f900fb966",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.044
+      },
+      {
+        "id": "bcd5552766",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.191
+      },
+      {
+        "id": "61fe87fe40",
+        "language": "French",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.088
+      },
+      {
+        "id": "fa9771a365",
+        "language": "Chinese",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.026
+      },
+      {
+        "id": "74a5587687",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.095
+      },
+      {
+        "id": "0b1479907c",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.027
+      },
+      {
+        "id": "02ec073c0c",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.279
+      },
+      {
+        "id": "f46c65b0a3",
+        "language": "Dutch",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.068
+      },
+      {
+        "id": "fbff9b3277",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.191
+      },
+      {
+        "id": "485571afa2",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.134
+      },
+      {
+        "id": "8ad1bca178",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.244
+      },
+      {
+        "id": "c0d7470bd8",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.161
+      },
+      {
+        "id": "7160a277f7",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.104
+      },
+      {
+        "id": "d1d4fc7662",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.124
+      },
+      {
+        "id": "6905cf444d",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.149
+      },
+      {
+        "id": "661e6e67b3",
+        "language": "French",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.069
+      },
+      {
+        "id": "20074f3b7a",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.176
+      },
+      {
+        "id": "8597e3e7b3",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 1.114
+      },
+      {
+        "id": "02a91ca8b5",
+        "language": "French",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.01
+      },
+      {
+        "id": "692c7b0934",
+        "language": "Tibetan",
+        "pos": true,
+        "major": false,
+        "judged": true,
+        "excess": -0.36
+      },
+      {
+        "id": "3b63cb3e17",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.343
+      },
+      {
+        "id": "9f3c4b81cf",
+        "language": "Greek",
+        "pos": true,
+        "major": false,
+        "judged": false,
+        "excess": null
+      },
+      {
+        "id": "dea55ea366",
+        "language": "Korean",
+        "pos": true,
+        "major": false,
+        "judged": true,
+        "excess": 0.138
+      },
+      {
+        "id": "40d19cba36",
+        "language": "Spanish",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.187
+      },
+      {
+        "id": "1c9d1945e6",
+        "language": "French",
+        "pos": true,
+        "major": false,
+        "judged": true,
+        "excess": 0.055
+      },
+      {
+        "id": "f4b029fb24",
+        "language": "Chinese",
+        "pos": false,
+        "major": false,
+        "judged": false,
+        "excess": null
+      },
+      {
+        "id": "a49d3d3155",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.262
+      },
+      {
+        "id": "e7fe261d55",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.391
+      },
+      {
+        "id": "ca3b660d08",
+        "language": "Dutch",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.054
+      },
+      {
+        "id": "6caa0693e3",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.005
+      },
+      {
+        "id": "1ec31d2575",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.16
+      },
+      {
+        "id": "d9f45e5b0a",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.007
+      },
+      {
+        "id": "e19901a027",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.24
+      },
+      {
+        "id": "f30e26de8d",
+        "language": "French",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.203
+      },
+      {
+        "id": "cc2ccd2177",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.122
+      },
+      {
+        "id": "c433548389",
+        "language": "French",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.142
+      },
+      {
+        "id": "71bec7e30e",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.112
+      },
+      {
+        "id": "e37dde5963",
+        "language": "Japanese",
+        "pos": false,
+        "major": false,
+        "judged": false,
+        "excess": null
+      },
+      {
+        "id": "242760d6a6",
+        "language": "Dutch",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.164
+      },
+      {
+        "id": "018aef589b",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.021
+      },
+      {
+        "id": "90ee75163d",
+        "language": "French",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.011
+      },
+      {
+        "id": "da99026acc",
+        "language": "Sanskrit",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.018
+      },
+      {
+        "id": "134c51dfa7",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.047
+      },
+      {
+        "id": "203b7be7ee",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.262
+      },
+      {
+        "id": "a95051158c",
+        "language": "French",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.066
+      },
+      {
+        "id": "0eaa606375",
+        "language": "Greek",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 1.055
+      },
+      {
+        "id": "4b76768eb2",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.008
+      },
+      {
+        "id": "da8dd70621",
+        "language": "French",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.066
+      },
+      {
+        "id": "94ec645ba9",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.226
+      },
+      {
+        "id": "897246fdea",
+        "language": "Sanskrit",
+        "pos": true,
+        "major": false,
+        "judged": true,
+        "excess": 0.017
+      },
+      {
+        "id": "5ec8fcf710",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.163
+      },
+      {
+        "id": "08137c018d",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.15
+      },
+      {
+        "id": "2460c77abe",
+        "language": "Italian",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.202
+      },
+      {
+        "id": "e067b05d32",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.131
+      },
+      {
+        "id": "545f9fcf4b",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.258
+      },
+      {
+        "id": "86096a7c82",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.004
+      },
+      {
+        "id": "8b87517412",
+        "language": "Chinese",
+        "pos": false,
+        "major": false,
+        "judged": false,
+        "excess": null
+      },
+      {
+        "id": "888095e8dd",
+        "language": "Hebrew",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.132
+      },
+      {
+        "id": "3f9b717dc1",
+        "language": "Arabic",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.08
+      },
+      {
+        "id": "de1cb7dcd9",
+        "language": "Chinese",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.01
+      },
+      {
+        "id": "03e5f6510e",
+        "language": "Chinese",
+        "pos": true,
+        "major": true,
+        "judged": true,
+        "excess": 0.076
+      },
+      {
+        "id": "ab55f30fa8",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.149
+      },
+      {
+        "id": "4c9937a086",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.115
+      },
+      {
+        "id": "e375252344",
+        "language": "Hebrew",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.121
+      },
+      {
+        "id": "5f722adf89",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.048
+      },
+      {
+        "id": "a695f2a367",
+        "language": "Korean",
+        "pos": false,
+        "major": false,
+        "judged": false,
+        "excess": null
+      },
+      {
+        "id": "2f13c22b47",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 1.431
+      },
+      {
+        "id": "38e3a0869b",
+        "language": "Greek",
+        "pos": true,
+        "major": true,
+        "judged": true,
+        "excess": -0.268
+      },
+      {
+        "id": "c96f5a9355",
+        "language": "Italian",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.059
+      },
+      {
+        "id": "000e297cf3",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.31
+      },
+      {
+        "id": "70af840905",
+        "language": "Sanskrit",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.138
+      },
+      {
+        "id": "4527f0ad49",
+        "language": "Arabic",
+        "pos": true,
+        "major": false,
+        "judged": true,
+        "excess": 0.043
+      },
+      {
+        "id": "959dcf8ad2",
+        "language": "Chinese",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.328
+      },
+      {
+        "id": "92b38e931a",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 1.449
+      },
+      {
+        "id": "589aeb7a7e",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.193
+      },
+      {
+        "id": "fcf9259dc1",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.339
+      },
+      {
+        "id": "1bdf80efdb",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.071
+      },
+      {
+        "id": "9f59eb58c5",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.095
+      },
+      {
+        "id": "621637f802",
+        "language": "English",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 1.383
+      },
+      {
+        "id": "344b07fc3b",
+        "language": "Latin",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.007
+      },
+      {
+        "id": "97dc3fc109",
+        "language": "Spanish",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.016
+      },
+      {
+        "id": "d359402bc4",
+        "language": "French",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.346
+      },
+      {
+        "id": "32de2c9eaa",
+        "language": "Chinese",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.023
+      },
+      {
+        "id": "10c9429971",
+        "language": "French",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.2
+      },
+      {
+        "id": "fdc537040e",
+        "language": "German",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": -0.114
+      },
+      {
+        "id": "20a6a43282",
+        "language": "Dutch",
+        "pos": false,
+        "major": false,
+        "judged": true,
+        "excess": 0.06
+      }
+    ]
+  },
+  "gate": {
+    "fired": 1,
+    "tp": 1,
+    "fp": 0,
+    "recall": 0.034,
+    "recall_major": 0,
+    "false_withholds_on_clean": 0,
+    "clean_pages": 282,
+    "fired_rows": [
+      {
+        "id": "9f3c4b81cf",
+        "language": "Greek",
+        "pos": true,
+        "kind": "no-legible-body",
+        "warning": "<warning>Illegible: the transcription holds no legible text</warning>"
+      }
+    ]
+  }
+}

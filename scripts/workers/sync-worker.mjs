@@ -20,10 +20,15 @@
  */
 
 import { MongoClient, ObjectId } from 'mongodb';
-import { computeTranslationMetrics } from '../lib/page-counts.mjs';
+import { realpathSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import {
+  buildCorpusPageCountPipeline, diffPageCounters, recountSet, PAGE_COUNTERS,
+  computeTranslationMetrics, computeTranslationState,
+} from '../lib/page-counts.mjs';
+import { recordSweepActions } from '../lib/sweep-log.mjs';
+import { NEXT_STEP_PROJECTION, PIPELINE_NEXT_VERSION, buildPipelineNext, pipelineNextChanged, resolveOpenJobs } from '../lib/pipeline-next-step.mjs';
 
-const MONGODB_URI = process.env.MONGODB_URI;
-if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
 
 // Supabase is the source of truth for gemini_usage since 2026-04-10 (Issue #567).
 // MongoDB now only catches ~half the writes, so the daily rollup must read from
@@ -45,161 +50,158 @@ const GALLERY_ONLY = args.includes('--gallery-only');
 const USAGE_ONLY = args.includes('--usage-only');
 const USAGE_FROM = args.includes('--usage-from') ? args[args.indexOf('--usage-from') + 1] : null;
 
-console.log(`[sync-worker] Dry run: ${DRY_RUN}${COUNTS_ONLY ? ' | Counts only' : ''}${GALLERY_ONLY ? ' | Gallery only' : ''}`);
-
 // ── Sync Page Counts ──
+//
+// The reconciler (.claude/docs/page-counts.md). It recounts every book's visible
+// pages with the SAME accumulator recountBook() uses (buildCorpusPageCountPipeline,
+// #5326) and writes all six counters together on any mismatch. It used to carry a
+// private aggregation — the fifth copy of the counting rule — which counted
+// `ocr.unreadable` pages in pages_ocr and never wrote pages_translatable, and it
+// reverted the canonical values the job-time writers had written every 2 h.
 
-async function syncPageCounts(db) {
+/** Short names for the per-counter mismatch tally. */
+const COUNTER_LABELS = {
+  pages_count: 'count', pages_ocr: 'ocr', pages_translated: 'translated',
+  pages_translatable: 'translatable', pages_blank: 'blank', pages_archived: 'archived',
+};
+
+/** `count 3 · ocr 12 · translated 0 · translatable 40 · blank 1 · archived 0` */
+export function formatCounterTally(tally) {
+  return PAGE_COUNTERS.map(c => `${COUNTER_LABELS[c]} ${tally[c] ?? 0}`).join(' · ');
+}
+
+export async function syncPageCounts(db, { dryRun = DRY_RUN } = {}) {
   console.log('\n--- Sync Page Counts ---');
   const start = Date.now();
 
-  // Single aggregation: count OCR and translation pages per book.
-  // Excludes hidden pages (page_number <= 0) so dedup-hidden pages and
-  // archived-spread layers don't inflate pages_count.
-  const pageStats = await db.collection('pages').aggregate([
-    { $match: { page_number: { $gt: 0 } } },
-    {
-      $group: {
-        _id: '$book_id',
-        pages_count: { $sum: 1 },
-        pages_ocr: {
-          $sum: {
-            $cond: [
-              { $and: [
-                { $eq: [{ $type: '$ocr.data' }, 'string'] },
-                { $gt: [{ $strLenCP: '$ocr.data' }, 0] },
-              ] },
-              1, 0,
-            ],
-          },
-        },
-        // A blank page is NOT a translated page. The translator writes the
-        // literal placeholder "[Blank page — no translatable content]" onto
-        // every blank leaf, so a naive non-empty check counted 87,777 flyleaves
-        // and endpapers as translations (99.8% of them under 120 characters).
-        //
-        // That is also what made `translation_pct` exceed 100: blank pages are
-        // subtracted from the denominator below via `pages_blank`, but were
-        // still counted here in the numerator. The Blue Qur'an reported
-        // **1000% translated** — 60 pages of which 54 were blank, over a
-        // denominator of 6. Measured 2026-08-08: every one of 300 sampled
-        // over-100% books had translated blank pages, and excluding them lands
-        // each on exactly 100%.
-        pages_translated: {
-          $sum: {
-            $cond: [
-              { $and: [
-                { $eq: [{ $type: '$translation.data' }, 'string'] },
-                { $gt: [{ $strLenCP: '$translation.data' }, 0] },
-                { $ne: [{ $ifNull: ['$page_type', ''] }, 'blank'] },
-              ] },
-              1, 0,
-            ],
-          },
-        },
-        pages_blank: {
-          $sum: {
-            $cond: [
-              { $and: [
-                { $eq: [{ $ifNull: ['$page_type', ''] }, 'blank'] },
-                { $eq: [{ $type: '$ocr.data' }, 'string'] },
-                { $gt: [{ $strLenCP: '$ocr.data' }, 0] },
-              ] },
-              1, 0,
-            ],
-          },
-        },
-        pages_archived: {
-          $sum: {
-            $cond: [
-              { $and: [
-                { $eq: [{ $type: '$archived_photo' }, 'string'] },
-                // Count any non-empty archived_photo; "failed:*" entries are rare
-                // and will be a small overcount vs the perf cost of $regexMatch
-                { $gt: [{ $strLenCP: '$archived_photo' }, 0] },
-              ] },
-              1, 0,
-            ],
-          },
-        },
-      },
-    },
-  ]).toArray();
+  const pageStats = await db.collection('pages')
+    .aggregate(buildCorpusPageCountPipeline(), { allowDiskUse: true })
+    .toArray();
+  const statsMap = new Map(pageStats.map(stat => [stat._id, stat]));
 
-  const statsMap = new Map();
-  for (const stat of pageStats) {
-    statsMap.set(stat._id, {
-      pages_count: stat.pages_count,
-      pages_ocr: stat.pages_ocr,
-      pages_translated: stat.pages_translated,
-      pages_blank: stat.pages_blank,
-      pages_archived: stat.pages_archived,
-    });
-  }
-
-  // Fetch all books' cached values
+  const counterProjection = Object.fromEntries(PAGE_COUNTERS.map(c => [c, 1]));
   const books = await db.collection('books')
-    .find({}, { projection: { _id: 1, id: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, pages_archived: 1, pages_translatable: 1, translation_pct: 1, is_fully_translated: 1, over_90_translated: 1 } })
+    .find({}, { projection: { _id: 1, id: 1, ...NEXT_STEP_PROJECTION, ...counterProjection, translation_pct: 1, is_fully_translated: 1, over_90_translated: 1, language: 1, content_type: 1, translation_state: 1 } })
     .toArray();
 
-  // Build bulk updates for mismatches
+  // `pipeline_next` (#5477, .claude/docs/pipeline-next-step.md) needs to know whether `book.job` names a
+  // job that is still OPEN — most pointers name a cancelled one — so resolve that once, in one query.
+  const openJobs = await resolveOpenJobs(db, books);
+  const runAt = new Date();
+
   const bulkOps = [];
   let mismatchCount = 0;
+  let stateMismatchCount = 0;
+  let nextMismatchCount = 0;
+  const stepTally = {};
+  const stampedByRule = [];
+  // Which counter each write corrected. A counter that the reconciler keeps
+  // fixing is a job-time writer that counts it wrong (page-counts.md).
+  const counterTally = Object.fromEntries(PAGE_COUNTERS.map(c => [c, 0]));
+  let translatableMissing = 0;
 
   for (const book of books) {
     const bookId = book.id || book._id?.toString();
-    const actual = statsMap.get(bookId) || { pages_count: 0, pages_ocr: 0, pages_translated: 0, pages_blank: 0, pages_archived: 0 };
-    const current = {
-      pages_count: book.pages_count || 0,
-      pages_ocr: book.pages_ocr || 0,
-      pages_translated: book.pages_translated || 0,
-      pages_blank: book.pages_blank || 0,
-      pages_archived: book.pages_archived || 0,
-    };
+    // A book with no visible pages recounts to zeros — its true count.
+    const { before, after: actual, changed } = diffPageCounters(book, statsMap.get(bookId));
+    for (const c of changed) counterTally[c]++;
+    if (before.pages_translatable === null) translatableMissing++;
 
     // Pre-compute translation metrics (avoids $expr queries on Atlas).
     // The rule lives in computeTranslationMetrics() — see its comment for why
     // the flag needs OCR COVERAGE as well as completion (#5063: 1,369 visible
     // preview-only books read as fully translated because the denominator was
-    // OCR'd pages — the mirror of #3804). `pages_translatable` comes from the
-    // book document (written by the recount, #4442), not from this aggregation.
-    const { translation_pct, is_fully_translated, over_90_translated } = computeTranslationMetrics({
-      ...actual,
-      pages_translatable: book.pages_translatable,
-    });
+    // OCR'd pages — the mirror of #3804). Every input, `pages_translatable`
+    // included, is the recount, never the stored value it is about to replace.
+    const { translation_pct, is_fully_translated, over_90_translated } = computeTranslationMetrics(actual);
 
-    if (
-      current.pages_count !== actual.pages_count ||
-      current.pages_ocr !== actual.pages_ocr ||
-      current.pages_translated !== actual.pages_translated ||
-      current.pages_blank !== actual.pages_blank ||
-      current.pages_archived !== actual.pages_archived ||
+    // The translation-state ladder (#5284, .claude/docs/translation-state.md).
+    // This worker is its ONLY writer — job-time writers update counters and
+    // never this field — so a rung lags a counter by at most one cycle. The
+    // three legacy flags above keep being written until step 7 of #3402.
+    const translation_state = computeTranslationState(
+      actual,
+      { language: book.language, content_type: book.content_type },
+    );
+
+    const countersStale =
+      changed.length > 0 ||
       // translation_pct is compared too: its denominator changed with #5063, and
       // a book whose flags happen not to flip would otherwise keep a stale 100.
       (book.translation_pct ?? 0) !== translation_pct ||
       book.is_fully_translated !== is_fully_translated ||
-      book.over_90_translated !== over_90_translated
-    ) {
+      book.over_90_translated !== over_90_translated;
+    // Rung, version, and the inputs the rung was computed from — a stale input
+    // (e.g. pages_translatable moved by a recount) would make a right rung
+    // untraceable. `computed_at` is deliberately not compared.
+    const stored = book.translation_state;
+    const stateStale = !stored ||
+      Object.keys(translation_state).some((k) => stored[k] !== translation_state[k]);
+
+    // The next step (#5477), computed from the counters and rung just derived, so it is never a cycle
+    // behind them. OBSERVE ONLY: no phase or lane selects on it until that lane's cutover (#5469 step 5).
+    const pipeline_next = buildPipelineNext(
+      { ...book, ...actual, translation_state },
+      { now: runAt, openJob: openJobs.get(bookId) ?? null },
+    );
+    const nextStale = pipelineNextChanged(book.pipeline_next, pipeline_next);
+    const tallyKey = pipeline_next.step === 'blocked' ? `blocked:${pipeline_next.reason}` : pipeline_next.step;
+    stepTally[tallyKey] = (stepTally[tallyKey] || 0) + 1;
+    if (nextStale && (!book.pipeline_next || book.pipeline_next.version !== PIPELINE_NEXT_VERSION)) {
+      stampedByRule.push({
+        sweep: `pipeline-next-v${PIPELINE_NEXT_VERSION}`,
+        book_id: bookId,
+        action: book.pipeline_next ? 'pipeline-next-restamped' : 'pipeline-next-stamped',
+        detail: { step: pipeline_next.step, reason: pipeline_next.reason, ...(book.pipeline_next ? { from_version: book.pipeline_next.version, from_step: book.pipeline_next.step } : {}) },
+      });
+    }
+
+    if (countersStale || stateStale || nextStale) {
       mismatchCount++;
-      if (!DRY_RUN) {
-        bulkOps.push({
-          updateOne: {
-            filter: { _id: book._id },
-            update: {
-              $set: {
-                pages_count: actual.pages_count,
-                pages_ocr: actual.pages_ocr,
-                pages_translated: actual.pages_translated,
-                pages_blank: actual.pages_blank,
-                pages_archived: actual.pages_archived,
-                translation_pct,
-                is_fully_translated,
-                over_90_translated,
-                updated_at: new Date(),
-              },
-            },
-          },
+      if (stateStale) stateMismatchCount++;
+      if (nextStale) nextMismatchCount++;
+      // A stamp the RULE caused (never stamped, or TRANSLATION_STATE_VERSION
+      // moved) is a sweep and gets a sweep_log row (field-sprawl.md). A rung
+      // that moved because a counter moved is routine and does not.
+      if (!stored || stored.version !== translation_state.version) {
+        stampedByRule.push({
+          sweep: `translation-state-v${translation_state.version}`,
+          book_id: bookId,
+          action: stored ? 'translation-state-restamped' : 'translation-state-stamped',
+          detail: { rung: translation_state.rung, ...(stored ? { from_version: stored.version, from_rung: stored.rung } : {}) },
         });
+      }
+      if (!dryRun) {
+        const now = new Date();
+        const stamped = { ...translation_state, computed_at: now };
+        // Only a counter change bumps `updated_at`. A state-only write (the first
+        // stamping of ~117K books, or a TRANSLATION_STATE_VERSION bump) must not,
+        // because sync-books-catalog.mjs syncs every book whose `updated_at`
+        // moved — the first pass would otherwise re-upsert the whole catalog to
+        // Supabase for a field that mirror does not carry yet (step 4).
+        // The counters go through recountSet(): all six or none, never a subset.
+        // The other `$set` keys are literal so scripts/audit/new-field-writes.mjs sees them. An unchanged
+        // translation_state / pipeline_next is written back as stored (a no-op for that field), so
+        // neither stamp's computed_at moves unless its own value did.
+        const update = countersStale
+          ? {
+            $set: {
+              ...recountSet(actual, now),
+              translation_pct,
+              is_fully_translated,
+              over_90_translated,
+              translation_state: stamped,
+              pipeline_next: nextStale ? pipeline_next : book.pipeline_next,
+              updated_at: now,
+            },
+          }
+          : {
+            $set: {
+              translation_state: stateStale ? stamped : book.translation_state,
+              pipeline_next: nextStale ? pipeline_next : book.pipeline_next,
+            },
+          };
+        bulkOps.push({ updateOne: { filter: { _id: book._id }, update } });
       }
     }
   }
@@ -209,11 +211,27 @@ async function syncPageCounts(db) {
     const result = await db.collection('books').bulkWrite(bulkOps);
     updated = result.modifiedCount;
   }
+  // Logged after the write succeeds, so a row means the stamp landed.
+  let sweepRows = 0;
+  if (!dryRun && stampedByRule.length > 0) {
+    sweepRows = await recordSweepActions(db, stampedByRule);
+    console.log(`  translation_state / pipeline_next stamped by rule: ${stampedByRule.length} (sweep_log rows: ${sweepRows})`);
+  }
+  console.log(`  pipeline_next (observe only): ${Object.entries(stepTally).sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k}=${n}`).join(' ')}`);
 
   const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-  console.log(`  Books checked: ${books.length} | Mismatches: ${mismatchCount} | Updated: ${updated} | ${elapsed}s`);
+  console.log(`  Books checked: ${books.length} | Mismatches: ${mismatchCount} (translation_state: ${stateMismatchCount}, pipeline_next: ${nextMismatchCount}) | Updated: ${updated} | ${elapsed}s`);
+  console.log(`  Counters corrected: ${formatCounterTally(counterTally)} (pages_translatable missing before: ${translatableMissing})${dryRun ? ' — DRY RUN, nothing written' : ''}`);
 
-  return { books_checked: books.length, mismatches: mismatchCount, updated };
+  return {
+    books_checked: books.length,
+    mismatches: mismatchCount,
+    translation_state_mismatches: stateMismatchCount,
+    pipeline_next_mismatches: nextMismatchCount,
+    counter_mismatches: counterTally,
+    translatable_missing: translatableMissing,
+    updated,
+  };
 }
 
 // ── Sync Collection Counts ──
@@ -456,6 +474,30 @@ async function syncGalleryImages(db) {
 }
 
 // ── Sync Author Slugs ──
+
+/**
+ * `gallery_images.book_hidden` is copied from the book when the row is built
+ * and never again, but hiding a book does not touch its pages, so
+ * syncGalleryImages never revisits them. On 2026-10-07, 10,516 rows of 1,274
+ * hidden books still read as not hidden: the homepage wall and /gallery linked
+ * them, and the image API (which checks the book itself) answered "Image not
+ * found" for 19 of 84 links (#6092). This marks them, every run.
+ *
+ * One direction only. A row marked hidden whose book is no longer `hidden` is
+ * NOT un-hidden here: not-hidden is not the same as published (`visible`), so
+ * showing those plates is a publication decision, not a sync.
+ */
+async function markHiddenBooksGalleryRows(db) {
+  const hidden = await db.collection('books').distinct('id', { hidden: true });
+  let modified = 0;
+  for (let i = 0; i < hidden.length; i += 5000) {
+    const filter = { book_id: { $in: hidden.slice(i, i + 5000) }, book_hidden: { $ne: true } };
+    if (DRY_RUN) { modified += await db.collection('gallery_images').countDocuments(filter); continue; }
+    modified += (await db.collection('gallery_images').updateMany(filter, { $set: { book_hidden: true } })).modifiedCount;
+  }
+  console.log(`[sync-worker] gallery_images book_hidden: ${DRY_RUN ? 'would mark' : 'marked'} ${modified} rows of hidden books`);
+  return modified;
+}
 
 function authorSlugFn(author) {
   return author.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
@@ -864,6 +906,9 @@ async function syncUsageDaily(db) {
 // ── Main ──
 
 async function run() {
+  const MONGODB_URI = process.env.MONGODB_URI;
+  if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
+  console.log(`[sync-worker] Dry run: ${DRY_RUN}${COUNTS_ONLY ? ' | Counts only' : ''}${GALLERY_ONLY ? ' | Gallery only' : ''}`);
   const startTime = Date.now();
   const client = new MongoClient(MONGODB_URI, { maxPoolSize: 5, serverSelectionTimeoutMS: 10000 });
   await client.connect();
@@ -922,6 +967,13 @@ async function run() {
     } catch (err) {
       console.error(`[sync-worker] Gallery sync phase FAILED: ${err.message}`);
       phaseErrors.push({ phase: 'gallery', error: err.message });
+    }
+    try {
+      await markHiddenBooksGalleryRows(db);
+      phasesCompleted.push('gallery_book_hidden');
+    } catch (err) {
+      console.error(`[sync-worker] Gallery book_hidden phase FAILED: ${err.message}`);
+      phaseErrors.push({ phase: 'gallery_book_hidden', error: err.message });
     }
   }
 
@@ -990,4 +1042,9 @@ async function run() {
   await client.close();
 }
 
-run().catch(err => { console.error(err); process.exit(1); });
+// Run only when executed directly, so a test can import syncPageCounts(). realpath on
+// both sides: ESM resolves the main module's symlinks, process.argv[1] does not.
+const isMain = (() => {
+  try { return realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url)); } catch { return false; }
+})();
+if (isMain) run().catch(err => { console.error(err); process.exit(1); });

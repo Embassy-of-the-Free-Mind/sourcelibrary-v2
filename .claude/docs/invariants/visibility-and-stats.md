@@ -11,9 +11,9 @@
 Lessons from PR #2055 (see `.claude/handoffs/`). The homepage and most public surfaces filter on `visible: true`, but `hidden: true` exists as a parallel flag. When the two disagree, books leak into public counts.
 
 - **`visible` and `hidden` must be opposites.** Every writer that sets `hidden: true` must also set `visible: false` (and vice versa for un-hide). Don't write one without the other. Active writers: `scripts/maintenance/hide-{unarchived-books,efm-duplicates}.mjs`, `scripts/maintenance/set-launch-books.mjs`, `scripts/workers/pipeline-orchestrator.mjs`, `src/app/api/admin/duplicates/route.ts`, `src/app/api/books/[id]/visibility/route.ts`. Historical drift cleaned up by `scripts/maintenance/fix-conflicting-visibility.mjs` — re-run if `db.books.countDocuments({ visible: true, hidden: true })` ever climbs above zero again.
-- **Homepage stats live in `system_config.homepage_stats`** (Mongo). Refreshed daily at 05:00 by `scripts/maintenance/prewarm-browse.mjs`, also writable on demand by `scripts/maintenance/update-homepage-stats.mjs`. Both scripts now share the same canonical filters — keep them in sync if you touch either. The canonical filters are:
+- **Homepage stats live in `system_config.homepage_stats`** (Mongo). Refreshed daily at 05:00 by `scripts/maintenance/prewarm-browse.mjs`, also writable on demand by `scripts/maintenance/update-homepage-stats.mjs`. Both call ONE computation, `computeHomepageStats()` in `scripts/lib/homepage-stats.mjs` (#5286) — there is no second copy to keep in sync. The canonical filters are:
   - `totalBooks` / `authorCount` / `languageCount`: `visible: true && pages_count > 0` (plus `pages_translated > 0` for authors/languages)
-  - `translatedToEnglish`: ≥90% "readable" — `pages_translated >= 0.9 * (pages_ocr - pages_blank)`. **Being replaced** (design 2026-09-30, `.claude/docs/translation-state.md`, #3402): this rule has no OCR-coverage clause, so it counts ~2,000 preview-only books as readable, and it cannot see English originals. The successor is the named view `readable_in_english` over the stored ladder; do not add an eighth definition.
+  - `readableInEnglish`: the named view `readable_in_english` over the stored `books.translation_state` (`.claude/docs/translation-state.md` § Named views, #5286), via `READABLE_IN_ENGLISH_FILTER` / `READABLE_IN_ENGLISH_EXPR` in `scripts/lib/page-counts.mjs` and its TS twin — never re-type the rule in a caller. `translatedToEnglish` holds the SAME value for one release (the broadcast email reads it until step 5 of #3402), then goes. The writer refuses to publish the view while fewer than 99% of live books carry a stamped `translation_state` (it read 0 the morning step 1 merged) and keeps the previous value instead. The old rule — `pages_translated >= 0.9 * (pages_ocr - pages_blank)` — had no OCR-coverage clause (counted ~2,000 preview-only books) and could not see English originals; do not reintroduce it or add an eighth definition. Before/after of the switch is recorded on #5286.
   - `artworkCount`: `visible: true && content_type: 'artwork'` — single-object entries (paintings, prints, sculptures, etc.), distinguished from books by being non-sequential. They typically have `pages_count: 0` (image + metadata only) or a handful of non-sequential images of the same object. Don't filter on `resource_type` here — it's a finer-grained sub-category (sculpture, religious, allegory, manuscript-illumination…) that under-counts if used alone.
   - `illustrationCount`: `gallery_images.countDocuments({})`
 - **`hidden_reason` is a flip-guard, not a read-gate.** Consumers must gate on `visible` alone — treating the reason field as a state/rights signal silently misfires, and once did on a third of the corpus: ~6.3K `visible: true` books carried a stale `hidden_reason` (`launch_curation` 5.7K, `unprocessed`, `unarchived`, …) left by batch sweeps that flipped `visible` without unsetting the field, and the corpus exporter dropped 6,289 books that way (#3332). **That backlog is cleared** — #3334 swept it and audited the writers; re-measured 2026-07-29, `{visible: true, hidden_reason: {$exists: true, $ne: null}}` returns **0**. The invariant is what still matters, not the backlog: the field's real job is protecting visibility *flips* (never bulk-unhide takedown reasons), and rights-class reasons (`/copyright|takedown|dmca/i`) are the only defensible read-side screen. Corollary of the visible/hidden opposites rule above: any writer setting `visible: true` must `$unset: { hidden_reason }` in the same update (the single-book visibility route already does) — that corollary is the thing keeping the count at zero, so a new writer that skips it reopens the whole class.
@@ -132,3 +132,54 @@ The canonical "live" filter across all public APIs is
 `visible: true && pages_count > 0` (see `/api/books/library`). The `tier` field
 is **legacy** — its only remaining reader is `src/app/page.tsx` homepage ranking
 via `highlighted_books` collection entries.
+
+## Corpus size in words ("bigger than Wikipedia")
+
+**One instrument, one log.** Every "N billion words" or "× English Wikipedia"
+claim comes from `scripts/analytics/corpus-size.mjs`: per-page word statistics
+from a `$sample` over `pages` (winsorized at 3,000 words a page; median is the
+floor), multiplied by the **exact** page counts from `books.pages_ocr` /
+`pages_translated`. Run it with `--log` and it appends a dated row to
+`scripts/analytics/corpus-size-log.jsonl`; quote from the log, and re-run before
+any public number older than a month:
+
+```
+node --env-file=.env.production.local scripts/analytics/corpus-size.mjs --sample 6000 --log
+```
+
+| Date | Page docs | OCR'd / translated pages | Headline words | Floor (median) | vs EN Wikipedia (5B) | Source |
+|---|---|---|---|---|---|---|
+| 2026-06-01 | 6.5M | | 5–7B | | ≈ 1× | blog "How Big Is the Library?" |
+| 2026-10-01 | 22.6M | 6.9M / 4.87M | 6.8B (3.4B originals + 3.3B translations) | 4.8B | ≈ 1.35× | the log |
+
+**`$sample` is biased toward text-bearing documents — never take a coverage
+fraction from it (2026-10-01).** The same run, projecting from the sample's own
+coverage (71% of docs with OCR, 48% with translation), reported **15.2B words,
+3× Wikipedia** — a tripling since June that did not happen. The exact counters
+say 30% and 22%. A WiredTiger random-cursor sample lands on large documents
+more often, and since June the collection filled with ≈ 14M empty import stubs
+(50K hidden books), so the bias went from negligible to 2×. A per-book spot
+check (25 visible books) confirmed the counters: page docs = 1.03× `pages_count`,
+docs with translation text = 1.05× `pages_translated`. The sample is fine for
+words-per-page; the denominator must be an exact count. Same family as the
+`visible: true` overcount above: the convenient number is the wrong one.
+
+Three things the number does NOT say, learned the same day when "we had about as
+much as Wikipedia months ago — have we stopped translating? are we losing
+books?" came in:
+
+- **Flat words ≠ stopped, and it is not loss.** Books with pages went 88,123 →
+  92,185 (7 Sep → 1 Oct), visible readable 41,848 → 42,192; 1,483 books moved to
+  the recoverable `deleted_books` in 90 days. Translation output July–September
+  was 12% of April alone (`output.json` on the spend page), by choice: the
+  $5/day dial and the holds. The page-doc count (6.5M → 22.6M) is import stubs
+  waiting for the pipeline, not text.
+- **The translated share can still be nudged by English books whose
+  `translation` field held their own text** (English-to-English, stopped by
+  #5384); the book-level counter for English books with translation is 742K
+  pages, so the effect on the total is under 10%.
+- **This is a different question from "how many books are translated".** That
+  one is the ladder in `../translation-state.md` (`readable_in_english`); the
+  homepage `readableInEnglish` IS that view (since #5286); the vision page's
+  "18,000" is the any-translated-page count and is not defensible as
+  "translated". Three surfaces, three numbers — say which one you mean.

@@ -1,0 +1,1933 @@
+{
+ "syriac-gt": {
+  "date": "2026-10-07",
+  "issue": 6011,
+  "scorer": "scripts/eval/benchmark/syriac-retest/score-syriac-retest.py (SYRIAC_IMAGES / SYRIAC_SCORE_OUT), ground truth /root/ocr-bench/syriac-retest/gt-text — same as results/benchmark/syriac-retest-2026-09-16/score.json",
+  "note": "only the wave-2 engines and gemini-3.1-flash-lite (the baseline check) were scored here; build-ocr-pareto.mjs takes the wave engines only",
+  "n": 40,
+  "engines": {
+   "deepseek-ocr": {
+    "run": 40,
+    "empty": 0,
+    "loops": 26,
+    "median_cer_n2": 2.906,
+    "median_accuracy_capped": 0.0,
+    "catastrophic": 40,
+    "le_20pct": 0,
+    "median_line_cer": 1.0
+   },
+   "qwen3-vl-8b": {
+    "run": 40,
+    "empty": 0,
+    "loops": 22,
+    "median_cer_n2": 2.962,
+    "median_accuracy_capped": 0.0,
+    "catastrophic": 40,
+    "le_20pct": 0,
+    "median_line_cer": 1.0
+   },
+   "chandra-ocr-2": {
+    "run": 40,
+    "empty": 0,
+    "loops": 16,
+    "median_cer_n2": 1.033,
+    "median_accuracy_capped": 0.0,
+    "catastrophic": 40,
+    "le_20pct": 0,
+    "median_line_cer": 0.894
+   },
+   "mistral-ocr-4-1": {
+    "run": 40,
+    "empty": 1,
+    "loops": 33,
+    "median_cer_n2": 0.964,
+    "median_accuracy_capped": 0.036,
+    "catastrophic": 40,
+    "le_20pct": 0,
+    "median_line_cer": 0.976
+   }
+  },
+  "pages": {
+   "jerusalem36-0003_SMMJ_00036__008": {
+    "chandra-ocr-2": {
+     "chars": 5653,
+     "empty": false,
+     "loop": 0.731,
+     "cer_n1": 2.3714,
+     "cer_n2": 2.506,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "deepseek-ocr": {
+     "chars": 8893,
+     "empty": false,
+     "loop": 0.001,
+     "cer_n1": 2.9106,
+     "cer_n2": 2.9056,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 0,
+     "empty": true,
+     "loop": 0.0,
+     "cer_n1": 1.0,
+     "cer_n2": 1.0,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "mistral-ocr-4-1": {
+     "chars": 664,
+     "empty": false,
+     "loop": 1.373,
+     "cer_n1": 0.963,
+     "cer_n2": 0.9609,
+     "dice_n2": 0.0,
+     "line_cer": 0.9377
+    },
+    "qwen3-vl-8b": {
+     "chars": 4670,
+     "empty": false,
+     "loop": 0.003,
+     "cer_n1": 1.9278,
+     "cer_n2": 2.0372,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "jerusalem36-0005_SMMJ_00036__010": {
+    "chandra-ocr-2": {
+     "chars": 1718,
+     "empty": false,
+     "loop": 0.612,
+     "cer_n1": 0.8374,
+     "cer_n2": 0.8341,
+     "dice_n2": 0.0,
+     "line_cer": 0.8753
+    },
+    "deepseek-ocr": {
+     "chars": 10839,
+     "empty": false,
+     "loop": 0.521,
+     "cer_n1": 2.9,
+     "cer_n2": 2.8963,
+     "dice_n2": 0.0,
+     "line_cer": 0.9329
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 17020,
+     "empty": false,
+     "loop": 0.739,
+     "cer_n1": 2.493,
+     "cer_n2": 2.477,
+     "dice_n2": 0.076,
+     "line_cer": 0.6715
+    },
+    "mistral-ocr-4-1": {
+     "chars": 702,
+     "empty": false,
+     "loop": 0.94,
+     "cer_n1": 0.9352,
+     "cer_n2": 0.9328,
+     "dice_n2": 0.0,
+     "line_cer": 0.9113
+    },
+    "qwen3-vl-8b": {
+     "chars": 4687,
+     "empty": false,
+     "loop": 0.003,
+     "cer_n1": 1.8509,
+     "cer_n2": 1.9193,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "jerusalem36-0008_SMMJ_00036__013": {
+    "chandra-ocr-2": {
+     "chars": 215,
+     "empty": false,
+     "loop": 0.652,
+     "cer_n1": 0.979,
+     "cer_n2": 0.9781,
+     "dice_n2": 0.0,
+     "line_cer": 0.9786
+    },
+    "deepseek-ocr": {
+     "chars": 12246,
+     "empty": false,
+     "loop": 2.286,
+     "cer_n1": 2.9096,
+     "cer_n2": 2.9056,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 13048,
+     "empty": false,
+     "loop": 0.74,
+     "cer_n1": 2.5124,
+     "cer_n2": 2.4245,
+     "dice_n2": 0.013,
+     "line_cer": 1.0
+    },
+    "mistral-ocr-4-1": {
+     "chars": 921,
+     "empty": false,
+     "loop": 1.365,
+     "cer_n1": 0.9277,
+     "cer_n2": 0.9245,
+     "dice_n2": 0.0,
+     "line_cer": 0.9165
+    },
+    "qwen3-vl-8b": {
+     "chars": 8191,
+     "empty": false,
+     "loop": 0.002,
+     "cer_n1": 2.9096,
+     "cer_n2": 2.9056,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "jerusalem36-0009_SMMJ_00036__014": {
+    "chandra-ocr-2": {
+     "chars": 885,
+     "empty": false,
+     "loop": 0.197,
+     "cer_n1": 0.9117,
+     "cer_n2": 0.9063,
+     "dice_n2": 0.0,
+     "line_cer": 0.8762
+    },
+    "deepseek-ocr": {
+     "chars": 83,
+     "empty": false,
+     "loop": 2.714,
+     "cer_n1": 0.991,
+     "cer_n2": 0.9905,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 1538,
+     "empty": false,
+     "loop": 0.02,
+     "cer_n1": 0.6967,
+     "cer_n2": 0.68,
+     "dice_n2": 0.197,
+     "line_cer": 0.6571
+    },
+    "mistral-ocr-4-1": {
+     "chars": 886,
+     "empty": false,
+     "loop": 2.655,
+     "cer_n1": 0.9341,
+     "cer_n2": 0.9301,
+     "dice_n2": 0.0,
+     "line_cer": 0.9371
+    },
+    "qwen3-vl-8b": {
+     "chars": 4650,
+     "empty": false,
+     "loop": 0.003,
+     "cer_n1": 1.901,
+     "cer_n2": 2.0176,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "jerusalem36-0029_SMMJ_00036__034": {
+    "chandra-ocr-2": {
+     "chars": 715,
+     "empty": false,
+     "loop": 0.038,
+     "cer_n1": 0.9078,
+     "cer_n2": 0.9016,
+     "dice_n2": 0.0,
+     "line_cer": 0.9973
+    },
+    "deepseek-ocr": {
+     "chars": 11362,
+     "empty": false,
+     "loop": 0.571,
+     "cer_n1": 2.8912,
+     "cer_n2": 2.8843,
+     "dice_n2": 0.0,
+     "line_cer": 0.9897
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 15195,
+     "empty": false,
+     "loop": 0.749,
+     "cer_n1": 2.4285,
+     "cer_n2": 2.3971,
+     "dice_n2": 0.006,
+     "line_cer": 1.0
+    },
+    "mistral-ocr-4-1": {
+     "chars": 7727,
+     "empty": false,
+     "loop": 0.591,
+     "cer_n1": 2.8581,
+     "cer_n2": 2.8843,
+     "dice_n2": 0.0,
+     "line_cer": 0.9982
+    },
+    "qwen3-vl-8b": {
+     "chars": 4666,
+     "empty": false,
+     "loop": 0.003,
+     "cer_n1": 1.6516,
+     "cer_n2": 1.7631,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "jerusalem36-0030_SMMJ_00036__035": {
+    "chandra-ocr-2": {
+     "chars": 923,
+     "empty": false,
+     "loop": 0.41,
+     "cer_n1": 0.9119,
+     "cer_n2": 0.9075,
+     "dice_n2": 0.0,
+     "line_cer": 0.8606
+    },
+    "deepseek-ocr": {
+     "chars": 10734,
+     "empty": false,
+     "loop": 0.366,
+     "cer_n1": 2.8982,
+     "cer_n2": 2.8932,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 1735,
+     "empty": false,
+     "loop": 0.019,
+     "cer_n1": 0.6942,
+     "cer_n2": 0.6848,
+     "dice_n2": 0.184,
+     "line_cer": 0.9045
+    },
+    "mistral-ocr-4-1": {
+     "chars": 2284,
+     "empty": false,
+     "loop": 0.82,
+     "cer_n1": 0.8467,
+     "cer_n2": 0.8551,
+     "dice_n2": 0.0,
+     "line_cer": 0.8654
+    },
+    "qwen3-vl-8b": {
+     "chars": 4638,
+     "empty": false,
+     "loop": 0.003,
+     "cer_n1": 1.6291,
+     "cer_n2": 1.7098,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "jerusalem36-0031_SMMJ_00036__036": {
+    "chandra-ocr-2": {
+     "chars": 585,
+     "empty": false,
+     "loop": 0.483,
+     "cer_n1": 0.9398,
+     "cer_n2": 0.9363,
+     "dice_n2": 0.0,
+     "line_cer": 0.8831
+    },
+    "deepseek-ocr": {
+     "chars": 12710,
+     "empty": false,
+     "loop": 0.011,
+     "cer_n1": 2.8979,
+     "cer_n2": 2.892,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 2537,
+     "empty": false,
+     "loop": 0.042,
+     "cer_n1": 0.7674,
+     "cer_n2": 0.7781,
+     "dice_n2": 0.136,
+     "line_cer": 0.7965
+    },
+    "mistral-ocr-4-1": {
+     "chars": 2620,
+     "empty": false,
+     "loop": 1.299,
+     "cer_n1": 0.9634,
+     "cer_n2": 1.0013,
+     "dice_n2": 0.0,
+     "line_cer": 0.9519
+    },
+    "qwen3-vl-8b": {
+     "chars": 4635,
+     "empty": false,
+     "loop": 0.003,
+     "cer_n1": 1.7015,
+     "cer_n2": 1.7996,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "jerusalem36-0054_SMMJ_00036__059": {
+    "chandra-ocr-2": {
+     "chars": 13492,
+     "empty": false,
+     "loop": 0.367,
+     "cer_n1": 2.9092,
+     "cer_n2": 2.9063,
+     "dice_n2": 0.0,
+     "line_cer": 0.8914
+    },
+    "deepseek-ocr": {
+     "chars": 10371,
+     "empty": false,
+     "loop": 0.703,
+     "cer_n1": 2.9092,
+     "cer_n2": 2.9063,
+     "dice_n2": 0.0,
+     "line_cer": 0.9437
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 16010,
+     "empty": false,
+     "loop": 0.372,
+     "cer_n1": 2.4106,
+     "cer_n2": 2.3884,
+     "dice_n2": 0.052,
+     "line_cer": 0.7851
+    },
+    "mistral-ocr-4-1": {
+     "chars": 1655,
+     "empty": false,
+     "loop": 0.754,
+     "cer_n1": 0.8324,
+     "cer_n2": 0.8285,
+     "dice_n2": 0.0,
+     "line_cer": 0.8714
+    },
+    "qwen3-vl-8b": {
+     "chars": 10230,
+     "empty": false,
+     "loop": 1.493,
+     "cer_n1": 2.9092,
+     "cer_n2": 2.9063,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "jerusalem36-0086_SMMJ_00036__091": {
+    "chandra-ocr-2": {
+     "chars": 11396,
+     "empty": false,
+     "loop": 0.989,
+     "cer_n1": 2.8998,
+     "cer_n2": 2.8961,
+     "dice_n2": 0.0,
+     "line_cer": 0.8785
+    },
+    "deepseek-ocr": {
+     "chars": 8976,
+     "empty": false,
+     "loop": 0.599,
+     "cer_n1": 2.8998,
+     "cer_n2": 2.8961,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 3062,
+     "empty": false,
+     "loop": 0.016,
+     "cer_n1": 0.8578,
+     "cer_n2": 0.8704,
+     "dice_n2": 0.182,
+     "line_cer": 0.6077
+    },
+    "mistral-ocr-4-1": {
+     "chars": 956,
+     "empty": false,
+     "loop": 0.429,
+     "cer_n1": 0.9669,
+     "cer_n2": 0.9656,
+     "dice_n2": 0.0,
+     "line_cer": 0.9816
+    },
+    "qwen3-vl-8b": {
+     "chars": 4119,
+     "empty": false,
+     "loop": 0.0,
+     "cer_n1": 1.6438,
+     "cer_n2": 1.7039,
+     "dice_n2": 0.0,
+     "line_cer": 0.939
+    }
+   },
+   "jerusalem36-0088_SMMJ_00036__093": {
+    "chandra-ocr-2": {
+     "chars": 4385,
+     "empty": false,
+     "loop": 0.997,
+     "cer_n1": 1.4844,
+     "cer_n2": 1.5663,
+     "dice_n2": 0.0,
+     "line_cer": 0.9847
+    },
+    "deepseek-ocr": {
+     "chars": 9178,
+     "empty": false,
+     "loop": 0.001,
+     "cer_n1": 2.887,
+     "cer_n2": 2.8808,
+     "dice_n2": 0.0,
+     "line_cer": 0.9429
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 2042,
+     "empty": false,
+     "loop": 0.014,
+     "cer_n1": 0.6794,
+     "cer_n2": 0.6714,
+     "dice_n2": 0.254,
+     "line_cer": 0.8803
+    },
+    "mistral-ocr-4-1": {
+     "chars": 1621,
+     "empty": false,
+     "loop": 0.828,
+     "cer_n1": 0.8939,
+     "cer_n2": 0.888,
+     "dice_n2": 0.0,
+     "line_cer": 0.9225
+    },
+    "qwen3-vl-8b": {
+     "chars": 9213,
+     "empty": false,
+     "loop": 1.496,
+     "cer_n1": 2.887,
+     "cer_n2": 2.8808,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "jerusalem36-0091_SMMJ_00036__096": {
+    "chandra-ocr-2": {
+     "chars": 3028,
+     "empty": false,
+     "loop": 0.018,
+     "cer_n1": 1.0687,
+     "cer_n2": 1.1138,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "deepseek-ocr": {
+     "chars": 18106,
+     "empty": false,
+     "loop": 0.521,
+     "cer_n1": 2.8801,
+     "cer_n2": 2.875,
+     "dice_n2": 0.0,
+     "line_cer": 0.924
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 3484,
+     "empty": false,
+     "loop": 0.026,
+     "cer_n1": 0.9515,
+     "cer_n2": 0.9594,
+     "dice_n2": 0.398,
+     "line_cer": 0.8897
+    },
+    "mistral-ocr-4-1": {
+     "chars": 525,
+     "empty": false,
+     "loop": 1.205,
+     "cer_n1": 0.95,
+     "cer_n2": 0.9478,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "qwen3-vl-8b": {
+     "chars": 4110,
+     "empty": false,
+     "loop": 0.0,
+     "cer_n1": 1.6311,
+     "cer_n2": 1.6999,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "jerusalem36-0094_SMMJ_00036__099": {
+    "chandra-ocr-2": {
+     "chars": 1732,
+     "empty": false,
+     "loop": 0.055,
+     "cer_n1": 0.854,
+     "cer_n2": 0.8484,
+     "dice_n2": 0.0,
+     "line_cer": 0.866
+    },
+    "deepseek-ocr": {
+     "chars": 3892,
+     "empty": false,
+     "loop": 0.003,
+     "cer_n1": 1.289,
+     "cer_n2": 1.3381,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 3060,
+     "empty": false,
+     "loop": 0.015,
+     "cer_n1": 0.8104,
+     "cer_n2": 0.8214,
+     "dice_n2": 0.3,
+     "line_cer": 0.8757
+    },
+    "mistral-ocr-4-1": {
+     "chars": 5633,
+     "empty": false,
+     "loop": 0.841,
+     "cer_n1": 1.9545,
+     "cer_n2": 2.029,
+     "dice_n2": 0.0,
+     "line_cer": 0.9496
+    },
+    "qwen3-vl-8b": {
+     "chars": 4657,
+     "empty": false,
+     "loop": 0.003,
+     "cer_n1": 1.5814,
+     "cer_n2": 1.6417,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "jerusalem36-0102_SMMJ_00036__107": {
+    "chandra-ocr-2": {
+     "chars": 2033,
+     "empty": false,
+     "loop": 2.486,
+     "cer_n1": 0.8285,
+     "cer_n2": 0.8246,
+     "dice_n2": 0.0,
+     "line_cer": 0.8687
+    },
+    "deepseek-ocr": {
+     "chars": 6809,
+     "empty": false,
+     "loop": 0.031,
+     "cer_n1": 2.462,
+     "cer_n2": 2.5754,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 2934,
+     "empty": false,
+     "loop": 0.023,
+     "cer_n1": 0.8191,
+     "cer_n2": 0.8042,
+     "dice_n2": 0.131,
+     "line_cer": 0.8813
+    },
+    "mistral-ocr-4-1": {
+     "chars": 546,
+     "empty": false,
+     "loop": 1.979,
+     "cer_n1": 0.9626,
+     "cer_n2": 0.9608,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "qwen3-vl-8b": {
+     "chars": 4681,
+     "empty": false,
+     "loop": 2.992,
+     "cer_n1": 1.6324,
+     "cer_n2": 1.7076,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "jerusalem36-0105_SMMJ_00036__110": {
+    "chandra-ocr-2": {
+     "chars": 24698,
+     "empty": false,
+     "loop": 0.998,
+     "cer_n1": 2.8863,
+     "cer_n2": 2.8816,
+     "dice_n2": 0.0,
+     "line_cer": 0.963
+    },
+    "deepseek-ocr": {
+     "chars": 1287,
+     "empty": false,
+     "loop": 0.01,
+     "cer_n1": 0.8803,
+     "cer_n2": 0.8754,
+     "dice_n2": 0.0,
+     "line_cer": 0.9419
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 1629,
+     "empty": false,
+     "loop": 0.028,
+     "cer_n1": 0.6943,
+     "cer_n2": 0.6856,
+     "dice_n2": 0.167,
+     "line_cer": 0.8715
+    },
+    "mistral-ocr-4-1": {
+     "chars": 16291,
+     "empty": false,
+     "loop": 1.428,
+     "cer_n1": 2.8863,
+     "cer_n2": 2.8816,
+     "dice_n2": 0.0,
+     "line_cer": 0.9978
+    },
+    "qwen3-vl-8b": {
+     "chars": 4656,
+     "empty": false,
+     "loop": 0.003,
+     "cer_n1": 1.6644,
+     "cer_n2": 1.7321,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "jerusalem36-0129_SMMJ_00036__134": {
+    "chandra-ocr-2": {
+     "chars": 2682,
+     "empty": false,
+     "loop": 0.377,
+     "cer_n1": 0.9466,
+     "cer_n2": 0.9614,
+     "dice_n2": 0.0,
+     "line_cer": 0.9644
+    },
+    "deepseek-ocr": {
+     "chars": 8303,
+     "empty": false,
+     "loop": 1.09,
+     "cer_n1": 2.8784,
+     "cer_n2": 2.8748,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 2189,
+     "empty": false,
+     "loop": 0.021,
+     "cer_n1": 0.7038,
+     "cer_n2": 0.69,
+     "dice_n2": 0.208,
+     "line_cer": 0.6364
+    },
+    "mistral-ocr-4-1": {
+     "chars": 864,
+     "empty": false,
+     "loop": 1.826,
+     "cer_n1": 0.9441,
+     "cer_n2": 0.9425,
+     "dice_n2": 0.0,
+     "line_cer": 0.9907
+    },
+    "qwen3-vl-8b": {
+     "chars": 4681,
+     "empty": false,
+     "loop": 2.992,
+     "cer_n1": 1.7067,
+     "cer_n2": 1.7568,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "jerusalem36-0139_SMMJ_00036__144": {
+    "chandra-ocr-2": {
+     "chars": 27943,
+     "empty": false,
+     "loop": 0.375,
+     "cer_n1": 2.889,
+     "cer_n2": 2.8864,
+     "dice_n2": 0.0,
+     "line_cer": 0.8975
+    },
+    "deepseek-ocr": {
+     "chars": 11664,
+     "empty": false,
+     "loop": 1.044,
+     "cer_n1": 2.889,
+     "cer_n2": 2.8864,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 11039,
+     "empty": false,
+     "loop": 0.948,
+     "cer_n1": 2.5377,
+     "cer_n2": 2.5266,
+     "dice_n2": 0.071,
+     "line_cer": 0.6667
+    },
+    "mistral-ocr-4-1": {
+     "chars": 2083,
+     "empty": false,
+     "loop": 0.38,
+     "cer_n1": 0.8867,
+     "cer_n2": 0.8864,
+     "dice_n2": 0.0,
+     "line_cer": 0.9755
+    },
+    "qwen3-vl-8b": {
+     "chars": 8194,
+     "empty": false,
+     "loop": 2.977,
+     "cer_n1": 2.889,
+     "cer_n2": 2.8864,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "jerusalem36-0206_SMMJ_00036__211": {
+    "chandra-ocr-2": {
+     "chars": 9163,
+     "empty": false,
+     "loop": 0.004,
+     "cer_n1": 2.926,
+     "cer_n2": 2.9245,
+     "dice_n2": 0.0,
+     "line_cer": 0.9339
+    },
+    "deepseek-ocr": {
+     "chars": 12468,
+     "empty": false,
+     "loop": 0.425,
+     "cer_n1": 2.926,
+     "cer_n2": 2.9245,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 2308,
+     "empty": false,
+     "loop": 0.014,
+     "cer_n1": 0.7725,
+     "cer_n2": 0.7698,
+     "dice_n2": 0.13,
+     "line_cer": 0.5709
+    },
+    "mistral-ocr-4-1": {
+     "chars": 1484,
+     "empty": false,
+     "loop": 0.913,
+     "cer_n1": 0.9059,
+     "cer_n2": 0.904,
+     "dice_n2": 0.0,
+     "line_cer": 0.902
+    },
+    "qwen3-vl-8b": {
+     "chars": 8229,
+     "empty": false,
+     "loop": 0.592,
+     "cer_n1": 2.926,
+     "cer_n2": 2.9245,
+     "dice_n2": 0.0,
+     "line_cer": 0.9194
+    }
+   },
+   "jerusalem36-0211_SMMJ_00036__216": {
+    "chandra-ocr-2": {
+     "chars": 15404,
+     "empty": false,
+     "loop": 2.931,
+     "cer_n1": 2.9006,
+     "cer_n2": 2.8989,
+     "dice_n2": 0.0,
+     "line_cer": 0.8699
+    },
+    "deepseek-ocr": {
+     "chars": 8243,
+     "empty": false,
+     "loop": 0.745,
+     "cer_n1": 2.9006,
+     "cer_n2": 2.8989,
+     "dice_n2": 0.0,
+     "line_cer": 0.9669
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 20902,
+     "empty": false,
+     "loop": 0.747,
+     "cer_n1": 2.4057,
+     "cer_n2": 2.3951,
+     "dice_n2": 0.041,
+     "line_cer": 0.7637
+    },
+    "mistral-ocr-4-1": {
+     "chars": 32544,
+     "empty": false,
+     "loop": 0.572,
+     "cer_n1": 2.9006,
+     "cer_n2": 2.8989,
+     "dice_n2": 0.0,
+     "line_cer": 0.9493
+    },
+    "qwen3-vl-8b": {
+     "chars": 4110,
+     "empty": false,
+     "loop": 0.0,
+     "cer_n1": 2.0005,
+     "cer_n2": 2.0362,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "jerusalem36-0227_SMMJ_00036__232": {
+    "chandra-ocr-2": {
+     "chars": 1911,
+     "empty": false,
+     "loop": 0.119,
+     "cer_n1": 0.8796,
+     "cer_n2": 0.8818,
+     "dice_n2": 0.0,
+     "line_cer": 0.8884
+    },
+    "deepseek-ocr": {
+     "chars": 12621,
+     "empty": false,
+     "loop": 0.427,
+     "cer_n1": 2.9186,
+     "cer_n2": 2.9178,
+     "dice_n2": 0.0,
+     "line_cer": 0.9958
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 19190,
+     "empty": false,
+     "loop": 2.992,
+     "cer_n1": 2.6307,
+     "cer_n2": 2.6268,
+     "dice_n2": 0.0,
+     "line_cer": 0.8287
+    },
+    "mistral-ocr-4-1": {
+     "chars": 17621,
+     "empty": false,
+     "loop": 0.591,
+     "cer_n1": 2.9186,
+     "cer_n2": 2.9178,
+     "dice_n2": 0.0,
+     "line_cer": 0.9319
+    },
+    "qwen3-vl-8b": {
+     "chars": 4111,
+     "empty": false,
+     "loop": 0.0,
+     "cer_n1": 1.9779,
+     "cer_n2": 1.999,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "jerusalem36-0264_SMMJ_00036__269": {
+    "chandra-ocr-2": {
+     "chars": 21967,
+     "empty": false,
+     "loop": 1.0,
+     "cer_n1": 2.9024,
+     "cer_n2": 2.8959,
+     "dice_n2": 0.0,
+     "line_cer": 0.9411
+    },
+    "deepseek-ocr": {
+     "chars": 14479,
+     "empty": false,
+     "loop": 0.428,
+     "cer_n1": 2.9024,
+     "cer_n2": 2.8959,
+     "dice_n2": 0.0,
+     "line_cer": 0.9545
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 11560,
+     "empty": false,
+     "loop": 1.493,
+     "cer_n1": 2.6017,
+     "cer_n2": 2.5753,
+     "dice_n2": 0.02,
+     "line_cer": 0.8174
+    },
+    "mistral-ocr-4-1": {
+     "chars": 25223,
+     "empty": false,
+     "loop": 0.267,
+     "cer_n1": 2.9024,
+     "cer_n2": 2.8959,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "qwen3-vl-8b": {
+     "chars": 10907,
+     "empty": false,
+     "loop": 0.992,
+     "cer_n1": 2.9024,
+     "cer_n2": 2.8959,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "onb-syr1-0009_00000024": {
+    "chandra-ocr-2": {
+     "chars": 165,
+     "empty": false,
+     "loop": 0.158,
+     "cer_n1": 0.9448,
+     "cer_n2": 0.9433,
+     "dice_n2": 0.015,
+     "line_cer": 0.8757
+    },
+    "deepseek-ocr": {
+     "chars": 3500,
+     "empty": false,
+     "loop": 0.0,
+     "cer_n1": 3.2829,
+     "cer_n2": 3.2907,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 13235,
+     "empty": false,
+     "loop": 0.553,
+     "cer_n1": 2.6874,
+     "cer_n2": 2.6265,
+     "dice_n2": 0.046,
+     "line_cer": 0.7365
+    },
+    "mistral-ocr-4-1": {
+     "chars": 24375,
+     "empty": false,
+     "loop": 0.541,
+     "cer_n1": 3.1004,
+     "cer_n2": 3.1032,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "qwen3-vl-8b": {
+     "chars": 4915,
+     "empty": false,
+     "loop": 2.995,
+     "cer_n1": 3.1004,
+     "cer_n2": 3.1032,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "onb-syr1-0026_00000041": {
+    "chandra-ocr-2": {
+     "chars": 617,
+     "empty": false,
+     "loop": 0.03,
+     "cer_n1": 0.8133,
+     "cer_n2": 0.8188,
+     "dice_n2": 0.009,
+     "line_cer": 0.9034
+    },
+    "deepseek-ocr": {
+     "chars": 11389,
+     "empty": false,
+     "loop": 0.251,
+     "cer_n1": 3.0744,
+     "cer_n2": 3.0788,
+     "dice_n2": 0.016,
+     "line_cer": 0.9759
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 1071,
+     "empty": false,
+     "loop": 0.091,
+     "cer_n1": 0.9778,
+     "cer_n2": 0.982,
+     "dice_n2": 0.104,
+     "line_cer": 0.6903
+    },
+    "mistral-ocr-4-1": {
+     "chars": 602,
+     "empty": false,
+     "loop": 1.39,
+     "cer_n1": 0.9452,
+     "cer_n2": 0.9419,
+     "dice_n2": 0.017,
+     "line_cer": 0.9759
+    },
+    "qwen3-vl-8b": {
+     "chars": 4915,
+     "empty": false,
+     "loop": 2.995,
+     "cer_n1": 3.077,
+     "cer_n2": 3.0816,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "onb-syr1-0029_00000044": {
+    "chandra-ocr-2": {
+     "chars": 32049,
+     "empty": false,
+     "loop": 0.78,
+     "cer_n1": 3.0571,
+     "cer_n2": 3.0596,
+     "dice_n2": 0.0,
+     "line_cer": 0.9245
+    },
+    "deepseek-ocr": {
+     "chars": 12040,
+     "empty": false,
+     "loop": 0.665,
+     "cer_n1": 3.0571,
+     "cer_n2": 3.0596,
+     "dice_n2": 0.0,
+     "line_cer": 0.8555
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 683,
+     "empty": false,
+     "loop": 0.044,
+     "cer_n1": 0.6707,
+     "cer_n2": 0.6565,
+     "dice_n2": 0.088,
+     "line_cer": 0.6602
+    },
+    "mistral-ocr-4-1": {
+     "chars": 451,
+     "empty": false,
+     "loop": 0.941,
+     "cer_n1": 0.9368,
+     "cer_n2": 0.9341,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "qwen3-vl-8b": {
+     "chars": 8828,
+     "empty": false,
+     "loop": 1.477,
+     "cer_n1": 3.0571,
+     "cer_n2": 3.0596,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "onb-syr1-0033_00000048": {
+    "chandra-ocr-2": {
+     "chars": 1465,
+     "empty": false,
+     "loop": 0.589,
+     "cer_n1": 1.4897,
+     "cer_n2": 1.5728,
+     "dice_n2": 0.015,
+     "line_cer": 0.8817
+    },
+    "deepseek-ocr": {
+     "chars": 13639,
+     "empty": false,
+     "loop": 1.984,
+     "cer_n1": 3.0391,
+     "cer_n2": 3.0413,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 13567,
+     "empty": false,
+     "loop": 0.333,
+     "cer_n1": 2.5966,
+     "cer_n2": 2.5231,
+     "dice_n2": 0.067,
+     "line_cer": 0.6762
+    },
+    "mistral-ocr-4-1": {
+     "chars": 261,
+     "empty": false,
+     "loop": 0.56,
+     "cer_n1": 0.9126,
+     "cer_n2": 0.9078,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "qwen3-vl-8b": {
+     "chars": 4681,
+     "empty": false,
+     "loop": 2.992,
+     "cer_n1": 3.0391,
+     "cer_n2": 3.0413,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "onb-syr1-0046_00000061": {
+    "chandra-ocr-2": {
+     "chars": 10815,
+     "empty": false,
+     "loop": 0.88,
+     "cer_n1": 3.0239,
+     "cer_n2": 3.0251,
+     "dice_n2": 0.008,
+     "line_cer": 1.0
+    },
+    "deepseek-ocr": {
+     "chars": 10697,
+     "empty": false,
+     "loop": 2.106,
+     "cer_n1": 3.0239,
+     "cer_n2": 3.0251,
+     "dice_n2": 0.015,
+     "line_cer": 0.8797
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 1244,
+     "empty": false,
+     "loop": 0.289,
+     "cer_n1": 1.0272,
+     "cer_n2": 0.7731,
+     "dice_n2": 0.096,
+     "line_cer": 0.7103
+    },
+    "mistral-ocr-4-1": {
+     "chars": 2036,
+     "empty": false,
+     "loop": 1.068,
+     "cer_n1": 2.0196,
+     "cer_n2": 2.1186,
+     "dice_n2": 0.014,
+     "line_cer": 0.9498
+    },
+    "qwen3-vl-8b": {
+     "chars": 9995,
+     "empty": false,
+     "loop": 1.465,
+     "cer_n1": 3.0261,
+     "cer_n2": 3.0274,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "onb-syr1-0082_00000097": {
+    "chandra-ocr-2": {
+     "chars": 820,
+     "empty": false,
+     "loop": 0.283,
+     "cer_n1": 0.8649,
+     "cer_n2": 0.8755,
+     "dice_n2": 0.013,
+     "line_cer": 0.8633
+    },
+    "deepseek-ocr": {
+     "chars": 12751,
+     "empty": false,
+     "loop": 0.373,
+     "cer_n1": 3.0344,
+     "cer_n2": 3.0358,
+     "dice_n2": 0.015,
+     "line_cer": 0.9519
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 787,
+     "empty": false,
+     "loop": 2.166,
+     "cer_n1": 0.7595,
+     "cer_n2": 0.7682,
+     "dice_n2": 0.045,
+     "line_cer": 0.7418
+    },
+    "mistral-ocr-4-1": {
+     "chars": 2,
+     "empty": true,
+     "loop": 0.0,
+     "cer_n1": 0.9976,
+     "cer_n2": 0.9975,
+     "dice_n2": 0.017,
+     "line_cer": 1.0
+    },
+    "qwen3-vl-8b": {
+     "chars": 8227,
+     "empty": false,
+     "loop": 2.976,
+     "cer_n1": 3.0344,
+     "cer_n2": 3.0358,
+     "dice_n2": 0.0,
+     "line_cer": 0.8911
+    }
+   },
+   "onb-syr1-0085_00000100": {
+    "chandra-ocr-2": {
+     "chars": 1046,
+     "empty": false,
+     "loop": 0.429,
+     "cer_n1": 1.0685,
+     "cer_n2": 1.1182,
+     "dice_n2": 0.011,
+     "line_cer": 0.8778
+    },
+    "deepseek-ocr": {
+     "chars": 40,
+     "empty": false,
+     "loop": 2.1,
+     "cer_n1": 0.9772,
+     "cer_n2": 0.9761,
+     "dice_n2": 0.0,
+     "line_cer": 0.827
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 12333,
+     "empty": false,
+     "loop": 0.371,
+     "cer_n1": 2.6719,
+     "cer_n2": 2.5862,
+     "dice_n2": 0.058,
+     "line_cer": 1.0
+    },
+    "mistral-ocr-4-1": {
+     "chars": 618,
+     "empty": false,
+     "loop": 1.326,
+     "cer_n1": 0.8966,
+     "cer_n2": 0.8943,
+     "dice_n2": 0.0,
+     "line_cer": 0.8778
+    },
+    "qwen3-vl-8b": {
+     "chars": 4096,
+     "empty": false,
+     "loop": 0.0,
+     "cer_n1": 3.2404,
+     "cer_n2": 3.2516,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "onb-syr1-0086_00000101": {
+    "chandra-ocr-2": {
+     "chars": 14759,
+     "empty": false,
+     "loop": 0.33,
+     "cer_n1": 3.0289,
+     "cer_n2": 3.0299,
+     "dice_n2": 0.006,
+     "line_cer": 1.0
+    },
+    "deepseek-ocr": {
+     "chars": 11213,
+     "empty": false,
+     "loop": 0.652,
+     "cer_n1": 3.0289,
+     "cer_n2": 3.0299,
+     "dice_n2": 0.013,
+     "line_cer": 1.0
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 13676,
+     "empty": false,
+     "loop": 0.298,
+     "cer_n1": 2.6189,
+     "cer_n2": 2.5414,
+     "dice_n2": 0.041,
+     "line_cer": 1.0
+    },
+    "mistral-ocr-4-1": {
+     "chars": 281,
+     "empty": false,
+     "loop": 1.125,
+     "cer_n1": 0.9656,
+     "cer_n2": 0.9644,
+     "dice_n2": 0.015,
+     "line_cer": 1.0
+    },
+    "qwen3-vl-8b": {
+     "chars": 9074,
+     "empty": false,
+     "loop": 0.748,
+     "cer_n1": 3.0289,
+     "cer_n2": 3.0299,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "onb-syr1-0088_00000103": {
+    "chandra-ocr-2": {
+     "chars": 939,
+     "empty": false,
+     "loop": 0.061,
+     "cer_n1": 0.9939,
+     "cer_n2": 1.0228,
+     "dice_n2": 0.01,
+     "line_cer": 0.8958
+    },
+    "deepseek-ocr": {
+     "chars": 1797,
+     "empty": false,
+     "loop": 0.505,
+     "cer_n1": 2.0122,
+     "cer_n2": 2.0914,
+     "dice_n2": 0.017,
+     "line_cer": 1.0
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 757,
+     "empty": false,
+     "loop": 0.21,
+     "cer_n1": 0.641,
+     "cer_n2": 0.6282,
+     "dice_n2": 0.155,
+     "line_cer": 0.6341
+    },
+    "mistral-ocr-4-1": {
+     "chars": 292,
+     "empty": false,
+     "loop": 1.241,
+     "cer_n1": 0.9658,
+     "cer_n2": 0.9645,
+     "dice_n2": 0.019,
+     "line_cer": 1.0
+    },
+    "qwen3-vl-8b": {
+     "chars": 9178,
+     "empty": false,
+     "loop": 0.622,
+     "cer_n1": 3.0623,
+     "cer_n2": 3.0647,
+     "dice_n2": 0.014,
+     "line_cer": 0.9232
+    }
+   },
+   "onb-syr1-0107_00000122": {
+    "chandra-ocr-2": {
+     "chars": 4266,
+     "empty": false,
+     "loop": 0.004,
+     "cer_n1": 3.0719,
+     "cer_n2": 3.0764,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "deepseek-ocr": {
+     "chars": 14753,
+     "empty": false,
+     "loop": 0.62,
+     "cer_n1": 3.0719,
+     "cer_n2": 3.0764,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 12371,
+     "empty": false,
+     "loop": 1.467,
+     "cer_n1": 2.7255,
+     "cer_n2": 2.6611,
+     "dice_n2": 0.104,
+     "line_cer": 1.0
+    },
+    "mistral-ocr-4-1": {
+     "chars": 5204,
+     "empty": false,
+     "loop": 0.499,
+     "cer_n1": 3.0719,
+     "cer_n2": 3.0764,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "qwen3-vl-8b": {
+     "chars": 4681,
+     "empty": false,
+     "loop": 2.992,
+     "cer_n1": 3.0719,
+     "cer_n2": 3.0764,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "onb-syr1-0127_00000142": {
+    "chandra-ocr-2": {
+     "chars": 787,
+     "empty": false,
+     "loop": 0.713,
+     "cer_n1": 0.8527,
+     "cer_n2": 0.8587,
+     "dice_n2": 0.013,
+     "line_cer": 0.8423
+    },
+    "deepseek-ocr": {
+     "chars": 11140,
+     "empty": false,
+     "loop": 0.617,
+     "cer_n1": 3.0392,
+     "cer_n2": 3.0402,
+     "dice_n2": 0.0,
+     "line_cer": 0.9962
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 13089,
+     "empty": false,
+     "loop": 0.251,
+     "cer_n1": 2.595,
+     "cer_n2": 2.5152,
+     "dice_n2": 0.22,
+     "line_cer": 1.0
+    },
+    "mistral-ocr-4-1": {
+     "chars": 537,
+     "empty": false,
+     "loop": 0.44,
+     "cer_n1": 0.9097,
+     "cer_n2": 0.9074,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "qwen3-vl-8b": {
+     "chars": 9552,
+     "empty": false,
+     "loop": 1.489,
+     "cer_n1": 3.0392,
+     "cer_n2": 3.0402,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "onb-syr1-0131_00000146": {
+    "chandra-ocr-2": {
+     "chars": 2448,
+     "empty": false,
+     "loop": 0.189,
+     "cer_n1": 2.5446,
+     "cer_n2": 2.6919,
+     "dice_n2": 0.007,
+     "line_cer": 0.9297
+    },
+    "deepseek-ocr": {
+     "chars": 11903,
+     "empty": false,
+     "loop": 1.06,
+     "cer_n1": 3.0357,
+     "cer_n2": 3.0378,
+     "dice_n2": 0.0,
+     "line_cer": 0.9782
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 1188,
+     "empty": false,
+     "loop": 0.052,
+     "cer_n1": 0.9922,
+     "cer_n2": 0.7414,
+     "dice_n2": 0.116,
+     "line_cer": 1.0
+    },
+    "mistral-ocr-4-1": {
+     "chars": 22214,
+     "empty": false,
+     "loop": 1.492,
+     "cer_n1": 3.0357,
+     "cer_n2": 3.0378,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "qwen3-vl-8b": {
+     "chars": 4096,
+     "empty": false,
+     "loop": 0.0,
+     "cer_n1": 3.2232,
+     "cer_n2": 3.2361,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "onb-syr1-0133_00000148": {
+    "chandra-ocr-2": {
+     "chars": 1052,
+     "empty": false,
+     "loop": 1.332,
+     "cer_n1": 1.0044,
+     "cer_n2": 1.0437,
+     "dice_n2": 0.0,
+     "line_cer": 0.8873
+    },
+    "deepseek-ocr": {
+     "chars": 6435,
+     "empty": false,
+     "loop": 2.894,
+     "cer_n1": 3.1652,
+     "cer_n2": 3.1749,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 12499,
+     "empty": false,
+     "loop": 0.995,
+     "cer_n1": 2.6597,
+     "cer_n2": 2.5823,
+     "dice_n2": 0.028,
+     "line_cer": 1.0
+    },
+    "mistral-ocr-4-1": {
+     "chars": 2837,
+     "empty": false,
+     "loop": 1.476,
+     "cer_n1": 2.9405,
+     "cer_n2": 3.038,
+     "dice_n2": 0.0,
+     "line_cer": 0.9703
+    },
+    "qwen3-vl-8b": {
+     "chars": 8858,
+     "empty": false,
+     "loop": 0.744,
+     "cer_n1": 3.0363,
+     "cer_n2": 3.038,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "onb-syr1-0157_00000172": {
+    "chandra-ocr-2": {
+     "chars": 753,
+     "empty": false,
+     "loop": 0.296,
+     "cer_n1": 0.8616,
+     "cer_n2": 0.8661,
+     "dice_n2": 0.011,
+     "line_cer": 0.9023
+    },
+    "deepseek-ocr": {
+     "chars": 13895,
+     "empty": false,
+     "loop": 0.841,
+     "cer_n1": 3.0572,
+     "cer_n2": 3.0592,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 12346,
+     "empty": false,
+     "loop": 0.741,
+     "cer_n1": 2.6762,
+     "cer_n2": 2.6256,
+     "dice_n2": 0.027,
+     "line_cer": 0.7228
+    },
+    "mistral-ocr-4-1": {
+     "chars": 4819,
+     "empty": false,
+     "loop": 0.747,
+     "cer_n1": 3.0572,
+     "cer_n2": 3.0592,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "qwen3-vl-8b": {
+     "chars": 8954,
+     "empty": false,
+     "loop": 2.928,
+     "cer_n1": 3.0572,
+     "cer_n2": 3.0592,
+     "dice_n2": 0.0,
+     "line_cer": 0.9206
+    }
+   },
+   "onb-syr1-0161_00000176": {
+    "chandra-ocr-2": {
+     "chars": 666,
+     "empty": false,
+     "loop": 0.688,
+     "cer_n1": 0.8359,
+     "cer_n2": 0.8382,
+     "dice_n2": 0.013,
+     "line_cer": 0.8677
+    },
+    "deepseek-ocr": {
+     "chars": 97,
+     "empty": false,
+     "loop": 1.286,
+     "cer_n1": 0.9849,
+     "cer_n2": 0.9843,
+     "dice_n2": 0.0,
+     "line_cer": 0.975
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 12434,
+     "empty": false,
+     "loop": 0.645,
+     "cer_n1": 2.6729,
+     "cer_n2": 2.6147,
+     "dice_n2": 0.063,
+     "line_cer": 0.7203
+    },
+    "mistral-ocr-4-1": {
+     "chars": 950,
+     "empty": false,
+     "loop": 0.571,
+     "cer_n1": 0.9779,
+     "cer_n2": 1.0048,
+     "dice_n2": 0.015,
+     "line_cer": 0.8951
+    },
+    "qwen3-vl-8b": {
+     "chars": 9706,
+     "empty": false,
+     "loop": 1.329,
+     "cer_n1": 3.0512,
+     "cer_n2": 3.0531,
+     "dice_n2": 0.0,
+     "line_cer": 0.9288
+    }
+   },
+   "onb-syr1-0179_00000194": {
+    "chandra-ocr-2": {
+     "chars": 1047,
+     "empty": false,
+     "loop": 0.233,
+     "cer_n1": 0.9967,
+     "cer_n2": 1.0721,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "deepseek-ocr": {
+     "chars": 14429,
+     "empty": false,
+     "loop": 0.598,
+     "cer_n1": 3.041,
+     "cer_n2": 3.0445,
+     "dice_n2": 0.009,
+     "line_cer": 1.0
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 17662,
+     "empty": false,
+     "loop": 0.184,
+     "cer_n1": 2.536,
+     "cer_n2": 2.512,
+     "dice_n2": 0.07,
+     "line_cer": 1.0
+    },
+    "mistral-ocr-4-1": {
+     "chars": 401,
+     "empty": false,
+     "loop": 0.828,
+     "cer_n1": 0.9025,
+     "cer_n2": 0.8942,
+     "dice_n2": 0.016,
+     "line_cer": 0.9975
+    },
+    "qwen3-vl-8b": {
+     "chars": 4120,
+     "empty": false,
+     "loop": 0.0,
+     "cer_n1": 3.2159,
+     "cer_n2": 3.2344,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "onb-syr1-0235_00000250": {
+    "chandra-ocr-2": {
+     "chars": 719,
+     "empty": false,
+     "loop": 0.225,
+     "cer_n1": 0.8376,
+     "cer_n2": 0.8427,
+     "dice_n2": 0.011,
+     "line_cer": 0.8684
+    },
+    "deepseek-ocr": {
+     "chars": 11005,
+     "empty": false,
+     "loop": 0.674,
+     "cer_n1": 3.038,
+     "cer_n2": 3.0396,
+     "dice_n2": 0.0,
+     "line_cer": 0.8598
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 719,
+     "empty": false,
+     "loop": 1.5,
+     "cer_n1": 0.6855,
+     "cer_n2": 0.6843,
+     "dice_n2": 0.113,
+     "line_cer": 0.674
+    },
+    "mistral-ocr-4-1": {
+     "chars": 3932,
+     "empty": false,
+     "loop": 0.548,
+     "cer_n1": 3.038,
+     "cer_n2": 3.0396,
+     "dice_n2": 0.0,
+     "line_cer": 0.9631
+    },
+    "qwen3-vl-8b": {
+     "chars": 9069,
+     "empty": false,
+     "loop": 0.427,
+     "cer_n1": 3.038,
+     "cer_n2": 3.0396,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   },
+   "onb-syr1-0258_00000273": {
+    "chandra-ocr-2": {
+     "chars": 355,
+     "empty": false,
+     "loop": 0.185,
+     "cer_n1": 0.8367,
+     "cer_n2": 0.8279,
+     "dice_n2": 0.013,
+     "line_cer": 0.8159
+    },
+    "deepseek-ocr": {
+     "chars": 10472,
+     "empty": false,
+     "loop": 0.48,
+     "cer_n1": 3.007,
+     "cer_n2": 3.0073,
+     "dice_n2": 0.013,
+     "line_cer": 1.0
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 1164,
+     "empty": false,
+     "loop": 0.142,
+     "cer_n1": 0.8825,
+     "cer_n2": 0.6905,
+     "dice_n2": 0.079,
+     "line_cer": 1.0
+    },
+    "mistral-ocr-4-1": {
+     "chars": 387,
+     "empty": false,
+     "loop": 0.75,
+     "cer_n1": 0.9303,
+     "cer_n2": 0.9265,
+     "dice_n2": 0.014,
+     "line_cer": 0.9419
+    },
+    "qwen3-vl-8b": {
+     "chars": 16349,
+     "empty": false,
+     "loop": 1.491,
+     "cer_n1": 3.01,
+     "cer_n2": 3.0105,
+     "dice_n2": 0.0,
+     "line_cer": 0.9806
+    }
+   },
+   "onb-syr1-0260_00000275": {
+    "chandra-ocr-2": {
+     "chars": 668,
+     "empty": false,
+     "loop": 2.592,
+     "cer_n1": 0.8011,
+     "cer_n2": 0.7918,
+     "dice_n2": 0.014,
+     "line_cer": 0.8152
+    },
+    "deepseek-ocr": {
+     "chars": 331,
+     "empty": false,
+     "loop": 0.551,
+     "cer_n1": 0.9446,
+     "cer_n2": 0.942,
+     "dice_n2": 0.013,
+     "line_cer": 0.9111
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 898,
+     "empty": false,
+     "loop": 0.527,
+     "cer_n1": 0.8011,
+     "cer_n2": 0.6689,
+     "dice_n2": 0.07,
+     "line_cer": 0.6573
+    },
+    "mistral-ocr-4-1": {
+     "chars": 47,
+     "empty": false,
+     "loop": 0.462,
+     "cer_n1": 0.9837,
+     "cer_n2": 0.9829,
+     "dice_n2": 0.014,
+     "line_cer": 0.8947
+    },
+    "qwen3-vl-8b": {
+     "chars": 9442,
+     "empty": false,
+     "loop": 0.839,
+     "cer_n1": 3.0207,
+     "cer_n2": 3.0216,
+     "dice_n2": 0.0,
+     "line_cer": 0.931
+    }
+   },
+   "onb-syr1-0261_00000276": {
+    "chandra-ocr-2": {
+     "chars": 1489,
+     "empty": false,
+     "loop": 0.313,
+     "cer_n1": 1.31,
+     "cer_n2": 1.3633,
+     "dice_n2": 0.012,
+     "line_cer": 0.9956
+    },
+    "deepseek-ocr": {
+     "chars": 12702,
+     "empty": false,
+     "loop": 0.615,
+     "cer_n1": 2.999,
+     "cer_n2": 2.9989,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "gemini-3.1-flash-lite": {
+     "chars": 19188,
+     "empty": false,
+     "loop": 2.97,
+     "cer_n1": 2.7307,
+     "cer_n2": 2.7193,
+     "dice_n2": 0.072,
+     "line_cer": 0.741
+    },
+    "mistral-ocr-4-1": {
+     "chars": 24931,
+     "empty": false,
+     "loop": 0.999,
+     "cer_n1": 2.999,
+     "cer_n2": 2.9989,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    },
+    "qwen3-vl-8b": {
+     "chars": 8247,
+     "empty": false,
+     "loop": 0.188,
+     "cer_n1": 2.999,
+     "cer_n2": 2.9989,
+     "dice_n2": 0.0,
+     "line_cer": 1.0
+    }
+   }
+  }
+ }
+}

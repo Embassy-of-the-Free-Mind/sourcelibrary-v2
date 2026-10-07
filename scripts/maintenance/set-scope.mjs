@@ -20,6 +20,14 @@
  *   node --env-file=.env.production.local scripts/maintenance/set-scope.mjs \
  *     --tag repair-xyz --books id1,id2 --budget 5 --by "why"
  *   node --env-file=.env.production.local scripts/maintenance/set-scope.mjs --tag wellcome-2026-09 --budget 40 --by "top up"
+ *   node --env-file=.env.production.local scripts/maintenance/set-scope.mjs \
+ *     --tag chained-x --books id1,id2 --budget 10 --lanes translate-batch-chained --by "why"
+ *     (--lanes: the envelope opens only for gates whose label starts with one of these —
+ *      without it every scoped worker may spend it on these books)
+ *   node --env-file=.env.production.local scripts/maintenance/set-scope.mjs \
+ *     --tag embed-x --books id1,id2 --budget 15 --lanes embed-gemini --meter-endpoints worker/embed-gemini --by "why"
+ *     (--meter-endpoints: the envelope's meter counts only usage rows with these endpoints —
+ *      without it, every lane's spend on these books counts against it, #5729)
  *   node --env-file=.env.production.local scripts/maintenance/set-scope.mjs --tag wellcome-2026-09 --remove --by "done"
  *
  * --books and --collection ADD to the existing scope (set union) — the safe
@@ -57,9 +65,9 @@ await withMongo(async (db) => {
           const rows = await db.collection('books').find({ collections: { $in: env.collections } }).project({ id: 1 }).toArray();
           for (const b of rows) ids.add(String(b.id));
         }
-        const spend = await getScopeSpendUsd(db, { ids: [...ids], since: env.created_at });
+        const spend = await getScopeSpendUsd(db, { ids: [...ids], since: env.created_at, endpoints: env.meter_endpoints });
         const state = spend.meterError ? `METER ERROR: ${spend.meterError}` : (spend.usd < env.budget_usd ? 'OPEN' : 'SPENT');
-        spendNote = `envelope $${spend.usd.toFixed(2)} / $${env.budget_usd.toFixed(2)} → ${state} (${ids.size} books, ${spend.rows} usage rows)`;
+        spendNote = `envelope $${spend.usd.toFixed(2)} / $${env.budget_usd.toFixed(2)} → ${state} (${ids.size} books, ${spend.rows} usage rows${env.meter_endpoints ? `; metering only ${env.meter_endpoints.join(', ')}` : ''})`;
       }
       console.log(`${tag}`);
       console.log(`  book_ids: ${(s.book_ids || []).length}  collections: ${(s.collections || []).join(', ') || '(none)'}`);
@@ -112,11 +120,18 @@ await withMongo(async (db) => {
     updated_at: new Date(),
     updated_by: by,
   };
+  if (val('lanes')) next.lanes = val('lanes').split(',').map((s) => s.trim()).filter(Boolean);
+  else if (existing?.lanes) next.lanes = existing.lanes;
+  if (val('meter-endpoints') && !next.lanes) {
+    console.error('--meter-endpoints needs --lanes: an unlaned envelope can be spent by any worker, and a one-endpoint meter would not see them.'); process.exit(1);
+  }
+  if (val('meter-endpoints')) next.meter_endpoints = val('meter-endpoints').split(',').map((s) => s.trim()).filter(Boolean);
+  else if (existing?.meter_endpoints) next.meter_endpoints = existing.meter_endpoints;
   if (budget != null) next.budget_usd = budget;
   else if (existing?.budget_usd != null) next.budget_usd = existing.budget_usd;
 
   await updateConfigVersioned(db, 'processing_control', { $set: { [`allow_scopes.${tag}`]: next } }, by);
-  console.log(`${existing ? 'Updated' : 'Created'} scope '${tag}': ${next.book_ids.length} book_ids, collections [${next.collections.join(', ')}]${next.budget_usd != null ? `, envelope $${next.budget_usd}` : ' (no envelope — pause bypass only)'}`);
+  console.log(`${existing ? 'Updated' : 'Created'} scope '${tag}': ${next.book_ids.length} book_ids, collections [${next.collections.join(', ')}]${next.budget_usd != null ? `, envelope $${next.budget_usd}` : ' (no envelope — pause bypass only)'}${next.lanes ? `, envelope lanes [${next.lanes.join(', ')}]` : ''}${next.meter_endpoints ? `, metering only [${next.meter_endpoints.join(', ')}]` : ''}`);
   if (next.budget_usd != null) {
     console.log('Envelope spend is measured from created_at over both usage stores; monitor with scripts/audit/scope-progress.mjs --scope ' + tag);
   }

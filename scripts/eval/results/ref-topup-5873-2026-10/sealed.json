@@ -1,0 +1,4725 @@
+{
+ "seed": 5873,
+ "at": "2026-10-06T08:15:13.240Z",
+ "pages_per_book": 6,
+ "eligible": {
+  "Persian": {
+   "live_translated_books": 62,
+   "already_tried": 16,
+   "drawable": 46
+  },
+  "Hebrew": {
+   "live_translated_books": 283,
+   "already_tried": 30,
+   "drawable": 253
+  },
+  "Arabic": {
+   "live_translated_books": 276,
+   "already_tried": 22,
+   "drawable": 254
+  },
+  "Pali": {
+   "live_translated_books": 26,
+   "already_tried": 8,
+   "drawable": 18
+  },
+  "Chinese": {
+   "live_translated_books": 2071,
+   "already_tried": 25,
+   "drawable": 2046
+  },
+  "Sanskrit": {
+   "live_translated_books": 393,
+   "already_tried": 28,
+   "drawable": 365
+  }
+ },
+ "books": {
+  "Persian": [
+   {
+    "order": 1,
+    "book_id": "69f32c4234076d2bddeb2fde",
+    "eligible_pages": 103,
+    "candidates": [
+     39,
+     24,
+     88,
+     51,
+     17,
+     79
+    ]
+   },
+   {
+    "order": 2,
+    "book_id": "6a08c5ffe4e4b7b8793e97a9",
+    "eligible_pages": 6,
+    "candidates": [
+     24,
+     25,
+     23,
+     18,
+     19,
+     22
+    ]
+   },
+   {
+    "order": 3,
+    "book_id": "6a09fcc5edaf0f8bef57ba2f",
+    "eligible_pages": 5,
+    "candidates": [
+     22,
+     21,
+     23,
+     24,
+     25
+    ]
+   },
+   {
+    "order": 4,
+    "book_id": "69907bdc5f855ec553e7177b",
+    "eligible_pages": 397,
+    "candidates": [
+     104,
+     314,
+     439,
+     232,
+     406,
+     146
+    ]
+   },
+   {
+    "order": 5,
+    "book_id": "6992548ad5d1c6dbb2bcdcb8",
+    "eligible_pages": 138,
+    "candidates": [
+     105,
+     73,
+     247,
+     186,
+     47,
+     114
+    ]
+   },
+   {
+    "order": 6,
+    "book_id": "69d5ac2ed0bd3547a5655830",
+    "eligible_pages": 79,
+    "candidates": [
+     63,
+     18,
+     88,
+     89,
+     24,
+     78
+    ]
+   },
+   {
+    "order": 7,
+    "book_id": "69f3285baeeee0fa38c6445e",
+    "eligible_pages": 22,
+    "candidates": [
+     16,
+     6,
+     12,
+     10,
+     15,
+     14
+    ]
+   },
+   {
+    "order": 8,
+    "book_id": "69920ba8e0a548a13d8846fe",
+    "eligible_pages": 340,
+    "candidates": [
+     244,
+     127,
+     51,
+     364,
+     188,
+     96
+    ]
+   },
+   {
+    "order": 9,
+    "book_id": "6a08c5ece4e4b7b8793e9727",
+    "eligible_pages": 18,
+    "candidates": [
+     16,
+     21,
+     15,
+     20,
+     23,
+     11
+    ]
+   },
+   {
+    "order": 10,
+    "book_id": "69e534bbd48480a386966f5c",
+    "eligible_pages": 87,
+    "candidates": [
+     163,
+     101,
+     123,
+     88,
+     41,
+     55
+    ]
+   },
+   {
+    "order": 11,
+    "book_id": "6a3c61d1879008ba7e160b5a",
+    "eligible_pages": 76,
+    "candidates": [
+     49,
+     88,
+     55,
+     48,
+     68,
+     11
+    ]
+   },
+   {
+    "order": 12,
+    "book_id": "69e748a385f786e884a4c8c1",
+    "eligible_pages": 0,
+    "candidates": []
+   },
+   {
+    "order": 13,
+    "book_id": "69e748b385f786e884a4cbdb",
+    "eligible_pages": 224,
+    "candidates": [
+     137,
+     83,
+     198,
+     161,
+     248,
+     42
+    ]
+   },
+   {
+    "order": 14,
+    "book_id": "69e748cd49abba5e98281879",
+    "eligible_pages": 230,
+    "candidates": [
+     199,
+     110,
+     244,
+     83,
+     140,
+     147
+    ]
+   },
+   {
+    "order": 15,
+    "book_id": "6a08fd269c1b82475e15c0fa",
+    "eligible_pages": 0,
+    "candidates": []
+   },
+   {
+    "order": 16,
+    "book_id": "69d5ac26d0bd3547a5655542",
+    "eligible_pages": 575,
+    "candidates": [
+     560,
+     344,
+     244,
+     320,
+     351,
+     360
+    ]
+   },
+   {
+    "order": 17,
+    "book_id": "69f32865aeeee0fa38c6447c",
+    "eligible_pages": 311,
+    "candidates": [
+     304,
+     210,
+     168,
+     135,
+     250,
+     147
+    ]
+   },
+   {
+    "order": 18,
+    "book_id": "69f3284caeeee0fa38c643b8",
+    "eligible_pages": 117,
+    "candidates": [
+     45,
+     112,
+     89,
+     20,
+     65,
+     34
+    ]
+   },
+   {
+    "order": 19,
+    "book_id": "6a358874d8c4016326cdcb7f",
+    "eligible_pages": 620,
+    "candidates": [
+     193,
+     695,
+     386,
+     512,
+     287,
+     425
+    ]
+   },
+   {
+    "order": 20,
+    "book_id": "6a08a3a28fae3d3f19b789cd",
+    "eligible_pages": 11,
+    "candidates": [
+     24,
+     22,
+     17,
+     19,
+     15,
+     20
+    ]
+   },
+   {
+    "order": 21,
+    "book_id": "69f33c2d876dd827cbc59f9b",
+    "eligible_pages": 149,
+    "candidates": [
+     63,
+     114,
+     110,
+     50,
+     41,
+     142
+    ]
+   },
+   {
+    "order": 22,
+    "book_id": "69d5abb0f5e2a1273d900fd6",
+    "eligible_pages": 420,
+    "candidates": [
+     536,
+     215,
+     395,
+     446,
+     119,
+     99
+    ]
+   },
+   {
+    "order": 23,
+    "book_id": "6a21987f2fef46793dd7117d",
+    "eligible_pages": 40,
+    "candidates": [
+     20,
+     37,
+     35,
+     24,
+     28,
+     27
+    ]
+   },
+   {
+    "order": 24,
+    "book_id": "6a08569f0bb3f3f14ee99f3d",
+    "eligible_pages": 199,
+    "candidates": [
+     91,
+     189,
+     86,
+     96,
+     120,
+     206
+    ]
+   },
+   {
+    "order": 25,
+    "book_id": "6a088afebd8fc3beee8aa59c",
+    "eligible_pages": 282,
+    "candidates": [
+     73,
+     76,
+     69,
+     37,
+     298,
+     302
+    ]
+   },
+   {
+    "order": 26,
+    "book_id": "69e748bd49abba5e982816d3",
+    "eligible_pages": 98,
+    "candidates": [
+     76,
+     108,
+     80,
+     74,
+     35,
+     15
+    ]
+   },
+   {
+    "order": 27,
+    "book_id": "69f3286daeeee0fa38c64605",
+    "eligible_pages": 233,
+    "candidates": [
+     36,
+     165,
+     43,
+     138,
+     82,
+     119
+    ]
+   },
+   {
+    "order": 28,
+    "book_id": "6a08fd2d9c1b82475e15c27b",
+    "eligible_pages": 0,
+    "candidates": []
+   },
+   {
+    "order": 29,
+    "book_id": "69f33d92876dd827cbc5c190",
+    "eligible_pages": 393,
+    "candidates": [
+     121,
+     212,
+     90,
+     439,
+     71,
+     108
+    ]
+   },
+   {
+    "order": 30,
+    "book_id": "699243d2bc722ec0ee80a13d",
+    "eligible_pages": 281,
+    "candidates": [
+     221,
+     247,
+     243,
+     199,
+     284,
+     261
+    ]
+   },
+   {
+    "order": 31,
+    "book_id": "6a08fe27cba2f4fe3ad83918",
+    "eligible_pages": 1,
+    "candidates": [
+     25
+    ]
+   },
+   {
+    "order": 32,
+    "book_id": "69f33b46876dd827cbc589f2",
+    "eligible_pages": 215,
+    "candidates": [
+     54,
+     56,
+     132,
+     30,
+     202,
+     172
+    ]
+   },
+   {
+    "order": 33,
+    "book_id": "69b632b166ab51b501d93b92",
+    "eligible_pages": 475,
+    "candidates": [
+     434,
+     512,
+     447,
+     182,
+     515,
+     412
+    ]
+   },
+   {
+    "order": 34,
+    "book_id": "69e748e049abba5e98281ded",
+    "eligible_pages": 22,
+    "candidates": [
+     7,
+     4,
+     14,
+     10,
+     12,
+     20
+    ]
+   },
+   {
+    "order": 35,
+    "book_id": "6a16cecf8b31450421122259",
+    "eligible_pages": 27,
+    "candidates": [
+     21,
+     30,
+     15,
+     11,
+     8,
+     17
+    ]
+   },
+   {
+    "order": 36,
+    "book_id": "69e7934980b52390feb1853b",
+    "eligible_pages": 386,
+    "candidates": [
+     367,
+     151,
+     143,
+     370,
+     132,
+     290
+    ]
+   },
+   {
+    "order": 37,
+    "book_id": "6a08a3a88fae3d3f19b78a66",
+    "eligible_pages": 12,
+    "candidates": [
+     18,
+     13,
+     22,
+     17,
+     14,
+     19
+    ]
+   },
+   {
+    "order": 38,
+    "book_id": "6a09fcbaedaf0f8bef57b987",
+    "eligible_pages": 9,
+    "candidates": [
+     24,
+     21,
+     22,
+     19,
+     17,
+     25
+    ]
+   },
+   {
+    "order": 39,
+    "book_id": "6a08c5f7e4e4b7b8793e9770",
+    "eligible_pages": 20,
+    "candidates": [
+     19,
+     23,
+     21,
+     8,
+     9,
+     7
+    ]
+   },
+   {
+    "order": 40,
+    "book_id": "69b63e99535439aaa4891686",
+    "eligible_pages": 8,
+    "candidates": [
+     8,
+     2,
+     7,
+     6,
+     5,
+     9
+    ]
+   },
+   {
+    "order": 41,
+    "book_id": "6a3c5e6c40c88a541d8e1e89",
+    "eligible_pages": 44,
+    "candidates": [
+     20,
+     52,
+     13,
+     39,
+     26,
+     8
+    ]
+   },
+   {
+    "order": 42,
+    "book_id": "69dfdabf220eedf04e13bab1",
+    "eligible_pages": 68,
+    "candidates": [
+     40,
+     71,
+     59,
+     66,
+     70,
+     74
+    ]
+   },
+   {
+    "order": 43,
+    "book_id": "6a3c61c9879008ba7e160496",
+    "eligible_pages": 91,
+    "candidates": [
+     46,
+     106,
+     17,
+     43,
+     49,
+     42
+    ]
+   },
+   {
+    "order": 44,
+    "book_id": "69f32876aeeee0fa38c6472b",
+    "eligible_pages": 133,
+    "candidates": [
+     135,
+     103,
+     84,
+     120,
+     137,
+     66
+    ]
+   },
+   {
+    "order": 45,
+    "book_id": "69b63e602a1dde00d5a9d059",
+    "eligible_pages": 104,
+    "candidates": [
+     42,
+     106,
+     34,
+     74,
+     40,
+     25
+    ]
+   },
+   {
+    "order": 46,
+    "book_id": "6a3c61ce879008ba7e160a56",
+    "eligible_pages": 7,
+    "candidates": [
+     7,
+     17,
+     16,
+     12,
+     11,
+     3
+    ]
+   }
+  ],
+  "Hebrew": [
+   {
+    "order": 1,
+    "book_id": "69c1bc2f8522835be8461c0f",
+    "eligible_pages": 7,
+    "candidates": [
+     5,
+     4,
+     3,
+     6,
+     2,
+     7
+    ]
+   },
+   {
+    "order": 2,
+    "book_id": "69c1bacc8522835be845a738",
+    "eligible_pages": 383,
+    "candidates": [
+     301,
+     162,
+     152,
+     436,
+     129,
+     314
+    ]
+   },
+   {
+    "order": 3,
+    "book_id": "69c1bc0d8522835be8461541",
+    "eligible_pages": 115,
+    "candidates": [
+     54,
+     64,
+     96,
+     18,
+     45,
+     106
+    ]
+   },
+   {
+    "order": 4,
+    "book_id": "69c1bc7f8522835be84637fc",
+    "eligible_pages": 1,
+    "candidates": [
+     1
+    ]
+   },
+   {
+    "order": 5,
+    "book_id": "69c1bbf98522835be8460ee1",
+    "eligible_pages": 144,
+    "candidates": [
+     138,
+     243,
+     77,
+     99,
+     224,
+     240
+    ]
+   },
+   {
+    "order": 6,
+    "book_id": "69c736b46a0f3d112faf76b0",
+    "eligible_pages": 14,
+    "candidates": [
+     45,
+     110,
+     160,
+     101,
+     152,
+     157
+    ]
+   },
+   {
+    "order": 7,
+    "book_id": "69c1bc068522835be8461209",
+    "eligible_pages": 268,
+    "candidates": [
+     65,
+     194,
+     128,
+     83,
+     198,
+     147
+    ]
+   },
+   {
+    "order": 8,
+    "book_id": "69c731f56a0f3d112faf73d7",
+    "eligible_pages": 227,
+    "candidates": [
+     245,
+     43,
+     80,
+     74,
+     172,
+     134
+    ]
+   },
+   {
+    "order": 9,
+    "book_id": "69c1bb4a8522835be845e71f",
+    "eligible_pages": 554,
+    "candidates": [
+     478,
+     245,
+     426,
+     121,
+     596,
+     616
+    ]
+   },
+   {
+    "order": 10,
+    "book_id": "69c1bbbb8522835be8460594",
+    "eligible_pages": 1,
+    "candidates": [
+     1
+    ]
+   },
+   {
+    "order": 11,
+    "book_id": "6956eb52b5d89fc3ccb4817f",
+    "eligible_pages": 344,
+    "candidates": [
+     162,
+     218,
+     350,
+     82,
+     382,
+     185
+    ]
+   },
+   {
+    "order": 12,
+    "book_id": "69c1bb1c8522835be845cf19",
+    "eligible_pages": 117,
+    "candidates": [
+     160,
+     152,
+     35,
+     138,
+     60,
+     121
+    ]
+   },
+   {
+    "order": 13,
+    "book_id": "69c1bc5f8522835be84622f6",
+    "eligible_pages": 1,
+    "candidates": [
+     1
+    ]
+   },
+   {
+    "order": 14,
+    "book_id": "69c1bad18522835be845aabc",
+    "eligible_pages": 477,
+    "candidates": [
+     251,
+     319,
+     310,
+     414,
+     292,
+     318
+    ]
+   },
+   {
+    "order": 15,
+    "book_id": "697c8e137aeb5769e4cf1a26",
+    "eligible_pages": 81,
+    "candidates": [
+     62,
+     59,
+     27,
+     42,
+     30,
+     64
+    ]
+   },
+   {
+    "order": 16,
+    "book_id": "69c1bae98522835be845b6b8",
+    "eligible_pages": 200,
+    "candidates": [
+     172,
+     150,
+     212,
+     148,
+     222,
+     36
+    ]
+   },
+   {
+    "order": 17,
+    "book_id": "69c1bc788522835be84637be",
+    "eligible_pages": 3,
+    "candidates": [
+     3,
+     1,
+     2
+    ]
+   },
+   {
+    "order": 18,
+    "book_id": "69c1bbd28522835be8460a78",
+    "eligible_pages": 90,
+    "candidates": [
+     32,
+     62,
+     71,
+     101,
+     57,
+     77
+    ]
+   },
+   {
+    "order": 19,
+    "book_id": "69b525b56be6046083030af0",
+    "eligible_pages": 300,
+    "candidates": [
+     52,
+     321,
+     185,
+     213,
+     227,
+     157
+    ]
+   },
+   {
+    "order": 20,
+    "book_id": "69c734936a0f3d112faf7595",
+    "eligible_pages": 83,
+    "candidates": [
+     71,
+     64,
+     82,
+     34,
+     32,
+     53
+    ]
+   },
+   {
+    "order": 21,
+    "book_id": "69c1bb538522835be845ee95",
+    "eligible_pages": 297,
+    "candidates": [
+     154,
+     257,
+     105,
+     176,
+     119,
+     201
+    ]
+   },
+   {
+    "order": 22,
+    "book_id": "69c1bc858522835be8463804",
+    "eligible_pages": 131,
+    "candidates": [
+     115,
+     136,
+     145,
+     45,
+     120,
+     116
+    ]
+   },
+   {
+    "order": 23,
+    "book_id": "69b3e677304c1c6b3950b41f",
+    "eligible_pages": 432,
+    "candidates": [
+     434,
+     103,
+     225,
+     573,
+     78,
+     426
+    ]
+   },
+   {
+    "order": 24,
+    "book_id": "69c1ba738522835be8458e8d",
+    "eligible_pages": 88,
+    "candidates": [
+     72,
+     99,
+     76,
+     91,
+     93,
+     75
+    ]
+   },
+   {
+    "order": 25,
+    "book_id": "69b525ac29577f283b57a775",
+    "eligible_pages": 595,
+    "candidates": [
+     563,
+     616,
+     95,
+     533,
+     634,
+     590
+    ]
+   },
+   {
+    "order": 26,
+    "book_id": "69c1bb3e8522835be845dcd3",
+    "eligible_pages": 388,
+    "candidates": [
+     513,
+     150,
+     196,
+     391,
+     501,
+     77
+    ]
+   },
+   {
+    "order": 27,
+    "book_id": "69c79f1492b884e4f817372f",
+    "eligible_pages": 33,
+    "candidates": [
+     31,
+     15,
+     14,
+     32,
+     21,
+     30
+    ]
+   },
+   {
+    "order": 28,
+    "book_id": "69c1bc268522835be84618c7",
+    "eligible_pages": 336,
+    "candidates": [
+     163,
+     334,
+     189,
+     305,
+     221,
+     158
+    ]
+   },
+   {
+    "order": 29,
+    "book_id": "69c1baf08522835be845ba94",
+    "eligible_pages": 198,
+    "candidates": [
+     173,
+     73,
+     156,
+     35,
+     199,
+     84
+    ]
+   },
+   {
+    "order": 30,
+    "book_id": "69c1bba08522835be8460580",
+    "eligible_pages": 5,
+    "candidates": [
+     5,
+     2,
+     1,
+     3,
+     4
+    ]
+   },
+   {
+    "order": 31,
+    "book_id": "69c1bafc8522835be845bffa",
+    "eligible_pages": 190,
+    "candidates": [
+     97,
+     76,
+     197,
+     51,
+     108,
+     221
+    ]
+   },
+   {
+    "order": 32,
+    "book_id": "69b4cd46d5b6c3815e1a53f2",
+    "eligible_pages": 77,
+    "candidates": [
+     10,
+     65,
+     14,
+     40,
+     66,
+     67
+    ]
+   },
+   {
+    "order": 33,
+    "book_id": "69c1bb4c8522835be845e9f3",
+    "eligible_pages": 552,
+    "candidates": [
+     580,
+     377,
+     232,
+     345,
+     168,
+     626
+    ]
+   },
+   {
+    "order": 34,
+    "book_id": "69c1be688522835be846c193",
+    "eligible_pages": 2,
+    "candidates": [
+     2,
+     1
+    ]
+   },
+   {
+    "order": 35,
+    "book_id": "69c7b0ec25ec2ba5ccd7f3f3",
+    "eligible_pages": 118,
+    "candidates": [
+     127,
+     96,
+     79,
+     18,
+     74,
+     110
+    ]
+   },
+   {
+    "order": 36,
+    "book_id": "69c1bc438522835be84621e8",
+    "eligible_pages": 188,
+    "candidates": [
+     159,
+     52,
+     155,
+     59,
+     106,
+     186
+    ]
+   },
+   {
+    "order": 37,
+    "book_id": "69c1bc6b8522835be8463238",
+    "eligible_pages": 435,
+    "candidates": [
+     106,
+     270,
+     148,
+     381,
+     333,
+     150
+    ]
+   },
+   {
+    "order": 38,
+    "book_id": "69c1bc708522835be84634e8",
+    "eligible_pages": 99,
+    "candidates": [
+     60,
+     46,
+     67,
+     34,
+     106,
+     18
+    ]
+   },
+   {
+    "order": 39,
+    "book_id": "69c1bac18522835be845a172",
+    "eligible_pages": 331,
+    "candidates": [
+     324,
+     71,
+     288,
+     125,
+     122,
+     225
+    ]
+   },
+   {
+    "order": 40,
+    "book_id": "69b52c4e3dd6d9423027f43e",
+    "eligible_pages": 314,
+    "candidates": [
+     302,
+     229,
+     63,
+     278,
+     139,
+     123
+    ]
+   },
+   {
+    "order": 41,
+    "book_id": "69c1bb878522835be8460195",
+    "eligible_pages": 19,
+    "candidates": [
+     15,
+     27,
+     32,
+     13,
+     78,
+     19
+    ]
+   },
+   {
+    "order": 42,
+    "book_id": "697711607e1d5a07ae945879",
+    "eligible_pages": 242,
+    "candidates": [
+     73,
+     236,
+     117,
+     274,
+     120,
+     191
+    ]
+   },
+   {
+    "order": 43,
+    "book_id": "69b525932379d2fed6c29089",
+    "eligible_pages": 136,
+    "candidates": [
+     94,
+     112,
+     107,
+     120,
+     61,
+     152
+    ]
+   },
+   {
+    "order": 44,
+    "book_id": "69c1bb5c8522835be845f2eb",
+    "eligible_pages": 293,
+    "candidates": [
+     52,
+     96,
+     275,
+     290,
+     255,
+     205
+    ]
+   },
+   {
+    "order": 45,
+    "book_id": "6a26bf4e0e247ebad6debeb4",
+    "eligible_pages": 321,
+    "candidates": [
+     350,
+     155,
+     329,
+     216,
+     254,
+     60
+    ]
+   },
+   {
+    "order": 46,
+    "book_id": "69b3e679304c1c6b3950b712",
+    "eligible_pages": 126,
+    "candidates": [
+     81,
+     141,
+     66,
+     129,
+     52,
+     54
+    ]
+   },
+   {
+    "order": 47,
+    "book_id": "69c734076a0f3d112faf750d",
+    "eligible_pages": 106,
+    "candidates": [
+     21,
+     109,
+     25,
+     77,
+     69,
+     81
+    ]
+   },
+   {
+    "order": 48,
+    "book_id": "69c1bfda8522835be846c2ce",
+    "eligible_pages": 1,
+    "candidates": [
+     1
+    ]
+   },
+   {
+    "order": 49,
+    "book_id": "69c1bb558522835be845f021",
+    "eligible_pages": 78,
+    "candidates": [
+     73,
+     79,
+     25,
+     65,
+     85,
+     15
+    ]
+   },
+   {
+    "order": 50,
+    "book_id": "69b632cf66ab51b501d94024",
+    "eligible_pages": 7,
+    "candidates": [
+     363,
+     137,
+     364,
+     485,
+     487,
+     271
+    ]
+   },
+   {
+    "order": 51,
+    "book_id": "69c7a1c492b884e4f817382f",
+    "eligible_pages": 166,
+    "candidates": [
+     115,
+     122,
+     73,
+     144,
+     31,
+     130
+    ]
+   },
+   {
+    "order": 52,
+    "book_id": "69c1bb218522835be845d0eb",
+    "eligible_pages": 536,
+    "candidates": [
+     448,
+     454,
+     124,
+     88,
+     180,
+     211
+    ]
+   },
+   {
+    "order": 53,
+    "book_id": "69c1bb6c8522835be845fafb",
+    "eligible_pages": 460,
+    "candidates": [
+     498,
+     364,
+     406,
+     582,
+     226,
+     452
+    ]
+   },
+   {
+    "order": 54,
+    "book_id": "69c1bb8e8522835be84603f3",
+    "eligible_pages": 25,
+    "candidates": [
+     12,
+     44,
+     13,
+     25,
+     27,
+     40
+    ]
+   },
+   {
+    "order": 55,
+    "book_id": "69c1bb5a8522835be845f27d",
+    "eligible_pages": 77,
+    "candidates": [
+     36,
+     54,
+     40,
+     28,
+     20,
+     88
+    ]
+   },
+   {
+    "order": 56,
+    "book_id": "69c1bb8c8522835be8460259",
+    "eligible_pages": 309,
+    "candidates": [
+     191,
+     50,
+     323,
+     314,
+     78,
+     188
+    ]
+   },
+   {
+    "order": 57,
+    "book_id": "69c1bf288522835be846c264",
+    "eligible_pages": 1,
+    "candidates": [
+     1
+    ]
+   },
+   {
+    "order": 58,
+    "book_id": "69b418ae2b0edf3eaa2dd9aa",
+    "eligible_pages": 203,
+    "candidates": [
+     239,
+     114,
+     59,
+     117,
+     67,
+     65
+    ]
+   },
+   {
+    "order": 59,
+    "book_id": "69c1bb038522835be845c210",
+    "eligible_pages": 482,
+    "candidates": [
+     372,
+     569,
+     370,
+     184,
+     566,
+     338
+    ]
+   },
+   {
+    "order": 60,
+    "book_id": "69c1bb998522835be8460578",
+    "eligible_pages": 1,
+    "candidates": [
+     1
+    ]
+   },
+   {
+    "order": 61,
+    "book_id": "69c1bae08522835be845b1f6",
+    "eligible_pages": 230,
+    "candidates": [
+     67,
+     100,
+     157,
+     152,
+     251,
+     163
+    ]
+   },
+   {
+    "order": 62,
+    "book_id": "6976db51097b3607ee4be2f9",
+    "eligible_pages": 229,
+    "candidates": [
+     254,
+     177,
+     231,
+     99,
+     201,
+     175
+    ]
+   },
+   {
+    "order": 63,
+    "book_id": "69c1bc0b8522835be84613b7",
+    "eligible_pages": 210,
+    "candidates": [
+     323,
+     98,
+     259,
+     155,
+     342,
+     281
+    ]
+   },
+   {
+    "order": 64,
+    "book_id": "69c1bad58522835be845ae24",
+    "eligible_pages": 34,
+    "candidates": [
+     26,
+     18,
+     31,
+     22,
+     29,
+     11
+    ]
+   },
+   {
+    "order": 65,
+    "book_id": "69c1bbf58522835be8460d6b",
+    "eligible_pages": 149,
+    "candidates": [
+     42,
+     136,
+     80,
+     84,
+     57,
+     90
+    ]
+   },
+   {
+    "order": 66,
+    "book_id": "69c1ba9b8522835be8459ac5",
+    "eligible_pages": 48,
+    "candidates": [
+     42,
+     48,
+     7,
+     14,
+     32,
+     16
+    ]
+   },
+   {
+    "order": 67,
+    "book_id": "69c1bb478522835be845e4d1",
+    "eligible_pages": 412,
+    "candidates": [
+     322,
+     137,
+     390,
+     460,
+     498,
+     521
+    ]
+   },
+   {
+    "order": 68,
+    "book_id": "699246babc722ec0ee8120e8",
+    "eligible_pages": 727,
+    "candidates": [
+     367,
+     559,
+     815,
+     341,
+     234,
+     399
+    ]
+   },
+   {
+    "order": 69,
+    "book_id": "69c1bbee8522835be8460bc5",
+    "eligible_pages": 15,
+    "candidates": [
+     14,
+     15,
+     13,
+     23,
+     16,
+     12
+    ]
+   },
+   {
+    "order": 70,
+    "book_id": "69d5acb04dc55b8478dde57f",
+    "eligible_pages": 142,
+    "candidates": [
+     268,
+     72,
+     249,
+     49,
+     91,
+     95
+    ]
+   },
+   {
+    "order": 71,
+    "book_id": "69c1baf98522835be845be90",
+    "eligible_pages": 259,
+    "candidates": [
+     252,
+     90,
+     113,
+     156,
+     170,
+     277
+    ]
+   },
+   {
+    "order": 72,
+    "book_id": "69b3e675304c1c6b3950b1fa",
+    "eligible_pages": 432,
+    "candidates": [
+     369,
+     77,
+     275,
+     123,
+     147,
+     231
+    ]
+   },
+   {
+    "order": 73,
+    "book_id": "69a5e3f5006a409842216b6c",
+    "eligible_pages": 263,
+    "candidates": [
+     216,
+     231,
+     63,
+     59,
+     132,
+     57
+    ]
+   },
+   {
+    "order": 74,
+    "book_id": "69c1bc458522835be84622de",
+    "eligible_pages": 7,
+    "candidates": [
+     6,
+     2,
+     5,
+     3,
+     4,
+     7
+    ]
+   },
+   {
+    "order": 75,
+    "book_id": "69c1bab38522835be8459bf4",
+    "eligible_pages": 201,
+    "candidates": [
+     238,
+     77,
+     32,
+     62,
+     161,
+     118
+    ]
+   },
+   {
+    "order": 76,
+    "book_id": "69c1bbaf8522835be846058c",
+    "eligible_pages": 1,
+    "candidates": [
+     1
+    ]
+   },
+   {
+    "order": 77,
+    "book_id": "69c1bc7d8522835be84637c4",
+    "eligible_pages": 43,
+    "candidates": [
+     44,
+     40,
+     15,
+     23,
+     30,
+     37
+    ]
+   },
+   {
+    "order": 78,
+    "book_id": "6a26bbb54045b346e6ad3a35",
+    "eligible_pages": 69,
+    "candidates": [
+     9,
+     12,
+     68,
+     32,
+     63,
+     27
+    ]
+   },
+   {
+    "order": 79,
+    "book_id": "69c1ba928522835be845954d",
+    "eligible_pages": 328,
+    "candidates": [
+     386,
+     72,
+     355,
+     62,
+     364,
+     275
+    ]
+   },
+   {
+    "order": 80,
+    "book_id": "69c1ba8d8522835be8459371",
+    "eligible_pages": 104,
+    "candidates": [
+     90,
+     25,
+     81,
+     116,
+     99,
+     64
+    ]
+   },
+   {
+    "order": 81,
+    "book_id": "69c1bbfb8522835be8460ff9",
+    "eligible_pages": 145,
+    "candidates": [
+     146,
+     163,
+     159,
+     141,
+     107,
+     114
+    ]
+   },
+   {
+    "order": 82,
+    "book_id": "69b4cd36d5b6c3815e1a4e66",
+    "eligible_pages": 68,
+    "candidates": [
+     58,
+     75,
+     51,
+     23,
+     16,
+     79
+    ]
+   },
+   {
+    "order": 83,
+    "book_id": "69b52596cced70d8e6d72a41",
+    "eligible_pages": 34,
+    "candidates": [
+     19,
+     16,
+     33,
+     36,
+     26,
+     18
+    ]
+   },
+   {
+    "order": 84,
+    "book_id": "69c1bb0c8522835be845c840",
+    "eligible_pages": 416,
+    "candidates": [
+     266,
+     210,
+     417,
+     249,
+     126,
+     87
+    ]
+   },
+   {
+    "order": 85,
+    "book_id": "69c1bb398522835be845d733",
+    "eligible_pages": 385,
+    "candidates": [
+     543,
+     348,
+     109,
+     418,
+     339,
+     321
+    ]
+   },
+   {
+    "order": 86,
+    "book_id": "69c1bac58522835be845a39c",
+    "eligible_pages": 168,
+    "candidates": [
+     179,
+     115,
+     57,
+     143,
+     103,
+     170
+    ]
+   },
+   {
+    "order": 87,
+    "book_id": "69c1ba898522835be845930d",
+    "eligible_pages": 16,
+    "candidates": [
+     14,
+     10,
+     20,
+     19,
+     18,
+     8
+    ]
+   },
+   {
+    "order": 88,
+    "book_id": "6992469abc722ec0ee80efa9",
+    "eligible_pages": 751,
+    "candidates": [
+     636,
+     465,
+     295,
+     682,
+     463,
+     315
+    ]
+   },
+   {
+    "order": 89,
+    "book_id": "695285cdab34727b1f04c25a",
+    "eligible_pages": 151,
+    "candidates": [
+     83,
+     147,
+     72,
+     116,
+     43,
+     44
+    ]
+   },
+   {
+    "order": 90,
+    "book_id": "69c1bb008522835be845c132",
+    "eligible_pages": 154,
+    "candidates": [
+     196,
+     46,
+     193,
+     162,
+     60,
+     188
+    ]
+   }
+  ],
+  "Arabic": [
+   {
+    "order": 1,
+    "book_id": "6a09f784ec7a5a72f8daad04",
+    "eligible_pages": 0,
+    "candidates": []
+   },
+   {
+    "order": 2,
+    "book_id": "69b636138ab57a1de53a7205",
+    "eligible_pages": 383,
+    "candidates": [
+     370,
+     82,
+     84,
+     207,
+     278,
+     191
+    ]
+   },
+   {
+    "order": 3,
+    "book_id": "69d5abced0bd3547a5654189",
+    "eligible_pages": 381,
+    "candidates": [
+     133,
+     87,
+     99,
+     128,
+     248,
+     408
+    ]
+   },
+   {
+    "order": 4,
+    "book_id": "69b6363a8ab57a1de53a75c8",
+    "eligible_pages": 234,
+    "candidates": [
+     55,
+     260,
+     76,
+     112,
+     117,
+     198
+    ]
+   },
+   {
+    "order": 5,
+    "book_id": "69f33c6b876dd827cbc5a49d",
+    "eligible_pages": 87,
+    "candidates": [
+     37,
+     84,
+     86,
+     77,
+     39,
+     18
+    ]
+   },
+   {
+    "order": 6,
+    "book_id": "69f33c41876dd827cbc5a088",
+    "eligible_pages": 204,
+    "candidates": [
+     143,
+     51,
+     223,
+     115,
+     185,
+     219
+    ]
+   },
+   {
+    "order": 7,
+    "book_id": "69ef332b72c1376fdf2afcf2",
+    "eligible_pages": 198,
+    "candidates": [
+     121,
+     211,
+     45,
+     180,
+     178,
+     103
+    ]
+   },
+   {
+    "order": 8,
+    "book_id": "6a09f77aec7a5a72f8daabe8",
+    "eligible_pages": 13,
+    "candidates": [
+     14,
+     21,
+     24,
+     11,
+     22,
+     19
+    ]
+   },
+   {
+    "order": 9,
+    "book_id": "69ea0f8f13a685002bb8e780",
+    "eligible_pages": 308,
+    "candidates": [
+     131,
+     228,
+     146,
+     155,
+     257,
+     71
+    ]
+   },
+   {
+    "order": 10,
+    "book_id": "69f33bdd876dd827cbc59626",
+    "eligible_pages": 7,
+    "candidates": [
+     4,
+     6,
+     5,
+     3,
+     2,
+     8
+    ]
+   },
+   {
+    "order": 11,
+    "book_id": "6a2032e818654bf8e1903be2",
+    "eligible_pages": 17,
+    "candidates": [
+     14,
+     11,
+     3,
+     16,
+     9,
+     8
+    ]
+   },
+   {
+    "order": 12,
+    "book_id": "6a20331018654bf8e19040d0",
+    "eligible_pages": 62,
+    "candidates": [
+     42,
+     34,
+     57,
+     31,
+     54,
+     51
+    ]
+   },
+   {
+    "order": 13,
+    "book_id": "6a2032f218654bf8e1903e24",
+    "eligible_pages": 37,
+    "candidates": [
+     15,
+     35,
+     10,
+     22,
+     27,
+     9
+    ]
+   },
+   {
+    "order": 14,
+    "book_id": "6a29d583c0df82e562e4c4cd",
+    "eligible_pages": 221,
+    "candidates": [
+     98,
+     61,
+     252,
+     144,
+     197,
+     193
+    ]
+   },
+   {
+    "order": 15,
+    "book_id": "6a08a40ada3498baef092e0a",
+    "eligible_pages": 223,
+    "candidates": [
+     178,
+     235,
+     62,
+     60,
+     59,
+     185
+    ]
+   },
+   {
+    "order": 16,
+    "book_id": "69d665abdaca889caf927527",
+    "eligible_pages": 150,
+    "candidates": [
+     106,
+     57,
+     37,
+     167,
+     87,
+     31
+    ]
+   },
+   {
+    "order": 17,
+    "book_id": "69b3e5ee304c1c6b3950a8f5",
+    "eligible_pages": 0,
+    "candidates": []
+   },
+   {
+    "order": 18,
+    "book_id": "6a20330b18654bf8e1904083",
+    "eligible_pages": 21,
+    "candidates": [
+     12,
+     6,
+     11,
+     14,
+     17,
+     7
+    ]
+   },
+   {
+    "order": 19,
+    "book_id": "6a2032f718654bf8e1903f05",
+    "eligible_pages": 63,
+    "candidates": [
+     64,
+     45,
+     18,
+     65,
+     72,
+     11
+    ]
+   },
+   {
+    "order": 20,
+    "book_id": "6a20329618654bf8e1903183",
+    "eligible_pages": 40,
+    "candidates": [
+     10,
+     15,
+     35,
+     24,
+     22,
+     31
+    ]
+   },
+   {
+    "order": 21,
+    "book_id": "69b3e598c94a4ff7cce22dfc",
+    "eligible_pages": 0,
+    "candidates": []
+   },
+   {
+    "order": 22,
+    "book_id": "69f33450876dd827cbc4ca21",
+    "eligible_pages": 201,
+    "candidates": [
+     228,
+     213,
+     63,
+     84,
+     230,
+     79
+    ]
+   },
+   {
+    "order": 23,
+    "book_id": "69f32843aeeee0fa38c642f2",
+    "eligible_pages": 150,
+    "candidates": [
+     94,
+     114,
+     131,
+     156,
+     58,
+     110
+    ]
+   },
+   {
+    "order": 24,
+    "book_id": "6a20331b18654bf8e19042bf",
+    "eligible_pages": 10,
+    "candidates": [
+     11,
+     15,
+     16,
+     12,
+     14,
+     7
+    ]
+   },
+   {
+    "order": 25,
+    "book_id": "69908ad8285673ff8cb80bac",
+    "eligible_pages": 111,
+    "candidates": [
+     75,
+     95,
+     62,
+     26,
+     19,
+     17
+    ]
+   },
+   {
+    "order": 26,
+    "book_id": "6a20330d18654bf8e190409f",
+    "eligible_pages": 17,
+    "candidates": [
+     16,
+     14,
+     18,
+     15,
+     19,
+     7
+    ]
+   },
+   {
+    "order": 27,
+    "book_id": "6a20331318654bf8e1904192",
+    "eligible_pages": 68,
+    "candidates": [
+     49,
+     20,
+     23,
+     15,
+     28,
+     32
+    ]
+   },
+   {
+    "order": 28,
+    "book_id": "69907c165f855ec553e71de7",
+    "eligible_pages": 241,
+    "candidates": [
+     72,
+     241,
+     205,
+     51,
+     244,
+     48
+    ]
+   },
+   {
+    "order": 29,
+    "book_id": "69c1be4e8522835be846c16b",
+    "eligible_pages": 1,
+    "candidates": [
+     1
+    ]
+   },
+   {
+    "order": 30,
+    "book_id": "695361ba9c494f9f9f042a69",
+    "eligible_pages": 282,
+    "candidates": [
+     270,
+     265,
+     43,
+     238,
+     107,
+     101
+    ]
+   },
+   {
+    "order": 31,
+    "book_id": "69ef2f6c72c1376fdf2af335",
+    "eligible_pages": 271,
+    "candidates": [
+     220,
+     293,
+     278,
+     231,
+     76,
+     39
+    ]
+   },
+   {
+    "order": 32,
+    "book_id": "6a09f775ec7a5a72f8daab75",
+    "eligible_pages": 11,
+    "candidates": [
+     18,
+     14,
+     24,
+     12,
+     20,
+     13
+    ]
+   },
+   {
+    "order": 33,
+    "book_id": "69a5e660e751f06e74b89c25",
+    "eligible_pages": 33,
+    "candidates": [
+     30,
+     14,
+     23,
+     15,
+     16,
+     37
+    ]
+   },
+   {
+    "order": 34,
+    "book_id": "69b63e852a1dde00d5a9e472",
+    "eligible_pages": 680,
+    "candidates": [
+     521,
+     86,
+     106,
+     410,
+     543,
+     441
+    ]
+   },
+   {
+    "order": 35,
+    "book_id": "6a20331d18654bf8e19042cb",
+    "eligible_pages": 24,
+    "candidates": [
+     8,
+     20,
+     4,
+     15,
+     24,
+     13
+    ]
+   },
+   {
+    "order": 36,
+    "book_id": "6a2032b918654bf8e19035f3",
+    "eligible_pages": 101,
+    "candidates": [
+     48,
+     68,
+     59,
+     46,
+     89,
+     78
+    ]
+   },
+   {
+    "order": 37,
+    "book_id": "6953dd3e77f38f6761be722c",
+    "eligible_pages": 292,
+    "candidates": [
+     272,
+     296,
+     325,
+     109,
+     179,
+     258
+    ]
+   },
+   {
+    "order": 38,
+    "book_id": "69f3288faeeee0fa38c64a0d",
+    "eligible_pages": 196,
+    "candidates": [
+     142,
+     81,
+     39,
+     183,
+     79,
+     107
+    ]
+   },
+   {
+    "order": 39,
+    "book_id": "6a2032dc18654bf8e19038f2",
+    "eligible_pages": 22,
+    "candidates": [
+     16,
+     21,
+     8,
+     24,
+     14,
+     3
+    ]
+   },
+   {
+    "order": 40,
+    "book_id": "6a2032d218654bf8e1903805",
+    "eligible_pages": 56,
+    "candidates": [
+     39,
+     36,
+     19,
+     45,
+     41,
+     28
+    ]
+   },
+   {
+    "order": 41,
+    "book_id": "69c1b7b48522835be8448cf5",
+    "eligible_pages": 149,
+    "candidates": [
+     90,
+     110,
+     37,
+     57,
+     72,
+     52
+    ]
+   },
+   {
+    "order": 42,
+    "book_id": "69c1b8c68522835be844b1b3",
+    "eligible_pages": 355,
+    "candidates": [
+     132,
+     161,
+     120,
+     137,
+     122,
+     232
+    ]
+   },
+   {
+    "order": 43,
+    "book_id": "69e786a94a6785cfd60c88a8",
+    "eligible_pages": 619,
+    "candidates": [
+     487,
+     538,
+     181,
+     464,
+     292,
+     436
+    ]
+   },
+   {
+    "order": 44,
+    "book_id": "69c1b7a6fe4b8f25b9200a17",
+    "eligible_pages": 51,
+    "candidates": [
+     46,
+     39,
+     8,
+     44,
+     40,
+     35
+    ]
+   },
+   {
+    "order": 45,
+    "book_id": "6a20330718654bf8e1904042",
+    "eligible_pages": 24,
+    "candidates": [
+     8,
+     17,
+     26,
+     3,
+     18,
+     19
+    ]
+   },
+   {
+    "order": 46,
+    "book_id": "6a9fb1ff732b9e75e96ba39d",
+    "eligible_pages": 318,
+    "candidates": [
+     214,
+     353,
+     267,
+     44,
+     159,
+     246
+    ]
+   },
+   {
+    "order": 47,
+    "book_id": "6a2032ed18654bf8e1903d4f",
+    "eligible_pages": 36,
+    "candidates": [
+     7,
+     41,
+     5,
+     9,
+     11,
+     24
+    ]
+   },
+   {
+    "order": 48,
+    "book_id": "6a2032c618654bf8e19037b6",
+    "eligible_pages": 2,
+    "candidates": [
+     1,
+     3
+    ]
+   },
+   {
+    "order": 49,
+    "book_id": "6a9f344c9a132af385446258",
+    "eligible_pages": 341,
+    "candidates": [
+     216,
+     74,
+     147,
+     374,
+     173,
+     339
+    ]
+   },
+   {
+    "order": 50,
+    "book_id": "69b3043d1d880408995dff3d",
+    "eligible_pages": 375,
+    "candidates": [
+     167,
+     357,
+     203,
+     405,
+     411,
+     169
+    ]
+   },
+   {
+    "order": 51,
+    "book_id": "69d5abbf4dc55b8478ddcfa6",
+    "eligible_pages": 107,
+    "candidates": [
+     105,
+     90,
+     27,
+     76,
+     41,
+     79
+    ]
+   },
+   {
+    "order": 52,
+    "book_id": "69f328aaaeeee0fa38c64de1",
+    "eligible_pages": 364,
+    "candidates": [
+     387,
+     218,
+     265,
+     266,
+     325,
+     207
+    ]
+   },
+   {
+    "order": 53,
+    "book_id": "69d5abdcd0bd3547a5654368",
+    "eligible_pages": 243,
+    "candidates": [
+     95,
+     72,
+     59,
+     116,
+     191,
+     60
+    ]
+   },
+   {
+    "order": 54,
+    "book_id": "6a20330218654bf8e1903ff6",
+    "eligible_pages": 22,
+    "candidates": [
+     13,
+     5,
+     9,
+     20,
+     8,
+     19
+    ]
+   },
+   {
+    "order": 55,
+    "book_id": "695931d4b91a6184ea9433a8",
+    "eligible_pages": 7,
+    "candidates": [
+     5,
+     6,
+     2,
+     8,
+     7,
+     4
+    ]
+   },
+   {
+    "order": 56,
+    "book_id": "6a2032e518654bf8e1903b96",
+    "eligible_pages": 28,
+    "candidates": [
+     25,
+     21,
+     6,
+     27,
+     8,
+     19
+    ]
+   },
+   {
+    "order": 57,
+    "book_id": "6a2032cb18654bf8e19037c7",
+    "eligible_pages": 12,
+    "candidates": [
+     12,
+     21,
+     15,
+     8,
+     9,
+     14
+    ]
+   },
+   {
+    "order": 58,
+    "book_id": "69906543726f64800c10abfe",
+    "eligible_pages": 285,
+    "candidates": [
+     275,
+     186,
+     265,
+     82,
+     95,
+     223
+    ]
+   },
+   {
+    "order": 59,
+    "book_id": "69c1b89e8522835be844add5",
+    "eligible_pages": 155,
+    "candidates": [
+     170,
+     45,
+     111,
+     36,
+     106,
+     30
+    ]
+   },
+   {
+    "order": 60,
+    "book_id": "69f325c852a77bb28fdb5cd7",
+    "eligible_pages": 145,
+    "candidates": [
+     59,
+     133,
+     160,
+     110,
+     33,
+     48
+    ]
+   },
+   {
+    "order": 61,
+    "book_id": "6a2032ac18654bf8e190353b",
+    "eligible_pages": 9,
+    "candidates": [
+     11,
+     15,
+     3,
+     2,
+     12,
+     8
+    ]
+   },
+   {
+    "order": 62,
+    "book_id": "6a3c5e4f40c88a541d8e0d0e",
+    "eligible_pages": 38,
+    "candidates": [
+     53,
+     45,
+     54,
+     12,
+     8,
+     18
+    ]
+   },
+   {
+    "order": 63,
+    "book_id": "69b3e5db304c1c6b3950a6a1",
+    "eligible_pages": 0,
+    "candidates": []
+   },
+   {
+    "order": 64,
+    "book_id": "6990650b3dc2ed39a49f05e2",
+    "eligible_pages": 0,
+    "candidates": []
+   },
+   {
+    "order": 65,
+    "book_id": "6a20330a18654bf8e190406e",
+    "eligible_pages": 10,
+    "candidates": [
+     3,
+     7,
+     16,
+     14,
+     8,
+     15
+    ]
+   },
+   {
+    "order": 66,
+    "book_id": "6a08a74f871243dce9deeca9",
+    "eligible_pages": 318,
+    "candidates": [
+     53,
+     334,
+     369,
+     150,
+     306,
+     84
+    ]
+   },
+   {
+    "order": 67,
+    "book_id": "6a2032ec18654bf8e1903c24",
+    "eligible_pages": 234,
+    "candidates": [
+     63,
+     246,
+     264,
+     88,
+     258,
+     31
+    ]
+   },
+   {
+    "order": 68,
+    "book_id": "69d6659cdaca889caf9273c3",
+    "eligible_pages": 282,
+    "candidates": [
+     74,
+     260,
+     303,
+     278,
+     151,
+     126
+    ]
+   },
+   {
+    "order": 69,
+    "book_id": "69c1b7b68522835be8448dbb",
+    "eligible_pages": 81,
+    "candidates": [
+     87,
+     63,
+     17,
+     11,
+     25,
+     46
+    ]
+   },
+   {
+    "order": 70,
+    "book_id": "6a08c6dde4e4b7b8793eaf04",
+    "eligible_pages": 0,
+    "candidates": []
+   }
+  ],
+  "Pali": [
+   {
+    "order": 1,
+    "book_id": "69b99ef86ed9e0490990a8ac",
+    "eligible_pages": 81,
+    "candidates": [
+     79,
+     50,
+     55,
+     28,
+     93,
+     87
+    ]
+   },
+   {
+    "order": 2,
+    "book_id": "6a09ff0429abf62080bbdb55",
+    "eligible_pages": 73,
+    "candidates": [
+     73,
+     41,
+     31,
+     77,
+     82,
+     54
+    ]
+   },
+   {
+    "order": 3,
+    "book_id": "69b99f111b6f70482c00d17c",
+    "eligible_pages": 93,
+    "candidates": [
+     41,
+     87,
+     27,
+     26,
+     94,
+     40
+    ]
+   },
+   {
+    "order": 4,
+    "book_id": "6a09ff3dfa20006dbaba8b4d",
+    "eligible_pages": 433,
+    "candidates": [
+     427,
+     451,
+     224,
+     172,
+     398,
+     311
+    ]
+   },
+   {
+    "order": 5,
+    "book_id": "69b99ec16ed9e0490990a6f2",
+    "eligible_pages": 274,
+    "candidates": [
+     195,
+     237,
+     202,
+     40,
+     136,
+     300
+    ]
+   },
+   {
+    "order": 6,
+    "book_id": "69b99eae6ed9e0490990a486",
+    "eligible_pages": 489,
+    "candidates": [
+     510,
+     381,
+     321,
+     200,
+     116,
+     462
+    ]
+   },
+   {
+    "order": 7,
+    "book_id": "6a09ff1629abf62080bbdbb6",
+    "eligible_pages": 320,
+    "candidates": [
+     164,
+     80,
+     165,
+     298,
+     340,
+     195
+    ]
+   },
+   {
+    "order": 8,
+    "book_id": "6a09ff1dfa20006dbaba89aa",
+    "eligible_pages": 0,
+    "candidates": []
+   },
+   {
+    "order": 9,
+    "book_id": "69b99edc76b9bab2de21a295",
+    "eligible_pages": 252,
+    "candidates": [
+     195,
+     100,
+     128,
+     133,
+     279,
+     51
+    ]
+   },
+   {
+    "order": 10,
+    "book_id": "6a09ff65fa20006dbaba93c1",
+    "eligible_pages": 162,
+    "candidates": [
+     43,
+     142,
+     140,
+     124,
+     37,
+     127
+    ]
+   },
+   {
+    "order": 11,
+    "book_id": "69b99f1a1b6f70482c00d1fa",
+    "eligible_pages": 265,
+    "candidates": [
+     189,
+     277,
+     186,
+     135,
+     37,
+     291
+    ]
+   },
+   {
+    "order": 12,
+    "book_id": "69b99f0b6ed9e0490990a92b",
+    "eligible_pages": 230,
+    "candidates": [
+     94,
+     247,
+     111,
+     160,
+     87,
+     185
+    ]
+   },
+   {
+    "order": 13,
+    "book_id": "69de99071b234a773e439b52",
+    "eligible_pages": 423,
+    "candidates": [
+     236,
+     375,
+     372,
+     248,
+     361,
+     367
+    ]
+   },
+   {
+    "order": 14,
+    "book_id": "69b99d316ed9e04909908baa",
+    "eligible_pages": 312,
+    "candidates": [
+     45,
+     73,
+     116,
+     339,
+     239,
+     99
+    ]
+   },
+   {
+    "order": 15,
+    "book_id": "69d5ae284dc55b8478de0f7a",
+    "eligible_pages": 274,
+    "candidates": [
+     376,
+     387,
+     156,
+     276,
+     249,
+     301
+    ]
+   },
+   {
+    "order": 16,
+    "book_id": "69b99eea76b9bab2de21a3d4",
+    "eligible_pages": 527,
+    "candidates": [
+     163,
+     563,
+     76,
+     316,
+     226,
+     368
+    ]
+   },
+   {
+    "order": 17,
+    "book_id": "69b99e9576b9bab2de21a0bc",
+    "eligible_pages": 369,
+    "candidates": [
+     372,
+     280,
+     138,
+     237,
+     223,
+     109
+    ]
+   },
+   {
+    "order": 18,
+    "book_id": "69b99ec86ed9e0490990a85d",
+    "eligible_pages": 30,
+    "candidates": [
+     35,
+     26,
+     36,
+     14,
+     18,
+     10
+    ]
+   }
+  ],
+  "Chinese": [
+   {
+    "order": 1,
+    "book_id": "6a3c646739b4508b04e26bb7",
+    "eligible_pages": 113,
+    "candidates": [
+     92,
+     75,
+     86,
+     44,
+     36,
+     100
+    ]
+   },
+   {
+    "order": 2,
+    "book_id": "699356c28ed86e583b7b8320",
+    "eligible_pages": 13,
+    "candidates": [
+     3,
+     4,
+     10,
+     13,
+     6,
+     8
+    ]
+   },
+   {
+    "order": 3,
+    "book_id": "6992f3d4dc69844b023ff228",
+    "eligible_pages": 336,
+    "candidates": [
+     233,
+     278,
+     253,
+     357,
+     150,
+     371
+    ]
+   },
+   {
+    "order": 4,
+    "book_id": "6a3c646b39b4508b04e26e50",
+    "eligible_pages": 112,
+    "candidates": [
+     92,
+     68,
+     28,
+     58,
+     120,
+     54
+    ]
+   },
+   {
+    "order": 5,
+    "book_id": "6a3c65d639b4508b04e2f8a8",
+    "eligible_pages": 140,
+    "candidates": [
+     89,
+     104,
+     26,
+     75,
+     169,
+     57
+    ]
+   },
+   {
+    "order": 6,
+    "book_id": "69af12510092756351e44992",
+    "eligible_pages": 70,
+    "candidates": [
+     47,
+     61,
+     79,
+     72,
+     42,
+     31
+    ]
+   },
+   {
+    "order": 7,
+    "book_id": "6a3c63730339d4df9abcbd4c",
+    "eligible_pages": 89,
+    "candidates": [
+     52,
+     55,
+     17,
+     86,
+     93,
+     78
+    ]
+   },
+   {
+    "order": 8,
+    "book_id": "699998884310a6713945261c",
+    "eligible_pages": 111,
+    "candidates": [
+     119,
+     61,
+     131,
+     40,
+     103,
+     110
+    ]
+   },
+   {
+    "order": 9,
+    "book_id": "6a3c649c39b4508b04e28862",
+    "eligible_pages": 94,
+    "candidates": [
+     33,
+     53,
+     105,
+     46,
+     37,
+     100
+    ]
+   },
+   {
+    "order": 10,
+    "book_id": "6a3c647339b4508b04e2739a",
+    "eligible_pages": 88,
+    "candidates": [
+     33,
+     43,
+     42,
+     13,
+     96,
+     24
+    ]
+   },
+   {
+    "order": 11,
+    "book_id": "6a0a4e9a7cd8e1e3d0f4964a",
+    "eligible_pages": 110,
+    "candidates": [
+     17,
+     65,
+     69,
+     62,
+     95,
+     88
+    ]
+   },
+   {
+    "order": 12,
+    "book_id": "6992cdb643713c66ea6381da",
+    "eligible_pages": 116,
+    "candidates": [
+     111,
+     57,
+     104,
+     132,
+     51,
+     31
+    ]
+   },
+   {
+    "order": 13,
+    "book_id": "6a06ce6b9a48d5139995b6d1",
+    "eligible_pages": 14,
+    "candidates": [
+     16,
+     23,
+     15,
+     25,
+     21,
+     18
+    ]
+   },
+   {
+    "order": 14,
+    "book_id": "6a3c642f39b4508b04e24ed1",
+    "eligible_pages": 112,
+    "candidates": [
+     99,
+     47,
+     73,
+     97,
+     76,
+     110
+    ]
+   },
+   {
+    "order": 15,
+    "book_id": "6992ca96d4d545ae73fee5c3",
+    "eligible_pages": 148,
+    "candidates": [
+     113,
+     124,
+     85,
+     101,
+     176,
+     143
+    ]
+   },
+   {
+    "order": 16,
+    "book_id": "6a3c5ec040c88a541d8e576a",
+    "eligible_pages": 69,
+    "candidates": [
+     117,
+     49,
+     128,
+     163,
+     144,
+     30
+    ]
+   },
+   {
+    "order": 17,
+    "book_id": "69bd0aaab01b17638a097e63",
+    "eligible_pages": 372,
+    "candidates": [
+     308,
+     70,
+     255,
+     59,
+     405,
+     391
+    ]
+   },
+   {
+    "order": 18,
+    "book_id": "6992cdd381c9d7efb84d06ab",
+    "eligible_pages": 161,
+    "candidates": [
+     152,
+     81,
+     178,
+     35,
+     68,
+     77
+    ]
+   },
+   {
+    "order": 19,
+    "book_id": "6992ce4500291c2fcb634100",
+    "eligible_pages": 54,
+    "candidates": [
+     84,
+     20,
+     38,
+     73,
+     28,
+     25
+    ]
+   },
+   {
+    "order": 20,
+    "book_id": "6a3c651639b4508b04e2c6b1",
+    "eligible_pages": 114,
+    "candidates": [
+     32,
+     122,
+     129,
+     114,
+     106,
+     26
+    ]
+   },
+   {
+    "order": 21,
+    "book_id": "6a3c662e39b4508b04e32a9b",
+    "eligible_pages": 97,
+    "candidates": [
+     95,
+     37,
+     90,
+     108,
+     54,
+     48
+    ]
+   },
+   {
+    "order": 22,
+    "book_id": "69c6615501a26ccff09f50ca",
+    "eligible_pages": 120,
+    "candidates": [
+     106,
+     90,
+     69,
+     53,
+     59,
+     150
+    ]
+   },
+   {
+    "order": 23,
+    "book_id": "6a3c645739b4508b04e26377",
+    "eligible_pages": 104,
+    "candidates": [
+     98,
+     46,
+     50,
+     111,
+     77,
+     31
+    ]
+   },
+   {
+    "order": 24,
+    "book_id": "6992ce073ea667fbac827a63",
+    "eligible_pages": 69,
+    "candidates": [
+     48,
+     42,
+     74,
+     51,
+     80,
+     13
+    ]
+   },
+   {
+    "order": 25,
+    "book_id": "6a3c611d40c88a541d8edd7f",
+    "eligible_pages": 117,
+    "candidates": [
+     87,
+     122,
+     76,
+     124,
+     105,
+     120
+    ]
+   },
+   {
+    "order": 26,
+    "book_id": "6992cdab43713c66ea637d67",
+    "eligible_pages": 77,
+    "candidates": [
+     20,
+     71,
+     68,
+     22,
+     30,
+     83
+    ]
+   },
+   {
+    "order": 27,
+    "book_id": "6a3c5e6640c88a541d8e1aa8",
+    "eligible_pages": 40,
+    "candidates": [
+     62,
+     27,
+     47,
+     49,
+     45,
+     33
+    ]
+   },
+   {
+    "order": 28,
+    "book_id": "6a3c644939b4508b04e25d58",
+    "eligible_pages": 84,
+    "candidates": [
+     62,
+     86,
+     68,
+     67,
+     59,
+     80
+    ]
+   },
+   {
+    "order": 29,
+    "book_id": "6992cbfc018b80967354c9d1",
+    "eligible_pages": 55,
+    "candidates": [
+     48,
+     56,
+     57,
+     15,
+     42,
+     29
+    ]
+   },
+   {
+    "order": 30,
+    "book_id": "6a3c63be39b4508b04e22d88",
+    "eligible_pages": 107,
+    "candidates": [
+     55,
+     72,
+     17,
+     119,
+     49,
+     23
+    ]
+   },
+   {
+    "order": 31,
+    "book_id": "6958e9ac538549809db82aee",
+    "eligible_pages": 79,
+    "candidates": [
+     80,
+     70,
+     42,
+     16,
+     51,
+     66
+    ]
+   },
+   {
+    "order": 32,
+    "book_id": "6992cdde81c9d7efb84d0815",
+    "eligible_pages": 56,
+    "candidates": [
+     33,
+     20,
+     81,
+     45,
+     49,
+     51
+    ]
+   },
+   {
+    "order": 33,
+    "book_id": "6a3c677eaf3c49b59c5d3ea6",
+    "eligible_pages": 105,
+    "candidates": [
+     79,
+     84,
+     58,
+     20,
+     42,
+     113
+    ]
+   },
+   {
+    "order": 34,
+    "book_id": "6992cd2dae978f7d41598661",
+    "eligible_pages": 72,
+    "candidates": [
+     23,
+     79,
+     45,
+     93,
+     54,
+     41
+    ]
+   },
+   {
+    "order": 35,
+    "book_id": "6a3c5f7e40c88a541d8e6f2e",
+    "eligible_pages": 2,
+    "candidates": [
+     101,
+     126
+    ]
+   },
+   {
+    "order": 36,
+    "book_id": "6992cdfa81c9d7efb84d122b",
+    "eligible_pages": 82,
+    "candidates": [
+     80,
+     44,
+     81,
+     40,
+     63,
+     99
+    ]
+   },
+   {
+    "order": 37,
+    "book_id": "6a3c612a40c88a541d8ee628",
+    "eligible_pages": 92,
+    "candidates": [
+     70,
+     88,
+     110,
+     102,
+     113,
+     90
+    ]
+   },
+   {
+    "order": 38,
+    "book_id": "6992cdfe00f13b15f3ca3b1f",
+    "eligible_pages": 60,
+    "candidates": [
+     30,
+     53,
+     13,
+     36,
+     47,
+     56
+    ]
+   },
+   {
+    "order": 39,
+    "book_id": "6a3c5f3b879008ba7e1537d3",
+    "eligible_pages": 28,
+    "candidates": [
+     17,
+     23,
+     42,
+     13,
+     27,
+     20
+    ]
+   },
+   {
+    "order": 40,
+    "book_id": "6a3c643839b4508b04e253ef",
+    "eligible_pages": 89,
+    "candidates": [
+     34,
+     81,
+     35,
+     79,
+     27,
+     24
+    ]
+   },
+   {
+    "order": 41,
+    "book_id": "69af12230092756351e4473e",
+    "eligible_pages": 25,
+    "candidates": [
+     24,
+     16,
+     17,
+     6,
+     27,
+     21
+    ]
+   },
+   {
+    "order": 42,
+    "book_id": "6992cffef5b4f75c1a4c9ede",
+    "eligible_pages": 58,
+    "candidates": [
+     91,
+     67,
+     19,
+     16,
+     96,
+     87
+    ]
+   },
+   {
+    "order": 43,
+    "book_id": "69e75e3acc48e59ad74ec35a",
+    "eligible_pages": 95,
+    "candidates": [
+     65,
+     117,
+     58,
+     54,
+     123,
+     37
+    ]
+   },
+   {
+    "order": 44,
+    "book_id": "69de986b1b234a773e438787",
+    "eligible_pages": 77,
+    "candidates": [
+     49,
+     33,
+     50,
+     31,
+     19,
+     74
+    ]
+   },
+   {
+    "order": 45,
+    "book_id": "6a3c645639b4508b04e262e2",
+    "eligible_pages": 117,
+    "candidates": [
+     123,
+     48,
+     117,
+     90,
+     109,
+     105
+    ]
+   },
+   {
+    "order": 46,
+    "book_id": "6a3c655c39b4508b04e2e1e6",
+    "eligible_pages": 133,
+    "candidates": [
+     55,
+     157,
+     91,
+     136,
+     67,
+     166
+    ]
+   },
+   {
+    "order": 47,
+    "book_id": "6a3c638b93327f06e83511ca",
+    "eligible_pages": 102,
+    "candidates": [
+     108,
+     82,
+     114,
+     73,
+     56,
+     57
+    ]
+   },
+   {
+    "order": 48,
+    "book_id": "6a3c5f95879008ba7e156214",
+    "eligible_pages": 0,
+    "candidates": []
+   },
+   {
+    "order": 49,
+    "book_id": "6a3c64bd39b4508b04e29a2e",
+    "eligible_pages": 97,
+    "candidates": [
+     94,
+     68,
+     100,
+     52,
+     76,
+     36
+    ]
+   },
+   {
+    "order": 50,
+    "book_id": "6a3c5f61879008ba7e154c8b",
+    "eligible_pages": 0,
+    "candidates": []
+   },
+   {
+    "order": 51,
+    "book_id": "6a0a4f0c7cd8e1e3d0f49fb1",
+    "eligible_pages": 113,
+    "candidates": [
+     83,
+     51,
+     46,
+     15,
+     95,
+     82
+    ]
+   },
+   {
+    "order": 52,
+    "book_id": "6a3c611240c88a541d8ed510",
+    "eligible_pages": 147,
+    "candidates": [
+     112,
+     87,
+     93,
+     161,
+     142,
+     159
+    ]
+   },
+   {
+    "order": 53,
+    "book_id": "6a3c645339b4508b04e260f6",
+    "eligible_pages": 126,
+    "candidates": [
+     46,
+     121,
+     111,
+     105,
+     98,
+     56
+    ]
+   },
+   {
+    "order": 54,
+    "book_id": "6992cee1673ee1e40e321b2b",
+    "eligible_pages": 88,
+    "candidates": [
+     91,
+     86,
+     104,
+     96,
+     106,
+     50
+    ]
+   },
+   {
+    "order": 55,
+    "book_id": "6a3c638d93327f06e835124d",
+    "eligible_pages": 106,
+    "candidates": [
+     51,
+     28,
+     56,
+     112,
+     22,
+     17
+    ]
+   },
+   {
+    "order": 56,
+    "book_id": "6a3c5f31879008ba7e153573",
+    "eligible_pages": 0,
+    "candidates": []
+   },
+   {
+    "order": 57,
+    "book_id": "6a3c613e40c88a541d8ef1fe",
+    "eligible_pages": 89,
+    "candidates": [
+     40,
+     71,
+     35,
+     23,
+     93,
+     83
+    ]
+   },
+   {
+    "order": 58,
+    "book_id": "6a3c6401af3c49b59c5ca440",
+    "eligible_pages": 120,
+    "candidates": [
+     41,
+     105,
+     35,
+     15,
+     56,
+     74
+    ]
+   },
+   {
+    "order": 59,
+    "book_id": "6992cdf481c9d7efb84d0fa3",
+    "eligible_pages": 175,
+    "candidates": [
+     78,
+     204,
+     142,
+     181,
+     81,
+     101
+    ]
+   },
+   {
+    "order": 60,
+    "book_id": "6a3c650039b4508b04e2bc88",
+    "eligible_pages": 104,
+    "candidates": [
+     54,
+     30,
+     92,
+     110,
+     83,
+     89
+    ]
+   },
+   {
+    "order": 61,
+    "book_id": "6a0a4ebe7cd8e1e3d0f49965",
+    "eligible_pages": 76,
+    "candidates": [
+     31,
+     35,
+     15,
+     70,
+     51,
+     50
+    ]
+   },
+   {
+    "order": 62,
+    "book_id": "6a3c5e7440c88a541d8e243d",
+    "eligible_pages": 117,
+    "candidates": [
+     86,
+     41,
+     85,
+     128,
+     139,
+     54
+    ]
+   },
+   {
+    "order": 63,
+    "book_id": "6992ce9e673ee1e40e3212dd",
+    "eligible_pages": 50,
+    "candidates": [
+     73,
+     70,
+     13,
+     14,
+     84,
+     33
+    ]
+   },
+   {
+    "order": 64,
+    "book_id": "6992cec6673ee1e40e3217d6",
+    "eligible_pages": 57,
+    "candidates": [
+     57,
+     72,
+     74,
+     11,
+     60,
+     10
+    ]
+   },
+   {
+    "order": 65,
+    "book_id": "6a40efd67f8d954eada8b8ab",
+    "eligible_pages": 90,
+    "candidates": [
+     85,
+     40,
+     97,
+     86,
+     39,
+     22
+    ]
+   },
+   {
+    "order": 66,
+    "book_id": "6a3c64c139b4508b04e29b9c",
+    "eligible_pages": 103,
+    "candidates": [
+     100,
+     99,
+     65,
+     63,
+     40,
+     35
+    ]
+   },
+   {
+    "order": 67,
+    "book_id": "6992ce273ea667fbac82854a",
+    "eligible_pages": 50,
+    "candidates": [
+     10,
+     41,
+     15,
+     22,
+     16,
+     23
+    ]
+   },
+   {
+    "order": 68,
+    "book_id": "6a3c5e6e40c88a541d8e2095",
+    "eligible_pages": 1,
+    "candidates": [
+     25
+    ]
+   },
+   {
+    "order": 69,
+    "book_id": "6a3c60a340c88a541d8e9399",
+    "eligible_pages": 84,
+    "candidates": [
+     23,
+     22,
+     78,
+     21,
+     36,
+     41
+    ]
+   },
+   {
+    "order": 70,
+    "book_id": "6a3c654eaf3c49b59c5cb5f3",
+    "eligible_pages": 113,
+    "candidates": [
+     87,
+     86,
+     140,
+     50,
+     35,
+     40
+    ]
+   },
+   {
+    "order": 71,
+    "book_id": "6a40ef403a63957730efebb0",
+    "eligible_pages": 96,
+    "candidates": [
+     26,
+     50,
+     25,
+     62,
+     91,
+     30
+    ]
+   },
+   {
+    "order": 72,
+    "book_id": "6a3c61cd879008ba7e16099d",
+    "eligible_pages": 144,
+    "candidates": [
+     76,
+     49,
+     31,
+     122,
+     29,
+     87
+    ]
+   },
+   {
+    "order": 73,
+    "book_id": "6a1d60c1d274b9630ccf8edd",
+    "eligible_pages": 120,
+    "candidates": [
+     30,
+     68,
+     123,
+     112,
+     118,
+     42
+    ]
+   },
+   {
+    "order": 74,
+    "book_id": "6a3cc0c0f9474f825c171eab",
+    "eligible_pages": 134,
+    "candidates": [
+     66,
+     50,
+     179,
+     55,
+     189,
+     49
+    ]
+   },
+   {
+    "order": 75,
+    "book_id": "6abec5199a6d02ff1a559462",
+    "eligible_pages": 0,
+    "candidates": []
+   },
+   {
+    "order": 76,
+    "book_id": "6a3cea100a0011cb4bc123c9",
+    "eligible_pages": 101,
+    "candidates": [
+     66,
+     75,
+     97,
+     99,
+     92,
+     15
+    ]
+   },
+   {
+    "order": 77,
+    "book_id": "6a3c615640c88a541d8f0108",
+    "eligible_pages": 72,
+    "candidates": [
+     32,
+     72,
+     40,
+     20,
+     60,
+     44
+    ]
+   },
+   {
+    "order": 78,
+    "book_id": "6a3c6005879008ba7e159a6c",
+    "eligible_pages": 170,
+    "candidates": [
+     158,
+     116,
+     125,
+     90,
+     195,
+     49
+    ]
+   },
+   {
+    "order": 79,
+    "book_id": "6a3c64d539b4508b04e2a71d",
+    "eligible_pages": 100,
+    "candidates": [
+     88,
+     72,
+     106,
+     23,
+     68,
+     18
+    ]
+   },
+   {
+    "order": 80,
+    "book_id": "6a3c611b40c88a541d8edb6f",
+    "eligible_pages": 122,
+    "candidates": [
+     24,
+     122,
+     91,
+     44,
+     73,
+     141
+    ]
+   },
+   {
+    "order": 81,
+    "book_id": "6992cf56f5b4f75c1a4c89f4",
+    "eligible_pages": 59,
+    "candidates": [
+     45,
+     69,
+     46,
+     53,
+     50,
+     44
+    ]
+   },
+   {
+    "order": 82,
+    "book_id": "6a3c617d879008ba7e15e8b2",
+    "eligible_pages": 129,
+    "candidates": [
+     180,
+     118,
+     70,
+     144,
+     43,
+     74
+    ]
+   },
+   {
+    "order": 83,
+    "book_id": "6a3c5e5040c88a541d8e0de9",
+    "eligible_pages": 0,
+    "candidates": []
+   },
+   {
+    "order": 84,
+    "book_id": "6a06ce519a48d5139995b4bb",
+    "eligible_pages": 11,
+    "candidates": [
+     24,
+     22,
+     20,
+     23,
+     15,
+     19
+    ]
+   },
+   {
+    "order": 85,
+    "book_id": "6992c9022b03ab4dc6e12b7a",
+    "eligible_pages": 100,
+    "candidates": [
+     17,
+     15,
+     72,
+     125,
+     65,
+     76
+    ]
+   },
+   {
+    "order": 86,
+    "book_id": "6992cd9d43713c66ea63791a",
+    "eligible_pages": 78,
+    "candidates": [
+     29,
+     19,
+     64,
+     16,
+     55,
+     24
+    ]
+   },
+   {
+    "order": 87,
+    "book_id": "6992cdaf43713c66ea637f22",
+    "eligible_pages": 55,
+    "candidates": [
+     68,
+     39,
+     67,
+     48,
+     18,
+     50
+    ]
+   },
+   {
+    "order": 88,
+    "book_id": "69c6617b01a26ccff09f5378",
+    "eligible_pages": 23,
+    "candidates": [
+     13,
+     5,
+     20,
+     22,
+     24,
+     11
+    ]
+   },
+   {
+    "order": 89,
+    "book_id": "69af0e45be5fc7f363546782",
+    "eligible_pages": 85,
+    "candidates": [
+     112,
+     46,
+     95,
+     76,
+     22,
+     103
+    ]
+   },
+   {
+    "order": 90,
+    "book_id": "6a3c63e6af3c49b59c5c959c",
+    "eligible_pages": 96,
+    "candidates": [
+     48,
+     51,
+     49,
+     87,
+     34,
+     101
+    ]
+   },
+   {
+    "order": 91,
+    "book_id": "6a3c611a40c88a541d8edac1",
+    "eligible_pages": 136,
+    "candidates": [
+     50,
+     99,
+     23,
+     20,
+     127,
+     122
+    ]
+   },
+   {
+    "order": 92,
+    "book_id": "6a3ceb3195fcd45563054522",
+    "eligible_pages": 77,
+    "candidates": [
+     77,
+     73,
+     53,
+     60,
+     21,
+     76
+    ]
+   },
+   {
+    "order": 93,
+    "book_id": "6992cb53d4d545ae73feef31",
+    "eligible_pages": 93,
+    "candidates": [
+     27,
+     89,
+     144,
+     48,
+     137,
+     39
+    ]
+   },
+   {
+    "order": 94,
+    "book_id": "6a3c655c39b4508b04e2e2a6",
+    "eligible_pages": 125,
+    "candidates": [
+     87,
+     123,
+     76,
+     81,
+     38,
+     46
+    ]
+   },
+   {
+    "order": 95,
+    "book_id": "6a3c5f53879008ba7e154672",
+    "eligible_pages": 63,
+    "candidates": [
+     31,
+     59,
+     79,
+     36,
+     66,
+     56
+    ]
+   },
+   {
+    "order": 96,
+    "book_id": "6a3c660b39b4508b04e3152c",
+    "eligible_pages": 116,
+    "candidates": [
+     23,
+     111,
+     44,
+     69,
+     43,
+     41
+    ]
+   },
+   {
+    "order": 97,
+    "book_id": "6a3c60d840c88a541d8eb34e",
+    "eligible_pages": 118,
+    "candidates": [
+     78,
+     119,
+     110,
+     36,
+     58,
+     74
+    ]
+   },
+   {
+    "order": 98,
+    "book_id": "6a3cc1cbf9474f825c17281e",
+    "eligible_pages": 122,
+    "candidates": [
+     51,
+     109,
+     17,
+     131,
+     43,
+     40
+    ]
+   },
+   {
+    "order": 99,
+    "book_id": "69af123a0092756351e4483e",
+    "eligible_pages": 37,
+    "candidates": [
+     35,
+     12,
+     34,
+     45,
+     26,
+     13
+    ]
+   },
+   {
+    "order": 100,
+    "book_id": "6a3c64ce39b4508b04e2a299",
+    "eligible_pages": 104,
+    "candidates": [
+     118,
+     96,
+     93,
+     107,
+     66,
+     53
+    ]
+   },
+   {
+    "order": 101,
+    "book_id": "6a3c5e5840c88a541d8e12e7",
+    "eligible_pages": 3,
+    "candidates": [
+     66,
+     69,
+     81
+    ]
+   },
+   {
+    "order": 102,
+    "book_id": "6992cd8043713c66ea636ec0",
+    "eligible_pages": 42,
+    "candidates": [
+     61,
+     29,
+     9,
+     57,
+     45,
+     16
+    ]
+   },
+   {
+    "order": 103,
+    "book_id": "6a3c65c839b4508b04e2f657",
+    "eligible_pages": 95,
+    "candidates": [
+     60,
+     132,
+     74,
+     123,
+     59,
+     34
+    ]
+   },
+   {
+    "order": 104,
+    "book_id": "6992ce273ea667fbac8284fd",
+    "eligible_pages": 60,
+    "candidates": [
+     27,
+     12,
+     32,
+     67,
+     52,
+     54
+    ]
+   },
+   {
+    "order": 105,
+    "book_id": "6a3c5f1e40c88a541d8e683a",
+    "eligible_pages": 1,
+    "candidates": [
+     90
+    ]
+   },
+   {
+    "order": 106,
+    "book_id": "6a3c60c240c88a541d8ea512",
+    "eligible_pages": 102,
+    "candidates": [
+     96,
+     14,
+     92,
+     60,
+     107,
+     51
+    ]
+   },
+   {
+    "order": 107,
+    "book_id": "6a3c64f639b4508b04e2b744",
+    "eligible_pages": 90,
+    "candidates": [
+     73,
+     99,
+     88,
+     45,
+     71,
+     44
+    ]
+   },
+   {
+    "order": 108,
+    "book_id": "6a05f0836a888f57ebd7727e",
+    "eligible_pages": 13,
+    "candidates": [
+     19,
+     21,
+     22,
+     15,
+     13,
+     14
+    ]
+   },
+   {
+    "order": 109,
+    "book_id": "6992c906453c7175dc1bcc1b",
+    "eligible_pages": 105,
+    "candidates": [
+     41,
+     63,
+     50,
+     66,
+     138,
+     76
+    ]
+   },
+   {
+    "order": 110,
+    "book_id": "6a3c654439b4508b04e2d9ea",
+    "eligible_pages": 101,
+    "candidates": [
+     104,
+     78,
+     46,
+     75,
+     126,
+     65
+    ]
+   },
+   {
+    "order": 111,
+    "book_id": "6a3c6231879008ba7e1616dd",
+    "eligible_pages": 5,
+    "candidates": [
+     66,
+     140,
+     64,
+     184,
+     86
+    ]
+   },
+   {
+    "order": 112,
+    "book_id": "69e75e46cc48e59ad74ec4a4",
+    "eligible_pages": 75,
+    "candidates": [
+     29,
+     70,
+     23,
+     89,
+     90,
+     34
+    ]
+   },
+   {
+    "order": 113,
+    "book_id": "6992f3d9dc69844b023ff452",
+    "eligible_pages": 266,
+    "candidates": [
+     195,
+     301,
+     216,
+     141,
+     204,
+     144
+    ]
+   },
+   {
+    "order": 114,
+    "book_id": "6992cefbf7519cdd65044ae0",
+    "eligible_pages": 77,
+    "candidates": [
+     102,
+     40,
+     91,
+     78,
+     28,
+     14
+    ]
+   },
+   {
+    "order": 115,
+    "book_id": "6a3c6158879008ba7e15d8dd",
+    "eligible_pages": 109,
+    "candidates": [
+     114,
+     44,
+     119,
+     49,
+     42,
+     81
+    ]
+   },
+   {
+    "order": 116,
+    "book_id": "6a3c612940c88a541d8ee524",
+    "eligible_pages": 92,
+    "candidates": [
+     16,
+     30,
+     106,
+     73,
+     13,
+     85
+    ]
+   },
+   {
+    "order": 117,
+    "book_id": "6992ce7c673ee1e40e320b48",
+    "eligible_pages": 36,
+    "candidates": [
+     10,
+     14,
+     18,
+     48,
+     12,
+     58
+    ]
+   },
+   {
+    "order": 118,
+    "book_id": "6a3c60a640c88a541d8e9567",
+    "eligible_pages": 128,
+    "candidates": [
+     56,
+     17,
+     87,
+     44,
+     130,
+     64
+    ]
+   },
+   {
+    "order": 119,
+    "book_id": "6a3c65fb39b4508b04e309f3",
+    "eligible_pages": 106,
+    "candidates": [
+     29,
+     136,
+     65,
+     127,
+     50,
+     89
+    ]
+   },
+   {
+    "order": 120,
+    "book_id": "6992cd9843713c66ea637791",
+    "eligible_pages": 67,
+    "candidates": [
+     34,
+     31,
+     15,
+     35,
+     24,
+     12
+    ]
+   }
+  ],
+  "Sanskrit": [
+   {
+    "order": 1,
+    "book_id": "6953e30277f38f6761beb46f",
+    "eligible_pages": 242,
+    "candidates": [
+     259,
+     59,
+     124,
+     144,
+     104,
+     43
+    ]
+   },
+   {
+    "order": 2,
+    "book_id": "69907e03b91bcb2db3f6da66",
+    "eligible_pages": 29,
+    "candidates": [
+     27,
+     26,
+     30,
+     28,
+     21,
+     17
+    ]
+   },
+   {
+    "order": 3,
+    "book_id": "699065163dc2ed39a49f06c3",
+    "eligible_pages": 152,
+    "candidates": [
+     39,
+     125,
+     110,
+     86,
+     94,
+     57
+    ]
+   },
+   {
+    "order": 4,
+    "book_id": "69907e21b91bcb2db3f6e542",
+    "eligible_pages": 159,
+    "candidates": [
+     103,
+     162,
+     156,
+     55,
+     75,
+     160
+    ]
+   },
+   {
+    "order": 5,
+    "book_id": "69907c4e5f855ec553e7395a",
+    "eligible_pages": 570,
+    "candidates": [
+     261,
+     217,
+     435,
+     142,
+     102,
+     487
+    ]
+   },
+   {
+    "order": 6,
+    "book_id": "69e8b109839ca3f47ec56c99",
+    "eligible_pages": 589,
+    "candidates": [
+     397,
+     550,
+     378,
+     332,
+     606,
+     295
+    ]
+   },
+   {
+    "order": 7,
+    "book_id": "69907e05b91bcb2db3f6da8c",
+    "eligible_pages": 23,
+    "candidates": [
+     18,
+     6,
+     15,
+     24,
+     19,
+     17
+    ]
+   },
+   {
+    "order": 8,
+    "book_id": "69e8b28a2ff2a8dc09e77ff4",
+    "eligible_pages": 275,
+    "candidates": [
+     206,
+     184,
+     75,
+     149,
+     73,
+     36
+    ]
+   },
+   {
+    "order": 9,
+    "book_id": "69907cf2a3654a711c0b6e4c",
+    "eligible_pages": 16,
+    "candidates": [
+     3,
+     9,
+     7,
+     8,
+     17,
+     6
+    ]
+   },
+   {
+    "order": 10,
+    "book_id": "6991d8978c1030b12444c035",
+    "eligible_pages": 50,
+    "candidates": [
+     55,
+     44,
+     8,
+     39,
+     48,
+     18
+    ]
+   },
+   {
+    "order": 11,
+    "book_id": "69de101d5cedf736edb85346",
+    "eligible_pages": 98,
+    "candidates": [
+     33,
+     27,
+     34,
+     20,
+     104,
+     51
+    ]
+   },
+   {
+    "order": 12,
+    "book_id": "6992d66546b85e738a0c3d03",
+    "eligible_pages": 349,
+    "candidates": [
+     220,
+     70,
+     81,
+     343,
+     246,
+     293
+    ]
+   },
+   {
+    "order": 13,
+    "book_id": "69af0c59067c0c26ee26b07d",
+    "eligible_pages": 264,
+    "candidates": [
+     82,
+     144,
+     43,
+     158,
+     184,
+     161
+    ]
+   },
+   {
+    "order": 14,
+    "book_id": "69e167b83615607a59942283",
+    "eligible_pages": 139,
+    "candidates": [
+     148,
+     101,
+     54,
+     140,
+     147,
+     74
+    ]
+   },
+   {
+    "order": 15,
+    "book_id": "6991d8a38c1030b12444c221",
+    "eligible_pages": 9,
+    "candidates": [
+     7,
+     6,
+     5,
+     4,
+     10,
+     3
+    ]
+   },
+   {
+    "order": 16,
+    "book_id": "69d0059ee305ccff7ff943dc",
+    "eligible_pages": 141,
+    "candidates": [
+     43,
+     26,
+     143,
+     33,
+     109,
+     153
+    ]
+   },
+   {
+    "order": 17,
+    "book_id": "69907d8baee9f4aa58591e3e",
+    "eligible_pages": 267,
+    "candidates": [
+     138,
+     168,
+     171,
+     175,
+     46,
+     72
+    ]
+   },
+   {
+    "order": 18,
+    "book_id": "69907c525f855ec553e74698",
+    "eligible_pages": 108,
+    "candidates": [
+     24,
+     97,
+     69,
+     57,
+     61,
+     67
+    ]
+   },
+   {
+    "order": 19,
+    "book_id": "69907e02b91bcb2db3f6d9c8",
+    "eligible_pages": 43,
+    "candidates": [
+     10,
+     26,
+     45,
+     9,
+     25,
+     6
+    ]
+   },
+   {
+    "order": 20,
+    "book_id": "699066ed249ce014347d2094",
+    "eligible_pages": 70,
+    "candidates": [
+     17,
+     51,
+     66,
+     68,
+     80,
+     55
+    ]
+   },
+   {
+    "order": 21,
+    "book_id": "69dea1f74d19ec2e9ba75a72",
+    "eligible_pages": 0,
+    "candidates": []
+   },
+   {
+    "order": 22,
+    "book_id": "69907c634d10d339852371b5",
+    "eligible_pages": 31,
+    "candidates": [
+     14,
+     21,
+     13,
+     30,
+     26,
+     7
+    ]
+   },
+   {
+    "order": 23,
+    "book_id": "69907c485f855ec553e73532",
+    "eligible_pages": 241,
+    "candidates": [
+     71,
+     79,
+     148,
+     92,
+     151,
+     212
+    ]
+   },
+   {
+    "order": 24,
+    "book_id": "69906a6f1cf6ed5fbc8f5cc5",
+    "eligible_pages": 71,
+    "candidates": [
+     64,
+     19,
+     28,
+     30,
+     35,
+     41
+    ]
+   },
+   {
+    "order": 25,
+    "book_id": "69907e1cb91bcb2db3f6e4ae",
+    "eligible_pages": 33,
+    "candidates": [
+     19,
+     32,
+     10,
+     9,
+     17,
+     33
+    ]
+   },
+   {
+    "order": 26,
+    "book_id": "6a30909cbec66f86487f2e8d",
+    "eligible_pages": 421,
+    "candidates": [
+     291,
+     114,
+     339,
+     301,
+     373,
+     380
+    ]
+   },
+   {
+    "order": 27,
+    "book_id": "6990665e2ec9f7db5717a1dd",
+    "eligible_pages": 83,
+    "candidates": [
+     56,
+     43,
+     84,
+     25,
+     88,
+     23
+    ]
+   },
+   {
+    "order": 28,
+    "book_id": "69ea3e6b300d991d0f1d337d",
+    "eligible_pages": 319,
+    "candidates": [
+     117,
+     187,
+     57,
+     328,
+     175,
+     222
+    ]
+   },
+   {
+    "order": 29,
+    "book_id": "69dea5da4d19ec2e9ba77511",
+    "eligible_pages": 930,
+    "candidates": [
+     229,
+     747,
+     509,
+     983,
+     1043,
+     923
+    ]
+   },
+   {
+    "order": 30,
+    "book_id": "699066de249ce014347d1e4c",
+    "eligible_pages": 217,
+    "candidates": [
+     58,
+     182,
+     32,
+     30,
+     132,
+     213
+    ]
+   }
+  ]
+ }
+}

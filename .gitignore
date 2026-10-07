@@ -60,9 +60,13 @@ src/data/*
 !src/data/marcianus-berthelot-overlay.json
 !src/data/jung-bph-alignment-2026-05-22.json
 !src/data/concept-aliases.json
+!src/data/language-card-images.json
 !src/data/image-subjects.json
 !src/data/image-subject-map.json
 !src/data/ocr-benchmark-evidence.json
+!src/data/ocr-pareto.json
+!src/data/translation-pareto.json
+!src/data/quality-feedback-themes.json
 !src/data/carbon-ledger/
 !src/data/carbon-ledger/*.json
 !src/data/cite/
@@ -70,6 +74,9 @@ src/data/*
 !src/data/shwep-bibliographies.ts
 !src/data/shwep-linked-bibliographies.ts
 !src/data/shwep-supplementary-works.ts
+!src/data/public-models.ts
+!src/data/model-usage-recent.json
+!src/data/quality-methods.json
 
 # User uploads and test files
 public/uploads/

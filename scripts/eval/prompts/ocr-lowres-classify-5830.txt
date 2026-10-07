@@ -1,0 +1,4 @@
+Classify this scanned page of a historical book. Do not transcribe it. Output exactly two lines and nothing else:
+
+<page-type>X</page-type> — one of: title-page, frontispiece, dedication, preface, toc, index, errata, colophon, appendix, blank, illustration, diagram, map, text. `blank` means NO INK on this side of the leaf. Show-through (mirror-reversed marks from the other side) is not ink. A faint or damaged page is NOT blank.
+<illustration size="none|small|medium|large" significance="none|low|high"/> — the LARGEST picture, diagram, ornament, decorative initial or printer's device on the page. large = more than a quarter page; medium = prominent but less; small = minor initials and ornaments. high = illustrations, diagrams, emblems, figures, maps; low = decorative initials, borders, ornaments. Use size="none" significance="none" when there is none.

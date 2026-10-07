@@ -1,0 +1,21 @@
+{
+ "id": "6a3c61ec40c88a541d8f0f4a_00018",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "->The light of stainless purity, the sun of wisdom that destroys all darkness, can subdue the calamities of wind and fire, shining its brilliance throughout the world.<-\n\n->The body of compassion is like the thunder of precepts; the intent of kindness is like a wondrous great cloud. It pours down the dharma-rain of sweet dew <note>original: \"amrita\"</note>, extinguishing the flames of worldly afflictions.<-\n\n->In legal disputes before officials, or in the terrifying midst of battle arrays, by the power of mindful contemplation of Avalokiteshvara <note>the Bodhisattva of Compassion</note>, all enemies and grievances will retreat and disperse.<-\n\n->The Wondrous Voice, the One who Perceives the World's Sounds <note>original: \"Guanshiyin\"</note>, the Brahma-voice, the voice like the ocean tide, surpassing all sounds of the world; therefore, one should always be mindful of him.<-\n\n->In every thought, let no doubt arise. The pure sage Avalokiteshvara is a refuge and protector in times of suffering, distress, and the peril of death.<-\n\n->Possessing all merits and viewing sentient beings with eyes of compassion, his gathered blessings are as limitless as the ocean; therefore, one should bow the head in prostration.<-\n\n---\n\n->At that time, the Bodhisattva Earth-Holder <note>original: \"Dharanimdhara\"</note> rose from his seat, came forward, and said to the Buddha: \"World-Honored One! If there are sentient beings who hear this chapter on the Bodhisattva Avalokiteshvara, and learn of his sovereign deeds and the power of his supernatural penetrations in the Universal Gate manifestation, it should be known that the merit of such people is not small.\" When the Buddha spoke this Universal Gate Chapter, eighty-four thousand sentient beings in the assembly all set their minds upon the unsurpassed, equal, and correct enlightenment <note>original: \"Anuttara Samyak Sambodhi\"</note>.<-\n\n<summary>This page concludes the verse section praising Avalokiteshvara's saving powers and records the Bodhisattva Earth-Holder's confirmation of the merit gained by hearing this teaching. The chapter ends with a vast number of beings resolving to attain supreme enlightenment.</summary>\n<keywords>Avalokiteshvara, Guanyin, Universal Gate Chapter, Earth-Holder Bodhisattva, Bodhicitta, Lotus Sutra, merit, enlightenment</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2142,
+ "outputTokens": 525,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.001323,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 533,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

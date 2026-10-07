@@ -17,6 +17,16 @@
 #   for p in $(ss -lntpH | grep -oE 'pid=[0-9]+' | cut -d= -f2 | sort -u); do
 #     systemctl status $p --no-pager 2>/dev/null | head -1; done
 # As of 2026-08-02 every listening node/python process is under a unit.
+#
+# RUNTIME (#5099): CLIP_RUNTIME picks the transformers package (v2 = @xenova 2.17,
+# v4 = @huggingface 4.3.0). They put the same image at different vectors, so the
+# value must match the space clip_embeddings.embedding was written in. It is set
+# by a drop-in on the box, not here, so the switch is one file and one restart:
+#   /etc/systemd/system/sl-clip-server.service.d/runtime.conf
+#     [Service]
+#     Environment=CLIP_RUNTIME=v4
+# Flip it only together with scripts/migration/clip-embeddings-v4-cutover.sql
+# (or -rollback.sql). No drop-in = v2.
 [Unit]
 Description=Source Library CLIP Server (visual search, Xenova/clip-vit-base-patch32)
 After=network.target

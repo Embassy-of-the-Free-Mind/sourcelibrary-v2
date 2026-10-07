@@ -1,0 +1,21 @@
+{
+ "id": "69e72c6ba409200ea79f484e_00102",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "莊子說苑卷三\n\n<margin>This is the conduct of the perfected person who does not seek fame or recognition. Why then, sir, do you take pleasure in being heard?</margin>\nblamed him, saying, \"The perfected person is not heard; why then are you pleased, sir?\" Confucius replied, \"Excellent.\" He declined the\n<margin>Does not value ostentation</margin>\nsocial circles, left his disciples, and fled to the great marshes. He wore furs and coarse hemp, and ate acorns and chestnuts.\n<margin>Does not value fine flavors</margin>\n<margin>Does not generate discriminating thoughts that disturb the flocks of birds and beasts</margin>\nHe entered among beasts without disturbing their herds, and entered among birds without disturbing their formations. If birds and beasts do not resent him, how much more so\n<margin>Even those of a different kind do not resent him</margin>\n<margin>Name: Zisang Hu, a recluse</margin>\nfor humans? Confucius asked Zisang Hu, \"I was twice driven from Lu, had the tree cut down over me in Song, had my tracks erased in Wei, was reduced to poverty in Shang and Zhou, and was besieged between Chen and Cai. I have encountered these several afflictions, and my relatives and associates have grown distant, my disciples and friends have dispersed. What is the reason?\" Zisang Hu\n\n<note>A small printer's mark or seal appears in the top right corner of the page.</note>\n\n<summary>This page discusses the behavior of the perfected person (zhenren) who avoids fame and social entanglements, contrasting Confucius's worldly struggles with the reclusive life of Zisang Hu.</summary>\n<keywords>Confucius, Zisang Hu, perfected person, reclusion, adversity, social detachment</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2124,
+ "outputTokens": 394,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.000561,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 596,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

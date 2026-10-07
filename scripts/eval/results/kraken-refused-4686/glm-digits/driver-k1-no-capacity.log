@@ -1,0 +1,4 @@
+2026-10-06T13:35:04Z [k1] created 8cd1968c-d31d-4e31-bddc-35d2f08a1da5 sl-kraken-digits-4686-k1 L4-1-24G fr-par-2 (€0.7875/h ≈ $0.9214/h) lease-until=2026-10-06T16:35:03Z
+2026-10-06T13:45:16Z [k1] did not reach running (stopped ) — deleting
+2026-10-06T13:45:19Z [k1] volume 4567a930-6533-434d-ad45-37c44c471395 delete -> 204
+2026-10-06T13:45:19Z [k1] DELETED 8cd1968c-d31d-4e31-bddc-35d2f08a1da5 (now: gone -); billed ≈ $0.157

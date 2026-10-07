@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import { useStableSession } from '@/hooks/useStableSession';
 import { shouldShowTranslationRequestCta } from '@/lib/translation-request-cta';
+import type { StoredTranslationState } from '@/lib/translation-completeness';
 import { useLocale } from '@/lib/i18n';
 import { getReaderStrings } from '@/lib/reader-strings';
 import type { Book, Page } from '@/lib/types';
@@ -160,6 +161,7 @@ export function PaneEmptyState({ page, book, kind, unreadable, withheld }: { pag
     translationUpdatedAt: page.translation?.updated_at,
     modernizedText: page.modernized?.data,
     bookPagesTranslated: book.pages_translated,
+    bookTranslationState: (book as { translation_state?: StoredTranslationState | null }).translation_state,
     bookPagesCount: book.pages_count,
     bookLanguage: book.language,
   });

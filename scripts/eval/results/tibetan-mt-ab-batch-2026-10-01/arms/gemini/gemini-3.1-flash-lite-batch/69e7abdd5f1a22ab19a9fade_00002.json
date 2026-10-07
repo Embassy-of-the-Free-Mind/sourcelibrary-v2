@@ -1,0 +1,20 @@
+{
+ "id": "69e7abdd5f1a22ab19a9fade_00002",
+ "arm": "gemini-3.1-flash-lite",
+ "text": "Homage to the Victorious Ones.\n\nI bow down. To all the Victorious Ones of the past, future, and present, you are the Mother, O Virtuous One. You are the Goddess, the child of the Victorious Ones. You possess a nature that is the nature of non-nature. I shall speak the name of her who has become the Mother of the Buddhas, O Virtuous One. Those who desire to attain it, listen.\n\nThe Perfection of Wisdom, Omniscience, and the knowledge of all aspects of the path.\n\n<summary>This text serves as an introductory homage and invocation to the Perfection of Wisdom, identifying her as the Mother of all Buddhas and the source of omniscience.</summary>\n<keywords>Perfection of Wisdom, Prajnaparamita, Homage, Omniscience, Mother of Buddhas</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2109,
+ "outputTokens": 181,
+ "thinkingTokens": 0,
+ "ms": 102237,
+ "cost_usd": 0.00039937500000000004,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 429,
+ "job": "batches/crx0ckdkigsuckrtbv86iaudz41zfwz4k307"
+}

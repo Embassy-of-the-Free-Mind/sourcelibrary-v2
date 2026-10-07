@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A44021",
+  "edition": "EEBO-TCP A44021 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6a426869aedf4c943f91eac4",
+  "page_number": 14,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 13273,
+    "to_char": 14558,
+    "overlap": 0.947,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "Starts one clause early; ends at last verse plus catchword.",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:36.316Z",
+  "text_location": "repo",
+  "text_sha256": "0c7c9de0a79e80bf88f6d8dd70322cb46d840c22cd9995e7fc568fb4cb82daf4",
+  "unit": {
+    "chars": 1285
+  }
+}

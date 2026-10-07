@@ -1,0 +1,4 @@
+# PRIOR ART: results/translation-corpus-audit-2026-09-30/.gitignore — same rule: judge packets are rebuilt from the committed key + texts.
+# The Batch request files (11 MB) are rebuilt by --draw; sample.jsonl pins each prompt's hash.
+packets/
+requests-*.jsonl

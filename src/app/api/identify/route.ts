@@ -3,7 +3,7 @@ import sharp from 'sharp';
 import { getNextApiKey } from '@/lib/gemini-client';
 import { logGeminiCall, outputTokensFrom } from '@/lib/gemini-logger';
 import { getDb } from '@/lib/mongodb';
-import { supabase } from '@/lib/supabase';
+import { GLOBAL_SCOPE, matchClip } from '@/lib/tenant-search-scope';
 import { semanticArtworkSearch, type SemanticArtworkResult } from '@/lib/semantic-search';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { CLIP_URL } from '@/lib/clip';
@@ -236,16 +236,17 @@ export async function POST(request: NextRequest) {
         if (!embedding) return [];
 
         // Search Supabase for visual matches
-        const { data, error } = await supabase.rpc('match_clip_images', {
-          query_embedding: embedding,
-          match_threshold: 0.25,
-          match_count: 20,
-        }).abortSignal(AbortSignal.timeout(8000));
+        // GLOBAL_SCOPE: /identify and /api/identify are refused on partner
+        // hosts by the proxy (tenant-global-paths.ts, #4232), so this route
+        // only ever answers for the main site.
+        const { rows: data, error } = await matchClip(embedding, {
+          scope: GLOBAL_SCOPE, threshold: 0.25, count: 20, timeoutMs: 8000,
+        });
         if (error) {
-          console.error('[identify] CLIP search error:', error.message);
+          console.error('[identify] CLIP search error:', error);
           return [];
         }
-        return ((data || []) as ClipMatch[]).filter(isContentMatch);
+        return (data as ClipMatch[]).filter(isContentMatch);
       } catch (e) {
         // CLIP search is optional — don't fail the whole request
         console.warn('[identify] CLIP search unavailable:', e instanceof Error ? e.message : String(e));
@@ -353,12 +354,10 @@ export async function POST(request: NextRequest) {
           if (!clipResp.ok) return [];
           const { embedding } = await clipResp.json();
           if (!embedding) return [];
-          const { data, error } = await supabase.rpc('match_clip_images', {
-            query_embedding: embedding,
-            match_threshold: 0.25,
-            match_count: 12,
-          }).abortSignal(AbortSignal.timeout(8000));
-          return error ? [] : ((data || []) as ClipMatch[]).filter(isContentMatch);
+          const { rows: data, error } = await matchClip(embedding, {
+            scope: GLOBAL_SCOPE, threshold: 0.25, count: 12, timeoutMs: 8000,
+          });
+          return error ? [] : (data as ClipMatch[]).filter(isContentMatch);
         };
         const [a, b2] = await Promise.all([queryOne(cropBuf), queryOne(tightBuf).catch(() => [] as ClipMatch[])]);
         if (a.length === 0 && b2.length === 0) return null;
@@ -386,7 +385,7 @@ export async function POST(request: NextRequest) {
     ].filter(Boolean).join(' ');
 
     const semanticArtworkPromise: Promise<SemanticArtworkResult[]> = artworkSearchQuery
-      ? semanticArtworkSearch(artworkSearchQuery, 10, { threshold: 0.4 }).catch(() => [])
+      ? semanticArtworkSearch(artworkSearchQuery, 10, { scope: GLOBAL_SCOPE, threshold: 0.4 }).catch(() => [])
       : Promise.resolve([]);
 
     // Promise 3b: two-stage visual confirmation (#3193). Candidates come from
@@ -524,10 +523,13 @@ export async function POST(request: NextRequest) {
         const pageImageUrl = pageDoc ? getPageImageUrl(pageDoc as PageImageFields, 'display') : null;
         const readSlug = sourceLink ? (sourceLink.book_slug || sourceLink.book_id) : slugOrId;
         const readPageNumber = sourceLink ? sourceLink.page_number : h?.page_number;
+        // Open on the scan with the original and English stacked beneath it:
+        // the visitor photographed a picture, so the picture is what they
+        // should recognise first (the reader strips ?views= after applying it).
         const readUrl = pageId
-          ? `/book/${readSlug}/page/${pageId}`
+          ? `/book/${readSlug}/page/${pageId}?views=scan,ocr,en`
           : readPageNumber != null
-            ? `/book/${readSlug}/page-number/${readPageNumber}`
+            ? `/book/${readSlug}/page-number/${readPageNumber}?views=scan,ocr,en`
             : `/book/${readSlug}`;
         const confirmed: ConfirmedMatch = {
           book_id: picked.bookId,

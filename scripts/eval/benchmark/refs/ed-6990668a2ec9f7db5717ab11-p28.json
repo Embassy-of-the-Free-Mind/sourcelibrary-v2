@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A26190",
+  "edition": "EEBO-TCP A26190 (same edition by Wing/STC; scan copy unconfirmed)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6990668a2ec9f7db5717ab11",
+  "page_number": 28,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 26323,
+    "to_char": 27617,
+    "overlap": 1,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "lead checker read from image: ref opens 3 words early ('Quaere de hoc.'), ends at catchword 'But' +2",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T16:08:50.146Z",
+  "text_location": "repo",
+  "text_sha256": "cd805f5429fbd63106eedbd216c809fa526db055554e35fd5073ae7c4bd84e22",
+  "unit": {
+    "chars": 1294
+  }
+}

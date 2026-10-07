@@ -24,7 +24,7 @@ import type { PageProcessingMessage } from '@/lib/types/sqs';
 import type { OcrWriteResult, GeminiUsagePayload } from '@/lib/types/sqs';
 import { performOCRWithBuffer } from '@/lib/ai';
 import { DEFAULT_MODEL, DEFAULT_LITE_MODEL, getModelForBook, type RoutableBook } from '@/lib/types/ai-models';
-import { PROMPT_VERSION, extractPageType, extractColumns, extractScriptType, parseDetectedImages } from '@/lib/types/prompts/defaults';
+import { PROMPT_VERSION, liftOcrTags, parseDetectedImages } from '@/lib/types/prompts/defaults';
 import { images } from '@/lib/api-client/images';
 import type { Page } from '@/lib/types/page';
 import { classifyError } from '@/lib/errors';
@@ -227,9 +227,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
     console.log(`[OCR] OCR completed for page ${pageId}, text length: ${ocrResult.text.length}, ${durationMs}ms`);
 
     // Send result to write queue — Writer Lambda handles all DB writes
-    const pageType = extractPageType(ocrResult.text);
-    const columns = extractColumns(ocrResult.text);
-    const scriptType = extractScriptType(ocrResult.text);
+    const { page_type: pageType, columns, script_type: scriptType } = liftOcrTags(ocrResult.text);
     const detectedImages = parseDetectedImages(ocrResult.text);
     await sendWriteResult({
       type: 'ocr',
@@ -294,8 +292,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
           console.log(`[OCR] Retry succeeded with ${nextModel} for page ${pageId}`);
 
           // Send retry result to write queue
-          const retryPageType = extractPageType(retryResult.text);
-          const retryColumns = extractColumns(retryResult.text);
+          const { page_type: retryPageType, columns: retryColumns, script_type: retryScriptType } = liftOcrTags(retryResult.text);
           const retryImages = parseDetectedImages(retryResult.text);
           await sendWriteResult({
             type: 'ocr',
@@ -315,6 +312,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
               promptName,
               ...(retryPageType && { pageType: retryPageType }),
               ...(retryColumns && { columns: retryColumns }),
+              ...(retryScriptType && { scriptType: retryScriptType }),
               ...(retryImages.length > 0 && { detectedImages: retryImages }),
               sourceUrl: imageUrl,        // provenance: the exact image OCR'd (#2297)
               codeVersion: CODE_VERSION,

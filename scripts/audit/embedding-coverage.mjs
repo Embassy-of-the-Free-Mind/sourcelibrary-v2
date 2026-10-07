@@ -52,8 +52,19 @@
  * Report-only. It files nothing, writes nothing, and costs nothing: pure counts
  * over PostgREST and Mongo, no embedding calls.
  *
+ * PER-BOOK GAP (#5869). Store totals hid a 910K-page hole: page_translations
+ * held millions of rows, so the table looked healthy while 37% of live books
+ * were under 90% embedded — the incremental watermark had skipped them. The
+ * per-book line counts rows per book (one GROUP BY over direct PG, ~5 min) and
+ * reports live books with rows < 90% of max(pages_translated, pages_ocr), plus
+ * the translated pages they are missing (pages_translated − rows, floored at 0
+ * — a lower bound, since a book's rows may include untranslated pages).
+ * `--gap-list PATH` writes those books, most missing translated pages first,
+ * as the input for a `--books-file` backfill. `--no-per-book` skips it.
+ *
  * Usage:
  *   node --env-file=.env.production.local scripts/audit/embedding-coverage.mjs
+ *   node --env-file=.env.production.local scripts/audit/embedding-coverage.mjs --gap-list /tmp/gap.json
  *   node --env-file=.env.production.local scripts/audit/embedding-coverage.mjs --json
  *   node --env-file=.env.production.local scripts/audit/embedding-coverage.mjs --ci
  *
@@ -68,6 +79,9 @@ import { withMongo } from '../lib/mongo.mjs';
 const args = process.argv.slice(2);
 const JSON_OUT = args.includes('--json');
 const CI = args.includes('--ci');
+const PER_BOOK = !args.includes('--no-per-book');
+const GAP_LIST = args.find((_, i, a) => a[i - 1] === '--gap-list');
+const GAP_THRESHOLD = 0.9;
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -135,7 +149,7 @@ const STORES = [
   { table: 'page_texts', select: 'page_id', createdAt: null },
 ];
 
-const out = { measured_at: new Date().toISOString(), stores: {}, denominators: {}, findings: [] };
+const out = { measured_at: new Date().toISOString(), stores: {}, denominators: {}, per_book: null, findings: [] };
 let unknown = false;
 
 for (const s of STORES) {
@@ -170,7 +184,68 @@ await withMongo(async (db) => {
   out.denominators.gallery_images_24h = await db.collection('gallery_images').countDocuments({
     _id: { $gt: objectIdAtTime(Date.now() - 24 * 3600 * 1000) },
   });
-});
+
+  if (PER_BOOK) out.per_book = await perBookGap(db, live);
+// The per-book GROUP BY alone runs ~8 min under load; the 300s default killed it.
+}, { timeoutMs: 1_200_000 });
+
+/**
+ * Per-book coverage of page_translations against each live book's own page
+ * counts. Returns null (→ UNKNOWN) when the row counts cannot be read: a book
+ * with no rows and a probe that never ran must not look the same.
+ */
+async function perBookGap(db, live) {
+  if (!process.env.SUPABASE_DB_URL) {
+    console.error('  per-book: SUPABASE_DB_URL not set — cannot count rows per book.');
+    return null;
+  }
+  const { default: pg } = await import('pg');
+  const client = new pg.Client({ connectionString: process.env.SUPABASE_DB_URL, ssl: { rejectUnauthorized: false } });
+  let rowsByBook;
+  try {
+    await client.connect();
+    await client.query('SET statement_timeout = 900000');
+    const { rows } = await client.query('SELECT book_id, count(*)::int AS n FROM page_translations GROUP BY book_id');
+    rowsByBook = new Map(rows.map((r) => [r.book_id, r.n]));
+  } catch (err) {
+    console.error(`  per-book: row count failed — ${err.message}`);
+    return null;
+  } finally {
+    await client.end().catch(() => {});
+  }
+  // Positive control: an empty map means the probe misfired, not a dark store.
+  if (rowsByBook.size === 0) return null;
+
+  const books = await db.collection('books')
+    .find(live, { projection: { id: 1, pages_translated: 1, pages_ocr: 1, language: 1 } })
+    .toArray();
+  let measured = 0;
+  let zeroRows = 0;
+  let missingTranslated = 0;
+  const gap = [];
+  for (const b of books) {
+    const target = Math.max(b.pages_translated || 0, b.pages_ocr || 0);
+    if (!target) continue;
+    measured++;
+    const rows = rowsByBook.get(b.id) || 0;
+    if (rows >= GAP_THRESHOLD * target) continue;
+    if (rows === 0) zeroRows++;
+    const missT = Math.max(0, (b.pages_translated || 0) - rows);
+    missingTranslated += missT;
+    gap.push({ id: b.id, rows, pages_translated: b.pages_translated || 0, pages_ocr: b.pages_ocr || 0, missing_translated: missT, language: b.language ?? null });
+  }
+  gap.sort((a, b) => b.missing_translated - a.missing_translated || (b.pages_ocr - b.rows) - (a.pages_ocr - a.rows));
+  return {
+    live_books_with_text: measured,
+    under_90pct: gap.length,
+    zero_rows: zeroRows,
+    missing_translated_pages: missingTranslated,
+    worst: gap.slice(0, 5),
+    gap,
+  };
+}
+
+if (PER_BOOK && !out.per_book) unknown = true;
 
 if (unknown) {
   console.error('\nUNKNOWN — at least one probe did not fire. Nothing here is a measurement.');
@@ -196,6 +271,18 @@ if (bookCoverage < 0.95) {
   out.findings.push(`book_embeddings: ${out.stores.book_embeddings.rows} rows against ${out.denominators.live_books} live books — book-level retrieval is partial.`);
 }
 
+const pb = out.per_book;
+if (pb && pb.under_90pct > 0) {
+  out.findings.push(`page_translations per book: ${pb.under_90pct.toLocaleString()} / ${pb.live_books_with_text.toLocaleString()} live books under ${GAP_THRESHOLD * 100}% embedded (${pb.zero_rows.toLocaleString()} with zero rows), ≥${pb.missing_translated_pages.toLocaleString()} translated pages with no vector — the store total does not show this (#5869).`);
+}
+if (pb && GAP_LIST) {
+  const fs = await import('node:fs');
+  fs.writeFileSync(GAP_LIST, JSON.stringify(pb.gap, null, 1));
+  console.error(`per-book gap list (${pb.gap.length} books) → ${GAP_LIST}`);
+}
+// The full list is for --gap-list; keep JSON output readable.
+if (pb) delete pb.gap;
+
 if (JSON_OUT) {
   console.log(JSON.stringify(out, null, 2));
 } else {
@@ -203,6 +290,11 @@ if (JSON_OUT) {
   for (const [t, v] of Object.entries(out.stores)) {
     const fresh = v.freshness_column ? `${v.added_24h?.toLocaleString()} in 24h` : 'no write timestamp (see header)';
     console.log(`  ${t.padEnd(24)} ${String(v.rows?.toLocaleString()).padStart(12)} rows   ${fresh}`);
+  }
+  if (pb) {
+    console.log(`\n  per-book (live, rows < ${GAP_THRESHOLD * 100}% of max(pages_translated, pages_ocr)):`);
+    console.log(`    under ${GAP_THRESHOLD * 100}%: ${pb.under_90pct.toLocaleString()} / ${pb.live_books_with_text.toLocaleString()} books   zero rows: ${pb.zero_rows.toLocaleString()}   translated pages missing: ≥${pb.missing_translated_pages.toLocaleString()}`);
+    for (const w of pb.worst) console.log(`      ${w.id}  ${w.rows} rows / ${w.pages_translated} translated / ${w.pages_ocr} ocr`);
   }
   console.log('\n  denominators:');
   for (const [k, v] of Object.entries(out.denominators)) {

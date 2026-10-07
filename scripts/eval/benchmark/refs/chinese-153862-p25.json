@@ -10,5 +10,8 @@
   "url": "https://cbetaonline.dila.edu.tw/X0487_001",
   "etext_chars": 39349,
   "window_chars": 101,
-  "overlap": 0.604
+  "overlap": 0.604,
+  "licence": "CC-BY-NC-SA-4.0",
+  "licence_url": "https://www.cbeta.org/copyright.php",
+  "licence_checked": "2026-10-01"
 }

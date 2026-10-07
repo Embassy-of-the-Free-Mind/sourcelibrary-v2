@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "book_id": "6970e37d9b09d309d780a2c2",
+    "title": "Anthroposophia theomagica; or a discourse of the nature of man and his state after death",
+    "published": "1650",
+    "source": "EEBO-TCP A64763",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 8,
+    "skips": {},
+    "median_char_acc": 0.9647,
+    "median_char_acc_windowed": 0.9607,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6970e37d9b09d309d780a2c2-p26",
+      "page": 26,
+      "overlap": 1,
+      "probe_words": 231,
+      "ref_chars": 1345,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.072,
+      "char_acc": 0.963,
+      "char_acc_windowed": 0.9556
+    },
+    {
+      "slug": "ed-6970e37d9b09d309d780a2c2-p43",
+      "page": 43,
+      "overlap": 1,
+      "probe_words": 213,
+      "ref_chars": 1362,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.05,
+      "char_acc": 0.9647,
+      "char_acc_windowed": 0.9611
+    },
+    {
+      "slug": "ed-6970e37d9b09d309d780a2c2-p47",
+      "page": 47,
+      "overlap": 0.941,
+      "probe_words": 231,
+      "ref_chars": 1374,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.082,
+      "char_acc": 0.9718,
+      "char_acc_windowed": 0.97
+    },
+    {
+      "slug": "ed-6970e37d9b09d309d780a2c2-p58",
+      "page": 58,
+      "overlap": 1,
+      "probe_words": 236,
+      "ref_chars": 1404,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.066,
+      "char_acc": 0.9727,
+      "char_acc_windowed": 0.9631
+    },
+    {
+      "slug": "ed-6970e37d9b09d309d780a2c2-p61",
+      "page": 61,
+      "overlap": 0.995,
+      "probe_words": 227,
+      "ref_chars": 1331,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.073,
+      "char_acc": 0.9601,
+      "char_acc_windowed": 0.9526
+    },
+    {
+      "slug": "ed-6970e37d9b09d309d780a2c2-p68",
+      "page": 68,
+      "overlap": 0.967,
+      "probe_words": 214,
+      "ref_chars": 1326,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.064,
+      "char_acc": 0.9691,
+      "char_acc_windowed": 0.9607
+    },
+    {
+      "slug": "ed-6970e37d9b09d309d780a2c2-p78",
+      "page": 78,
+      "overlap": 0.84,
+      "probe_words": 196,
+      "ref_chars": 1209,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.087,
+      "char_acc": 0.9493,
+      "char_acc_windowed": 0.9389
+    },
+    {
+      "slug": "ed-6970e37d9b09d309d780a2c2-p83",
+      "page": 83,
+      "overlap": 0.981,
+      "probe_words": 155,
+      "ref_chars": 897,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.062,
+      "char_acc": 0.9518,
+      "char_acc_windowed": 0.9488
+    }
+  ]
+}

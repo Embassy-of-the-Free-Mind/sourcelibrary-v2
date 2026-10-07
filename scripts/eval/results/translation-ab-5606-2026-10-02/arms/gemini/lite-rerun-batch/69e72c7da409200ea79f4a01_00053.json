@@ -1,0 +1,21 @@
+{
+ "id": "69e72c7da409200ea79f4a01_00053",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "If one possesses no animal heart, even if they have an animal-like appearance, they are still regarded with intimacy. Legends tell of creatures with horns, fangs, and claws that fly, soar, crouch, and run, yet are called birds and beasts. If one possesses a human heart, even if they have a human appearance, they are still regarded with alienation. Fuxi, Nüwa, Shennong, and the sovereigns of the Xia dynasty had the bodies of snakes and human faces, or ox heads and tiger noses. These had appearances that were not human, yet they possessed the virtues of great sages. Jie of Xia, Zhou of Shang, Huan of Lu, and Mu of Chu all possessed human appearances and features, yet they had the hearts of birds and beasts. The common people focus only on outward appearances to judge wisdom, which is hardly a way to approach the truth. When the Yellow Emperor fought the Flame Emperor on the plains of Banquan, he led bears, leopards, <term>pixiu</term> <gloss>mythical fierce beasts</gloss>, and tigers as his vanguard, and used eagles, falcons, and kites as his flags and banners. These are those who used their power to command birds and beasts. When Yao appointed Kui to oversee music, he struck the stones and beat the chimes, and all the beasts danced in accordance. When the <term>Xiaoshao</term> <gloss>a legendary ancient musical composition</gloss> was performed in nine movements, the phoenixes came to present their grace.\n\n<margin>These two paragraphs carry this meaning.</margin>\n<margin>Liezi, Yellow Emperor</margin>\n\n<summary>This passage discusses the distinction between inner virtue and outward appearance, illustrating that true character is determined by the heart rather than physical form, referencing legendary figures and the harmony of the natural world.</summary>\n<keywords>Yellow Emperor, Flame Emperor, Banquan, virtue, appearance, Kui, Yao, music, wisdom</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2103,
+ "outputTokens": 413,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.000572625,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 423,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

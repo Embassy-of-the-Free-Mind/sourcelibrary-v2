@@ -1,0 +1,111 @@
+{
+  "summary": {
+    "book_id": "6a3d29e1af872ba37a51ab17",
+    "title": "A Sermon Preached before the King",
+    "published": "1670",
+    "source": "EEBO-TCP A66059",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "probe-too-short": 1
+    },
+    "median_char_acc": 0.9404,
+    "median_char_acc_windowed": 0.9362,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a3d29e1-p2",
+      "page": 2,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a3d29e1-p9",
+      "page": 9,
+      "overlap": 0.925,
+      "probe_words": 141,
+      "ref_chars": 869,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.167,
+      "char_acc": 0.9514,
+      "char_acc_windowed": 0.9514
+    },
+    {
+      "slug": "ed-6a3d29e1-p16",
+      "page": 16,
+      "overlap": 0.853,
+      "probe_words": 119,
+      "ref_chars": 800,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.189,
+      "char_acc": 0.9059,
+      "char_acc_windowed": 0.8857
+    },
+    {
+      "slug": "ed-6a3d29e1-p17",
+      "page": 17,
+      "overlap": 0.962,
+      "probe_words": 140,
+      "ref_chars": 884,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.132,
+      "char_acc": 0.9351,
+      "char_acc_windowed": 0.9337
+    },
+    {
+      "slug": "ed-6a3d29e1-p22",
+      "page": 22,
+      "overlap": 0.978,
+      "probe_words": 148,
+      "ref_chars": 892,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.102,
+      "char_acc": 0.9404,
+      "char_acc_windowed": 0.9362
+    },
+    {
+      "slug": "ed-6a3d29e1-p26",
+      "page": 26,
+      "overlap": 1,
+      "probe_words": 145,
+      "ref_chars": 899,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.085,
+      "char_acc": 0.9508,
+      "char_acc_windowed": 0.9494
+    },
+    {
+      "slug": "ed-6a3d29e1-p28",
+      "page": 28,
+      "overlap": 0.992,
+      "probe_words": 139,
+      "ref_chars": 881,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.113,
+      "char_acc": 0.9651,
+      "char_acc_windowed": 0.9637
+    },
+    {
+      "slug": "ed-6a3d29e1-p33",
+      "page": 33,
+      "overlap": 0.993,
+      "probe_words": 141,
+      "ref_chars": 910,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.118,
+      "char_acc": 0.913,
+      "char_acc_windowed": 0.9046
+    }
+  ]
+}

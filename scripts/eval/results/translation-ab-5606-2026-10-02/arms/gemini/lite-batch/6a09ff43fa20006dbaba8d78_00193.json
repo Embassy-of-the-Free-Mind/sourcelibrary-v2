@@ -1,0 +1,21 @@
+{
+ "id": "6a09ff43fa20006dbaba8d78_00193",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "MAHĀ-VAGGA. [III. 61. 2.]\n\nI say to them: If that is so, then venerable ones, you will be killers of living beings because of prior deeds, you will be takers of what is not given because of prior deeds, you will be unchaste because of prior deeds, you will be speakers of falsehood because of prior deeds, you will be speakers of malicious words because of prior deeds, you will be speakers of harsh words because of prior deeds, you will be speakers of frivolous gossip because of prior deeds, you will be covetous because of prior deeds, you will be malevolent because of prior deeds, and you will hold wrong views because of prior deeds. But for those who fall back on prior deeds as the essential truth, there is no desire or effort, nor the thought that this is to be done or this is not to be done. Because the distinction between what is to be done and what is not to be done cannot be truly and reliably found, those who dwell with confused mindfulness and lack of self-guarding do not have a firm foundation for a doctrine of righteous living.\n\nThis, monks, is my first refutation of those ascetics and brahmins who hold such views and opinions.\n\n3. Regarding this, monks, to those ascetics and brahmins who hold the view and opinion that whatever a person experiences—whether pleasure, pain, or neutral feeling—is all due to the creation of a supreme deity <term>issaranimmânahetu</term> <gloss>due to the creation of a god</gloss>, I approach them and say: Is it true, venerable ones, that you hold this view and opinion?\n\nIf, when asked, they answer yes.\n\nI say to them: If that is so, then venerable ones, you will be killers of living beings because of the creation of a god . . . [and so on] . . . you will be holders of wrong views because of the creation of a god. But for those who fall back on the creation of a god as the essential truth, there is no desire or effort, nor the thought that this is to be done or this is not to be done. Because the distinction between what is to be done and what is not to be done cannot be truly and reliably found, those who dwell with confused mindfulness and lack of self-guarding do not have a firm foundation for a doctrine of righteous living.\n\nThis, monks, is my second refutation of those ascetics and brahmins who hold such views and opinions.\n\n<note>¹ All manuscripts have <term>pisuṇâvâcâ</term> <gloss>malicious speech</gloss> and <term>pharusâvâcâ</term> <gloss>harsh speech</gloss>.</note>\n<note>² The manuscripts here and below vary between \"gacchantam\" and \"gacchatam\".</note>\n<note>³ D. and T. have \"āmo\" <gloss>yes</gloss>.</note>\n\n<summary>The Buddha refutes two deterministic views: the belief that all experiences are caused by past deeds (kamma) or by the will of a creator deity, arguing that both views remove the basis for moral responsibility and ethical action.</summary>\n<keywords>determinism, moral responsibility, past deeds, creator deity, Buddha, ethical action</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2687,
+ "outputTokens": 714,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.000871375,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2296,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

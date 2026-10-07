@@ -1,0 +1,21 @@
+{
+ "id": "6a09ff48fa20006dbaba8ee1_00114",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "VALĀHAKAVAGGA. 103\n\n102.\n\n1. Monks, there are these four kinds of clouds. What are the four?\nThose that thunder but do not rain... (and so on)... and those that both thunder and rain.\nThese, monks, are the four kinds of clouds.\n\n2. In the same way, monks, there are these four kinds of individuals, resembling clouds, found in the world. What are the four?\nThose who thunder but do not rain... (and so on)... and those who both thunder and rain.\n\n3. And how, monks, is an individual like one who thunders but does not rain?\nHere, monks, a certain individual learns the <term>Dhamma</term> <gloss>the teaching</gloss>, including the discourses, poems, prose expositions, verses, inspired utterances, traditional narratives, birth stories, wonderful accounts, and analytical discussions. However, they do not understand as it really is: \"This is suffering,\"... (and so on)... \"This is the path leading to the cessation of suffering.\"\nIn this way, monks, an individual is like one who thunders but does not rain. Just as that cloud thunders but does not rain, so do I describe this individual.\n\n4. And how, monks, is an individual like one who rains but does not thunder?\nHere, monks, a certain individual does not learn the <term>Dhamma</term>... (and so on)... including the analytical discussions. However, they understand as it really is: \"This is suffering,\"... (and so on)... \"This is the path leading to the cessation of suffering.\"\nIn this way, monks, an individual is like one who rains but does not thunder. Just as that cloud... (and so on)... so do I describe this individual.\n\n5. And how, monks, is an individual like one who neither thunders nor rains?\nHere, monks, a certain individual does not learn the <term>Dhamma</term>... (and so on)... including the analytical discussions. And they do not understand as it really is: \"This is suffering,\"... (and so on)... \"This is the path leading to the cessation of suffering.\"\nIn this way, monks, an individual is like one who neither thunders nor rains. Just as that cloud... (and so on)... so do I describe this individual.\n\n6. And how, monks, is an individual like one who both thunders and rains?\nHere, monks, a certain individual learns the <term>Dhamma</term>... (and so on)... including the analytical discussions. And they understand as it really is: \"This is suffering,\"... (and so on)... \"This is the path leading to the cessation of suffering.\"\nIn this way, monks, an individual is like one who both thunders and rains. Just as that cloud, monks, both thunders and rains, so do I describe this individual.\n\n<summary>This passage uses the analogy of four types of clouds to categorize individuals based on their mastery of the Buddha's teachings and their realization of the Four Noble Truths.</summary>\n<keywords>Clouds, Analogy, Dhamma, Four Noble Truths, Buddhist Teaching, Spiritual Development</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2654,
+ "outputTokens": 691,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.0008500000000000001,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2262,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

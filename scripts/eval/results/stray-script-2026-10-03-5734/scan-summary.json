@@ -1,0 +1,2155 @@
+{
+ "generated_at": "2026-10-04T00:08:16.877Z",
+ "windows": 1363,
+ "english_translated_pages": 5395496,
+ "stray_pages": 4913,
+ "guard_would_refuse_pages": 3470,
+ "hangul_that_only_pages": 2089,
+ "by_script": {
+  "Hangul": 2689,
+  "Greek": 1032,
+  "Cyrillic": 179,
+  "Other": 54,
+  "Gothic": 3,
+  "Runic": 3,
+  "Arabic": 179,
+  "Hebrew": 425,
+  "Hiragana": 9,
+  "Han": 123,
+  "Thai": 11,
+  "Coptic": 7,
+  "Bengali": 63,
+  "Gujarati": 28,
+  "Devanagari": 40,
+  "Avestan": 4,
+  "Malayalam": 7,
+  "Ogham": 7,
+  "Katakana": 9,
+  "Ethiopic": 11,
+  "Tamil": 5,
+  "Egyptian_Hieroglyphs": 18,
+  "Kannada": 4,
+  "Myanmar": 1,
+  "Balinese": 11,
+  "Tifinagh": 2,
+  "Thaana": 2,
+  "Armenian": 7,
+  "Khmer": 2,
+  "Lao": 2,
+  "Telugu": 1,
+  "Georgian": 2,
+  "Gurmukhi": 2,
+  "Mongolian": 1,
+  "Phoenician": 2,
+  "Sinhala": 1,
+  "Cherokee": 2,
+  "Syriac": 8,
+  "Yi": 1
+ },
+ "model": {
+  "gemini-3-flash-preview": {
+   "translated": 2076009,
+   "stray": 3811,
+   "guard": 3134,
+   "hangul_that_only": 2089,
+   "by_script": {
+    "Hangul": 2677,
+    "Cyrillic": 73,
+    "Other": 30,
+    "Greek": 355,
+    "Gothic": 1,
+    "Runic": 3,
+    "Arabic": 138,
+    "Hebrew": 331,
+    "Hiragana": 7,
+    "Han": 84,
+    "Thai": 9,
+    "Coptic": 2,
+    "Bengali": 47,
+    "Gujarati": 21,
+    "Devanagari": 25,
+    "Avestan": 3,
+    "Malayalam": 3,
+    "Ogham": 3,
+    "Katakana": 3,
+    "Ethiopic": 1,
+    "Egyptian_Hieroglyphs": 1,
+    "Kannada": 3,
+    "Myanmar": 1,
+    "Tifinagh": 1,
+    "Tamil": 2,
+    "Balinese": 2,
+    "Thaana": 1,
+    "Sinhala": 1,
+    "Syriac": 8
+   }
+  },
+  "manual": {
+   "translated": 16,
+   "stray": 1,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Greek": 1
+   }
+  },
+  "(none)": {
+   "translated": 104655,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "gemini": {
+   "translated": 24,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "gemini-2.0-flash-exp": {
+   "translated": 14,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "gemini-3.1-flash-lite": {
+   "translated": 1002345,
+   "stray": 281,
+   "guard": 97,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Greek": 155,
+    "Balinese": 1,
+    "Han": 20,
+    "Other": 14,
+    "Cyrillic": 23,
+    "Gurmukhi": 1,
+    "Bengali": 4,
+    "Devanagari": 4,
+    "Hiragana": 1,
+    "Arabic": 10,
+    "Gujarati": 3,
+    "Ethiopic": 5,
+    "Hebrew": 30,
+    "Georgian": 1,
+    "Katakana": 1,
+    "Hangul": 5,
+    "Ogham": 4,
+    "Cherokee": 2,
+    "Armenian": 1,
+    "Yi": 1,
+    "Malayalam": 1,
+    "Tamil": 1
+   }
+  },
+  "gemini-3.1-flash-lite-preview": {
+   "translated": 2197844,
+   "stray": 781,
+   "guard": 218,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Greek": 506,
+    "Hebrew": 61,
+    "Hangul": 6,
+    "Coptic": 5,
+    "Cyrillic": 63,
+    "Malayalam": 3,
+    "Arabic": 31,
+    "Devanagari": 11,
+    "Gujarati": 4,
+    "Tamil": 2,
+    "Bengali": 12,
+    "Ethiopic": 5,
+    "Other": 10,
+    "Thaana": 1,
+    "Armenian": 6,
+    "Khmer": 2,
+    "Han": 19,
+    "Lao": 2,
+    "Hiragana": 1,
+    "Thai": 2,
+    "Kannada": 1,
+    "Katakana": 5,
+    "Telugu": 1,
+    "Balinese": 8,
+    "Georgian": 1,
+    "Gurmukhi": 1,
+    "Mongolian": 1,
+    "Egyptian_Hieroglyphs": 17,
+    "Phoenician": 2,
+    "Avestan": 1,
+    "Tifinagh": 1,
+    "Gothic": 2
+   }
+  },
+  "gemini-2.5-flash": {
+   "translated": 8802,
+   "stray": 39,
+   "guard": 21,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Greek": 15,
+    "Cyrillic": 20,
+    "Hangul": 1,
+    "Hebrew": 3
+   }
+  },
+  "gemini-2.0-flash": {
+   "translated": 15,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "etcsl-corpus": {
+   "translated": 5759,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "claude-opus-4-8": {
+   "translated": 1,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "tla-manual": {
+   "translated": 12,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  }
+ },
+ "language": {
+  "Latin": {
+   "translated": 1915106,
+   "stray": 1903,
+   "guard": 1285,
+   "hangul_that_only": 841,
+   "by_script": {
+    "Hangul": 1018,
+    "Cyrillic": 88,
+    "Other": 20,
+    "Greek": 482,
+    "Arabic": 58,
+    "Han": 42,
+    "Hebrew": 142,
+    "Coptic": 4,
+    "Bengali": 5,
+    "Gujarati": 2,
+    "Devanagari": 5,
+    "Malayalam": 5,
+    "Runic": 2,
+    "Ogham": 7,
+    "Thai": 3,
+    "Egyptian_Hieroglyphs": 1,
+    "Thaana": 2,
+    "Armenian": 6,
+    "Khmer": 2,
+    "Lao": 2,
+    "Tamil": 1,
+    "Ethiopic": 6,
+    "Balinese": 5,
+    "Georgian": 1,
+    "Gurmukhi": 1,
+    "Hiragana": 2,
+    "Katakana": 1,
+    "Gothic": 2,
+    "Cherokee": 2,
+    "Syriac": 8
+   }
+  },
+  "Hebrew": {
+   "translated": 60822,
+   "stray": 48,
+   "guard": 43,
+   "hangul_that_only": 25,
+   "by_script": {
+    "Hangul": 31,
+    "Hiragana": 1,
+    "Greek": 5,
+    "Arabic": 8,
+    "Cyrillic": 2,
+    "Han": 1
+   }
+  },
+  "French": {
+   "translated": 316692,
+   "stray": 222,
+   "guard": 110,
+   "hangul_that_only": 60,
+   "by_script": {
+    "Greek": 90,
+    "Hangul": 82,
+    "Gothic": 1,
+    "Runic": 1,
+    "Han": 6,
+    "Hebrew": 23,
+    "Arabic": 12,
+    "Katakana": 1,
+    "Cyrillic": 6,
+    "Tamil": 1,
+    "Hiragana": 1
+   }
+  },
+  "German": {
+   "translated": 651922,
+   "stray": 608,
+   "guard": 398,
+   "hangul_that_only": 246,
+   "by_script": {
+    "Greek": 182,
+    "Hangul": 317,
+    "Thai": 2,
+    "Arabic": 22,
+    "Han": 18,
+    "Cyrillic": 8,
+    "Hebrew": 29,
+    "Katakana": 2,
+    "Tifinagh": 1,
+    "Phoenician": 1,
+    "Devanagari": 2,
+    "Other": 22,
+    "Bengali": 2,
+    "Egyptian_Hieroglyphs": 1
+   }
+  },
+  "Spanish": {
+   "translated": 22555,
+   "stray": 19,
+   "guard": 18,
+   "hangul_that_only": 16,
+   "by_script": {
+    "Hangul": 18,
+    "Hebrew": 1
+   }
+  },
+  "Dutch": {
+   "translated": 147212,
+   "stray": 274,
+   "guard": 252,
+   "hangul_that_only": 198,
+   "by_script": {
+    "Hangul": 237,
+    "Hebrew": 12,
+    "Greek": 10,
+    "Cyrillic": 4,
+    "Han": 4,
+    "Arabic": 6,
+    "Other": 1,
+    "Yi": 1
+   }
+  },
+  "Russian": {
+   "translated": 101295,
+   "stray": 11,
+   "guard": 7,
+   "hangul_that_only": 2,
+   "by_script": {
+    "Greek": 4,
+    "Katakana": 2,
+    "Bengali": 2,
+    "Gujarati": 1,
+    "Hangul": 2
+   }
+  },
+  "English": {
+   "translated": 725509,
+   "stray": 831,
+   "guard": 568,
+   "hangul_that_only": 389,
+   "by_script": {
+    "Hangul": 462,
+    "Greek": 205,
+    "Arabic": 18,
+    "Han": 22,
+    "Hebrew": 61,
+    "Cyrillic": 22,
+    "Bengali": 6,
+    "Ethiopic": 3,
+    "Tamil": 2,
+    "Myanmar": 1,
+    "Balinese": 1,
+    "Coptic": 3,
+    "Telugu": 1,
+    "Egyptian_Hieroglyphs": 16,
+    "Phoenician": 1,
+    "Other": 3,
+    "Gurmukhi": 1,
+    "Georgian": 1,
+    "Devanagari": 8,
+    "Katakana": 1,
+    "Gujarati": 1
+   }
+  },
+  "Italian": {
+   "translated": 152665,
+   "stray": 137,
+   "guard": 120,
+   "hangul_that_only": 97,
+   "by_script": {
+    "Hangul": 117,
+    "Hebrew": 2,
+    "Bengali": 1,
+    "Arabic": 1,
+    "Greek": 15,
+    "Cyrillic": 1
+   }
+  },
+  "Latin/English": {
+   "translated": 730,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Latin/German/English": {
+   "translated": 146,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Greek": {
+   "translated": 446564,
+   "stray": 293,
+   "guard": 185,
+   "hangul_that_only": 82,
+   "by_script": {
+    "Hangul": 117,
+    "Hebrew": 108,
+    "Han": 8,
+    "Cyrillic": 29,
+    "Devanagari": 4,
+    "Bengali": 2,
+    "Gujarati": 2,
+    "Thai": 2,
+    "Other": 5,
+    "Arabic": 6,
+    "Ethiopic": 1,
+    "Hiragana": 2,
+    "Armenian": 1,
+    "Mongolian": 1,
+    "Katakana": 1,
+    "Balinese": 5
+   }
+  },
+  "Italian/Latin": {
+   "translated": 466,
+   "stray": 2,
+   "guard": 2,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Arabic": 2
+   }
+  },
+  "Latin/Hebrew": {
+   "translated": 505,
+   "stray": 2,
+   "guard": 1,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Greek": 1,
+    "Cyrillic": 1
+   }
+  },
+  "Catalan": {
+   "translated": 324,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Multiple (Hebrew, Greek, Latin, Syriac, Arabic, Ethiopic)": {
+   "translated": 687,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Arabic": {
+   "translated": 58013,
+   "stray": 30,
+   "guard": 27,
+   "hangul_that_only": 21,
+   "by_script": {
+    "Hangul": 23,
+    "Han": 3,
+    "Greek": 2,
+    "Hebrew": 1,
+    "Devanagari": 1
+   }
+  },
+  "Arabic-English": {
+   "translated": 385,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Chinese-English": {
+   "translated": 2275,
+   "stray": 3,
+   "guard": 3,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Devanagari": 3,
+    "Avestan": 3,
+    "Greek": 2,
+    "Arabic": 1,
+    "Hebrew": 1
+   }
+  },
+  "Chinese-Latin": {
+   "translated": 566,
+   "stray": 4,
+   "guard": 4,
+   "hangul_that_only": 4,
+   "by_script": {
+    "Hangul": 4
+   }
+  },
+  "Anglo-Saxon": {
+   "translated": 602,
+   "stray": 1,
+   "guard": 1,
+   "hangul_that_only": 1,
+   "by_script": {
+    "Hangul": 1
+   }
+  },
+  "German-English": {
+   "translated": 1581,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Armenian": {
+   "translated": 29472,
+   "stray": 18,
+   "guard": 11,
+   "hangul_that_only": 3,
+   "by_script": {
+    "Greek": 7,
+    "Cyrillic": 3,
+    "Hangul": 8
+   }
+  },
+  "Aramaic": {
+   "translated": 437,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "German/Arabic": {
+   "translated": 42,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Latin-German": {
+   "translated": 10563,
+   "stray": 7,
+   "guard": 7,
+   "hangul_that_only": 5,
+   "by_script": {
+    "Hangul": 7
+   }
+  },
+  "Dutch-English": {
+   "translated": 106,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Demotic": {
+   "translated": 246,
+   "stray": 1,
+   "guard": 1,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Cyrillic": 1
+   }
+  },
+  "Old English": {
+   "translated": 798,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Sanskrit-English": {
+   "translated": 198,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Mixtec": {
+   "translated": 158,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Italian-English": {
+   "translated": 292,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Sanskrit": {
+   "translated": 121527,
+   "stray": 58,
+   "guard": 49,
+   "hangul_that_only": 7,
+   "by_script": {
+    "Arabic": 7,
+    "Bengali": 13,
+    "Gujarati": 5,
+    "Han": 10,
+    "Greek": 7,
+    "Hangul": 9,
+    "Cyrillic": 1,
+    "Hebrew": 2,
+    "Kannada": 2,
+    "Malayalam": 1,
+    "Tamil": 1
+   }
+  },
+  "Latin-English": {
+   "translated": 917,
+   "stray": 1,
+   "guard": 1,
+   "hangul_that_only": 1,
+   "by_script": {
+    "Hangul": 1
+   }
+  },
+  "Old Spanish": {
+   "translated": 31,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Egyptian": {
+   "translated": 2222,
+   "stray": 1,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Hebrew": 1
+   }
+  },
+  "Italian-German": {
+   "translated": 685,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Middle English-English": {
+   "translated": 474,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Dutch-German": {
+   "translated": 220,
+   "stray": 1,
+   "guard": 1,
+   "hangul_that_only": 1,
+   "by_script": {
+    "Hangul": 1
+   }
+  },
+  "Greek/Latin": {
+   "translated": 4420,
+   "stray": 2,
+   "guard": 2,
+   "hangul_that_only": 1,
+   "by_script": {
+    "Hangul": 1,
+    "Arabic": 1
+   }
+  },
+  "Irish": {
+   "translated": 16,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "English, Old Irish": {
+   "translated": 73,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "French/Greek": {
+   "translated": 712,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Irish/English": {
+   "translated": 2661,
+   "stray": 4,
+   "guard": 4,
+   "hangul_that_only": 1,
+   "by_script": {
+    "Hangul": 2,
+    "Cyrillic": 1,
+    "Han": 1
+   }
+  },
+  "Welsh/English": {
+   "translated": 1329,
+   "stray": 3,
+   "guard": 3,
+   "hangul_that_only": 2,
+   "by_script": {
+    "Hangul": 3
+   }
+  },
+  "English, Scottish Gaelic": {
+   "translated": 379,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "German/Latin": {
+   "translated": 61,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "French/English": {
+   "translated": 308,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "English/Sanskrit": {
+   "translated": 547,
+   "stray": 1,
+   "guard": 1,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Bengali": 1
+   }
+  },
+  "English/Gaelic": {
+   "translated": 30,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Greek/English": {
+   "translated": 461,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Japanese": {
+   "translated": 19954,
+   "stray": 3,
+   "guard": 2,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Greek": 1,
+    "Malayalam": 1,
+    "Arabic": 1
+   }
+  },
+  "Chinese": {
+   "translated": 129277,
+   "stray": 21,
+   "guard": 20,
+   "hangul_that_only": 3,
+   "by_script": {
+    "Hiragana": 3,
+    "Arabic": 8,
+    "Hangul": 6,
+    "Cyrillic": 2,
+    "Bengali": 1,
+    "Katakana": 1,
+    "Greek": 1
+   }
+  },
+  "Portuguese": {
+   "translated": 3433,
+   "stray": 1,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Greek": 1
+   }
+  },
+  "Greek-German": {
+   "translated": 576,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Greek-French": {
+   "translated": 349,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Greek-Latin": {
+   "translated": 5570,
+   "stray": 5,
+   "guard": 5,
+   "hangul_that_only": 3,
+   "by_script": {
+    "Hangul": 4,
+    "Han": 1
+   }
+  },
+  "Hebrew-Latin": {
+   "translated": 52,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Hebrew-German": {
+   "translated": 100,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "German-Latin": {
+   "translated": 153,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Latin-Dutch": {
+   "translated": 1486,
+   "stray": 8,
+   "guard": 8,
+   "hangul_that_only": 6,
+   "by_script": {
+    "Hangul": 8
+   }
+  },
+  "Hindi": {
+   "translated": 6524,
+   "stray": 10,
+   "guard": 10,
+   "hangul_that_only": 4,
+   "by_script": {
+    "Bengali": 4,
+    "Hangul": 6
+   }
+  },
+  "Turkish": {
+   "translated": 721,
+   "stray": 1,
+   "guard": 1,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Arabic": 1
+   }
+  },
+  "Telugu": {
+   "translated": 1479,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Tamil": {
+   "translated": 5577,
+   "stray": 2,
+   "guard": 2,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Bengali": 2
+   }
+  },
+  "Persian": {
+   "translated": 15982,
+   "stray": 19,
+   "guard": 10,
+   "hangul_that_only": 10,
+   "by_script": {
+    "Hangul": 10,
+    "Greek": 8,
+    "Hebrew": 1
+   }
+  },
+  "Gothic": {
+   "translated": 633,
+   "stray": 4,
+   "guard": 4,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Ethiopic": 1,
+    "Other": 3
+   }
+  },
+  "Syriac": {
+   "translated": 7721,
+   "stray": 15,
+   "guard": 9,
+   "hangul_that_only": 5,
+   "by_script": {
+    "Hangul": 8,
+    "Hebrew": 4,
+    "Greek": 2,
+    "Arabic": 1
+   }
+  },
+  "Coptic": {
+   "translated": 2039,
+   "stray": 22,
+   "guard": 1,
+   "hangul_that_only": 1,
+   "by_script": {
+    "Hebrew": 21,
+    "Hangul": 1
+   }
+  },
+  "Arabic-Latin": {
+   "translated": 105,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Ge'ez": {
+   "translated": 8610,
+   "stray": 8,
+   "guard": 7,
+   "hangul_that_only": 3,
+   "by_script": {
+    "Hangul": 5,
+    "Han": 2,
+    "Greek": 1
+   }
+  },
+  "Hebrew-Greek": {
+   "translated": 2569,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Welsh": {
+   "translated": 458,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Sumerian": {
+   "translated": 6635,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Navajo": {
+   "translated": 52,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Nahuatl": {
+   "translated": 1053,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Ethiopic": {
+   "translated": 83,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Icelandic": {
+   "translated": 346,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Old Norse": {
+   "translated": 2315,
+   "stray": 1,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Greek": 1
+   }
+  },
+  "Haida": {
+   "translated": 469,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Maori": {
+   "translated": 2590,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Old Javanese": {
+   "translated": 918,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Akkadian": {
+   "translated": 1543,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Punjabi": {
+   "translated": 1068,
+   "stray": 1,
+   "guard": 1,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Devanagari": 1
+   }
+  },
+  "Yucatec Maya": {
+   "translated": 819,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Greek-English": {
+   "translated": 154,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "English, Prakrit, Sanskrit": {
+   "translated": 238,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Middle French": {
+   "translated": 581,
+   "stray": 1,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Hebrew": 1
+   }
+  },
+  "Ancient Greek": {
+   "translated": 2294,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Danish": {
+   "translated": 5394,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Greek, Syriac": {
+   "translated": 246,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Middle English": {
+   "translated": 6352,
+   "stray": 14,
+   "guard": 14,
+   "hangul_that_only": 12,
+   "by_script": {
+    "Hangul": 13,
+    "Bengali": 1
+   }
+  },
+  "Middle Dutch": {
+   "translated": 2369,
+   "stray": 1,
+   "guard": 1,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Hangul": 1
+   }
+  },
+  "Czech": {
+   "translated": 622,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Low German": {
+   "translated": 170,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Yiddish": {
+   "translated": 145,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Latin; Italian": {
+   "translated": 225,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Urdu": {
+   "translated": 321,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Ardhamagadhi Prakrit": {
+   "translated": 18,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Avestan": {
+   "translated": 1554,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Occitan": {
+   "translated": 468,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Aromanian (in Greek alphabet), Greek": {
+   "translated": 618,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Church Slavonic, Greek": {
+   "translated": 38,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Arabic and Coptic": {
+   "translated": 74,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Arabic and Turkish": {
+   "translated": 317,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Hebrew, Aramaic, and Judeo-Arabic": {
+   "translated": 1478,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Hebrew and Arabic": {
+   "translated": 4,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Hebrew, Judeo-Persian, and Aramaic": {
+   "translated": 485,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Hebrew, Judeo-Arabic, and Ladino": {
+   "translated": 1239,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Judeo-Arabic and Hebrew": {
+   "translated": 1160,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Italian in Italian script, Hebrew in Hebrew script": {
+   "translated": 1,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Hebrew, German, French": {
+   "translated": 104,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Hebrew and Judeo-Arabic": {
+   "translated": 2388,
+   "stray": 1,
+   "guard": 1,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Avestan": 1
+   }
+  },
+  "Hebrew, Ladino, and English": {
+   "translated": 54,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Arabic and Samaritan Hebrew": {
+   "translated": 255,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Egyptian hieroglyphs": {
+   "translated": 1643,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Hebrew and Aramaic": {
+   "translated": 1906,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "German and Hebrew": {
+   "translated": 300,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Armenian; Armenian": {
+   "translated": 386,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Hebrew and Aramaic in Hebrew script": {
+   "translated": 6,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Hebrew, Judeo-Arabic and Ladino in Hebrew script": {
+   "translated": 2,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Hebrew, Judeo-Arabic and Aramaic": {
+   "translated": 533,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Hebrew and Ladino": {
+   "translated": 230,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Hebrew, Judeo-Arabic, and Aramaic": {
+   "translated": 662,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "English and Hebrew": {
+   "translated": 164,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Hebrew in Hebrew script, Arabic in Arabic script": {
+   "translated": 2,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Hebrew and Judeo-Italian": {
+   "translated": 660,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Geez": {
+   "translated": 295,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Hebrew, Judeo-Italian, and Judeo-Greek": {
+   "translated": 446,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Judeo-Occitan and Hebrew": {
+   "translated": 100,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Arabic and Hebrew": {
+   "translated": 1,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Hebrew, Yiddish and Ladino": {
+   "translated": 95,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Arabic, Ottoman Turkish, Persian, Latin, Ternate (a Papuan language), French and Dutch.": {
+   "translated": 457,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "English, Greek, Hebrew, Latin": {
+   "translated": 2,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Karaim and Hebrew": {
+   "translated": 481,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Hebrew, Aramaic, and Arabic.": {
+   "translated": 2,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "e": {
+   "translated": 1912,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Multiple": {
+   "translated": 543,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Pali": {
+   "translated": 13438,
+   "stray": 1,
+   "guard": 1,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Han": 1
+   }
+  },
+  "Classical Chinese": {
+   "translated": 4822,
+   "stray": 1,
+   "guard": 1,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Cyrillic": 1
+   }
+  },
+  "Classical Armenian": {
+   "translated": 546,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Georgian": {
+   "translated": 777,
+   "stray": 2,
+   "guard": 1,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Greek": 1,
+    "Tifinagh": 1
+   }
+  },
+  "Uzbek": {
+   "translated": 319,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Chagatai Turkish": {
+   "translated": 224,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Bulgarian": {
+   "translated": 24,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Javanese": {
+   "translated": 1251,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Korean": {
+   "translated": 52531,
+   "stray": 5,
+   "guard": 5,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Cyrillic": 2,
+    "Thai": 1,
+    "Arabic": 2
+   }
+  },
+  "Unknown": {
+   "translated": 2198,
+   "stray": 1,
+   "guard": 1,
+   "hangul_that_only": 1,
+   "by_script": {
+    "Hangul": 1
+   }
+  },
+  "Greek, English": {
+   "translated": 525,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Hausa": {
+   "translated": 874,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Zulu": {
+   "translated": 2355,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Nahuatl-Spanish": {
+   "translated": 2448,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Tibetan": {
+   "translated": 211850,
+   "stray": 253,
+   "guard": 239,
+   "hangul_that_only": 26,
+   "by_script": {
+    "Hebrew": 14,
+    "Arabic": 24,
+    "Bengali": 23,
+    "Hangul": 152,
+    "Gujarati": 17,
+    "Kannada": 2,
+    "Cyrillic": 4,
+    "Devanagari": 14,
+    "Thai": 2,
+    "Sinhala": 1,
+    "Han": 1
+   }
+  },
+  "Kanuri": {
+   "translated": 451,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Maya Hieroglyphic Script": {
+   "translated": 74,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Maya hieroglyphs": {
+   "translated": 90,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Italian / German": {
+   "translated": 621,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Greek, Latin": {
+   "translated": 274,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "K'iche' Maya": {
+   "translated": 395,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Vietnamese": {
+   "translated": 799,
+   "stray": 1,
+   "guard": 1,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Hangul": 1
+   }
+  },
+  "Burmese": {
+   "translated": 1982,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Igbo": {
+   "translated": 858,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Hawaiian": {
+   "translated": 3028,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Yoruba": {
+   "translated": 524,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Thai": {
+   "translated": 1278,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Xhosa": {
+   "translated": 1092,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Swahili": {
+   "translated": 1425,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Samoan": {
+   "translated": 1151,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Malagasy": {
+   "translated": 1033,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Old French": {
+   "translated": 4494,
+   "stray": 1,
+   "guard": 1,
+   "hangul_that_only": 1,
+   "by_script": {
+    "Hangul": 1
+   }
+  },
+  "Maithili": {
+   "translated": 104,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Quiché Maya": {
+   "translated": 655,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Anglo-Norman": {
+   "translated": 809,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Finnish": {
+   "translated": 598,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Middle High German": {
+   "translated": 920,
+   "stray": 1,
+   "guard": 1,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Cyrillic": 1
+   }
+  },
+  "Dzongkha": {
+   "translated": 337,
+   "stray": 1,
+   "guard": 1,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Thai": 1
+   }
+  },
+  "Malay": {
+   "translated": 1892,
+   "stray": 2,
+   "guard": 1,
+   "hangul_that_only": 1,
+   "by_script": {
+    "Hangul": 1,
+    "Hebrew": 1
+   }
+  },
+  "Norwegian": {
+   "translated": 243,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Provençal": {
+   "translated": 350,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Bengali": {
+   "translated": 1204,
+   "stray": 2,
+   "guard": 2,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Devanagari": 2
+   }
+  },
+  "Polish": {
+   "translated": 1312,
+   "stray": 2,
+   "guard": 1,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Cyrillic": 1,
+    "Greek": 1
+   }
+  },
+  "Swedish": {
+   "translated": 1173,
+   "stray": 1,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Greek": 1
+   }
+  },
+  "auto-detect": {
+   "translated": 3022,
+   "stray": 7,
+   "guard": 7,
+   "hangul_that_only": 4,
+   "by_script": {
+    "Han": 3,
+    "Hangul": 4
+   }
+  },
+  "Chinese, Latin": {
+   "translated": 17,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Tangut": {
+   "translated": 11,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Ottoman Turkish": {
+   "translated": 1262,
+   "stray": 2,
+   "guard": 2,
+   "hangul_that_only": 2,
+   "by_script": {
+    "Hangul": 2
+   }
+  },
+  "zxx": {
+   "translated": 19,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "roa": {
+   "translated": 872,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Church Slavonic": {
+   "translated": 404,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Law French": {
+   "translated": 221,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Maya hieroglyphs / French": {
+   "translated": 949,
+   "stray": 1,
+   "guard": 1,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Cyrillic": 1
+   }
+  },
+  "Cakchiquel / English": {
+   "translated": 230,
+   "stray": 1,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Greek": 1
+   }
+  },
+  "Spanish / French": {
+   "translated": 633,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Yucatec Maya / English": {
+   "translated": 274,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "K'iche' / French": {
+   "translated": 404,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Spanish / Latin": {
+   "translated": 268,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Marathi": {
+   "translated": 754,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "French, Latin": {
+   "translated": 25,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Latin, French": {
+   "translated": 29,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Undetermined": {
+   "translated": 1,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Bugis": {
+   "translated": 35,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Sundanese": {
+   "translated": 35,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Balinese": {
+   "translated": 37,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Ne": {
+   "translated": 1423,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "lat": {
+   "translated": 113,
+   "stray": 1,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Greek": 1
+   }
+  },
+  "ger": {
+   "translated": 100,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "und": {
+   "translated": 1331,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "ita": {
+   "translated": 13,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "gre": {
+   "translated": 24,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Hungarian": {
+   "translated": 20,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "Lb": {
+   "translated": 1316,
+   "stray": 4,
+   "guard": 4,
+   "hangul_that_only": 4,
+   "by_script": {
+    "Hangul": 4
+   }
+  },
+  "Kannada": {
+   "translated": 75,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "English.": {
+   "translated": 640,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "K'iche' Maya-Spanish": {
+   "translated": 131,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  }
+ },
+ "lane": {
+  "(no engine block: pre-#4613)": {
+   "translated": 4932654,
+   "stray": 4552,
+   "guard": 3176,
+   "hangul_that_only": 2053,
+   "by_script": {
+    "Hangul": 2526,
+    "Greek": 985,
+    "Cyrillic": 163,
+    "Other": 42,
+    "Gothic": 3,
+    "Runic": 3,
+    "Arabic": 151,
+    "Hebrew": 405,
+    "Hiragana": 9,
+    "Han": 119,
+    "Thai": 9,
+    "Coptic": 7,
+    "Bengali": 39,
+    "Gujarati": 9,
+    "Devanagari": 26,
+    "Avestan": 4,
+    "Malayalam": 7,
+    "Ogham": 3,
+    "Katakana": 8,
+    "Ethiopic": 6,
+    "Tamil": 4,
+    "Egyptian_Hieroglyphs": 18,
+    "Kannada": 2,
+    "Myanmar": 1,
+    "Balinese": 11,
+    "Tifinagh": 2,
+    "Thaana": 2,
+    "Armenian": 7,
+    "Khmer": 2,
+    "Lao": 2,
+    "Telugu": 1,
+    "Georgian": 1,
+    "Gurmukhi": 2,
+    "Mongolian": 1,
+    "Phoenician": 2,
+    "Syriac": 8,
+    "Yi": 1
+   }
+  },
+  "scripts/lib/translate-batch-chained.mjs (batch)": {
+   "translated": 424936,
+   "stray": 326,
+   "guard": 272,
+   "hangul_that_only": 24,
+   "by_script": {
+    "Greek": 37,
+    "Other": 11,
+    "Cyrillic": 14,
+    "Han": 4,
+    "Arabic": 28,
+    "Gujarati": 19,
+    "Bengali": 24,
+    "Katakana": 1,
+    "Hebrew": 17,
+    "Hangul": 147,
+    "Kannada": 2,
+    "Devanagari": 14,
+    "Thai": 2,
+    "Sinhala": 1,
+    "Ogham": 4,
+    "Ethiopic": 3,
+    "Cherokee": 2,
+    "Tamil": 1
+   }
+  },
+  "scripts/maintenance/retranslate-pages.mjs (realtime)": {
+   "translated": 144,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "scripts/workers/translate-worker.mjs (realtime)": {
+   "translated": 30056,
+   "stray": 32,
+   "guard": 21,
+   "hangul_that_only": 12,
+   "by_script": {
+    "Greek": 8,
+    "Ethiopic": 2,
+    "Hebrew": 3,
+    "Georgian": 1,
+    "Cyrillic": 2,
+    "Other": 1,
+    "Hangul": 15
+   }
+  },
+  "src/app/api/books/[id]/batch-translate-async/route.ts (batch)": {
+   "translated": 7617,
+   "stray": 3,
+   "guard": 1,
+   "hangul_that_only": 0,
+   "by_script": {
+    "Greek": 2,
+    "Hangul": 1
+   }
+  },
+  "scripts/batch/collect-batch-results.mjs (batch)": {
+   "translated": 20,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "scripts/batch/realtime-translate.mjs (realtime)": {
+   "translated": 43,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  },
+  "src/workers/translation-processor-logic.ts (realtime)": {
+   "translated": 26,
+   "stray": 0,
+   "guard": 0,
+   "hangul_that_only": 0,
+   "by_script": {}
+  }
+ }
+}

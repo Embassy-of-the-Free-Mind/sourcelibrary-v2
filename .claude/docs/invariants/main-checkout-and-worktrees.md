@@ -93,6 +93,11 @@ indistinguishable from ordinary uncommitted work.
   commit: `mkdir -p src/lib/vendor && cp <main-dir>/src/lib/vendor/lamejs-bundle.js src/lib/vendor/`.
   The `mkdir` is load-bearing — that directory contains nothing but the gitignored bundle, so it does
   not exist in a fresh worktree and the bare `cp` fails.
+- **Resolving a rebase conflict: `main` wins every line you did not set out to change — then re-read
+  the whole hunk for facts that now disagree with their neighbours.** Taking "ours" on a line the PR
+  never meant to touch is a silent revert of someone else's merged work: #5269, rebuilt on #5272,
+  brought back a "$60 a book" footnote one line under #5272's "$550K for 3,000 books" (#5415).
+  `pr-tier.yml` now comments when a PR re-adds a line `main` removed in the last 14 days; warn only.
 
 ## Reaping
 
@@ -111,3 +116,6 @@ indistinguishable from ordinary uncommitted work.
   twice. `EnterWorktree` writes its session pid into the lock reason, so a dead pid means a stale
   lock (unlock, then reap) and a live pid means someone is working (keep). Locking is a deliberate
   "don't touch" signal; the reaper honors it.
+
+## Counting references: `git grep`, never `grep -r` (moved from CLAUDE.md, 2026-10-07)
+`grep -r` over `.claude/` crawls dozens of full worktree checkouts in `.claude/worktrees/`. Patching it with `--exclude-dir` does not work: `grep` here may be **ugrep**, whose `--exclude-dir` semantics differ from GNU grep's. The same query returned 134, then 0, then 2 hits depending on the binary and on whether a file was mixed in with the directory arguments, and the "0" nearly archived five live docs. `git grep` searches tracked files only and never enters a worktree.

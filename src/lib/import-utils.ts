@@ -5,7 +5,8 @@ import { notifyBookImport } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { computeProcessingPriority } from '@/lib/processing-priority';
-import { sourceFingerprint, checkDuplicate } from '@/lib/dedup';
+import { sourceFingerprint, type DedupCandidate } from '@/lib/dedup';
+import { acquisitionGate, confirmClaims, releaseClaims } from '@/lib/acquisition-guard';
 import { computeIdentityFields } from '@/lib/identity-fields';
 import { resolveLanguage, resolveDate, publishedToYear } from '@/lib/resolve-language';
 import { storeImportedManifest } from '@/lib/iiif-manifest-store';
@@ -352,29 +353,8 @@ export async function importBookFromIIIF(
     );
   }
 
-  // Cross-source dedup check (catches duplicates across providers)
-  const dedupResult = await checkDuplicate(db, {
-    title: config.title,
-    author: config.author,
-    display_title: config.display_title,
-    image_source: {
-      provider: config.provider,
-      identifier: config.identifier,
-      iiif_manifest: config.manifest_url,
-      source_url: config.source_url,
-    },
-  });
-  if (dedupResult.isDuplicate) {
-    const best = dedupResult.matches[0];
-    return NextResponse.json(
-      {
-        error: `Duplicate detected (${best.matchType}): matches "${best.matchedTitle}"`,
-        existingId: best.matchedBookId,
-        matches: dedupResult.matches,
-      },
-      { status: 409 }
-    );
-  }
+  // The cross-source gate runs below, on the finished book document — it needs
+  // the edition year, which is only resolved from the manifest further down.
 
   // Extract page images from canvases
   const pageImages = canvases.map(extractCanvasImage);
@@ -433,6 +413,8 @@ export async function importBookFromIIIF(
     ...(config.identifier_field || {}),
     ...(config.work_id ? { work_id: config.work_id } : {}),
     thumbnail: pageImages[0]?.thumbnail || '',
+    // A paged import is a text; declare it rather than leave it null (#5292c).
+    content_type: 'book',
     pages_count: pageCount,
     pages_ocr: 0,
     pages_translated: 0,
@@ -487,7 +469,35 @@ export async function importBookFromIIIF(
   // real text_role immediately instead of the language-proxy fallback.
   applyTextRole(bookDoc as Record<string, unknown>);
 
-  await db.collection('books').insertOne(bookDoc);
+  // Cross-source acquisition gate (#6019) on the document we are about to
+  // write: it carries the edition YEAR, so a different printing of a held
+  // title is not declined as "same edition" (a bare checkDuplicate() without
+  // the year treats every printing as one), the claim closes the
+  // check-then-insert race, and a decline lands in `dedup_skips`.
+  const gate = await acquisitionGate(db, bookDoc as unknown as DedupCandidate, {
+    importer: `api:${config.provider}`,
+    sourceIdentifier: config.identifier,
+    sourceUrl: config.source_url ?? config.manifest_url,
+  });
+  if (!gate.ok) {
+    const best = gate.matches[0];
+    return NextResponse.json(
+      {
+        error: gate.message,
+        existingId: best?.matchedBookId,
+        matches: gate.matches,
+      },
+      { status: 409 }
+    );
+  }
+
+  try {
+    await db.collection('books').insertOne(bookDoc);
+  } catch (err) {
+    await releaseClaims(db, gate.fingerprints);
+    throw err;
+  }
+  await confirmClaims(db, gate.fingerprints, bookIdStr);
 
   // Create pages
   const pageDocs = [];

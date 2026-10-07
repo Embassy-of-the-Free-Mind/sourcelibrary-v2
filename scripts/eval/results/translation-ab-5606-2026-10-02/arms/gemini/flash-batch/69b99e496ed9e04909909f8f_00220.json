@@ -1,0 +1,21 @@
+{
+ "id": "69b99e496ed9e04909909f8f_00220",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "### 9. Discourse to Subha (99)\n\nYoung man, there are these five <term>nīvaraṇā</term> <gloss>hindrances</gloss>. Which five? The hindrance of sensual desire, the hindrance of ill-will, the hindrance of sloth and torpor, the hindrance of restlessness and remorse, and the hindrance of doubt. These, young man, are the five hindrances. By these five hindrances, the Brahmin <note>a member of the priestly caste</note> Pokkharasāti Opamañño of Subhaga Grove is obstructed, secluded, blocked, and enveloped. That he should know or see or realize any superhuman state, any distinction in knowledge and vision worthy of the noble ones—this is impossible.\n\nYoung man, there are these five <term>kāmaguṇā</term> <gloss>strands of sensual pleasure</gloss>. Which five? Forms cognizable by the eye that are wished for, desired, agreeable, likeable, connected with sensual desire, and provocative of lust. Sounds cognizable by the ear... odors cognizable by the nose... flavors cognizable by the tongue... touches cognizable by the body that are wished for, desired, agreeable, likeable, connected with sensual desire, and provocative of lust. These, young man, are the five strands of sensual pleasure. With these five strands of sensual pleasure, the Brahmin Pokkharasāti Opamañño of Subhaga Grove is tied, infatuated, and obsessed; he enjoys them without seeing the danger or knowing the escape. That he should know or see or realize any superhuman state, any distinction in knowledge and vision worthy of the noble ones—this is impossible.\n\nWhat do you think, young man? Suppose someone were to kindle a fire depending on grass and wood as fuel, and another person were to kindle a fire without any grass or wood as fuel. Which of these two fires would have flame, color, and radiance?\n\nIf it were possible, Master Gotama, to kindle a fire without any grass or wood as fuel, that fire would have flame, color, and radiance.\n\nYoung man, it is impossible, there is no way, that a fire could be kindled without grass or wood as fuel, except by one with psychic power. Just as a fire burns depending on grass and wood as fuel, even so, young man, do I describe this rapture—that <term>pīti</term> <gloss>rapture</gloss> which...\n\n<summary>The Buddha explains to the young man Subha how the five hindrances and five strands of sensual pleasure prevent spiritual realization. He uses an analogy of a fire requiring fuel to illustrate the nature of worldly rapture compared to spiritual attainment.</summary>\n<keywords>five hindrances, sensual pleasures, Pokkharasāti, fire analogy, rapture, spiritual realization, Majjhima Nikaya</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2844,
+ "outputTokens": 607,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.0016215000000000001,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2266,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

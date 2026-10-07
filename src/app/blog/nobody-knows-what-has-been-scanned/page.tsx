@@ -15,7 +15,7 @@ export const metadata: Metadata = {
       'There is no global registry of digitized books. The case for building a shared one.',
     images: [
       {
-        url: 'https://images.sourcelibrary.org/archived/69b51d1f47b06ecd58183e84/2.jpg',
+        url: 'https://images.sourcelibrary.org/archived/69b51d1f47b06ecd58183e84/9.jpg',
         width: 1200,
         height: 630,
       },
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    images: [{ url: 'https://images.sourcelibrary.org/archived/69b51d1f47b06ecd58183e84/2.jpg' }],
+    images: [{ url: 'https://images.sourcelibrary.org/archived/69b51d1f47b06ecd58183e84/9.jpg' }],
   },
   alternates: {
     canonical: '/blog/nobody-knows-what-has-been-scanned',
@@ -38,15 +38,15 @@ export default function GlobalScanRegistryPage() {
         title="Nobody Knows What Has Been Scanned"
         description="There is no global registry of digitized books. Every library that wants to scan responsibly has to privately rebuild the same census. The case for a shared one."
         datePublished="2026-08-09"
-        image="https://images.sourcelibrary.org/archived/69b51d1f47b06ecd58183e84/2.jpg"
+        image="https://images.sourcelibrary.org/archived/69b51d1f47b06ecd58183e84/9.jpg"
       />
       <ContentPageLayout
         header={
           <ContentHeader
             title="Nobody Knows What Has Been Scanned"
             subtitle="The case for a global registry of digitized books"
-            image="https://images.sourcelibrary.org/archived/69b51d1f47b06ecd58183e84/2.jpg"
-            imageAlt="Engraved title page of Zwinger's Theatrum Humanae Vitae, 1604 — the largest encyclopedia of its age"
+            image="https://images.sourcelibrary.org/archived/69b51d1f47b06ecd58183e84/9.jpg"
+            imageAlt="Title page of a volume of Zwinger's Theatrum Humanae Vitae, the largest encyclopedia of its age"
           >
             <p className="text-stone-400 text-sm mt-4">9 August 2026 &middot; 6 min read</p>
           </ContentHeader>

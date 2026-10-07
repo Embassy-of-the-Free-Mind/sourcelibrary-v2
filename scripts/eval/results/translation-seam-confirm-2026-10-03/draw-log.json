@@ -1,0 +1,45 @@
+{
+  "seed": 53055,
+  "frame": {
+    "call_site": "scripts/lib/translate-batch-chained.mjs",
+    "runs_mode": "chained",
+    "books": 4836
+  },
+  "skipped": {
+    "english_or_tibetan": 93,
+    "no_seed_now": 8,
+    "no_seeded_lane_page": 28,
+    "v14_book": 5,
+    "no_next_ocr": 14,
+    "control_full": 88
+  },
+  "visited": 263,
+  "by": {
+    "pagebreak": 100,
+    "control": 25
+  },
+  "languages": {
+    "Latin": 97,
+    "Chinese": 10,
+    "Old Norse": 1,
+    "German": 3,
+    "Persian": 1,
+    "Hebrew": 3,
+    "Arabic": 3,
+    "Greek": 2,
+    "Malay": 1,
+    "Avestan": 1,
+    "Italian": 1,
+    "French": 1,
+    "e": 1
+  },
+  "estimate": {
+    "calls": 375,
+    "inTok": 1555047,
+    "outTok": 999576,
+    "usd": 0.9440628750000006,
+    "models": {
+      "gemini-3.1-flash-lite": 375
+    }
+  }
+}

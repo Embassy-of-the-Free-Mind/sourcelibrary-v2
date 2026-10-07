@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA cera/scholz1",
+  "edition": "Epistolarum Philosophicarum: Medicinalium, Ac Chymicarum a Summis nostrae Aetatis Philosophis ac Medicis Exaratarum, Vol — Frankfurt am Main: Andreas Wechel (Erben), Claude de Marne, Johann Aubry (I.), 1598.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "8/14",
+    "pb_aligned_pages": "8/8"
+  },
+  "origin": "library",
+  "book_id": "6a26beae0e247ebad6de8612",
+  "page_number": 18,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 29624,
+    "to_char": 33803,
+    "overlap": 0.831,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Image is an opening of pp.11-12 (two columns of text; right edge shows start of next page); starts 'restaurat, somnia horribilia arcet'; ends 'Itaque non magno negotio expugnabitur, cum'; ref includes both pages in order and marginal notes inline; pharmacy abbreviations (Cortic. granator. an.) kept unexpanded while q; expanded.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "many",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:46.944Z",
+  "text_location": "repo",
+  "text_sha256": "b937f76e04fb80a170cb812b62d00acb74f7a6e6f308e2e6708f9d07fa5ae8ea",
+  "unit": {
+    "chars": 4179
+  },
+  "stratum": "latin-period-5126"
+}

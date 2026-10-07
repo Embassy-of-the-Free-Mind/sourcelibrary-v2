@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "book_id": "69de1c99d10d4b0d3f6f3175",
+    "title": "The Decameron (first English, 1620)",
+    "published": "1620",
+    "source": "EEBO-TCP A16248",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 8,
+    "skips": {},
+    "median_char_acc": 0.9839,
+    "median_char_acc_windowed": 0.9827,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-69de1c99-p26",
+      "page": 26,
+      "overlap": 1,
+      "probe_words": 521,
+      "ref_chars": 3240,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.046,
+      "char_acc": 0.9842,
+      "char_acc_windowed": 0.9838
+    },
+    {
+      "slug": "ed-69de1c99-p43",
+      "page": 43,
+      "overlap": 1,
+      "probe_words": 558,
+      "ref_chars": 3220,
+      "engine": "gemini-3.1-flash-lite-preview",
+      "aligned": true,
+      "guard_wer": 0.061,
+      "char_acc": 0.9783,
+      "char_acc_windowed": 0.9775
+    },
+    {
+      "slug": "ed-69de1c99-p99",
+      "page": 99,
+      "overlap": 1,
+      "probe_words": 559,
+      "ref_chars": 3271,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.063,
+      "char_acc": 0.9794,
+      "char_acc_windowed": 0.9783
+    },
+    {
+      "slug": "ed-69de1c99-p162",
+      "page": 162,
+      "overlap": 1,
+      "probe_words": 603,
+      "ref_chars": 3407,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.042,
+      "char_acc": 0.9837,
+      "char_acc_windowed": 0.9834
+    },
+    {
+      "slug": "ed-69de1c99-p201",
+      "page": 201,
+      "overlap": 1,
+      "probe_words": 532,
+      "ref_chars": 3187,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.055,
+      "char_acc": 0.9839,
+      "char_acc_windowed": 0.9827
+    },
+    {
+      "slug": "ed-69de1c99-p265",
+      "page": 265,
+      "overlap": 1,
+      "probe_words": 546,
+      "ref_chars": 3234,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.052,
+      "char_acc": 0.9858,
+      "char_acc_windowed": 0.9854
+    },
+    {
+      "slug": "ed-69de1c99-p384",
+      "page": 384,
+      "overlap": 1,
+      "probe_words": 548,
+      "ref_chars": 3234,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.055,
+      "char_acc": 0.9839,
+      "char_acc_windowed": 0.9827
+    },
+    {
+      "slug": "ed-69de1c99-p751",
+      "page": 751,
+      "overlap": 0.974,
+      "probe_words": 449,
+      "ref_chars": 2745,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.09,
+      "char_acc": 0.9811,
+      "char_acc_windowed": 0.9802
+    }
+  ]
+}

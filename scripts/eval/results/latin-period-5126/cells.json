@@ -1,0 +1,563 @@
+{
+ "what": "slug → cell map for benchmark-cost-lane.mjs --cells (PREREGISTRATION-latin-period-5126.md)",
+ "pages": [
+  {
+   "slug": "ed-606a74d72ac1420b924dde761439fb3f-p27",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1543
+  },
+  {
+   "slug": "ed-690986dccf28baa1b4cae0e3-p81",
+   "cell": "Latin 1600s (corrected-OCR reference)",
+   "origin": "library",
+   "year": 1628
+  },
+  {
+   "slug": "ed-69523495ab34727b1f044a45-p63",
+   "cell": "Latin 1400s (corrected-OCR reference)",
+   "origin": "library",
+   "year": 1486
+  },
+  {
+   "slug": "ed-6953e4fa77f38f6761bef1dc-p53",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1686
+  },
+  {
+   "slug": "ed-6958e912d3a8928334814c19-p8",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1669
+  },
+  {
+   "slug": "ed-6970e3599b09d309d780a252-p61",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1626
+  },
+  {
+   "slug": "ed-697a6e5cb981745f5fac1d7e-p31",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1626
+  },
+  {
+   "slug": "ed-697a8014e680cef7cedae395-p31",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1625
+  },
+  {
+   "slug": "ed-6990505e7d19f3f2aac1e2b7-p72",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1679
+  },
+  {
+   "slug": "ed-699062f5ef12272ffdc8e9d5-p505",
+   "cell": "Latin 1400s (corrected-OCR reference)",
+   "origin": "library",
+   "year": 1475
+  },
+  {
+   "slug": "ed-69aea708971abe996d21b4aa-p471",
+   "cell": "Latin 1600s (corrected-OCR reference)",
+   "origin": "library",
+   "year": 1649
+  },
+  {
+   "slug": "ed-69afd0df775a23a98ee93a30-p420",
+   "cell": "Latin 1400s (corrected-OCR reference)",
+   "origin": "library",
+   "year": 1481
+  },
+  {
+   "slug": "ed-69b21d1a429e087c6f866ee7-p452",
+   "cell": "Latin 1500s (corrected-OCR reference)",
+   "origin": "library",
+   "year": 1515
+  },
+  {
+   "slug": "ed-69b2f46f5ef23d31023f6f1c-p176",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1594
+  },
+  {
+   "slug": "ed-69b303fb983e01f74b98704a-p1127",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1669
+  },
+  {
+   "slug": "ed-69b51e49cf111105c4299e5d-p40",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1625
+  },
+  {
+   "slug": "ed-69b51e69768235dc65992e2f-p15",
+   "cell": "Latin 1700s",
+   "origin": "library",
+   "year": 1717
+  },
+  {
+   "slug": "ed-69b51e9947b06ecd581940dc-p309",
+   "cell": "Latin 1700s",
+   "origin": "library",
+   "year": 1729
+  },
+  {
+   "slug": "ed-69b63e841c1c21a3738655d6-p40",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1541
+  },
+  {
+   "slug": "ed-69b649aa18b87551bfc5e743-p59",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1509
+  },
+  {
+   "slug": "ed-69b64c0318b87551bfc70acd-p13",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1528
+  },
+  {
+   "slug": "ed-69b64c9618b87551bfc76fcf-p20",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1536
+  },
+  {
+   "slug": "ed-69b64da218b87551bfc7fe19-p70",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1552
+  },
+  {
+   "slug": "ed-69b64f1818b87551bfc907fb-p125",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1557
+  },
+  {
+   "slug": "ed-69b6542618b87551bfcc6072-p119",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1567
+  },
+  {
+   "slug": "ed-69b660aeb3f4fc0441533e16-p29",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1586
+  },
+  {
+   "slug": "ed-69b6e47ea8d7b8d17a676440-p218",
+   "cell": "Latin 1700s",
+   "origin": "library",
+   "year": 1729
+  },
+  {
+   "slug": "ed-69b6f32ab1a3146c05278d5a-p72",
+   "cell": "Latin 1700s",
+   "origin": "library",
+   "year": 1760
+  },
+  {
+   "slug": "ed-69c7a6b092b884e4f8173c12-p232",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1646
+  },
+  {
+   "slug": "ed-69c821446c6f3cc53c84aa06-p433",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1657
+  },
+  {
+   "slug": "ed-69c8a3f26c6f3cc53c85e777-p36",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1626
+  },
+  {
+   "slug": "ed-69dbc9491040d1d5e20a1afd-p87",
+   "cell": "Latin 1400s (corrected-OCR reference)",
+   "origin": "library",
+   "year": 1465
+  },
+  {
+   "slug": "ed-69dbcc3e0f8c5edf20f484a0-p330",
+   "cell": "Latin 1400s (corrected-OCR reference)",
+   "origin": "library",
+   "year": 1484
+  },
+  {
+   "slug": "ed-69e9c962625ec74a14473399-p93",
+   "cell": "Latin 1500s (corrected-OCR reference)",
+   "origin": "library",
+   "year": 1516
+  },
+  {
+   "slug": "ed-6a0b351d688e6a8e15f6759f-p18",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1682
+  },
+  {
+   "slug": "ed-6a26bc6cd6b178e5aad8300b-p18",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1568
+  },
+  {
+   "slug": "ed-6a26beae0e247ebad6de8612-p18",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1598
+  },
+  {
+   "slug": "ed-6a26c136aad44c98627bfb47-p21",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1619
+  },
+  {
+   "slug": "ed-6a4252e5343d756d34e33e36-p9",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1669
+  },
+  {
+   "slug": "ed-6a4253fe343d756d34e37966-p18",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1605
+  },
+  {
+   "slug": "ed-6a425bef744db9e3105a3b00-p18",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1670
+  },
+  {
+   "slug": "ed-6a425df3dfbbb4d07aa634cb-p21",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1695
+  },
+  {
+   "slug": "ed-6a4263b1744db9e3105b1125-p23",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1659
+  },
+  {
+   "slug": "ed-6a429a398e351c27eb859980-p20",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1581
+  },
+  {
+   "slug": "ed-6a429c378e351c27eb85cd66-p6",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1567
+  },
+  {
+   "slug": "ed-6a42abe85207af7c42f4b6d7-p10",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1668
+  },
+  {
+   "slug": "ed-6a42acc65207af7c42f4db34-p13",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1627
+  },
+  {
+   "slug": "ed-6a42b1d25207af7c42f57a9c-p25",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1641
+  },
+  {
+   "slug": "ed-6a42b7ee5207af7c42f63a27-p21",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1615
+  },
+  {
+   "slug": "ed-6a42bbf75207af7c42f6f607-p6",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1660
+  },
+  {
+   "slug": "ed-6a42ca0be76baa13aa84c734-p23",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1580
+  },
+  {
+   "slug": "ed-6a42d91f1894955eb72629fe-p18",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1674
+  },
+  {
+   "slug": "ed-6a42eb2806e6ead3ac541e30-p21",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1678
+  },
+  {
+   "slug": "ed-6a42ebca06e6ead3ac543887-p8",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1618
+  },
+  {
+   "slug": "ed-6a42f62b3ad4d80da1237aed-p18",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1618
+  },
+  {
+   "slug": "ed-6a434784201f98f53c3eff29-p17",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1568
+  },
+  {
+   "slug": "ed-6a43779193aef4a7d61477df-p21",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1586
+  },
+  {
+   "slug": "ed-6a4388a857a09c2c0fcc46bb-p8",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1625
+  },
+  {
+   "slug": "ed-6a448ab6bd67d80f01c767fe-p18",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1658
+  },
+  {
+   "slug": "ed-6a479e7ce1b3ba9165a14c27-p23",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1608
+  },
+  {
+   "slug": "ed-6a48d782df05f7ea342b7309-p21",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1662
+  },
+  {
+   "slug": "ed-6a48d783df05f7ea342b730a-p21",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1662
+  },
+  {
+   "slug": "ed-6a48e1881e36bf8015227aa8-p21",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1663
+  },
+  {
+   "slug": "ed-6a4e46a4dc886f1f5abb5d80-p9",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1588
+  },
+  {
+   "slug": "ed-6a4f22748afd506469a564d5-p18",
+   "cell": "Latin 1700s",
+   "origin": "library",
+   "year": 1740
+  },
+  {
+   "slug": "ed-6a4f92c0d7f4f9119ff22b41-p9",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1620
+  },
+  {
+   "slug": "ed-6a509b82ad1859a71f41b8d6-p18",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1691
+  },
+  {
+   "slug": "ed-6a9057a0ab26ecd307a0cd7c-p9",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1662
+  },
+  {
+   "slug": "ed-6a906153ce57ddf536207e42-p9",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1670
+  },
+  {
+   "slug": "ed-6a9061f6c21b989bffd757b3-p8",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1617
+  },
+  {
+   "slug": "ed-6a90658feb8fb726ee3b3f2a-p18",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1599
+  },
+  {
+   "slug": "ed-6a9066caeb8fb726ee3b6d69-p6",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1675
+  },
+  {
+   "slug": "ed-6a906748eb8fb726ee3b7bad-p18",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1628
+  },
+  {
+   "slug": "ed-6a90675ceb8fb726ee3b7f5a-p9",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1616
+  },
+  {
+   "slug": "ed-6a906bf4336010794b0d2ab0-p18",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1590
+  },
+  {
+   "slug": "ed-6a9078467f9d520dd42e41e2-p18",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1561
+  },
+  {
+   "slug": "ed-6a9085af8696e74449c320be-p21",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1678
+  },
+  {
+   "slug": "ed-6a909914b7feee6e9c427a2a-p21",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1538
+  },
+  {
+   "slug": "ed-6a90991fb7feee6e9c427bf0-p18",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1537
+  },
+  {
+   "slug": "ed-6a9099bbb7feee6e9c42915e-p9",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1551
+  },
+  {
+   "slug": "ed-6a909b5ab7feee6e9c429605-p18",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1557
+  },
+  {
+   "slug": "ed-6a90a3b93a69baad5d30cf72-p9",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1612
+  },
+  {
+   "slug": "ed-6a90a3c03a69baad5d30d34e-p21",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1612
+  },
+  {
+   "slug": "ed-6a90b8fdfea824c8068281d6-p18",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1615
+  },
+  {
+   "slug": "ed-6a90ce08354ec8f981e30277-p9",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1666
+  },
+  {
+   "slug": "ed-6a90ce1d2efcf696ead70a9b-p23",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1694
+  },
+  {
+   "slug": "ed-6a90e2d81a02a5cb2d7325f2-p21",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1572
+  },
+  {
+   "slug": "ed-6a90e7e5544007b776b3806a-p18",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1633
+  },
+  {
+   "slug": "ed-6a94184aa4ed5935447a82d2-p9",
+   "cell": "Latin 1500s",
+   "origin": "library",
+   "year": 1547
+  },
+  {
+   "slug": "ed-6a94341a7680120fac24d808-p18",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1618
+  },
+  {
+   "slug": "ed-6a9437f67e41ac276318823e-p21",
+   "cell": "Latin 1600s",
+   "origin": "library",
+   "year": 1656
+  },
+  {
+   "slug": "ed-8a9eea4b6be144249a38b7a0deb58f95-p256",
+   "cell": "Latin 1600s (corrected-OCR reference)",
+   "origin": "library",
+   "year": 1658
+  },
+  {
+   "slug": "ed-c87fadfa154344b9a138573c144246e6-p328",
+   "cell": "Latin 1600s (corrected-OCR reference)",
+   "origin": "library",
+   "year": 1678
+  }
+ ]
+}

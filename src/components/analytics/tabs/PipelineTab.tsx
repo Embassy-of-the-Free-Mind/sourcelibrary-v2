@@ -6,6 +6,7 @@ import { Clock, AlertTriangle, XCircle, BarChart3, Layers, Image } from 'lucide-
 import { analytics } from '@/lib/api-client';
 import { BookLoader } from '@/components/ui/BookLoader';
 import type { PipelineData } from '@/lib/api-client/types/analytics';
+import type { PipelineDay } from '@/lib/library-dashboard';
 import { formatDuration } from '../shared/formatters';
 import { MultiLineChart } from '../charts/MultiLineChart';
 import { compactNumber, dateLabel } from '../charts/chart-utils';
@@ -48,10 +49,25 @@ interface PipelineTabProps {
   hours: number;
 }
 
+/** The daily day series from system_config.library_dashboard (#5501). */
+interface DaySeries { generatedAt: string; stale: boolean; days: PipelineDay[] }
+const DAY_RANGES = [{ key: 30, label: '30 d' }, { key: 90, label: '90 d' }, { key: 0, label: 'All' }] as const;
+
 export default function PipelineTab({ hours }: PipelineTabProps) {
   const [pipelineData, setPipelineData] = useState<PipelineData | null>(null);
   const [loading, setLoading] = useState(true);
   const [slow, setSlow] = useState(false);
+  const [daySeries, setDaySeries] = useState<DaySeries | null>(null);
+  const [dayRange, setDayRange] = useState<number>(30);
+
+  // Independent of `hours`: one projected findOne, fetched once. On failure the
+  // progress chart falls back to the pipeline_snapshots series below.
+  useEffect(() => {
+    fetch('/api/admin/library-dashboard')
+      .then(r => (r.ok ? r.json() : null))
+      .then(d => setDaySeries(d?.days?.length ? d : null))
+      .catch(() => setDaySeries(null));
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -90,7 +106,24 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
     );
   }
 
-  // Build velocity chart from snapshots
+  // OCR & translation progress, one point per day, from the daily dashboard doc.
+  // Days whose snapshot lacked page counts are skipped, not drawn as zero.
+  const dayChart = (() => {
+    if (!daySeries) return null;
+    const known = daySeries.days.filter(d => d.ocr != null && d.translated != null);
+    // Calendar days, not data points: the series has gaps where a day had no snapshot.
+    const cutoff = new Date(Date.now() - dayRange * 86400000).toISOString().slice(0, 10);
+    const shown = dayRange > 0 ? known.filter(d => d.day >= cutoff) : known;
+    if (shown.length < 2) return null;
+    return {
+      labels: shown.map(d => dateLabel(`${d.day}T12:00:00Z`)),
+      ocrData: shown.map(d => d.ocr as number),
+      transData: shown.map(d => d.translated as number),
+      from: shown[0].day,
+    };
+  })();
+
+  // Fallback progress chart from pipeline_snapshots (when the day series is unavailable)
   const velocityChart = (() => {
     if (!pipelineData.snapshots || pipelineData.snapshots.length < 2) return null;
     const sorted = [...pipelineData.snapshots].sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
@@ -329,7 +362,41 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
       })()}
 
       {/* OCR + Translation Velocity Chart */}
-      {velocityChart && (
+      {dayChart ? (
+        <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+          <div className="flex justify-between items-baseline mb-4">
+            <h2 className="text-lg font-medium" style={{ color: 'var(--text-primary)' }}>
+              OCR & Translation Progress Over Time
+              <SourceLabel>
+                library_dashboard, daily since {dateLabel(`${dayChart.from}T12:00:00Z`)}
+                {' '}&middot; {daySeries!.stale ? 'STALE, ' : ''}snapshot {timeAgo(daySeries!.generatedAt)}
+              </SourceLabel>
+            </h2>
+            <div className="flex gap-1">
+              {DAY_RANGES.map(r => (
+                <button
+                  key={r.key}
+                  onClick={() => setDayRange(r.key)}
+                  className="px-2 py-0.5 text-xs rounded"
+                  style={dayRange === r.key
+                    ? { background: 'var(--accent-sage)', color: 'var(--bg-white)' }
+                    : { background: 'var(--bg-warm)', color: 'var(--text-muted)' }}
+                >
+                  {r.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <MultiLineChart
+            series={[
+              { label: 'OCR Pages', data: dayChart.ocrData, color: 'var(--accent-sage)' },
+              { label: 'Translated Pages', data: dayChart.transData, color: 'var(--accent-rust)' },
+            ]}
+            labels={dayChart.labels}
+            yLabel={compactNumber}
+          />
+        </div>
+      ) : velocityChart && (
         <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
           <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
             OCR & Translation Progress Over Time

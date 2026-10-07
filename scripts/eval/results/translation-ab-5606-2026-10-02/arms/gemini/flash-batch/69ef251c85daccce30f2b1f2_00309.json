@@ -1,0 +1,21 @@
+{
+ "id": "69ef251c85daccce30f2b1f2_00309",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "# The Noble Bhagavad Gita\n\n<meta>continues from previous page</meta>\n\n## Chapter 9, Verses 30-31\n\n**Shridhari Commentary:** If you grant liberation only to devotees and not to non-devotees, does that not mean you possess partiality caused by attachment and aversion? He answers this with: \"I am equal.\" I am equal toward all beings; therefore, no one is especially dear or hateful to me. This being the case, those who worship me with devotion exist in me, and I also exist in them as their benefactor. The idea is this: just as fire removes the distress of darkness and cold only for those who attend to it, yet the fire itself has no partiality; or just as a desire-fulfilling tree <term>kalpavriksha</term> <gloss>a divine wish-granting tree</gloss> functions, so too I have no partiality even though I favor my devotees. Rather, this is the glorious power of devotion to me. (29)\n\n**Madhusudana Commentary:** Furthermore, listen to the glory of my devotion, which produces a distinction even where there is equality:\n\n> Even if a person of the most wicked conduct worships me with undivided devotion, he must be considered righteous, for he has rightly resolved. (30)\n\nEven if someone is of very wicked conduct, like <term>Ajamila</term> <gloss>a legendary sinner who found salvation at death by calling on the Lord</gloss> and others, if through some dawn of good fortune he worships me with undivided devotion, he must be considered righteous even if he was previously unrighteous. This is because he has a right resolve; he possesses the determination of the virtuous. (30)\n\n**Shridhari Commentary:** Showing that the influence of devotion to me is beyond logic, he says: \"Even if.\" Even a man of extremely wicked conduct, if he worships me, Lord Narayana, without practicing devotion to other deities separately, must be considered excellent and righteous. This is because he has made a beautiful resolve: \"I shall become fulfilled through the worship of the Supreme Lord alone.\" (30)\n\n**Madhusudana Commentary:** Because of this right resolve, having abandoned his wicked conduct:\n\n> Quickly he becomes a righteous soul and attains eternal peace. O son of Kunti <note>Arjuna</note>, declare it boldly: my devotee never perishes. (31)\n\nEven if one has been unrighteous for a long time, by the glory of worshipping me, he quickly—very soon—becomes a righteous soul <term>dharmatma</term> <gloss>one whose mind follows virtue</gloss>. This means he quickly abandons wicked conduct and becomes a man of good conduct. Furthermore, he attains eternal peace, meaning the complete cessation of the desire for sensual enjoyments due to extreme detachment. One might ask: if a devotee of mine does not give up his previously practiced wicked conduct, would he then fail to become a righteous soul and thus perish? To this, the Lord, as if angered by his overwhelming compassion for his devotees, says: \"O son of Kunti, do not think this is strange; such is the certain greatness of devotion to me.\" Therefore, even in the presence of those who disagree, you should declare it boldly; make a promise with confidence and pride: \"The devotee of me, Vasudeva, even if he is of very wicked conduct, even if facing a life crisis, even if seeking something very difficult to obtain, or even if he is very foolish and without refuge, he does not perish.\" Rather, he reaches fulfillment.\n\n<summary>These commentaries on verses 30-31 emphasize that divine grace is available to all through devotion. Even the most sinful person is transformed and saved by the power of a sincere, undivided resolve to worship the Lord.</summary>\n\n<keywords>Bhagavad Gita, devotion, Krishna, grace, righteousness, Ajamila, redemption, Vasudeva</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2740,
+ "outputTokens": 844,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.001951,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2151,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

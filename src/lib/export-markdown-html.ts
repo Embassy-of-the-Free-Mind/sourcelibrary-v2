@@ -1,5 +1,6 @@
 import { pipeTableToHtml } from '@/lib/markdown-table-html';
 import { applyNotesOff } from '@/lib/notes-off';
+import { separateTermDefinitions } from '@/lib/term-definitions';
 import { stripEditorialWrapperBlocks } from '@/lib/strip-editorial-wrappers';
 
 /**
@@ -33,6 +34,11 @@ export function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): s
   if (opts?.stripNotes) {
     html = applyNotesOff(html);
     html = html.replace(/\[\[notes?:\s*.*?\]\]/gi, '');
+  } else {
+    // The model's definitions inside <term> chips are notes (#5895). Notes on only:
+    // applyNotesOff splits the chips itself, and relabelling a headword's <gloss>
+    // as a <note> would get the whole line deleted with notes off (#5942).
+    html = separateTermDefinitions(html);
   }
 
   // Convert XML annotation tags to styled aside/span blocks BEFORE escaping HTML

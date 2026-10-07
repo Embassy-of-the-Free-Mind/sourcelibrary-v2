@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A28529",
+  "edition": "EEBO-TCP A28529 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "69526046ab34727b1f04660c",
+  "page_number": 342,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 519796,
+    "to_char": 523506,
+    "overlap": 1,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "Starts might be proved in the fire of God (one line early); ends plague our selves, but",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:27.800Z",
+  "text_location": "repo",
+  "text_sha256": "db3fd0b09bb9b1fb75262d9f2b4ac24fcb8ca2e783113d65ef0e20259d7dfab9",
+  "unit": {
+    "chars": 3710
+  }
+}

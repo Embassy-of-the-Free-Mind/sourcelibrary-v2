@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { buildBookSearchStage } from '@/lib/atlas-search';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
-import { translationPercent } from '@/lib/translation-percent';
+import { translationPercent } from '@/lib/translation-completeness';
 import { buildSortStage, type SortOption } from '@/lib/book-sort';
 import { resolveAuthorBookFilter } from '@/lib/author-thesaurus';
 
@@ -223,6 +223,11 @@ export async function GET(request: NextRequest) {
       pages_count: 1,
       pages_ocr: 1,
       pages_translated: 1,
+      // The denominator inputs for translationCompleteness() (#4505), and the
+      // stamped rung (#5287) so a caller can tell `readable` from `complete`.
+      pages_translatable: 1,
+      pages_blank: 1,
+      translation_state: { rung: 1, english_original: 1 },
       translation_percent: 1,
       // Only when asked for. Projecting every language's counter would put a
       // field on 22,000 rows to describe 103 of them, and the counter set grows
@@ -272,7 +277,7 @@ export async function GET(request: NextRequest) {
       // Computed, not projected. The stored `translation_percent` is absent on
       // 8,928 of 19,419 live books — its writer (`sync-page-counts`) is archived
       // — and this route feeds MCP `list_books`, so callers were getting nothing
-      // usable back (#3652 B). See src/lib/translation-percent.ts.
+      // usable back (#3652 B). One formula: src/lib/translation-completeness.ts.
       translation_percent: translationPercent(book),
       tenant_slug: book.tenantId ? tenantSlugMap.get(book.tenantId) || null : null,
     }));

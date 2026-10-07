@@ -1,0 +1,20 @@
+{
+ "id": "69c1bdc98522835be846bb3a_00032",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "",
+ "finishReason": "RECITATION",
+ "inputTokens": 2643,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.000330375,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1498,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

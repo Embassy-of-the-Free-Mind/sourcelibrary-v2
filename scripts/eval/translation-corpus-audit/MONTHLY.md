@@ -58,18 +58,19 @@ You are the routine. You start with a fresh checkout of the repo and no other co
    lines. Re-launch a subagent once for any packet that is missing or short; after that, leave it and say so in
    the PR.
 5. Score, gate first: `node scripts/eval/translation-corpus-audit/score.mjs --dir $DIR --primary opus --gate`.
-   - **Exit 0 (controls pass):** re-run with `--store` added. Then add one row to the table under
-     "Monthly translation corpus audit (#5301)" in `scripts/eval/EXPERIMENTS.md` (newest first), filled from
+   - **Exit 0 (controls pass):** re-run with `--store` added. Then add one row to the table in
+     `scripts/eval/experiments/_series-monthly-translation-corpus-audit.md` (newest first; never edit
+     `EXPERIMENTS.md` itself — main regenerates it from that file, #5436), filled from
      `$DIR/report.json`: month, n books, fidelity ≥ 4 with CI, fidelity ≤ 2, any major defect with CI, omission,
      invention, garble pass-through, Latin-script vs non-Latin ≥ 4, controls (swap/drop/repeat as k/n).
    - **Exit 3 (controls fail):** do not add `--store`, do not add an EXPERIMENTS row. The run is not reported.
    - Any other exit: treat as a failed run; report it as such in step 7.
-6. Commit `$DIR` (verdicts + report), the store file and `EXPERIMENTS.md` with `git commit -s`. Push to
+6. Commit `$DIR` (verdicts + report), the store file and the `_series-…` file with `git commit -s`. Push to
    `eval/tca-$MONTH`; if that push is refused, push to `claude/tca-$MONTH` instead.
 7. Open a PR to `main`. Title when the gate passed: `eval(translation-corpus-audit): <MONTH> — ≥4 <est>% (<ci>), major <est>% (<ci>), n=<books> (#5301)`.
    When it failed: `eval(translation-corpus-audit): <MONTH> — CONTROLS FAILED, not reported (#5301)`.
    Body: the controls block and corpus-estimate table from `$DIR/report.md` (controls first), the change against
-   the previous month's row in EXPERIMENTS.md in one sentence, any packet left incomplete, and `Refs #5274 #5301`.
+   the previous month's row in the series file in one sentence, any packet left incomplete, and `Refs #5274 #5301`.
    Say "judged", never "accuracy". Then, if `gh` works, comment the same headline and the PR link on #5274.
 8. Finish with one line: the PR URL and PASS/FAIL.
 

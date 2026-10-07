@@ -1,0 +1,116 @@
+{
+ "id": "69dbcc3e0f8c5edf20f484a0_00330",
+ "image_legible": true,
+ "ocr_word_errors": 270,
+ "ocr_words_approx": 900,
+ "ocr_errors": [
+  {
+   "image": "prius deprehenditur esse corpus quam deprehendatur esse animal ... homo quam sortes uel plato",
+   "ocr": "per opzebedit esse corp. et opzebedit et aial ... prius bo et sor. uel placet",
+   "effect_on_english": "body/animal/man/Socrates series replaced by '...' and a 'garbled' note"
+  },
+  {
+   "image": "ex uniuersalibus (vl'ib9) in singularia oportet deuenire",
+   "ocr": "ex libris in singularia os deuenire",
+   "effect_on_english": "'from singulars to come to [principles]' - universals lost, direction then inverted"
+  },
+  {
+   "image": "per effectus deuenimus in causas et principia. sed uniuersalia sunt quedam principia",
+   "ocr": "effectus euenimus et casu et principia. sed uniuersalia sunt posterius",
+   "effect_on_english": "'effects occur by chance and principles'"
+  },
+  {
+   "image": "sic nihil prohibet prius cognoscere partes quam totum: ut lapides quam domum",
+   "ocr": "sic nihil et domum",
+   "effect_on_english": "'thus [we know] nothing of the house'"
+  },
+  {
+   "image": "sed secundum platonem qui posuit uniuersalia suba[sistentia] ... uniuersale esset prius",
+   "ocr": "sed et plus tonem et posuit uniuersalia suba: et in hanc confide rationem uerem est",
+   "effect_on_english": "'[some] posited universals as substances, and in this consideration it is true'"
+  },
+  {
+   "image": "minus commune continet in sui ratione non solum magis commune sed etiam alia",
+   "ocr": "minus et est et tinet in futurum non solum magis et est sed et alia",
+   "effect_on_english": "'it contains in the future not only the more [universal]'"
+  },
+  {
+   "image": "cum intentione uniuersalitatis ... ut scilicet unum et idem",
+   "ocr": "sic et intentio ueritatis ... et uerum et idem",
+   "effect_on_english": "'the intention of truth ... the true and the same'"
+  },
+  {
+   "image": "prius distinguit hominem a non homine quam distinguat hunc hominem ab alio homine",
+   "ocr": "prius distinguit bo et a bo",
+   "effect_on_english": "'distinguishes [man] and [not-man]' (guessed right; second half lost)"
+  },
+  {
+   "image": "quia prius est a quo non conuertitur subsistendi consequentia: ergo uniuersalia sunt posteriora",
+   "ocr": "(line pair dropped) 'priora secundum naturam nostri intellectus'",
+   "effect_on_english": "objection 1 loses its reason and conclusion"
+  },
+  {
+   "image": "sed uniuersalia sunt simpliciora: ergo sunt posterius nota",
+   "ocr": "sed uniuersalia sunt priora cioza: sunt posterius nota",
+   "effect_on_english": "'But universals are prior, and are later known'"
+  },
+  {
+   "image": "diffinientia absolute consideranda sunt prius nota quam diffinitum",
+   "ocr": "diffinentia absolute consideranda fit prius nos et diffinitur",
+   "effect_on_english": "'the definition considered absolutely is made before the defined'"
+  },
+  {
+   "image": "sed homo est prius in nostra cognitione quam quod animal sit pars rationis eius",
+   "ocr": "si bo et pus i nra cognitione et animal sic per ronis eius",
+   "effect_on_english": "'If man [is prior] ... then animal [is posterior] by its reason'"
+  }
+ ],
+ "page_cause": "ocr_abbrev",
+ "causes": [
+  {
+   "finding": "T9 major: sensory example (body, animal, man, Socrates) replaced by '...' and note 'text garbled in original'",
+   "cause": "ocr_abbrev",
+   "image": "deprehenditur esse corpus quam deprehendatur esse animal ... homo quam sortes uel plato",
+   "ocr": "per opzebedit esse corp. et opzebedit et aial ... bo et sor",
+   "english": "when it is known less, it is further away... [note: garbled]"
+  },
+  {
+   "finding": "T8 major reversal: sed contra 'from singulars to come to [principles]' inverts 'in singularia deuenire'",
+   "cause": "ocr_abbrev",
+   "image": "ex uniuersalibus in singularia oportet deuenire",
+   "ocr": "ex libris in singularia os deuenire",
+   "english": "from singulars to come to [principles]"
+  },
+  {
+   "finding": "major: Obj. 4 'effects occur by chance and principles'",
+   "cause": "ocr_abbrev",
+   "image": "per effectus deuenimus in causas et principia",
+   "ocr": "effectus euenimus et casu et principia",
+   "english": "effects occur by chance and principles"
+  },
+  {
+   "finding": "major: 'thus [we know] nothing of the house' in reply 3",
+   "cause": "ocr_misread",
+   "image": "sic nihil prohibet prius cognoscere partes quam totum: ut lapides quam domum",
+   "ocr": "sic nihil et domum",
+   "english": "and thus [we know] nothing of the house"
+  },
+  {
+   "finding": "major: '[some] posited universals as substances' stays garbled",
+   "cause": "ocr_abbrev",
+   "image": "secundum platonem qui posuit uniuersalia suba (subsistentia)",
+   "ocr": "sed et plus tonem et posuit uniuersalia suba",
+   "english": "But [some] posited universals as substances"
+  },
+  {
+   "finding": "major: reply 2 'it contains in the future not only the more [universal]'",
+   "cause": "ocr_abbrev",
+   "image": "continet in sui ratione non solum magis commune",
+   "ocr": "tinet in futurum non solum magis et est",
+   "english": "it contains in the future not only the more [universal]"
+  }
+ ],
+ "share_of_served_error_from_ocr": "most",
+ "fixed_transcription_written": true,
+ "note": "1484 gothic type, heavily abbreviated, lines of column 2 slope upward: the OCR left bo/aial/coe/vl'e/fz/q3 unresolved (rendered 'bo', 'et est', 'et') and skipped line halves (e.g. 'nihil prohibet prius cognoscere partes quam totum: ut lapides' → 'nihil et domum'). Image is clear and matches the standard text of I q.85 a.3. Only translator-added error: the sed contra direction ('from singulars to') which even the garbled OCR 'ex libris in singularia' does not say. 'suba' expanded as subsistentia per context (could be substantia)."
+}

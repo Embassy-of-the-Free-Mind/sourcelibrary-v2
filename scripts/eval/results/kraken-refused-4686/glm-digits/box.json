@@ -1,0 +1,14 @@
+{
+ "server_id": "9804b730-e85d-4ddd-85a0-ff4e5cf6eab4",
+ "host": "scaleway:pl-waw-2:9804b730-e85d-4ddd-85a0-ff4e5cf6eab4",
+ "type": "L4-1-24G",
+ "glm_revision": "2e85a62840ccac27daa451df36c736c4636b8628",
+ "versions": [
+  "NVIDIA L4, 580.126.20",
+  "vllm 0.31.0 2.13.0+cu132 True",
+  "kraken-torch 2.13.0+cu132 True",
+  "kraken, version 7.1"
+ ],
+ "cost_per_hr": 0.9214,
+ "code_rev": "93c1f8a9500b9601e54e20d7fd156d7635dec892"
+}

@@ -1,0 +1,60 @@
+{
+ "id": "8a9eea4b-6be1-4424-9a38-b7a0deb58f95_00256",
+ "image_legible": true,
+ "ocr_word_errors": 5,
+ "ocr_words_approx": 640,
+ "ocr_errors": [
+  {
+   "image": "mea tamen nihilominus Monarchia stabit, vestrâ eunte pessum",
+   "ocr": "vestrā cuncte pessum",
+   "effect_on_english": "'while all of yours goes to ruin' - 'all' comes from cuncte; sense otherwise intact"
+  },
+  {
+   "image": "Corrigo Medicis quid (margin, small type)",
+   "ocr": "Corrigo Medicu quid",
+   "effect_on_english": "margin rendered 'What \"I correct the physician\" means'"
+  },
+  {
+   "image": "penes ipsas situm est",
+   "ocr": "penes ipsas fitum est",
+   "effect_on_english": "none"
+  },
+  {
+   "image": "ni forte fiat",
+   "ocr": "nisi forte fiat",
+   "effect_on_english": "none"
+  },
+  {
+   "image": "venenum latere & inexistere",
+   "ocr": "latere & inesistere",
+   "effect_on_english": "none"
+  }
+ ],
+ "page_cause": "translation",
+ "causes": [
+  {
+   "finding": "minor: 'they also correct Gentian and Theriac' loses the relation (theriac corrected with gentian)",
+   "cause": "translation",
+   "image": "Sic gentianâ etiā corrigūt theriacam",
+   "ocr": "Sic gentianā etiā corrigūt theriacam",
+   "english": "they also \"correct\" Gentian and Theriac"
+  },
+  {
+   "finding": "minor: 'or as they say of Diagridium' misses 'post Diagridium dictum' (then called diagridium)",
+   "cause": "translation",
+   "image": "veluti Cotonea Scammoneam, post Diagridium, dictum corrigūt",
+   "ocr": "veluti Cotonea Scammoneam, post Diagridium, dictum corrigūt",
+   "english": "or as they say of Diagridium"
+  },
+  {
+   "finding": "minor: margin 'What \"I correct the physician\" means' for 'Corrigo Medicu quid'",
+   "cause": "translation",
+   "image": "Corrigo Medicis quid",
+   "ocr": "Corrigo Medicu quid",
+   "english": "What \"I correct the physician\" means"
+  }
+ ],
+ "share_of_served_error_from_ocr": "none",
+ "fixed_transcription_written": true,
+ "note": "Clean two-column roman type; OCR is near-exact (5 small slips in ~640 words, only 'eunte'→'cuncte' changes a word, and the English still gets the sense). The judges' three minor findings sit where OCR = image (margin note: one letter off, 'Medicis' not 'Medicu', but the mistranslation is the translator's). 'fundamentum si oportet' and doubled 'propinan-pinandæ' are as printed."
+}

@@ -64,6 +64,14 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // list, so listing it here also removes the button on tenant hosts.
   '/give',
   '/sponsors',
+  // How to connect Claude/ChatGPT to Source Library (#5265). It is about the
+  // whole library's MCP endpoint and links a non-BPH book (Chrysopoea of
+  // Cleopatra); the nightly leak audit flagged it on bph.sourcelibrary.org the
+  // day it shipped (2026-09-30).
+  '/connect',
+  // The journey film's curated instance (#5861): Source Library's own story,
+  // told through one global (non-partner) book, with links into it.
+  '/how-it-works',
   // Volunteer review queues. Items are drawn from `review_candidates`, a pool
   // built across every visible book in the corpus, so a partner reading room
   // would hand its visitors other libraries' pages to judge — the same content
@@ -71,11 +79,18 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // A tenant-scoped review queue is a different feature, not a filter.
   '/review',
   '/volunteers',
+  // The public Quality Center (#5918): the whole library's quality figures, experiments and
+  // feedback themes, with doors into /review. Corpus-wide by construction, like /research.
+  '/quality',
   // Private spend & unit-cost report (#5225): Source Library's own vendor
   // bills, backlog projections and people. Nothing about it belongs on a
   // partner's domain, and the admin layout's role gate is not the right tool
   // for "this host must not even answer" — refuse in the proxy like the rest.
   '/admin/spend',
+  // Corpus-wide quality report (#5474): our own instruments over the whole library.
+  '/admin/quality',
+  // Work in flight (#5705): our own job boxes, issues and decisions. Nothing a partner host should answer.
+  '/admin/work',
   // Inner-circle curation surfaces (#3846): identity adjudication over the
   // whole corpus (work merges, edition keeper choices). Corpus-wide by
   // construction and actuating, so a partner host must refuse it outright —
@@ -88,6 +103,12 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // museum QR use case points at sourcelibrary.org/identify, not a subdomain,
   // so nothing tenant-facing is lost. (#4232)
   '/identify',
+  // The Librarian (#4330, decided 2026-10-07). It answers from the whole
+  // library: its tools search, quote and link any book, and its threads and
+  // rooms belong to the global site. A partner reading room that wants an
+  // assistant over its own shelf needs a different feature, not this one on
+  // its domain. The header and footer filter on this list, so the link goes too.
+  '/librarian',
 ] as const;
 
 /**
@@ -130,6 +151,10 @@ export const GLOBAL_ONLY_TENANT_API_PATHS = [
   // /identify posts the photo from the client, so blocking only the page would
   // leave corpus-wide visual search callable from a tenant host.
   '/api/identify',
+  // Everything behind the Librarian: chat, voice, voice-search, threads, rooms.
+  // Blocking only the page would leave the whole-library agent callable from
+  // the partner host.
+  '/api/embassy',
 ] as const;
 
 const ALL_GLOBAL_ONLY_PATHS: readonly string[] = [

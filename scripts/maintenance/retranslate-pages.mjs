@@ -51,6 +51,9 @@ const NO_CONTEXT = process.argv.includes('--no-context');
 // short) calls them healthy. A leaked previous page makes a translation too LONG, which isBad cannot see.
 // Only honoured with an explicit --book/--pages or --from list — never a blanket sweep.
 const FORCE = process.argv.includes('--force');
+// #5700: a book whose OCR was measured untrusted is not re-translated — the same transcription
+// gives the same wrong English. The override is for a pilot on pages that were re-read.
+const ALLOW_UNTRUSTED_OCR = process.argv.includes('--allow-untrusted-ocr');
 
 // ── model routing from translate-core (the one door, issue #3725) ──
 // The verbatim copy this replaces had drifted: it was missing nine languages
@@ -67,6 +70,7 @@ import {
   assessTranslationHealth,
   bodyLen,
 } from '../lib/translate-core.mjs';
+import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
 
 function getModelForBook(book) {
   // Re-translation override: collapses happened on lite, so a fix run forces the
@@ -156,13 +160,24 @@ await withMongo(async (db) => {
     bookCache.set(book_id, book);
     return book;
   };
+  const trustCache = new Map();
+  const trustOf = async (book) => {
+    if (!trustCache.has(book.id)) trustCache.set(book.id, await ocrTrustGate(db, book, { lane: 'retranslate-pages', allow: ALLOW_UNTRUSTED_OCR, record: EXECUTE }));
+    return trustCache.get(book.id);
+  };
 
   let fixed = 0, stillBad = 0, skipped = 0, alreadyGood = 0, protectedCount = 0, done = 0;
   const touchedBooks = new Set();
+  const refusedBooks = new Set();
 
   async function processTarget(t) {
     const book = await getBook(t.book_id);
     if (!book) { skipped++; return; }
+    const trust = await trustOf(book);
+    if (!trust.ok) {
+      if (!refusedBooks.has(book.id)) { refusedBooks.add(book.id); console.log(`  REFUSED ${book.id}: ${trust.reason} (--allow-untrusted-ocr to override)`); }
+      skipped++; return;
+    }
     const page = await db.collection('pages').findOne({ book_id: t.book_id, page_number: t.page_number });
     if (!page?.ocr?.data) { skipped++; return; }
     // A looping source cannot be repaired by re-translating it (#4765/#4850) —
@@ -184,9 +199,11 @@ await withMongo(async (db) => {
     let best = null;
     for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
       try {
-        const { text, promptRef } = await translateOnce(page, book, NO_CONTEXT ? null : prevTr);
-        if (!best || badnessScore(page.ocr.data, text) < badnessScore(page.ocr.data, best.text)) best = { text, promptRef };
-        if (!isBad(page.ocr.data, text)) { best = { text, promptRef }; break; }
+        // Keep the whole result: `call` is the provenance the writer requires (#4613) — dropping it
+        // here made every --execute run throw at the first write (found 2026-10-01, #4681 repair).
+        const r = await translateOnce(page, book, NO_CONTEXT ? null : prevTr);
+        if (!best || badnessScore(page.ocr.data, r.text) < badnessScore(page.ocr.data, best.text)) best = r;
+        if (!isBad(page.ocr.data, r.text)) { best = r; break; }
       } catch (e) {
         console.log(`    ${book.id} p${t.page_number} attempt ${attempt} error: ${e.message?.slice(0, 70)}`);
         await new Promise(r => setTimeout(r, 2000));

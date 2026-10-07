@@ -89,7 +89,7 @@ Twenty pages across all 15 languages were then read by a person against the page
 
 ## What the judge cannot see
 
-Two of those 20 pages, both Internet Archive scans (Oxyrhynchus Papyri V and the 1605 Don Quixote), serve a display image one leaf away from the page that was transcribed and translated. The translation is faithful to its source on both. The reader still sees the wrong page beside it. This is the known wrong-leaf class of #4790, it is invisible to any text-only judge, and it means every fidelity number above is conditional on the served image being the transcribed leaf. Two of 20 is exploratory, not a rate; a leaf check over the 311 audited pages would give a first one.
+Two of those 20 pages, both Internet Archive scans (Oxyrhynchus Papyri V and the 1605 Don Quixote), carry a transcription of a different leaf from the image shown. The translation is faithful to its transcription, so a text-only judge scores it well, while the reader sees a translation that does not match the page in front of them. **Corrected 2026-09-30 by the follow-up leaf check over all 311 pages (#5311):** 6 of 298 pages (2.0%) are mismatched, all Internet Archive (3.8% of IA pages), and on every one the image is the correct leaf — it is the Gemini OCR text that was read from a neighbouring leaf, not the image that is off. The first version of this paragraph had that the wrong way round. Detector: #5309. Every fidelity number above is conditional on the transcription being of the page shown.
 
 Two more of the 20 pages had a catalogue language that was not the page's language (an "Arabic" book whose page is German; a "Korean" book whose page is Classical Chinese). The language table above is by catalogue language.
 

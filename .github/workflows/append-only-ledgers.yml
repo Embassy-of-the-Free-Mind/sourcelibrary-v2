@@ -1,0 +1,69 @@
+name: Append-only ledgers audit
+
+# A file every PR appends one entry to conflicts by construction — two appends to
+# one tail — and auto-merge never merges a conflicting PR. EXPERIMENTS.md did this
+# to 6 of 11 conflicting PRs on 2026-10-01 (#5436). This weekly sweep reads main's
+# history for the next such file (≥ 8 commits in 90 days, ≥ 75% pure insertions,
+# or a GENERATED file regenerated in every PR) that has neither treatment —
+# one-file-per-entry generated on main, or merge=union in .gitattributes — and
+# files ONE tracking issue, updating it while findings persist and closing it when
+# a run comes back clean (CLAUDE.md: a detector closes what it files).
+#
+# Not a PR check: a ledger only reveals itself after several appends, by which
+# time failing an unrelated contributor's PR would teach everyone to ignore it.
+# The PR-time rule (a PR may not hand-edit a generated ledger) is the --pr mode of
+# the same script, run from unit-tests.yml.
+
+on:
+  schedule:
+    - cron: '20 7 * * 1'   # Mondays 07:20 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Scan main's history
+        id: scan
+        run: |
+          set +e
+          node scripts/audit/append-only-ledgers.mjs > report.txt
+          echo "status=$?" >> "$GITHUB_OUTPUT"
+          cat report.txt
+
+      - name: File, update or close the tracking issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STATUS: ${{ steps.scan.outputs.status }}
+        run: |
+          TITLE="Append-only ledgers without a merge treatment"
+          EXISTING=$(gh issue list --search "$TITLE in:title" --state open --json number --jq '.[0].number')
+          if [ "$STATUS" = "0" ]; then
+            if [ -n "$EXISTING" ]; then
+              gh issue close "$EXISTING" --comment "Clean run of \`scripts/audit/append-only-ledgers.mjs\` on $(date -u +%F): every append-only or per-PR-regenerated ledger now has a treatment. Closing (the detector closes what it files)."
+            fi
+            exit 0
+          fi
+          BODY=$(printf '%s\n\n```\n%s\n```\n\n%s\n' \
+            "Weekly run of \`scripts/audit/append-only-ledgers.mjs\` (#5436). Each FLAG line is a file PRs keep appending to, or a generated file PRs keep regenerating, with no merge treatment — the next EXPERIMENTS.md." \
+            "$(cat report.txt)" \
+            "Treatments: one file per entry + regenerate on main (\`scripts/eval/experiments/\` + \`eval-ledgers-regenerate.yml\` is the model), or \`<path> merge=union\` in \`.gitattributes\` (local rebases only; GitHub ignores it). This issue closes itself on the first clean run.")
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "$BODY"
+          else
+            gh issue create --title "$TITLE" --body "$BODY" --label infra
+          fi

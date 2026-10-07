@@ -43,6 +43,8 @@ export interface BookStrings {
   notTranscribed: string;
   ocr: string;
   translated: string;
+  /** Rung `complete` (#5287): every translatable page is translated. */
+  translationComplete: string;
   ocrTooltip: (done: number, total: number) => string;
   translatedTooltip: (n: number) => string;
   notTranscribedTooltip: (total: number) => string;
@@ -141,6 +143,7 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     notTranscribed: 'Scans only — not transcribed yet',
     ocr: 'OCR',
     translated: 'Translated',
+    translationComplete: 'Complete',
     ocrTooltip: (done, total) => `${done} of ${total} pages transcribed`,
     translatedTooltip: (n) => `${n} pages translated to English`,
     notTranscribedTooltip: (total) => `${total} scans available; no pages transcribed yet`,
@@ -230,6 +233,7 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     notTranscribed: 'Solo escaneos — todavía sin transcribir',
     ocr: 'OCR',
     translated: 'Traducido',
+    translationComplete: 'Completo',
     ocrTooltip: (done, total) => `${done} de ${total} páginas transcritas`,
     translatedTooltip: (n) => `${n} páginas traducidas al inglés`,
     notTranscribedTooltip: (total) => `${total} escaneos disponibles; ninguna página transcrita todavía`,

@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "book_id": "69526046ab34727b1f04660c",
+    "title": "Mysterium Magnum",
+    "published": "1656",
+    "source": "EEBO-TCP A28529",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 8,
+    "skips": {},
+    "median_char_acc": 0.9623,
+    "median_char_acc_windowed": 0.9457,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-69526046-p26",
+      "page": 26,
+      "overlap": 1,
+      "probe_words": 432,
+      "ref_chars": 2478,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.061,
+      "char_acc": 0.9718,
+      "char_acc_windowed": 0.9457
+    },
+    {
+      "slug": "ed-69526046-p48",
+      "page": 48,
+      "overlap": 1,
+      "probe_words": 647,
+      "ref_chars": 3608,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.147,
+      "char_acc": 0.8828,
+      "char_acc_windowed": 0.7762
+    },
+    {
+      "slug": "ed-69526046-p57",
+      "page": 57,
+      "overlap": 1,
+      "probe_words": 216,
+      "ref_chars": 1168,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.153,
+      "char_acc": 0.8859,
+      "char_acc_windowed": 0.8593
+    },
+    {
+      "slug": "ed-69526046-p93",
+      "page": 93,
+      "overlap": 1,
+      "probe_words": 216,
+      "ref_chars": 1213,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.109,
+      "char_acc": 0.9497,
+      "char_acc_windowed": 0.9476
+    },
+    {
+      "slug": "ed-69526046-p342",
+      "page": 342,
+      "overlap": 1,
+      "probe_words": 705,
+      "ref_chars": 3725,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.052,
+      "char_acc": 0.9684,
+      "char_acc_windowed": 0.9471
+    },
+    {
+      "slug": "ed-69526046-p438",
+      "page": 438,
+      "overlap": 1,
+      "probe_words": 632,
+      "ref_chars": 3493,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.097,
+      "char_acc": 0.9623,
+      "char_acc_windowed": 0.9086
+    },
+    {
+      "slug": "ed-69526046-p448",
+      "page": 448,
+      "overlap": 0.835,
+      "probe_words": 200,
+      "ref_chars": 1074,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.204,
+      "char_acc": 0.8589,
+      "char_acc_windowed": 0.7902
+    },
+    {
+      "slug": "ed-69526046-p616",
+      "page": 616,
+      "overlap": 1,
+      "probe_words": 169,
+      "ref_chars": 929,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.053,
+      "char_acc": 0.9808,
+      "char_acc_windowed": 0.9726
+    }
+  ]
+}

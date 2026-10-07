@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A41072",
+  "edition": "EEBO-TCP A41072 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6a58ec9ac6cd8f987106886f",
+  "page_number": 6,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 8798,
+    "to_char": 11528,
+    "overlap": 1,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "Starts said, Simon, seest thou; ends told these things to the Apostles; dark but legible",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:32.345Z",
+  "text_location": "repo",
+  "text_sha256": "16c6140b447ac91af5073056304ebab995520af8e905b64cafd5170d3632bfc0",
+  "unit": {
+    "chars": 2730
+  }
+}

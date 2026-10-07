@@ -1,0 +1,52 @@
+{
+ "n_books": 60,
+ "cost_usd": 0.0974,
+ "clef-flash": {
+  "auc_match_vs_next": 0.9897222222222222,
+  "auc_match_vs_other": 0.9988888888888889,
+  "mean_p": {
+   "match": 0.811,
+   "next": 0.276,
+   "other": 0.08
+  },
+  "relation_correct": {
+   "match": "59/60",
+   "next": "40/60",
+   "other": "58/60"
+  },
+  "median_ms": 391,
+  "mean_tokens": 1639
+ },
+ "clef": {
+  "auc_match_vs_next": 0.9955555555555555,
+  "auc_match_vs_other": 1,
+  "mean_p": {
+   "match": 0.961,
+   "next": 0.266,
+   "other": 0.07
+  },
+  "relation_correct": {
+   "match": "59/60",
+   "next": "49/60",
+   "other": "55/60"
+  },
+  "median_ms": 807,
+  "mean_tokens": 1639
+ },
+ "languages": {
+  "Latin": 25,
+  "Tibetan": 1,
+  "Chinese": 19,
+  "Persian": 1,
+  "English": 3,
+  "Syriac": 1,
+  "Arabic": 1,
+  "Classical Chinese": 1,
+  "German": 3,
+  "Sanskrit": 1,
+  "Hebrew": 1,
+  "French": 1,
+  "Middle High German": 1,
+  "Latin-Dutch": 1
+ }
+}
