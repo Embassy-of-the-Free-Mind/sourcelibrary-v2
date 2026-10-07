@@ -24,6 +24,8 @@ import { bootstrapRatioCI, resetSeed } from '../lib/paired-stats.mjs';
 const args = process.argv.slice(2);
 const dir = args[args.indexOf('--dir') + 1];
 const log = JSON.parse(readFileSync(join(dir, 'draw-log.json'), 'utf8'));
+// A --picked run (overview-draw.mjs) holds books chosen for interest: its shares are not rates of anything.
+if (log.mode === 'picked') { console.error(`${dir} is a hand-picked curation check: no rates. Its verdicts go to a private shelf with curation-shelf.mjs.`); process.exit(1); }
 resetSeed(log.seed);
 
 const serious = (p) => [...(p.ocr_errors || []), ...(p.tr_errors || []), ...(p.other || [])].some((e) => e.severity === 'serious') || p.right_page === 'no';
