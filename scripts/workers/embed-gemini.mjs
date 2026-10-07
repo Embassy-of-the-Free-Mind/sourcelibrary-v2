@@ -53,7 +53,15 @@
  *                 the dial and the scope envelope see committed spend (#4567).
  *                 The spend gate is re-asked before every job. Pages already in an
  *                 uncollected job are skipped, so a re-run resumes. Exit 3 = the
- *                 Batch API refused a job (quota); re-run later.
+ *                 Batch API refused a job (quota) or --max-running was reached;
+ *                 re-run later.
+ *   --max-running N  With --batch: submit only while fewer than N embedding jobs
+ *                 are still running at Gemini. Measured 2026-10-07 (#5729): with
+ *                 ~6–10 10K-page jobs in flight, the project's jobs all ended at
+ *                 the same moment and the later-submitted ones came back with
+ *                 most requests "The operation was cancelled" (up to 100%);
+ *                 jobs submitted on their own succeeded 100%. Cancelled requests
+ *                 are not billed, but every one is a page to submit again.
  *   --collect     Collect finished jobs: stream each results file, re-read the
  *                 page from Mongo, rebuild its text with the same composer, and
  *                 upsert the row only when the text still hashes to what was
@@ -126,6 +134,7 @@ const BATCH_MODE = args.includes('--batch');
 const COLLECT_MODE = args.includes('--collect');
 const JOB_PAGES = parseInt(args.find((_, i, a) => a[i - 1] === '--job-pages') || '20000');
 const COLLECT_CONCURRENCY = parseInt(args.find((_, i, a) => a[i - 1] === '--collect-concurrency') || '3');
+const MAX_RUNNING = parseInt(args.find((_, i, a) => a[i - 1] === '--max-running') || '0') || 0;
 if (BATCH_MODE && !BOOKS_FILE) {
   // A batch job is priced and attributed per book; an open-ended batch --full
   // would enqueue the whole corpus' spend in one go. Name the books.
@@ -381,10 +390,32 @@ async function addToEmbedJob(item) {
   if (embedJob.lines.length >= JOB_PAGES || embedJob.bytes >= BATCH_MAX_JOB_BYTES) await submitEmbedJob();
 }
 
+/** Embedding jobs still queued or running at Gemini (submitted, not yet finished). */
+async function runningEmbedJobs() {
+  const open = await db.collection(EMBED_JOBS).find({ status: 'submitted', model: MODEL }, { projection: { gemini_name: 1 } }).toArray();
+  let running = 0;
+  for (const j of open) {
+    const r = await (await fetch(`${BATCH_API}/${j.gemini_name}?key=${GEMINI_KEY}`)).json().catch(() => ({}));
+    if (!/SUCCEEDED|FAILED|CANCELLED|EXPIRED/.test(r.metadata?.state || r.state || '')) running++;
+  }
+  return running;
+}
+
+/** True (and batchStop = 'busy') when --max-running jobs are already in flight. */
+async function atMaxRunning() {
+  if (!MAX_RUNNING) return false;
+  const running = await runningEmbedJobs();
+  if (running < MAX_RUNNING) return false;
+  batchStop = 'busy';
+  console.log(`[embed-gemini] batch: ${running} embedding job(s) running at Gemini (--max-running ${MAX_RUNNING}) — not submitting more now.`);
+  return true;
+}
+
 async function submitEmbedJob() {
   const job = embedJob;
   embedJob = newEmbedJob();
   if (!job.lines.length || batchStop) return;
+  if (await atMaxRunning()) return;
   // Re-ask the gate for every job: a long run can outlive its envelope.
   const gate = await budgetAllowsDispatchScoped(db, 'embed-gemini');
   if (!gate.allowed || (gate.envelopeIds && [...job.books.keys()].some(id => !gate.envelopeIds.has(id)))) {
@@ -645,6 +676,12 @@ if (COLLECT_MODE) {
       console.log(`[embed-gemini] Global dial closed, scope envelope open — confining to ${ENVELOPE_IDS.size} envelope book(s).`);
     }
   }
+}
+
+// Nothing to submit into: skip the stream (and the skip-set load) entirely.
+if (BATCH_MODE && !DRY_RUN && await atMaxRunning()) {
+  await mongoClient.close();
+  process.exit(3);
 }
 
 // Build query — need pages with OCR or translation.
@@ -981,7 +1018,7 @@ if (BATCH_MODE) {
   const pages = batchSubmitted.reduce((t, j) => t + j.pages, 0);
   const usd = batchSubmitted.reduce((t, j) => t + j.estUsd, 0);
   console.log(`Batch: ${batchSubmitted.length} job(s) submitted, ${pages.toLocaleString()} pages, est $${usd.toFixed(4)}${batchStop ? ` — stopped early: ${batchStop}` : ''}. Collect with --collect.`);
-  if (batchStop === 'quota') process.exit(3);
+  if (batchStop === 'quota' || batchStop === 'busy') process.exit(3);
   if (batchStop === 'error') process.exit(1);
 }
 
