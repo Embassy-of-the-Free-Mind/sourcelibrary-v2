@@ -259,14 +259,14 @@ function sampleDuplicates(rows) {
   const by = new Map();
   for (const r of rows) {
     if (!r.vec) continue;
-    const k = sha(JSON.stringify(r.vec));
+    const k = sha(Buffer.from(Float32Array.from(r.vec).buffer));
     if (!by.has(k)) by.set(k, []);
     by.get(k).push(r);
   }
   for (const group of by.values()) {
     if (group.length < 2) continue;
     // Identical text legitimately gives an identical vector (blank leaves, repeated plates).
-    const texts = new Set(group.map(r => r.target ?? r.translation));
+    const texts = new Set(group.map(r => r.target ?? r.translation ?? r.snip_hash));
     if (texts.size > 1) for (const r of group) r.flags.push('dup-vector');
   }
 }
@@ -277,11 +277,14 @@ async function probeDuplicates(rows) {
     const { rows: nn } = await sql.query(
       `SELECT page_id, book_id, left(translation, 300) t, embedding <=> $1::vector AS d
          FROM page_translations WHERE embedding IS NOT NULL
-        ORDER BY embedding <=> $1::vector LIMIT 4`, [JSON.stringify(r.vec)]);
+        ORDER BY embedding <=> $1::vector LIMIT 4`, [JSON.stringify(Array.from(r.vec))]);
     // The WHERE is not decoration: idx_pt_embedding_hnsw is PARTIAL on it, and without it the
     // planner seq-scans 7M rows (measured 2026-10-07: > 120 s, cancelled).
     probed++;
-    const copies = nn.filter(n => n.page_id !== r.page_id && Number(n.d) < 1e-6 && n.t !== (r.translation || '').slice(0, 300));
+    // Same text gives the same vector legitimately; compare against the composed text when the
+    // snippet itself was dropped to save memory.
+    const own = (r.translation ?? r.target ?? '').slice(0, 300);
+    const copies = nn.filter(n => n.page_id !== r.page_id && Number(n.d) < 1e-6 && n.t !== own);
     if (copies.length) { r.flags.push('dup-vector'); r.dup_of = copies.map(c => c.page_id); }
   }
   return probed;
@@ -387,8 +390,22 @@ async function sampleRun() {
   log(`${books.length.toLocaleString()} books to sample (${PER_BOOK} rows each, seed ${SEED})`);
   const { rows, noRows } = await sampleRows(books);
   log(`${rows.length.toLocaleString()} rows sampled; ${noRows} books had no vector row`);
-  const pages = await loadPages(rows.map(r => r.page_id));
-  for (const r of rows) { const p = pages.get(r.page_id); freeChecks(r, p); r._page = p; }
+  // In chunks, releasing each chunk's pages: a corpus run holds ~78K rows, and keeping every
+  // page's full OCR + translation (and 78K vectors as JS arrays) ran out of heap at 1.5 GB.
+  const KEEP_TEXT = EXPLAIN || PLANT;
+  for (let i = 0; i < rows.length; i += 2000) {
+    const chunk = rows.slice(i, i + 2000);
+    const pages = await loadPages(chunk.map(r => r.page_id));
+    for (const r of chunk) {
+      const p = pages.get(r.page_id);
+      freeChecks(r, p);
+      if (KEEP_TEXT) { r._page = p; continue; }
+      if (r.vec) r.vec = Float32Array.from(r.vec);
+      r.translation_len = r.translation?.length ?? 0;
+      r.snip_hash = r.translation ? sha(r.translation).slice(0, 16) : null;
+      delete r.translation;
+    }
+  }
   const planted = PLANT ? plant(rows) : [];
   for (const c of planted) freeChecks(c, c._page);
   const all = [...rows, ...planted];

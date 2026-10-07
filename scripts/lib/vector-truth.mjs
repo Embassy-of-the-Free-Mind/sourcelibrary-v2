@@ -148,7 +148,7 @@ export function e5Signature(v) {
  * only a fresh embed can say that).
  */
 export function vectorShapeProblems(v, { dims = 768 } = {}) {
-  if (!Array.isArray(v)) return ['unparseable'];
+  if (!Array.isArray(v) && !ArrayBuffer.isView(v)) return ['unparseable'];
   const out = [];
   if (v.length !== dims) out.push(`dims:${v.length}`);
   let n = 0;
