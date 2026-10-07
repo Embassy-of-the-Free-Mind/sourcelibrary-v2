@@ -706,6 +706,51 @@ prompt and routing (Latin, Chinese, Arabic; nothing stored).
 **Artifact.** scripts/eval/translation-write-guard-5902/ (live-dry.mjs, stored-draw.mjs),
 scripts/eval/results/translation-write-guard-5902/.
 
+## 2026-10-06 · How many stored translations are the model talking about its job instead of the page? A model-free count (#6056, #5918)
+<!-- PRIOR ART: `ocrReasoningLeak()` in scripts/lib/page-integrity.mjs (taxonomy O15, 25 pages, #5055) looks for the same thing in the OCR. Nothing had looked in the translation, where it reaches a reader as plain English. scripts/audit/page-integrity.mjs walks the local mirror, which the job box does not hold, so this walk reads Atlas. -->
+
+**Question.** The Eternity shelf review met a page whose English was "*Wait, the prompt says:* Style: warm museum label" (`69e7484085f786e884a4c10f` p.20). How many pages carry the model's reasoning as the translation?
+
+**Design.**
+- **Rule.** `translationReasoningLeak()` in `scripts/lib/page-integrity.mjs`: phrase rules, no model. Four kinds, strongest first:
+  - *reasoning*: the scratchpad. It names the prompt, the user, a tag as a tag, or is a markdown label such as `*Self-Correction during drafting:*`, `*Constraints:*`, `*Formatting check:*`.
+  - *assistant-reply*: a chat reply to the requester ("Please provide the OCR transcription you would like me to translate").
+  - *thought-token*: the page opens with the bare word "thought" on its own line.
+  - *input-talk*: "the provided OCR / transcription / text is …". The mildest, and mostly inside `<meta>`.
+- **Seed and extension.** The seed was `/Wait, the prompt|the prompt says|Style: warm museum/`. The rest was added by reading hits. Bare first-person lines ("I will translate…", "Wait, I…") are left out on purpose: sermons, dialogues and translators' prefaces say them.
+- **Walk.** `scripts/audit/translation-reasoning-leak.mjs walk`: every `pages` record in `_id` order, one `_id` type at a time, in planned ranges of 20,000 with a checkpoint per range. A wide net runs on the server so page text leaves Atlas only for candidates. Read-only, secondary preferred. 28,967,125 records in 27 minutes; 9,274 candidates.
+- **Headline.** *reasoning* or *assistant-reply*, with the phrase in the page body (not only in a `<meta>`, `<summary>`, `<keywords>` or `<vocab>` block, which the reader keeps in its metadata panel), on a live book (`visible: true`, `pages_count > 0`) at `page_number > 0`.
+- **Read by eye.** A seeded sample of 40 headline pages (seed 6056), then up to four rows from each less common phrase group (about 75 rows) and the 8 chat replies that are long or start late in the page. Each was read as text around the matched phrase.
+
+**Result.** Measured 2026-10-06.
+
+| | pages | books |
+|---|---:|---:|
+| **Headline: reasoning or a chat reply, in the page body of a live book** | **549** | **269** |
+| … reasoning | 352 | |
+| … chat reply | 197 | |
+| Live, in the page body, any kind (adds 177 input-talk and 12 thought-token) | 738 | 397 |
+| Live, any kind, including phrases only inside a metadata block | 1,151 | 680 |
+| All books, any kind | 1,327 | 763 |
+
+- **By source language (headline pages):** English 176, Latin 138, Dutch 63, Greek 50, German 28, French 28, Latin-German 16, Tibetan 8, Chinese 7, Italian 6, Sanskrit 5, Persian 4, others 20.
+- **By model:** gemini-3-flash-preview 330, gemini-3.1-flash-lite-preview 190, gemini-2.5-flash 18, gemini-3.1-flash-lite 11.
+- **By month written:** January to April 2026 hold 475 of the 549. It did not stop: 14 are from October 2026 and 11 from September.
+- **Clustered.** 202 of the 269 books have one such page. Six books hold 131: *Apocalypse Explained* vol. 2 (39) and vol. 3 (18), *Ann Lee* (26), Colet's *Two Treatises* (18), *On the Revolutions* (16), the Dowson *Ikhwan al-Safa* (14). The pages read from them were chat replies to an empty transcription.
+- **A side class, not counted above:** 5,337 pages in 2,451 books where a note in the page body tells the reader what "the OCR reads" or what "the `<gloss>` tags" hold. That is pipeline vocabulary in a reader's note, and it is not reasoning.
+
+**By-eye check.** The sample of 40 held 38 leaks and 2 that were book text: a gloss "(self-correction)" on the Pali *pavāraṇā*, and a bold glossary label "Refinement/Struggle". The wider read found two more shapes: a commentary lemma "**We shall check:**" and a treaty's "once you provide the further information". All four were removed from the rule and are pinned as negatives in `tests/unit/page-integrity.test.ts`. The sample was not redrawn after the fix, so the 549 has no measured precision. No other non-leak was met in the rows read.
+
+**Conclusion.** At least 549 pages of 269 public books show the model's reasoning or a chat reply where the translation should be. It is rare per page and easy to find, and it is still being written. It also sits in books that pass a two-page check: the Bardo Thödol cycle `69dfee83ce6bb8619e07f177`, tier 1 on the Eternity shelf, has seven such pages (p.23, 24, 196, 245, 310, 350, 408).
+
+**Limits.**
+- **A floor.** The rule is a list of phrases. A leak worded another way is not counted, and a leak past the first 60,000 characters of a page is not seen.
+- **Not a rate.** The denominator here is page records, with or without a translation.
+- **"In the page body" is a rule about tags**, not a render. 176 headline pages are English-source books, where the stored "translation" is the modernised text and the reader shows that panel only for early editions. A page with a withheld translation is not excluded.
+- **Nothing was written.** No page was changed, hidden or queued.
+
+*Replicated?* No. Data: `scripts/eval/results/quality-sprint/2026-10-06-translation-reasoning-leak/` (`summary.json`; `pages.jsonl` has ids, page numbers and the matched phrase, no page text).
+
 ## 2026-10-06 · Does the translation get worse when the prompt stops asking for notes? (v13 with the notes instructions removed, #5919)
 <!-- PRIOR ART: 2026-10-04-translation-prompt-v17-typed-notes-5698.md (PR #5764) typed the notes and tested a stance on the same 40 pages; its runner, mechanical scorer and v13-a/v13-b noise-floor design are reused here. The #5695 fidelity harness (translation-vs-reference/) is used unchanged. Nothing before this removed the notes instructions. -->
 
@@ -1282,6 +1327,81 @@ Labels: (a) round-2 controls of #5982 (37 pages with one planted commentary sent
   - the driver logs.
   The full GLM and Kraken reads of the 715 pages are on Hetzner under `/root/kraken-digits-4686/{out,kr,merged}`. The driver scripts are `scripts/gpu/kraken-digits-4686-{scw,box}.sh` and `scripts/eval/kraken-refused-4686/glm-digits.mjs`.
 - **Cost: $1.75** (one L4 for 1.90 h at $0.92/h, deleted and confirmed gone). The first box, in fr-par-2, was created but never started (no capacity) and was deleted. No Gemini was used. *run_id:* `kraken-digits-4686`.
+
+## 2026-10-06 · Which books in Eternity's traditions can we show a scholar today? A hand-picked curation check, not a rate (#5918, #6056)
+<!-- PRIOR ART: 2026-10-06-random-book-spot-check-canon-shelves-5914.md (30 books drawn at random from the canon shelves) and the shelf overviews in scripts/eval/results/spot-check/overview-2026-10-07*/ (PR #6079, #6090: stratified random draws with rates) answer "how often is a page wrong". This entry is the hand-picked complement: a worklist of named books, which those draws cannot give and which cannot give their rates. -->
+
+**Question.** A partner judges the library by opening the famous books of the traditions it cares about. Which of those books can be put in front of a scholar now, which need a warning, and which must be fixed first?
+
+**This is a curation check. It is not a rate.** The books were chosen because they are interesting: candidates were listed per language by `read_count`, or looked up by title. Two pages were read in each. The tier shares below describe this list and nothing else: they must not be quoted as the quality of a tradition, a shelf or the corpus. For a rate use the random instruments: the fortnightly spot check (#5914) and the stratified shelf overviews (`overview-2026-10-07`: a frame-weighted serious-page rate with intervals by book).
+
+**Design.**
+- **Books.** 107, picked by hand across nine traditions, mostly from public books at least 80% translated. 17 were hidden at the snapshot: some were chosen before publication, some have been hidden since. They sit in the private collection `eternity-spot-check`.
+- **Pages.** Two consecutive translated pages from the middle of each book (the page 45% of the way through its translated pages, and the next).
+- **Reading.** The transcription and the English were read against the page image. Each book got a tier (1 show, 2 show with care, 3 fix first or do not show), a note with the page to open, and a line on why a reader would open it.
+- **Who read.** Three passes, kept apart in every table below because they are not equally strong:
+  - *reviewer by eye*: 68 books, read by 7 Opus subagents, one per tradition, each told to open the image;
+  - *read from image*: 15 books, read by the session itself with the image open;
+  - *earlier session*: 24 books carried over from earlier sessions. Their notes say the page was checked, but how was not recorded. Treat these as the weakest.
+- **Cost.** No paid API calls.
+- **Data.** `scripts/eval/results/spot-check/curation-2026-10-06-eternity/shelf.json` (one row per book: tier, tradition, who read it, note, page) and `summary.json`. Rights wording is left out; it is in the private ops repo.
+
+**Result.** 43 show, 30 show with care, 34 fix first or do not show.
+
+| tradition | books | show | with care | fix / don't |
+|---|---:|---:|---:|---:|
+| Sanskrit (Nālandā, Prajñāpāramitā) | 6 | 4 | 0 | 2 |
+| Tibetan | 16 | 6 | 5 | 5 |
+| Pali | 10 | 5 | 4 | 1 |
+| Chinese | 18 | 8 | 5 | 5 |
+| Korean | 9 | 4 | 3 | 2 |
+| Japanese | 9 | 1 | 3 | 5 |
+| Hebrew and Aramaic | 15 | 3 | 4 | 8 |
+| Arabic | 13 | 6 | 4 | 3 |
+| Persian | 11 | 6 | 2 | 3 |
+| **all** | **107** | **43** | **30** | **34** |
+
+| who read | books | show | with care | fix / don't |
+|---|---:|---:|---:|---:|
+| reviewer by eye | 68 | 26 | 24 | 18 |
+| read from image | 15 | 7 | 3 | 5 |
+| earlier session | 24 | 10 | 3 | 11 |
+
+The tradition is the book's catalogued language on 2026-10-06, before the label fixes below. One English edition of a Korean author is counted under Korean.
+
+**Defect classes.** Each was seen on the pages named; the label says who saw it. None is a count.
+
+| class | what a reader meets | examples | seen by |
+|---|---|---|---|
+| Leaked model reasoning as the English | "Wait, the prompt says: Style: warm museum label" where the translation should be | `69e7484085f786e884a4c10f` p.20 (Life of Tsangpa Gyare) | reviewer by eye |
+| Repetition loop | one phrase or word repeated to the end of the page, sometimes translated as such | `69dfebad090ad7d5c33b1903` p.32 (Kojiki vol. 1); `69e76134cc48e59ad74ee309` p.143 (gold-ink Aṣṭasāhasrikā) | reviewer by eye |
+| | | `69c7a0a892b884e4f8173817` p.57 (Zohar Ḥadash 1702) | read from image |
+| Verse half-lines or columns out of order | half-lines paired wrongly; a whole column missing | `69e74eeb5cf1eaf3ad80ddc1` p.190 (Ḥāfiẓ 1957); `6976db51097b3607ee4be2f9` p.133 (Avodat ha-Kodesh 1578) | reviewer by eye |
+| | | `69e7299ba409200ea79f0b56` p.150 (Masnavī, Bulaq 1851: the Turkish columns unread) | read from image |
+| Rabbinic type garbled under good square type | the main text is right and the commentary below it is guesswork | `6990633def12272ffdc907b0` p.277 (Zohar, Mantua 1558); `699ef9f2c2bcb75dbdbaad92` p.101 (Sha'arei Orah 1715) | reviewer by eye |
+| Cursive Japanese: the English is not a translation | the kuzushiji reading is good or near, and the English is nonsense or a summary | `69dfedec8d34461cbe7f4fc2` p.45 (Tsurezuregusa); `69dfeded8d34461cbe7f5026` p.12 (Hōjōki) | reviewer by eye |
+| Negative page numbers | the pages drawn are numbered below 1 and show a blank or the title page | `699243fabc722ec0ee80b251` (Prague Haggadah 1526); `69b6363a8ab57a1de53a75c8` (Ikhwān al-Ṣafāʾ, Bombay 1887) | reviewer by eye |
+| Wrong title or language on the record | the book is not what its label says | `69e8b27a2ff2a8dc09e77e4c`, `69e748aa85f786e884a4ca1f`, `69e9617a2beefe2f6f72ba14`, `69920ba8e0a548a13d8846fe` | reviewer by eye; then each title page and the page-language tags of every page read for the fix |
+
+Pages numbered below 1 are soft-hidden records and are not rendered (`scripts/lib/page-counts.mjs`), so the two "negative page number" books are a finding about what the check drew, and their body text was not read.
+
+**What it changed.**
+- **Hidden** (`broken_text_6056`, reversible): Zohar Ḥadash 1702, Kojiki vol. 1, Life of Tsangpa Gyare.
+- **Labels corrected** (`scripts/maintenance/fix-6056-eternity-shelf-labels.mjs`, applied 2026-10-06, a `sweep_log` row each):
+  - `69e8b27a2ff2a8dc09e77e4c`: title 傳習錄 (Chuanxilu) → 陽明先生集要 經濟編 卷四. It is the statecraft part of the 1787 *Yangming xiansheng jiyao*, volume 7.
+  - `69e748aa85f786e884a4ca1f`: Persian → English-French-German, with the title-page title. It is Dole's 1896 variorum of translations around FitzGerald; `original_language` Persian, `text_role` modern-translation.
+  - `69e9617a2beefe2f6f72ba14`: Hebrew → Hebrew-English. Asher's 1840 volume holds the Hebrew text (156 of 319 pages) and his translation (175). The reviewer's "it is English" came from one page.
+  - `69920ba8e0a548a13d8846fe`: Persian → Middle Persian-English (Pahlavi text on 193 of 428 pages, English on 210).
+- **A detector for the first class**: `translationReasoningLeak()` and `scripts/audit/translation-reasoning-leak.mjs`. Its corpus count is its own entry (`2026-10-06-translation-reasoning-leak-6056.md`): at least 549 pages in 269 public books. One of them is a tier-1 book on this shelf: the Bardo Thödol cycle `69dfee83ce6bb8619e07f177` has seven such pages, none of them the two that were read.
+- **The method** is now a variant of the `shelf-overview` skill: `overview-draw.mjs --picked`, `CURATION-ADDENDUM.md`, `curation-shelf.mjs`. `overview-score.mjs` refuses a picked run, so no rate can be formed from one by accident.
+
+**Limits.**
+- Chosen books, two pages each: a tier-1 book can hold bad pages elsewhere, and a tier-3 book may be bad only where it was opened.
+- The readers are AI. Their confidence on cursive Japanese, rabbinic type and Tibetan manuscript hands was low at the stored image size, and those are the scripts where most tier-3 verdicts fall.
+- One reviewer per tradition and no second read, so there is no agreement figure.
+- 24 of the 107 verdicts have no record of how the page was read.
+
+*Replicated?* No. The stratified random overviews of the same traditions (PR #6079, #6090) are the independent look; they share no books by design and measure a different thing.
 
 ## 2026-10-06 · What does dropping role words from the `edition_key` surname do to the corpus? (#4444, #6019 decision 6)
 <!-- PRIOR ART: scripts/maintenance/edition-key-integrity.ts counts stored-vs-computed drift but not which groups a change merges or splits, and reads `books` only; scripts/maintenance/materialize-edition-keys.ts (dry run) reports cluster totals after a change, not the difference; the #6019 review (2026-10-06-dedupe-review-6019.md §4) counted the role-word keys but did not replay a fix. -->
