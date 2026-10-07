@@ -20,10 +20,10 @@
  * set: the verdict derived by the method's rule (REVIEWER.md asks for none), the sample's model ids as the text read,
  * and the book's share of its packet's `claude -p` cost when run-reviewers.sh launched it. --no-record skips it.
  */
-import { readFileSync, writeFileSync, readdirSync, existsSync, statSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { recordBookCheck, ensureBookCheckIndexes, provenanceFromPage, readMethod } from '../../lib/book-checks.mjs';
-import { seriousClasses, derivedFortnightly, pageRecords, packetProvenance, runCost } from './check-rows.mjs';
+import { seriousClasses, derivedFortnightly, pageRecords, packetProvenance, runCost, checkedAtOf } from './check-rows.mjs';
 
 const args = process.argv.slice(2);
 const opt = (k, d) => { const i = args.indexOf(`--${k}`); return i >= 0 ? args[i + 1] : d; };
@@ -91,23 +91,24 @@ if (existsSync(join(dir, 'reviews'))) for (const f of readdirSync(join(dir, 'rev
   for (const b of books) packetOf.set(b.book_id, f.replace(/\.json$/, ''));
   packetSize.set(f.replace(/\.json$/, ''), books.length);
 }
-const checkedAt = statSync(join(dir, 'results.json')).mtime;
-let ins = 0, dup = 0;
+const checkedAt = checkedAtOf(join(dir, 'results.json'));
+let ins = 0, dup = 0, skip = 0;
 for (const book of results) {
   const pagesRead = book.pages.map((p) => p.page_number);
-  const now = await pageRecords(db, book.book_id, pagesRead);
+  const now = await pageRecords(db, book.book_id, pagesRead, { withText: true });
   const pk = packetOf.get(book.book_id);
   const cost = pk ? runCost(dir, pk) : null;
-  const r = await recordBookCheck(db, {
+  let r;
+  try { r = await recordBookCheck(db, {
     book_id: book.book_id, checked_at: checkedAt, method_id: 'fortnightly-spot-check', method_version: version, run_id: round,
-    frame: { draw: round, frame, checked_at_source: 'results.json mtime' },
+    frame: { draw: round, frame, checked_at_source: 'results.json (git add or mtime)' },
     pages_read: pagesRead, reader: { kind: 'model', model: cost?.model ?? 'opus', image_opened: true },
     verdict: derivedFortnightly(book), verdict_source: 'derived:fortnightly-v1', classes: seriousClasses(book.pages), note: book.book_verdict,
     evidence_path: join(dir, 'results.json'),
     text_provenance: packetProvenance({ pagesRead, packetPages: sampleBooks.find((b) => b.book_id === book.book_id)?.pages, now, checkedAt, provenanceFromPage }),
     ...(cost ? { subscription_usd_eq: +(cost.usd / packetSize.get(pk)).toFixed(4) } : {}),
-  });
+  }); } catch (e) { console.error(`book_checks: ${book.book_id} refused — ${e.message}`); skip++; continue; }
   r.inserted ? ins++ : dup++;
 }
-console.log(`book_checks: ${ins} recorded, ${dup} already present`);
+console.log(`book_checks: ${ins} recorded, ${dup} already present, ${skip} refused (see above)`);
 await client.close();

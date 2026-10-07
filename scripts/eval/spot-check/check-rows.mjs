@@ -8,13 +8,17 @@
  *   seriousPage / seriousClasses   overview-score.mjs's definition of a serious page, and the classes on it
  *   FIT                            shelf-overview's fit_to_show → show | caveat | fix
  *   derivedFortnightly             the fortnightly rule (scripts/eval/methods/fortnightly-spot-check.md)
- *   pageRecords / packetProvenance the text a run read: the packet's model ids, plus the page's *_updated_at when the
- *                                  text has not been rewritten since the check
+ *   pageRecords / packetProvenance the text a run read: the packet's model ids; the packet's TEXT is compared with the
+ *                                  page's text now, so a page rewritten after the draw (before or after the review) is
+ *                                  changed_since_check, and only an unchanged page gets the page's *_updated_at stamps
+ *   checkedAtOf                    when an evidence file was written: the earlier of its git add time and its mtime
+ *                                  (a checkout resets mtime; an uncommitted fresh run has no git time)
  *   runCost                        `claude -p` total_cost_usd and model id from run-reviewers.sh's meta/<packet>*.json
  *                                  (what run-cost.py sums), so a row carries its share of the run's cost
  */
-import { readFileSync, readdirSync, existsSync } from 'node:fs';
-import { join } from 'node:path';
+import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
+import { join, dirname, basename } from 'node:path';
+import { execFileSync } from 'node:child_process';
 
 const allErrors = (p) => [...(p.ocr_errors || []), ...(p.tr_errors || []), ...(p.other || [])].filter((e) => e && typeof e === 'object');
 export const seriousPage = (p) => allErrors(p).some((e) => e.severity === 'serious') || p.right_page === 'no';
@@ -32,10 +36,24 @@ export function derivedFortnightly(b) {
 const PAGE_PROJECTION = { _id: 0, id: 1, page_number: 1, 'ocr.model': 1, 'ocr.source': 1, 'ocr.updated_at': 1, 'ocr.prompt_version': 1,
   'translation.model': 1, 'translation.source': 1, 'translation.updated_at': 1, 'translation.content_hash': 1 };
 
-/** Current page records of one book, keyed by page number. One indexed query ({book_id, page_number}); no text. */
-export async function pageRecords(db, bookId, nums) {
-  const rows = await db.collection('pages').find({ book_id: bookId, page_number: { $in: [...nums] } }, { projection: PAGE_PROJECTION }).toArray();
+/**
+ * Current page records of one book, keyed by page number. One indexed query ({book_id, page_number}). With
+ * `withText`, ocr.data and translation.data too — only the few pages a check read, to compare with its packet.
+ */
+export async function pageRecords(db, bookId, nums, { withText = false } = {}) {
+  const projection = withText ? { ...PAGE_PROJECTION, 'ocr.data': 1, 'translation.data': 1 } : PAGE_PROJECTION;
+  const rows = await db.collection('pages').find({ book_id: bookId, page_number: { $in: [...nums] } }, { projection }).toArray();
   return new Map(rows.map((r) => [r.page_number, r]));
+}
+
+/** When an evidence file was written: min(git add time, mtime). A checkout resets mtime; a fresh run has no commit. */
+export function checkedAtOf(path) {
+  const times = [statSync(path).mtime];
+  try {
+    const out = execFileSync('git', ['log', '--diff-filter=A', '--format=%aI', '-1', '--', basename(path)], { encoding: 'utf8', cwd: dirname(path), stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    if (out) times.push(new Date(out));
+  } catch { /* not in a git checkout */ }
+  return new Date(Math.min(...times.map((t) => t.getTime())));
 }
 
 const after = (d, at) => d && new Date(d) > at;
@@ -51,10 +69,14 @@ export function packetProvenance({ pagesRead, packetPages, now, checkedAt, prove
     const rewritten = cur && (after(cur.ocr?.updated_at, checkedAt) || after(cur.translation?.updated_at, checkedAt));
     const pk = packetPages?.find((p) => p.page_number === n);
     if (pk) {
+      // The reviewer read the packet's frozen text. Compare TEXT when both sides have it (pageRecords withText): a
+      // timestamp after checkedAt would miss a rewrite between the draw and the review.
+      const compared = cur && typeof pk.ocr === 'string' && cur.ocr && 'data' in cur.ocr;
+      const changed = !cur || (compared ? (cur.ocr?.data ?? '') !== pk.ocr || (cur.translation?.data ?? '') !== (pk.translation ?? '') : !!rewritten);
       const e = { page_number: n, page_id: pk.page_id ?? null, ocr_model: pk.ocr_model ?? (pk.ocr_engine ? `source:${pk.ocr_engine}` : null),
         ocr_source: pk.ocr_engine ?? null, translation_model: pk.translation_model ?? null, translation_source: pk.translation_source ?? null,
-        source: 'packet', changed_since_check: !cur || !!rewritten };
-      if (cur && !rewritten) Object.assign(e, { ocr_updated_at: cur.ocr?.updated_at ?? null, ocr_prompt_version: cur.ocr?.prompt_version ?? null,
+        source: 'packet', text_compared: !!compared, changed_since_check: changed };
+      if (!changed) Object.assign(e, { ocr_updated_at: cur.ocr?.updated_at ?? null, ocr_prompt_version: cur.ocr?.prompt_version ?? null,
         translation_updated_at: cur.translation?.updated_at ?? null, translation_content_hash: cur.translation?.content_hash ?? null });
       const miss = [!e.ocr_model && 'packet has no ocr_model', !e.translation_model && 'packet has no translation_model'].filter(Boolean);
       if (miss.length) e.unknown_reason = miss.join('; ');

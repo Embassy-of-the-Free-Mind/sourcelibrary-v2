@@ -22,11 +22,11 @@
  * `claude -p` cost when run-reviewers.sh launched it (meta/<stratum>.json). A rerun of the same dir adds nothing.
  * --no-record skips it; without MONGODB_URI it says so and records nothing.
  */
-import { readFileSync, writeFileSync, existsSync, statSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { bootstrapRatioCI, resetSeed } from '../lib/paired-stats.mjs';
 import { recordBookCheck, ensureBookCheckIndexes, provenanceFromPage, readMethod } from '../../lib/book-checks.mjs';
-import { seriousPage, seriousClasses, FIT, pageRecords, packetProvenance, runCost } from './check-rows.mjs';
+import { seriousPage, seriousClasses, FIT, pageRecords, packetProvenance, runCost, checkedAtOf } from './check-rows.mjs';
 
 const args = process.argv.slice(2);
 const dir = args[args.indexOf('--dir') + 1];
@@ -84,26 +84,29 @@ let ins = 0, dup = 0, skip = 0;
 for (const st of log.strata) {
   const f = join(dir, 'reviews', `${st.name}.json`);
   if (!existsSync(f)) continue;
-  const checkedAt = statSync(f).mtime;
+  const checkedAt = checkedAtOf(f);
   const packets = JSON.parse(readFileSync(join(dir, 'packets', `${st.name}.json`), 'utf8'));
   const reviews = JSON.parse(readFileSync(f, 'utf8'));
   const cost = runCost(dir, st.name);
   for (const b of reviews) {
     const verdict = FIT[b.fit_to_show];
     if (!verdict) { console.error(`book_checks: ${b.book_id} has no fit_to_show — not recorded`); skip++; continue; }
+    // Every page the reviewer read, soft-hidden (≤ 0) ones included: the record is of the read, and the read's verdict
+    // covers them. The report above leaves them out of its RATES, which is a different question.
     const pagesRead = b.pages.map((p) => p.page_number);
-    const now = await pageRecords(db, b.book_id, pagesRead);
-    const r = await recordBookCheck(db, {
+    const now = await pageRecords(db, b.book_id, pagesRead, { withText: true });
+    let r;
+    try { r = await recordBookCheck(db, {
       book_id: b.book_id, checked_at: checkedAt, method_id: 'shelf-overview', method_version: version, run_id: runId,
-      frame: { stratum: st.name, seed: log.seed, draw: runId, checked_at_source: 'reviews file mtime' },
+      frame: { stratum: st.name, seed: log.seed, draw: runId, checked_at_source: 'reviews file (git add or mtime)' },
       pages_read: pagesRead, reader: { kind: 'model', model: cost?.model ?? 'opus', image_opened: true },
       verdict, verdict_source: 'reader', classes: seriousClasses(b.pages), note: b.reader_summary ?? b.book_verdict,
       evidence_path: f,
       text_provenance: packetProvenance({ pagesRead, packetPages: packets.find((x) => x.book_id === b.book_id)?.pages, now, checkedAt, provenanceFromPage }),
       ...(cost ? { subscription_usd_eq: +(cost.usd / reviews.length).toFixed(4) } : {}),
-    });
+    }); } catch (e) { console.error(`book_checks: ${b.book_id} refused — ${e.message}`); skip++; continue; }
     r.inserted ? ins++ : dup++;
   }
 }
-console.log(`book_checks: ${ins} recorded, ${dup} already present, ${skip} without a verdict`);
+console.log(`book_checks: ${ins} recorded, ${dup} already present, ${skip} not recorded (see above)`);
 await client.close();

@@ -23,7 +23,8 @@
  *
  * checked_at is the author time of the commit that added the evidence file: an upper bound on when it was read
  * (frame.checked_at_source = 'commit'). Text provenance: from the packet where the run froze one (model ids as read;
- * the page's current *_updated_at added only when the text has not been rewritten since); otherwise reconstructed from
+ * the packet's text compared with the page's text now, and the page's *_updated_at added only when they are equal);
+ * otherwise reconstructed from
  * the page record, and only when the page's text predates checked_at — else the model ids are null with the reason.
  * Rights notes (rights_flag, rights_note) are never copied: this record is not where rights suspicions live.
  */
@@ -175,7 +176,7 @@ for (const h of hidden) {
 const want = new Map();
 for (const c of cands.filter((x) => !x.drop)) { const s = want.get(c.book_id) ?? new Set(); c.pages_read.forEach((n) => s.add(n)); want.set(c.book_id, s); }
 const pageRec = new Map();
-for (const [bookId, nums] of want) pageRec.set(bookId, await pageRecords(db, bookId, nums));
+for (const [bookId, nums] of want) pageRec.set(bookId, await pageRecords(db, bookId, nums, { withText: true }));
 const provenance = (c) => packetProvenance({ pagesRead: c.pages_read, packetPages: c.packetPages, now: pageRec.get(c.book_id), checkedAt: c.checked_at, provenanceFromPage });
 
 // Build every row first, then write. A source row the helper refuses (a tier outside 1–3, a page with no number) is
