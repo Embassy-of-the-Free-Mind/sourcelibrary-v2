@@ -71,6 +71,8 @@
  *                 Closes the submit-time usage rows with the BILLED tokens (batch
  *                 results carry usageMetadata; realtime ones do not). Free: it
  *                 runs whatever the dial says. --collect-concurrency N (default 3).
+ *                 --collect-jobs id,id collects only those jobs (and takes ones
+ *                 parked with status 'held').
  *
  * Env: MONGODB_URI, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, SUPABASE_DB_URL,
  *      GEMINI_API_KEY_TIER3 (preferred, no training opt-in) or GEMINI_API_KEY
@@ -142,6 +144,10 @@ const BATCH_MODE = args.includes('--batch');
 const COLLECT_MODE = args.includes('--collect');
 const JOB_PAGES = parseInt(args.find((_, i, a) => a[i - 1] === '--job-pages') || '20000');
 const COLLECT_CONCURRENCY = parseInt(args.find((_, i, a) => a[i - 1] === '--collect-concurrency') || '3');
+// --collect-jobs id,id: collect ONLY these jobs, including ones set aside with status 'held'.
+// A plain --collect takes every finished job, whoever submitted it; a job composed by a newer
+// checkout than the collector's fails the text-hash check page by page and is lost (#6175).
+const COLLECT_JOBS = (args.find((_, i, a) => a[i - 1] === '--collect-jobs') || '').split(',').filter(Boolean);
 const MAX_RUNNING = parseInt(args.find((_, i, a) => a[i - 1] === '--max-running') || '0') || 0;
 if (BATCH_MODE && !BOOKS_FILE && !PAGES_FILE) {
   // A batch job is priced and attributed per book; an open-ended batch --full
@@ -508,8 +514,9 @@ async function collectEmbedJobs() {
   if (!SUPABASE_DB_URL) { console.error('--collect needs SUPABASE_DB_URL'); process.exit(1); }
   const jobs = db.collection(EMBED_JOBS);
   const staleClaim = new Date(Date.now() - 2 * 3600e3);
+  const open = { $or: [{ status: 'submitted' }, { status: 'collecting', collecting_at: { $lt: staleClaim } }] };
   const todo = await jobs.find(
-    { $or: [{ status: 'submitted' }, { status: 'collecting', collecting_at: { $lt: staleClaim } }] },
+    COLLECT_JOBS.length ? { _id: { $in: COLLECT_JOBS }, $or: [...open.$or, { status: 'held' }] } : open,
     { projection: { page_ids: 0 } },
   ).sort({ created_at: 1 }).toArray();
   console.log(`[collect] ${todo.length} job(s) to check`);
@@ -521,8 +528,8 @@ async function collectEmbedJobs() {
       try { await collectEmbedJob(job, report); } catch (e) { report.errored++; console.error(`[collect] ${job._id}: ${e.message}`); }
     }
   }));
-  const open = await jobs.countDocuments({ status: { $in: ['submitted', 'collecting'] } });
-  console.log(`[collect] ${JSON.stringify(report)} — ${open} job(s) still open`);
+  const stillOpen = await jobs.countDocuments({ status: { $in: ['submitted', 'collecting', 'held'] } });
+  console.log(`[collect] ${JSON.stringify(report)} — ${stillOpen} job(s) still open`);
 }
 
 async function collectEmbedJob(job, report) {
@@ -751,7 +758,7 @@ if (BOOK_ID) {
   const skip = new Set();
   if (BATCH_MODE) {
     const inflight = db.collection(EMBED_JOBS).find(
-      { page_ids: { $in: ids }, $or: [{ status: { $in: ['submitted', 'collecting'] } }, { status: 'creating', created_at: { $gt: new Date(Date.now() - 3600e3) } }] },
+      { page_ids: { $in: ids }, $or: [{ status: { $in: ['submitted', 'collecting', 'held'] } }, { status: 'creating', created_at: { $gt: new Date(Date.now() - 3600e3) } }] },
       { projection: { page_ids: 1 } },
     );
     for await (const j of inflight) for (const id of j.page_ids || []) skip.add(id);
