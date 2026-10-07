@@ -19,7 +19,8 @@
  *               pages matched (lower bound, capped at 100,000) and the books of
  *               the 25 best pages
  *   search      the real /api/search handler, limit 50: book rows, passage rows
- *   unified     the real /api/search/unified handler: books, collections, artworks
+ *   unified     the real /api/search/unified handler: books, collections (its artwork
+ *               count mixes a vector lane that times out under load: not compared)
  * Env: OUT (required), ONLY (substring of a query id), ROUTES=0 to skip the two
  * route calls. Reads prod Mongo and Supabase; calls the embedding API once per
  * route call. Writes nothing to any store.
@@ -93,5 +94,5 @@ test('word-form lanes', async () => {
     }
     out[q.id] = row;
   }
-  writeFileSync(process.env.OUT, JSON.stringify(out, null, 1));
+  writeFileSync(process.env.OUT, JSON.stringify(out));
 });

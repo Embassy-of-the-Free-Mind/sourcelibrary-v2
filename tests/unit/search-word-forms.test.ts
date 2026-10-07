@@ -75,8 +75,8 @@ describe('matchStems', () => {
   it('adds the stems of a family no suffix rule joins', () => {
     expect(matchStems('medical')).toEqual(['medic']);
     expect(matchStems('medicine')).toEqual(['medic']);
-    expect(matchStems('herbal')).toEqual(['herb']);
-    expect(matchStems('herbs')).toEqual(['herb']);
+    expect(matchStems('herbal')).toEqual(['herba', 'herbs', 'herbes']);
+    expect(matchStems('herbs')).toEqual(['herba', 'herbs', 'herbes']);
     expect(matchStems('poetry').sort()).toEqual(['poem', 'poet']);
     expect(matchStems('surgical').sort()).toEqual(['chirurg', 'surg']);
     expect(matchStems('chymical').sort()).toEqual(['chemi', 'chymi']);
@@ -139,6 +139,9 @@ describe('stemmedQueryRegex', () => {
     expect(stemmedQueryRegex('optical').test('Coptic manuscripts')).toBe(false);
     expect(stemmedQueryRegex('herbal').test('Herbarius latinus')).toBe(true);
     expect(stemmedQueryRegex('herbal').test('Sherborne missal')).toBe(false);
+    // "herb" alone starts a town named in hundreds of imprints.
+    expect(stemmedQueryRegex('herbal').test('Herbornae Nassoviorum, 1612')).toBe(false);
+    expect(stemmedQueryRegex('herbs').test('Mysterium sigillorum, herbarum & lapidum')).toBe(true);
   });
 
   it('still matches the word as typed anywhere, as the plain regex did', () => {

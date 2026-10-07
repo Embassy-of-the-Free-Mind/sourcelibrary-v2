@@ -48,7 +48,8 @@ const FOLDABLE = /^[a-z]+$/;
 const FAMILIES: Array<{ stems: string[]; words: string[] }> = [
   // "medic" also reaches the Latin (materia medica, medicus) and, as noise, "Medici".
   { stems: ['medic'], words: ['medical', 'medicine', 'medicines', 'medicinal'] },
-  { stems: ['herb'], words: ['herb', 'herbs', 'herbal', 'herbals', 'herbalism', 'herbalist', 'herbalists'] },
+  // Not a bare "herb": it starts Herborn (an academy in hundreds of imprints), Herbert, Herbrand.
+  { stems: ['herba', 'herbs', 'herbes'], words: ['herbs', 'herbal', 'herbals', 'herbalism', 'herbalist', 'herbalists'] },
   { stems: ['poet', 'poem'], words: ['poet', 'poets', 'poetic', 'poetical', 'poetry', 'poem', 'poems'] },
   // "chirurgery" / "chirurgical" are the period English spellings.
   { stems: ['surg', 'chirurg'], words: ['surgical', 'surgery', 'surgeon', 'surgeons', 'chirurgery', 'chirurgical'] },
@@ -90,15 +91,14 @@ export function matchStem(word: string): string {
 }
 
 /**
- * Every substring a title is searched for: the stem, plus the stems of the
- * word's family when it has one. Stems that contain another are dropped
- * ("herbal" beside "herb" adds nothing).
- *   medicine → [medic], poetry → [poet, poem], herbal → [herb], botanical → [botan]
+ * Every word-start a title is searched for: the stems of the word's family
+ * when it has one, else its one stem.
+ *   medicine → [medic], poetry → [poet, poem], herbal → [herba, herbs, herbes],
+ *   botanical → [botan]
  */
 export function matchStems(word: string): string[] {
   const w = word.toLowerCase();
-  const stems = [matchStem(w), ...(FAMILY_OF.get(w)?.stems ?? [])];
-  return [...new Set(stems)].filter(s => !stems.some(o => o !== s && s.includes(o)));
+  return FAMILY_OF.get(w)?.stems ?? [matchStem(w)];
 }
 
 /** True when folding searches for anything beyond the word as typed. */
