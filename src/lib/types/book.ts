@@ -99,6 +99,12 @@ export interface Book {
 
   // Workflow status
   status?: BookStatus;
+  /** True when this record is a partial scan / preview of a larger work — the
+   *  source site (e.g. museumsofindia) hosts only a handful of page images
+   *  where the physical object has many more. Public books carrying this flag
+   *  show a "Preview" badge on their page and cards. Absent/null = not a
+   *  preview. Independent of `publication`/`visible`: a preview can be public. */
+  preview?: boolean;
   /** Libraries/institutions that hold a copy of this work (e.g. ['bph', 'mdz']) */
   held_by?: string[];
   summary?: string | BookSummary;
