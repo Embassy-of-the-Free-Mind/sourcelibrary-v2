@@ -82,7 +82,7 @@ import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
 import fs from 'node:fs';
 import crypto from 'node:crypto';
-import { cleanPageText, buildPageEmbeddingRow, PAGE_EMBEDDING_COLUMNS } from '../lib/page-embedding-text.mjs';
+import { cleanPageText, pageEmbeddingInput, buildPageEmbeddingRow, PAGE_EMBEDDING_COLUMNS } from '../lib/page-embedding-text.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage, estimateUsd, estimateTextTokens, usdForTokens, FLUSH_EVERY_TEXTS } from '../lib/embedding-usage.mjs';
 import { pageSourceTs, incrementalSourceFilter, nextWatermark, readWatermark, writeWatermark } from '../lib/embed-watermark.mjs';
@@ -317,27 +317,26 @@ const PAGE_PROJECTION = {
   'translation.updated_at': 1,
   'ocr.updated_at': 1,
   updated_at: 1, // fallback for the mongo_updated_at watermark when sub-doc timestamps are missing
-  translation_summary: 1,
-  translation_keywords: 1,
 };
 
 /**
  * The text this worker embeds for a page, or null when it has none worth
- * embedding. Translation (or OCR) plus the compact, high-signal summary and
- * keywords that sharpen the vector for concept-level matching. ONE function
- * for the realtime stream and the batch collector, which rebuilds the text to
- * check it still matches what was submitted.
+ * embedding. ONE function for the realtime stream and the batch collector,
+ * which rebuilds the text to check it still matches what was submitted.
+ *
+ * It is the SHARED composer (`pageEmbeddingInput`), the one enrich Phase 6
+ * uses. This worker used to prepend the page's `translation_summary` and
+ * `translation_keywords`, and because the row's `translation` column is the
+ * composed text, the AI's description of the page was stored as its quotable
+ * snippet — the #2232 misquote class, alive in one writer (#6175: 58 of 148
+ * summary-bearing pages sampled). The 20-character floor is this worker's own
+ * and is kept: a stub translation falls back to the OCR, as before.
  */
 function composeEmbedText(page) {
+  const input = pageEmbeddingInput(page);
+  if (input && input.text.length >= 20) return input;
   const ocrText = cleanText(page.ocr?.data);
-  const translationText = cleanText(page.translation?.data);
-  if (ocrText.length < 20 && translationText.length < 20) return null;
-  let text = translationText.length >= 20 ? translationText : ocrText;
-  const meta = [];
-  if (page.translation_summary) meta.push(page.translation_summary);
-  if (page.translation_keywords?.length) meta.push(`Keywords: ${page.translation_keywords.join(', ')}`);
-  if (meta.length) text = meta.join('\n') + '\n\n' + text;
-  return { text, hasTranslation: translationText.length >= 20 };
+  return ocrText.length >= 20 ? { text: ocrText, hasTranslation: false } : null;
 }
 
 // Book metadata cache
