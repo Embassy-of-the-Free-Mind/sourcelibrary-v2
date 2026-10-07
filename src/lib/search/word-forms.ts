@@ -20,7 +20,7 @@
  * Second pass (#5517, measured 2026-10-07 on 38 queries): the first rules
  * needed five letters left after the suffix, so every four-letter root still
  * failed. "magical" found 35 books where "magic" finds 176, "optical" 1 where
- * "optics" finds 97, "witches" 27 of 52, "astronomer" 2 of 295. Added: -ical
+ * "optics" finds 51, "witches" 27 of 52, "astronomer" 2 of 295. Added: -ical
  * over a short root keeps the -ic ("magical" → "magic"), -es after a sibilant,
  * -istic, -ian, the -nomer/-loger/-sopher/-grapher agent nouns, and a short
  * table of families no suffix rule can join (medical/medicine, herbal/herbs,

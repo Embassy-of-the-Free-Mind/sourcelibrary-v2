@@ -39,7 +39,7 @@ describe('matchStem', () => {
   });
 
   // Second pass: measured 2026-10-07, each of these found a fraction of what
-  // its sibling finds (magical 35 / magic 176, optical 1 / optics 97).
+  // its sibling finds (magical 35 / magic 176, optical 1 / optics 51).
   it('joins forms whose root has four letters', () => {
     const pairs: [string, string][] = [
       ['magical', 'magic'],
