@@ -22,7 +22,8 @@
  *      page carrying `translation.health_blocked`. Without the stamp the page is re-translated by whatever
  *      code is deployed, before the guard is.
  *   3. Per book: move featured quotes drawn from those pages to `reading_summary.quotes_withheld`,
- *      recount the page counters, re-sync the Supabase `pages` mirror, and write one `sweep_log` row.
+ *      recount the page counters, re-sync the Supabase `pages` mirror, ask the site to re-render the
+ *      book (`/api/admin/revalidate-book`), and write one `sweep_log` row.
  *   4. Park the Supabase `page_translations` snippet and vector of each page (the search surface), with
  *      the statement of scripts/migration/add-page-translations-withheld.mjs --move.
  *
@@ -82,7 +83,7 @@ const run = promisify(execFile);
 
 const T = { mode: VERIFY ? 'verify' : APPLY ? 'apply' : 'dry-run', listed: listed.length, books: byBook.size, found: 0,
   refusable: 0, already_withheld: 0, changed_since_walk: 0, human_edited: 0, no_snapshot: 0, withheld: 0, pin_missed: 0,
-  quotes_moved: 0, books_changed: 0, recounted: 0, mirror_synced: 0, mirror_failed: 0, sweep_rows: 0, search_rows_parked: null };
+  quotes_moved: 0, books_changed: 0, recounted: 0, revalidated: 0, revalidate_failed: 0, mirror_synced: 0, mirror_failed: 0, sweep_rows: 0, search_rows_parked: null };
 const V = { withheld_no_text: 0, stamped: 0, snapshot_ok: 0, still_serving_leak: 0, other: 0, books_under_90: [] };
 const writtenIds = [];
 
@@ -154,7 +155,7 @@ async function oneBook(bookId, rows) {
   if (!targets.length) return;
   const pageNumbers = new Set(targets.map((t) => t.page.page_number));
   if (!APPLY) {
-    T.quotes_moved += await moveQuotes(bookId, pageNumbers);
+    const q = await moveQuotes(bookId, pageNumbers); T.quotes_moved += q;
     rec({ book: bookId, status: 'dry-run', pages: [...pageNumbers] });
     return;
   }
@@ -186,6 +187,16 @@ async function oneBook(bookId, rows) {
   // The mirror's 5-minute worker selects by `translation.updated_at`, which this write removes.
   try { await run(process.execPath, ['scripts/workers/sync-pages-content.mjs', `--book=${bookId}`], { timeout: 300000, env: process.env }); T.mirror_synced++; }
   catch (e) { T.mirror_failed++; rec({ book: bookId, status: 'supabase-pages-mirror-sync-failed', error: String(e.message).slice(0, 160) }); }
+  // Reader HTML is edge-cached for 24 h; the route re-renders the book's pages and purges its landing URLs.
+  // It does not purge each /page/<id> URL at Cloudflare: one a visitor loaded in the last day can stay up to 24 h.
+  let revalidated = false;
+  if (process.env.CRON_SECRET) {
+    try {
+      const r = await fetch(`https://sourcelibrary.org/api/admin/revalidate-book/${bookId}`, { method: 'POST', headers: { 'x-revalidate-secret': process.env.CRON_SECRET } });
+      revalidated = r.ok;
+    } catch { /* counted below */ }
+  }
+  if (revalidated) T.revalidated++; else { T.revalidate_failed++; rec({ book: bookId, status: 'revalidate-failed' }); }
   await recordSweepAction(db, {
     sweep: SWEEP, book_id: bookId, action: 'translation-withheld',
     detail: { issue: 6117, reason: REASON, pages: done.map((t) => ({ page_id: t.page.id, page_number: t.page.page_number, kind: t.kind, chars: t.text.length })),
