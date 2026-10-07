@@ -20,6 +20,8 @@
  * Writes src/data/ocr-pareto.json. No timestamps: unchanged inputs give an identical file.
  *   node scripts/eval/build-ocr-pareto.mjs           # write
  *   node scripts/eval/build-ocr-pareto.mjs --check   # exit 1 if the committed file is stale
+ *   node scripts/eval/build-ocr-pareto.mjs --dump-sets=<file>   # write each chart's most-pages page keys
+ *                                                    # (stratum|slug) and engines, nothing else (#6011 wave 2)
  *
  * The rules (.claude/docs/eval-design.md §7):
  *   - engines are compared ONLY on pages every plotted engine read, against a typed reference,
@@ -148,8 +150,11 @@ function costOf(engine, chartId) {
 // engine, the benchmark store wins (they agree on 681 of 690 such pairs; the rest are separate runs).
 // Then #6011 wave 1 (results/engine-wave1-6011/scored): the same scorer and references on a seeded subset of the
 // sealed strata. Only its six new engines are taken; its re-scored comparator rows never override the store.
-const OPEN_ENGINE_DIRS = ['open-engine-print-5660/scored', 'open-engine-print-5660/scored-olmocr', 'engine-wave1-6011/scored'];
-const DIR_ENGINES = { 'engine-wave1-6011/scored': new Set(['deepseek-ocr', 'qwen3-vl-8b', 'chandra-ocr-2', 'mistral-ocr-4-1', 'claude-opus-5-5', 'claude-sonnet-5-5']) };
+// Then #6011 wave 2 (results/engine-wave2-6011/scored): the same six engines on the rest of each chart's most-pages
+// set (PREREGISTRATION-engine-wave2-6011.md); a page wave 1 already read keeps its wave-1 row.
+const WAVE_ENGINES = new Set(['deepseek-ocr', 'qwen3-vl-8b', 'chandra-ocr-2', 'mistral-ocr-4-1', 'claude-opus-5-5', 'claude-sonnet-5-5']);
+const OPEN_ENGINE_DIRS = ['open-engine-print-5660/scored', 'open-engine-print-5660/scored-olmocr', 'engine-wave1-6011/scored', 'engine-wave2-6011/scored'];
+const DIR_ENGINES = { 'engine-wave1-6011/scored': WAVE_ENGINES, 'engine-wave2-6011/scored': WAVE_ENGINES };
 const isRepeatArm = e => /-b$/.test(e); // the A-vs-A repeat of production; it is the noise floor, not an engine
 const benchRows = [];
 {
@@ -171,15 +176,19 @@ const accRows = benchRows
   .filter(r => r.referenced && r.aligned && r.cer != null && !isRepeatArm(r.engine))
   .map(r => ({ page: `${r.stratum}|${r.slug}`, book: `${r.stratum}|${r.slug}`, stratum: r.stratum, engine: r.engine, cer: r.cer, refused: r.refused, invented: r.invention_ref, date: r.date, file: r.file, row: r }));
 
-// Syriac: the ground-truth retest scores pages of two manuscripts, so pages are not books here.
+// Syriac: the ground-truth retest scores pages of two manuscripts, so pages are not books here. #6011 wave 2 scored
+// the six wave engines with the same scorer against the same ground truth into its own file; only those engines are taken.
 const SYRIAC_FILE = 'syriac-retest-2026-09-16/score.json';
+const SYRIAC_SOURCES = [[path.join(BENCHMARK_DIR, SYRIAC_FILE), null, '2026-09-16'], [path.join(__dirname, 'results', 'engine-wave2-6011', 'syriac-gt-score.json'), WAVE_ENGINES, null]];
 const syriacRows = [];
-{
-  const j = JSON.parse(fs.readFileSync(path.join(BENCHMARK_DIR, SYRIAC_FILE), 'utf8'))['syriac-gt'];
+for (const [file, only, fixedDate] of SYRIAC_SOURCES) {
+  if (!fs.existsSync(file)) continue;
+  const j = JSON.parse(fs.readFileSync(file, 'utf8'))['syriac-gt'];
+  const date = fixedDate || j.date;
   for (const [slug, engines] of Object.entries(j.pages)) for (const [engine, e] of Object.entries(engines)) {
-    if (typeof e.cer_n2 !== 'number') continue;
+    if (typeof e.cer_n2 !== 'number' || (only && !only.has(engine))) continue;
     // An output longer than the page can score CER > 1; for accuracy it is simply 0.
-    syriacRows.push({ page: `syriac-gt|${slug}`, book: slug.split('-')[0], stratum: 'syriac-gt', engine, cer: Math.min(1, e.cer_n2), refused: false, invented: null, date: SYRIAC_FILE.match(/(\d{4}-\d{2}-\d{2})/)[1], file: `scripts/eval/results/benchmark/${SYRIAC_FILE}` });
+    syriacRows.push({ page: `syriac-gt|${slug}`, book: slug.split('-')[0], stratum: 'syriac-gt', engine, cer: Math.min(1, e.cer_n2), refused: false, invented: null, date, file: path.relative(REPO, file) });
   }
 }
 
@@ -245,7 +254,7 @@ function panel(script, kind, byEngine, engines, pages, production) {
   };
 }
 
-const charts = [], noChart = [];
+const charts = [], noChart = [], mostPagesSets = {};
 for (const script of SCRIPTS) {
   const rows = script.source === 'syriac' ? syriacRows : accRows.filter(r => script.match(r.row));
   const byEngine = pagesOf(rows);
@@ -261,6 +270,7 @@ for (const script of SCRIPTS) {
   }
   const wide = greedy(byEngine, production, Math.max(MIN_PAGES, Math.ceil(nProd * WIDE_KEEP)));
   const panels = [panel(script, 'most-pages', byEngine, wide.engines, wide.pages, production)];
+  mostPagesSets[script.id] = { engines: wide.engines, pages: [...wide.pages].sort() };
   const broad = greedy(byEngine, production, MIN_PAGES);
   if (broad.engines.length > wide.engines.length) panels.push(panel(script, 'most-engines', byEngine, broad.engines, broad.pages, production));
   // Engines run with a reference on this script but on too few of the same pages to join either panel.
@@ -280,6 +290,8 @@ const out = {
   no_chart: [...noChart, ...NO_REFERENCE],
 };
 const json = JSON.stringify(out, null, 1) + '\n';
+const dumpTo = process.argv.find(a => a.startsWith('--dump-sets='))?.slice('--dump-sets='.length);
+if (dumpTo) { fs.writeFileSync(dumpTo, JSON.stringify(mostPagesSets, null, 1) + '\n'); console.log(`wrote ${dumpTo}`); process.exit(0); }
 // --check: fail when the committed file is not what the inputs give (CI test); writes nothing.
 if (process.argv.includes('--check')) {
   const have = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : '';

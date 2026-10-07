@@ -138,6 +138,17 @@
         "quote": "**$4.62** on Chinese manuscript",
         "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md",
         "measured_on": "2026-10-06"
+      },
+      {
+        "charts": [
+          "chinese-print"
+        ],
+        "basis": "metered-api",
+        "usd_per_1k": 12.32,
+        "hardware": "Claude Sonnet 5.5 via OpenRouter (Anthropic), effort low",
+        "quote": "**$12.32 per 1,000 pages** on Chinese print",
+        "source": "scripts/eval/experiments/2026-10-07-ocr-engines-full-sets-wave2-6011.md",
+        "measured_on": "2026-10-07"
       }
     ],
     "claude-opus-5-5": [
