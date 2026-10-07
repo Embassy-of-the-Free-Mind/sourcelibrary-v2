@@ -755,7 +755,7 @@ export default function ImageDetailPage({
     if (!data) return;
     const imageUrl = data.extractedUrl || data.imageUrl;
     const pageUrl = window.location.href;
-    const desc = `${data.description}. From "${data.book.title}"${data.book.year ? ` (${data.book.year})` : ''} via Source Library`;
+    const desc = `${(data.description || '').replace(/[.\s]+$/, '')}. From "${data.book.title}"${data.book.year ? ` (${data.book.year})` : ''} via Source Library`;
     window.open(
       `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(pageUrl)}&media=${encodeURIComponent(imageUrl)}&description=${encodeURIComponent(desc)}`,
       '_blank',
