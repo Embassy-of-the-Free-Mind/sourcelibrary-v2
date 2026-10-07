@@ -229,7 +229,7 @@ export function searchKeys({ toh, title_sa, title_ewts, people = [] }) {
     for (const w of String(s).split(/[\s\-/_]+/)) { const f = fold(w); if (f.length >= 3) keys.add(f); }
   };
   add(title_sa); add(title_ewts);
-  for (const p of people) { add(p.name); add(p.name_ewts); }
+  for (const p of people) { add(p.name); add(p.name_ewts); add(p.canonical_name); }
   const n = String(toh || '').replace(/^D/, '');
   if (n) { keys.add(`toh${n.toLowerCase()}`); keys.add(n.toLowerCase()); }
   return [...keys];
