@@ -44,7 +44,17 @@ parallel, retries a call that ends without its file, and writes `meta/` with eac
 - Measured on #6174: $0.15–0.20 per page.
 - Agreement with session-run reviews is the same as two script runs agreeing with each other (κ 0.85–0.92).
 - Run it under `nohup`, or as a Hetzner job, and leave this window quiet while it runs.
-- To measure reviewer consistency on a new shelf, run it twice and compare with
+- **Every run rereads one stratum (standing rule, #6174).** It costs about $2.50 and builds the reviewer-consistency
+  series:
+  1. Pick one packet at random: `ls <dir>/packets | shuf -n1`.
+  2. Copy it alone into `<scratchpad>/retest-packets/` and run the runner again into `<scratchpad>/retest`.
+  3. Run `review-agreement.py RUN=<scratchpad>/overview RETEST=<scratchpad>/retest > <dir>/agreement.md`. The weekly
+     subscription report lists every `agreement.md` on main.
+  4. Put the κ in your #6056 line.
+
+  A serious-flag κ below 0.7 means the stratum's rate is noise-dominated: say so in the report rather than quote
+  the rate.
+- To measure reviewer consistency on a whole new shelf, run it twice and compare with
   `scripts/eval/spot-check/review-agreement.py A=<dir1>/reviews B=<dir2>/reviews`.
   The pattern is in `2026-10-07-script-run-reviewers-6174.md`.
 
