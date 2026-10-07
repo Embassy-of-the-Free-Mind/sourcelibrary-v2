@@ -2,6 +2,7 @@
 // scripts/batch/bulk-reocr-local.mjs (the production Flash/lite request, Batch, writes pages.ocr). This runner
 // sends the production request on realtime at chosen temperatures, k samples per arm, and writes FILES only.
 // Usage: node --env-file=/root/sourcelibrary/.env.production.local run-arms.mjs <slots-final.json> <out.jsonl> [--execute]
+//   [--arms=FP,LP --cap=0.48]  (plain-prompt arms, prereg addendum; default arms F0,F1,L1,P1 and cap 2.8)
 import { MongoClient } from 'mongodb';
 import fs from 'node:fs';
 import { callGemini } from '../../lib/gemini-script-client.mjs';
@@ -9,7 +10,8 @@ import { getPageSource } from '../../lib/page-image-url.mjs';
 
 const [slotsFile, outFile] = process.argv.slice(2);
 const EXECUTE = process.argv.includes('--execute');
-const CAP_USD = 2.8;
+const opt = (k, d) => (process.argv.find((a) => a.startsWith(`--${k}=`)) || '').split('=')[1] || d;
+const CAP_USD = Number(opt('cap', 2.8));
 const PRICE = { 'gemini-3-flash-preview': [0.5, 3], 'gemini-3.1-flash-lite': [0.25, 1.5], 'gemini-3.1-pro-preview': [2.5, 15] };
 const PRO_PROMPT = 'Transcribe the Sanskrit (Devanagari) text on this printed page exactly as printed, character for character. Do not correct, normalise or emend anything: keep every vowel sign, virāma and avagraha as the print has it. Plain text only, one printed line per line.';
 // Same as bulk-reocr-local.mjs SAFETY_SETTINGS.
@@ -29,7 +31,10 @@ const ARMS = [
   { arm: 'F1', model: 'gemini-3-flash-preview', temperature: 1.0, thinkingBudget: 0, prompt: OCR_PROMPT, n: 5 },
   { arm: 'L1', model: 'gemini-3.1-flash-lite', temperature: 1.0, thinkingBudget: 0, prompt: OCR_PROMPT, n: 5 },
   { arm: 'P1', model: 'gemini-3.1-pro-preview', temperature: 1.0, thinkingBudget: 128, prompt: PRO_PROMPT, n: 2 },
-];
+  // Addendum: Pro's plain prompt on Flash and lite at the served temperature — separates model from prompt.
+  { arm: 'FP', model: 'gemini-3-flash-preview', temperature: 0.1, thinkingBudget: 0, prompt: PRO_PROMPT, n: 3 },
+  { arm: 'LP', model: 'gemini-3.1-flash-lite', temperature: 0.1, thinkingBudget: 0, prompt: PRO_PROMPT, n: 3 },
+].filter((a) => opt('arms', 'F0,F1,L1,P1').split(',').includes(a.arm));
 const pageIds = [...new Set(JSON.parse(fs.readFileSync(slotsFile, 'utf8')).map((s) => s.page_id))];
 const done = new Set(fs.existsSync(outFile) ? fs.readFileSync(outFile, 'utf8').trim().split('\n').filter(Boolean).map((l) => JSON.parse(l)).map((r) => `${r.page_id}|${r.arm}|${r.sample}`) : []);
 let spent = fs.existsSync(outFile) ? fs.readFileSync(outFile, 'utf8').trim().split('\n').filter(Boolean).reduce((a, l) => a + JSON.parse(l).usd, 0) : 0;
@@ -57,7 +62,7 @@ async function one({ id, a, s }) {
     if (r.finishReason !== 'STOP' || !r.text) throw new Error('finish ' + r.finishReason);
     const [pi, po] = PRICE[a.model]; const usd = (r.inputTokens * pi + r.outputTokens * po) / 1e6; spent += usd;
     fs.appendFileSync(outFile, JSON.stringify({ page_id: id, book_id: p.book_id, page: p.page_number, arm: a.arm, sample: s, model: a.model, temperature: a.temperature,
-      thinking_budget: a.thinkingBudget, prompt: a.arm === 'P1' ? 'pro-plain-6184' : `${pr.name} v${pr.version}`, image_url: url, in: r.inputTokens, out: r.outputTokens, think: r.thinkingTokens, usd, at: new Date().toISOString(), text: r.text }) + '\n');
+      thinking_budget: a.thinkingBudget, prompt: a.prompt === PRO_PROMPT ? 'pro-plain-6184' : `${pr.name} v${pr.version}`, image_url: url, in: r.inputTokens, out: r.outputTokens, think: r.thinkingTokens, usd, at: new Date().toISOString(), text: r.text }) + '\n');
     return;
   } catch (e) { console.error(id, a.arm, s, e.message.slice(0, 140)); await new Promise((z) => setTimeout(z, 4000)); }
 }
