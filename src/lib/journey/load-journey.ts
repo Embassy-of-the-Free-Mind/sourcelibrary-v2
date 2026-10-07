@@ -197,11 +197,26 @@ async function loadEditions(db: Db, bookId: string, workId: string | undefined):
     }));
 }
 
+/** Attempts at the curated search: a cold index times out, and the repeat call is warm. */
+const SEARCH_ATTEMPTS = 3;
+
+/** True while `next build` prerenders. There is no last good render to fall back on then. */
+function duringBuild(): boolean {
+  return process.env.NEXT_PHASE === 'phase-production-build';
+}
+
 /**
  * Runs the curated search by meaning and keeps it only if this page is near
- * the top. A failed search throws (the page's last good render keeps serving,
- * rendering-and-seo.md); a search that simply no longer finds the page drops
- * the claim.
+ * the top. A search that simply no longer finds the page drops the claim.
+ *
+ * A FAILED search is retried, then:
+ *  - at request time it throws, and the page's last good render keeps serving
+ *    (rendering-and-seo.md);
+ *  - during a build it drops the claim. A throw there fails the whole deploy:
+ *    on 2026-10-07 `match_semantic` was answering in 4–7 s on a cold cache
+ *    against the app role's 3 s limit, and six production builds in a row
+ *    died on this one optional panel (#6204). The page revalidates daily, so
+ *    the panel comes back with the first render that finds the index awake.
  */
 async function loadSearch(
   db: Db,
@@ -210,7 +225,18 @@ async function loadSearch(
 ): Promise<JourneyConnect['search']> {
   // Whole-library scope on purpose: the only config with a search is
   // /how-it-works, which the proxy refuses on partner hosts (tenant-global-paths).
-  const rows = await semanticPageSearchGlobal(query, 20, { scope: GLOBAL_SCOPE });
+  let rows: Awaited<ReturnType<typeof semanticPageSearchGlobal>> = [];
+  for (let attempt = 1; ; attempt++) {
+    try {
+      rows = await semanticPageSearchGlobal(query, 20, { scope: GLOBAL_SCOPE });
+      break;
+    } catch (err) {
+      if (attempt < SEARCH_ATTEMPTS) continue;
+      if (!duringBuild()) throw err;
+      console.warn(`[journey] the search "${query}" failed ${SEARCH_ATTEMPTS} times during the build; the panel is left out:`, err instanceof Error ? err.message : String(err));
+      return undefined;
+    }
+  }
   if (!rows.length) throw new Error(`journey: the search "${query}" returned nothing`);
   const books = await db.collection('books').find(
     { id: { $in: [...new Set(rows.map(r => r.book_id))] } },
