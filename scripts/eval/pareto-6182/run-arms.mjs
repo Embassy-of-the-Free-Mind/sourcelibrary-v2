@@ -89,7 +89,7 @@ async function batchArm(label, modelOpt, sets) {
   const groups = {};
   for (const u of todo) (groups[modelOpt === 'prod' ? u.prod_model : modelOpt] ||= []).push(u);
   for (const [model, us] of Object.entries(groups)) {
-    const key = `${label}|${model}|${sets.join(',')}`;
+    const key = `${label}|${model}|${sets.join(',')}${args.includes('--retry') ? '|retry' : ''}`; // --retry: one resubmit of pages that came back empty
     let job = jobs[key];
     const ai = () => new GoogleGenAI({ apiKey: KEYS[job?.keyIndex ?? 0] });
     if (!job) {
