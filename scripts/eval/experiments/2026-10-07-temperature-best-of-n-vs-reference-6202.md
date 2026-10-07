@@ -70,6 +70,14 @@
 
 **Not planned: the OCR rising-temperature retry.** It runs only if the translation run ends at or under $8.50, and then with a $1 cap.
 
+### OCR addendum (registered 2026-10-07 after the translation arms had cost $6.77, before any OCR call)
+
+The condition above is met, so the optional arm runs (`ocr-retry.mjs`, cap $1).
+- **Pages:** the 20 sealed pages of `benchmark/refused-en-4686.json` (#4686): *Philosophical Transactions* and Birch, all stamped `ocr.recitation_blocked` with no text. No page is drawn. Looping pages (#3878) are not included: no sealed set of them exists.
+- **Arms:** the production OCR request (default OCR prompt, the archived image, thinking 0, `maxOutputTokens` 16384) on Lite and on Flash at temperature 0, 0.4 and 0.8. Production sends 0.1.
+- **Measure:** a page is "answered" if the reply has ≥ 200 characters and `loopVerdict` does not call it a loop. Reported: pages answered at each temperature, and pages answered at any step of the ladder. Outputs are not scored for accuracy.
+- **Reading:** if the ladder answers fewer than 5 of 20 pages per model, a rising-temperature retry is not worth adding for refusals.
+
 ### Results
 
 *(to be filled in after the run)*
