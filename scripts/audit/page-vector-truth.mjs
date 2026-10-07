@@ -58,7 +58,7 @@ import { execFileSync } from 'node:child_process';
 import { pageEmbeddingInput, cleanPageText, embedTexts, EMBED_MODEL, EMBED_DIMS } from '../lib/page-embedding-text.mjs';
 import { newEmbedUsage, logEmbeddingUsage, estimateTextTokens, usdForTokens } from '../lib/embedding-usage.mjs';
 import { uploadBatchInputFile, createThenDeleteInput, streamBatchResponses } from '../lib/gemini-batch-input-file.mjs';
-import { logUsage } from '../workers/lib/supabase-usage-logger.mjs';
+import { logUsage, completeBatchUsage } from '../workers/lib/supabase-usage-logger.mjs';
 import {
   parseVector, cosine, e5Signature, vectorShapeProblems, cosineClass, wilson, e5CentroidLiteral, E5_SIGNATURE_MAX_DISTANCE,
   GEMINI_TEXT_MODELS,
@@ -268,8 +268,11 @@ function sampleDuplicates(rows) {
   }
   for (const group of by.values()) {
     if (group.length < 2) continue;
-    // Identical text legitimately gives an identical vector (blank leaves, repeated plates).
-    const texts = new Set(group.map(r => r.target ?? r.translation ?? r.snip_hash));
+    // Identical text legitimately gives an identical vector (blank leaves, repeated plates). Compare
+    // what the vector was made FROM — the stored snippet — not today's Mongo text: 1,143 blank pages
+    // share the vector of "[Blank page — no translatable content]" and are not a defect. Rows with
+    // no snippet (OCR rows) fall back to the composed text.
+    const texts = new Set(group.map(r => (r.translation ? sha(r.translation).slice(0, 16) : r.snip_hash) || r.target));
     if (texts.size > 1) for (const r of group) r.flags.push('dup-vector');
   }
 }
@@ -487,8 +490,8 @@ async function submitBatch(rows, books, noRows) {
     save();
     log(`submitted ${jobId} → ${created.name} (${chunk.length.toLocaleString()} texts)`);
   }
-  log(`state → ${STATE}. Collect: --collect ${STATE}`);
-  console.log(JSON.stringify({ submitted: st.jobs.map(j => j.name), state: STATE, texts: uniq.length, est_usd: +estUsd.toFixed(3) }));
+  log(`state → ${STATE_OVERRIDE || STATE}. Collect: --collect ${STATE_OVERRIDE || STATE}`);
+  console.log(JSON.stringify({ submitted: st.jobs.map(j => j.name), state: STATE_OVERRIDE || STATE, texts: uniq.length, est_usd: +estUsd.toFixed(3) }));
   return 0;
 }
 
@@ -530,11 +533,16 @@ async function collectRun() {
   }
   for (const j of states) {
     if (!j.responsesFile) { log(`${j.jobId}: ${j.state}, no results — its texts count as failed`); failed += j.texts; continue; }
+    let jobTokens = 0;
     for await (const line of streamBatchResponses(j.responsesFile, KEY)) {
       const v = line.response?.embedding?.values;
-      billed += line.response?.usageMetadata?.promptTokenCount || 0;
-      if (v) fresh.set(line.key ?? line.metadata?.key, v); else failed++;
+      jobTokens += line.response?.usageMetadata?.promptTokenCount || 0;
+      if (v) fresh.set(line.key ?? line.metadata?.key, Float32Array.from(v)); else failed++;
     }
+    billed += jobTokens;
+    // Replace the submit-time estimate with the billed tokens, as embed-gemini --collect does.
+    await completeBatchUsage({ batch_job_id: j.jobId, model: EMBED_MODEL, input_tokens: jobTokens, output_tokens: 0,
+      status: jobTokens ? 'success' : 'failed', type: 'embedding', mode: 'batch', endpoint: 'audit/page-vector-truth' }, db).catch(e => log(`  could not close usage for ${j.jobId}: ${e.message}`));
   }
   log(`results: ${fresh.size.toLocaleString()} vectors, ${failed} failed requests, ${billed.toLocaleString()} billed tokens`);
   // Stored vectors are re-read now (the state file does not keep them); a row rewritten since
