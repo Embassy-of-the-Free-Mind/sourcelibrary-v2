@@ -157,14 +157,14 @@ export interface FeedbackStrings {
 export const FEEDBACK_STRINGS: Record<Locale, FeedbackStrings> = {
   en: {
     calloutHeading: 'Share your feedback.',
-    calloutIntro: 'If you spot an error, have a suggestion, or just want to say hello \u2014 we\u2019d love to hear from you.',
+    calloutIntro: 'If you spot an error, have a suggestion, or just want to say hello, we\u2019d love to hear from you.',
     calloutButton: 'Give Feedback',
     calloutDismiss: 'Dismiss',
     heading: 'Send feedback',
     placeholder: 'Spot an error? Have an idea? Anything at all...',
     namePlaceholder: 'Your name (optional)',
     sendingAs: 'Sending as',
-    helpLabel: 'I\u2019d like to help \u2014 translations, research, or suggesting books.',
+    helpLabel: 'I\u2019d like to help: translations, research, or suggesting books.',
     helpHint: 'We\u2019ll email you to learn more.',
     emailPlaceholder: 'Your email (so we can reach out)',
     sentFrom: 'Sent from',

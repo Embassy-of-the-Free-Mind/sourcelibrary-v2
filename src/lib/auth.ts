@@ -66,7 +66,7 @@ const WELCOME_HTML = `
   <div style="background: #f5f0e8; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
     <p style="font-size: 15px; line-height: 1.7; margin: 0 0 16px; color: #1a1612;">
       Source Library is a digital archive of over 2,000 rare books in alchemy, Hermetica, Kabbalah,
-      astrology, and the Western esoteric tradition &mdash; many translated into English for the first time using AI.
+      astrology, and the Western esoteric tradition, many translated into English for the first time using AI.
     </p>
     <p style="font-size: 15px; line-height: 1.7; margin: 0; color: #1a1612;">
       Every text is free to read, search, and cite. Here are a few places to start:
@@ -105,7 +105,7 @@ const WELCOME_HTML = `
   </div>
   <div style="border-top: 1px solid #e8e4dc; padding-top: 24px; text-align: center;">
     <p style="color: #8a8480; font-size: 12px; line-height: 1.6; margin: 0;">
-      Source Library &mdash; Rare texts, translated and searchable.
+      Source Library: rare texts, translated and searchable.
       <br />
       <a href="https://sourcelibrary.org" style="color: #8a8480;">sourcelibrary.org</a>
     </p>

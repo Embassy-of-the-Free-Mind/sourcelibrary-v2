@@ -32,10 +32,10 @@ const CHANNEL: Record<Locale, {
     self: 'https://sourcelibrary.org/api/podcast/feed.xml',
     formatPrefix: (label, topic) => `${label}: ${topic}`,
     itemDescription: (label, topic, findings, creator) =>
-      `${label} episode exploring "${topic}" — generated from ${findings} research findings in Source Library. By ${creator}.`,
+      `${label} episode exploring "${topic}", generated from ${findings} research findings in Source Library. By ${creator}.`,
   },
   es: {
-    title: 'Source Library — Deep Dive en español',
+    title: 'Source Library: Deep Dive en español',
     description:
       'Pódcast académico generado con IA a partir de las fuentes primarias de Source Library: alquimia, hermética, astrología, filosofía y ciencia del mundo antiguo y moderno temprano, narrado en español.',
     language: 'es',
