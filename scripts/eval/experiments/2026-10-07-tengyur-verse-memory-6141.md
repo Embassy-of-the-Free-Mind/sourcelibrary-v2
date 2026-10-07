@@ -72,7 +72,7 @@ These are AI reviewers (Opus), checked by Claude, not a human review.
     - "View the authentic as truly authentic" misparsed ཡང་དག་ཉིད་ལ་ཡང་དག་ལྟ.
     - A request had been rendered "I bow to you".
   - Worse:
-    - a block that reorders the verse across lines (vol p487), sliced;
+    - a block that reorders the verse across lines (vol 73 p487), sliced;
     - a lead-in "The Bhagavan is said to possess six excellences:" inside the block, lost;
     - a lead-in "The teacher then says:" inside a 5-line block, lost, and a line duplicated.
 
