@@ -469,16 +469,22 @@ async function stageAProv() {
   const out = path.join(PRIVATE, 'prov-docs.jsonl'); const done = new Set(readJsonl(out).map((x) => x.h));
   for (const q of pick) {
     if (done.has(q.h)) continue;
-    const c = counts.get(q.h); const ix = MINI.find((x) => c[x] > 0 && x.startsWith('v2_cc')) || MINI.find((x) => c[x] > 0);
+    const c = counts.get(q.h);
+    const ix = MINI.find((x) => c[x] > 0) || IG.find((x) => c[x] > 0);
+    const url = MINI_ALL.includes(ix) ? 'https://api.infini-gram-mini.io/' : 'https://api.infini-gram.io/';
+    const post = async (body) => { await takeToken(); return (await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json', 'User-Agent': UA }, body: JSON.stringify(body), signal: AbortSignal.timeout(90000) })).json(); };
     let doc = null;
-    if (ix) {
-      try {
-        const f = await (await fetch('https://api.infini-gram-mini.io/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ index: ix, query_type: 'find', query: q.text }), signal: AbortSignal.timeout(90000) })).json();
-        const seg = (f.segment_by_shard || []).findIndex(([a, b]) => b > a);
-        if (seg >= 0) doc = await (await fetch('https://api.infini-gram-mini.io/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ index: ix, query_type: 'get_doc_by_rank', s: seg, rank: f.segment_by_shard[seg][0], max_ctx_len: 600 }), signal: AbortSignal.timeout(90000) })).json();
-      } catch (e) { doc = { error: String(e.message) }; }
-    }
-    appendJsonl(out, { h: q.h, id: q.id, index: ix || 'v4-only', counts: c, passage: q.text, doc: doc ? { text: String(doc.text || '').slice(0, 1500), meta: doc.metadata || doc.doc_meta || null, error: doc.error || null } : null });
+    try {
+      const f = await post({ index: ix, query_type: 'find', query: q.text });
+      const seg = (f.segment_by_shard || []).findIndex(([a, b]) => (MINI_ALL.includes(ix) ? b > a : b >= a));
+      if (seg >= 0) {
+        const rank = f.segment_by_shard[seg][0];
+        const d = MINI_ALL.includes(ix) ? await post({ index: ix, query_type: 'get_doc_by_rank', s: seg, rank, max_ctx_len: 600 }) : await post({ index: ix, query_type: 'get_doc_by_rank', s: seg, rank, max_disp_len: 400, query: q.text });
+        const text = d.text || (Array.isArray(d.spans) ? d.spans.map((x) => x[0]).join('') : '');
+        doc = { text: String(text).slice(0, 2000), meta: String(d.metadata || d.doc_meta || '').slice(0, 600), keys: Object.keys(d) };
+      }
+    } catch (e) { doc = { error: String(e.message) }; }
+    appendJsonl(out, { h: q.h, id: q.id, index: ix, counts: c, passage: q.text, doc });
     console.log('prov', q.id, ix);
   }
 }
