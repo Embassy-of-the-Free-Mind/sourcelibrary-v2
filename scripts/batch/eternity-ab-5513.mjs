@@ -44,6 +44,7 @@ import { RUNS_COLLECTION, MAX_PAGES_PER_RUN } from '../lib/translate-batch-seam.
 import { TERMINAL_PHASES } from '../lib/translate-batch-chained.mjs';
 import { translatablePageFilter } from '../lib/translate-core.mjs';
 import { READABLE_IN_ENGLISH_EXPR } from '../lib/page-counts.mjs';
+import { ocrTrustVerdictForBook } from '../lib/ocr-trust-gate.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const args = process.argv.slice(2);
@@ -178,7 +179,7 @@ async function shelfReadable(db) {
 /**
  * #6109's rule, exactly: visible, pages_count > 0, on a tradition shelf, no pipeline hold, NOT
  * readable in English, language one of five. Per book: the pages (page_number > 0) with no OCR text
- * are the OCR targets. Read-only. Ordered by language, then least work first, so a cap that binds
+ * are the OCR targets. Books the OCR trust gate refuses are listed under `skipped`. Read-only. Ordered by language, then least work first, so a cap that binds
  * has finished the most books it could.
  */
 async function selectTraditionShelves(db, s) {
@@ -188,9 +189,13 @@ async function selectTraditionShelves(db, s) {
   const slugs = [...new Set(Object.values(TRADITION_SHELVES).flat())];
   const books = await db.collection('books').find({ ...liveOnShelves(slugs), 'pipeline_auto.hold': { $exists: false },
     $expr: { $not: [READABLE_IN_ENGLISH_EXPR] }, language: { $in: languages } },
-  { projection: { _id: 0, id: 1, title: 1, language: 1, visible: 1, collections: 1, 'pipeline_auto.status': 1 } }).toArray();
+  { projection: { _id: 0, id: 1, title: 1, language: 1, year: 1, published: 1, visible: 1, collections: 1, 'pipeline_auto.status': 1 } }).toArray();
   const per = [];
   for (const b of books) {
+    // A book the translation lane will refuse (#5700: Greek manuscripts and early print, Latin incunabula)
+    // is not sent to OCR either: the job is English, and that stratum's lite/flash read is the one measured bad.
+    const trust = await ocrTrustVerdictForBook(db, b);
+    if (!trust.ok) { s.skipped.push({ id: b.id, title: b.title, language: b.language, why: trust.reason }); continue; }
     const pages = await db.collection('pages').find({ book_id: b.id, page_number: { $gt: 0 } },
       { projection: { _id: 0, id: 1, page_number: 1, hasOcr: { $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] }, hasEn: { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] } } }).sort({ page_number: 1 }).toArray();
     per.push({ id: b.id, title: b.title, language: b.language, visible: b.visible, status: b.pipeline_auto?.status ?? null,
