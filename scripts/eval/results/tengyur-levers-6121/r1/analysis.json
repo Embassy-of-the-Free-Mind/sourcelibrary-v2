@@ -1,0 +1,868 @@
+{
+ "round": 1,
+ "gate": {
+  "by_reviewer": {
+   "A": {
+    "rev_agent_found": 10,
+    "rev_agent_of": 12,
+    "term_found": 3,
+    "term_of": 4
+   },
+   "B": {
+    "rev_agent_found": 9,
+    "rev_agent_of": 12,
+    "term_found": 3,
+    "term_of": 4
+   }
+  },
+  "span": {
+   "marked_either": 3,
+   "of": 4,
+   "span_field_either": 3
+  },
+  "pass": false
+ },
+ "pool": {
+  "label": "pool (all 60)",
+  "pages": 60,
+  "arms": {
+   "A": {
+    "rev_agent_per100_either": 58.3,
+    "ci": [
+     40.0,
+     76.7
+    ],
+    "rev_agent_per100_both": 35.0,
+    "pages_with_rev_agent": 27,
+    "reversal_per100": 18.3,
+    "agent_per100": 40.0,
+    "all_per100": 238.3,
+    "term_per100": 93.3,
+    "omission_per100": 5.0,
+    "span_error_pages": 0,
+    "span_kinds": {},
+    "score_mean": 3.69,
+    "light_share": 60.8
+   },
+   "C": {
+    "rev_agent_per100_either": 68.3,
+    "ci": [
+     46.7,
+     90.0
+    ],
+    "rev_agent_per100_both": 35.0,
+    "pages_with_rev_agent": 28,
+    "reversal_per100": 33.3,
+    "agent_per100": 35.0,
+    "all_per100": 240.0,
+    "term_per100": 88.3,
+    "omission_per100": 10.0,
+    "span_error_pages": 1,
+    "span_kinds": {
+     "short": 1
+    },
+    "score_mean": 3.69,
+    "light_share": 59.2
+   },
+   "P": {
+    "rev_agent_per100_either": 38.3,
+    "ci": [
+     23.3,
+     56.7
+    ],
+    "rev_agent_per100_both": 21.7,
+    "pages_with_rev_agent": 18,
+    "reversal_per100": 16.7,
+    "agent_per100": 21.7,
+    "all_per100": 185.0,
+    "term_per100": 103.3,
+    "omission_per100": 5.0,
+    "span_error_pages": 2,
+    "span_kinds": {
+     "short": 3
+    },
+    "score_mean": 3.73,
+    "light_share": 63.3
+   },
+   "S": {
+    "rev_agent_per100_either": 63.3,
+    "ci": [
+     43.3,
+     86.7
+    ],
+    "rev_agent_per100_both": 28.3,
+    "pages_with_rev_agent": 27,
+    "reversal_per100": 21.7,
+    "agent_per100": 41.7,
+    "all_per100": 258.3,
+    "term_per100": 91.7,
+    "omission_per100": 13.3,
+    "span_error_pages": 1,
+    "span_kinds": {
+     "short": 1
+    },
+    "score_mean": 3.61,
+    "light_share": 56.7
+   }
+  },
+  "floor_per100": 5.0,
+  "span_floor_pages": 1,
+  "rule": {
+   "C": {
+    "gain_per100_vs_S": -5.0,
+    "gain_ci": [
+     -30.0,
+     20.0
+    ],
+    "pages_better": 13,
+    "pages_worse": 14,
+    "p_one_sided": 0.6992,
+    "beats_floor": false,
+    "p_lt_0.10": false,
+    "span_ok": true,
+    "adopt": false,
+    "card_min_effect_8": false
+   },
+   "P": {
+    "gain_per100_vs_S": 25.0,
+    "gain_ci": [
+     5.0,
+     46.7
+    ],
+    "pages_better": 20,
+    "pages_worse": 9,
+    "p_one_sided": 0.0159,
+    "beats_floor": true,
+    "p_lt_0.10": true,
+    "span_ok": true,
+    "adopt": true,
+    "card_min_effect_8": true
+   },
+   "A": {
+    "gain_per100_vs_S": 5.0,
+    "gain_ci": [
+     -18.3,
+     26.7
+    ],
+    "pages_better": 16,
+    "pages_worse": 15,
+    "p_one_sided": 0.3881,
+    "beats_floor": false,
+    "p_lt_0.10": false,
+    "span_ok": true,
+    "adopt": null,
+    "card_min_effect_8": false
+   }
+  }
+ },
+ "by_section": {
+  "Jātaka": {
+   "label": "Jātaka",
+   "pages": 10,
+   "arms": {
+    "A": {
+     "rev_agent_per100_either": 70.0,
+     "ci": [
+      30.0,
+      120.0
+     ],
+     "rev_agent_per100_both": 50.0,
+     "pages_with_rev_agent": 5,
+     "reversal_per100": 0.0,
+     "agent_per100": 70.0,
+     "all_per100": 200.0,
+     "term_per100": 70.0,
+     "omission_per100": 10.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 3.75,
+     "light_share": 60.0
+    },
+    "C": {
+     "rev_agent_per100_either": 100.0,
+     "ci": [
+      30.0,
+      180.0
+     ],
+     "rev_agent_per100_both": 30.0,
+     "pages_with_rev_agent": 4,
+     "reversal_per100": 20.0,
+     "agent_per100": 80.0,
+     "all_per100": 270.0,
+     "term_per100": 60.0,
+     "omission_per100": 10.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 3.6,
+     "light_share": 40.0
+    },
+    "P": {
+     "rev_agent_per100_either": 90.0,
+     "ci": [
+      40.0,
+      150.0
+     ],
+     "rev_agent_per100_both": 60.0,
+     "pages_with_rev_agent": 7,
+     "reversal_per100": 40.0,
+     "agent_per100": 50.0,
+     "all_per100": 220.0,
+     "term_per100": 70.0,
+     "omission_per100": 10.0,
+     "span_error_pages": 1,
+     "span_kinds": {
+      "short": 1
+     },
+     "score_mean": 3.6,
+     "light_share": 75.0
+    },
+    "S": {
+     "rev_agent_per100_either": 50.0,
+     "ci": [
+      0.0,
+      100.0
+     ],
+     "rev_agent_per100_both": 30.0,
+     "pages_with_rev_agent": 3,
+     "reversal_per100": 10.0,
+     "agent_per100": 40.0,
+     "all_per100": 290.0,
+     "term_per100": 80.0,
+     "omission_per100": 30.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 3.5,
+     "light_share": 50.0
+    }
+   },
+   "floor_per100": 20.0,
+   "span_floor_pages": 0,
+   "rule": {
+    "C": {
+     "gain_per100_vs_S": -50.0,
+     "gain_ci": [
+      -110.0,
+      -10.0
+     ],
+     "pages_better": 0,
+     "pages_worse": 3,
+     "p_one_sided": 1.0,
+     "beats_floor": false,
+     "p_lt_0.10": false,
+     "span_ok": true,
+     "adopt": false,
+     "card_min_effect_8": false
+    },
+    "P": {
+     "gain_per100_vs_S": -40.0,
+     "gain_ci": [
+      -80.0,
+      0.0
+     ],
+     "pages_better": 1,
+     "pages_worse": 5,
+     "p_one_sided": 0.9844,
+     "beats_floor": false,
+     "p_lt_0.10": false,
+     "span_ok": false,
+     "adopt": false,
+     "card_min_effect_8": false
+    },
+    "A": {
+     "gain_per100_vs_S": -20.0,
+     "gain_ci": [
+      -80.0,
+      40.0
+     ],
+     "pages_better": 1,
+     "pages_worse": 3,
+     "p_one_sided": 0.8125,
+     "beats_floor": false,
+     "p_lt_0.10": false,
+     "span_ok": true,
+     "adopt": null,
+     "card_min_effect_8": false
+    }
+   }
+  },
+  "Madhyamaka": {
+   "label": "Madhyamaka",
+   "pages": 10,
+   "arms": {
+    "A": {
+     "rev_agent_per100_either": 50.0,
+     "ci": [
+      10.0,
+      90.0
+     ],
+     "rev_agent_per100_both": 40.0,
+     "pages_with_rev_agent": 4,
+     "reversal_per100": 20.0,
+     "agent_per100": 30.0,
+     "all_per100": 130.0,
+     "term_per100": 50.0,
+     "omission_per100": 0.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 4.15,
+     "light_share": 85.0
+    },
+    "C": {
+     "rev_agent_per100_either": 40.0,
+     "ci": [
+      0.0,
+      90.0
+     ],
+     "rev_agent_per100_both": 30.0,
+     "pages_with_rev_agent": 3,
+     "reversal_per100": 30.0,
+     "agent_per100": 10.0,
+     "all_per100": 150.0,
+     "term_per100": 30.0,
+     "omission_per100": 0.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 4.0,
+     "light_share": 80.0
+    },
+    "P": {
+     "rev_agent_per100_either": 0.0,
+     "ci": [
+      0.0,
+      0.0
+     ],
+     "rev_agent_per100_both": 0.0,
+     "pages_with_rev_agent": 0,
+     "reversal_per100": 0.0,
+     "agent_per100": 0.0,
+     "all_per100": 90.0,
+     "term_per100": 30.0,
+     "omission_per100": 0.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 4.25,
+     "light_share": 85.0
+    },
+    "S": {
+     "rev_agent_per100_either": 30.0,
+     "ci": [
+      0.0,
+      60.0
+     ],
+     "rev_agent_per100_both": 20.0,
+     "pages_with_rev_agent": 3,
+     "reversal_per100": 10.0,
+     "agent_per100": 20.0,
+     "all_per100": 100.0,
+     "term_per100": 10.0,
+     "omission_per100": 30.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 4.3,
+     "light_share": 100.0
+    }
+   },
+   "floor_per100": 20.0,
+   "span_floor_pages": 0,
+   "rule": {
+    "C": {
+     "gain_per100_vs_S": -10.0,
+     "gain_ci": [
+      -60.0,
+      40.0
+     ],
+     "pages_better": 2,
+     "pages_worse": 2,
+     "p_one_sided": 0.75,
+     "beats_floor": false,
+     "p_lt_0.10": false,
+     "span_ok": true,
+     "adopt": false,
+     "card_min_effect_8": false
+    },
+    "P": {
+     "gain_per100_vs_S": 30.0,
+     "gain_ci": [
+      0.0,
+      60.0
+     ],
+     "pages_better": 3,
+     "pages_worse": 0,
+     "p_one_sided": 0.125,
+     "beats_floor": true,
+     "p_lt_0.10": false,
+     "span_ok": true,
+     "adopt": false,
+     "card_min_effect_8": true
+    },
+    "A": {
+     "gain_per100_vs_S": -20.0,
+     "gain_ci": [
+      -60.0,
+      20.0
+     ],
+     "pages_better": 1,
+     "pages_worse": 3,
+     "p_one_sided": 0.9375,
+     "beats_floor": false,
+     "p_lt_0.10": false,
+     "span_ok": true,
+     "adopt": null,
+     "card_min_effect_8": false
+    }
+   }
+  },
+  "Pramāṇa": {
+   "label": "Pramāṇa",
+   "pages": 30,
+   "arms": {
+    "A": {
+     "rev_agent_per100_either": 56.7,
+     "ci": [
+      33.3,
+      80.0
+     ],
+     "rev_agent_per100_both": 23.3,
+     "pages_with_rev_agent": 14,
+     "reversal_per100": 23.3,
+     "agent_per100": 33.3,
+     "all_per100": 280.0,
+     "term_per100": 103.3,
+     "omission_per100": 3.3,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 3.6,
+     "light_share": 56.7
+    },
+    "C": {
+     "rev_agent_per100_either": 66.7,
+     "ci": [
+      40.0,
+      93.3
+     ],
+     "rev_agent_per100_both": 36.7,
+     "pages_with_rev_agent": 15,
+     "reversal_per100": 36.7,
+     "agent_per100": 30.0,
+     "all_per100": 246.7,
+     "term_per100": 100.0,
+     "omission_per100": 6.7,
+     "span_error_pages": 1,
+     "span_kinds": {
+      "short": 1
+     },
+     "score_mean": 3.7,
+     "light_share": 63.3
+    },
+    "P": {
+     "rev_agent_per100_either": 33.3,
+     "ci": [
+      13.3,
+      56.7
+     ],
+     "rev_agent_per100_both": 16.7,
+     "pages_with_rev_agent": 8,
+     "reversal_per100": 13.3,
+     "agent_per100": 20.0,
+     "all_per100": 196.7,
+     "term_per100": 120.0,
+     "omission_per100": 3.3,
+     "span_error_pages": 1,
+     "span_kinds": {
+      "short": 2
+     },
+     "score_mean": 3.63,
+     "light_share": 56.7
+    },
+    "S": {
+     "rev_agent_per100_either": 60.0,
+     "ci": [
+      33.3,
+      86.7
+     ],
+     "rev_agent_per100_both": 20.0,
+     "pages_with_rev_agent": 14,
+     "reversal_per100": 20.0,
+     "agent_per100": 40.0,
+     "all_per100": 280.0,
+     "term_per100": 106.7,
+     "omission_per100": 3.3,
+     "span_error_pages": 1,
+     "span_kinds": {
+      "short": 1
+     },
+     "score_mean": 3.48,
+     "light_share": 46.7
+    }
+   },
+   "floor_per100": 3.299999999999997,
+   "span_floor_pages": 1,
+   "rule": {
+    "C": {
+     "gain_per100_vs_S": -6.7,
+     "gain_ci": [
+      -40.0,
+      23.3
+     ],
+     "pages_better": 8,
+     "pages_worse": 9,
+     "p_one_sided": 0.7188,
+     "beats_floor": false,
+     "p_lt_0.10": false,
+     "span_ok": true,
+     "adopt": false,
+     "card_min_effect_8": false
+    },
+    "P": {
+     "gain_per100_vs_S": 26.7,
+     "gain_ci": [
+      -3.3,
+      56.7
+     ],
+     "pages_better": 10,
+     "pages_worse": 4,
+     "p_one_sided": 0.0676,
+     "beats_floor": true,
+     "p_lt_0.10": true,
+     "span_ok": true,
+     "adopt": true,
+     "card_min_effect_8": true
+    },
+    "A": {
+     "gain_per100_vs_S": 3.3,
+     "gain_ci": [
+      -30.0,
+      36.7
+     ],
+     "pages_better": 8,
+     "pages_worse": 8,
+     "p_one_sided": 0.5,
+     "beats_floor": true,
+     "p_lt_0.10": false,
+     "span_ok": true,
+     "adopt": null,
+     "card_min_effect_8": false
+    }
+   }
+  },
+  "Vinaya": {
+   "label": "Vinaya",
+   "pages": 10,
+   "arms": {
+    "A": {
+     "rev_agent_per100_either": 60.0,
+     "ci": [
+      20.0,
+      110.0
+     ],
+     "rev_agent_per100_both": 50.0,
+     "pages_with_rev_agent": 4,
+     "reversal_per100": 20.0,
+     "agent_per100": 40.0,
+     "all_per100": 260.0,
+     "term_per100": 130.0,
+     "omission_per100": 10.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 3.45,
+     "light_share": 50.0
+    },
+    "C": {
+     "rev_agent_per100_either": 70.0,
+     "ci": [
+      30.0,
+      110.0
+     ],
+     "rev_agent_per100_both": 40.0,
+     "pages_with_rev_agent": 6,
+     "reversal_per100": 40.0,
+     "agent_per100": 30.0,
+     "all_per100": 280.0,
+     "term_per100": 140.0,
+     "omission_per100": 30.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 3.45,
+     "light_share": 45.0
+    },
+    "P": {
+     "rev_agent_per100_either": 40.0,
+     "ci": [
+      10.0,
+      90.0
+     ],
+     "rev_agent_per100_both": 20.0,
+     "pages_with_rev_agent": 3,
+     "reversal_per100": 20.0,
+     "agent_per100": 20.0,
+     "all_per100": 210.0,
+     "term_per100": 160.0,
+     "omission_per100": 10.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 3.6,
+     "light_share": 50.0
+    },
+    "S": {
+     "rev_agent_per100_either": 120.0,
+     "ci": [
+      50.0,
+      200.0
+     ],
+     "rev_agent_per100_both": 60.0,
+     "pages_with_rev_agent": 7,
+     "reversal_per100": 50.0,
+     "agent_per100": 70.0,
+     "all_per100": 320.0,
+     "term_per100": 140.0,
+     "omission_per100": 10.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 3.4,
+     "light_share": 50.0
+    }
+   },
+   "floor_per100": 60.0,
+   "span_floor_pages": 0,
+   "rule": {
+    "C": {
+     "gain_per100_vs_S": 50.0,
+     "gain_ci": [
+      0.0,
+      120.0
+     ],
+     "pages_better": 3,
+     "pages_worse": 0,
+     "p_one_sided": 0.125,
+     "beats_floor": false,
+     "p_lt_0.10": false,
+     "span_ok": true,
+     "adopt": false,
+     "card_min_effect_8": true
+    },
+    "P": {
+     "gain_per100_vs_S": 80.0,
+     "gain_ci": [
+      30.0,
+      130.0
+     ],
+     "pages_better": 6,
+     "pages_worse": 0,
+     "p_one_sided": 0.0156,
+     "beats_floor": true,
+     "p_lt_0.10": true,
+     "span_ok": true,
+     "adopt": true,
+     "card_min_effect_8": true
+    },
+    "A": {
+     "gain_per100_vs_S": 60.0,
+     "gain_ci": [
+      10.0,
+      110.0
+     ],
+     "pages_better": 6,
+     "pages_worse": 1,
+     "p_one_sided": 0.0547,
+     "beats_floor": false,
+     "p_lt_0.10": true,
+     "span_ok": true,
+     "adopt": null,
+     "card_min_effect_8": true
+    }
+   }
+  }
+ },
+ "verse_pages_ge_0.3": {
+  "label": "verse share ≥ 0.3",
+  "pages": 7,
+  "arms": {
+   "A": {
+    "rev_agent_per100_either": 85.7,
+    "ci": [
+     28.6,
+     142.9
+    ],
+    "rev_agent_per100_both": 57.1,
+    "pages_with_rev_agent": 4,
+    "reversal_per100": 14.3,
+    "agent_per100": 71.4,
+    "all_per100": 257.1,
+    "term_per100": 71.4,
+    "omission_per100": 14.3,
+    "span_error_pages": 0,
+    "span_kinds": {},
+    "score_mean": 3.64,
+    "light_share": 57.1
+   },
+   "C": {
+    "rev_agent_per100_either": 114.3,
+    "ci": [
+     28.6,
+     214.3
+    ],
+    "rev_agent_per100_both": 42.9,
+    "pages_with_rev_agent": 3,
+    "reversal_per100": 14.3,
+    "agent_per100": 100.0,
+    "all_per100": 242.9,
+    "term_per100": 71.4,
+    "omission_per100": 0.0,
+    "span_error_pages": 0,
+    "span_kinds": {},
+    "score_mean": 3.64,
+    "light_share": 42.9
+   },
+   "P": {
+    "rev_agent_per100_either": 100.0,
+    "ci": [
+     42.9,
+     171.4
+    ],
+    "rev_agent_per100_both": 42.9,
+    "pages_with_rev_agent": 5,
+    "reversal_per100": 42.9,
+    "agent_per100": 57.1,
+    "all_per100": 214.3,
+    "term_per100": 57.1,
+    "omission_per100": 0.0,
+    "span_error_pages": 0,
+    "span_kinds": {},
+    "score_mean": 3.64,
+    "light_share": 71.4
+   },
+   "S": {
+    "rev_agent_per100_either": 71.4,
+    "ci": [
+     14.3,
+     142.9
+    ],
+    "rev_agent_per100_both": 57.1,
+    "pages_with_rev_agent": 3,
+    "reversal_per100": 28.6,
+    "agent_per100": 42.9,
+    "all_per100": 357.1,
+    "term_per100": 114.3,
+    "omission_per100": 42.9,
+    "span_error_pages": 0,
+    "span_kinds": {},
+    "score_mean": 3.36,
+    "light_share": 35.7
+   }
+  },
+  "floor_per100": 14.299999999999997,
+  "span_floor_pages": 0,
+  "rule": {
+   "C": {
+    "gain_per100_vs_S": -42.9,
+    "gain_ci": [
+     -128.6,
+     28.6
+    ],
+    "pages_better": 1,
+    "pages_worse": 2,
+    "p_one_sided": 0.875,
+    "beats_floor": false,
+    "p_lt_0.10": false,
+    "span_ok": true,
+    "adopt": false,
+    "card_min_effect_8": false
+   },
+   "P": {
+    "gain_per100_vs_S": -28.6,
+    "gain_ci": [
+     -71.4,
+     28.6
+    ],
+    "pages_better": 1,
+    "pages_worse": 3,
+    "p_one_sided": 0.9375,
+    "beats_floor": false,
+    "p_lt_0.10": false,
+    "span_ok": true,
+    "adopt": false,
+    "card_min_effect_8": false
+   },
+   "A": {
+    "gain_per100_vs_S": -14.3,
+    "gain_ci": [
+     -85.7,
+     71.4
+    ],
+    "pages_better": 1,
+    "pages_worse": 3,
+    "p_one_sided": 0.75,
+    "beats_floor": false,
+    "p_lt_0.10": false,
+    "span_ok": true,
+    "adopt": null,
+    "card_min_effect_8": false
+   }
+  }
+ },
+ "agreement": {
+  "rev_agent_page_flag_A": 83,
+  "rev_agent_page_flag_B": 89,
+  "rev_agent_page_flag_both": 62,
+  "verdict_agree": 0.804
+ },
+ "cost": {
+  "A-ref": {
+   "pages": 58,
+   "usd": 0.1963,
+   "per_1000_realtime": 3.38,
+   "per_1000_batch_equiv": 1.69,
+   "thinking_tokens_mean": 0,
+   "thinking_pages": 0
+  },
+  "A": {
+   "pages": 60,
+   "usd": 0.2084,
+   "per_1000_realtime": 3.47,
+   "per_1000_batch_equiv": 1.74,
+   "thinking_tokens_mean": 0,
+   "thinking_pages": 0
+  },
+  "C-ref": {
+   "pages": 58,
+   "usd": 0.2651,
+   "per_1000_realtime": 4.57,
+   "per_1000_batch_equiv": 2.29,
+   "thinking_tokens_mean": 0,
+   "thinking_pages": 0
+  },
+  "C": {
+   "pages": 60,
+   "usd": 0.2705,
+   "per_1000_realtime": 4.51,
+   "per_1000_batch_equiv": 2.25,
+   "thinking_tokens_mean": 0,
+   "thinking_pages": 0
+  },
+  "P-ref": {
+   "pages": 58,
+   "usd": 1.0978,
+   "per_1000_realtime": 18.93,
+   "per_1000_batch_equiv": 9.46,
+   "thinking_tokens_mean": 225,
+   "thinking_pages": 6
+  },
+  "P": {
+   "pages": 60,
+   "usd": 1.2201,
+   "per_1000_realtime": 20.34,
+   "per_1000_batch_equiv": 10.17,
+   "thinking_tokens_mean": 344,
+   "thinking_pages": 9
+  },
+  "probe-P": {
+   "pages": 3,
+   "usd": 0.0487,
+   "per_1000_realtime": 16.23,
+   "per_1000_batch_equiv": 8.12,
+   "thinking_tokens_mean": 0,
+   "thinking_pages": 0
+  }
+ },
+ "spend_total_usd": 3.3069
+}
