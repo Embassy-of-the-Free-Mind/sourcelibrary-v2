@@ -51,3 +51,9 @@ jobs:
       # and new direct `@vercel/blob` imports that bypass storagePut().
       - name: No new Vercel Blob dependencies
         run: node scripts/audit/no-vercel-blob.mjs
+
+      # Static source check (#6215): an em dash in reader-visible copy under
+      # src/app or src/components (JSX text, string literals; comments are
+      # fine) fails unless the file's ratchet in em-dash-allowlist.txt allows it.
+      - name: No new em dashes in reader-facing copy
+        run: node scripts/maintenance/check-em-dashes.mjs
