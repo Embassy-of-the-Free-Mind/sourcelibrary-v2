@@ -13,8 +13,28 @@ Source Library has **six embedding stores** in Supabase, indexing different thin
 | `clip_embeddings` | 512 (vector) | CLIP visual | One row per image (artwork covers, gallery extractions) | `scripts/backfill-clip-embeddings.mjs` + `scripts/workers/image-embeddings-cron.mjs` | `match_gallery_text` (CLIP text→image) | gallery similar-image queries |
 | `site_pages` | 768 (vector) | `gemini-embedding-2-preview` | One row per ~1,600-char chunk of the site's OWN writing: blog essays, collection intros (from Mongo), editorial pages (#1180) | `scripts/workers/embed-site-pages.mjs` (hash-diffed; prunes vanished pages, refuses a >20% prune) | `match_site_pages` (best chunk per URL; NULL tenant = main site only) | "From the site" lane in `/api/search/unified` → `/search` |
 | `page_texts` | 768 (vector) | `gemini-embedding-2-preview` | One row per translated page **per language** (`page_id, lang`) | `scripts/workers/embed-page-texts.mjs --lang=<iso>` (bulk) + `es-translate-worker.mjs` (inline) | `match_page_texts`, `match_page_texts_in_books`, `search_page_texts` (lexical) | Spanish/localized page search: `/api/search?lang=es`, `/api/books/:id/search?lang=es` |
+| `page_concepts` | 768 (**halfvec**) | `gemini-embedding-2-preview` | One row per page: the embedding of a model-written **concept abstract** of the page's ideas (flash-lite, `concept-abstract-v1`), NOT of its text. Stage 1 (#6173): ~1,200 books | `scripts/batch/concept-abstracts.mjs` (Batch; select → submit → collect → embed → load) | `match_page_concepts`, `match_page_concepts_in_books` (both return the PAGE's text as snippet, never the abstract) | EXPERIMENTAL, flag only: `/api/search?lane=concept`, `/api/search/semantic?level=page&lane=concept`, MCP `search_concept` `lane:"concept"` |
 
 Approximate current row counts (May 2026): pages ~3.9M, books 33,828, artworks 19,731, gallery_text 116,641, clip 151,957.
+
+## `page_concepts` — the concept lane (#6173, stage 1, experimental)
+
+The page vectors find a page by its own words; a concept query ("the soul's
+ascent through the heavens") then fills its top 10 with one tradition's
+vocabulary. The pilot (`scripts/eval/experiments/2026-10-07-embedding-granularity-cross-tradition.md`)
+embedded a 2–4 sentence abstract of each page's ideas in neutral language and
+put more traditions into the first ten. `page_concepts` is that lane:
+
+- **The abstract is an index key, not text.** It lives on the page as
+  `pages.concept_abstract` (with a `gemini-engine/1` provenance block whose
+  `input.source_text_hash` is the page text it was made from) and in this table
+  for the vector. No read path returns it; the RPCs return the page's own text.
+- **It goes stale like a translation does.** A re-OCR or re-translation changes
+  the page text and leaves the abstract describing the old one. Detect it by
+  comparing `concept_abstract.engine.input.source_text_hash` with the hash of the
+  page's current composed text (`abstractInputText(pageEmbeddingInput(page).text)`).
+- **Not public.** No default search reads it; it is reached only by the
+  `lane=concept` flag until stage 1 is judged.
 
 ## `page_texts` — the language-keyed store (#4095)
 
