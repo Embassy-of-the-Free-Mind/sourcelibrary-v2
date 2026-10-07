@@ -1,0 +1,129 @@
+{
+ "toh1183": {
+  "sides_84000": 120,
+  "kept": 119,
+  "dropped": {
+   "84000 Tibetan covers <70% of our page": 1
+  },
+  "num_pages_lobby": "120"
+ },
+ "toh1189": {
+  "sides_84000": 153,
+  "kept": 150,
+  "dropped": {
+   "English cut length off": 2,
+   "no English folio mention for this side": 1
+  },
+  "num_pages_lobby": "153"
+ },
+ "toh1777": {
+  "sides_84000": 2,
+  "kept": 1,
+  "dropped": {
+   "84000 Tibetan covers <70% of our page": 1
+  },
+  "num_pages_lobby": "2"
+ },
+ "toh1996": {
+  "sides_84000": 3,
+  "kept": 1,
+  "dropped": {
+   "84000 Tibetan covers <70% of our page": 2
+  },
+  "num_pages_lobby": "2"
+ },
+ "toh2006": {
+  "sides_84000": 2,
+  "kept": 0,
+  "dropped": {
+   "84000 Tibetan covers <70% of our page": 2
+  },
+  "num_pages_lobby": "2"
+ },
+ "toh3156": {
+  "sides_84000": 1,
+  "kept": 0,
+  "dropped": {
+   "84000 Tibetan covers <70% of our page": 1
+  },
+  "num_pages_lobby": "1"
+ },
+ "toh3808": {
+  "sides_84000": 583,
+  "kept": 582,
+  "dropped": {
+   "84000 Tibetan covers <70% of our page": 1
+  },
+  "num_pages_lobby": "582"
+ },
+ "toh3990": {
+  "sides_84000": 2,
+  "kept": 2,
+  "dropped": {},
+  "num_pages_lobby": "2"
+ },
+ "toh4377": {
+  "sides_84000": 7,
+  "kept": 6,
+  "dropped": {
+   "84000 Tibetan covers <70% of our page": 1
+  },
+  "num_pages_lobby": "8"
+ },
+ "toh4378": {
+  "sides_84000": 3,
+  "kept": 0,
+  "dropped": {
+   "no English folio mention for this side": 3
+  },
+  "num_pages_lobby": "3"
+ },
+ "toh4400a": {
+  "sides_84000": 4,
+  "kept": 3,
+  "dropped": {
+   "84000 Tibetan covers <70% of our page": 1
+  },
+  "num_pages_lobby": "4"
+ },
+ "toh4410": {
+  "sides_84000": 3,
+  "kept": 0,
+  "dropped": {
+   "no English folio mention for this side": 3
+  },
+  "num_pages_lobby": "3"
+ },
+ "toh4413": {
+  "sides_84000": 1,
+  "kept": 0,
+  "dropped": {
+   "no English folio mention for this side": 1
+  },
+  "num_pages_lobby": "2"
+ },
+ "toh4414": {
+  "sides_84000": 2,
+  "kept": 0,
+  "dropped": {
+   "84000 Tibetan covers <70% of our page": 2
+  },
+  "num_pages_lobby": "1"
+ },
+ "toh4417": {
+  "sides_84000": 1,
+  "kept": 0,
+  "dropped": {
+   "84000 Tibetan covers <70% of our page": 1
+  },
+  "num_pages_lobby": "2"
+ },
+ "toh4418": {
+  "sides_84000": 1,
+  "kept": 0,
+  "dropped": {
+   "84000 Tibetan covers <70% of our page": 1
+  },
+  "num_pages_lobby": "2"
+ }
+}

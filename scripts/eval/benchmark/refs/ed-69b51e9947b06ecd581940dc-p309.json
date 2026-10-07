@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA poemata/poemata/baldeelegiae.xml",
+  "edition": "Elegiae variae. In: Opera poetica omnia. Tomus V. — M�nchen: Martin Happach; Franz Xav. Schl�tter; Joh. Lukas Straub, 1729.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "3/10",
+    "pb_aligned_pages": "3/3"
+  },
+  "origin": "library",
+  "book_id": "69b51e9947b06ecd581940dc",
+  "page_number": 309,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 83805,
+    "to_char": 85002,
+    "overlap": 0.902,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'Quàm caream vobis, cœlestia Nomina, raptis.'; ends 'Nunc punita gerit? cetera venter habet.' (signature A5); ref padded with 'fossis lumen abire genis:' and 'At mutata licet'; page includes title ARANEA and ELEGIA XIX; printed page number 301 vs book page 309.",
+    "leaf_language": "lat",
+    "page_type": "verse",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:26.069Z",
+  "text_location": "repo",
+  "text_sha256": "2309f5067d55b6a868cbe3de0e3ecbfd8de861209fb980de1319da5a1a62a15e",
+  "unit": {
+    "chars": 1197
+  },
+  "stratum": "latin-period-5126"
+}

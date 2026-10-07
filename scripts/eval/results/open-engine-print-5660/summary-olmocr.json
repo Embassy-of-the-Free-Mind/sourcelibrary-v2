@@ -1,0 +1,271 @@
+{
+ "engines": {
+  "olmocr-2-7b-fp8": {
+   "english-1600-1699": {
+    "n_pages": 59,
+    "n_library": 59,
+    "lite_cer": 0.053,
+    "engine_cer": 0.036,
+    "delta": -0.014,
+    "delta_ci95": [
+     -0.024,
+     0
+    ],
+    "wlt": "35/19/5",
+    "catastrophic": {
+     "engine": 0,
+     "lite": 3
+    },
+    "lite_refused": 3,
+    "answered_only": {
+     "n": 56,
+     "lite_cer": 0.053,
+     "engine_cer": 0.036,
+     "delta": -0.007,
+     "catastrophic_engine": 0,
+     "catastrophic_lite": 0
+    },
+    "invention": {
+     "olmocr-2-7b-fp8": 0.043,
+     "gemini-3.1-flash-lite": 0.171
+    },
+    "checks": {
+     "median_delta_le_margin": true,
+     "ci_upper_le_max": true,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": true,
+     "invention_le_ref": true,
+     "loops_le_ref": true
+    },
+    "verdict": "cost lane ADOPTED"
+   },
+   "latin-1500-1699": {
+    "n_pages": 36,
+    "n_library": 15,
+    "lite_cer": 0.067,
+    "engine_cer": 0.066,
+    "delta": 0.003,
+    "delta_ci95": [
+     -0.012,
+     0.008
+    ],
+    "wlt": "15/19/2",
+    "catastrophic": {
+     "engine": 1,
+     "lite": 2
+    },
+    "lite_refused": 0,
+    "answered_only": {
+     "n": 36,
+     "lite_cer": 0.067,
+     "engine_cer": 0.066,
+     "delta": 0.003,
+     "catastrophic_engine": 1,
+     "catastrophic_lite": 2
+    },
+    "invention": {
+     "olmocr-2-7b-fp8": 0.14,
+     "gemini-3.1-flash-lite": 0.231
+    },
+    "checks": {
+     "median_delta_le_margin": true,
+     "ci_upper_le_max": true,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": true,
+     "invention_le_ref": true,
+     "loops_le_ref": true
+    },
+    "verdict": "directional (n=15 library < 50) — no lane decision"
+   },
+   "english-1700+": {
+    "n_pages": 106,
+    "n_library": 106,
+    "lite_cer": 0.022,
+    "engine_cer": 0.002,
+    "delta": -0.015,
+    "delta_ci95": [
+     -0.019,
+     -0.012
+    ],
+    "wlt": "98/6/2",
+    "catastrophic": {
+     "engine": 2,
+     "lite": 21
+    },
+    "lite_refused": 21,
+    "answered_only": {
+     "n": 85,
+     "lite_cer": 0.017,
+     "engine_cer": 0.002,
+     "delta": -0.012,
+     "catastrophic_engine": 2,
+     "catastrophic_lite": 0
+    },
+    "invention": {
+     "olmocr-2-7b-fp8": 0.002,
+     "gemini-3.1-flash-lite": 0.018
+    },
+    "checks": {
+     "median_delta_le_margin": true,
+     "ci_upper_le_max": true,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": true,
+     "invention_le_ref": true,
+     "loops_le_ref": false
+    },
+    "verdict": "REJECTED"
+   },
+   "german": {
+    "n_pages": 29,
+    "n_library": 0,
+    "lite_cer": 0.005,
+    "engine_cer": 0.026,
+    "delta": 0.016,
+    "delta_ci95": [
+     0.007,
+     0.026
+    ],
+    "wlt": "4/25/0",
+    "catastrophic": {
+     "engine": 1,
+     "lite": 0
+    },
+    "lite_refused": 0,
+    "answered_only": {
+     "n": 29,
+     "lite_cer": 0.005,
+     "engine_cer": 0.026,
+     "delta": 0.016,
+     "catastrophic_engine": 1,
+     "catastrophic_lite": 0
+    },
+    "invention": {
+     "olmocr-2-7b-fp8": null,
+     "gemini-3.1-flash-lite": null
+    },
+    "checks": {
+     "median_delta_le_margin": true,
+     "ci_upper_le_max": true,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": true,
+     "invention_le_ref": false,
+     "loops_le_ref": true
+    },
+    "verdict": "directional (n=0 library < 50) — no lane decision"
+   },
+   "latin-1700+": {
+    "n_pages": 39,
+    "n_library": 0,
+    "lite_cer": 0.007,
+    "engine_cer": 0.019,
+    "delta": 0.008,
+    "delta_ci95": [
+     0.002,
+     0.012
+    ],
+    "wlt": "8/28/3",
+    "catastrophic": {
+     "engine": 1,
+     "lite": 2
+    },
+    "lite_refused": 0,
+    "answered_only": {
+     "n": 39,
+     "lite_cer": 0.007,
+     "engine_cer": 0.019,
+     "delta": 0.008,
+     "catastrophic_engine": 1,
+     "catastrophic_lite": 2
+    },
+    "invention": {
+     "olmocr-2-7b-fp8": null,
+     "gemini-3.1-flash-lite": null
+    },
+    "checks": {
+     "median_delta_le_margin": true,
+     "ci_upper_le_max": true,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": true,
+     "invention_le_ref": false,
+     "loops_le_ref": true
+    },
+    "verdict": "directional (n=0 library < 50) — no lane decision"
+   },
+   "greek-print": {
+    "n_pages": 114,
+    "n_library": 114,
+    "lite_cer": 0.145,
+    "engine_cer": 0.48,
+    "delta": 0.287,
+    "delta_ci95": [
+     0.2,
+     0.369
+    ],
+    "wlt": "1/113/0",
+    "catastrophic": {
+     "engine": 55,
+     "lite": 1
+    },
+    "lite_refused": 0,
+    "answered_only": {
+     "n": 114,
+     "lite_cer": 0.145,
+     "engine_cer": 0.48,
+     "delta": 0.287,
+     "catastrophic_engine": 55,
+     "catastrophic_lite": 1
+    },
+    "invention": {
+     "olmocr-2-7b-fp8": 0.726,
+     "gemini-3.1-flash-lite": 0.244
+    },
+    "checks": {
+     "median_delta_le_margin": false,
+     "ci_upper_le_max": false,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": false,
+     "invention_le_ref": false,
+     "loops_le_ref": false
+    },
+    "verdict": "REJECTED"
+   }
+  }
+ },
+ "agreement": {
+  "latin-pre1700": {
+   "n": 20,
+   "gemini-3-flash-preview_vs_lite": 0.955,
+   "olmocr-2-7b-fp8_vs_lite": 0.933
+  },
+  "latin-1700s": {
+   "n": 20,
+   "gemini-3-flash-preview_vs_lite": 0.977,
+   "olmocr-2-7b-fp8_vs_lite": 0.932
+  },
+  "german-fraktur": {
+   "n": 20,
+   "gemini-3-flash-preview_vs_lite": 0.985,
+   "olmocr-2-7b-fp8_vs_lite": 0.942
+  },
+  "longs-en-fr": {
+   "n": 20,
+   "gemini-3-flash-preview_vs_lite": 0.962,
+   "olmocr-2-7b-fp8_vs_lite": 0.933
+  }
+ },
+ "cost": {
+  "olmocr-2-7b-fp8": {
+   "pages": 632,
+   "errors": null,
+   "wall_secs": 1715.5,
+   "s_per_page": 2.714,
+   "usd_per_page_gex45": 0.000257
+  },
+  "gemini-3.1-flash-lite": {
+   "pages": 195,
+   "usd_per_page_realtime": 0.000902,
+   "usd_per_page_batch": 0.000451,
+   "note": "generic transcription prompt, thinking 0; production prompt output is longer"
+  }
+ }
+}

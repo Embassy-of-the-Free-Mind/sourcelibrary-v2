@@ -61,3 +61,26 @@ export function isTruncatedCandidate(candidate) {
 export function truncationFailReason(candidate) {
   return `truncated:${String(candidate?.finishReason || 'unknown').toUpperCase()}`;
 }
+
+/**
+ * The whole text of a candidate: every text part, joined in order.
+ *
+ * A candidate's `content.parts` is a LIST. Gemini 3 sometimes answers one request in two
+ * text parts (measured 2026-10-06, #5813: 160 of 2,929 finished `gemini-3-flash-preview`
+ * file-based Batch OCR responses, 5.5 %, `finishReason: 'STOP'` on every one). Every
+ * collector read `parts[0].text`, so those pages were stored cut off — the first part held
+ * a median 20 % of the page and as little as `<scan-quality>good</scan-quality>\n<language>Ancient Greek</`
+ * — over a complete older transcription, with nothing failing: the provider said STOP,
+ * the text was non-empty, and `pages_ocr` counted the page.
+ *
+ * Thought parts (`thought: true`) are the model's reasoning, never the answer, and are
+ * left out. Returns '' when there is no text, so callers keep their `if (!text)` branch.
+ *
+ * @param {{content?: {parts?: Array<{text?: string, thought?: boolean}>}}|null|undefined} candidate
+ * @returns {string}
+ */
+export function candidateText(candidate) {
+  const parts = candidate?.content?.parts;
+  if (!Array.isArray(parts)) return '';
+  return parts.filter((p) => p && typeof p.text === 'string' && p.thought !== true).map((p) => p.text).join('');
+}

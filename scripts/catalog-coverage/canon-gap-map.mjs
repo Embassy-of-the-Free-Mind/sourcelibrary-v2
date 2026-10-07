@@ -45,6 +45,7 @@ import { mkdirSync, existsSync, readFileSync, writeFileSync } from 'fs';
 import { execSync } from 'child_process';
 import { MongoClient } from 'mongodb';
 import { pgClient } from '../works-catalog/lib.mjs';
+import { loadHoldingCandidates, corpusBookSets, sumHoldings } from '../lib/canon-holdings.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).filter(a => a.startsWith('--')).map(a => {
   const [k, v] = a.slice(2).split('='); return [k, v ?? true];
@@ -186,67 +187,18 @@ async function measureRates(db) {
 }
 
 // ---------------------------------------------------------------- holdings
+// The selectors live in scripts/lib/canon-holdings.mjs, shared with the status file (canon-gap-status.mjs).
 async function holdings(db) {
-  const B = db.collection('books');
-  const proj = { projection: { id: 1, title: 1, english_title: 1, language: 1, visible: 1, hidden: 1, pages_count: 1, pages_translated: 1, collections: 1, 'image_source.provider': 1, 'image_source.source_url': 1, source_url: 1, metadata: 1 } };
-  const langs = ['Tibetan', 'Chinese', 'Classical Chinese', 'Chinese; Chinese (script)', 'Sanskrit', 'Pali', 'Hebrew', 'Aramaic', 'Arabic', 'Persian', 'Mongolian', 'Korean'];
-  const colls = ['tibetan-canon', 'buddhist-canon', 'chinese-buddhist-texts', 'zen-chan', 'kabbalah', 'jewish-kabbalistic-mysticism', 'sufism', 'sufi-eastern-mysticism', 'sufism-islamic-mysticism', 'vedanta-darshana', 'persian-literary-tradition', 'daoist-classics', 'buddhism'];
-  const byLang = await B.find({ language: { $in: langs } }, proj).toArray();
-  const byColl = await B.find({ collections: { $in: colls } }, proj).toArray();
-  // works-catalog title-auto holdings (build-holdings.mjs) per source catalog
   const pgc = pgClient(); await pgc.connect();
-  const wh = (await pgc.query(`select distinct w.source_catalog, h.book_id from work_holdings h join works w on w.id=h.work_id where w.source_catalog in ('kanripo','cbeta','openiti','gretil','sefaria','bdrc')`)).rows;
+  const { books, whBy, counts } = await loadHoldingCandidates(db, pgc);
   await pgc.end();
-  const whBooks = await B.find({ id: { $in: [...new Set(wh.map(r => r.book_id))] } }, proj).toArray();
-  const all = new Map(); for (const b of [...byLang, ...byColl, ...whBooks]) all.set(b.id, b);
-  const books = [...all.values()];
   writeFileSync(`${CACHE}/holdings-books.json`, JSON.stringify(books));
-  const whBy = {}; for (const r of wh) (whBy[r.source_catalog] ||= new Set()).add(r.book_id);
-  log(`holdings: ${books.length} candidate books (lang ${byLang.length}, collections ${byColl.length}, work_holdings ${whBooks.length})`);
-  const hay = b => `${b.title || ''} | ${b.english_title || ''} | ${b.image_source?.source_url || ''} | ${b.source_url || ''}`;
-  const sum = (sel, method) => {
-    const live = sel.filter(b => b.visible === true && (b.pages_count || 0) > 0);
-    const hid = sel.filter(b => !(b.visible === true && (b.pages_count || 0) > 0));
-    return { live_books: live.length, live_pages: live.reduce((a, b) => a + (b.pages_count || 0), 0), live_pages_translated: live.reduce((a, b) => a + (b.pages_translated || 0), 0),
-      hidden_books: hid.length, hidden_pages: hid.reduce((a, b) => a + (b.pages_count || 0), 0), method };
-  };
-  const has = (b, ...cs) => (b.collections || []).some(c => cs.includes(c));
-  const tib = books.filter(b => b.language === 'Tibetan');
-  const zh = books.filter(b => /Chinese/.test(b.language || ''));
+  log(`holdings: ${books.length} candidate books (lang ${counts.lang}, collections ${counts.collections}, work_holdings ${counts.work_holdings})`);
+  const S = corpusBookSets(books, whBy);
   const R = {};
-  R.tengyur = sum(tib.filter(b => /W23703|derge-tengyur/i.test(hay(b)) || (/bstan ?'?gyur|tengyur|tanjur/i.test(hay(b)) && /sde dge|derge|dege/i.test(hay(b)))),
-    "language=Tibetan, title/source matches Derge Tengyur (bstan 'gyur + sde dge, BDRC W23703, Esukhia)");
-  R.tengyur.other_editions = sum(tib.filter(b => /bstan ?'?gyur|tengyur|tanjur/i.test(hay(b))), "any Tengyur edition by title");
-  R.kangyur = sum(tib.filter(b => /W22084|derge-kangyur/i.test(hay(b)) || (/bka'? ?'?gyur|kangyur|kanjur/i.test(hay(b)) && /sde dge|derge|dege/i.test(hay(b)))),
-    "language=Tibetan, title/source matches Derge Kangyur (bka' 'gyur + sde dge, BDRC W22084, Esukhia)");
-  R.kangyur.other_editions = sum(tib.filter(b => /bka'? ?'?gyur|kangyur|kanjur/i.test(hay(b))), "any Kangyur edition by title (e.g. BL Thadrak manuscript Kanjur)");
-  const cbetaSet = whBy.cbeta || new Set();
-  R.cbeta = sum(zh.filter(b => cbetaSet.has(b.id) || b.metadata?.cbeta_id || b.image_source?.provider === 'sat_daizokyo' || has(b, 'buddhist-canon', 'chinese-buddhist-texts', 'zen-chan')),
-    'Chinese-language books in buddhist-canon / chinese-buddhist-texts / zen-chan, SAT Daizōkyō scans, metadata.cbeta_id, or works-catalog cbeta holdings');
-  R.cbeta_chan = sum(zh.filter(b => /景德傳燈錄|景德传灯录|祖堂集|五燈會元|五灯会元|語錄|语录|廣錄|語要/.test(hay(b)) || has(b, 'zen-chan')),
-    'Chinese-language books whose title contains 景德傳燈錄 / 祖堂集 / 五燈會元 / 語錄 / 廣錄 / 語要, or in zen-chan');
-  R.pali = sum(books.filter(b => b.language === 'Pali'), 'language=Pali (any edition; not matched to the VRI CSCD edition)');
-  const skt = books.filter(b => b.language === 'Sanskrit');
-  R.gretil = sum(skt, 'language=Sanskrit (any edition; NOT matched to GRETIL e-texts — work_holdings has no gretil rows)');
-  R.gretil_buddhist = sum(skt.filter(b => has(b, 'buddhism', 'buddhist-canon', 'indian-buddhist-jain') || /buddh|bauddh|sūtra|sutra|prajñā|prajna|abhidharma|bodhi/i.test(hay(b))), 'Sanskrit books in buddhism collections or Buddhist title terms');
-  R.gretil_vedanta = sum(skt.filter(b => has(b, 'vedanta-darshana') || /vedānta|vedanta|brahmasūtra|brahmasutra|upaniṣad|upanishad|śaṅkara|shankara/i.test(hay(b))), 'Sanskrit books in vedanta-darshana or Vedānta title terms');
-  R.gretil_gaudiya = sum(skt.filter(b => /gosvām|gosvam|caitanya|chaitanya|rūpa|jīva gos|bhaktirasām|bhaktirasam|haribhakti/i.test(hay(b))), 'Sanskrit books with Gauḍīya author/title terms');
-  const heb = books.filter(b => /Hebrew|Aramaic/.test(b.language || '') || has(b, 'kabbalah', 'jewish-kabbalistic-mysticism'));
-  const kab = heb.filter(b => has(b, 'kabbalah', 'jewish-kabbalistic-mysticism') || /zohar|זהר|זוהר|kabbal|qabbal|cabbal|עץ חיים|etz ?chaim|ets ?hayy?im|pardes rimm?on|פרדס רמונים|cordovero|קורדובירו|luria|vital|ויטאל|tikk?un/i.test(hay(b)));
-  R.kabbalah = sum(kab, 'Hebrew/Aramaic or kabbalah collections, with Kabbalah collection/title terms (any edition)');
-  R.zohar = sum(kab.filter(b => /zohar|זהר|זוהר|tikk?un/i.test(hay(b))), 'Zohar / Tikkunei Zohar by title');
-  R.lurianic = sum(kab.filter(b => /etz ?chaim|ets ?hayy?im|עץ חיים|luria|vital|ויטאל|ari\b|shemonah sh|שמונה שערים|pri etz|sha.ar ha/i.test(hay(b))), 'Lurianic corpus by title (Etz Chaim, Vital, Shemonah She`arim …)');
-  R.cordovero = sum(kab.filter(b => /cordovero|קורדובירו|pardes rimm?on|פרדס רמונים|tomer dev|תומר דבורה|or ne.erav|אור נערב/i.test(hay(b))), 'Cordovero by title (Pardes Rimonim, Tomer Devorah, Or Ne`erav)');
-  const isl = books.filter(b => /Arabic|Persian/.test(b.language || '') || has(b, 'sufism', 'sufi-eastern-mysticism', 'sufism-islamic-mysticism'));
-  const oitiSet = whBy.openiti || new Set();
-  R.openiti_sufi = sum(isl.filter(b => oitiSet.has(b.id) || has(b, 'sufism', 'sufi-eastern-mysticism', 'sufism-islamic-mysticism') || /ibn ?.?arab[iī]|fus[uū]s|fut[uū]h[aā]t|فصوص|فتوحات|ابن عربي|ابن العربي/i.test(hay(b))),
-    'Arabic/Persian books in sufism collections, Ibn ʿArabī title terms, or works-catalog openiti holdings');
-  R.ganjoor = sum(books.filter(b => b.language === 'Persian' && (has(b, 'persian-literary-tradition') || /d[iī]v[aā]n|diwan|masnav|mathnaw|shahnam|sh[aā]hn[aā]m|gulist|bust[aā]n|دیوان|ديوان|مثنوی|شاهنامه|گلستان|بوستان|غزل|hafez|hafiz|sa.di|rumi|attar|ferdowsi|nizami|jami/i.test(hay(b)))),
-    'Persian books in persian-literary-tradition or with classical poetry title terms (any edition)');
-  R.mongolian_kanjur = sum(books.filter(b => b.language === 'Mongolian' || /W4CZ5370|mongolian (kanjur|kangyur)|ganjuur/i.test(hay(b))), 'language=Mongolian or Mongolian Kanjur by title/source');
-  R.tripitaka_koreana = sum(books.filter(b => (/Korean|Chinese/.test(b.language || '')) && /高麗|高丽|tripitaka koreana|koryo|goryeo|海印寺|再雕/i.test(hay(b))), 'Korean/Chinese books with Tripitaka Koreana / 高麗 / 海印寺 title terms');
-  const krSet = whBy.kanripo || new Set();
-  R.kanripo = sum(books.filter(b => krSet.has(b.id)), 'works-catalog work_holdings for kanripo works (build-holdings.mjs title-auto match; a floor)');
+  for (const [k, v] of Object.entries(S)) if (!k.endsWith('_other_editions')) R[k] = sumHoldings(v);
+  R.tengyur.other_editions = sumHoldings(S.tengyur_other_editions);
+  R.kangyur.other_editions = sumHoldings(S.kangyur_other_editions);
   return R;
 }
 

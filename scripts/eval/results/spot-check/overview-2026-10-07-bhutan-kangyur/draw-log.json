@@ -1,0 +1,46 @@
+{
+ "issue": 6056,
+ "mode": "random",
+ "seed": 2026100701,
+ "books_per_stratum": 4,
+ "bins": 4,
+ "strata": [
+  {
+   "name": "bhutan-tibetan",
+   "desc": "Visible Tibetan books in the bhutan/vajrayana collections (BL EAP manuscripts and prints, read by our own OCR: BDRC Yigdzin + Gemini; no e-text), pages_translated>=8, frame tightened to the lives of Padmasambhava (rnam thar, skyes rabs, bka thang): 8 of 908 eligible books. 69e7481e85f786e884a4b4dc (Lamp Dispelling Darkness) has 595 OCR pages and 0 English, so it cannot be drawn; read separately by eye.",
+   "frame_size": 8,
+   "drawn": 4,
+   "frame_ids": [
+    "69e77a5e0fc6fc955e35f863",
+    "69e77a930fc6fc955e360a71",
+    "69e788a44a6785cfd60d15ed",
+    "69e788e14a6785cfd60d20c4",
+    "69e78aa34a6785cfd60d485f",
+    "69e78aa54a6785cfd60d497d",
+    "69e7ac8c5f1a22ab19aa8f60",
+    "69e76132cc48e59ad74ee251"
+   ]
+  },
+  {
+   "name": "derge-kangyur",
+   "desc": "Derge Kangyur volumes from #5665 (BDRC W4CZ5369 scans + Esukhia PD e-text), all hidden (curation, about to be published), with >=8 translated pages (the 40 84000 Not-Begun texts, 1,835 pages). Drawn from translated pages only; ~2,600 Prajnaparamita pages are deliberately empty.",
+   "frame_size": 13,
+   "drawn": 4,
+   "frame_ids": [
+    "6ac0afecf427c9bb0692c231",
+    "6ac0b3aff427c9bb0692c9c7",
+    "6ac0b529f427c9bb0692cc11",
+    "6ac0b6fff427c9bb0692cebd",
+    "6ac0b910f427c9bb0692d126",
+    "6ac0ba11f427c9bb0692d3bd",
+    "6ac0bdbef427c9bb0692d885",
+    "6ac0c0fef427c9bb0692dd73",
+    "6ac0c746f427c9bb0692e956",
+    "6ac0c90ef427c9bb0692ebba",
+    "6ac0ceadf427c9bb0692f4ff",
+    "6ac0cf0df427c9bb0692f770",
+    "6ac197d40bfddaf1932d4b8d"
+   ]
+  }
+ ]
+}

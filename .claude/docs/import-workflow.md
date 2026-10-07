@@ -4,6 +4,24 @@ Canonical workflow for acquiring books at scale without creating duplicates.
 Written 2026-06-01 after the Daoist/Sefaria/Mesopotamian import work (PR #2290).
 Applies to all contributors — human and AI.
 
+## One book: "do we hold this?" first (#6019)
+
+Before importing a single book — or when anyone asks "do we have X?" — run the
+holdings check. It takes a library URL, one of our book links, an identifier, or
+a title (+ author/year), searches hidden books and the warehouse too, looks
+books up by `id` OR `_id`, and answers in ~2 s: same scan / same edition /
+another edition / similar titles / new, each with the reason and a link.
+
+```
+npx tsx --env-file=.env.production.local scripts/import/check-holdings.ts <url-or-id>
+npx tsx --env-file=.env.production.local scripts/import/check-holdings.ts --title "Musurgia universalis" --author Kircher
+```
+
+Admin form: https://sourcelibrary.org/admin/holdings (API `/api/admin/holdings-check`).
+Logic: `src/lib/holdings-check.ts` — read-only, built on `checkDuplicate()`;
+never write a second matcher. A "new" from a URL alone has not searched other
+editions (no title) — the result's `limits` says so.
+
 ## The loop
 
 1. **ENUMERATE** — get a candidate list *from the source*, don't hand-list from memory.
@@ -63,6 +81,7 @@ Applies to all contributors — human and AI.
    Flip the `visible`/`hidden` pair together.
 
 ## Reusable assets
+- `scripts/import/check-holdings.ts` — single-item pre-import check (see top).
 - `scripts/import/enumerate-dedupe-source.ts` — the enumerate+dedupe tool (IA; pluggable).
 - `scripts/import/harvard-wuzhen-direct.mjs` — residential direct-insert template (429 bypass).
 - `scripts/import/al-badri-direct.mjs` — original direct-insert pattern (bundled IA item).

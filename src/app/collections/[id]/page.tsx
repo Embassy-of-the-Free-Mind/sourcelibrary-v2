@@ -21,7 +21,7 @@ import { bookUrl, tenantBookUrl } from '@/lib/slugify';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import { ART_EXCLUDED_RESOURCE_TYPES, bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
-import { getBookThumbnailUrl } from '@/lib/utils';
+import { getBookThumbnailUrl, toDisplayVariantUrl } from '@/lib/utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { isTranslationReadable } from '@/lib/first-translation/derive';
 import { ftRenderProps, type FtRenderSource } from '@/lib/first-translation/render';
@@ -394,6 +394,13 @@ function autoLinkPlain(
 // ---------- Data fetching ----------
 
 const COMPACT_LIMIT = 14;
+
+// A reading page that belongs to one collection and is written in code, not in
+// the `collections` doc (#5936). Keyed by slug; the link sits in the hero's
+// meta row and is never shown inside a partner room.
+const COLLECTION_READING_PAGES: Record<string, { href: string; label: string }> = {
+  drebbel: { href: '/collections/drebbel/beeckman', label: 'Beeckman on Drebbel, in his own words' },
+};
 
 /** Sanitize thumbnail URLs: unwrap /api/image?url= wrappers, reject non-http URLs.
  *  The /api/image wrapper crashes Next.js Image during SSR. */
@@ -1060,6 +1067,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
 
   // The band self-gates on empty, but the hero anchor needs to know in advance.
   const hasFurtherReading = furtherReading.length > 0 || readingListGaps.length > 0;
+  const readingPage = COLLECTION_READING_PAGES[collection.slug || id];
 
   // Collections that carry an Index catalogue (index_catalogs editions) render
   // the catalogue browser as their centrepiece — hide the Visual Art section
@@ -1141,7 +1149,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
 
   // Fallback hero: use collection.hero_image or first featured_image when no gallery images
   const fallbackHeroUrl = !heroImages.length
-    ? (collection.hero_image as string | undefined)
+    ? (toDisplayVariantUrl(collection.hero_image as string | undefined) ?? undefined)
     || (() => {
       const fi = (collection.featured_images as { extracted_url?: string; image_url?: string; thumbnail_url?: string }[] | undefined);
       const first = fi?.find(img => img.thumbnail_url || img.extracted_url || img.image_url);
@@ -1287,6 +1295,17 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                 <span>{languages.map((l: { lang: string }) => l.lang).join(', ')}</span>
               </>
             )}
+            {!tenantSlug && readingPage && (
+              <>
+                <span className="w-px h-4 bg-white/20" />
+                <Link
+                  href={readingPage.href}
+                  className="hover:text-white/80 transition-colors underline underline-offset-2 decoration-white/30"
+                >
+                  {readingPage.label}
+                </Link>
+              </>
+            )}
             {/* The bridge only ran one way: the Spanish twin links here ("Ver esta
                 colección … en inglés") and this page had NO reference to
                 /es/collections at all, so a Spanish reader was told to go read
@@ -1339,7 +1358,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                   >
                     {heroUrl ? (
                       <Image
-                        src={heroUrl}
+                        src={toDisplayVariantUrl(heroUrl) ?? heroUrl}
                         alt={`Illustration from ${child.name}`}
                         fill
                         sizes="(max-width: 640px) 50vw, 25vw"
@@ -1903,6 +1922,17 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
           provider={provider}
           defaultView={(collection as { all_books_default_view?: 'grid' | 'list' }).all_books_default_view}
         />
+
+        {/* Server-rendered link to the complete A–Z list: the grid above is
+            client-rendered, so this is the crawl path to every member (#2266).
+            Apex only — the catalog route 404s on partner subdomains. */}
+        {!tenantSlug && total > 0 && (
+          <p className="mt-6 text-sm" style={{ color: 'var(--text-muted)' }}>
+            <Link href={`/collections/${id}/catalog`} className="underline hover:opacity-70">
+              All {total.toLocaleString('en-US')} {total === 1 ? 'book' : 'books'} in this collection, as a list
+            </Link>
+          </p>
+        )}
       </div>
 
       {/* Further reading — adjacent works we hold, and the ones we don't. Sits

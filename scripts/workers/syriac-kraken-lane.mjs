@@ -55,7 +55,7 @@ import {
   LANE, LANE_ISSUE, REVISION_REASON, BOOK_EVENT, ENGINES, KRAKEN,
   routeBook, scriptTagCounts, pagePolicy, envelope, letterCount, ocrSetFields,
   STALE_OCR_FIELDS, reenrolDecision, isHumanEdited, hasRealTranslation, markTranslationsStale,
-  findGutter, cutAtGutter,
+  findGutter, cutAtGutter, preprocessMode, preprocessApplies,
 } from '../lib/syriac-kraken-lane.mjs';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
 
@@ -81,6 +81,11 @@ const RUN = arg('--run', `${LANE}/${new Date().toISOString().slice(0, 10)}`);
 /** Below this many letters a Kraken read is "textless": it replaces a loop, never a reading. */
 const MIN_LETTERS = 12;
 const HELD_REASON = 'syriac-ocr-lane-trial';
+/** #5277 per-stratum preprocessing — OFF (`none`) unless --preprocess / SYRIAC_KRAKEN_PREPROCESS says otherwise.
+ *  Flipping it on the live lane is Derek's call; the transfer check did not support `auto` (see #5277). */
+const PREPROCESS = preprocessMode(arg('--preprocess', undefined));
+const PYTHON = arg('--python', process.env.SYRIAC_KRAKEN_PYTHON || '/root/tibetan-ocr-app/venv/bin/python');
+const PP_SCRIPT = path.join(path.dirname(new URL(import.meta.url).pathname), 'syriac-kraken-preprocess.py');
 
 const F = {
   books: path.join(DIR, 'books.json'),
@@ -206,6 +211,21 @@ function osdScript(img) {
   return m ? m[1] : null;
 }
 
+/**
+ * Classify the capture and write the arm image (#5277). Returns the helper's JSON ({ mode, klass, arm, wrote, ... }).
+ * A helper failure reads the ORIGINAL image and says so — `none` is the lane's unchanged behaviour, never a guess.
+ */
+function runPreprocess(img, dest) {
+  const r = spawnSync(PYTHON, [PP_SCRIPT, 'apply', PREPROCESS, img, dest], { encoding: 'utf8', timeout: 120_000 });
+  try {
+    const out = JSON.parse((r.stdout || '').trim().split('\n').pop());
+    if (out.wrote && !fs.existsSync(dest)) return { mode: PREPROCESS, arm: 'none', error: 'helper reported a file it did not write' };
+    return out;
+  } catch {
+    return { mode: PREPROCESS, arm: 'none', error: `helper rc ${r.status}: ${(r.stderr || '').slice(-200)}` };
+  }
+}
+
 function runKraken(engineKey, pairs, timeoutMs) {
   const e = ENGINES[engineKey];
   const args = [];
@@ -216,6 +236,13 @@ function runKraken(engineKey, pairs, timeoutMs) {
   return { rc: r.status, signal: r.signal, secs: Math.round((Date.now() - t0) / 1000), err: (r.stderr || '').slice(-2000) };
 }
 
+/** The part of the helper's answer that goes on the page (#4613 standard: engine + revision + arm). */
+function provenanceOf(pp) {
+  if (!pp) return null;
+  const { mode, arm, klass, classifier, features, meta, error } = pp;
+  return { mode, arm, ...(klass ? { klass, classifier, features } : {}), ...(meta ? { meta } : {}), ...(error ? { error } : {}) };
+}
+
 async function work() {
   fs.mkdirSync(DIR, { recursive: true });
   const all = readJsonl(F.plan);
@@ -223,7 +250,7 @@ async function work() {
   let todo = all.filter((r, i) => i % SHARDS === SHARD && (!PHASE || r.phase === PHASE) && (!BOOK || r.bid === BOOK)
     && !fs.existsSync(outTxt(r.bid, r.pn)) && !fs.existsSync(outSkip(r.bid, r.pn)) && (RETRY_FAILED || !failed.has(key(r))));
   if (LIMIT) todo = todo.slice(0, LIMIT);
-  log(`plan ${all.length} rows; this shard has ${todo.length} to read`);
+  log(`plan ${all.length} rows; this shard has ${todo.length} to read (preprocess ${PREPROCESS})`);
   let done = 0, skipped = 0, fails = 0;
   while (todo.length) {
     // one Kraken process per batch of pages sharing an engine (model load amortised)
@@ -245,16 +272,24 @@ async function work() {
           fs.rmSync(img, { force: true }); skipped++; continue;
         }
       }
+      // #5277: the arm image, when the flag is on and the route is one the arms were measured on.
+      // The gutter is still found on the ORIGINAL capture (a binarised or flattened copy has a
+      // different ground), and the arm image is cut at the same fraction of its width.
+      const ppPath = path.join(imgDir(r.bid), `${r.pn}.pp.jpg`);
+      let pp = { mode: PREPROCESS, arm: 'none' };
+      if (preprocessApplies(PREPROCESS, r.route)) pp = runPreprocess(img, ppPath);
+      const readImg = pp.wrote ? ppPath : img;
+      if (pp.error) log(`preprocess failed on ${r.bid}/${r.pn} — reading the original: ${pp.error}`);
       // Two columns, or two leaves in one photograph: cut at the gutter and read the
       // right part first (a right-to-left book reads right column / right leaf first).
       let gutter = null;
       try { gutter = await findGutter(img); } catch (e) { log(`gutter detection failed on ${r.bid}/${r.pn}: ${e?.message}`); }
       if (gutter) {
         const base = path.join(imgDir(r.bid), String(r.pn));
-        const { R, L } = await cutAtGutter(img, gutter.x, base);
-        pairs.push({ r, gutter, parts: [[R, `${base}.R.txt`], [L, `${base}.L.txt`]], img });
+        const { R, L } = await cutAtGutter(readImg, gutter.x, base);
+        pairs.push({ r, gutter, parts: [[R, `${base}.R.txt`], [L, `${base}.L.txt`]], img, ppPath, pp });
       } else {
-        pairs.push({ r, gutter: null, parts: [[img, outTxt(r.bid, r.pn)]], img });
+        pairs.push({ r, gutter: null, parts: [[readImg, outTxt(r.bid, r.pn)]], img, ppPath, pp });
       }
     }
     if (!pairs.length) continue;
@@ -280,13 +315,14 @@ async function work() {
       }
       if (fs.existsSync(out)) {
         done++;
-        append(F.runs, { bid: p.r.bid, pn: p.r.pn, engine, secs: p.retry ? p.retry.secs : +(res.secs / allParts.length * p.parts.length).toFixed(1), rc: p.retry ? p.retry.rc : res.rc, chars: fs.statSync(out).size, split: p.gutter ? p.gutter.x : null, retry: !!p.retry });
+        append(F.runs, { bid: p.r.bid, pn: p.r.pn, engine, secs: p.retry ? p.retry.secs : +(res.secs / allParts.length * p.parts.length).toFixed(1), rc: p.retry ? p.retry.rc : res.rc, chars: fs.statSync(out).size, split: p.gutter ? p.gutter.x : null, retry: !!p.retry, preprocess: provenanceOf(p.pp) });
       } else {
         fails++;
         append(F.fail, { bid: p.r.bid, pn: p.r.pn, stage: 'kraken', rc: p.retry?.rc ?? res.rc, signal: p.retry?.signal ?? res.signal, secs: p.retry?.secs ?? res.secs, err: (p.retry?.err || res.err || '').slice(-300), split: p.gutter ? p.gutter.x : null });
       }
       for (const [pi] of p.parts) fs.rmSync(pi, { force: true });
       fs.rmSync(p.img, { force: true });
+      fs.rmSync(p.ppPath, { force: true });
     }
     log(`batch ${engine} ${pairs.length} pages (${allParts.length} parts) in ${res.secs}s (rc ${res.rc}${retried ? `, ${retried} retried alone` : ''}) — read ${done}, skipped ${skipped}, failed ${fails}, left ${todo.length}`);
   }
@@ -341,7 +377,9 @@ async function apply() {
         writes.push({ r, p, text, letters, oldLoop, oldLetters: letterCount(p.ocr?.data) });
       }
       const rec = books[bid] || { title: book.title };
-      const secsBy = new Map(readJsonl(F.runs).filter((x) => x.bid === bid).map((x) => [x.pn, x.secs]));
+      const runsForBook = readJsonl(F.runs).filter((x) => x.bid === bid);
+      const secsBy = new Map(runsForBook.map((x) => [x.pn, x.secs]));
+      const ppBy = new Map(runsForBook.map((x) => [x.pn, x.preprocess || null]));
       if (!APPLY) { log(`${bid} would write ${writes.length} of ${rows.length} read pages | ${String(book.title || '').slice(0, 50)}`); totals.written += writes.length; continue; }
       if (!writes.length) { log(`${bid} nothing to write`); continue; }
       const pids = writes.map((w) => w.p.id);
@@ -353,7 +391,7 @@ async function apply() {
       let modified = 0;
       const unset = Object.fromEntries([...STALE_OCR_FIELDS, 'translation.health_blocked', 'translation.health_blocked_at'].map((k) => [k, '']));
       for (const w of writes) {
-        const set = ocrSetFields(w.text, w.r.engine, w.r.route, { run: RUN, now, secs: secsBy.get(w.r.pn) ?? null, imageUrl: w.r.src || null });
+        const set = ocrSetFields(w.text, w.r.engine, w.r.route, { run: RUN, now, secs: secsBy.get(w.r.pn) ?? null, imageUrl: w.r.src || null, preprocess: ppBy.get(w.r.pn) ?? null });
         // Pipeline update because `ocr` is literally null on never-read pages and a dotted
         // $set cannot create fields inside null (the error that crashed the first IA apply,
         // 2026-09-12). Every value is $literal: in a pipeline a string beginning with `$`

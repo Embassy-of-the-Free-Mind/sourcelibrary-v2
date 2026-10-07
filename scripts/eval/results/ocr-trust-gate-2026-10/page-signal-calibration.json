@@ -1,0 +1,566 @@
+{
+ "generated_at": "2026-10-03T23:22:36.866Z",
+ "bar": "precision >= 0.8 (at least 5 pages flagged) at a useful recall, against \"OCR was the primary cause\" (image opened)",
+ "labelled": 135,
+ "scored": 135,
+ "missing_ocr": [],
+ "positives": 48,
+ "by_track": {
+  "T1": {
+   "n": 20,
+   "ocr_primary": 3
+  },
+  "T2": {
+   "n": 32,
+   "ocr_primary": 17
+  },
+  "T3": {
+   "n": 20,
+   "ocr_primary": 1
+  },
+  "T4": {
+   "n": 33,
+   "ocr_primary": 18
+  },
+  "T5": {
+   "n": 30,
+   "ocr_primary": 9
+  }
+ },
+ "reread_since_eval": [
+  "699383a150654cbbe29179f7_00189",
+  "69ea0f5413a685002bb8dc8a_00107",
+  "69e7299ba409200ea79f0b56_00211",
+  "69e729a1a409200ea79f0ca5_00257",
+  "69e729a7a409200ea79f0e08_00279",
+  "69b99e681f30176bf4d3798a_00155",
+  "69b99e856ed9e0490990a0b5_00301",
+  "69b99e8b6ed9e0490990a274_00179",
+  "69b99f256ed9e0490990aa8a_00185",
+  "69bc7a3f8888fef520b73c1e_00217",
+  "69bd014bf403a9ca2380f091_00054",
+  "69e72698a409200ea79ef8c3_00129",
+  "69e72c60a409200ea79f46f6_00141",
+  "69e72c6ba409200ea79f484e_00102",
+  "69e72c75a409200ea79f4976_00100",
+  "6a31c8b74400787ae5a9d7a7_00042"
+ ],
+ "lexicon": {
+  "books": 1800,
+  "pages": 14062,
+  "greek_words": 28159,
+  "latin_words": 79527,
+  "rule": "unit in >= 3 books; calibration books excluded"
+ },
+ "signals": {
+  "unclear": {
+   "all": {
+    "judged": 135,
+    "positives": 48,
+    "base_rate": 0.356,
+    "meets_bar": null,
+    "best_f1": {
+     "threshold": 0.0006,
+     "flagged": 5,
+     "tp": 3,
+     "precision": 0.6,
+     "recall": 0.063,
+     "precision_ci": [
+      0.231,
+      0.882
+     ]
+    }
+   },
+   "greek": {
+    "judged": 32,
+    "positives": 17,
+    "base_rate": 0.531,
+    "meets_bar": null,
+    "best_f1": {
+     "threshold": 0.0006,
+     "flagged": 4,
+     "tp": 3,
+     "precision": 0.75,
+     "recall": 0.176,
+     "precision_ci": [
+      0.301,
+      0.954
+     ]
+    }
+   },
+   "latin_script": {
+    "judged": 40,
+    "positives": 4,
+    "base_rate": 0.1,
+    "meets_bar": null,
+    "best_f1": null
+   },
+   "rtl": {
+    "judged": 33,
+    "positives": 18,
+    "base_rate": 0.545,
+    "meets_bar": null,
+    "best_f1": null
+   },
+   "indic_cjk": {
+    "judged": 30,
+    "positives": 9,
+    "base_rate": 0.3,
+    "meets_bar": null,
+    "best_f1": {
+     "threshold": 0.0029,
+     "flagged": 1,
+     "tp": 0,
+     "precision": 0,
+     "recall": 0,
+     "precision_ci": [
+      0,
+      0.793
+     ]
+    }
+   }
+  },
+  "mismatch": {
+   "all": {
+    "judged": 135,
+    "positives": 48,
+    "base_rate": 0.356,
+    "meets_bar": null,
+    "best_f1": {
+     "threshold": 0.0008,
+     "flagged": 66,
+     "tp": 28,
+     "precision": 0.424,
+     "recall": 0.583,
+     "precision_ci": [
+      0.312,
+      0.544
+     ]
+    }
+   },
+   "greek": {
+    "judged": 32,
+    "positives": 17,
+    "base_rate": 0.531,
+    "meets_bar": null,
+    "best_f1": {
+     "threshold": 0.0008,
+     "flagged": 30,
+     "tp": 15,
+     "precision": 0.5,
+     "recall": 0.882,
+     "precision_ci": [
+      0.332,
+      0.668
+     ]
+    }
+   },
+   "latin_script": {
+    "judged": 40,
+    "positives": 4,
+    "base_rate": 0.1,
+    "meets_bar": null,
+    "best_f1": {
+     "threshold": 0.0003,
+     "flagged": 8,
+     "tp": 0,
+     "precision": 0,
+     "recall": 0,
+     "precision_ci": [
+      0,
+      0.324
+     ]
+    }
+   },
+   "rtl": {
+    "judged": 33,
+    "positives": 18,
+    "base_rate": 0.545,
+    "meets_bar": null,
+    "best_f1": {
+     "threshold": 0.0161,
+     "flagged": 8,
+     "tp": 6,
+     "precision": 0.75,
+     "recall": 0.333,
+     "precision_ci": [
+      0.409,
+      0.929
+     ]
+    }
+   },
+   "indic_cjk": {
+    "judged": 30,
+    "positives": 9,
+    "base_rate": 0.3,
+    "meets_bar": null,
+    "best_f1": {
+     "threshold": 0.0016,
+     "flagged": 20,
+     "tp": 7,
+     "precision": 0.35,
+     "recall": 0.778,
+     "precision_ci": [
+      0.181,
+      0.567
+     ]
+    }
+   }
+  },
+  "oov": {
+   "all": {
+    "judged": 78,
+    "positives": 21,
+    "base_rate": 0.269,
+    "meets_bar": null,
+    "best_f1": {
+     "threshold": 0.1691,
+     "flagged": 50,
+     "tp": 17,
+     "precision": 0.34,
+     "recall": 0.81,
+     "precision_ci": [
+      0.224,
+      0.478
+     ]
+    }
+   },
+   "greek": {
+    "judged": 32,
+    "positives": 17,
+    "base_rate": 0.531,
+    "meets_bar": {
+     "threshold": 0.2815,
+     "flagged": 5,
+     "tp": 4,
+     "precision": 0.8,
+     "recall": 0.235,
+     "precision_ci": [
+      0.376,
+      0.964
+     ]
+    },
+    "best_f1": {
+     "threshold": 0.1691,
+     "flagged": 22,
+     "tp": 14,
+     "precision": 0.636,
+     "recall": 0.824,
+     "precision_ci": [
+      0.43,
+      0.803
+     ]
+    }
+   },
+   "latin_script": {
+    "judged": 40,
+    "positives": 4,
+    "base_rate": 0.1,
+    "meets_bar": null,
+    "best_f1": {
+     "threshold": 0.2346,
+     "flagged": 20,
+     "tp": 3,
+     "precision": 0.15,
+     "recall": 0.75,
+     "precision_ci": [
+      0.052,
+      0.36
+     ]
+    }
+   },
+   "rtl": {
+    "judged": 0,
+    "positives": 0,
+    "base_rate": null,
+    "meets_bar": null,
+    "best_f1": null
+   },
+   "indic_cjk": {
+    "judged": 6,
+    "positives": 0,
+    "base_rate": 0,
+    "meets_bar": null,
+    "best_f1": {
+     "threshold": 0.8519,
+     "flagged": 6,
+     "tp": 0,
+     "precision": 0,
+     "recall": null,
+     "precision_ci": [
+      0,
+      0.39
+     ]
+    }
+   }
+  },
+  "self": {
+   "all": {
+    "judged": 135,
+    "positives": 48,
+    "base_rate": 0.356,
+    "meets_bar": null,
+    "best_f1": null
+   },
+   "greek": {
+    "judged": 32,
+    "positives": 17,
+    "base_rate": 0.531,
+    "meets_bar": null,
+    "best_f1": null
+   },
+   "latin_script": {
+    "judged": 40,
+    "positives": 4,
+    "base_rate": 0.1,
+    "meets_bar": null,
+    "best_f1": null
+   },
+   "rtl": {
+    "judged": 33,
+    "positives": 18,
+    "base_rate": 0.545,
+    "meets_bar": null,
+    "best_f1": null
+   },
+   "indic_cjk": {
+    "judged": 30,
+    "positives": 9,
+    "base_rate": 0.3,
+    "meets_bar": null,
+    "best_f1": null
+   }
+  },
+  "no_vowel": {
+   "all": {
+    "judged": 55,
+    "positives": 4,
+    "base_rate": 0.073,
+    "meets_bar": null,
+    "best_f1": {
+     "threshold": 0.0056,
+     "flagged": 7,
+     "tp": 1,
+     "precision": 0.143,
+     "recall": 0.25,
+     "precision_ci": [
+      0.026,
+      0.513
+     ]
+    }
+   },
+   "greek": {
+    "judged": 9,
+    "positives": 0,
+    "base_rate": 0,
+    "meets_bar": null,
+    "best_f1": {
+     "threshold": 0.0196,
+     "flagged": 3,
+     "tp": 0,
+     "precision": 0,
+     "recall": null,
+     "precision_ci": [
+      0,
+      0.562
+     ]
+    }
+   },
+   "latin_script": {
+    "judged": 40,
+    "positives": 4,
+    "base_rate": 0.1,
+    "meets_bar": null,
+    "best_f1": {
+     "threshold": 0.0056,
+     "flagged": 2,
+     "tp": 1,
+     "precision": 0.5,
+     "recall": 0.25,
+     "precision_ci": [
+      0.095,
+      0.905
+     ]
+    }
+   },
+   "rtl": {
+    "judged": 0,
+    "positives": 0,
+    "base_rate": null,
+    "meets_bar": null,
+    "best_f1": null
+   },
+   "indic_cjk": {
+    "judged": 6,
+    "positives": 0,
+    "base_rate": 0,
+    "meets_bar": null,
+    "best_f1": {
+     "threshold": 0.0063,
+     "flagged": 2,
+     "tp": 0,
+     "precision": 0,
+     "recall": null,
+     "precision_ci": [
+      0,
+      0.658
+     ]
+    }
+   }
+  },
+  "mixed": {
+   "all": {
+    "judged": 135,
+    "positives": 48,
+    "base_rate": 0.356,
+    "meets_bar": null,
+    "best_f1": {
+     "threshold": 0.0027,
+     "flagged": 4,
+     "tp": 0,
+     "precision": 0,
+     "recall": 0,
+     "precision_ci": [
+      0,
+      0.49
+     ]
+    }
+   },
+   "greek": {
+    "judged": 32,
+    "positives": 17,
+    "base_rate": 0.531,
+    "meets_bar": null,
+    "best_f1": {
+     "threshold": 0.0027,
+     "flagged": 3,
+     "tp": 0,
+     "precision": 0,
+     "recall": 0,
+     "precision_ci": [
+      0,
+      0.562
+     ]
+    }
+   },
+   "latin_script": {
+    "judged": 40,
+    "positives": 4,
+    "base_rate": 0.1,
+    "meets_bar": null,
+    "best_f1": null
+   },
+   "rtl": {
+    "judged": 33,
+    "positives": 18,
+    "base_rate": 0.545,
+    "meets_bar": null,
+    "best_f1": null
+   },
+   "indic_cjk": {
+    "judged": 30,
+    "positives": 9,
+    "base_rate": 0.3,
+    "meets_bar": null,
+    "best_f1": {
+     "threshold": 0.0252,
+     "flagged": 1,
+     "tp": 0,
+     "precision": 0,
+     "recall": 0,
+     "precision_ci": [
+      0,
+      0.793
+     ]
+    }
+   }
+  },
+  "fragment": {
+   "all": {
+    "judged": 135,
+    "positives": 48,
+    "base_rate": 0.356,
+    "meets_bar": null,
+    "best_f1": {
+     "threshold": 0.0039,
+     "flagged": 30,
+     "tp": 9,
+     "precision": 0.3,
+     "recall": 0.188,
+     "precision_ci": [
+      0.167,
+      0.479
+     ]
+    }
+   },
+   "greek": {
+    "judged": 32,
+    "positives": 17,
+    "base_rate": 0.531,
+    "meets_bar": null,
+    "best_f1": {
+     "threshold": 0.0039,
+     "flagged": 10,
+     "tp": 2,
+     "precision": 0.2,
+     "recall": 0.118,
+     "precision_ci": [
+      0.057,
+      0.51
+     ]
+    }
+   },
+   "latin_script": {
+    "judged": 40,
+    "positives": 4,
+    "base_rate": 0.1,
+    "meets_bar": null,
+    "best_f1": {
+     "threshold": 0.0274,
+     "flagged": 3,
+     "tp": 1,
+     "precision": 0.333,
+     "recall": 0.25,
+     "precision_ci": [
+      0.061,
+      0.792
+     ]
+    }
+   },
+   "rtl": {
+    "judged": 33,
+    "positives": 18,
+    "base_rate": 0.545,
+    "meets_bar": null,
+    "best_f1": {
+     "threshold": 0.0044,
+     "flagged": 9,
+     "tp": 6,
+     "precision": 0.667,
+     "recall": 0.333,
+     "precision_ci": [
+      0.354,
+      0.879
+     ]
+    }
+   },
+   "indic_cjk": {
+    "judged": 30,
+    "positives": 9,
+    "base_rate": 0.3,
+    "meets_bar": null,
+    "best_f1": {
+     "threshold": 0.0305,
+     "flagged": 4,
+     "tp": 0,
+     "precision": 0,
+     "recall": 0,
+     "precision_ci": [
+      0,
+      0.49
+     ]
+    }
+   }
+  }
+ }
+}

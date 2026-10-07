@@ -32,7 +32,6 @@ scripts/analysis/stamp-work-merge-queue-llm.mjs
 scripts/artwork-enrichment.mjs
 scripts/audit-subcollections.mjs
 scripts/audit/gemini-key-attribution.mjs
-scripts/audit/search-tenant-purity.mjs
 scripts/audit/semantic-language-filter-recall.mjs
 scripts/audit/titlepage-attribution-run.mjs
 scripts/audit/titlepage-model-pilot-v2.mjs

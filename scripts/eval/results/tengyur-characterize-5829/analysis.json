@@ -1,0 +1,3691 @@
+{
+ "n_items": 210,
+ "by_item_type": {
+  "SAMPLE": {
+   "label": "SAMPLE",
+   "pages": 150,
+   "share_light": 75.3,
+   "share_light_ci": [
+    69.0,
+    81.7
+   ],
+   "share_work": 23.3,
+   "share_work_ci": [
+    17.3,
+    29.7
+   ],
+   "share_specialist": 1.3,
+   "share_specialist_ci": [
+    0.0,
+    3.3
+   ],
+   "worse_of_two": {
+    "light": 103,
+    "work": 44,
+    "specialist": 3
+   },
+   "score_mean": 3.9,
+   "reversal": {
+    "errors_per100_either": 12.7,
+    "errors_per100_both": 6.7,
+    "errors_per100_A": 12.0,
+    "errors_per100_B": 9.3,
+    "pages_with_either": 18,
+    "pages_with_either_pct": 12.0,
+    "pages_with_either_ci": [
+     7.7,
+     18.2
+    ],
+    "pages_with_both": 10,
+    "pages_with_both_pct": 6.7,
+    "pages_with_both_ci": [
+     3.7,
+     11.8
+    ],
+    "errors_per100_either_ci": [
+     7.3,
+     18.7
+    ],
+    "errors_per100_both_ci": [
+     3.3,
+     10.7
+    ]
+   },
+   "agent": {
+    "errors_per100_either": 34.7,
+    "errors_per100_both": 14.0,
+    "errors_per100_A": 28.0,
+    "errors_per100_B": 24.7,
+    "pages_with_either": 42,
+    "pages_with_either_pct": 28.0,
+    "pages_with_either_ci": [
+     21.4,
+     35.7
+    ],
+    "pages_with_both": 20,
+    "pages_with_both_pct": 13.3,
+    "pages_with_both_ci": [
+     8.8,
+     19.7
+    ],
+    "errors_per100_either_ci": [
+     25.3,
+     44.7
+    ],
+    "errors_per100_both_ci": [
+     8.7,
+     20.0
+    ]
+   },
+   "term": {
+    "errors_per100_either": 78.0,
+    "errors_per100_both": 34.7,
+    "errors_per100_A": 58.0,
+    "errors_per100_B": 61.3,
+    "pages_with_either": 80,
+    "pages_with_either_pct": 53.3,
+    "pages_with_either_ci": [
+     45.4,
+     61.1
+    ],
+    "pages_with_both": 41,
+    "pages_with_both_pct": 27.3,
+    "pages_with_both_ci": [
+     20.8,
+     35.0
+    ],
+    "errors_per100_either_ci": [
+     63.3,
+     92.7
+    ],
+    "errors_per100_both_ci": [
+     24.7,
+     44.7
+    ]
+   },
+   "rev_agent": {
+    "errors_per100_either": 47.3,
+    "errors_per100_both": 22.0,
+    "errors_per100_A": 40.0,
+    "errors_per100_B": 34.0,
+    "pages_with_either": 57,
+    "pages_with_either_pct": 38.0,
+    "pages_with_either_ci": [
+     30.6,
+     46.0
+    ],
+    "pages_with_both": 30,
+    "pages_with_both_pct": 20.0,
+    "pages_with_both_ci": [
+     14.4,
+     27.1
+    ],
+    "errors_per100_either_ci": [
+     37.3,
+     59.3
+    ],
+    "errors_per100_both_ci": [
+     15.3,
+     30.7
+    ]
+   },
+   "all": {
+    "errors_per100_either": 189.3,
+    "errors_per100_both": 107.3,
+    "errors_per100_A": 148.7,
+    "errors_per100_B": 148.0,
+    "pages_with_either": 127,
+    "pages_with_either_pct": 84.7,
+    "pages_with_either_ci": [
+     78.0,
+     89.6
+    ],
+    "pages_with_both": 97,
+    "pages_with_both_pct": 64.7,
+    "pages_with_both_ci": [
+     56.7,
+     71.9
+    ],
+    "errors_per100_either_ci": [
+     166.7,
+     212.0
+    ],
+    "errors_per100_both_ci": [
+     90.7,
+     126.0
+    ]
+   }
+  },
+  "PLANT": {
+   "label": "PLANT",
+   "pages": 20,
+   "share_light": 75.0,
+   "share_light_ci": [
+    60.0,
+    90.0
+   ],
+   "share_work": 22.5,
+   "share_work_ci": [
+    10.0,
+    37.5
+   ],
+   "share_specialist": 2.5,
+   "share_specialist_ci": [
+    0.0,
+    7.5
+   ],
+   "worse_of_two": {
+    "light": 13,
+    "work": 6,
+    "specialist": 1
+   },
+   "score_mean": 3.5,
+   "reversal": {
+    "errors_per100_either": 50.0,
+    "errors_per100_both": 45.0,
+    "errors_per100_A": 50.0,
+    "errors_per100_B": 45.0,
+    "pages_with_either": 8,
+    "pages_with_either_pct": 40.0,
+    "pages_with_either_ci": [
+     21.9,
+     61.3
+    ],
+    "pages_with_both": 7,
+    "pages_with_both_pct": 35.0,
+    "pages_with_both_ci": [
+     18.1,
+     56.7
+    ],
+    "errors_per100_either_ci": [
+     20.0,
+     85.0
+    ],
+    "errors_per100_both_ci": [
+     15.0,
+     80.0
+    ]
+   },
+   "agent": {
+    "errors_per100_either": 50.0,
+    "errors_per100_both": 40.0,
+    "errors_per100_A": 45.0,
+    "errors_per100_B": 55.0,
+    "pages_with_either": 9,
+    "pages_with_either_pct": 45.0,
+    "pages_with_either_ci": [
+     25.8,
+     65.8
+    ],
+    "pages_with_both": 7,
+    "pages_with_both_pct": 35.0,
+    "pages_with_both_ci": [
+     18.1,
+     56.7
+    ],
+    "errors_per100_either_ci": [
+     25.0,
+     75.0
+    ],
+    "errors_per100_both_ci": [
+     15.0,
+     70.0
+    ]
+   },
+   "term": {
+    "errors_per100_either": 75.0,
+    "errors_per100_both": 40.0,
+    "errors_per100_A": 60.0,
+    "errors_per100_B": 65.0,
+    "pages_with_either": 12,
+    "pages_with_either_pct": 60.0,
+    "pages_with_either_ci": [
+     38.7,
+     78.1
+    ],
+    "pages_with_both": 7,
+    "pages_with_both_pct": 35.0,
+    "pages_with_both_ci": [
+     18.1,
+     56.7
+    ],
+    "errors_per100_either_ci": [
+     45.0,
+     105.0
+    ],
+    "errors_per100_both_ci": [
+     15.0,
+     65.0
+    ]
+   },
+   "rev_agent": {
+    "errors_per100_either": 100.0,
+    "errors_per100_both": 85.0,
+    "errors_per100_A": 95.0,
+    "errors_per100_B": 100.0,
+    "pages_with_either": 17,
+    "pages_with_either_pct": 85.0,
+    "pages_with_either_ci": [
+     64.0,
+     94.8
+    ],
+    "pages_with_both": 14,
+    "pages_with_both_pct": 70.0,
+    "pages_with_both_ci": [
+     48.1,
+     85.5
+    ],
+    "errors_per100_either_ci": [
+     75.0,
+     130.0
+    ],
+    "errors_per100_both_ci": [
+     55.0,
+     120.0
+    ]
+   },
+   "all": {
+    "errors_per100_either": 220.0,
+    "errors_per100_both": 175.0,
+    "errors_per100_A": 185.0,
+    "errors_per100_B": 210.0,
+    "pages_with_either": 20,
+    "pages_with_either_pct": 100.0,
+    "pages_with_either_ci": [
+     83.9,
+     100.0
+    ],
+    "pages_with_both": 20,
+    "pages_with_both_pct": 100.0,
+    "pages_with_both_ci": [
+     83.9,
+     100.0
+    ],
+    "errors_per100_either_ci": [
+     175.0,
+     270.0
+    ],
+    "errors_per100_both_ci": [
+     140.0,
+     215.0
+    ]
+   }
+  },
+  "HUMAN": {
+   "label": "HUMAN",
+   "pages": 20,
+   "share_light": 80.0,
+   "share_light_ci": [
+    62.5,
+    95.0
+   ],
+   "share_work": 20.0,
+   "share_work_ci": [
+    5.0,
+    37.5
+   ],
+   "share_specialist": 0.0,
+   "share_specialist_ci": [
+    0.0,
+    0.0
+   ],
+   "worse_of_two": {
+    "light": 15,
+    "work": 5,
+    "specialist": 0
+   },
+   "score_mean": 4.05,
+   "reversal": {
+    "errors_per100_either": 5.0,
+    "errors_per100_both": 5.0,
+    "errors_per100_A": 5.0,
+    "errors_per100_B": 5.0,
+    "pages_with_either": 1,
+    "pages_with_either_pct": 5.0,
+    "pages_with_either_ci": [
+     0.9,
+     23.6
+    ],
+    "pages_with_both": 1,
+    "pages_with_both_pct": 5.0,
+    "pages_with_both_ci": [
+     0.9,
+     23.6
+    ],
+    "errors_per100_either_ci": [
+     0.0,
+     15.0
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     15.0
+    ]
+   },
+   "agent": {
+    "errors_per100_either": 15.0,
+    "errors_per100_both": 5.0,
+    "errors_per100_A": 10.0,
+    "errors_per100_B": 10.0,
+    "pages_with_either": 3,
+    "pages_with_either_pct": 15.0,
+    "pages_with_either_ci": [
+     5.2,
+     36.0
+    ],
+    "pages_with_both": 1,
+    "pages_with_both_pct": 5.0,
+    "pages_with_both_ci": [
+     0.9,
+     23.6
+    ],
+    "errors_per100_either_ci": [
+     0.0,
+     30.0
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     15.0
+    ]
+   },
+   "term": {
+    "errors_per100_either": 70.0,
+    "errors_per100_both": 40.0,
+    "errors_per100_A": 70.0,
+    "errors_per100_B": 45.0,
+    "pages_with_either": 10,
+    "pages_with_either_pct": 50.0,
+    "pages_with_either_ci": [
+     29.9,
+     70.1
+    ],
+    "pages_with_both": 8,
+    "pages_with_both_pct": 40.0,
+    "pages_with_both_ci": [
+     21.9,
+     61.3
+    ],
+    "errors_per100_either_ci": [
+     35.0,
+     105.0
+    ],
+    "errors_per100_both_ci": [
+     20.0,
+     60.0
+    ]
+   },
+   "rev_agent": {
+    "errors_per100_either": 20.0,
+    "errors_per100_both": 10.0,
+    "errors_per100_A": 15.0,
+    "errors_per100_B": 15.0,
+    "pages_with_either": 4,
+    "pages_with_either_pct": 20.0,
+    "pages_with_either_ci": [
+     8.1,
+     41.6
+    ],
+    "pages_with_both": 2,
+    "pages_with_both_pct": 10.0,
+    "pages_with_both_ci": [
+     2.8,
+     30.1
+    ],
+    "errors_per100_either_ci": [
+     5.0,
+     40.0
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     25.0
+    ]
+   },
+   "all": {
+    "errors_per100_either": 195.0,
+    "errors_per100_both": 115.0,
+    "errors_per100_A": 180.0,
+    "errors_per100_B": 130.0,
+    "pages_with_either": 15,
+    "pages_with_either_pct": 75.0,
+    "pages_with_either_ci": [
+     53.1,
+     88.8
+    ],
+    "pages_with_both": 12,
+    "pages_with_both_pct": 60.0,
+    "pages_with_both_ci": [
+     38.7,
+     78.1
+    ],
+    "errors_per100_either_ci": [
+     120.0,
+     270.0
+    ],
+    "errors_per100_both_ci": [
+     60.0,
+     175.0
+    ]
+   }
+  },
+  "J5797": {
+   "label": "J5797",
+   "pages": 20,
+   "share_light": 77.5,
+   "share_light_ci": [
+    57.5,
+    95.0
+   ],
+   "share_work": 22.5,
+   "share_work_ci": [
+    7.5,
+    42.5
+   ],
+   "share_specialist": 0.0,
+   "share_specialist_ci": [
+    0.0,
+    0.0
+   ],
+   "worse_of_two": {
+    "light": 15,
+    "work": 5,
+    "specialist": 0
+   },
+   "score_mean": 4.0,
+   "reversal": {
+    "errors_per100_either": 20.0,
+    "errors_per100_both": 15.0,
+    "errors_per100_A": 20.0,
+    "errors_per100_B": 15.0,
+    "pages_with_either": 4,
+    "pages_with_either_pct": 20.0,
+    "pages_with_either_ci": [
+     8.1,
+     41.6
+    ],
+    "pages_with_both": 3,
+    "pages_with_both_pct": 15.0,
+    "pages_with_both_ci": [
+     5.2,
+     36.0
+    ],
+    "errors_per100_either_ci": [
+     5.0,
+     40.0
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     30.0
+    ]
+   },
+   "agent": {
+    "errors_per100_either": 30.0,
+    "errors_per100_both": 10.0,
+    "errors_per100_A": 25.0,
+    "errors_per100_B": 20.0,
+    "pages_with_either": 5,
+    "pages_with_either_pct": 25.0,
+    "pages_with_either_ci": [
+     11.2,
+     46.9
+    ],
+    "pages_with_both": 2,
+    "pages_with_both_pct": 10.0,
+    "pages_with_both_ci": [
+     2.8,
+     30.1
+    ],
+    "errors_per100_either_ci": [
+     10.0,
+     55.0
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     25.0
+    ]
+   },
+   "term": {
+    "errors_per100_either": 75.0,
+    "errors_per100_both": 20.0,
+    "errors_per100_A": 50.0,
+    "errors_per100_B": 45.0,
+    "pages_with_either": 11,
+    "pages_with_either_pct": 55.0,
+    "pages_with_either_ci": [
+     34.2,
+     74.2
+    ],
+    "pages_with_both": 3,
+    "pages_with_both_pct": 15.0,
+    "pages_with_both_ci": [
+     5.2,
+     36.0
+    ],
+    "errors_per100_either_ci": [
+     40.0,
+     110.0
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     45.0
+    ]
+   },
+   "rev_agent": {
+    "errors_per100_either": 50.0,
+    "errors_per100_both": 25.0,
+    "errors_per100_A": 45.0,
+    "errors_per100_B": 35.0,
+    "pages_with_either": 9,
+    "pages_with_either_pct": 45.0,
+    "pages_with_either_ci": [
+     25.8,
+     65.8
+    ],
+    "pages_with_both": 5,
+    "pages_with_both_pct": 25.0,
+    "pages_with_both_ci": [
+     11.2,
+     46.9
+    ],
+    "errors_per100_either_ci": [
+     25.0,
+     75.0
+    ],
+    "errors_per100_both_ci": [
+     10.0,
+     45.0
+    ]
+   },
+   "all": {
+    "errors_per100_either": 170.0,
+    "errors_per100_both": 75.0,
+    "errors_per100_A": 125.0,
+    "errors_per100_B": 120.0,
+    "pages_with_either": 16,
+    "pages_with_either_pct": 80.0,
+    "pages_with_either_ci": [
+     58.4,
+     91.9
+    ],
+    "pages_with_both": 11,
+    "pages_with_both_pct": 55.0,
+    "pages_with_both_ci": [
+     34.2,
+     74.2
+    ],
+    "errors_per100_either_ci": [
+     120.0,
+     220.0
+    ],
+    "errors_per100_both_ci": [
+     40.0,
+     110.0
+    ]
+   }
+  }
+ },
+ "sample_by_section": {
+  "Tantra commentary": {
+   "label": "Tantra commentary",
+   "pages": 59,
+   "share_light": 82.2,
+   "share_light_ci": [
+    73.7,
+    89.8
+   ],
+   "share_work": 17.8,
+   "share_work_ci": [
+    10.2,
+    27.1
+   ],
+   "share_specialist": 0.0,
+   "share_specialist_ci": [
+    0.0,
+    0.0
+   ],
+   "worse_of_two": {
+    "light": 44,
+    "work": 15,
+    "specialist": 0
+   },
+   "score_mean": 4.01,
+   "reversal": {
+    "errors_per100_either": 6.8,
+    "errors_per100_both": 3.4,
+    "errors_per100_A": 6.8,
+    "errors_per100_B": 3.4,
+    "pages_with_either": 4,
+    "pages_with_either_pct": 6.8,
+    "pages_with_either_ci": [
+     2.7,
+     16.2
+    ],
+    "pages_with_both": 2,
+    "pages_with_both_pct": 3.4,
+    "pages_with_both_ci": [
+     0.9,
+     11.5
+    ],
+    "errors_per100_either_ci": [
+     1.7,
+     13.6
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     8.5
+    ]
+   },
+   "agent": {
+    "errors_per100_either": 32.2,
+    "errors_per100_both": 11.9,
+    "errors_per100_A": 27.1,
+    "errors_per100_B": 18.6,
+    "pages_with_either": 16,
+    "pages_with_either_pct": 27.1,
+    "pages_with_either_ci": [
+     17.4,
+     39.6
+    ],
+    "pages_with_both": 7,
+    "pages_with_both_pct": 11.9,
+    "pages_with_both_ci": [
+     5.9,
+     22.5
+    ],
+    "errors_per100_either_ci": [
+     18.6,
+     47.5
+    ],
+    "errors_per100_both_ci": [
+     5.1,
+     20.3
+    ]
+   },
+   "term": {
+    "errors_per100_either": 81.4,
+    "errors_per100_both": 33.9,
+    "errors_per100_A": 59.3,
+    "errors_per100_B": 62.7,
+    "pages_with_either": 35,
+    "pages_with_either_pct": 59.3,
+    "pages_with_either_ci": [
+     46.6,
+     70.9
+    ],
+    "pages_with_both": 13,
+    "pages_with_both_pct": 22.0,
+    "pages_with_both_ci": [
+     13.4,
+     34.1
+    ],
+    "errors_per100_either_ci": [
+     59.3,
+     103.4
+    ],
+    "errors_per100_both_ci": [
+     16.9,
+     52.5
+    ]
+   },
+   "rev_agent": {
+    "errors_per100_either": 39.0,
+    "errors_per100_both": 15.3,
+    "errors_per100_A": 33.9,
+    "errors_per100_B": 22.0,
+    "pages_with_either": 19,
+    "pages_with_either_pct": 32.2,
+    "pages_with_either_ci": [
+     21.7,
+     44.9
+    ],
+    "pages_with_both": 9,
+    "pages_with_both_pct": 15.3,
+    "pages_with_both_ci": [
+     8.2,
+     26.5
+    ],
+    "errors_per100_either_ci": [
+     25.4,
+     54.2
+    ],
+    "errors_per100_both_ci": [
+     6.8,
+     25.4
+    ]
+   },
+   "all": {
+    "errors_per100_either": 176.3,
+    "errors_per100_both": 91.5,
+    "errors_per100_A": 142.4,
+    "errors_per100_B": 125.4,
+    "pages_with_either": 53,
+    "pages_with_either_pct": 89.8,
+    "pages_with_either_ci": [
+     79.5,
+     95.3
+    ],
+    "pages_with_both": 37,
+    "pages_with_both_pct": 62.7,
+    "pages_with_both_ci": [
+     50.0,
+     73.9
+    ],
+    "errors_per100_either_ci": [
+     147.5,
+     203.4
+    ],
+    "errors_per100_both_ci": [
+     67.8,
+     115.3
+    ]
+   }
+  },
+  "Pramāṇa": {
+   "label": "Pramāṇa",
+   "pages": 19,
+   "share_light": 39.5,
+   "share_light_ci": [
+    21.1,
+    57.9
+   ],
+   "share_work": 55.3,
+   "share_work_ci": [
+    36.8,
+    73.7
+   ],
+   "share_specialist": 5.3,
+   "share_specialist_ci": [
+    0.0,
+    13.2
+   ],
+   "worse_of_two": {
+    "light": 5,
+    "work": 12,
+    "specialist": 2
+   },
+   "score_mean": 3.39,
+   "reversal": {
+    "errors_per100_either": 31.6,
+    "errors_per100_both": 5.3,
+    "errors_per100_A": 31.6,
+    "errors_per100_B": 10.5,
+    "pages_with_either": 6,
+    "pages_with_either_pct": 31.6,
+    "pages_with_either_ci": [
+     15.4,
+     54.0
+    ],
+    "pages_with_both": 1,
+    "pages_with_both_pct": 5.3,
+    "pages_with_both_ci": [
+     0.9,
+     24.6
+    ],
+    "errors_per100_either_ci": [
+     10.5,
+     52.6
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     15.8
+    ]
+   },
+   "agent": {
+    "errors_per100_either": 42.1,
+    "errors_per100_both": 10.5,
+    "errors_per100_A": 31.6,
+    "errors_per100_B": 31.6,
+    "pages_with_either": 7,
+    "pages_with_either_pct": 36.8,
+    "pages_with_either_ci": [
+     19.1,
+     59.0
+    ],
+    "pages_with_both": 2,
+    "pages_with_both_pct": 10.5,
+    "pages_with_both_ci": [
+     2.9,
+     31.4
+    ],
+    "errors_per100_either_ci": [
+     15.8,
+     68.4
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     26.3
+    ]
+   },
+   "term": {
+    "errors_per100_either": 105.3,
+    "errors_per100_both": 47.4,
+    "errors_per100_A": 78.9,
+    "errors_per100_B": 78.9,
+    "pages_with_either": 14,
+    "pages_with_either_pct": 73.7,
+    "pages_with_either_ci": [
+     51.2,
+     88.2
+    ],
+    "pages_with_both": 7,
+    "pages_with_both_pct": 36.8,
+    "pages_with_both_ci": [
+     19.1,
+     59.0
+    ],
+    "errors_per100_either_ci": [
+     68.4,
+     142.1
+    ],
+    "errors_per100_both_ci": [
+     21.1,
+     78.9
+    ]
+   },
+   "rev_agent": {
+    "errors_per100_either": 73.7,
+    "errors_per100_both": 21.1,
+    "errors_per100_A": 63.2,
+    "errors_per100_B": 42.1,
+    "pages_with_either": 12,
+    "pages_with_either_pct": 63.2,
+    "pages_with_either_ci": [
+     41.0,
+     80.9
+    ],
+    "pages_with_both": 4,
+    "pages_with_both_pct": 21.1,
+    "pages_with_both_ci": [
+     8.5,
+     43.3
+    ],
+    "errors_per100_either_ci": [
+     47.4,
+     105.3
+    ],
+    "errors_per100_both_ci": [
+     5.3,
+     42.1
+    ]
+   },
+   "all": {
+    "errors_per100_either": 289.5,
+    "errors_per100_both": 136.8,
+    "errors_per100_A": 210.5,
+    "errors_per100_B": 215.8,
+    "pages_with_either": 19,
+    "pages_with_either_pct": 100.0,
+    "pages_with_either_ci": [
+     83.2,
+     100.0
+    ],
+    "pages_with_both": 15,
+    "pages_with_both_pct": 78.9,
+    "pages_with_both_ci": [
+     56.7,
+     91.5
+    ],
+    "errors_per100_either_ci": [
+     236.8,
+     347.4
+    ],
+    "errors_per100_both_ci": [
+     89.5,
+     184.2
+    ]
+   }
+  },
+  "Cittamātra": {
+   "label": "Cittamātra",
+   "pages": 13,
+   "share_light": 76.9,
+   "share_light_ci": [
+    53.8,
+    96.2
+   ],
+   "share_work": 23.1,
+   "share_work_ci": [
+    3.8,
+    46.2
+   ],
+   "share_specialist": 0.0,
+   "share_specialist_ci": [
+    0.0,
+    0.0
+   ],
+   "worse_of_two": {
+    "light": 9,
+    "work": 4,
+    "specialist": 0
+   },
+   "score_mean": 4.0,
+   "reversal": {
+    "errors_per100_either": 0.0,
+    "errors_per100_both": 0.0,
+    "errors_per100_A": 0.0,
+    "errors_per100_B": 0.0,
+    "pages_with_either": 0,
+    "pages_with_either_pct": 0.0,
+    "pages_with_either_ci": [
+     0.0,
+     22.8
+    ],
+    "pages_with_both": 0,
+    "pages_with_both_pct": 0.0,
+    "pages_with_both_ci": [
+     0.0,
+     22.8
+    ],
+    "errors_per100_either_ci": [
+     0.0,
+     0.0
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     0.0
+    ]
+   },
+   "agent": {
+    "errors_per100_either": 30.8,
+    "errors_per100_both": 23.1,
+    "errors_per100_A": 23.1,
+    "errors_per100_B": 38.5,
+    "pages_with_either": 3,
+    "pages_with_either_pct": 23.1,
+    "pages_with_either_ci": [
+     8.2,
+     50.3
+    ],
+    "pages_with_both": 3,
+    "pages_with_both_pct": 23.1,
+    "pages_with_both_ci": [
+     8.2,
+     50.3
+    ],
+    "errors_per100_either_ci": [
+     0.0,
+     69.2
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     46.2
+    ]
+   },
+   "term": {
+    "errors_per100_either": 46.2,
+    "errors_per100_both": 15.4,
+    "errors_per100_A": 30.8,
+    "errors_per100_B": 30.8,
+    "pages_with_either": 4,
+    "pages_with_either_pct": 30.8,
+    "pages_with_either_ci": [
+     12.7,
+     57.6
+    ],
+    "pages_with_both": 2,
+    "pages_with_both_pct": 15.4,
+    "pages_with_both_ci": [
+     4.3,
+     42.2
+    ],
+    "errors_per100_either_ci": [
+     7.7,
+     84.6
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     38.5
+    ]
+   },
+   "rev_agent": {
+    "errors_per100_either": 30.8,
+    "errors_per100_both": 23.1,
+    "errors_per100_A": 23.1,
+    "errors_per100_B": 38.5,
+    "pages_with_either": 3,
+    "pages_with_either_pct": 23.1,
+    "pages_with_either_ci": [
+     8.2,
+     50.3
+    ],
+    "pages_with_both": 3,
+    "pages_with_both_pct": 23.1,
+    "pages_with_both_ci": [
+     8.2,
+     50.3
+    ],
+    "errors_per100_either_ci": [
+     0.0,
+     69.2
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     46.2
+    ]
+   },
+   "all": {
+    "errors_per100_either": 130.8,
+    "errors_per100_both": 92.3,
+    "errors_per100_A": 100.0,
+    "errors_per100_B": 123.1,
+    "pages_with_either": 9,
+    "pages_with_either_pct": 69.2,
+    "pages_with_either_ci": [
+     42.4,
+     87.3
+    ],
+    "pages_with_both": 8,
+    "pages_with_both_pct": 61.5,
+    "pages_with_both_ci": [
+     35.5,
+     82.3
+    ],
+    "errors_per100_either_ci": [
+     69.2,
+     207.7
+    ],
+    "errors_per100_both_ci": [
+     46.2,
+     146.2
+    ]
+   }
+  },
+  "Madhyamaka": {
+   "label": "Madhyamaka",
+   "pages": 12,
+   "share_light": 83.3,
+   "share_light_ci": [
+    58.3,
+    100.0
+   ],
+   "share_work": 16.7,
+   "share_work_ci": [
+    0.0,
+    41.7
+   ],
+   "share_specialist": 0.0,
+   "share_specialist_ci": [
+    0.0,
+    0.0
+   ],
+   "worse_of_two": {
+    "light": 10,
+    "work": 2,
+    "specialist": 0
+   },
+   "score_mean": 4.04,
+   "reversal": {
+    "errors_per100_either": 8.3,
+    "errors_per100_both": 8.3,
+    "errors_per100_A": 8.3,
+    "errors_per100_B": 16.7,
+    "pages_with_either": 1,
+    "pages_with_either_pct": 8.3,
+    "pages_with_either_ci": [
+     1.5,
+     35.4
+    ],
+    "pages_with_both": 1,
+    "pages_with_both_pct": 8.3,
+    "pages_with_both_ci": [
+     1.5,
+     35.4
+    ],
+    "errors_per100_either_ci": [
+     0.0,
+     25.0
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     25.0
+    ]
+   },
+   "agent": {
+    "errors_per100_either": 58.3,
+    "errors_per100_both": 16.7,
+    "errors_per100_A": 50.0,
+    "errors_per100_B": 33.3,
+    "pages_with_either": 6,
+    "pages_with_either_pct": 50.0,
+    "pages_with_either_ci": [
+     25.4,
+     74.6
+    ],
+    "pages_with_both": 2,
+    "pages_with_both_pct": 16.7,
+    "pages_with_both_ci": [
+     4.7,
+     44.8
+    ],
+    "errors_per100_either_ci": [
+     25.0,
+     91.7
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     41.7
+    ]
+   },
+   "term": {
+    "errors_per100_either": 58.3,
+    "errors_per100_both": 41.7,
+    "errors_per100_A": 58.3,
+    "errors_per100_B": 58.3,
+    "pages_with_either": 6,
+    "pages_with_either_pct": 50.0,
+    "pages_with_either_ci": [
+     25.4,
+     74.6
+    ],
+    "pages_with_both": 5,
+    "pages_with_both_pct": 41.7,
+    "pages_with_both_ci": [
+     19.3,
+     68.0
+    ],
+    "errors_per100_either_ci": [
+     25.0,
+     100.0
+    ],
+    "errors_per100_both_ci": [
+     16.7,
+     66.7
+    ]
+   },
+   "rev_agent": {
+    "errors_per100_either": 66.7,
+    "errors_per100_both": 33.3,
+    "errors_per100_A": 58.3,
+    "errors_per100_B": 50.0,
+    "pages_with_either": 6,
+    "pages_with_either_pct": 50.0,
+    "pages_with_either_ci": [
+     25.4,
+     74.6
+    ],
+    "pages_with_both": 2,
+    "pages_with_both_pct": 16.7,
+    "pages_with_both_ci": [
+     4.7,
+     44.8
+    ],
+    "errors_per100_either_ci": [
+     25.0,
+     125.0
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     91.7
+    ]
+   },
+   "all": {
+    "errors_per100_either": 166.7,
+    "errors_per100_both": 116.7,
+    "errors_per100_A": 141.7,
+    "errors_per100_B": 141.7,
+    "pages_with_either": 9,
+    "pages_with_either_pct": 75.0,
+    "pages_with_either_ci": [
+     46.8,
+     91.1
+    ],
+    "pages_with_both": 7,
+    "pages_with_both_pct": 58.3,
+    "pages_with_both_ci": [
+     32.0,
+     80.7
+    ],
+    "errors_per100_either_ci": [
+     91.7,
+     233.3
+    ],
+    "errors_per100_both_ci": [
+     50.0,
+     183.3
+    ]
+   }
+  },
+  "Vinaya": {
+   "label": "Vinaya",
+   "pages": 11,
+   "share_light": 63.6,
+   "share_light_ci": [
+    40.9,
+    86.4
+   ],
+   "share_work": 36.4,
+   "share_work_ci": [
+    9.1,
+    63.6
+   ],
+   "share_specialist": 0.0,
+   "share_specialist_ci": [
+    0.0,
+    0.0
+   ],
+   "worse_of_two": {
+    "light": 6,
+    "work": 5,
+    "specialist": 0
+   },
+   "score_mean": 3.55,
+   "reversal": {
+    "errors_per100_either": 0.0,
+    "errors_per100_both": 0.0,
+    "errors_per100_A": 0.0,
+    "errors_per100_B": 0.0,
+    "pages_with_either": 0,
+    "pages_with_either_pct": 0.0,
+    "pages_with_either_ci": [
+     0.0,
+     25.9
+    ],
+    "pages_with_both": 0,
+    "pages_with_both_pct": 0.0,
+    "pages_with_both_ci": [
+     0.0,
+     25.9
+    ],
+    "errors_per100_either_ci": [
+     0.0,
+     0.0
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     0.0
+    ]
+   },
+   "agent": {
+    "errors_per100_either": 36.4,
+    "errors_per100_both": 27.3,
+    "errors_per100_A": 27.3,
+    "errors_per100_B": 36.4,
+    "pages_with_either": 4,
+    "pages_with_either_pct": 36.4,
+    "pages_with_either_ci": [
+     15.2,
+     64.6
+    ],
+    "pages_with_both": 3,
+    "pages_with_both_pct": 27.3,
+    "pages_with_both_ci": [
+     9.7,
+     56.6
+    ],
+    "errors_per100_either_ci": [
+     9.1,
+     63.6
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     54.5
+    ]
+   },
+   "term": {
+    "errors_per100_either": 145.5,
+    "errors_per100_both": 63.6,
+    "errors_per100_A": 109.1,
+    "errors_per100_B": 118.2,
+    "pages_with_either": 8,
+    "pages_with_either_pct": 72.7,
+    "pages_with_either_ci": [
+     43.4,
+     90.3
+    ],
+    "pages_with_both": 6,
+    "pages_with_both_pct": 54.5,
+    "pages_with_both_ci": [
+     28.0,
+     78.7
+    ],
+    "errors_per100_either_ci": [
+     72.7,
+     218.2
+    ],
+    "errors_per100_both_ci": [
+     27.3,
+     100.0
+    ]
+   },
+   "rev_agent": {
+    "errors_per100_either": 36.4,
+    "errors_per100_both": 27.3,
+    "errors_per100_A": 27.3,
+    "errors_per100_B": 36.4,
+    "pages_with_either": 4,
+    "pages_with_either_pct": 36.4,
+    "pages_with_either_ci": [
+     15.2,
+     64.6
+    ],
+    "pages_with_both": 3,
+    "pages_with_both_pct": 27.3,
+    "pages_with_both_ci": [
+     9.7,
+     56.6
+    ],
+    "errors_per100_either_ci": [
+     9.1,
+     63.6
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     54.5
+    ]
+   },
+   "all": {
+    "errors_per100_either": 254.5,
+    "errors_per100_both": 163.6,
+    "errors_per100_A": 209.1,
+    "errors_per100_B": 209.1,
+    "pages_with_either": 10,
+    "pages_with_either_pct": 90.9,
+    "pages_with_either_ci": [
+     62.3,
+     98.4
+    ],
+    "pages_with_both": 10,
+    "pages_with_both_pct": 90.9,
+    "pages_with_both_ci": [
+     62.3,
+     98.4
+    ],
+    "errors_per100_either_ci": [
+     163.6,
+     336.4
+    ],
+    "errors_per100_both_ci": [
+     100.0,
+     245.5
+    ]
+   }
+  },
+  "Prajñāpāramitā": {
+   "label": "Prajñāpāramitā",
+   "pages": 10,
+   "share_light": 100.0,
+   "share_light_ci": [
+    100.0,
+    100.0
+   ],
+   "share_work": 0.0,
+   "share_work_ci": [
+    0.0,
+    0.0
+   ],
+   "share_specialist": 0.0,
+   "share_specialist_ci": [
+    0.0,
+    0.0
+   ],
+   "worse_of_two": {
+    "light": 10,
+    "work": 0,
+    "specialist": 0
+   },
+   "score_mean": 4.35,
+   "reversal": {
+    "errors_per100_either": 30.0,
+    "errors_per100_both": 20.0,
+    "errors_per100_A": 30.0,
+    "errors_per100_B": 20.0,
+    "pages_with_either": 3,
+    "pages_with_either_pct": 30.0,
+    "pages_with_either_ci": [
+     10.8,
+     60.3
+    ],
+    "pages_with_both": 2,
+    "pages_with_both_pct": 20.0,
+    "pages_with_both_ci": [
+     5.7,
+     51.0
+    ],
+    "errors_per100_either_ci": [
+     0.0,
+     60.0
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     50.0
+    ]
+   },
+   "agent": {
+    "errors_per100_either": 0.0,
+    "errors_per100_both": 0.0,
+    "errors_per100_A": 0.0,
+    "errors_per100_B": 10.0,
+    "pages_with_either": 0,
+    "pages_with_either_pct": 0.0,
+    "pages_with_either_ci": [
+     -0.0,
+     27.8
+    ],
+    "pages_with_both": 0,
+    "pages_with_both_pct": 0.0,
+    "pages_with_both_ci": [
+     -0.0,
+     27.8
+    ],
+    "errors_per100_either_ci": [
+     0.0,
+     0.0
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     0.0
+    ]
+   },
+   "term": {
+    "errors_per100_either": 10.0,
+    "errors_per100_both": 0.0,
+    "errors_per100_A": 10.0,
+    "errors_per100_B": 10.0,
+    "pages_with_either": 1,
+    "pages_with_either_pct": 10.0,
+    "pages_with_either_ci": [
+     1.8,
+     40.4
+    ],
+    "pages_with_both": 0,
+    "pages_with_both_pct": 0.0,
+    "pages_with_both_ci": [
+     -0.0,
+     27.8
+    ],
+    "errors_per100_either_ci": [
+     0.0,
+     30.0
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     0.0
+    ]
+   },
+   "rev_agent": {
+    "errors_per100_either": 30.0,
+    "errors_per100_both": 20.0,
+    "errors_per100_A": 30.0,
+    "errors_per100_B": 30.0,
+    "pages_with_either": 3,
+    "pages_with_either_pct": 30.0,
+    "pages_with_either_ci": [
+     10.8,
+     60.3
+    ],
+    "pages_with_both": 2,
+    "pages_with_both_pct": 20.0,
+    "pages_with_both_ci": [
+     5.7,
+     51.0
+    ],
+    "errors_per100_either_ci": [
+     0.0,
+     60.0
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     50.0
+    ]
+   },
+   "all": {
+    "errors_per100_either": 100.0,
+    "errors_per100_both": 80.0,
+    "errors_per100_A": 90.0,
+    "errors_per100_B": 90.0,
+    "pages_with_either": 5,
+    "pages_with_either_pct": 50.0,
+    "pages_with_either_ci": [
+     23.7,
+     76.3
+    ],
+    "pages_with_both": 5,
+    "pages_with_both_pct": 50.0,
+    "pages_with_both_ci": [
+     23.7,
+     76.3
+    ],
+    "errors_per100_either_ci": [
+     30.0,
+     180.0
+    ],
+    "errors_per100_both_ci": [
+     30.0,
+     150.0
+    ]
+   }
+  },
+  "Grammar & sciences": {
+   "label": "Grammar & sciences",
+   "pages": 7,
+   "share_light": 57.1,
+   "share_light_ci": [
+    28.6,
+    85.7
+   ],
+   "share_work": 28.6,
+   "share_work_ci": [
+    0.0,
+    57.1
+   ],
+   "share_specialist": 14.3,
+   "share_specialist_ci": [
+    0.0,
+    42.9
+   ],
+   "worse_of_two": {
+    "light": 4,
+    "work": 2,
+    "specialist": 1
+   },
+   "score_mean": 3.71,
+   "reversal": {
+    "errors_per100_either": 28.6,
+    "errors_per100_both": 14.3,
+    "errors_per100_A": 14.3,
+    "errors_per100_B": 42.9,
+    "pages_with_either": 1,
+    "pages_with_either_pct": 14.3,
+    "pages_with_either_ci": [
+     2.6,
+     51.3
+    ],
+    "pages_with_both": 1,
+    "pages_with_both_pct": 14.3,
+    "pages_with_both_ci": [
+     2.6,
+     51.3
+    ],
+    "errors_per100_either_ci": [
+     0.0,
+     85.7
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     42.9
+    ]
+   },
+   "agent": {
+    "errors_per100_either": 0.0,
+    "errors_per100_both": 0.0,
+    "errors_per100_A": 0.0,
+    "errors_per100_B": 0.0,
+    "pages_with_either": 0,
+    "pages_with_either_pct": 0.0,
+    "pages_with_either_ci": [
+     0.0,
+     35.4
+    ],
+    "pages_with_both": 0,
+    "pages_with_both_pct": 0.0,
+    "pages_with_both_ci": [
+     0.0,
+     35.4
+    ],
+    "errors_per100_either_ci": [
+     0.0,
+     0.0
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     0.0
+    ]
+   },
+   "term": {
+    "errors_per100_either": 114.3,
+    "errors_per100_both": 42.9,
+    "errors_per100_A": 85.7,
+    "errors_per100_B": 71.4,
+    "pages_with_either": 4,
+    "pages_with_either_pct": 57.1,
+    "pages_with_either_ci": [
+     25.0,
+     84.2
+    ],
+    "pages_with_both": 3,
+    "pages_with_both_pct": 42.9,
+    "pages_with_both_ci": [
+     15.8,
+     75.0
+    ],
+    "errors_per100_either_ci": [
+     28.6,
+     200.0
+    ],
+    "errors_per100_both_ci": [
+     14.3,
+     85.7
+    ]
+   },
+   "rev_agent": {
+    "errors_per100_either": 28.6,
+    "errors_per100_both": 14.3,
+    "errors_per100_A": 14.3,
+    "errors_per100_B": 42.9,
+    "pages_with_either": 1,
+    "pages_with_either_pct": 14.3,
+    "pages_with_either_ci": [
+     2.6,
+     51.3
+    ],
+    "pages_with_both": 1,
+    "pages_with_both_pct": 14.3,
+    "pages_with_both_ci": [
+     2.6,
+     51.3
+    ],
+    "errors_per100_either_ci": [
+     0.0,
+     85.7
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     42.9
+    ]
+   },
+   "all": {
+    "errors_per100_either": 242.9,
+    "errors_per100_both": 128.6,
+    "errors_per100_A": 171.4,
+    "errors_per100_B": 200.0,
+    "pages_with_either": 6,
+    "pages_with_either_pct": 85.7,
+    "pages_with_either_ci": [
+     48.7,
+     97.4
+    ],
+    "pages_with_both": 5,
+    "pages_with_both_pct": 71.4,
+    "pages_with_both_ci": [
+     35.9,
+     91.8
+    ],
+    "errors_per100_either_ci": [
+     128.6,
+     371.4
+    ],
+    "errors_per100_both_ci": [
+     57.1,
+     185.7
+    ]
+   }
+  },
+  "Jātaka": {
+   "label": "Jātaka",
+   "pages": 7,
+   "share_light": 64.3,
+   "share_light_ci": [
+    28.6,
+    92.9
+   ],
+   "share_work": 35.7,
+   "share_work_ci": [
+    7.1,
+    71.4
+   ],
+   "share_specialist": 0.0,
+   "share_specialist_ci": [
+    0.0,
+    0.0
+   ],
+   "worse_of_two": {
+    "light": 4,
+    "work": 3,
+    "specialist": 0
+   },
+   "score_mean": 3.5,
+   "reversal": {
+    "errors_per100_either": 14.3,
+    "errors_per100_both": 14.3,
+    "errors_per100_A": 14.3,
+    "errors_per100_B": 14.3,
+    "pages_with_either": 1,
+    "pages_with_either_pct": 14.3,
+    "pages_with_either_ci": [
+     2.6,
+     51.3
+    ],
+    "pages_with_both": 1,
+    "pages_with_both_pct": 14.3,
+    "pages_with_both_ci": [
+     2.6,
+     51.3
+    ],
+    "errors_per100_either_ci": [
+     0.0,
+     42.9
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     42.9
+    ]
+   },
+   "agent": {
+    "errors_per100_either": 114.3,
+    "errors_per100_both": 57.1,
+    "errors_per100_A": 85.7,
+    "errors_per100_B": 85.7,
+    "pages_with_either": 4,
+    "pages_with_either_pct": 57.1,
+    "pages_with_either_ci": [
+     25.0,
+     84.2
+    ],
+    "pages_with_both": 3,
+    "pages_with_both_pct": 42.9,
+    "pages_with_both_ci": [
+     15.8,
+     75.0
+    ],
+    "errors_per100_either_ci": [
+     28.6,
+     200.0
+    ],
+    "errors_per100_both_ci": [
+     14.3,
+     114.3
+    ]
+   },
+   "term": {
+    "errors_per100_either": 57.1,
+    "errors_per100_both": 42.9,
+    "errors_per100_A": 42.9,
+    "errors_per100_B": 57.1,
+    "pages_with_either": 2,
+    "pages_with_either_pct": 28.6,
+    "pages_with_either_ci": [
+     8.2,
+     64.1
+    ],
+    "pages_with_both": 2,
+    "pages_with_both_pct": 28.6,
+    "pages_with_both_ci": [
+     8.2,
+     64.1
+    ],
+    "errors_per100_either_ci": [
+     0.0,
+     142.9
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     100.0
+    ]
+   },
+   "rev_agent": {
+    "errors_per100_either": 128.6,
+    "errors_per100_both": 71.4,
+    "errors_per100_A": 100.0,
+    "errors_per100_B": 100.0,
+    "pages_with_either": 5,
+    "pages_with_either_pct": 71.4,
+    "pages_with_either_ci": [
+     35.9,
+     91.8
+    ],
+    "pages_with_both": 4,
+    "pages_with_both_pct": 57.1,
+    "pages_with_both_ci": [
+     25.0,
+     84.2
+    ],
+    "errors_per100_either_ci": [
+     57.1,
+     200.0
+    ],
+    "errors_per100_both_ci": [
+     28.6,
+     128.6
+    ]
+   },
+   "all": {
+    "errors_per100_either": 271.4,
+    "errors_per100_both": 171.4,
+    "errors_per100_A": 200.0,
+    "errors_per100_B": 242.9,
+    "pages_with_either": 6,
+    "pages_with_either_pct": 85.7,
+    "pages_with_either_ci": [
+     48.7,
+     97.4
+    ],
+    "pages_with_both": 5,
+    "pages_with_both_pct": 71.4,
+    "pages_with_both_ci": [
+     35.9,
+     91.8
+    ],
+    "errors_per100_either_ci": [
+     128.6,
+     457.1
+    ],
+    "errors_per100_both_ci": [
+     57.1,
+     328.6
+    ]
+   }
+  },
+  "Abhidharma": {
+   "label": "Abhidharma",
+   "pages": 7,
+   "share_light": 100.0,
+   "share_light_ci": [
+    100.0,
+    100.0
+   ],
+   "share_work": 0.0,
+   "share_work_ci": [
+    0.0,
+    0.0
+   ],
+   "share_specialist": 0.0,
+   "share_specialist_ci": [
+    0.0,
+    0.0
+   ],
+   "worse_of_two": {
+    "light": 7,
+    "work": 0,
+    "specialist": 0
+   },
+   "score_mean": 4.36,
+   "reversal": {
+    "errors_per100_either": 14.3,
+    "errors_per100_both": 14.3,
+    "errors_per100_A": 14.3,
+    "errors_per100_B": 14.3,
+    "pages_with_either": 1,
+    "pages_with_either_pct": 14.3,
+    "pages_with_either_ci": [
+     2.6,
+     51.3
+    ],
+    "pages_with_both": 1,
+    "pages_with_both_pct": 14.3,
+    "pages_with_both_ci": [
+     2.6,
+     51.3
+    ],
+    "errors_per100_either_ci": [
+     0.0,
+     42.9
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     42.9
+    ]
+   },
+   "agent": {
+    "errors_per100_either": 28.6,
+    "errors_per100_both": 0.0,
+    "errors_per100_A": 28.6,
+    "errors_per100_B": 0.0,
+    "pages_with_either": 2,
+    "pages_with_either_pct": 28.6,
+    "pages_with_either_ci": [
+     8.2,
+     64.1
+    ],
+    "pages_with_both": 0,
+    "pages_with_both_pct": 0.0,
+    "pages_with_both_ci": [
+     0.0,
+     35.4
+    ],
+    "errors_per100_either_ci": [
+     0.0,
+     57.1
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     0.0
+    ]
+   },
+   "term": {
+    "errors_per100_either": 42.9,
+    "errors_per100_both": 14.3,
+    "errors_per100_A": 14.3,
+    "errors_per100_B": 42.9,
+    "pages_with_either": 3,
+    "pages_with_either_pct": 42.9,
+    "pages_with_either_ci": [
+     15.8,
+     75.0
+    ],
+    "pages_with_both": 1,
+    "pages_with_both_pct": 14.3,
+    "pages_with_both_ci": [
+     2.6,
+     51.3
+    ],
+    "errors_per100_either_ci": [
+     14.3,
+     71.4
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     42.9
+    ]
+   },
+   "rev_agent": {
+    "errors_per100_either": 42.9,
+    "errors_per100_both": 14.3,
+    "errors_per100_A": 42.9,
+    "errors_per100_B": 14.3,
+    "pages_with_either": 3,
+    "pages_with_either_pct": 42.9,
+    "pages_with_either_ci": [
+     15.8,
+     75.0
+    ],
+    "pages_with_both": 1,
+    "pages_with_both_pct": 14.3,
+    "pages_with_both_ci": [
+     2.6,
+     51.3
+    ],
+    "errors_per100_either_ci": [
+     14.3,
+     85.7
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     42.9
+    ]
+   },
+   "all": {
+    "errors_per100_either": 85.7,
+    "errors_per100_both": 42.9,
+    "errors_per100_A": 57.1,
+    "errors_per100_B": 71.4,
+    "pages_with_either": 6,
+    "pages_with_either_pct": 85.7,
+    "pages_with_either_ci": [
+     48.7,
+     97.4
+    ],
+    "pages_with_both": 3,
+    "pages_with_both_pct": 42.9,
+    "pages_with_both_ci": [
+     15.8,
+     75.0
+    ],
+    "errors_per100_either_ci": [
+     57.1,
+     100.0
+    ],
+    "errors_per100_both_ci": [
+     14.3,
+     85.7
+    ]
+   }
+  },
+  "Sūtra commentary": {
+   "label": "Sūtra commentary",
+   "pages": 5,
+   "share_light": 90.0,
+   "share_light_ci": [
+    70.0,
+    100.0
+   ],
+   "share_work": 10.0,
+   "share_work_ci": [
+    0.0,
+    30.0
+   ],
+   "share_specialist": 0.0,
+   "share_specialist_ci": [
+    0.0,
+    0.0
+   ],
+   "worse_of_two": {
+    "light": 4,
+    "work": 1,
+    "specialist": 0
+   },
+   "score_mean": 4.1,
+   "reversal": {
+    "errors_per100_either": 20.0,
+    "errors_per100_both": 20.0,
+    "errors_per100_A": 20.0,
+    "errors_per100_B": 20.0,
+    "pages_with_either": 1,
+    "pages_with_either_pct": 20.0,
+    "pages_with_either_ci": [
+     3.6,
+     62.4
+    ],
+    "pages_with_both": 1,
+    "pages_with_both_pct": 20.0,
+    "pages_with_both_ci": [
+     3.6,
+     62.4
+    ],
+    "errors_per100_either_ci": [
+     0.0,
+     60.0
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     60.0
+    ]
+   },
+   "agent": {
+    "errors_per100_either": 0.0,
+    "errors_per100_both": 0.0,
+    "errors_per100_A": 0.0,
+    "errors_per100_B": 0.0,
+    "pages_with_either": 0,
+    "pages_with_either_pct": 0.0,
+    "pages_with_either_ci": [
+     -0.0,
+     43.4
+    ],
+    "pages_with_both": 0,
+    "pages_with_both_pct": 0.0,
+    "pages_with_both_ci": [
+     -0.0,
+     43.4
+    ],
+    "errors_per100_either_ci": [
+     0.0,
+     0.0
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     0.0
+    ]
+   },
+   "term": {
+    "errors_per100_either": 80.0,
+    "errors_per100_both": 40.0,
+    "errors_per100_A": 60.0,
+    "errors_per100_B": 60.0,
+    "pages_with_either": 3,
+    "pages_with_either_pct": 60.0,
+    "pages_with_either_ci": [
+     23.1,
+     88.2
+    ],
+    "pages_with_both": 2,
+    "pages_with_both_pct": 40.0,
+    "pages_with_both_ci": [
+     11.8,
+     76.9
+    ],
+    "errors_per100_either_ci": [
+     20.0,
+     140.0
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     80.0
+    ]
+   },
+   "rev_agent": {
+    "errors_per100_either": 20.0,
+    "errors_per100_both": 20.0,
+    "errors_per100_A": 20.0,
+    "errors_per100_B": 20.0,
+    "pages_with_either": 1,
+    "pages_with_either_pct": 20.0,
+    "pages_with_either_ci": [
+     3.6,
+     62.4
+    ],
+    "pages_with_both": 1,
+    "pages_with_both_pct": 20.0,
+    "pages_with_both_ci": [
+     3.6,
+     62.4
+    ],
+    "errors_per100_either_ci": [
+     0.0,
+     60.0
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     60.0
+    ]
+   },
+   "all": {
+    "errors_per100_either": 160.0,
+    "errors_per100_both": 100.0,
+    "errors_per100_A": 140.0,
+    "errors_per100_B": 120.0,
+    "pages_with_either": 4,
+    "pages_with_either_pct": 80.0,
+    "pages_with_either_ci": [
+     37.6,
+     96.4
+    ],
+    "pages_with_both": 2,
+    "pages_with_both_pct": 40.0,
+    "pages_with_both_ci": [
+     11.8,
+     76.9
+    ],
+    "errors_per100_either_ci": [
+     60.0,
+     240.0
+    ],
+    "errors_per100_both_ci": [
+     0.0,
+     220.0
+    ]
+   }
+  }
+ },
+ "sample_by_covariate": {
+  "prose (< 10% verse)": {
+   "pages": 105,
+   "rev_agent_pages_either": 33,
+   "rev_agent_per100_either": 37.1,
+   "light_share": 74.3
+  },
+  "verse 10–50%": {
+   "pages": 32,
+   "rev_agent_pages_either": 15,
+   "rev_agent_per100_either": 59.4,
+   "light_share": 82.8
+  },
+  "verse ≥ 50%": {
+   "pages": 13,
+   "rev_agent_pages_either": 9,
+   "rev_agent_per100_either": 100.0,
+   "light_share": 65.4
+  },
+  "colophon": {
+   "pages": 5,
+   "rev_agent_pages_either": 2,
+   "rev_agent_per100_either": 60.0,
+   "light_share": 100.0
+  },
+  "opens a text": {
+   "pages": 3,
+   "rev_agent_pages_either": 2,
+   "rev_agent_per100_either": 100.0,
+   "light_share": 100.0
+  }
+ },
+ "agreement": {
+  "sample": {
+   "verdict": {
+    "n": 150,
+    "observed": 0.853,
+    "kappa": 0.613,
+    "table": {
+     "light/light": 103,
+     "light/work": 13,
+     "light/specialist": 0,
+     "work/light": 7,
+     "work/work": 24,
+     "work/specialist": 0,
+     "specialist/light": 0,
+     "specialist/work": 2,
+     "specialist/specialist": 1
+    }
+   },
+   "findings": {
+    "findings_A": 223,
+    "findings_B": 222,
+    "matched": 161,
+    "share_of_A_matched": 0.722,
+    "share_of_B_matched": 0.725,
+    "jaccard": 0.567,
+    "rev_agent_A": 60,
+    "rev_agent_B": 51,
+    "rev_agent_matched": 33,
+    "rev_agent_pages_A": 52,
+    "rev_agent_pages_B": 43,
+    "rev_agent_pages_both": 35
+   }
+  },
+  "all_210": {
+   "verdict": {
+    "n": 210,
+    "observed": 0.857,
+    "kappa": 0.615,
+    "table": {
+     "light/light": 146,
+     "light/work": 15,
+     "light/specialist": 0,
+     "work/light": 12,
+     "work/work": 33,
+     "work/specialist": 0,
+     "specialist/light": 0,
+     "specialist/work": 3,
+     "specialist/specialist": 1
+    }
+   },
+   "findings": {
+    "findings_A": 321,
+    "findings_B": 314,
+    "matched": 234,
+    "share_of_A_matched": 0.729,
+    "share_of_B_matched": 0.745,
+    "jaccard": 0.584,
+    "rev_agent_A": 91,
+    "rev_agent_B": 81,
+    "rev_agent_matched": 57,
+    "rev_agent_pages_A": 79,
+    "rev_agent_pages_B": 68,
+    "rev_agent_pages_both": 57
+   }
+  }
+ },
+ "controls": {
+  "HUMAN_false_alarm": {
+   "note": "84000's published English, run through the same rendering. Every finding is counted as a false alarm, although some may be real (84000 is not error-free) and some are side-boundary effects of the alignment.",
+   "errors_per100_either": 195.0,
+   "errors_per100_A": 180.0,
+   "errors_per100_B": 130.0,
+   "rev_agent_per100_either": 20.0,
+   "rev_agent_pages_either": 4,
+   "rev_agent_pages_both": 2,
+   "by_type_per100_either": {
+    "reversal": 5.0,
+    "agent": 15.0,
+    "term": 70.0,
+    "omission": 40.0,
+    "addition": 45.0,
+    "structure": 20.0,
+    "gloss": 0.0
+   },
+   "verdicts": {
+    "light": 32,
+    "work": 8,
+    "specialist": 0
+   },
+   "score_mean": 4.05
+  },
+  "PLANT_recall": {
+   "by_kind": {
+    "reversal": {
+     "n": 7,
+     "A": 7,
+     "B": 7,
+     "either": 7,
+     "both": 7,
+     "either_typed_right": 7,
+     "per_review_recall_pct": 100.0,
+     "per_review_recall_ci": [
+      78.5,
+      100.0
+     ]
+    },
+    "agent": {
+     "n": 7,
+     "A": 6,
+     "B": 7,
+     "either": 7,
+     "both": 6,
+     "either_typed_right": 6,
+     "per_review_recall_pct": 92.9,
+     "per_review_recall_ci": [
+      68.5,
+      98.7
+     ]
+    },
+    "term": {
+     "n": 6,
+     "A": 6,
+     "B": 6,
+     "either": 6,
+     "both": 6,
+     "either_typed_right": 6,
+     "per_review_recall_pct": 100.0,
+     "per_review_recall_ci": [
+      75.7,
+      100.0
+     ]
+    },
+    "all": {
+     "n": 20,
+     "A": 19,
+     "B": 20,
+     "either": 20,
+     "both": 19,
+     "either_typed_right": 19,
+     "per_review_recall_pct": 97.5,
+     "per_review_recall_ci": [
+      87.1,
+      99.6
+     ]
+    }
+   },
+   "items": [
+    {
+     "id": "P1RPH",
+     "kind": "agent",
+     "how": "\\b[Yy]ou ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → I $1",
+     "A": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "agent"
+      ]
+     },
+     "B": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "agent"
+      ]
+     }
+    },
+    {
+     "id": "P2DCT",
+     "kind": "agent",
+     "how": "\\bI am\\b → you are",
+     "A": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "agent"
+      ]
+     },
+     "B": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "agent"
+      ]
+     }
+    },
+    {
+     "id": "P4TD7",
+     "kind": "agent",
+     "how": "\\b[Yy]ou ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → I $1",
+     "A": {
+      "found": false,
+      "typed_right": false,
+      "types": []
+     },
+     "B": {
+      "found": true,
+      "typed_right": false,
+      "types": [
+       "term"
+      ]
+     }
+    },
+    {
+     "id": "P4TDS",
+     "kind": "reversal",
+     "how": "\\bis\\b → is not",
+     "A": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "reversal"
+      ]
+     },
+     "B": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "reversal"
+      ]
+     }
+    },
+    {
+     "id": "P52RY",
+     "kind": "reversal",
+     "how": "\\bis\\b → is not",
+     "A": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "reversal"
+      ]
+     },
+     "B": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "reversal"
+      ]
+     }
+    },
+    {
+     "id": "P81W7",
+     "kind": "term",
+     "how": "wisdom → faith",
+     "A": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "term"
+      ]
+     },
+     "B": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "term"
+      ]
+     }
+    },
+    {
+     "id": "P9M6I",
+     "kind": "term",
+     "how": "conventional → ultimate",
+     "A": {
+      "found": true,
+      "typed_right": false,
+      "types": [
+       "reversal"
+      ]
+     },
+     "B": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "term"
+      ]
+     }
+    },
+    {
+     "id": "PCID5",
+     "kind": "agent",
+     "how": "\\bI ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → you $1",
+     "A": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "agent"
+      ]
+     },
+     "B": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "agent"
+      ]
+     }
+    },
+    {
+     "id": "PCVKM",
+     "kind": "term",
+     "how": "wisdom → faith",
+     "A": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "term"
+      ]
+     },
+     "B": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "term"
+      ]
+     }
+    },
+    {
+     "id": "PI9RS",
+     "kind": "reversal",
+     "how": "\\bis\\b → is not",
+     "A": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "reversal"
+      ]
+     },
+     "B": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "reversal"
+      ]
+     }
+    },
+    {
+     "id": "PJQXF",
+     "kind": "agent",
+     "how": "\\bthe master\\b → the student",
+     "A": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "agent"
+      ]
+     },
+     "B": {
+      "found": true,
+      "typed_right": false,
+      "types": [
+       "term"
+      ]
+     }
+    },
+    {
+     "id": "PKJHT",
+     "kind": "term",
+     "how": "monk → novice",
+     "A": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "term"
+      ]
+     },
+     "B": {
+      "found": true,
+      "typed_right": false,
+      "types": [
+       "agent"
+      ]
+     }
+    },
+    {
+     "id": "POGFV",
+     "kind": "agent",
+     "how": "\\bI ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → you $1",
+     "A": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "agent"
+      ]
+     },
+     "B": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "agent"
+      ]
+     }
+    },
+    {
+     "id": "POL15",
+     "kind": "term",
+     "how": "mandala → stupa",
+     "A": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "term"
+      ]
+     },
+     "B": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "term"
+      ]
+     }
+    },
+    {
+     "id": "PQ3IK",
+     "kind": "agent",
+     "how": "\\b[Yy]ou are\\b → I am",
+     "A": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "agent"
+      ]
+     },
+     "B": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "agent"
+      ]
+     }
+    },
+    {
+     "id": "PSKAW",
+     "kind": "reversal",
+     "how": "\\bwill\\b → will not",
+     "A": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "reversal"
+      ]
+     },
+     "B": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "reversal"
+      ]
+     }
+    },
+    {
+     "id": "PTFM3",
+     "kind": "reversal",
+     "how": "\\bis\\b → is not",
+     "A": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "reversal",
+       "reversal"
+      ]
+     },
+     "B": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "reversal",
+       "reversal"
+      ]
+     }
+    },
+    {
+     "id": "PWNEG",
+     "kind": "reversal",
+     "how": "\\bis\\b → is not",
+     "A": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "reversal"
+      ]
+     },
+     "B": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "reversal"
+      ]
+     }
+    },
+    {
+     "id": "PWPCY",
+     "kind": "reversal",
+     "how": "\\bis\\b → is not",
+     "A": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "reversal"
+      ]
+     },
+     "B": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "reversal"
+      ]
+     }
+    },
+    {
+     "id": "PX2FB",
+     "kind": "term",
+     "how": "wisdom → faith",
+     "A": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "term"
+      ]
+     },
+     "B": {
+      "found": true,
+      "typed_right": true,
+      "types": [
+       "term"
+      ]
+     }
+    }
+   ]
+  },
+  "J5797_agreement": {
+   "design": "10 sides either #5797 judge marked reversed (vs 84000) + 10 neither marked; reviewer flag = any reversal or agent finding",
+   "reviewer_A": {
+    "judge_yes_rev_yes": 8,
+    "judge_yes_rev_no": 2,
+    "judge_no_rev_yes": 0,
+    "judge_no_rev_no": 10
+   },
+   "reviewer_B": {
+    "judge_yes_rev_yes": 6,
+    "judge_yes_rev_no": 4,
+    "judge_no_rev_yes": 1,
+    "judge_no_rev_no": 9
+   },
+   "same_spot_on_judged_reversals": {
+    "A": 7,
+    "B": 5,
+    "either": 7,
+    "of": 10
+   },
+   "items": [
+    {
+     "id": "P1265",
+     "judges_reversed_either": true,
+     "judges_reversed_both": true,
+     "rev_A": true,
+     "rev_B": true,
+     "same_spot_A": true,
+     "same_spot_B": true,
+     "verdict": [
+      "work",
+      "work"
+     ]
+    },
+    {
+     "id": "P1M3H",
+     "judges_reversed_either": false,
+     "judges_reversed_both": false,
+     "rev_A": false,
+     "rev_B": false,
+     "same_spot_A": false,
+     "same_spot_B": false,
+     "verdict": [
+      "light",
+      "light"
+     ]
+    },
+    {
+     "id": "P8EWL",
+     "judges_reversed_either": true,
+     "judges_reversed_both": false,
+     "rev_A": true,
+     "rev_B": true,
+     "same_spot_A": true,
+     "same_spot_B": true,
+     "verdict": [
+      "light",
+      "light"
+     ]
+    },
+    {
+     "id": "P8YU8",
+     "judges_reversed_either": true,
+     "judges_reversed_both": true,
+     "rev_A": false,
+     "rev_B": false,
+     "same_spot_A": false,
+     "same_spot_B": false,
+     "verdict": [
+      "work",
+      "light"
+     ]
+    },
+    {
+     "id": "P9MFY",
+     "judges_reversed_either": true,
+     "judges_reversed_both": true,
+     "rev_A": true,
+     "rev_B": false,
+     "same_spot_A": true,
+     "same_spot_B": false,
+     "verdict": [
+      "light",
+      "light"
+     ]
+    },
+    {
+     "id": "PAUM2",
+     "judges_reversed_either": false,
+     "judges_reversed_both": false,
+     "rev_A": false,
+     "rev_B": true,
+     "same_spot_A": false,
+     "same_spot_B": false,
+     "verdict": [
+      "light",
+      "light"
+     ]
+    },
+    {
+     "id": "PBU5P",
+     "judges_reversed_either": true,
+     "judges_reversed_both": false,
+     "rev_A": true,
+     "rev_B": true,
+     "same_spot_A": true,
+     "same_spot_B": true,
+     "verdict": [
+      "work",
+      "work"
+     ]
+    },
+    {
+     "id": "PDR0K",
+     "judges_reversed_either": true,
+     "judges_reversed_both": false,
+     "rev_A": true,
+     "rev_B": true,
+     "same_spot_A": true,
+     "same_spot_B": true,
+     "verdict": [
+      "light",
+      "light"
+     ]
+    },
+    {
+     "id": "PHLHK",
+     "judges_reversed_either": true,
+     "judges_reversed_both": true,
+     "rev_A": true,
+     "rev_B": true,
+     "same_spot_A": true,
+     "same_spot_B": true,
+     "verdict": [
+      "work",
+      "work"
+     ]
+    },
+    {
+     "id": "PM853",
+     "judges_reversed_either": false,
+     "judges_reversed_both": false,
+     "rev_A": false,
+     "rev_B": false,
+     "same_spot_A": false,
+     "same_spot_B": false,
+     "verdict": [
+      "light",
+      "light"
+     ]
+    },
+    {
+     "id": "PNH66",
+     "judges_reversed_either": true,
+     "judges_reversed_both": false,
+     "rev_A": false,
+     "rev_B": false,
+     "same_spot_A": false,
+     "same_spot_B": false,
+     "verdict": [
+      "light",
+      "light"
+     ]
+    },
+    {
+     "id": "POA2E",
+     "judges_reversed_either": true,
+     "judges_reversed_both": false,
+     "rev_A": true,
+     "rev_B": true,
+     "same_spot_A": true,
+     "same_spot_B": false,
+     "verdict": [
+      "light",
+      "light"
+     ]
+    },
+    {
+     "id": "PP5GW",
+     "judges_reversed_either": true,
+     "judges_reversed_both": true,
+     "rev_A": true,
+     "rev_B": false,
+     "same_spot_A": false,
+     "same_spot_B": false,
+     "verdict": [
+      "work",
+      "work"
+     ]
+    },
+    {
+     "id": "PPXFE",
+     "judges_reversed_either": false,
+     "judges_reversed_both": false,
+     "rev_A": false,
+     "rev_B": false,
+     "same_spot_A": false,
+     "same_spot_B": false,
+     "verdict": [
+      "light",
+      "light"
+     ]
+    },
+    {
+     "id": "PRG8O",
+     "judges_reversed_either": false,
+     "judges_reversed_both": false,
+     "rev_A": false,
+     "rev_B": false,
+     "same_spot_A": false,
+     "same_spot_B": false,
+     "verdict": [
+      "light",
+      "light"
+     ]
+    },
+    {
+     "id": "PTJO9",
+     "judges_reversed_either": false,
+     "judges_reversed_both": false,
+     "rev_A": false,
+     "rev_B": false,
+     "same_spot_A": false,
+     "same_spot_B": false,
+     "verdict": [
+      "light",
+      "light"
+     ]
+    },
+    {
+     "id": "PU8HF",
+     "judges_reversed_either": false,
+     "judges_reversed_both": false,
+     "rev_A": false,
+     "rev_B": false,
+     "same_spot_A": false,
+     "same_spot_B": false,
+     "verdict": [
+      "light",
+      "light"
+     ]
+    },
+    {
+     "id": "PWU94",
+     "judges_reversed_either": false,
+     "judges_reversed_both": false,
+     "rev_A": false,
+     "rev_B": false,
+     "same_spot_A": false,
+     "same_spot_B": false,
+     "verdict": [
+      "light",
+      "light"
+     ]
+    },
+    {
+     "id": "PX9AO",
+     "judges_reversed_either": false,
+     "judges_reversed_both": false,
+     "rev_A": false,
+     "rev_B": false,
+     "same_spot_A": false,
+     "same_spot_B": false,
+     "verdict": [
+      "light",
+      "light"
+     ]
+    },
+    {
+     "id": "PXICJ",
+     "judges_reversed_either": false,
+     "judges_reversed_both": false,
+     "rev_A": false,
+     "rev_B": false,
+     "same_spot_A": false,
+     "same_spot_B": false,
+     "verdict": [
+      "light",
+      "light"
+     ]
+    }
+   ]
+  }
+ },
+ "spotcheck": {
+  "all": {
+   "n": 30,
+   "confirmed": 21,
+   "debatable": 6,
+   "rejected": 3,
+   "precision_strict": 0.7,
+   "precision_half_debatable": 0.8,
+   "strict_ci": [
+    52.1,
+    83.3
+   ]
+  },
+  "rev_agent": {
+   "n": 10,
+   "confirmed": 8,
+   "debatable": 2,
+   "rejected": 0,
+   "precision_strict": 0.8,
+   "precision_half_debatable": 0.9,
+   "strict_ci": [
+    49.0,
+    94.3
+   ]
+  },
+  "by_type": {
+   "agent": {
+    "n": 6,
+    "confirmed": 5,
+    "debatable": 1,
+    "rejected": 0,
+    "precision_strict": 0.833,
+    "precision_half_debatable": 0.917,
+    "strict_ci": [
+     43.6,
+     97.0
+    ]
+   },
+   "gloss": {
+    "n": 2,
+    "confirmed": 1,
+    "debatable": 0,
+    "rejected": 1,
+    "precision_strict": 0.5,
+    "precision_half_debatable": 0.5,
+    "strict_ci": [
+     9.5,
+     90.5
+    ]
+   },
+   "omission": {
+    "n": 2,
+    "confirmed": 2,
+    "debatable": 0,
+    "rejected": 0,
+    "precision_strict": 1.0,
+    "precision_half_debatable": 1.0,
+    "strict_ci": [
+     34.2,
+     100.0
+    ]
+   },
+   "reversal": {
+    "n": 4,
+    "confirmed": 3,
+    "debatable": 1,
+    "rejected": 0,
+    "precision_strict": 0.75,
+    "precision_half_debatable": 0.875,
+    "strict_ci": [
+     30.1,
+     95.4
+    ]
+   },
+   "structure": {
+    "n": 4,
+    "confirmed": 4,
+    "debatable": 0,
+    "rejected": 0,
+    "precision_strict": 1.0,
+    "precision_half_debatable": 1.0,
+    "strict_ci": [
+     51.0,
+     100.0
+    ]
+   },
+   "term": {
+    "n": 12,
+    "confirmed": 6,
+    "debatable": 4,
+    "rejected": 2,
+    "precision_strict": 0.5,
+    "precision_half_debatable": 0.667,
+    "strict_ci": [
+     25.4,
+     74.6
+    ]
+   }
+  },
+  "clean_pages": [
+   [
+    "PCP6C",
+    "no miss"
+   ],
+   [
+    "PYMGV",
+    "no miss"
+   ],
+   [
+    "P2ANJ",
+    "no miss"
+   ],
+   [
+    "PQAA5",
+    "no miss"
+   ],
+   [
+    "PDDTF",
+    "no miss"
+   ],
+   [
+    "PF9P1",
+    "no miss"
+   ],
+   [
+    "PHRXK",
+    "no miss"
+   ],
+   [
+    "PEAH2",
+    "no miss"
+   ],
+   [
+    "POEPW",
+    "possible minor miss"
+   ],
+   [
+    "P7CEM",
+    "no miss"
+   ]
+  ]
+ },
+ "headline_rev_agent_per100": {
+  "either_strict": {
+   "point": 37.9,
+   "ci": [
+    23.0,
+    50.3
+   ],
+   "precision": 0.8
+  },
+  "either_half_debatable": {
+   "point": 42.6,
+   "ci": [
+    27.7,
+    53.9
+   ],
+   "precision": 0.9
+  },
+  "both_unadjusted": {
+   "point": 22.0,
+   "ci": [
+    15.3,
+    30.7
+   ]
+  }
+ },
+ "detectors_corpus": {
+  "Praises": {
+   "pages": 514,
+   "a_flag": 4,
+   "a_flag_noq": 85,
+   "a_has_objection": 180,
+   "b_hand": 29,
+   "b_mvy": 223,
+   "b_any": 232,
+   "c_pali": 2,
+   "a_flag_pct": 0.78,
+   "a_flag_noq_pct": 16.54,
+   "a_has_objection_pct": 35.02,
+   "b_hand_pct": 5.64,
+   "b_mvy_pct": 43.39,
+   "b_any_pct": 45.14,
+   "c_pali_pct": 0.39
+  },
+  "Tantra commentary": {
+   "pages": 44887,
+   "a_flag": 406,
+   "a_flag_noq": 4998,
+   "a_has_objection": 10490,
+   "b_hand": 1132,
+   "b_mvy": 17794,
+   "b_any": 18265,
+   "c_pali": 32,
+   "a_flag_pct": 0.9,
+   "a_flag_noq_pct": 11.13,
+   "a_has_objection_pct": 23.37,
+   "b_hand_pct": 2.52,
+   "b_mvy_pct": 39.64,
+   "b_any_pct": 40.69,
+   "c_pali_pct": 0.07
+  },
+  "Prajñāpāramitā": {
+   "pages": 9117,
+   "a_flag": 121,
+   "a_flag_noq": 2086,
+   "a_has_objection": 3320,
+   "b_hand": 1105,
+   "b_mvy": 6439,
+   "b_any": 6696,
+   "c_pali": 19,
+   "a_flag_pct": 1.33,
+   "a_flag_noq_pct": 22.88,
+   "a_has_objection_pct": 36.42,
+   "b_hand_pct": 12.12,
+   "b_mvy_pct": 70.63,
+   "b_any_pct": 73.45,
+   "c_pali_pct": 0.21
+  },
+  "Madhyamaka": {
+   "pages": 10845,
+   "a_flag": 467,
+   "a_flag_noq": 2613,
+   "a_has_objection": 5411,
+   "b_hand": 513,
+   "b_mvy": 5993,
+   "b_any": 6154,
+   "c_pali": 45,
+   "a_flag_pct": 4.31,
+   "a_flag_noq_pct": 24.09,
+   "a_has_objection_pct": 49.89,
+   "b_hand_pct": 4.73,
+   "b_mvy_pct": 55.26,
+   "b_any_pct": 56.75,
+   "c_pali_pct": 0.41
+  },
+  "Sūtra commentary": {
+   "pages": 5562,
+   "a_flag": 113,
+   "a_flag_noq": 1176,
+   "a_has_objection": 2052,
+   "b_hand": 273,
+   "b_mvy": 3804,
+   "b_any": 3873,
+   "c_pali": 36,
+   "a_flag_pct": 2.03,
+   "a_flag_noq_pct": 21.14,
+   "a_has_objection_pct": 36.89,
+   "b_hand_pct": 4.91,
+   "b_mvy_pct": 68.39,
+   "b_any_pct": 69.63,
+   "c_pali_pct": 0.65
+  },
+  "Cittamātra": {
+   "pages": 8887,
+   "a_flag": 127,
+   "a_flag_noq": 3028,
+   "a_has_objection": 4380,
+   "b_hand": 509,
+   "b_mvy": 6364,
+   "b_any": 6489,
+   "c_pali": 58,
+   "a_flag_pct": 1.43,
+   "a_flag_noq_pct": 34.07,
+   "a_has_objection_pct": 49.29,
+   "b_hand_pct": 5.73,
+   "b_mvy_pct": 71.61,
+   "b_any_pct": 73.02,
+   "c_pali_pct": 0.65
+  },
+  "Abhidharma": {
+   "pages": 6335,
+   "a_flag": 153,
+   "a_flag_noq": 2576,
+   "a_has_objection": 4209,
+   "b_hand": 170,
+   "b_mvy": 3775,
+   "b_any": 3837,
+   "c_pali": 88,
+   "a_flag_pct": 2.42,
+   "a_flag_noq_pct": 40.66,
+   "a_has_objection_pct": 66.44,
+   "b_hand_pct": 2.68,
+   "b_mvy_pct": 59.59,
+   "b_any_pct": 60.57,
+   "c_pali_pct": 1.39
+  },
+  "Vinaya": {
+   "pages": 10229,
+   "a_flag": 429,
+   "a_flag_noq": 2034,
+   "a_has_objection": 3295,
+   "b_hand": 328,
+   "b_mvy": 5580,
+   "b_any": 5684,
+   "c_pali": 1148,
+   "a_flag_pct": 4.19,
+   "a_flag_noq_pct": 19.88,
+   "a_has_objection_pct": 32.21,
+   "b_hand_pct": 3.21,
+   "b_mvy_pct": 54.55,
+   "b_any_pct": 55.57,
+   "c_pali_pct": 11.22
+  },
+  "Jātaka": {
+   "pages": 2954,
+   "a_flag": 13,
+   "a_flag_noq": 184,
+   "a_has_objection": 331,
+   "b_hand": 85,
+   "b_mvy": 858,
+   "b_any": 910,
+   "c_pali": 24,
+   "a_flag_pct": 0.44,
+   "a_flag_noq_pct": 6.23,
+   "a_has_objection_pct": 11.21,
+   "b_hand_pct": 2.88,
+   "b_mvy_pct": 29.05,
+   "b_any_pct": 30.81,
+   "c_pali_pct": 0.81
+  },
+  "Letters": {
+   "pages": 373,
+   "a_flag": 2,
+   "a_flag_noq": 43,
+   "a_has_objection": 90,
+   "b_hand": 12,
+   "b_mvy": 162,
+   "b_any": 167,
+   "c_pali": 7,
+   "a_flag_pct": 0.54,
+   "a_flag_noq_pct": 11.53,
+   "a_has_objection_pct": 24.13,
+   "b_hand_pct": 3.22,
+   "b_mvy_pct": 43.43,
+   "b_any_pct": 44.77,
+   "c_pali_pct": 1.88
+  },
+  "Pramāṇa": {
+   "pages": 12784,
+   "a_flag": 329,
+   "a_flag_noq": 2055,
+   "a_has_objection": 9705,
+   "b_hand": 400,
+   "b_mvy": 5757,
+   "b_any": 5959,
+   "c_pali": 14,
+   "a_flag_pct": 2.57,
+   "a_flag_noq_pct": 16.07,
+   "a_has_objection_pct": 75.92,
+   "b_hand_pct": 3.13,
+   "b_mvy_pct": 45.03,
+   "b_any_pct": 46.61,
+   "c_pali_pct": 0.11
+  },
+  "Grammar & sciences": {
+   "pages": 4216,
+   "a_flag": 27,
+   "a_flag_noq": 498,
+   "a_has_objection": 858,
+   "b_hand": 43,
+   "b_mvy": 1154,
+   "b_any": 1179,
+   "c_pali": 4,
+   "a_flag_pct": 0.64,
+   "a_flag_noq_pct": 11.81,
+   "a_has_objection_pct": 20.35,
+   "b_hand_pct": 1.02,
+   "b_mvy_pct": 27.37,
+   "b_any_pct": 27.96,
+   "c_pali_pct": 0.09
+  },
+  "ALL": {
+   "pages": 116703,
+   "a_flag": 2191,
+   "a_flag_noq": 21376,
+   "a_has_objection": 44321,
+   "b_hand": 4599,
+   "b_mvy": 57903,
+   "b_any": 59445,
+   "c_pali": 1477,
+   "a_flag_pct": 1.88,
+   "a_flag_noq_pct": 18.32,
+   "a_has_objection_pct": 37.98,
+   "b_hand_pct": 3.94,
+   "b_mvy_pct": 49.62,
+   "b_any_pct": 50.94,
+   "c_pali_pct": 1.27
+  }
+ },
+ "detectors_pali_forms": [
+  [
+   "sanghadisesa",
+   519
+  ],
+  [
+   "uposatha",
+   189
+  ],
+  [
+   "dukkata",
+   174
+  ],
+  [
+   "pacittiya",
+   124
+  ],
+  [
+   "sanghadisesha",
+   100
+  ],
+  [
+   "pavarana",
+   62
+  ],
+  [
+   "dukkha",
+   60
+  ],
+  [
+   "anagami",
+   54
+  ],
+  [
+   "anathapindika",
+   53
+  ],
+  [
+   "thullaccaya",
+   53
+  ],
+  [
+   "sutta",
+   45
+  ],
+  [
+   "sankhara",
+   42
+  ],
+  [
+   "vassa",
+   37
+  ],
+  [
+   "samghadisesa",
+   20
+  ],
+  [
+   "nissaggiya",
+   17
+  ],
+  [
+   "kassapa",
+   14
+  ],
+  [
+   "dhamma",
+   11
+  ],
+  [
+   "anatta",
+   9
+  ],
+  [
+   "kosambi",
+   9
+  ],
+  [
+   "theravada",
+   9
+  ],
+  [
+   "veluvana",
+   9
+  ],
+  [
+   "patidesaniya",
+   6
+  ],
+  [
+   "bhikkhu",
+   4
+  ],
+  [
+   "metta",
+   4
+  ],
+  [
+   "pasenadi",
+   4
+  ],
+  [
+   "kamma",
+   3
+  ],
+  [
+   "bhikkhuni",
+   3
+  ],
+  [
+   "samanera",
+   3
+  ],
+  [
+   "sariputta",
+   2
+  ],
+  [
+   "isipatana",
+   2
+  ]
+ ],
+ "detectors_hand_terms": [
+  [
+   "vyatireka",
+   2164
+  ],
+  [
+   "pakṣadharma",
+   918
+  ],
+  [
+   "pratyakṣa",
+   452
+  ],
+  [
+   "sapakṣa",
+   336
+  ],
+  [
+   "anvaya",
+   278
+  ],
+  [
+   "śikṣāpada",
+   161
+  ],
+  [
+   "pramāṇa",
+   99
+  ],
+  [
+   "svalakṣaṇa",
+   88
+  ],
+  [
+   "duṣkṛta",
+   40
+  ],
+  [
+   "pātayantika",
+   25
+  ],
+  [
+   "anumāna",
+   25
+  ],
+  [
+   "kāryahetu",
+   21
+  ],
+  [
+   "poṣadha",
+   19
+  ],
+  [
+   "vipakṣa",
+   18
+  ],
+  [
+   "prasaṅga",
+   18
+  ],
+  [
+   "pravāraṇā",
+   16
+  ],
+  [
+   "sahakāripratyaya",
+   14
+  ],
+  [
+   "upādānakāraṇa",
+   12
+  ],
+  [
+   "sthūlātyaya",
+   10
+  ],
+  [
+   "svabhāvahetu",
+   7
+  ],
+  [
+   "naiḥsargika-pātayantika",
+   7
+  ],
+  [
+   "saṅghāvaśeṣa",
+   3
+  ],
+  [
+   "apoha",
+   2
+  ],
+  [
+   "prātimokṣa",
+   1
+  ]
+ ],
+ "detectors_vs_reviewers": {
+  "a_flag_vs_agent": {
+   "flagged": 0,
+   "targets": 42,
+   "tp": 0,
+   "precision": null,
+   "recall": 0.0
+  },
+  "a_flag_noq_vs_agent": {
+   "flagged": 25,
+   "targets": 42,
+   "tp": 5,
+   "precision": 0.2,
+   "recall": 0.119
+  },
+  "a_flag_noq_vs_voice_agent": {
+   "flagged": 25,
+   "targets": 6,
+   "tp": 0,
+   "precision": 0.0,
+   "recall": 0.0
+  },
+  "a_flag_noq_vs_rev_agent": {
+   "flagged": 25,
+   "targets": 57,
+   "tp": 8,
+   "precision": 0.32,
+   "recall": 0.14
+  },
+  "b_hand_vs_term": {
+   "flagged": 2,
+   "targets": 80,
+   "tp": 0,
+   "precision": 0.0,
+   "recall": 0.0
+  },
+  "b_mvy_vs_term": {
+   "flagged": 81,
+   "targets": 80,
+   "tp": 43,
+   "precision": 0.531,
+   "recall": 0.537
+  },
+  "b_any_vs_term": {
+   "flagged": 82,
+   "targets": 80,
+   "tp": 43,
+   "precision": 0.524,
+   "recall": 0.537
+  },
+  "c_pali_vs_pali_finding": {
+   "flagged": 2,
+   "targets": 5,
+   "tp": 1,
+   "precision": 0.5,
+   "recall": 0.2
+  },
+  "voice_agent_targets": 6
+ }
+}

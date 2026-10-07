@@ -18,6 +18,7 @@ import { MongoClient } from 'mongodb';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { nanoid } from 'nanoid';
 import { SKIP_TRANSLATION_PAGE_TYPES, getTranslateModelForBook } from '../lib/translate-core.mjs';
+import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 
 // --- Config ---
@@ -167,6 +168,14 @@ async function main() {
       }).project({ id: 1, page_number: 1, _id: 0 }).sort({ page_number: 1 }).toArray();
 
       if (pages.length === 0) {
+        continue;
+      }
+
+      // #5700: untrusted OCR is not translated until re-read (scripts/lib/ocr-trust-gate.mjs).
+      const trust = await ocrTrustGate(db, book, { lane: 'queue-efm-translations', record: !DRY_RUN });
+      if (!trust.ok) {
+        console.log(`  REFUSED (${trust.reason}): ${book.title?.substring(0, 50)}`);
+        skipped++;
         continue;
       }
 

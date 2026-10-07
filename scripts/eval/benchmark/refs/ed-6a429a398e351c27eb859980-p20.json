@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA thesaurus/thesaurus/Cartari_imagines.xml",
+  "edition": "Imagines Deorum, Qui Ab Antiquis Colebantur: In quibus simulacra, ritus, caerimoniae, magnaq[ue] ex parte veterum religi — Lyon: Barptolemaeus [sic] Honoratus, 1581.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "10/11",
+    "pb_aligned_pages": "10/10"
+  },
+  "origin": "library",
+  "book_id": "6a429a398e351c27eb859980",
+  "page_number": 20,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 20510,
+    "to_char": 22849,
+    "overlap": 0.864,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'benda est fides, Numa Pompilius'; ends 'iniuriis protege-'; ref has several transcription errors and a literal '\\n', omits a handwritten Greek (Homer) margin note; printed marginal notes placed inline by ref.",
+    "leaf_language": "lat (handwritten Greek marginal note)",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:03.510Z",
+  "text_location": "repo",
+  "text_sha256": "ee096a62fd8b48d2a13080d4abc0cf3dfb789890478ea49c677330ae921154de",
+  "unit": {
+    "chars": 2339
+  },
+  "stratum": "latin-period-5126"
+}

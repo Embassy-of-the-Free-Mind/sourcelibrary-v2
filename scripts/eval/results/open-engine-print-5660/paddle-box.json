@@ -1,0 +1,21 @@
+{
+ "host": "40528527d69e",
+ "gpu": "NVIDIA RTX PRO 4000 Blackwell",
+ "workers": 8,
+ "backend": "server",
+ "max_side": 0,
+ "layout": 1,
+ "paddle_version": "3.2.1",
+ "paddleocr_version": "3.7.0",
+ "paddlex_version": "3.7.2",
+ "vl_model": "PaddleOCRVL() default pipeline",
+ "weights_files": [
+  "PaddleOCR-VL-1.6/model.safetensors"
+ ],
+ "vllm_version": "0.10.2",
+ "weights_sha256": "85a479d506a11e724e7285d395c551be69f41dbc16b6342d3cacfb189aed71db",
+ "pages_out": 0,
+ "pages_err": 0,
+ "infer_secs": null,
+ "wall_secs_per_page": null
+}

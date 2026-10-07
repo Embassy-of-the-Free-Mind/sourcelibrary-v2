@@ -925,7 +925,7 @@ export default function ImageDetailPage({
               <ImageWithMagnifier
                 src={data.imageUrl}
                 thumbnail={data.imageUrl}
-                alt={data.description}
+                alt={[data.description, data.book?.title && `from ${data.book.title}`, data.book?.author && data.book.author !== 'Various' && `by ${data.book.author}`].filter(Boolean).join(' ')}
                 className="w-full h-full"
                 magnifierSize={250}
                 zoomLevel={4}

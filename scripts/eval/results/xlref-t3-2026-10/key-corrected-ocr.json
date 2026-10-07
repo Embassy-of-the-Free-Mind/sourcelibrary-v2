@@ -1,0 +1,213 @@
+{
+ "seed": 5696,
+ "input": "/data/scratch/sl/xlref-t3-work/records-fix.jsonl",
+ "input_sha": "44f6b8f79b901503",
+ "judges": [
+  "j1",
+  "j2"
+ ],
+ "controls": {
+  "wrong_page": {
+   "69aebfa4c337b1e6a4d582f3_00161": {
+    "donor": "69b1da4879939cb4065ddf2e_00044",
+    "donor_arm": "F0_fix",
+    "text": "<meta>continues from previous page</meta>\nfor some hours still, as we say, whitish, finally after the fourth or sixth day, they deposit everything, remaining pure and clear: can their resistance to penetration stop those impalpable and insensible atoms of sand <note>original: \"atomi di rena\"</note> which, due to their very minimal force, take six days to descend the space of half a cubit? What then is this thickness of the water with which it resists division? What, in our faith, shall it be, if we (even as I have also said above) with every diligence trying to reduce a material so similar in gravity to water that, by forming it even into a very wide sheet, it remains suspended, as we say, between the two waters; it is impossible to achieve it, although we bring ourselves to such a similarity of equal weight <note>original: \"equiponderanza\"</note> that as much lead as is the fourth part of a grain of millet, added to the said very wide sheet, which in air would weigh four or six pounds, leads it to the bottom, and when removed, it comes to the surface of the water? I cannot see (if what I say is true, as it is most true) what minimum virtue and force could be found or imagined, of which the reluctance of the water <note>original: \"renitenza dell'acqua\"</note> to being divided and pulled apart is not smaller, from which, by necessity, it is concluded that it is nothing: because if it were of some sensible power, some wide sheet could be found or composed of material similar in gravity to water, which would not only stop between the two waters, but could not be lowered or raised without notable force. \n\nWe could likewise gather the same truth from another experiment, showing how the water in the same way yields also to transverse division, because if in still and stagnant water we place any very large mass that does not go to the bottom, pulling it with a single hair from a woman's head, we will lead it from place to place without any opposition, even if its shape be whatever one wishes, such that it embraces a great space of water, as a large beam moved crosswise would do. Perhaps someone might oppose me, saying that if the resistance of water to being divided were, as I affirm, nothing, ships should not need such force of oars or sails to be pushed from place to place in the calm sea or in stagnant lakes. To whoever made such oppositions I would answer that water does not contrast or resist simply being divided, but indeed being divided quickly, and with much greater reluctance as the velocity <note>original: \"velocità\"</note> is greater: and the cause of such resistance does not depend on thickness or anything else that absolutely opposes division, but\n\n<summary>Galileo argues that water has zero internal resistance or tenacity because even minute particles of sand eventually sink through it. He demonstrates that huge objects can be moved through water with minimal force, concluding that water only resists rapid movement, not division itself.</summary>\n<keywords>viscosity, density, resistance, division, velocity, buoyancy, experiment</keywords>"
+   }
+  },
+  "planted": {
+   "69a5d8d3a63a00aaae8aab0d_00322": {
+    "base_arm": "L1",
+    "text": "<meta>continues from previous page: ...as many people come there from all the surrounding cities.</meta>\n\n# Description of Lima, City of the Kings.\n\n<margin>Appearance of the city of Lima.</margin>\nIn this city there are good houses, and some are very beautiful with small towers and galleries. The market square is large, and the streets are wide, all leading directly to the market, from where one can see into every corner. On both sides runs flat land, and through the greater part of these houses run canals that bring in fresh water from the river, providing great convenience and comfort to the citizens, who can through this irrigate all their gardens and vegetable plots, which they keep clean and delightful. Also\n\n<margin>Many water mills, with which they grind their corn.</margin>\nthere are many water mills on this river, in the manner of our own country, where they grind their corn. In short, very rich citizens live here, some of whom have 150,000 ducats. And from this city, ships sail at times with goods worth 800,000 ducats, and some even worth a million. On the east side, above the city, is a high hill upon which stands a crucifix. On another side outside the city, the citizens have their dwellings and places where they keep their beasts, their dovecotes, and their vineyards—though no good grapes, due to the nature of the land—and beautiful gardens, not only full of all kinds of fruits of that land, but also\n\n<margin>Description of the fertility of the land.</margin>\nof those of Spain, such as figs, pomegranates, lemons, citrons, oranges, melons, beans, peas, and sugar cane, all very tasty, indeed better than in Spain. Truly, to pass human life with joy—if the scandals, disagreements, and wars were not there—this place is certainly one of the most beautiful in the entire world, for the landscape there is so temperate that throughout the entire year there is no excessive heat or harmful cold. Also, one has never seen famine or plague there, or any rain, or thunderclaps, or lightning struck from the sky.\n\n<margin>Why the City of Kings received its name, and was built in the year 1535.</margin>\nOn the contrary, there is always a bright, clear, and beautiful sky. It was founded by the Admiral Don Francisco Pizarro in the year 1535. It is called the City of Kings because the people were brought into it on the day of the Three Kings <note>Epiphany, January 6th</note>. Arriving at the coast, besides the fish, which they have in great abundance from the sea and the river, as well as meat and fruits of the trees and the earth, as has been said, there is no less abundance of wheat and grain. The four months that are summer in Spain are winter there, and a little colder than at other times. In these four winter months, there falls every day before noon a small dew or mist like a fog, though not unhealthy as it is with us: for those who have pain in the head, by washing themselves with this, find relief. It is very apparent that this city of Lima will increase in people and wealth daily, although for many years there were over 500 houses\n\n<margin>The width and length of the houses of Lima.</margin>\nand the city was built very white, so that there may well be 2,000 now, for the streets are wide and the market square is large. Each house has 80 feet of plot width and 160 feet in length. And because there is no suitable wood to make floors—for within 2 or 3 years it is eaten by worms—houses are built with only one story, yet they are still very\n\n<margin>Appearance of the houses.</margin>\ncostly and magnificent with many rooms, halls, and galleries, suitable for living and for housing foreign guests. The walls are made of certain materials that they bake together until very thick, and they fill them with earth. They cover their houses with painted mats or painted linen, around and above\n\n<column-break/>\n\non the walls they make arbors of reeds, where they shelter from the sun. For the rain, they do not need to worry, for it does rain there. This city has under it all these cities where bishops reside: Quito, Cusco, Guamanga, Arequipa, Pax, Plata, Trugillo, Guanuco, Chachapoia, Portus Vetus, Guayaquil, Popaian, Catchi, S. Michael, S. Francisco. It has been said before that Peru is divided into three kinds of landscapes: in flat land by the sea, in mountains or mountainous land running through the middle of Peru, and in land beyond the mountains. Of the flat land on the shore of the sea, we have dealt until now, beginning from the line <note>the Equator</note> and Cape Pasao up to this point. So it is also to be known that from Tumbes, not only to Lima, but even much further, the seacoast to the south is very dry and full of large, desolate sandy places, where for 10 miles of the way the city does not thunder, lighten, or rain; but beyond the 10 miles it does, or as much more or less as the mountain range lies from the sea. There are also no springs or wells in this flat land, but only 4 or 5 stagnant waters that are brackish, because they lie near the sea. The inhabitants support themselves with water from the rivers that come from the mountains, which take their origin from the snow and rain that fall in the mountains, not from springs, which are few in the mountains. The distances of these rivers are described here in part, lying 7, 8, 10, 12, 15, and 20 miles from one another, though mostly 7 or 8, by which the traveling people regulate themselves, because they find no other water elsewhere. On both sides of these rivers, a mile wide, or even wider, sometimes more, sometimes less, according to the lay of the land, are different fertile trees and corn fields that are cultivated and sown by the people, which they can do throughout the entire year. Also, around these rivers grow many kinds of wild trees, cotton, reeds, thistles, rushes, and irises, etc. And after the Spaniards took the land, they also sowed wheat, making the land moist through some canals that they lead from these rivers, which, because they run down quickly from high mountains, one can hardly cross without help, and many have drowned in them. Those who make their journey along the flat land generally keep so close to the seaside that they always have it in sight. When it is winter in the mountains and it rains a lot, it is dangerous to travel there because of the rising of the rivers that one must pass, either with certain rafts that they have for this purpose, or with a net that they fill tightly with calabashes, on which the traveling man must lie stretched out, and one of the Indians swims ahead, pulling that net or the raft with a cord, and another steers from behind. The people of the flat land live in huts made of reeds. The men wear shirts and cloths to the knees and extending over that, and an upper garment like a mantle. The women, a shift of cotton the length of the body, and although the style of the clothing is almost everywhere the same, there is still some difference in the dressing of the head, for some wear single hoods, some braided, some of one kind, others of various colors, and there is no one who does not wear a cap on the head, and all are distinguished according to the custom of the land.\n\n<margin>In Peru, in the flat land, no rain or very little.</margin>\n\n<margin>1. Quitto. 2. Cusco. 3. Guamang. 4. Arequipa. 5. Pax. 6. Plata. 7. Trujillo. 8. Guanuca. 9. Chachapo. 10. Portus vetus. 11. Guayaquil. 12. Popaian. 13. Catchi. 14. S. Michael. 15. S. Francisco.</margin>\n\n<margin>One may always sow, without regard to time.</margin>\n\n<margin>The fertility of the land around the rivers.</margin>\n\n<margin>Houses of the people of the flat land.</margin>\n\n<summary>This page details the geography, climate, and urban infrastructure of Lima, while also describing the irrigation-dependent agriculture and the travel conditions along the arid Peruvian coast.</summary>\n<keywords>Lima, Peru, Francisco Pizarro, city architecture, irrigation, agriculture, travel, coastal landscape, indigenous customs, colonial administration</keywords>",
+    "op": "drop-negation",
+    "from": "does not",
+    "to": "does",
+    "at": 3987,
+    "before_context": "here they shelter from the sun. For the rain, they do not need to worry, for it does not rain there. This city has under it all these cities where bishops reside: Quito",
+    "after_context": "here they shelter from the sun. For the rain, they do not need to worry, for it does rain there. This city has under it all these cities where bishops reside: Quito"
+   }
+  },
+  "duplicate": {
+   "69ef3d8c72c1376fdf2b04e9_00105": {
+    "arm": "L1"
+   }
+  }
+ },
+ "items": {
+  "j1": {
+   "69ef3d8c72c1376fdf2b04e9_00105": {
+    "T1": "L1",
+    "T2": "L1#dup",
+    "T3": "F0",
+    "T4": "F0_fix",
+    "T5": "L1_fix"
+   },
+   "69b1da4879939cb4065ddf2e_00044": {
+    "T1": "F0",
+    "T2": "F0_fix",
+    "T3": "L1",
+    "T4": "L1_fix"
+   },
+   "69aebfa4c337b1e6a4d582f3_00161": {
+    "T1": "control:wrong_page",
+    "T2": "F0",
+    "T3": "L1",
+    "T4": "F0_fix",
+    "T5": "L1_fix"
+   },
+   "69790e9eeb0dcfd399123423_00297": {
+    "T1": "L1_fix",
+    "T2": "F0",
+    "T3": "L1",
+    "T4": "F0_fix"
+   },
+   "69a5d8d3a63a00aaae8aab0d_00322": {
+    "T1": "L1",
+    "T2": "L1_fix",
+    "T3": "control:planted",
+    "T4": "F0",
+    "T5": "F0_fix"
+   },
+   "69ea0f5413a685002bb8dc8a_00107": {
+    "T1": "L1",
+    "T2": "F0",
+    "T3": "F0_fix",
+    "T4": "L1_fix"
+   }
+  },
+  "j2": {
+   "69ef3d8c72c1376fdf2b04e9_00105": {
+    "T1": "F0",
+    "T2": "L1#dup",
+    "T3": "L1_fix",
+    "T4": "F0_fix",
+    "T5": "L1"
+   },
+   "69b1da4879939cb4065ddf2e_00044": {
+    "T1": "F0_fix",
+    "T2": "L1",
+    "T3": "F0",
+    "T4": "L1_fix"
+   },
+   "69aebfa4c337b1e6a4d582f3_00161": {
+    "T1": "control:wrong_page",
+    "T2": "L1_fix",
+    "T3": "F0_fix",
+    "T4": "F0",
+    "T5": "L1"
+   },
+   "69790e9eeb0dcfd399123423_00297": {
+    "T1": "F0",
+    "T2": "F0_fix",
+    "T3": "L1",
+    "T4": "L1_fix"
+   },
+   "69a5d8d3a63a00aaae8aab0d_00322": {
+    "T1": "L1",
+    "T2": "L1_fix",
+    "T3": "F0_fix",
+    "T4": "control:planted",
+    "T5": "F0"
+   },
+   "69ea0f5413a685002bb8dc8a_00107": {
+    "T1": "L1_fix",
+    "T2": "F0_fix",
+    "T3": "L1",
+    "T4": "F0"
+   }
+  }
+ },
+ "text_hash": {
+  "j1": {
+   "69ef3d8c72c1376fdf2b04e9_00105": {
+    "T1": "c4095347419bab62",
+    "T2": "c4095347419bab62",
+    "T3": "c22773d786bfa968",
+    "T4": "c69f75319b87946b",
+    "T5": "027683d2bf85a56f"
+   },
+   "69b1da4879939cb4065ddf2e_00044": {
+    "T1": "7b57c99393e638a3",
+    "T2": "e70bd087061dcdf8",
+    "T3": "3c48e19f69bb3ce1",
+    "T4": "ee7c2708d5f09e3b"
+   },
+   "69aebfa4c337b1e6a4d582f3_00161": {
+    "T1": "e70bd087061dcdf8",
+    "T2": "df64888aaee88bbe",
+    "T3": "b9d0285998944513",
+    "T4": "d2d1ec8333c76901",
+    "T5": "c8d66a5a3a5460fa"
+   },
+   "69790e9eeb0dcfd399123423_00297": {
+    "T1": "73443d13bd284cb8",
+    "T2": "6b05a77e1c7e1ebc",
+    "T3": "d3322c9550d74e6b",
+    "T4": "83956bf19998e58a"
+   },
+   "69a5d8d3a63a00aaae8aab0d_00322": {
+    "T1": "e19665218de0399e",
+    "T2": "650b40444d48455a",
+    "T3": "b480276a8a1ca710",
+    "T4": "da08b41245563db9",
+    "T5": "0189ad3450726c46"
+   },
+   "69ea0f5413a685002bb8dc8a_00107": {
+    "T1": "037bc16bd85f9ea7",
+    "T2": "f627f595c8490e61",
+    "T3": "29551be0989b1775",
+    "T4": "a7a1392908fa8d3c"
+   }
+  },
+  "j2": {
+   "69ef3d8c72c1376fdf2b04e9_00105": {
+    "T1": "c22773d786bfa968",
+    "T2": "c4095347419bab62",
+    "T3": "027683d2bf85a56f",
+    "T4": "c69f75319b87946b",
+    "T5": "c4095347419bab62"
+   },
+   "69b1da4879939cb4065ddf2e_00044": {
+    "T1": "e70bd087061dcdf8",
+    "T2": "3c48e19f69bb3ce1",
+    "T3": "7b57c99393e638a3",
+    "T4": "ee7c2708d5f09e3b"
+   },
+   "69aebfa4c337b1e6a4d582f3_00161": {
+    "T1": "e70bd087061dcdf8",
+    "T2": "c8d66a5a3a5460fa",
+    "T3": "d2d1ec8333c76901",
+    "T4": "df64888aaee88bbe",
+    "T5": "b9d0285998944513"
+   },
+   "69790e9eeb0dcfd399123423_00297": {
+    "T1": "6b05a77e1c7e1ebc",
+    "T2": "83956bf19998e58a",
+    "T3": "d3322c9550d74e6b",
+    "T4": "73443d13bd284cb8"
+   },
+   "69a5d8d3a63a00aaae8aab0d_00322": {
+    "T1": "e19665218de0399e",
+    "T2": "650b40444d48455a",
+    "T3": "0189ad3450726c46",
+    "T4": "b480276a8a1ca710",
+    "T5": "da08b41245563db9"
+   },
+   "69ea0f5413a685002bb8dc8a_00107": {
+    "T1": "a7a1392908fa8d3c",
+    "T2": "29551be0989b1775",
+    "T3": "037bc16bd85f9ea7",
+    "T4": "f627f595c8490e61"
+   }
+  }
+ },
+ "gate_items": [
+  "69aebfa4c337b1e6a4d582f3_00161",
+  "69a5d8d3a63a00aaae8aab0d_00322",
+  "69ef3d8c72c1376fdf2b04e9_00105"
+ ],
+ "main_items": [
+  "69b1da4879939cb4065ddf2e_00044",
+  "69790e9eeb0dcfd399123423_00297",
+  "69ea0f5413a685002bb8dc8a_00107"
+ ]
+}

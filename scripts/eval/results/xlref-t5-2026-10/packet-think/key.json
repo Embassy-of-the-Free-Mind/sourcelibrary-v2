@@ -1,0 +1,1219 @@
+{
+ "seed": 56953,
+ "input": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/work/records-think.jsonl",
+ "input_sha": "d662d2786d88b0dd",
+ "judges": [
+  "j1",
+  "j2"
+ ],
+ "controls": {
+  "wrong_page": {
+   "69e8b2962ff2a8dc09e780a7_00722": {
+    "donor": "6a0e54e98831ddc9459ad225_00087",
+    "donor_arm": "flash-thinkon",
+    "text": "६४\n\nहठयोगप्रदीपिकायां <note>In the Light on Hatha Yoga</note>\n\n**Root Text**\nThe body’s vitality and strength shall be restored, and it shall be freed from all disturbances. By this method, truly, the lord of yogis on this earth becomes free from all obstacles. 56\n\n### Now Shitali <note>The Cooling Breath</note> ###\n\nDrawing the air in with the tongue, one should practice <term>Kumbhaka</term> <gloss>breath retention</gloss> as described before. The wise practitioner should then slowly <term>Rechaka</term> <gloss>exhale</gloss> the air through both nostrils. 57\n\nThis retention called <term>Shitali</term> <gloss>the cooling breath</gloss> truly destroys diseases such as <term>Gulma</term> <gloss>abdominal disorders</gloss> and <term>Pliha</term> <gloss>enlargement of the spleen</gloss>, as well as fever, excess bile, hunger, thirst, and the effects of poisons. 58\n\n---\n\n->॥ Commentary ॥<-\n\nRegarding the verse beginning with \"The body\": Vitality and strength shall come to the body. By following the mentioned method of practice, the lord of yogis—one who is like a king among yogis—becomes free from all disturbances or obstacles on the surface of the earth. This is the truth. According to the principle that every statement carries an inherent emphasis, the result described is indeed true. 56\n\nHe describes <term>Shitali Kumbhaka</term>. With the tongue protruded outside the lips and shaped like the lower beak of a bird, one should draw in the air, meaning one should perform a slow inhalation. \"As before\" refers to performing the method of breath retention as established in the section on <term>Suryabhedana</term> <gloss>the sun-piercing breath</gloss>. The wise one, meaning one with a refined intellect, should exhale the air through the two nostrils. 57\n\nHe describes the qualities of <term>Shitali</term>. <term>Gulma</term> and <term>Pliha</term> refer to specific ailments such as abdominal tumors and splenic disorders. It destroys these diseases, along with fever, disorders of the <term>Pitta</term> <gloss>the fiery humor or bile</gloss>, hunger, thirst, and poisons caused by snake bites and other sources. \"Shitali\" is the well-known name for this practice. This mentioned retention destroys these ailments completely. The word <term>Kumbhika</term> <gloss>retention</gloss> is used here in the feminine form. 58\n\n---\n\n->॥ Vernacular Translation ॥<-\n\nRegarding the verse \"The body\": The body gains strength. Through the mentioned method of practice, the yogi becomes like Indra <note>the king of the gods</note> among yogis on this earth and remains free from all disturbances. The fruit or result described here is true. 56\n\nNow he describes the fourth retention, <term>Shitali</term>. Having extended the tongue outside the lips like the lower beak of a bird, one should pull the air in to perform inhalation. Then, just as previously described for the sun-piercing breath, one should perform the practice of retention. Then, the practitioner of beautiful intellect should slowly exhale the air through the holes of the nose. 57\n\nHe describes the qualities of <term>Shitali</term>. These include diseases such as abdominal disorders and spleen enlargement, as well as fever, bile disorders, the desire for food, the desire for water, the poison of snake bites, and other toxins. This retention called <term>Shitali</term> removes them all. 58\n\n<summary>This page concludes the benefits of previous practices and introduces Shitali Kumbhaka, a cooling breathing technique. It details the method of inhaling through a curled tongue and exhaling through the nose to cure fever, bile issues, and toxins.</summary>\n<keywords>Shitali, Kumbhaka, Pranayama, spleen enlargement, pitta, bile, abdominal disorders, yogic health, detoxification</keywords>"
+   }
+  },
+  "planted": {
+   "69b99d043a4a443c39c00775_00147": {
+    "base_arm": "flash",
+    "text": "19. Then Passion <term>Ragā</term>, the daughter of Mara, spoke this verse in the presence of the Blessed One:\n\nCutting through craving <term>taṇhā</term>, the recruiter of the crowds,\nmany beings will indeed walk <note>the editor notes a variant reading: cross over</note> <gloss>the spiritual path</gloss>.\nIndeed, this homeless one <note>referring to the Buddha</note> will not pull many people away,\nsnatching them across to the far shore, beyond the King of Death.\n\n20. <note>The Buddha replies:</note>\nGreat heroes, the <term>Tathāgatas</term> <gloss>Those who have thus gone</gloss>, lead indeed by the true Dhamma.\nWhen beings are being led by the Dhamma, what envy can there be in those who truly understand?\n\n21. Then Craving <term>Taṇhā</term>, Discontent <term>Arati</term>, and Passion <term>Ragā</term>, the daughters of Mara, approached Mara the Evil One.\n\n22. Mara the Evil One saw Craving, Discontent, and Passion, his daughters, coming from afar. Seeing them, he addressed them in verses:\n\nFools! You try to crush a mountain with the stalks of water lilies.\nYou dig into a mountain with your fingernails. You chew iron with your teeth.\nAs if lifting a rock with your head, you seek a foothold in the abyss.\nAs if attacking a tree stump with your chest, you go away frustrated by Gotama.\n\n23. Blazing with beauty they came: Craving, Discontent, and Passion.\nThe Teacher swept them away right there, like the wind blows away a fallen tuft of cotton.\n\n->The Third Chapter<-\n\n->Its Summary Table<-\n\nThe Many <term>Sambahulā</term>, Samiddhi, Godhika, the Seven Years, and the Daughters; this Mara-pentad was taught by the Buddha-Teacher. The Connected Discourses of Mara <term>Māra-saṃyutta</term> are complete.\n\n<summary>The daughters of Mara admit their failure to tempt the Buddha, leading Mara to mock their foolishness before the chapter concludes with a summary of the section's contents.</summary>\n<keywords>Mara, Taṇhā, Arati, Ragā, Buddha, Dhamma, Māra-saṃyutta, Pali Canon</keywords>",
+    "op": "add-negation",
+    "from": "will ",
+    "to": "will not ",
+    "at": 372,
+    "before_context": "al path</gloss>.\nIndeed, this homeless one <note>referring to the Buddha</note> will pull many people away,\nsnatching them across to the far shore, beyond the King o",
+    "after_context": "al path</gloss>.\nIndeed, this homeless one <note>referring to the Buddha</note> will not pull many people away,\nsnatching them across to the far shore, beyond the King o"
+   }
+  },
+  "duplicate": {
+   "69e3ff61b142e5dd9d6b0095_00128": {
+    "arm": "flash"
+   }
+  }
+ },
+ "items": {
+  "j1": {
+   "69b99e551f30176bf4d37774_00306": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69b99e681f30176bf4d3798a_00155": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69b99e496ed9e04909909f8f_00220": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69b99e856ed9e0490990a0b5_00301": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69b99e8b6ed9e0490990a274_00179": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69b99d043a4a443c39c00775_00147": {
+    "T1": "flash-thinkon",
+    "T2": "control:planted",
+    "T3": "flash"
+   },
+   "69b99d0e6ed9e04909908946_00387": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "6a09ff43fa20006dbaba8d78_00193": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "6a09ff48fa20006dbaba8ee1_00114": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "6a09ff4ffa20006dbaba901a_00263": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "6a09ff5dfa20006dbaba9200_00274": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "6a31c8b74400787ae5a9d7a7_00042": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69bc7a3f8888fef520b73c1e_00217": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69c1bdc98522835be846bb3a_00032": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69bd00f7f403a9ca2380efbf_00080": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69bd014bf403a9ca2380f091_00054": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69920bd5e0a548a13d886144_00793": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "699258c28812793469fdd6be_00160": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69935b4d8e28d8f4c5d3cfaa_00177": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69b99f256ed9e0490990aa8a_00185": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69d91e423a50087f7bd9afc5_00214": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e13c79998131d6a99c0917_00310": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e3ff61b142e5dd9d6b0095_00128": {
+    "T1": "flash-thinkon",
+    "T2": "flash",
+    "T3": "flash#dup"
+   },
+   "69e72c8ca409200ea79f4dd6_00556": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e7490585f786e884a4d1aa_00097": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e7490d85f786e884a4d40e_00180": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e7491a85f786e884a4d6f9_00789": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e7491f85f786e884a4dc2f_00182": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e8b27f2ff2a8dc09e77ed7_00048": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e8b2962ff2a8dc09e780a7_00722": {
+    "T1": "flash",
+    "T2": "flash-thinkon",
+    "T3": "control:wrong_page"
+   },
+   "69ea3e63300d991d0f1d3186_00160": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69ef251c85daccce30f2b1f2_00309": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "6a06657a64d4bf2ce5510151_00636": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "6a06b0aff12363da8cfdc945_00193": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "6a0e54e98831ddc9459ad225_00087": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "6a3067d0c4fd77fb5b9f8378_00057": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "6a312d8867a0ec73f1bc373f_00050": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69935b692c63944063133f67_00112": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e72c60a409200ea79f46f6_00141": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e72c65a409200ea79f47bd_00106": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e72c6ba409200ea79f484e_00102": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e72c70a409200ea79f48f9_00078": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e72c75a409200ea79f4976_00100": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e72c7da409200ea79f4a01_00053": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e7494885f786e884a4e57a_00024": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e8b2642ff2a8dc09e778a1_00439": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e8b26b2ff2a8dc09e77afc_00118": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "6a3c5f05879008ba7e15291d_00045": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "6a3c5f3b879008ba7e153836_00013": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "6a3c5f3c879008ba7e153862_00029": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "6a3c6191879008ba7e15f0b2_00070": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "6a3c6192879008ba7e15f12e_00065": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "6a3c61b1879008ba7e15fba1_00068": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "6a3c61b3879008ba7e15fc71_00112": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "6a3c61b5879008ba7e15fd28_00117": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "6a3c61db40c88a541d8f091d_00083": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "6a3c61ec40c88a541d8f0f4a_00018": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e7268ca409200ea79ef73b_00111": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e72698a409200ea79ef8c3_00129": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e792f880b52390feb17389_00344": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e792fd80b52390feb1770f_00022": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69906a861cf6ed5fbc8f5d21_00078": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69907971b621b177c1af74df_00309": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69de10185cedf736edb851e4_00244": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e72674a409200ea79ef3ae_00219": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e7267ca409200ea79ef51d_00353": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e80662fdad300064d9ed7c_00171": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e80670fdad300064d9ef9d_00599": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   }
+  },
+  "j2": {
+   "69b99e551f30176bf4d37774_00306": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69b99e681f30176bf4d3798a_00155": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69b99e496ed9e04909909f8f_00220": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69b99e856ed9e0490990a0b5_00301": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69b99e8b6ed9e0490990a274_00179": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69b99d043a4a443c39c00775_00147": {
+    "T1": "control:planted",
+    "T2": "flash-thinkon",
+    "T3": "flash"
+   },
+   "69b99d0e6ed9e04909908946_00387": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "6a09ff43fa20006dbaba8d78_00193": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "6a09ff48fa20006dbaba8ee1_00114": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "6a09ff4ffa20006dbaba901a_00263": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "6a09ff5dfa20006dbaba9200_00274": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "6a31c8b74400787ae5a9d7a7_00042": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69bc7a3f8888fef520b73c1e_00217": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69c1bdc98522835be846bb3a_00032": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69bd00f7f403a9ca2380efbf_00080": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69bd014bf403a9ca2380f091_00054": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69920bd5e0a548a13d886144_00793": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "699258c28812793469fdd6be_00160": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69935b4d8e28d8f4c5d3cfaa_00177": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69b99f256ed9e0490990aa8a_00185": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69d91e423a50087f7bd9afc5_00214": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e13c79998131d6a99c0917_00310": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e3ff61b142e5dd9d6b0095_00128": {
+    "T1": "flash#dup",
+    "T2": "flash-thinkon",
+    "T3": "flash"
+   },
+   "69e72c8ca409200ea79f4dd6_00556": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e7490585f786e884a4d1aa_00097": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e7490d85f786e884a4d40e_00180": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e7491a85f786e884a4d6f9_00789": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e7491f85f786e884a4dc2f_00182": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e8b27f2ff2a8dc09e77ed7_00048": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e8b2962ff2a8dc09e780a7_00722": {
+    "T1": "control:wrong_page",
+    "T2": "flash",
+    "T3": "flash-thinkon"
+   },
+   "69ea3e63300d991d0f1d3186_00160": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69ef251c85daccce30f2b1f2_00309": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "6a06657a64d4bf2ce5510151_00636": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "6a06b0aff12363da8cfdc945_00193": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "6a0e54e98831ddc9459ad225_00087": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "6a3067d0c4fd77fb5b9f8378_00057": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "6a312d8867a0ec73f1bc373f_00050": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69935b692c63944063133f67_00112": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e72c60a409200ea79f46f6_00141": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e72c65a409200ea79f47bd_00106": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e72c6ba409200ea79f484e_00102": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e72c70a409200ea79f48f9_00078": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e72c75a409200ea79f4976_00100": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e72c7da409200ea79f4a01_00053": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e7494885f786e884a4e57a_00024": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e8b2642ff2a8dc09e778a1_00439": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e8b26b2ff2a8dc09e77afc_00118": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "6a3c5f05879008ba7e15291d_00045": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "6a3c5f3b879008ba7e153836_00013": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "6a3c5f3c879008ba7e153862_00029": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "6a3c6191879008ba7e15f0b2_00070": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "6a3c6192879008ba7e15f12e_00065": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "6a3c61b1879008ba7e15fba1_00068": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "6a3c61b3879008ba7e15fc71_00112": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "6a3c61b5879008ba7e15fd28_00117": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "6a3c61db40c88a541d8f091d_00083": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "6a3c61ec40c88a541d8f0f4a_00018": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e7268ca409200ea79ef73b_00111": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e72698a409200ea79ef8c3_00129": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e792f880b52390feb17389_00344": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e792fd80b52390feb1770f_00022": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69906a861cf6ed5fbc8f5d21_00078": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69907971b621b177c1af74df_00309": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69de10185cedf736edb851e4_00244": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e72674a409200ea79ef3ae_00219": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e7267ca409200ea79ef51d_00353": {
+    "T1": "flash-thinkon",
+    "T2": "flash"
+   },
+   "69e80662fdad300064d9ed7c_00171": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   },
+   "69e80670fdad300064d9ef9d_00599": {
+    "T1": "flash",
+    "T2": "flash-thinkon"
+   }
+  }
+ },
+ "text_hash": {
+  "j1": {
+   "69b99e551f30176bf4d37774_00306": {
+    "T1": "309bf8ad46e463d9",
+    "T2": "0aa3e701de683886"
+   },
+   "69b99e681f30176bf4d3798a_00155": {
+    "T1": "f4093121fa92f4b1",
+    "T2": "b1485d04fd90521b"
+   },
+   "69b99e496ed9e04909909f8f_00220": {
+    "T1": "23e823fd8234d1b5",
+    "T2": "cf12cae4e4390c02"
+   },
+   "69b99e856ed9e0490990a0b5_00301": {
+    "T1": "f9ec51eae4d5b540",
+    "T2": "1c50195a7ae461e0"
+   },
+   "69b99e8b6ed9e0490990a274_00179": {
+    "T1": "1dc11dca80ddb7b4",
+    "T2": "7500607bb808615d"
+   },
+   "69b99d043a4a443c39c00775_00147": {
+    "T1": "368a9978f6a4eee7",
+    "T2": "73f0b382b7c230d9",
+    "T3": "bd719442654c5496"
+   },
+   "69b99d0e6ed9e04909908946_00387": {
+    "T1": "954aa383d95d69aa",
+    "T2": "730c4b342130ba7f"
+   },
+   "6a09ff43fa20006dbaba8d78_00193": {
+    "T1": "2815c603f7aea811",
+    "T2": "a7c421a150b62c00"
+   },
+   "6a09ff48fa20006dbaba8ee1_00114": {
+    "T1": "3e4a03b93c0d48df",
+    "T2": "fb585d38d3f0dee5"
+   },
+   "6a09ff4ffa20006dbaba901a_00263": {
+    "T1": "4fad8976244465bf",
+    "T2": "c45b47f3b5491fb0"
+   },
+   "6a09ff5dfa20006dbaba9200_00274": {
+    "T1": "ff9602ccc139b847",
+    "T2": "340792a7a3842e5b"
+   },
+   "6a31c8b74400787ae5a9d7a7_00042": {
+    "T1": "1322f9ce4975316a",
+    "T2": "dccff504c0e2f9b7"
+   },
+   "69bc7a3f8888fef520b73c1e_00217": {
+    "T1": "2ac6e6b9e4817b0b",
+    "T2": "d9c61d7ea4604162"
+   },
+   "69c1bdc98522835be846bb3a_00032": {
+    "T1": "451cb2b92ee53bdd",
+    "T2": "d26bea8da8347cc4"
+   },
+   "69bd00f7f403a9ca2380efbf_00080": {
+    "T1": "ddf7f1d252a1c7a9",
+    "T2": "e88016e7d28878fc"
+   },
+   "69bd014bf403a9ca2380f091_00054": {
+    "T1": "08511a76e27c3d0e",
+    "T2": "2c4f616e1a830fed"
+   },
+   "69920bd5e0a548a13d886144_00793": {
+    "T1": "e1932cf7fe3091ab",
+    "T2": "c754e07e906994df"
+   },
+   "699258c28812793469fdd6be_00160": {
+    "T1": "d867d5c00bc0254a",
+    "T2": "422a90a683841526"
+   },
+   "69935b4d8e28d8f4c5d3cfaa_00177": {
+    "T1": "0de9a24a4d596d70",
+    "T2": "648dfe52498ba030"
+   },
+   "69b99f256ed9e0490990aa8a_00185": {
+    "T1": "1970b38598438428",
+    "T2": "3a944f4a7e8a6792"
+   },
+   "69d91e423a50087f7bd9afc5_00214": {
+    "T1": "fc366aad869e2a85",
+    "T2": "679f9c0ac50db934"
+   },
+   "69e13c79998131d6a99c0917_00310": {
+    "T1": "273f14d44adaa8d0",
+    "T2": "ad8ea82626e250b4"
+   },
+   "69e3ff61b142e5dd9d6b0095_00128": {
+    "T1": "26ef00e2f7f07366",
+    "T2": "1e393cf676d3be93",
+    "T3": "1e393cf676d3be93"
+   },
+   "69e72c8ca409200ea79f4dd6_00556": {
+    "T1": "525e2d375285a371",
+    "T2": "df0f0bc27b236328"
+   },
+   "69e7490585f786e884a4d1aa_00097": {
+    "T1": "61a928a22b21d2c6",
+    "T2": "2b1bd4d25f418022"
+   },
+   "69e7490d85f786e884a4d40e_00180": {
+    "T1": "da7df4a8fa082210",
+    "T2": "c9a9fefabca6c9f0"
+   },
+   "69e7491a85f786e884a4d6f9_00789": {
+    "T1": "c7c30f32bbac7a73",
+    "T2": "acca0e42e7fcb54b"
+   },
+   "69e7491f85f786e884a4dc2f_00182": {
+    "T1": "0178ce8bb549289d",
+    "T2": "bae102b7e5448d9d"
+   },
+   "69e8b27f2ff2a8dc09e77ed7_00048": {
+    "T1": "bb4542cb69ae353e",
+    "T2": "5289faa4adf23c8f"
+   },
+   "69e8b2962ff2a8dc09e780a7_00722": {
+    "T1": "94fd49a46490f4af",
+    "T2": "20ea31c07835d026",
+    "T3": "fd6b9777edb87915"
+   },
+   "69ea3e63300d991d0f1d3186_00160": {
+    "T1": "2284b26d61d023a3",
+    "T2": "415c413da0f1c75c"
+   },
+   "69ef251c85daccce30f2b1f2_00309": {
+    "T1": "83ff4641c1c1f52c",
+    "T2": "2d4a16b2de5e0f40"
+   },
+   "6a06657a64d4bf2ce5510151_00636": {
+    "T1": "85cc73b75049314e",
+    "T2": "d52a4ce59880e129"
+   },
+   "6a06b0aff12363da8cfdc945_00193": {
+    "T1": "679c41b1f389acd0",
+    "T2": "3f1e25b1240ee145"
+   },
+   "6a0e54e98831ddc9459ad225_00087": {
+    "T1": "ea1a2961e91e7d72",
+    "T2": "fd6b9777edb87915"
+   },
+   "6a3067d0c4fd77fb5b9f8378_00057": {
+    "T1": "34a4ea75d2e3157c",
+    "T2": "a3360bf401824a0f"
+   },
+   "6a312d8867a0ec73f1bc373f_00050": {
+    "T1": "8b98b1c585ecfef5",
+    "T2": "0d7893fe5c77fd5d"
+   },
+   "69935b692c63944063133f67_00112": {
+    "T1": "bd7517fbf93cae41",
+    "T2": "f246e9b41d1d4c95"
+   },
+   "69e72c60a409200ea79f46f6_00141": {
+    "T1": "8f083e7a0726bcee",
+    "T2": "54cf7eda68bdb2b3"
+   },
+   "69e72c65a409200ea79f47bd_00106": {
+    "T1": "445f5a5f082a12a4",
+    "T2": "f0a263466e937f02"
+   },
+   "69e72c6ba409200ea79f484e_00102": {
+    "T1": "a48a0b409f4ea7a5",
+    "T2": "2b0503c7aecf7840"
+   },
+   "69e72c70a409200ea79f48f9_00078": {
+    "T1": "d0f75efa8cf5020e",
+    "T2": "878c4115ce38ae85"
+   },
+   "69e72c75a409200ea79f4976_00100": {
+    "T1": "d4d24c3cb7c9cdfd",
+    "T2": "c1ca108be2957be0"
+   },
+   "69e72c7da409200ea79f4a01_00053": {
+    "T1": "e7b8996ba5b988f2",
+    "T2": "0d75d6d4a4075eed"
+   },
+   "69e7494885f786e884a4e57a_00024": {
+    "T1": "4f88b77680fa9540",
+    "T2": "9755da04075ada82"
+   },
+   "69e8b2642ff2a8dc09e778a1_00439": {
+    "T1": "3a656ef1ee61e214",
+    "T2": "be1de991b4960bcc"
+   },
+   "69e8b26b2ff2a8dc09e77afc_00118": {
+    "T1": "322dc3347d2635a5",
+    "T2": "9566a8f57366e410"
+   },
+   "6a3c5f05879008ba7e15291d_00045": {
+    "T1": "f83ab6ea228f2970",
+    "T2": "209b98c66174626b"
+   },
+   "6a3c5f3b879008ba7e153836_00013": {
+    "T1": "68f169575e3d4c48",
+    "T2": "39f51f2e3a6ede5d"
+   },
+   "6a3c5f3c879008ba7e153862_00029": {
+    "T1": "db9b2ac1d8da4cb1",
+    "T2": "86ea2a79262bc61c"
+   },
+   "6a3c6191879008ba7e15f0b2_00070": {
+    "T1": "ad1f203d6a07c478",
+    "T2": "8888e4cbb68be9a4"
+   },
+   "6a3c6192879008ba7e15f12e_00065": {
+    "T1": "34a57ff15fa46419",
+    "T2": "ab2f19b0cb57d2a8"
+   },
+   "6a3c61b1879008ba7e15fba1_00068": {
+    "T1": "55f96d325f881112",
+    "T2": "a4cbdb1563eb511c"
+   },
+   "6a3c61b3879008ba7e15fc71_00112": {
+    "T1": "2cc5f3bb454320d1",
+    "T2": "1bd505fe562c82f1"
+   },
+   "6a3c61b5879008ba7e15fd28_00117": {
+    "T1": "ade75bc479123408",
+    "T2": "122a06e636e2e204"
+   },
+   "6a3c61db40c88a541d8f091d_00083": {
+    "T1": "1d98cf08018938a4",
+    "T2": "522cded6c77320d2"
+   },
+   "6a3c61ec40c88a541d8f0f4a_00018": {
+    "T1": "6d98ccb4c472731f",
+    "T2": "78d595a583514020"
+   },
+   "69e7268ca409200ea79ef73b_00111": {
+    "T1": "b91a136672ab2e2d",
+    "T2": "20491c88d8b13519"
+   },
+   "69e72698a409200ea79ef8c3_00129": {
+    "T1": "a98bc9cbcef5262f",
+    "T2": "4c791a05a8cd738f"
+   },
+   "69e792f880b52390feb17389_00344": {
+    "T1": "46eb54415c1d38bc",
+    "T2": "a7ad40295a6ead24"
+   },
+   "69e792fd80b52390feb1770f_00022": {
+    "T1": "6aeb4b309787b64f",
+    "T2": "c52ea0c10dd3de78"
+   },
+   "69906a861cf6ed5fbc8f5d21_00078": {
+    "T1": "f61f49332e36b9c1",
+    "T2": "8cd1c76bac6b29ee"
+   },
+   "69907971b621b177c1af74df_00309": {
+    "T1": "15d764de68288fb8",
+    "T2": "c08c6f6eabe62de2"
+   },
+   "69de10185cedf736edb851e4_00244": {
+    "T1": "b9552041bb0ac81c",
+    "T2": "0a1cce159ea8cf10"
+   },
+   "69e72674a409200ea79ef3ae_00219": {
+    "T1": "7513a35c7c9f0c55",
+    "T2": "05cc879dba7eba20"
+   },
+   "69e7267ca409200ea79ef51d_00353": {
+    "T1": "417f2c7eb19f2181",
+    "T2": "ee082339378f5de5"
+   },
+   "69e80662fdad300064d9ed7c_00171": {
+    "T1": "7585e4eccbf55dbd",
+    "T2": "e84cfb39c2328386"
+   },
+   "69e80670fdad300064d9ef9d_00599": {
+    "T1": "740531bf844d52cf",
+    "T2": "7722319a9a16dcd9"
+   }
+  },
+  "j2": {
+   "69b99e551f30176bf4d37774_00306": {
+    "T1": "0aa3e701de683886",
+    "T2": "309bf8ad46e463d9"
+   },
+   "69b99e681f30176bf4d3798a_00155": {
+    "T1": "b1485d04fd90521b",
+    "T2": "f4093121fa92f4b1"
+   },
+   "69b99e496ed9e04909909f8f_00220": {
+    "T1": "cf12cae4e4390c02",
+    "T2": "23e823fd8234d1b5"
+   },
+   "69b99e856ed9e0490990a0b5_00301": {
+    "T1": "f9ec51eae4d5b540",
+    "T2": "1c50195a7ae461e0"
+   },
+   "69b99e8b6ed9e0490990a274_00179": {
+    "T1": "1dc11dca80ddb7b4",
+    "T2": "7500607bb808615d"
+   },
+   "69b99d043a4a443c39c00775_00147": {
+    "T1": "73f0b382b7c230d9",
+    "T2": "368a9978f6a4eee7",
+    "T3": "bd719442654c5496"
+   },
+   "69b99d0e6ed9e04909908946_00387": {
+    "T1": "730c4b342130ba7f",
+    "T2": "954aa383d95d69aa"
+   },
+   "6a09ff43fa20006dbaba8d78_00193": {
+    "T1": "a7c421a150b62c00",
+    "T2": "2815c603f7aea811"
+   },
+   "6a09ff48fa20006dbaba8ee1_00114": {
+    "T1": "fb585d38d3f0dee5",
+    "T2": "3e4a03b93c0d48df"
+   },
+   "6a09ff4ffa20006dbaba901a_00263": {
+    "T1": "c45b47f3b5491fb0",
+    "T2": "4fad8976244465bf"
+   },
+   "6a09ff5dfa20006dbaba9200_00274": {
+    "T1": "340792a7a3842e5b",
+    "T2": "ff9602ccc139b847"
+   },
+   "6a31c8b74400787ae5a9d7a7_00042": {
+    "T1": "dccff504c0e2f9b7",
+    "T2": "1322f9ce4975316a"
+   },
+   "69bc7a3f8888fef520b73c1e_00217": {
+    "T1": "2ac6e6b9e4817b0b",
+    "T2": "d9c61d7ea4604162"
+   },
+   "69c1bdc98522835be846bb3a_00032": {
+    "T1": "451cb2b92ee53bdd",
+    "T2": "d26bea8da8347cc4"
+   },
+   "69bd00f7f403a9ca2380efbf_00080": {
+    "T1": "ddf7f1d252a1c7a9",
+    "T2": "e88016e7d28878fc"
+   },
+   "69bd014bf403a9ca2380f091_00054": {
+    "T1": "2c4f616e1a830fed",
+    "T2": "08511a76e27c3d0e"
+   },
+   "69920bd5e0a548a13d886144_00793": {
+    "T1": "c754e07e906994df",
+    "T2": "e1932cf7fe3091ab"
+   },
+   "699258c28812793469fdd6be_00160": {
+    "T1": "d867d5c00bc0254a",
+    "T2": "422a90a683841526"
+   },
+   "69935b4d8e28d8f4c5d3cfaa_00177": {
+    "T1": "648dfe52498ba030",
+    "T2": "0de9a24a4d596d70"
+   },
+   "69b99f256ed9e0490990aa8a_00185": {
+    "T1": "1970b38598438428",
+    "T2": "3a944f4a7e8a6792"
+   },
+   "69d91e423a50087f7bd9afc5_00214": {
+    "T1": "679f9c0ac50db934",
+    "T2": "fc366aad869e2a85"
+   },
+   "69e13c79998131d6a99c0917_00310": {
+    "T1": "ad8ea82626e250b4",
+    "T2": "273f14d44adaa8d0"
+   },
+   "69e3ff61b142e5dd9d6b0095_00128": {
+    "T1": "1e393cf676d3be93",
+    "T2": "26ef00e2f7f07366",
+    "T3": "1e393cf676d3be93"
+   },
+   "69e72c8ca409200ea79f4dd6_00556": {
+    "T1": "525e2d375285a371",
+    "T2": "df0f0bc27b236328"
+   },
+   "69e7490585f786e884a4d1aa_00097": {
+    "T1": "61a928a22b21d2c6",
+    "T2": "2b1bd4d25f418022"
+   },
+   "69e7490d85f786e884a4d40e_00180": {
+    "T1": "da7df4a8fa082210",
+    "T2": "c9a9fefabca6c9f0"
+   },
+   "69e7491a85f786e884a4d6f9_00789": {
+    "T1": "c7c30f32bbac7a73",
+    "T2": "acca0e42e7fcb54b"
+   },
+   "69e7491f85f786e884a4dc2f_00182": {
+    "T1": "0178ce8bb549289d",
+    "T2": "bae102b7e5448d9d"
+   },
+   "69e8b27f2ff2a8dc09e77ed7_00048": {
+    "T1": "bb4542cb69ae353e",
+    "T2": "5289faa4adf23c8f"
+   },
+   "69e8b2962ff2a8dc09e780a7_00722": {
+    "T1": "fd6b9777edb87915",
+    "T2": "94fd49a46490f4af",
+    "T3": "20ea31c07835d026"
+   },
+   "69ea3e63300d991d0f1d3186_00160": {
+    "T1": "415c413da0f1c75c",
+    "T2": "2284b26d61d023a3"
+   },
+   "69ef251c85daccce30f2b1f2_00309": {
+    "T1": "2d4a16b2de5e0f40",
+    "T2": "83ff4641c1c1f52c"
+   },
+   "6a06657a64d4bf2ce5510151_00636": {
+    "T1": "85cc73b75049314e",
+    "T2": "d52a4ce59880e129"
+   },
+   "6a06b0aff12363da8cfdc945_00193": {
+    "T1": "3f1e25b1240ee145",
+    "T2": "679c41b1f389acd0"
+   },
+   "6a0e54e98831ddc9459ad225_00087": {
+    "T1": "fd6b9777edb87915",
+    "T2": "ea1a2961e91e7d72"
+   },
+   "6a3067d0c4fd77fb5b9f8378_00057": {
+    "T1": "a3360bf401824a0f",
+    "T2": "34a4ea75d2e3157c"
+   },
+   "6a312d8867a0ec73f1bc373f_00050": {
+    "T1": "8b98b1c585ecfef5",
+    "T2": "0d7893fe5c77fd5d"
+   },
+   "69935b692c63944063133f67_00112": {
+    "T1": "bd7517fbf93cae41",
+    "T2": "f246e9b41d1d4c95"
+   },
+   "69e72c60a409200ea79f46f6_00141": {
+    "T1": "54cf7eda68bdb2b3",
+    "T2": "8f083e7a0726bcee"
+   },
+   "69e72c65a409200ea79f47bd_00106": {
+    "T1": "f0a263466e937f02",
+    "T2": "445f5a5f082a12a4"
+   },
+   "69e72c6ba409200ea79f484e_00102": {
+    "T1": "2b0503c7aecf7840",
+    "T2": "a48a0b409f4ea7a5"
+   },
+   "69e72c70a409200ea79f48f9_00078": {
+    "T1": "878c4115ce38ae85",
+    "T2": "d0f75efa8cf5020e"
+   },
+   "69e72c75a409200ea79f4976_00100": {
+    "T1": "d4d24c3cb7c9cdfd",
+    "T2": "c1ca108be2957be0"
+   },
+   "69e72c7da409200ea79f4a01_00053": {
+    "T1": "0d75d6d4a4075eed",
+    "T2": "e7b8996ba5b988f2"
+   },
+   "69e7494885f786e884a4e57a_00024": {
+    "T1": "9755da04075ada82",
+    "T2": "4f88b77680fa9540"
+   },
+   "69e8b2642ff2a8dc09e778a1_00439": {
+    "T1": "3a656ef1ee61e214",
+    "T2": "be1de991b4960bcc"
+   },
+   "69e8b26b2ff2a8dc09e77afc_00118": {
+    "T1": "9566a8f57366e410",
+    "T2": "322dc3347d2635a5"
+   },
+   "6a3c5f05879008ba7e15291d_00045": {
+    "T1": "209b98c66174626b",
+    "T2": "f83ab6ea228f2970"
+   },
+   "6a3c5f3b879008ba7e153836_00013": {
+    "T1": "68f169575e3d4c48",
+    "T2": "39f51f2e3a6ede5d"
+   },
+   "6a3c5f3c879008ba7e153862_00029": {
+    "T1": "86ea2a79262bc61c",
+    "T2": "db9b2ac1d8da4cb1"
+   },
+   "6a3c6191879008ba7e15f0b2_00070": {
+    "T1": "8888e4cbb68be9a4",
+    "T2": "ad1f203d6a07c478"
+   },
+   "6a3c6192879008ba7e15f12e_00065": {
+    "T1": "34a57ff15fa46419",
+    "T2": "ab2f19b0cb57d2a8"
+   },
+   "6a3c61b1879008ba7e15fba1_00068": {
+    "T1": "55f96d325f881112",
+    "T2": "a4cbdb1563eb511c"
+   },
+   "6a3c61b3879008ba7e15fc71_00112": {
+    "T1": "1bd505fe562c82f1",
+    "T2": "2cc5f3bb454320d1"
+   },
+   "6a3c61b5879008ba7e15fd28_00117": {
+    "T1": "122a06e636e2e204",
+    "T2": "ade75bc479123408"
+   },
+   "6a3c61db40c88a541d8f091d_00083": {
+    "T1": "522cded6c77320d2",
+    "T2": "1d98cf08018938a4"
+   },
+   "6a3c61ec40c88a541d8f0f4a_00018": {
+    "T1": "6d98ccb4c472731f",
+    "T2": "78d595a583514020"
+   },
+   "69e7268ca409200ea79ef73b_00111": {
+    "T1": "20491c88d8b13519",
+    "T2": "b91a136672ab2e2d"
+   },
+   "69e72698a409200ea79ef8c3_00129": {
+    "T1": "a98bc9cbcef5262f",
+    "T2": "4c791a05a8cd738f"
+   },
+   "69e792f880b52390feb17389_00344": {
+    "T1": "a7ad40295a6ead24",
+    "T2": "46eb54415c1d38bc"
+   },
+   "69e792fd80b52390feb1770f_00022": {
+    "T1": "6aeb4b309787b64f",
+    "T2": "c52ea0c10dd3de78"
+   },
+   "69906a861cf6ed5fbc8f5d21_00078": {
+    "T1": "8cd1c76bac6b29ee",
+    "T2": "f61f49332e36b9c1"
+   },
+   "69907971b621b177c1af74df_00309": {
+    "T1": "15d764de68288fb8",
+    "T2": "c08c6f6eabe62de2"
+   },
+   "69de10185cedf736edb851e4_00244": {
+    "T1": "0a1cce159ea8cf10",
+    "T2": "b9552041bb0ac81c"
+   },
+   "69e72674a409200ea79ef3ae_00219": {
+    "T1": "05cc879dba7eba20",
+    "T2": "7513a35c7c9f0c55"
+   },
+   "69e7267ca409200ea79ef51d_00353": {
+    "T1": "417f2c7eb19f2181",
+    "T2": "ee082339378f5de5"
+   },
+   "69e80662fdad300064d9ed7c_00171": {
+    "T1": "7585e4eccbf55dbd",
+    "T2": "e84cfb39c2328386"
+   },
+   "69e80670fdad300064d9ef9d_00599": {
+    "T1": "7722319a9a16dcd9",
+    "T2": "740531bf844d52cf"
+   }
+  }
+ },
+ "gate_items": [
+  "69e8b2962ff2a8dc09e780a7_00722",
+  "69b99d043a4a443c39c00775_00147",
+  "69e3ff61b142e5dd9d6b0095_00128"
+ ],
+ "main_items": [
+  "69b99e551f30176bf4d37774_00306",
+  "69b99e681f30176bf4d3798a_00155",
+  "69b99e496ed9e04909909f8f_00220",
+  "69b99e856ed9e0490990a0b5_00301",
+  "69b99e8b6ed9e0490990a274_00179",
+  "69b99d0e6ed9e04909908946_00387",
+  "6a09ff43fa20006dbaba8d78_00193",
+  "6a09ff48fa20006dbaba8ee1_00114",
+  "6a09ff4ffa20006dbaba901a_00263",
+  "6a09ff5dfa20006dbaba9200_00274",
+  "6a31c8b74400787ae5a9d7a7_00042",
+  "69bc7a3f8888fef520b73c1e_00217",
+  "69c1bdc98522835be846bb3a_00032",
+  "69bd00f7f403a9ca2380efbf_00080",
+  "69bd014bf403a9ca2380f091_00054",
+  "69920bd5e0a548a13d886144_00793",
+  "699258c28812793469fdd6be_00160",
+  "69935b4d8e28d8f4c5d3cfaa_00177",
+  "69b99f256ed9e0490990aa8a_00185",
+  "69d91e423a50087f7bd9afc5_00214",
+  "69e13c79998131d6a99c0917_00310",
+  "69e72c8ca409200ea79f4dd6_00556",
+  "69e7490585f786e884a4d1aa_00097",
+  "69e7490d85f786e884a4d40e_00180",
+  "69e7491a85f786e884a4d6f9_00789",
+  "69e7491f85f786e884a4dc2f_00182",
+  "69e8b27f2ff2a8dc09e77ed7_00048",
+  "69ea3e63300d991d0f1d3186_00160",
+  "69ef251c85daccce30f2b1f2_00309",
+  "6a06657a64d4bf2ce5510151_00636",
+  "6a06b0aff12363da8cfdc945_00193",
+  "6a0e54e98831ddc9459ad225_00087",
+  "6a3067d0c4fd77fb5b9f8378_00057",
+  "6a312d8867a0ec73f1bc373f_00050",
+  "69935b692c63944063133f67_00112",
+  "69e72c60a409200ea79f46f6_00141",
+  "69e72c65a409200ea79f47bd_00106",
+  "69e72c6ba409200ea79f484e_00102",
+  "69e72c70a409200ea79f48f9_00078",
+  "69e72c75a409200ea79f4976_00100",
+  "69e72c7da409200ea79f4a01_00053",
+  "69e7494885f786e884a4e57a_00024",
+  "69e8b2642ff2a8dc09e778a1_00439",
+  "69e8b26b2ff2a8dc09e77afc_00118",
+  "6a3c5f05879008ba7e15291d_00045",
+  "6a3c5f3b879008ba7e153836_00013",
+  "6a3c5f3c879008ba7e153862_00029",
+  "6a3c6191879008ba7e15f0b2_00070",
+  "6a3c6192879008ba7e15f12e_00065",
+  "6a3c61b1879008ba7e15fba1_00068",
+  "6a3c61b3879008ba7e15fc71_00112",
+  "6a3c61b5879008ba7e15fd28_00117",
+  "6a3c61db40c88a541d8f091d_00083",
+  "6a3c61ec40c88a541d8f0f4a_00018",
+  "69e7268ca409200ea79ef73b_00111",
+  "69e72698a409200ea79ef8c3_00129",
+  "69e792f880b52390feb17389_00344",
+  "69e792fd80b52390feb1770f_00022",
+  "69906a861cf6ed5fbc8f5d21_00078",
+  "69907971b621b177c1af74df_00309",
+  "69de10185cedf736edb851e4_00244",
+  "69e72674a409200ea79ef3ae_00219",
+  "69e7267ca409200ea79ef51d_00353",
+  "69e80662fdad300064d9ed7c_00171",
+  "69e80670fdad300064d9ef9d_00599"
+ ]
+}

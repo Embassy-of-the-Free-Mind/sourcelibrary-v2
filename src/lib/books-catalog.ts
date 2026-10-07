@@ -11,7 +11,7 @@
 import { supabase, supabaseAdmin, sanitizeFilterValue } from '@/lib/supabase';
 import { isSingleRealLanguage } from '@/lib/language-canonical';
 import { NON_ARTWORK_FILTERS } from '@/lib/artwork-record';
-import { matchStem, keywordVariants } from '@/lib/search/word-forms';
+import { matchStems, hasWordForms, keywordVariants } from '@/lib/search/word-forms';
 import { READABLE_RUNGS, ENGLISH_ORIGINAL_READABLE_RUNGS, type TranslationRung } from '@/lib/page-counts';
 
 /**
@@ -85,6 +85,10 @@ export interface CatalogBook {
    *  needed to tell an artwork from a text — see isArtworkRecord(). */
   content_type: string | null;
   resource_type: string | null;
+  /** True when this is a partial scan / preview of a larger work (e.g. only a
+   *  few page images of a much longer manuscript). Mirrors `books.preview`;
+   *  cards show a "Preview" badge when set. */
+  preview: boolean;
   /** original | period-translation | modern-translation — see src/lib/text-role.ts (#2395) */
   text_role: string | null;
   place_published: string | null;
@@ -136,6 +140,56 @@ export interface CatalogBookDetail extends CatalogBook {
 // `attachCardVariants()` below instead.
 export const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_translated_es, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, content_type, resource_type, text_role, place_published, ft_verdict, ft_evidence_strength, ft_our_completeness, ft_source_screen, ft_translator_screen, translation_rung, english_original';
 
+// The extra columns search and the book-detail shell append after BOOK_SELECT.
+// `preview` is deliberately NOT in BOOK_SELECT: it only lands when the migration
+// (supabase/migrations/20261006084050_books_catalog_preview.sql) runs, and
+// PostgREST 42703s the ENTIRE query on a missing column (see the note above).
+// Every query goes through bookSelect() below, which appends `preview` only once
+// the column is actually present — so deploying the badge code before the
+// migration can never take a catalogue surface down; the badge simply stays off
+// until the column + sync land.
+const SEARCH_EXTRA = ', summary_text, doi, work_id';
+const DETAIL_EXTRA = ', visible, contributing_library, summary_text, publisher, place_published, doi, work_id, resource_type, source_url, provider_name, image_attribution, image_license, cover_image, dedication, subtitle, source_work_dates, ft_disposition, ft_reasoning, description, subject_keywords, created_at, updated_at';
+
+// Cached capability probe: has `books_catalog.preview` landed yet?
+// Probed once per serverless instance by attempting a select of the column —
+// the exact failure we are guarding against. A stale cache only delays the
+// badge appearing (until the next instance), never breaks a query.
+let previewColumnState: 'unknown' | 'yes' | 'no' = 'unknown';
+let previewColumnProbe: Promise<'yes' | 'no'> | null = null;
+
+async function previewColumnAvailable(): Promise<boolean> {
+  if (previewColumnState !== 'unknown') return previewColumnState === 'yes';
+  if (!previewColumnProbe) {
+    previewColumnProbe = (async () => {
+      try {
+        const { error } = await supabase.from('books_catalog').select('preview').limit(1);
+        return error ? 'no' : 'yes';
+      } catch {
+        return 'no';
+      }
+    })();
+  }
+  previewColumnState = await previewColumnProbe;
+  return previewColumnState === 'yes';
+}
+
+/** BOOK_SELECT, plus `preview` once the migration column is present. */
+async function bookSelect(): Promise<string> {
+  const preview = (await previewColumnAvailable()) ? ', preview' : '';
+  return `${BOOK_SELECT}${preview}`;
+}
+
+/** SEARCH_SELECT — BOOK_SELECT (+preview) + the search display fields. */
+async function searchSelect(): Promise<string> {
+  return `${await bookSelect()}${SEARCH_EXTRA}`;
+}
+
+/** BOOK_DETAIL_SELECT — BOOK_SELECT (+preview) + the detail shell fields. */
+async function bookDetailSelect(): Promise<string> {
+  return `${await bookSelect()}${DETAIL_EXTRA}`;
+}
+
 export type SortOption = 'popular' | 'title' | 'author' | 'year_asc' | 'year_desc' | 'recent' | 'last_translated' | 'quality';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -180,6 +234,9 @@ export async function browseBooks(opts: {
   yearMin?: number;
   yearMax?: number;
   titlePrefix?: string;
+  /** Titles that start with no Latin letter (CJK, Greek, Arabic, digits,
+   *  brackets) — the bucket the A–Z title index otherwise has no home for. */
+  titleNonLatin?: boolean;
   authorPrefix?: string;
   search?: string;
   sort?: SortOption;
@@ -207,7 +264,7 @@ export async function browseBooks(opts: {
 
   let query = supabase
     .from('books_catalog')
-    .select(BOOK_SELECT, { count: countMode })
+    .select(await bookSelect(), { count: countMode })
     .eq('visible', true);
 
   if (opts.hasPages !== false) query = query.gt('pages_count', 0);
@@ -226,6 +283,11 @@ export async function browseBooks(opts: {
   if (opts.yearMin != null) query = query.gte('year', opts.yearMin);
   if (opts.yearMax != null) query = query.lte('year', opts.yearMax);
   if (opts.titlePrefix) { const s = sanitizeFilterValue(opts.titlePrefix); query = query.or(`display_title.ilike.${s}%,title.ilike.${s}%`); }
+  if (opts.titleNonLatin) {
+    query = query
+      .or('display_title.is.null,display_title.not.imatch.^[a-z]')
+      .not('title', 'imatch', '^[a-z]');
+  }
   if (opts.authorPrefix) query = query.ilike('author', `${sanitizeFilterValue(opts.authorPrefix)}%`);
   if (opts.search) { const s = sanitizeFilterValue(opts.search); query = query.or(`title.ilike.%${s}%,display_title.ilike.%${s}%,author.ilike.%${s}%`); }
 
@@ -246,7 +308,7 @@ export async function browseBooks(opts: {
     throw new Error(`books_catalog query failed: ${error.message}`);
   }
 
-  return { books: await attachCardVariants((data || []) as CatalogBook[]), total: count || 0 };
+  return { books: await attachCardVariants((data || []) as unknown as CatalogBook[]), total: count || 0 };
 }
 
 /**
@@ -516,9 +578,6 @@ export async function browseArtists(letter: string): Promise<{ name: string; cou
   return results.sort((a, b) => a.name.localeCompare(b.name));
 }
 
-/** Select string for search results — includes summary_text and doi for display */
-const SEARCH_SELECT = `${BOOK_SELECT}, summary_text, doi, work_id`;
-
 /**
  * Author alias groups. Each group lists name variants that should be treated as
  * equivalent at search time — querying any member surfaces records whose author
@@ -531,6 +590,116 @@ const SEARCH_SELECT = `${BOOK_SELECT}, summary_text, doi, work_id`;
 const AUTHOR_ALIAS_GROUPS: string[][] = [
   ['carl jung', 'carl gustav jung', 'c.g. jung'],
 ];
+
+const SEARCH_STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
+
+/**
+ * The PostgREST `or` filter of the catalogue book lane, shared by
+ * `searchBooksCatalog` and `searchBookIds`.
+ *
+ * `fold: false` matches the query as typed. `fold: true` widens each word to
+ * its related forms (#5517, src/lib/search/word-forms.ts): titles are searched
+ * for words that START with one of the word's stems (`imatch` + `\m`, served
+ * by the same trigram index as ILIKE) and `subject_keywords` for its likely
+ * surface forms. Anchored because a bare `%optic%` also finds every "Coptic"
+ * title. Author matching is never folded, because names should not fold, and a
+ * word with no related forms (a name, Latin, any non-Latin script) is matched
+ * exactly as typed, so the two filters are then identical.
+ *
+ * `authors` adds the author-only ANDs and the alias groups (the display lane).
+ */
+function catalogOrFilter(searchText: string, opts: { isPhrase: boolean; fold: boolean; authors: boolean }): string {
+  const safe = sanitizeFilterValue(searchText);
+  const words = safe.trim().split(/\s+/).filter(w => w.length >= 2);
+  const contentWords = words.filter(w => w.length >= 3 && !SEARCH_STOPWORDS.has(w.toLowerCase()));
+  // Only ilike on indexed/short fields — summary_text and description cause
+  // full-table scans and Supabase statement timeouts (no trigram indexes)
+  let orFilter = `title.ilike.%${safe}%,display_title.ilike.%${safe}%,author.ilike.%${safe}%`;
+  // Quoted phrase ("venus humanitas"): exact phrase only, no word splitting.
+  if (opts.isPhrase) return orFilter;
+
+  /** One column against one word: its stems (each `[a-z]+`) when folding, else the word. */
+  const col = (column: string, w: string) => {
+    if (!opts.fold || !hasWordForms(w)) return `${column}.ilike.%${w}%`;
+    const stems = matchStems(w).map(st => `${column}.imatch.\\m${st}`);
+    return stems.length === 1 ? stems[0] : `or(${stems.join(',')})`;
+  };
+
+  if (words.length >= 2) {
+    // Word-level AND: title contains ALL words (handles spelling variants —
+    // "mathematical magick" finds "Mathematicall Magick").
+    orFilter += `,and(${words.map(w => col('title', w)).join(',')}),and(${words.map(w => col('display_title', w)).join(',')})`;
+
+    if (opts.authors) {
+      orFilter += `,and(${words.map(w => `author.ilike.%${w}%`).join(',')})`;
+      // Author alias expansion: if the query matches a known alias group, also
+      // search authors using each alternate variant in the group.
+      const lowerSafe = safe.toLowerCase();
+      const aliasGroup = AUTHOR_ALIAS_GROUPS.find(group => group.some(a => lowerSafe.includes(a)));
+      if (aliasGroup) {
+        for (const variant of aliasGroup) {
+          if (lowerSafe.includes(variant)) continue;
+          const variantWords = variant.split(/\s+/).filter(w => w.length >= 2);
+          if (variantWords.length < 2) continue;
+          orFilter += `,and(${variantWords.map(w => `author.ilike.%${w}%`).join(',')})`;
+        }
+      }
+    }
+
+    // Cross-field AND: some words in title + some in author. Catches "newton
+    // principia". Only for 2-3 content words (more would be too loose).
+    if (contentWords.length >= 2 && contentWords.length <= 3) {
+      for (const w of contentWords) {
+        const others = contentWords.filter(o => o !== w);
+        orFilter += `,and(author.ilike.%${w}%,${others.map(o => col('title', o)).join(',')})`;
+        orFilter += `,and(author.ilike.%${w}%,${others.map(o => col('display_title', o)).join(',')})`;
+      }
+    }
+    return orFilter;
+  }
+
+  // Single word: also match language (e.g. "Sanskrit") and subject_keywords
+  // ("panchatantra", "alchemy"). The keyword array holds both casings.
+  const word = safe.trim();
+  orFilter += `,language.ilike.%${safe}%`;
+  if (opts.fold && hasWordForms(word)) {
+    for (const stem of matchStems(word)) orFilter += `,title.imatch.\\m${stem},display_title.imatch.\\m${stem}`;
+  }
+  const lower = word.toLowerCase();
+  const keywords = opts.fold ? keywordVariants(word) : [...new Set([lower, lower.charAt(0).toUpperCase() + lower.slice(1)])];
+  orFilter += `,subject_keywords.ov.{${keywords.map(v => `"${v}"`).join(',')}}`;
+  return orFilter;
+}
+
+/**
+ * Run the catalogue lane for the query as typed and, when folding changes the
+ * filter, for its related word forms too (in parallel). Rows matching the typed
+ * form come FIRST and related forms fill what is left of `limit`.
+ *
+ * Why not one widened query: the lane reads an unordered `limit`-row sample.
+ * "magical" has 35 title matches and "magic" 176; one widened query would hand
+ * back 40 of the 176 at random and could drop every book the reader named.
+ * If the related-forms query fails, the typed result stands.
+ */
+async function typedThenRelated<T extends { id: string }>(
+  searchText: string,
+  filterOpts: { isPhrase: boolean; authors: boolean },
+  limit: number,
+  run: (orFilter: string) => Promise<T[]>,
+): Promise<T[]> {
+  const typed = catalogOrFilter(searchText, { ...filterOpts, fold: false });
+  const folded = catalogOrFilter(searchText, { ...filterOpts, fold: true });
+  if (folded === typed) return run(typed);
+  const [own, related] = await Promise.all([
+    run(typed),
+    run(folded).catch((err: unknown) => {
+      console.warn('[books-catalog] related word forms query failed:', err instanceof Error ? err.message : String(err));
+      return [] as T[];
+    }),
+  ]);
+  const seen = new Set(own.map(r => r.id));
+  return [...own, ...related.filter(r => !seen.has(r.id))].slice(0, limit);
+}
 
 /**
  * Search books by title/author text — returns full metadata for search display.
@@ -558,90 +727,40 @@ export async function searchBooksCatalog(
   const isPhrase = /^".*"$/.test(text.trim());
   const searchText = isPhrase ? text.trim().slice(1, -1) : text;
 
-  // Build OR filter — same logic as searchBookIds
-  const safe = sanitizeFilterValue(searchText);
-  const STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
-  const words = safe.trim().split(/\s+/).filter(w => w.length >= 2);
-  const contentWords = words.filter(w => w.length >= 3 && !STOPWORDS.has(w.toLowerCase()));
-  const phraseFilters = `title.ilike.%${safe}%,display_title.ilike.%${safe}%,author.ilike.%${safe}%`;
+  return typedThenRelated(searchText, { isPhrase, authors: true }, limit, async (orFilter) => {
+    let query = supabase
+      .from('books_catalog')
+      .select(await searchSelect())
+      .eq('visible', true)
+      .gt('pages_count', 0)
+      .or(orFilter)
+      .limit(limit);
 
-  // For quoted phrases, only do exact phrase matching — no word splitting or cross-field matching
-  let orFilter = phraseFilters;
-  if (isPhrase) {
-    // Exact phrase only — already handled by phraseFilters
-  } else if (words.length >= 2) {
-    const titleAnds = words.map(w => `title.ilike.%${matchStem(w)}%`).join(',');
-    const displayAnds = words.map(w => `display_title.ilike.%${matchStem(w)}%`).join(',');
-    const authorAnds = words.map(w => `author.ilike.%${w}%`).join(',');
-    orFilter += `,and(${titleAnds}),and(${displayAnds}),and(${authorAnds})`;
+    // Artworks share this table with texts, and a book card linking to /book/ is
+    // the wrong promise for a Met stela — the reader clicks expecting a readable
+    // scan. Search surfaces artworks in their own Images lane instead (see the
+    // artwork lanes in /api/search/unified). Measured 2026-08-30: this drops 96
+    // of 31,731 live rows, e.g. "stela" 27 results → 8, all of them books.
+    // NOT `.not('resource_type','is',null)` — that would also drop the one live
+    // record carrying content_type:'text' + resource_type:'text', a real Javanese
+    // chronicle. See isArtworkRecord().
+    for (const f of NON_ARTWORK_FILTERS) query = query.or(f);
 
-    // Author alias expansion: if the query matches a known alias group, also
-    // search authors using each alternate variant in the group.
-    const lowerSafe = safe.toLowerCase();
-    const aliasGroup = AUTHOR_ALIAS_GROUPS.find(group => group.some(a => lowerSafe.includes(a)));
-    if (aliasGroup) {
-      for (const variant of aliasGroup) {
-        if (lowerSafe.includes(variant)) continue;
-        const variantWords = variant.split(/\s+/).filter(w => w.length >= 2);
-        if (variantWords.length < 2) continue;
-        const variantAnds = variantWords.map(w => `author.ilike.%${w}%`).join(',');
-        orFilter += `,and(${variantAnds})`;
-      }
-    }
+    if (opts?.language) query = query.eq('language', opts.language);
+    if (opts?.category) query = query.contains('categories', [canonicalizeCategory(opts.category)]);
+    if (opts?.firstTranslation) query = query.eq('is_first_translation', true);
+    if (opts?.hasTranslation) query = query.or(READABLE_IN_ENGLISH_OR);
+    // Publication-year range. Rows with a null year drop out of a bounded range,
+    // same as listBooksCatalog — an undated edition can't satisfy "after 1600".
+    if (opts?.yearMin != null) query = query.gte('year', opts.yearMin);
+    if (opts?.yearMax != null) query = query.lte('year', opts.yearMax);
+    if (opts?.library === 'bhutan') query = query.ilike('source_url', '%eap.bl.uk%');
+    else if (opts?.library) query = query.eq('image_source_provider', opts.library);
 
-    // Cross-field AND: author + title words (catches "newton principia")
-    if (contentWords.length >= 2 && contentWords.length <= 3) {
-      for (const w of contentWords) {
-        const others = contentWords.filter(o => o !== w);
-        const titlePart = others.map(o => `title.ilike.%${matchStem(o)}%`).join(',');
-        const displayPart = others.map(o => `display_title.ilike.%${matchStem(o)}%`).join(',');
-        orFilter += `,and(author.ilike.%${w}%,${titlePart})`;
-        orFilter += `,and(author.ilike.%${w}%,${displayPart})`;
-      }
-    }
-  } else {
-    // Single word: also match against language and subject_keywords
-    orFilter += `,language.ilike.%${safe}%`;
-    // subject_keywords overlap — catches "panchatantra", "alchemy", etc.
-    // Related word forms (#5517): "botanical" also finds titles with "Botan…" and
-    // books keyed "botany". The stem is a prefix of the word, so this only widens.
-    const stem = matchStem(safe.trim());
-    if (stem !== safe.trim().toLowerCase()) orFilter += `,title.ilike.%${stem}%,display_title.ilike.%${stem}%`;
-    orFilter += `,subject_keywords.ov.{${keywordVariants(safe.trim()).map(v => `"${v}"`).join(',')}}`;
-  }
-
-  let query = supabase
-    .from('books_catalog')
-    .select(SEARCH_SELECT)
-    .eq('visible', true)
-    .gt('pages_count', 0)
-    .or(orFilter)
-    .limit(limit);
-
-  // Artworks share this table with texts, and a book card linking to /book/ is
-  // the wrong promise for a Met stela — the reader clicks expecting a readable
-  // scan. Search surfaces artworks in their own Images lane instead (see the
-  // artwork lanes in /api/search/unified). Measured 2026-08-30: this drops 96
-  // of 31,731 live rows, e.g. "stela" 27 results → 8, all of them books.
-  // NOT `.not('resource_type','is',null)` — that would also drop the one live
-  // record carrying content_type:'text' + resource_type:'text', a real Javanese
-  // chronicle. See isArtworkRecord().
-  for (const f of NON_ARTWORK_FILTERS) query = query.or(f);
-
-  if (opts?.language) query = query.eq('language', opts.language);
-  if (opts?.category) query = query.contains('categories', [canonicalizeCategory(opts.category)]);
-  if (opts?.firstTranslation) query = query.eq('is_first_translation', true);
-  if (opts?.hasTranslation) query = query.or(READABLE_IN_ENGLISH_OR);
-  // Publication-year range. Rows with a null year drop out of a bounded range,
-  // same as listBooksCatalog — an undated edition can't satisfy "after 1600".
-  if (opts?.yearMin != null) query = query.gte('year', opts.yearMin);
-  if (opts?.yearMax != null) query = query.lte('year', opts.yearMax);
-  if (opts?.library === 'bhutan') query = query.ilike('source_url', '%eap.bl.uk%');
-  else if (opts?.library) query = query.eq('image_source_provider', opts.library);
-
-  const { data, error } = await query;
-  if (error) throw new Error(`searchBooksCatalog failed: ${error.message}`);
-  return (data || []) as unknown as CatalogBookDetail[];
+    const { data, error } = await query;
+    if (error) throw new Error(`searchBooksCatalog failed: ${error.message}`);
+    return (data || []) as unknown as CatalogBookDetail[];
+  });
 }
 
 /**
@@ -665,62 +784,21 @@ export async function searchBookIds(
   const isPhrase = /^".*"$/.test(text.trim());
   const searchText = isPhrase ? text.trim().slice(1, -1) : text;
 
-  // Build OR filter: exact phrase match + word-level AND matches
-  // "mathematical magick" should match "Mathematicall Magick" by matching each word
-  const safe = sanitizeFilterValue(searchText);
-  const STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
-  const words = safe.trim().split(/\s+/).filter(w => w.length >= 2);
-  const contentWords = words.filter(w => w.length >= 3 && !STOPWORDS.has(w.toLowerCase()));
-  // Only ilike on indexed/short fields — summary_text and description cause
-  // full-table scans and Supabase statement timeouts (no trigram indexes)
-  const phraseFilters = `title.ilike.%${safe}%,display_title.ilike.%${safe}%,author.ilike.%${safe}%`;
+  const rows = await typedThenRelated(searchText, { isPhrase, authors: false }, limit, async (orFilter) => {
+    let query = supabase
+      .from('books_catalog')
+      .select('id')
+      .gt('pages_count', 0)
+      .or(orFilter)
+      .limit(limit);
 
-  // For quoted phrases, only do exact phrase matching
-  let orFilter = phraseFilters;
-  if (isPhrase) {
-    // Exact phrase only — already handled by phraseFilters
-  } else if (words.length >= 2) {
-    // Add word-level AND: title contains ALL words (handles spelling variants)
-    const titleAnds = words.map(w => `title.ilike.%${matchStem(w)}%`).join(',');
-    const displayAnds = words.map(w => `display_title.ilike.%${matchStem(w)}%`).join(',');
-    orFilter += `,and(${titleAnds}),and(${displayAnds})`;
+    if (!opts?.includeHidden) query = query.eq('visible', true);
 
-    // Cross-field AND: some words in title + some in author
-    // Catches "newton principia" where "newton" is author and "principia" is in title
-    // Only add if we have 2-3 words (more would be too loose)
-    if (contentWords.length >= 2 && contentWords.length <= 3) {
-      for (const w of contentWords) {
-        const others = contentWords.filter(o => o !== w);
-        const titlePart = others.map(o => `title.ilike.%${matchStem(o)}%`).join(',');
-        const displayPart = others.map(o => `display_title.ilike.%${matchStem(o)}%`).join(',');
-        orFilter += `,and(author.ilike.%${w}%,${titlePart})`;
-        orFilter += `,and(author.ilike.%${w}%,${displayPart})`;
-      }
-    }
-  } else {
-    // Single word: also match against language (e.g. "Sanskrit", "Arabic")
-    // This is fast since it's a single ilike on an indexed field
-    orFilter += `,language.ilike.%${safe}%`;
-    // subject_keywords overlap — catches terms like "panchatantra", "alchemy", "metallurgy"
-    // Related word forms (#5517): "botanical" also finds titles with "Botan…" and
-    // books keyed "botany". The stem is a prefix of the word, so this only widens.
-    const stem = matchStem(safe.trim());
-    if (stem !== safe.trim().toLowerCase()) orFilter += `,title.ilike.%${stem}%,display_title.ilike.%${stem}%`;
-    orFilter += `,subject_keywords.ov.{${keywordVariants(safe.trim()).map(v => `"${v}"`).join(',')}}`;
-  }
-
-  let query = supabase
-    .from('books_catalog')
-    .select('id')
-    .gt('pages_count', 0)
-    .or(orFilter)
-    .limit(limit);
-
-  if (!opts?.includeHidden) query = query.eq('visible', true);
-
-  const { data, error } = await query;
-  if (error) throw new Error(`searchBookIds failed: ${error.message}`);
-  return (data || []).map(row => row.id);
+    const { data, error } = await query;
+    if (error) throw new Error(`searchBookIds failed: ${error.message}`);
+    return (data || []) as Array<{ id: string }>;
+  });
+  return rows.map(row => row.id);
 }
 
 /**
@@ -758,32 +836,8 @@ export async function getCategoryCounts(): Promise<Map<string, number>> {
   return counts;
 }
 
-// All fields needed for the book detail page shell
-const BOOK_DETAIL_SELECT = [
-  BOOK_SELECT,
-  'visible', // needed by the /book/[id] hidden-book gate (book-access.ts)
-  'contributing_library',
-  'summary_text',
-  'publisher',
-  'place_published',
-  'doi',
-  'work_id',
-  'resource_type',
-  'source_url',
-  'provider_name',
-  'image_attribution',
-  'image_license',
-  'cover_image',
-  'dedication',
-  'subtitle',
-  'source_work_dates',
-  'ft_disposition',
-  'ft_reasoning',
-  'description',
-  'subject_keywords',
-  'created_at',
-  'updated_at',
-].join(', ');
+// All fields needed for the book detail page shell — see bookDetailSelect()
+// (BOOK_SELECT + preview-when-available + the shell fields).
 
 /**
  * Fetch a single book by slug or id from Supabase books_catalog.
@@ -797,7 +851,7 @@ export async function getBookDetail(idOrSlug: string): Promise<{ book: CatalogBo
   // Try slug first (the common case for SEO URLs)
   const { data: bySlug } = await supabase
     .from('books_catalog')
-    .select(BOOK_DETAIL_SELECT)
+    .select(await bookDetailSelect())
     .eq('slug', idOrSlug)
     .limit(1)
     .maybeSingle();
@@ -809,7 +863,7 @@ export async function getBookDetail(idOrSlug: string): Promise<{ book: CatalogBo
   // Fall back to id
   const { data: byId } = await supabase
     .from('books_catalog')
-    .select(BOOK_DETAIL_SELECT)
+    .select(await bookDetailSelect())
     .eq('id', idOrSlug)
     .limit(1)
     .maybeSingle();

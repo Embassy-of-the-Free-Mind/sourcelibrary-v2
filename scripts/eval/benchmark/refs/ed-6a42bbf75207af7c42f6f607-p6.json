@@ -1,0 +1,46 @@
+{
+  "source": "EEBO-TCP A67147",
+  "edition": "Increpatio Barjesu, sive, Polemicæ adsertiones locorum aliquot S. Scripturæ, ab imposturis perversio — W3676 (1660)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/textcreationpartnership/A67147",
+  "same_edition": {
+    "evidence": "catalogue-number",
+    "text_match_pages": "12/14",
+    "pb_aligned_pages": "7/12"
+  },
+  "origin": "library",
+  "book_id": "6a42bbf75207af7c42f6f607",
+  "page_number": 6,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 4062,
+    "to_char": 5412,
+    "overlap": 0.967,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'tationes suas (Methodo nulli à Se...'; ends 'Paragrapho 1. [Hâc'. Ref pad at start is ~6 words ('subindè fuerat, inter caeteras Exercitationes'); acceptable.",
+    "leaf_language": "lat (with Greek word)",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:05:07.063Z",
+  "text_location": "repo",
+  "text_sha256": "268a97642fb09f442a43e05b0aed6e461f194de716a7cc8d04405b8b3ce32ed3",
+  "unit": {
+    "chars": 1350
+  },
+  "stratum": "latin-period-5126"
+}

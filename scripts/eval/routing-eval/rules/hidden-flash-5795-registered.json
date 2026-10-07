@@ -1,0 +1,14 @@
+{
+  "id": "hidden-flash-5795-registered",
+  "PRIOR ART": "scripts/eval/PREREGISTRATION-hidden-flash-5795.md — this file is that document's decision rule written as data, so routing-eval.mjs can apply it; the wording there is the authority.",
+  "registered": "2026-10-04, before any engine call (PREREGISTRATION-hidden-flash-5795.md)",
+  "candidate": "flash",
+  "baseline": "lite",
+  "min_text_pages": 10,
+  "checks": [
+    { "id": "a", "rule": "labelPrecision", "min": 0.9, "use": "point", "on_fail": "relabel (#4884)" },
+    { "id": "b", "rule": "countNoWorse", "slack": 0 },
+    { "id": "c", "rule": "adjudication", "mode": "majority", "invention_max": 0 }
+  ],
+  "verdicts": { "pass": "route to flash", "fail": "stay on lite", "small_n": "undecided: n too small", "pending": "pending adjudication" }
+}

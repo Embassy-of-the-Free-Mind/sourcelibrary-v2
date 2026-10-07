@@ -1,0 +1,771 @@
+[
+  {
+    "book_id": "69e75cf2cc48e59ad74eb2b4",
+    "slot": 21,
+    "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 11a",
+    "tradition": "japanese",
+    "shelf_fit": "fits",
+    "shelf_note": "A Kanze-school chanting book in cursive with red and black vocal notation; the sampled pages are from Tsunemasa (経政), Kochō (胡蝶) and Torioibune (鳥追舟). It belongs on a Japanese shelf.",
+    "rights_flag": null,
+    "structure_note": "There are 152 page records against pages_count 102 (and 144 vs 96 translated), so the count field and the records disagree, which may be a re-split or re-import. Only 5 pages carry a printed number, so the 2 backsteps and 1 repeat are probably misread folio numerals, not a real reordering.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 26,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "からて仮に見えつる",
+            "image": "うつて仮に見えつる (first kana uncertain)",
+            "problem": "first word misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "図正 / ハ一一二一一八一二十一人 / 同一同キセル / □□し同きせん・一一・二",
+            "image": "vocal-notation ticks and the speaker label ワキセリフ",
+            "problem": "notation marks transcribed as digit strings and junk lines",
+            "severity": "moderate",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "不思議やなはや深更になるまゝに。よるのともし火幽なる…いかなる人にてましますそ〽我經政か幽霊なるか。御弔ひの有穀さに",
+            "english": "A mystery, such a deep lament. / Even so, the lament doubles back. / At the rumors, Rete a lament… A ghostly spirit, a perilous state",
+            "problem": "The English does not translate the page. The priest's question to the figure glimpsed in the dim lamplight, and the reply 'I am the ghost of Tsunemasa, come in gratitude for your rites', are replaced by invented Waki/Shite lines about 'lament'. The name Tsunemasa is lost.",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "Speaker labels <gloss>Waki</gloss>/<gloss>Shite</gloss> are invented and alternated line by line; the page marks only ワキセリフ and シテ",
+            "severity": "moderate",
+            "class": "T16"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 49,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "山ふきのがさね",
+            "image": "山ぶきのかさね",
+            "problem": "voicing slip",
+            "severity": "minor"
+          },
+          {
+            "ocr": "三十五日 … ヤヲハ",
+            "image": "notation and margin marks",
+            "problem": "junk header and footer",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "荘子かあたにみし夢の。小蝶の姿",
+            "english": "Like a light dream, the figure of a small butterfly",
+            "problem": "Zhuangzi's butterfly dream, the allusion the passage turns on, is dropped",
+            "severity": "serious",
+            "class": "T9"
+          },
+          {
+            "source": "つかさくらゐもけたかき。光源氏の古へも。小蝶の舞人色々の見ふねにかさる金銀の。かめにさす山ふきのかさねのきぬをかけ給ふ",
+            "english": "The butterfly dances, its colors unseen, a trace of lingering scent in the mountain pass, a small butterfly that drifts among the eaves.",
+            "problem": "Hikaru Genji, the butterfly dancers on the boat, the gold and silver vases and the yamabuki-layered robes are all replaced by invented imagery ('mountain pass', 'eaves')",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "<summary> and <keywords> blocks are stored in the translation text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 64,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "あなたにあたつてふみ",
+            "image": "あなたにあたつてふゑ",
+            "problem": "笛 (flute) misread as ふみ",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "社山とつの見事にて作へ",
+            "image": "…ひとつの見事にて候へ",
+            "problem": "候 misread as 作 (twice on the page)",
+            "severity": "minor"
+          },
+          {
+            "ocr": "作るといふ事のそのまういないの",
+            "image": "not in this page's text block; possibly the edge of the facing leaf",
+            "problem": "line not on the page",
+            "severity": "moderate",
+            "class": "I4"
+          },
+          {
+            "ocr": "十七 / 一十 / 仝 / 十七 / 一十一",
+            "image": "speaker labels ツレ, ワキ and notation",
+            "problem": "speaker labels read as numerals",
+            "severity": "moderate",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "ツレ / ワキ (speaker labels)",
+            "english": "Hair / Keyama / Mouth Ki",
+            "problem": "role labels rendered as nonsense words",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "御前にん… 鼓の音の聞えんは。何事にて有そ",
+            "english": "Before the master, the rain arrives, suddenly held in the beak / The sound of instruction, the wisdom is clear",
+            "problem": "The question 'what is this sound of flute and drum?' becomes invented 'rain' and 'instruction'",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 84,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "一七百九十一一年十一月十一日上刻",
+            "image": "a red notation column; no date is written on the page",
+            "problem": "a date ('1791, 11th month, 11th day') invented from notation marks",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "なふそわうそわら給り候へ",
+            "image": "main line overlaid by red interlinear annotations",
+            "problem": "red annotation merged into the main text; garbled",
+            "severity": "moderate",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "旧里を出し鶴の子の松にかへらぬ。淋しさよ",
+            "english": "The hōfuku ceremonial garb, riding the crane to the old village",
+            "problem": "'Having left the old home, the crane chick does not return to the pine: how lonely' becomes an invented garment and a ride",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "二人を西に引すへてきらんとすゝみけり",
+            "english": "The two raise their voices together, striving",
+            "problem": "The threat to cut down the two children is lost; this is the dramatic turn of the scene",
+            "severity": "serious",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "Notation marks rendered as stage glosses ('In the ground style', 'Raised up') between lines",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The right images and a fair-to-good kuzushiji transcription of three plays, but the English is not a translation on any of the four pages: speaker labels become nonsense words and the key lines (Tsunemasa's ghost, Zhuangzi's dream, the threat to the children) are invented over.",
+    "fit_to_show": "do_not_show",
+    "showcase_pages": [],
+    "reader_summary": "This is an Edo-period Kanze chanting book; the sampled pages come from Tsunemasa, Kochō and Torioibune. The Japanese transcription follows the cursive text closely, apart from notation marks read as digits and a few misread kana. The English cannot be trusted: on every sampled page it replaces the play's lines with invented phrases."
+  },
+  {
+    "book_id": "69e75ab9095c302d3fddefcf",
+    "slot": 22,
+    "title": "観世流謡本 (Kanze-ryū Utaibon), Vol. 3",
+    "tradition": "japanese",
+    "shelf_fit": "fits",
+    "shelf_note": "A Kanze chanting book; the sampled pages are from Yorimasa (頼政), Hachi no ki (鉢木) and Hagoromo (羽衣).",
+    "rights_flag": null,
+    "structure_note": "There are 167 page records against pages_count 112 (152 vs 108 translated), the same mismatch as Vol. 11a. Printed numbers are on only 9 pages, so the 4 backsteps and 4 repeats are most likely misread folio numerals.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 25,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "能々御謡共久し〽やうにおもしろき所にて郷",
+            "image": "よく〳〵御覧候へ ワキ げにかやうに面白き所にて候",
+            "problem": "'look closely' and the speaker change are garbled",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "早討 / 頃役 / 二丁 □□",
+            "image": "ワキ label, running title 頼政",
+            "problem": "labels misread as words",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "平等院",
+            "english": "Heike-in (a temple associated with the Heike clan)",
+            "problem": "Byōdō-in, where Yorimasa dies, is renamed, and a gloss is invented to fit the new name",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "(nothing on the page)",
+            "english": "It appears like the gate of the forbidden golden city. … This is my private Heike-in.",
+            "problem": "invented sentences",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "扇のことく取残されて候は何と",
+            "english": "That folding fan, the kokuen (dark edge), proceeding with the affair",
+            "problem": "The question about the fan-shaped lawn (扇の芝) is garbled, and 'kokuen' is invented",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 40,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ぜ生の種の縁",
+            "image": "他生の種の縁",
+            "problem": "他生 (former life) misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "帰るとてうけにけり",
+            "image": "帰るとてうせにけり",
+            "problem": "せ read as け",
+            "severity": "minor"
+          },
+          {
+            "ocr": "東正 / 一月",
+            "image": "notation and running header",
+            "problem": "junk header",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "たまへ御僧よ",
+            "english": "The priest from the temple looks around.",
+            "problem": "The ghost's plea to the priest ('[pray for me], O priest') becomes a stage direction",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "扇の芝の草の陰に。帰るとてうせにけり 立帰るとてうせにけり",
+            "english": "Hearing that one returns to the shade of the leaves of the grass. The path of my own life is indeed strange.",
+            "problem": "The ghost's vanishing into the Fan Lawn ends the first act; it is dropped, and a closing line is invented",
+            "severity": "serious",
+            "class": "T9"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 79,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "一てつないて",
+            "image": "一疋つないで",
+            "problem": "the counter 疋 (one horse) is lost",
+            "severity": "minor"
+          },
+          {
+            "ocr": "十一月廿一日 … 伊来",
+            "image": "no date on the page",
+            "problem": "a date invented as a header",
+            "severity": "moderate",
+            "class": "O7"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "是は只今にてもあれ。鎌倉に御大事あらは",
+            "english": "(absent)",
+            "problem": "The 'if there is trouble at Kamakura' clause, the core of Hachi no ki's famous vow, is dropped",
+            "severity": "serious",
+            "class": "T9"
+          },
+          {
+            "source": "ちぎれたりとも此具足取て投かけ さびたりとも長刀を持 痩たりともあの馬に乗",
+            "english": "Discarding the equipment, throwing away the gear… he leans on it thin and exhausted",
+            "problem": "'Though torn, I will throw on this armour; though rusted, take up the halberd; though thin, ride that horse' is reversed into discarding the gear",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "馬をも一疋つないで持て候",
+            "english": "Saying it is a horse that cannot be touched… The armor is gold",
+            "problem": "invented",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 101,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "霞たつぶら路まとひて",
+            "image": "霞たつ雲路まどひて",
+            "problem": "雲路 (cloud road) misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "頻伽の所々し。し入し今さらに",
+            "image": "頻伽の馴れ馴れし声今更に",
+            "problem": "'familiar voice' garbled",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "雁入みの帰り行",
+            "image": "雁がねの帰り行",
+            "problem": "雁がね misread",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "十一月十一日 … 月文",
+            "image": "no date on the page",
+            "problem": "an invented date header",
+            "severity": "moderate",
+            "class": "O7"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "目の前にみえて浅ましや〽天の原ふりさけ見れば。霞たつ雲路まどひてゆくへしらすも",
+            "english": "Looking to the front, I wait. From the heavenly fields, It is clearly visible, pulling the path along.",
+            "problem": "The angel's lament ('gazing up at the plain of heaven, the cloud road lost in mist, I know not the way') is reversed to 'clearly visible'",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "住馴し空にいつしか行雲の羨ましき気色かな 迦陵頻伽の…雁がねの帰り行天路を聞けばなつかしや",
+            "english": "I do not know where I live… Hearing of the bay of passing clouds, There is trust, I stop by for a moment.",
+            "problem": "The envy of the passing clouds, the kalavinka and the returning geese are lost; the lines are invented",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The images are right and the cursive transcription is mostly good, but the English invents or reverses the central lines of Yorimasa, Hachi no ki and Hagoromo and mistranslates Byōdō-in as 'Heike-in'.",
+    "fit_to_show": "do_not_show",
+    "showcase_pages": [],
+    "reader_summary": "This is an Edo-period Kanze chanting book holding Yorimasa, Hachi no ki and Hagoromo. The Japanese transcription is usable, with some misread kana and dates invented from notation marks. The English cannot be trusted: famous passages are dropped, reversed or replaced, and Byōdō-in becomes 'Heike-in'."
+  },
+  {
+    "book_id": "69e753d3095c302d3fddc43d",
+    "slot": 23,
+    "title": "観世流改訂謡本 (Kanze-ryū Noh Texts)",
+    "tradition": "japanese",
+    "shelf_fit": "fits",
+    "shelf_note": "A Kanze revised chanting book of the play Tamura (田村), from the University of Illinois. 'Zeami' as author is conventional for Tamura, and 1912 fits a revised Kanze edition.",
+    "rights_flag": null,
+    "structure_note": "28 records for 28 pages, consistent. The single backstep and repeat are probably misread printed numerals. Page 3 is the play's title page with a modern library due-date slip pasted over the centre of the text.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 3,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "敷も長門よめぐる月の霞にむすび其方",
+            "image": "数も長閑にめぐる日の霞む其方 (partly under the slip)",
+            "problem": "長閑 (calm) read as the place name 長門 (Nagato), and 日 read as 月",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "霞もさやに波生ひおろして春の空",
+            "image": "風もさやに…生あらそれ春の空 (partly obscured)",
+            "problem": "line partly guessed",
+            "severity": "moderate",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "敷も長門よめぐる月の霞",
+            "english": "Even the path to Nagato is shrouded in the mist of the moon",
+            "problem": "a place, Nagato, that is not in the text, carried over from the misread",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "ワキ 僧 / シテ 田村丸 前ハ童子",
+            "english": "Monk, Tamura-maru (in his former state as a child)",
+            "problem": "the waki (monk) and shite (Tamura-maru, a boy in the first half) roles are merged into one table row",
+            "severity": "moderate"
+          },
+          {
+            "source": "口付 (left-margin running title 田村)",
+            "english": "Oral Instruction",
+            "problem": "the running title is misread and rendered as a word",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The University of Illinois due-date slip is transcribed in full into the reader text as an <insert>",
+            "severity": "minor",
+            "class": "O13"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 13,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "上見ぬ貌鳥の尾の寺",
+            "image": "上見ぬ鷲の尾の寺 (furigana ワシ)",
+            "problem": "Washi-no-o, the temple name, is misread as 貌鳥",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "やがて法性坊へ音羽の山に日影にうつる",
+            "image": "や。御覧候へ音羽の山の嶺よりも",
+            "problem": "'look, from the peak of Mt Otowa' is misread and a 'Hōshō-bō' is invented",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "いらハらゐていふぞ / 入相の聞えいふにハあらぬ様にていふぞ",
+            "image": "いかなる所にて候ぞ / 入相の聞え候はいかなる御寺にて候ぞ",
+            "problem": "the waki's questions are garbled",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "早 (speaker label)",
+            "image": "ワキ",
+            "problem": "speaker label misread; <gloss>シテ</gloss> tags scattered mid-line",
+            "severity": "moderate",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "あれは上見ぬ鷲の尾の寺",
+            "english": "'Ah, the cuckoo does not look up.' … at the temple of the tail",
+            "problem": "The temple Washi-no-o (Eagle's Tail) becomes a cuckoo and 'temple of the tail'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "(misread line)",
+            "english": "Immediately, it reaches Hōshō-bō.",
+            "problem": "invented place",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "ワキ (speaker label)",
+            "english": "Early:",
+            "problem": "the speaker label is translated as a word",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 15,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "あけぼのの露も。わづかに光の。透きとほりて散るや",
+            "image": "洩る月の雪も降る夜嵐の誘ふ花とつれて散るや",
+            "problem": "A whole clause is replaced by a plausible-sounding invention: 'moonlight leaking like falling snow, petals swept by the night storm'",
+            "severity": "serious",
+            "class": "O8"
+          },
+          {
+            "ocr": "さすがにおぼろげの夜は。春の宝げよ",
+            "image": "さぞな名にしおふ花の都の春の空げに",
+            "problem": "'the spring sky of the famed Capital of Flowers' is misread",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "あら。たへなるや。地を権現",
+            "image": "ありがたや地主権現",
+            "problem": "Jishu Gongen, the Kiyomizu shrine deity, is lost",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "<gloss>中</gloss><gloss>甲</gloss><gloss>元</gloss>… on every kana",
+            "image": "vocal notation beside the text",
+            "problem": "notation stuffed into per-character <gloss> tags, cluttering the reader text",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "(image) 洩る月の雪も降る夜嵐の誘ふ花とつれて散る",
+            "english": "the dew drops from the light. It shines through and scatters",
+            "problem": "translation carries the OCR's invented clause",
+            "severity": "serious",
+            "class": "O8"
+          },
+          {
+            "source": "(image) 花の都の春の空",
+            "english": "the hazy night is the treasure of spring",
+            "problem": "carried misread",
+            "severity": "serious",
+            "class": "O6"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 23,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "ふなこに。元に。行に。",
+            "image": "vocal-notation marks",
+            "problem": "notation read as a line of text",
+            "severity": "moderate",
+            "class": "O11"
+          },
+          {
+            "ocr": "其数によまじらじ",
+            "image": "共に数々…(meaning: surpassing in number)",
+            "problem": "garbled",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ふなこに。元に。行に。",
+            "english": "In the boat. In the origin. In the practice.",
+            "problem": "notation junk translated as an opening line",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      }
+    ],
+    "book_verdict": "The right images of a revised Tamura, but the cursive transcription invents or misreads place names and whole clauses (Nagato, Hōshō-bō, and the cherry-blossom passage on p.15), and the English faithfully carries those inventions.",
+    "fit_to_show": "do_not_show",
+    "showcase_pages": [],
+    "reader_summary": "This is a revised Kanze chanting book of the play Tamura, set at Kiyomizu temple. The transcription is the right text but with serious misreadings: several clauses and place names are replaced by plausible inventions, and the notation is stuffed into the text as tags. The English follows that flawed transcription, so it cannot be trusted line by line."
+  },
+  {
+    "book_id": "69dfede38d34461cbe7f4db6",
+    "slot": 24,
+    "title": "Genji Monogatari Ekotoba (源氏物語絵詞), Vol. 1",
+    "tradition": "japanese",
+    "shelf_fit": "fits",
+    "shelf_note": "An illustrated Genji handscroll at the National Diet Library (target label: 『源氏物語絵巻』 請求記号 ん-98).",
+    "rights_flag": null,
+    "structure_note": "19 records for 19 frames, consistent. The catalogue is wrong: 'published 1100' and the title 'Ekotoba' do not match the object. NDL labels it 源氏物語絵巻 ん-98, and the painting style and the Meiji/Taishō accession stamps point to a later copy, not a Heian original (I7).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 4,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "のみらになむはつりける念すもたい / □□して覚しおくれさす□つたう",
+            "image": "のみちになむまつりける念しも… / して思ひたくれはまたはやう (cursive over gold dust; reading uncertain)",
+            "problem": "several kana misread or replaced with placeholder boxes",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "のみちになむまつりける念しも…",
+            "english": "Not only this, but after a short while, he soon pays a visit (original: \"otozure\")",
+            "problem": "The sentence is not a translation of the transcribed lines, and the 'original: otozure' note quotes a word that is not on the page",
+            "severity": "serious",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "The stamp descriptions (red seal, purple oval stamps, small stamp at upper right) are accurate",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 8,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "みやは女きみの",
+            "image": "みやも女きみの",
+            "problem": "particle misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "□□ / □□ / □ / □□□",
+            "image": "nothing; the painting area",
+            "problem": "placeholder lines",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "みやも女きみのおほむありさまひる見きこえさせたまふにいとゝ御こゝろざしまさりにけり",
+            "english": "The Prince also speaks of the mother's disposition; observing her with such pity, the depth of the barrier between them is truly...",
+            "problem": "'The Prince, seeing the young lady by daylight, grew all the more devoted' becomes 'mother', 'pity' and 'barrier'; the sense is reversed and the person wrong",
+            "severity": "serious",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 11,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "二十 / おし / □ / 同",
+            "image": "not text",
+            "problem": "junk lines",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "きみき丁のつまより脇息におりゐてなやみたまへる…いとみまほしくらうたげなり あきはつるのゝけしき…",
+            "english": "It is troublesome and regrettable. The amorous affairs of the palace, the evening meetings, and the morning heart are all quite clear…",
+            "problem": "The lady leaning on her armrest at the edge of the curtain, lovely to see, and the late-autumn fields and wind are replaced by invented generic 'court romance' sentences",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "A closing <note> gives the model's guess ('appears to be a fragmented or stylized rendering of common Heian-period poetic tropes… likely serving as a caption'), invented scholarship shown to the reader",
+            "severity": "serious",
+            "class": "T10"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 17,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "あまりほとふるあまはゝきかなゝ",
+            "image": "あまりほとふるあまそゝきかな",
+            "problem": "the last word of the poem (雨そそき) is misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "如し□□□れにていかなる",
+            "image": "first line partly unread",
+            "problem": "placeholders",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "さしとむるむくらやしけきあつまやのあまりほとふるあまそゝきかな (and the surrounding Azumaya prose)",
+            "english": "The edge of the fire-starter, / The edge of the mouth. / … Thinking only of the path of the father.",
+            "problem": "The whole page, including Kaoru's well-known Azumaya poem, is replaced by invented free verse",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "<summary>/<keywords> stored in the translation text, describing the invented content",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A fine NDL Genji handscroll with a largely correct transcription, but the English on every sampled page is unrelated to the Japanese, including the Azumaya poem, and the catalogue gives a Heian date to what the holding library labels a later 絵巻.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      8
+    ],
+    "reader_summary": "This is an illustrated Genji handscroll from the National Diet Library (label ん-98), catalogued with an impossible date of 1100. The cursive text is transcribed reasonably well, and the painting descriptions are accurate. The English does not translate the text on any sampled page, so show the images and the transcription only, not the translation."
+  }
+]

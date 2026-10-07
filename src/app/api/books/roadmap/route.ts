@@ -1,3 +1,4 @@
+import { withAuth } from '@/lib/auth-helpers';
 import { NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
 import { getDb } from '@/lib/mongodb';
@@ -985,7 +986,7 @@ export async function GET() {
 }
 
 // POST /api/books/roadmap - Add all roadmap books to database
-export async function POST() {
+async function handlePOST() {
   try {
     const db = await getDb();
 
@@ -1068,3 +1069,6 @@ export async function POST() {
     return NextResponse.json({ error: 'Failed to add roadmap books' }, { status: 500 });
   }
 }
+
+// Admin only (#6032): bulk-creates books and had no auth at all.
+export const POST = withAuth(async () => handlePOST(), { minRole: 'admin' });

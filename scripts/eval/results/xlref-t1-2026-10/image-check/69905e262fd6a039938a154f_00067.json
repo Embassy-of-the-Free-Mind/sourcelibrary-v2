@@ -1,0 +1,20 @@
+{
+ "id": "69905e262fd6a039938a154f_00067",
+ "image_legible": true,
+ "ocr_word_errors": 0,
+ "ocr_words_approx": 170,
+ "ocr_errors": [],
+ "page_cause": "none",
+ "causes": [
+  {
+   "finding": "No defects reported for served English (fidelity 5/5)",
+   "cause": "none",
+   "image": "Mutato enim Tempore mutant & nomina",
+   "ocr": "Mutato enim Tempore mutant & nomina",
+   "english": "For with the changing of the Time, the names also change"
+  }
+ ],
+ "share_of_served_error_from_ocr": "none",
+ "fixed_transcription_written": false,
+ "note": "OCR matches the image; its only quirk is writing long s as 'f' throughout (diftent, fcribe, figillum), which changes no word and did not affect the English. Page ends 'scri-' with catchword 'batur', which the OCR joins as 'fcribatur'."
+}

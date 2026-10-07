@@ -14,6 +14,7 @@ import { getEffectiveByline } from '@/lib/byline';
 import HighlightedText from './HighlightedText';
 import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
 import { useLocalePath, canonicalPath } from '@/lib/i18n';
+import { useIsEmbedded } from '@/hooks/useEmbedContext';
 
 const TYPE_ICONS: Record<string, typeof Lightbulb> = {
   concept: Lightbulb,
@@ -108,6 +109,9 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
   const lp = useLocalePath();
   const pathParts = canonicalPath(pathname).split('/').filter(Boolean);
   const tenantPrefix = pathParts[0] && pathParts[0] !== 'search' ? `/${pathParts[0]}` : '';
+  // The Librarian is refused on partner hosts (tenant-global-paths), so the
+  // typeahead must not offer it there.
+  const isTenantSurface = useIsEmbedded();
 
   // Preload vocabulary on first focus
   const handleFocus = useCallback(() => {
@@ -548,6 +552,7 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
                         </Link>
                       );
                     })}
+                    {!isTenantSurface && (
                     <Link
                       href={`/librarian?q=${encodeURIComponent(query)}`}
                       onClick={() => setIsOpen(false)}
@@ -556,6 +561,7 @@ export default function UnifiedSearch({ dropdownPosition = 'top' }: UnifiedSearc
                       <MessageCircle className="w-3.5 h-3.5" />
                       Ask the Librarian about this
                     </Link>
+                    )}
                   </div>
                 );
               })()}

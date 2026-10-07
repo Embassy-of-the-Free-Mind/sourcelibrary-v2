@@ -1,0 +1,36 @@
+{
+  "note": "By-eye clusters for #5888. Membership is explicit `entities._id`s read on 2026-10-05 — never a pattern. `exclude` records look similar and are NOT the same person; they are listed so the planner can show they were considered.",
+  "clusters": [
+    {
+      "key": "drebbel",
+      "person": "Cornelis Drebbel (1572–1633), Wikidata Q365463",
+      "members": [
+        "69526160c263a0240a48e216", "69a861eac2a664615ef0dccf", "69c86acdca7b699a3fed00d4",
+        "69526165c263a0240a48e21c", "695292b7c263a0240a48f03b", "699cd3d8fb05b02a153bc74b",
+        "69a85adcc2a664615ef0db17", "69a88f88c2a664615ef0f294", "69c86acdca7b699a3fed0104",
+        "69c91924ca7b699a3fed5b97", "69d409d8db508d94b5a1bc93", "69d409d9db508d94b5a1bc9b",
+        "69d409d9db508d94b5a1bcde", "69d409d9db508d94b5a1bce1", "69e248e53df447ba499ca767",
+        "69e353253df447ba499cc48a", "69e4c4703df447ba499d2251", "69f7bad19363337b70490700",
+        "6ac28e92e080f5f2766611db", "6ac31b37e080f5f276662669"
+      ],
+      "exclude": [
+        { "_id": "69c90b7bca7b699a3fed5353", "name": "Michiel Drebberts", "why": "a different person" },
+        { "_id": "69d05b93dd0c42d5acaebad5", "name": "Drebler", "why": "a different surname; not checked against its page" },
+        { "_id": "6a23d3736b79207d17ec84a3", "name": "Brahmin Drebo Zang", "why": "Tibetan name, unrelated" }
+      ]
+    },
+    {
+      "key": "kuffler",
+      "person": "Küffler / Kuffler as a bare surname (Drebbel's sons-in-law; the pages do not say which brother)",
+      "members": [
+        "69d9ce6c719415c98bbfc77b", "69cafd05b27dddf140855934", "69954673fb05b02a153a630b",
+        "69d64042dd0c42d5acb05c17", "69953e92fb05b02a153a4ea2", "69f58ac09363337b704865eb",
+        "6a0155babe073f4e8fa0c1d2"
+      ],
+      "exclude": [
+        { "_id": "6ac31b37e080f5f27666261e", "name": "Johannes Sibertus Kufler", "why": "a named individual (1595–1677); the bare-surname record must not absorb him" },
+        { "_id": "6ac31b37e080f5f27666261f", "name": "Abraham Kufler", "why": "a named individual (1598–1657), his brother" }
+      ]
+    }
+  ]
+}

@@ -26,14 +26,14 @@ import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
 import { isTrivialGalleryDetection } from '../lib/gallery-image-types.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
-import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON } from '../lib/translate-core.mjs';
+import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, STRAY_SCRIPT_REASON, guardTranslationText } from '../lib/translate-core.mjs';
 import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
 
 /** Provenance identity of this collector (#4613): recorded on every page it writes as `run.collected_by`. */
 const COLLECTOR_CALL_SITE = 'scripts/workers/batch-collector.mjs';
 import { shouldRefuseOcrWrite, recordRefusal, guardEnabled } from '../lib/blank-page-guard.mjs';
 import { loopVerdict, recordLoopRefusal, guardEnabled as loopGuardEnabled } from '../lib/ocr-loop-guard.mjs';
-import { isTruncatedCandidate, truncationFailReason } from '../lib/truncated-response.mjs';
+import { isTruncatedCandidate, truncationFailReason, candidateText } from '../lib/truncated-response.mjs';
 import { repairTexGreek, texGreekRepairEnabled } from '../lib/tex-greek.mjs';
 import { liftOcrTags, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
@@ -330,7 +330,7 @@ async function processOneJob(db, job) {
         if (r.error) { failCount++; noteFail(`error:${String(r.error?.status || r.error?.code || r.error).slice(0, 60)}`); continue; }
         const candidate = r.response?.candidates?.[0];
         if (candidate?.finishReason === 'RECITATION') { recitationCount++; failCount++; noteFail('RECITATION'); continue; }
-        const text = candidate?.content?.parts?.[0]?.text;
+        const text = candidateText(candidate);
         if (!text) { failCount++; noteFail(`no-text:${candidate?.finishReason || 'no-candidate'}`); continue; }
         const parsed = parseMultiPageOcr(text, { lenient: true });
         // A truncated generation cuts the LAST page mid-word; every page before
@@ -381,7 +381,7 @@ async function processOneJob(db, job) {
           const reason = `error:${String(r.error?.status || r.error?.code || r.error).slice(0, 60)}`;
           failCount++; noteFail(reason); failedPageIds.set(pageId, reason); continue;
         }
-        const text = candidate?.content?.parts?.[0]?.text;
+        const text = candidateText(candidate);
         if (!text) {
           const reason = `no-text:${candidate?.finishReason || 'no-candidate'}`;
           failCount++; noteFail(reason); failedPageIds.set(pageId, reason); continue;
@@ -557,7 +557,8 @@ async function processOneJob(db, job) {
       for (const r of pageResults) r.text = foldLongS(r.text);
     }
 
-    for (const { pageId, text, usage } of pageResults) {
+    for (const { pageId, text: resultText, usage } of pageResults) {
+      let text = resultText;
       if (staleDropPages?.has(pageId)) { continue; } // generation guard (#2449)
       if (humanEditedIds.has(pageId)) {
         console.log(`  PROTECTED: page ${pageId} has a human-edited ${job.type === 'ocr' ? 'ocr' : 'translation'} — skipping (#3749)`);
@@ -768,6 +769,11 @@ async function processOneJob(db, job) {
           failCount++; noteFail(HIDDEN_META_REASON); failedPageIds.set(pageId, HIDDEN_META_REASON);
           continue;
         }
+        // #5734: Korean 그-for-"that" repaired; any other script in the English that is in neither
+        // the source nor the book's language (outside note/term/gloss…) is refused the same way.
+        const stray = await strayScriptGate(db, { id: pageId, book_id: job.book_id }, text, { language: job.language, jobId: jobIdStr, model: job.model, dryRun: DRY_RUN });
+        if (stray.refused) { failCount++; noteFail(STRAY_SCRIPT_REASON); failedPageIds.set(pageId, STRAY_SCRIPT_REASON); continue; }
+        text = guardTranslationText(stray.text); // #5902: term definitions → <note>
         bulkOps.push({
           updateOne: {
             filter: { id: pageId },

@@ -1,0 +1,1664 @@
+{
+ "issue": 5983,
+ "generated_by": "scripts/eval/build-translation-pareto.mjs",
+ "measure": "fidelity: mean score 1–5 from blind Opus judges reading the English beside a published human translation of the same passage, on pages every engine in the panel translated. Model-judged, not human-scored; not accuracy.",
+ "ring": "reversed statements: pages where either judge quoted a statement the English reverses, per 100 pages",
+ "production_rule": "the engine scripts/lib/translate-core.mjs getTranslateModelForBook assigns to new pages in the language",
+ "batch_over_realtime": 0.5,
+ "sources": [
+  {
+   "track": "T1",
+   "writeup": "scripts/eval/experiments/2026-10-03-xlref-t1-latin-vs-reference-5695.md"
+  },
+  {
+   "track": "T2",
+   "writeup": "scripts/eval/experiments/2026-10-03-greek-served-english-vs-published-translations-5695-t2.md"
+  },
+  {
+   "track": "T3",
+   "writeup": "scripts/eval/experiments/2026-10-03-translation-vs-reference-vernaculars-t3-5695.md"
+  },
+  {
+   "track": "T4",
+   "writeup": "scripts/eval/experiments/2026-10-03-translation-vs-reference-t4-hebrew-arabic-persian-5695.md"
+  },
+  {
+   "track": "T5",
+   "writeup": "scripts/eval/experiments/2026-10-03-xlref-t5-sanskrit-pali-chinese-vs-reference.md"
+  },
+  {
+   "track": "Tib",
+   "writeup": "scripts/eval/experiments/2026-10-03-tengyur-quality-arms-5497.md"
+  }
+ ],
+ "charts": [
+  {
+   "id": "latin",
+   "title": "Latin",
+   "production_engine": "gemini-3.1-flash-lite",
+   "production_label": "Gemini 3.1 Flash-Lite",
+   "panels": [
+    {
+     "kind": "most-pages",
+     "n_pages": 71,
+     "n_books": 71,
+     "frontier": false,
+     "frontier_note": "too few for a frontier: 2 engines with a measured cost on these pages",
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "T1",
+       "reference": "a published English translation of the same passage",
+       "pages": 71,
+       "date": "2026-10-03"
+      }
+     ],
+     "date": "2026-10-03",
+     "files": [
+      "scripts/eval/experiments/2026-10-03-xlref-t1-latin-vs-reference-5695.md"
+     ],
+     "notes": [],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "fidelity": 4.077,
+       "fidelity_ci95": [
+        3.908,
+        4.239
+       ],
+       "share_ge4": 0.789,
+       "reversals": {
+        "pages": 8,
+        "n": 71,
+        "per_100": 11.3,
+        "ci95": [
+         5.8,
+         20.7
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.984,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; averaged over these 71 pages",
+        "source": "scripts/eval/experiments/2026-10-03-xlref-t1-latin-vs-reference-5695.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": false,
+       "fidelity": 4.296,
+       "fidelity_ci95": [
+        4.148,
+        4.437
+       ],
+       "share_ge4": 0.887,
+       "reversals": {
+        "pages": 5,
+        "n": 71,
+        "per_100": 7,
+        "ci95": [
+         3,
+         15.4
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.862,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; averaged over these 71 pages",
+        "source": "scripts/eval/experiments/2026-10-03-xlref-t1-latin-vs-reference-5695.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": []
+    }
+   ],
+   "not_on_shared_pages": [
+    {
+     "engine": "Gemini 3 Flash, thinking on",
+     "label": "Gemini 3 Flash, thinking on",
+     "pages": 71,
+     "why": "the thinking budget billed no thinking tokens, so it is a second plain Flash run"
+    },
+    {
+     "engine": "Claude Opus",
+     "label": "Claude Opus",
+     "pages": 20,
+     "why": "judged in a separate read, without the engine in use beside it"
+    },
+    {
+     "engine": "Gemini 3 Flash, dynamic thinking",
+     "label": "Gemini 3 Flash, dynamic thinking",
+     "pages": 71,
+     "why": "judged in a separate read, without the engine in use beside it"
+    }
+   ],
+   "not_tested": [
+    "Gemini 3.1 Pro (as the translator)",
+    "Claude through the metered API",
+    "GPT"
+   ]
+  },
+  {
+   "id": "greek",
+   "title": "Greek",
+   "production_engine": "gemini-3-flash-preview",
+   "production_label": "Gemini 3 Flash",
+   "panels": [
+    {
+     "kind": "most-pages",
+     "n_pages": 75,
+     "n_books": 75,
+     "frontier": false,
+     "frontier_note": "too few for a frontier: 2 engines with a measured cost on these pages",
+     "judges": 1,
+     "references": [
+      {
+       "stratum": "T2",
+       "reference": "a published English translation of the same passage",
+       "pages": 75,
+       "date": "2026-10-03"
+      }
+     ],
+     "date": "2026-10-03",
+     "files": [
+      "scripts/eval/experiments/2026-10-03-greek-served-english-vs-published-translations-5695-t2.md"
+     ],
+     "notes": [
+      "On 26 of these pages every engine was judged against a corrected transcription, that is, for fidelity to the page"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": false,
+       "fidelity": 3.373,
+       "fidelity_ci95": [
+        3.12,
+        3.613
+       ],
+       "share_ge4": 0.56,
+       "reversals": {
+        "pages": 12,
+        "n": 75,
+        "per_100": 16,
+        "ci95": [
+         9.4,
+         25.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.923,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; averaged over these 75 pages",
+        "source": "scripts/eval/experiments/2026-10-03-greek-served-english-vs-published-translations-5695-t2.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 3.693,
+       "fidelity_ci95": [
+        3.427,
+        3.96
+       ],
+       "share_ge4": 0.707,
+       "reversals": {
+        "pages": 12,
+        "n": 75,
+        "per_100": 16,
+        "ci95": [
+         9.4,
+         25.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.958,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; averaged over these 75 pages",
+        "source": "scripts/eval/experiments/2026-10-03-greek-served-english-vs-published-translations-5695-t2.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-opus",
+       "label": "Claude Opus",
+       "production": false,
+       "fidelity": 4,
+       "fidelity_ci95": [
+        3,
+        4.9
+       ],
+       "share_ge4": 0.8,
+       "reversals": {
+        "pages": 0,
+        "n": 10,
+        "per_100": 0,
+        "ci95": [
+         0,
+         27.8
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 10,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 3.6
+       },
+       "note": "run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
+    }
+   ],
+   "not_on_shared_pages": [],
+   "not_tested": [
+    "Gemini 3.1 Pro (as the translator)",
+    "Claude through the metered API",
+    "GPT"
+   ]
+  },
+  {
+   "id": "german",
+   "title": "German",
+   "production_engine": "gemini-3.1-flash-lite",
+   "production_label": "Gemini 3.1 Flash-Lite",
+   "panels": [
+    {
+     "kind": "most-pages",
+     "n_pages": 22,
+     "n_books": 22,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "T3",
+       "reference": "a published English translation of the same passage",
+       "pages": 22,
+       "date": "2026-10-03"
+      }
+     ],
+     "date": "2026-10-03",
+     "files": [
+      "scripts/eval/experiments/2026-10-03-translation-vs-reference-vernaculars-t3-5695.md"
+     ],
+     "notes": [],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "fidelity": 4.25,
+       "fidelity_ci95": [
+        4.023,
+        4.455
+       ],
+       "share_ge4": 0.909,
+       "reversals": {
+        "pages": 2,
+        "n": 22,
+        "per_100": 9.1,
+        "ci95": [
+         2.5,
+         27.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.656,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; averaged over these 22 pages",
+        "source": "scripts/eval/experiments/2026-10-03-translation-vs-reference-vernaculars-t3-5695.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": false,
+       "fidelity": 4.636,
+       "fidelity_ci95": [
+        4.432,
+        4.818
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 22,
+        "per_100": 0,
+        "ci95": [
+         0,
+         14.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.357,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; averaged over these 22 pages",
+        "source": "scripts/eval/experiments/2026-10-03-translation-vs-reference-vernaculars-t3-5695.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview+thinking",
+       "label": "Gemini 3 Flash, thinking on",
+       "production": false,
+       "fidelity": 4.636,
+       "fidelity_ci95": [
+        4.432,
+        4.818
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 22,
+        "per_100": 0,
+        "ci95": [
+         0,
+         14.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 5.126,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, 2,464 thinking tokens per page; averaged over these 22 pages",
+        "source": "scripts/eval/experiments/2026-10-03-translation-vs-reference-vernaculars-t3-5695.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-opus",
+       "label": "Claude Opus",
+       "production": false,
+       "fidelity": 5,
+       "fidelity_ci95": [
+        5,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 7,
+        "per_100": 0,
+        "ci95": [
+         0,
+         35.4
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 7,
+        "production_label": "Gemini 3.1 Flash-Lite",
+        "production_fidelity": 4.5
+       },
+       "note": "run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
+    }
+   ],
+   "not_on_shared_pages": [],
+   "not_tested": [
+    "Gemini 3.1 Pro (as the translator)",
+    "Claude through the metered API",
+    "GPT"
+   ]
+  },
+  {
+   "id": "french",
+   "title": "French",
+   "production_engine": "gemini-3.1-flash-lite",
+   "production_label": "Gemini 3.1 Flash-Lite",
+   "panels": [
+    {
+     "kind": "most-pages",
+     "n_pages": 14,
+     "n_books": 14,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "T3",
+       "reference": "a published English translation of the same passage",
+       "pages": 14,
+       "date": "2026-10-03"
+      }
+     ],
+     "date": "2026-10-03",
+     "files": [
+      "scripts/eval/experiments/2026-10-03-translation-vs-reference-vernaculars-t3-5695.md"
+     ],
+     "notes": [],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "fidelity": 4.893,
+       "fidelity_ci95": [
+        4.714,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 14,
+        "per_100": 0,
+        "ci95": [
+         0,
+         21.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.662,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; averaged over these 14 pages",
+        "source": "scripts/eval/experiments/2026-10-03-translation-vs-reference-vernaculars-t3-5695.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": false,
+       "fidelity": 4.714,
+       "fidelity_ci95": [
+        4.5,
+        4.929
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 14,
+        "per_100": 0,
+        "ci95": [
+         0,
+         21.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.386,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; averaged over these 14 pages",
+        "source": "scripts/eval/experiments/2026-10-03-translation-vs-reference-vernaculars-t3-5695.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview+thinking",
+       "label": "Gemini 3 Flash, thinking on",
+       "production": false,
+       "fidelity": 4.821,
+       "fidelity_ci95": [
+        4.643,
+        4.964
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 14,
+        "per_100": 0,
+        "ci95": [
+         0,
+         21.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 5.06,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, 2,393 thinking tokens per page; averaged over these 14 pages",
+        "source": "scripts/eval/experiments/2026-10-03-translation-vs-reference-vernaculars-t3-5695.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-opus",
+       "label": "Claude Opus",
+       "production": false,
+       "fidelity": 5,
+       "fidelity_ci95": [
+        5,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 5,
+        "per_100": 0,
+        "ci95": [
+         0,
+         43.4
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 5,
+        "production_label": "Gemini 3.1 Flash-Lite",
+        "production_fidelity": 5
+       },
+       "note": "run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
+    }
+   ],
+   "not_on_shared_pages": [],
+   "not_tested": [
+    "Gemini 3.1 Pro (as the translator)",
+    "Claude through the metered API",
+    "GPT"
+   ]
+  },
+  {
+   "id": "italian",
+   "title": "Italian",
+   "production_engine": "gemini-3.1-flash-lite",
+   "production_label": "Gemini 3.1 Flash-Lite",
+   "panels": [
+    {
+     "kind": "most-pages",
+     "n_pages": 10,
+     "n_books": 10,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "T3",
+       "reference": "a published English translation of the same passage",
+       "pages": 10,
+       "date": "2026-10-03"
+      }
+     ],
+     "date": "2026-10-03",
+     "files": [
+      "scripts/eval/experiments/2026-10-03-translation-vs-reference-vernaculars-t3-5695.md"
+     ],
+     "notes": [],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "fidelity": 4.05,
+       "fidelity_ci95": [
+        3.6,
+        4.5
+       ],
+       "share_ge4": 0.7,
+       "reversals": {
+        "pages": 3,
+        "n": 10,
+        "per_100": 30,
+        "ci95": [
+         10.8,
+         60.3
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.748,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; averaged over these 10 pages",
+        "source": "scripts/eval/experiments/2026-10-03-translation-vs-reference-vernaculars-t3-5695.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": false,
+       "fidelity": 4.4,
+       "fidelity_ci95": [
+        3.9,
+        4.85
+       ],
+       "share_ge4": 0.8,
+       "reversals": {
+        "pages": 2,
+        "n": 10,
+        "per_100": 20,
+        "ci95": [
+         5.7,
+         51
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.559,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; averaged over these 10 pages",
+        "source": "scripts/eval/experiments/2026-10-03-translation-vs-reference-vernaculars-t3-5695.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview+thinking",
+       "label": "Gemini 3 Flash, thinking on",
+       "production": false,
+       "fidelity": 4.6,
+       "fidelity_ci95": [
+        4.2,
+        4.9
+       ],
+       "share_ge4": 0.9,
+       "reversals": {
+        "pages": 1,
+        "n": 10,
+        "per_100": 10,
+        "ci95": [
+         1.8,
+         40.4
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 5.554,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, 2,593 thinking tokens per page; averaged over these 10 pages",
+        "source": "scripts/eval/experiments/2026-10-03-translation-vs-reference-vernaculars-t3-5695.md"
+       },
+       "on_frontier": true
+      }
+     ],
+     "no_cost": []
+    }
+   ],
+   "not_on_shared_pages": [
+    {
+     "engine": "Claude Opus",
+     "label": "Claude Opus",
+     "pages": 4,
+     "why": "too few pages to compare"
+    }
+   ],
+   "not_tested": [
+    "Gemini 3.1 Pro (as the translator)",
+    "Claude through the metered API",
+    "GPT"
+   ]
+  },
+  {
+   "id": "hebrew",
+   "title": "Hebrew",
+   "production_engine": "gemini-3-flash-preview",
+   "production_label": "Gemini 3 Flash",
+   "panels": [
+    {
+     "kind": "most-pages",
+     "n_pages": 15,
+     "n_books": 15,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "T4",
+       "reference": "a published English translation of the same passage",
+       "pages": 15,
+       "date": "2026-10-03"
+      }
+     ],
+     "date": "2026-10-03",
+     "files": [
+      "scripts/eval/experiments/2026-10-03-translation-vs-reference-t4-hebrew-arabic-persian-5695.md"
+     ],
+     "notes": [],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": false,
+       "fidelity": 3.6,
+       "fidelity_ci95": [
+        3.2,
+        4
+       ],
+       "share_ge4": 0.533,
+       "reversals": {
+        "pages": 1,
+        "n": 15,
+        "per_100": 6.7,
+        "ci95": [
+         1.2,
+         29.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.865,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; averaged over these 15 pages",
+        "source": "scripts/eval/experiments/2026-10-03-translation-vs-reference-t4-hebrew-arabic-persian-5695.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.2,
+       "fidelity_ci95": [
+        3.733,
+        4.6
+       ],
+       "share_ge4": 0.733,
+       "reversals": {
+        "pages": 0,
+        "n": 15,
+        "per_100": 0,
+        "ci95": [
+         0,
+         20.4
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.849,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; averaged over these 15 pages",
+        "source": "scripts/eval/experiments/2026-10-03-translation-vs-reference-t4-hebrew-arabic-persian-5695.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview+thinking",
+       "label": "Gemini 3 Flash, thinking on",
+       "production": false,
+       "fidelity": 3.933,
+       "fidelity_ci95": [
+        3.533,
+        4.3
+       ],
+       "share_ge4": 0.733,
+       "reversals": {
+        "pages": 2,
+        "n": 15,
+        "per_100": 13.3,
+        "ci95": [
+         3.7,
+         37.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 7.306,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, 2,860 thinking tokens per page; averaged over these 15 pages",
+        "source": "scripts/eval/experiments/2026-10-03-translation-vs-reference-t4-hebrew-arabic-persian-5695.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-opus",
+       "label": "Claude Opus",
+       "production": false,
+       "fidelity": 4.429,
+       "fidelity_ci95": [
+        3.857,
+        4.857
+       ],
+       "share_ge4": 0.857,
+       "reversals": {
+        "pages": 0,
+        "n": 7,
+        "per_100": 0,
+        "ci95": [
+         0,
+         35.4
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 7,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 4
+       },
+       "note": "run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
+    }
+   ],
+   "not_on_shared_pages": [],
+   "not_tested": [
+    "Gemini 3.1 Pro (as the translator)",
+    "Claude through the metered API",
+    "GPT"
+   ]
+  },
+  {
+   "id": "arabic",
+   "title": "Arabic",
+   "production_engine": "gemini-3-flash-preview",
+   "production_label": "Gemini 3 Flash",
+   "panels": [
+    {
+     "kind": "most-pages",
+     "n_pages": 20,
+     "n_books": 20,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "T4",
+       "reference": "a published English translation of the same passage",
+       "pages": 20,
+       "date": "2026-10-03"
+      }
+     ],
+     "date": "2026-10-03",
+     "files": [
+      "scripts/eval/experiments/2026-10-03-translation-vs-reference-t4-hebrew-arabic-persian-5695.md"
+     ],
+     "notes": [],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": false,
+       "fidelity": 3.675,
+       "fidelity_ci95": [
+        3.325,
+        4.025
+       ],
+       "share_ge4": 0.55,
+       "reversals": {
+        "pages": 1,
+        "n": 20,
+        "per_100": 5,
+        "ci95": [
+         0.9,
+         23.6
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.956,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; averaged over these 20 pages",
+        "source": "scripts/eval/experiments/2026-10-03-translation-vs-reference-t4-hebrew-arabic-persian-5695.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.1,
+       "fidelity_ci95": [
+        3.775,
+        4.4
+       ],
+       "share_ge4": 0.85,
+       "reversals": {
+        "pages": 1,
+        "n": 20,
+        "per_100": 5,
+        "ci95": [
+         0.9,
+         23.6
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.95,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; averaged over these 20 pages",
+        "source": "scripts/eval/experiments/2026-10-03-translation-vs-reference-t4-hebrew-arabic-persian-5695.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview+thinking",
+       "label": "Gemini 3 Flash, thinking on",
+       "production": false,
+       "fidelity": 4.225,
+       "fidelity_ci95": [
+        3.75,
+        4.625
+       ],
+       "share_ge4": 0.8,
+       "reversals": {
+        "pages": 3,
+        "n": 20,
+        "per_100": 15,
+        "ci95": [
+         5.2,
+         36
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 5.542,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, 2,344 thinking tokens per page; averaged over these 20 pages",
+        "source": "scripts/eval/experiments/2026-10-03-translation-vs-reference-t4-hebrew-arabic-persian-5695.md"
+       },
+       "on_frontier": true
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-opus",
+       "label": "Claude Opus",
+       "production": false,
+       "fidelity": 4.857,
+       "fidelity_ci95": [
+        4.571,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 7,
+        "per_100": 0,
+        "ci95": [
+         0,
+         35.4
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 7,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 4.143
+       },
+       "note": "run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
+    }
+   ],
+   "not_on_shared_pages": [],
+   "not_tested": [
+    "Gemini 3.1 Pro (as the translator)",
+    "Claude through the metered API",
+    "GPT"
+   ]
+  },
+  {
+   "id": "persian",
+   "title": "Persian",
+   "production_engine": "gemini-3-flash-preview",
+   "production_label": "Gemini 3 Flash",
+   "panels": [
+    {
+     "kind": "most-pages",
+     "n_pages": 12,
+     "n_books": 12,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "T4",
+       "reference": "a published English translation of the same passage",
+       "pages": 12,
+       "date": "2026-10-03"
+      }
+     ],
+     "date": "2026-10-03",
+     "files": [
+      "scripts/eval/experiments/2026-10-03-translation-vs-reference-t4-hebrew-arabic-persian-5695.md"
+     ],
+     "notes": [],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": false,
+       "fidelity": 3.042,
+       "fidelity_ci95": [
+        2.792,
+        3.333
+       ],
+       "share_ge4": 0.167,
+       "reversals": {
+        "pages": 4,
+        "n": 12,
+        "per_100": 33.3,
+        "ci95": [
+         13.8,
+         60.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.094,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; averaged over these 12 pages",
+        "source": "scripts/eval/experiments/2026-10-03-translation-vs-reference-t4-hebrew-arabic-persian-5695.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 3.667,
+       "fidelity_ci95": [
+        3.417,
+        3.917
+       ],
+       "share_ge4": 0.583,
+       "reversals": {
+        "pages": 1,
+        "n": 12,
+        "per_100": 8.3,
+        "ci95": [
+         1.5,
+         35.4
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.124,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; averaged over these 12 pages",
+        "source": "scripts/eval/experiments/2026-10-03-translation-vs-reference-t4-hebrew-arabic-persian-5695.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview+thinking",
+       "label": "Gemini 3 Flash, thinking on",
+       "production": false,
+       "fidelity": 3.708,
+       "fidelity_ci95": [
+        3.417,
+        3.958
+       ],
+       "share_ge4": 0.583,
+       "reversals": {
+        "pages": 1,
+        "n": 12,
+        "per_100": 8.3,
+        "ci95": [
+         1.5,
+         35.4
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 5.493,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, 2,145 thinking tokens per page; averaged over these 12 pages",
+        "source": "scripts/eval/experiments/2026-10-03-translation-vs-reference-t4-hebrew-arabic-persian-5695.md"
+       },
+       "on_frontier": true
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-opus",
+       "label": "Claude Opus",
+       "production": false,
+       "fidelity": 5,
+       "fidelity_ci95": [
+        5,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 5,
+        "per_100": 0,
+        "ci95": [
+         0,
+         43.4
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 5,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 3.4
+       },
+       "note": "run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
+    }
+   ],
+   "not_on_shared_pages": [],
+   "not_tested": [
+    "Gemini 3.1 Pro (as the translator)",
+    "Claude through the metered API",
+    "GPT"
+   ]
+  },
+  {
+   "id": "sanskrit",
+   "title": "Sanskrit",
+   "production_engine": "gemini-3-flash-preview",
+   "production_label": "Gemini 3 Flash",
+   "panels": [
+    {
+     "kind": "most-pages",
+     "n_pages": 28,
+     "n_books": 28,
+     "frontier": false,
+     "frontier_note": "too few for a frontier: 2 engines with a measured cost on these pages",
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "T5",
+       "reference": "a published English translation of the same passage",
+       "pages": 28,
+       "date": "2026-10-03"
+      }
+     ],
+     "date": "2026-10-03",
+     "files": [
+      "scripts/eval/experiments/2026-10-03-xlref-t5-sanskrit-pali-chinese-vs-reference.md"
+     ],
+     "notes": [],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": false,
+       "fidelity": 3.661,
+       "fidelity_ci95": [
+        3.375,
+        3.893
+       ],
+       "share_ge4": 0.643,
+       "reversals": {
+        "pages": 6,
+        "n": 28,
+        "per_100": 21.4,
+        "ci95": [
+         10.2,
+         39.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.84,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; the arm's average over all 68 pages of the track (its page rows carry no cost)",
+        "source": "scripts/eval/experiments/2026-10-03-xlref-t5-sanskrit-pali-chinese-vs-reference.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.036,
+       "fidelity_ci95": [
+        3.839,
+        4.232
+       ],
+       "share_ge4": 0.821,
+       "reversals": {
+        "pages": 1,
+        "n": 28,
+        "per_100": 3.6,
+        "ci95": [
+         0.6,
+         17.7
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.78,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; the arm's average over all 68 pages of the track (its page rows carry no cost)",
+        "source": "scripts/eval/experiments/2026-10-03-xlref-t5-sanskrit-pali-chinese-vs-reference.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-opus",
+       "label": "Claude Opus",
+       "production": false,
+       "fidelity": 4.929,
+       "fidelity_ci95": [
+        4.786,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 7,
+        "per_100": 0,
+        "ci95": [
+         0,
+         35.4
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 7,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 4.214
+       },
+       "note": "run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
+    }
+   ],
+   "not_on_shared_pages": [
+    {
+     "engine": "Gemini 3 Flash, thinking on",
+     "label": "Gemini 3 Flash, thinking on",
+     "pages": 28,
+     "why": "the thinking budget billed no thinking tokens, so it is a second plain Flash run"
+    }
+   ],
+   "not_tested": [
+    "Gemini 3.1 Pro (as the translator)",
+    "Claude through the metered API",
+    "GPT"
+   ]
+  },
+  {
+   "id": "pali",
+   "title": "Pali",
+   "production_engine": "gemini-3-flash-preview",
+   "production_label": "Gemini 3 Flash",
+   "panels": [
+    {
+     "kind": "most-pages",
+     "n_pages": 16,
+     "n_books": 16,
+     "frontier": false,
+     "frontier_note": "too few for a frontier: 2 engines with a measured cost on these pages",
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "T5",
+       "reference": "a published English translation of the same passage",
+       "pages": 16,
+       "date": "2026-10-03"
+      }
+     ],
+     "date": "2026-10-03",
+     "files": [
+      "scripts/eval/experiments/2026-10-03-xlref-t5-sanskrit-pali-chinese-vs-reference.md"
+     ],
+     "notes": [],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": false,
+       "fidelity": 3.906,
+       "fidelity_ci95": [
+        3.313,
+        4.406
+       ],
+       "share_ge4": 0.75,
+       "reversals": {
+        "pages": 1,
+        "n": 16,
+        "per_100": 6.3,
+        "ci95": [
+         1.1,
+         28.3
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.84,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; the arm's average over all 68 pages of the track (its page rows carry no cost)",
+        "source": "scripts/eval/experiments/2026-10-03-xlref-t5-sanskrit-pali-chinese-vs-reference.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.438,
+       "fidelity_ci95": [
+        4.094,
+        4.719
+       ],
+       "share_ge4": 0.938,
+       "reversals": {
+        "pages": 1,
+        "n": 16,
+        "per_100": 6.3,
+        "ci95": [
+         1.1,
+         28.3
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.78,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; the arm's average over all 68 pages of the track (its page rows carry no cost)",
+        "source": "scripts/eval/experiments/2026-10-03-xlref-t5-sanskrit-pali-chinese-vs-reference.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-opus",
+       "label": "Claude Opus",
+       "production": false,
+       "fidelity": 4.917,
+       "fidelity_ci95": [
+        4.75,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 6,
+        "per_100": 0,
+        "ci95": [
+         0,
+         39
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 6,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 4.167
+       },
+       "note": "run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
+    }
+   ],
+   "not_on_shared_pages": [
+    {
+     "engine": "Gemini 3 Flash, thinking on",
+     "label": "Gemini 3 Flash, thinking on",
+     "pages": 16,
+     "why": "the thinking budget billed no thinking tokens, so it is a second plain Flash run"
+    }
+   ],
+   "not_tested": [
+    "Gemini 3.1 Pro (as the translator)",
+    "Claude through the metered API",
+    "GPT"
+   ]
+  },
+  {
+   "id": "chinese",
+   "title": "Chinese",
+   "production_engine": "gemini-3-flash-preview",
+   "production_label": "Gemini 3 Flash",
+   "panels": [
+    {
+     "kind": "most-pages",
+     "n_pages": 24,
+     "n_books": 24,
+     "frontier": false,
+     "frontier_note": "too few for a frontier: 2 engines with a measured cost on these pages",
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "T5",
+       "reference": "a published English translation of the same passage",
+       "pages": 24,
+       "date": "2026-10-03"
+      }
+     ],
+     "date": "2026-10-03",
+     "files": [
+      "scripts/eval/experiments/2026-10-03-xlref-t5-sanskrit-pali-chinese-vs-reference.md"
+     ],
+     "notes": [],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": false,
+       "fidelity": 3.708,
+       "fidelity_ci95": [
+        3.438,
+        3.958
+       ],
+       "share_ge4": 0.583,
+       "reversals": {
+        "pages": 6,
+        "n": 24,
+        "per_100": 25,
+        "ci95": [
+         12,
+         44.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.84,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; the arm's average over all 68 pages of the track (its page rows carry no cost)",
+        "source": "scripts/eval/experiments/2026-10-03-xlref-t5-sanskrit-pali-chinese-vs-reference.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.042,
+       "fidelity_ci95": [
+        3.813,
+        4.292
+       ],
+       "share_ge4": 0.75,
+       "reversals": {
+        "pages": 3,
+        "n": 24,
+        "per_100": 12.5,
+        "ci95": [
+         4.3,
+         31
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.78,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; the arm's average over all 68 pages of the track (its page rows carry no cost)",
+        "source": "scripts/eval/experiments/2026-10-03-xlref-t5-sanskrit-pali-chinese-vs-reference.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-opus",
+       "label": "Claude Opus",
+       "production": false,
+       "fidelity": 4.786,
+       "fidelity_ci95": [
+        4.5,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 7,
+        "per_100": 0,
+        "ci95": [
+         0,
+         35.4
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 7,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 3.714
+       },
+       "note": "run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
+    }
+   ],
+   "not_on_shared_pages": [
+    {
+     "engine": "Gemini 3 Flash, thinking on",
+     "label": "Gemini 3 Flash, thinking on",
+     "pages": 24,
+     "why": "the thinking budget billed no thinking tokens, so it is a second plain Flash run"
+    }
+   ],
+   "not_tested": [
+    "Gemini 3.1 Pro (as the translator)",
+    "Claude through the metered API",
+    "GPT"
+   ]
+  },
+  {
+   "id": "tibetan",
+   "title": "Tibetan",
+   "production_engine": "gemini-3-flash-preview",
+   "production_label": "Gemini 3 Flash",
+   "panels": [
+    {
+     "kind": "most-pages",
+     "n_pages": 113,
+     "n_books": 8,
+     "frontier": false,
+     "frontier_note": "too few for a frontier: 2 engines with a measured cost on these pages",
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "Tib",
+       "reference": "84000's published English",
+       "pages": 113,
+       "date": "2026-10-03"
+      }
+     ],
+     "date": "2026-10-03",
+     "files": [
+      "scripts/eval/experiments/2026-10-03-tengyur-quality-arms-5497.md"
+     ],
+     "notes": [],
+     "placed": [
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.553,
+       "fidelity_ci95": [
+        4.473,
+        4.633
+       ],
+       "share_ge4": 0.982,
+       "reversals": {
+        "pages": 5,
+        "n": 113,
+        "per_100": 4.4,
+        "ci95": [
+         1.9,
+         9.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.77,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; averaged over these 113 pages",
+        "source": "scripts/eval/experiments/2026-10-03-tengyur-quality-arms-5497.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview+thinking",
+       "label": "Gemini 3 Flash, thinking on",
+       "production": false,
+       "fidelity": 4.535,
+       "fidelity_ci95": [
+        4.447,
+        4.619
+       ],
+       "share_ge4": 0.982,
+       "reversals": {
+        "pages": 9,
+        "n": 113,
+        "per_100": 8,
+        "ci95": [
+         4.2,
+         14.4
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.03,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, 163 thinking tokens per page; averaged over these 113 pages",
+        "source": "scripts/eval/experiments/2026-10-03-tengyur-quality-arms-5497.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-opus",
+       "label": "Claude Opus",
+       "production": false,
+       "fidelity": 4.838,
+       "fidelity_ci95": [
+        4.7,
+        4.938
+       ],
+       "share_ge4": 0.975,
+       "reversals": {
+        "pages": 1,
+        "n": 40,
+        "per_100": 2.5,
+        "ci95": [
+         0.4,
+         12.9
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 40,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 4.338,
+        "separate_read": true
+       },
+       "note": "run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
+    }
+   ],
+   "not_on_shared_pages": [],
+   "not_tested": [
+    "Gemini 3.1 Pro (as the translator)",
+    "Claude through the metered API",
+    "GPT"
+   ]
+  }
+ ],
+ "no_chart": [
+  {
+   "title": "Dutch",
+   "why": "7 pages with a published translation; at least 10 are needed for an interval",
+   "source": "scripts/eval/experiments/2026-10-03-translation-vs-reference-vernaculars-t3-5695.md"
+  },
+  {
+   "title": "Spanish",
+   "why": "6 pages with a published translation; at least 10 are needed for an interval",
+   "source": "scripts/eval/experiments/2026-10-03-translation-vs-reference-vernaculars-t3-5695.md"
+  },
+  {
+   "title": "Aramaic",
+   "why": "5 pages with a published translation; at least 10 are needed for an interval",
+   "source": "scripts/eval/experiments/2026-10-03-translation-vs-reference-t4-hebrew-arabic-persian-5695.md"
+  },
+  {
+   "title": "Sanskrit, Pali and Chinese (#5606)",
+   "why": "its 57 pages and references were reused, re-cut and re-judged in the #5695 T5 track, which is what the charts above plot",
+   "source": "scripts/eval/experiments/2026-10-02-translation-flash-vs-lite-sanskrit-pali-chinese-5606.md"
+  },
+  {
+   "title": "OCR engines feeding the translation (#5870)",
+   "why": "it compares OCR engines by the lift they give the English, not translators, so it belongs beside the OCR charts",
+   "source": "scripts/eval/experiments/2026-10-05-engine-contest-5870.md"
+  },
+  {
+   "title": "The stored Tengyur draft (#5797)",
+   "why": "one engine scored against 84000, with nothing beside it to compare",
+   "source": "scripts/eval/experiments/2026-10-04-tengyur-stored-draft-vs-84000-5797.md"
+  }
+ ]
+}
