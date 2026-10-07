@@ -1,6 +1,6 @@
 {
   "issue": 5513,
-  "generated_at": "2026-10-01T14:36:23.653Z",
+  "generated_at": "2026-10-07T16:17:29.639Z",
   "script": "scripts/catalog-coverage/canon-gap-map.mjs",
   "method": {
     "base_chars": "non-whitespace, non-combining-mark code points after stripping tags/markers; the same function counts corpora and our pages",
@@ -24,141 +24,165 @@
   "rates": {
     "tibetan": {
       "lane": "chained Batch, gemini-3-flash-preview",
-      "books_metered": 102,
-      "pages_metered": 6305,
-      "usd_metered": 9.16,
-      "usd_per_page": 0.001454,
-      "sample_pages_for_chars": 936,
-      "base_chars_per_page": 1748.5,
-      "usd_per_million_chars": 0.831,
-      "english_words_per_source_char": 0.3579,
+      "books_metered": 1598,
+      "pages_metered": 387363,
+      "usd_metered": 540.29,
+      "usd_per_page": 0.001395,
+      "sample_pages_for_chars": 765,
+      "base_chars_per_page": 1758.9,
+      "usd_per_million_chars": 0.793,
+      "english_words_per_source_char": 0.3396,
       "source": "Supabase gemini_usage, endpoint 'hetzner/translate-batch-chained', type translation, mode batch, last 45 days, books joined to books.language; chars from the same books' translated pages"
     },
     "chinese": {
       "lane": "chained Batch, gemini-3.1-flash-lite",
-      "books_metered": 61,
-      "pages_metered": 8515,
-      "usd_metered": 2.89,
-      "usd_per_page": 0.000339,
-      "sample_pages_for_chars": 1115,
-      "base_chars_per_page": 303.6,
-      "usd_per_million_chars": 1.118,
-      "english_words_per_source_char": 0.7795,
+      "books_metered": 250,
+      "pages_metered": 39924,
+      "usd_metered": 16.99,
+      "usd_per_page": 0.000426,
+      "sample_pages_for_chars": 1191,
+      "base_chars_per_page": 356.5,
+      "usd_per_million_chars": 1.194,
+      "english_words_per_source_char": 0.8924,
       "source": "Supabase gemini_usage, endpoint 'hetzner/translate-batch-chained', type translation, mode batch, last 45 days, books joined to books.language; chars from the same books' translated pages"
     },
     "sanskrit": {
       "lane": "chained Batch, gemini-3.1-flash-lite",
-      "books_metered": 18,
-      "pages_metered": 3815,
-      "usd_metered": 1.81,
-      "usd_per_page": 0.000474,
-      "sample_pages_for_chars": 709,
-      "base_chars_per_page": 1220.9,
-      "usd_per_million_chars": 0.389,
-      "english_words_per_source_char": 0.2715,
+      "books_metered": 52,
+      "pages_metered": 16118,
+      "usd_metered": 8.42,
+      "usd_per_page": 0.000522,
+      "sample_pages_for_chars": 1200,
+      "base_chars_per_page": 1180.2,
+      "usd_per_million_chars": 0.443,
+      "english_words_per_source_char": 0.2808,
       "source": "Supabase gemini_usage, endpoint 'hetzner/translate-batch-chained', type translation, mode batch, last 45 days, books joined to books.language; chars from the same books' translated pages"
     },
     "pali": {
       "lane": "chained Batch, gemini-3.1-flash-lite",
-      "books_metered": 3,
-      "pages_metered": 947,
-      "usd_metered": 0.53,
-      "usd_per_page": 0.000555,
-      "sample_pages_for_chars": 120,
-      "base_chars_per_page": 1400.5,
-      "usd_per_million_chars": 0.396,
-      "english_words_per_source_char": 0.2372,
+      "books_metered": 36,
+      "pages_metered": 17371,
+      "usd_metered": 9.53,
+      "usd_per_page": 0.000549,
+      "sample_pages_for_chars": 1196,
+      "base_chars_per_page": 1326.3,
+      "usd_per_million_chars": 0.414,
+      "english_words_per_source_char": 0.2339,
       "source": "Supabase gemini_usage, endpoint 'hetzner/translate-batch-chained', type translation, mode batch, last 45 days, books joined to books.language; chars from the same books' translated pages"
     },
     "hebrew": {
       "lane": "chained Batch, gemini-3.1-flash-lite",
-      "books_metered": 23,
-      "pages_metered": 747,
-      "usd_metered": 0.56,
-      "usd_per_page": 0.000746,
-      "sample_pages_for_chars": 909,
-      "base_chars_per_page": 1677.3,
-      "usd_per_million_chars": 0.444,
-      "english_words_per_source_char": 0.3429,
+      "books_metered": 33,
+      "pages_metered": 2510,
+      "usd_metered": 2.04,
+      "usd_per_page": 0.000814,
+      "sample_pages_for_chars": 1146,
+      "base_chars_per_page": 1714.3,
+      "usd_per_million_chars": 0.475,
+      "english_words_per_source_char": 0.3499,
       "source": "Supabase gemini_usage, endpoint 'hetzner/translate-batch-chained', type translation, mode batch, last 45 days, books joined to books.language; chars from the same books' translated pages"
     },
     "arabic": {
       "lane": "chained Batch, gemini-3.1-flash-lite",
-      "books_metered": 36,
-      "pages_metered": 3141,
-      "usd_metered": 1.77,
-      "usd_per_page": 0.000564,
-      "sample_pages_for_chars": 798,
-      "base_chars_per_page": 1292.6,
-      "usd_per_million_chars": 0.436,
-      "english_words_per_source_char": 0.2766,
+      "books_metered": 64,
+      "pages_metered": 7697,
+      "usd_metered": 4.25,
+      "usd_per_page": 0.000553,
+      "sample_pages_for_chars": 687,
+      "base_chars_per_page": 1082.8,
+      "usd_per_million_chars": 0.51,
+      "english_words_per_source_char": 0.3366,
       "source": "Supabase gemini_usage, endpoint 'hetzner/translate-batch-chained', type translation, mode batch, last 45 days, books joined to books.language; chars from the same books' translated pages"
     },
     "persian": {
       "lane": "chained Batch, gemini-3.1-flash-lite",
-      "books_metered": 4,
-      "pages_metered": 988,
-      "usd_metered": 0.83,
-      "usd_per_page": 0.00084,
-      "sample_pages_for_chars": 128,
-      "base_chars_per_page": 1872,
-      "usd_per_million_chars": 0.449,
-      "english_words_per_source_char": 0.3508,
+      "books_metered": 9,
+      "pages_metered": 2115,
+      "usd_metered": 1.62,
+      "usd_per_page": 0.000764,
+      "sample_pages_for_chars": 328,
+      "base_chars_per_page": 1152.2,
+      "usd_per_million_chars": 0.663,
+      "english_words_per_source_char": 0.447,
+      "source": "Supabase gemini_usage, endpoint 'hetzner/translate-batch-chained', type translation, mode batch, last 45 days, books joined to books.language; chars from the same books' translated pages"
+    },
+    "latin": {
+      "lane": "chained Batch, gemini-3.1-flash-lite",
+      "books_metered": 3557,
+      "pages_metered": 250801,
+      "usd_metered": 138.69,
+      "usd_per_page": 0.000553,
+      "sample_pages_for_chars": 825,
+      "base_chars_per_page": 1526.4,
+      "usd_per_million_chars": 0.362,
+      "english_words_per_source_char": 0.2319,
+      "source": "Supabase gemini_usage, endpoint 'hetzner/translate-batch-chained', type translation, mode batch, last 45 days, books joined to books.language; chars from the same books' translated pages"
+    },
+    "greek": {
+      "lane": "chained Batch, gemini-3.1-flash-lite",
+      "books_metered": 70,
+      "pages_metered": 15789,
+      "usd_metered": 11.09,
+      "usd_per_page": 0.000702,
+      "sample_pages_for_chars": 895,
+      "base_chars_per_page": 1509.1,
+      "usd_per_million_chars": 0.465,
+      "english_words_per_source_char": 0.2197,
       "source": "Supabase gemini_usage, endpoint 'hetzner/translate-batch-chained', type translation, mode batch, last 45 days, books joined to books.language; chars from the same books' translated pages"
     }
   },
   "measurement": {
-    "bytes_fetched": 32979382,
-    "bytes_from_cache": 593560750,
-    "http_calls": 1371,
-    "gb_fetched_this_run": 0.033,
-    "gb_downloaded_total": 0.627,
+    "bytes_fetched": 29743808,
+    "bytes_from_cache": 652874332,
+    "http_calls": 104,
+    "gb_fetched_this_run": 0.03,
+    "gb_downloaded_total": 0.683,
     "note": "gb_downloaded_total = everything this script downloaded (this run + its own cache from earlier runs); the ~2 GB budget applies to it",
     "model_calls": 0,
     "spend_usd": 0
   },
-  "total_draft_usd": 1511,
-  "total_scope": "derge-tengyur + derge-kangyur + cbeta + pali-mula + pali-atthakatha + pali-tika + gretil-buddhist + gretil-vedanta + gretil-gaudiya + sefaria-zohar + sefaria-lurianic + sefaria-cordovero + openiti-sufi + ganjoor + kanripo (excl. KR6). Excludes the Chan subset and the Sefaria/OpenITI whole-corpus figures (contained in other rows), Tripitaka Koreana (same text as CBETA T) and the Mongolian Kanjur (no typed text).",
+  "total_draft_usd": 1888,
+  "total_scope": "derge-tengyur + derge-kangyur + cbeta + pali-mula + pali-atthakatha + pali-tika + gretil-buddhist + gretil-vedanta + gretil-gaudiya + sefaria-zohar + sefaria-lurianic + sefaria-cordovero + openiti-sufi + ganjoor + patrologia-latina + camena-poemata + perseus-latin + perseus-greek + first1k-greek + kanripo (excl. KR6). Excludes the Chan subset and the Sefaria/OpenITI whole-corpus figures (contained in other rows), Tripitaka Koreana (same text as CBETA T) and the Mongolian Kanjur (no typed text).",
   "ranking_top5": [
     {
       "id": "kanripo",
-      "score": 392458,
-      "untranslated_english_words_est": 654097131,
+      "score": 449301,
+      "untranslated_english_words_est": 748834226,
       "licence": "open",
       "pairing": "partial",
-      "usd": 938
+      "usd": 1002
     },
     {
       "id": "cbeta",
-      "score": 95897,
-      "untranslated_english_words_est": 213105160,
+      "score": 109787,
+      "untranslated_english_words_est": 243970552,
       "licence": "open-nc",
       "pairing": "partial",
-      "usd": 306
+      "usd": 326
     },
     {
       "id": "derge-tengyur",
-      "score": 55611,
-      "untranslated_english_words_est": 55611161,
+      "score": 52768,
+      "untranslated_english_words_est": 52767673,
       "licence": "open",
       "pairing": "yes",
-      "usd": 129
+      "usd": 123
     },
     {
-      "id": "derge-kangyur",
-      "score": 11617,
-      "untranslated_english_words_est": 11617360,
-      "licence": "open",
-      "pairing": "yes",
-      "usd": 27
-    },
-    {
-      "id": "openiti-sufi",
-      "score": 8412,
-      "untranslated_english_words_est": 18693554,
+      "id": "patrologia-latina",
+      "score": 25262,
+      "untranslated_english_words_est": 112275327,
       "licence": "open-nc",
-      "pairing": "partial",
-      "usd": 29
+      "pairing": "unknown",
+      "usd": 175
+    },
+    {
+      "id": "camena-poemata",
+      "score": 21238,
+      "untranslated_english_words_est": 21238330,
+      "licence": "open",
+      "pairing": "yes",
+      "usd": 33
     }
   ],
   "rows": [
@@ -199,16 +223,16 @@
         "note": "page-weighted (84000 num_pages = Degé folio sides)"
       },
       "holdings": {
-        "live_books": 0,
-        "live_pages": 0,
-        "live_pages_translated": 0,
+        "live_books": 213,
+        "live_pages": 128639,
+        "live_pages_translated": 128332,
         "hidden_books": 0,
         "hidden_pages": 0,
         "method": "language=Tibetan, title/source matches Derge Tengyur (bstan 'gyur + sde dge, BDRC W23703, Esukhia)",
         "other_editions": {
-          "live_books": 0,
-          "live_pages": 0,
-          "live_pages_translated": 0,
+          "live_books": 213,
+          "live_pages": 128639,
+          "live_pages_translated": 128332,
           "hidden_books": 0,
           "hidden_pages": 0,
           "method": "any Tengyur edition by title"
@@ -222,17 +246,17 @@
       "cost": {
         "rate_key": "tibetan",
         "lane": "chained Batch, gemini-3-flash-preview",
-        "usd_per_million_chars": 0.831,
+        "usd_per_million_chars": 0.793,
         "untranslated_base_chars": 155381840,
-        "page_equivalents": 88866,
-        "english_words_est": 55611161,
-        "usd": 129,
+        "page_equivalents": 88340,
+        "english_words_est": 52767673,
+        "usd": 123,
         "bound": "untranslated share only",
-        "per_page_measured_usd": 191,
+        "per_page_measured_usd": 183,
         "cross_check_frames_usd": 315,
-        "cross_check": "131088 untranslated 84000 pages × measured $0.001454/page = per_page_measured_usd; × $0.0024/page-frame (brief's figure) = cross_check_frames_usd. The per-char figure is lower because a Degé folio side (1185 chars) is shorter than our average Tibetan page (1748.5), and per-request prompt overhead does not shrink with the page"
+        "cross_check": "131088 untranslated 84000 pages × measured $0.001395/page = per_page_measured_usd; × $0.0024/page-frame (brief's figure) = cross_check_frames_usd. The per-char figure is lower because a Degé folio side (1185 chars) is shorter than our average Tibetan page (1758.9), and per-request prompt overhead does not shrink with the page"
       },
-      "score": 55611
+      "score": 52768
     },
     {
       "id": "derge-kangyur",
@@ -271,18 +295,18 @@
         "note": "page-weighted; a further 26741 pages are \"In Progress\" at 84000 — a draft there competes with funded human work"
       },
       "holdings": {
-        "live_books": 0,
-        "live_pages": 0,
-        "live_pages_translated": 0,
-        "hidden_books": 0,
-        "hidden_pages": 0,
-        "method": "language=Tibetan, title/source matches Derge Kangyur (bka' 'gyur + sde dge, BDRC W22084, Esukhia)",
+        "live_books": 15,
+        "live_pages": 9176,
+        "live_pages_translated": 1835,
+        "hidden_books": 88,
+        "hidden_pages": 56123,
+        "method": "language=Tibetan, title/source matches Derge Kangyur (bka' 'gyur + sde dge, BDRC W4CZ5369 / W22084, Esukhia)",
         "other_editions": {
-          "live_books": 210,
-          "live_pages": 93347,
-          "live_pages_translated": 541,
-          "hidden_books": 5,
-          "hidden_pages": 2252,
+          "live_books": 225,
+          "live_pages": 103004,
+          "live_pages_translated": 83912,
+          "hidden_books": 93,
+          "hidden_pages": 58375,
           "method": "any Kangyur edition by title (e.g. BL Thadrak manuscript Kanjur)"
         }
       },
@@ -294,17 +318,17 @@
       "cost": {
         "rate_key": "tibetan",
         "lane": "chained Batch, gemini-3-flash-preview",
-        "usd_per_million_chars": 0.831,
+        "usd_per_million_chars": 0.793,
         "untranslated_base_chars": 32459794,
-        "page_equivalents": 18564,
-        "english_words_est": 11617360,
-        "usd": 27,
+        "page_equivalents": 18455,
+        "english_words_est": 11023346,
+        "usd": 26,
         "bound": "untranslated share only",
-        "per_page_measured_usd": 42,
+        "per_page_measured_usd": 40,
         "cross_check_frames_usd": 69,
         "excluding_in_progress_usd": 2
       },
-      "score": 11617
+      "score": 11023
     },
     {
       "id": "cbeta",
@@ -348,11 +372,11 @@
         "note": "unknown — BDK English Tripiṭaka (bdkamerica.org/tripitaka-list) lists its volumes by title only, without Taishō numbers or sizes, so no measured share"
       },
       "holdings": {
-        "live_books": 78,
-        "live_pages": 9118,
-        "live_pages_translated": 4998,
-        "hidden_books": 3,
-        "hidden_pages": 739,
+        "live_books": 127,
+        "live_pages": 14612,
+        "live_pages_translated": 12828,
+        "hidden_books": 10,
+        "hidden_pages": 1359,
         "method": "Chinese-language books in buddhist-canon / chinese-buddhist-texts / zen-chan, SAT Daizōkyō scans, metadata.cbeta_id, or works-catalog cbeta holdings"
       },
       "pairing": {
@@ -363,14 +387,14 @@
       "cost": {
         "rate_key": "chinese",
         "lane": "chained Batch, gemini-3.1-flash-lite",
-        "usd_per_million_chars": 1.118,
+        "usd_per_million_chars": 1.194,
         "untranslated_base_chars": 273386992,
-        "page_equivalents": 900484,
-        "english_words_est": 213105160,
-        "usd": 306,
+        "page_equivalents": 766864,
+        "english_words_est": 243970552,
+        "usd": 326,
         "bound": "upper bound — English coverage unknown, whole corpus priced"
       },
-      "score": 95897
+      "score": 109787
     },
     {
       "id": "cbeta-chan",
@@ -542,11 +566,11 @@
         "note": "unknown — several classics (Linji lu, Blue Cliff, Platform Sūtra) are translated, but there is no bibliography mapped to these work ids"
       },
       "holdings": {
-        "live_books": 39,
-        "live_pages": 7020,
-        "live_pages_translated": 1098,
-        "hidden_books": 5,
-        "hidden_pages": 2596,
+        "live_books": 92,
+        "live_pages": 12001,
+        "live_pages_translated": 6853,
+        "hidden_books": 7,
+        "hidden_pages": 2796,
         "method": "Chinese-language books whose title contains 景德傳燈錄 / 祖堂集 / 五燈會元 / 語錄 / 廣錄 / 語要, or in zen-chan"
       },
       "pairing": {
@@ -557,14 +581,14 @@
       "cost": {
         "rate_key": "chinese",
         "lane": "chained Batch, gemini-3.1-flash-lite",
-        "usd_per_million_chars": 1.118,
+        "usd_per_million_chars": 1.194,
         "untranslated_base_chars": 8186972,
-        "page_equivalents": 26966,
-        "english_words_est": 6381745,
-        "usd": 9,
+        "page_equivalents": 22965,
+        "english_words_est": 7306054,
+        "usd": 10,
         "bound": "upper bound — English coverage unknown, whole corpus priced"
       },
-      "score": 2872
+      "score": 3288
     },
     {
       "id": "pali-mula",
@@ -619,11 +643,11 @@
         "note": "SuttaCentral only — PTS and other print translations (e.g. the whole Abhidhamma) are not counted, so this understates English coverage"
       },
       "holdings": {
-        "live_books": 26,
-        "live_pages": 9076,
-        "live_pages_translated": 2237,
-        "hidden_books": 31,
-        "hidden_pages": 11283,
+        "live_books": 25,
+        "live_pages": 8524,
+        "live_pages_translated": 7783,
+        "hidden_books": 32,
+        "hidden_pages": 11835,
         "method": "language=Pali (any edition; not matched to the VRI CSCD edition)"
       },
       "pairing": {
@@ -634,14 +658,14 @@
       "cost": {
         "rate_key": "pali",
         "lane": "chained Batch, gemini-3.1-flash-lite",
-        "usd_per_million_chars": 0.396,
+        "usd_per_million_chars": 0.414,
         "untranslated_base_chars": 11202509,
-        "page_equivalents": 7999,
-        "english_words_est": 2657235,
-        "usd": 4,
+        "page_equivalents": 8446,
+        "english_words_est": 2620267,
+        "usd": 5,
         "bound": "untranslated share only"
       },
-      "score": 598
+      "score": 590
     },
     {
       "id": "pali-atthakatha",
@@ -676,11 +700,11 @@
         "note": "unknown — SuttaCentral carries no aṭṭhakathā; PTS translations of some exist, no bibliography measured"
       },
       "holdings": {
-        "live_books": 26,
-        "live_pages": 9076,
-        "live_pages_translated": 2237,
-        "hidden_books": 31,
-        "hidden_pages": 11283,
+        "live_books": 25,
+        "live_pages": 8524,
+        "live_pages_translated": 7783,
+        "hidden_books": 32,
+        "hidden_pages": 11835,
         "method": "shared with root texts row (Pali books are not split by layer)"
       },
       "pairing": {
@@ -691,14 +715,14 @@
       "cost": {
         "rate_key": "pali",
         "lane": "chained Batch, gemini-3.1-flash-lite",
-        "usd_per_million_chars": 0.396,
+        "usd_per_million_chars": 0.414,
         "untranslated_base_chars": 28281229,
-        "page_equivalents": 20194,
-        "english_words_est": 6708308,
-        "usd": 11,
+        "page_equivalents": 21323,
+        "english_words_est": 6614979,
+        "usd": 12,
         "bound": "upper bound — English coverage unknown, whole corpus priced"
       },
-      "score": 1509
+      "score": 1488
     },
     {
       "id": "pali-tika",
@@ -738,11 +762,11 @@
         "note": "unknown"
       },
       "holdings": {
-        "live_books": 26,
-        "live_pages": 9076,
-        "live_pages_translated": 2237,
-        "hidden_books": 31,
-        "hidden_pages": 11283,
+        "live_books": 25,
+        "live_pages": 8524,
+        "live_pages_translated": 7783,
+        "hidden_books": 32,
+        "hidden_pages": 11835,
         "method": "shared with root texts row"
       },
       "pairing": {
@@ -753,14 +777,14 @@
       "cost": {
         "rate_key": "pali",
         "lane": "chained Batch, gemini-3.1-flash-lite",
-        "usd_per_million_chars": 0.396,
+        "usd_per_million_chars": 0.414,
         "untranslated_base_chars": 10464046,
-        "page_equivalents": 7472,
-        "english_words_est": 2482072,
+        "page_equivalents": 7890,
+        "english_words_est": 2447540,
         "usd": 4,
         "bound": "upper bound — English coverage unknown, whole corpus priced"
       },
-      "score": 558
+      "score": 551
     },
     {
       "id": "gretil-buddhist",
@@ -796,11 +820,11 @@
         "note": "unknown — no bibliography mapped to GRETIL file ids"
       },
       "holdings": {
-        "live_books": 32,
-        "live_pages": 8950,
-        "live_pages_translated": 6353,
-        "hidden_books": 63,
-        "hidden_pages": 18673,
+        "live_books": 31,
+        "live_pages": 9679,
+        "live_pages_translated": 7913,
+        "hidden_books": 64,
+        "hidden_pages": 17944,
         "method": "Sanskrit books in buddhism collections or Buddhist title terms"
       },
       "pairing": {
@@ -811,14 +835,14 @@
       "cost": {
         "rate_key": "sanskrit",
         "lane": "chained Batch, gemini-3.1-flash-lite",
-        "usd_per_million_chars": 0.389,
+        "usd_per_million_chars": 0.443,
         "untranslated_base_chars": 41716748,
-        "page_equivalents": 34169,
-        "english_words_est": 11326097,
-        "usd": 16,
+        "page_equivalents": 35347,
+        "english_words_est": 11714063,
+        "usd": 18,
         "bound": "upper bound — English coverage unknown, whole corpus priced"
       },
-      "score": 849
+      "score": 879
     },
     {
       "id": "gretil-vedanta",
@@ -854,11 +878,11 @@
         "note": "unknown — no bibliography mapped to GRETIL file ids"
       },
       "holdings": {
-        "live_books": 13,
-        "live_pages": 4627,
-        "live_pages_translated": 3627,
-        "hidden_books": 46,
-        "hidden_pages": 8217,
+        "live_books": 12,
+        "live_pages": 4285,
+        "live_pages_translated": 3281,
+        "hidden_books": 47,
+        "hidden_pages": 8559,
         "method": "Sanskrit books in vedanta-darshana or Vedānta title terms"
       },
       "pairing": {
@@ -869,14 +893,14 @@
       "cost": {
         "rate_key": "sanskrit",
         "lane": "chained Batch, gemini-3.1-flash-lite",
-        "usd_per_million_chars": 0.389,
+        "usd_per_million_chars": 0.443,
         "untranslated_base_chars": 14453577,
-        "page_equivalents": 11838,
-        "english_words_est": 3924146,
+        "page_equivalents": 12247,
+        "english_words_est": 4058564,
         "usd": 6,
         "bound": "upper bound — English coverage unknown, whole corpus priced"
       },
-      "score": 294
+      "score": 304
     },
     {
       "id": "gretil-gaudiya",
@@ -946,14 +970,14 @@
       "cost": {
         "rate_key": "sanskrit",
         "lane": "chained Batch, gemini-3.1-flash-lite",
-        "usd_per_million_chars": 0.389,
+        "usd_per_million_chars": 0.443,
         "untranslated_base_chars": 3253596,
-        "page_equivalents": 2665,
-        "english_words_est": 883351,
+        "page_equivalents": 2757,
+        "english_words_est": 913610,
         "usd": 1,
         "bound": "upper bound — English coverage unknown, whole corpus priced"
       },
-      "score": 66
+      "score": 69
     },
     {
       "id": "sefaria-zohar",
@@ -1069,11 +1093,11 @@
         "note": "segment-weighted"
       },
       "holdings": {
-        "live_books": 15,
-        "live_pages": 8678,
-        "live_pages_translated": 5379,
-        "hidden_books": 8,
-        "hidden_pages": 5862,
+        "live_books": 12,
+        "live_pages": 7564,
+        "live_pages_translated": 5469,
+        "hidden_books": 24,
+        "hidden_pages": 13263,
         "method": "Zohar / Tikkunei Zohar by title"
       },
       "pairing": {
@@ -1084,14 +1108,14 @@
       "cost": {
         "rate_key": "hebrew",
         "lane": "chained Batch, gemini-3.1-flash-lite",
-        "usd_per_million_chars": 0.444,
+        "usd_per_million_chars": 0.475,
         "untranslated_base_chars": 2597465,
-        "page_equivalents": 1549,
-        "english_words_est": 890671,
+        "page_equivalents": 1515,
+        "english_words_est": 908853,
         "usd": 1,
         "bound": "untranslated share only"
       },
-      "score": 134
+      "score": 136
     },
     {
       "id": "sefaria-lurianic",
@@ -1332,11 +1356,11 @@
         "note": "segment-weighted"
       },
       "holdings": {
-        "live_books": 7,
-        "live_pages": 3186,
-        "live_pages_translated": 1018,
-        "hidden_books": 2,
-        "hidden_pages": 0,
+        "live_books": 6,
+        "live_pages": 2646,
+        "live_pages_translated": 2350,
+        "hidden_books": 3,
+        "hidden_pages": 540,
         "method": "Lurianic corpus by title (Etz Chaim, Vital, Shemonah She`arim …)"
       },
       "pairing": {
@@ -1347,14 +1371,14 @@
       "cost": {
         "rate_key": "hebrew",
         "lane": "chained Batch, gemini-3.1-flash-lite",
-        "usd_per_million_chars": 0.444,
+        "usd_per_million_chars": 0.475,
         "untranslated_base_chars": 7019023,
-        "page_equivalents": 4185,
-        "english_words_est": 2406823,
+        "page_equivalents": 4094,
+        "english_words_est": 2455956,
         "usd": 3,
         "bound": "untranslated share only"
       },
-      "score": 1444
+      "score": 1474
     },
     {
       "id": "sefaria-cordovero",
@@ -1448,11 +1472,11 @@
         "note": "English includes versions titled as AI/machine translations for: Pardes Rimmonim — human coverage is lower"
       },
       "holdings": {
-        "live_books": 3,
-        "live_pages": 728,
-        "live_pages_translated": 340,
-        "hidden_books": 1,
-        "hidden_pages": 1160,
+        "live_books": 1,
+        "live_pages": 2,
+        "live_pages_translated": 2,
+        "hidden_books": 4,
+        "hidden_pages": 2042,
         "method": "Cordovero by title (Pardes Rimonim, Tomer Devorah, Or Ne`erav)"
       },
       "pairing": {
@@ -1463,14 +1487,14 @@
       "cost": {
         "rate_key": "hebrew",
         "lane": "chained Batch, gemini-3.1-flash-lite",
-        "usd_per_million_chars": 0.444,
+        "usd_per_million_chars": 0.475,
         "untranslated_base_chars": 1265130,
-        "page_equivalents": 754,
-        "english_words_est": 433813,
+        "page_equivalents": 738,
+        "english_words_est": 442669,
         "usd": 1,
         "bound": "untranslated share only"
       },
-      "score": 260
+      "score": 266
     },
     {
       "id": "openiti-sufi",
@@ -1539,11 +1563,11 @@
         "note": "unknown — partial English exists for some (e.g. Fuṣūṣ al-ḥikam), no bibliography measured"
       },
       "holdings": {
-        "live_books": 126,
-        "live_pages": 23383,
-        "live_pages_translated": 20838,
-        "hidden_books": 35,
-        "hidden_pages": 4868,
+        "live_books": 116,
+        "live_pages": 22322,
+        "live_pages_translated": 20584,
+        "hidden_books": 45,
+        "hidden_pages": 6002,
         "method": "Arabic/Persian books in sufism collections, Ibn ʿArabī title terms, or works-catalog openiti holdings"
       },
       "pairing": {
@@ -1554,14 +1578,14 @@
       "cost": {
         "rate_key": "arabic",
         "lane": "chained Batch, gemini-3.1-flash-lite",
-        "usd_per_million_chars": 0.436,
+        "usd_per_million_chars": 0.51,
         "untranslated_base_chars": 67583348,
-        "page_equivalents": 52285,
-        "english_words_est": 18693554,
-        "usd": 29,
+        "page_equivalents": 62415,
+        "english_words_est": 22748555,
+        "usd": 34,
         "bound": "upper bound — English coverage unknown, whole corpus priced"
       },
-      "score": 8412
+      "score": 10237
     },
     {
       "id": "ganjoor",
@@ -1593,11 +1617,11 @@
         "note": "unknown"
       },
       "holdings": {
-        "live_books": 23,
-        "live_pages": 6905,
-        "live_pages_translated": 5946,
-        "hidden_books": 31,
-        "hidden_pages": 17651,
+        "live_books": 22,
+        "live_pages": 6770,
+        "live_pages_translated": 6317,
+        "hidden_books": 32,
+        "hidden_pages": 17786,
         "method": "Persian books in persian-literary-tradition or with classical poetry title terms (any edition)"
       },
       "pairing": {
@@ -1608,14 +1632,14 @@
       "cost": {
         "rate_key": "persian",
         "lane": "chained Batch, gemini-3.1-flash-lite",
-        "usd_per_million_chars": 0.449,
+        "usd_per_million_chars": 0.663,
         "untranslated_base_chars": 77616813,
-        "page_equivalents": 41462,
-        "english_words_est": 27227978,
-        "usd": 35,
+        "page_equivalents": 67364,
+        "english_words_est": 34694715,
+        "usd": 51,
         "bound": "upper bound — English coverage unknown, whole corpus priced"
       },
-      "score": 4084
+      "score": 5204
     },
     {
       "id": "mongolian-kanjur",
@@ -1651,8 +1675,8 @@
         "live_books": 0,
         "live_pages": 0,
         "live_pages_translated": 0,
-        "hidden_books": 0,
-        "hidden_pages": 0,
+        "hidden_books": 108,
+        "hidden_pages": 83090,
         "method": "language=Mongolian or Mongolian Kanjur by title/source"
       },
       "pairing": {
@@ -1663,7 +1687,7 @@
       "cost": {
         "rate_key": "tibetan",
         "lane": "chained Batch, gemini-3-flash-preview",
-        "usd_per_million_chars": 0.831,
+        "usd_per_million_chars": 0.793,
         "untranslated_base_chars": null,
         "page_equivalents": null,
         "english_words_est": null,
@@ -1718,15 +1742,15 @@
       "cost": {
         "rate_key": "chinese",
         "lane": "chained Batch, gemini-3.1-flash-lite",
-        "usd_per_million_chars": 1.118,
+        "usd_per_million_chars": 1.194,
         "untranslated_base_chars": 71108493,
-        "page_equivalents": 234218,
-        "english_words_est": 55429070,
-        "usd": 79,
+        "page_equivalents": 199463,
+        "english_words_est": 63457219,
+        "usd": 85,
         "bound": "upper bound — English coverage unknown, whole corpus priced",
         "note": "NOT additive with CBETA: the Taishō is largely edited from the Koryŏ canon, so this is the same text priced twice"
       },
-      "score": 4157
+      "score": 4759
     },
     {
       "id": "kanripo",
@@ -1825,11 +1849,11 @@
         "note": "unknown (the Siku census #2234 put the imperial canon at ~1–2% translated — a sample, not a measure of Kanripo)"
       },
       "holdings": {
-        "live_books": 166,
-        "live_pages": 32359,
-        "live_pages_translated": 26900,
-        "hidden_books": 4,
-        "hidden_pages": 3938,
+        "live_books": 165,
+        "live_pages": 33452,
+        "live_pages_translated": 31254,
+        "hidden_books": 5,
+        "hidden_pages": 3785,
         "method": "works-catalog work_holdings for kanripo works (build-holdings.mjs title-auto match; a floor)"
       },
       "pairing": {
@@ -1840,36 +1864,331 @@
       "cost": {
         "rate_key": "chinese",
         "lane": "chained Batch, gemini-3.1-flash-lite",
-        "usd_per_million_chars": 1.118,
+        "usd_per_million_chars": 1.194,
         "untranslated_base_chars": 839123965,
-        "page_equivalents": 2763913,
-        "english_words_est": 654097131,
-        "usd": 938,
+        "page_equivalents": 2353784,
+        "english_words_est": 748834226,
+        "usd": 1002,
         "bound": "upper bound — English coverage unknown, whole corpus priced",
-        "usd_whole_incl_kr6": 1378,
+        "usd_whole_incl_kr6": 1471,
         "note": "KR6 (Buddhist, 4,850 works) mirrors CBETA and is excluded here so the row adds to CBETA without double counting"
       },
-      "score": 392458
+      "score": 449301
+    },
+    {
+      "id": "patrologia-latina",
+      "corpus": "Patrologia Latina (Migne), via Corpus Corporum",
+      "tradition": "Latin Christian: Church Fathers and medieval authors to 1216",
+      "partner": "unknown",
+      "lang": "latin",
+      "source": {
+        "name": "Corpus Corporum (University of Zurich)",
+        "url": "https://mlat.uzh.ch/browser?path=/38"
+      },
+      "licence": {
+        "label": "non-commercial reuse (Corpus Corporum \"About\" text)",
+        "url": "https://mlat.uzh.ch/cc_modules/home.js",
+        "quote": "Texts may be downloaded as TEI xml for non-commercial use and can thus be reused by other researchers.",
+        "verified": true,
+        "http_status": 200,
+        "open": "open-nc",
+        "note": "The same page says the texts \"stem from various online sources\" and are \"either in the public domain or their use was granted us by their owners\". The Open Greek and Latin EpiDoc of the PL on GitHub (patrologia_latina-dev) states no licence."
+      },
+      "size": {
+        "texts": 5277,
+        "works": 5204,
+        "authors": 1528,
+        "words": 85539587,
+        "base_chars": 484154062,
+        "calibration": {
+          "repo": "OpenGreekAndLatin/patrologia_latina-dev",
+          "sha": "8c651f859f821f0868755596f1a513946ca25350",
+          "sample_files": 12,
+          "base_chars": 540382,
+          "words": 95473
+        },
+        "method": "https://mlat.uzh.ch/php_modules/navigate.php?load=/ (Corpus Corporum navigation API: texts_count, words_count per corpus): corpus \"Patrologia Latina\" 5277 texts, 85539587 words; base chars = words × 5.66 base chars per word, measured on 12 sampled PL texts from OpenGreekAndLatin/patrologia_latina-dev"
+      },
+      "english": {
+        "fraction": null,
+        "source": null,
+        "note": "unknown: no catalogue maps English translations to PL columns. Many Fathers are in English (the 19th-century Ante-Nicene and Nicene and Post-Nicene Fathers series, Fathers of the Church), so the cost is an upper bound"
+      },
+      "holdings": {
+        "live_books": 2,
+        "live_pages": 785,
+        "live_pages_translated": 720,
+        "hidden_books": 39,
+        "hidden_pages": 26058,
+        "method": "language=Latin with Patrologia / Migne in the title or source (any volume; not matched to Corpus Corporum's texts)"
+      },
+      "pairing": {
+        "status": "unknown",
+        "source": "Migne's printed volumes are on the Internet Archive and Google Books; not matched volume by volume",
+        "url": null
+      },
+      "cost": {
+        "rate_key": "latin",
+        "lane": "chained Batch, gemini-3.1-flash-lite",
+        "usd_per_million_chars": 0.362,
+        "untranslated_base_chars": 484154062,
+        "page_equivalents": 317187,
+        "english_words_est": 112275327,
+        "usd": 175,
+        "bound": "upper bound — English coverage unknown, whole corpus priced"
+      },
+      "score": 25262
+    },
+    {
+      "id": "camena-poemata",
+      "corpus": "CAMENA POEMATA (Neo-Latin poetry by German authors, 16th–17th c.)",
+      "tradition": "Neo-Latin (humanist and early modern)",
+      "partner": "unknown",
+      "lang": "latin",
+      "source": {
+        "name": "CAMENA (Heidelberg / Mannheim)",
+        "url": "http://mateo.uni-mannheim.de/camenahtdocs/camena_e.html"
+      },
+      "licence": {
+        "label": "CC BY-SA (CAMENA project page; links CC BY-SA 3.0)",
+        "url": "http://mateo.uni-mannheim.de/camenahtdocs/camena_e.html",
+        "quote": "The machine-readable texts of CAMENA (and MATEO / Alte Drucke) may be used in compliance with the licence Creative Commons Attribution / Share Alike.",
+        "verified": false,
+        "http_status": null,
+        "open": "open",
+        "note": "licence fetch failed: fetch failed"
+      },
+      "size": {
+        "texts": null,
+        "pages_stated": 60000,
+        "base_chars": 91584000,
+        "corpus_corporum_neolatinitas": {
+          "texts": 30,
+          "words": 7745320,
+          "base_chars": 43838511
+        },
+        "method": "CAMENA states POEMATA \"presents more than 60.000 pages of early editions reproduced both as images and as machine-readable texts\" (camena_e.html); base chars = 60000 pages × our own average Latin page (1526.4 base chars, rates.latin). An estimate: the e-texts are spread over per-author pages with no download list. CAMENA's other four collections (HISTORICA, THESAURUS, CERA, ITALI) are mostly typed as tables of contents and indexes only and are not counted. Cross-check: the 30 CAMENA texts loaded into Corpus Corporum (\"Neolatinitas\") are counted in corpus_corporum_neolatinitas"
+      },
+      "english": {
+        "fraction": null,
+        "source": null,
+        "note": "unknown; very little Neo-Latin poetry has been translated, but no catalogue measures it"
+      },
+      "holdings": {
+        "live_books": 0,
+        "live_pages": 0,
+        "live_pages_translated": 0,
+        "hidden_books": 0,
+        "hidden_pages": 0,
+        "method": "language=Latin with a CAMENA / MATEO (Mannheim) source URL"
+      },
+      "pairing": {
+        "status": "yes",
+        "source": "CAMENA serves the page images of the same printed editions beside each e-text",
+        "url": "http://mateo.uni-mannheim.de/camenahtdocs/camenapoem_e.html"
+      },
+      "cost": {
+        "rate_key": "latin",
+        "lane": "chained Batch, gemini-3.1-flash-lite",
+        "usd_per_million_chars": 0.362,
+        "untranslated_base_chars": 91584000,
+        "page_equivalents": 60000,
+        "english_words_est": 21238330,
+        "usd": 33,
+        "bound": "upper bound — English coverage unknown, whole corpus priced"
+      },
+      "score": 21238
+    },
+    {
+      "id": "perseus-latin",
+      "corpus": "Perseus classical Latin (canonical-latinLit)",
+      "tradition": "Classical Latin",
+      "partner": "unknown",
+      "lang": "latin",
+      "source": {
+        "name": "Perseus Digital Library, canonical-latinLit",
+        "url": "https://github.com/PerseusDL/canonical-latinLit",
+        "sha": "5493c006cc4c6f4651b6ea7f5f063aa88649efe5"
+      },
+      "licence": {
+        "label": "CC BY-SA 4.0 unless otherwise indicated (repository README)",
+        "url": "https://raw.githubusercontent.com/PerseusDL/canonical-latinLit/master/README.md",
+        "quote": "Unless otherwise indicated, all contents of this repository are licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.",
+        "verified": true,
+        "http_status": 200,
+        "open": "open",
+        "note": "The same README: \"Materials within the Perseus DL have varying copyright status\"; check each file header before import."
+      },
+      "size": {
+        "texts": 351,
+        "base_chars": 35463114,
+        "bytes": 79470941,
+        "method": "git tree API: 351 works with a lat edition under data/ (largest edition per work, 79 MB); 40 sampled editions downloaded and counted (teiHeader and notes excluded), chars scaled by bytes (0.446 base chars/byte)"
+      },
+      "english": {
+        "fraction": 0.696,
+        "works_with_english": 148,
+        "source": "PerseusDL/canonical-latinLit: works whose folder also holds an -eng translation, weighted by source-edition bytes",
+        "note": "Perseus English only; Loeb and other print translations are not counted, so this understates English coverage"
+      },
+      "holdings": {
+        "live_books": 1292,
+        "live_pages": 505342,
+        "live_pages_translated": 429681,
+        "hidden_books": 583,
+        "hidden_pages": 106411,
+        "method": "language=Latin in classical-philosophy, literature, stoicism, ancient-historiography, ancient-epic-drama, school-of-athens (any edition; not matched to Perseus works)"
+      },
+      "pairing": {
+        "status": "unknown",
+        "source": "the 19th- and early 20th-century source editions are mostly on the Internet Archive; not matched",
+        "url": null
+      },
+      "cost": {
+        "rate_key": "latin",
+        "lane": "chained Batch, gemini-3.1-flash-lite",
+        "usd_per_million_chars": 0.362,
+        "untranslated_base_chars": 10780787,
+        "page_equivalents": 7063,
+        "english_words_est": 2500065,
+        "usd": 4,
+        "bound": "untranslated share only"
+      },
+      "score": 750
+    },
+    {
+      "id": "perseus-greek",
+      "corpus": "Perseus classical Greek (canonical-greekLit)",
+      "tradition": "Classical Greek",
+      "partner": "unknown",
+      "lang": "greek",
+      "source": {
+        "name": "Perseus Digital Library, canonical-greekLit",
+        "url": "https://github.com/PerseusDL/canonical-greekLit",
+        "sha": "01b725d835e6e733062ffd79e0efdbae1ba06e5c"
+      },
+      "licence": {
+        "label": "CC BY-SA 4.0 unless otherwise indicated (repository README)",
+        "url": "https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/master/README.md",
+        "quote": "Unless otherwise indicated, all contents of this repository are licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.",
+        "verified": true,
+        "http_status": 200,
+        "open": "open",
+        "note": "The same README: \"Materials within the Perseus DL have varying copyright status\"; check each file header before import."
+      },
+      "size": {
+        "texts": 772,
+        "base_chars": 60867838,
+        "bytes": 168422912,
+        "method": "git tree API: 772 works with a grc edition under data/ (largest edition per work, 168 MB); 40 sampled editions downloaded and counted (teiHeader and notes excluded), chars scaled by bytes (0.361 base chars/byte)"
+      },
+      "english": {
+        "fraction": 0.657,
+        "works_with_english": 596,
+        "source": "PerseusDL/canonical-greekLit: works whose folder also holds an -eng translation, weighted by source-edition bytes",
+        "note": "Perseus English only; Loeb and other print translations are not counted, so this understates English coverage"
+      },
+      "holdings": {
+        "live_books": 1098,
+        "live_pages": 490552,
+        "live_pages_translated": 433416,
+        "hidden_books": 3468,
+        "hidden_pages": 1717858,
+        "method": "language=Greek or Ancient Greek (any edition; not matched to Perseus or First1KGreek works); shared with the First1KGreek row"
+      },
+      "pairing": {
+        "status": "unknown",
+        "source": "the source editions are mostly on the Internet Archive; not matched",
+        "url": null
+      },
+      "cost": {
+        "rate_key": "greek",
+        "lane": "chained Batch, gemini-3.1-flash-lite",
+        "usd_per_million_chars": 0.465,
+        "untranslated_base_chars": 20877668,
+        "page_equivalents": 13835,
+        "english_words_est": 4586824,
+        "usd": 10,
+        "bound": "untranslated share only"
+      },
+      "score": 1376
+    },
+    {
+      "id": "first1k-greek",
+      "corpus": "First Thousand Years of Greek (First1KGreek)",
+      "tradition": "Greek: Church Fathers, philosophers, scientists to c. 250 CE and later",
+      "partner": "unknown",
+      "lang": "greek",
+      "source": {
+        "name": "Open Greek and Latin, First1KGreek",
+        "url": "https://github.com/OpenGreekAndLatin/First1KGreek",
+        "sha": "03776b39f4047c5cff06f5296fae4b2bae4b08fb"
+      },
+      "licence": {
+        "label": "CC BY-SA 4.0 (repository license.md)",
+        "url": "https://raw.githubusercontent.com/OpenGreekAndLatin/First1KGreek/master/license.md",
+        "quote": "Attribution-ShareAlike 4.0 International",
+        "verified": true,
+        "http_status": 200,
+        "open": "open",
+        "note": null
+      },
+      "size": {
+        "texts": 1091,
+        "base_chars": 118905975,
+        "bytes": 396136609,
+        "method": "git tree API: 1091 works with a grc edition under data/ (largest edition per work, 396 MB); 40 sampled editions downloaded and counted (teiHeader and notes excluded), chars scaled by bytes (0.300 base chars/byte)"
+      },
+      "english": {
+        "fraction": 0.035,
+        "works_with_english": 41,
+        "source": "OpenGreekAndLatin/First1KGreek: works whose folder also holds an -eng translation, weighted by source-edition bytes",
+        "note": "only translations in the repository are counted; many of these authors have printed English translations, so this understates English coverage"
+      },
+      "holdings": {
+        "live_books": 1098,
+        "live_pages": 490552,
+        "live_pages_translated": 433416,
+        "hidden_books": 3468,
+        "hidden_pages": 1717858,
+        "method": "language=Greek or Ancient Greek (any edition; not matched to Perseus or First1KGreek works); shared with the Perseus Greek row"
+      },
+      "pairing": {
+        "status": "unknown",
+        "source": "source editions (Teubner, Migne PG, GCS) partly on the Internet Archive; not matched",
+        "url": null
+      },
+      "cost": {
+        "rate_key": "greek",
+        "lane": "chained Batch, gemini-3.1-flash-lite",
+        "usd_per_million_chars": 0.465,
+        "untranslated_base_chars": 114744266,
+        "page_equivalents": 76035,
+        "english_words_est": 25209315,
+        "usd": 53,
+        "bound": "untranslated share only"
+      },
+      "score": 7563
     }
   ],
   "context": {
     "gretil_whole_sanskrit": {
       "texts": 3133,
       "base_chars_est": 231580783,
-      "usd": 90,
+      "usd": 103,
       "note": "English coverage unknown → upper bound"
     },
     "sefaria_kabbalah_whole": {
       "titles": 70,
       "base_chars_est": 44219244,
       "english_titles": 55,
-      "usd_upper": 20,
+      "usd_upper": 21,
       "note": "English share for the whole category not measured (subsets only)"
     },
     "openiti_whole": {
       "books": 8790,
       "base_chars": 4604045915,
-      "usd_upper": 2007
+      "usd_upper": 2348
     }
   },
   "works_catalog": {
@@ -1991,5 +2310,422 @@
       "english_fraction_by_root_bytes": 0.522,
       "source": "github.com/suttacentral/bilara-data (branch published): root/pli/ms segment files with a translation/en file of the same uid, weighted by root-file bytes"
     }
-  }
+  },
+  "already_in_english": [
+    {
+      "id": "bible",
+      "corpus": "Bible (Hebrew Bible and New Testament)",
+      "tradition": "Jewish and Christian scripture",
+      "english": {
+        "fraction": 1,
+        "complete_translations": "many; e.g. the King James Version, public domain",
+        "source": "https://ebible.org/find/details.php?id=eng-kjv2006",
+        "quote": "King James (Authorized) Version … public domain",
+        "note": "eBible.org lists the KJV, Old and New Testament, as public domain"
+      }
+    },
+    {
+      "id": "quran",
+      "corpus": "Qur'an",
+      "tradition": "Islamic scripture",
+      "english": {
+        "fraction": 1,
+        "complete_translations": 16,
+        "source": "https://tanzil.net/trans/",
+        "note": "Tanzil lists 16 complete English translations of the whole Qur'an (Arberry, Pickthall, Saheeh International and others)"
+      }
+    },
+    {
+      "id": "mishnah",
+      "corpus": "Mishnah",
+      "tradition": "Rabbinic Judaism",
+      "english": {
+        "fraction": 1,
+        "titles": 63,
+        "he_segments": 4192,
+        "en_segments": 4192,
+        "source": "https://www.sefaria.org/api/counts/{title} for every tractate under Mishnah in https://www.sefaria.org/api/index",
+        "note": "segments with English ÷ segments with Hebrew, summed over tractates"
+      }
+    },
+    {
+      "id": "talmud-bavli",
+      "corpus": "Babylonian Talmud",
+      "tradition": "Rabbinic Judaism",
+      "english": {
+        "fraction": 0.997,
+        "titles": 37,
+        "he_segments": 81793,
+        "en_segments": 81526,
+        "source": "https://www.sefaria.org/api/counts/{title} for every tractate under Talmud › Bavli in https://www.sefaria.org/api/index",
+        "note": "segments with English ÷ segments with Hebrew/Aramaic; the English is mainly the William Davidson (Steinsaltz) translation"
+      }
+    },
+    {
+      "id": "pali-suttas",
+      "corpus": "Pali suttas (Sutta Piṭaka)",
+      "tradition": "Theravāda",
+      "english": {
+        "fraction": 0.636,
+        "files": 5764,
+        "en_files": 4269,
+        "source": "github.com/suttacentral/bilara-data (branch published): root/pli/ms segment files with a translation/en file of the same uid, weighted by root-file bytes",
+        "note": "SuttaCentral English only; the Pali canon row above prices the Vinaya and Abhidhamma remainder of the root texts"
+      }
+    }
+  ],
+  "left_out": [
+    {
+      "corpus": "Daoist canon (Zhengtong Daozang)",
+      "reason": "Already inside the Kanripo row: Kanripo section KR5 is the Daoist canon.",
+      "source": "https://github.com/kanripo/KR-Catalog"
+    },
+    {
+      "corpus": "Avesta",
+      "reason": "No open typed text found. TITUS (Frankfurt), the standard typed Avesta, states: \"No parts of this document may be republished in any form without prior permission by the copyright holder.\" avesta.org states no licence for its Avestan text. Most of the Avesta has had English since the Sacred Books of the East (Darmesteter and Mills).",
+      "source": "https://titus.uni-frankfurt.de/texte/etcs/iran/airan/avesta/avest.htm"
+    },
+    {
+      "corpus": "Jain Āgamas",
+      "reason": "No open typed canon found. GRETIL holds 8 Prakrit files, a few of the 45 Āgamas (Āyāraṅga, Sūyagaḍa, Uttarajjhāyā, Dasaveyāliya, Isibhāsiyāiṃ), each marked \"FOR REFERENCE PURPOSES ONLY\".",
+      "source": "https://github.com/INDOLOGY/GRETIL-mirror"
+    },
+    {
+      "corpus": "Other Corpus Corporum corpora (Acta Sanctorum, Monumenta Germaniae Historica, Thomas Aquinas and others)",
+      "reason": "Listed with their sizes in corpus_corporum. Not priced: they mix public-domain and permission-only texts, and Thomas Aquinas shows 0 downloadable texts.",
+      "source": "https://mlat.uzh.ch/php_modules/navigate.php?load=/"
+    }
+  ],
+  "corpus_corporum": [
+    {
+      "nr": 1,
+      "idno": "17098",
+      "name": "Libri sacri",
+      "texts": 7,
+      "accessible_texts": 7,
+      "works": 7,
+      "authors": 2,
+      "words": 2451449,
+      "source": "var."
+    },
+    {
+      "nr": 2,
+      "idno": "38",
+      "name": "Patrologia Latina",
+      "texts": 5277,
+      "accessible_texts": 5277,
+      "works": 5204,
+      "authors": 1528,
+      "words": 85539587,
+      "source": "cf. Open Greek and Latin"
+    },
+    {
+      "nr": 3,
+      "idno": "11975",
+      "name": "Thomas Aquinas",
+      "texts": 77,
+      "accessible_texts": 0,
+      "works": 76,
+      "authors": 1,
+      "words": 8095449,
+      "source": "Corpus Thomisticum"
+    },
+    {
+      "nr": 4,
+      "idno": "12130",
+      "name": "Auctores scientiarum varii",
+      "texts": 93,
+      "accessible_texts": 86,
+      "works": 93,
+      "authors": 71,
+      "words": 7274700,
+      "source": "var."
+    },
+    {
+      "nr": 5,
+      "idno": "35",
+      "name": "Latinitas antiqua",
+      "texts": 197,
+      "accessible_texts": 197,
+      "works": 197,
+      "authors": 47,
+      "words": 5258738,
+      "source": "Perseus (Tufts University)"
+    },
+    {
+      "nr": 6,
+      "idno": "12780",
+      "name": "Rinascimento",
+      "texts": 148,
+      "accessible_texts": 148,
+      "works": 148,
+      "authors": 49,
+      "words": 4476214,
+      "source": "Biblioteca Italiana (Università Sapienza Roma)"
+    },
+    {
+      "nr": 7,
+      "idno": "13139",
+      "name": "Richard Rufus Project",
+      "texts": 11,
+      "accessible_texts": 11,
+      "works": 11,
+      "authors": 6,
+      "words": 321833,
+      "source": "Richard Rufus Project (Indiana University)"
+    },
+    {
+      "nr": 8,
+      "idno": "13150",
+      "name": "Croatiae auctores Latini",
+      "texts": 331,
+      "accessible_texts": 331,
+      "works": 331,
+      "authors": 113,
+      "words": 4528649,
+      "source": "Croatiae auctores Latini (Universitas Studiorum Zagrabiensis)"
+    },
+    {
+      "nr": 9,
+      "idno": "14001",
+      "name": "Neolatinitas",
+      "texts": 30,
+      "accessible_texts": 30,
+      "works": 30,
+      "authors": 16,
+      "words": 7745320,
+      "source": "CAMENA (Universität Mannheim)"
+    },
+    {
+      "nr": 10,
+      "idno": "11857",
+      "name": "Philosophica",
+      "texts": 48,
+      "accessible_texts": 48,
+      "works": 48,
+      "authors": 11,
+      "words": 1928239,
+      "source": "University Toronto"
+    },
+    {
+      "nr": 11,
+      "idno": "11974",
+      "name": "Hagiographica",
+      "texts": 10,
+      "accessible_texts": 10,
+      "works": 10,
+      "authors": 4,
+      "words": 276081,
+      "source": "mostly from José Carlos Martín Iglesias"
+    },
+    {
+      "nr": 12,
+      "idno": "34",
+      "name": "Itinera",
+      "texts": 11,
+      "accessible_texts": 11,
+      "works": 11,
+      "authors": 11,
+      "words": 231520,
+      "source": "mostly our own OCR"
+    },
+    {
+      "nr": 13,
+      "idno": "14161",
+      "name": "Grammatici Latini",
+      "texts": 103,
+      "accessible_texts": 103,
+      "works": 102,
+      "authors": 52,
+      "words": 1071297,
+      "source": "CGL (Université de la Sorbonne)"
+    },
+    {
+      "nr": 14,
+      "idno": "14002",
+      "name": "Theologica",
+      "texts": 12,
+      "accessible_texts": 12,
+      "works": 12,
+      "authors": 5,
+      "words": 214022,
+      "source": "Andrew Dunning"
+    },
+    {
+      "nr": 15,
+      "idno": "14003",
+      "name": "Poetica",
+      "texts": 681,
+      "accessible_texts": 681,
+      "works": 627,
+      "authors": 293,
+      "words": 2824249,
+      "source": "var."
+    },
+    {
+      "nr": 16,
+      "idno": "14004",
+      "name": "Antiquitas Posterior",
+      "texts": 189,
+      "accessible_texts": 189,
+      "works": 189,
+      "authors": 101,
+      "words": 2979900,
+      "source": "digilibLT (Università Piemonte Orientale)"
+    },
+    {
+      "nr": 17,
+      "idno": "14005",
+      "name": "Historica",
+      "texts": 3,
+      "accessible_texts": 3,
+      "works": 3,
+      "authors": 3,
+      "words": 89561,
+      "source": "var. "
+    },
+    {
+      "nr": 18,
+      "idno": "14006",
+      "name": "Versiones latinae",
+      "texts": 14,
+      "accessible_texts": 13,
+      "works": 14,
+      "authors": 13,
+      "words": 279792,
+      "source": "mostly our own OCR"
+    },
+    {
+      "nr": 19,
+      "idno": "14007",
+      "name": "Scriptores Ecclesiastici",
+      "texts": 272,
+      "accessible_texts": 272,
+      "works": 270,
+      "authors": 61,
+      "words": 5845390,
+      "source": "cf. Open Greek and Latin"
+    },
+    {
+      "nr": 20,
+      "idno": "14008",
+      "name": "Encyclopediae",
+      "texts": 1,
+      "accessible_texts": 1,
+      "works": 1,
+      "authors": 1,
+      "words": 784247,
+      "source": "SourceEncyMe (IRHT Paris)"
+    },
+    {
+      "nr": 21,
+      "idno": "14009",
+      "name": "Latinità Italiana del Medioevo",
+      "texts": 348,
+      "accessible_texts": 347,
+      "works": 346,
+      "authors": 195,
+      "words": 4371143,
+      "source": "ALIM"
+    },
+    {
+      "nr": 22,
+      "idno": "14010",
+      "name": "Monumenta Germaniae Historica",
+      "texts": 406,
+      "accessible_texts": 406,
+      "works": 405,
+      "authors": 138,
+      "words": 6643810,
+      "source": "dMGH"
+    },
+    {
+      "nr": 23,
+      "idno": "14011",
+      "name": "Mathematica",
+      "texts": 17,
+      "accessible_texts": 11,
+      "works": 17,
+      "authors": 14,
+      "words": 510864,
+      "source": "mostly Università Pisa"
+    },
+    {
+      "nr": 24,
+      "idno": "14012",
+      "name": "Mirabile Digital Library",
+      "texts": 407,
+      "accessible_texts": 407,
+      "works": 399,
+      "authors": 174,
+      "words": 6308125,
+      "source": "Mirabile Digital Library"
+    },
+    {
+      "nr": 25,
+      "idno": "23570",
+      "name": "Corpus epistolarum Bullingeri",
+      "texts": 475,
+      "accessible_texts": 475,
+      "works": 475,
+      "authors": 369,
+      "words": 1816807,
+      "source": "Bullinger Digital"
+    },
+    {
+      "nr": 26,
+      "idno": "21320",
+      "name": "Dissertationes",
+      "texts": 4,
+      "accessible_texts": 4,
+      "works": 4,
+      "authors": 4,
+      "words": 36422,
+      "source": "mostly our own OCR"
+    },
+    {
+      "nr": 27,
+      "idno": "11838",
+      "name": "noscemus",
+      "texts": 3,
+      "accessible_texts": 3,
+      "works": 3,
+      "authors": 3,
+      "words": 76044,
+      "source": "noscemus (Universität Innsbruck)"
+    },
+    {
+      "nr": 28,
+      "idno": "21967",
+      "name": "Acta Sanctorum",
+      "texts": 66,
+      "accessible_texts": 66,
+      "works": 66,
+      "authors": 1,
+      "words": 52680193,
+      "source": "Cf. heiligenlexikon.de"
+    },
+    {
+      "nr": 29,
+      "idno": "21643",
+      "name": "Ptolemaeus Latinus",
+      "texts": 30,
+      "accessible_texts": 30,
+      "works": 30,
+      "authors": 10,
+      "words": 808972,
+      "source": "Ptolemaeus Arabus et Latinus (PAL)"
+    },
+    {
+      "nr": 99,
+      "idno": "21155",
+      "name": "Graeca miscellanea",
+      "texts": 775,
+      "accessible_texts": 775,
+      "works": 773,
+      "authors": 93,
+      "words": 10842709,
+      "source": "Perseus (Tufts University)"
+    }
+  ]
 }

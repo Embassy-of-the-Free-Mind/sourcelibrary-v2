@@ -133,7 +133,7 @@ export function CanonBars({ rows, n }: { rows: CanonBar[]; n: number }) {
       caption={
         <>
           Bars are to scale across canons. Left: characters of typed source text, split by the share a catalogue
-          reports as published in English (84000, SuttaCentral, Sefaria). Right: the cost of a first AI draft of what
+          reports as published in English (84000, SuttaCentral, Sefaria, Perseus, First1KGreek). Right: the cost of a first AI draft of what
           has no English, at the rate we measure on our own translation runs. Hatched cost bars price the whole corpus
           because nobody publishes its English coverage, so they are upper bounds. Hover a bar for exact figures.
         </>
