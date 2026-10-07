@@ -7,12 +7,14 @@
 score-ref.py — $0. Reads /root/tlev/refjudge/out-J{1,2}-*.jsonl and results/.../refjudge/key.json,
 writes results/.../refjudge/scores.json (no quotes).
 """
-import collections, glob, itertools, json, random
+import collections, glob, itertools, json, random, sys
 
-OUT = "scripts/eval/results/tengyur-levers-6121/refjudge"
+R2 = "--round" in sys.argv and sys.argv[sys.argv.index("--round") + 1] == "2"  # #6121 round 2: S, A, G38, G35, O
+OUT = "scripts/eval/results/tengyur-models-6121/refjudge" if R2 else "scripts/eval/results/tengyur-levers-6121/refjudge"
+JW = "/root/tlev2/refjudge" if R2 else "/root/tlev/refjudge"
 key = json.load(open(f"{OUT}/key.json"))
 J = {"J1": {}, "J2": {}}
-for f in glob.glob("/root/tlev/refjudge/out-J*-*.jsonl"):
+for f in glob.glob(f"{JW}/out-J*-*.jsonl"):
     j = f.split("/")[-1].split("-")[1]
     for l in open(f):
         if l.strip():
@@ -40,7 +42,12 @@ for iid, k in key.items():
 gate = {j: {"plant_caught": sum(x["caught"] for x in ctrl["PLANT"] if x["judge"] == j), "plants": sum(1 for x in ctrl["PLANT"] if x["judge"] == j),
             "dup_tie": sum(x["tie"] for x in ctrl["DUP"] if x["judge"] == j), "dups": sum(1 for x in ctrl["DUP"] if x["judge"] == j)} for j in J}
 
-ARMS = ["S", "A", "C", "P"]
+if R2:  # preregistered judge gate: each judge catches >= 5 of 6 plants and ties >= 3 of 4 duplicates
+    for g in gate.values():
+        g["pass"] = g["plant_caught"] >= 5 and g["dup_tie"] >= 3
+
+ARMS = ["S", "A", "G38", "G35", "O"] if R2 else ["S", "A", "C", "P"]
+NEW = ARMS[1:]
 rows = []
 for iid, k in key.items():
     if k["kind"] != "ARMS":
@@ -65,7 +72,7 @@ def summary(rs):
                 "omission_sides_either": sum(1 for r in rs if any(r["J"][j][a]["om"] for j in J)),
                 "span_off_either": sum(1 for r in rs if any(r["J"][j][a]["span_off"] for j in J)),
                 "mean_rank": round(sum(r["J"][j][a]["rank"] for r in rs for j in J) / (2 * n), 2)}
-    for x in ["A", "C", "P"]:
+    for x in NEW:
         d = [sum(r["J"][j][x]["fid"] - r["J"][j]["S"]["fid"] for j in J) / 2 for r in rs]
         inv = [sum(r["J"][j]["S"]["inv"] - r["J"][j][x]["inv"] for j in J) / 2 for r in rs]
         rng = random.Random(6121)
@@ -73,11 +80,37 @@ def summary(rs):
         o[f"{x}_vs_S"] = {"fid_diff": round(sum(d) / n, 2), "fid_diff_ci": [round(bs[50], 2), round(bs[1949], 2)],
                           "sides_higher": sum(1 for v in d if v > 0), "sides_lower": sum(1 for v in d if v < 0),
                           "inversions_fewer_per100": round(100 * sum(inv) / n, 1)}
+    if R2:  # the preregistered rule (PREREG-R2.md)
+        dA = o["A_vs_S"]["fid_diff_raw"] = sum(sum(r["J"][j]["A"]["fid"] - r["J"][j]["S"]["fid"] for j in J) / 2 for r in rs) / n
+        invS = sum(r["J"][j]["S"]["inv"] for r in rs for j in J)
+        for x in NEW[1:]:
+            d = [sum(r["J"][j][x]["fid"] - r["J"][j]["S"]["fid"] for j in J) / 2 for r in rs]
+            invX = sum(r["J"][j][x]["inv"] for r in rs for j in J)
+            p = perm_p(d)
+            c1, c2, c3 = sum(d) / n > abs(dA), p < 0.10, invX <= invS
+            o[f"{x}_rule"] = {"gain": round(sum(d) / n, 3), "floor_abs_A": round(abs(dA), 3), "p_one_sided": round(p, 4), "inversions_X": invX, "inversions_S": invS,
+                              "beats_floor": c1, "p_lt_0.10": c2, "inversions_ok": c3, "worth_priced_retranslation": bool(c1 and c2 and c3)}
     return o
 
 
+def perm_p(d, seed=6121):
+    """One-sided paired sign-flip p for mean(d) > 0. Exact when ≤ 20 nonzero, else 10,000 draws."""
+    nz = [x for x in d if x]
+    obs = sum(d)
+    if not nz:
+        return 1.0
+    if len(nz) <= 20:
+        tot = ge = 0
+        for signs in itertools.product((1, -1), repeat=len(nz)):
+            tot += 1; ge += sum(s * abs(x) for s, x in zip(signs, nz)) >= obs - 1e-9
+        return ge / tot
+    rng = random.Random(seed)
+    ge = sum(sum(abs(x) * rng.choice((1, -1)) for x in nz) >= obs - 1e-9 for _ in range(10000))
+    return (ge + 1) / 10001
+
+
 res = {"gate": gate, "all": summary(rows), "by_text": {t: summary([r for r in rows if r["toh"] == t]) for t in sorted({r["toh"] for r in rows})},
-       "judge_fid_agree_within_1": round(sum(abs(r["J"]["J1"][a]["fid"] - r["J"]["J2"][a]["fid"]) <= 1 for r in rows for a in ARMS) / (4 * len(rows)), 3),
+       "judge_fid_agree_within_1": round(sum(abs(r["J"]["J1"][a]["fid"] - r["J"]["J2"][a]["fid"]) <= 1 for r in rows for a in ARMS) / (len(ARMS) * len(rows)), 3),
        "rows": rows}
 json.dump(res, open(f"{OUT}/scores.json", "w"), indent=1)
 print("gate", gate)
@@ -86,5 +119,7 @@ for k, v in [("all", res["all"])] + list(res["by_text"].items()):
     print("==", k, v["sides"])
     for a in ARMS:
         print("  ", a, v[a])
-    for x in ["A", "C", "P"]:
+    for x in NEW:
         print("  ", x, "vs S", v[f"{x}_vs_S"])
+        if f"{x}_rule" in v:
+            print("     RULE", v[f"{x}_rule"])
