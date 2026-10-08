@@ -6,13 +6,46 @@
 """
 score-ref.py — $0. Reads /root/tlev/refjudge/out-J{1,2}-*.jsonl and results/.../refjudge/key.json,
 writes results/.../refjudge/scores.json (no quotes).
+
+  --round 2      #6121 round 2 (S, A, G38, G35, O)
+  --round 6182   #6182 (171 sides × 11 arms, PREREG.md): the same gate/summary/rule code with FP as the
+                 floor arm, plus per-stratum scores with by-text bootstrap CIs and rule B (pareto-6182.py)
+  --round 6182xl #6182, every language but Tibetan (365 pages × 9 Gemini arms + the tracks' Opus): #5695's
+                 judge schema (one reversal, boolean omission), so gate, strata and rule B are score-xl.py's
 """
 import collections, glob, itertools, json, random, sys
 
-R2 = "--round" in sys.argv and sys.argv[sys.argv.index("--round") + 1] == "2"  # #6121 round 2: S, A, G38, G35, O
-OUT = "scripts/eval/results/tengyur-models-6121/refjudge" if R2 else "scripts/eval/results/tengyur-levers-6121/refjudge"
-JW = "/root/tlev2/refjudge" if R2 else "/root/tlev/refjudge"
+ROUND = sys.argv[sys.argv.index("--round") + 1] if "--round" in sys.argv else "1"
+if ROUND == "6182xl":  # J1 on every item, J2 on the preregistered subset (J2-subset.json); out-J2s-* are J2's
+    import hashlib, importlib.util
+    OUT, JW = "scripts/eval/results/pareto-6182/xljudge", "/root/pareto-6182/xljudge"
+    key = json.load(open(f"{OUT}/key.json"))
+    subset = json.load(open(f"{JW}/J2-subset.json"))["ids"]
+    assert hashlib.sha256(",".join(subset).encode()).hexdigest().startswith("e3413c8bb1ed6b57"), "J2 subset changed"
+    J = {"J1": {}, "J2": {}}
+    for f in glob.glob(f"{JW}/out-J*-*.jsonl"):
+        j = "J2" if "-J2" in f else "J1"
+        for l in open(f):
+            if l.strip():
+                o = json.loads(l); J[j][o["id"]] = o
+    missing = {"J1": [i for i in key["items"] if i not in J["J1"]], "J2": [i for i in subset if i not in J["J2"]]}
+    assert not any(missing.values()), missing
+    spec = importlib.util.spec_from_file_location("p6182xl", "scripts/eval/pareto-6182/score-xl.py")
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+    m.run(key=key, J=J, OUT=OUT, subset=subset)
+    sys.exit(0)
+P6182 = ROUND == "6182"
+R2 = ROUND == "2" or P6182  # 6182 applies round 2's rule (PREREG.md rule A), FP in A's place
+OUT = {"1": "scripts/eval/results/tengyur-levers-6121/refjudge", "2": "scripts/eval/results/tengyur-models-6121/refjudge",
+       "6182": "scripts/eval/results/pareto-6182/tibjudge"}[ROUND]
+JW = {"1": "/root/tlev/refjudge", "2": "/root/tlev2/refjudge", "6182": "/root/pareto-6182/tibjudge"}[ROUND]
+BASE = "FP" if P6182 else "A"  # the production rerun: planted twin and rule-A floor
 key = json.load(open(f"{OUT}/key.json"))
+if P6182:  # this key has no toh: the 113 take it from #5497's key, the 58 from the set's text label
+    toh = {k["page_id"]: k["toh"] for k in json.load(open("/root/tref/judge/key.json")).values() if isinstance(k, dict) and k.get("toh")}
+    for k in key.values():
+        if k["kind"] == "ARMS":
+            k["toh"] = k["text"] if k["set"] == "tib-ref58" else toh[k["page_id"]]
 J = {"J1": {}, "J2": {}}
 for f in glob.glob(f"{JW}/out-J*-*.jsonl"):
     j = f.split("/")[-1].split("-")[1]
@@ -35,18 +68,30 @@ for iid, k in key.items():
     for j in J:
         sc, rk = unblind(j, iid)
         if k["kind"] == "PLANT":
-            ctrl["PLANT"].append({"judge": j, "caught": bool(sc["A_PLANT"]["inversions"]) and not sc["A"]["inversions"] or len(sc["A_PLANT"]["inversions"]) > len(sc["A"]["inversions"]),
-                                  "ranked_below": any("A" in t and "A_PLANT" not in t for t in rk[:1])})
+            pl, tw = sc[f"{BASE}_PLANT"], sc[BASE]
+            ctrl["PLANT"].append({"judge": j, "item": iid, "caught": bool(pl["inversions"]) and not tw["inversions"] or len(pl["inversions"]) > len(tw["inversions"]),
+                                  "lower_fid": pl["fidelity"] < tw["fidelity"],
+                                  "ranked_below": any(BASE in t and f"{BASE}_PLANT" not in t for t in rk[:1])})
         else:
             ctrl["DUP"].append({"judge": j, "tie": any(set(t) == {"S", "S_DUP"} for t in rk), "same_fid": sc["S"]["fidelity"] == sc["S_DUP"]["fidelity"]})
 gate = {j: {"plant_caught": sum(x["caught"] for x in ctrl["PLANT"] if x["judge"] == j), "plants": sum(1 for x in ctrl["PLANT"] if x["judge"] == j),
             "dup_tie": sum(x["tie"] for x in ctrl["DUP"] if x["judge"] == j), "dups": sum(1 for x in ctrl["DUP"] if x["judge"] == j)} for j in J}
 
-if R2:  # preregistered judge gate: each judge catches >= 5 of 6 plants and ties >= 3 of 4 duplicates
+if P6182:  # PREREG.md: caught = reversal listed OR a lower fidelity than its twin, in >= 6 of 8; duplicates tie in >= 3 of 4
+    for j, g in gate.items():
+        mine = [x for x in ctrl["PLANT"] if x["judge"] == j]
+        g["plant_caught_prereg"] = sum(x["caught"] or x["lower_fid"] for x in mine)
+        g["plant_caught_strict"] = sum(x["caught"] and x["lower_fid"] for x in mine)
+        g["pass"] = g["plant_caught_prereg"] >= 6 and g["dup_tie"] >= 3
+    gate["controls"] = ctrl
+    J = {j: v for j, v in J.items() if gate[j]["pass"]}  # PREREG: score only with the judge(s) that pass
+    assert J, "instrument failed: no judge passed the gate"
+elif R2:  # preregistered judge gate: each judge catches >= 5 of 6 plants and ties >= 3 of 4 duplicates
     for g in gate.values():
         g["pass"] = g["plant_caught"] >= 5 and g["dup_tie"] >= 3
 
-ARMS = ["S", "A", "G38", "G35", "O"] if R2 else ["S", "A", "C", "P"]
+ARMS = (["S", "FP", "AA", "L31", "L35", "G35", "G36", "G37", "G38", "PRO", "O"] if P6182 else
+        ["S", "A", "G38", "G35", "O"] if R2 else ["S", "A", "C", "P"])
 NEW = ARMS[1:]
 rows = []
 for iid, k in key.items():
@@ -56,37 +101,38 @@ for iid, k in key.items():
     for j in J:
         sc, rk = unblind(j, iid)
         per[j] = {a: {"fid": sc[a]["fidelity"], "inv": len(sc[a]["inversions"]), "om": len(sc[a]["omissions"]), "inven": len(sc[a]["inventions"]),
-                      "span_off": sc[a]["span"] != "same", "rank": next(i for i, t in enumerate(rk) if a in t)} for a in ARMS}
-    rows.append({"id": iid, "page_id": k["page_id"], "toh": k["toh"], "J": per})
+                      "span_off": sc[a]["span"] != "same", "inven_n": len(sc[a]["inventions"]), "rank": next(i for i, t in enumerate(rk) if a in t)} for a in ARMS}
+    rows.append({"id": iid, "page_id": k["page_id"], "toh": k["toh"], "set": k.get("set"), "J": per})
+NJ = len(J)
 
 
 def summary(rs):
     n = len(rs)
     o = {"sides": n}
     for a in ARMS:
-        fid = [sum(r["J"][j][a]["fid"] for j in J) / 2 for r in rs]
+        fid = [sum(r["J"][j][a]["fid"] for j in J) / NJ for r in rs]
         o[a] = {"fidelity_mean": round(sum(fid) / n, 2),
                 "inversion_sides_either": sum(1 for r in rs if any(r["J"][j][a]["inv"] for j in J)),
                 "inversion_sides_both": sum(1 for r in rs if all(r["J"][j][a]["inv"] for j in J)),
-                "inversions_per100_mean_of_judges": round(100 * sum(r["J"][j][a]["inv"] for r in rs for j in J) / (2 * n), 1),
+                "inversions_per100_mean_of_judges": round(100 * sum(r["J"][j][a]["inv"] for r in rs for j in J) / (NJ * n), 1),
                 "omission_sides_either": sum(1 for r in rs if any(r["J"][j][a]["om"] for j in J)),
                 "span_off_either": sum(1 for r in rs if any(r["J"][j][a]["span_off"] for j in J)),
-                "mean_rank": round(sum(r["J"][j][a]["rank"] for r in rs for j in J) / (2 * n), 2)}
+                "mean_rank": round(sum(r["J"][j][a]["rank"] for r in rs for j in J) / (NJ * n), 2)}
     for x in NEW:
-        d = [sum(r["J"][j][x]["fid"] - r["J"][j]["S"]["fid"] for j in J) / 2 for r in rs]
-        inv = [sum(r["J"][j]["S"]["inv"] - r["J"][j][x]["inv"] for j in J) / 2 for r in rs]
+        d = [sum(r["J"][j][x]["fid"] - r["J"][j]["S"]["fid"] for j in J) / NJ for r in rs]
+        inv = [sum(r["J"][j]["S"]["inv"] - r["J"][j][x]["inv"] for j in J) / NJ for r in rs]
         rng = random.Random(6121)
         bs = sorted(sum(d[rng.randrange(n)] for _ in range(n)) / n for _ in range(2000))
         o[f"{x}_vs_S"] = {"fid_diff": round(sum(d) / n, 2), "fid_diff_ci": [round(bs[50], 2), round(bs[1949], 2)],
                           "sides_higher": sum(1 for v in d if v > 0), "sides_lower": sum(1 for v in d if v < 0),
                           "inversions_fewer_per100": round(100 * sum(inv) / n, 1)}
     if R2:  # the preregistered rule (PREREG-R2.md)
-        dA = o["A_vs_S"]["fid_diff_raw"] = sum(sum(r["J"][j]["A"]["fid"] - r["J"][j]["S"]["fid"] for j in J) / 2 for r in rs) / n
+        dA = o[f"{BASE}_vs_S"]["fid_diff_raw"] = sum(sum(r["J"][j][BASE]["fid"] - r["J"][j]["S"]["fid"] for j in J) / NJ for r in rs) / n
         invS = sum(r["J"][j]["S"]["inv"] for r in rs for j in J)
         for x in NEW[1:]:
-            d = [sum(r["J"][j][x]["fid"] - r["J"][j]["S"]["fid"] for j in J) / 2 for r in rs]
+            d = [sum(r["J"][j][x]["fid"] - r["J"][j]["S"]["fid"] for j in J) / NJ for r in rs]
             invX = sum(r["J"][j][x]["inv"] for r in rs for j in J)
-            p = perm_p(d)
+            p = perm_p(d, 6182 if P6182 else 6121)
             c1, c2, c3 = sum(d) / n > abs(dA), p < 0.10, invX <= invS
             o[f"{x}_rule"] = {"gain": round(sum(d) / n, 3), "floor_abs_A": round(abs(dA), 3), "p_one_sided": round(p, 4), "inversions_X": invX, "inversions_S": invS,
                               "beats_floor": c1, "p_lt_0.10": c2, "inversions_ok": c3, "worth_priced_retranslation": bool(c1 and c2 and c3)}
@@ -109,6 +155,12 @@ def perm_p(d, seed=6121):
     return (ge + 1) / 10001
 
 
+if P6182:  # rule A's numbers above; strata, by-text CIs and rule B live beside this file's caller
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("p6182", "scripts/eval/pareto-6182/score-tib.py")
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+    m.run(rows=rows, J=list(J), ARMS=ARMS, gate=gate, summary=summary, perm_p=perm_p, OUT=OUT)
+    sys.exit(0)
 res = {"gate": gate, "all": summary(rows), "by_text": {t: summary([r for r in rows if r["toh"] == t]) for t in sorted({r["toh"] for r in rows})},
        "judge_fid_agree_within_1": round(sum(abs(r["J"]["J1"][a]["fid"] - r["J"]["J2"][a]["fid"]) <= 1 for r in rows for a in ARMS) / (len(ARMS) * len(rows)), 3),
        "rows": rows}

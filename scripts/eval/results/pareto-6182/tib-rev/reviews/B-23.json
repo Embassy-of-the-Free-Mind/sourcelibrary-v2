@@ -1,0 +1,62 @@
+[
+{"id": "QJZ1X", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Faithful rendering of Avalokitavrata's gloss on 'when debated by means of emptiness', with the MMK 1.1 verse correctly set as verse; only inline glosses clutter it."},
+{"id": "QX88Y", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Grammatically careful rendering of the ablative-case and bahuvrihi discussion; argument structure preserved."},
+{"id": "QB5LB", "score": 3, "verdict": "work", "span": "ok", "errors": [
+  {"type": "omission", "confidence": "high",
+   "tibetan": "འགལ་བའི་རང་བཞིན་འཛིན་པར་བྱེད་པའི་རྟོག་པ་དང་བྲལ་བ་བཟློག་པའི་དོན་དུ་ཡིན་ལ",
+   "english": "for the purpose of reversing conceptual thought (kalpana) that perceives a contradictory nature",
+   "why": "The Tibetan says 'non-mistaken' excludes cognition that is free from conceptual thought yet grasps a contradictory nature (non-conceptual error); dropping 'free from' (dang bral ba) inverts the point, since conceptual cognition is excluded by a different qualifier.",
+   "fix": {"find": "for the purpose of reversing conceptual thought (kalpana) that perceives a contradictory nature", "replace": "for the purpose of excluding cognition that is free from conceptual thought (kalpana) yet perceives a contradictory nature"}},
+  {"type": "term", "confidence": "high",
+   "tibetan": "དབྱིབས་ནི་ཁ་དོག་ལས་ཐ་དད་པར",
+   "english": "Because shape (akara) is not capable",
+   "why": "dbyibs is shape (saṃsthāna), not ākāra, which is rnam pa (aspect).",
+   "fix": {"find": "Because shape (akara) is not capable", "replace": "Because shape (saṃsthāna) is not capable"}},
+  {"type": "reversal", "confidence": "medium",
+   "tibetan": "དེ་ལ་ཚད་མར་འཁྲུལ་པར་མི་འགྱུར་བར་བྱ་བའི་ཕྱིར་རོ་ཞེ་ན",
+   "english": "Is this not done so that valid cognition (pramana) reliable knowledge or a valid means of knowing does not become mistaken?",
+   "why": "The objection is that the qualifier is stated so that one does not mistake such a cognition for a pramāṇa, not so that pramāṇa does not become mistaken."}
+ ],
+ "note": "Readable, but the key sentence on what 'non-mistaken' (abhrānta) excludes is inverted, and a term is mis-equated."},
+{"id": "QR06M", "score": 4, "verdict": "light", "span": "ok", "errors": [
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "གཞན་གྱི་གོམས་ལས་ཞེས་བྱ་བ་ལ་སོགས་པ་སྨྲས་སོ",
+   "english": "The opponent says: \"From the familiarity of others,\" and so forth.",
+   "why": "gzhan gyi marks the cited words as the opponent's ('the other's [statement]: \"from familiarity\"'), as in the parallel gzhan gyi ste just above; it is not familiarity belonging to others."},
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "གཞན་དག་གལ་ཏེ་ཉམས་སུ་མྱོང་བའི་དོན་ནི་སྙོན་པའི་མི་ནུས་སོ་སྙམ་པས།",
+   "english": "Others, thinking it is impossible to deny the experienced object, show the sequence",
+   "why": "The author shows the sequence of engagement lest others think the experienced object cannot be shown/denied; 'others' are not the ones showing it."}
+ ],
+ "note": "The pramāṇa debate on attainment and familiarity is followed well; two attributions of who speaks or acts are off."},
+{"id": "QTDRJ", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Faithful rendering of the argument that a permanent cause cannot acquire a new productive nature and that destruction needs no cause."},
+{"id": "Q3J9X", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Accurate on the god/human continuum argument and the opponent's dilemma about the reason; inline name glosses are distracting but harmless."},
+{"id": "QETUK", "score": 4, "verdict": "light", "span": "extra", "span_why": "The opening sentence (bed with lapis legs, golden canopy, beings with golden lotuses in hand) translates the previous side's last line.", "errors": [
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "གནོད་སྦྱིན་བདག་རྣམས་ཀུན་ནས་ཡོངས་སུ་བསྐོར་ནས་གནས། །མི་མངོན་གྱུར་པའི་ལྷ་རྣམས་ཀྱིས་ཀྱང་ནམ་མཁའ་ལ།",
+   "english": "Surrounded on all sides by the masters of the (Yakshas) nature spirits or guardians of wealth, invisible gods also dwelled in the sky.",
+   "why": "The yakṣa lords stood surrounding the newborn on all sides; it is not the invisible gods who are surrounded by them."}
+ ],
+ "note": "A fluent verse paraphrase of the nativity wonders, faithful in substance, though it pulls in the previous side's last line."},
+{"id": "QQCPM", "score": 4, "verdict": "light", "span": "ok", "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "གནོད་པ་ཅན་གྱི་ཚད་མ་",
+   "english": "\"sublimating evidence\" (gnod pa can gyi tshad ma)",
+   "why": "gnod pa can gyi tshad ma is bādhakapramāṇa, the invalidating (refuting) valid cognition, not 'sublimating evidence'.",
+   "fix": {"find": "\"sublimating evidence\" (gnod pa can gyi tshad ma)", "replace": "\"invalidating valid cognition\" (gnod pa can gyi tshad ma, bādhakapramāṇa)"}}
+ ],
+ "note": "Sound rendering of the momentariness argument and the opponent's non-pervasion doubt; one technical term is badly mis-rendered."},
+{"id": "QXA05", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Careful rendering of the latrine-etiquette root lines and their glosses; the interleaving of root and commentary is preserved."},
+{"id": "QGBAN", "score": 4, "verdict": "light", "span": "ok", "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "གཉེན་དུ་འཐམས་པ་རིམ་གྲོ་བྱས་པ་རྣམས་ལ",
+   "english": "close relatives and those who perform religious duties",
+   "why": "rim gro byas pa here means those who have rendered one service or honour (benefactors/attendants), not people performing religious duties."}
+ ],
+ "note": "Faithful account of the hell punishments for sexual misconduct; one category in the closing list is misread."}
+]

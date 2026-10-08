@@ -86,7 +86,7 @@ const STRINGS: Record<Locale, SupportStrings> = {
     giveLead: "Pick a route below to give now, or use the form and we'll follow up personally. Every gift, of any size, makes a difference.",
     usLabel: 'US tax-deductible', usTitle: 'Netherland-America Foundation', usSub: '501(c)(3) public charity',
     intlLabel: 'International', intlTitle: 'Donate via EFM', intlSub: 'ANBI-registered (NL)',
-    largeLabel: 'Large gifts — wire, stock, or donor-advised fund',
+    largeLabel: 'Large gifts: wire, stock, or donor-advised fund',
     taxNote: 'US donors giving through the Netherland-America Foundation (NAF) receive full 501(c)(3) tax benefits, with receipts issued by NAF. International gifts go to Stichting Het Wereldhart (Cultural ANBI), where Stripe issues the receipt automatically.',
     businessPre: 'Business owners:', businessLink: 'giving through your company', businessPost: 'is usually cheaper than giving personally.',
     whereTitle: 'Where your support goes',
@@ -97,7 +97,7 @@ const STRINGS: Record<Locale, SupportStrings> = {
     ],
     followTitle: 'Follow the work',
     followLead: "Not ready to give? Leave your email and we'll send word as new first-ever translations come online. No account needed.",
-    footerPre: 'Not everyone gives money — some give time.',
+    footerPre: 'Not everyone gives money. Some give time.',
     participate: 'Participate',
     footerPost: 'as a translator, reviewer, or volunteer.',
     home: 'Home',
@@ -113,7 +113,7 @@ const STRINGS: Record<Locale, SupportStrings> = {
     giveLead: 'Elige una opción abajo para donar ahora, o usa el formulario y te contactaremos personalmente. Cada donación, de cualquier tamaño, marca la diferencia.',
     usLabel: 'Deducible en EE. UU.', usTitle: 'Netherland-America Foundation', usSub: 'Entidad benéfica 501(c)(3)',
     intlLabel: 'Internacional', intlTitle: 'Donar vía EFM', intlSub: 'Registrada ANBI (NL)',
-    largeLabel: 'Donaciones grandes — transferencia, acciones o fondo asesorado',
+    largeLabel: 'Donaciones grandes: transferencia, acciones o fondo asesorado',
     taxNote: 'Los donantes de EE. UU. que donan a través de la Netherland-America Foundation (NAF) reciben beneficios fiscales 501(c)(3) completos, con recibos emitidos por la NAF. Las donaciones internacionales van a Stichting Het Wereldhart (ANBI Cultural), donde Stripe emite el recibo automáticamente.',
     businessPre: 'Para empresas:', businessLink: 'donar a través de tu empresa', businessPost: 'suele ser más económico que donar personalmente.',
     whereTitle: 'Adónde va tu apoyo',
@@ -124,7 +124,7 @@ const STRINGS: Record<Locale, SupportStrings> = {
     ],
     followTitle: 'Sigue el trabajo',
     followLead: '¿Aún no quieres donar? Déjanos tu correo y te avisaremos cuando salgan nuevas primeras traducciones. No necesitas cuenta.',
-    footerPre: 'No todos donan dinero — algunos donan tiempo.',
+    footerPre: 'No todos donan dinero. Algunos donan tiempo.',
     participate: 'Participa',
     footerPost: 'como traductor, revisor o voluntario.',
     home: 'Inicio',
@@ -252,7 +252,7 @@ export default function SupportView({
             {s.footerPost}
           </p>
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 text-stone-500 text-sm">
-            <span>&copy; {new Date().getFullYear()} Source Library — Embassy of the Free Mind</span>
+            <span>&copy; {new Date().getFullYear()} Source Library · Embassy of the Free Mind</span>
             <div className="flex flex-wrap items-center gap-4">
               <Link href={homeHref} className="hover:text-stone-900 transition-colors">{s.home}</Link>
               <Link href="/licensing" className="hover:text-stone-900 transition-colors">

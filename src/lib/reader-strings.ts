@@ -397,6 +397,16 @@ export interface ReaderStrings {
     blankPage: string;
     readyToTranslate: string;
     readyToTranslateBody: string;
+    /**
+     * An English edition with no `translation.data` is not "untranslated" —
+     * the pipeline never translates English. The transcription is the
+     * reading text; say so, with no request CTA and no pipeline button.
+     */
+    englishReadingText: string;
+    englishReadingTextBody: string;
+    /** Pre-1700 English: a modernized reading (same field) could be made but has not been (#4958). */
+    notModernized: string;
+    notModernizedBody: string;
     signInToRequest: string;
     requestTranslation: string;
     /** The request POST failed, so nothing was queued. */
@@ -858,6 +868,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       blankPage: 'Blank page.',
       readyToTranslate: 'Ready to translate',
       readyToTranslateBody: 'OCR is complete for this page. It has not been translated into English yet.',
+      englishReadingText: 'English edition',
+      englishReadingTextBody: 'This book is in English — the transcription is the reading text. There is nothing to translate.',
+      notModernized: 'Not yet modernized',
+      notModernizedBody: 'This book is in Early Modern English. A modernized reading has not been made yet; the transcription is the reading text.',
       signInToRequest: 'Sign in to request a translation',
       requestTranslation: 'Request translation',
       requestFailed: 'That request did not go through. Try again in a moment.',
@@ -1286,6 +1300,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       blankPage: 'Página en blanco.',
       readyToTranslate: 'Lista para traducir',
       readyToTranslateBody: 'La transcripción de esta página está completa. Todavía no se ha traducido al inglés.',
+      englishReadingText: 'Edición en inglés',
+      englishReadingTextBody: 'Este libro está en inglés — la transcripción es el texto de lectura. No hay nada que traducir.',
+      notModernized: 'Aún sin modernizar',
+      notModernizedBody: 'Este libro está en inglés moderno temprano. Todavía no se ha hecho una lectura modernizada; la transcripción es el texto de lectura.',
       signInToRequest: 'Inicia sesión para pedir una traducción',
       requestTranslation: 'Pedir la traducción',
       requestFailed: 'La solicitud no se ha enviado. Inténtalo de nuevo en un momento.',

@@ -1,0 +1,316 @@
+[
+ {
+  "id": "QAS1L",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "ལམ་དང་ངེས་པར་འབྱིན་པ་དང་། །རིགས་པ་སྒྲུབ་པའི་རང་བཞིན་ལས།",
+    "english": "the path, the realization, the achievement of the method, and the nature of accomplishment",
+    "why": "These are the four standard aspects of the truth of the path: path (mārga), deliverance (nairyāṇika), reasoning/method (nyāya) and accomplishment (pratipatti); nges par 'byin pa is deliverance, not realization.",
+    "fix": {
+     "find": "the path, the realization, the achievement of the method, and the nature of accomplishment",
+     "replace": "path, deliverance, method, and accomplishment"
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "ཚུལ་ཁྲིམས་བརྟུལ་ཞུགས་མཆོག་འཛིན་དང་། །བཅས་པ་བརྒྱད་ནི་འདོད་པའི་འོ།",
+    "english": "These, along with the supreme adherence to ethical discipline and ascetic observances",
+    "why": "The eight are the desire-realm afflictions abandoned by seeing the path truth (a set that includes śīlavrataparāmarśa), not the acceptance and knowledge plus that view."
+   },
+   {
+    "type": "gloss",
+    "confidence": "medium",
+    "tibetan": "ཚུལ་ཁྲིམས་བརྟུལ་ཞུགས་མཆོག་འཛིན་",
+    "english": "[note: This refers to the purification of wrong views regarding morality and religious vows]",
+    "why": "Śīlavrataparāmarśa is itself the wrong view (holding rules and vows as supreme) that is abandoned, not a purification of wrong views."
+   },
+   {
+    "type": "addition",
+    "confidence": "high",
+    "tibetan": "ཕྲ་ཞིང་ཕྲ་བའི་དྲི་མ་ནི། །ཟད་བྱེད་",
+    "english": "stains one line of text partially illegible",
+    "why": "The Tibetan is complete; 'one line of text partially illegible' is an artifact, not in the source.",
+    "fix": {
+     "find": "stains one line of text partially illegible",
+     "replace": "stains"
+    }
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "ལམ་གྱི་བདེན་པ་བསྒོམས་པ་ནི། །འདོད་པའི་ཁམས་སུ་རྣམ་པ་བཞི། །",
+    "english": "Regarding the cultivation of the Truth of the Path, there are four aspects in the Desire Realm",
+    "why": "The whole side is seven-syllable verse, rendered throughout as running prose."
+   }
+  ],
+  "note": "Generally follows the verse on the path of seeing, but the four aspects of the path truth are garbled, the eight abandoned afflictions are misconstrued, and a stray scribal remark ends the side."
+ },
+ {
+  "id": "QAP0G",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "དེ་ཕྱིར་དེ་ཡི་ཡེ་ཤེས་ནི། །ནན་ཏན་བྱ་རྟོགས་རྣམ་དཔྱད་བྱའོ།",
+    "english": "Therefore, his primordial wisdom should be examined through diligent realization.",
+    "why": "PV II.32 (anuṣṭheyagataṃ jñānam asya vicāryatām): his knowledge concerning what is to be practised should be examined; nan tan bya is 'what is to be practised', not 'diligent'.",
+    "fix": {
+     "find": "Therefore, his primordial wisdom should be examined through diligent realization.",
+     "replace": "Therefore, his knowledge concerning what is to be practised should be examined."
+    }
+   },
+   {
+    "type": "reversal",
+    "confidence": "medium",
+    "tibetan": "ཡུལ་གཞན་ཤེས་པ་སྲིད་པ་ནི་དོན་གྱི་གཙོ་བོ་ལ་མི་སླུ་བར་ཁྱད་པར་མེད་པས་སོ།",
+    "english": "knowing other objects is possible because there is no difference in their non-deceptive nature regarding the essential point",
+    "why": "This explains why examining other objects is impossible/pointless: whether he can know them makes no difference to his non-deceptiveness about the principal aim; the English turns it into an affirmation that such knowledge is possible."
+   },
+   {
+    "type": "omission",
+    "confidence": "medium",
+    "tibetan": "གང་གི་ཕྱིར་ཤེས་པ་དང་ལྡན་པ་ནན་ཏན་བྱ་བའི་དོན་དུ་བཙལ་བ་ནི།",
+    "english": "Because one seeks to engage with one who possesses knowledge",
+    "why": "The Tibetan says a knower is sought for the sake of what is to be practised; that purpose clause is dropped."
+   }
+  ],
+  "note": "The argument of PV II.32-33 is followed in outline, but the key verse on knowledge of what is to be practised is mistranslated and one step of the reasoning is inverted."
+ },
+ {
+  "id": "QL976",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "བརྩེ་བ་དང་ལྡན་ཞེས་བྱ་བའི་དོན་ཏོ།",
+    "english": "endowed with equanimity",
+    "why": "brtse ba is compassion/loving concern, not equanimity.",
+    "fix": {
+     "find": "endowed with equanimity",
+     "replace": "endowed with compassion"
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "སྐྱེས་བུ་མངོན་པར་འདོད་པའི་འབྲས་བུས་སྦྱར་བར་བྱའོ་སྙམ་པས",
+    "english": "\"A person should apply this for the sake of the desired result.\"",
+    "why": "The convention-maker thinks 'I shall connect the person (who applies it) with the desired result'; the intent is the maker's, not an instruction to the user."
+   }
+  ],
+  "note": "A sound rendering of the argument about mantras as conventions; one clear term error and one blurred intention."
+ },
+ {
+  "id": "Q15DH",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "དྲན་པ་གོམས་པས་ཡིད་གསལ་བ་ཡིན་པའི་ཕྱིར།",
+    "english": "the cultivation of mindfulness",
+    "why": "dran pa here is memory (the recollection of former births that follows), not meditative mindfulness."
+   }
+  ],
+  "note": "Faithful in its handling of the compassion and habituation arguments; only a minor term issue."
+ },
+ {
+  "id": "QSIZM",
+  "score": 2,
+  "verdict": "specialist",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "མེན་ལ་བ་ལང་བཞིན་ནོ།",
+    "english": "between a person and a cow",
+    "why": "ba men is the gavaya (wild ox), the standard example alongside the cow (go-gavaya), not a person.",
+    "fix": {
+     "find": "between a person and a cow",
+     "replace": "between a gavaya (wild ox) and a cow"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "བ་མེ་ན་ནི་བ་ལང་གི་ཉེ་བར་ལེན་པ་མ་ཡིན་ཏེ།",
+    "english": "A person is not the substantial cause of a cow",
+    "why": "The gavaya is not the substantial cause of the cow.",
+    "fix": {
+     "find": "A person is not the substantial cause of a cow",
+     "replace": "A gavaya is not the substantial cause of a cow"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "དུས་ཐ་དད་པ་ནི་གནས་སྐབས་པའི་རྒྱུའམ་རྒྱུན་གྱི་ཡང་རྒྱུ་ཡིན་གྱི་ཉེ་བར་ལེན་པ་ནི་མ་ཡིན་ནོ།",
+    "english": "A cause that exists at a specific time",
+    "why": "dus tha dad pa is a cause at a different time (temporally distinct), which is only a situational or continuum cause.",
+    "fix": {
+     "find": "A cause that exists at a specific time",
+     "replace": "A cause that is distinct in time"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "མེ་རྗེས་སུ་འགྲོ་བ་དང་ལྡོག་པ་དག་གིས་བླངས་པའི་ཐ་དད་པ་ནི་དེ་ཉེ་བར་འཚོ་བ་ཉིད་དུ་བསྟན་པ་ཡིན་གྱི་",
+    "english": "The way heat follows and recedes from the copper shows a distinction in how it is sustained.",
+    "why": "The fire, a distinct thing ascertained as cause of the copper's liquidity by positive and negative concomitance (anvaya-vyatireka), is shown to be only its sustaining condition; the logical terms are lost."
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ནུར་ནུར་པོ་",
+    "english": "(kalala) embryo in its first week; oval stage",
+    "why": "nur nur po is the second embryonic stage (arbuda); kalala is mer mer po."
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "ལུས་ཀྱི་རྒྱུ་ནི་སེམས་ཀྱི་རྒྱུ་སེམས་གཞན་དང་ལྷན་ཅིག་བྱེད་པ་ལས་སམ།",
+    "english": "the cause of the body arises either from the mind acting as a cooperative condition with another mind",
+    "why": "The body's cause acts as co-operating condition together with the mind's cause, i.e. a prior mind; the roles are muddled."
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "ཡང་ན་འབྲས་བུའི་བདག་ཉིད་ཁོ་ན་གནས་སྐབས་པ་དང་རྒྱུན་གྱི་རྒྱུ་མེ་དང་འཇི་བ་ལ་སོགས་པ་ཉེ་བར་ལེན་པ་ཡིན་པའི་",
+    "english": "Alternatively, only the nature of the result itself—such as fire or clay in their specific states—acts as the substantial cause for the situational states and the continuity of the cause.",
+    "why": "The sentence says situational and continuum causes such as fire and clay are called substantial causes only insofar as they have the nature of the result; the English reorders the relation."
+   }
+  ],
+  "note": "The upādāna argument about body and mind is repeatedly misrendered (gavaya as 'person', temporal distinctness reversed, logical terms lost); not reliable without a specialist pass."
+ },
+ {
+  "id": "Q35OB",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "addition",
+    "confidence": "high",
+    "tibetan": "དག་ལས་མ་ཡིན་ནོ།",
+    "english": "# Chapter on Valid Cognition",
+    "why": "No chapter heading is on this side; the heading is invented.",
+    "fix": {
+     "find": "# Chapter on Valid Cognition\n\n",
+     "replace": ""
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "རེས་འགའ་སྨྲ་བ་ཉིད་རང་དབང་",
+    "english": "Is one attempting to establish the independence of speech itself",
+    "why": "rang dbang du bsgrub pa is an independent (svatantra) proof as opposed to a prasaṅga; the question is whether 'being a speaker' is used as a svatantra reason.",
+    "fix": {
+     "find": "Is one attempting to establish the independence of speech itself",
+     "replace": "Is 'being a speaker' itself intended as an independent proof (svatantra)"
+    }
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "མ་བརྟགས་ན་ཉམས་དགའ་བ་ཉིད་ཀྱི་#ལུང་ཙམ་ལས་གཞན་",
+    "english": "if one does not analyze, one might find simple pleasure in mere scripture",
+    "why": "In a prasaṅga the property accepted by the opponent on mere scripture, attractive only while unexamined (avicāraramaṇīya), is stated as the probans; the English makes it a separate remark about enjoying scripture."
+   }
+  ],
+  "note": "The svatantra/prasaṅga dilemma is misread at its opening and one clause is mis-segmented, though the rest of the argument is followed; an invented heading opens the side."
+ },
+ {
+  "id": "QG9AZ",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "A faithful rendering of the argument against suffering being made by another, with sound notes."
+ },
+ {
+  "id": "Q00II",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "reversal",
+    "confidence": "high",
+    "tibetan": "འགལ་བའི་རང་བཞིན་འཛིན་པར་བྱེད་པའི་རྟོག་པ་དང་བྲལ་བ་བཟློག་པའི་དོན་དུ་ཡིན་ལ།",
+    "english": "excluding conceptual thought (kalpana) mental fabrication or construction which apprehends a contradictory nature",
+    "why": "'Non-erroneous' excludes cognition that is FREE of conceptual construction (rtog pa dang bral ba) yet apprehends a contradictory nature; conceptual cognition is already excluded by 'free of conception'.",
+    "fix": {
+     "find": "excluding conceptual thought (kalpana) mental fabrication or construction which apprehends a contradictory nature",
+     "replace": "excluding cognition free of conceptual construction (kalpanā) which apprehends a contradictory nature"
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "དེ་ལ་ཚད་མར་འཁྲུལ་པར་མི་འགྱུར་བར་བྱ་བའི་ཕྱིར་རོ་ཞེ་ན།",
+    "english": "Is this not done to prevent valid cognition (pramana) reliable or valid means of knowledge from becoming erroneous?",
+    "why": "The objection is that it is stated so that one does not mistake that cognition for a pramāṇa, not to keep pramāṇa from becoming erroneous."
+   },
+   {
+    "type": "addition",
+    "confidence": "high",
+    "tibetan": "གྲུར་ཞུགས་པ་ནི་",
+    "english": "Being seated in a boat sentence continues to next page",
+    "why": "'sentence continues to next page' is an artifact, not in the source.",
+    "fix": {
+     "find": "Being seated in a boat sentence continues to next page",
+     "replace": "Being seated in a boat..."
+    }
+   }
+  ],
+  "note": "Readable treatment of 'non-erroneous' and the causes of sensory error, but the key point about what 'non-erroneous' excludes is reversed."
+ },
+ {
+  "id": "Q8NLL",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "Accurate rendering of the Vigrahavyāvartanī verses and autocommentary on the infinite regress of pramāṇas."
+ },
+ {
+  "id": "Q8W90",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "ཞེས་ཟེར་བ་#ནི་འདི་སྐད་ཅེས་གལ་ཏེ་དེ་ལ་རང་གི་བདག་ཉིད་ལ་ནུས་པ་མེད་ན།",
+    "english": "# To this it is said: if it lacks the capacity regarding its own self",
+    "why": "This is still the opponent speaking ('what you say shows that if it lacks capacity regarding itself...'), leading into his charge of inconclusiveness; the English inserts a heading and presents it as a reply."
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "གཏན་ཚིགས་མ་ངེས་པ་ཉིད་ཀྱི་སྐྱོན་བརྗོད་པ་#སྟེ།",
+    "english": "This clarifies that the point claiming \"the eye is the very essence of seeing\" is flawed due to an uncertain reason.",
+    "why": "The opponent's charge of an inconclusive reason, made to establish that the eye has the nature of seeing, cannot be made with the fire example; the English makes the eye-sees thesis the thing that is faulty."
+   }
+  ],
+  "note": "The gone/not-gone application to fire is rendered well, but the dialectic at the opening is misassigned between opponent and respondent."
+ }
+]

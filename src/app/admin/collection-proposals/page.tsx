@@ -81,7 +81,7 @@ export default function AdminCollectionProposalsPage() {
   return (
     <div className="max-w-5xl mx-auto px-6 py-10">
       <h1 className="text-2xl font-semibold mb-2">Collection proposals</h1>
-      <p className="text-sm text-stone-500 mb-6">Themed-collection proposals submitted via the <code>propose_collection</code> MCP tool / <code>/api/collection-proposals</code>. Untrusted input — review the rationale and books before approving. <strong>Approve</strong> mints a <em>hidden draft</em> collection (books tagged, <code>visible:false</code>); flip it public in the book-collections admin after review.</p>
+      <p className="text-sm text-stone-500 mb-6">Themed-collection proposals submitted via the <code>propose_collection</code> MCP tool / <code>/api/collection-proposals</code>. Untrusted input: review the rationale and books before approving. <strong>Approve</strong> mints a <em>hidden draft</em> collection (books tagged, <code>visible:false</code>); flip it public in the book-collections admin after review.</p>
 
       <div className="flex gap-2 mb-6 border-b border-stone-200">
         {(['pending', 'approved', 'rejected'] as Tab[]).map(t => (
@@ -156,7 +156,7 @@ export default function AdminCollectionProposalsPage() {
                 {item.status === 'approved' && item.created_collection_slug && (
                   <span>Approved → <a href={`/collections/${item.created_collection_slug}`} className="text-accent-rust hover:underline">/collections/{item.created_collection_slug}</a> (draft)</span>
                 )}
-                {item.status === 'rejected' && <span>Rejected{item.review_note ? ` — ${item.review_note}` : ''}</span>}
+                {item.status === 'rejected' && <span>Rejected{item.review_note ? `: ${item.review_note}` : ''}</span>}
                 {item.reviewed_by && <span className="text-stone-400"> · by {item.reviewed_by}</span>}
               </div>
             )}

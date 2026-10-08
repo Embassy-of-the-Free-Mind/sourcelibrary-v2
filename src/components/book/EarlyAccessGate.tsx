@@ -38,7 +38,7 @@ export default function EarlyAccessGate({ membersOnlyUntil, children }: EarlyAcc
           >
             <span>Early access</span>
             <span style={{ opacity: 0.5 }}>
-              &mdash; public {until.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}
+              · public {until.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}
             </span>
           </div>
         </div>

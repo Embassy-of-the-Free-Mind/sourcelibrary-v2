@@ -66,7 +66,7 @@ export default function PageDeepZoomButton({
           onClick={() => (isDesktop ? setInline(true) : setOverlay(true))}
           style={{ top: buttonTop, zIndex: OVERLAY_CONTROL_Z }}
           className="absolute right-2 flex items-center gap-1.5 px-2.5 py-1.5 bg-black/55 hover:bg-black/80 text-white text-xs rounded-lg backdrop-blur-sm transition-colors"
-          title="Open deep zoom — stream this page at full resolution"
+          title="Open deep zoom: stream this page at full resolution"
         >
           <Search className="w-3.5 h-3.5" />
           Deep zoom

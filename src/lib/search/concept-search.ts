@@ -34,6 +34,7 @@
  */
 import { getDb } from '@/lib/mongodb';
 import {
+  semanticConceptSearch,
   semanticPageSearchGlobal,
   semanticPageSearchUntranslated,
   type SemanticPageResult,
@@ -71,6 +72,13 @@ export interface ConceptPageRow extends SemanticPageResult {
 export interface ConceptSearchOptions extends SemanticPageSearchOptions {
   /** `off` returns the lanes' own order. */
   diversity: DiversityMode;
+  /**
+   * EXPERIMENTAL (#6173): rank by the concept-abstract lane (`page_concepts`,
+   * stage 1 holds 1,216 books) instead of the page vectors. The original-text
+   * lane is not read, and the language and year filters do not apply. Set only
+   * by an explicit `lane=concept`; no default search passes it.
+   */
+  abstractLane?: boolean;
 }
 
 export interface ConceptSearchResult {
@@ -113,15 +121,17 @@ export async function conceptPageSearch(
   limit: number,
   opts: ConceptSearchOptions,
 ): Promise<ConceptSearchResult> {
-  const { diversity: requested, maxPerBook, ...laneOpts } = opts;
+  const { diversity: requested, maxPerBook, abstractLane, ...laneOpts } = opts;
   if (opts.scope.kind === 'closed') {
     return { rows: [], diversity: requested, lanes: { untranslated: 'closed' }, traditions: {} };
   }
   const want = Math.max(limit, CANDIDATES);
-  const [english, original] = await Promise.all([
-    semanticPageSearchGlobal(query, want, laneOpts),
-    semanticPageSearchUntranslated(query, UNTRANSLATED_CANDIDATES, laneOpts),
-  ]);
+  const [english, original] = abstractLane
+    ? [await semanticConceptSearch(query, want, { scope: opts.scope }), { rows: [], state: 'off' as const }]
+    : await Promise.all([
+      semanticPageSearchGlobal(query, want, laneOpts),
+      semanticPageSearchUntranslated(query, UNTRANSLATED_CANDIDATES, laneOpts),
+    ]);
 
   // An English-lane row with no stored translation is a page embedded from
   // its own text: same handling as the original-text lane's rows.

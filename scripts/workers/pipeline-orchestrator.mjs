@@ -3522,7 +3522,7 @@ Based on this text and metadata, classify the book. Respond with JSON only — n
   "categories": ["<1-4 subject tags from EXACTLY this list: ${METADATA_CATEGORIES.join(', ')}>"],
   "estimated_year": "<best estimate of publication year as number. null if impossible>",
   "estimated_century": "<e.g. '17th century' — fallback if exact year unclear>",
-  "description": "<1-2 sentence scholarly description. No em-dashes. No filler.>",
+  "description": "<1-2 sentence scholarly description. No em-dashes (—). No filler: no 'delves into', 'rich tapestry', 'profound', 'pivotal', 'meticulous', 'intricate', 'vibrant', 'interplay', 'showcases', 'landscape of', 'a testament to', 'not only X but also Y'.>",
   "display_title": "<Clear English title. Must be ENTIRELY in English — no foreign words. null for English books.>",
   "confidence": "<high, medium, or low>",
   "subject_keywords": ["<3-5 subject keywords>"],

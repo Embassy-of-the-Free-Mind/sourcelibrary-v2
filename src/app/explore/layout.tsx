@@ -1,12 +1,12 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Explore — Source Library',
+  title: 'Explore | Source Library',
   description:
-    'Explore the people, places, and concepts indexed across the library — interactive map, timeline, and knowledge network built from AI-indexed historical texts and Wikidata.',
+    'Explore the people, places, and concepts indexed across the library: interactive map, timeline, and knowledge network built from AI-indexed historical texts and Wikidata.',
   openGraph: {
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
-    title: 'Explore — Source Library',
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
+    title: 'Explore | Source Library',
     description:
       'Interactive visualizations of people, places, and concepts from 1,200+ digitized historical texts.',
     url: 'https://sourcelibrary.org/explore',
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Explore — Source Library',
+    title: 'Explore | Source Library',
     description:
       'Interactive visualizations of people, places, and concepts from 1,200+ digitized historical texts.',
   },

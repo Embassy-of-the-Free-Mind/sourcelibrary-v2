@@ -465,7 +465,7 @@ Output as JSON:
   "people": ["Person Name 1", "Person Name 2"],
   "places": ["Place Name 1", "Place Name 2"],
   "concepts": ["Key concept 1", "Technical term 2"],
-  "summary": "2-3 sentence summary of what these pages cover and their key arguments. No em-dashes. No filler like 'delves into' or 'rich tapestry'. Short, direct sentences."
+  "summary": "2-3 sentence summary of what these pages cover and their key arguments. No em-dashes (—). No filler like 'delves into', 'rich tapestry', 'profound', 'pivotal', 'meticulous', 'intricate', 'vibrant', 'interplay', 'showcases', 'landscape of', 'a testament to', 'not only X but also Y'. Short, direct sentences."
 }
 
 CRITICAL for quotes:
@@ -1353,7 +1353,10 @@ async function prepareChapterExtraction(db, bookId) {
 
   const pages = await db.collection('pages')
     .find(
-      { book_id: bookId, 'ocr.data': { $exists: true, $ne: '' } },
+      // page_number > 0: a split book keeps its spreads as archived pages at page_number <= 0, still carrying
+      // their old OCR. Read here they anchored chapters at page -5 and stretched the last endPage past the
+      // book's length (#6114 wave A).
+      { book_id: bookId, page_number: { $gt: 0 }, 'ocr.data': { $exists: true, $ne: '' } },
       { projection: { id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1, page_type: 1 } }
     )
     .sort({ page_number: 1 })
