@@ -27,6 +27,7 @@
 
 import { probeBatchJob } from '../workers/lib/batch-reconcile.mjs';
 import { COLLECTABLE_BATCH_STATUSES } from './batch-job-filters.mjs';
+import { sumBatchResponseUsage, PLACEHOLDER_STATUSES } from '../workers/lib/supabase-usage-logger.mjs';
 
 export const LOSS_STATUSES = Object.freeze(['cancelled', 'failed', 'expired']);
 /** Gemini states after which no output will ever exist to collect. */
@@ -146,6 +147,95 @@ export async function endBatchJob(db, job, opts) {
     modified = res?.modifiedCount ?? 0;
   }
   return { action: 'written', why: d.why, state: d.state, modified };
+}
+
+/**
+ * Close a row whose output was recovered by hand after the row was wrongly ended (#6276 stage 3):
+ * sets `results_collected: true` and a `recovery` record, and NEVER touches `status` — the row
+ * keeps the (wrong) label it was given, with the evidence of what Gemini actually did beside it.
+ * Refused unless Gemini, asked about THIS job, says SUCCEEDED, and the caller holds the result it
+ * downloaded (`recovery.result_sha256` + `recovery.result_bytes`). A row already collected is
+ * left alone. The written document is filtered on `results_collected != true`, so two recoveries
+ * cannot both claim it.
+ * @param {any} db
+ * @param {any} job
+ * @param {{ gemini: any, by: string, recovery: Record<string, any>, dryRun?: boolean, now?: Date }} opts
+ * Returns { action: 'marked' | 'refused', why, modified }.
+ */
+export async function markRecovered(db, job, { gemini, by, recovery, dryRun = false, now = new Date() } = /** @type {any} */ ({})) {
+  if (!by) throw new Error('markRecovered: by is required');
+  if (!jobNameOf(job)) return { action: 'refused', why: 'nameless row — nothing was submitted, nothing to recover', modified: 0 };
+  if (job.results_collected === true) return { action: 'refused', why: 'already collected', modified: 0 };
+  if (gemini?.verdict !== 'exists') return { action: 'refused', why: `Gemini verdict '${gemini?.verdict ?? 'not asked'}'`, modified: 0 };
+  const state = normalizeGeminiState(gemini.state ?? gemini.sdkJob?.state);
+  if (state !== GEMINI_SUCCEEDED) return { action: 'refused', why: `Gemini state ${state} — only a SUCCEEDED job has output to recover`, modified: 0 };
+  if (!/^[0-9a-f]{64}$/.test(recovery?.result_sha256 || '') || !(recovery?.result_bytes > 0)) {
+    return { action: 'refused', why: 'no downloaded result (result_sha256 + result_bytes) — recovery must hold the output', modified: 0 };
+  }
+  if ('status' in recovery) throw new Error('markRecovered: never writes a status');
+  if (dryRun) return { action: 'marked', why: 'dry run', modified: 0 };
+  const res = await db.collection('batch_jobs').updateOne(
+    { _id: job._id, results_collected: { $ne: true } },
+    { $set: { results_collected: true, gemini_state: state, recovery: { ...recovery, by, at: now }, updated_at: now } },
+  );
+  return { action: 'marked', why: `Gemini state ${state}; result held`, modified: res?.modifiedCount ?? 0 };
+}
+
+/**
+ * Close out a recovered job's usage row from the responses Gemini returned (#6276, #4599) — the
+ * same close-out batch-collector.mjs does when it collects: tokens summed per RESPONSE
+ * (sumBatchResponseUsage), written through completeBatchUsage() (passed in as `complete`).
+ *
+ * A per-request error line carries no usageMetadata and adds 0 tokens: Gemini bills tokens, and an
+ * errored request produced none. It is counted in `errored` and named in the row's error_message.
+ *
+ * Idempotent against the rows the job already has (`existing`, both stores, read by the caller):
+ *   - a closed (non-placeholder) row with these exact tokens, $0 close-outs included → 'skipped'
+ *   - a closed row with OTHER non-zero tokens → 'refused' (someone else's reading; never overwrite)
+ *   - more than one row → 'refused' (the double-count shape completeBatchUsage exists to stop)
+ *   - no row and no tokens → 'skipped' (nothing was billed; a $0 row adds nothing)
+ *   - otherwise the placeholder, a zero close-out, or no row at all is closed via `complete`.
+ * Inserted rows carry the job's own created_at, so September spend never lands on today's dial.
+ * @param {any} job batch_jobs row
+ * @param {any[]} responses result lines
+ * @param {{ existing?: any[], complete: (p: any) => Promise<string>, dryRun?: boolean, placeholderStatuses?: string[] }} opts
+ * Returns { action: 'closed'|'skipped'|'refused', why, result?, params, errored, responded }.
+ */
+export async function meterRecovered(job, responses, { existing = [], complete, dryRun = false, placeholderStatuses = PLACEHOLDER_STATUSES } = /** @type {any} */ ({})) {
+  const batchJobId = job?.id || (job?._id && String(job._id));
+  if (!batchJobId) throw new Error('meterRecovered: the row has neither id nor _id');
+  if (typeof complete !== 'function') throw new Error('meterRecovered: complete (completeBatchUsage) is required');
+  const { inputTokens: input, outputTokens: output } = sumBatchResponseUsage(responses);
+  const errored = (responses || []).filter((r) => r?.error).length;
+  const responded = (responses || []).length;
+  const metered = input + output > 0;
+  const params = {
+    type: job.type || 'ocr',
+    mode: 'batch',
+    model: job.model,
+    book_id: job.book_id,
+    page_count: job.page_count || job.page_ids?.length || 0,
+    input_tokens: input,
+    output_tokens: output,
+    status: metered ? 'success' : 'failed',
+    error_message: errored ? `${errored}/${responded} responses were per-request errors (no usageMetadata, 0 tokens); recovered #6276` : null,
+    batch_job_id: batchJobId,
+    endpoint: 'hetzner/pipeline-orchestrator',
+    triggered_by: 'manual',
+    timestamp: new Date(job.created_at || Date.now()).toISOString(),
+    insertIfMissing: metered,
+  };
+  const out = (action, why, result) => ({ action, why, result, params, errored, responded });
+  const tok = (r) => (r.input_tokens || 0) + (r.output_tokens || 0);
+  if (existing.length > 1) return out('refused', `${existing.length} usage rows for one batch job`);
+  const [row] = existing;
+  if (row && !placeholderStatuses.includes(row.status)) {
+    if ((row.input_tokens || 0) === input && (row.output_tokens || 0) === output) return out('skipped', 'already metered with these tokens');
+    if (tok(row) > 0) return out('refused', `closed row holds other tokens (${row.input_tokens}/${row.output_tokens})`);
+  }
+  if (!row && !metered) return out('skipped', 'no usage row and no tokens billed');
+  if (dryRun) return out('closed', `dry run (${row ? `would close ${row.status} row` : 'would insert'})`);
+  return out('closed', row ? `closed ${row.status} row` : 'inserted', await complete(params));
 }
 
 /**
