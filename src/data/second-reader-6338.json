@@ -1,0 +1,8 @@
+{
+ "issue": 6338,
+ "schema": 1,
+ "measure": "AI reviewers (Claude Opus, Gemini) reading page images; recall on planted errors; serious issues confirmed by blind adjudication and by eye",
+ "preregistration": "scripts/eval/PREREGISTRATION-second-reader-6338.md",
+ "status": "not yet run",
+ "scripts": []
+}

@@ -11,12 +11,20 @@
  *   node scripts/eval/second-reader/second-reader.mjs cluster --run R --readers a,b,c,d [--seed N]
  *   node scripts/eval/second-reader/second-reader.mjs score   --run R --primary a --control b --candidates c,d
  *          --adjudicators x,y [--retest c=c2] [--interim]
+ *   node scripts/eval/second-reader/second-reader.mjs flagged --run R --from <page-integrity out dir>
+ *   node scripts/eval/second-reader/second-reader.mjs exclude --run R
+ *   node scripts/eval/second-reader/second-reader.mjs export  [--results DIR] [--out FILE] [--check]
+ *   node scripts/eval/second-reader/second-reader.mjs dataset [--results DIR] [--out DIR]
+ *
+ * export / dataset read every committed run under scripts/eval/results/second-reader-6338/<script>/ that has a
+ * report.json, and write the site's data file (src/data/second-reader-6338.json) and the published dataset.
  *
  * No network, no database. Everything under R/private/ is what the readers must never see; the run directory is
  * committed only after every read and adjudication is done.
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { makeRng } from '../lib/paired-stats.mjs';
 import {
@@ -39,7 +47,10 @@ const pct = (x) => (x == null ? '—' : `${(100 * x).toFixed(0)}%`);
 const f2 = (x) => (x == null ? '—' : x.toFixed(2));
 const ci = (c, k = 100) => (c ? `[${(c[0] * k).toFixed(1)}, ${(c[1] * k).toFixed(1)}]` : '—');
 
-if (!R && cmd !== 'help') { console.error('--run DIR required (see the header of this file)'); process.exit(2); }
+if (!R && !['help', 'export', 'dataset'].includes(cmd)) { console.error('--run DIR required (see the header of this file)'); process.exit(2); }
+const RESULTS = opt('results', path.join(REPO, 'scripts/eval/results/second-reader-6338'));
+/** The committed run directories (one per script) that carry a final report. */
+const scoredRuns = () => (fs.existsSync(RESULTS) ? fs.readdirSync(RESULTS).sort().map((d) => path.join(RESULTS, d)).filter((d) => fs.existsSync(path.join(d, 'report.json'))) : []);
 
 // The texts the readers saw, keyed by page: the planted text where an error was planted.
 function packetTexts() {
@@ -321,11 +332,46 @@ else if (cmd === 'score') {
   const pairs = [[P, C, 'within-family floor'], ...cands.map((c) => [P, c, 'cross-family']), ...Object.entries(retest).map(([a, b]) => [a, b, 'candidate retest floor'])];
   const agreement = pairs.map(([a, b, what]) => ({ pair: `${a}–${b}`, what, serious: alpha([a, b], 'serious', 'nominal'), ocr: alpha([a, b], 'ocr_score', 'ordinal'), tr: alpha([a, b], 'tr_score', 'ordinal') }));
 
+  // Table 4 (UpSet): confirmed serious clusters on natural pages, by the exact set of readers that raised them.
+  const naturalKeys = new Set(natural.map((u) => u.key));
+  const confirmed = clusters.filter((c) => naturalKeys.has(c.key) && verdictOf.get(c.id)?.confirmedSerious);
+  const upset = {};
+  for (const c of confirmed) { const sig = readers.filter((r) => c.by[r]).join('+') || '(none)'; upset[sig] = (upset[sig] || 0) + 1; }
+
+  // Table 7: cost per confirmed serious issue found (claude: total_cost_usd from the transcript; agy: $0, seconds).
+  for (const r of readers) {
+    const meta = J('readers', r, 'meta');
+    let usd = 0, seconds = 0;
+    if (fs.existsSync(meta)) for (const f of fs.readdirSync(meta)) {
+      const p = path.join(meta, f);
+      if (f.endsWith('.jsonl')) for (const line of fs.readFileSync(p, 'utf8').split('\n')) { try { const o = JSON.parse(line); if (o.type === 'result') usd += o.total_cost_usd || 0; } catch { /* not JSON */ } }
+      if (f.endsWith('.time.json')) { try { seconds += read(p).seconds || 0; } catch { /* unreadable */ } }
+    }
+    const found = confirmed.filter((c) => c.by[r]).length;
+    perReader[r].cost = { usd_equivalent: +usd.toFixed(2), seconds, confirmed_found: found, usd_per_confirmed: found ? +(usd / found).toFixed(2) : null };
+  }
+
+  // Table 8. H2: the lane of each candidate's confirmed finds the primary missed, and the primary's the candidate
+  // missed. H3: recall on planted TRANSLATION errors, and the English score against the primary's on the same pages.
+  const lane = (c) => (c.kind === 'ocr' ? 'transcription' : c.kind === 'leaf' ? 'page' : 'translation');
+  const laneCount = (list) => list.reduce((o, c) => ({ ...o, [lane(c)]: (o[lane(c)] || 0) + 1 }), {});
+  const TR_CLASSES = ['negation', 'number', 'invented', 'dropped'];
+  const hypotheses = Object.fromEntries(cands.map((c) => {
+    const paired = natural.filter((u) => R_[c].pages.get(u.key)?.tr_score != null && R_[P].pages.get(u.key)?.tr_score != null);
+    return [c, {
+      h2_unique_to_candidate: laneCount(confirmed.filter((x) => x.by[c] && !x.by[P])),
+      h2_unique_to_primary: laneCount(confirmed.filter((x) => x.by[P] && !x.by[c])),
+      h3_translation_recall: Object.fromEntries([P, c].map((r) => { const n = TR_CLASSES.reduce((s, k) => s + perReader[r].recall[k].n, 0), k = TR_CLASSES.reduce((s, x) => s + perReader[r].recall[x].serious, 0); return [r, { serious: k, n, ci95: wilson(k, n) }]; })),
+      h3_en_score_minus_primary: weightedMeanCI(paired.map((u) => R_[c].pages.get(u.key).tr_score - R_[P].pages.get(u.key).tr_score), paired.map((u) => u.weight)),
+    }];
+  }));
+
   const cleanEye = eye.clean_pages || [];
   const report = {
     issue: 6338, interim, readers, adjudicators: adjs, n_units: units.length, n_natural: natural.length, n_planted: plantedUnits.length,
     incomplete: needEye.length ? { by_eye_needed: needEye } : null,
-    decision, per_reader: perReader, agreement,
+    decision, per_reader: perReader, agreement, upset, hypotheses,
+    scored_at: new Date().toISOString().slice(0, 10), script: units[0]?.script ?? null,
     adjudicators_measured: adjStats,
     shared_miss: { pages_read: cleanEye.length, serious_found: cleanEye.filter((x) => x.serious_found).length, ci95: wilson(cleanEye.filter((x) => x.serious_found).length, cleanEye.length) },
     settled_by: [...verdictOf.values()].reduce((o, v) => ({ ...o, [v.by]: (o[v.by] || 0) + 1 }), {}),
@@ -333,6 +379,99 @@ else if (cmd === 'score') {
   write(J(interim ? 'report-interim.json' : 'report.json'), report);
   fs.writeFileSync(J(interim ? 'report-interim.md' : 'report.md'), markdown(report));
   console.log(markdown(report));
+}
+
+// ── export: the ONE file the site and the paper read (preregistration, "Reporting plan") ─────────────────────
+// Every number on /research/quality and in the paper comes from here. `--check` rebuilds it in memory and exits 1
+// if the committed file differs, so a typed or stale number cannot survive.
+else if (cmd === 'export') {
+  const OUT = opt('out', path.join(REPO, 'src/data/second-reader-6338.json'));
+  const r1 = (x) => (x == null ? null : Math.round(x * 10) / 10);
+  const per100 = (m) => ({ est: m?.est == null ? null : r1(100 * m.est), ci95: m?.ci95 ? m.ci95.map((v) => r1(100 * v)) : null, n: m?.n ?? null });
+  const rate = (k, n) => ({ k, n, est: n ? r1(100 * k / n) : null, ci95: n ? wilson(k, n).map((v) => r1(100 * v)) : null });
+  const scripts = scoredRuns().map((d) => {
+    const r = read(path.join(d, 'report.json'));
+    return {
+      script: r.script, scored_at: r.scored_at, complete: !r.incomplete,
+      pages: r.n_units, natural_pages: r.n_natural, planted_pages: r.n_planted,
+      verdict: r.decision.verdict, chosen: r.decision.chosen ?? null,
+      gain_per100_block2: per100(r.decision.gain_block2), second_opus_gain_per100_block2: per100(r.decision.second_opus_gain_block2),
+      readers: Object.fromEntries(Object.entries(r.per_reader).map(([name, x]) => [name, {
+        returned: x.returned, missing: x.missing, fabricated_quotes: x.fabricated_quotes,
+        recall_serious: rate(x.recall.all.serious, x.recall.all.n), recall_detected: rate(x.recall.all.detected, x.recall.all.n),
+        recall_by_class: Object.fromEntries(SEED_CLASSES.map((c) => [c, rate(x.recall[c].serious, x.recall[c].n)])),
+        false_alarms_per100: per100(x.false_alarms_per100), confirmed_per100: per100(x.confirmed_per100), cost: x.cost,
+      }])),
+      agreement: r.agreement.map((a) => ({ pair: a.pair, what: a.what, alpha_serious: a.serious == null ? null : +a.serious.toFixed(2), alpha_ocr: a.ocr == null ? null : +a.ocr.toFixed(2), alpha_tr: a.tr == null ? null : +a.tr.toFixed(2) })),
+      adjudicators: r.adjudicators_measured, shared_miss: { ...r.shared_miss, ci95: r.shared_miss.ci95 ? r.shared_miss.ci95.map((v) => r1(100 * v)) : null },
+      upset: r.upset, hypotheses: r.hypotheses,
+    };
+  });
+  const data = {
+    issue: 6338, schema: 1,
+    measure: 'AI reviewers (Claude Opus, Gemini) reading page images; recall on planted errors; serious issues confirmed by blind adjudication and by eye',
+    preregistration: 'scripts/eval/PREREGISTRATION-second-reader-6338.md',
+    status: !scripts.length ? 'not yet run' : scripts.every((s) => s.complete) && scripts.length >= 3 ? 'complete' : 'in progress',
+    scripts,
+  };
+  const text = JSON.stringify(data, null, 1) + '\n';
+  if (flag('check')) {
+    const now = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : '';
+    if (now !== text) { console.error(`${path.relative(REPO, OUT)} is stale or hand-edited: run \`second-reader.mjs export\``); process.exit(1); }
+    console.log(`${path.relative(REPO, OUT)} matches the committed reports (${scripts.length} scripts)`);
+  } else { write(OUT, data); console.log(`wrote ${OUT}: ${scripts.length} scripts, status ${data.status}`); }
+}
+
+// ── dataset: second-reader-v1, built from the committed run directories only ────────────────────────────────
+else if (cmd === 'dataset') {
+  const { CANARY_TEXT, assertCanary } = await import('../../lib/dataset-canary.mjs');
+  const OUT = opt('out', path.join(REPO, 'scripts/eval/dataset/second-reader-v1'));
+  const runs = scoredRuns();
+  if (!runs.length) { console.error(`no scored run under ${RESULTS}: nothing to publish`); process.exit(1); }
+  fs.rmSync(OUT, { recursive: true, force: true }); fs.mkdirSync(OUT, { recursive: true });
+  const rows = { pages: [], reviews: [], clusters: [], adjudication: [] };
+  for (const d of runs) {
+    const draw = read(path.join(d, 'private', 'draw.json')), units = read(path.join(d, 'private', 'units.json'));
+    const planted = new Map(read(path.join(d, 'private', 'key.json')).planted.map((s) => [s.key, s]));
+    const pick = new Map(draw.picks.map((p) => [keyOf(p.book_id, p.page_number), p]));
+    for (const f of fs.readdirSync(path.join(d, 'packets')).filter((x) => x.endsWith('.json')).sort()) for (const rec of read(path.join(d, 'packets', f))) {
+      const k = keyOf(rec.book_id, rec.pages[0].page_number), u = units.find((x) => x.key === k), p = pick.get(k).record.pages[0];
+      rows.pages.push({ canary: CANARY_TEXT, script: u.script, key: k, book_id: rec.book_id, page_number: rec.pages[0].page_number, stratum: u.stratum, weight: u.weight, block: u.block,
+        image_url: p.image_url, image_sha256: p.image_sha256, ocr_model: p.ocr_model, translation_model: p.translation_model,
+        shown_ocr: rec.pages[0].ocr, shown_translation: rec.pages[0].translation, planted: planted.get(k) ?? null });
+    }
+    for (const reader of fs.existsSync(path.join(d, 'readers')) ? fs.readdirSync(path.join(d, 'readers')).sort() : []) {
+      const dir = path.join(d, 'readers', reader, 'reviews');
+      const run = fs.existsSync(path.join(d, 'readers', reader, 'meta', 'run.json')) ? read(path.join(d, 'readers', reader, 'meta', 'run.json')) : {};
+      for (const f of fs.existsSync(dir) ? fs.readdirSync(dir).sort() : []) for (const b of (() => { try { return read(path.join(dir, f)); } catch { return []; } })())
+        for (const pg of b.pages || []) rows.reviews.push({ canary: CANARY_TEXT, script: units[0].script, reader, engine: run.engine ?? null, model: run.model ?? null, key: keyOf(b.book_id, pg.page_number), review: pg });
+    }
+    for (const c of read(path.join(d, 'clusters.json')).clusters) rows.clusters.push({ canary: CANARY_TEXT, script: units[0].script, ...c });
+    const ak = read(path.join(d, 'private', 'adjudication-key.json'));
+    const eye = fs.existsSync(path.join(d, 'adjudication', 'by-eye.json')) ? read(path.join(d, 'adjudication', 'by-eye.json')) : { items: [] };
+    const verdicts = {};
+    for (const a of fs.readdirSync(path.join(d, 'adjudication')).filter((x) => fs.existsSync(path.join(d, 'adjudication', x, 'reviews'))))
+      verdicts[a] = new Map(readArrays(path.join(d, 'adjudication', a, 'reviews')).map((v) => [v.item_id, v]));
+    for (const it of ak.items) rows.adjudication.push({ canary: CANARY_TEXT, script: units[0].script, ...it,
+      verdicts: Object.fromEntries(Object.entries(verdicts).map(([a, m]) => [a, m.get(it.item_id) ?? null])), by_eye: (eye.items || []).find((e) => e.item_id === it.item_id) ?? null });
+    fs.copyFileSync(path.join(d, 'report.json'), path.join(OUT, `report-${units[0].script}.json`));
+  }
+  for (const [name, list] of Object.entries(rows)) fs.writeFileSync(path.join(OUT, `${name}.jsonl`), list.map((x) => JSON.stringify(x)).join('\n') + '\n');
+  fs.writeFileSync(path.join(OUT, 'CANARY.txt'), CANARY_TEXT + '\n');
+  fs.writeFileSync(path.join(OUT, 'README.md'), `# Second-reader calibration (#6338), dataset v1\n\n${CANARY_TEXT}\n\n` +
+    `AI reviewers (Claude Opus, Gemini) read the same pages of a digital library of historical sources, some with a planted error; ` +
+    `findings were matched across readers and adjudicated blind. Method and decision rule: \`scripts/eval/PREREGISTRATION-second-reader-6338.md\`. ` +
+    `Built by \`scripts/eval/second-reader/second-reader.mjs dataset\` from the committed run directories only.\n\n` +
+    `| file | one row per |\n|---|---|\n| pages.jsonl | page read: the text as shown (with the planted error, if any), the planted-error key, the draw weight, the image URL and sha256 |\n` +
+    `| reviews.jsonl | reader × page: the reader's page object as returned |\n| clusters.jsonl | issue after matching across readers |\n` +
+    `| adjudication.jsonl | adjudication item: its kind (cluster, planted true, planted false), each adjudicator's verdict and the by-eye verdict |\n| report-<script>.json | the scored report |\n\n` +
+    `Licences: see LICENSES.md. Integrity: checksums.txt.\n`);
+  fs.writeFileSync(path.join(OUT, 'LICENSES.md'), '# Licences\n\nTranscriptions, translations, reviews and adjudications made by Source Library: CC BY-SA 4.0. ' +
+    'Page images are not included: each row gives the URL and the sha256 of the bytes the readers saw; the images keep the terms of their holding library.\n');
+  const files = fs.readdirSync(OUT).filter((f) => f !== 'checksums.txt').sort();
+  fs.writeFileSync(path.join(OUT, 'checksums.txt'), files.map((f) => `${crypto.createHash('sha256').update(fs.readFileSync(path.join(OUT, f))).digest('hex')}  ${f}`).join('\n') + '\n');
+  assertCanary(OUT);
+  console.log(`wrote ${OUT}: ${Object.entries(rows).map(([k, v]) => `${v.length} ${k}`).join(', ')}`);
 }
 
 else {
@@ -381,6 +520,13 @@ function markdown(r) {
   for (const a of r.agreement) L.push(`| ${a.pair} | ${a.what} | ${f2(a.serious)} | ${f2(a.ocr)} | ${f2(a.tr)} |`);
   L.push('', '**Adjudicators measured:** ' + Object.entries(r.adjudicators_measured).map(([a, s]) => `${a}: planted-true confirmed ${s.decoy_true[0]}/${s.decoy_true[1]}, planted-false rejected ${s.decoy_false[0]}/${s.decoy_false[1]}, agrees with by-eye ${s.vs_eye[0]}/${s.vs_eye[1]}`).join(' · '));
   L.push(`**Shared misses:** of ${r.shared_miss.pages_read} pages no reader called serious, read by eye, ${r.shared_miss.serious_found} carried a serious error ${ci(r.shared_miss.ci95)}.`);
-  L.push(`**How clusters were settled:** ${JSON.stringify(r.settled_by)}.`, '');
+  L.push(`**How clusters were settled:** ${JSON.stringify(r.settled_by)}.`);
+  L.push(`**Confirmed serious issues by the readers that raised them:** ${Object.entries(r.upset).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} ${v}`).join(' · ') || 'none'}.`);
+  L.push(`**Cost per confirmed serious issue found:** ${Object.entries(r.per_reader).map(([n, x]) => `${n} ${x.cost.usd_per_confirmed == null ? '—' : '$' + x.cost.usd_per_confirmed} (${x.cost.confirmed_found} found, ${Math.round(x.cost.seconds / 60)} min)`).join(' · ')}.`);
+  for (const [c, h] of Object.entries(r.hypotheses)) {
+    L.push(`**H2 (${c}):** lanes of confirmed finds only ${c} made ${JSON.stringify(h.h2_unique_to_candidate)}; only the primary made ${JSON.stringify(h.h2_unique_to_primary)}. ` +
+      `**H3:** recall on planted translation errors ${Object.entries(h.h3_translation_recall).map(([n, v]) => `${n} ${v.serious}/${v.n}`).join(', ')}; English score ${c} − primary ${h.h3_en_score_minus_primary.est == null ? '—' : h.h3_en_score_minus_primary.est.toFixed(2)} ${ci(h.h3_en_score_minus_primary.ci95, 1)}.`);
+  }
+  L.push('');
   return L.join('\n') + '\n';
 }

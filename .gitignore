@@ -67,6 +67,7 @@ src/data/*
 !src/data/ocr-pareto.json
 !src/data/translation-pareto.json
 !src/data/pareto-sample-audit.json
+!src/data/second-reader-6338.json
 !src/data/quality-feedback-themes.json
 !src/data/carbon-ledger/
 !src/data/carbon-ledger/*.json

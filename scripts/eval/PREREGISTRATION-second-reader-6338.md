@@ -133,6 +133,43 @@ A call that writes nothing is retried once; a page still missing counts as **not
 - A reader's transcript shows a READ outside its sealed folder: that packet is re-run; twice for one reader, the
   reader is dropped and the report says so.
 
+## Reporting plan (fixed now, whatever the result)
+
+**Every outcome is published.** An ADOPT, a DO NOT ADOPT, a futility stop, a dropped reader and a script abandoned
+for any reason are all reported, on the site and in the paper, with the same tables and figures. A selective
+write-up (only the scripts where Gemini helped) is what this section exists to prevent.
+
+**Every number comes from one generated file.** `second-reader.mjs export` reads each script's committed
+`report.json` and writes `src/data/second-reader-6338.json`; `export --check` rebuilds it in memory and fails if a
+committed number differs. The site renders from that file; the paper's tables are generated from it; the paper's
+`VERIFICATION` table maps every number in the text to a field in it. No figure is typed by hand.
+
+**Where it is reported:**
+- `scripts/eval/experiments/` (one entry per script round) and a verdict comment on #6338.
+- `/research/quality/open` lists the study while it runs; `/research/quality` gets a results section and
+  `/quality/methods` the method, once a script is scored. Public copy follows `.claude/docs/quality-statements.md`
+  ("AI reviewers", n, date, interval, measured strengths beside measured shortcomings) and merges as `tier:hold`.
+- Reader warnings (#6199) cite a reader's calibrated recall for the page's script only after Derek approves the
+  wording, and never for a script whose study was not run.
+- A dataset (`second-reader-v1`, CC BY-SA 4.0 for our text, images as URL + sha256, the eval canary on every row)
+  with a Zenodo DOI, built by `second-reader.mjs dataset` from the committed run directories only.
+- A paper (`paper/second-reader-calibration.md`), preprinted with the dataset DOI before submission.
+
+**Tables and figures, fixed now:**
+1. Per script and reader: pages returned, recall on planted errors (detected / serious, Wilson 95%), false alarms
+   per 100 pages, confirmed serious issues per 100 pages (weighted, 95% by book).
+2. Recall by planted class × reader (figure).
+3. Gain of the chosen Gemini over the control on block 2, per script, against the +5 line (figure), with the
+   second-Opus gain beside it.
+4. Which readers found which confirmed issues (UpSet figure).
+5. Krippendorff's α per pair against the Opus–Opus floor and the Gemini retest floor.
+6. Adjudicator accuracy on planted claims and against the eye; shared-miss rate.
+7. Cost per confirmed serious issue found, per reader.
+8. H2 (lane of unique finds) and H3 (recall on planted translation errors; mean English score) with intervals.
+
+**Deviations** from this document are listed in the paper's method section with the date and reason; an analysis
+not listed here is labelled *post hoc* wherever it appears.
+
 ## Limits to state in any write-up
 
 No scholar is in the loop: adjudication is two more model reads plus by-eye checks by non-specialists, and on a
