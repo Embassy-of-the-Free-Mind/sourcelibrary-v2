@@ -4,8 +4,9 @@
 # must be out of reach) and ../../batch/cli-ocr.mjs (the `agy -p … --add-dir` call for Gemini through the CLI).
 # This runs each packet in a SEALED folder holding only the brief, the addendum, the taxonomy, the packet and its
 # images, with the folder as the working directory, and keeps the transcript so `second-reader.mjs collect` can
-# audit what the reader opened (claude transcripts only; agy logs are reported as unaudited). For claude the seal is
-# enforced by the CLI (--restricted); for agy it rests on the working directory and --add-dir alone.
+# audit what the reader opened (claude transcripts only). For claude the seal is enforced by the CLI (--restricted:
+# Read and Write only, confined to the folder). For agy it is stronger: --mode plan gives the model no tools at all,
+# and every input is attached with `@./file`; nothing can be opened, so there is nothing to audit.
 #
 # Usage: scripts/eval/second-reader/run-readers.sh <run_dir> <name> <claude|agy> <model> [read|adjudicate] [parallel]
 #   read:       packets  = <run>/packets/*.json          → <run>/readers/<name>/reviews/<packet>.json
@@ -55,13 +56,31 @@ $KEYWORD: \`packet.json\`
 OUTPUT_FILE: \`review.json\`"
 }
 
+agy_prompt() {  # $1 sealed folder → the plan-mode prompt: the same files, attached instead of opened
+  local d="$1" att="" b f n=1
+  for b in $BRIEFS; do att="$att
+$n. @./$b"; n=$((n+1)); done
+  printf '%s' "Your instructions are the full text of these attached files, in this order, followed exactly (skip the leading \`<!-- … -->\` comments):$att
+The error taxonomy: @./page-error-taxonomy.md
+$KEYWORD (JSON): @./packet.json
+The page images, each attached under the \`image_file\` name the packet gives it:"
+  for f in $(cd "$d" && ls images); do printf '\n- images/%s: @./images/%s' "$f" "$f"; done
+  printf '\n\nYou have no tools in this session: you cannot open or write files, so the images above are your only view of the pages. Do not write OUTPUT_FILE. Reply with the JSON array only, in one ```json block, and nothing else.\n'
+}
+
 one() {  # $1 packet, $2 suffix
   local p="$1" s d t0; s=$(basename "$p" .json); d=$(seal "$p"); t0=$(date +%s)
   if [ "$ENGINE" = claude ]; then
     prompt | (cd "$d" && claude -p --model "$MODEL" --restricted --tools Read Write --allowedTools Read Write --strict-mcp-config \
       --output-format stream-json --verbose) > "$OUT/meta/$s$2.jsonl" 2> "$OUT/meta/$s$2.err"
   else
-    (cd "$d" && agy -p "$(prompt)" --model "$MODEL" --add-dir "$d" --dangerously-skip-permissions --print-timeout 900s) > "$OUT/meta/$s$2.out" 2> "$OUT/meta/$s$2.err"
+    # Plan mode: no tools at all, so no shell and no file access (tests/unit/no-cli-auto-approve.test.ts forbids the
+    # auto-approve flag). Every input is ATTACHED with `@./file`, relative to the sealed folder, and the reader's
+    # JSON comes back in its reply, which is pulled out below. One model call per packet, not an agent session.
+    (cd "$d" && agy -p "$(agy_prompt "$d")" --model "$MODEL" --mode plan --print-timeout 900s) > "$OUT/meta/$s$2.out" 2> "$OUT/meta/$s$2.err"
+    node --input-type=module -e "import { recoverArray } from '$HERE/lib.mjs'; import fs from 'node:fs';
+      const a = recoverArray(fs.readFileSync(process.argv[1], 'utf8')); if (a) fs.writeFileSync(process.argv[2], JSON.stringify(a));" \
+      "$OUT/meta/$s$2.out" "$d/review.json"
   fi
   echo "{\"packet\":\"$s\",\"seconds\":$(( $(date +%s) - t0 ))}" > "$OUT/meta/$s$2.time.json"
   [ -s "$d/review.json" ] && cp "$d/review.json" "$OUT/reviews/$s.json"

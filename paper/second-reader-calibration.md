@@ -99,8 +99,9 @@ over-report them, and false-alarm rates would not transfer to a corpus where abo
 ### 3.4 Readers
 Four readers read every page against its image with the same frozen brief: Claude Opus (primary), a second
 independent Claude Opus run (**control**), Gemini 3.1 Pro and Gemini 3.8 Flash. Model names and URLs are removed from
-what readers see; each reader runs in a sealed folder holding only the brief, the packet and its images (for Claude,
-enforced by the command-line tool's restricted mode). Both Gemini models are candidates; on the Latin script
+what readers see; each reader gets only the brief, the packet and its images. Claude reads them from a sealed folder
+with file tools confined to it (the command-line tool's restricted mode); Gemini has no tools and receives the same
+files attached to a single call. Both Gemini models are candidates; on the Latin script
 Gemini 3.1 Pro is re-run once to measure its own test–retest floor.
 
 ### 3.5 Matching and adjudication
@@ -168,7 +169,8 @@ planted classes cannot stand for; what changes on the reader-facing warnings.)*
 **Limits.** No scholar is in the loop: adjudication is two model reads plus by-eye checks by non-specialists, which on
 a script the checker cannot read reduce to layout, numbers and alignment. Recall is measured on the kinds of error
 planted. Command-line requests are not API requests. "Serious" is the reviewer brief's definition, not a severity
-rated by readers. Gemini runs are not audited for reads outside their folder.
+rated by readers. Claude opens its inputs with a tool over several turns while Gemini receives them in one call, so
+part of any difference between the families may be a difference in access.
 
 ## 6. Data and code availability
 Dataset `second-reader-v1` (pages as shown, the planted-error key, every reader's output, matched issues,

@@ -75,7 +75,10 @@ a different defect, #5913).
 
 Every reader gets the same frozen text — `spot-check/REVIEWER.md` + `second-reader/CALIBRATION-ADDENDUM.md` + the
 taxonomy — and the same pinned image files, with model names and URLs removed from the packet, in a sealed folder
-(`run-readers.sh`; for claude the CLI's `--restricted` confines it there, verified 2026-10-08).
+(`run-readers.sh`). Claude runs with `--restricted --tools Read Write`: it opens the files itself and cannot leave
+the folder (verified 2026-10-08). Gemini runs with `agy --mode plan`: it has no tools, every file is attached to the
+prompt with `@./`, and its JSON comes back in the reply (the repository forbids auto-approving an agent CLI,
+`tests/unit/no-cli-auto-approve.test.ts`). The inputs are the same bytes; the access differs, and the write-up says so.
 
 | name | engine | model |
 |---|---|---|
@@ -202,7 +205,10 @@ No scholar is in the loop: adjudication is two more model reads plus by-eye chec
 script the checker cannot read, by-eye means layout, numbers and alignment only. Recall on planted errors measures
 detection of the kinds planted, not of every error. The CLI request is not the API request (thinking level,
 temperature). The pages are frozen at draw time. "Serious" is the reviewer brief's definition, not a severity rated by
-readers (#6203 step 0). Gemini runs through `agy` are not audited for reads outside the folder.
+readers (#6203 step 0). Claude opens its files with a tool across several turns; Gemini receives them attached to one call, so a difference
+between the families may partly be a difference in access. Whether `agy` plan mode accepts text files (not only
+images) as `@./` attachments is checked by the pilot: if it does not, every Gemini page comes back missing and the
+run stops before scoring.
 
 ## Budget
 
