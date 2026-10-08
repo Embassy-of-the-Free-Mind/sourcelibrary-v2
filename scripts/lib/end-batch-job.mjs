@@ -149,6 +149,38 @@ export async function endBatchJob(db, job, opts) {
 }
 
 /**
+ * Close a row whose output was recovered by hand after the row was wrongly ended (#6276 stage 3):
+ * sets `results_collected: true` and a `recovery` record, and NEVER touches `status` — the row
+ * keeps the (wrong) label it was given, with the evidence of what Gemini actually did beside it.
+ * Refused unless Gemini, asked about THIS job, says SUCCEEDED, and the caller holds the result it
+ * downloaded (`recovery.result_sha256` + `recovery.result_bytes`). A row already collected is
+ * left alone. The written document is filtered on `results_collected != true`, so two recoveries
+ * cannot both claim it.
+ * @param {any} db
+ * @param {any} job
+ * @param {{ gemini: any, by: string, recovery: Record<string, any>, dryRun?: boolean, now?: Date }} opts
+ * Returns { action: 'marked' | 'refused', why, modified }.
+ */
+export async function markRecovered(db, job, { gemini, by, recovery, dryRun = false, now = new Date() } = /** @type {any} */ ({})) {
+  if (!by) throw new Error('markRecovered: by is required');
+  if (!jobNameOf(job)) return { action: 'refused', why: 'nameless row — nothing was submitted, nothing to recover', modified: 0 };
+  if (job.results_collected === true) return { action: 'refused', why: 'already collected', modified: 0 };
+  if (gemini?.verdict !== 'exists') return { action: 'refused', why: `Gemini verdict '${gemini?.verdict ?? 'not asked'}'`, modified: 0 };
+  const state = normalizeGeminiState(gemini.state ?? gemini.sdkJob?.state);
+  if (state !== GEMINI_SUCCEEDED) return { action: 'refused', why: `Gemini state ${state} — only a SUCCEEDED job has output to recover`, modified: 0 };
+  if (!/^[0-9a-f]{64}$/.test(recovery?.result_sha256 || '') || !(recovery?.result_bytes > 0)) {
+    return { action: 'refused', why: 'no downloaded result (result_sha256 + result_bytes) — recovery must hold the output', modified: 0 };
+  }
+  if ('status' in recovery) throw new Error('markRecovered: never writes a status');
+  if (dryRun) return { action: 'marked', why: 'dry run', modified: 0 };
+  const res = await db.collection('batch_jobs').updateOne(
+    { _id: job._id, results_collected: { $ne: true } },
+    { $set: { results_collected: true, gemini_state: state, recovery: { ...recovery, by, at: now }, updated_at: now } },
+  );
+  return { action: 'marked', why: `Gemini state ${state}; result held`, modified: res?.modifiedCount ?? 0 };
+}
+
+/**
  * Bulk-end rows that never reached Gemini. The nameless clauses are ANDed onto the caller's
  * filter, so this cannot touch a named row whatever the filter says.
  */

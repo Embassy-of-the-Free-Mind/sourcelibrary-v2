@@ -9,7 +9,7 @@
  */
 import { describe, it, expect } from 'vitest';
 import {
-  endBatchJob, endNamelessBatchJobs, decideEnd, normalizeGeminiState, ROUTE_TO_COLLECTION_STATUS,
+  endBatchJob, endNamelessBatchJobs, markRecovered, decideEnd, normalizeGeminiState, ROUTE_TO_COLLECTION_STATUS,
 } from '../../scripts/lib/end-batch-job.mjs';
 
 class ApiErrorStub extends Error {
@@ -116,6 +116,44 @@ describe('a named row is ended only on Gemini’s word', () => {
 
   it('a row whose output was already collected may be ended without asking', () => {
     expect(decideEnd(named({ results_collected: true }), { status: 'failed' }).action).toBe('write');
+  });
+});
+
+describe('markRecovered closes a recovered row without touching its status', () => {
+  const held = { result_sha256: 'a'.repeat(64), result_bytes: 1234, gemini_job: 'batches/abc' };
+  const succeeded = { verdict: 'exists', state: 'JOB_STATE_SUCCEEDED' };
+
+  it('MARKS a SUCCEEDED job whose result is held: results_collected + recovery, no status', async () => {
+    const { db, calls } = fakeDb();
+    const r = await markRecovered(db, named({ status: 'cancelled' }), { gemini: succeeded, by: 't', recovery: held });
+    expect(r.action).toBe('marked');
+    expect(calls).toHaveLength(1);
+    expect(calls[0].set.results_collected).toBe(true);
+    expect(calls[0].set.status).toBeUndefined();
+    expect(calls[0].filter.results_collected).toEqual({ $ne: true });
+  });
+
+  it('REFUSES without Gemini’s SUCCEEDED, without the held result, or on an already-collected row', async () => {
+    const cases: [Record<string, unknown>, unknown, Record<string, unknown>][] = [
+      [named(), null, held],
+      [named(), { verdict: 'exists', state: 'JOB_STATE_CANCELLED' }, held],
+      [named(), { verdict: 'not_found', attempts: [] }, held],
+      [named(), succeeded, { result_sha256: 'x', result_bytes: 1 }],
+      [named(), succeeded, { result_sha256: 'a'.repeat(64), result_bytes: 0 }],
+      [named({ results_collected: true }), succeeded, held],
+      [named({ job_name: null }), succeeded, held],
+    ];
+    for (const [job, gemini, recovery] of cases) {
+      const { db, calls } = fakeDb();
+      const r = await markRecovered(db, job, { gemini, by: 't', recovery });
+      expect(r.action).toBe('refused');
+      expect(calls).toHaveLength(0);
+    }
+  });
+
+  it('throws if a status is smuggled into the recovery record', async () => {
+    const { db } = fakeDb();
+    await expect(markRecovered(db, named(), { gemini: succeeded, by: 't', recovery: { ...held, status: 'saved' } })).rejects.toThrow(/status/);
   });
 });
 
