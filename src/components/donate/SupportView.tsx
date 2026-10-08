@@ -4,7 +4,7 @@ import DonationIntentionForm from '@/components/donate/DonationIntentionForm';
 import QuickSubscribe from '@/components/donate/QuickSubscribe';
 import GiveForm from '@/components/donate/GiveForm';
 import { getReadDb } from '@/lib/mongodb';
-import type { Locale } from '@/lib/i18n';
+import { withEnglishFallback, type Locale } from '@/lib/locale-path';
 
 // The two payment destinations, the NAF-form ambiguity, and the amount-carrying
 // URL params all live in src/lib/give-routes.ts now — this page and /give mount
@@ -74,7 +74,9 @@ interface SupportStrings {
   home: string;
 }
 
-const STRINGS: Record<Locale, SupportStrings> = {
+// No `/la` twin for this surface (#6254): Latin reads the English copy, which is
+// never rendered under a Latin URL. See `withEnglishFallback`.
+const STRINGS: Record<Locale, SupportStrings> = withEnglishFallback({
   en: {
     heroTitle: 'Support Source Library',
     heroLeadPre: 'Consider making a gift to support our work to digitize, translate, and freely publish rare historical texts. Source Library is a project of the',
@@ -129,7 +131,7 @@ const STRINGS: Record<Locale, SupportStrings> = {
     footerPost: 'como traductor, revisor o voluntario.',
     home: 'Inicio',
   },
-};
+});
 
 export default function SupportView({
   stats,
@@ -200,7 +202,7 @@ export default function SupportView({
                   HIT, age 1202, on a page marked force-dynamic). `/give` is the
                   country-aware surface and is not edge-cached; here the donor
                   gets a visible "Giving from the United States?" switch. */}
-              <GiveForm defaultRoute="international" locale={locale} surface="support" contactEmail={CONTACT_EMAIL} />
+              <GiveForm defaultRoute="international" locale={locale === 'es' ? 'es' : 'en'} surface="support" contactEmail={CONTACT_EMAIL} />
 
               <p className="mt-5 text-xs text-stone-500 leading-relaxed">{s.taxNote}</p>
               <p className="mt-2 text-xs text-stone-500 leading-relaxed">

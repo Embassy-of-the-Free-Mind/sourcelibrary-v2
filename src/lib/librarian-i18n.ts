@@ -8,7 +8,7 @@
 // conversation. Client-safe: no server imports, no hooks.
 
 import type { Metadata } from 'next';
-import type { Locale } from './locale-path';
+import { withEnglishFallback, type Locale } from './locale-path';
 import { siteOgImage, OG_LOCALE } from './og-locale';
 
 export interface LibrarianStrings {
@@ -68,7 +68,9 @@ export interface LibrarianStrings {
   dateLocale: string;
 }
 
-export const LIBRARIAN_STRINGS: Record<Locale, LibrarianStrings> = {
+// No `/la` twin for this surface (#6254): Latin reads the English copy, which is
+// never rendered under a Latin URL. See `withEnglishFallback`.
+export const LIBRARIAN_STRINGS: Record<Locale, LibrarianStrings> = withEnglishFallback({
   en: {
     metaTitle: 'The Librarian — Source Library',
     metaDescription: 'Ask the Librarian about any text in the collection. Alchemy, Hermetica, Kabbalah, astrology, natural philosophy — thousands of rare books, many translated into English for the first time.',
@@ -267,7 +269,7 @@ export const LIBRARIAN_STRINGS: Record<Locale, LibrarianStrings> = {
     ],
     dateLocale: 'es-ES',
   },
-};
+});
 
 /** Route metadata for `/librarian` and `/es/librarian`, with hreflang twins. */
 export function librarianMetadata(lang: Locale): Metadata {
