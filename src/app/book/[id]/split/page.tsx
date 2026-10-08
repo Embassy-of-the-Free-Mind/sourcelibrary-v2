@@ -279,7 +279,9 @@ export default function SplitPage({ params }: PageProps) {
     if (!bookId) return;
     setLoading(true);
     try {
-      const data = await books.get(bookId);
+      // Signed-in editors get every page in one response; the helper only
+      // pages through if the session lapsed and the API capped the list (#6281).
+      const data = await books.getWithAllPages(bookId);
       setBook(data);
       setPages((data as any).pages || []);
     } catch (error) {
