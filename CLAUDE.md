@@ -165,6 +165,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 - **Telling readers how good a text is** (draft labels, quality pages, collection blurbs, partner reports) → `../quality-statements.md` (**direct, not harsh, not sugarcoated: measured value and measured errors, with n and date**)
 - Normalising, folding, comparing or validating TEXT (names, quotes, dedup keys, detectors) → `non-latin-text-operations.md`
 - Naming a page defect, or designing an OCR/translation detector, prompt or judge → `../page-error-taxonomy.md` (44 classes, by eye)
+- **Found invented or wrong-leaf text with the image open** → `containment-on-finding.md` (**hold, withhold those pages, label `contained`: same run, no ask**)
 
 **PRs, git & the shared checkout**
 - Judging a PR's checks (red Vercel, missing/stale CI, backlog sweeps, batch merges) → `pr-checks.md`
@@ -213,8 +214,8 @@ Detect the work domain from the user's prompt and load the right context automat
 If installed, use it at PR-open time → `.claude/docs/code-review-graph.md`. **Never treat its `dead_code` output as a deletion list** (2,509 "dead" functions, live `GET` handlers among them).
 
 ## System Map
-- **Interactive diagram:** https://sourcelibrary.org/platform/admin/system-map — click any node for details, key files, collections, gotchas (requires platform login)
-- **Markdown reference:** `.claude/docs/system-map.md` — full text version with file layout, collection inventory, dead code list
+- **Interactive diagram:** https://sourcelibrary.org/platform/admin/system-map (platform login)
+- **Markdown reference:** `.claude/docs/system-map.md`
 
 ## Knowledge Maintenance
 - **After fixing a non-trivial bug**, proactively update the relevant memory file following the `/lesson` workflow. Don't wait to be asked.
