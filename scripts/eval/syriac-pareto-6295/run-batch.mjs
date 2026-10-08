@@ -17,6 +17,7 @@
  *   translate  production's one-page translation request as #6182 sent it (pareto-6182/run-arms.mjs):
  *              temperature 1.0, maxOutputTokens from the page, thinkingBudget 0.
  * Thinking budget 0 (3.5-flash-lite: level 'minimal', the lowest it accepts). Thinking is CHECKED, not assumed: thoughtsTokenCount is recorded per response and billed at the output rate.
+ * Registered in batch_jobs through scripts/lib/eval-batch-registry.mjs at submit, closed at collection.
  * Spend: before any submit, ledger (collected jobs) + estimate of open jobs + this job must stay under --cap-usd.
  */
 import fs from 'node:fs';
@@ -26,6 +27,8 @@ import { GoogleGenAI } from '@google/genai';
 import { sanitizeTranslationTags, SAFETY_SETTINGS } from '../../lib/translate-core.mjs';
 import { costOf, BATCH_MULTIPLIER } from '../../lib/model-pricing.mjs';
 import { logUsage, completeBatchUsage, sumBatchResponseUsage } from '../../workers/lib/supabase-usage-logger.mjs';
+import { registerEvalBatch, closeEvalBatch } from '../../lib/eval-batch-registry.mjs';
+import { withMongo } from '../../lib/mongo.mjs';
 
 const args = process.argv.slice(2);
 const opt = (n, d) => { const i = args.indexOf(`--${n}`); return i >= 0 && args[i + 1] != null ? args[i + 1] : d; };
@@ -85,11 +88,8 @@ async function submit(label, model, kind, units) {
       jobs[key] = { name: created.name, label, model, kind, keyIndex: k, submitted_at: new Date().toISOString(), requests: us.length, est_usd: est };
       saveJobs();
       await logUsage({ type: kind === 'ocr' ? 'ocr' : 'translation', mode: 'batch', model, page_count: us.length, input_tokens: 0, output_tokens: 0, status: 'submitted', batch_job_id: created.name, endpoint: ENDPOINT, triggered_by: 'manual' });
-      const { withMongo } = await import('../../lib/mongo.mjs');
-      await withMongo((d) => d.collection('batch_jobs').updateOne({ gemini_job_name: created.name }, { $setOnInsert: {
-        id: `syriac-pareto-6295-${label}`, job_name: created.name, gemini_job_name: created.name, status: 'external_eval', type: 'eval', model,
-        page_count: us.length, created_at: new Date(), updated_at: new Date(), issue: 6295,
-        note: 'hand-submitted eval Batch (scripts/eval/syriac-pareto-6295/run-batch.mjs); results go to files only, never to pages' } }, { upsert: true }));
+      await withMongo((d) => registerEvalBatch(d, { jobName: created.name, id: `syriac-pareto-6295-${label}`, submittedBy: 'scripts/eval/syriac-pareto-6295/run-batch.mjs',
+        model, pageCount: us.length, issue: 6295, note: 'hand-submitted eval Batch; results go to files only, never to pages' }));
       console.log(`${key}: submitted ${created.name} (key ${k}), registered external_eval`);
       break;
     } catch (e) {
@@ -109,7 +109,11 @@ async function collect(pollMin) {
       const ai = new GoogleGenAI({ apiKey: KEYS[job.keyIndex] });
       const got = await ai.batches.get({ name: job.name });
       if (!/SUCCEEDED|FAILED|CANCELLED|EXPIRED/.test(got.state)) { console.log(`${key}: ${got.state}`); continue; }
-      if (got.state !== 'JOB_STATE_SUCCEEDED') { console.log(`${key}: ${got.state} — not collected`); job.collected = got.state; saveJobs(); continue; }
+      if (got.state !== 'JOB_STATE_SUCCEEDED') {
+        console.log(`${key}: ${got.state} — not collected`); job.collected = got.state; saveJobs();
+        await withMongo((d) => closeEvalBatch(d, job.name, { evidence: `${got.state}: no responses used (${JOBS})` }));
+        continue;
+      }
       let responses = got.dest?.inlinedResponses || [];
       if (got.dest?.fileName) {
         const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/${got.dest.fileName}:download?alt=media&key=${KEYS[job.keyIndex]}`);
@@ -133,6 +137,7 @@ async function collect(pollMin) {
       }
       fs.appendFileSync(LEDGER, JSON.stringify({ arm: job.label, model: job.model, mode: 'batch', n: responses.length, in: inputTokens, out: outputTokens, thinking: think, usd, job: job.name, at: new Date().toISOString() }) + '\n');
       job.collected = got.state; job.usd = usd; job.written = n; job.failed = fail; job.thinking = think; saveJobs();
+      await withMongo((d) => closeEvalBatch(d, job.name, { evidence: outFile, usage: { input_tokens: inputTokens, output_tokens: outputTokens, cost_usd: usd } }));
       console.log(`${key}: collected ${n} with text, ${fail} empty, thinking ${think}, $${usd.toFixed(4)} (${(usd / Math.max(1, responses.length) * 1000).toFixed(2)}/1K Batch)`);
     }
     if (Date.now() - t0 > pollMin * 60000) { console.log(`spent $${spent().toFixed(3)}, pending $${pending().toFixed(3)}`); return; }
