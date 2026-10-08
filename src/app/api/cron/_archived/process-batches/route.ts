@@ -8,6 +8,7 @@ import { verifyCronAuth } from '@/lib/cron-auth';
 import { createRevision } from '@/lib/page-revisions';
 import { createCronLogger } from '@/lib/cron-logger';
 import { contentHash } from '@/lib/steganographia';
+import { endBatchJob, endNamelessBatchJobs } from '../../../../../../scripts/lib/end-batch-job.mjs';
 
 export const maxDuration = 300;
 
@@ -49,22 +50,17 @@ export async function GET(request: NextRequest) {
     // Orphan jobs have no job_name (Gemini submission failed) and are older than 1 hour.
     // These permanently inflate pending counts and never complete. Auto-fail them.
     const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
-    const orphanResult = await db.collection('batch_jobs').updateMany(
-      {
-        status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
-        job_name: { $in: [null, undefined, ''] },
-        gemini_job_name: { $in: [null, undefined, ''] },
-        child_job_ids: { $exists: false },
-        created_at: { $lt: oneHourAgo },
-      },
-      {
-        $set: {
-          status: 'failed',
-          error: 'Orphan job: no Gemini job_name (submission likely failed)',
-          updated_at: new Date(),
-        },
-      }
-    );
+    // Archived route (not served), moved onto the one guarded terminator with the rest (#6276).
+    const orphanResult = await endNamelessBatchJobs(db, {
+      status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
+      child_job_ids: { $exists: false },
+      created_at: { $lt: oneHourAgo },
+    }, {
+      status: 'failed',
+      reason: 'Orphan job: no Gemini job_name (submission likely failed)',
+      by: 'api/cron/process-batches',
+      set: { error: 'Orphan job: no Gemini job_name (submission likely failed)' },
+    });
     if (orphanResult.modifiedCount > 0) {
       logger.action('orphans_cleaned', orphanResult.modifiedCount);
       console.log(`[cron] Cleaned up ${orphanResult.modifiedCount} orphan batch_jobs`);
@@ -463,17 +459,11 @@ export async function GET(request: NextRequest) {
 
         } else if (geminiStatus.state === 'JOB_STATE_FAILED') {
           // Failed - mark it
-          await db.collection('batch_jobs').updateOne(
-            { _id: job._id },
-            {
-              $set: {
-                status: 'failed',
-                gemini_state: geminiStatus.state,
-                error: 'Gemini batch job failed',
-                updated_at: new Date(),
-              },
-            }
-          );
+await endBatchJob(db, job, {
+            status: 'failed', reason: 'Gemini batch job failed', by: 'api/cron/process-batches',
+            gemini: { verdict: 'exists', state: geminiStatus.state },
+            set: { error: 'Gemini batch job failed' },
+          });
           if (job.parent_job_id) {
             await updateParentJobProgress(db, job.parent_job_id);
           }
@@ -481,16 +471,11 @@ export async function GET(request: NextRequest) {
 
         } else if (geminiStatus.state === 'JOB_STATE_CANCELLED' || (geminiStatus.state as string) === 'BATCH_STATE_CANCELLED') {
           // Cancelled — terminal state
-          await db.collection('batch_jobs').updateOne(
-            { _id: job._id },
-            {
-              $set: {
-                status: 'cancelled',
-                gemini_state: geminiStatus.state,
-                updated_at: new Date(),
-              },
-            }
-          );
+await endBatchJob(db, job, {
+            status: 'cancelled', reason: 'Gemini batch job cancelled', by: 'api/cron/process-batches',
+            gemini: { verdict: 'exists', state: geminiStatus.state },
+            set: {  },
+          });
           if (job.parent_job_id) {
             await updateParentJobProgress(db, job.parent_job_id);
           }
@@ -498,17 +483,11 @@ export async function GET(request: NextRequest) {
 
         } else if (geminiStatus.state === 'JOB_STATE_EXPIRED' || (geminiStatus.state as string) === 'BATCH_STATE_EXPIRED') {
           // Expired (7-day Gemini limit) — terminal state
-          await db.collection('batch_jobs').updateOne(
-            { _id: job._id },
-            {
-              $set: {
-                status: 'failed',
-                gemini_state: geminiStatus.state,
-                error: 'Gemini batch job expired (7-day limit)',
-                updated_at: new Date(),
-              },
-            }
-          );
+await endBatchJob(db, job, {
+            status: 'failed', reason: 'Gemini batch job expired', by: 'api/cron/process-batches',
+            gemini: { verdict: 'exists', state: geminiStatus.state },
+            set: { error: 'Gemini batch job expired (7-day limit)' },
+          });
           if (job.parent_job_id) {
             await updateParentJobProgress(db, job.parent_job_id);
           }

@@ -156,3 +156,130 @@ describe('paid, headline and verdict', () => {
     expect(h.find((x: { lane: string }) => x.lane === 'images').per_1k_usd).toBeNull();
   });
 });
+
+// ─────────────────────────────────────────── 8. Gemini side (#6276)
+// @ts-expect-error — .mjs without types
+import * as G from '../../scripts/lib/gemini-batch-ledger.mjs';
+
+/** A stub @google/genai client: batches.list returns a Pager-like object (first `.page`, async iterable). */
+function listClient(jobs: Array<Record<string, unknown>> | Error) {
+  return {
+    batches: {
+      list: async () => {
+        if (jobs instanceof Error) throw jobs;
+        return { page: jobs.slice(0, 100), async *[Symbol.asyncIterator]() { for (const j of jobs) yield j; } };
+      },
+    },
+  };
+}
+const iso = (h: number) => ago(h).toISOString();
+const job = (name: string, state: string, createdH: number, endedH: number | null = null, displayName = '') =>
+  ({ name, state, createTime: iso(createdH), ...(endedH != null ? { endTime: iso(endedH) } : {}), displayName });
+const rec = (o: Record<string, unknown>) => ({ store: 'batch_jobs', status: 'x', collected: false, open: false, pages: 5, ...o });
+
+describe('Gemini-side ledger: the three classes fire, and a clean listing passes', () => {
+  const listing = new Map([
+    ['batches/collected', job('batches/collected', 'JOB_STATE_SUCCEEDED', 10, 9)],
+    ['batches/inflight', job('batches/inflight', 'JOB_STATE_SUCCEEDED', 2, 1)],
+    ['batches/cancelled-row', job('batches/cancelled-row', 'JOB_STATE_SUCCEEDED', 10, 9)],
+    ['batches/stale-open', job('batches/stale-open', 'JOB_STATE_SUCCEEDED', 10, 9)],
+    ['batches/nobody', job('batches/nobody', 'JOB_STATE_SUCCEEDED', 10, 9)],
+    ['batches/running-failed', job('batches/running-failed', 'JOB_STATE_RUNNING', 3)],
+    ['batches/running-ok', job('batches/running-ok', 'JOB_STATE_RUNNING', 3)],
+    ['batches/dead', job('batches/dead', 'JOB_STATE_CANCELLED', 3, 2)],
+    ['batches/old-cancelled', job('batches/old-cancelled', 'JOB_STATE_SUCCEEDED', 300, 299)],
+  ]);
+  const records = new Map([
+    ['batches/collected', [rec({ status: 'saved', collected: true })]],
+    ['batches/inflight', [rec({ status: 'processing', open: true })]],
+    ['batches/cancelled-row', [rec({ status: 'cancelled' })]],
+    ['batches/stale-open', [rec({ status: 'pending', open: true })]],
+    ['batches/running-failed', [rec({ status: 'failed' })]],
+    ['batches/running-ok', [rec({ status: 'processing', open: true })]],
+    ['batches/dead', [rec({ status: 'failed' })]],
+    ['batches/old-cancelled', [rec({ status: 'cancelled' })]],
+  ]);
+
+  it('classifies each shape (positive control)', () => {
+    const r = G.classifyLedger({ jobs: listing, records, now: NOW });
+    const by = Object.fromEntries(r.findings.map((f: { name: string; class: string; actionable: boolean }) => [f.name, `${f.class}${f.actionable ? '' : ' (old)'}`]));
+    expect(by).toEqual({
+      'batches/cancelled-row': 'succeeded_uncollected',
+      'batches/stale-open': 'succeeded_uncollected', // open, but 9 h since Gemini finished > 3 h grace
+      'batches/nobody': 'unknown_to_db',
+      'batches/running-failed': 'terminal_while_alive',
+      'batches/old-cancelled': 'succeeded_uncollected (old)',
+    });
+    expect(r.counts.succeeded_uncollected).toMatchObject({ jobs: 3, actionable: 2, actionable_pages: 10 });
+    expect(r.ok_counts).toMatchObject({ collected: 1, in_flight: 1, alive_tracked: 1, dead: 1 });
+  });
+
+  it('FAILs the verdict on actionable findings only; old ones are a WARN', () => {
+    const r = G.classifyLedger({ jobs: listing, records, now: NOW });
+    const v = L.verdict({ collection: { fail: 0, warn: 0 }, gemini: { counts: r.counts } });
+    expect(v.status).toBe('FAIL');
+    expect(v.fails.join('\n')).toMatch(/2 batch job\(s\): Gemini SUCCEEDED, our record never collected it/);
+    expect(v.warns.join('\n')).toMatch(/1 older/);
+  });
+
+  it('a clean listing passes (negative control)', () => {
+    const clean = new Map([...listing].filter(([n]) => ['batches/collected', 'batches/inflight', 'batches/running-ok', 'batches/dead'].includes(n)));
+    const r = G.classifyLedger({ jobs: clean, records, now: NOW });
+    expect(r.findings).toEqual([]);
+    expect(L.verdict({ collection: { fail: 0, warn: 0 }, gemini: { counts: r.counts } }).status).toBe('PASS');
+  });
+
+  it('a re-submission whose twin was collected is waste, not a loss', () => {
+    const jobs = new Map([['batches/twin', job('batches/twin', 'JOB_STATE_SUCCEEDED', 10, 9)]]);
+    const r = G.classifyLedger({ jobs, records: new Map([['batches/twin', [rec({ twin: true, twin_collected: true })]]]), now: NOW });
+    expect(r.findings).toEqual([]);
+    expect(r.ok_counts.twin_collected).toBe(1);
+    expect(G.twinIdsFromDisplayName('reocr-69b51e9547b06ecd58193b99-wEr2ZM0fGXRw5cYSUxEOZ')).toEqual({ batchJobId: 'wEr2ZM0fGXRw5cYSUxEOZ' });
+    expect(G.twinIdsFromDisplayName('tbc-69dfee86ce6bb8619e07f683-tbc_muxg64bm_rfbv65-r41')).toEqual({ runId: 'tbc_muxg64bm_rfbv65' });
+  });
+
+  it('the every-run positive control fires all three classes against a real-shaped listing', () => {
+    expect(G.ledgerPositiveControl({ jobs: listing, records, now: NOW })).toEqual({
+      ok: true, succeeded_uncollected: 'fired', unknown_to_db: 'fired', terminal_while_alive: 'fired',
+    });
+  });
+
+  it('a chained round struck on the job’s own Gemini state was never read; other strikes were', () => {
+    const wanted = new Set(['batches/a', 'batches/b', 'batches/c']);
+    const recs = G.recordsFromRun({ id: 'tbc_1', phase: 'round_ready', rounds: [
+      { job: 'batches/a', outcome: 'strike', reason: 'job JOB_STATE_CANCELLED', pages: 8 },
+      { job: 'batches/b', outcome: 'strike', reason: 'block parsed 0/8 (finish STOP)', pages: 8 },
+      { job: 'batches/c', outcome: 'done', collected_at: NOW, pages: 8 },
+    ] }, wanted);
+    expect(Object.fromEntries(recs.map((r: { name: string; collected: boolean }) => [r.name, r.collected]))).toEqual({ 'batches/a': false, 'batches/b': true, 'batches/c': true });
+  });
+});
+
+describe('Gemini-side listing: every key, aliases walked once, no silent truncation', () => {
+  it('a key that cannot be listed makes the run UNKNOWN', async () => {
+    const r = await G.listAllBatches([listClient([job('batches/x', 'JOB_STATE_SUCCEEDED', 1, 1)]), listClient(new Error('403 PERMISSION_DENIED'))], { keys: ['a', 'b'] });
+    expect(r.unknown).toHaveLength(1);
+    expect(r.unknown[0]).toMatch(/key 1 .* could not be listed/);
+    expect(r.jobs.size).toBe(1);
+  });
+
+  it('keys of one project are walked once; distinct projects each walked to the end', async () => {
+    const p1 = [job('batches/p1a', 'JOB_STATE_SUCCEEDED', 1, 1), job('batches/p1b', 'JOB_STATE_SUCCEEDED', 2, 2)];
+    const p2 = [job('batches/p2a', 'JOB_STATE_RUNNING', 1)];
+    const r = await G.listAllBatches([listClient(p1), listClient(p2), listClient(p1)], { keys: ['a', 'b', 'c'] });
+    expect(r.unknown).toEqual([]);
+    expect([...r.jobs.keys()].sort()).toEqual(['batches/p1a', 'batches/p1b', 'batches/p2a']);
+    expect(r.perKey.map((k: { stop: string }) => k.stop)).toEqual(['end', 'end', 'alias of key 0']);
+  });
+
+  it('a windowed walk stops at the window, and is UNKNOWN if the listing is not newest-first', async () => {
+    const ordered = [job('batches/new', 'JOB_STATE_SUCCEEDED', 1, 1), job('batches/mid', 'JOB_STATE_SUCCEEDED', 50, 49), job('batches/old', 'JOB_STATE_SUCCEEDED', 100, 99)];
+    const w = await G.listAllBatches([listClient(ordered)], { sinceMs: ago(72).getTime() });
+    expect([...w.jobs.keys()]).toEqual(['batches/new', 'batches/mid']);
+    expect(w.unknown).toEqual([]);
+    expect(w.perKey[0].stop).toBe('window');
+    const shuffled = [ordered[1], ordered[0], ordered[2]];
+    const bad = await G.listAllBatches([listClient(shuffled)], { sinceMs: ago(72).getTime() });
+    expect(bad.unknown[0]).toMatch(/not newest-first/);
+  });
+});

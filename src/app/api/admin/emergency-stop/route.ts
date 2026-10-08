@@ -4,6 +4,7 @@ import { getDb } from '@/lib/mongodb';
 import { purgeAIQueues } from '@/lib/sqs-client';
 import { PAUSE_KEYS, PAUSE_ALIASES, classifyPauseEntry, pausedKeys, validatePauseKeys, type PauseKey } from '@/lib/pause';
 import { collectableBatchJobsFilter, unsubmittedBatchJobsFilter } from '../../../../../scripts/lib/batch-job-filters.mjs';
+import { endNamelessBatchJobs } from '../../../../../scripts/lib/end-batch-job.mjs';
 
 export const maxDuration = 60;
 
@@ -207,18 +208,15 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
   result.batch_jobs_cancelled = activeBatchCount;
   result.batch_jobs_left_for_collector = await db.collection('batch_jobs').countDocuments(collectableBatchJobsFilter());
 
+  // Through the one guarded terminator (#6276): it ANDs the no-name clauses onto the filter
+  // again at write time, so a row named between the count and the write is left alone.
   if (!dryRun && activeBatchCount > 0) {
-    await db.collection('batch_jobs').updateMany(
-      activeBatchFilter,
-      {
-        $set: {
-          status: 'cancelled',
-          updated_at: new Date(),
-          cancelled_at: new Date(),
-          cancelled_by: 'emergency-stop',
-        },
-      }
-    );
+    await endNamelessBatchJobs(db, activeBatchFilter, {
+      status: 'cancelled',
+      reason: 'emergency stop',
+      by: 'emergency-stop',
+      set: { cancelled_at: new Date(), cancelled_by: 'emergency-stop' },
+    });
   }
 
   // 3. Park batch translation runs about to submit. They live in their own collection, so
