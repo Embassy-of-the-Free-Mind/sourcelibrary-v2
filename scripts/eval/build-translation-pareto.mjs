@@ -529,6 +529,71 @@ for (const [lang, trackId] of LANGS) {
   TRACKS.push({ id: 'pareto-6182', writeup: X.writeup, judges: 2 });
 }
 
+// #6182, Claude on the subscription (PREREG-claude-arms.md): Sonnet 5.5 (CS) and Haiku 4.5 (CH) as Claude Code
+// subagents, $0 billed, beside the API's Gemini 3.8 Flash (G38) and the page's production engine, one blinded item per
+// page, two blind Opus judges on every item. Its own read, so its own panel. G38 and production are placed at their
+// billed Batch dollars; CS and CH have no metered cost, so they are listed under the chart with production's score on
+// the same pages, the way Opus is. Tibetan: the 113 fresh 84000 sides, where both anchors have a per-side bill.
+{
+  const C = { writeup: 'scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md',
+    xl: 'pareto-6182/claude/xljudge/scores.json', tib: 'pareto-6182/claude/tibjudge/scores.json' };
+  const SONNET = 'claude-sonnet-5.5', HAIKU = 'claude-haiku-4.5';
+  Object.assign(LABEL, { [SONNET]: 'Claude Sonnet 5.5', [HAIKU]: 'Claude Haiku 4.5' });
+  const note = 'run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it';
+  const panel = (chart, rs, fid, rev, usd, refs, extra) => {
+    const production = chart.production_engine;
+    const engine = { G38, PROD: production };
+    const pt = (a, e) => ({ engine: e, label: LABEL[e], production: e === production,
+      ...stats(rs.map(r => ({ fidelity: fid(r, a), reversal: rev(r, a) })), hash(`${chart.title}|claude-6182|${a}`)) });
+    const placed = Object.entries(engine).map(([a, e]) => ({ ...pt(a, e), cost: { usd_per_1k: r3(avg(rs.map(r => usd(r, a))) * 1000), basis: 'metered',
+      detail: `billed tokens of the #6182 ${a === 'G38' ? 'Gemini 3.8 Flash' : 'production-engine'} run at the Batch rate, thinking included; averaged over these ${rs.length} pages`, source: C.writeup } }));
+    for (const a of placed) a.on_frontier = false;
+    placed.sort((a, b) => a.cost.usd_per_1k - b.cost.usd_per_1k || a.engine.localeCompare(b.engine));
+    const prodY = r3(avg(rs.map(r => fid(r, 'PROD'))));
+    const noCost = [['CS', SONNET], ['CH', HAIKU]].map(([a, e]) => ({ ...pt(a, e), cost: null,
+      subset: { n_pages: rs.length, production_label: LABEL[production], production_fidelity: prodY }, note }));
+    chart.panels.push({
+      kind: 'claude-subscription-6182', heading: 'Claude Sonnet and Haiku on the subscription, 8 Oct 2026 (#6182)', n_pages: rs.length,
+      n_books: new Set(rs.map(r => r.book || r.toh)).size, frontier: false,
+      frontier_note: 'two engines with a measured cost here; the Claude runs have none, so they are listed below the chart', judges: 2,
+      references: refs, date: dateOf(C.writeup), files: [C.writeup],
+      notes: [
+        'A separate read from the other panels, with both Claude runs, Gemini 3.8 Flash and the engine in use in one item per page, so its scores are compared only within this panel',
+        'Claude Sonnet 5.5 and Claude Haiku 4.5 ran on a subscription, which billed nothing, so they have no point on the cost axis',
+        'Both judges are Claude Opus; any preference they have for Claude would raise the two Claude scores, not lower them',
+        ...extra,
+      ],
+      placed, no_cost: noCost,
+    });
+  };
+  const xs = JSON.parse(fs.readFileSync(path.join(RES, C.xl), 'utf8'));
+  const xfid = (r, a) => avg(Object.values(r.J).filter(j => j[a]?.fid != null).map(j => j[a].fid));
+  const xrev = (r, a) => Object.values(r.J).some(j => j[a]?.rev > 0);
+  const ARM4 = ['CS', 'CH', 'G38', 'PROD'];
+  for (const chart of charts) {
+    const all = xs.rows.filter(r => r.lang === chart.title && ARM4.every(a => r.arms.includes(a)));
+    const own = xs.primary.languages_ge_10[chart.title];
+    if (own && (own.pages_shared !== all.length || ARM4.some(a => Math.abs(avg(all.map(r => xfid(r, a))) - own.arms[a].fidelity) > 0.0005))) {
+      throw new Error(`${C.xl}: parse does not reproduce ${chart.title}`);
+    }
+    // PROD is each page's own engine; the panel keeps the pages whose engine is the one the chart labels production
+    const rs = all.filter(r => keep(r.page_id) && r.usd.G38 != null && r.usd.PROD != null && ({ L31: LITE, FP: FLASH })[r.prod] === chart.production_engine);
+    if (rs.length < MIN_PAGES) continue;
+    dumpSet(chart.id, 'claude-subscription-6182', rs.map(r => ({ page: r.page_id, book: r.book })));
+    panel(chart, rs, xfid, xrev, (r, a) => r.usd[a], [{ stratum: '6182', reference: REFERENCE.default, pages: rs.length, date: dateOf(C.writeup) }],
+      auditNotes(chart.id, 'claude-subscription-6182'));
+  }
+  const tib = charts.find(c => c.id === 'tibetan');
+  if (!tib) throw new Error('no Tibetan chart for the Claude panel');
+  const ts = JSON.parse(fs.readFileSync(path.join(RES, C.tib), 'utf8'));
+  const fpCall = JSON.parse(fs.readFileSync(path.join(TIB_DIR, 'cost.json'), 'utf8'))[`B2|${FLASH}`];
+  const trs = ts.rows.filter(r => r.set === 'tib-ref113' && keep(r.page_id)).map(r => ({ ...r, J: Object.fromEntries(Object.entries(r.J).map(([j, v]) => [j, { ...v, PROD: v.FP }])) }));
+  const tfid = (r, a) => avg(Object.values(r.J).map(j => j[a].fid));
+  if (trs.length === ts['tib-ref113'].sides && ['CS', 'CH', 'G38', 'FP'].some(a => Math.abs(avg(trs.map(r => tfid(r, a))) - ts['tib-ref113'][a].fidelity_mean) > 0.0005)) throw new Error(`${C.tib}: parse does not reproduce scores.json`);
+  panel(tib, trs, tfid, (r, a) => Object.values(r.J).some(j => j[a].inv > 0), (r, a) => (a === 'G38' ? r.usd_G38 : fpCall.batch_usd_per_call),
+    [{ stratum: 'Tib', reference: REFERENCE.Tib, pages: trs.length, date: dateOf(C.writeup) }], []);
+}
+
 // Syriac (#6295): one translator, two INPUTS. Production would translate the Kraken lane's text; the same model on the
 // typed Digital Syriac Corpus window is the ceiling for that model. The judges read the Syriac e-text, not a published
 // English translation (none was located for these pages), so this panel is fidelity to the source text.
