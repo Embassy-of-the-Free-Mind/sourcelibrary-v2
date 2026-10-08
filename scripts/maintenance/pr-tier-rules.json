@@ -9,7 +9,7 @@
     { "reason": "page-image storage keys (the #3362 class: a book-independent key shares images between books and nothing fails loudly)",
       "globs": ["src/lib/r2-key.ts", "scripts/lib/r2-key.mjs", "src/lib/storage.ts"] },
     { "reason": "public copy Derek has not seen",
-      "globs": ["src/content/**", "src/app/vision/**", "src/app/blog/**", "src/app/about/**", "src/app/press/**", "src/app/press-release/**", "src/app/press-releases/**", "src/generated/blog*", "src/lib/email-templates.ts", "src/lib/adoption-email.ts", "src/lib/feedback-reply-email.ts", "src/lib/email-digest-generator.ts", "public/connect/**"] },
+      "globs": ["src/content/**", "src/app/vision/**", "src/app/blog/**", "src/app/about/**", "src/app/press/**", "src/app/press-release/**", "src/app/press-releases/**", "src/app/research/quality/**", "src/app/research/canon-quality/**", "src/generated/blog*", "src/lib/email-templates.ts", "src/lib/adoption-email.ts", "src/lib/feedback-reply-email.ts", "src/lib/email-digest-generator.ts", "public/connect/**"] },
     { "reason": "tenant lockdown surface",
       "globs": ["src/app/embed/**", "src/app/[tenant]/**"] },
     { "reason": "doctrine or enforcement (CLAUDE.md, hooks, workflows, commands)",

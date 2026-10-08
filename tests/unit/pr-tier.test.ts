@@ -74,3 +74,14 @@ describe('pr-tier: a grouped dependabot bump is read from the diff', () => {
     expect(groupedBumps('').pairs).toBe(0);
   });
 });
+
+describe('pr-tier: the research papers are public copy', () => {
+  // #5294 and #5646 were both reader-facing paper copy the path rules missed,
+  // held only because a session added tier:hold by hand.
+  const COPY = 'public copy Derek has not seen';
+  it('a change to a research paper holds; a research tool does not', () => {
+    expect(reasons(['src/app/research/quality/page.tsx'], [])).toContain(COPY);
+    expect(reasons(['src/app/research/canon-quality/page.tsx'], [])).toContain(COPY);
+    expect(reasons(['src/app/research/ocr-heatmap/page.tsx'], [])).not.toContain(COPY);
+  });
+});
