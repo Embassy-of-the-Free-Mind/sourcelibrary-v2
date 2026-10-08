@@ -7,7 +7,7 @@ import { readCardFraming, type CardFraming } from '@/lib/collection-card-image';
 import { browseBooks, type CatalogBook } from '@/lib/books-catalog';
 import { toGalleryCardUrl, toGalleryFullUrl } from '@/lib/utils';
 import { type Plate } from '@/components/GalleryMasonry';
-import { type HomeLang } from '@/lib/home-i18n';
+import { type HomeLang, LA_COLLECTION_NAMES } from '@/lib/home-i18n';
 import { getEsSpanishCollectionCard, type EsSpanishCollectionCard } from '@/lib/es-collections';
 import { localizedEditionFilterIndexed } from '@/lib/localized';
 import type { Locale } from '@/lib/locale-path';
@@ -231,8 +231,10 @@ export interface CuratedShowcase {
  * the section; this part rotates with each revalidation, the same way the
  * featured-collection spread further down the page does.
  * `homepage_exclude` opts an exhibition out without unpublishing it.
+ * On `/la` the draw is limited to exhibitions that have a hand-written Latin
+ * name, so a card there is never titled in English (#6278).
  */
-async function getCuratedShowcase(): Promise<CuratedShowcase> {
+async function getCuratedShowcase(lang: HomeLang): Promise<CuratedShowcase> {
   const db = await getReadDb();
   const published = { type: 'curated', published: true, visible: { $ne: false } };
   const [total, docs] = await Promise.all([
@@ -241,6 +243,7 @@ async function getCuratedShowcase(): Promise<CuratedShowcase> {
       {
         $match: {
           ...published,
+          ...(lang === 'la' ? { slug: { $in: Object.keys(LA_COLLECTION_NAMES) } } : {}),
           homepage_exclude: { $ne: true },
           book_count: { $gte: 15 },
           subtitle: { $type: 'string', $nin: ['', '-'] },
@@ -476,6 +479,56 @@ async function getLatinShelf(): Promise<CatalogBook[]> {
     if (out.length >= LATIN_SHELF_COUNT) break;
   }
   return out;
+}
+
+// ---------- The beginner's shelf (the /la "Tironibus" band, #6278) ----------
+
+/**
+ * Readable Latin, hand-picked, easiest first: what a teacher assigns and what a
+ * learner can finish. One edition per work, each chosen against the other
+ * editions we hold and checked against its page scans on 2026-10-08:
+ * catalogued `Latin` (so `/la/book/…` exists), fully transcribed, legible.
+ * Several are schoolbooks with a vernacular beside the Latin (the Orbis pictus
+ * is Latin and German, the Janua Latin and Dutch, the Vestibulum Latin, German
+ * and Polish, the Nepos has English notes); that is how they were printed.
+ */
+const BEGINNER_SHELF_IDS = [
+  '69cfb6fe709cb88a028365a4', // Comenius, Orbis sensualium pictus (Nuremberg 1698)
+  '694e7c5146953358dafc3867', // Comenius, Vestibulum (1644)
+  '69c818926c6f3cc53c84911e', // Comenius, Janua linguarum reserata (1666)
+  '69b65af418b87551bfd060ad', // Erasmus, De civilitate morum puerilium (1580)
+  '69b21c6c429e087c6f8646f6', // Erasmus, Colloquia (1636)
+  '69e7006a91015041e8f2131d', // Phaedrus, Fabulae Aesopiae (1701)
+  '69af22d8b5227118e60e4a09', // Eutropius, Breviarium (1883)
+  '69af22d9f98f6eff774cd5d3', // Cornelius Nepos, Vitae (1858)
+  '69b2f450f9f1ad2b3b152c44', // Caesar, Commentarii (Estienne 1544)
+  '69b2ff0ea1a4246ddb45adbb', // More, Utopia (Froben 1518)
+];
+
+// Looked up by `id` OR `_id` (book-deletion-and-identity.md), behind the same
+// live filter as every public list. A book that is hidden, loses its cover or
+// is recatalogued out of `Latin` drops off the shelf rather than rendering a
+// card that 307s to the English page.
+async function getBeginnerShelf(): Promise<CatalogBook[]> {
+  const db = await getReadDb();
+  const oids = BEGINNER_SHELF_IDS.map((id) => new ObjectId(id));
+  const books = await db.collection('books').aggregate([
+    { $match: { $or: [{ id: { $in: BEGINNER_SHELF_IDS } }, { _id: { $in: oids } }], visible: true, pages_count: { $gt: 0 }, language: 'Latin' } },
+    { $project: { ...BOOK_PROJECTION, _oid: { $toString: '$_id' }, rawId: '$id' } },
+  ], { maxTimeMS: 5000 }).toArray();
+  const byId = new Map<string, any>();
+  for (const b of books) {
+    if (b.rawId) byId.set(String(b.rawId), b);
+    byId.set(b._oid, b);
+  }
+  const out: CatalogBook[] = [];
+  for (const id of BEGINNER_SHELF_IDS) {
+    const b = byId.get(id);
+    if (!b || !hasRenderableCover(b as CatalogBook)) continue;
+    const { _oid, rawId, ...rest } = b;
+    out.push(rest as CatalogBook);
+  }
+  return JSON.parse(JSON.stringify(out)) as CatalogBook[];
 }
 
 // ---------- Most liked ----------
@@ -824,6 +877,8 @@ export interface HomeData {
   blogPosts: HomeBlogPost[];
   /** Popular books written in Latin, for the `/la` shelf (#6254). Empty on every other homepage. */
   latinShelf: CatalogBook[];
+  /** Hand-picked readable Latin for the `/la` "Tironibus" shelf (#6278). Empty elsewhere. */
+  beginnerShelf: CatalogBook[];
   /** The `en-espanol` collection card. Null on the English homepage. */
   spanishCollection: EsSpanishCollectionCard | null;
   /**
@@ -840,7 +895,7 @@ export interface HomeData {
 // this file).
 export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
   const emptyShowcase: CuratedShowcase = { items: [], total: 0 };
-  const [featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts, latinShelf] = await Promise.all([
+  const [featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts, latinShelf, beginnerShelf] = await Promise.all([
     withTimeout(getFeaturedCollections(), 20000, [] as FeaturedItem[]),
     withTimeout(getDiscoverBooks(), 20000, FALLBACK_DISCOVER_BOOKS),
     withTimeout(getRecentlyTranslated(), 20000, [] as CatalogBook[]),
@@ -848,12 +903,13 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
     withTimeout(getHomeGalleryPlates(), 20000, [] as Plate[]),
     getBookCounts(),
     withTimeout(getRemainingCollections(), 20000, SORTED_FALLBACK_COLLECTIONS),
-    withTimeout(getCuratedShowcase(), 8000, emptyShowcase),
+    withTimeout(getCuratedShowcase(lang), 8000, emptyShowcase),
     lang === 'es' ? withTimeout(getEsSpanishCollectionCard(), 8000, null) : Promise.resolve(null),
     lang === 'en'
       ? Promise.resolve({} as Record<string, number>)
       : withTimeout(getLocalizedCollectionCounts(lang), 8000, {} as Record<string, number>),
     lang === 'la' ? withTimeout(getLatinShelf(), 20000, [] as CatalogBook[]) : Promise.resolve([] as CatalogBook[]),
+    lang === 'la' ? withTimeout(getBeginnerShelf(), 8000, [] as CatalogBook[]) : Promise.resolve([] as CatalogBook[]),
   ]);
 
   // One book, one appearance: see src/lib/home-dedupe.ts.
@@ -879,6 +935,8 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
     blogPosts: BLOG_POSTS,
     spanishCollection,
     localizedCollectionCounts,
-    latinShelf,
+    // One book, one appearance: the beginner's shelf is the hand-picked one, so it keeps the card.
+    latinShelf: latinShelf.filter((b) => !beginnerShelf.some((p) => p.id === b.id)),
+    beginnerShelf,
   };
 }

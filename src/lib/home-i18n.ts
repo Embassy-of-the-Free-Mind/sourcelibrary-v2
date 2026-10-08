@@ -94,6 +94,9 @@ export interface HomeStrings {
   nativeShelfHeading: string;
   nativeShelfSubtitle: string;
   nativeShelfAll: string;
+  /** The beginner's shelf under it (`/la` only): readable Latin a teacher can assign. */
+  beginnerShelfHeading: string;
+  beginnerShelfSubtitle: string;
   spanishSubtitle: string;
 
   // Gallery masonry (homepage)
@@ -210,6 +213,8 @@ const en: HomeStrings = {
   nativeShelfHeading: 'Latin books',
   nativeShelfSubtitle: 'Books written in Latin, read here in the original.',
   nativeShelfAll: 'All Latin books',
+  beginnerShelfHeading: 'For beginners',
+  beginnerShelfSubtitle: 'Easier Latin: the schoolbooks, dialogues, fables and short histories that generations of pupils learned from.',
   spanishSubtitle: 'The works in the library that already have a Spanish edition, page by page beside the original.',
   galleryHeading: 'Gallery',
   gallerySubtitle: 'Plates, figures, and engravings from rare books across the library.',
@@ -326,6 +331,8 @@ const es: HomeStrings = {
   nativeShelfHeading: 'Libros en latín',
   nativeShelfSubtitle: 'Libros escritos en latín, para leer aquí en el original.',
   nativeShelfAll: 'Todos los libros en latín',
+  beginnerShelfHeading: 'Para principiantes',
+  beginnerShelfSubtitle: 'Latín más fácil: los manuales, diálogos, fábulas e historias breves con que aprendieron generaciones de alumnos.',
   spanishSubtitle: 'Las obras de la biblioteca que ya cuentan con una edición en español, página a página junto al original.',
   galleryHeading: 'Galería',
   gallerySubtitle: 'Láminas, figuras y grabados de libros raros de toda la biblioteca.',
@@ -449,6 +456,8 @@ const la: HomeStrings = {
   nativeShelfHeading: 'Libri Latini',
   nativeShelfSubtitle: 'Libri Latine scripti, quos hic in ipso textu Latino legere potes.',
   nativeShelfAll: 'Omnes libri Latini',
+  beginnerShelfHeading: 'Tironibus',
+  beginnerShelfSubtitle: 'Libri faciliores, e quibus discipuli olim linguam Latinam discebant: libelli scholastici, colloquia, fabulae, historiae breves.',
   spanishSubtitle: 'Opera quae iam editionem Hispanicam habent, paginatim iuxta textum primigenium.',
   galleryHeading: 'Pinacotheca',
   gallerySubtitle: 'Tabulae, figurae, imagines aere incisae ex libris raris totius bibliothecae.',
@@ -539,7 +548,111 @@ export const ES_COLLECTION_NAMES: Record<string, string> = {
   'en-espanol': 'Libros en español',
 };
 
+// Latin display names, hand-written (#6278). Two groups: the top-level
+// collections of the subject index, then the curated exhibitions the showcase
+// draws from. Where a traditional Latin name exists it is used (Theatra
+// machinarum, Antiquitates Septentrionales, Philosophia perennis). On `/la` the
+// showcase draws only from exhibitions named here, so adding a curated
+// exhibition without a Latin name keeps it off the Latin homepage instead of
+// showing it in English.
+export const LA_COLLECTION_NAMES: Record<string, string> = {
+  'natural-philosophy': 'Philosophia naturalis et scientiae',
+  theology: 'Theologia Christiana',
+  literature: 'Litterae et poesis',
+  'classical-philosophy': 'Philosophia antiqua',
+  astrology: 'Astrologia et divinatio',
+  'sacred-texts': 'Libri sacri',
+  medicine: 'Medicina et historia naturalis',
+  alchemy: 'Alchemia',
+  mysticism: 'Theologia mystica',
+  hermetica: 'Hermetica',
+  'renaissance-philosophy': 'Philosophia Renascentiae',
+  'east-asia': 'Asia orientalis',
+  magic: 'Magia et artes occultae',
+  'art-illustrated': 'Ars et libri imaginibus ornati',
+  'south-asia': 'Asia meridiana',
+  'secret-societies': 'Sodalitates arcanae',
+  'history-political-thought': 'Historia et doctrina civilis',
+  psychology: 'Psychologia',
+  demonology: 'Daemonologia et maleficia',
+  'cannabis-western-record': 'Cannabis: plantae historia',
+  'american-founding': 'Origines rei publicae Americanae',
+  'signs-in-the-sky': 'Signa in caelo',
+  'gardens-festivals-ephemeral': 'Horti, festa, artes caducae',
+  'druids-megaliths': 'Druidae et monumenta megalithica',
+  'sacred-plants': 'Herbae sacrae et ebrietas ritualis',
+  'norse-antiquities': 'Antiquitates Septentrionales',
+  'the-human-condition': 'Condicio humana',
+  'book-of-the-dead': 'Liber mortuorum',
+  sibyls: 'Sibyllae',
+  nalanda: 'Nālandā: fontes Sanscritici canonis Tibetani',
+  'alchemists-studio': 'Officina alchemistae',
+  'venetian-mystery': 'Mysterium Venetum',
+  'art-of-altdorfer-baldung': 'Maleficae et res mirae',
+  'leonardo-drawings': 'Leonardi Vincii codices',
+
+  // Curated exhibitions (the showcase pool).
+  manichaeism: 'Manichaeorum religio',
+  'ancient-egyptian': 'Aegyptus antiqua',
+  'indigenous-traditions': 'Traditiones gentium indigenarum',
+  'music-of-the-spheres': 'Musica sphaerarum',
+  'sympathy-of-all-things': 'Sympathia rerum',
+  'perennial-philosophy': 'Philosophia perennis',
+  'art-of-memory': 'Ars memoriae',
+  'forbidden-books': 'Libri prohibiti',
+  'star-science': 'Scientia astrorum',
+  'making-things-visible': 'Invisibilia detecta',
+  'invention-of-method': 'Methodus inventa',
+  'letters-from-the-desert': 'Scripta e deserto',
+  'kepler-fludd-debate': 'Kepleri et Fluddi controversia',
+  'newtons-other-science': 'Altera Newtoni scientia',
+  'courts-of-wonder': 'Aulae mirabilium',
+  'agrippas-world': 'Orbis Agrippae',
+  'behmenist-underground': 'Boehmii sectatores',
+  'robert-hooke-polymath': 'Robertus Hooke polyhistor',
+  encyclopedists: 'Encyclopaedici',
+  'women-of-the-secret-tradition': 'Feminae traditionis arcanae',
+  'theatres-of-machines': 'Theatra machinarum',
+  'bestiary-tradition': 'Bestiaria',
+  'alchemical-emblem': 'Emblemata alchemica',
+  'maps-of-the-invisible': 'Tabulae rerum invisibilium',
+  'byzantine-bridge': 'Pons Byzantinus',
+  'rhineland-mystics': 'Mystici Rhenani',
+  'syriac-church': 'Ecclesia Syriaca',
+  'armenian-golden-age': 'Aetas aurea Armeniorum',
+  'islamic-philosophy-meets-christian-mysticism': 'Philosophia Islamica et theologia mystica Christiana',
+  'sacred-objects': 'Res sacrae',
+  'indigenous-sacred-narratives': 'Narrationes sacrae gentium indigenarum',
+  apocrypha: 'Apocrypha',
+  'sacred-books-of-the-east': 'Libri sacri Orientis',
+  'dutch-golden-age-of-science': 'Aetas aurea scientiae Batavae',
+  'anatomical-revolution': 'Anatomia renovata',
+  'mining-metals-and-fire': 'Metalla, fodinae, ignis',
+  'canon-of-avicenna': 'Canon Avicennae',
+  'nova-reperta': 'Nova Reperta',
+  'herculaneum-papyri': 'Papyri Herculanenses',
+  'rosicrucian-moment': 'Fraternitas Rosae Crucis',
+  'global-demonology': 'Daemonologia omnium gentium',
+  'printing-press-revolution': 'Ars typographica',
+  ayurveda: 'Ayurveda: scientia vitae',
+  'grimoire-tradition': 'Libri magici',
+  'ancient-engineering': 'Ars machinalis antiquorum',
+  'renaissance-literary-imagination': 'Litterae Renascentiae',
+  'ancient-papyri': 'Papyri antiquae',
+  'great-manuscripts': 'Codices insignes',
+  'theosophical-society': 'Societates theosophicae et occultae',
+  'blavatsky-mahatmas': 'Blavatsky et Mahatmae',
+  'index-librorum-prohibitorum': 'Index Librorum Prohibitorum',
+  'hogwarts-library': 'Bibliotheca Hogvartensis',
+  yoga: 'Yoga',
+  'javanese-kraton': 'Aula Iavanica',
+  'indonesian-manuscripts': 'Codices Indonesici',
+  'baltic-paganism': 'Religio pagana Baltica',
+  seafaring: 'Navigatio et ars navium aedificandarum',
+};
+
 export function collectionName(lang: HomeLang, slug: string, fallback: string): string {
   if (lang === 'es') return ES_COLLECTION_NAMES[slug] ?? fallback;
+  if (lang === 'la') return LA_COLLECTION_NAMES[slug] ?? fallback;
   return fallback;
 }

@@ -25,7 +25,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   // catalog, browse, podcast, blog…) are returned untouched by localePath and go
   // to their English page rather than a 404. See .claude/docs/i18n.md rule 5.
   const lp = (href: string) => localePath(href, lang);
-  const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, blogPosts, spanishCollection, localizedCollectionCounts, latinShelf } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, blogPosts, spanishCollection, localizedCollectionCounts, latinShelf, beginnerShelf } = data;
   const hasShowcase = curatedShowcase.items.length > 0;
   const nf = (n: number) => n.toLocaleString(t.locale);
   // The subject index's count. On /es it also says how many of the collection's
@@ -115,6 +115,23 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
         </section>
       )}
 
+      {/* Tironibus — readable Latin, hand-picked and ordered easiest first
+          (#6278). The anchor is the link a teacher shares with a class:
+          sourcelibrary.org/la#tironibus. */}
+      {beginnerShelf.length > 0 && (
+        <section id="tironibus" className="bg-white pb-10 md:pb-14 scroll-mt-20">
+          <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
+            <h2 className="text-3xl md:text-4xl text-primary font-display mb-3">
+              {t.beginnerShelfHeading}
+            </h2>
+            <p className="text-muted mb-6 max-w-2xl">
+              {t.beginnerShelfSubtitle}
+            </p>
+            <BookSlider books={beginnerShelf as unknown as MiniBook[]} lang={lang} />
+          </div>
+        </section>
+      )}
+
       {/* Collections — two jobs, kept apart. The showcase leads: four curated
           exhibitions with a one-line hook each, one large and three beside it,
           because a small argued selection is what makes someone open a
@@ -150,7 +167,12 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
           {hasShowcase && (
             <>
               <CuratedShowcase
-                items={curatedShowcase.items}
+                // The one-line hooks are English prose. On /la the card carries
+                // its Latin name alone rather than a Latin title over an
+                // English sentence (#6278).
+                items={lang === 'la'
+                  ? curatedShowcase.items.map((item) => ({ ...item, name: collectionName(lang, item.slug, item.name), subtitle: '' }))
+                  : curatedShowcase.items}
                 lang={lang}
                 countLabel={(item) => `${nf(item.book_count)} ${t.booksLabel}`}
               />
