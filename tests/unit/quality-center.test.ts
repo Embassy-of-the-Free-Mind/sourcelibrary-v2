@@ -1,7 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseExperiment, listExperiments, latestCanonStatus, typedPages, sampleAudit, unfitRows, dropReason } from '@/lib/quality-center';
+import { parseExperiment, listExperiments, latestCanonStatus, typedPages, sampleAudit } from '@/lib/quality-center';
+// @ts-expect-error -- plain ESM script, no types
+import { digest, render, unfitRows, dropReason, OUT as DIGEST } from '../../scripts/eval/build-pareto-sample-digest.mjs';
 import { FOOTER_NAV_COLUMNS, visibleFooterNavColumns } from '@/lib/footer-nav';
 import { FOOTER_STRINGS } from '@/lib/i18n';
 // @ts-expect-error -- plain ESM script, no types
@@ -140,7 +142,11 @@ describe('footer door', () => {
 });
 
 describe('the Pareto sample check (#6304) on /quality', () => {
-  it('reads the committed audit files and the write-up', () => {
+  it('the committed digest matches its sources (run scripts/eval/build-pareto-sample-digest.mjs)', () => {
+    expect(fs.readFileSync(path.join(process.cwd(), DIGEST), 'utf8')).toBe(render(digest()));
+  });
+
+  it('states consistent figures', () => {
     const a = sampleAudit();
     expect(a.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     expect(a.checked.translation).toBeGreaterThan(0);

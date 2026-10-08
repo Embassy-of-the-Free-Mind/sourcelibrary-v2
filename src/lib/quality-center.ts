@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import digest from '@/data/pareto-sample-audit.json';
 
 /**
  * Build-time readers for /quality (#5918). Server-only: they read committed files from
@@ -138,173 +139,20 @@ export function typedPages(t: Tradition): number {
   return t.ocr_engines.filter(([e]) => TYPED_SOURCE.test(e)).reduce((s, [, n]) => s + n, 0);
 }
 
-/* ── The sample check behind the cost/quality charts (#6304): results/pareto-sample-audit-<issue>/ ── */
+/* ── The sample check behind the cost/quality charts (#6304) ── */
 
-const AUDIT_ISSUE = 6304;
-const AUDIT_DIR = `scripts/eval/results/pareto-sample-audit-${AUDIT_ISSUE}`;
+// src/data/pareto-sample-audit.json is written by scripts/eval/build-pareto-sample-digest.mjs from
+// scripts/eval/results/pareto-sample-audit-6304/ and the write-up's verdict table. It is a src/data
+// import, not a read of the results dir, because .vercelignore leaves scripts/eval/results out of a
+// Vercel build.
 
 /** n of a whole, as the page states it. */
 export type Of = { n: number; of: number };
-/** A share of the chart's sample against the same share of the library's live pages in that language. */
-export type Gap = { sample: number; corpus: number };
-
-export type SampleAudit = {
-  issue: number;
-  date: string;
-  writeup: string;
-  files: { summary: string; drops: string; eye: string };
-  /** Page slots checked by script: every page each panel plots. */
-  checked: { translation: number; ocr: number };
-  dropped: { translation: number; ocr: number; reasons: { family: 'translation' | 'ocr'; reason: DropReason; n: number }[] };
-  /** Panels whose order and frontier did not move without the dropped pages. */
-  held: { translation: Of; ocr: Of; swapsAllOverlap: boolean };
-  /** Rows the write-up's per-panel table calls not fit, one per chart. */
-  unfit: { chart: string; qualifier: string | null }[];
-  edition: { greek: Of; latinNormalised: Of; chineseOverrun: Of };
-  famous: { language: string; famous: number; n: number }[];
-  /** Rank correlation of the engines on famous pages against the rest, over the pools with enough famous pages. */
-  spearman: [number, number];
-  /** Famous-page mean minus the rest, over every engine in those pools (points of 5). */
-  levelShift: [number, number];
-  coverage: {
-    chineseTranslationPrinted: Gap;
-    chineseHandwritten: Gap;
-    tibetan: { texts: number; printed: Gap; handwritten: Gap };
-    english17c: Gap;
-    germanFrench: { n: number; wikisource: Gap; c19: Gap };
-  };
-  eye: { pages: number; readers: number; fit: number; limit: number; unfit: number; flagged: Of; unflagged: Of };
-};
-
 export type DropReason = 'judges' | 'by-eye' | 'language' | 'cer';
-
-/** The first reason the script recorded for a drop, in the four kinds the write-up names. */
-export function dropReason(why: string): DropReason {
-  if (why.startsWith('ref-fit')) return 'judges';
-  if (why.startsWith('by eye')) return 'by-eye';
-  if (/^(script|language):/.test(why)) return 'language';
-  if (why.startsWith('best-engine-cer')) return 'cer';
-  throw new Error(`unknown drop reason in ${AUDIT_DIR}/summary.json: ${why}`);
-}
-
-type Coverage = Record<string, { top_gaps: { k: string; sample: number; corpus: number }[] }>;
-type AuditPanel = {
-  family: string; chart: string; panel: string; lang: string; n: number; works: number; famous: number; coverage: Coverage;
+export type SampleAudit = Omit<typeof digest, 'dropped'> & {
+  dropped: Omit<typeof digest.dropped, 'reasons'> & { reasons: { family: 'translation' | 'ocr'; reason: DropReason; n: number }[] };
 };
 
-function gapOf(p: AuditPanel, dim: string, k: string): Gap {
-  const g = p.coverage[dim]?.top_gaps.find(x => x.k === k);
-  if (!g) throw new Error(`${AUDIT_DIR}: no ${dim}=${k} gap for ${p.family} ${p.chart}/${p.panel}`);
-  return { sample: g.sample, corpus: g.corpus };
-}
-
-/** "On 109 of 121 pages the reference …" from the script's own panel note. */
-function noteCount(notes: Record<string, string[]>, key: string, re: RegExp): Of {
-  const m = (notes[key] ?? []).map(s => re.exec(s)).find(Boolean);
-  if (!m) throw new Error(`${AUDIT_DIR}: no note matching ${re} for ${key}`);
-  return { n: Number(m[1]), of: Number(m[2]) };
-}
-
-/**
- * The per-panel verdict table of the write-up: rows whose verdict says "not fit". Rows for the
- * same chart (most-pages and most-engines) collapse into one.
- */
-export function unfitRows(md: string): { chart: string; qualifier: string | null }[] {
-  const out: { chart: string; qualifier: string | null }[] = [];
-  for (const line of md.split('\n')) {
-    const cells = line.split('|').map(c => cleanMarkdown(c));
-    if (cells.length < 5 || !/not fit/i.test(cells[3] ?? '')) continue;
-    const [chartCell] = cells.slice(1);
-    const base = chartCell.replace(/\s*·\s*(most-pages|most-engines)\s*$/, '');
-    const chart = (/OCR/.test(base) ? base : base.replace(/^([^·]+?)(\s*·|$)/, '$1 translation$2')).replace(/\s*·\s*#(\d+)$/, ' (the #$1 chart)');
-    const q = /not fit to rank (?!engines)(.+)$/i.exec(cells[3]);
-    if (!out.some(o => o.chart === chart)) out.push({ chart, qualifier: q ? q[1].replace(/\barms\b/, 'engines') : null });
-  }
-  return out;
-}
-
-export function sampleAudit(root = process.cwd()): SampleAudit {
-  const read = (f: string) => JSON.parse(fs.readFileSync(path.join(root, AUDIT_DIR, f), 'utf8'));
-  const s = read('summary.json');
-  const eye: { group: string; verdict: string; stratum: string }[] = read('eye.json');
-  const writeup = fs.readdirSync(path.join(root, 'scripts', 'eval', 'experiments')).find(f => DATED.test(f) && f.includes(`sample-audit-${AUDIT_ISSUE}`));
-  if (!writeup) throw new Error(`no write-up for #${AUDIT_ISSUE} in scripts/eval/experiments`);
-  const md = fs.readFileSync(path.join(root, 'scripts', 'eval', 'experiments', writeup), 'utf8');
-
-  const panels: AuditPanel[] = s.panels;
-  const panel = (family: string, chart: string, name = 'most-pages') => {
-    const p = panels.find(x => x.family === family && x.chart === chart && x.panel === name);
-    if (!p) throw new Error(`${AUDIT_DIR}: no ${family} ${chart}/${name} panel`);
-    return p;
-  };
-
-  const drops: { family: 'translation' | 'ocr'; why: string[] }[] = s.drops;
-  const reasons: SampleAudit['dropped']['reasons'] = [];
-  for (const d of drops) {
-    const reason = dropReason(d.why[0]);
-    const r = reasons.find(x => x.family === d.family && x.reason === reason);
-    if (r) r.n++;
-    else reasons.push({ family: d.family, reason, n: 1 });
-  }
-  reasons.sort((a, b) => (a.family === b.family ? b.n - a.n : a.family === 'translation' ? -1 : 1));
-
-  type Sens = { n: number; frontier_changed: boolean; top_before: string; top_after: string; swaps: unknown[]; ci_overlap_swaps: number };
-  const sens: { translation: Sens[]; ocr: Sens[] } = s.sensitivity.drops;
-  const held = (ps: Sens[]): Of => ({ n: ps.filter(p => !p.frontier_changed && p.top_before === p.top_after && p.swaps.length === 0).length, of: ps.length });
-
-  type Pool = { spearman: number | null; means: { famous: Record<string, number>; obscure: Record<string, number> } };
-  const pools = (Object.values(s.memorisation.translation_6182) as Pool[]).filter(p => p.spearman != null);
-  const rhos = pools.map(p => p.spearman as number);
-  const shifts = pools.flatMap(p => Object.keys(p.means.famous).map(a => p.means.famous[a] - p.means.obscure[a]));
-
-  const famous = panels
-    .filter(p => p.family === 'translation' && p.panel === 'gemini-models-6182')
-    .map(p => ({ language: p.lang, famous: p.famous, n: p.n }))
-    .sort((a, b) => b.famous / b.n - a.famous / a.n);
-
-  const chineseTr = panel('translation', 'chinese');
-  const tibetan = panel('translation', 'tibetan');
-  const gf = panel('ocr', 'latin-script-other');
-
-  return {
-    issue: AUDIT_ISSUE,
-    date: writeup.slice(0, 10),
-    writeup: `${BLOB}${writeup}`,
-    files: { summary: `${AUDIT_DIR}/summary.json`, drops: `${AUDIT_DIR}/drops.json`, eye: `${AUDIT_DIR}/eye.json` },
-    checked: {
-      translation: panels.filter(p => p.family === 'translation').reduce((t, p) => t + p.n, 0),
-      ocr: panels.filter(p => p.family === 'ocr').reduce((t, p) => t + p.n, 0),
-    },
-    dropped: { translation: drops.filter(d => d.family === 'translation').length, ocr: drops.filter(d => d.family === 'ocr').length, reasons },
-    held: {
-      translation: held(sens.translation),
-      ocr: held(sens.ocr),
-      swapsAllOverlap: [...sens.translation, ...sens.ocr].every(p => p.ci_overlap_swaps === p.swaps.length),
-    },
-    unfit: unfitRows(md),
-    edition: {
-      greek: noteCount(s.notes.ocr, 'greek|most-pages', /On (\d+) of (\d+) pages the reference is a modern edition/),
-      latinNormalised: noteCount(s.notes.ocr, 'latin|most-pages', /On (\d+) of (\d+) pages the reference expands abbreviations/),
-      chineseOverrun: noteCount(s.notes.ocr, 'chinese-manuscript|most-pages', /On (\d+) of (\d+) pages the reference runs more than 15% longer/),
-    },
-    famous,
-    spearman: [Math.min(...rhos), Math.max(...rhos)],
-    levelShift: [Math.min(...shifts), Math.max(...shifts)],
-    coverage: {
-      chineseTranslationPrinted: gapOf(chineseTr, 'hand', 'printed'),
-      chineseHandwritten: gapOf(chineseTr, 'hand', 'handwritten'),
-      tibetan: { texts: tibetan.works, printed: gapOf(tibetan, 'hand', 'printed'), handwritten: gapOf(tibetan, 'hand', 'handwritten') },
-      english17c: gapOf(panel('ocr', 'english'), 'century', '17c'),
-      germanFrench: { n: gf.n, wikisource: gapOf(gf, 'provider', 'wikisource (external scan)'), c19: gapOf(gf, 'century', '19c') },
-    },
-    eye: {
-      pages: eye.length,
-      readers: new Set(eye.map(e => e.group)).size,
-      fit: eye.filter(e => e.verdict === 'fit').length,
-      limit: eye.filter(e => e.verdict === 'fit-with-limit').length,
-      unfit: eye.filter(e => e.verdict === 'unfit').length,
-      flagged: { n: eye.filter(e => e.stratum === 'flagged' && e.verdict === 'unfit').length, of: eye.filter(e => e.stratum === 'flagged').length },
-      unflagged: { n: eye.filter(e => e.stratum === 'unflagged' && e.verdict === 'unfit').length, of: eye.filter(e => e.stratum === 'unflagged').length },
-    },
-  };
+export function sampleAudit(): SampleAudit {
+  return digest as SampleAudit;
 }
