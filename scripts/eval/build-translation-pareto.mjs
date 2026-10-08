@@ -14,6 +14,7 @@
  *   #5497        results/tengyur-arms-2026-10/ (judge families F1, F2 and the metered cost.json)
  *   #6121        results/tengyur-levers-6121/ (round 1) and results/tengyur-models-6121/ (round 2):
  *                refjudge/scores.json per-side rows and arms/ledger.jsonl billed cost; one panel each
+ *   #6295        results/syriac-pareto-6295/translation-summary.json (one translator, two inputs, judged gate)
  *   production   scripts/lib/translate-core.mjs getTranslateModelForBook, the router for new pages
  * Writes src/data/translation-pareto.json. No timestamps: unchanged inputs give an identical file.
  *   node scripts/eval/build-translation-pareto.mjs           # write
@@ -478,6 +479,45 @@ for (const [lang, trackId] of LANGS) {
   TRACKS.push({ id: 'pareto-6182', writeup: X.writeup, judges: 2 });
 }
 
+// Syriac (#6295): one translator, two INPUTS. Production would translate the Kraken lane's text; the same model on the
+// typed Digital Syriac Corpus window is the ceiling for that model. The judges read the Syriac e-text, not a published
+// English translation (none was located for these pages), so this panel is fidelity to the source text.
+const SYR_FILE = path.join(RES, 'syriac-pareto-6295', 'translation-summary.json');
+const SYR_WRITEUP = 'scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md';
+if (fs.existsSync(SYR_FILE)) {
+  const s = JSON.parse(fs.readFileSync(SYR_FILE, 'utf8'));
+  if (!s.gate_pass) throw new Error('syriac-pareto-6295: the judge gate did not pass, so no Syriac translation number may be plotted');
+  const pt = (arm, engine, label, production) => {
+    const a = s.arms[arm];
+    return { engine, label, production, fidelity: a.fidelity, fidelity_ci95: a.fidelity_ci95, share_ge4: a.share_ge4,
+      reversals: { pages: a.inversion_pages, n: s.n_pages, per_100: a.reversals_per_100, ci95: a.reversals_ci95 },
+      cost: { usd_per_1k: a.usd_per_1k_batch, basis: 'metered', detail: `billed tokens of this run at the Batch rate; averaged over these ${s.n_pages} pages`, source: SYR_WRITEUP } };
+  };
+  const placed = [pt('K', `${LITE}|kraken`, `${LABEL[LITE]} on the Kraken text`, true), pt('R', `${LITE}|etext`, `${LABEL[LITE]} on the typed e-text`, false)];
+  for (const a of placed) a.on_frontier = false;
+  placed.sort((a, b) => a.cost.usd_per_1k - b.cost.usd_per_1k || a.engine.localeCompare(b.engine));
+  const f = s.noise_floor, kr = s.k_minus_r, g = s.gate;
+  charts.push({
+    id: 'syriac', title: 'Syriac (print)', production_engine: LITE, production_label: LABEL[LITE],
+    panels: [{
+      kind: 'most-pages', heading: `Printed Syriac, ${s.n_pages} pages from ${s.n_editions} editions (#6295)`, n_pages: s.n_pages, n_books: s.n_books,
+      frontier: false, frontier_note: 'one translator from two inputs, so no frontier', judges: 2,
+      references: [{ stratum: 'syriac-print-6295', reference: 'the typed Syriac text of the same passage (Digital Syriac Corpus); the judges read the Syriac, not a published English translation', pages: s.n_pages, date: dateOf(SYR_WRITEUP) }],
+      date: dateOf(SYR_WRITEUP), files: [SYR_WRITEUP, rel(SYR_FILE)],
+      notes: [
+        `Directional: ${s.n_books} books, under the 30 a decision needs; intervals resample editions`,
+        'Fidelity here is to the Syriac source text, judged by blind AI judges who read Syriac; there is no published English translation beside it',
+        `Noise floor: the e-text translated twice differs by ${f.r2_minus_r_mean} [${f.ci95.join(', ')}]; from the Kraken text against from the e-text, ${kr.mean} [${kr.ci95.join(', ')}]`,
+        `Judge check passed: planted reversals caught ${g.J1.plants_caught}/${g.J1.plants} and ${g.J2.plants_caught}/${g.J2.plants}, identical drafts tied ${g.J1.dups_tied}/${g.J1.dups} and ${g.J2.dups_tied}/${g.J2.dups}`,
+      ],
+      placed, no_cost: [],
+    }],
+    not_on_shared_pages: [],
+    not_tested: NOT_TESTED,
+    pending: ['Gemini 3.8 Flash', 'Gemini 3 Flash', 'Gemini 3.5 Flash-Lite', 'Gemini 3.7 Flash'],
+  });
+}
+
 const out = {
   issue: 5983,
   generated_by: 'scripts/eval/build-translation-pareto.mjs',
@@ -496,6 +536,7 @@ const out = {
 };
 for (const n of out.no_chart) if (!fs.existsSync(path.join(REPO, n.source))) throw new Error(`no_chart source missing: ${n.source}`);
 for (const t of TRACKS) if (!fs.existsSync(path.join(REPO, t.writeup))) throw new Error(`write-up missing: ${t.writeup}`);
+if (fs.existsSync(SYR_FILE) && !fs.existsSync(path.join(REPO, SYR_WRITEUP))) throw new Error(`write-up missing: ${SYR_WRITEUP}`);
 
 const json = JSON.stringify(out, null, 1) + '\n';
 if (argOf('dump-sets')) { fs.writeFileSync(argOf('dump-sets'), JSON.stringify(SETS, null, 1) + '\n'); console.log(`wrote ${argOf('dump-sets')}`); process.exit(0); }

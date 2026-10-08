@@ -4892,6 +4892,111 @@
     "Claude through the metered API",
     "GPT"
    ]
+  },
+  {
+   "id": "syriac",
+   "title": "Syriac (print)",
+   "production_engine": "gemini-3.1-flash-lite",
+   "production_label": "Gemini 3.1 Flash-Lite",
+   "panels": [
+    {
+     "kind": "most-pages",
+     "heading": "Printed Syriac, 20 pages from 18 editions (#6295)",
+     "n_pages": 20,
+     "n_books": 20,
+     "frontier": false,
+     "frontier_note": "one translator from two inputs, so no frontier",
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "syriac-print-6295",
+       "reference": "the typed Syriac text of the same passage (Digital Syriac Corpus); the judges read the Syriac, not a published English translation",
+       "pages": 20,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md",
+      "scripts/eval/results/syriac-pareto-6295/translation-summary.json"
+     ],
+     "notes": [
+      "Directional: 20 books, under the 30 a decision needs; intervals resample editions",
+      "Fidelity here is to the Syriac source text, judged by blind AI judges who read Syriac; there is no published English translation beside it",
+      "Noise floor: the e-text translated twice differs by 0.075 [-0.109, 0.275]; from the Kraken text against from the e-text, -1.325 [-1.658, -0.974]",
+      "Judge check passed: planted reversals caught 8/8 and 8/8, identical drafts tied 4/4 and 4/4"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite|etext",
+       "label": "Gemini 3.1 Flash-Lite on the typed e-text",
+       "production": false,
+       "fidelity": 4.325,
+       "fidelity_ci95": [
+        4.105,
+        4.525
+       ],
+       "share_ge4": 0.95,
+       "reversals": {
+        "pages": 5,
+        "n": 20,
+        "per_100": 25,
+        "ci95": [
+         11.2,
+         46.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.742,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; averaged over these 20 pages",
+        "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-flash-lite|kraken",
+       "label": "Gemini 3.1 Flash-Lite on the Kraken text",
+       "production": true,
+       "fidelity": 3,
+       "fidelity_ci95": [
+        2.675,
+        3.3
+       ],
+       "share_ge4": 0.2,
+       "reversals": {
+        "pages": 12,
+        "n": 20,
+        "per_100": 60,
+        "ci95": [
+         38.7,
+         78.1
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.79,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; averaged over these 20 pages",
+        "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": []
+    }
+   ],
+   "not_on_shared_pages": [],
+   "not_tested": [
+    "Gemini 3.1 Pro (as the translator)",
+    "Claude through the metered API",
+    "GPT"
+   ],
+   "pending": [
+    "Gemini 3.8 Flash",
+    "Gemini 3 Flash",
+    "Gemini 3.5 Flash-Lite",
+    "Gemini 3.7 Flash"
+   ]
   }
  ],
  "no_chart": [
