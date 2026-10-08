@@ -360,7 +360,9 @@ export interface GeminiEngine {
   model: string;
   model_version: string | null;
   model_version_source: string;
-  api: 'realtime' | 'batch';
+  api: 'realtime' | 'batch' | 'cli';
+  /** The subscription CLI that made the read; present when `api` is 'cli'. */
+  cli?: { name: string; version: string };
   call_site: string;
   prompt: { id: string | null; name: string | null; version: string; hash: string | null; sent_hash: string; sent_chars: number | null };
   generation: {
