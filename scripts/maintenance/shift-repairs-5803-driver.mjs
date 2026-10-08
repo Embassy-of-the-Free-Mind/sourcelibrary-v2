@@ -49,6 +49,12 @@ const WORK = flag('work', process.env.JOB_SCRATCH || 'scripts/output/shift-repai
 const SPEND_CAP = Number(flag('spend-cap', '17.5'));
 // --post-only: a book repaired by hand (the first five per class): post map, purge and its row only.
 // --note "<what was done by hand>" is recorded on the row; --image-pages purges every page image too.
+// --adjudicate 485 --adjudicate-why "<eye evidence>": pages checked by eye (one --book run) that leave the run checks and
+// go to repair-text-shift-run's own --adjudicated gate, recorded on the book_event.
+const ADJ_EYE = flag('adjudicate') ? flag('adjudicate').split(',').map(Number) : [];
+const ADJ_EYE_WHY = flag('adjudicate-why', '');
+if (ADJ_EYE.length && (!ONLY_BOOK || !ADJ_EYE_WHY)) { console.error('--adjudicate needs --book and --adjudicate-why'); process.exit(1); }
+const SOURCE_IMG = args.includes('--source-img'); // post-only after an image repair: map pages.photo, not the edge-cached reader URL
 const POST_ONLY = args.includes('--post-only'), NOTE = flag('note', null), IMAGE_PAGES = args.includes('--image-pages');
 const SPEND_FILE = path.join(WORK, 'clef-spend.jsonl'); // one row per map call, all classes: the job's meter
 const ENV = '/root/sourcelibrary/.env.production.local';
@@ -79,12 +85,12 @@ function run(bookId, script, scriptArgs, { env = {}, timeout = 1_800_000 } = {})
 }
 
 /** Clef map over the given pages (FULL = score own, prev and next). Returns rows keyed by page. */
-function clefMap(bookId, pages, tag, { full }) {
+function clefMap(bookId, pages, tag, { full, img = 'reader' }) {
   if (!pages.length) return new Map();
   const left = SPEND_CAP - spentSoFar();
   if (left <= 0.05) throw new Error(`SPEND: job meter at $${spentSoFar().toFixed(2)} ≥ cap $${SPEND_CAP}`);
   const r = run(bookId, 'scripts/eval/jev/clef-book-offset-map.mjs',
-    ['--book', bookId, '--pages', pages.join(','), '--out', MAPS, '--tag', tag, '--cap', String(Math.min(1.5, left).toFixed(2))],
+    ['--book', bookId, '--pages', pages.join(','), '--out', MAPS, '--tag', tag, '--img', img, '--cap', String(Math.min(1.5, left).toFixed(2))],
     { env: full ? { FULL: '1' } : {} });
   const sumLine = r.out.trim().split('\n').reverse().find((l) => l.startsWith('{"book_id"'));
   const sum = sumLine ? JSON.parse(sumLine) : { cost_usd: 0, calls: 0 };
@@ -95,6 +101,10 @@ function clefMap(bookId, pages, tag, { full }) {
   // batch page duplicates the last preview leaf, so image N scores ~0.97 against text N AND N+1 and
   // the map's argmax flips with Clef's run-to-run noise (69b63105 p.25: 0.971/0.971, then +1).
   for (const r of rows) {
+    // A row that does not discriminate is unknown, not a match: on glossed decretals the formulas repeat
+    // leaf to leaf and own/prev/next all read ~0.9 within 0.03 (69b63147 pp. 75, 108; 69b631d8 p. 173).
+    const sc = [r.own, r.prev, r.next].filter((x) => x != null);
+    if (isNum(r.offset) && sc.length >= 2 && Math.max(...sc) - Math.min(...sc) < 0.05) { r.offset = '?'; r.ambiguous = true; continue; }
     if (isNum(r.offset) && r.offset !== 0 && r.own != null && r.own >= 0.7 && Math.max(r.prev ?? 0, r.next ?? 0) - r.own < TIE) { r.offset = 0; r.tie = true; }
   }
   return new Map(rows.map((x) => [x.page, x]));
@@ -105,10 +115,10 @@ const matchPct = (rows) => { const s = [...rows.values()].filter((r) => r.offset
 
 /** Adaptive map, then FULL on every row that is not a clear own-match: the adaptive pass reads 0.75–0.9
  *  on a NEIGHBOUR's prose as offset 0 (measured 2026-10-08 on 69b630cd: 9 such rows in a 19-page run). */
-function settledMap(bookId, pages, tag) {
-  const a = clefMap(bookId, pages, tag + '-a', { full: false });
+function settledMap(bookId, pages, tag, img = 'reader') {
+  const a = clefMap(bookId, pages, tag + '-a', { full: false, img });
   const unsure = [...a.values()].filter((r) => r.offset !== 'no-image' && r.own_text !== 'short' && !(r.offset === 0 && r.own >= 0.9)).map((r) => r.page);
-  const f = clefMap(bookId, unsure, tag + '-f', { full: true });
+  const f = clefMap(bookId, unsure, tag + '-f', { full: true, img });
   for (const [k, v] of f) a.set(k, v);
   return a;
 }
@@ -180,7 +190,8 @@ for (const scr of list) {
     if (!book) { finish('skip: book not found'); continue; }
     if (book.visible !== true) { finish('skip: visible is not true'); continue; }
     if (book.hidden_reason) { finish(`skip: hidden_reason ${book.hidden_reason}`); continue; }
-    if (book.pipeline_auto?.hold || book.pipeline_auto?.status === 'held') { finish(`skip: pipeline hold ${book.pipeline_auto?.hold?.reason}`); continue; }
+    const ownHold = book.pipeline_auto?.hold?.reason === 'shift-repair-5803-cleared-leaves'; // this job's own hold (a re-run of a held book)
+    if (!ownHold && (book.pipeline_auto?.hold || book.pipeline_auto?.status === 'held')) { finish(`skip: pipeline hold ${book.pipeline_auto?.hold?.reason}`); continue; }
     rec.status = book.pipeline_auto?.status;
 
     if (CLASS === 'ia-5309') {
@@ -190,7 +201,7 @@ for (const scr of list) {
     }
 
     const pages = await db.collection('pages').find({ book_id: bookId, page_number: { $gte: 1 } }, {
-      projection: { page_number: 1, page_type: 1, 'ocr.source': 1, 'ocr.updated_at': 1, 'ocr.edited_by': 1, 'ocr.data': 1, 'translation.edited_by': 1, archive_metadata: 1, split_side: 1 },
+      projection: { page_number: 1, page_type: 1, photo: 1, 'ocr.source': 1, 'ocr.updated_at': 1, 'ocr.edited_by': 1, 'ocr.data': 1, 'translation.edited_by': 1, archive_metadata: 1, split_side: 1 },
     }).sort({ page_number: 1 }).toArray();
     const human = pages.filter((p) => p.ocr?.source === 'manual' || p.ocr?.edited_by || p.translation?.edited_by).length;
     if (human) { finish(`skip: ${human} human-edited pages`); continue; }
@@ -203,10 +214,12 @@ for (const scr of list) {
     rec.pages = pages.length; rec.text_pages = textPages.length;
     if (POST_ONLY) {
       if (NOTE) rec.by_hand = NOTE;
-      const post = settledMap(bookId, textPages.length <= 120 ? textPages : stride(textPages, 100), 'after');
+      const post = settledMap(bookId, textPages.length <= 120 ? textPages : stride(textPages, 100), 'after', SOURCE_IMG ? 'source' : 'reader');
+      rec.map_img = SOURCE_IMG ? 'source' : 'reader';
       rec.clef_after = matchPct(post);
       rec.after_misses = [...post.values()].filter((r) => r.offset !== 0 && r.offset !== 'no-image' && r.own_text !== 'short').map((r) => `${r.page}:${r.offset}`).slice(0, 40);
       rec.purge = await purge(bookId, IMAGE_PAGES ? pages.map((p) => p.page_number) : [], db);
+      if (IMAGE_PAGES) fs.appendFileSync(path.join(WORK, 'purge-needed.txt'), [`https://sourcelibrary.org/book/${bookId}`, ...pages.flatMap((p) => [`https://images.sourcelibrary.org/pages/${bookId}/${String(p.page_number).padStart(4, '0')}.jpg`, `https://images.sourcelibrary.org/archived/${bookId}/${p.page_number}.jpg`])].join('\n') + '\n');
       finish(rec.clef_after >= MATCH_OK ? 'repaired' : 'stop: post-repair match below 95%');
       continue;
     }
@@ -217,11 +230,19 @@ for (const scr of list) {
     rec.dhash = { verdict: dh.verdict, detail: dh.detail, pre: dh.pre_archival, post: dh.post_archival, refuse: dh.refuse?.slice(0, 80) };
 
     // ── Clef before (reader images, as readers see them now) ──
-    const before = clefMap(bookId, stride(textPages, 30), 'before', { full: true });
+    // --source-img on a re-run of a book whose images this job already re-archived: the reader URLs are
+    // edge-cached stale (see below), so every map reads pages.photo.
+    const before = clefMap(bookId, stride(textPages, 30), 'before', { full: true, img: SOURCE_IMG ? 'source' : 'reader' });
     rec.clef_before = matchPct(before);
 
     let imageDone = false;
     const imageSide = dh.shift_ok; // ≥2 shift votes, 0 aligned, and the pre-archival witness exists
+    // After a re-archive, Cloudflare keeps serving the OLD bytes of the reader URLs (s-maxage 7 days;
+    // a plain GET of 69b6315b pages/0005.jpg was a HIT on the 2026-08-18 object after the repair), and
+    // this box has no purge credentials. So every map after an image repair reads pages.photo (the
+    // source leaf, which the re-archive copied), and a book whose photo IS the R2 copy is refused.
+    const photoOnR2 = pages.some((p) => String(p.photo || '').includes('images.sourcelibrary.org'));
+    if (imageSide && photoOnR2) { finish('no-write: image repair needed but pages.photo is the R2 copy, so it cannot be verified through the 7-day edge cache without a Cloudflare purge'); continue; }
     if (imageSide) {
       if (src === 'bulk_jp2') {
         // Stranded = post-archival text that is not ia_djvu (ia_djvu is keyed to the IA leaf; Group A).
@@ -245,25 +266,28 @@ for (const scr of list) {
     }
 
     // ── 4. text map on the (now correct) reader images ──
-    const sample = imageDone ? clefMap(bookId, stride(textPages, 40), 'run-sample', { full: true }) : before;
+    const mapImg = imageDone || SOURCE_IMG ? 'source' : 'reader';
+    rec.map_img = mapImg;
+    const sample = imageDone ? clefMap(bookId, stride(textPages, 40), 'run-sample', { full: true, img: 'source' }) : before;
     const nonzero = [...sample.values()].filter((r) => isNum(r.offset) && r.offset !== 0);
     const textRows = new Map(sample);
-    let runSpec = null;
+    let runSpec = null, skipText = false;
     // A text-step refusal after the image step is not a no-write: the images were re-archived.
     // On e-rara the batch text the re-archive stranded is waiting on this shift, so stop the class.
     const textFail = (why, extra = {}) => {
       if (!imageDone) { finish('no-write: ' + why, extra); return; }
       rec.text_verdict = why; Object.assign(rec, extra);
       if (src === 'erara_pdf') { stopClass = `image re-archived but text step: ${why}`; finish('stop: image re-archived, text step ' + why); }
-      else finish('repaired-image; text ' + why);
+      else { skipText = true; runSpec = null; } // IA: images done; fall through to the post map and purge
     };
+    textStep: {
     if (nonzero.length) {
       const d = nonzero.filter((r) => r.offset === 1).length >= nonzero.filter((r) => r.offset === -1).length ? 1 : -1;
       const sNums = [...sample.keys()].sort((a, b) => a - b);
       const dPages = sNums.filter((n) => sample.get(n).offset === d);
       let first = dPages[0], last = dPages[dPages.length - 1];
-      const inside = sNums.filter((n) => n > first && n < last && isNum(sample.get(n).offset) && sample.get(n).offset !== d);
-      if (inside.length) { textFail('needs-eye (sample is not one constant run)', { d, inside: inside.slice(0, 20), sample_runs: dPages.length }); if (stopClass) break; continue; }
+      const inside = sNums.filter((n) => n > first && n < last && isNum(sample.get(n).offset) && sample.get(n).offset !== d && !ADJ_EYE.includes(n));
+      if (inside.length) { textFail('needs-eye (sample is not one constant run)', { d, inside: inside.slice(0, 20), sample_runs: dPages.length }); if (stopClass) break; if (skipText) break textStep; continue; }
       // scan the gaps to the neighbouring samples, page by page
       const prevS = sNums.filter((n) => n < first).pop() ?? 0, nextS = sNums.find((n) => n > last) ?? Infinity;
       const gap = textPages.filter((n) => (n > prevS && n < first) || (n > last && n < nextS));
@@ -274,21 +298,80 @@ for (const scr of list) {
       const major = Object.entries(tally).sort((a, b) => b[1] - a[1])[0]?.[0];
       const odd = runPages.filter((p) => p.ocr?.data && pass(p) !== major).map((p) => p.page_number).filter((n) => textPages.includes(n));
       const extra = [...new Set([...gap, ...odd])].filter((n) => !textRows.has(n));
-      if (extra.length > 400) { textFail('needs-eye (too many pages to refine)', { extra: extra.length }); if (stopClass) break; continue; }
-      for (const [k, v] of clefMap(bookId, extra, 'refine', { full: true })) textRows.set(k, v);
-      const allNums = [...textRows.keys()].sort((a, b) => a - b);
+      if (extra.length > 400) { textFail('needs-eye (too many pages to refine)', { extra: extra.length }); if (stopClass) break; if (skipText) break textStep; continue; }
+      for (const [k, v] of clefMap(bookId, extra, 'refine', { full: true, img: mapImg })) textRows.set(k, v);
+      let allNums = [...textRows.keys()].sort((a, b) => a - b);
       // The shift is one OCR pass's defect: an edge page from another pass that scores d is a boundary
       // duplicate (the batch's first page repeats the preview's last leaf), not part of the run.
       const passOf = new Map(pages.map((p) => [p.page_number, p.ocr?.data ? pass(p) : null]));
-      const dAll = allNums.filter((n) => textRows.get(n).offset === d);
-      while (dAll.length && passOf.get(dAll[0]) !== major) { rec.trimmed = [...(rec.trimmed || []), dAll[0]]; textRows.get(dAll[0]).offset = 0; textRows.get(dAll[0]).trimmed = true; dAll.shift(); }
-      while (dAll.length && passOf.get(dAll[dAll.length - 1]) !== major) { rec.trimmed = [...(rec.trimmed || []), dAll[dAll.length - 1]]; textRows.get(dAll[dAll.length - 1]).offset = 0; textRows.get(dAll[dAll.length - 1]).trimmed = true; dAll.pop(); }
-      if (!dAll.length) { textFail('needs-eye (no run left after trimming other-pass edges)'); if (stopClass) break; continue; }
+      const strong = (n) => Math.max(textRows.get(n).own ?? 0, textRows.get(n).prev ?? 0, textRows.get(n).next ?? 0) >= 0.9;
+      // Settle the edges, then scan every unscored text page between each edge and the nearest scored row,
+      // and repeat: a weak sample dropped as an anchor leaves unscanned pages past the edge (69b63179
+      // 609-612 behind a 0.83 sample at 613), and a run ended there clears a page and strands the rest.
+      let dAll = [], edgeFail = null;
+      for (let iter = 0; iter < 4; iter++) {
+        allNums = [...textRows.keys()].sort((a, b) => a - b);
+        dAll = allNums.filter((n) => textRows.get(n).offset === d);
+        // At most ONE page per edge (the boundary duplicate is one page): a while-loop trimmed 12 genuinely
+        // shifted pages of 69b631ce (56-67), whose run crossed three OCR passes; fixed by hand 2026-10-08.
+        if (dAll.length && passOf.get(dAll[0]) !== major && !textRows.get(dAll[0]).trimmed) { rec.trimmed = [...(rec.trimmed || []), dAll[0]]; textRows.get(dAll[0]).offset = 0; textRows.get(dAll[0]).trimmed = true; dAll.shift(); }
+        if (dAll.length && passOf.get(dAll[dAll.length - 1]) !== major && !textRows.get(dAll[dAll.length - 1]).trimmed) { rec.trimmed = [...(rec.trimmed || []), dAll[dAll.length - 1]]; textRows.get(dAll[dAll.length - 1]).offset = 0; textRows.get(dAll[dAll.length - 1]).trimmed = true; dAll.pop(); }
+        // Only a STRONG row anchors an edge: 69b6318d's run was carried to p.319 by one +1 at 0.81 after
+        // 67 pages of '?' (text matching neither its image nor a neighbour), and the shift broke the
+        // aligned pages inside that stretch (undone 2026-10-08). '?' is unknown, not agreement.
+        while (dAll.length && !strong(dAll[dAll.length - 1])) dAll.pop();
+        while (dAll.length && !strong(dAll[0])) dAll.shift();
+        if (!dAll.length) { edgeFail = 'needs-eye (no strong rows anchor the run)'; break; }
+        const f = dAll[0], l = dAll[dAll.length - 1];
+        const before = allNums.filter((n) => n < f && !(textRows.get(n).offset === d)).pop() ?? 0;
+        const after = allNums.find((n) => n > l && !(textRows.get(n).offset === d && strong(n))) ?? Infinity;
+        const unscanned = textPages.filter((n) => ((n > before && n < f) || (n > l && n < after)) && !textRows.has(n));
+        if (!unscanned.length) break;
+        if (iter === 3 || unscanned.length > 200) { edgeFail = 'needs-eye (edges did not settle)'; break; }
+        for (const [k, v] of clefMap(bookId, unscanned, `edge${iter}`, { full: true, img: mapImg })) textRows.set(k, v);
+        rec.edge_scanned = (rec.edge_scanned || 0) + unscanned.length;
+      }
+      if (edgeFail) { textFail(edgeFail); if (stopClass) break; if (skipText) break textStep; continue; }
       first = dAll[0]; last = dAll[dAll.length - 1];
-      const bad = allNums.filter((n) => n >= first && n <= last && isNum(textRows.get(n).offset) && textRows.get(n).offset !== d);
-      if (bad.length) { textFail('needs-eye (zero/other offsets inside the run)', { d, first, last, bad: bad.slice(0, 30), odd_pass: odd.length }); if (stopClass) break; continue; }
+      const inRunRows = allNums.filter((n) => n >= first && n <= last);
+      // Two kinds of '?': LOW (the text matches nothing near: 69b6318d, all ~0.05, the dangerous kind, cap
+      // 10%) and AMBIGUOUS (look-alike neighbours, all ~0.9; 69b63147 pp. 206 and 281 read by eye as +1, cap 25%).
+      const unknown = inRunRows.filter((n) => textRows.get(n).offset === '?' && !textRows.get(n).ambiguous);
+      const ambiguous = inRunRows.filter((n) => textRows.get(n).ambiguous);
+      if (ambiguous.length > Math.max(2, 0.25 * inRunRows.length)) { textFail("needs-eye (too many ambiguous rows inside the run)", { ambiguous: ambiguous.slice(0, 30), rows: inRunRows.length }); if (stopClass) break; if (skipText) break textStep; continue; }
+      if (ambiguous.length) rec.ambiguous_in_run = ambiguous;
+      if (unknown.length > Math.max(2, 0.1 * inRunRows.length)) { textFail("needs-eye (too many '?' rows inside the run)", { unknown: unknown.slice(0, 30), rows: inRunRows.length }); if (stopClass) break; if (skipText) break textStep; continue; }
+      const bad = allNums.filter((n) => n >= first && n <= last && isNum(textRows.get(n).offset) && textRows.get(n).offset !== d && !ADJ_EYE.includes(n));
+      if (bad.length) { textFail('needs-eye (zero/other offsets inside the run)', { d, first, last, bad: bad.slice(0, 30), odd_pass: odd.length }); if (stopClass) break; if (skipText) break textStep; continue; }
       const maxPage = pages[pages.length - 1].page_number, minPage = pages[0].page_number;
       runSpec = d === 1 ? { from: first, to: Math.min(last + 1, maxPage), dir: 'left' } : { from: Math.max(first - 1, minPage), to: last, dir: 'right' };
+      // The text a shift DISCARDS (left: old text at `from`; right: old text at `to`) must be a duplicate:
+      // the outside neighbour's image matches it AND that neighbour keeps its own text. Otherwise it is the
+      // only copy of a leaf (69b63147: a run from 27 would have dropped leaf 26's text; row 26 own 0.72,
+      // next 0.93). Extend the edge while the neighbour points into the run; refuse if it cannot be shown.
+      {
+        const outside = () => (runSpec.dir === 'left' ? runSpec.from - 1 : runSpec.to + 1);
+        let ok = false;
+        for (let k = 0; k < 4; k++) {
+          const o = outside();
+          if (o < minPage || o > maxPage || !pages.some((p) => p.page_number === o)) { ok = true; break; }
+          if (!textRows.has(o) && textPages.includes(o)) for (const [kk, v] of clefMap(bookId, [o], `discard${k}`, { full: true, img: mapImg })) textRows.set(kk, v);
+          const r = textRows.get(o);
+          const discardedHasText = !!pages.find((p) => p.page_number === (runSpec.dir === 'left' ? runSpec.from : runSpec.to))?.ocr?.data;
+          if (!discardedHasText) { ok = true; break; }
+          if (!r) { const po = pages.find((p) => p.page_number === o); if (!po?.ocr?.data || isBlank(po)) { ok = true; break; } break; }
+          const toward = runSpec.dir === 'left' ? r.next : r.prev;
+          if ((toward ?? 0) >= 0.9 && (r.own ?? 0) >= 0.9) { ok = true; break; }       // duplicate: safe to discard
+          if ((toward ?? 0) >= 0.9) {
+            // Extending onto a row the other-pass trim zeroed: the evidence (toward ≥ 0.9, own < 0.9) says it is
+            // in the run after all (69af0f70 p.501: own 0.10, next 0.98, its text a duplicate of leaf 500).
+            if (r.trimmed && (r.own ?? 0) < 0.9) { r.offset = d; r.untrimmed = true; rec.trimmed = (rec.trimmed || []).filter((n) => n !== o); }
+            if (runSpec.dir === 'left') runSpec.from--; else runSpec.to++; rec.edge_extended = (rec.edge_extended || 0) + 1; continue;
+          }
+          break;
+        }
+        if (!ok) { textFail('needs-eye (the text the shift would discard is not shown to be a duplicate)', { discard_edge: outside() }); if (stopClass) break; if (skipText) break textStep; continue; }
+      }
       rec.run = { ...runSpec, d, scored_in_run: allNums.filter((n) => n >= runSpec.from && n <= runSpec.to && isNum(textRows.get(n).offset)).length, odd_pass: odd.length, gap_scanned: gap.length };
       // the batch range the shift should have covered: pages of the run's majority pass
       const batchNums = pages.filter((p) => p.ocr?.data && pass(p) === major && textPages.includes(p.page_number)).map((p) => p.page_number);
@@ -299,10 +382,23 @@ for (const scr of list) {
     if (!runSpec) {
       if (!imageDone) { finish('no-write: no text shift found and images aligned', {}); continue; }
     } else {
+      // The page a run clears often reads a weak 0: a blank verso showing the previous leaf through
+      // the paper (69b62fd4 p.490 own 0.78, Calendarium p.72; by eye 2026-10-08). When its neighbour
+      // inside the run matches its text at ≥ 0.95, that text belongs to the neighbour's leaf, so the
+      // page is adjudicated (recorded on the book_event), never silently dropped from the gate.
+      const adj = [];
+      const edge = runSpec.dir === 'left' ? runSpec.to : runSpec.from, inner = runSpec.dir === 'left' ? runSpec.to - 1 : runSpec.from + 1;
+      const eRow = textRows.get(edge), iRow = textRows.get(inner);
+      if (eRow?.offset === 0 && (eRow.own ?? 0) < 0.9 && ((runSpec.dir === 'left' ? iRow?.next : iRow?.prev) ?? 0) >= 0.95) adj.push(edge);
+      const why = [adj.length ? `shift-repairs-5803-driver: run-edge page ${edge} scores own ${eRow.own} (< 0.9) while page ${inner}'s image matches its text at ≥ 0.95, so that text is ${inner}'s leaf (blank show-through verso / board pattern, by eye 2026-10-08 on 69b62fd4 p.490 and 69b630ac p.72)` : null,
+        ADJ_EYE.length ? `by eye: ${ADJ_EYE_WHY}` : null].filter(Boolean).join('; ');
+      for (const n of ADJ_EYE) if (!adj.includes(n)) adj.push(n);
+      const adjArgs = adj.length ? ['--adjudicated', adj.join(','), '--adjudicated-why', why] : [];
+      rec.adjudicated = adj.length ? adj : undefined;
       const mapFile = path.join(MAPS, `${bookId}-textmap.jsonl`);
       fs.writeFileSync(mapFile, [...textRows.values()].sort((a, b) => a.page - b.page).map((r) => JSON.stringify(r)).join('\n') + '\n');
-      const dry = run(bookId, 'scripts/maintenance/repair-text-shift-run.mjs', ['--book', bookId, '--from', String(runSpec.from), '--to', String(runSpec.to), '--dir', runSpec.dir, '--map', mapFile, '--issue', String(ISSUE)]);
-      if (!/\[DRY RUN\]/.test(dry.out)) { textFail('needs-eye (text-shift tool refused)', { tool: dry.out.trim().split('\n').slice(-3).join(' | ').slice(0, 300) }); if (stopClass) break; continue; }
+      const dry = run(bookId, 'scripts/maintenance/repair-text-shift-run.mjs', ['--book', bookId, '--from', String(runSpec.from), '--to', String(runSpec.to), '--dir', runSpec.dir, '--map', mapFile, '--issue', String(ISSUE), ...adjArgs]);
+      if (!/\[DRY RUN\]/.test(dry.out)) { textFail('needs-eye (text-shift tool refused)', { tool: dry.out.trim().split('\n').slice(-3).join(' | ').slice(0, 300) }); if (stopClass) break; if (skipText) break textStep; continue; }
       const cl = dry.out.match(/cleared: ([\d,]*) \(had text: (\d+), translation: (\d+)\)/);
       rec.cleared = cl ? { pages: cl[1], had_text: +cl[2], had_translation: +cl[3] } : null;
       const curStatus = (await db.collection('books').findOne({ id: bookId }, { projection: { 'pipeline_auto.status': 1 } }))?.pipeline_auto?.status;
@@ -314,32 +410,42 @@ for (const scr of list) {
         const h = run(bookId, 'scripts/maintenance/hold-pipeline-books.mjs', ['--ids', idsFile, '--reason', 'shift-repair-5803-cleared-leaves', '--issue', '5803',
           '--release', `Derek decides whether the leaves the #5803 text shift cleared (pages ${cl[1]}; their own text was never produced) are OCR'd, or releases the book as-is`, '--apply']);
         const after = (await db.collection('books').findOne({ id: bookId }, { projection: { 'pipeline_auto.status': 1 } }))?.pipeline_auto?.status;
-        if (after !== 'held') { textFail('hold failed, not applying', { hold_out: h.out.slice(-300) }); if (stopClass) break; continue; }
+        if (after !== 'held') { textFail('hold failed, not applying', { hold_out: h.out.slice(-300) }); if (stopClass) break; if (skipText) break textStep; continue; }
         rec.held = { from: curStatus, reason: 'shift-repair-5803-cleared-leaves' };
       }
-      const ap = run(bookId, 'scripts/maintenance/repair-text-shift-run.mjs', ['--book', bookId, '--from', String(runSpec.from), '--to', String(runSpec.to), '--dir', runSpec.dir, '--map', mapFile, '--issue', String(ISSUE), '--backup-dir', BACKUPS, '--apply']);
+      const ap = run(bookId, 'scripts/maintenance/repair-text-shift-run.mjs', ['--book', bookId, '--from', String(runSpec.from), '--to', String(runSpec.to), '--dir', runSpec.dir, '--map', mapFile, '--issue', String(ISSUE), ...adjArgs, '--backup-dir', BACKUPS, '--apply']);
       const w = ap.out.match(/pages written: (\d+)\/(\d+); revisions (\d+)/);
       rec.text_written = w ? { pages: +w[1], of: +w[2], revisions: +w[3] } : null;
       rec.embeddings = (ap.out.match(/page_translations embeddings: ([^\n]*)/) || [])[1] ?? null;
       if (!/\[OK\] applied/.test(ap.out) || /\[WARN\]/.test(ap.out)) { stopClass = 'text shift did not apply cleanly'; finish('stop: text shift did not apply cleanly', { tool: ap.out.slice(-400) }); break; }
       // Group C: the image step flagged the batch pages needs_reocr; those now hold their own text.
-      if (imageDone && src === 'erara_pdf') {
+      if (imageDone || SOURCE_IMG) {
         const moved = [];
         for (let n = runSpec.from; n <= runSpec.to; n++) if (!(rec.cleared?.pages || '').split(',').map(Number).includes(n)) moved.push(n);
-        const u = await db.collection('pages').updateMany({ book_id: bookId, page_number: { $in: moved }, needs_reocr: true, needs_reocr_reason: 'erara-cover-sheet-repair-#5803', 'ocr.data': { $exists: true, $ne: '' } },
+        const u = await db.collection('pages').updateMany({ book_id: bookId, page_number: { $in: moved }, needs_reocr: true, needs_reocr_reason: src === 'erara_pdf' ? 'erara-cover-sheet-repair-#5803' : 'jp2-offset-repair-#3368', 'ocr.data': { $exists: true, $ne: '' } },
           { $unset: { needs_reocr: '', needs_reocr_reason: '' } });
         await db.collection('book_events').insertOne({ book_id: bookId, type: 'needs_reocr_cleared', at: new Date(), source: 'shift-repairs-5803-driver', details: { issue: ISSUE, pages: u.modifiedCount, why: 'the text shift put each page\'s own text back beside its re-archived image' } });
         rec.needs_reocr_cleared = u.modifiedCount;
       }
     }
+    } // textStep
 
     // ── 6. post map ──
-    const post = settledMap(bookId, textPages.length <= 120 ? textPages : stride(textPages, 100), 'after');
+    const post = settledMap(bookId, textPages.length <= 120 ? textPages : stride(textPages, 100), 'after', mapImg);
     rec.clef_after = matchPct(post);
     rec.after_misses = [...post.values()].filter((r) => r.offset !== 0 && r.offset !== 'no-image' && r.own_text !== 'short').map((r) => `${r.page}:${r.offset}`).slice(0, 40);
     rec.purge = await purge(bookId, imageDone ? pages.map((p) => p.page_number) : [], db);
-    if (rec.clef_after == null || rec.clef_after < MATCH_OK) { stopClass = `post-repair match ${rec.clef_after}% < ${MATCH_OK}%`; finish('stop: post-repair match below 95%'); break; }
-    finish('repaired');
+    if (imageDone) fs.appendFileSync(path.join(WORK, 'purge-needed.txt'), [`https://sourcelibrary.org/book/${bookId}`, ...pages.flatMap((p) => [`https://images.sourcelibrary.org/pages/${bookId}/${String(p.page_number).padStart(4, '0')}.jpg`, `https://images.sourcelibrary.org/archived/${bookId}/${p.page_number}.jpg`])].join('\n') + '\n');
+    // IA image repairs strand the post-archival pages by design (they join the #5309 residual, flagged
+    // needs_reocr), so the gate there is measured on the pages the repair did not strand.
+    let gate = rec.clef_after;
+    if (imageDone && src === 'bulk_jp2') {
+      const stranded = new Set((await db.collection('pages').find({ book_id: bookId, needs_reocr: true }, { projection: { page_number: 1 } }).toArray()).map((p) => p.page_number));
+      rec.stranded_now = stranded.size;
+      gate = rec.clef_after_unstranded = matchPct(new Map([...post].filter(([k]) => !stranded.has(k))));
+    }
+    if (gate == null || gate < MATCH_OK) { stopClass = `post-repair match ${gate}% < ${MATCH_OK}%`; finish('stop: post-repair match below 95%'); break; }
+    finish(rec.text_verdict ? 'repaired-image; text ' + rec.text_verdict : 'repaired');
   } catch (e) {
     if (String(e.message).startsWith('SPEND')) { stopClass = e.message; finish('stop: spend cap', { error: e.message }); break; }
     finish('error', { error: String(e.stack || e.message).slice(0, 400) });
