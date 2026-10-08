@@ -91,6 +91,7 @@ import fs from 'node:fs';
 import crypto from 'node:crypto';
 import { cleanPageText, pageEmbeddingInput, buildPageEmbeddingRow, PAGE_EMBEDDING_COLUMNS } from '../lib/page-embedding-text.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
+import { isPaused } from '../lib/pause.mjs';
 import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage, estimateUsd, estimateTextTokens, usdForTokens, FLUSH_EVERY_TEXTS } from '../lib/embedding-usage.mjs';
 import { pageSourceTs, incrementalSourceFilter, nextWatermark, readWatermark, writeWatermark } from '../lib/embed-watermark.mjs';
 import { createThenDeleteInput, uploadBatchInputFile, streamBatchResponses } from '../lib/gemini-batch-input-file.mjs';
@@ -689,8 +690,8 @@ if (COLLECT_MODE) {
 {
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
   if (!BOOK_ID) {
-    if (control?.paused) {
-      console.log('[embed-gemini] Pipeline paused — exiting.');
+    if (control?.paused || isPaused(control, 'embeddings')) {
+      console.log(`[embed-gemini] ${control?.paused ? 'Pipeline' : 'embeddings step'} paused — exiting.`);
       await mongoClient.close();
       process.exit(0);
     }

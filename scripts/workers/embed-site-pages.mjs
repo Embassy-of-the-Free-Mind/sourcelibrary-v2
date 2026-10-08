@@ -57,6 +57,7 @@ import { embedTexts, EMBED_MODEL } from '../lib/page-embedding-text.mjs';
 import { assertStoreVector } from '../lib/vector-truth.mjs';
 import { newEmbedUsage, logEmbeddingUsage, estimateUsd } from '../lib/embedding-usage.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
+import { isPaused } from '../lib/pause.mjs';
 import { classifyVariant } from '../lib/variant-shape.mjs';
 import { navTokens, pathNames, distinctNames, nameTokens } from '../lib/site-nav-names.mjs';
 import SITE_FEATURES from '../../src/lib/site-features.json' with { type: 'json' };
@@ -353,6 +354,15 @@ async function main() {
   const db = mongo.db(process.env.MONGODB_DB || 'bookstore');
 
   if (!DRY_RUN) {
+    // Pause, then dial (#5492). An --operator run bypasses both, as with the dial.
+    if (!OPERATOR) {
+      const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
+      if (control?.paused || isPaused(control, 'embeddings')) {
+        console.log(`[embed-site-pages] ${control?.paused ? 'Pipeline' : 'embeddings step'} paused — exiting.`);
+        await mongo.close();
+        process.exit(0);
+      }
+    }
     const gate = await budgetAllowsDispatchScoped(db, 'embed-site-pages', { bypass: OPERATOR });
     if (!gate.allowed) { await mongo.close(); process.exit(0); }
   }

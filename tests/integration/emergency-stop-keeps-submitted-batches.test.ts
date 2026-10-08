@@ -80,15 +80,28 @@ describe('emergency stop keeps submitted batch jobs collectable (#5492 B1)', () 
       expect(json.batch_jobs_left_for_collector).toBe(3);
     });
 
-    it(`${label}: only never-submitted, non-parent rows are cancelled`, async () => {
-      const json = await (await stop(body)).json();
-      const cancelled = await getTestDb().collection('batch_jobs').find({ status: 'cancelled' }).toArray();
-      expect(cancelled.map(r => r.id).sort()).toEqual(['unsub', 'unsub-empty']);
-      expect(json.batch_jobs_cancelled).toBe(2);
-      const parent = await getTestDb().collection('batch_jobs').findOne({ id: 'parent' });
-      expect(parent?.status).toBe('processing');
-    });
   }
+
+  it('full stop: only never-submitted, non-parent rows are cancelled', async () => {
+    const json = await (await stop()).json();
+    const cancelled = await getTestDb().collection('batch_jobs').find({ status: 'cancelled' }).toArray();
+    expect(cancelled.map(r => r.id).sort()).toEqual(['unsub', 'unsub-empty']);
+    expect(json.batch_jobs_cancelled).toBe(2);
+    const parent = await getTestDb().collection('batch_jobs').findOne({ id: 'parent' });
+    expect(parent?.status).toBe('processing');
+  });
+
+  it('targeted stop cancels no batch job at all: cancelling is not keyed by step (#5496 review B1)', async () => {
+    const { purgeAIQueues } = await import('@/lib/sqs-client');
+    vi.mocked(purgeAIQueues).mockClear();
+    await getTestDb().collection('jobs').insertOne({ id: 'lambda-ocr', status: 'processing' });
+    const json = await (await stop({ paused_phases: ['embeddings'] })).json();
+    expect(json.batch_jobs_cancelled).toBe(0);
+    expect(json.lambda_jobs_cancelled).toBe(0);
+    expect((await getTestDb().collection('jobs').findOne({ id: 'lambda-ocr' }))?.status).toBe('processing');
+    expect(purgeAIQueues).not.toHaveBeenCalled();
+    expect(await getTestDb().collection('batch_jobs').countDocuments({ status: 'cancelled' })).toBe(0);
+  });
 
   it('dry run changes nothing', async () => {
     await cleanDb();
