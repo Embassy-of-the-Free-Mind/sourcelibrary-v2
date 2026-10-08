@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+// @ts-expect-error — plain .mjs, no types
+import { PHASE_PAUSE_KEY, isPaused } from '../../scripts/lib/pause.mjs';
 
 /**
  * #5472 — two pipeline wiring bugs.
@@ -99,11 +101,13 @@ describe('enrich-worker status writes refresh the field the stale sweeps select 
 
 describe('orchestrator phases have their own pause switches (#5472b)', () => {
   function loadShouldRun(onlyPhase: number | null, paused: number[]) {
-    const factory = new Function('ONLY_PHASE', 'PAUSED_PHASES', `
+    // shouldRun also asks the phase's step key (#5492); give it the same control doc.
+    const factory = new Function('ONLY_PHASE', 'PAUSED_PHASES', 'PHASE_PAUSE_KEY', 'isPaused', 'PAUSE_CONTROL', `
       ${extractFn(ORCH, 'function shouldRun(')}
       return shouldRun;
     `);
-    return factory(onlyPhase, new Set(paused)) as (...args: number[]) => boolean;
+    const quietIsPaused = (c: unknown, k: string) => isPaused(c, k, { log: () => {} });
+    return factory(onlyPhase, new Set(paused), PHASE_PAUSE_KEY, quietIsPaused, { paused_phases: paused }) as (...args: number[]) => boolean;
   }
 
   /** The literal shouldRun(...) arguments of the first gate after a phase header. */

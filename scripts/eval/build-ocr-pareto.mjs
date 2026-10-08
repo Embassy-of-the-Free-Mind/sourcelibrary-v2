@@ -11,7 +11,8 @@
  * Run by benchmark-dashboard-data.mjs after every re-score, so the charts move with the evidence
  * table in the same commit (the Vercel build cannot run it: .vercelignore drops scripts/eval/results).
  * tests/unit/ocr-pareto.test.ts runs --check, so CI refuses a stale file. Reads only committed files:
- *   accuracy   scripts/eval/lib/benchmark-rows.mjs (the evidence table's own rows) and the Syriac
+ *   accuracy   scripts/eval/lib/benchmark-rows.mjs (the evidence table's own rows), the #6295 Syriac print
+ *              panel (results/syriac-pareto-6295/ocr-summary.json), and the Syriac
  *              ground-truth retest (results/benchmark/syriac-retest-2026-09-16/score.json)
  *   cost       Gemini: the latest results/ocr-cost/ocr-cost-<date>.json (ocr-cost-snapshot.mjs,
  *              metered Batch spend); self-hosted: ocr-engine-gpu-costs.json (each entry quotes
@@ -22,6 +23,10 @@
  *   node scripts/eval/build-ocr-pareto.mjs --check   # exit 1 if the committed file is stale
  *   node scripts/eval/build-ocr-pareto.mjs --dump-sets=<file>   # write each chart's most-pages page keys
  *                                                    # (stratum|slug) and engines, nothing else (#6011 wave 2)
+ *   node scripts/eval/build-ocr-pareto.mjs --keep-dropped   # with the pages #6304 dropped (below) put back
+ *   node scripts/eval/build-ocr-pareto.mjs --exclude=<file> --out=<file>
+ *        # rebuild without the page keys listed in <file> (a JSON array of stratum|slug), for the #6304
+ *        # sensitivity check; each panel keeps its engines, only pages drop. Never writes the committed file.
  *
  * The rules (.claude/docs/eval-design.md §7):
  *   - engines are compared ONLY on pages every plotted engine read, against a typed reference,
@@ -63,6 +68,7 @@ const LABEL = {
   'tesseract-deu': 'Tesseract (deu)', 'tesseract-frk': 'Tesseract (frk)', 'tesseract-hye': 'Tesseract (hye)', 'tesseract-hye_calfa': 'Tesseract (hye, Calfa)',
   'tesseract-chi_tra_vert': 'Tesseract (chi_tra_vert)', omnisyr: 'Kraken (OmniSyr)', 'qoruyo-eastern': 'Kraken (Qoruyo East)',
   'qoruyo-estrangela': 'Kraken (Qoruyo Estrangela)', 'sophro-defaultseg': 'Kraken (Sophro)',
+  'omnisyr-nosplit': 'Kraken (OmniSyr), no column split', 'sophro-mhiro': 'Kraken (Sophro Mhiro)',
   'olmocr-2-7b-fp8': 'olmOCR 2 7B', mineru: 'MinerU',
   'deepseek-ocr': 'DeepSeek-OCR', 'qwen3-vl-8b': 'Qwen3-VL 8B', 'chandra-ocr-2': 'Chandra OCR 2', 'mistral-ocr-4-1': 'Mistral OCR 4.1',
   'claude-opus-5-5': 'Claude Opus 5.5', 'claude-sonnet-5-5': 'Claude Sonnet 5.5',
@@ -74,6 +80,7 @@ const REFERENCE = {
   greek: 'First1KGreek / Perseus TEI', 'greek-ext': 'First1KGreek / Perseus / el.wikisource TEI', 'greek-ext2': 'First1KGreek / Perseus / el.wikisource TEI',
   chinese: 'Kanripo (Siku Quanshu) and CBETA', 'chinese-ext': 'Kanripo (Siku Quanshu) and CBETA', 'chinese-cohort-5547': 'Kanripo Siku Quanshu witnesses',
   armenian: 'TITUS', 'syriac-gt': 'line-by-line ground truth for two manuscripts',
+  'syriac-print-6295': 'Digital Syriac Corpus e-texts, the window voted across engines',
 };
 
 // One chart per script. `language` is what the router is asked, to name the production engine.
@@ -88,6 +95,8 @@ const SCRIPTS = [
   { id: 'armenian', title: 'Armenian', language: 'Armenian', match: r => r.script === 'Armenian' },
   { id: 'hebrew', title: 'Hebrew', language: 'Hebrew', match: r => r.script === 'Hebrew' },
   { id: 'syriac', title: 'Syriac manuscript', language: 'Syriac', source: 'syriac' },
+  // Production for printed Syriac is the Kraken lane (scripts/workers/syriac-kraken-lane.mjs, #4883), not the router.
+  { id: 'syriac-print', title: 'Syriac print', language: 'Syriac', source: 'syriac-print', production: 'omnisyr' },
 ];
 // Scripts with OCR runs but no typed reference the charts could score against. Said on the page so an
 // absence reads as a gap in the evidence, not as a script nobody looked at.
@@ -192,6 +201,21 @@ for (const [file, only, fixedDate] of SYRIAC_SOURCES) {
   }
 }
 
+// Syriac print (#6295): one sealed page per book, scored by scripts/eval/syriac-pareto-6295/analyze-ocr.mjs. Its
+// intervals resample EDITIONS (four editions are held twice), as preregistered; they replace the page bootstrap below.
+// The served lane text scores identically to the omnisyr re-run (same model, same split) and the stored Gemini reads
+// exist on only some pages, so neither is an engine here; L-ocr-b is the A-vs-A repeat.
+const SYRIAC_PRINT_FILE = path.join(__dirname, 'results', 'syriac-pareto-6295', 'ocr-summary.json');
+const SYRIAC_PRINT_ARMS = { omnisyr: 'omnisyr', 'omnisyr-nosplit': 'omnisyr-nosplit', 'sophro-mhiro': 'sophro-mhiro', 'qoruyo-eastern': 'qoruyo-eastern',
+  'qoruyo-estrangela': 'qoruyo-estrangela', 'L-ocr': 'gemini-3.1-flash-lite', mineru: 'mineru' };
+const syriacPrint = fs.existsSync(SYRIAC_PRINT_FILE) ? JSON.parse(fs.readFileSync(SYRIAC_PRINT_FILE, 'utf8')) : null;
+const syriacPrintRows = [];
+if (syriacPrint) for (const pg of syriacPrint.per_page) for (const [arm, engine] of Object.entries(SYRIAC_PRINT_ARMS)) {
+  if (pg.cer[arm] == null) continue;
+  syriacPrintRows.push({ page: `syriac-print-6295|${pg.slug}`, book: pg.slug.split('_')[0], stratum: 'syriac-print-6295', engine, cer: pg.cer[arm], refused: false, invented: null, date: syriacPrint.date, file: path.relative(REPO, SYRIAC_PRINT_FILE) });
+}
+const syriacPrintCI = syriacPrint ? Object.fromEntries(syriacPrint.panel.filter(p => SYRIAC_PRINT_ARMS[p.arm]).map(p => [SYRIAC_PRINT_ARMS[p.arm], p.cer_ci95])) : {};
+
 // ── shared-page sets ─────────────────────────────────────────────────────────────────────────
 function pagesOf(rows) { const m = new Map(); for (const r of rows) { if (!m.has(r.engine)) m.set(r.engine, new Map()); m.get(r.engine).set(r.page, r); } return m; }
 const intersect = (a, b) => new Set([...a].filter(x => b.has(x)));
@@ -254,11 +278,47 @@ function panel(script, kind, byEngine, engines, pages, production) {
   };
 }
 
+// The edition-bootstrap intervals, the preregistered notes, and the arms this panel could not run on the box.
+function syriacPrintPanel(p) {
+  for (const x of [...p.placed, ...p.no_cost]) {
+    const ci = syriacPrintCI[x.engine]; if (!ci) continue;
+    x.cer_ci95 = ci; x.accuracy_ci95 = [r3(1 - ci[1]), r3(1 - ci[0])];
+  }
+  const s = syriacPrint, split = s.column_splitter, aa = s.lite_a_vs_a;
+  p.heading = `Printed Syriac, ${s.n_scored} pages from ${s.n_editions} editions (#6295)`;
+  p.notes = [
+    `Directional: ${s.n_books} books, under the 30 a decision needs; intervals resample editions (2,000 draws)`,
+    `Pages were drawn from those whose Kraken lane read could be located in the Digital Syriac Corpus, so the draw leans towards pages Kraken reads; ${s.unscored.length} of the ${s.n_sealed} sealed pages had no e-text window and are not scored`,
+    'Error is counted on the consonants (vowel points and Syriac punctuation folded, a Latin column ignored), scripts/eval/syriac-pareto-6295/syriac-cer.mjs',
+    `Column split (the lane's gutter cut) against no split: median difference ${split.median_diff} [${split.ci95.join(', ')}]; the cut changed the score on ${split.pages_split} pages, so ${split.verdict}`,
+    aa ? `Gemini 3.1 Flash-Lite read every page twice: ${aa.identical_pages} of ${aa.n} reads identical, median difference ${(aa.median_abs_diff * 100).toFixed(1)} points` : null,
+    'Kraken and MinerU priced on this box\'s CPU time (a Hetzner cax41, about €32 a month), Gemini at its metered Batch rate',
+  ].filter(Boolean);
+}
+function syriacPrintExtra() {
+  const st = syriacPrint.stored.filter(x => x.vs_served_lane_on_same_pages);
+  return {
+    elsewhere: st.map(x => ({ label: x.arm === 'stored-gemini-flash' ? 'Gemini 3 Flash, stored read' : 'Gemini 3.1 Flash-Lite, stored read', pages: x.n_pages,
+      why: `the read each page had before the Kraken lane: ${pctOf(x.accuracy)} against ${pctOf(x.vs_served_lane_on_same_pages.accuracy)} for the lane on the same pages` })),
+    notRun: ['PaddleOCR-VL 1.6 and GLM-OCR (not run here: no stored Syriac read, and no GPU rental under the 2026-10-08 spend rule)'],
+    pending: ['Gemini 3.8 Flash', 'Gemini 3 Flash (fresh read)', 'Gemini 3.5 Flash-Lite', 'Gemini 3.7 Flash'],
+  };
+}
+const pctOf = x => (x == null ? '—' : `${Math.round(x * 100)}%`);
+
+const argOf = n => process.argv.find(a => a.startsWith(`--${n}=`))?.slice(n.length + 3);
+// #6304: pages whose reference does not transcribe the page (no engine within 35% CER on print, or read
+// so by eye) or that are in another script, and per-panel limits, generated by audit-pareto-samples.mjs.
+const AUDIT_FILE = path.join(__dirname, 'results', 'pareto-sample-audit-6304', 'drops.json');
+const AUDIT = !process.argv.includes('--keep-dropped') && fs.existsSync(AUDIT_FILE) ? JSON.parse(fs.readFileSync(AUDIT_FILE, 'utf8')) : null;
+const CLI_EXCLUDE = argOf('exclude') ? JSON.parse(fs.readFileSync(argOf('exclude'), 'utf8')) : [];
+const EXCLUDE = new Set([...CLI_EXCLUDE, ...(AUDIT?.drops || []).filter(d => d.family === 'ocr').map(d => d.page)]);
+const without = s => (EXCLUDE.size ? { ...s, pages: new Set([...s.pages].filter(p => !EXCLUDE.has(p))) } : s);
 const charts = [], noChart = [], mostPagesSets = {};
 for (const script of SCRIPTS) {
-  const rows = script.source === 'syriac' ? syriacRows : accRows.filter(r => script.match(r.row));
+  const rows = script.source === 'syriac' ? syriacRows : script.source === 'syriac-print' ? syriacPrintRows : accRows.filter(r => script.match(r.row));
   const byEngine = pagesOf(rows);
-  const production = getOcrModelForBook({ language: script.language, visible: true });
+  const production = script.production || getOcrModelForBook({ language: script.language, visible: true });
   const tested = new Set(rows.map(r => r.engine));
   // Every engine run on the script at all, referenced or not — so "not yet tested" means exactly that.
   if (!script.source) for (const r of benchRows) if (!isRepeatArm(r.engine) && script.match(r)) tested.add(r.engine);
@@ -268,15 +328,20 @@ for (const script of SCRIPTS) {
     noChart.push({ title: script.title, why: nProd ? `${nProd} page${nProd === 1 ? '' : 's'} with a typed reference; at least ${MIN_PAGES} are needed for an interval` : 'no page with a typed reference yet (scored only against another engine)', source: 'scripts/eval/results/benchmark/', not_tested: notTested });
     continue;
   }
-  const wide = greedy(byEngine, production, Math.max(MIN_PAGES, Math.ceil(nProd * WIDE_KEEP)));
+  const wide = without(greedy(byEngine, production, Math.max(MIN_PAGES, Math.ceil(nProd * WIDE_KEEP))));
   const panels = [panel(script, 'most-pages', byEngine, wide.engines, wide.pages, production)];
+  if (script.source === 'syriac-print') syriacPrintPanel(panels[0]);
+  const notes = AUDIT?.notes?.ocr?.[`${script.id}|most-pages`];
+  if (notes?.length) panels[0].notes = notes;
   mostPagesSets[script.id] = { engines: wide.engines, pages: [...wide.pages].sort() };
-  const broad = greedy(byEngine, production, MIN_PAGES);
-  if (broad.engines.length > wide.engines.length) panels.push(panel(script, 'most-engines', byEngine, broad.engines, broad.pages, production));
+  const broad = without(greedy(byEngine, production, MIN_PAGES));
+  // a panel the #6304 drops leave under MIN_PAGES has no interval, so it is not drawn
+  if (broad.engines.length > wide.engines.length && broad.pages.size >= MIN_PAGES) panels.push(panel(script, 'most-engines', byEngine, broad.engines, broad.pages, production));
   // Engines run with a reference on this script but on too few of the same pages to join either panel.
   const shown = new Set(panels.flatMap(p => [...p.placed, ...p.no_cost].map(x => x.engine)));
   const elsewhere = [...byEngine.keys()].filter(e => !shown.has(e)).sort().map(e => ({ engine: e, label: LABEL[e] || e, pages: byEngine.get(e).size }));
-  charts.push({ id: script.id, title: script.title, production_engine: production, production_label: LABEL[production] || production, panels, not_on_shared_pages: elsewhere, not_tested: notTested });
+  const extra = script.source === 'syriac-print' ? syriacPrintExtra() : {};
+  charts.push({ id: script.id, title: script.title, production_engine: production, production_label: LABEL[production] || production, panels, not_on_shared_pages: [...elsewhere, ...(extra.elsewhere || [])], not_tested: [...notTested.filter(t => ![...(extra.notRun || []), ...(extra.pending || [])].some(n => n.startsWith(t))), ...(extra.notRun || [])], ...(extra.pending ? { pending: extra.pending } : {}) });
 }
 
 const out = {
@@ -291,6 +356,8 @@ const out = {
 };
 const json = JSON.stringify(out, null, 1) + '\n';
 const dumpTo = process.argv.find(a => a.startsWith('--dump-sets='))?.slice('--dump-sets='.length);
+if (argOf('out')) { fs.writeFileSync(argOf('out'), json); console.log(`wrote ${argOf('out')} (${EXCLUDE.size} pages excluded)`); process.exit(0); }
+if (CLI_EXCLUDE.length) throw new Error('--exclude needs --out: the committed file is never built without pages');
 if (dumpTo) { fs.writeFileSync(dumpTo, JSON.stringify(mostPagesSets, null, 1) + '\n'); console.log(`wrote ${dumpTo}`); process.exit(0); }
 // --check: fail when the committed file is not what the inputs give (CI test); writes nothing.
 if (process.argv.includes('--check')) {

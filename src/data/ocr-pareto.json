@@ -182,6 +182,72 @@
     "detail": "Claude Opus 5.5 via OpenRouter (Anthropic), effort low; metered API spend, realtime prices, measured 2026-10-06",
     "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
    }
+  ],
+  "omnisyr": [
+   {
+    "charts": [
+     "syriac-print"
+    ],
+    "usd_per_1k": 0.11,
+    "basis": "compute",
+    "detail": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads; inference time only, measured 2026-10-08",
+    "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+   }
+  ],
+  "omnisyr-nosplit": [
+   {
+    "charts": [
+     "syriac-print"
+    ],
+    "usd_per_1k": 0.11,
+    "basis": "compute",
+    "detail": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads; inference time only, measured 2026-10-08",
+    "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+   }
+  ],
+  "sophro-mhiro": [
+   {
+    "charts": [
+     "syriac-print"
+    ],
+    "usd_per_1k": 0.11,
+    "basis": "compute",
+    "detail": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads; inference time only, measured 2026-10-08",
+    "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+   }
+  ],
+  "qoruyo-eastern": [
+   {
+    "charts": [
+     "syriac-print"
+    ],
+    "usd_per_1k": 0.11,
+    "basis": "compute",
+    "detail": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads; inference time only, measured 2026-10-08",
+    "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+   }
+  ],
+  "qoruyo-estrangela": [
+   {
+    "charts": [
+     "syriac-print"
+    ],
+    "usd_per_1k": 0.11,
+    "basis": "compute",
+    "detail": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads; inference time only, measured 2026-10-08",
+    "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+   }
+  ],
+  "mineru": [
+   {
+    "charts": [
+     "syriac-print"
+    ],
+    "usd_per_1k": 0.38,
+    "basis": "compute",
+    "detail": "Hetzner cax41 (16 cores, about €32/month), 641 s for 24 pages, the whole box; inference time only, measured 2026-10-08",
+    "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+   }
   ]
  },
  "charts": [
@@ -193,21 +259,21 @@
    "panels": [
     {
      "kind": "most-pages",
-     "n_pages": 147,
-     "n_books": 147,
+     "n_pages": 143,
+     "n_books": 143,
      "frontier": true,
      "frontier_note": null,
      "references": [
       {
        "stratum": "latin-period-5126",
        "reference": "Wikisource and corrected transcriptions matched to the leaf",
-       "pages": 82,
+       "pages": 79,
        "date": "2026-10-07"
       },
       {
        "stratum": "ref-ws",
        "reference": "Wikisource transcriptions",
-       "pages": 45,
+       "pages": 44,
        "date": "2026-10-07"
       },
       {
@@ -253,7 +319,7 @@
        ],
        "invented": {
         "median": 0.338,
-        "n": 96
+        "n": 93
        },
        "cost": {
         "usd_per_1k": 0.96,
@@ -267,19 +333,19 @@
        "engine": "gemini-3.1-flash-lite",
        "label": "Gemini 3.1 Flash-Lite",
        "production": true,
-       "median_cer": 0.067,
+       "median_cer": 0.068,
        "cer_ci95": [
         0.061,
-        0.075
+        0.076
        ],
-       "accuracy": 0.933,
+       "accuracy": 0.932,
        "accuracy_ci95": [
-        0.925,
+        0.924,
         0.939
        ],
        "invented": {
-        "median": 0.15,
-        "n": 96
+        "median": 0.148,
+        "n": 93
        },
        "cost": {
         "usd_per_1k": 1.279,
@@ -293,19 +359,19 @@
        "engine": "gemini-3-flash-preview",
        "label": "Gemini 3 Flash",
        "production": false,
-       "median_cer": 0.053,
+       "median_cer": 0.056,
        "cer_ci95": [
         0.045,
-        0.061
+        0.063
        ],
-       "accuracy": 0.947,
+       "accuracy": 0.944,
        "accuracy_ci95": [
-        0.939,
+        0.937,
         0.955
        ],
        "invented": {
-        "median": 0.121,
-        "n": 96
+        "median": 0.118,
+        "n": 93
        },
        "cost": {
         "usd_per_1k": 2.709,
@@ -319,19 +385,19 @@
        "engine": "qwen3-vl-8b",
        "label": "Qwen3-VL 8B",
        "production": false,
-       "median_cer": 0.08,
+       "median_cer": 0.078,
        "cer_ci95": [
         0.067,
         0.085
        ],
-       "accuracy": 0.92,
+       "accuracy": 0.922,
        "accuracy_ci95": [
         0.915,
         0.933
        ],
        "invented": {
-        "median": 0.226,
-        "n": 96
+        "median": 0.225,
+        "n": 93
        },
        "cost": {
         "usd_per_1k": 3.43,
@@ -345,19 +411,19 @@
        "engine": "mistral-ocr-4-1",
        "label": "Mistral OCR 4.1",
        "production": false,
-       "median_cer": 0.071,
+       "median_cer": 0.068,
        "cer_ci95": [
         0.057,
-        0.084
+        0.082
        ],
-       "accuracy": 0.929,
+       "accuracy": 0.932,
        "accuracy_ci95": [
-        0.916,
+        0.918,
         0.943
        ],
        "invented": {
         "median": 0.2,
-        "n": 96
+        "n": 93
        },
        "cost": {
         "usd_per_1k": 4,
@@ -374,16 +440,16 @@
        "median_cer": 0.067,
        "cer_ci95": [
         0.059,
-        0.078
+        0.08
        ],
        "accuracy": 0.933,
        "accuracy_ci95": [
-        0.922,
+        0.92,
         0.941
        ],
        "invented": {
-        "median": 0.178,
-        "n": 96
+        "median": 0.176,
+        "n": 93
        },
        "cost": {
         "usd_per_1k": 7.55,
@@ -397,19 +463,19 @@
        "engine": "claude-sonnet-5-5",
        "label": "Claude Sonnet 5.5",
        "production": false,
-       "median_cer": 0.06,
+       "median_cer": 0.059,
        "cer_ci95": [
         0.051,
-        0.072
+        0.071
        ],
-       "accuracy": 0.94,
+       "accuracy": 0.941,
        "accuracy_ci95": [
-        0.928,
+        0.929,
         0.949
        ],
        "invented": {
-        "median": 0.149,
-        "n": 96
+        "median": 0.147,
+        "n": 93
        },
        "cost": {
         "usd_per_1k": 16.89,
@@ -420,7 +486,12 @@
        "on_frontier": false
       }
      ],
-     "no_cost": []
+     "no_cost": [],
+     "notes": [
+      "Sample check, 8 Oct 2026 (#6304): 4 of 147 pages left out because the reference does not transcribe this page, or no engine came within 35% of it",
+      "On 40 of 143 pages the reference expands abbreviations or modernises u and v where the print does not, which counts against an engine that copies the print",
+      "44 of 143 pages are Wikisource's own scans, not this library's"
+     ]
     },
     {
      "kind": "most-engines",
@@ -1276,6 +1347,9 @@
        "invented": null,
        "cost": null
       }
+     ],
+     "notes": [
+      "23 of 23 pages are Wikisource's own scans, not this library's"
      ]
     },
     {
@@ -1609,27 +1683,27 @@
    "panels": [
     {
      "kind": "most-pages",
-     "n_pages": 127,
-     "n_books": 127,
+     "n_pages": 121,
+     "n_books": 121,
      "frontier": true,
      "frontier_note": null,
      "references": [
       {
        "stratum": "greek-ext",
        "reference": "First1KGreek / Perseus / el.wikisource TEI",
-       "pages": 95,
+       "pages": 91,
        "date": "2026-10-07"
       },
       {
        "stratum": "ref-ws",
        "reference": "Wikisource transcriptions",
-       "pages": 13,
+       "pages": 12,
        "date": "2026-10-07"
       },
       {
        "stratum": "greek",
        "reference": "First1KGreek / Perseus TEI",
-       "pages": 11,
+       "pages": 10,
        "date": "2026-10-06"
       },
       {
@@ -1664,19 +1738,19 @@
        "engine": "paddleocr-vl-1.6",
        "label": "PaddleOCR-VL 1.6",
        "production": false,
-       "median_cer": 0.48,
+       "median_cer": 0.461,
        "cer_ci95": [
-        0.397,
-        0.528
+        0.383,
+        0.514
        ],
-       "accuracy": 0.52,
+       "accuracy": 0.539,
        "accuracy_ci95": [
-        0.472,
-        0.603
+        0.486,
+        0.617
        ],
        "invented": {
         "median": 0.87,
-        "n": 114
+        "n": 109
        },
        "cost": {
         "usd_per_1k": 0.091,
@@ -1690,19 +1764,19 @@
        "engine": "olmocr-2-7b-fp8",
        "label": "olmOCR 2 7B",
        "production": false,
-       "median_cer": 0.436,
+       "median_cer": 0.417,
        "cer_ci95": [
-        0.341,
-        0.508
+        0.323,
+        0.51
        ],
-       "accuracy": 0.564,
+       "accuracy": 0.583,
        "accuracy_ci95": [
-        0.492,
-        0.659
+        0.49,
+        0.677
        ],
        "invented": {
-        "median": 0.726,
-        "n": 104
+        "median": 0.735,
+        "n": 100
        },
        "cost": {
         "usd_per_1k": 0.26,
@@ -1716,19 +1790,19 @@
        "engine": "deepseek-ocr",
        "label": "DeepSeek-OCR",
        "production": false,
-       "median_cer": 0.879,
+       "median_cer": 0.981,
        "cer_ci95": [
         0.554,
         1
        ],
-       "accuracy": 0.121,
+       "accuracy": 0.019,
        "accuracy_ci95": [
         0,
         0.446
        ],
        "invented": {
-        "median": 0.765,
-        "n": 74
+        "median": 0.778,
+        "n": 69
        },
        "cost": {
         "usd_per_1k": 0.96,
@@ -1742,19 +1816,19 @@
        "engine": "gemini-3.1-flash-lite",
        "label": "Gemini 3.1 Flash-Lite",
        "production": false,
-       "median_cer": 0.122,
+       "median_cer": 0.118,
        "cer_ci95": [
-        0.107,
-        0.159
+        0.106,
+        0.156
        ],
-       "accuracy": 0.878,
+       "accuracy": 0.882,
        "accuracy_ci95": [
-        0.841,
-        0.893
+        0.844,
+        0.894
        ],
        "invented": {
-        "median": 0.244,
-        "n": 114
+        "median": 0.242,
+        "n": 109
        },
        "cost": {
         "usd_per_1k": 1.279,
@@ -1768,19 +1842,19 @@
        "engine": "gemini-3-flash-preview",
        "label": "Gemini 3 Flash",
        "production": true,
-       "median_cer": 0.077,
+       "median_cer": 0.076,
        "cer_ci95": [
-        0.065,
-        0.094
+        0.064,
+        0.09
        ],
-       "accuracy": 0.923,
+       "accuracy": 0.924,
        "accuracy_ci95": [
-        0.906,
-        0.935
+        0.91,
+        0.936
        ],
        "invented": {
-        "median": 0.145,
-        "n": 114
+        "median": 0.142,
+        "n": 109
        },
        "cost": {
         "usd_per_1k": 2.709,
@@ -1794,19 +1868,19 @@
        "engine": "qwen3-vl-8b",
        "label": "Qwen3-VL 8B",
        "production": false,
-       "median_cer": 0.288,
+       "median_cer": 0.281,
        "cer_ci95": [
-        0.226,
-        0.321
+        0.196,
+        0.317
        ],
-       "accuracy": 0.712,
+       "accuracy": 0.719,
        "accuracy_ci95": [
-        0.679,
-        0.774
+        0.683,
+        0.804
        ],
        "invented": {
-        "median": 0.615,
-        "n": 114
+        "median": 0.62,
+        "n": 109
        },
        "cost": {
         "usd_per_1k": 3.43,
@@ -1820,19 +1894,19 @@
        "engine": "mistral-ocr-4-1",
        "label": "Mistral OCR 4.1",
        "production": false,
-       "median_cer": 0.253,
+       "median_cer": 0.248,
        "cer_ci95": [
-        0.202,
-        0.297
+        0.198,
+        0.288
        ],
-       "accuracy": 0.747,
+       "accuracy": 0.752,
        "accuracy_ci95": [
-        0.703,
-        0.798
+        0.712,
+        0.802
        ],
        "invented": {
-        "median": 0.543,
-        "n": 114
+        "median": 0.554,
+        "n": 109
        },
        "cost": {
         "usd_per_1k": 4,
@@ -1846,19 +1920,19 @@
        "engine": "chandra-ocr-2",
        "label": "Chandra OCR 2",
        "production": false,
-       "median_cer": 0.25,
+       "median_cer": 0.232,
        "cer_ci95": [
-        0.207,
-        0.282
+        0.202,
+        0.277
        ],
-       "accuracy": 0.75,
+       "accuracy": 0.768,
        "accuracy_ci95": [
-        0.718,
-        0.793
+        0.723,
+        0.798
        ],
        "invented": {
         "median": 0.512,
-        "n": 114
+        "n": 109
        },
        "cost": {
         "usd_per_1k": 7.55,
@@ -1874,35 +1948,39 @@
        "engine": "kraken-greek-cllg",
        "label": "Kraken (CLLG Greek)",
        "production": false,
-       "median_cer": 0.079,
+       "median_cer": 0.078,
        "cer_ci95": [
-        0.068,
-        0.091
+        0.067,
+        0.09
        ],
-       "accuracy": 0.921,
+       "accuracy": 0.922,
        "accuracy_ci95": [
-        0.909,
-        0.932
+        0.91,
+        0.933
        ],
        "invented": {
-        "median": 0.231,
-        "n": 114
+        "median": 0.229,
+        "n": 109
        },
        "cost": null
       }
+     ],
+     "notes": [
+      "Sample check, 8 Oct 2026 (#6304): 6 of 127 pages left out because the reference does not transcribe this page, or no engine came within 35% of it",
+      "On 109 of 121 pages the reference is a modern edition or e-text of the work, not a transcription of this print, so the score is agreement with that text"
      ]
     },
     {
      "kind": "most-engines",
-     "n_pages": 11,
-     "n_books": 11,
+     "n_pages": 10,
+     "n_books": 10,
      "frontier": true,
      "frontier_note": null,
      "references": [
       {
        "stratum": "greek",
        "reference": "First1KGreek / Perseus TEI",
-       "pages": 11,
+       "pages": 10,
        "date": "2026-10-06"
       }
      ],
@@ -1918,19 +1996,19 @@
        "engine": "paddleocr-vl-1.6",
        "label": "PaddleOCR-VL 1.6",
        "production": false,
-       "median_cer": 0.482,
+       "median_cer": 0.497,
        "cer_ci95": [
         0.139,
         0.611
        ],
-       "accuracy": 0.518,
+       "accuracy": 0.503,
        "accuracy_ci95": [
         0.389,
         0.861
        ],
        "invented": {
-        "median": 0.5,
-        "n": 11
+        "median": 0.705,
+        "n": 10
        },
        "cost": {
         "usd_per_1k": 0.091,
@@ -1944,19 +2022,19 @@
        "engine": "olmocr-2-7b-fp8",
        "label": "olmOCR 2 7B",
        "production": false,
-       "median_cer": 0.48,
+       "median_cer": 0.504,
        "cer_ci95": [
         0.157,
-        0.591
+        0.796
        ],
-       "accuracy": 0.52,
+       "accuracy": 0.496,
        "accuracy_ci95": [
-        0.409,
+        0.204,
         0.843
        ],
        "invented": {
-        "median": 0.68,
-        "n": 10
+        "median": 0.784,
+        "n": 9
        },
        "cost": {
         "usd_per_1k": 0.26,
@@ -1964,25 +2042,25 @@
         "detail": "Hetzner GEX45 ($249/month), 2.71 s/page with 8 clients; inference time only, measured 2026-10-03",
         "source": "scripts/eval/experiments/2026-10-03-open-engine-print-5660.md"
        },
-       "on_frontier": true
+       "on_frontier": false
       },
       {
        "engine": "deepseek-ocr",
        "label": "DeepSeek-OCR",
        "production": false,
-       "median_cer": 0.42,
+       "median_cer": 0.46,
        "cer_ci95": [
         0.135,
         1
        ],
-       "accuracy": 0.58,
+       "accuracy": 0.541,
        "accuracy_ci95": [
         0,
         0.865
        ],
        "invented": {
-        "median": 0.413,
-        "n": 7
+        "median": 0.46,
+        "n": 6
        },
        "cost": {
         "usd_per_1k": 0.96,
@@ -1996,19 +2074,19 @@
        "engine": "surya2",
        "label": "Surya 2",
        "production": false,
-       "median_cer": 0.324,
+       "median_cer": 0.249,
        "cer_ci95": [
-        0.078,
-        0.384
+        0.067,
+        0.378
        ],
-       "accuracy": 0.676,
+       "accuracy": 0.751,
        "accuracy_ci95": [
-        0.616,
-        0.922
+        0.622,
+        0.933
        ],
        "invented": {
-        "median": 0.351,
-        "n": 11
+        "median": 0.472,
+        "n": 10
        },
        "cost": {
         "usd_per_1k": 1.094,
@@ -2022,19 +2100,19 @@
        "engine": "gemini-3.1-flash-lite",
        "label": "Gemini 3.1 Flash-Lite",
        "production": false,
-       "median_cer": 0.171,
+       "median_cer": 0.167,
        "cer_ci95": [
-        0.064,
-        0.196
+        0.05,
+        0.188
        ],
-       "accuracy": 0.829,
+       "accuracy": 0.834,
        "accuracy_ci95": [
-        0.804,
-        0.936
+        0.812,
+        0.95
        ],
        "invented": {
-        "median": 0.178,
-        "n": 11
+        "median": 0.17,
+        "n": 10
        },
        "cost": {
         "usd_per_1k": 1.279,
@@ -2048,19 +2126,19 @@
        "engine": "gemini-3-flash-preview",
        "label": "Gemini 3 Flash",
        "production": true,
-       "median_cer": 0.115,
+       "median_cer": 0.102,
        "cer_ci95": [
-        0.061,
-        0.161
+        0.044,
+        0.145
        ],
-       "accuracy": 0.885,
+       "accuracy": 0.898,
        "accuracy_ci95": [
-        0.839,
-        0.939
+        0.855,
+        0.956
        ],
        "invented": {
-        "median": 0.157,
-        "n": 11
+        "median": 0.145,
+        "n": 10
        },
        "cost": {
         "usd_per_1k": 2.709,
@@ -2074,19 +2152,19 @@
        "engine": "qwen3-vl-8b",
        "label": "Qwen3-VL 8B",
        "production": false,
-       "median_cer": 0.353,
+       "median_cer": 0.268,
        "cer_ci95": [
-        0.083,
-        0.405
+        0.079,
+        0.402
        ],
-       "accuracy": 0.647,
+       "accuracy": 0.732,
        "accuracy_ci95": [
-        0.595,
-        0.917
+        0.598,
+        0.921
        ],
        "invented": {
-        "median": 0.303,
-        "n": 11
+        "median": 0.429,
+        "n": 10
        },
        "cost": {
         "usd_per_1k": 3.43,
@@ -2100,19 +2178,19 @@
        "engine": "mistral-ocr-4-1",
        "label": "Mistral OCR 4.1",
        "production": false,
-       "median_cer": 0.321,
+       "median_cer": 0.243,
        "cer_ci95": [
-        0.064,
+        0.05,
         0.402
        ],
-       "accuracy": 0.679,
+       "accuracy": 0.757,
        "accuracy_ci95": [
         0.598,
-        0.936
+        0.95
        ],
        "invented": {
-        "median": 0.216,
-        "n": 11
+        "median": 0.319,
+        "n": 10
        },
        "cost": {
         "usd_per_1k": 4,
@@ -2126,19 +2204,19 @@
        "engine": "chandra-ocr-2",
        "label": "Chandra OCR 2",
        "production": false,
-       "median_cer": 0.33,
+       "median_cer": 0.25,
        "cer_ci95": [
         0.086,
-        0.443
+        0.387
        ],
-       "accuracy": 0.67,
+       "accuracy": 0.75,
        "accuracy_ci95": [
-        0.557,
+        0.613,
         0.914
        ],
        "invented": {
-        "median": 0.355,
-        "n": 11
+        "median": 0.421,
+        "n": 10
        },
        "cost": {
         "usd_per_1k": 7.55,
@@ -2152,19 +2230,19 @@
        "engine": "claude-opus-5-5",
        "label": "Claude Opus 5.5",
        "production": false,
-       "median_cer": 0.089,
+       "median_cer": 0.085,
        "cer_ci95": [
-        0.064,
-        0.139
+        0.046,
+        0.126
        ],
-       "accuracy": 0.911,
+       "accuracy": 0.915,
        "accuracy_ci95": [
-        0.861,
-        0.936
+        0.874,
+        0.954
        ],
        "invented": {
-        "median": 0.1,
-        "n": 11
+        "median": 0.082,
+        "n": 10
        },
        "cost": {
         "usd_per_1k": 43.65,
@@ -2180,19 +2258,19 @@
        "engine": "cllg-qwen3vl-8b",
        "label": "Qwen3-VL 8B (CLLG)",
        "production": false,
-       "median_cer": 0.306,
+       "median_cer": 0.228,
        "cer_ci95": [
-        0.06,
-        0.394
+        0.053,
+        0.381
        ],
-       "accuracy": 0.694,
+       "accuracy": 0.772,
        "accuracy_ci95": [
-        0.606,
-        0.94
+        0.619,
+        0.947
        ],
        "invented": {
-        "median": 0.219,
-        "n": 11
+        "median": 0.329,
+        "n": 10
        },
        "cost": null
       },
@@ -2200,19 +2278,19 @@
        "engine": "dots-mocr",
        "label": "dots.mocr",
        "production": false,
-       "median_cer": 0.313,
+       "median_cer": 0.239,
        "cer_ci95": [
         0.036,
-        0.359
+        0.347
        ],
-       "accuracy": 0.687,
+       "accuracy": 0.762,
        "accuracy_ci95": [
-        0.641,
+        0.653,
         0.964
        ],
        "invented": {
-        "median": 0.203,
-        "n": 11
+        "median": 0.366,
+        "n": 10
        },
        "cost": null
       },
@@ -2220,19 +2298,19 @@
        "engine": "kraken-greek-cllg",
        "label": "Kraken (CLLG Greek)",
        "production": false,
-       "median_cer": 0.087,
+       "median_cer": 0.081,
        "cer_ci95": [
         0.066,
-        0.156
+        0.146
        ],
-       "accuracy": 0.913,
+       "accuracy": 0.919,
        "accuracy_ci95": [
-        0.844,
+        0.854,
         0.934
        ],
        "invented": {
-        "median": 0.205,
-        "n": 11
+        "median": 0.207,
+        "n": 10
        },
        "cost": null
       },
@@ -2240,19 +2318,19 @@
        "engine": "tesseract-grc",
        "label": "Tesseract (grc)",
        "production": false,
-       "median_cer": 0.61,
+       "median_cer": 0.545,
        "cer_ci95": [
-        0.379,
-        2.267
+        0.342,
+        1.586
        ],
-       "accuracy": 0.39,
+       "accuracy": 0.456,
        "accuracy_ci95": [
-        -1.267,
-        0.621
+        -0.586,
+        0.658
        ],
        "invented": {
-        "median": 0.765,
-        "n": 11
+        "median": 0.77,
+        "n": 10
        },
        "cost": null
       }
@@ -2276,21 +2354,21 @@
    "panels": [
     {
      "kind": "most-pages",
-     "n_pages": 503,
-     "n_books": 503,
+     "n_pages": 498,
+     "n_books": 498,
      "frontier": true,
      "frontier_note": null,
      "references": [
       {
        "stratum": "chinese-cohort-5547",
        "reference": "Kanripo Siku Quanshu witnesses",
-       "pages": 432,
+       "pages": 428,
        "date": "2026-10-07"
       },
       {
        "stratum": "chinese-ext",
        "reference": "Kanripo (Siku Quanshu) and CBETA",
-       "pages": 50,
+       "pages": 49,
        "date": "2026-10-07"
       },
       {
@@ -2316,19 +2394,19 @@
        "engine": "deepseek-ocr",
        "label": "DeepSeek-OCR",
        "production": false,
-       "median_cer": 0.429,
+       "median_cer": 0.43,
        "cer_ci95": [
-        0.391,
-        0.472
+        0.388,
+        0.477
        ],
        "accuracy": 0.571,
        "accuracy_ci95": [
-        0.528,
-        0.609
+        0.523,
+        0.612
        ],
        "invented": {
         "median": 0.256,
-        "n": 503
+        "n": 498
        },
        "cost": {
         "usd_per_1k": 0.96,
@@ -2342,19 +2420,19 @@
        "engine": "paddleocr-vl-1.6",
        "label": "PaddleOCR-VL 1.6",
        "production": false,
-       "median_cer": 0.183,
+       "median_cer": 0.181,
        "cer_ci95": [
         0.167,
-        0.196
+        0.195
        ],
-       "accuracy": 0.817,
+       "accuracy": 0.819,
        "accuracy_ci95": [
-        0.804,
+        0.805,
         0.833
        ],
        "invented": {
         "median": 0.123,
-        "n": 502
+        "n": 497
        },
        "cost": {
         "usd_per_1k": 1.036,
@@ -2368,19 +2446,19 @@
        "engine": "gemini-3.1-flash-lite",
        "label": "Gemini 3.1 Flash-Lite",
        "production": true,
-       "median_cer": 0.258,
+       "median_cer": 0.256,
        "cer_ci95": [
-        0.239,
+        0.238,
         0.28
        ],
-       "accuracy": 0.742,
+       "accuracy": 0.744,
        "accuracy_ci95": [
         0.72,
-        0.761
+        0.762
        ],
        "invented": {
         "median": 0.188,
-        "n": 503
+        "n": 498
        },
        "cost": {
         "usd_per_1k": 1.279,
@@ -2394,19 +2472,19 @@
        "engine": "gemini-3-flash-preview",
        "label": "Gemini 3 Flash",
        "production": false,
-       "median_cer": 0.202,
+       "median_cer": 0.201,
        "cer_ci95": [
-        0.184,
-        0.218
+        0.183,
+        0.216
        ],
-       "accuracy": 0.798,
+       "accuracy": 0.8,
        "accuracy_ci95": [
-        0.782,
-        0.816
+        0.784,
+        0.817
        ],
        "invented": {
         "median": 0.14,
-        "n": 503
+        "n": 498
        },
        "cost": {
         "usd_per_1k": 2.709,
@@ -2420,19 +2498,19 @@
        "engine": "qwen3-vl-8b",
        "label": "Qwen3-VL 8B",
        "production": false,
-       "median_cer": 0.183,
+       "median_cer": 0.182,
        "cer_ci95": [
         0.169,
-        0.199
+        0.196
        ],
-       "accuracy": 0.817,
+       "accuracy": 0.819,
        "accuracy_ci95": [
-        0.801,
+        0.804,
         0.831
        ],
        "invented": {
         "median": 0.103,
-        "n": 503
+        "n": 498
        },
        "cost": {
         "usd_per_1k": 3.43,
@@ -2446,19 +2524,19 @@
        "engine": "mistral-ocr-4-1",
        "label": "Mistral OCR 4.1",
        "production": false,
-       "median_cer": 0.264,
+       "median_cer": 0.263,
        "cer_ci95": [
         0.244,
-        0.281
+        0.28
        ],
-       "accuracy": 0.736,
+       "accuracy": 0.737,
        "accuracy_ci95": [
-        0.719,
+        0.72,
         0.756
        ],
        "invented": {
         "median": 0.274,
-        "n": 503
+        "n": 498
        },
        "cost": {
         "usd_per_1k": 4,
@@ -2472,19 +2550,19 @@
        "engine": "claude-sonnet-5-5",
        "label": "Claude Sonnet 5.5",
        "production": false,
-       "median_cer": 0.218,
+       "median_cer": 0.215,
        "cer_ci95": [
-        0.196,
-        0.245
+        0.194,
+        0.242
        ],
-       "accuracy": 0.782,
+       "accuracy": 0.786,
        "accuracy_ci95": [
-        0.755,
-        0.804
+        0.758,
+        0.806
        ],
        "invented": {
         "median": 0.153,
-        "n": 503
+        "n": 498
        },
        "cost": {
         "usd_per_1k": 4.62,
@@ -2498,19 +2576,19 @@
        "engine": "chandra-ocr-2",
        "label": "Chandra OCR 2",
        "production": false,
-       "median_cer": 0.21,
+       "median_cer": 0.205,
        "cer_ci95": [
         0.192,
-        0.225
+        0.222
        ],
-       "accuracy": 0.79,
+       "accuracy": 0.795,
        "accuracy_ci95": [
-        0.775,
+        0.778,
         0.808
        ],
        "invented": {
         "median": 0.165,
-        "n": 503
+        "n": 498
        },
        "cost": {
         "usd_per_1k": 7.55,
@@ -2521,7 +2599,11 @@
        "on_frontier": false
       }
      ],
-     "no_cost": []
+     "no_cost": [],
+     "notes": [
+      "Sample check, 8 Oct 2026 (#6304): 5 of 503 pages left out because the reference does not transcribe this page, or no engine came within 35% of it",
+      "On 145 of 498 pages the reference runs more than 15% longer than the page's stored transcription, mostly text of the neighbouring leaf that no engine can match"
+     ]
     },
     {
      "kind": "most-engines",
@@ -2892,21 +2974,21 @@
    "panels": [
     {
      "kind": "most-pages",
-     "n_pages": 19,
-     "n_books": 19,
+     "n_pages": 12,
+     "n_books": 12,
      "frontier": true,
      "frontier_note": null,
      "references": [
       {
        "stratum": "chinese-ext",
        "reference": "Kanripo (Siku Quanshu) and CBETA",
-       "pages": 12,
+       "pages": 8,
        "date": "2026-10-07"
       },
       {
        "stratum": "chinese",
        "reference": "Kanripo (Siku Quanshu) and CBETA",
-       "pages": 7,
+       "pages": 4,
        "date": "2026-10-07"
       }
      ],
@@ -2924,19 +3006,19 @@
        "engine": "deepseek-ocr",
        "label": "DeepSeek-OCR",
        "production": false,
-       "median_cer": 0.407,
+       "median_cer": 0.374,
        "cer_ci95": [
-        0.352,
-        5.722
+        0.194,
+        13.435
        ],
-       "accuracy": 0.593,
+       "accuracy": 0.627,
        "accuracy_ci95": [
-        -4.722,
-        0.648
+        -12.435,
+        0.806
        ],
        "invented": {
-        "median": 0.294,
-        "n": 19
+        "median": 0.184,
+        "n": 12
        },
        "cost": {
         "usd_per_1k": 0.96,
@@ -2950,19 +3032,19 @@
        "engine": "paddleocr-vl-1.6",
        "label": "PaddleOCR-VL 1.6",
        "production": false,
-       "median_cer": 0.269,
+       "median_cer": 0.151,
        "cer_ci95": [
-        0.129,
-        0.364
+        0.102,
+        0.225
        ],
-       "accuracy": 0.731,
+       "accuracy": 0.85,
        "accuracy_ci95": [
-        0.636,
-        0.871
+        0.775,
+        0.898
        ],
        "invented": {
-        "median": 0.125,
-        "n": 19
+        "median": 0.109,
+        "n": 12
        },
        "cost": {
         "usd_per_1k": 1.036,
@@ -2976,329 +3058,19 @@
        "engine": "gemini-3.1-flash-lite",
        "label": "Gemini 3.1 Flash-Lite",
        "production": true,
-       "median_cer": 0.276,
-       "cer_ci95": [
-        0.145,
-        0.364
-       ],
-       "accuracy": 0.724,
-       "accuracy_ci95": [
-        0.636,
-        0.855
-       ],
-       "invented": {
-        "median": 0.127,
-        "n": 19
-       },
-       "cost": {
-        "usd_per_1k": 1.279,
-        "basis": "metered",
-        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
-        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
-       },
-       "on_frontier": false
-      },
-      {
-       "engine": "gemini-3-flash-preview",
-       "label": "Gemini 3 Flash",
-       "production": false,
-       "median_cer": 0.247,
-       "cer_ci95": [
-        0.114,
-        0.364
-       ],
-       "accuracy": 0.753,
-       "accuracy_ci95": [
-        0.636,
-        0.886
-       ],
-       "invented": {
-        "median": 0.072,
-        "n": 19
-       },
-       "cost": {
-        "usd_per_1k": 2.709,
-        "basis": "metered",
-        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
-        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
-       },
-       "on_frontier": true
-      },
-      {
-       "engine": "qwen3-vl-8b",
-       "label": "Qwen3-VL 8B",
-       "production": false,
-       "median_cer": 0.251,
-       "cer_ci95": [
-        0.098,
-        0.366
-       ],
-       "accuracy": 0.749,
-       "accuracy_ci95": [
-        0.634,
-        0.902
-       ],
-       "invented": {
-        "median": 0.068,
-        "n": 19
-       },
-       "cost": {
-        "usd_per_1k": 3.43,
-        "basis": "billed",
-        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
-        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
-       },
-       "on_frontier": false
-      },
-      {
-       "engine": "mistral-ocr-4-1",
-       "label": "Mistral OCR 4.1",
-       "production": false,
-       "median_cer": 0.284,
-       "cer_ci95": [
-        0.183,
-        0.391
-       ],
-       "accuracy": 0.716,
-       "accuracy_ci95": [
-        0.609,
-        0.817
-       ],
-       "invented": {
-        "median": 0.174,
-        "n": 19
-       },
-       "cost": {
-        "usd_per_1k": 4,
-        "basis": "metered-api",
-        "detail": "Mistral /v1/ocr, $4 / 1,000 pages; metered API spend, realtime prices, measured 2026-10-06",
-        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
-       },
-       "on_frontier": false
-      },
-      {
-       "engine": "chandra-ocr-2",
-       "label": "Chandra OCR 2",
-       "production": false,
-       "median_cer": 0.269,
+       "median_cer": 0.162,
        "cer_ci95": [
         0.11,
-        0.366
+        0.251
        ],
-       "accuracy": 0.731,
+       "accuracy": 0.838,
        "accuracy_ci95": [
-        0.634,
+        0.749,
         0.89
        ],
        "invented": {
-        "median": 0.084,
-        "n": 19
-       },
-       "cost": {
-        "usd_per_1k": 7.55,
-        "basis": "billed",
-        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
-        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
-       },
-       "on_frontier": false
-      },
-      {
-       "engine": "claude-sonnet-5-5",
-       "label": "Claude Sonnet 5.5",
-       "production": false,
-       "median_cer": 0.278,
-       "cer_ci95": [
-        0.15,
-        0.372
-       ],
-       "accuracy": 0.722,
-       "accuracy_ci95": [
-        0.628,
-        0.85
-       ],
-       "invented": {
-        "median": 0.105,
-        "n": 19
-       },
-       "cost": {
-        "usd_per_1k": 12.32,
-        "basis": "metered-api",
-        "detail": "Claude Sonnet 5.5 via OpenRouter (Anthropic), effort low; metered API spend, realtime prices, measured 2026-10-07",
-        "source": "scripts/eval/experiments/2026-10-07-ocr-engines-full-sets-wave2-6011.md"
-       },
-       "on_frontier": false
-      },
-      {
-       "engine": "claude-opus-5-5",
-       "label": "Claude Opus 5.5",
-       "production": false,
-       "median_cer": 0.247,
-       "cer_ci95": [
-        0.134,
-        0.364
-       ],
-       "accuracy": 0.753,
-       "accuracy_ci95": [
-        0.636,
-        0.866
-       ],
-       "invented": {
-        "median": 0.088,
-        "n": 19
-       },
-       "cost": {
-        "usd_per_1k": 17.2,
-        "basis": "metered-api",
-        "detail": "Claude Opus 5.5 via OpenRouter (Anthropic), effort low; metered API spend, realtime prices, measured 2026-10-06",
-        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
-       },
-       "on_frontier": false
-      }
-     ],
-     "no_cost": []
-    },
-    {
-     "kind": "most-engines",
-     "n_pages": 7,
-     "n_books": 7,
-     "frontier": true,
-     "frontier_note": null,
-     "references": [
-      {
-       "stratum": "chinese",
-       "reference": "Kanripo (Siku Quanshu) and CBETA",
-       "pages": 7,
-       "date": "2026-10-07"
-      }
-     ],
-     "date": "2026-10-07",
-     "files": [
-      "scripts/eval/results/benchmark/chinese-2026-09-18.json",
-      "scripts/eval/results/engine-wave1-6011/scored/chinese-2026-10-06.json",
-      "scripts/eval/results/engine-wave2-6011/scored/chinese-2026-10-07.json"
-     ],
-     "placed": [
-      {
-       "engine": "deepseek-ocr",
-       "label": "DeepSeek-OCR",
-       "production": false,
-       "median_cer": 0.352,
-       "cer_ci95": [
-        0.18,
-        0.407
-       ],
-       "accuracy": 0.648,
-       "accuracy_ci95": [
-        0.593,
-        0.82
-       ],
-       "invented": {
-        "median": 0.141,
-        "n": 7
-       },
-       "cost": {
-        "usd_per_1k": 0.96,
-        "basis": "billed",
-        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
-        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
-       },
-       "on_frontier": true
-      },
-      {
-       "engine": "paddleocr-vl-1.6",
-       "label": "PaddleOCR-VL 1.6",
-       "production": false,
-       "median_cer": 0.273,
-       "cer_ci95": [
-        0.129,
-        0.377
-       ],
-       "accuracy": 0.727,
-       "accuracy_ci95": [
-        0.623,
-        0.871
-       ],
-       "invented": {
-        "median": 0.082,
-        "n": 7
-       },
-       "cost": {
-        "usd_per_1k": 1.036,
-        "basis": "billed",
-        "detail": "1 × Scaleway L4 (pl-waw-2), €0.7875/h; whole billed rental, measured 2026-10-01",
-        "source": "scripts/eval/experiments/2026-10-01-chinese-ocr-cohort-5547.md"
-       },
-       "on_frontier": true
-      },
-      {
-       "engine": "surya2",
-       "label": "Surya 2",
-       "production": false,
-       "median_cer": 0.28,
-       "cer_ci95": [
-        0.101,
-        0.386
-       ],
-       "accuracy": 0.72,
-       "accuracy_ci95": [
-        0.614,
-        0.899
-       ],
-       "invented": {
-        "median": 0.085,
-        "n": 7
-       },
-       "cost": {
-        "usd_per_1k": 1.094,
-        "basis": "compute",
-        "detail": "1 × Scaleway L4, €0.79/h, 4.3 s/page; inference time only, measured 2026-09-03",
-        "source": "scripts/eval/experiments/2026-09-03-bench-2-complete-can-self-hosted-ocr-replace-gemini.md"
-       },
-       "on_frontier": false
-      },
-      {
-       "engine": "ndlkotenocr-v3",
-       "label": "NDL Koten OCR v3",
-       "production": false,
-       "median_cer": 0.506,
-       "cer_ci95": [
-        0.215,
-        0.937
-       ],
-       "accuracy": 0.494,
-       "accuracy_ci95": [
-        0.063,
-        0.785
-       ],
-       "invented": {
-        "median": 0.377,
-        "n": 7
-       },
-       "cost": {
-        "usd_per_1k": 1.178,
-        "basis": "billed",
-        "detail": "1 × Scaleway L4 (pl-waw-2); whole billed rental, measured 2026-09-30",
-        "source": "scripts/eval/experiments/2026-09-30-ndl-classical-ocr-lane-20-book-pilot-written-and-4925.md"
-       },
-       "on_frontier": false
-      },
-      {
-       "engine": "gemini-3.1-flash-lite",
-       "label": "Gemini 3.1 Flash-Lite",
-       "production": true,
-       "median_cer": 0.276,
-       "cer_ci95": [
-        0.145,
-        0.384
-       ],
-       "accuracy": 0.724,
-       "accuracy_ci95": [
-        0.616,
-        0.855
-       ],
-       "invented": {
-        "median": 0.094,
-        "n": 7
+        "median": 0.129,
+        "n": 12
        },
        "cost": {
         "usd_per_1k": 1.279,
@@ -3312,19 +3084,19 @@
        "engine": "gemini-3-flash-preview",
        "label": "Gemini 3 Flash",
        "production": false,
-       "median_cer": 0.273,
+       "median_cer": 0.147,
        "cer_ci95": [
-        0.113,
-        0.377
+        0.092,
+        0.234
        ],
-       "accuracy": 0.727,
+       "accuracy": 0.853,
        "accuracy_ci95": [
-        0.623,
-        0.887
+        0.766,
+        0.908
        ],
        "invented": {
-        "median": 0.068,
-        "n": 7
+        "median": 0.083,
+        "n": 12
        },
        "cost": {
         "usd_per_1k": 2.709,
@@ -3332,25 +3104,25 @@
         "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
         "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
        },
-       "on_frontier": false
+       "on_frontier": true
       },
       {
        "engine": "qwen3-vl-8b",
        "label": "Qwen3-VL 8B",
        "production": false,
-       "median_cer": 0.291,
+       "median_cer": 0.126,
        "cer_ci95": [
-        0.093,
-        0.393
+        0.089,
+        0.221
        ],
-       "accuracy": 0.709,
+       "accuracy": 0.874,
        "accuracy_ci95": [
-        0.607,
-        0.907
+        0.779,
+        0.911
        ],
        "invented": {
-        "median": 0.068,
-        "n": 7
+        "median": 0.059,
+        "n": 12
        },
        "cost": {
         "usd_per_1k": 3.43,
@@ -3358,25 +3130,25 @@
         "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
         "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
        },
-       "on_frontier": false
+       "on_frontier": true
       },
       {
        "engine": "mistral-ocr-4-1",
        "label": "Mistral OCR 4.1",
        "production": false,
-       "median_cer": 0.284,
+       "median_cer": 0.184,
        "cer_ci95": [
-        0.183,
-        0.382
+        0.141,
+        0.277
        ],
-       "accuracy": 0.716,
+       "accuracy": 0.817,
        "accuracy_ci95": [
-        0.618,
-        0.817
+        0.723,
+        0.859
        ],
        "invented": {
-        "median": 0.112,
-        "n": 7
+        "median": 0.188,
+        "n": 12
        },
        "cost": {
         "usd_per_1k": 4,
@@ -3390,19 +3162,19 @@
        "engine": "chandra-ocr-2",
        "label": "Chandra OCR 2",
        "production": false,
-       "median_cer": 0.276,
+       "median_cer": 0.142,
        "cer_ci95": [
-        0.097,
-        0.382
+        0.091,
+        0.233
        ],
-       "accuracy": 0.724,
+       "accuracy": 0.859,
        "accuracy_ci95": [
-        0.618,
-        0.903
+        0.767,
+        0.909
        ],
        "invented": {
-        "median": 0.06,
-        "n": 7
+        "median": 0.106,
+        "n": 12
        },
        "cost": {
         "usd_per_1k": 7.55,
@@ -3416,19 +3188,19 @@
        "engine": "claude-sonnet-5-5",
        "label": "Claude Sonnet 5.5",
        "production": false,
-       "median_cer": 0.276,
+       "median_cer": 0.165,
        "cer_ci95": [
-        0.124,
-        0.372
+        0.106,
+        0.277
        ],
-       "accuracy": 0.724,
+       "accuracy": 0.835,
        "accuracy_ci95": [
-        0.628,
-        0.876
+        0.723,
+        0.894
        ],
        "invented": {
-        "median": 0.068,
-        "n": 7
+        "median": 0.105,
+        "n": 12
        },
        "cost": {
         "usd_per_1k": 12.32,
@@ -3442,19 +3214,19 @@
        "engine": "claude-opus-5-5",
        "label": "Claude Opus 5.5",
        "production": false,
-       "median_cer": 0.273,
+       "median_cer": 0.152,
        "cer_ci95": [
-        0.102,
-        0.372
+        0.098,
+        0.231
        ],
-       "accuracy": 0.727,
+       "accuracy": 0.849,
        "accuracy_ci95": [
-        0.628,
-        0.898
+        0.769,
+        0.902
        ],
        "invented": {
-        "median": 0.068,
-        "n": 7
+        "median": 0.08,
+        "n": 12
        },
        "cost": {
         "usd_per_1k": 17.2,
@@ -3465,51 +3237,36 @@
        "on_frontier": false
       }
      ],
-     "no_cost": [
-      {
-       "engine": "dots-mocr",
-       "label": "dots.mocr",
-       "production": false,
-       "median_cer": 0.309,
-       "cer_ci95": [
-        0.102,
-        0.462
-       ],
-       "accuracy": 0.691,
-       "accuracy_ci95": [
-        0.538,
-        0.898
-       ],
-       "invented": {
-        "median": 0.071,
-        "n": 7
-       },
-       "cost": null
-      },
-      {
-       "engine": "tesseract-chi_tra_vert",
-       "label": "Tesseract (chi_tra_vert)",
-       "production": false,
-       "median_cer": 0.898,
-       "cer_ci95": [
-        0.463,
-        0.936
-       ],
-       "accuracy": 0.102,
-       "accuracy_ci95": [
-        0.064,
-        0.537
-       ],
-       "invented": {
-        "median": 0.793,
-        "n": 7
-       },
-       "cost": null
-      }
+     "no_cost": [],
+     "notes": [
+      "Sample check, 8 Oct 2026 (#6304): 7 of 19 pages left out because the reference does not transcribe this page, or no engine came within 35% of it",
+      "On 12 of 12 pages the reference is a modern edition or e-text of the work, not a transcription of this print, so the score is agreement with that text",
+      "On 2 of 12 pages the reference runs more than 15% longer than the page's stored transcription, mostly text of the neighbouring leaf that no engine can match"
      ]
     }
    ],
-   "not_on_shared_pages": [],
+   "not_on_shared_pages": [
+    {
+     "engine": "dots-mocr",
+     "label": "dots.mocr",
+     "pages": 7
+    },
+    {
+     "engine": "ndlkotenocr-v3",
+     "label": "NDL Koten OCR v3",
+     "pages": 7
+    },
+    {
+     "engine": "surya2",
+     "label": "Surya 2",
+     "pages": 7
+    },
+    {
+     "engine": "tesseract-chi_tra_vert",
+     "label": "Tesseract (chi_tra_vert)",
+     "pages": 7
+    }
+   ],
    "not_tested": [
     "olmOCR 2 7B",
     "MinerU",
@@ -3655,6 +3412,9 @@
        "invented": null,
        "cost": null
       }
+     ],
+     "notes": [
+      "On 2 of 5 pages the reference is a modern edition or e-text of the work, not a transcription of this print, so the score is agreement with that text"
      ]
     }
    ],
@@ -3934,6 +3694,239 @@
     "Qwen3-VL 32B",
     "GPT (vision)",
     "Google Cloud Vision"
+   ]
+  },
+  {
+   "id": "syriac-print",
+   "title": "Syriac print",
+   "production_engine": "omnisyr",
+   "production_label": "Kraken (OmniSyr)",
+   "panels": [
+    {
+     "kind": "most-pages",
+     "n_pages": 20,
+     "n_books": 20,
+     "frontier": true,
+     "frontier_note": null,
+     "references": [
+      {
+       "stratum": "syriac-print-6295",
+       "reference": "Digital Syriac Corpus e-texts, the window voted across engines",
+       "pages": 20,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/results/syriac-pareto-6295/ocr-summary.json"
+     ],
+     "placed": [
+      {
+       "engine": "omnisyr",
+       "label": "Kraken (OmniSyr)",
+       "production": true,
+       "median_cer": 0.13,
+       "cer_ci95": [
+        0.076,
+        0.168
+       ],
+       "accuracy": 0.87,
+       "accuracy_ci95": [
+        0.832,
+        0.924
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.11,
+        "basis": "compute",
+        "detail": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads; inference time only, measured 2026-10-08",
+        "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "omnisyr-nosplit",
+       "label": "Kraken (OmniSyr), no column split",
+       "production": false,
+       "median_cer": 0.14,
+       "cer_ci95": [
+        0.076,
+        0.176
+       ],
+       "accuracy": 0.86,
+       "accuracy_ci95": [
+        0.824,
+        0.924
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.11,
+        "basis": "compute",
+        "detail": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads; inference time only, measured 2026-10-08",
+        "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "qoruyo-eastern",
+       "label": "Kraken (Qoruyo East)",
+       "production": false,
+       "median_cer": 0.14,
+       "cer_ci95": [
+        0.108,
+        0.222
+       ],
+       "accuracy": 0.86,
+       "accuracy_ci95": [
+        0.778,
+        0.892
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.11,
+        "basis": "compute",
+        "detail": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads; inference time only, measured 2026-10-08",
+        "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "qoruyo-estrangela",
+       "label": "Kraken (Qoruyo Estrangela)",
+       "production": false,
+       "median_cer": 0.156,
+       "cer_ci95": [
+        0.078,
+        0.213
+       ],
+       "accuracy": 0.844,
+       "accuracy_ci95": [
+        0.787,
+        0.922
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.11,
+        "basis": "compute",
+        "detail": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads; inference time only, measured 2026-10-08",
+        "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "sophro-mhiro",
+       "label": "Kraken (Sophro Mhiro)",
+       "production": false,
+       "median_cer": 0.193,
+       "cer_ci95": [
+        0.09,
+        0.398
+       ],
+       "accuracy": 0.807,
+       "accuracy_ci95": [
+        0.602,
+        0.91
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.11,
+        "basis": "compute",
+        "detail": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads; inference time only, measured 2026-10-08",
+        "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "mineru",
+       "label": "MinerU",
+       "production": false,
+       "median_cer": 1,
+       "cer_ci95": [
+        1,
+        1
+       ],
+       "accuracy": 0,
+       "accuracy_ci95": [
+        0,
+        0
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.38,
+        "basis": "compute",
+        "detail": "Hetzner cax41 (16 cores, about €32/month), 641 s for 24 pages, the whole box; inference time only, measured 2026-10-08",
+        "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": false,
+       "median_cer": 0.683,
+       "cer_ci95": [
+        0.626,
+        0.711
+       ],
+       "accuracy": 0.317,
+       "accuracy_ci95": [
+        0.289,
+        0.374
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 1.279,
+        "basis": "metered",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [],
+     "heading": "Printed Syriac, 20 pages from 18 editions (#6295)",
+     "notes": [
+      "Directional: 20 books, under the 30 a decision needs; intervals resample editions (2,000 draws)",
+      "Pages were drawn from those whose Kraken lane read could be located in the Digital Syriac Corpus, so the draw leans towards pages Kraken reads; 4 of the 24 sealed pages had no e-text window and are not scored",
+      "Error is counted on the consonants (vowel points and Syriac punctuation folded, a Latin column ignored), scripts/eval/syriac-pareto-6295/syriac-cer.mjs",
+      "Column split (the lane's gutter cut) against no split: median difference 0 [0, 0]; the cut changed the score on 4 pages, so no difference shown (CI includes 0)",
+      "Gemini 3.1 Flash-Lite read every page twice: 0 of 20 reads identical, median difference 5.3 points",
+      "Kraken and MinerU priced on this box's CPU time (a Hetzner cax41, about €32 a month), Gemini at its metered Batch rate"
+     ]
+    }
+   ],
+   "not_on_shared_pages": [
+    {
+     "label": "Gemini 3 Flash, stored read",
+     "pages": 9,
+     "why": "the read each page had before the Kraken lane: 53% against 89% for the lane on the same pages"
+    },
+    {
+     "label": "Gemini 3.1 Flash-Lite, stored read",
+     "pages": 9,
+     "why": "the read each page had before the Kraken lane: 0% against 83% for the lane on the same pages"
+    }
+   ],
+   "not_tested": [
+    "olmOCR 2 7B",
+    "Surya 2",
+    "dots.mocr",
+    "DeepSeek-OCR",
+    "Qwen3-VL 8B",
+    "Chandra OCR 2",
+    "Mistral OCR 4.1",
+    "Claude Opus 5.5",
+    "Claude Sonnet 5.5",
+    "Qwen3-VL 32B",
+    "GPT (vision)",
+    "Google Cloud Vision",
+    "PaddleOCR-VL 1.6 and GLM-OCR (not run here: no stored Syriac read, and no GPU rental under the 2026-10-08 spend rule)"
+   ],
+   "pending": [
+    "Gemini 3.8 Flash",
+    "Gemini 3 Flash (fresh read)",
+    "Gemini 3.5 Flash-Lite",
+    "Gemini 3.7 Flash"
    ]
   }
  ],

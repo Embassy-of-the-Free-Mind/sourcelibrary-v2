@@ -1,0 +1,999 @@
+{
+  "issue": 6256,
+  "compiled": "2026-10-08",
+  "checker": "scripts/catalog-coverage/language-funnel-check.mjs",
+  "method": "Hand-compiled from published sources. Each figure keeps the sentence it was read from; the checker re-fetches the page and looks for that sentence. kind 'ours' marks a number we measured ourselves, with the script or document that produced it. A bar with no citable figure is left empty; nothing is estimated by us. Bars are scaled within one language only, because languages are counted in different units.",
+  "languages": [
+    {
+      "id": "latin",
+      "language": "Latin",
+      "scope": "Printed editions, 1450 to 1700",
+      "unit": "editions",
+      "bars": {
+        "estimated": {
+          "missing": "No published estimate of all Latin editions printed, lost ones included."
+        },
+        "catalogued": {
+          "value": 503360,
+          "label": "503,360 editions",
+          "figure": "latin-ustc"
+        },
+        "scanned": {
+          "value": 65483,
+          "label": "at least 65,483 open scans matched to a Latin edition",
+          "figure": "latin-scan"
+        },
+        "translated": {
+          "share": 0.151,
+          "share_of": "catalogued",
+          "label": "about 15% of works (12.7 to 17.7%)",
+          "figure": "latin-gap"
+        }
+      },
+      "notes": [
+        "Of Latin works first written in the Renaissance, 6.7% (4.8 to 8.7%) have an English translation.",
+        "Manuscripts are not counted here."
+      ],
+      "figures": [
+        {
+          "id": "latin-ustc",
+          "stage": "catalogued",
+          "value": 503360,
+          "unit": "editions",
+          "what": "Latin-language editions in the Universal Short Title Catalogue (all years to 1700), counted in our copy of the USTC data",
+          "source_title": "Universal Short Title Catalogue",
+          "body": "University of St Andrews; count by Source Library",
+          "year": 2026,
+          "url": "https://www.ustc.ac.uk/",
+          "quote": null,
+          "kind": "ours",
+          "produced_by": "Supabase ustc_editions, language_1 = 'Latin', counted 2026-10-08",
+          "caveat": "The USTC records editions known to bibliographers, including some with no surviving copy. Recounted 2026-10-08 by three query paths: 503,360 with Latin as first language, 499,604 of them dated 1450 to 1700, and 29,808 more with Latin as a second language.",
+          "check": {
+            "status": "own_measurement",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "latin-scan",
+          "stage": "scanned",
+          "value": 65483,
+          "unit": "scans",
+          "what": "Distinct open IIIF scans, from seven libraries, that our catalogue join matched to a Latin edition in the USTC",
+          "source_title": "Source Library catalogue coverage build",
+          "body": "Source Library",
+          "year": 2026,
+          "url": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/scripts/catalog-coverage/build.mjs",
+          "quote": null,
+          "kind": "ours",
+          "produced_by": "Mongo catalog_coverage (scripts/catalog-coverage/build.mjs): distinct iiif_manifest_url where language = Latin, counted 2026-10-08",
+          "caveat": "A floor. The join matches on title, so one scan is attached to every edition of that title: 251,549 edition rows share these 65,483 scans, which is why this bar counts scans and not editions. In a random sample of 55 matches opened on 2026-10-08, 37 named the same year as the USTC record, about 13 were another edition of the same title, and about 5 were a different work. Scans outside the seven libraries are not counted.",
+          "check": {
+            "status": "own_measurement",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "latin-gap",
+          "stage": "translated",
+          "value": null,
+          "share": 0.151,
+          "low": 0.127,
+          "high": 0.177,
+          "unit": "share of works",
+          "what": "Share of Latin works printed 1480 to 1620 with any prior English translation, from a blind stratified sample of 1,000 works judged by two independent search-grounded models",
+          "source_title": "Measuring the Latin Translation Gap",
+          "body": "Source Library working paper",
+          "year": 2026,
+          "url": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/.claude/docs/translation-gap-paper.md",
+          "quote": "Debiased gap — all-print denominator (1480–1620): 84.9% [82.3–87.3]",
+          "kind": "ours",
+          "produced_by": "scripts/analysis/gap-validation-estimate.mjs",
+          "caveat": "Measured on works, drawn here against editions. The human gold-standard check of the sample is not finished.",
+          "check": {
+            "status": "own_measurement",
+            "checked": "2026-10-08"
+          }
+        }
+      ]
+    },
+    {
+      "id": "greek",
+      "language": "Greek",
+      "scope": "Manuscripts of Greek texts written before about 1600",
+      "unit": "manuscripts",
+      "bars": {
+        "estimated": {
+          "missing": "No published estimate of how many Greek manuscripts survive beyond those already listed."
+        },
+        "catalogued": {
+          "value": 75725,
+          "label": "75,725 manuscripts",
+          "figure": "greek-binks-cat"
+        },
+        "scanned": {
+          "value": 15544,
+          "label": "15,544 with images online",
+          "figure": "greek-binks-scan"
+        },
+        "translated": {
+          "missing": "No published figure for the share of Greek texts in English."
+        }
+      },
+      "notes": [
+        "The Thesaurus Linguae Graecae holds typed text of over 12,000 works by 4,000 authors.",
+        "One Byzantinist estimates that under 5% of surviving Byzantine scientific and philosophical writing has been printed at all."
+      ],
+      "figures": [
+        {
+          "id": "greek-diktyon",
+          "stage": "catalogued",
+          "value": 70000,
+          "unit": "manuscripts",
+          "what": "Greek manuscript shelf marks listed in the Pinakes database (IRHT, Paris), each with a Diktyon identifier",
+          "source_title": "Identifiers for Manuscripts",
+          "body": "Diktyon network / IRHT-CNRS",
+          "year": null,
+          "url": "https://diktyon.irht.cnrs.fr/en/?p=22",
+          "quote": "the Pinakes database, which has to date the most comprehensive directory of Greek manuscript shelf marks (over 70,000)",
+          "kind": "institution",
+          "caveat": "Undated page; 'over 70,000'.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "greek-binks-cat",
+          "stage": "catalogued",
+          "value": 75725,
+          "unit": "manuscripts",
+          "what": "Rows in the Diktyon list of Greek manuscripts, counted by the author in January 2019",
+          "source_title": "Where are the world's Greek manuscripts?",
+          "body": "James Binks",
+          "year": 2023,
+          "url": "https://binks.substack.com/p/where-are-the-worlds-greek-manuscripts",
+          "quote": "There are 75,725 known Greek-language manuscripts in the world (as of January 2019).",
+          "kind": "secondary",
+          "caveat": "An independent count of the Diktyon list, consistent with Diktyon's own 'over 70,000'.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "greek-binks-scan",
+          "stage": "scanned",
+          "value": 15544,
+          "unit": "manuscripts",
+          "what": "Greek manuscripts listed as digitised in Princeton University Library's Digitized Greek Manuscripts database",
+          "source_title": "Where are the world's Greek manuscripts?",
+          "body": "James Binks, counting Princeton's database",
+          "year": 2023,
+          "url": "https://binks.substack.com/p/where-are-the-worlds-greek-manuscripts",
+          "quote": "the 15,544 manuscripts that are digitized and listed on Princeton University Library’s database",
+          "kind": "secondary",
+          "caveat": "Princeton's database does not print its own total. The same article says under 5% of the manuscripts in Greece are digitised.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "greek-tlg",
+          "stage": "catalogued",
+          "value": 12000,
+          "unit": "works",
+          "what": "Works with typed text in the Thesaurus Linguae Graecae, Homer to 1453 and later",
+          "source_title": "The Thesaurus Linguae Graecae: Our Mission and our Projects",
+          "body": "TLG, University of California, Irvine",
+          "year": null,
+          "url": "https://stephanus.tlg.uci.edu/tlg.php",
+          "quote": "Today the Online TLG contains more than 125 million words from over 12,000 works associated with 4,000 authors",
+          "kind": "institution",
+          "caveat": "Subscription corpus of edited texts; counts works, not manuscripts.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "greek-mavroudi",
+          "stage": "translated",
+          "value": null,
+          "share": 0.05,
+          "unit": "share of Byzantine scientific and philosophical texts printed",
+          "what": "Maria Mavroudi's estimate, quoted by Roger Pearse: a ceiling on publication, so also on translation",
+          "source_title": "Less than 5% of Byzantine scientific texts have been published?",
+          "body": "Roger Pearse, quoting Maria Mavroudi",
+          "year": 2017,
+          "url": "https://www.roger-pearse.com/weblog/2017/09/08/less-than-5-of-byzantine-scientific-texts-have-been-published/",
+          "quote": "less than 5 percent of its surviving scientific and philosophical production has been published.",
+          "kind": "secondary",
+          "caveat": "The author calls it her own estimate, with no official statistic behind it. Science and philosophy only.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        }
+      ]
+    },
+    {
+      "id": "chinese",
+      "language": "Chinese",
+      "scope": "Books made before 1912, held in mainland China",
+      "unit": "copies (部)",
+      "bars": {
+        "estimated": {
+          "value": 3000000,
+          "derived": true,
+          "label": "about 3 million copies expected",
+          "figure": "chinese-census"
+        },
+        "catalogued": {
+          "value": 2700000,
+          "label": "over 2.7 million copies",
+          "figure": "chinese-census"
+        },
+        "scanned": {
+          "value": 100000,
+          "partial": true,
+          "label": "100,000 on the National Library's platform",
+          "figure": "chinese-nlc"
+        },
+        "translated": {
+          "missing": "No published figure. Our own catalogue match finds evidence of English for 65 of 10,141 works in the Kanseki Repository, which is a floor."
+        }
+      },
+      "notes": [
+        "Counted as distinct titles, the national union catalogue lists close to 200,000 surviving works.",
+        "The expected total is derived: the census says 2.7 million is over 90% of what it expects to find."
+      ],
+      "figures": [
+        {
+          "id": "chinese-census",
+          "stage": "catalogued",
+          "value": 2700000,
+          "unit": "copies (部)",
+          "what": "Copies of pre-1912 books registered by the national census of ancient books; said to be over 90% of the expected Chinese-language total",
+          "source_title": "激活古籍里的文字——赓续生生不息的中华文脉",
+          "body": "China News Service, quoting the National Center for Preservation and Conservation of Ancient Books",
+          "year": 2022,
+          "url": "https://www.chinanews.com.cn/cul/2022/06-01/9768679.shtml",
+          "quote": "全国古籍普查完成270余万部另1.8万函，30个省份基本完成汉文普查工作，占预计汉文总量的90%以上",
+          "kind": "secondary",
+          "caveat": "News report of an official's statement. Counts copies held by institutions, so one work appears many times. Mainland China only.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "chinese-nlc",
+          "stage": "scanned",
+          "value": 100000,
+          "unit": "copies or items (部/件)",
+          "what": "Ancient books and special-collection items with images published on the National Library of China's Chinese Ancient Books Resource Database",
+          "source_title": "激活古籍里的文字——赓续生生不息的中华文脉",
+          "body": "China News Service",
+          "year": 2022,
+          "url": "https://www.chinanews.com.cn/cul/2022/06-01/9768679.shtml",
+          "quote": "目前已累计发布古籍及特藏数字资源10万部(件)",
+          "kind": "secondary",
+          "caveat": "One platform only, and it includes rubbings and other special collections. Other libraries' scans are not counted.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "chinese-zongmu",
+          "stage": "catalogued",
+          "value": 200000,
+          "unit": "titles (种)",
+          "what": "Surviving Chinese ancient books worldwide, as distinct titles, in the union catalogue 中国古籍总目",
+          "source_title": "年投资数亿元整理出版古籍",
+          "body": "sinoss.net (Ministry of Education social-science portal)",
+          "year": 2010,
+          "url": "https://www.sinoss.net/c/2010-09-14/529402.shtml",
+          "quote": "《中国古籍总目》将于年内出版,预计收书近20万种",
+          "kind": "secondary",
+          "caveat": "An announcement before publication: 'expected to include close to 200,000 titles'.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        }
+      ]
+    },
+    {
+      "id": "japanese",
+      "language": "Japanese",
+      "scope": "Books made before 1868",
+      "unit": "books",
+      "bars": {
+        "estimated": {
+          "value": 3000000,
+          "label": "over 3 million books",
+          "figure": "japanese-kuronet"
+        },
+        "catalogued": {
+          "value": 800000,
+          "label": "800,000 catalogue records",
+          "figure": "japanese-kokusho"
+        },
+        "scanned": {
+          "value": 225000,
+          "label": "225,000 with images online",
+          "figure": "japanese-kokusho"
+        },
+        "translated": {
+          "missing": "No published figure. Most of these books have not yet been transcribed into modern characters."
+        }
+      },
+      "notes": [],
+      "figures": [
+        {
+          "id": "japanese-kuronet",
+          "stage": "estimated",
+          "value": 3000000,
+          "unit": "books",
+          "what": "Books written in cursive Japanese (kuzushiji) that are preserved today",
+          "source_title": "KuroNet: Pre-Modern Japanese Kuzushiji Character Recognition with Deep Learning",
+          "body": "Clanuwat, Lamb and Kitamoto (ROIS-DS Center for Open Data in the Humanities)",
+          "year": 2019,
+          "url": "https://arxiv.org/abs/1910.09433",
+          "quote": "Over 3 millions books on a diverse array of topics, such as literature, science, mathematics and even cooking are preserved.",
+          "kind": "peer-reviewed",
+          "caveat": "A round figure in a paper's abstract, given without its own source. The paper also says the vast majority have not been transcribed into modern Japanese characters.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "japanese-kokusho",
+          "stage": "catalogued",
+          "value": 800000,
+          "unit": "bibliographic records",
+          "what": "Records in the National Institute of Japanese Literature's Kokusho Database, from about 580 holders; 225,000 items have full digital images (24 million frames), as of April 2023",
+          "source_title": "E2612 – 日本古典籍を身近にする「国書データベース」",
+          "body": "National Diet Library, Current Awareness-E (authors from NIJL)",
+          "year": 2023,
+          "url": "https://current.ndl.go.jp/e2612",
+          "quote": "約580の機関・個人が所蔵する資料の書誌80万件と、うち約200の機関・個人が所蔵する資料22万5,000点のデジタル画像であり",
+          "kind": "institution",
+          "caveat": "Records and items are holdings, so one work can appear several times.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        }
+      ]
+    },
+    {
+      "id": "sanskrit",
+      "language": "Sanskrit and other Indian languages",
+      "scope": "Manuscripts in India, all languages and scripts",
+      "unit": "manuscripts",
+      "bars": {
+        "estimated": {
+          "value": 10000000,
+          "low": 5000000,
+          "high": 30000000,
+          "label": "over 10 million (estimates run from 5 to 30 million)",
+          "figure": "sanskrit-pib-est"
+        },
+        "catalogued": {
+          "value": 4407000,
+          "label": "4.4 million documented",
+          "figure": "sanskrit-pib-cat"
+        },
+        "scanned": {
+          "value": 350000,
+          "label": "350,000 digitised since 2003",
+          "figure": "sanskrit-lok-sabha"
+        },
+        "translated": {
+          "missing": "No published figure for the share in English."
+        }
+      },
+      "notes": [
+        "The government figures cover every Indian language, not Sanskrit alone."
+      ],
+      "figures": [
+        {
+          "id": "sanskrit-pib-est",
+          "stage": "estimated",
+          "value": 10000000,
+          "low": 5000000,
+          "high": 30000000,
+          "unit": "manuscripts",
+          "what": "Manuscripts in India, per the Government of India's Gyan Bharatam Mission briefing",
+          "source_title": "Gyan Bharatam Mission: key takeaways",
+          "body": "Press Information Bureau, Government of India",
+          "year": 2025,
+          "url": "https://static.pib.gov.in/WriteReadData/specificdocs/documents/2025/sep/doc2025910632801.pdf",
+          "quote": "With over 10 million manuscripts spanning",
+          "kind": "institution",
+          "caveat": "The same briefing also says 'estimated at over five million works'. The high end, 30 million, is David Pingree's spoken estimate as recalled by Dominik Wujastyk.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "sanskrit-pingree",
+          "stage": "estimated",
+          "value": 30000000,
+          "unit": "manuscripts",
+          "what": "Sanskrit manuscripts worldwide, private collections included (Pingree, in conversation)",
+          "source_title": "INDOLOGY list: Classical heritages",
+          "body": "Dominik Wujastyk",
+          "year": 2009,
+          "url": "https://list.indology.info/pipermail/indology/2009-March/032831.html",
+          "quote": "I heard David Pingree say in conversation that there might be 30 million Sanskrit manuscripts in the world today, if one took into account all the MSS in private collections.",
+          "kind": "secondary",
+          "caveat": "A recalled remark on a scholarly mailing list; Wujastyk notes he never learned how the figure was reached.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "sanskrit-pib-cat",
+          "stage": "catalogued",
+          "value": 4407000,
+          "unit": "manuscripts",
+          "what": "Manuscripts documented in the National Mission for Manuscripts' Kriti Sampada database",
+          "source_title": "Gyan Bharatam Mission: key takeaways",
+          "body": "Press Information Bureau, Government of India",
+          "year": 2025,
+          "url": "https://static.pib.gov.in/WriteReadData/specificdocs/documents/2025/sep/doc2025910632801.pdf",
+          "quote": "with over 44.07 lakh manuscripts already documented in the Kriti Sampada digital repository.",
+          "kind": "institution",
+          "caveat": "44.07 lakh is 4,407,000. A record in the database, not a full catalogue description.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "sanskrit-lok-sabha",
+          "stage": "scanned",
+          "value": 350000,
+          "unit": "manuscripts",
+          "what": "Manuscripts digitised by the National Mission for Manuscripts since 2003, as told to the Lok Sabha",
+          "source_title": "3.5 lakh manuscripts digitised since 2003 Govt tells Lok Sabha",
+          "body": "Press Trust of India, in The Week",
+          "year": 2025,
+          "url": "https://www.theweek.in/wire-updates/national/2025/08/11/des14-lsq-culture-manuscripts.html",
+          "quote": "Since 2003, a total of 3.5 lakh manuscripts have been digitised, the government informed the Lok Sabha",
+          "kind": "secondary",
+          "caveat": "3.5 lakh is 350,000. Digitised is not the same as online: far fewer are openly viewable.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        }
+      ]
+    },
+    {
+      "id": "tibetan",
+      "language": "Tibetan",
+      "scope": "The Buddhist canon in Tibetan (Kangyur and Tengyur)",
+      "unit": "pages",
+      "bars": {
+        "estimated": {
+          "value": 231800,
+          "label": "231,800 pages",
+          "figure": "tibetan-canon"
+        },
+        "catalogued": {
+          "value": 231800,
+          "label": "all of it (4,541 texts)",
+          "figure": "tibetan-84000-cat"
+        },
+        "scanned": {
+          "value": 231800,
+          "label": "all of it",
+          "figure": "tibetan-scans"
+        },
+        "translated": {
+          "value": 38504,
+          "label": "38,504 pages published in English",
+          "figure": "tibetan-84000-en"
+        }
+      },
+      "notes": [
+        "Half of the Kangyur is published in English; under 1% of the Tengyur is.",
+        "Outside the canon, the Buddhist Digital Resource Center has scanned over 28 million pages of Buddhist texts. Nobody publishes how much of that is in English."
+      ],
+      "figures": [
+        {
+          "id": "tibetan-canon",
+          "stage": "estimated",
+          "value": 231800,
+          "unit": "pages",
+          "what": "Kangyur (70,000 pages) plus Tengyur (161,800 pages), as sized by 84000",
+          "source_title": "A One-Hundred-Year Vision Clearly Within Reach",
+          "body": "84000: Translating the Words of the Buddha",
+          "year": 2022,
+          "url": "https://84000.co/news/a-one-hundred-year-vision-clearly-within-reach",
+          "quote": "to translate and publish the additional 161,800 pages of the Tengyur by the year 2110",
+          "kind": "institution",
+          "caveat": "The same release gives 'the 70,000 page Tibetan Kangyur'. A closed canon, so the estimate is a count.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "tibetan-84000-cat",
+          "stage": "catalogued",
+          "value": 4541,
+          "unit": "texts",
+          "what": "Texts in 84000's Reading Room catalogue (1,145 Kangyur, 3,396 Tengyur), read from its public catalogue",
+          "source_title": "84000 Reading Room catalogue",
+          "body": "84000; count by Source Library",
+          "year": 2026,
+          "url": "https://read.84000.co/section/lobby.json",
+          "quote": null,
+          "kind": "ours",
+          "produced_by": "scripts/catalog-coverage/canon-gap-map.mjs, run 2026-10-01",
+          "caveat": "The catalogue's own page counts sum to 198,236, a little under 84000's round figure. The catalogue address stopped serving the catalogue by 2026-10-08 (it redirects to 84000.co/reading-room), so this count could not be repeated; it stands as read on 2026-10-01.",
+          "check": {
+            "status": "own_measurement",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "tibetan-scans",
+          "stage": "scanned",
+          "value": 231800,
+          "unit": "pages",
+          "what": "The Derge Kangyur and Tengyur are scanned in full at the Buddhist Digital Resource Center; we hold all 213 Tengyur volumes from those scans",
+          "source_title": "Canon gap map",
+          "body": "Source Library",
+          "year": 2026,
+          "url": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/scripts/catalog-coverage/results/canon-gap-map-2026-10.json",
+          "quote": null,
+          "kind": "ours",
+          "produced_by": "scripts/catalog-coverage/canon-gap-map.mjs (pairing)",
+          "caveat": "One edition (Derge). Other editions are also scanned. Checked 2026-10-08 against our holdings: 213 Tengyur volumes with 128,639 pages and 104 Kangyur books with 65,887 pages.",
+          "check": {
+            "status": "own_measurement",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "tibetan-84000-en",
+          "stage": "translated",
+          "value": 38504,
+          "unit": "pages",
+          "what": "Pages marked Published in 84000's catalogue: 37,586 Kangyur and 918 Tengyur",
+          "source_title": "84000 Reading Room catalogue",
+          "body": "84000; count by Source Library",
+          "year": 2026,
+          "url": "https://read.84000.co/section/lobby.json",
+          "quote": null,
+          "kind": "ours",
+          "produced_by": "scripts/catalog-coverage/canon-gap-map.mjs, run 2026-10-01",
+          "caveat": "84000 only. Other publishers have translated some of these texts, so this is a floor. The catalogue address stopped serving the catalogue by 2026-10-08 (it redirects to 84000.co/reading-room), so this count could not be repeated; it stands as read on 2026-10-01.",
+          "check": {
+            "status": "own_measurement",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "tibetan-kf",
+          "stage": "translated",
+          "value": null,
+          "share": 0.05,
+          "unit": "share of the canon in any modern language, in 2009",
+          "what": "Where translation stood when 84000 was founded",
+          "source_title": "Translating the Words of the Buddha",
+          "body": "Khyentse Foundation",
+          "year": 2025,
+          "url": "https://khyentsefoundation.org/story/translating-the-words-of-the-buddha/",
+          "quote": "At that time, less than 5 percent of the Tibetan Buddhist canon had been translated into any modern language.",
+          "kind": "institution",
+          "caveat": "",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "tibetan-bdrc",
+          "stage": "scanned",
+          "value": 28000000,
+          "unit": "pages",
+          "what": "Pages of Buddhist texts BDRC shares online, in all its languages",
+          "source_title": "About us",
+          "body": "Buddhist Digital Resource Center",
+          "year": null,
+          "url": "https://www.bdrc.io/about-us",
+          "quote": "The Buddhist Digital Resource Center shares over 28 million pages of Buddhist texts with the world, for free.",
+          "kind": "institution",
+          "caveat": "Not Tibetan only; BDRC also holds Sanskrit, Pali, Chinese, Khmer and other collections.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        }
+      ]
+    },
+    {
+      "id": "pali",
+      "language": "Pali",
+      "scope": "The canon with its commentaries and sub-commentaries",
+      "unit": "characters of typed text",
+      "bars": {
+        "estimated": {
+          "value": 62181487,
+          "label": "62 million characters",
+          "figure": "pali-vri"
+        },
+        "catalogued": {
+          "value": 62181487,
+          "label": "all of it",
+          "figure": "pali-vri"
+        },
+        "scanned": {
+          "value": 62181487,
+          "label": "all of it, typed in",
+          "figure": "pali-vri"
+        },
+        "translated": {
+          "value": 12233703,
+          "label": "about 12 million: half the canon, none of the commentaries",
+          "figure": "pali-sc"
+        }
+      },
+      "notes": [
+        "Typed text stands in for scans here: the whole canon was keyed in by the Vipassana Research Institute.",
+        "Print translations of some commentaries exist (Pali Text Society and others) and are not counted."
+      ],
+      "figures": [
+        {
+          "id": "pali-vri",
+          "stage": "estimated",
+          "value": 62181487,
+          "unit": "characters",
+          "what": "Chaṭṭha Saṅgāyana edition as typed by the Vipassana Research Institute: root texts 23,436,212, commentaries 28,281,229, sub-commentaries 10,464,046",
+          "source_title": "VRI Chaṭṭha Saṅgāyana tipitaka-xml",
+          "body": "Vipassana Research Institute; count by Source Library",
+          "year": 2026,
+          "url": "https://github.com/vipassanatech/tipitaka-xml",
+          "quote": null,
+          "kind": "ours",
+          "produced_by": "scripts/catalog-coverage/canon-gap-map.mjs, run 2026-10-01",
+          "caveat": "One edition of a closed canon. Later Pali literature outside it is not counted. File sizes re-read from the repository on 2026-10-08 match the 1 October run byte for byte.",
+          "check": {
+            "status": "own_measurement",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "pali-sc",
+          "stage": "translated",
+          "value": 12233703,
+          "share": 0.522,
+          "unit": "characters",
+          "what": "52.2% of the root texts, by size, have an English translation on SuttaCentral; SuttaCentral carries no commentaries",
+          "source_title": "SuttaCentral bilara-data",
+          "body": "SuttaCentral; count by Source Library",
+          "year": 2026,
+          "url": "https://github.com/suttacentral/bilara-data",
+          "quote": null,
+          "kind": "ours",
+          "produced_by": "scripts/catalog-coverage/canon-gap-map.mjs, run 2026-10-01",
+          "caveat": "One open catalogue. Print-only translations are not counted, so this is a floor. Recounted from the repository on 2026-10-08: 52.1%.",
+          "check": {
+            "status": "own_measurement",
+            "checked": "2026-10-08"
+          }
+        }
+      ]
+    },
+    {
+      "id": "arabic",
+      "language": "Arabic, Persian and Ottoman Turkish",
+      "scope": "Islamic manuscripts worldwide",
+      "unit": "manuscripts",
+      "bars": {
+        "estimated": {
+          "value": 3000000,
+          "label": "3 million",
+          "figure": "arabic-furqan"
+        },
+        "catalogued": {
+          "value": 640000,
+          "partial": true,
+          "label": "640,000 on Turkey's national platform alone",
+          "figure": "arabic-turkey"
+        },
+        "scanned": {
+          "value": 483000,
+          "partial": true,
+          "label": "483,000 with images, Turkey alone",
+          "figure": "arabic-turkey"
+        },
+        "translated": {
+          "missing": "No published figure for the share in English."
+        }
+      },
+      "notes": [
+        "We found no current worldwide count of catalogued or scanned manuscripts, so the two middle bars show the largest national programme we could source.",
+        "Iran's union catalogue (FANKHA) describes a further 320,000 manuscripts."
+      ],
+      "figures": [
+        {
+          "id": "arabic-furqan",
+          "stage": "estimated",
+          "value": 3000000,
+          "unit": "manuscripts",
+          "what": "Islamic manuscripts surviving worldwide, in all languages",
+          "source_title": "The digitisation of manuscripts",
+          "body": "Al-Furqan Islamic Heritage Foundation",
+          "year": null,
+          "url": "https://al-furqan.com/did-you-know/the-digitisation-of-manuscripts/",
+          "quote": "It is estimated that three million Islamic manuscripts survive today.",
+          "kind": "institution",
+          "caveat": "Undated. Other writers give up to 7 million.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "arabic-turkey",
+          "stage": "catalogued",
+          "value": 640000,
+          "unit": "works",
+          "what": "Records on the digital platform of Turkey's Manuscripts Institution (Türkiye Yazma Eserler Kurumu); about 483,000 manuscripts have images open to readers",
+          "source_title": "Rami Kütüphanesi sergisi açıldı: 784 bin eserlik dev arşiv",
+          "body": "Yeni Ankara, reporting the Ministry of Culture and Tourism",
+          "year": 2026,
+          "url": "https://www.yeniankara.com.tr/guncel/rami-kutuphanesi-sergisi-acildi-784-bin-eserlik-dev-arsiv-165014",
+          "quote": "Dijital platformda ise 640 bin eserin künyesi yer alırken, yaklaşık 483 bin",
+          "kind": "secondary",
+          "caveat": "News report of ministry figures. Turkey only; includes rare printed books.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "persian-fankha",
+          "stage": "catalogued",
+          "value": 320000,
+          "unit": "manuscripts",
+          "what": "Manuscripts described in FANKHA, the union catalogue of manuscripts in Iran, per its compiler Mostafa Derayati",
+          "source_title": "ماجراهای ۱۲ جلد «دنا» و ۴۵ جلد «فنخا»",
+          "body": "Khabar Online, interview with Mostafa Derayati",
+          "year": null,
+          "url": "https://www.khabaronline.ir/news/2007904/",
+          "quote": "فقط توانستم اطلاعات 320 هزار نسخه خطی را بگنجانم",
+          "kind": "secondary",
+          "caveat": "An interview. Iran only; all languages held there. He also reports data on over 180,000 Persian manuscripts in the Indian subcontinent.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hebrew",
+      "language": "Hebrew",
+      "scope": "Handwritten books (codices), not counting Genizah fragments",
+      "unit": "manuscripts",
+      "bars": {
+        "estimated": {
+          "value": 100000,
+          "low": 60000,
+          "high": 100000,
+          "label": "about 100,000 (an older estimate says 60,000)",
+          "figure": "hebrew-est"
+        },
+        "catalogued": {
+          "share": 0.95,
+          "share_of": "estimated",
+          "label": "close to 95% of known manuscripts, on microfilm at the National Library of Israel",
+          "figure": "hebrew-nli"
+        },
+        "scanned": {
+          "value": 95000,
+          "label": "nearly 95,000 with images online",
+          "figure": "hebrew-ktiv"
+        },
+        "translated": {
+          "missing": "No published figure for manuscripts. In Sefaria's library of typed Jewish texts, 91 million of 372 million words are translations."
+        }
+      },
+      "notes": [
+        "About 300,000 fragments from the Cairo Genizah survive as well; the Friedberg project has 739,868 images of them.",
+        "The three bars come from three different counts, so read them as roughly equal."
+      ],
+      "figures": [
+        {
+          "id": "hebrew-est",
+          "stage": "estimated",
+          "value": 100000,
+          "low": 60000,
+          "high": 100000,
+          "unit": "codices",
+          "what": "Handwritten Hebrew codices and their remains surviving today",
+          "source_title": "History of Information, entry 3788",
+          "body": "Jeremy Norman's History of Information, quoting the British Library",
+          "year": 2013,
+          "url": "https://www.historyofinformation.com/detail.php?id=3788",
+          "quote": "About 100,000 handwritten Hebrew codices and their remains have survived to this day.",
+          "kind": "secondary",
+          "caveat": "A quoted passage on a reference site. The Encyclopaedia Judaica gives about 60,000 codices and 200,000 fragments.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "hebrew-ej",
+          "stage": "estimated",
+          "value": 60000,
+          "unit": "codices",
+          "what": "Hebrew manuscripts (codices) in existence, per the Encyclopaedia Judaica",
+          "source_title": "Hebrew Manuscripts",
+          "body": "Jewish Virtual Library, reproducing the Encyclopaedia Judaica",
+          "year": null,
+          "url": "https://www.jewishvirtuallibrary.org/hebrew-manuscripts",
+          "quote": "It has been estimated that there are about 60,000 manuscripts (codices) and about 200,000 fragments",
+          "kind": "secondary",
+          "caveat": "An older estimate.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "hebrew-nli",
+          "stage": "catalogued",
+          "value": null,
+          "share": 0.95,
+          "unit": "share of all known Hebrew manuscripts",
+          "what": "Microfilm copies gathered by the Institute of Microfilmed Hebrew Manuscripts at the National Library of Israel",
+          "source_title": "About the 'Ktiv' Project",
+          "body": "National Library of Israel (archived copy)",
+          "year": 2024,
+          "url": "https://web.archive.org/web/2024/https://www.nli.org.il/en/discover/manuscripts/hebrew-manuscripts/about",
+          "quote": "succeeded in collecting microfilm copies of close to 95% of all known Hebrew manuscripts worldwide",
+          "kind": "institution",
+          "caveat": "Read from the Internet Archive's copy, because the library's site refuses scripted requests. Filmed is taken here as catalogued.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "hebrew-ktiv",
+          "stage": "scanned",
+          "value": 95000,
+          "unit": "manuscripts",
+          "what": "Manuscripts with images in KTIV, the International Collection of Digitized Hebrew Manuscripts",
+          "source_title": "KTIV project entry",
+          "body": "Digital Humanities Jewish directory",
+          "year": null,
+          "url": "https://dhjewish.org/node/154",
+          "quote": "With more than 1.2 million digitized images of nearly 95,000 manuscripts",
+          "kind": "secondary",
+          "caveat": "A directory description, undated. Many images are scans of microfilm.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "hebrew-genizah",
+          "stage": "scanned",
+          "value": 739868,
+          "unit": "images",
+          "what": "Images of Cairo Genizah fragments in the Friedberg Genizah Project database",
+          "source_title": "Friedberg Genizah Project",
+          "body": "Princeton University Library",
+          "year": null,
+          "url": "https://dpul.princeton.edu/cairo_geniza/about/friedberg-genizah-project",
+          "quote": "a database containing 739,868 digital images of geniza fragments from sixty libraries",
+          "kind": "institution",
+          "caveat": "Images, not fragments.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "hebrew-sefaria",
+          "stage": "translated",
+          "value": 91000000,
+          "unit": "words",
+          "what": "Words in translation, of 372 million words in Sefaria's library",
+          "source_title": "Sefaria Impact Report 2024",
+          "body": "Sefaria",
+          "year": 2024,
+          "url": "https://www.sefaria.org/static/files/Sefaria_Impact_Report_2024.pdf",
+          "quote": "Words in Translation",
+          "kind": "institution",
+          "caveat": "Typed texts in a curated library, in several languages; not a share of all Hebrew literature.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        }
+      ]
+    },
+    {
+      "id": "syriac",
+      "language": "Syriac",
+      "scope": "Manuscripts",
+      "unit": "manuscripts",
+      "bars": {
+        "estimated": {
+          "value": 10000,
+          "label": "perhaps 10,000",
+          "figure": "syriac-gedsh"
+        },
+        "catalogued": {
+          "missing": "No published figure. There is no worldwide union catalogue."
+        },
+        "scanned": {
+          "missing": "No published figure for Syriac alone."
+        },
+        "translated": {
+          "missing": "No published figure for the share in English."
+        }
+      },
+      "notes": [
+        "Typed Syriac text is small so far: the Simtho corpus holds about 6.5 million words."
+      ],
+      "figures": [
+        {
+          "id": "syriac-gedsh",
+          "stage": "estimated",
+          "value": 10000,
+          "unit": "manuscripts",
+          "what": "Syriac manuscripts surviving today",
+          "source_title": "Manuscripts",
+          "body": "Gorgias Encyclopedic Dictionary of the Syriac Heritage (Beth Mardutho)",
+          "year": 2011,
+          "url": "https://gedsh.bethmardutho.org/Manuscripts",
+          "quote": "A body of perhaps ten thousand Syriac mss. survives today.",
+          "kind": "peer-reviewed",
+          "caveat": "An encyclopedia entry's round figure.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "syriac-simtho",
+          "stage": "scanned",
+          "value": 6500000,
+          "unit": "words",
+          "what": "Typed Syriac text in the Simtho corpus",
+          "source_title": "Simtho: The Syriac Thesaurus",
+          "body": "Beth Mardutho",
+          "year": 2019,
+          "url": "https://bethmardutho.org/simtho",
+          "quote": "consists of 7.3 million tokens (ca. 6.5 million words)",
+          "kind": "institution",
+          "caveat": "Typed text, not page images.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        }
+      ]
+    }
+  ],
+  "validated": "2026-10-08: own counts recounted from their sources; see each caveat."
+}

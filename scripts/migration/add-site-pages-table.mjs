@@ -3,7 +3,10 @@
  * Apply add-site-pages-table.sql (#1180). Idempotent: CREATE IF NOT EXISTS /
  * CREATE OR REPLACE throughout, so re-running is safe.
  *
- *   node --env-file=.env.production.local scripts/migration/add-site-pages-table.mjs
+ *   node --env-file=.env.production.local scripts/migration/add-site-pages-table.mjs [file.sql]
+ *
+ * With a file name (beside this script) it applies that migration instead,
+ * e.g. add-site-pages-names.sql (#5945), which is additive and idempotent too.
  *
  * Env: SUPABASE_DB_URL (the direct-postgres URL — the service-role key cannot run DDL).
  */
@@ -22,9 +25,10 @@ if (!SUPABASE_DB_URL) {
 const client = new pg.Client({ connectionString: SUPABASE_DB_URL });
 await client.connect();
 try {
-  await client.query(fs.readFileSync(path.join(HERE, 'add-site-pages-table.sql'), 'utf8'));
+  const file = path.basename(process.argv[2] || 'add-site-pages-table.sql');
+  await client.query(fs.readFileSync(path.join(HERE, file), 'utf8'));
   const { rows: [{ n }] } = await client.query('SELECT count(*)::int AS n FROM site_pages');
-  console.log(`site_pages ready (${n} rows); match_site_pages installed`);
+  console.log(`${file} applied; site_pages holds ${n} rows`);
 } finally {
   await client.end();
 }

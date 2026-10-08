@@ -2,6 +2,7 @@
 // `src/lib/i18n.ts` about why server code (this catalogue may be read from
 // `layout.tsx`'s generateMetadata) must not import `@/lib/i18n` itself.
 import type { Locale } from '@/lib/locale-path';
+import type { WarningKind } from '@/lib/book-warnings';
 
 /**
  * Chrome strings for the redesigned reader (`reader-v2`, currently
@@ -334,6 +335,12 @@ export interface ReaderStrings {
      *  translation too) is the corpus editors' scholarly work, not AI's. */
     corpusNoScan: (witnessCount: number) => string;
     corpusTranscript: (name: string, org?: string) => string;
+    /** Syriac pages read by a specialist Kraken model (#4883), by route: Sophro Mhiro for
+     *  manuscripts, omnisyr for print. Replaces transcribedBy + machineNotice on those pages. */
+    krakenTranscript: (route: 'manuscript' | 'print') => string;
+    krakenNotice: (route: 'manuscript' | 'print') => string;
+    /** Label for the link under krakenNotice to the by-eye check it cites (KRAKEN_EVIDENCE_URL). */
+    krakenEvidenceLink: string;
     /** Text taken from the Internet Archive's own OCR of the scan (ocr.source === 'ia_djvu'). */
     iaTranscript: (engine: string | null, year: string | null, agreement: number | null) => string;
     /** Written or corrected by a person; `model` is the display name of what they started from, if known. */
@@ -355,6 +362,19 @@ export interface ReaderStrings {
     textSourceTranscript: (name: string, license: string, version: string | null) => string;
     /** Translation pane line and drawer line for an unreviewed machine translation (#5571). */
     machineDraftNotice: string;
+    /**
+     * Quality warnings from stored checks (#6199). Voice: .claude/docs/quality-statements.md — what was found, by
+     * whom, when; no softening, no verdict adjectives. Each `qualityKinds` value is a clause that follows "found that".
+     */
+    qualityKinds: Record<WarningKind, string>;
+    /** Joins the clauses of one page: at most two are named, `more` says others were found. */
+    qualityFindings: (clauses: string[], more: boolean) => string;
+    qualityPageReview: (o: { ai: boolean; image: boolean; findings: string; date: string }) => string;
+    qualityPageDetector: (date: string) => string;
+    /** `serious` is null when the check kept no per-page record. */
+    qualityBook: (o: { ai: boolean; image: boolean; read: number; serious: number | null; date: string }) => string;
+    qualitySeeReview: string;
+    qualityDetectorLink: string;
     licenceLink: string;
     sourceLink: string;
     corpusTranslation: (name: string) => string;
@@ -832,6 +852,16 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         ? `None — this is a digital text edition. The composition survives on ${witnessCount} clay tablet${witnessCount === 1 ? '' : 's'} catalogued at CDLI.`
         : 'None — this is a digital text edition; no page images exist.',
       corpusTranscript: (name, org) => `Composite transliteration from the ${name}${org ? ` (${org})` : ''}`,
+      krakenTranscript: (route) => route === 'print'
+        ? 'Read from the scan by omnisyr, a model trained on printed Syriac.'
+        : 'Read from the scan by Sophro Mhiro (Beth Mardutho), a model trained on Syriac manuscripts.',
+      krakenNotice: (route) =>
+        'Machine transcription, not checked by a person. ' +
+        (route === 'print'
+          ? 'We read five printed pages against their scans (September 2026): the words were right on all five, and on two of them lines from separate columns ran together.'
+          : 'We read five manuscript pages against their scans (September 2026): three were read correctly, and two damaged pages came out as fragments.') +
+        ' Check the scan wherever a reading matters.',
+      krakenEvidenceLink: 'How we checked',
       iaTranscript: (engine, year, agreement) =>
         `Read from the scan by the Internet Archive's OCR${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
         (agreement != null ? `, taken because it agrees with our own reading of this book's sample pages (${Math.round(agreement * 100)}% of words)` : ''),
@@ -845,6 +875,34 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `Text: ${shortName}, ${license}`,
       textSourceTranscript: (name, license, version) => `Text: ${name}${version ? ` (${version})` : ''}, ${license}`,
       machineDraftNotice: 'AI translation, not yet reviewed by a scholar.',
+      qualityKinds: {
+        wrong_page: 'the scan and the text are from different pages',
+        english_other_page: 'the English belongs to a different page',
+        invented_transcription: 'the transcription has text that is not on the page',
+        model_notes: 'the model’s own notes stand where the text should be',
+        garble_translated: 'the English translates a garbled transcription as if it were sound',
+        meaning_reversed: 'the English reverses a statement or drops a qualifier',
+        misread_meaning: 'a misread word changes the meaning',
+        unsupported_notes: 'the notes state things the page does not say',
+        missing_transcription: 'part of the page is missing from the transcription',
+        missing_english: 'part of the page is missing from the English',
+        number_misread: 'a number, date or quantity is misread',
+        repeated_text: 'a passage is repeated that appears once on the page',
+        serious_transcription: 'the transcription has a serious error',
+        serious_english: 'the English has a serious error',
+        serious_other: 'the page has a serious error',
+      },
+      qualityFindings: (clauses, more) => clauses.join(', and that ') + (more ? ', among other serious errors' : ''),
+      qualityPageReview: ({ ai, image, findings, date }) =>
+        `${ai ? 'An AI reviewer' : 'A reviewer'} reading this page ${image ? 'against the scan' : 'as text, without the scan,'} found that ${findings} (${date}).`,
+      qualityPageDetector: (date) => `Flagged by an automated check, not yet read by a person (${date}).`,
+      qualityBook: ({ ai, image, read, serious, date }) => {
+        const start = `A check by ${ai ? 'an AI reviewer' : 'a reviewer'} read ${read} ${read === 1 ? 'page' : 'pages'} of this book${image ? (read === 1 ? ' against the scan' : ' against the scans') : ''} on ${date}`;
+        if (serious === null) return `${start} and found serious errors.`;
+        return `${start} and found serious errors on ${read === 1 ? 'it' : `${serious} of them`}.`;
+      },
+      qualitySeeReview: 'See the review',
+      qualityDetectorLink: 'What the check looks for',
       licenceLink: 'licence',
       sourceLink: 'source',
       corpusTranslation: (name) => `Scholarly translation from the ${name} — not machine-made`,
@@ -1265,6 +1323,16 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         ? `Ninguno — es una edición digital de texto. La composición sobrevive en ${witnessCount} tablilla${witnessCount === 1 ? '' : 's'} de arcilla catalogada${witnessCount === 1 ? '' : 's'} en CDLI.`
         : 'Ninguno — es una edición digital de texto; no existen imágenes de página.',
       corpusTranscript: (name, org) => `Transliteración compuesta procedente de ${name}${org ? ` (${org})` : ''}`,
+      krakenTranscript: (route) => route === 'print'
+        ? 'Leída del escaneo por omnisyr, un modelo entrenado con siríaco impreso.'
+        : 'Leída del escaneo por Sophro Mhiro (Beth Mardutho), un modelo entrenado con manuscritos siríacos.',
+      krakenNotice: (route) =>
+        'Transcripción automática, no revisada por una persona. ' +
+        (route === 'print'
+          ? 'Leímos cinco páginas impresas junto a sus escaneos (septiembre de 2026): las palabras eran correctas en las cinco, y en dos se mezclaron líneas de columnas distintas.'
+          : 'Leímos cinco páginas manuscritas junto a sus escaneos (septiembre de 2026): tres se leyeron bien, y dos páginas dañadas salieron en fragmentos.') +
+        ' Consulta el escaneo siempre que una lectura sea importante.',
+      krakenEvidenceLink: 'Cómo lo comprobamos',
       iaTranscript: (engine, year, agreement) =>
         `Leída del escaneo por el OCR del Internet Archive${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
         (agreement != null ? `, aceptada porque coincide con nuestra propia lectura de las páginas de muestra de este libro (${Math.round(agreement * 100)}% de las palabras)` : ''),
@@ -1278,6 +1346,34 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `Texto: ${shortName}, ${license === 'public domain' ? 'dominio público' : license}`,
       textSourceTranscript: (name, license, version) => `Texto: ${name}${version ? ` (${version})` : ''}, ${license === 'public domain' ? 'dominio público' : license}`,
       machineDraftNotice: 'Traducción por IA, aún no revisada por un especialista.',
+      qualityKinds: {
+        wrong_page: 'la imagen y el texto son de páginas distintas',
+        english_other_page: 'la traducción corresponde a otra página',
+        invented_transcription: 'la transcripción contiene texto que no está en la página',
+        model_notes: 'las notas del propio modelo ocupan el lugar del texto',
+        garble_translated: 'la traducción da por bueno un pasaje mal transcrito',
+        meaning_reversed: 'la traducción invierte una afirmación u omite un matiz',
+        misread_meaning: 'una palabra mal leída cambia el sentido',
+        unsupported_notes: 'las notas afirman cosas que la página no dice',
+        missing_transcription: 'falta parte de la página en la transcripción',
+        missing_english: 'falta parte de la página en la traducción',
+        number_misread: 'un número, una fecha o una cantidad están mal leídos',
+        repeated_text: 'se repite un pasaje que aparece una sola vez en la página',
+        serious_transcription: 'la transcripción tiene un error grave',
+        serious_english: 'la traducción tiene un error grave',
+        serious_other: 'la página tiene un error grave',
+      },
+      qualityFindings: (clauses, more) => clauses.join(', y que ') + (more ? ', entre otros errores graves' : ''),
+      qualityPageReview: ({ ai, image, findings, date }) =>
+        `${ai ? 'Un revisor de IA' : 'Un revisor'}, al leer esta página ${image ? 'junto a la imagen' : 'solo como texto, sin la imagen'}, encontró que ${findings} (${date}).`,
+      qualityPageDetector: (date) => `Señalada por una comprobación automática; aún no la ha leído una persona (${date}).`,
+      qualityBook: ({ ai, image, read, serious, date }) => {
+        const start = `Una revisión hecha por ${ai ? 'un revisor de IA' : 'un revisor'} leyó ${read} ${read === 1 ? 'página' : 'páginas'} de este libro${image ? (read === 1 ? ' junto a la imagen' : ' junto a las imágenes') : ''} el ${date}`;
+        if (serious === null) return `${start} y encontró errores graves.`;
+        return `${start} y encontró errores graves en ${read === 1 ? 'ella' : `${serious} de ellas`}.`;
+      },
+      qualitySeeReview: 'Ver la revisión',
+      qualityDetectorLink: 'Qué busca la comprobación',
       licenceLink: 'licencia',
       sourceLink: 'fuente',
       corpusTranslation: (name) => `Traducción académica procedente de ${name} — no es obra de una máquina`,
@@ -1697,6 +1793,16 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         ? `Nulla: haec est editio textus digitalis. Opus in ${witnessCount} ${witnessCount === 1 ? 'tabula fictili' : 'tabulis fictilibus'} apud CDLI relatis servatur.`
         : 'Nulla: haec est editio textus digitalis; imagines paginarum nullae exstant.',
       corpusTranscript: (name, org) => `Transcriptio composita ex ${name}${org ? ` (${org})` : ''}`,
+      krakenTranscript: (route) => route === 'print'
+        ? 'Ex imagine lecta ab omnisyr, exemplari in libris Syriacis typis impressis exercitato.'
+        : 'Ex imagine lecta a Sophro Mhiro (Beth Mardutho), exemplari in codicibus Syriacis manu scriptis exercitato.',
+      krakenNotice: (route) =>
+        'Transcriptio machina facta, ab homine non recognita. ' +
+        (route === 'print'
+          ? 'Quinque paginas typis impressas cum imaginibus contulimus (mense Septembri 2026): verba in omnibus quinque recte lecta sunt, in duabus autem versus e columnis diversis confusi sunt.'
+          : 'Quinque paginas manu scriptas cum imaginibus contulimus (mense Septembri 2026): tres recte lectae sunt, duae laesae fragmentatim redditae sunt.') +
+        ' Imaginem inspice, ubicumque lectio alicuius momenti est.',
+      krakenEvidenceLink: 'Quomodo exploraverimus',
       iaTranscript: (engine, year, agreement) =>
         `Ex imagine lecta ab OCR Internet Archive${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
         (agreement != null ? `, recepta quia cum nostra lectione paginarum huius libri delectarum consentit (${Math.round(agreement * 100)}% verborum)` : ''),
@@ -1710,6 +1816,36 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `Textus: ${shortName}, ${license}`,
       textSourceTranscript: (name, license, version) => `Textus: ${name}${version ? ` (${version})` : ''}, ${license}`,
       machineDraftNotice: 'Conversio intellegentiae artificialis, a docto nondum recensita.',
+      // Latin has no neat "found that X, and that Y": each kind is a full
+      // clause and the sentence frames them after a colon.
+      qualityKinds: {
+        wrong_page: 'imago et textus ex diversis paginis sunt',
+        english_other_page: 'textus Anglicus ad aliam paginam pertinet',
+        invented_transcription: 'transcriptio verba habet quae in pagina non sunt',
+        model_notes: 'adnotationes ipsius machinae locum textus tenent',
+        garble_translated: 'textus Anglicus transcriptionem corruptam quasi sanam convertit',
+        meaning_reversed: 'textus Anglicus sententiam invertit vel exceptionem omittit',
+        misread_meaning: 'verbum perperam lectum sensum mutat',
+        unsupported_notes: 'adnotationes ea affirmant quae pagina non dicit',
+        missing_transcription: 'pars paginae in transcriptione deest',
+        missing_english: 'pars paginae in textu Anglico deest',
+        number_misread: 'numerus, dies vel quantitas perperam lecta est',
+        repeated_text: 'locus iteratur qui in pagina semel legitur',
+        serious_transcription: 'transcriptio mendum grave habet',
+        serious_english: 'textus Anglicus mendum grave habet',
+        serious_other: 'pagina mendum grave habet',
+      },
+      qualityFindings: (clauses, more) => clauses.join('; ') + (more ? '; praeterea alia menda gravia' : ''),
+      qualityPageReview: ({ ai, image, findings, date }) =>
+        `${ai ? 'Recensor artificialis' : 'Recensor'} hanc paginam ${image ? 'cum imagine collatam' : 'ut textum, sine imagine,'} legens haec invenit: ${findings} (${date}).`,
+      qualityPageDetector: (date) => `Probatione automataria notata, ab homine nondum lecta (${date}).`,
+      qualityBook: ({ ai, image, read, serious, date }) => {
+        const start = `${ai ? 'Recensor artificialis' : 'Recensor'} ${read} ${read === 1 ? 'paginam' : 'paginas'} huius libri ${image ? (read === 1 ? 'cum imagine collatam ' : 'cum imaginibus collatas ') : ''}legit (${date})`;
+        if (serious === null) return `${start} et menda gravia invenit.`;
+        return `${start} et menda gravia ${read === 1 ? 'in ea' : `in ${serious} earum`} invenit.`;
+      },
+      qualitySeeReview: 'Recensionem vide',
+      qualityDetectorLink: 'Quid probatio quaerat',
       licenceLink: 'licentia',
       sourceLink: 'fons',
       corpusTranslation: (name) => `Conversio docta ex ${name}; machina facta non est`,

@@ -7,6 +7,8 @@ build-ref-packet.py — $0. Blinded reference-judge packet for #6121 step 4.
 
   python3 scripts/eval/tengyur-levers/build-ref-packet.py
   python3 scripts/eval/tengyur-levers/build-ref-packet.py --round 2    # S, A, G38, G35, O → /root/tlev2/refjudge
+  python3 scripts/eval/tengyur-levers/build-ref-packet.py --round cli6182   # #6182 CLI arm: C38, G38, FP → /root/tlev3/refjudge
+                 (FP on these sides is round 1's A, as pareto-6182/PREREG.md names it; plants are FP beside FP)
 
 Items: 58 aligned sides × candidates {S, A, C, P} (order shuffled per item). Controls: PLANT 6 (A beside
 A with one planted reversal, #5829's planter run in node) and DUP 4 (S beside an identical S).
@@ -16,12 +18,17 @@ scripts/eval/results/tengyur-levers-6121/refjudge/key.json.
 import json, os, random, subprocess, sys
 
 W = "/root/tlev"
-R2 = "--round" in sys.argv and sys.argv[sys.argv.index("--round") + 1] == "2"
-ARMS = ["S", "A", "G38", "G35", "O"] if R2 else ["S", "A", "C", "P"]
-JW = "/root/tlev2/refjudge" if R2 else f"{W}/refjudge"
-OUT = "scripts/eval/results/tengyur-models-6121/refjudge" if R2 else "scripts/eval/results/tengyur-levers-6121/refjudge"
+ROUND = sys.argv[sys.argv.index("--round") + 1] if "--round" in sys.argv else "1"
+CLI = ROUND == "cli6182"  # #6182: gemini-3.8-flash through the Antigravity CLI (C38) beside the API's G38 and FP
+R2 = ROUND == "2" or CLI
+ARMS = ["FP", "C38", "G38"] if CLI else ["S", "A", "G38", "G35", "O"] if R2 else ["S", "A", "C", "P"]
+BASE = "FP" if CLI else "A"  # the planted twin
+FILE = {"FP": "A"}  # FP's text on the 58 sides is round 1's A
+JW = "/root/tlev3/refjudge" if CLI else "/root/tlev2/refjudge" if R2 else f"{W}/refjudge"
+OUT = ("scripts/eval/results/cli-arm-6182/refjudge" if CLI else "scripts/eval/results/tengyur-models-6121/refjudge" if R2
+       else "scripts/eval/results/tengyur-levers-6121/refjudge")
 os.makedirs(JW, exist_ok=True); os.makedirs(OUT, exist_ok=True)
-rng = random.Random(6121 + 4 + (20 if R2 else 0))
+rng = random.Random(6182 + 3 if CLI else 6121 + 4 + (20 if R2 else 0))
 read = lambda p: [json.loads(l) for l in open(p) if l.strip()]
 pages = {r["page_id"]: r for r in read(f"{W}/ref-pages.jsonl")}
 align = {}
@@ -33,8 +40,9 @@ for t in ("D3862", "D4231"):
         a["next_head"] = rows[i + 1]["ref_text"][:300] if i + 1 < len(rows) else ""
         align[a["page_id"]] = a
 arm = {"S": {k: v["en"] for k, v in pages.items()}}
-for a in ARMS[1:]:
-    arm[a] = {o["page_id"]: o["text"] for o in read(f"{W}/arms/{a}-ref.jsonl")}
+for a in ARMS:
+    if a != "S":
+        arm[a] = {o["page_id"]: o["text"] for o in read(f"{W}/arms/{FILE.get(a, a)}-ref.jsonl")}
 
 
 def item(pid, cands):
@@ -56,12 +64,12 @@ for pid in pages:
     items.append((it, {"kind": "ARMS", "page_id": pid, "toh": pages[pid]["text_toh"], "labels": lab}))
 ids = list(pages)
 ctrl = rng.sample(ids, 10)
-plant_js = "import { makePlanters } from './scripts/eval/tengyur-characterize/plants.mjs'; import { rng } from './scripts/eval/tengyur-characterize/common.mjs'; const p = makePlanters(rng(" + str(6145 if R2 else 6125) + ")); const t = JSON.parse(process.argv[1]); console.log(JSON.stringify(t.map((x) => p.plantReversal(x))));"
-planted = json.loads(subprocess.check_output(["node", "--input-type=module", "-e", plant_js, json.dumps([arm["A"][pid] for pid in ctrl[:6]])]))
+plant_js = "import { makePlanters } from './scripts/eval/tengyur-characterize/plants.mjs'; import { rng } from './scripts/eval/tengyur-characterize/common.mjs'; const p = makePlanters(rng(" + str(6183 if CLI else 6145 if R2 else 6125) + ")); const t = JSON.parse(process.argv[1]); console.log(JSON.stringify(t.map((x) => p.plantReversal(x))));"
+planted = json.loads(subprocess.check_output(["node", "--input-type=module", "-e", plant_js, json.dumps([arm[BASE][pid] for pid in ctrl[:6]])]))
 for pid, pl in zip(ctrl[:6], planted):
     if not pl:
         continue
-    it, lab = item(pid, {"A": arm["A"][pid], "A_PLANT": arm["A"][pid].replace(pl["old"], pl["new"], 1)})
+    it, lab = item(pid, {BASE: arm[BASE][pid], f"{BASE}_PLANT": arm[BASE][pid].replace(pl["old"], pl["new"], 1)})
     items.append((it, {"kind": "PLANT", "page_id": pid, "labels": lab, "plant": pl}))
 for pid in ctrl[6:]:
     it, lab = item(pid, {"S": arm["S"][pid], "S_DUP": arm["S"][pid]})
@@ -71,9 +79,9 @@ for i, (it, k) in enumerate(items):
     it["id"] = f"R{i + 1:03d}"
     key[it["id"]] = k
 json.dump(key, open(f"{OUT}/key.json", "w"), indent=1, ensure_ascii=False)
-parts = 10 if R2 else 8
+parts = 6 if CLI else 10 if R2 else 8
 for j in ("J1", "J2"):
-    order = items[:] if j == "J1" else random.Random(6121 + 5 + (20 if R2 else 0)).sample(items, len(items))
+    order = items[:] if j == "J1" else random.Random(6182 + 5 if CLI else 6121 + 5 + (20 if R2 else 0)).sample(items, len(items))
     for p in range(parts):
         with open(f"{JW}/in-{j}-{p + 1}.jsonl", "w") as f:
             for it, _ in order[p::parts]:

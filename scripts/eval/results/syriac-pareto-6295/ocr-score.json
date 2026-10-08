@@ -1,0 +1,2382 @@
+{
+ "issue": 6295,
+ "scorer": "syriac-cer/1",
+ "generated_by": "scripts/eval/syriac-pareto-6295/score-ocr.mjs",
+ "reference": "Digital Syriac Corpus (srophe/syriac-corpus, CC BY 4.0) TEI, window voted across arms (PREREGISTRATION-syriac-pareto-6295.md)",
+ "date": "2026-10-08",
+ "pages": [
+  {
+   "slug": "69920b97_271",
+   "book_id": "69920b97e0a548a13d8840d5",
+   "label": "New Testament, Pinkerton-Gwilliam 1905",
+   "tier": "same-edition",
+   "page_number": 271,
+   "edition": "New Testament, Pinkerton-Gwilliam 1905",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro",
+    "stored-gemini-flash"
+   ],
+   "reference": {
+    "dsc_text": "book:100+119+120+121+122+123+124+126+127+128+129+130+131+132+133+134+135+136+137+138+139+140+141+142+143+144+145",
+    "from_char": 677537,
+    "to_char": 679719,
+    "ref_chars": 1264,
+    "voters": [
+     "omnisyr",
+     "omnisyr-nosplit",
+     "qoruyo-eastern",
+     "qoruyo-estrangela",
+     "served-lane",
+     "sophro-mhiro"
+    ]
+   },
+   "scores": {
+    "omnisyr": {
+     "cer": 0.1139,
+     "cer_capped": 0.1139,
+     "hyp_chars": 1297,
+     "length_ratio": 1.026,
+     "fit_wer": 0.238,
+     "voted": true
+    },
+    "omnisyr-nosplit": {
+     "cer": 0.1139,
+     "cer_capped": 0.1139,
+     "hyp_chars": 1297,
+     "length_ratio": 1.026,
+     "fit_wer": 0.238,
+     "voted": true
+    },
+    "sophro-mhiro": {
+     "cer": 0.1139,
+     "cer_capped": 0.1139,
+     "hyp_chars": 1293,
+     "length_ratio": 1.023,
+     "fit_wer": 0.275,
+     "voted": true
+    },
+    "qoruyo-eastern": {
+     "cer": 0.129,
+     "cer_capped": 0.129,
+     "hyp_chars": 1299,
+     "length_ratio": 1.028,
+     "fit_wer": 0.307,
+     "voted": true
+    },
+    "qoruyo-estrangela": {
+     "cer": 0.1487,
+     "cer_capped": 0.1487,
+     "hyp_chars": 1278,
+     "length_ratio": 1.011,
+     "fit_wer": 0.346,
+     "voted": true
+    },
+    "served-lane": {
+     "cer": 0.1139,
+     "cer_capped": 0.1139,
+     "hyp_chars": 1297,
+     "length_ratio": 1.026,
+     "fit_wer": 0.238,
+     "voted": true
+    },
+    "stored-gemini-flash": {
+     "cer": 0.5103,
+     "cer_capped": 0.5103,
+     "hyp_chars": 1374,
+     "length_ratio": 1.087,
+     "fit_wer": 0.716,
+     "voted": false
+    },
+    "L-ocr-b": {
+     "cer": 0.6717,
+     "cer_capped": 0.6717,
+     "hyp_chars": 1013,
+     "length_ratio": 0.801,
+     "fit_wer": 0.963,
+     "voted": false
+    },
+    "L-ocr": {
+     "cer": 2.6796,
+     "cer_capped": 1,
+     "hyp_chars": 8174,
+     "length_ratio": 6.467,
+     "fit_wer": 0.995,
+     "voted": false
+    },
+    "mineru": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    }
+   }
+  },
+  {
+   "slug": "69a5ea9a_391",
+   "book_id": "69a5ea9a2c1720a023b0c9c0",
+   "label": "Narsai, Mingana 1905 (copy A)",
+   "tier": "same-edition",
+   "page_number": 391,
+   "edition": "Narsai, Mingana 1905",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro",
+    "stored-gemini-lite"
+   ],
+   "reference": {
+    "dsc_text": "book:27+28+29+34+36+38+39+40+41+42+46+49+50+51+52+53+58+61+62+64+65+66+68+69+71+73+75+76+79+81+85+86+87+88+89+90+91+92+93+96+97+99+101+105+106+107+108",
+    "from_char": 498351,
+    "to_char": 500349,
+    "ref_chars": 1184,
+    "voters": [
+     "omnisyr",
+     "omnisyr-nosplit",
+     "qoruyo-eastern",
+     "qoruyo-estrangela",
+     "served-lane",
+     "sophro-mhiro"
+    ]
+   },
+   "scores": {
+    "omnisyr": {
+     "cer": 0.0405,
+     "cer_capped": 0.0405,
+     "hyp_chars": 1161,
+     "length_ratio": 0.981,
+     "fit_wer": 0.074,
+     "voted": true
+    },
+    "omnisyr-nosplit": {
+     "cer": 0.0405,
+     "cer_capped": 0.0405,
+     "hyp_chars": 1161,
+     "length_ratio": 0.981,
+     "fit_wer": 0.074,
+     "voted": true
+    },
+    "sophro-mhiro": {
+     "cer": 0.0895,
+     "cer_capped": 0.0895,
+     "hyp_chars": 1165,
+     "length_ratio": 0.984,
+     "fit_wer": 0.298,
+     "voted": true
+    },
+    "qoruyo-eastern": {
+     "cer": 0.0448,
+     "cer_capped": 0.0448,
+     "hyp_chars": 1161,
+     "length_ratio": 0.981,
+     "fit_wer": 0.101,
+     "voted": true
+    },
+    "qoruyo-estrangela": {
+     "cer": 0.0414,
+     "cer_capped": 0.0414,
+     "hyp_chars": 1157,
+     "length_ratio": 0.977,
+     "fit_wer": 0.088,
+     "voted": true
+    },
+    "served-lane": {
+     "cer": 0.0405,
+     "cer_capped": 0.0405,
+     "hyp_chars": 1161,
+     "length_ratio": 0.981,
+     "fit_wer": 0.074,
+     "voted": true
+    },
+    "stored-gemini-lite": {
+     "cer": 0.6605,
+     "cer_capped": 0.6605,
+     "hyp_chars": 756,
+     "length_ratio": 0.639,
+     "fit_wer": 0.973,
+     "voted": false
+    },
+    "L-ocr-b": {
+     "cer": 0.5895,
+     "cer_capped": 0.5895,
+     "hyp_chars": 1194,
+     "length_ratio": 1.008,
+     "fit_wer": 0.957,
+     "voted": false
+    },
+    "L-ocr": {
+     "cer": 0.6807,
+     "cer_capped": 0.6807,
+     "hyp_chars": 851,
+     "length_ratio": 0.719,
+     "fit_wer": 0.964,
+     "voted": false
+    },
+    "mineru": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    }
+   }
+  },
+  {
+   "slug": "69943ce1_628",
+   "book_id": "69943ce1a668f66e6953cccb",
+   "label": "Narsai, Mingana 1905 (copy B)",
+   "tier": "same-edition",
+   "page_number": 628,
+   "edition": "Narsai, Mingana 1905",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro",
+    "stored-gemini-lite"
+   ],
+   "reference": {
+    "dsc_text": "book:27+28+29+34+36+38+39+40+41+42+46+49+50+51+52+53+58+61+62+64+65+66+68+69+71+73+75+76+79+81+85+86+87+88+89+90+91+92+93+96+97+99+101+105+106+107+108",
+    "from_char": 962753,
+    "to_char": 964839,
+    "ref_chars": 1211,
+    "voters": [
+     "omnisyr",
+     "omnisyr-nosplit",
+     "qoruyo-eastern",
+     "qoruyo-estrangela",
+     "served-lane",
+     "sophro-mhiro"
+    ]
+   },
+   "scores": {
+    "omnisyr": {
+     "cer": 0.0694,
+     "cer_capped": 0.0694,
+     "hyp_chars": 1204,
+     "length_ratio": 0.994,
+     "fit_wer": 0.191,
+     "voted": true
+    },
+    "omnisyr-nosplit": {
+     "cer": 0.0694,
+     "cer_capped": 0.0694,
+     "hyp_chars": 1204,
+     "length_ratio": 0.994,
+     "fit_wer": 0.191,
+     "voted": true
+    },
+    "sophro-mhiro": {
+     "cer": 0.0768,
+     "cer_capped": 0.0768,
+     "hyp_chars": 1187,
+     "length_ratio": 0.98,
+     "fit_wer": 0.244,
+     "voted": true
+    },
+    "qoruyo-eastern": {
+     "cer": 0.0776,
+     "cer_capped": 0.0776,
+     "hyp_chars": 1210,
+     "length_ratio": 0.999,
+     "fit_wer": 0.23,
+     "voted": true
+    },
+    "qoruyo-estrangela": {
+     "cer": 0.071,
+     "cer_capped": 0.071,
+     "hyp_chars": 1194,
+     "length_ratio": 0.986,
+     "fit_wer": 0.219,
+     "voted": true
+    },
+    "served-lane": {
+     "cer": 0.0694,
+     "cer_capped": 0.0694,
+     "hyp_chars": 1204,
+     "length_ratio": 0.994,
+     "fit_wer": 0.191,
+     "voted": true
+    },
+    "stored-gemini-lite": {
+     "cer": 2.5111,
+     "cer_capped": 1,
+     "hyp_chars": 8869,
+     "length_ratio": 7.324,
+     "fit_wer": 0.995,
+     "voted": false
+    },
+    "L-ocr-b": {
+     "cer": 2.4641,
+     "cer_capped": 1,
+     "hyp_chars": 15913,
+     "length_ratio": 13.14,
+     "fit_wer": 0.993,
+     "voted": false
+    },
+    "L-ocr": {
+     "cer": 0.5797,
+     "cer_capped": 0.5797,
+     "hyp_chars": 969,
+     "length_ratio": 0.8,
+     "fit_wer": 0.968,
+     "voted": false
+    },
+    "mineru": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    }
+   }
+  },
+  {
+   "slug": "69943f7b_732",
+   "book_id": "69943f7b338b1d7fd14de029",
+   "label": "Jacob of Sarug, Bedjan vol. 1 (copy A)",
+   "tier": "same-edition",
+   "page_number": 732,
+   "edition": "Jacob of Sarug, Bedjan vol. 1",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro",
+    "stored-gemini-lite"
+   ],
+   "reference": null,
+   "why": "no arm aligned with span word error < 0.5"
+  },
+  {
+   "slug": "69a5eaa3_611",
+   "book_id": "69a5eaa32c1720a023b0cb7e",
+   "label": "Jacob of Sarug, Bedjan vol. 1 (copy B)",
+   "tier": "same-edition",
+   "page_number": 611,
+   "edition": "Jacob of Sarug, Bedjan vol. 1",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro",
+    "stored-gemini-lite"
+   ],
+   "reference": {
+    "dsc_text": "book:70+340+341+342+343+344+345+346+347+348+349+350+351+352+353+354+355+356+357+358+359+360+361+362+363+364+365+366+367+368",
+    "from_char": 270122,
+    "to_char": 271179,
+    "ref_chars": 644,
+    "voters": [
+     "omnisyr",
+     "omnisyr-nosplit",
+     "qoruyo-eastern",
+     "qoruyo-estrangela",
+     "served-lane",
+     "sophro-mhiro"
+    ]
+   },
+   "scores": {
+    "omnisyr": {
+     "cer": 0.0792,
+     "cer_capped": 0.0792,
+     "hyp_chars": 651,
+     "length_ratio": 1.011,
+     "fit_wer": 0.143,
+     "voted": true
+    },
+    "omnisyr-nosplit": {
+     "cer": 0.0792,
+     "cer_capped": 0.0792,
+     "hyp_chars": 650,
+     "length_ratio": 1.009,
+     "fit_wer": 0.143,
+     "voted": true
+    },
+    "sophro-mhiro": {
+     "cer": 0.1925,
+     "cer_capped": 0.1925,
+     "hyp_chars": 693,
+     "length_ratio": 1.076,
+     "fit_wer": 0.355,
+     "voted": true
+    },
+    "qoruyo-eastern": {
+     "cer": 0.0792,
+     "cer_capped": 0.0792,
+     "hyp_chars": 650,
+     "length_ratio": 1.009,
+     "fit_wer": 0.143,
+     "voted": true
+    },
+    "qoruyo-estrangela": {
+     "cer": 0.0745,
+     "cer_capped": 0.0745,
+     "hyp_chars": 651,
+     "length_ratio": 1.011,
+     "fit_wer": 0.113,
+     "voted": true
+    },
+    "served-lane": {
+     "cer": 0.0792,
+     "cer_capped": 0.0792,
+     "hyp_chars": 651,
+     "length_ratio": 1.011,
+     "fit_wer": 0.143,
+     "voted": true
+    },
+    "stored-gemini-lite": {
+     "cer": 0.5311,
+     "cer_capped": 0.5311,
+     "hyp_chars": 548,
+     "length_ratio": 0.851,
+     "fit_wer": 0.95,
+     "voted": false
+    },
+    "L-ocr-b": {
+     "cer": 0.6242,
+     "cer_capped": 0.6242,
+     "hyp_chars": 513,
+     "length_ratio": 0.797,
+     "fit_wer": 0.955,
+     "voted": false
+    },
+    "L-ocr": {
+     "cer": 0.5714,
+     "cer_capped": 0.5714,
+     "hyp_chars": 600,
+     "length_ratio": 0.932,
+     "fit_wer": 0.94,
+     "voted": false
+    },
+    "mineru": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    }
+   }
+  },
+  {
+   "slug": "69943f85_836",
+   "book_id": "69943f85338b1d7fd14de391",
+   "label": "Jacob of Sarug, Bedjan vol. 2",
+   "tier": "same-edition",
+   "page_number": 836,
+   "edition": "Jacob of Sarug, Bedjan vol. 2",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro",
+    "stored-gemini-flash"
+   ],
+   "reference": null,
+   "why": "no arm aligned with span word error < 0.5"
+  },
+  {
+   "slug": "69943c78_154",
+   "book_id": "69943c7813c9a0dce2757b20",
+   "label": "Isaac of Nineveh, Bedjan 1909",
+   "tier": "same-edition",
+   "page_number": 154,
+   "edition": "Isaac of Nineveh, Bedjan 1909",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro",
+    "stored-gemini-flash"
+   ],
+   "reference": {
+    "dsc_text": "book:392+393+394+395+396+397+398+399+400+401+402+403+404+405+406+407+408+409+410+411+412+413+414+415+416+417+418+419+420+421+422+423+424+425+426+427+428+429+430+431+432+433+434+435+436+437+438+439+440+441+442+443+444+445+446+447+448+449+450+451+452+453+454+455+456+457+458+459+460+461+462+463+464+465+466+467+468+469+470+471+472+473",
+    "from_char": 179402,
+    "to_char": 180656,
+    "ref_chars": 774,
+    "voters": [
+     "omnisyr",
+     "omnisyr-nosplit",
+     "qoruyo-eastern",
+     "qoruyo-estrangela",
+     "served-lane",
+     "sophro-mhiro"
+    ]
+   },
+   "scores": {
+    "omnisyr": {
+     "cer": 0.0762,
+     "cer_capped": 0.0762,
+     "hyp_chars": 747,
+     "length_ratio": 0.965,
+     "fit_wer": 0.109,
+     "voted": true
+    },
+    "omnisyr-nosplit": {
+     "cer": 0.0762,
+     "cer_capped": 0.0762,
+     "hyp_chars": 747,
+     "length_ratio": 0.965,
+     "fit_wer": 0.109,
+     "voted": true
+    },
+    "sophro-mhiro": {
+     "cer": 0.1667,
+     "cer_capped": 0.1667,
+     "hyp_chars": 768,
+     "length_ratio": 0.992,
+     "fit_wer": 0.411,
+     "voted": true
+    },
+    "qoruyo-eastern": {
+     "cer": 0.0762,
+     "cer_capped": 0.0762,
+     "hyp_chars": 746,
+     "length_ratio": 0.964,
+     "fit_wer": 0.109,
+     "voted": true
+    },
+    "qoruyo-estrangela": {
+     "cer": 0.1111,
+     "cer_capped": 0.1111,
+     "hyp_chars": 757,
+     "length_ratio": 0.978,
+     "fit_wer": 0.246,
+     "voted": true
+    },
+    "served-lane": {
+     "cer": 0.0762,
+     "cer_capped": 0.0762,
+     "hyp_chars": 747,
+     "length_ratio": 0.965,
+     "fit_wer": 0.109,
+     "voted": true
+    },
+    "stored-gemini-flash": {
+     "cer": 0.4742,
+     "cer_capped": 0.4742,
+     "hyp_chars": 748,
+     "length_ratio": 0.966,
+     "fit_wer": 0.942,
+     "voted": false
+    },
+    "L-ocr-b": {
+     "cer": 0.6382,
+     "cer_capped": 0.6382,
+     "hyp_chars": 544,
+     "length_ratio": 0.703,
+     "fit_wer": 0.942,
+     "voted": false
+    },
+    "L-ocr": {
+     "cer": 0.7106,
+     "cer_capped": 0.7106,
+     "hyp_chars": 698,
+     "length_ratio": 0.902,
+     "fit_wer": 0.948,
+     "voted": false
+    },
+    "mineru": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    }
+   }
+  },
+  {
+   "slug": "69943c68_564",
+   "book_id": "69943c6813c9a0dce2757890",
+   "label": "Philoxenus, Budge 1894",
+   "tier": "same-edition",
+   "page_number": 564,
+   "edition": "Philoxenus, Budge 1894",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro",
+    "stored-gemini-flash"
+   ],
+   "reference": {
+    "dsc_text": "book:374+375+376+377+378+379+380+381+382+383+384+385+386",
+    "from_char": 665610,
+    "to_char": 666982,
+    "ref_chars": 993,
+    "voters": [
+     "omnisyr",
+     "omnisyr-nosplit",
+     "qoruyo-eastern",
+     "qoruyo-estrangela",
+     "served-lane",
+     "sophro-mhiro"
+    ]
+   },
+   "scores": {
+    "omnisyr": {
+     "cer": 0.0705,
+     "cer_capped": 0.0705,
+     "hyp_chars": 969,
+     "length_ratio": 0.976,
+     "fit_wer": 0.122,
+     "voted": true
+    },
+    "omnisyr-nosplit": {
+     "cer": 0.0705,
+     "cer_capped": 0.0705,
+     "hyp_chars": 969,
+     "length_ratio": 0.976,
+     "fit_wer": 0.122,
+     "voted": true
+    },
+    "sophro-mhiro": {
+     "cer": 0.0836,
+     "cer_capped": 0.0836,
+     "hyp_chars": 1006,
+     "length_ratio": 1.013,
+     "fit_wer": 0.102,
+     "voted": true
+    },
+    "qoruyo-eastern": {
+     "cer": 0.1259,
+     "cer_capped": 0.1259,
+     "hyp_chars": 963,
+     "length_ratio": 0.97,
+     "fit_wer": 0.348,
+     "voted": true
+    },
+    "qoruyo-estrangela": {
+     "cer": 0.0645,
+     "cer_capped": 0.0645,
+     "hyp_chars": 972,
+     "length_ratio": 0.979,
+     "fit_wer": 0.106,
+     "voted": true
+    },
+    "served-lane": {
+     "cer": 0.0705,
+     "cer_capped": 0.0705,
+     "hyp_chars": 969,
+     "length_ratio": 0.976,
+     "fit_wer": 0.122,
+     "voted": true
+    },
+    "stored-gemini-flash": {
+     "cer": 0.4894,
+     "cer_capped": 0.4894,
+     "hyp_chars": 946,
+     "length_ratio": 0.953,
+     "fit_wer": 0.941,
+     "voted": false
+    },
+    "L-ocr-b": {
+     "cer": 0.7482,
+     "cer_capped": 0.7482,
+     "hyp_chars": 966,
+     "length_ratio": 0.973,
+     "fit_wer": 0.933,
+     "voted": false
+    },
+    "L-ocr": {
+     "cer": 0.7543,
+     "cer_capped": 0.7543,
+     "hyp_chars": 984,
+     "length_ratio": 0.991,
+     "fit_wer": 0.96,
+     "voted": false
+    },
+    "mineru": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    }
+   }
+  },
+  {
+   "slug": "69a5eaa8_205",
+   "book_id": "69a5eaa82c1720a023b0ceeb",
+   "label": "Ephrem/Rabbula/Balai, Overbeck 1865",
+   "tier": "same-edition",
+   "page_number": 205,
+   "edition": "Ephrem/Rabbula/Balai, Overbeck 1865",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro",
+    "stored-gemini-flash"
+   ],
+   "reference": {
+    "dsc_text": "book:490+491+492+493+494+495+496+497+498+499+500+503+504+527",
+    "from_char": 98950,
+    "to_char": 100197,
+    "ref_chars": 919,
+    "voters": [
+     "omnisyr",
+     "omnisyr-nosplit",
+     "qoruyo-eastern",
+     "qoruyo-estrangela",
+     "served-lane",
+     "sophro-mhiro"
+    ]
+   },
+   "scores": {
+    "omnisyr": {
+     "cer": 0.062,
+     "cer_capped": 0.062,
+     "hyp_chars": 892,
+     "length_ratio": 0.971,
+     "fit_wer": 0.067,
+     "voted": true
+    },
+    "omnisyr-nosplit": {
+     "cer": 0.062,
+     "cer_capped": 0.062,
+     "hyp_chars": 892,
+     "length_ratio": 0.971,
+     "fit_wer": 0.067,
+     "voted": true
+    },
+    "sophro-mhiro": {
+     "cer": 0.0751,
+     "cer_capped": 0.0751,
+     "hyp_chars": 904,
+     "length_ratio": 0.984,
+     "fit_wer": 0.1,
+     "voted": true
+    },
+    "qoruyo-eastern": {
+     "cer": 0.1088,
+     "cer_capped": 0.1088,
+     "hyp_chars": 886,
+     "length_ratio": 0.964,
+     "fit_wer": 0.288,
+     "voted": true
+    },
+    "qoruyo-estrangela": {
+     "cer": 0.0653,
+     "cer_capped": 0.0653,
+     "hyp_chars": 894,
+     "length_ratio": 0.973,
+     "fit_wer": 0.073,
+     "voted": true
+    },
+    "served-lane": {
+     "cer": 0.062,
+     "cer_capped": 0.062,
+     "hyp_chars": 892,
+     "length_ratio": 0.971,
+     "fit_wer": 0.067,
+     "voted": true
+    },
+    "stored-gemini-flash": {
+     "cer": 0.3417,
+     "cer_capped": 0.3417,
+     "hyp_chars": 910,
+     "length_ratio": 0.99,
+     "fit_wer": 0.636,
+     "voted": false
+    },
+    "L-ocr-b": {
+     "cer": 0.6942,
+     "cer_capped": 0.6942,
+     "hyp_chars": 809,
+     "length_ratio": 0.88,
+     "fit_wer": 0.959,
+     "voted": false
+    },
+    "L-ocr": {
+     "cer": 0.7018,
+     "cer_capped": 0.7018,
+     "hyp_chars": 563,
+     "length_ratio": 0.613,
+     "fit_wer": 0.958,
+     "voted": false
+    },
+    "mineru": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    }
+   }
+  },
+  {
+   "slug": "69943c94_125",
+   "book_id": "69943c94a668f66e6953bc60",
+   "label": "Aphrahat, Parisot PS I.1 (copy A)",
+   "tier": "same-edition",
+   "page_number": 125,
+   "edition": "Aphrahat, Parisot PS I.1",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro",
+    "stored-gemini-flash"
+   ],
+   "reference": {
+    "dsc_text": "book:1+2+3+4+5+6+7+8+9+10+11+12+13+14+15+16+17+18+19+20+21+22+23+24",
+    "from_char": 19270,
+    "to_char": 20129,
+    "ref_chars": 788,
+    "voters": [
+     "omnisyr",
+     "omnisyr-nosplit",
+     "qoruyo-eastern",
+     "qoruyo-estrangela",
+     "served-lane"
+    ]
+   },
+   "scores": {
+    "omnisyr": {
+     "cer": 0.1218,
+     "cer_capped": 0.1218,
+     "hyp_chars": 825,
+     "length_ratio": 1.047,
+     "fit_wer": 0.175,
+     "voted": true
+    },
+    "omnisyr-nosplit": {
+     "cer": 0.2195,
+     "cer_capped": 0.2195,
+     "hyp_chars": 854,
+     "length_ratio": 1.084,
+     "fit_wer": 0.21,
+     "voted": true
+    },
+    "sophro-mhiro": {
+     "cer": 1.4289,
+     "cer_capped": 1,
+     "hyp_chars": 1885,
+     "length_ratio": 2.392,
+     "fit_wer": 0.656,
+     "voted": false
+    },
+    "qoruyo-eastern": {
+     "cer": 0.1079,
+     "cer_capped": 0.1079,
+     "hyp_chars": 784,
+     "length_ratio": 0.995,
+     "fit_wer": 0.125,
+     "voted": true
+    },
+    "qoruyo-estrangela": {
+     "cer": 0.1624,
+     "cer_capped": 0.1624,
+     "hyp_chars": 815,
+     "length_ratio": 1.034,
+     "fit_wer": 0.32,
+     "voted": true
+    },
+    "served-lane": {
+     "cer": 0.1218,
+     "cer_capped": 0.1218,
+     "hyp_chars": 825,
+     "length_ratio": 1.047,
+     "fit_wer": 0.175,
+     "voted": true
+    },
+    "stored-gemini-flash": {
+     "cer": 2.7195,
+     "cer_capped": 1,
+     "hyp_chars": 8855,
+     "length_ratio": 11.237,
+     "fit_wer": 0.965,
+     "voted": false
+    },
+    "L-ocr-b": {
+     "cer": 0.5419,
+     "cer_capped": 0.5419,
+     "hyp_chars": 630,
+     "length_ratio": 0.799,
+     "fit_wer": 0.757,
+     "voted": false
+    },
+    "L-ocr": {
+     "cer": 0.5457,
+     "cer_capped": 0.5457,
+     "hyp_chars": 776,
+     "length_ratio": 0.985,
+     "fit_wer": 0.763,
+     "voted": false
+    },
+    "mineru": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    }
+   }
+  },
+  {
+   "slug": "69a5f3e0_197",
+   "book_id": "69a5f3e01cf742c360413635",
+   "label": "Aphrahat, Parisot PS I.1 (copy B)",
+   "tier": "same-edition",
+   "page_number": 197,
+   "edition": "Aphrahat, Parisot PS I.1",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro",
+    "stored-gemini-lite"
+   ],
+   "reference": {
+    "dsc_text": "book:1+2+3+4+5+6+7+8+9+10+11+12+13+14+15+16+17+18+19+20+21+22+23+24",
+    "from_char": 74801,
+    "to_char": 75670,
+    "ref_chars": 793,
+    "voters": [
+     "omnisyr",
+     "served-lane"
+    ]
+   },
+   "scores": {
+    "omnisyr": {
+     "cer": 0.174,
+     "cer_capped": 0.174,
+     "hyp_chars": 794,
+     "length_ratio": 1.001,
+     "fit_wer": 0.483,
+     "voted": true
+    },
+    "omnisyr-nosplit": {
+     "cer": 0.1879,
+     "cer_capped": 0.1879,
+     "hyp_chars": 795,
+     "length_ratio": 1.003,
+     "fit_wer": 0.517,
+     "voted": false
+    },
+    "sophro-mhiro": {
+     "cer": 1.6356,
+     "cer_capped": 1,
+     "hyp_chars": 2043,
+     "length_ratio": 2.576,
+     "fit_wer": 0.705,
+     "voted": false
+    },
+    "qoruyo-eastern": {
+     "cer": 0.3178,
+     "cer_capped": 0.3178,
+     "hyp_chars": 903,
+     "length_ratio": 1.139,
+     "fit_wer": 0.656,
+     "voted": false
+    },
+    "qoruyo-estrangela": {
+     "cer": 0.3644,
+     "cer_capped": 0.3644,
+     "hyp_chars": 910,
+     "length_ratio": 1.148,
+     "fit_wer": 0.685,
+     "voted": false
+    },
+    "served-lane": {
+     "cer": 0.174,
+     "cer_capped": 0.174,
+     "hyp_chars": 794,
+     "length_ratio": 1.001,
+     "fit_wer": 0.483,
+     "voted": true
+    },
+    "stored-gemini-lite": {
+     "cer": 2.5334,
+     "cer_capped": 1,
+     "hyp_chars": 8938,
+     "length_ratio": 11.271,
+     "fit_wer": 0.983,
+     "voted": false
+    },
+    "L-ocr-b": {
+     "cer": 2.4842,
+     "cer_capped": 1,
+     "hyp_chars": 2464,
+     "length_ratio": 3.107,
+     "fit_wer": 0.987,
+     "voted": false
+    },
+    "L-ocr": {
+     "cer": 0.686,
+     "cer_capped": 0.686,
+     "hyp_chars": 670,
+     "length_ratio": 0.845,
+     "fit_wer": 0.957,
+     "voted": false
+    },
+    "mineru": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    }
+   }
+  },
+  {
+   "slug": "6994400f_296",
+   "book_id": "6994400f06e186ed6c012a44",
+   "label": "Patrologia Syriaca I.2 (copy A)",
+   "tier": "same-edition",
+   "page_number": 296,
+   "edition": "Patrologia Syriaca I.2",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro",
+    "stored-gemini-lite"
+   ],
+   "reference": {
+    "dsc_text": "book:1+2+3+4+5+6+7+8+9+10+11+12+13+14+15+16+17+18+19+20+21+22+23+24+186",
+    "from_char": 473548,
+    "to_char": 474525,
+    "ref_chars": 849,
+    "voters": [
+     "omnisyr",
+     "omnisyr-nosplit",
+     "served-lane"
+    ]
+   },
+   "scores": {
+    "omnisyr": {
+     "cer": 0.1673,
+     "cer_capped": 0.1673,
+     "hyp_chars": 852,
+     "length_ratio": 1.004,
+     "fit_wer": 0.408,
+     "voted": true
+    },
+    "omnisyr-nosplit": {
+     "cer": 0.1614,
+     "cer_capped": 0.1614,
+     "hyp_chars": 855,
+     "length_ratio": 1.007,
+     "fit_wer": 0.375,
+     "voted": true
+    },
+    "sophro-mhiro": {
+     "cer": 1.4335,
+     "cer_capped": 1,
+     "hyp_chars": 1999,
+     "length_ratio": 2.355,
+     "fit_wer": 0.678,
+     "voted": false
+    },
+    "qoruyo-eastern": {
+     "cer": 0.2862,
+     "cer_capped": 0.2862,
+     "hyp_chars": 928,
+     "length_ratio": 1.093,
+     "fit_wer": 0.555,
+     "voted": false
+    },
+    "qoruyo-estrangela": {
+     "cer": 0.3263,
+     "cer_capped": 0.3263,
+     "hyp_chars": 919,
+     "length_ratio": 1.082,
+     "fit_wer": 0.683,
+     "voted": false
+    },
+    "served-lane": {
+     "cer": 0.1673,
+     "cer_capped": 0.1673,
+     "hyp_chars": 852,
+     "length_ratio": 1.004,
+     "fit_wer": 0.408,
+     "voted": true
+    },
+    "stored-gemini-lite": {
+     "cer": 2.6066,
+     "cer_capped": 1,
+     "hyp_chars": 10083,
+     "length_ratio": 11.876,
+     "fit_wer": 0.986,
+     "voted": false
+    },
+    "L-ocr-b": {
+     "cer": 0.9658,
+     "cer_capped": 0.9658,
+     "hyp_chars": 1203,
+     "length_ratio": 1.417,
+     "fit_wer": 0.991,
+     "voted": false
+    },
+    "L-ocr": {
+     "cer": 0.8092,
+     "cer_capped": 0.8092,
+     "hyp_chars": 1018,
+     "length_ratio": 1.199,
+     "fit_wer": 0.989,
+     "voted": false
+    },
+    "mineru": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    }
+   }
+  },
+  {
+   "slug": "69a5f3f0_555",
+   "book_id": "69a5f3f01cf742c3604138c1",
+   "label": "Patrologia Syriaca I.2 (copy B)",
+   "tier": "same-edition",
+   "page_number": 555,
+   "edition": "Patrologia Syriaca I.2",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro",
+    "stored-gemini-lite"
+   ],
+   "reference": null,
+   "why": "no arm aligned with span word error < 0.5"
+  },
+  {
+   "slug": "69a5f02c_183",
+   "book_id": "69a5f02cb29703bc86eb4fd2",
+   "label": "Bar Hebraeus, Chronicon Ecclesiasticum vol. 1",
+   "tier": "same-edition",
+   "page_number": 183,
+   "edition": "Bar Hebraeus, Chronicon Ecclesiasticum vol. 1",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro",
+    "stored-gemini-lite"
+   ],
+   "reference": null,
+   "why": "no arm aligned with span word error < 0.5"
+  },
+  {
+   "slug": "69a5f031_235",
+   "book_id": "69a5f031b29703bc86eb50e9",
+   "label": "Bar Hebraeus, Chronicon Ecclesiasticum vol. 2",
+   "tier": "same-edition",
+   "page_number": 235,
+   "edition": "Bar Hebraeus, Chronicon Ecclesiasticum vol. 2",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro",
+    "stored-gemini-lite"
+   ],
+   "reference": {
+    "dsc_text": "book:373",
+    "from_char": 292677,
+    "to_char": 293515,
+    "ref_chars": 739,
+    "voters": [
+     "omnisyr",
+     "omnisyr-nosplit",
+     "qoruyo-eastern",
+     "served-lane"
+    ]
+   },
+   "scores": {
+    "omnisyr": {
+     "cer": 0.138,
+     "cer_capped": 0.138,
+     "hyp_chars": 736,
+     "length_ratio": 0.996,
+     "fit_wer": 0.451,
+     "voted": true
+    },
+    "omnisyr-nosplit": {
+     "cer": 0.138,
+     "cer_capped": 0.138,
+     "hyp_chars": 736,
+     "length_ratio": 0.996,
+     "fit_wer": 0.451,
+     "voted": true
+    },
+    "sophro-mhiro": {
+     "cer": 1.9256,
+     "cer_capped": 1,
+     "hyp_chars": 2093,
+     "length_ratio": 2.832,
+     "fit_wer": 0.787,
+     "voted": false
+    },
+    "qoruyo-eastern": {
+     "cer": 0.1962,
+     "cer_capped": 0.1962,
+     "hyp_chars": 766,
+     "length_ratio": 1.037,
+     "fit_wer": 0.485,
+     "voted": true
+    },
+    "qoruyo-estrangela": {
+     "cer": 0.2598,
+     "cer_capped": 0.2598,
+     "hyp_chars": 799,
+     "length_ratio": 1.081,
+     "fit_wer": 0.542,
+     "voted": false
+    },
+    "served-lane": {
+     "cer": 0.138,
+     "cer_capped": 0.138,
+     "hyp_chars": 736,
+     "length_ratio": 0.996,
+     "fit_wer": 0.451,
+     "voted": true
+    },
+    "stored-gemini-lite": {
+     "cer": 2.2355,
+     "cer_capped": 1,
+     "hyp_chars": 2121,
+     "length_ratio": 2.87,
+     "fit_wer": 0.994,
+     "voted": false
+    },
+    "L-ocr-b": {
+     "cer": 1.0677,
+     "cer_capped": 1,
+     "hyp_chars": 1125,
+     "length_ratio": 1.522,
+     "fit_wer": 0.994,
+     "voted": false
+    },
+    "L-ocr": {
+     "cer": 0.7199,
+     "cer_capped": 0.7199,
+     "hyp_chars": 719,
+     "length_ratio": 0.973,
+     "fit_wer": 0.949,
+     "voted": false
+    },
+    "mineru": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    }
+   }
+  },
+  {
+   "slug": "6aaafbb1_300",
+   "book_id": "6aaafbb15735c12a1ee4d40f",
+   "label": "Chronicle of Zuqnin pt 4, Chabot 1895",
+   "tier": "same-edition",
+   "page_number": 300,
+   "edition": "Chronicle of Zuqnin pt 4, Chabot 1895",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro"
+   ],
+   "reference": {
+    "dsc_text": "book:520",
+    "from_char": 270160,
+    "to_char": 271387,
+    "ref_chars": 1107,
+    "voters": [
+     "omnisyr",
+     "omnisyr-nosplit",
+     "qoruyo-eastern",
+     "qoruyo-estrangela",
+     "served-lane",
+     "sophro-mhiro"
+    ]
+   },
+   "scores": {
+    "omnisyr": {
+     "cer": 0.1075,
+     "cer_capped": 0.1075,
+     "hyp_chars": 1077,
+     "length_ratio": 0.973,
+     "fit_wer": 0.31,
+     "voted": true
+    },
+    "omnisyr-nosplit": {
+     "cer": 0.1075,
+     "cer_capped": 0.1075,
+     "hyp_chars": 1077,
+     "length_ratio": 0.973,
+     "fit_wer": 0.31,
+     "voted": true
+    },
+    "sophro-mhiro": {
+     "cer": 0.0894,
+     "cer_capped": 0.0894,
+     "hyp_chars": 1080,
+     "length_ratio": 0.976,
+     "fit_wer": 0.195,
+     "voted": true
+    },
+    "qoruyo-eastern": {
+     "cer": 0.1427,
+     "cer_capped": 0.1427,
+     "hyp_chars": 1071,
+     "length_ratio": 0.967,
+     "fit_wer": 0.437,
+     "voted": true
+    },
+    "qoruyo-estrangela": {
+     "cer": 0.1635,
+     "cer_capped": 0.1635,
+     "hyp_chars": 1054,
+     "length_ratio": 0.952,
+     "fit_wer": 0.487,
+     "voted": true
+    },
+    "served-lane": {
+     "cer": 0.1075,
+     "cer_capped": 0.1075,
+     "hyp_chars": 1077,
+     "length_ratio": 0.973,
+     "fit_wer": 0.31,
+     "voted": true
+    },
+    "L-ocr-b": {
+     "cer": 0.6649,
+     "cer_capped": 0.6649,
+     "hyp_chars": 1010,
+     "length_ratio": 0.912,
+     "fit_wer": 0.967,
+     "voted": false
+    },
+    "L-ocr": {
+     "cer": 0.6107,
+     "cer_capped": 0.6107,
+     "hyp_chars": 837,
+     "length_ratio": 0.756,
+     "fit_wer": 0.974,
+     "voted": false
+    },
+    "mineru": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    }
+   }
+  },
+  {
+   "slug": "6aaafba3_151",
+   "book_id": "6aaafba35735c12a1ee4cdde",
+   "label": "Joshua the Stylite, Wright 1882",
+   "tier": "same-edition",
+   "page_number": 151,
+   "edition": "Joshua the Stylite, Wright 1882",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro"
+   ],
+   "reference": {
+    "dsc_text": "book:485",
+    "from_char": 40472,
+    "to_char": 41613,
+    "ref_chars": 1018,
+    "voters": [
+     "omnisyr",
+     "omnisyr-nosplit",
+     "qoruyo-eastern",
+     "qoruyo-estrangela",
+     "served-lane",
+     "sophro-mhiro"
+    ]
+   },
+   "scores": {
+    "omnisyr": {
+     "cer": 0.164,
+     "cer_capped": 0.164,
+     "hyp_chars": 1017,
+     "length_ratio": 0.999,
+     "fit_wer": 0.258,
+     "voted": true
+    },
+    "omnisyr-nosplit": {
+     "cer": 0.164,
+     "cer_capped": 0.164,
+     "hyp_chars": 1017,
+     "length_ratio": 0.999,
+     "fit_wer": 0.258,
+     "voted": true
+    },
+    "sophro-mhiro": {
+     "cer": 0.1974,
+     "cer_capped": 0.1974,
+     "hyp_chars": 1069,
+     "length_ratio": 1.05,
+     "fit_wer": 0.393,
+     "voted": true
+    },
+    "qoruyo-eastern": {
+     "cer": 0.2259,
+     "cer_capped": 0.2259,
+     "hyp_chars": 1063,
+     "length_ratio": 1.044,
+     "fit_wer": 0.477,
+     "voted": true
+    },
+    "qoruyo-estrangela": {
+     "cer": 0.1994,
+     "cer_capped": 0.1994,
+     "hyp_chars": 998,
+     "length_ratio": 0.98,
+     "fit_wer": 0.359,
+     "voted": true
+    },
+    "served-lane": {
+     "cer": 0.164,
+     "cer_capped": 0.164,
+     "hyp_chars": 1017,
+     "length_ratio": 0.999,
+     "fit_wer": 0.258,
+     "voted": true
+    },
+    "L-ocr-b": {
+     "cer": 0.6346,
+     "cer_capped": 0.6346,
+     "hyp_chars": 885,
+     "length_ratio": 0.869,
+     "fit_wer": 0.943,
+     "voted": false
+    },
+    "L-ocr": {
+     "cer": 0.6316,
+     "cer_capped": 0.6316,
+     "hyp_chars": 782,
+     "length_ratio": 0.768,
+     "fit_wer": 0.942,
+     "voted": false
+    },
+    "mineru": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    }
+   }
+  },
+  {
+   "slug": "69a5eb6b_205",
+   "book_id": "69a5eb6baa8e0e409214781d",
+   "label": "Acta Martyrum II, Bedjan",
+   "tier": "same-edition",
+   "page_number": 205,
+   "edition": "Acta Martyrum II, Bedjan",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro",
+    "stored-gemini-flash"
+   ],
+   "reference": {
+    "dsc_text": "book:486+577",
+    "from_char": 87199,
+    "to_char": 88515,
+    "ref_chars": 831,
+    "voters": [
+     "omnisyr",
+     "omnisyr-nosplit",
+     "qoruyo-eastern",
+     "qoruyo-estrangela",
+     "served-lane"
+    ]
+   },
+   "scores": {
+    "omnisyr": {
+     "cer": 0.1889,
+     "cer_capped": 0.1889,
+     "hyp_chars": 823,
+     "length_ratio": 0.99,
+     "fit_wer": 0.277,
+     "voted": true
+    },
+    "omnisyr-nosplit": {
+     "cer": 0.1889,
+     "cer_capped": 0.1889,
+     "hyp_chars": 823,
+     "length_ratio": 0.99,
+     "fit_wer": 0.277,
+     "voted": true
+    },
+    "sophro-mhiro": {
+     "cer": 0.2671,
+     "cer_capped": 0.2671,
+     "hyp_chars": 853,
+     "length_ratio": 1.026,
+     "fit_wer": 0.583,
+     "voted": false
+    },
+    "qoruyo-eastern": {
+     "cer": 0.1853,
+     "cer_capped": 0.1853,
+     "hyp_chars": 824,
+     "length_ratio": 0.992,
+     "fit_wer": 0.252,
+     "voted": true
+    },
+    "qoruyo-estrangela": {
+     "cer": 0.2022,
+     "cer_capped": 0.2022,
+     "hyp_chars": 805,
+     "length_ratio": 0.969,
+     "fit_wer": 0.37,
+     "voted": true
+    },
+    "served-lane": {
+     "cer": 0.1889,
+     "cer_capped": 0.1889,
+     "hyp_chars": 823,
+     "length_ratio": 0.99,
+     "fit_wer": 0.277,
+     "voted": true
+    },
+    "stored-gemini-flash": {
+     "cer": 0.3574,
+     "cer_capped": 0.3574,
+     "hyp_chars": 884,
+     "length_ratio": 1.064,
+     "fit_wer": 0.565,
+     "voted": false
+    },
+    "L-ocr-b": {
+     "cer": 0.7172,
+     "cer_capped": 0.7172,
+     "hyp_chars": 450,
+     "length_ratio": 0.542,
+     "fit_wer": 0.958,
+     "voted": false
+    },
+    "L-ocr": {
+     "cer": 0.7028,
+     "cer_capped": 0.7028,
+     "hyp_chars": 584,
+     "length_ratio": 0.703,
+     "fit_wer": 0.989,
+     "voted": false
+    },
+    "mineru": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    }
+   }
+  },
+  {
+   "slug": "69a5e9f0_81",
+   "book_id": "69a5e9f0787d6e9b8d42e95b",
+   "label": "Book of the Laws of Countries, Nau 1899",
+   "tier": "other-edition",
+   "page_number": 81,
+   "edition": "Book of the Laws of Countries, Nau 1899",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro",
+    "stored-gemini-lite"
+   ],
+   "reference": {
+    "dsc_text": "book:186",
+    "from_char": 28505,
+    "to_char": 29698,
+    "ref_chars": 1038,
+    "voters": [
+     "omnisyr",
+     "omnisyr-nosplit",
+     "qoruyo-estrangela",
+     "served-lane",
+     "sophro-mhiro"
+    ]
+   },
+   "scores": {
+    "omnisyr": {
+     "cer": 0.1686,
+     "cer_capped": 0.1686,
+     "hyp_chars": 1022,
+     "length_ratio": 0.985,
+     "fit_wer": 0.473,
+     "voted": true
+    },
+    "omnisyr-nosplit": {
+     "cer": 0.1686,
+     "cer_capped": 0.1686,
+     "hyp_chars": 1022,
+     "length_ratio": 0.985,
+     "fit_wer": 0.473,
+     "voted": true
+    },
+    "sophro-mhiro": {
+     "cer": 0.0723,
+     "cer_capped": 0.0723,
+     "hyp_chars": 1010,
+     "length_ratio": 0.973,
+     "fit_wer": 0.153,
+     "voted": true
+    },
+    "qoruyo-eastern": {
+     "cer": 0.2399,
+     "cer_capped": 0.2399,
+     "hyp_chars": 912,
+     "length_ratio": 0.879,
+     "fit_wer": 0.612,
+     "voted": false
+    },
+    "qoruyo-estrangela": {
+     "cer": 0.0819,
+     "cer_capped": 0.0819,
+     "hyp_chars": 1000,
+     "length_ratio": 0.963,
+     "fit_wer": 0.211,
+     "voted": true
+    },
+    "served-lane": {
+     "cer": 0.1686,
+     "cer_capped": 0.1686,
+     "hyp_chars": 1022,
+     "length_ratio": 0.985,
+     "fit_wer": 0.473,
+     "voted": true
+    },
+    "stored-gemini-lite": {
+     "cer": 0.6089,
+     "cer_capped": 0.6089,
+     "hyp_chars": 899,
+     "length_ratio": 0.866,
+     "fit_wer": 0.953,
+     "voted": false
+    },
+    "L-ocr-b": {
+     "cer": 0.6329,
+     "cer_capped": 0.6329,
+     "hyp_chars": 915,
+     "length_ratio": 0.882,
+     "fit_wer": 0.943,
+     "voted": false
+    },
+    "L-ocr": {
+     "cer": 0.6387,
+     "cer_capped": 0.6387,
+     "hyp_chars": 789,
+     "length_ratio": 0.76,
+     "fit_wer": 0.934,
+     "voted": false
+    },
+    "mineru": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    }
+   }
+  },
+  {
+   "slug": "69a5eb4d_529",
+   "book_id": "69a5eb4daa8e0e4092146d10",
+   "label": "Acta Martyrum III (Acts of Thomas)",
+   "tier": "other-edition",
+   "page_number": 529,
+   "edition": "Acta Martyrum III (Acts of Thomas)",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro",
+    "stored-gemini-lite"
+   ],
+   "reference": {
+    "dsc_text": "book:332",
+    "from_char": 128859,
+    "to_char": 129775,
+    "ref_chars": 797,
+    "voters": [
+     "omnisyr",
+     "omnisyr-nosplit",
+     "qoruyo-eastern",
+     "qoruyo-estrangela",
+     "served-lane"
+    ]
+   },
+   "scores": {
+    "omnisyr": {
+     "cer": 0.2171,
+     "cer_capped": 0.2171,
+     "hyp_chars": 845,
+     "length_ratio": 1.06,
+     "fit_wer": 0.295,
+     "voted": true
+    },
+    "omnisyr-nosplit": {
+     "cer": 0.2171,
+     "cer_capped": 0.2171,
+     "hyp_chars": 845,
+     "length_ratio": 1.06,
+     "fit_wer": 0.295,
+     "voted": true
+    },
+    "sophro-mhiro": {
+     "cer": 0.3977,
+     "cer_capped": 0.3977,
+     "hyp_chars": 927,
+     "length_ratio": 1.163,
+     "fit_wer": 0.685,
+     "voted": false
+    },
+    "qoruyo-eastern": {
+     "cer": 0.2221,
+     "cer_capped": 0.2221,
+     "hyp_chars": 846,
+     "length_ratio": 1.061,
+     "fit_wer": 0.299,
+     "voted": true
+    },
+    "qoruyo-estrangela": {
+     "cer": 0.2233,
+     "cer_capped": 0.2233,
+     "hyp_chars": 847,
+     "length_ratio": 1.063,
+     "fit_wer": 0.287,
+     "voted": true
+    },
+    "served-lane": {
+     "cer": 0.2171,
+     "cer_capped": 0.2171,
+     "hyp_chars": 845,
+     "length_ratio": 1.06,
+     "fit_wer": 0.295,
+     "voted": true
+    },
+    "stored-gemini-lite": {
+     "cer": 2.5922,
+     "cer_capped": 1,
+     "hyp_chars": 16306,
+     "length_ratio": 20.459,
+     "fit_wer": 0.994,
+     "voted": false
+    },
+    "L-ocr-b": {
+     "cer": 0.7077,
+     "cer_capped": 0.7077,
+     "hyp_chars": 627,
+     "length_ratio": 0.787,
+     "fit_wer": 0.943,
+     "voted": false
+    },
+    "L-ocr": {
+     "cer": 0.7265,
+     "cer_capped": 0.7265,
+     "hyp_chars": 663,
+     "length_ratio": 0.832,
+     "fit_wer": 0.983,
+     "voted": false
+    },
+    "mineru": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    }
+   }
+  },
+  {
+   "slug": "69a5eb54_268",
+   "book_id": "69a5eb54aa8e0e4092146fcc",
+   "label": "Acta Martyrum IV (Life of Rabbula)",
+   "tier": "other-edition",
+   "page_number": 268,
+   "edition": "Acta Martyrum IV (Life of Rabbula)",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro",
+    "stored-gemini-flash"
+   ],
+   "reference": {
+    "dsc_text": "book:490",
+    "from_char": 7644,
+    "to_char": 8645,
+    "ref_chars": 895,
+    "voters": [
+     "omnisyr",
+     "omnisyr-nosplit",
+     "qoruyo-eastern",
+     "qoruyo-estrangela",
+     "served-lane",
+     "sophro-mhiro"
+    ]
+   },
+   "scores": {
+    "omnisyr": {
+     "cer": 0.0626,
+     "cer_capped": 0.0626,
+     "hyp_chars": 871,
+     "length_ratio": 0.973,
+     "fit_wer": 0.108,
+     "voted": true
+    },
+    "omnisyr-nosplit": {
+     "cer": 0.0626,
+     "cer_capped": 0.0626,
+     "hyp_chars": 871,
+     "length_ratio": 0.973,
+     "fit_wer": 0.108,
+     "voted": true
+    },
+    "sophro-mhiro": {
+     "cer": 0.124,
+     "cer_capped": 0.124,
+     "hyp_chars": 875,
+     "length_ratio": 0.978,
+     "fit_wer": 0.345,
+     "voted": true
+    },
+    "qoruyo-eastern": {
+     "cer": 0.0682,
+     "cer_capped": 0.0682,
+     "hyp_chars": 870,
+     "length_ratio": 0.972,
+     "fit_wer": 0.12,
+     "voted": true
+    },
+    "qoruyo-estrangela": {
+     "cer": 0.0782,
+     "cer_capped": 0.0782,
+     "hyp_chars": 865,
+     "length_ratio": 0.966,
+     "fit_wer": 0.162,
+     "voted": true
+    },
+    "served-lane": {
+     "cer": 0.0626,
+     "cer_capped": 0.0626,
+     "hyp_chars": 871,
+     "length_ratio": 0.973,
+     "fit_wer": 0.108,
+     "voted": true
+    },
+    "stored-gemini-flash": {
+     "cer": 0.2838,
+     "cer_capped": 0.2838,
+     "hyp_chars": 915,
+     "length_ratio": 1.022,
+     "fit_wer": 0.52,
+     "voted": false
+    },
+    "L-ocr-b": {
+     "cer": 2.5553,
+     "cer_capped": 1,
+     "hyp_chars": 9795,
+     "length_ratio": 10.944,
+     "fit_wer": 0.992,
+     "voted": false
+    },
+    "L-ocr": {
+     "cer": 0.6257,
+     "cer_capped": 0.6257,
+     "hyp_chars": 849,
+     "length_ratio": 0.949,
+     "fit_wer": 0.928,
+     "voted": false
+    },
+    "mineru": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    }
+   }
+  },
+  {
+   "slug": "69a5eb64_461",
+   "book_id": "69a5eb64aa8e0e4092147557",
+   "label": "Acta Martyrum VI (Julian Romance)",
+   "tier": "other-edition",
+   "page_number": 461,
+   "edition": "Acta Martyrum VI (Julian Romance)",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro",
+    "stored-gemini-flash"
+   ],
+   "reference": {
+    "dsc_text": "book:526",
+    "from_char": 19168,
+    "to_char": 20139,
+    "ref_chars": 903,
+    "voters": [
+     "omnisyr",
+     "omnisyr-nosplit",
+     "qoruyo-eastern",
+     "qoruyo-estrangela",
+     "served-lane",
+     "sophro-mhiro"
+    ]
+   },
+   "scores": {
+    "omnisyr": {
+     "cer": 0.1429,
+     "cer_capped": 0.1429,
+     "hyp_chars": 908,
+     "length_ratio": 1.006,
+     "fit_wer": 0.243,
+     "voted": true
+    },
+    "omnisyr-nosplit": {
+     "cer": 0.1429,
+     "cer_capped": 0.1429,
+     "hyp_chars": 908,
+     "length_ratio": 1.006,
+     "fit_wer": 0.243,
+     "voted": true
+    },
+    "sophro-mhiro": {
+     "cer": 0.1938,
+     "cer_capped": 0.1938,
+     "hyp_chars": 915,
+     "length_ratio": 1.013,
+     "fit_wer": 0.466,
+     "voted": true
+    },
+    "qoruyo-eastern": {
+     "cer": 0.1373,
+     "cer_capped": 0.1373,
+     "hyp_chars": 907,
+     "length_ratio": 1.004,
+     "fit_wer": 0.217,
+     "voted": true
+    },
+    "qoruyo-estrangela": {
+     "cer": 0.1329,
+     "cer_capped": 0.1329,
+     "hyp_chars": 905,
+     "length_ratio": 1.002,
+     "fit_wer": 0.205,
+     "voted": true
+    },
+    "served-lane": {
+     "cer": 0.1429,
+     "cer_capped": 0.1429,
+     "hyp_chars": 908,
+     "length_ratio": 1.006,
+     "fit_wer": 0.243,
+     "voted": true
+    },
+    "stored-gemini-flash": {
+     "cer": 0.3499,
+     "cer_capped": 0.3499,
+     "hyp_chars": 924,
+     "length_ratio": 1.023,
+     "fit_wer": 0.669,
+     "voted": false
+    },
+    "L-ocr-b": {
+     "cer": 0.6766,
+     "cer_capped": 0.6766,
+     "hyp_chars": 848,
+     "length_ratio": 0.939,
+     "fit_wer": 0.941,
+     "voted": false
+    },
+    "L-ocr": {
+     "cer": 0.6224,
+     "cer_capped": 0.6224,
+     "hyp_chars": 847,
+     "length_ratio": 0.938,
+     "fit_wer": 0.946,
+     "voted": false
+    },
+    "mineru": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    }
+   }
+  },
+  {
+   "slug": "69943c4f_169",
+   "book_id": "69943c4f13c9a0dce2757498",
+   "label": "Odes of Solomon, Harris-Mingana 1916",
+   "tier": "other-edition",
+   "page_number": 169,
+   "edition": "Odes of Solomon, Harris-Mingana 1916",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro",
+    "stored-gemini-lite"
+   ],
+   "reference": {
+    "dsc_text": "book:146+147+148+149+150+151+152+153+154+155+156+157+158+159+160+161+162+163+164+165+166+167+168+169+170+171+172+173+174+175+176+177+178+179+180+181+182+183+184+185",
+    "from_char": 28230,
+    "to_char": 29302,
+    "ref_chars": 567,
+    "voters": [
+     "omnisyr",
+     "omnisyr-nosplit",
+     "qoruyo-eastern",
+     "served-lane",
+     "sophro-mhiro"
+    ]
+   },
+   "scores": {
+    "omnisyr": {
+     "cer": 0.1711,
+     "cer_capped": 0.1711,
+     "hyp_chars": 504,
+     "length_ratio": 0.889,
+     "fit_wer": 0.242,
+     "voted": true
+    },
+    "omnisyr-nosplit": {
+     "cer": 0.1764,
+     "cer_capped": 0.1764,
+     "hyp_chars": 502,
+     "length_ratio": 0.885,
+     "fit_wer": 0.268,
+     "voted": true
+    },
+    "sophro-mhiro": {
+     "cer": 0.2116,
+     "cer_capped": 0.2116,
+     "hyp_chars": 549,
+     "length_ratio": 0.968,
+     "fit_wer": 0.413,
+     "voted": true
+    },
+    "qoruyo-eastern": {
+     "cer": 0.231,
+     "cer_capped": 0.231,
+     "hyp_chars": 527,
+     "length_ratio": 0.929,
+     "fit_wer": 0.402,
+     "voted": true
+    },
+    "qoruyo-estrangela": {
+     "cer": 0.2346,
+     "cer_capped": 0.2346,
+     "hyp_chars": 505,
+     "length_ratio": 0.891,
+     "fit_wer": 0.559,
+     "voted": false
+    },
+    "served-lane": {
+     "cer": 0.1711,
+     "cer_capped": 0.1711,
+     "hyp_chars": 504,
+     "length_ratio": 0.889,
+     "fit_wer": 0.242,
+     "voted": true
+    },
+    "stored-gemini-lite": {
+     "cer": 0.6138,
+     "cer_capped": 0.6138,
+     "hyp_chars": 438,
+     "length_ratio": 0.772,
+     "fit_wer": 0.941,
+     "voted": false
+    },
+    "L-ocr-b": {
+     "cer": 0.6296,
+     "cer_capped": 0.6296,
+     "hyp_chars": 531,
+     "length_ratio": 0.937,
+     "fit_wer": 0.957,
+     "voted": false
+    },
+    "L-ocr": {
+     "cer": 0.6261,
+     "cer_capped": 0.6261,
+     "hyp_chars": 469,
+     "length_ratio": 0.827,
+     "fit_wer": 0.957,
+     "voted": false
+    },
+    "mineru": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    }
+   }
+  },
+  {
+   "slug": "699443fa_308",
+   "book_id": "699443fa12a63b0c95d4d7dd",
+   "label": "Carmina Nisibena, Bickell 1866",
+   "tier": "other-edition",
+   "page_number": 308,
+   "edition": "Carmina Nisibena, Bickell 1866",
+   "arms_read": [
+    "L-ocr",
+    "L-ocr-b",
+    "mineru",
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-eastern",
+    "qoruyo-estrangela",
+    "served-lane",
+    "sophro-mhiro",
+    "stored-gemini-flash"
+   ],
+   "reference": {
+    "dsc_text": "book:259+260+261+262+263+264+265+266+267+268+269+270+271+272+273+274+275+276+277+278+279+280+281+282+283+284+285+286+287+288+289+290+291+292+293+294+295+296+297+298+299+300+301+302+303+304+305+306+307+308+309+310+311+312+313+314+315+316+317+318+319+320+321+322+323+324+325+326+327+328+329+330+331",
+    "from_char": 144497,
+    "to_char": 146089,
+    "ref_chars": 967,
+    "voters": [
+     "omnisyr",
+     "omnisyr-nosplit",
+     "served-lane"
+    ]
+   },
+   "scores": {
+    "omnisyr": {
+     "cer": 0.2141,
+     "cer_capped": 0.2141,
+     "hyp_chars": 1059,
+     "length_ratio": 1.095,
+     "fit_wer": 0.41,
+     "voted": true
+    },
+    "omnisyr-nosplit": {
+     "cer": 0.2141,
+     "cer_capped": 0.2141,
+     "hyp_chars": 1059,
+     "length_ratio": 1.095,
+     "fit_wer": 0.41,
+     "voted": true
+    },
+    "sophro-mhiro": {
+     "cer": 0.4747,
+     "cer_capped": 0.4747,
+     "hyp_chars": 1163,
+     "length_ratio": 1.203,
+     "fit_wer": 0.793,
+     "voted": false
+    },
+    "qoruyo-eastern": {
+     "cer": 0.2441,
+     "cer_capped": 0.2441,
+     "hyp_chars": 1051,
+     "length_ratio": 1.087,
+     "fit_wer": 0.56,
+     "voted": false
+    },
+    "qoruyo-estrangela": {
+     "cer": 0.2947,
+     "cer_capped": 0.2947,
+     "hyp_chars": 1035,
+     "length_ratio": 1.07,
+     "fit_wer": 0.682,
+     "voted": false
+    },
+    "served-lane": {
+     "cer": 0.2141,
+     "cer_capped": 0.2141,
+     "hyp_chars": 1059,
+     "length_ratio": 1.095,
+     "fit_wer": 0.41,
+     "voted": true
+    },
+    "stored-gemini-flash": {
+     "cer": 0.667,
+     "cer_capped": 0.667,
+     "hyp_chars": 1071,
+     "length_ratio": 1.108,
+     "fit_wer": 0.976,
+     "voted": false
+    },
+    "L-ocr-b": {
+     "cer": 0.7042,
+     "cer_capped": 0.7042,
+     "hyp_chars": 525,
+     "length_ratio": 0.543,
+     "fit_wer": 0.973,
+     "voted": false
+    },
+    "L-ocr": {
+     "cer": 0.698,
+     "cer_capped": 0.698,
+     "hyp_chars": 831,
+     "length_ratio": 0.859,
+     "fit_wer": 0.976,
+     "voted": false
+    },
+    "mineru": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    }
+   }
+  }
+ ]
+}

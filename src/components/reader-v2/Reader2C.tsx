@@ -47,10 +47,11 @@ import { usePairedEdition, PairedBadgeRow, PairedTranscriptionProse, PairedTrans
 import {
   CapsLabel, AiChip, CorpusChip, WitnessCaption, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS, SCAN_ZOOM_MAX,
   resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote, BAR_CONTROL, barControlStyle, useDialogFocus,
-  SURFACE, themeAttr, bookByline, TranscriptProvenanceChip, TextSourceLine, MachineDraftLine,
+  SURFACE, themeAttr, bookByline, TranscriptProvenanceChip, TextSourceLine, MachineDraftLine, QualityWarningLine,
 } from './ReaderV2Bits';
-import { pageTextCorpus, pageTextSource, translationCorpus, transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTranslation } from '@/lib/text-provenance';
+import { pageTextCorpus, pageTextSource, translationCorpus, transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTranslation, KRAKEN_EVIDENCE_URL } from '@/lib/text-provenance';
 import { isEnglishBook as isEnglishBookFn } from '@/lib/translation-pane-state';
+import type { QualityWarnings } from '@/lib/book-warnings';
 import type { CdliWitness } from '@/lib/types/book';
 import { translationVerdict, type TranslationStateSource } from '@/lib/translation-completeness';
 import { displayTranscription } from '@/lib/esukhia-apparatus';
@@ -167,6 +168,8 @@ interface Reader2CProps {
   initialBook: Book;
   initialPage: Page;
   initialPageList: Page[];
+  /** Warnings from stored quality checks of this book (#6199); the whole book's, so client page turns need no refetch. */
+  qualityWarnings?: QualityWarnings;
 }
 
 /** Desktop tool rail button (the rail is the desktop navigation). */
@@ -1581,6 +1584,9 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
         const trCorpus = translationCorpus(page);
         const prov = transcriptProvenance(page);
         const witnessCount = (book.cdli_witnesses || []).length;
+        // Syriac pages read by the Kraken lane (#4883) carry their own notice: the
+        // model's measured accuracy, not the generic machine-transcription line.
+        const krakenRoute = prov?.kind === 'kraken' ? prov.route : null;
         return (
         <>
           <CapsLabel className="block mt-5 mb-2" style={{ color: 'var(--text-muted)' }}>{t.howPageWasMade}</CapsLabel>
@@ -1622,7 +1628,16 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
             )}
           </dl>
           <p className="mt-2.5 font-sans text-[11.5px] leading-relaxed" style={{ color: 'var(--text-faint)' }}>
-            {trCorpus ? t.corpusNotice : ocrCorpus ? t.corpusAiNotice(ocrCorpus.name) : t.machineNotice}
+            {trCorpus ? t.corpusNotice : ocrCorpus ? t.corpusAiNotice(ocrCorpus.name) : krakenRoute ? t.krakenNotice(krakenRoute) : t.machineNotice}
+            {/* The notice cites a by-eye check; the reader can open it (#4883). */}
+            {!trCorpus && !ocrCorpus && krakenRoute && (
+              <>
+                {' '}
+                <a href={KRAKEN_EVIDENCE_URL} target="_blank" rel="noreferrer" className="underline" style={{ color: 'var(--accent-rust)' }}>
+                  {t.krakenEvidenceLink}
+                </a>
+              </>
+            )}
           </p>
         </>
         );
@@ -2483,7 +2498,7 @@ function PanelContent({
   );
 }
 
-export default function Reader2C({ initialBook, initialPage, initialPageList }: Reader2CProps) {
+export default function Reader2C({ initialBook, initialPage, initialPageList, qualityWarnings }: Reader2CProps) {
   const siteLocale = useLocale();
   // On the Latin site the Latin text is what the reader came for: open on the
   // scan and the transcription, with the English translation off until asked
@@ -3888,6 +3903,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 >
                   <div key={r.currentPageId} className="rv2-page-in">
                     {!paired && !showingSpanish && <MachineDraftLine page={displayPage} />}
+                    {!paired && !showingSpanish && <QualityWarningLine warnings={qualityWarnings} pageNumber={r.currentPage.page_number} bookPath={r.book.slug || r.book.id} />}
                     {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} page={r.currentPage} paired={!!paired} />}
                     {!paired && <ReadCautionNote page={r.currentPage} book={r.book} />}
                     {paired
@@ -4260,6 +4276,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   </p>
                 )}
                 {!paired && !showingSpanish && <MachineDraftLine page={displayPage} />}
+                    {!paired && !showingSpanish && <QualityWarningLine warnings={qualityWarnings} pageNumber={r.currentPage.page_number} bookPath={r.book.slug || r.book.id} />}
                 {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} page={r.currentPage} paired={!!paired} />}
                 {!paired && <ReadCautionNote page={r.currentPage} book={r.book} />}
                 {paired

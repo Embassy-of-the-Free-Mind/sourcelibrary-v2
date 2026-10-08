@@ -17,6 +17,7 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
 import { upgradeToFullRes, fetchPageMaster, dimensionFields } from '../lib/iiif-utils.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
+import { isPaused } from '../lib/pause.mjs';
 
 const MAX_PAGES = 10_000;
 // MAX_PAGES_PER_DOMAIN caps how many pages from a single source make it into one
@@ -243,6 +244,12 @@ async function main() {
 
   // Check processing_control pause
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
+  // The archive step pause (scripts/lib/pause.mjs, #5492) is absolute, like every step pause.
+  if (isPaused(control, 'archive')) {
+    console.log(`[archive-ocr] archive step paused. Exiting.`);
+    await client.close();
+    process.exit(0);
+  }
   if (!shouldBypassPause(control)) {
     console.log(`[archive-ocr] Pipeline paused. Exiting.`);
     await client.close();

@@ -203,6 +203,12 @@ async function searchConcept(args: Record<string, unknown>) {
   if (conceptDiversity) params.set('diversity', conceptDiversity);
   const conceptLang = langArg(args);
   if (conceptLang !== 'en') params.set('lang', conceptLang);
+  // EXPERIMENTAL (#6173): `lane: "concept"` reads the concept-abstract lane
+  // (1,216 books in stage 1) instead of the page vectors, so a Librarian or
+  // agent run can be judged against it. Deliberately NOT in the tool's input
+  // schema: a model reading the schema would reach for it on ordinary queries.
+  const conceptLane = args.lane === 'concept' && conceptLang === 'en';
+  if (conceptLane) params.set('lane', 'concept');
 
   const result = await apiGet('/search/semantic', params) as Record<string, unknown>;
   const passages = ((result.results as Array<Record<string, unknown>>)?.map((r) => ({
@@ -245,6 +251,7 @@ async function searchConcept(args: Record<string, unknown>) {
     ...(result.diversity && result.diversity !== 'off' ? {
       diversity_note: 'Passages are re-ordered for spread, not dropped: pass diversity "off" for the plain nearest-first order. This is a ranked sample, not a census of what the library holds on the topic.',
     } : {}),
+    ...(conceptLane ? { lane: 'concept', lane_note: 'Experimental concept lane (#6173): ranked by an abstract of each page\'s ideas, 1,216 books only. Snippets are the page text.' } : {}),
     passages,
     tip: 'language is the language of THIS EDITION\'s pages, which may itself be a translation — call get_book for work_language and text_role before citing a passage as an author\'s own wording. Each passage states its snippet_language: English translation text, except passages with snippet_type:"ocr", which are pages with no translation yet and carry their own original-language text (quote those in the original only; an English rendering would be yours, not the library\'s). Similarity calibration: 0.70+ strong match (quote with confidence); 0.55–0.70 worth reading but verify; below 0.55 mostly conceptual drift. Snippets tagged snippet_type:"summary" are AI continuity notes — paraphrase only, never quote. Always cite using short_url when presenting passages to users.',
   };
