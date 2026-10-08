@@ -64,7 +64,7 @@ export default function AdoptBookPanel({
           Adopt this book →
         </button>
         <p className="text-xs text-stone-500 mt-1">
-          Support its digitization and have your name credited here, forever — from {formatEuros(cfg.minCents)}.
+          Support its digitization and have your name credited here, forever, from {formatEuros(cfg.minCents)}.
         </p>
       </div>
     );
@@ -116,7 +116,7 @@ export default function AdoptBookPanel({
         disabled={loading || !valid}
         className="px-4 py-2 rounded text-sm border border-accent-gold text-accent-gold font-medium hover:bg-accent-gold/10 disabled:opacity-60"
       >
-        {loading ? 'Starting…' : `Continue${valid ? ` — ${formatEuros(finalCents)}` : ''} →`}
+        {loading ? 'Starting…' : `Continue${valid ? ` · ${formatEuros(finalCents)}` : ''} →`}
       </button>
       <p className="text-xs text-stone-500 mt-2">
         You&apos;ll be credited on this book&apos;s page, forever. Minimum {formatEuros(cfg.minCents)}.

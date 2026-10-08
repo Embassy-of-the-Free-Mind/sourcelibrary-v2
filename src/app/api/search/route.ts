@@ -8,9 +8,13 @@ import { expandNameQuery } from '@/lib/search/name-variants';
 import { CONTENT_LICENSE } from '@/lib/license-info';
 import { searchBookIds } from '@/lib/books-catalog';
 import { stemmedQueryRegex } from '@/lib/search/word-forms';
-import { semanticBookSearch, semanticPageSearchGlobal, lexicalPageSearchLang } from '@/lib/semantic-search';
+import { semanticBookSearch, lexicalPageSearchLang } from '@/lib/semantic-search';
+import { conceptPageSearch } from '@/lib/search/concept-search';
+import { defaultDiversity, diversify, parseDiversityParam } from '@/lib/search/diversity';
+import { loadBookFacets } from '@/lib/search/diversity-facets';
 import { rrfScores } from '@/lib/search/rrf';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { resolveSearchScope } from '@/lib/tenant-search-scope';
 import { withApiAuth } from '@/lib/api-auth';
 import { expandLanguages } from '@/lib/language-utils';
 import { logSearchQuery } from '@/lib/search-log';
@@ -19,6 +23,7 @@ import { logSearchEvent } from '@/lib/search-event-log';
 import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
 import { fetchWorkFanouts } from '@/lib/search/work-fanout';
 import { rollupTerms, countMatchingPagesByBook, bestPagePerBook, compareEvidence } from '@/lib/search/page-rollup';
+import { searchCanonTexts } from '@/lib/search/canon-texts';
 
 export const preferredRegion = 'fra1';
 
@@ -197,6 +202,17 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     const isPhrase = /^".*"$/.test(query.trim());
     const matchQuery = isPhrase ? query.trim().slice(1, -1) : query;
 
+    // Result diversity (#3514, #3895): `tradition`, `author` or `off`.
+    //  - The semantic page lane is spread by tradition unless the query is an
+    //    exact phrase, a known item (navigational/verbatim intent, a year) or
+    //    a search inside one book.
+    //  - The keyword lanes answer for the words typed, so the final list is
+    //    re-ordered only when a caller asks (`pages_only` passage search).
+    const diversityParam = parseDiversityParam(searchParams.get('diversity'));
+    const semanticDiversity = diversityParam
+      ?? defaultDiversity(matchQuery, { phrase: isPhrase, intent: llmIntent, bookScoped: !!bookId });
+    let untranslatedLane: string = 'off';
+
     // Resolve the ranking strategy for 'auto': prefer the LLM intent when the
     // client passed one (navigational → ladder, else → RRF); otherwise fall back
     // to query word count (1–2 words → ladder, 3+ → RRF) so 'auto' still works
@@ -221,6 +237,28 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     const { slug: tenantSlug, id: tenantId } = getTenantContextFromRequest(request.headers);
     if (tenantSlug && !tenantId) {
       return NextResponse.json({ results: [], total: 0 });
+    }
+    // The book set the vector lanes are confined to (#4330). They used to rank
+    // the whole library and rely on the Mongo materialization below to drop
+    // foreign books — pure, but a tenant got whatever of its shelf happened to
+    // sit in the global top-N, usually nothing.
+    const scope = await resolveSearchScope(request.headers);
+    if (scope.kind === 'closed') {
+      return NextResponse.json({ results: [], total: 0 });
+    }
+
+    // EXPERIMENTAL (#6173): `lane=concept` returns only the concept lane — pages
+    // ranked by the embedding of a model-written abstract of their ideas
+    // (`page_concepts`, 1,216 books in stage 1). It exists so the lane can be
+    // judged beside the page lane; no default search reads it, and none of the
+    // filters above apply. Snippets are the page's own text, never the abstract.
+    // Hidden and deleted books are dropped inside, as for the page lane.
+    if (searchParams.get('lane') === 'concept') {
+      const maxPerBook = parseInt(searchParams.get('max_per_book') || '0') || undefined;
+      const diversity = parseDiversityParam(searchParams.get('diversity')) ?? 'off';
+      const concept = await conceptPageSearch(query, Math.min(limit, 50), { scope, maxPerBook, diversity, abstractLane: true });
+      const results = concept.rows.map((p) => ({ ...p, url: `/book/${p.slug || p.book_id}?page=${p.page_number}` }));
+      return NextResponse.json({ lane: 'concept', experimental: true, query, total: results.length, diversity: concept.diversity, traditions: concept.traditions, results }, { headers: { 'Cache-Control': 'no-store' } });
     }
 
     // Helper: build common book-level filters (language, category, year, etc.)
@@ -298,6 +336,19 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // book id → pages of that book printing every query word. Filled by the
     // page lane's roll-up; read by the ladder as evidence (#5905).
     const matchPagesByBook = new Map<string, number>();
+
+    // Canon texts (#6145): the texts inside multi-text canon volumes (Derge Tengyur), matched on their
+    // catalogue entries (author, Sanskrit/Tibetan title, Tohoku number) and returned as the text's
+    // opening page. Not a passage, so not on the MCP passage contract (pages_only) or one book.
+    // Same book filters as the keyword lane, applied in the query. Started here so it runs beside
+    // the four lanes below rather than after them.
+    const canonPromise: Promise<SearchResult[]> = (!bookId && !pagesOnly && !isLocalizedSearch)
+      ? searchCanonTexts(db as any, matchQuery, buildBookFilters(), 5).catch((err) => {
+        console.warn('[search] Canon text lane failed:', err instanceof Error ? err.message : String(err));
+        degradedLanes.push('canon');
+        return [];
+      })
+      : Promise.resolve([]);
 
     const [bookResult, pageResult, semanticResult, semanticPageResult] = await Promise.all([
       // --- Book search via Supabase trigram (fast, no cold-start penalty) ---
@@ -561,8 +612,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         if (bookId || !searchContent) return [];
         try {
           const books = await semanticBookSearch(matchQuery, MAX_PAGE_RESULTS, {
+            scope,
             language: language || undefined,
-            tenantId: tenantId || undefined,
           });
           return books.filter(b => yearInRange(b.year)).map(b => ({
             page_id: '',
@@ -587,10 +638,15 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       timed(async () => {
         if (bookId || !searchContent) return [];
         try {
-          const pages = await semanticPageSearchGlobal(matchQuery, 15, {
-            tenantId: tenantId || undefined,
+          // Spread across traditions and works, with the original-text lane
+          // beside the English one when it is on (#3514, #5729).
+          const concept = await conceptPageSearch(matchQuery, 15, {
+            scope,
             textLang,
+            diversity: semanticDiversity,
           });
+          untranslatedLane = concept.lanes.untranslated;
+          const pages = concept.rows;
           if (pages.length === 0) return pages;
           // Drop semantic matches on non-content pages (cover/blank/illustration/etc.).
           // The Supabase embedding table has these — they pollute conceptual queries.
@@ -641,11 +697,13 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // skipped or abstained) the order is the lane's own.
     const pagesOf = (p: { book_id?: unknown }) => matchPagesByBook.get(p.book_id as string) ?? 0;
     const rrfPageDocs = [...pageDocs].sort((a, b) => pagesOf(b) - pagesOf(a));
+    const canonDocs = await canonPromise;
     const rrf = rrfScores([
       bookDocs.map(b => (b as any).id as string),                              // keyword book lane
       rrfPageDocs.map(p => `${p.book_id}-p${p.page_number}`),                     // keyword page lane
       semanticDocs.map(s => (s as any).book_id as string),                    // semantic book lane
       semanticPageDocs.map(s => `${(s as any).book_id}-p${(s as any).page_number}`), // semantic page lane
+      canonDocs.map(c => c.id),                                                // canon-text lane
     ], rrfK);
 
     // Process book results
@@ -768,9 +826,10 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       if (semanticBookIds.length > 0) {
         const semBooks = await db.collection('books')
           .find(
-            // match_books_semantic is GLOBAL (book_embeddings has no tenant
-            // or metadata predicate), so every book-level filter is applied
-            // here, with the object the keyword lanes use: tenant scope
+            // The lane above is confined to the tenant's book set (`scope`,
+            // #4330) but book_embeddings has no metadata predicate, so every
+            // book-level filter is applied here, with the object the keyword
+            // lanes use: tenant scope again as a second line of defence
             // (Tenant Subdomain Lockdown), the localized-edition counter,
             // language / languages / exclude_languages, and since #5921
             // category, has_doi, has_translation, first_translation, library.
@@ -877,7 +936,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           categories: book.categories,
           page_number: sp.page_number,
           snippet: sp.snippet,
-          snippet_type: 'translation' as const,
+          // An original-text row's snippet is the page's own language (#5729).
+          snippet_type: sp.snippet_type === 'ocr' ? 'ocr' as const : 'translation' as const,
           thumbnail: book.thumbnail,
           thumbnail_blob: book.thumbnail_blob,
         };
@@ -886,6 +946,14 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         (spResult as any)._match_pages = matchPagesByBook.get(sp.book_id);
         results.push(spResult);
       }
+    }
+
+    // Canon-text rows go in after every lane, and a lane that surfaced the same opening page as
+    // ordinary text loses it to the catalogue row (which names the text and its author).
+    if (canonDocs.length) {
+      const canonIds = new Set(canonDocs.map(c => c.id));
+      for (let i = results.length - 1; i >= 0; i--) if (canonIds.has(results[i].id)) results.splice(i, 1);
+      for (const c of canonDocs) results.push({ ...c, _canon: true } as SearchResult);
     }
 
     // Sort results
@@ -915,6 +983,10 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       const ladderCompare = (a: SearchResult, b: SearchResult): number => {
         // 1. Books before pages
         if (a.type !== b.type) return a.type === 'book' ? -1 : 1;
+        // 1b. Among pages, a canon text's catalogue row (it names the text) before passages.
+        const aCanon = (a as any)._canon ? 1 : 0;
+        const bCanon = (b as any)._canon ? 1 : 0;
+        if (aCanon !== bCanon) return bCanon - aCanon;
 
         // 2. Title/author match (strongest signal)
         // Check both title and display_title, and for multi-word queries
@@ -1040,7 +1112,17 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // Shared with the unified and semantic lanes — one definition, so a new
     // lane can't reintroduce the copies (src/lib/search/work-grouping.ts).
     const collapsed = collapseByWork(results, { getIdentity: identityOf });
-    const dedupedResults: SearchResult[] = collapsed.results;
+    let dedupedResults: SearchResult[] = collapsed.results;
+
+    // Asked-for diversity on a passage list (MCP search_translations, #3895):
+    // re-order, never drop. No score is passed: the list is fused from lanes
+    // whose scores do not compare, so the caps are absolute.
+    if (pagesOnly && diversityParam && diversityParam !== 'off' && sortBy === 'relevance' && dedupedResults.length > 2) {
+      const lookup = await loadBookFacets(dedupedResults.map(r => r.book_id));
+      if (lookup.ok) {
+        dedupedResults = diversify(dedupedResults, { mode: diversityParam, bookId: r => r.book_id, facets: lookup.facets });
+      }
+    }
 
     // "N editions of this work →" for rows that replaced siblings. The number
     // is what /work/[id] renders (fetchWorkFanouts calls that page's own
@@ -1069,7 +1151,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // Apply offset and strip transient fields
     const paginatedResults = dedupedResults.slice(offset, offset + limit)
       .map(r => {
-        const { _work_id, _work_id_aliases, _duplicate_of, _text_role, _match_pages, ...clean } = r as any;
+        const { _work_id, _work_id_aliases, _duplicate_of, _text_role, _match_pages, _canon, ...clean } = r as any;
         const fanout = fanoutByResultId.get(r.id);
         return (fanout ? { ...clean, work_group: fanout } : clean) as SearchResult;
       });
@@ -1133,6 +1215,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         languages, exclude_languages: excludeLanguages,
         has_doi: hasDoi, has_translation: hasTranslation, first_translation: firstTranslation, library, book_id: bookId,
         pages_only: pagesOnly, sort: sortBy, ranking: rankingApplied,
+        diversity: semanticDiversity, untranslated_lane: untranslatedLane,
       },
       degraded_lanes: degradedLanes,
     });
@@ -1149,6 +1232,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       limit,
       sort: sortBy,
       ranking: rankingApplied,
+      // What the semantic page lane was spread by; `diversity=off` returns its own order.
+      diversity: semanticDiversity,
       license: CONTENT_LICENSE,
       results: paginatedResults,
       ...(nearby.length > 0 && { nearby, nearby_range: `${parseInt(year!) - 5}-${parseInt(year!) + 5}` }),

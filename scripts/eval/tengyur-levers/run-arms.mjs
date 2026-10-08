@@ -9,13 +9,14 @@
  * run-arms.mjs — arms of #6121. Eval only: outputs go to <work>/arms/<ARM>.jsonl, NEVER to pages.
  *
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/tengyur-levers/run-arms.mjs \
- *        --arm A|C|P|PC [--pages sample|ref] [--cap-usd 5] [--conc 6] [--probe <n>]
+ *        --arm A|C|P|PC|G38|G35 [--pages sample|ref] [--cap-usd 5] [--conc 6] [--probe <n>] [--ledger <file>] [--endpoint <label>]
  *
  *   A   production again: gemini-3-flash-preview, v13, one page, no context, thinking 0 (A-vs-A floor).
  *   C   A + read-only context: the text's Tohoku number and titles, and the two previous sides' Tibetan.
  *   P   gemini-3.1-pro-preview, the production request unchanged, thinking budget PRO_THINK.
  *   PC  P + C's context.
- * --probe n: run P on n pages that are NOT in the sample (pricing only; written to probe.jsonl).
+ *   G38 G35 (round 2) gemini-3.8-flash / gemini-3.5-flash, A's request unchanged.
+ * --probe n: run --arm (default P) on n pages that are NOT in the sample (pricing only; probe-<arm>.jsonl).
  * Spend: --cap-usd is checked against <work>/ledger.jsonl (every arm and probe) before every call.
  */
 import fs from 'node:fs';
@@ -36,12 +37,14 @@ const PROBE = Number(opt('probe', 0));
 const FLASH = 'gemini-3-flash-preview';
 const PRO = 'gemini-3.1-pro-preview';
 export const PRO_THINK = 128; // the lowest budget Pro accepts; billed thinking is recorded per call
-const ENDPOINT = 'eval/tengyur-levers-6121';
-const ARMS = { A: { model: FLASH, ctx: false }, C: { model: FLASH, ctx: true }, P: { model: PRO, ctx: false }, PC: { model: PRO, ctx: true } };
+const ENDPOINT = opt('endpoint', 'eval/tengyur-levers-6121');
+// #6121 round 2: newer Flash models, A's request unchanged (one page, no context, thinking 0).
+const ARMS = { A: { model: FLASH, ctx: false }, C: { model: FLASH, ctx: true }, P: { model: PRO, ctx: false }, PC: { model: PRO, ctx: true },
+  G38: { model: 'gemini-3.8-flash', ctx: false }, G35: { model: 'gemini-3.5-flash', ctx: false } };
 fs.mkdirSync(path.join(WORK, 'arms'), { recursive: true });
 
 const readJsonl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : []);
-const LEDGER = path.join(WORK, 'ledger.jsonl');
+const LEDGER = opt('ledger', path.join(WORK, 'ledger.jsonl'));
 let spent = readJsonl(LEDGER).reduce((n, r) => n + r.usd, 0);
 
 const state = JSON.parse(fs.readFileSync('/root/tref/arms/state.json', 'utf8'));
@@ -120,9 +123,9 @@ async function probeRows(n) {
 }
 
 async function main() {
-  const cfg = PROBE ? ARMS.P : ARMS[ARM];
+  const cfg = PROBE ? ARMS[ARM || 'P'] : ARMS[ARM];
   if (!cfg) { console.error('--arm A|C|P|PC'); process.exit(1); }
-  const name = PROBE ? 'probe-P' : ARM;
+  const name = PROBE ? `probe-${ARM || 'P'}` : ARM;
   const src = opt('pages', 'sample') === 'ref' ? 'ref-pages.jsonl' : 'sample-pages.jsonl';
   const rows = PROBE ? await probeRows(PROBE) : readJsonl(path.join(WORK, src));
   const books = await booksFor(rows);

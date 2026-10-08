@@ -1,0 +1,245 @@
+{
+ "queries": [
+  {
+   "qid": "a100-01",
+   "cand": 2,
+   "lang": "Chinese",
+   "book_id": "6a3cc2bfaf74b230c6908e8a",
+   "page_number": 49,
+   "query": "famous arrow episodes, including Guan Yu calmly letting a surgeon scrape poison from his arm bone",
+   "page_note": "Glosses on an arrow fu cite Zuo zhuan shots and the Shu records story of Guan Yu having his arrow-poisoned arm bone scraped while unmoved.",
+   "confidence": "high"
+  },
+  {
+   "qid": "a100-02",
+   "cand": 3,
+   "lang": "Chinese",
+   "book_id": "6a3c6f6f01fe4f593c1cc4ef",
+   "page_number": 14,
+   "query": "why Mencius scorned Guan Zhong and Yanzi as mere ministers of hegemons rather than true kings",
+   "page_note": "The subcommentary explains Mencius declaring Qi could become a true kingdom as easily as turning a hand, mocking Guan Zhong and Yanzi for serving mere hegemony, and Gongsun Chou's confusion about King Wen.",
+   "confidence": "high"
+  },
+  {
+   "qid": "a100-03",
+   "cand": 4,
+   "lang": "Chinese",
+   "book_id": "6a3ce7c40a0011cb4bc0ae68",
+   "page_number": 45,
+   "query": "why the chaste woman in the ode about dew on the road refuses to travel at night",
+   "page_note": "Zhu Xi's commentary on the Xinglu ode explains the woman's fear of wet dew as fear of violent men, and the sparrow-without-horn image for a lawsuit brought without proper betrothal rites.",
+   "confidence": "high"
+  },
+  {
+   "qid": "a100-04",
+   "cand": 5,
+   "lang": "Chinese",
+   "book_id": "6a3c75ef01fe4f593c1f792d",
+   "page_number": 129,
+   "query": "hearing without learning is like never hearing; learning without practice is like never learning",
+   "page_note": "The page argues the gentleman's shame lies in words exceeding deeds, citing Shun, Zilu, Ran Qiu and Confucius on hearing, learning and acting.",
+   "confidence": "high"
+  },
+  {
+   "qid": "a100-05",
+   "cand": 6,
+   "lang": "Chinese",
+   "book_id": "6a3cef214701a906f10ed137",
+   "page_number": 34,
+   "query": "anecdotes of misers: Wang Rong counting coins all night and a ghost laughing at Liu Bolong",
+   "page_note": "Encyclopedia entries on wealth tell of Wang Rong's ivory counting rods, Zhang Yun's keys sewn to his clothes, a father burning his son's debt contracts, and a ghost mocking Liu Bolong's money scheme.",
+   "confidence": "high"
+  },
+  {
+   "qid": "a100-06",
+   "cand": 7,
+   "lang": "Chinese",
+   "book_id": "6a3c72fd01fe4f593c1e4c10",
+   "page_number": 88,
+   "query": "Zhao Meng hears the ministers of Zheng recite odes at a banquet and judges each choice",
+   "page_note": "The Zuo zhuan passage with Du Yu's notes records Zhao Meng's responses to odes recited by Zichan, Zixi, Taishu and others, including that bedroom words must not pass the threshold.",
+   "confidence": "high"
+  },
+  {
+   "qid": "a100-07",
+   "cand": 9,
+   "lang": "Chinese",
+   "book_id": "6a3c770701fe4f593c1ff4cb",
+   "page_number": 95,
+   "query": "why a petty man among superior men may sometimes be tolerated rather than expelled, Treading hexagram",
+   "page_note": "Commentary contrasts the lone yin line of Guai, which must be removed, with the third line of Lü, citing Yao tolerating Gong Gong and Gun alongside sages.",
+   "confidence": "medium"
+  },
+  {
+   "qid": "a100-08",
+   "cand": 10,
+   "lang": "Chinese",
+   "book_id": "6a3cbb6a3dce6cfad74a38bd",
+   "page_number": 17,
+   "query": "how thick the hemp mourning headband should be: one grip of thumb and forefinger, per Zhu Xi",
+   "page_note": "The page discusses the size of the mourning head-band and waist-band, with Zhu Xi saying the head-band is one span of thumb and second finger and the root end placed left and down.",
+   "confidence": "medium"
+  },
+  {
+   "qid": "a100-09",
+   "cand": 11,
+   "lang": "Chinese",
+   "book_id": "6a3c760e01fe4f593c1f8385",
+   "page_number": 108,
+   "query": "intercalary months and why Duke Wen of Lu stopped announcing the new moon but still visited the temple",
+   "page_note": "The Spring and Autumn commentary explains the leap month as a natural result of sun and moon motion and reads the record as censure of Duke Wen neglecting the new-moon announcement rite.",
+   "confidence": "medium"
+  },
+  {
+   "qid": "a100-10",
+   "cand": 12,
+   "lang": "Chinese",
+   "book_id": "6a3cefd88642f0445b161680",
+   "page_number": 15,
+   "query": "the six betrothal-rite tablets for an imperial wedding: their dimensions, symbolism and gifts of geese and sheep",
+   "page_note": "Rules for the six rites tablets (one foot two inches for the twelve months, four inches wide for the seasons) and the texts of the betrothal and name-asking exchanged with the empress's family.",
+   "confidence": "high"
+  },
+  {
+   "qid": "a100-11",
+   "cand": 14,
+   "lang": "Chinese",
+   "book_id": "6a3cecd74701a906f10db970",
+   "page_number": 98,
+   "query": "origin of the Han Yue cavalry and the Changshui colonel commanding foreign horsemen",
+   "page_note": "Entries explain the Yue cavalry title and that the Changshui colonel was named for a small stream near the camp, commanding barbarian horse, not river warfare.",
+   "confidence": "medium"
+  },
+  {
+   "qid": "a100-12",
+   "cand": 15,
+   "lang": "Chinese",
+   "book_id": "6a3cbb553dce6cfad74a2c83",
+   "page_number": 18,
+   "query": "Zhou tally system: metal tiger, human and dragon tallies, and bamboo tallies for roads and gates",
+   "page_note": "Commentary on the official of tallies lists metal tallies by terrain and bamboo flag, seal and tube tallies for roads, gates, passes and outlying domains, and who issues them to travellers.",
+   "confidence": "high"
+  },
+  {
+   "qid": "a100-13",
+   "cand": 16,
+   "lang": "Chinese",
+   "book_id": "6a3c6ec901fe4f593c1c5f66",
+   "page_number": 41,
+   "query": "the legend of Hou Ji abandoned as a baby after his mother stepped in a giant's footprint",
+   "page_note": "The Classic of Filial Piety subcommentary explains the Duke of Zhou pairing Hou Ji with Heaven, then retells Jiang Yuan's conception and the abandoned infant protected by animals and birds.",
+   "confidence": "high"
+  },
+  {
+   "qid": "a100-14",
+   "cand": 19,
+   "lang": "Chinese",
+   "book_id": "6a3cbbfbec254ff6cadecac2",
+   "page_number": 152,
+   "query": "divination by tortoise shell and yarrow stalks must not exceed three tries or be mixed after failure",
+   "page_note": "The commentary explains the rule of at most three divinations and that a failed tortoise reading may not be followed by yarrow, or vice versa, lest the spirits stop answering.",
+   "confidence": "medium"
+  },
+  {
+   "qid": "a100-15",
+   "cand": 20,
+   "lang": "Latin",
+   "book_id": "69b51dee47b06ecd581870ee",
+   "page_number": 186,
+   "query": "is fever heat real or imaginary, against Bontekoe, and can anger or fear cause fever",
+   "page_note": "Lists emotions, habit, retention and contagion as occasioning causes of fever, then argues febrile heat is a real symptom, not imaginary as Bontekoe claimed, nor caused by Cartesian elements.",
+   "confidence": "high"
+  },
+  {
+   "qid": "a100-16",
+   "cand": 23,
+   "lang": "Latin",
+   "book_id": "69b4cc22bb3208142d7bc4db",
+   "page_number": 828,
+   "query": "Plotinus on how intellect is both one and many, like a face with eyes and nose",
+   "page_note": "Plotinus argues intellect is one-many as a face has distinct features, describes the friendship that binds intelligible things, and Ficino's chapter heading calls the first intellect the first life.",
+   "confidence": "high"
+  },
+  {
+   "qid": "a100-17",
+   "cand": 24,
+   "lang": "Latin",
+   "book_id": "69b51e70768235dc659934a2",
+   "page_number": 29,
+   "query": "high priest Jaddua meets Alexander the Great, who honours God's name and spares the Jews",
+   "page_note": "Alexander bows to the divine name on Jaddua's headdress, sacrifices in the temple, grants religious freedom and sabbatical-year tax exemption, and the author attributes Psalm 119 to Jaddua.",
+   "confidence": "high"
+  },
+  {
+   "qid": "a100-18",
+   "cand": 26,
+   "lang": "Latin",
+   "book_id": "69b51e3b9a81ef7feb3d1fc9",
+   "page_number": 22,
+   "query": "three kinds of true divination, Syrian, Chaldean and Sibylline, as the basis for trustworthy history",
+   "page_note": "The author ranks Syrian, Chaldean and Roman histories as most reliable because tied to supercelestial, celestial and Sibylline divination, and doubts Greek origin stories like Hesiod's.",
+   "confidence": "medium"
+  },
+  {
+   "qid": "a100-19",
+   "cand": 27,
+   "lang": "Latin",
+   "book_id": "69b51ec59a81ef7feb3dab97",
+   "page_number": 62,
+   "query": "how Baubo made grieving Demeter laugh with an indecent display before she drank the barley drink",
+   "page_note": "Commentary on Orphic verses about Baubo explains the euphemism for the exposed body and the sense of plucking, citing Arnobius, Eusebius and Aristophanes.",
+   "confidence": "high"
+  },
+  {
+   "qid": "a100-20",
+   "cand": 28,
+   "lang": "Latin",
+   "book_id": "69b51e61ff09e4fe943adea6",
+   "page_number": 32,
+   "query": "sacraments as signs of God's will requiring faith, rejecting grace from the mere act performed",
+   "page_note": "Articles on sacraments, church order and rites: faith must accompany sacraments, the opus operato view is condemned, and no one may preach or administer sacraments unless rightly called.",
+   "confidence": "high"
+  },
+  {
+   "qid": "a100-21",
+   "cand": 29,
+   "lang": "German",
+   "book_id": "69b51e82cf111105c429e707",
+   "page_number": 59,
+   "query": "Tannhauser denied pardon by the pope, the blossoming staff, and faithful Eckhart warning people",
+   "page_note": "Pope Urban's staff that later blooms, Tannhauser's return into the mountain, faithful Eckhart warning at its entrance, and a pastor's testimony about the wild host passing Eisleben each Shrove Thursday.",
+   "confidence": "high"
+  },
+  {
+   "qid": "a100-22",
+   "cand": 30,
+   "lang": "German",
+   "book_id": "69b51e6dcf111105c429cb30",
+   "page_number": 52,
+   "query": "divine revelation and books as the third and fourth sources of human learning",
+   "page_note": "Distinguishes useful arts from divination and magic, names revelation as the third source of learning and books as the fourth, which has grown so large its history alone fills a life.",
+   "confidence": "high"
+  },
+  {
+   "qid": "a100-23",
+   "cand": 31,
+   "lang": "Dutch",
+   "book_id": "6a1966c73e125aa8d6e00365",
+   "page_number": 34,
+   "query": "Javanese: when a word-final consonant is doubled before a suffix starting with a vowel",
+   "page_note": "Grammar sections on Javanese aspirations explain vowel merging in fast speech and that final consonants are doubled in writing before suffixes, but heard only before two-syllable suffixes.",
+   "confidence": "high"
+  },
+  {
+   "qid": "a100-24",
+   "cand": 32,
+   "lang": "Dutch",
+   "book_id": "69b51e2147b06ecd5818a8d2",
+   "page_number": 100,
+   "query": "why there cannot be two or more creators of the world, according to Hermes",
+   "page_note": "The Hermetic text argues one order cannot be kept by many makers, since rivalry and strife would follow, and a maker of mortal beings would also want to make immortal ones.",
+   "confidence": "high"
+  }
+ ],
+ "method": "Written 2026-10-07 by an AI reader (job embed-next-6173) from 34 seeded-random OCR-only pages of the 100K pool, one page per book, the #5729 method: the page OCR read in full, one English query for what this page answers. No embedding arm or search tool was used. Relevant set = that page."
+}

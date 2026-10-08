@@ -5,7 +5,8 @@
  * A port of the approved prototype's scene (feat/journey-film-prototype),
  * with every image and line of text taken from `JourneyData` instead of
  * baked files. Stretches the prototype had already cut (spread splitting,
- * the search cloud, the 3D reader) are left out. `update(t)` is a pure
+ * the search cloud, the 3D reader) are left out. The last stretch (scene
+ * time 45–53) is Connect: cards for what ties the page to the library. `update(t)` is a pure
  * function of scene time, so scrubbing works.
  */
 import * as THREE from 'three';
@@ -318,15 +319,16 @@ export function createJourneyScene(
     scene.add(noteCard);
   }
 
-  // ---------- Describe ----------
+  // ---------- Connect: the page among the threads that tie it to the library ----------
   const CORE = V(150, 3.4, 0);
   const core = new THREE.Group(); core.position.copy(CORE); scene.add(core);
   const corePage = new THREE.Mesh(geo(new THREE.PlaneGeometry(1.25 * PW / PH * 1.4, 1.25 * 1.4)), basic({ map: scanTex, color: scanTex ? 0xffffff : 0xf4edde, transparent: true }));
   core.add(corePage);
+  const { search, index, editions } = d.connect;
   const cardDefs = [
-    d.summary ? { h: 'Summary · written by AI', b: d.summary } : null,
-    d.terms.length ? { h: 'Terms', b: d.terms.join(' · ') } : null,
-    d.keywords.length ? { h: 'Keywords · chosen by AI', b: d.keywords.join(' · ') } : null,
+    search ? { h: 'Found by meaning', b: `“${search.query}”` } : null,
+    index.length ? { h: 'In the index', b: index.slice(0, 6).map(x => x.name).join(' · ') } : null,
+    ...editions.slice(0, 2).map(e => ({ h: 'Another edition', b: [e.published, e.language].filter(Boolean).join(' · ') || e.title })),
     { h: 'Page', b: `${d.citation.locator} of ${d.pagesCount.toLocaleString('en-US')}` },
   ].filter((x): x is { h: string; b: string } => !!x);
   const cardGeo = geo(new THREE.PlaneGeometry(2.6, 1.52));
@@ -462,7 +464,7 @@ export function createJourneyScene(
       setOp(noteCard, S(31.2, 31.5, t) * (1 - S(34.2, 35, t)));
     }
 
-    // description cards orbit the page
+    // connection cards orbit the page
     const cs = S(45, 47, t) * (1 - S(52.4, 53.6, t));
     core.visible = cs > .003; core.scale.setScalar(Math.max(.001, cs));
     corePage.quaternion.copy(camera.quaternion);

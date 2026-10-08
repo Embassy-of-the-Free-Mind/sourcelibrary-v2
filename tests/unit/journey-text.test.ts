@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
-  cleanPageLines, paneText, pickFilmLines, readPageDescription, readTerms, containsLoose, pickOutroSentence,
+  cleanPageLines, paneText, pickFilmLines, containsLoose, pickOutroSentence,
 } from '@/lib/journey/journey-text';
 import { buildTimeline, segAt } from '@/components/journey/journey-timeline';
 import { buildJourneyCopy, type JourneyData } from '@/lib/journey/types';
@@ -65,12 +65,23 @@ describe('journey text', () => {
     expect(l.original).toEqual(['INDEX EORVM', 'LIBER PRIMVS.']);
   });
 
-  it('reads the machine-written description separately', () => {
-    expect(readPageDescription(EN)).toEqual({
-      summary: 'This page explains the rarity of human life, and mentions the previous page.',
-      keywords: ['human rebirth', 'kṣaṇa', 'liberation'],
-    });
-    expect(readTerms(EN)).toEqual(['kṣaṇasaṃpad']);
+  it('lifts only as many Trace lines as asked, without the verse number', () => {
+    // Shape from Haṭhayogapradīpikā p.20 (6991d89a8c1030b12444c076), verse 1.10.
+    const pairs = [
+      { s: 'अल्लामः प्रभुदेवश्च घोडा चोली च टिटिणिः ॥', t: 'Allama, Prabhudeva, Ghoda, Choli, and Tintini. || 8 ||', so: 0, to: 0 },
+      { s: 'अशेषतापतप्तानां समाश्रयमठो हठः ॥', t: 'Hatha Yoga is a sheltering monastery for those scorched by every kind of suffering.', so: 10, to: 10 },
+      { s: 'अशेषयोगयुक्तानामाधारकमठो हठः ॥ १० ॥', t: 'For those engaged in any form of Yoga, Hatha is the supporting tortoise. || 10 ||', so: 20, to: 20 },
+      { s: 'इत्यादय इति । इति पूर्वोक्ता आदयो येषां ते तथा ।', t: 'Regarding "These and others".', so: 30, to: 30 },
+    ];
+    const l = pickFilmLines('x', 'y', pairs, 'अशेषतापतप्तानां', 2)!;
+    expect(l.pairing).toBe('trace');
+    expect(l.original).toEqual(['अशेषतापतप्तानां समाश्रयमठो हठः ॥', 'अशेषयोगयुक्तानामाधारकमठो हठः ॥ १० ॥']);
+    expect(l.english[1]).toBe('For those engaged in any form of Yoga, Hatha is the supporting tortoise.');
+  });
+
+  it('prints Markdown bold and headings as plain text', () => {
+    const e = paneText(cleanPageLines('# The Lamp on Hatha Yoga\n\n**Hatha Yoga is a sheltering monastery. || 10 ||**\n\nA **bold** word.'));
+    expect(e).toBe('The Lamp on Hatha Yoga\n\nHatha Yoga is a sheltering monastery. || 10 ||\n\nA bold word.');
   });
 
   it('verifies curated strings loosely but not vacuously', () => {
@@ -90,27 +101,54 @@ describe('journey timeline', () => {
     bookId: 'b', pageId: 'p', pageNumber: 13, bookPath: '/book/b', readerPath: '/book/b/page/p',
     title: 'T', language: 'Sanskrit', pagesCount: 10, readBy: 'Gemini', readByModel: true, machineDraft: true,
     scan: { url: 'x' }, vault: [], shelf: [], lines: { original: ['a'], english: ['b'], pairing: 'verse' },
-    paneOriginal: 'a', paneEnglish: 'b', keywords: [], terms: [], outroQuote: 'q', outroSource: 's',
+    paneOriginal: 'a', paneEnglish: 'b', outroQuote: 'q', outroSource: 's',
     citation: { locator: 'p. 13', chicago: '', inline: '', url: '', short_url: '' }, script: 'latin', config: {},
+    connect: { index: [], editions: [] }, revisions: { count: 0 },
+  };
+  const connected: Partial<JourneyData> = {
+    connect: {
+      search: { query: 'masters who conquered death', rank: 1, results: [{ title: 'T', page: 13, href: '/x', here: true, sameWork: false }] },
+      index: [{ name: 'Allama', type: 'person', href: '/encyclopedia/Allama' }],
+      editions: [{ title: 'Hathayogapradipika', language: 'Sanskrit', published: '1867', href: '/book/e' }],
+    },
+    revisions: { count: 1, latest: { field: 'translation', at: '2026-10-06T10:16:24.479Z' } },
   };
 
-  it('shows only the steps that happened to this page', () => {
-    const { steps } = buildJourneyCopy(base);
-    expect(steps.map(s => s.key)).toEqual(['find', 'read', 'translate', 'check', 'publish']);
+  it('shows only the steps that happened to this page, publishing before checking', () => {
+    const { steps, parts } = buildJourneyCopy(base);
+    expect(steps.map(s => s.key)).toEqual(['find', 'read', 'translate', 'publish', 'check']);
+    expect(parts.map(p => p.eyebrow)).toEqual(['Part I', 'Part II', 'Part III', 'Part IV']);
     const tl = buildTimeline(base, steps);
-    expect(tl.segs.some(g => g.screen === 'trace')).toBe(false);
-    expect(tl.segs.some(g => g.s === 9)).toBe(false);
+    expect(tl.segs.some(g => g.screen === 'trace' || g.screen === 'search' || g.screen === 'links')).toBe(false);
+    expect(tl.segs.some(g => g.s === 9 || g.s === 45)).toBe(false);
     // chapter starts are increasing, so the transport can find the chapter
     expect([...tl.chStart].sort((a, b) => a - b)).toEqual(tl.chStart);
   });
 
-  it('includes copy, trace and describe when they happened', () => {
-    const d = { ...base, pagesArchived: 10, trace: { s: 'a', t: 'b' }, summary: 'x' };
-    const { steps } = buildJourneyCopy(d);
-    expect(steps.map(s => s.key)).toEqual(['find', 'copy', 'read', 'translate', 'check', 'describe', 'publish']);
+  it('has six chapters in the order of Figure 1 when the page is connected', () => {
+    const d = { ...base, ...connected, pagesArchived: 10, trace: { s: 'a', t: 'b' } } as JourneyData;
+    const { steps, parts } = buildJourneyCopy(d);
+    expect(steps.map(s => s.key)).toEqual(['find', 'read', 'translate', 'connect', 'publish', 'check']);
+    expect(parts).toHaveLength(5);
     const tl = buildTimeline(d, steps);
-    expect(tl.segs.filter(g => g.screen).map(g => g.screen)).toEqual(['ocr', 'english', 'trace', 'draft', 'overview', 'cite']);
+    expect(tl.segs.filter(g => g.screen).map(g => g.screen))
+      .toEqual(['ocr', 'english', 'search', 'links', 'overview', 'cite', 'trace', 'checks', 'draft']);
+    expect([...tl.chStart].sort((a, b) => a - b)).toEqual(tl.chStart);
     expect(segAt(tl, tl.total - 0.01).g.end).toBe(true);
+    const connect = steps.find(s => s.key === 'connect')!.body;
+    expect(connect).toContain('“masters who conquered death”');
+    expect(connect).toContain('first');
+    expect(connect).toContain('Allama');
+    expect(connect).toContain('the 1867 Sanskrit edition');
+    const check = steps.find(s => s.key === 'check')!.body;
+    expect(check).toContain('corrected once, on 6 October 2026');
+  });
+
+  it('never says "machine draft"', () => {
+    const d = { ...base, ...connected } as JourneyData;
+    const { steps, parts } = buildJourneyCopy(d);
+    const text = [...steps.map(s => `${s.title} ${s.body}`), ...parts.map(p => `${p.title} ${p.body}`)].join(' ');
+    expect(text).not.toMatch(/machine[- ]draft/i);
   });
 
   it('never claims a scholar review', () => {

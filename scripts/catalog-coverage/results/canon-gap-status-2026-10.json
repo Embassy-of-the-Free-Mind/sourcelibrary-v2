@@ -1,6 +1,6 @@
 {
  "issue": 5513,
- "generated_at": "2026-10-05T14:29:53.593Z",
+ "generated_at": "2026-10-07T10:39:40.712Z",
  "script": "scripts/catalog-coverage/canon-gap-status.mjs",
  "gap_map": "scripts/catalog-coverage/results/canon-gap-map-2026-10.json",
  "fields": {
@@ -22,17 +22,17 @@
    "id": "derge-tengyur",
    "corpus": "Derge Tengyur",
    "status": "running",
-   "owner_issue": 5497,
-   "done": "213 volumes imported hidden and held; 128,369 of 128,639 pages carry the Esukhia public-domain text, aligned folio by folio to the BDRC scans. The full run drafted English for 110,952 pages (187 volumes) with gemini-3-flash-preview, one page per request, for about $195; an unreviewed machine draft, with about 2 to 5 reversed statements per 100 pages measured against 84000.",
-   "next_action": "Drafting the last 26 volumes (17,400 pages: the end of the tantra commentaries, grammar, medicine, miscellany and the catalogue; about $31, approved 4 October). The volumes are published as an unreviewed machine draft only once the reader shows the licence and the draft label (#5571).",
-   "cost_usd": 31,
+   "owner_issue": 5800,
+   "done": "All 213 volumes are public as an AI translation not yet reviewed by a scholar, with the licence on every page (#5497). 128,369 of 128,639 pages carry the Esukhia public-domain text, aligned folio by folio to the BDRC scans, and 128,333 of them have draft English from gemini-3-flash-preview, one page per request, for about $233. About 2 to 5 statements per 100 pages are reversed, measured against 84000. 721 invented heading lines were removed from 569 pages, and each volume lists its texts with Tohoku numbers (3,363 texts).",
+   "next_action": "Tibetologists read 30 pages of the draft through Eternity, the first scholar review (#5800).",
+   "cost_usd": 0,
    "held_books": 213,
-   "live_books": 0,
-   "pipeline_held": 203,
-   "readable_books": 196,
+   "live_books": 213,
+   "pipeline_held": 213,
+   "readable_books": 213,
    "pages_with_text": 128369,
    "holdings_method": "language=Tibetan, title/source matches Derge Tengyur (bstan 'gyur + sde dge, BDRC W23703, Esukhia)",
-   "updated_at": "2026-10-05T14:29:53.593Z"
+   "updated_at": "2026-10-07T10:39:40.712Z"
   },
   {
    "id": "derge-kangyur",
@@ -48,7 +48,7 @@
    "readable_books": 0,
    "pages_with_text": 62375,
    "holdings_method": "language=Tibetan, title/source matches Derge Kangyur (bka' 'gyur + sde dge, BDRC W4CZ5369 / W22084, Esukhia)",
-   "updated_at": "2026-10-05T14:29:53.593Z"
+   "updated_at": "2026-10-07T10:39:40.712Z"
   },
   {
    "id": "cbeta",
@@ -57,13 +57,13 @@
    "owner_issue": 2554,
    "next_action": "Pair the whole CBETA canon with our scans once the Chan texts below are translated and published. CBETA's licence is non-commercial with attribution, so every page will show it (#5571).",
    "cost_usd": 306,
-   "held_books": 136,
-   "live_books": 133,
-   "pipeline_held": 55,
-   "readable_books": 71,
-   "pages_with_text": 11885,
+   "held_books": 137,
+   "live_books": 128,
+   "pipeline_held": 3,
+   "readable_books": 73,
+   "pages_with_text": 13737,
    "holdings_method": "Chinese-language books in buddhist-canon / chinese-buddhist-texts / zen-chan, SAT Daizōkyō scans, metadata.cbeta_id, or works-catalog cbeta holdings",
-   "updated_at": "2026-10-05T14:29:53.593Z"
+   "updated_at": "2026-10-07T10:39:40.712Z"
   },
   {
    "id": "cbeta-chan",
@@ -74,12 +74,12 @@
    "next_action": "Translate the remaining 19 texts listed on #5566.",
    "cost_usd": 9,
    "held_books": 99,
-   "live_books": 94,
-   "pipeline_held": 79,
-   "readable_books": 16,
-   "pages_with_text": 9985,
+   "live_books": 93,
+   "pipeline_held": 13,
+   "readable_books": 17,
+   "pages_with_text": 10921,
    "holdings_method": "Chinese-language books whose title contains 景德傳燈錄 / 祖堂集 / 五燈會元 / 語錄 / 廣錄 / 語要, or in zen-chan",
-   "updated_at": "2026-10-05T14:29:53.593Z"
+   "updated_at": "2026-10-07T10:39:40.712Z"
   },
   {
    "id": "pali-mula",
@@ -90,12 +90,12 @@
    "next_action": "Replace the OCR with the VRI Chaṭṭha Saṅgāyana typed text (non-commercial, with attribution), matched to our scans, and retranslate the pages that change.",
    "cost_usd": 4,
    "held_books": 57,
-   "live_books": 26,
+   "live_books": 25,
    "pipeline_held": 1,
    "readable_books": 34,
    "pages_with_text": 16892,
    "holdings_method": "language=Pali (any edition; not matched to the VRI CSCD edition)",
-   "updated_at": "2026-10-05T14:29:53.593Z"
+   "updated_at": "2026-10-07T10:39:40.712Z"
   },
   {
    "id": "pali-atthakatha",
@@ -106,12 +106,12 @@
    "next_action": "As for the root texts: match the VRI typed text to our scans; translate the five held commentaries when the test releases them.",
    "cost_usd": 11,
    "held_books": 57,
-   "live_books": 26,
+   "live_books": 25,
    "pipeline_held": 1,
    "readable_books": 34,
    "pages_with_text": 16892,
    "holdings_method": "language=Pali (any edition; not matched to the VRI CSCD edition)",
-   "updated_at": "2026-10-05T14:29:53.593Z"
+   "updated_at": "2026-10-07T10:39:40.712Z"
   },
   {
    "id": "pali-tika",
@@ -121,12 +121,12 @@
    "next_action": "As for the root texts: match the VRI typed text wherever we hold a scan. How much is in English is unknown, so the cost is an upper bound.",
    "cost_usd": 4,
    "held_books": 57,
-   "live_books": 26,
+   "live_books": 25,
    "pipeline_held": 1,
    "readable_books": 34,
    "pages_with_text": 16892,
    "holdings_method": "language=Pali (any edition; not matched to the VRI CSCD edition)",
-   "updated_at": "2026-10-05T14:29:53.593Z"
+   "updated_at": "2026-10-07T10:39:40.712Z"
   },
   {
    "id": "gretil-buddhist",
@@ -137,12 +137,12 @@
    "next_action": "Clear the rights edition by edition, or read our own scans of the printed editions instead, as we already do for the Sanskrit books we hold.",
    "cost_usd": null,
    "held_books": 95,
-   "live_books": 37,
-   "pipeline_held": 2,
+   "live_books": 31,
+   "pipeline_held": 3,
    "readable_books": 35,
    "pages_with_text": 14681,
    "holdings_method": "Sanskrit books in buddhism collections or Buddhist title terms",
-   "updated_at": "2026-10-05T14:29:53.593Z"
+   "updated_at": "2026-10-07T10:39:40.712Z"
   },
   {
    "id": "gretil-vedanta",
@@ -153,12 +153,12 @@
    "next_action": "As for GRETIL Buddhist texts.",
    "cost_usd": null,
    "held_books": 59,
-   "live_books": 14,
+   "live_books": 12,
    "pipeline_held": 0,
    "readable_books": 12,
-   "pages_with_text": 6053,
+   "pages_with_text": 6080,
    "holdings_method": "Sanskrit books in vedanta-darshana or Vedānta title terms",
-   "updated_at": "2026-10-05T14:29:53.593Z"
+   "updated_at": "2026-10-07T10:39:40.712Z"
   },
   {
    "id": "gretil-gaudiya",
@@ -174,7 +174,7 @@
    "readable_books": 1,
    "pages_with_text": 535,
    "holdings_method": "Sanskrit books with Gauḍīya author/title terms",
-   "updated_at": "2026-10-05T14:29:53.593Z"
+   "updated_at": "2026-10-07T10:39:40.712Z"
   },
   {
    "id": "sefaria-zohar",
@@ -184,13 +184,13 @@
    "blocker": "Licence: every Sefaria Zohar Hebrew version reports its licence as `unknown` (Sefaria API, version licence field), so no Zohar text is fitted (#5560: 0 of 175 refused pages of the Bodley Zohar written).",
    "next_action": "Re-read the pages our OCR refused from our own scans (#3878) instead of using Sefaria's text.",
    "cost_usd": null,
-   "held_books": 23,
-   "live_books": 15,
-   "pipeline_held": 5,
+   "held_books": 36,
+   "live_books": 12,
+   "pipeline_held": 20,
    "readable_books": 10,
-   "pages_with_text": 7582,
+   "pages_with_text": 9477,
    "holdings_method": "Zohar / Tikkunei Zohar by title",
-   "updated_at": "2026-10-05T14:29:53.593Z"
+   "updated_at": "2026-10-07T10:39:40.712Z"
   },
   {
    "id": "sefaria-lurianic",
@@ -203,10 +203,10 @@
    "held_books": 9,
    "live_books": 6,
    "pipeline_held": 0,
-   "readable_books": 2,
-   "pages_with_text": 2142,
+   "readable_books": 4,
+   "pages_with_text": 2548,
    "holdings_method": "Lurianic corpus by title (Etz Chaim, Vital, Shemonah She`arim …)",
-   "updated_at": "2026-10-05T14:29:53.593Z"
+   "updated_at": "2026-10-07T10:39:40.712Z"
   },
   {
    "id": "sefaria-cordovero",
@@ -216,13 +216,13 @@
    "done": "Pardes Rimmonim: 12 pages our OCR refused were filled with checked public-domain Sefaria text and are being translated.",
    "next_action": "Re-read the other 46 refused pages (#3878).",
    "cost_usd": null,
-   "held_books": 4,
-   "live_books": 3,
-   "pipeline_held": 1,
+   "held_books": 5,
+   "live_books": 1,
+   "pipeline_held": 4,
    "readable_books": 1,
    "pages_with_text": 658,
    "holdings_method": "Cordovero by title (Pardes Rimonim, Tomer Devorah, Or Ne`erav)",
-   "updated_at": "2026-10-05T14:29:53.593Z"
+   "updated_at": "2026-10-07T10:39:40.712Z"
   },
   {
    "id": "openiti-sufi",
@@ -232,12 +232,12 @@
    "next_action": "Not started. The licence is non-commercial with attribution, like CBETA's, so the Chan texts (#5566) are the model once they are published. Reading Persian manuscripts is paused until it is accurate enough (#5559).",
    "cost_usd": 29,
    "held_books": 161,
-   "live_books": 126,
+   "live_books": 118,
    "pipeline_held": 1,
    "readable_books": 132,
    "pages_with_text": 26418,
    "holdings_method": "Arabic/Persian books in sufism collections, Ibn ʿArabī title terms, or works-catalog openiti holdings",
-   "updated_at": "2026-10-05T14:29:53.593Z"
+   "updated_at": "2026-10-07T10:39:40.712Z"
   },
   {
    "id": "ganjoor",
@@ -248,12 +248,12 @@
    "next_action": "Ask Ganjoor for terms before any import.",
    "cost_usd": null,
    "held_books": 54,
-   "live_books": 23,
+   "live_books": 22,
    "pipeline_held": 0,
    "readable_books": 22,
    "pages_with_text": 9909,
    "holdings_method": "Persian books in persian-literary-tradition or with classical poetry title terms (any edition)",
-   "updated_at": "2026-10-05T14:29:53.593Z"
+   "updated_at": "2026-10-07T10:39:40.712Z"
   },
   {
    "id": "mongolian-kanjur",
@@ -269,7 +269,7 @@
    "readable_books": 0,
    "pages_with_text": 0,
    "holdings_method": "language=Mongolian or Mongolian Kanjur by title/source",
-   "updated_at": "2026-10-05T14:29:53.593Z"
+   "updated_at": "2026-10-07T10:39:40.712Z"
   },
   {
    "id": "tripitaka-koreana",
@@ -285,7 +285,7 @@
    "readable_books": 0,
    "pages_with_text": 0,
    "holdings_method": "Korean/Chinese books with Tripitaka Koreana / 高麗 / 海印寺 title terms",
-   "updated_at": "2026-10-05T14:29:53.593Z"
+   "updated_at": "2026-10-07T10:39:40.712Z"
   },
   {
    "id": "kanripo",
@@ -295,12 +295,12 @@
    "next_action": "Our Siku Quanshu scans were read with PaddleOCR-VL instead of being replaced by the Kanripo typed text (decided 2 October, #5547; 7,006 books, 1,033,868 pages written by 5 October, #5600): 36 of 40 pilot books aligned, but on 28% of pages Kanripo's page break is a column or more off the scan. Kanripo serves as a check on that OCR (6.6% of pages flagged for review). Using it as a second text layer for up to 7,001 books waits on its licence: the Kanripo organisation states CC BY-SA 4.0, and no text states its own (#5568).",
    "cost_usd": null,
    "held_books": 170,
-   "live_books": 167,
+   "live_books": 165,
    "pipeline_held": 5,
    "readable_books": 155,
-   "pages_with_text": 32306,
+   "pages_with_text": 33242,
    "holdings_method": "works-catalog work_holdings for kanripo works (build-holdings.mjs title-auto match; a floor)",
-   "updated_at": "2026-10-05T14:29:53.593Z"
+   "updated_at": "2026-10-07T10:39:40.712Z"
   }
  ],
  "traditions": [
@@ -312,10 +312,10 @@
     "derge-kangyur"
    ],
    "books": 531,
-   "readable_books": 318,
+   "readable_books": 335,
    "pages_scanned": 290018,
-   "pages_transcribed": 284232,
-   "pages_translated": 200615,
+   "pages_transcribed": 284149,
+   "pages_translated": 212784,
    "canon_page_equivalents": 132416,
    "ocr_engines": [
     [
@@ -324,23 +324,23 @@
     ],
     [
      "bdrc-yigdzin-v1",
-     90737
+     92465
     ],
     [
      "esukhia-derge-kangyur",
      62375
     ],
     [
-     "gemini-3.1-flash-lite-preview",
-     2208
-    ],
-    [
      "bdrc-woodblock-easter2",
      1456
     ],
     [
+     "gemini-3.1-flash-lite-preview",
+     600
+    ],
+    [
      "gemini-3-flash-preview",
-     281
+     185
     ],
     [
      "gemini-3.1-flash-lite",
@@ -350,7 +350,7 @@
    "translation_models": [
     [
      "gemini-3-flash-preview",
-     201058
+     213320
     ],
     [
      "gemini-3.1-flash-lite",
@@ -363,25 +363,49 @@
    ],
    "book_pages": [
     [
+     "6abee585a43718d234bf3203",
+     "བསྟན་འགྱུར། སྡེ་དགེ། དཀར་ཆག (Derge Tengyur, vol. 213)",
+     true,
+     1006,
+     1005,
+     1005
+    ],
+    [
+     "6abee417a43718d234bf2288",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སྒྲ་མདོ། ཏོ (Derge Tengyur, vol. 208)",
+     true,
+     903,
+     902,
+     901
+    ],
+    [
      "6abeab96896ea18127c8080a",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། མ (Derge Tengyur, vol. 17)",
-     false,
+     true,
      899,
      898,
-     895
+     897
     ],
     [
      "6abe90286a920ffd924d6333",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ར (Derge Tengyur, vol. 26)",
-     false,
+     true,
      877,
      876,
      876
     ],
     [
+     "6abee45ea43718d234bf2612",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། ཐོ (Derge Tengyur, vol. 209)",
+     true,
+     848,
+     847,
+     847
+    ],
+    [
      "6abedcc7896ea18127c91204",
      "བསྟན་འགྱུར། སྡེ་དགེ། གསོ་རིག ཨེ (Derge Tengyur, vol. 199)",
-     false,
+     true,
      842,
      841,
      840
@@ -389,7 +413,7 @@
     [
      "6abedc75896ea18127c90ecd",
      "བསྟན་འགྱུར། སྡེ་དགེ། གསོ་རིག ཧེ (Derge Tengyur, vol. 198)",
-     false,
+     true,
      820,
      819,
      819
@@ -397,7 +421,7 @@
     [
      "6abed65f896ea18127c8e6d6",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། པེ (Derge Tengyur, vol. 182)",
-     false,
+     true,
      795,
      794,
      794
@@ -405,7 +429,7 @@
     [
      "6abece70896ea18127c8b9e8",
      "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཡུ (Derge Tengyur, vol. 163)",
-     false,
+     true,
      779,
      778,
      778
@@ -413,15 +437,23 @@
     [
      "6abecd0e896ea18127c8b6de",
      "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། འུ (Derge Tengyur, vol. 162)",
-     false,
+     true,
      775,
      774,
      774
     ],
     [
+     "6abee496a43718d234bf2965",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། དོ (Derge Tengyur, vol. 210)",
+     true,
+     773,
+     772,
+     772
+    ],
+    [
      "6abedbe1896ea18127c90bc1",
      "བསྟན་འགྱུར། སྡེ་དགེ། སྒྲ་མདོ། སེ (Derge Tengyur, vol. 197)",
-     false,
+     true,
      777,
      773,
      771
@@ -429,23 +461,39 @@
     [
      "6abe8dbb6a920ffd924d59c0",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཞ (Derge Tengyur, vol. 22)",
-     false,
+     true,
      756,
      756,
      756
     ],
     [
+     "6abee265a43718d234bf1807",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། ཅོ (Derge Tengyur, vol. 204)",
+     true,
+     753,
+     752,
+     752
+    ],
+    [
      "6abeb2ec896ea18127c83529",
      "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཡ (Derge Tengyur, vol. 103)",
-     false,
+     true,
      749,
      748,
      748
     ],
     [
+     "6abee4eaa43718d234bf2c6d",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། ནོ (Derge Tengyur, vol. 211)",
+     true,
+     771,
+     747,
+     746
+    ],
+    [
      "6abe8cd66a920ffd924d56d8",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཝ (Derge Tengyur, vol. 21)",
-     false,
+     true,
      741,
      740,
      740
@@ -453,7 +501,7 @@
     [
      "6abed90a896ea18127c8f9ee",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཞེ (Derge Tengyur, vol. 190)",
-     false,
+     true,
      737,
      736,
      736
@@ -461,7 +509,7 @@
     [
      "6abe86656a920ffd924d3f40",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཏ (Derge Tengyur, vol. 10)",
-     false,
+     true,
      733,
      730,
      730
@@ -469,7 +517,7 @@
     [
      "6abed1ac896ea18127c8ca6c",
      "བསྟན་འགྱུར། སྡེ་དགེ། འཁྲི་ཤིང། ཀེ (Derge Tengyur, vol. 170)",
-     false,
+     true,
      731,
      730,
      730
@@ -477,7 +525,7 @@
     [
      "6abeb325896ea18127c83819",
      "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ར (Derge Tengyur, vol. 104)",
-     false,
+     true,
      729,
      728,
      728
@@ -485,7 +533,7 @@
     [
      "6abed5db896ea18127c8e188",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། དེ (Derge Tengyur, vol. 180)",
-     false,
+     true,
      729,
      728,
      728
@@ -493,7 +541,7 @@
     [
      "6abed95d896ea18127c8fcd2",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཟེ (Derge Tengyur, vol. 191)",
-     false,
+     true,
      725,
      724,
      724
@@ -501,7 +549,7 @@
     [
      "6abed3fc896ea18127c8d272",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཅེ (Derge Tengyur, vol. 174)",
-     false,
+     true,
      730,
      723,
      723
@@ -509,7 +557,7 @@
     [
      "6abea14b6a920ffd924dadae",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཨི (Derge Tengyur, vol. 61)",
-     false,
+     true,
      723,
      722,
      722
@@ -517,15 +565,23 @@
     [
      "6abea1d86a920ffd924db084",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཀུ (Derge Tengyur, vol. 62)",
-     false,
+     true,
      723,
      722,
      722
     ],
     [
+     "6abee360a43718d234bf1fb5",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། ཉོ (Derge Tengyur, vol. 207)",
+     true,
+     720,
+     718,
+     718
+    ],
+    [
      "6abebae6896ea18127c8795c",
      "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། རི (Derge Tengyur, vol. 134)",
-     false,
+     true,
      721,
      717,
      717
@@ -533,7 +589,7 @@
     [
      "6abed42c896ea18127c8d54f",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཆེ (Derge Tengyur, vol. 175)",
-     false,
+     true,
      718,
      717,
      717
@@ -541,7 +597,7 @@
     [
      "6abeb4ad896ea18127c84725",
      "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཀི (Derge Tengyur, vol. 110)",
-     false,
+     true,
      715,
      714,
      714
@@ -549,7 +605,7 @@
     [
      "6abe9ec86a920ffd924d9ce2",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། འི (Derge Tengyur, vol. 54)",
-     false,
+     true,
      703,
      702,
      702
@@ -557,7 +613,7 @@
     [
      "6abe9f6f6a920ffd924da3c8",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ལི (Derge Tengyur, vol. 57)",
-     false,
+     true,
      703,
      702,
      702
@@ -565,7 +621,7 @@
     [
      "6abea1016a920ffd924daaec",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཧི (Derge Tengyur, vol. 60)",
-     false,
+     true,
      703,
      702,
      700
@@ -573,7 +629,7 @@
     [
      "6abea5606a920ffd924dbcb1",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཉུ (Derge Tengyur, vol. 69)",
-     false,
+     true,
      701,
      700,
      700
@@ -581,7 +637,7 @@
     [
      "6abeb35b896ea18127c83af5",
      "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ལ (Derge Tengyur, vol. 105)",
-     false,
+     true,
      697,
      695,
      695
@@ -589,7 +645,7 @@
     [
      "6abe825059b86b7d32a6597a",
      "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། འ (Derge Tengyur, vol. 102)",
-     false,
+     true,
      695,
      692,
      692
@@ -597,7 +653,7 @@
     [
      "6abea70a6a920ffd924dc6e1",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ནུ (Derge Tengyur, vol. 73)",
-     false,
+     true,
      693,
      692,
      692
@@ -605,7 +661,7 @@
     [
      "6abec01d896ea18127c88fb8",
      "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཅུ (Derge Tengyur, vol. 144)",
-     false,
+     true,
      693,
      692,
      692
@@ -613,7 +669,15 @@
     [
      "6abe9cd56a920ffd924d937e",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཚི (Derge Tengyur, vol. 49)",
-     false,
+     true,
+     689,
+     688,
+     688
+    ],
+    [
+     "6abea8976a920ffd924dcfd7",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། མུ (Derge Tengyur, vol. 77)",
+     true,
      689,
      688,
      688
@@ -621,7 +685,7 @@
     [
      "6abedf77a43718d234bf11b2",
      "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། བི (Derge Tengyur, vol. 124)",
-     false,
+     true,
      689,
      688,
      688
@@ -629,7 +693,7 @@
     [
      "6abecf9e896ea18127c8bf06",
      "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ལུ (Derge Tengyur, vol. 165)",
-     false,
+     true,
      687,
      686,
      686
@@ -637,7 +701,7 @@
     [
      "6abe86096a920ffd924d3c92",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཉ (Derge Tengyur, vol. 9)",
-     false,
+     true,
      683,
      682,
      682
@@ -645,7 +709,7 @@
     [
      "6abeaad26a920ffd924ddbfc",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཅ (Derge Tengyur, vol. 84)",
-     false,
+     true,
      683,
      682,
      682
@@ -653,7 +717,7 @@
     [
      "6abea3fd6a920ffd924dba05",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཅུ (Derge Tengyur, vol. 66)",
-     false,
+     true,
      681,
      680,
      680
@@ -661,7 +725,7 @@
     [
      "6abeab0e6a920ffd924ddeaa",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཆ (Derge Tengyur, vol. 85)",
-     false,
+     true,
      681,
      680,
      680
@@ -669,15 +733,23 @@
     [
      "6abeb2b1896ea18127c8327d",
      "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཟ (Derge Tengyur, vol. 101)",
-     false,
+     true,
      681,
      680,
      680
     ],
     [
+     "6abeddd2896ea18127c917a3",
+     "བསྟན་འགྱུར། སྡེ་དགེ། གསོ་རིག ཁོ (Derge Tengyur, vol. 201)",
+     true,
+     680,
+     679,
+     679
+    ],
+    [
      "6abed0ea896ea18127c8c5c8",
      "བསྟན་འགྱུར། སྡེ་དགེ། སྐྱེས་རབས། ཧུ (Derge Tengyur, vol. 168)",
-     false,
+     true,
      679,
      678,
      678
@@ -685,7 +757,7 @@
     [
      "6abead3a896ea18127c81226",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཇུ (Derge Tengyur, vol. 68)",
-     false,
+     true,
      677,
      676,
      676
@@ -693,7 +765,7 @@
     [
      "6abeb286896ea18127c82fd7",
      "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཞ (Derge Tengyur, vol. 100)",
-     false,
+     true,
      675,
      674,
      674
@@ -701,7 +773,7 @@
     [
      "6abebaa5896ea18127c876b6",
      "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཡི (Derge Tengyur, vol. 133)",
-     false,
+     true,
      675,
      674,
      674
@@ -709,7 +781,7 @@
     [
      "6abe9b4b6a920ffd924d8d38",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། བི (Derge Tengyur, vol. 46)",
-     false,
+     true,
      673,
      672,
      672
@@ -717,7 +789,7 @@
     [
      "6abeba43896ea18127c8725a",
      "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཟི (Derge Tengyur, vol. 131)",
-     false,
+     true,
      669,
      668,
      668
@@ -725,7 +797,7 @@
     [
      "6abea6da6a920ffd924dc443",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། དུ (Derge Tengyur, vol. 72)",
-     false,
+     true,
      667,
      666,
      665
@@ -733,7 +805,7 @@
     [
      "6abebfd1896ea18127c88d1c",
      "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ངུ (Derge Tengyur, vol. 143)",
-     false,
+     true,
      665,
      664,
      664
@@ -741,7 +813,7 @@
     [
      "6abeaf6b896ea18127c81cfc",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ན (Derge Tengyur, vol. 91)",
-     false,
+     true,
      661,
      660,
      660
@@ -749,7 +821,7 @@
     [
      "6abed9a6896ea18127c8ffaa",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། འེ (Derge Tengyur, vol. 192)",
-     false,
+     true,
      661,
      660,
      660
@@ -757,7 +829,7 @@
     [
      "6abe85c46a920ffd924d39fc",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཇ (Derge Tengyur, vol. 8)",
-     false,
+     true,
      659,
      658,
      658
@@ -765,7 +837,7 @@
     [
      "6abea6ac6a920ffd924dc1ad",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཐུ (Derge Tengyur, vol. 71)",
-     false,
+     true,
      659,
      658,
      658
@@ -773,7 +845,7 @@
     [
      "6abeb20a896ea18127c82b01",
      "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཛ (Derge Tengyur, vol. 98)",
-     false,
+     true,
      659,
      658,
      658
@@ -781,7 +853,7 @@
     [
      "6abebf71896ea18127c88a86",
      "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། གུ (Derge Tengyur, vol. 142)",
-     false,
+     true,
      659,
      658,
      658
@@ -789,7 +861,7 @@
     [
      "6abed259896ea18127c8cd4a",
      "བསྟན་འགྱུར། སྡེ་དགེ། འཁྲི་ཤིང། ཁེ (Derge Tengyur, vol. 171)",
-     false,
+     true,
      657,
      656,
      656
@@ -797,7 +869,7 @@
     [
      "6abe89136a920ffd924d4900",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། པ (Derge Tengyur, vol. 14)",
-     false,
+     true,
      655,
      654,
      654
@@ -805,7 +877,7 @@
     [
      "6abed47a896ea18127c8d820",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཇེ (Derge Tengyur, vol. 176)",
-     false,
+     true,
      655,
      654,
      654
@@ -813,7 +885,7 @@
     [
      "6abed76c896ea18127c8ee40",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། མེ (Derge Tengyur, vol. 185)",
-     false,
+     true,
      655,
      654,
      654
@@ -821,7 +893,15 @@
     [
      "6abed8c2896ea18127c8f75e",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཝེ (Derge Tengyur, vol. 189)",
-     false,
+     true,
+     653,
+     652,
+     652
+    ],
+    [
+     "6abee53da43718d234bf2f73",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། པོ (Derge Tengyur, vol. 212)",
+     true,
      653,
      652,
      652
@@ -829,7 +909,7 @@
     [
      "6abec767896ea18127c8a9dc",
      "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཙུ (Derge Tengyur, vol. 156)",
-     false,
+     true,
      650,
      650,
      650
@@ -837,7 +917,7 @@
     [
      "6abe9d9d6a920ffd924d9828",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཝི (Derge Tengyur, vol. 51)",
-     false,
+     true,
      651,
      650,
      649
@@ -845,7 +925,7 @@
     [
      "6abe98196a920ffd924d8054",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཏི (Derge Tengyur, vol. 40)",
-     false,
+     true,
      649,
      648,
      648
@@ -853,7 +933,7 @@
     [
      "6abe91a66a920ffd924d6b5d",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ས (Derge Tengyur, vol. 29)",
-     false,
+     true,
      647,
      646,
      646
@@ -861,7 +941,7 @@
     [
      "6abec1df896ea18127c89736",
      "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཉུ (Derge Tengyur, vol. 147)",
-     false,
+     true,
      645,
      644,
      644
@@ -869,7 +949,7 @@
     [
      "6abec068896ea18127c89270",
      "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཆུ (Derge Tengyur, vol. 145)",
-     false,
+     true,
      643,
      642,
      642
@@ -877,7 +957,7 @@
     [
      "6abe84986a920ffd924d328a",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ང (Derge Tengyur, vol. 5)",
-     false,
+     true,
      641,
      640,
      640
@@ -885,7 +965,7 @@
     [
      "6abea7436a920ffd924dc999",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། པུ (Derge Tengyur, vol. 74)",
-     false,
+     true,
      641,
      640,
      638
@@ -893,7 +973,7 @@
     [
      "6abedf36a43718d234bf0f30",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། བ (Derge Tengyur, vol. 94)",
-     false,
+     true,
      639,
      638,
      638
@@ -901,7 +981,7 @@
     [
      "6abe8c706a920ffd924d545a",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཛ (Derge Tengyur, vol. 20)",
-     false,
+     true,
      635,
      634,
      634
@@ -909,15 +989,15 @@
     [
      "6abe974b6a920ffd924d7dd6",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཉི (Derge Tengyur, vol. 39)",
-     false,
+     true,
      635,
      634,
-     633
+     634
     ],
     [
      "6abeb11e896ea18127c82406",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། མ (Derge Tengyur, vol. 95)",
-     false,
+     true,
      633,
      632,
      632
@@ -925,7 +1005,7 @@
     [
      "6abeb404896ea18127c84235",
      "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཧ (Derge Tengyur, vol. 108)",
-     false,
+     true,
      633,
      632,
      632
@@ -933,31 +1013,31 @@
     [
      "6abea00c6a920ffd924da68a",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཤི (Derge Tengyur, vol. 58)",
-     false,
+     true,
      633,
      632,
      631
     ],
     [
-     "6abedb29896ea18127c906e6",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སྒྲ་མདོ། ལེ (Derge Tengyur, vol. 195)",
-     false,
-     632,
-     630,
-     630
-    ],
-    [
      "6abe850f6a920ffd924d3782",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཆ (Derge Tengyur, vol. 7)",
-     false,
+     true,
      631,
      630,
      630
     ],
     [
+     "6abedb29896ea18127c906e6",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སྒྲ་མདོ། ལེ (Derge Tengyur, vol. 195)",
+     true,
+     632,
+     630,
+     629
+    ],
+    [
      "6abea98e6a920ffd924dd984",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ག (Derge Tengyur, vol. 82)",
-     false,
+     true,
      629,
      628,
      628
@@ -965,7 +1045,7 @@
     [
      "6abec9bf896ea18127c8ae09",
      "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཛུ (Derge Tengyur, vol. 158)",
-     false,
+     true,
      629,
      628,
      628
@@ -973,7 +1053,7 @@
     [
      "6abe8a146a920ffd924d4e02",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། བ (Derge Tengyur, vol. 16)",
-     false,
+     true,
      629,
      628,
      627
@@ -981,7 +1061,7 @@
     [
      "6abeafd3896ea18127c8218e",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཕ (Derge Tengyur, vol. 93)",
-     false,
+     true,
      629,
      628,
      627
@@ -989,7 +1069,7 @@
     [
      "6abe8fd66a920ffd924d60bd",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཡ (Derge Tengyur, vol. 25)",
-     false,
+     true,
      627,
      626,
      626
@@ -997,7 +1077,7 @@
     [
      "6abed9f5896ea18127c90242",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཡེ (Derge Tengyur, vol. 193)",
-     false,
+     true,
      627,
      626,
      626
@@ -1005,7 +1085,7 @@
     [
      "6abe84ce6a920ffd924d350e",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཅ (Derge Tengyur, vol. 6)",
-     false,
+     true,
      625,
      624,
      624
@@ -1013,7 +1093,7 @@
     [
      "6abeb43e896ea18127c844b1",
      "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཨ (Derge Tengyur, vol. 109)",
-     false,
+     true,
      625,
      624,
      624
@@ -1021,15 +1101,23 @@
     [
      "6abeb4e5896ea18127c849f3",
      "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཁི (Derge Tengyur, vol. 111)",
-     false,
+     true,
      625,
      624,
      624
     ],
     [
+     "6abe98e76a920ffd924d82e0",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཐི (Derge Tengyur, vol. 41)",
+     true,
+     625,
+     624,
+     623
+    ],
+    [
      "6abe90fc6a920ffd924d66a3",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ལ (Derge Tengyur, vol. 27)",
-     false,
+     true,
      623,
      622,
      622
@@ -1037,7 +1125,7 @@
     [
      "6abec4ee896ea18127c8a184",
      "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། པུ (Derge Tengyur, vol. 152)",
-     false,
+     true,
      623,
      622,
      622
@@ -1045,23 +1133,15 @@
     [
      "6abed619896ea18127c8e464",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ནེ (Derge Tengyur, vol. 181)",
-     false,
+     true,
      623,
      622,
      622
     ],
     [
-     "6abe98e76a920ffd924d82e0",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཐི (Derge Tengyur, vol. 41)",
-     false,
-     625,
-     624,
-     621
-    ],
-    [
      "6abe89c46a920ffd924d4b92",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཕ (Derge Tengyur, vol. 15)",
-     false,
+     true,
      621,
      620,
      620
@@ -1069,15 +1149,23 @@
     [
      "6abeb822896ea18127c861e3",
      "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། པི (Derge Tengyur, vol. 122)",
-     false,
+     true,
      619,
      618,
      618
     ],
     [
+     "6abee32da43718d234bf1d47",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། ཇོ (Derge Tengyur, vol. 206)",
+     true,
+     619,
+     618,
+     617
+    ],
+    [
      "6abe94e86a920ffd924d7940",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཅི (Derge Tengyur, vol. 36)",
-     false,
+     true,
      615,
      614,
      614
@@ -1085,7 +1173,7 @@
     [
      "6abed518896ea18127c8dce8",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཏེ (Derge Tengyur, vol. 178)",
-     false,
+     true,
      615,
      614,
      614
@@ -1093,7 +1181,7 @@
     [
      "6abeadbd896ea18127c814ce",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ང (Derge Tengyur, vol. 83)",
-     false,
+     true,
      613,
      612,
      612
@@ -1101,15 +1189,23 @@
     [
      "6abeace1896ea18127c80d7a",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཞི (Derge Tengyur, vol. 52)",
-     false,
+     true,
      611,
      610,
      610
     ],
     [
+     "6abede62896ea18127c91a4e",
+     "བསྟན་འགྱུར། སྡེ་དགེ། གསོ་རིག གོ (Derge Tengyur, vol. 202)",
+     true,
+     608,
+     607,
+     607
+    ],
+    [
      "6abe88866a920ffd924d46a0",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ན (Derge Tengyur, vol. 13)",
-     false,
+     true,
      605,
      604,
      604
@@ -1117,7 +1213,7 @@
     [
      "6abedb94896ea18127c90961",
      "བསྟན་འགྱུར། སྡེ་དགེ། སྒྲ་མདོ། ཤེ (Derge Tengyur, vol. 196)",
-     false,
+     true,
      605,
      604,
      604
@@ -1125,7 +1221,7 @@
     [
      "6abeb782896ea18127c85d77",
      "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། དི (Derge Tengyur, vol. 120)",
-     false,
+     true,
      603,
      602,
      602
@@ -1133,7 +1229,7 @@
     [
      "6abebdc9896ea18127c88072",
      "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། སི (Derge Tengyur, vol. 137)",
-     false,
+     true,
      601,
      600,
      600
@@ -1141,7 +1237,7 @@
     [
      "6abea2356a920ffd924db35a",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཁུ (Derge Tengyur, vol. 63)",
-     false,
+     true,
      601,
      600,
      599
@@ -1149,7 +1245,7 @@
     [
      "6abe83b7433559215a997efb",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ག (Derge Tengyur, vol. 4)",
-     false,
+     true,
      593,
      592,
      592
@@ -1157,15 +1253,23 @@
     [
      "6abe87926a920ffd924d444c",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ད (Derge Tengyur, vol. 12)",
-     false,
+     true,
      593,
      592,
      592
     ],
     [
+     "6abedd7f896ea18127c91551",
+     "བསྟན་འགྱུར། སྡེ་དགེ། གསོ་རིག ཀོ (Derge Tengyur, vol. 200)",
+     true,
+     591,
+     590,
+     590
+    ],
+    [
      "6abed7f8896ea18127c8f2ca",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཚེ (Derge Tengyur, vol. 187)",
-     false,
+     true,
      589,
      588,
      588
@@ -1173,7 +1277,7 @@
     [
      "6abe8366433559215a997cad",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཁ (Derge Tengyur, vol. 3)",
-     false,
+     true,
      587,
      586,
      586
@@ -1181,7 +1285,15 @@
     [
      "6abebc98896ea18127c87c30",
      "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ལི (Derge Tengyur, vol. 135)",
-     false,
+     true,
+     585,
+     584,
+     584
+    ],
+    [
+     "6abee2a5a43718d234bf1afb",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། ཆོ (Derge Tengyur, vol. 205)",
+     true,
      585,
      584,
      584
@@ -1189,7 +1301,7 @@
     [
      "6abe92d06a920ffd924d7166",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཀི (Derge Tengyur, vol. 32)",
-     false,
+     true,
      583,
      582,
      582
@@ -1197,7 +1309,7 @@
     [
      "6abeb3d6896ea18127c83fed",
      "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ས (Derge Tengyur, vol. 107)",
-     false,
+     true,
      581,
      580,
      580
@@ -1205,7 +1317,7 @@
     [
      "6abeb70e896ea18127c8590d",
      "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཏི (Derge Tengyur, vol. 118)",
-     false,
+     true,
      581,
      580,
      580
@@ -1213,15 +1325,15 @@
     [
      "6abe914a6a920ffd924d6915",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཤ (Derge Tengyur, vol. 28)",
-     false,
+     true,
      581,
      580,
-     578
+     579
     ],
     [
      "6abead0e896ea18127c80fe0",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཆུ (Derge Tengyur, vol. 67)",
-     false,
+     true,
      579,
      578,
      578
@@ -1229,7 +1341,7 @@
     [
      "6abeba0b896ea18127c87016",
      "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཞི (Derge Tengyur, vol. 130)",
-     false,
+     true,
      577,
      576,
      576
@@ -1237,7 +1349,7 @@
     [
      "6abed85e896ea18127c8f51a",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཛེ (Derge Tengyur, vol. 188)",
-     false,
+     true,
      577,
      576,
      576
@@ -1245,7 +1357,7 @@
     [
      "6abe9a356a920ffd924d88dc",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། པི (Derge Tengyur, vol. 44)",
-     false,
+     true,
      577,
      576,
      575
@@ -1253,7 +1365,7 @@
     [
      "6abeb1dc896ea18127c828bc",
      "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཚ (Derge Tengyur, vol. 97)",
-     false,
+     true,
      578,
      575,
      575
@@ -1261,7 +1373,7 @@
     [
      "6abeb246896ea18127c82d97",
      "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཝ (Derge Tengyur, vol. 99)",
-     false,
+     true,
      573,
      572,
      572
@@ -1269,7 +1381,7 @@
     [
      "6abec12d896ea18127c894f6",
      "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཇུ (Derge Tengyur, vol. 146)",
-     false,
+     true,
      573,
      572,
      572
@@ -1277,7 +1389,7 @@
     [
      "6abed698896ea18127c8e9f4",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཕེ (Derge Tengyur, vol. 183)",
-     false,
+     true,
      573,
      572,
      572
@@ -1285,7 +1397,7 @@
     [
      "6abea60a6a920ffd924dbf71",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཏུ (Derge Tengyur, vol. 70)",
-     false,
+     true,
      569,
      568,
      568
@@ -1293,7 +1405,7 @@
     [
      "6abeb39f896ea18127c83db1",
      "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཤ (Derge Tengyur, vol. 106)",
-     false,
+     true,
      569,
      568,
      568
@@ -1301,7 +1413,7 @@
     [
      "6abe93ef6a920ffd924d7706",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ངི (Derge Tengyur, vol. 35)",
-     false,
+     true,
      567,
      566,
      565
@@ -1309,7 +1421,7 @@
     [
      "6abeb158896ea18127c82682",
      "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཙ (Derge Tengyur, vol. 96)",
-     false,
+     true,
      567,
      565,
      565
@@ -1317,7 +1429,7 @@
     [
      "6abeb8ed896ea18127c8665b",
      "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། མི (Derge Tengyur, vol. 125)",
-     false,
+     true,
      566,
      564,
      564
@@ -1325,7 +1437,7 @@
     [
      "6abe9f2c6a920ffd924da190",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། རི (Derge Tengyur, vol. 56)",
-     false,
+     true,
      565,
      564,
      564
@@ -1333,7 +1445,7 @@
     [
      "6abeb963896ea18127c86aaa",
      "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཚི (Derge Tengyur, vol. 127)",
-     false,
+     true,
      565,
      564,
      564
@@ -1341,7 +1453,7 @@
     [
      "6abed4cd896ea18127c8dab2",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཉེ (Derge Tengyur, vol. 177)",
-     false,
+     true,
      563,
      562,
      562
@@ -1349,7 +1461,7 @@
     [
      "6abed57e896ea18127c8df52",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཐེ (Derge Tengyur, vol. 179)",
-     false,
+     true,
      563,
      562,
      562
@@ -1357,7 +1469,7 @@
     [
      "6abec54c896ea18127c8a3f6",
      "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཕུ (Derge Tengyur, vol. 153)",
-     false,
+     true,
      561,
      560,
      560
@@ -1365,7 +1477,7 @@
     [
      "6abecb0a896ea18127c8b28a",
      "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཞུ (Derge Tengyur, vol. 160)",
-     false,
+     true,
      555,
      554,
      554
@@ -1373,7 +1485,7 @@
     [
      "6abeda5a896ea18127c904b8",
      "བསྟན་འགྱུར། སྡེ་དགེ། སྒྲ་མདོ། རེ (Derge Tengyur, vol. 194)",
-     false,
+     true,
      555,
      552,
      552
@@ -1381,7 +1493,7 @@
     [
      "6abe86b96a920ffd924d4220",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཐ (Derge Tengyur, vol. 11)",
-     false,
+     true,
      553,
      552,
      552
@@ -1389,7 +1501,7 @@
     [
      "6abe95d56a920ffd924d7baa",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཆི (Derge Tengyur, vol. 37)",
-     false,
+     true,
      553,
      552,
      552
@@ -1397,7 +1509,7 @@
     [
      "6abe9e9a6a920ffd924d9ab6",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཟི (Derge Tengyur, vol. 53)",
-     false,
+     true,
      553,
      552,
      552
@@ -1405,15 +1517,23 @@
     [
      "6abeb666896ea18127c854c5",
      "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཇི (Derge Tengyur, vol. 116)",
-     false,
+     true,
      553,
      552,
      552
     ],
     [
+     "6abee1cca43718d234bf15db",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། ངོ (Derge Tengyur, vol. 203)",
+     true,
+     553,
+     552,
+     551
+    ],
+    [
      "6abe82fa433559215a997a85",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཀ (Derge Tengyur, vol. 2)",
-     false,
+     true,
      549,
      548,
      548
@@ -1421,7 +1541,7 @@
     [
      "6abea2b96a920ffd924db5b6",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། གུ (Derge Tengyur, vol. 64)",
-     false,
+     true,
      549,
      548,
      548
@@ -1429,7 +1549,7 @@
     [
      "6abeab456a920ffd924de156",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཇ (Derge Tengyur, vol. 86)",
-     false,
+     true,
      549,
      548,
      548
@@ -1437,7 +1557,7 @@
     [
      "6abea35a6a920ffd924db7de",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ངུ (Derge Tengyur, vol. 65)",
-     false,
+     true,
      548,
      546,
      546
@@ -1445,7 +1565,7 @@
     [
      "6abecc3d896ea18127c8b4b8",
      "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཟུ (Derge Tengyur, vol. 161)",
-     false,
+     true,
      547,
      546,
      546
@@ -1453,7 +1573,7 @@
     [
      "6abeb628896ea18127c852a1",
      "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཆི (Derge Tengyur, vol. 115)",
-     false,
+     true,
      545,
      544,
      544
@@ -1461,7 +1581,7 @@
     [
      "6abeb74e896ea18127c85b55",
      "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཐི (Derge Tengyur, vol. 119)",
-     false,
+     true,
      543,
      542,
      542
@@ -1469,7 +1589,7 @@
     [
      "6abedef7a43718d234bf0d12",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཏ (Derge Tengyur, vol. 88)",
-     false,
+     true,
      539,
      538,
      538
@@ -1477,7 +1597,7 @@
     [
      "6abeb5fd896ea18127c85085",
      "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཅི (Derge Tengyur, vol. 114)",
-     false,
+     true,
      537,
      536,
      536
@@ -1485,7 +1605,7 @@
     [
      "6abeb6dc896ea18127c856f1",
      "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཉི (Derge Tengyur, vol. 117)",
-     false,
+     true,
      537,
      536,
      536
@@ -1493,7 +1613,7 @@
     [
      "6abec470896ea18127c89f6a",
      "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ནུ (Derge Tengyur, vol. 151)",
-     false,
+     true,
      535,
      534,
      534
@@ -1501,7 +1621,7 @@
     [
      "6abe9b0d6a920ffd924d8b20",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཕི (Derge Tengyur, vol. 45)",
-     false,
+     true,
      533,
      532,
      530
@@ -1509,7 +1629,7 @@
     [
      "6abeb583896ea18127c84e6f",
      "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ངི (Derge Tengyur, vol. 113)",
-     false,
+     true,
      531,
      530,
      530
@@ -1517,7 +1637,7 @@
     [
      "6abeb92e896ea18127c86894",
      "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཙི (Derge Tengyur, vol. 126)",
-     false,
+     true,
      531,
      530,
      530
@@ -1525,7 +1645,7 @@
     [
      "6abebf33896ea18127c88870",
      "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཁུ (Derge Tengyur, vol. 141)",
-     false,
+     true,
      531,
      530,
      530
@@ -1555,33 +1675,41 @@
      527
     ],
     [
-     "6abed040896ea18127c8c1b8",
-     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཤུ (Derge Tengyur, vol. 166)",
-     false,
+     "6abe8f0c6a920ffd924d5eab",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། འ (Derge Tengyur, vol. 24)",
+     true,
      527,
      526,
      526
     ],
     [
-     "6abe8f0c6a920ffd924d5eab",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། འ (Derge Tengyur, vol. 24)",
-     false,
+     "6abed040896ea18127c8c1b8",
+     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཤུ (Derge Tengyur, vol. 166)",
+     true,
      527,
      526,
-     525
+     526
     ],
     [
      "6abecf09896ea18127c8bcf6",
      "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། རུ (Derge Tengyur, vol. 164)",
-     false,
+     true,
      525,
      524,
      524
     ],
     [
+     "6abe8bab6a920ffd924d524c",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཚ (Derge Tengyur, vol. 19)",
+     true,
+     523,
+     522,
+     522
+    ],
+    [
      "6abeb7ec896ea18127c85fd5",
      "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ནི (Derge Tengyur, vol. 121)",
-     false,
+     true,
      523,
      522,
      522
@@ -1589,7 +1717,7 @@
     [
      "6abeadc8896ea18127c81736",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཉ (Derge Tengyur, vol. 87)",
-     false,
+     true,
      521,
      520,
      520
@@ -1597,7 +1725,7 @@
     [
      "6abec2d0896ea18127c89b7e",
      "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཐུ (Derge Tengyur, vol. 149)",
-     false,
+     true,
      521,
      520,
      520
@@ -1605,18 +1733,10 @@
     [
      "6abed724896ea18127c8ec34",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། བེ (Derge Tengyur, vol. 184)",
-     false,
+     true,
      521,
      520,
      520
-    ],
-    [
-     "6abe8bab6a920ffd924d524c",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཚ (Derge Tengyur, vol. 19)",
-     false,
-     523,
-     522,
-     519
     ],
     [
      "69e7ab345f1a22ab19a94976",
@@ -1637,7 +1757,7 @@
     [
      "6abeca4e896ea18127c8b081",
      "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཝུ (Derge Tengyur, vol. 159)",
-     false,
+     true,
      518,
      516,
      516
@@ -1645,7 +1765,7 @@
     [
      "6abeb51b896ea18127c84c67",
      "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། གི (Derge Tengyur, vol. 112)",
-     false,
+     true,
      517,
      516,
      516
@@ -1661,7 +1781,7 @@
     [
      "6abe824e59b86b7d32a65774",
      "བསྟན་འགྱུར། སྡེ་དགེ། བསྟོད་ཚོགས། ཀ (Derge Tengyur, vol. 1)",
-     false,
+     true,
      515,
      514,
      514
@@ -1669,7 +1789,7 @@
     [
      "6abebeed896ea18127c8866a",
      "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཀུ (Derge Tengyur, vol. 140)",
-     false,
+     true,
      515,
      513,
      513
@@ -1677,7 +1797,7 @@
     [
      "6abeb863896ea18127c86451",
      "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཕི (Derge Tengyur, vol. 123)",
-     false,
+     true,
      519,
      512,
      512
@@ -1701,7 +1821,7 @@
     [
      "6abed08d896ea18127c8c3ca",
      "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། སུ (Derge Tengyur, vol. 167)",
-     false,
+     true,
      507,
      506,
      506
@@ -1709,7 +1829,7 @@
     [
      "6abeafa0896ea18127c81f94",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། པ (Derge Tengyur, vol. 92)",
-     false,
+     true,
      503,
      502,
      502
@@ -1717,7 +1837,7 @@
     [
      "6abed155896ea18127c8c872",
      "བསྟན་འགྱུར། སྡེ་དགེ། སྐྱེས་རབས། ཨུ (Derge Tengyur, vol. 169)",
-     false,
+     true,
      503,
      502,
      502
@@ -1733,7 +1853,7 @@
     [
      "6abed7ad896ea18127c8f0d2",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཙེ (Derge Tengyur, vol. 186)",
-     false,
+     true,
      501,
      500,
      500
@@ -1757,7 +1877,7 @@
     [
      "6abebd37896ea18127c87e7c",
      "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཤི (Derge Tengyur, vol. 136)",
-     false,
+     true,
      499,
      498,
      498
@@ -1771,12 +1891,28 @@
      497
     ],
     [
+     "6abe9d656a920ffd924d9632",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཛི (Derge Tengyur, vol. 50)",
+     true,
+     499,
+     498,
+     496
+    ],
+    [
      "6abe8ebe6a920ffd924d5cb7",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཟ (Derge Tengyur, vol. 23)",
-     false,
+     true,
      497,
      496,
      496
+    ],
+    [
+     "6abea80b6a920ffd924dcde3",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། བུ (Derge Tengyur, vol. 76)",
+     true,
+     497,
+     496,
+     495
     ],
     [
      "69e7aaf75f1a22ab19a907e7",
@@ -1784,14 +1920,6 @@
      true,
      508,
      507,
-     494
-    ],
-    [
-     "6abe9d656a920ffd924d9632",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཛི (Derge Tengyur, vol. 50)",
-     false,
-     499,
-     498,
      494
     ],
     [
@@ -1813,7 +1941,7 @@
     [
      "6abec6fb896ea18127c8a7ee",
      "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། མུ (Derge Tengyur, vol. 155)",
-     false,
+     true,
      491,
      490,
      489
@@ -1829,7 +1957,7 @@
     [
      "6abe9ef86a920ffd924d9fa4",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཡི (Derge Tengyur, vol. 55)",
-     false,
+     true,
      489,
      488,
      487
@@ -1837,7 +1965,7 @@
     [
      "6abe9bd76a920ffd924d8fdc",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། མི (Derge Tengyur, vol. 47)",
-     false,
+     true,
      489,
      486,
      486
@@ -1853,7 +1981,7 @@
     [
      "6abeac51896ea18127c80b90",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཇི (Derge Tengyur, vol. 38)",
-     false,
+     true,
      487,
      486,
      483
@@ -1861,7 +1989,7 @@
     [
      "6abea9646a920ffd924dd79c",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཁ (Derge Tengyur, vol. 81)",
-     false,
+     true,
      485,
      483,
      483
@@ -1869,7 +1997,7 @@
     [
      "6abea0b56a920ffd924da906",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། སི (Derge Tengyur, vol. 59)",
-     false,
+     true,
      483,
      482,
      482
@@ -1877,7 +2005,7 @@
     [
      "6abeae7a896ea18127c81942",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཐ (Derge Tengyur, vol. 89)",
-     false,
+     true,
      479,
      478,
      478
@@ -1893,7 +2021,7 @@
     [
      "6abec330896ea18127c89d8a",
      "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། དུ (Derge Tengyur, vol. 150)",
-     false,
+     true,
      477,
      476,
      476
@@ -1933,7 +2061,7 @@
     [
      "6abeaef8896ea18127c81b24",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ད (Derge Tengyur, vol. 90)",
-     false,
+     true,
      469,
      468,
      467
@@ -1957,7 +2085,7 @@
     [
      "6abe91fc6a920ffd924d6de7",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཧ (Derge Tengyur, vol. 30)",
-     false,
+     true,
      467,
      466,
      465
@@ -1965,7 +2093,7 @@
     [
      "6abe8add6a920ffd924d507a",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཙ (Derge Tengyur, vol. 18)",
-     false,
+     true,
      463,
      462,
      462
@@ -1973,7 +2101,7 @@
     [
      "6abe998b6a920ffd924d8554",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། དི (Derge Tengyur, vol. 42)",
-     false,
+     true,
      461,
      460,
      460
@@ -1981,7 +2109,7 @@
     [
      "6abebe51896ea18127c882ce",
      "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཧི (Derge Tengyur, vol. 138)",
-     false,
+     true,
      461,
      460,
      460
@@ -2005,7 +2133,7 @@
     [
      "6abebe9a896ea18127c8849e",
      "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཨི (Derge Tengyur, vol. 139)",
-     false,
+     true,
      457,
      456,
      456
@@ -2061,7 +2189,7 @@
     [
      "6abea76e6a920ffd924dcc1d",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཕུ (Derge Tengyur, vol. 75)",
-     false,
+     true,
      451,
      450,
      449
@@ -2069,7 +2197,7 @@
     [
      "6abea8fd6a920ffd924dd42d",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཚུ (Derge Tengyur, vol. 79)",
-     false,
+     true,
      449,
      448,
      448
@@ -2077,7 +2205,7 @@
     [
      "6abec5ca896ea18127c8a62a",
      "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། བུ (Derge Tengyur, vol. 154)",
-     false,
+     true,
      449,
      448,
      448
@@ -2125,7 +2253,7 @@
     [
      "6abec24c896ea18127c899be",
      "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཏུ (Derge Tengyur, vol. 148)",
-     false,
+     true,
      445,
      444,
      444
@@ -2165,7 +2293,7 @@
     [
      "6abeba78896ea18127c874fa",
      "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། འི (Derge Tengyur, vol. 132)",
-     false,
+     true,
      441,
      440,
      440
@@ -2205,7 +2333,7 @@
     [
      "6abe938e6a920ffd924d754c",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། གི (Derge Tengyur, vol. 34)",
-     false,
+     true,
      439,
      438,
      438
@@ -2245,7 +2373,7 @@
     [
      "6abe99ba6a920ffd924d8724",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ནི (Derge Tengyur, vol. 43)",
-     false,
+     true,
      437,
      436,
      435
@@ -2253,7 +2381,7 @@
     [
      "6abe9c216a920ffd924d91c8",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཙི (Derge Tengyur, vol. 48)",
-     false,
+     true,
      435,
      434,
      434
@@ -2381,7 +2509,7 @@
     [
      "6abeb9d7896ea18127c86e6a",
      "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཝི (Derge Tengyur, vol. 129)",
-     false,
+     true,
      425,
      424,
      424
@@ -2421,7 +2549,7 @@
     [
      "6abea9346a920ffd924dd5f1",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཀ (Derge Tengyur, vol. 80)",
-     false,
+     true,
      424,
      422,
      422
@@ -2429,7 +2557,7 @@
     [
      "6abe92686a920ffd924d6fbd",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཨ (Derge Tengyur, vol. 31)",
-     false,
+     true,
      422,
      422,
      422
@@ -2579,6 +2707,14 @@
      414
     ],
     [
+     "6abea8c76a920ffd924dd28b",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཙུ (Derge Tengyur, vol. 78)",
+     true,
+     415,
+     414,
+     414
+    ],
+    [
      "69e7abb05f1a22ab19a9c661",
      "Neyphug Kanjur mDo sde Tsha",
      true,
@@ -2597,7 +2733,7 @@
     [
      "6abec7fa896ea18127c8ac69",
      "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཚུ (Derge Tengyur, vol. 157)",
-     false,
+     true,
      413,
      412,
      412
@@ -2653,7 +2789,7 @@
     [
      "6abe932b6a920ffd924d73b0",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཁི (Derge Tengyur, vol. 33)",
-     false,
+     true,
      409,
      408,
      408
@@ -2917,7 +3053,7 @@
     [
      "6abeb99b896ea18127c86ce2",
      "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཛི (Derge Tengyur, vol. 128)",
-     false,
+     true,
      389,
      388,
      388
@@ -2925,7 +3061,7 @@
     [
      "6abed33b896ea18127c8cfde",
      "བསྟན་འགྱུར། སྡེ་དགེ། སྐྱེས་རབས། གེ (Derge Tengyur, vol. 172)",
-     false,
+     true,
      389,
      388,
      388
@@ -3069,7 +3205,7 @@
     [
      "6abed3c3896ea18127c8d166",
      "བསྟན་འགྱུར། སྡེ་དགེ། སྤྲིང་ཡིག ངེ (Derge Tengyur, vol. 173)",
-     false,
+     true,
      373,
      373,
      373
@@ -3627,6 +3763,38 @@
      144
     ],
     [
+     "69e7abb85f1a22ab19a9cebc",
+     "Neyphug Kanjur mDo sde 'A",
+     false,
+     416,
+     408,
+     142
+    ],
+    [
+     "69e7ab125f1a22ab19a926ba",
+     "Thadrak Kanjur mDo sde A",
+     false,
+     447,
+     445,
+     135
+    ],
+    [
+     "69e7ac2f5f1a22ab19aa502e",
+     "Kanjur Khri brgyad stong pa Kha",
+     false,
+     435,
+     410,
+     135
+    ],
+    [
+     "69e7ab5d5f1a22ab19a976c1",
+     "Thadrak Kanjur Nyi khri Ka",
+     false,
+     540,
+     466,
+     128
+    ],
+    [
      "69e7ab2e5f1a22ab19a94515",
      "Thadrak Kanjur Kanjur Khri pa Ga",
      true,
@@ -3731,30 +3899,6 @@
      4
     ],
     [
-     "6abee585a43718d234bf3203",
-     "བསྟན་འགྱུར། སྡེ་དགེ། དཀར་ཆག (Derge Tengyur, vol. 213)",
-     false,
-     1006,
-     1005,
-     0
-    ],
-    [
-     "6abee417a43718d234bf2288",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སྒྲ་མདོ། ཏོ (Derge Tengyur, vol. 208)",
-     false,
-     903,
-     902,
-     0
-    ],
-    [
-     "6abee45ea43718d234bf2612",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། ཐོ (Derge Tengyur, vol. 209)",
-     false,
-     848,
-     847,
-     0
-    ],
-    [
      "6ac070adf427c9bb06926063",
      "བཀའ་འགྱུར། སྡེ་དགེ། ཕལ་ཆེན། ཁ (Derge Kangyur, vol. 36)",
      false,
@@ -3827,14 +3971,6 @@
      0
     ],
     [
-     "6abee496a43718d234bf2965",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། དོ (Derge Tengyur, vol. 210)",
-     false,
-     773,
-     772,
-     0
-    ],
-    [
      "6ac05ad7f427c9bb06923a17",
      "བཀའ་འགྱུར། སྡེ་དགེ། འབུམ། ཏ (Derge Kangyur, vol. 22)",
      false,
@@ -3867,22 +4003,6 @@
      0
     ],
     [
-     "6abee265a43718d234bf1807",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། ཅོ (Derge Tengyur, vol. 204)",
-     false,
-     753,
-     752,
-     0
-    ],
-    [
-     "6abee4eaa43718d234bf2c6d",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། ནོ (Derge Tengyur, vol. 211)",
-     false,
-     771,
-     747,
-     0
-    ],
-    [
      "6ac0b0d3f427c9bb0692c476",
      "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཀ (Derge Kangyur, vol. 77)",
      false,
@@ -3899,14 +4019,6 @@
      0
     ],
     [
-     "6abee360a43718d234bf1fb5",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། ཉོ (Derge Tengyur, vol. 207)",
-     false,
-     720,
-     718,
-     0
-    ],
-    [
      "6ac0cca5f427c9bb0692f231",
      "བཀའ་འགྱུར། སྡེ་དགེ། རྙིང་རྒྱུད། ཀ (Derge Kangyur, vol. 97)",
      false,
@@ -3915,27 +4027,11 @@
      0
     ],
     [
-     "6abea8976a920ffd924dcfd7",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། མུ (Derge Tengyur, vol. 77)",
-     false,
-     689,
-     688,
-     0
-    ],
-    [
      "6ac093adf427c9bb0692941d",
      "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། པ (Derge Kangyur, vol. 57)",
      false,
      687,
      686,
-     0
-    ],
-    [
-     "6abeddd2896ea18127c917a3",
-     "བསྟན་འགྱུར། སྡེ་དགེ། གསོ་རིག ཁོ (Derge Tengyur, vol. 201)",
-     false,
-     680,
-     679,
      0
     ],
     [
@@ -3976,14 +4072,6 @@
      false,
      655,
      654,
-     0
-    ],
-    [
-     "6abee53da43718d234bf2f73",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། པོ (Derge Tengyur, vol. 212)",
-     false,
-     653,
-     652,
      0
     ],
     [
@@ -4056,14 +4144,6 @@
      false,
      622,
      620,
-     0
-    ],
-    [
-     "6abee32da43718d234bf1d47",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། ཇོ (Derge Tengyur, vol. 206)",
-     false,
-     619,
-     618,
      0
     ],
     [
@@ -4160,14 +4240,6 @@
      false,
      609,
      608,
-     0
-    ],
-    [
-     "6abede62896ea18127c91a4e",
-     "བསྟན་འགྱུར། སྡེ་དགེ། གསོ་རིག གོ (Derge Tengyur, vol. 202)",
-     false,
-     608,
-     607,
      0
     ],
     [
@@ -4299,14 +4371,6 @@
      0
     ],
     [
-     "6abedd7f896ea18127c91551",
-     "བསྟན་འགྱུར། སྡེ་དགེ། གསོ་རིག ཀོ (Derge Tengyur, vol. 200)",
-     false,
-     591,
-     590,
-     0
-    ],
-    [
      "6ac076eff427c9bb06926b91",
      "བཀའ་འགྱུར། སྡེ་དགེ། དཀོན་བརྩེགས། ཁ (Derge Kangyur, vol. 40)",
      false,
@@ -4327,14 +4391,6 @@
      "བཀའ་འགྱུར། སྡེ་དགེ། འདུལ་བ། ག (Derge Kangyur, vol. 3)",
      false,
      587,
-     584,
-     0
-    ],
-    [
-     "6abee2a5a43718d234bf1afb",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། ཆོ (Derge Tengyur, vol. 205)",
-     false,
-     585,
      584,
      0
     ],
@@ -4443,14 +4499,6 @@
      0
     ],
     [
-     "6abee1cca43718d234bf15db",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། ངོ (Derge Tengyur, vol. 203)",
-     false,
-     553,
-     552,
-     0
-    ],
-    [
      "6ac0baf0f427c9bb0692d660",
      "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཉ (Derge Kangyur, vol. 84)",
      false,
@@ -4472,14 +4520,6 @@
      false,
      540,
      539,
-     0
-    ],
-    [
-     "69e7ab5d5f1a22ab19a976c1",
-     "Thadrak Kanjur Nyi khri Ka",
-     false,
-     540,
-     537,
      0
     ],
     [
@@ -4507,51 +4547,11 @@
      0
     ],
     [
-     "6abea80b6a920ffd924dcde3",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། བུ (Derge Tengyur, vol. 76)",
-     false,
-     497,
-     496,
-     0
-    ],
-    [
      "6ac052fff427c9bb06921fbd",
      "བཀའ་འགྱུར། སྡེ་དགེ། འདུལ་བ། པ (Derge Kangyur, vol. 13)",
      false,
      470,
      468,
-     0
-    ],
-    [
-     "69e7ab125f1a22ab19a926ba",
-     "Thadrak Kanjur mDo sde A",
-     false,
-     447,
-     446,
-     0
-    ],
-    [
-     "69e7abb85f1a22ab19a9cebc",
-     "Neyphug Kanjur mDo sde 'A",
-     false,
-     416,
-     416,
-     0
-    ],
-    [
-     "6abea8c76a920ffd924dd28b",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཙུ (Derge Tengyur, vol. 78)",
-     false,
-     415,
-     414,
-     0
-    ],
-    [
-     "69e7ac2f5f1a22ab19aa502e",
-     "Kanjur Khri brgyad stong pa Kha",
-     false,
-     435,
-     413,
      0
     ],
     [
@@ -4618,24 +4618,24 @@
    "gap_map_rows": [
     "cbeta"
    ],
-   "books": 170,
-   "readable_books": 79,
-   "pages_scanned": 21408,
-   "pages_transcribed": 17515,
-   "pages_translated": 10274,
+   "books": 171,
+   "readable_books": 81,
+   "pages_scanned": 23281,
+   "pages_transcribed": 19367,
+   "pages_translated": 15125,
    "canon_page_equivalents": 900484,
    "ocr_engines": [
+    [
+     "gemini-3.1-flash-lite",
+     7454
+    ],
     [
      "cbeta-xml-p5@dbdea41071",
      4937
     ],
     [
-     "gemini-3.1-flash-lite",
-     4687
-    ],
-    [
      "gemini-3-flash-preview",
-     3861
+     3902
     ],
     [
      "gemini-3.1-flash-lite-preview",
@@ -4648,23 +4648,31 @@
    ],
    "translation_models": [
     [
+     "gemini-3-flash-preview",
+     6296
+    ],
+    [
      "gemini-3.1-flash-lite",
-     5249
+     6147
     ],
     [
      "gemini-3.1-flash-lite-preview",
      3620
     ],
     [
-     "gemini-3-flash-preview",
-     1406
-    ],
-    [
      "unrecorded",
-     23
+     24
     ]
    ],
    "book_pages": [
+    [
+     "69bd0afdb01b17638a098546",
+     "Anthology of Chan Verse Commentaries on Koans",
+     true,
+     1896,
+     1888,
+     1864
+    ],
     [
      "69e014be47b76785d4ec7d4c",
      "대불정수릉엄경 (Surangama Sutra, 1456 Korean woodblock)",
@@ -4674,20 +4682,20 @@
      964
     ],
     [
-     "69bd0afdb01b17638a098546",
-     "Anthology of Chan Verse Commentaries on Koans",
-     true,
-     956,
-     952,
-     938
-    ],
-    [
      "699356c58ed86e583b7b8334",
      "Lotus Sutra (Miao fa lian hua jing) - Sixi Tripitaka Edition",
      true,
      918,
      918,
      908
+    ],
+    [
+     "69b99f786ed9e0490990abcf",
+     "大正新脩大藏經 第08冊 (Taishō Shinshū Daizōkyō, Vol. 8)",
+     true,
+     933,
+     916,
+     903
     ],
     [
      "69bd0b0bb01b17638a098903",
@@ -4779,7 +4787,7 @@
     ],
     [
      "69f13455365e3fcae574e1d2",
-     "Huineng, 638-713: Liuzu da shi fa bao tan jing",
+     "六祖大師法寶壇經 (Platform Sutra of the Sixth Patriarch)",
      true,
      178,
      178,
@@ -4844,7 +4852,7 @@
     [
      "6a3c61db40c88a541d8f091d",
      "金剛經口訣",
-     true,
+     false,
      116,
      116,
      113
@@ -4948,7 +4956,7 @@
     [
      "6a3c5f3b879008ba7e1537d3",
      "金剛般若波羅蜜經.難字注音. (vol 2)",
-     true,
+     false,
      96,
      96,
      94
@@ -4960,6 +4968,22 @@
      87,
      87,
      87
+    ],
+    [
+     "6abee1bd3bb95eea9ebe0167",
+     "圓悟佛果禪師語錄 卷14–20 (vol 3 of 3)",
+     true,
+     139,
+     85,
+     85
+    ],
+    [
+     "6abedf4b7ca26f5b50f80792",
+     "松源崇嶽禪師語錄",
+     true,
+     143,
+     98,
+     84
     ],
     [
      "6992cfd8f5b4f75c1a4c9a15",
@@ -4996,7 +5020,7 @@
     [
      "6a3c5f53879008ba7e154672",
      "續一切經音義(二) (vol 2)",
-     true,
+     false,
      101,
      91,
      82
@@ -5018,6 +5042,22 @@
      82
     ],
     [
+     "6abedf441b2cd9635f98b3e6",
+     "續古尊宿語要 卷6 (vol 5 of 5)",
+     true,
+     93,
+     81,
+     81
+    ],
+    [
+     "6abef33d4c777f224e1de5d3",
+     "天如惟則禪師語錄 卷1–2 (vol 1 of 4)",
+     true,
+     92,
+     80,
+     80
+    ],
+    [
      "6a3c5f52879008ba7e1542ee",
      "續一切經音義(三) (vol 3)",
      true,
@@ -5028,10 +5068,34 @@
     [
      "6a3c5f4c879008ba7e15428c",
      "續一切經音義(一) (vol 1)",
-     true,
+     false,
      95,
      83,
      77
+    ],
+    [
+     "6abef3414c777f224e1de6cf",
+     "天如惟則禪師語錄 卷7–9 (vol 4 of 4)",
+     true,
+     98,
+     77,
+     73
+    ],
+    [
+     "6abedf431b2cd9635f98b382",
+     "續古尊宿語要 卷5 (vol 4 of 5)",
+     true,
+     97,
+     73,
+     73
+    ],
+    [
+     "6abedf3f1b2cd9635f98b2c2",
+     "續古尊宿語要 卷2 (vol 2 of 5)",
+     true,
+     92,
+     73,
+     73
     ],
     [
      "6a3c61a3879008ba7e15f5dd",
@@ -5042,12 +5106,36 @@
      72
     ],
     [
+     "6abedf4914590c1068e24f00",
+     "笑隱大訢禪師語錄",
+     true,
+     85,
+     77,
+     71
+    ],
+    [
+     "6abedf411b2cd9635f98b321",
+     "續古尊宿語要 卷4 (vol 3 of 5)",
+     true,
+     94,
+     71,
+     71
+    ],
+    [
      "6a3c5fca879008ba7e157e6f",
      "憨山老人夢遊集(二) (vol 2)",
      true,
      71,
      71,
      71
+    ],
+    [
+     "6abef3343eeeaaa3202690a0",
+     "高峰原妙禪師語錄",
+     true,
+     116,
+     67,
+     67
     ],
     [
      "6a3c61a1879008ba7e15f4c5",
@@ -5063,6 +5151,14 @@
      true,
      68,
      68,
+     65
+    ],
+    [
+     "6abec5269a6d02ff1a55963c",
+     "景德傳燈錄 卷25–27 (vol 9 of 10)",
+     true,
+     78,
+     65,
      65
     ],
     [
@@ -5090,6 +5186,14 @@
      63
     ],
     [
+     "6abedf327ca0bb7fcd9e6c38",
+     "佛果圜悟禪師碧巖錄 卷1–2 (vol 1 of 5)",
+     true,
+     90,
+     63,
+     63
+    ],
+    [
      "69f13487365e3fcae574edba",
      "Śikṣānanda, 652-710: Di zang pu sa ben yuan jing. 2",
      true,
@@ -5106,12 +5210,68 @@
      61
     ],
     [
+     "6abee1bb3bb95eea9ebe00f4",
+     "圓悟佛果禪師語錄 卷8–13 (vol 2 of 3)",
+     true,
+     112,
+     61,
+     61
+    ],
+    [
+     "6abef30b38586aecb162ec23",
+     "法演禪師語錄",
+     true,
+     88,
+     59,
+     59
+    ],
+    [
+     "6abedf387ca0bb7fcd9e6d5b",
+     "佛果圜悟禪師碧巖錄 卷9–10 (vol 5 of 5)",
+     true,
+     77,
+     56,
+     56
+    ],
+    [
+     "6abec5259a6d02ff1a5595f2",
+     "景德傳燈錄 卷22–24 (vol 8 of 10)",
+     true,
+     71,
+     55,
+     55
+    ],
+    [
+     "6abec5239a6d02ff1a5595ab",
+     "景德傳燈錄 卷19–21 (vol 7 of 10)",
+     true,
+     68,
+     55,
+     55
+    ],
+    [
+     "6abef31cea0ee3a64e9b8041",
+     "無準師範禪師語錄 卷2–3 (vol 2 of 4)",
+     true,
+     57,
+     55,
+     55
+    ],
+    [
      "69f13446365e3fcae574e099",
      "Hsüan-tsang: Mahāprajñāpāramita sūtra. 1",
      true,
      54,
      54,
      54
+    ],
+    [
+     "6abec5219a6d02ff1a559564",
+     "景德傳燈錄 卷16–18 (vol 6 of 10)",
+     true,
+     68,
+     53,
+     53
     ],
     [
      "699356cb8ed86e583b7b86cc",
@@ -5122,11 +5282,35 @@
      53
     ],
     [
+     "6abee93080b99e80d7d932a3",
+     "虛堂和尚語錄 卷3–4 (vol 1 of 4)",
+     true,
+     98,
+     52,
+     52
+    ],
+    [
+     "6abec5199a6d02ff1a559462",
+     "景德傳燈錄 卷4–6 (vol 2 of 10)",
+     true,
+     65,
+     51,
+     51
+    ],
+    [
      "6a3c5e6640c88a541d8e1aa8",
      "一切經音義(二) (vol 2)",
      true,
      69,
      64,
+     50
+    ],
+    [
+     "6abee1b83bb95eea9ebe006b",
+     "圓悟佛果禪師語錄 卷1–7 (vol 1 of 3)",
+     true,
+     134,
+     50,
      50
     ],
     [
@@ -5136,6 +5320,158 @@
      74,
      65,
      49
+    ],
+    [
+     "6abedf28fb1708126df94c74",
+     "大慧普覺禪師語錄 卷1–4 (vol 1 of 3)",
+     true,
+     69,
+     49,
+     49
+    ],
+    [
+     "6abec51d9a6d02ff1a5594e0",
+     "景德傳燈錄 卷10–12 (vol 4 of 10)",
+     true,
+     64,
+     48,
+     48
+    ],
+    [
+     "6abedf47ee13871d17eb15a5",
+     "應菴曇華禪師語錄",
+     true,
+     56,
+     48,
+     48
+    ],
+    [
+     "6abef35fd8d3fdd636290525",
+     "楚石梵琦禪師語錄 卷13–16 (vol 4 of 5)",
+     true,
+     84,
+     47,
+     47
+    ],
+    [
+     "6abedf337ca0bb7fcd9e6c95",
+     "佛果圜悟禪師碧巖錄 卷3–4 (vol 2 of 5)",
+     true,
+     69,
+     47,
+     47
+    ],
+    [
+     "6abedf2bfb1708126df94cf9",
+     "大慧普覺禪師語錄 卷9–12 (vol 3 of 3)",
+     true,
+     68,
+     47,
+     47
+    ],
+    [
+     "6abedf23e54ec11ac8bae269",
+     "雲門匡真禪師廣錄 卷2 (vol 2 of 3)",
+     true,
+     53,
+     47,
+     47
+    ],
+    [
+     "6abef35ed8d3fdd6362904bf",
+     "楚石梵琦禪師語錄 卷9–12 (vol 3 of 5)",
+     true,
+     99,
+     46,
+     46
+    ],
+    [
+     "6abef3404c777f224e1de682",
+     "天如惟則禪師語錄 卷5–7 (vol 3 of 4)",
+     true,
+     74,
+     46,
+     46
+    ],
+    [
+     "6abec5289a6d02ff1a55968d",
+     "景德傳燈錄 卷28–30 (vol 10 of 10)",
+     true,
+     72,
+     46,
+     46
+    ],
+    [
+     "6abedf4d446ab1dad37c04ee",
+     "破菴祖先禪師語錄",
+     true,
+     55,
+     45,
+     45
+    ],
+    [
+     "6a3cc1bbf9474f825c172777",
+     "五燈會元·卷三 (vol 3)",
+     true,
+     164,
+     125,
+     44
+    ],
+    [
+     "6abef360d8d3fdd63629057c",
+     "楚石梵琦禪師語錄 卷17–20 (vol 5 of 5)",
+     true,
+     95,
+     44,
+     44
+    ],
+    [
+     "6abef33e4c777f224e1de632",
+     "天如惟則禪師語錄 卷3–5 (vol 2 of 4)",
+     true,
+     77,
+     44,
+     44
+    ],
+    [
+     "6abedf357ca0bb7fcd9e6cdd",
+     "佛果圜悟禪師碧巖錄 卷5–6 (vol 3 of 5)",
+     true,
+     61,
+     44,
+     44
+    ],
+    [
+     "6abedf367ca0bb7fcd9e6d1d",
+     "佛果圜悟禪師碧巖錄 卷7–8 (vol 4 of 5)",
+     true,
+     59,
+     44,
+     44
+    ],
+    [
+     "6abedf29fb1708126df94cbc",
+     "大慧普覺禪師語錄 卷5–8 (vol 2 of 3)",
+     true,
+     58,
+     44,
+     44
+    ],
+    [
+     "6abef31aea0ee3a64e9b8007",
+     "無準師範禪師語錄 卷1 (vol 1 of 4)",
+     true,
+     55,
+     44,
+     44
+    ],
+    [
+     "6abedf2f0f33d7676e25f3a6",
+     "密菴和尚語錄 卷1 (vol 2 of 2)",
+     true,
+     52,
+     44,
+     44
     ],
     [
      "6992ca19d4d545ae73fed7d6",
@@ -5148,10 +5484,18 @@
     [
      "69aebb9a6059efb05d4fdcc0",
      "六祖大師法寶壇經 (Platform Sutra of the Sixth Patriarch)",
-     true,
+     false,
      44,
      44,
      44
+    ],
+    [
+     "6a3cc1c3ec254ff6cae0ef14",
+     "五燈會元·卷九 (vol 9)",
+     true,
+     104,
+     73,
+     43
     ],
     [
      "69d5ad674dc55b8478de0b07",
@@ -5170,12 +5514,84 @@
      43
     ],
     [
+     "6abee93380b99e80d7d9334e",
+     "虛堂和尚語錄 卷8–9 (vol 3 of 4)",
+     true,
+     105,
+     43,
+     43
+    ],
+    [
+     "6abec51f9a6d02ff1a559523",
+     "景德傳燈錄 卷13–15 (vol 5 of 10)",
+     true,
+     62,
+     42,
+     42
+    ],
+    [
+     "6a3cc1c0ec254ff6cae0ecff",
+     "五燈會元·卷七 (vol 7)",
+     true,
+     192,
+     141,
+     41
+    ],
+    [
+     "6abedf2d0f33d7676e25f375",
+     "密菴和尚語錄 卷1 (vol 1 of 2)",
+     true,
+     46,
+     42,
+     41
+    ],
+    [
+     "6abef35cd8d3fdd636290464",
+     "楚石梵琦禪師語錄 卷5–8 (vol 2 of 5)",
+     true,
+     88,
+     41,
+     41
+    ],
+    [
+     "6abec51c9a6d02ff1a5594a6",
+     "景德傳燈錄 卷7–9 (vol 3 of 10)",
+     true,
+     55,
+     41,
+     41
+    ],
+    [
+     "6a3cc1cff9474f825c17296e",
+     "五燈會元·卷十五 (vol 15)",
+     true,
+     218,
+     159,
+     39
+    ],
+    [
+     "6a3cc1c6ec254ff6cae0ef7f",
+     "五燈會元·卷十二 (vol 12)",
+     true,
+     192,
+     139,
+     37
+    ],
+    [
      "6a3c61cc879008ba7e160972",
      "藥師琉璃光如來本願功德經 (vol 2)",
      true,
      38,
      38,
      37
+    ],
+    [
+     "6a3cc1bfec254ff6cae0ec64",
+     "五燈會元·卷六 (vol 6)",
+     true,
+     152,
+     99,
+     36
     ],
     [
      "6a3c5f3b879008ba7e153836",
@@ -5202,12 +5618,44 @@
      34
     ],
     [
+     "6abec5189a6d02ff1a559426",
+     "景德傳燈錄 卷1–3 (vol 1 of 10)",
+     true,
+     57,
+     31,
+     31
+    ],
+    [
+     "6abedf199f894b562076797f",
+     "鎮州臨濟慧照禪師語錄",
+     true,
+     40,
+     31,
+     31
+    ],
+    [
+     "6abedf20e54ec11ac8bae241",
+     "雲門匡真禪師廣錄 卷1 (vol 1 of 3)",
+     true,
+     37,
+     31,
+     31
+    ],
+    [
      "6992ca1bd4d545ae73fed80a",
      "Sutra of the Wheel of the Dedication of Merit",
      true,
      31,
      31,
      31
+    ],
+    [
+     "6abef31dea0ee3a64e9b807d",
+     "無準師範禪師語錄 卷3–5 (vol 3 of 4)",
+     true,
+     53,
+     30,
+     30
     ],
     [
      "69dfedf28d34461cbe7f50dc",
@@ -5218,6 +5666,30 @@
      29
     ],
     [
+     "6abedf24e54ec11ac8bae2a1",
+     "雲門匡真禪師廣錄 卷2–3 (vol 3 of 3)",
+     true,
+     38,
+     29,
+     29
+    ],
+    [
+     "6a3cc1bdec254ff6cae0eaf8",
+     "五燈會元·卷二 (vol 2)",
+     true,
+     186,
+     133,
+     28
+    ],
+    [
+     "6a3cc1d6f9474f825c172e49",
+     "五燈會元·卷二十 (vol 20)",
+     true,
+     242,
+     195,
+     25
+    ],
+    [
      "69f1347f365e3fcae574ed95",
      "Xuanzang ca. 596-664: Da ban ruo po luo mi duo jing",
      true,
@@ -5226,11 +5698,35 @@
      25
     ],
     [
+     "6a3cc1d0f9474f825c172a4b",
+     "五燈會元·卷十六 (vol 16)",
+     true,
+     204,
+     137,
+     22
+    ],
+    [
+     "6a3cc1baec254ff6cae0e99d",
+     "五燈會元·卷一 (vol 1)",
+     true,
+     184,
+     136,
+     22
+    ],
+    [
      "69f133eb1764d779d0c72100",
      "Fo shuo si tian wang jing [di 1-4 ye]",
      true,
      32,
      32,
+     21
+    ],
+    [
+     "6abef35bd8d3fdd636290417",
+     "楚石梵琦禪師語錄 卷1–4 (vol 1 of 5)",
+     true,
+     74,
+     21,
      21
     ],
     [
@@ -5242,12 +5738,36 @@
      21
     ],
     [
+     "6abee93580b99e80d7d933ba",
+     "虛堂和尚語錄 卷10 (vol 4 of 4)",
+     true,
+     40,
+     18,
+     18
+    ],
+    [
      "699356c28ed86e583b7b8320",
      "The Casket Seal Incantation Scripture",
      true,
      18,
      18,
      18
+    ],
+    [
+     "6a3cc1ccf9474f825c1728bb",
+     "五燈會元·卷十四 (vol 14)",
+     true,
+     176,
+     139,
+     17
+    ],
+    [
+     "6a3cc1d1f9474f825c172bb9",
+     "五燈會元·卷十七 (vol 17)",
+     true,
+     156,
+     126,
+     17
     ],
     [
      "69f13428c8d07a6810653407",
@@ -5300,7 +5820,7 @@
     [
      "69f1344a365e3fcae574e0d1",
      "Shi, Hu: Fo shuo yi qie ru lai zhen shi she da cheng xian zheng san mei da jiao wang jing",
-     true,
+     false,
      12,
      12,
      12
@@ -5322,28 +5842,28 @@
      10
     ],
     [
+     "6abef31fea0ee3a64e9b80b5",
+     "無準師範禪師語錄 卷5 (vol 4 of 4)",
+     true,
+     57,
+     15,
+     8
+    ],
+    [
+     "6abee93180b99e80d7d93308",
+     "虛堂和尚語錄 卷6–7 (vol 2 of 4)",
+     true,
+     67,
+     6,
+     6
+    ],
+    [
      "6992ca18d4d545ae73fed7ce",
      "Nestorian Hymn to the Trinity",
      true,
      6,
      6,
      6
-    ],
-    [
-     "6abedf337ca0bb7fcd9e6c95",
-     "佛果圜悟禪師碧巖錄 卷3–4 (vol 2 of 5)",
-     true,
-     69,
-     47,
-     3
-    ],
-    [
-     "6abec5239a6d02ff1a5595ab",
-     "景德傳燈錄 卷19–21 (vol 7 of 10)",
-     true,
-     68,
-     55,
-     2
     ],
     [
      "6992ca1ad4d545ae73fed806",
@@ -5360,118 +5880,6 @@
      2,
      2,
      2
-    ],
-    [
-     "6abee1bd3bb95eea9ebe0167",
-     "圓悟佛果禪師語錄 卷14–20 (vol 3 of 3)",
-     true,
-     139,
-     85,
-     1
-    ],
-    [
-     "6abec5269a6d02ff1a55963c",
-     "景德傳燈錄 卷25–27 (vol 9 of 10)",
-     true,
-     78,
-     65,
-     1
-    ],
-    [
-     "6abedf327ca0bb7fcd9e6c38",
-     "佛果圜悟禪師碧巖錄 卷1–2 (vol 1 of 5)",
-     true,
-     90,
-     63,
-     1
-    ],
-    [
-     "6abec5259a6d02ff1a5595f2",
-     "景德傳燈錄 卷22–24 (vol 8 of 10)",
-     true,
-     71,
-     55,
-     1
-    ],
-    [
-     "6abec5199a6d02ff1a559462",
-     "景德傳燈錄 卷4–6 (vol 2 of 10)",
-     true,
-     65,
-     51,
-     1
-    ],
-    [
-     "6abedf23e54ec11ac8bae269",
-     "雲門匡真禪師廣錄 卷2 (vol 2 of 3)",
-     true,
-     53,
-     47,
-     1
-    ],
-    [
-     "6abedf4d446ab1dad37c04ee",
-     "破菴祖先禪師語錄",
-     true,
-     55,
-     45,
-     1
-    ],
-    [
-     "6abedf357ca0bb7fcd9e6cdd",
-     "佛果圜悟禪師碧巖錄 卷5–6 (vol 3 of 5)",
-     true,
-     61,
-     44,
-     1
-    ],
-    [
-     "6abedf367ca0bb7fcd9e6d1d",
-     "佛果圜悟禪師碧巖錄 卷7–8 (vol 4 of 5)",
-     true,
-     59,
-     44,
-     1
-    ],
-    [
-     "6abedf2f0f33d7676e25f3a6",
-     "密菴和尚語錄 卷1 (vol 2 of 2)",
-     true,
-     52,
-     44,
-     1
-    ],
-    [
-     "6abec51f9a6d02ff1a559523",
-     "景德傳燈錄 卷13–15 (vol 5 of 10)",
-     true,
-     62,
-     42,
-     1
-    ],
-    [
-     "6abedf2d0f33d7676e25f375",
-     "密菴和尚語錄 卷1 (vol 1 of 2)",
-     true,
-     46,
-     42,
-     1
-    ],
-    [
-     "6abedf20e54ec11ac8bae241",
-     "雲門匡真禪師廣錄 卷1 (vol 1 of 3)",
-     true,
-     37,
-     31,
-     1
-    ],
-    [
-     "6abedf24e54ec11ac8bae2a1",
-     "雲門匡真禪師廣錄 卷2–3 (vol 3 of 3)",
-     true,
-     38,
-     29,
-     1
     ],
     [
      "6992cc35018b80967354cdee",
@@ -5503,14 +5911,6 @@
      false,
      616,
      218,
-     0
-    ],
-    [
-     "6a3cc1d6f9474f825c172e49",
-     "五燈會元·卷二十 (vol 20)",
-     true,
-     242,
-     195,
      0
     ],
     [
@@ -5562,14 +5962,6 @@
      0
     ],
     [
-     "6a3cc1cff9474f825c17296e",
-     "五燈會元·卷十五 (vol 15)",
-     true,
-     218,
-     159,
-     0
-    ],
-    [
      "6a3c75d139b4508b04e5dcdf",
      "榕村語錄·卷十九~卷二十 (vol 8)",
      true,
@@ -5583,54 +5975,6 @@
      true,
      149,
      148,
-     0
-    ],
-    [
-     "6a3cc1c0ec254ff6cae0ecff",
-     "五燈會元·卷七 (vol 7)",
-     true,
-     192,
-     141,
-     0
-    ],
-    [
-     "6a3cc1c6ec254ff6cae0ef7f",
-     "五燈會元·卷十二 (vol 12)",
-     true,
-     192,
-     139,
-     0
-    ],
-    [
-     "6a3cc1ccf9474f825c1728bb",
-     "五燈會元·卷十四 (vol 14)",
-     true,
-     176,
-     139,
-     0
-    ],
-    [
-     "6a3cc1d0f9474f825c172a4b",
-     "五燈會元·卷十六 (vol 16)",
-     true,
-     204,
-     137,
-     0
-    ],
-    [
-     "6a3cc1baec254ff6cae0e99d",
-     "五燈會元·卷一 (vol 1)",
-     true,
-     184,
-     136,
-     0
-    ],
-    [
-     "6a3cc1bdec254ff6cae0eaf8",
-     "五燈會元·卷二 (vol 2)",
-     true,
-     186,
-     133,
      0
     ],
     [
@@ -5650,22 +5994,6 @@
      0
     ],
     [
-     "6a3cc1d1f9474f825c172bb9",
-     "五燈會元·卷十七 (vol 17)",
-     true,
-     156,
-     126,
-     0
-    ],
-    [
-     "6a3cc1bbf9474f825c172777",
-     "五燈會元·卷三 (vol 3)",
-     true,
-     164,
-     125,
-     0
-    ],
-    [
      "6a3c75d439b4508b04e5de32",
      "榕村語錄·卷二十七~卷二十八 (vol 11)",
      true,
@@ -5682,142 +6010,6 @@
      0
     ],
     [
-     "6a3cc1bfec254ff6cae0ec64",
-     "五燈會元·卷六 (vol 6)",
-     true,
-     152,
-     99,
-     0
-    ],
-    [
-     "6abedf4b7ca26f5b50f80792",
-     "松源崇嶽禪師語錄",
-     true,
-     143,
-     98,
-     0
-    ],
-    [
-     "6abedf441b2cd9635f98b3e6",
-     "續古尊宿語要 卷6 (vol 5 of 5)",
-     true,
-     93,
-     81,
-     0
-    ],
-    [
-     "6abef33d4c777f224e1de5d3",
-     "天如惟則禪師語錄 卷1–2 (vol 1 of 4)",
-     true,
-     92,
-     80,
-     0
-    ],
-    [
-     "6abef3414c777f224e1de6cf",
-     "天如惟則禪師語錄 卷7–9 (vol 4 of 4)",
-     true,
-     98,
-     77,
-     0
-    ],
-    [
-     "6abedf4914590c1068e24f00",
-     "笑隱大訢禪師語錄",
-     true,
-     85,
-     77,
-     0
-    ],
-    [
-     "6a3cc1c3ec254ff6cae0ef14",
-     "五燈會元·卷九 (vol 9)",
-     true,
-     104,
-     73,
-     0
-    ],
-    [
-     "6abedf431b2cd9635f98b382",
-     "續古尊宿語要 卷5 (vol 4 of 5)",
-     true,
-     97,
-     73,
-     0
-    ],
-    [
-     "6abedf3f1b2cd9635f98b2c2",
-     "續古尊宿語要 卷2 (vol 2 of 5)",
-     true,
-     92,
-     73,
-     0
-    ],
-    [
-     "6abedf411b2cd9635f98b321",
-     "續古尊宿語要 卷4 (vol 3 of 5)",
-     true,
-     94,
-     71,
-     0
-    ],
-    [
-     "6abef3343eeeaaa3202690a0",
-     "高峰原妙禪師語錄",
-     true,
-     116,
-     67,
-     0
-    ],
-    [
-     "6abee1bb3bb95eea9ebe00f4",
-     "圓悟佛果禪師語錄 卷8–13 (vol 2 of 3)",
-     true,
-     112,
-     61,
-     0
-    ],
-    [
-     "6abef30b38586aecb162ec23",
-     "法演禪師語錄",
-     true,
-     88,
-     59,
-     0
-    ],
-    [
-     "6abedf387ca0bb7fcd9e6d5b",
-     "佛果圜悟禪師碧巖錄 卷9–10 (vol 5 of 5)",
-     true,
-     77,
-     56,
-     0
-    ],
-    [
-     "6abef31cea0ee3a64e9b8041",
-     "無準師範禪師語錄 卷2–3 (vol 2 of 4)",
-     true,
-     57,
-     55,
-     0
-    ],
-    [
-     "6abec5219a6d02ff1a559564",
-     "景德傳燈錄 卷16–18 (vol 6 of 10)",
-     true,
-     68,
-     53,
-     0
-    ],
-    [
-     "6abee93080b99e80d7d932a3",
-     "虛堂和尚語錄 卷3–4 (vol 1 of 4)",
-     true,
-     98,
-     52,
-     0
-    ],
-    [
      "69b9a26576b9bab2de21b5af",
      "新澤碧巖集 (Blue Cliff Record — Xinze Edition)",
      false,
@@ -5831,190 +6023,6 @@
      false,
      228,
      50,
-     0
-    ],
-    [
-     "6abee1b83bb95eea9ebe006b",
-     "圓悟佛果禪師語錄 卷1–7 (vol 1 of 3)",
-     true,
-     134,
-     50,
-     0
-    ],
-    [
-     "6abedf28fb1708126df94c74",
-     "大慧普覺禪師語錄 卷1–4 (vol 1 of 3)",
-     true,
-     69,
-     49,
-     0
-    ],
-    [
-     "6abec51d9a6d02ff1a5594e0",
-     "景德傳燈錄 卷10–12 (vol 4 of 10)",
-     true,
-     64,
-     48,
-     0
-    ],
-    [
-     "6abedf47ee13871d17eb15a5",
-     "應菴曇華禪師語錄",
-     true,
-     56,
-     48,
-     0
-    ],
-    [
-     "6abef35fd8d3fdd636290525",
-     "楚石梵琦禪師語錄 卷13–16 (vol 4 of 5)",
-     true,
-     84,
-     47,
-     0
-    ],
-    [
-     "6abedf2bfb1708126df94cf9",
-     "大慧普覺禪師語錄 卷9–12 (vol 3 of 3)",
-     true,
-     68,
-     47,
-     0
-    ],
-    [
-     "6abef35ed8d3fdd6362904bf",
-     "楚石梵琦禪師語錄 卷9–12 (vol 3 of 5)",
-     true,
-     99,
-     46,
-     0
-    ],
-    [
-     "6abef3404c777f224e1de682",
-     "天如惟則禪師語錄 卷5–7 (vol 3 of 4)",
-     true,
-     74,
-     46,
-     0
-    ],
-    [
-     "6abec5289a6d02ff1a55968d",
-     "景德傳燈錄 卷28–30 (vol 10 of 10)",
-     true,
-     72,
-     46,
-     0
-    ],
-    [
-     "6abef360d8d3fdd63629057c",
-     "楚石梵琦禪師語錄 卷17–20 (vol 5 of 5)",
-     true,
-     95,
-     44,
-     0
-    ],
-    [
-     "6abef33e4c777f224e1de632",
-     "天如惟則禪師語錄 卷3–5 (vol 2 of 4)",
-     true,
-     77,
-     44,
-     0
-    ],
-    [
-     "6abedf29fb1708126df94cbc",
-     "大慧普覺禪師語錄 卷5–8 (vol 2 of 3)",
-     true,
-     58,
-     44,
-     0
-    ],
-    [
-     "6abef31aea0ee3a64e9b8007",
-     "無準師範禪師語錄 卷1 (vol 1 of 4)",
-     true,
-     55,
-     44,
-     0
-    ],
-    [
-     "6abee93380b99e80d7d9334e",
-     "虛堂和尚語錄 卷8–9 (vol 3 of 4)",
-     true,
-     105,
-     43,
-     0
-    ],
-    [
-     "6abef35cd8d3fdd636290464",
-     "楚石梵琦禪師語錄 卷5–8 (vol 2 of 5)",
-     true,
-     88,
-     41,
-     0
-    ],
-    [
-     "6abec51c9a6d02ff1a5594a6",
-     "景德傳燈錄 卷7–9 (vol 3 of 10)",
-     true,
-     55,
-     41,
-     0
-    ],
-    [
-     "6abec5189a6d02ff1a559426",
-     "景德傳燈錄 卷1–3 (vol 1 of 10)",
-     true,
-     57,
-     31,
-     0
-    ],
-    [
-     "6abedf199f894b562076797f",
-     "鎮州臨濟慧照禪師語錄",
-     true,
-     40,
-     31,
-     0
-    ],
-    [
-     "6abef31dea0ee3a64e9b807d",
-     "無準師範禪師語錄 卷3–5 (vol 3 of 4)",
-     true,
-     53,
-     30,
-     0
-    ],
-    [
-     "6abef35bd8d3fdd636290417",
-     "楚石梵琦禪師語錄 卷1–4 (vol 1 of 5)",
-     true,
-     74,
-     21,
-     0
-    ],
-    [
-     "6abee93580b99e80d7d933ba",
-     "虛堂和尚語錄 卷10 (vol 4 of 4)",
-     true,
-     40,
-     18,
-     0
-    ],
-    [
-     "6abef31fea0ee3a64e9b80b5",
-     "無準師範禪師語錄 卷5 (vol 4 of 4)",
-     true,
-     57,
-     15,
-     0
-    ],
-    [
-     "6abee93180b99e80d7d93308",
-     "虛堂和尚語錄 卷6–7 (vol 2 of 4)",
-     true,
-     67,
-     6,
      0
     ],
     [
@@ -6035,22 +6043,22 @@
    ],
    "books": 170,
    "readable_books": 155,
-   "pages_scanned": 36297,
-   "pages_transcribed": 32306,
-   "pages_translated": 30647,
+   "pages_scanned": 37237,
+   "pages_transcribed": 33242,
+   "pages_translated": 31571,
    "canon_page_equivalents": 2763913,
    "ocr_engines": [
     [
      "gemini-3-flash-preview",
-     20602
+     20618
+    ],
+    [
+     "gemini-3.1-flash-lite",
+     6612
     ],
     [
      "gemini-3.1-flash-lite-preview",
      6161
-    ],
-    [
-     "gemini-3.1-flash-lite",
-     4736
     ],
     [
      "PaddleOCR-VL-1.6-0.9B",
@@ -6068,11 +6076,11 @@
    "translation_models": [
     [
      "gemini-3-flash-preview",
-     14452
+     16315
     ],
     [
      "gemini-3.1-flash-lite-preview",
-     12086
+     12085
     ],
     [
      "gemini-3.1-flash-lite",
@@ -6089,6 +6097,14 @@
    ],
    "book_pages": [
     [
+     "69bd0afdb01b17638a098546",
+     "Anthology of Chan Verse Commentaries on Koans",
+     true,
+     1896,
+     1888,
+     1864
+    ],
+    [
      "6a09f79aec7a5a72f8daafe5",
      "史記 (Shiji, 130 juan) — Qing 1884 photolithograph, vols. 1-6",
      true,
@@ -6103,14 +6119,6 @@
      1380,
      1380,
      1313
-    ],
-    [
-     "69bd0afdb01b17638a098546",
-     "Anthology of Chan Verse Commentaries on Koans",
-     true,
-     956,
-     952,
-     938
     ],
     [
      "6a0acab14d80f9c1594971ea",
@@ -6198,7 +6206,7 @@
      true,
      311,
      310,
-     303
+     302
     ],
     [
      "6992cec7673ee1e40e321834",
@@ -6227,7 +6235,7 @@
     [
      "6992c8904f3a8791242304e6",
      "本草綱目 (Bencao Gangmu) - Compendium of Materia Medica",
-     true,
+     false,
      249,
      249,
      249
@@ -6273,19 +6281,19 @@
      222
     ],
     [
-     "6992cda143713c66ea637ae7",
-     "Compendium of Materia Medica, Vol. 16",
-     true,
-     220,
-     220,
-     220
-    ],
-    [
      "69af123e0092756351e44874",
      "Record of Places Outside the Tributaries",
      true,
      223,
      223,
+     219
+    ],
+    [
+     "6992cda143713c66ea637ae7",
+     "Compendium of Materia Medica, Vol. 16",
+     true,
+     220,
+     220,
      219
     ],
     [
@@ -7331,7 +7339,7 @@
     [
      "69e8b26b2ff2a8dc09e77afc",
      "荀子 (Xúnzǐ)",
-     true,
+     false,
      220,
      220,
      68
@@ -7528,7 +7536,7 @@
     [
      "6a09ff3dfa20006dbaba8b4d",
      "Atthasālinī (Buddhaghosa's commentary on the Dhammasaṅgaṇī) — PTS Pali",
-     true,
+     false,
      552,
      545,
      536
@@ -7970,17 +7978,17 @@
    "books": 2100,
    "readable_books": 386,
    "pages_scanned": 351597,
-   "pages_transcribed": 162247,
-   "pages_translated": 109583,
+   "pages_transcribed": 162562,
+   "pages_translated": 109586,
    "canon_page_equivalents": 48672,
    "ocr_engines": [
     [
      "gemini-3-flash-preview",
-     78489
+     79713
     ],
     [
      "gemini-3.1-flash-lite",
-     57975
+     57066
     ],
     [
      "gemini-3.1-flash-lite-preview",
@@ -7998,7 +8006,7 @@
    "translation_models": [
     [
      "gemini-3-flash-preview",
-     67552
+     68818
     ],
     [
      "gemini-3.1-flash-lite-preview",
@@ -8006,7 +8014,7 @@
     ],
     [
      "gemini-3.1-flash-lite",
-     12921
+     11658
     ],
     [
      "unrecorded",
@@ -8041,7 +8049,7 @@
     [
      "6955831757e3b773024f76ae",
      "Treasury of the Abhidharma with Commentary (Abhidharmakosa with Bhashya)",
-     true,
+     false,
      1258,
      1258,
      1253
@@ -8153,7 +8161,7 @@
     [
      "6a08550c0ce3b2271052a93c",
      "Ashtāṅgahṛdayam of Vāgbhaṭa",
-     true,
+     false,
      1143,
      1023,
      1020
@@ -8219,8 +8227,8 @@
      "Tattvasaṃgraha, Vol. I — with Kamalaśīla’s Pañjikā (Sanskrit, GOS)",
      false,
      807,
-     803,
-     802
+     807,
+     807
     ],
     [
      "699068ea2e4efe9106769e41",
@@ -8228,7 +8236,7 @@
      true,
      796,
      796,
-     796
+     795
     ],
     [
      "69d005e0b2b7abac3c8397bb",
@@ -8313,7 +8321,7 @@
     [
      "69dea1f04d19ec2e9ba757c7",
      "Natyashastram (Sanskrit Text)",
-     true,
+     false,
      680,
      664,
      664
@@ -8401,7 +8409,7 @@
     [
      "6990601f8cbcc9a4dba2c624",
      "The Celestial Tree of Natal Astrology",
-     true,
+     false,
      580,
      580,
      580
@@ -8449,7 +8457,7 @@
     [
      "69906550726f64800c10b7a9",
      "The Correctly Established Doctrine of Brahma, Volume 2",
-     true,
+     false,
      553,
      553,
      553
@@ -8473,7 +8481,7 @@
     [
      "6a30909cbec66f86487f2e8d",
      "Pramāṇavārttika — with Manorathanandin’s Vṛtti (Sanskrit)",
-     true,
+     false,
      536,
      528,
      524
@@ -8553,7 +8561,7 @@
     [
      "69905f4440bc3a0478efb9b2",
      "The Great Compendium of Horoscopy",
-     true,
+     false,
      486,
      486,
      486
@@ -8569,7 +8577,7 @@
     [
      "69d91e473a50087f7bd9b19a",
      "Rasarnavam (Indradeo Tripathi & Taradatta Panta, 1978)",
-     true,
+     false,
      482,
      482,
      481
@@ -8593,7 +8601,7 @@
     [
      "69d91e423a50087f7bd9afc5",
      "Atharvaveda (Saunaka recension)",
-     true,
+     false,
      468,
      468,
      468
@@ -8603,8 +8611,8 @@
      "Tattvasaṃgraha, Vol. II — with Kamalaśīla’s Pañjikā (Sanskrit, GOS)",
      false,
      475,
-     466,
-     462
+     468,
+     465
     ],
     [
      "69ef250485daccce30f2ad7c",
@@ -8649,7 +8657,7 @@
     [
      "69d7e19fe9e5e67989c378e5",
      "Sri Svacchanda Tantra I",
-     true,
+     false,
      440,
      440,
      438
@@ -8665,7 +8673,7 @@
     [
      "69de98f51b234a773e439927",
      "Panchatantram with Sanskrit Commentary",
-     true,
+     false,
      433,
      433,
      433
@@ -8697,7 +8705,7 @@
     [
      "69906a47d69de0e69807024f",
      "Manual for the Propitiation of the Planets (Graha Shanti Paddhati)",
-     true,
+     false,
      408,
      408,
      408
@@ -8745,7 +8753,7 @@
     [
      "69907971b621b177c1af74df",
      "Surya Siddhanta (Ranganatha)",
-     true,
+     false,
      387,
      387,
      387
@@ -8849,7 +8857,7 @@
     [
      "6990694d2f82e0fda48068c9",
      "The Great Compilation",
-     true,
+     false,
      356,
      356,
      356
@@ -8916,7 +8924,7 @@
      true,
      347,
      347,
-     347
+     346
     ],
     [
      "69906821249ce014347d5660",
@@ -8985,7 +8993,7 @@
     [
      "69557548f63a757109173f3c",
      "Sangita Ratnakara",
-     true,
+     false,
      327,
      327,
      326
@@ -9028,12 +9036,12 @@
      true,
      311,
      311,
-     311
+     310
     ],
     [
      "69d7e0dbe9e5e67989c37135",
      "Rudrayamala Tantram",
-     true,
+     false,
      306,
      306,
      306
@@ -9113,7 +9121,7 @@
     [
      "69e13b2c0dae29249d20c176",
      "Stavacintāmaṇi of Bhaṭṭa Nārāyaṇa with Kṣemarāja's Commentary",
-     true,
+     false,
      288,
      288,
      283
@@ -9185,7 +9193,7 @@
     [
      "69dfee8ace6bb8619e07fc64",
      "Kriyāsamuccaya (Tantric Ritual Collection)",
-     true,
+     false,
      260,
      260,
      256
@@ -9209,18 +9217,10 @@
     [
      "69906467ef12272ffdc91f4e",
      "Concise Manual on Planetary Motion with Commentary",
-     true,
+     false,
      250,
      250,
      250
-    ],
-    [
-     "699258c28812793469fdd6be",
-     "Commentary on the Brahma Sutras (Brahma Sutra Bhashya)",
-     true,
-     248,
-     248,
-     248
     ],
     [
      "69e7928c80b52390feb16343",
@@ -9228,6 +9228,14 @@
      true,
      254,
      254,
+     247
+    ],
+    [
+     "699258c28812793469fdd6be",
+     "Commentary on the Brahma Sutras (Brahma Sutra Bhashya)",
+     true,
+     248,
+     248,
      247
     ],
     [
@@ -9244,7 +9252,7 @@
      true,
      244,
      244,
-     240
+     239
     ],
     [
      "69908c98e293c0bb53f39057",
@@ -9329,7 +9337,7 @@
     [
      "699068e42e4efe9106769c67",
      "Female Horoscopy",
-     true,
+     false,
      228,
      228,
      228
@@ -9369,7 +9377,7 @@
     [
      "69d7e121e9e5e67989c3751f",
      "Dattatreya Tantra",
-     true,
+     false,
      220,
      220,
      217
@@ -9529,7 +9537,7 @@
     [
      "6990796fb621b177c1af7208",
      "Moonlight of the Ascendant with the Clear Commentary",
-     true,
+     false,
      182,
      182,
      182
@@ -9585,7 +9593,7 @@
     [
      "69906d8364d44bd0a0ef5a44",
      "Nine Gems of Geomancy",
-     true,
+     false,
      172,
      172,
      172
@@ -9609,7 +9617,7 @@
     [
      "69d7e29de08c70307b76642c",
      "Dash Mahavidya Tantra Sara",
-     true,
+     false,
      169,
      169,
      167
@@ -9625,7 +9633,7 @@
     [
      "69d91e4b3a50087f7bd9b37d",
      "Shri Tantra Durga Saptashati (Chaukhambha, 1900)",
-     true,
+     false,
      165,
      165,
      165
@@ -9697,7 +9705,7 @@
     [
      "69b99f2c76b9bab2de21a67b",
      "Mūlamadhyamakakārikā of Nāgārjuna (Sanskrit Text)",
-     true,
+     false,
      160,
      158,
      156
@@ -9713,7 +9721,7 @@
     [
      "6991d8ac8c1030b12444c781",
      "Kriyākāṇḍakramāvalī (MS Add.1406)",
-     true,
+     false,
      156,
      156,
      153
@@ -9729,7 +9737,7 @@
     [
      "69d0065c73df40dce83db54c",
      "Rasārṇavakalpa",
-     true,
+     false,
      156,
      154,
      149
@@ -9833,7 +9841,7 @@
     [
      "6991d8a08c1030b12444c14c",
      "Tantra of the Supreme Lord",
-     true,
+     false,
      124,
      124,
      124
@@ -9897,7 +9905,7 @@
     [
      "699060238cbcc9a4dba2cef9",
      "Laghu Parashari (The Short Parashari)",
-     true,
+     false,
      116,
      115,
      114
@@ -9905,7 +9913,7 @@
     [
      "699066532ec9f7db5717a012",
      "The Science of Breath",
-     true,
+     false,
      112,
      112,
      112
@@ -9921,7 +9929,7 @@
     [
      "699066c3249ce014347d1d23",
      "The Jewel of Auspicious Moments",
-     true,
+     false,
      107,
      107,
      107
@@ -9969,7 +9977,7 @@
     [
      "69e7835dd93c1f6007506c9e",
      "वृक्षायुर्वेद (Vṛkṣāyurveda / Science of Plant Life)",
-     true,
+     false,
      100,
      100,
      100
@@ -10009,7 +10017,7 @@
     [
      "6990664f2ec9f7db57179fb3",
      "The Latter Nectar of Time",
-     true,
+     false,
      93,
      93,
      93
@@ -10081,7 +10089,7 @@
     [
      "699066582ec9f7db5717a0a5",
      "The Wonder of Calculation (Karana Kutuhala)",
-     true,
+     false,
      88,
      88,
      88
@@ -10121,7 +10129,7 @@
     [
      "6a3067e4c4fd77fb5b9f882d",
      "Ratnāvalī (Sanskrit, ed. Mishra & Goswami)",
-     true,
+     false,
      85,
      85,
      81
@@ -10153,7 +10161,7 @@
     [
      "699068be90f6a221d3a9a7fa",
      "Compendium of Kerala Horary Astrology",
-     true,
+     false,
      79,
      79,
      79
@@ -10161,7 +10169,7 @@
     [
      "69907975b621b177c1af7bf1",
      "The Lord of Questions",
-     true,
+     false,
      76,
      76,
      76
@@ -10281,7 +10289,7 @@
     [
      "699069262f82e0fda4804ae7",
      "Kashyapa's Treatise on Horoscopy",
-     true,
+     false,
      64,
      64,
      64
@@ -10393,7 +10401,7 @@
     [
      "699068c790f6a221d3a9a90f",
      "The Oracle of Rama's Command",
-     true,
+     false,
      51,
      51,
      51
@@ -10633,7 +10641,7 @@
     [
      "6990665c2ec9f7db5717a19a",
      "Small Manual of Astronomical Computation with the Commentary of Paramesvara",
-     true,
+     false,
      35,
      35,
      35
@@ -10849,7 +10857,7 @@
     [
      "69935b4a8e28d8f4c5d3cf8c",
      "Fifteen Principal Upanishads",
-     true,
+     false,
      26,
      26,
      26
@@ -11081,7 +11089,7 @@
     [
      "69906559726f64800c10be77",
      "Women's Horoscopy",
-     true,
+     false,
      15,
      15,
      15
@@ -11153,7 +11161,7 @@
     [
      "69906a601cf6ed5fbc8f57c7",
      "Hymn to the Nine Planets",
-     true,
+     false,
      11,
      11,
      11
@@ -11551,6 +11559,14 @@
      0
     ],
     [
+     "6a94ca4d8e2a2ffc91d25bc8",
+     "Maha Ganapati Stava Raj From Bhavishya Puran And Panchastavi Sharada Manuscript From Kulga",
+     false,
+     113,
+     71,
+     0
+    ],
+    [
      "6a94d4e68e2a2ffc91d29fcf",
      "Panchastavi Tika Sharada Shashi Shekhar Toshkhani Collection",
      false,
@@ -11695,6 +11711,14 @@
      0
     ],
     [
+     "6a94cc4e8e2a2ffc91d26812",
+     "Manuscript 11 Suktani ( Vishnu, Brahma, Shiva, Yama , Pitru, Manuscript In Sharada)",
+     false,
+     66,
+     65,
+     0
+    ],
+    [
      "6a9422f939b196bfaa0445c1",
      "15 Prapancha Sara Sanskrit In Malayalam Script Tantra Palm Leaf Manuscript Unknown",
      false,
@@ -11739,6 +11763,14 @@
      "Spanda Nirnaya Ist Chapter And 1st Page Of Second Chapter Sharada Ram Shaiva Ashram 1",
      false,
      76,
+     63,
+     0
+    ],
+    [
+     "6a94cddd8e2a2ffc91d26e54",
+     "Manuscript 24 Panchayatana Puja",
+     false,
+     75,
      63,
      0
     ],
@@ -11903,6 +11935,14 @@
      0
     ],
     [
+     "6a94cbc88e2a2ffc91d26458",
+     "Manu 6 Laghu Vritti",
+     false,
+     150,
+     59,
+     0
+    ],
+    [
      "6a94d4a88e2a2ffc91d29c68",
      "Pancha Tantra Samvatsara Shraddha Shraddha Brahmana Ritu Naryana Vishnu Purana Sharada Man",
      false,
@@ -11927,10 +11967,26 @@
      0
     ],
     [
+     "6a94c8738e2a2ffc91d25361",
+     "Kupwara 4 Shri Shiva Shraddha Vidhi (श्री शिव श्राद्ध विधिः)",
+     false,
+     129,
+     58,
+     0
+    ],
+    [
      "6a94d5698e2a2ffc91d2a310",
      "Partial Utpal Stotravali And Bhavani Sahasranama Sharada Manuscript From Baramula Trust",
      false,
      116,
+     58,
+     0
+    ],
+    [
+     "6a94e02db24b5a49c27daaab",
+     "Tantriki Shiva Puja Sharada RSkt S Jammu No 33",
+     false,
+     67,
      58,
      0
     ],
@@ -11971,6 +12027,14 @@
      "Various Vedic Stotras And Ritualistic Vidhans",
      false,
      504,
+     56,
+     0
+    ],
+    [
+     "6a94ce9c8e2a2ffc91d273a8",
+     "Manuscript 34 Saundarya Lahari ( Shankaracharya), Rudra Mantras, Bhagavad Gita And Others ",
+     false,
+     422,
      56,
      0
     ],
@@ -12095,14 +12159,6 @@
      0
     ],
     [
-     "6a94e02db24b5a49c27daaab",
-     "Tantriki Shiva Puja Sharada RSkt S Jammu No 33",
-     false,
-     67,
-     52,
-     0
-    ],
-    [
      "6a9489bf31b41d9c57444515",
      "4170 UPSS Sharada Annapurna Paddhati Kumbha Tara Tantra Folio 13 35",
      false,
@@ -12179,6 +12235,14 @@
      "Bhagavata Suprabhat Stotra Shauchachar Kram Vidhi Snan Vidhi Sandhyopasanam Sharada Manusc",
      false,
      255,
+     50,
+     0
+    ],
+    [
+     "6a94cd9a8e2a2ffc91d26d27",
+     "Manuscript 20 Upanayana Vidhi ( 1898 C E Research By Rajanaka Prasada) Sharada Manuscript ",
+     false,
+     179,
      50,
      0
     ],
@@ -12615,14 +12679,6 @@
      0
     ],
     [
-     "6a94ca4d8e2a2ffc91d25bc8",
-     "Maha Ganapati Stava Raj From Bhavishya Puran And Panchastavi Sharada Manuscript From Kulga",
-     false,
-     113,
-     48,
-     0
-    ],
-    [
      "6a94a83fbf723b215d8bff08",
      "Surya Varam Walnut Puja Kanya Sanskrar Vidhi Etc Ritualistic Sharada Manuscript Kulgam Res",
      false,
@@ -12659,14 +12715,6 @@
      "480 Pancastavi Dharmacharya DAM Sharada Paper",
      false,
      72,
-     48,
-     0
-    ],
-    [
-     "6a94cc4e8e2a2ffc91d26812",
-     "Manuscript 11 Suktani ( Vishnu, Brahma, Shiva, Yama , Pitru, Manuscript In Sharada)",
-     false,
-     66,
      48,
      0
     ],
@@ -13287,6 +13335,14 @@
      0
     ],
     [
+     "6a94d0db8e2a2ffc91d28773",
+     "MN 003306 Partialy Destroyed Sharada Manuscripts At Kurukshetra University",
+     false,
+     95,
+     45,
+     0
+    ],
+    [
      "6a94c3bc56cac2f882c84d20",
      "Jaiminiya Sutra With Artha Sangraha Comm Mss No 71 Sharada Alm 1 Panjab Uni",
      false,
@@ -13395,6 +13451,14 @@
      "Sharada Manuscript Donated By C M Dhar With Illustrations Alakh Sahiba Trust",
      false,
      510,
+     44,
+     0
+    ],
+    [
+     "6a94d308c3eaca0630266876",
+     "Mokshopaya Sharada Manuscript 6",
+     false,
+     443,
      44,
      0
     ],
@@ -13871,14 +13935,6 @@
      0
     ],
     [
-     "6a94cddd8e2a2ffc91d26e54",
-     "Manuscript 24 Panchayatana Puja",
-     false,
-     75,
-     41,
-     0
-    ],
-    [
      "6a94c4d756cac2f882c851be",
      "Kadambari Kathasara Mss No 54 Sharada Alm 1 Panjab Uni",
      false,
@@ -14311,14 +14367,6 @@
      0
     ],
     [
-     "6a94c8738e2a2ffc91d25361",
-     "Kupwara 4 Shri Shiva Shraddha Vidhi (श्री शिव श्राद्ध विधिः)",
-     false,
-     129,
-     38,
-     0
-    ],
-    [
      "6a94b94856cac2f882c80686",
      "Baramulla 1 Veda Mantra Nakshatra Yajna – Brahmanas",
      false,
@@ -14535,6 +14583,22 @@
      0
     ],
     [
+     "6a94cb0f8e2a2ffc91d25ed6",
+     "Malini Vijayotaram Sharada RSkt S Jammu No 23",
+     false,
+     59,
+     37,
+     0
+    ],
+    [
+     "6a94cd3e8e2a2ffc91d26906",
+     "Manuscript 17 Gayathri Nitya Puja Paddhati ( Rudra Yamala, Manuscript In Sharada)",
+     false,
+     52,
+     37,
+     0
+    ],
+    [
      "6a948f1c31b41d9c57446ae3",
      "Anantnag 2 Rakshoghna Mantra – Gayathri Brahmana Kushmanda Brahmana Abhisheka Mantra",
      false,
@@ -14631,18 +14695,18 @@
      0
     ],
     [
+     "6a94d0cd8e2a2ffc91d2851b",
+     "MN 003304 Atma Bodha Of Shankaracharya Sharada Manuscripts At Kurukshetra University",
+     false,
+     37,
+     37,
+     0
+    ],
+    [
      "6a94bfc056cac2f882c8203b",
      "Bhagavat Gita Ram Kantha Kashmirian Tika Partial",
      false,
      769,
-     36,
-     0
-    ],
-    [
-     "6a94ce9c8e2a2ffc91d273a8",
-     "Manuscript 34 Saundarya Lahari ( Shankaracharya), Rudra Mantras, Bhagavad Gita And Others ",
-     false,
-     422,
      36,
      0
     ],
@@ -14659,22 +14723,6 @@
      "Hari Vamsha Mss No 66 Sharada Alm 1 Panjab Uni",
      false,
      297,
-     36,
-     0
-    ],
-    [
-     "6a94cd9a8e2a2ffc91d26d27",
-     "Manuscript 20 Upanayana Vidhi ( 1898 C E Research By Rajanaka Prasada) Sharada Manuscript ",
-     false,
-     179,
-     36,
-     0
-    ],
-    [
-     "6a94cbc88e2a2ffc91d26458",
-     "Manu 6 Laghu Vritti",
-     false,
-     150,
      36,
      0
     ],
@@ -14943,6 +14991,14 @@
      0
     ],
     [
+     "6a94cf298e2a2ffc91d276e9",
+     "Matrika Tantra Sharada RSkt S Jammu No 72",
+     false,
+     35,
+     35,
+     0
+    ],
+    [
      "6a94da53b24b5a49c27d7ec0",
      "Sharada Almanac 5049 2030 1895 1973 74 Vijeshwar Panchang",
      false,
@@ -14963,6 +15019,14 @@
      "Vedant Sar Tika Sharada RSkt S Jammu No 42",
      false,
      147,
+     34,
+     0
+    ],
+    [
+     "6a94d31e8e2a2ffc91d2894e",
+     "Mokshopaya Utpatti Prakaran Left Side KECSS Photocopied",
+     false,
+     142,
      34,
      0
     ],
@@ -15047,14 +15111,6 @@
      0
     ],
     [
-     "6a94d0cd8e2a2ffc91d2851b",
-     "MN 003304 Atma Bodha Of Shankaracharya Sharada Manuscripts At Kurukshetra University",
-     false,
-     37,
-     34,
-     0
-    ],
-    [
      "6a94de56b24b5a49c27d9d2c",
      "Shiv Sutra Vimarshani Sharada RSkt S Jammu No 76",
      false,
@@ -15097,14 +15153,6 @@
     [
      "6a94a52fbf723b215d8be1c9",
      "Shiv Deep Shraddham Sharada Manuscript 3 Of 3 Residence Of Altaf Ahmed From Pulwama",
-     false,
-     35,
-     34,
-     0
-    ],
-    [
-     "6a94cf298e2a2ffc91d276e9",
-     "Matrika Tantra Sharada RSkt S Jammu No 72",
      false,
      35,
      34,
@@ -15155,6 +15203,14 @@
      "Kiratarjuniya With Comm Mss No 56 Sharada Alm 1 Panjab Uni",
      false,
      121,
+     33,
+     0
+    ],
+    [
+     "6a94ced28e2a2ffc91d275e7",
+     "Manuscript 7 Garuda Purana Saroddhara Tika ( Manuscript In Sharada)",
+     false,
+     93,
      33,
      0
     ],
@@ -15227,6 +15283,14 @@
      "430 431 Bhairavaukaran Of Kshemaraja And Paramarthasar Of Abhinvagupta DAM Sharada Birch B",
      false,
      35,
+     33,
+     0
+    ],
+    [
+     "6a94cbbf8e2a2ffc91d2641f",
+     "Manu 5 Mahimna Para Stotram ( Shiva Mahimna Stotram By Pushpadanta) Shadakshara Mantram Ot",
+     false,
+     34,
      33,
      0
     ],
@@ -15311,6 +15375,14 @@
      0
     ],
     [
+     "6a94cad28e2a2ffc91d25ded",
+     "Mahartha Manjari With Parimal Sharada RSkt S Jammu No 75",
+     false,
+     42,
+     32,
+     0
+    ],
+    [
      "6a94d97db24b5a49c27d7c3c",
      "Sharada Almanac 5025 1949 50 Vijeshwar Panchang",
      false,
@@ -15367,14 +15439,6 @@
      0
     ],
     [
-     "6a94cbbf8e2a2ffc91d2641f",
-     "Manu 5 Mahimna Para Stotram ( Shiva Mahimna Stotram By Pushpadanta) Shadakshara Mantram Ot",
-     false,
-     34,
-     32,
-     0
-    ],
-    [
      "6a94d935b24b5a49c27d7b6e",
      "Sharada Almanac 5013 1937 38 Vijeshwar Panchang",
      false,
@@ -15411,6 +15475,14 @@
      "Pahari Lok Git 2004 Vol 24 Kashmiri Urdu Pahari Jk Academy",
      false,
      110,
+     31,
+     0
+    ],
+    [
+     "6a94cebd8e2a2ffc91d2757d",
+     "Manuscript 6 – Garuda Purana Saroddhara Tika ( Manuscript In Sharada)",
+     false,
+     103,
      31,
      0
     ],
@@ -15547,6 +15619,14 @@
      "Anargha Raghava Mss No 51 Sharada Alm 1 Panjab Uni",
      false,
      241,
+     30,
+     0
+    ],
+    [
+     "6a94d3d28e2a2ffc91d29288",
+     "Munshi Ahmad Ali Ghazi Hayat Te Khidmat Kashmiri Urdu Pahari Maqbool Sajid",
+     false,
+     186,
      30,
      0
     ],
@@ -15871,6 +15951,14 @@
      0
     ],
     [
+     "6a94d4318e2a2ffc91d29993",
+     "Nirvana Prakarana Purvardha Part II KECSS Photocopied",
+     false,
+     346,
+     28,
+     0
+    ],
+    [
      "6a94936e31b41d9c5744a29e",
      "Combo Of Original Handwritten And Handwritten To Digitally Transcribed Excel Catalog List ",
      false,
@@ -16055,6 +16143,14 @@
      0
     ],
     [
+     "6a94c9c48e2a2ffc91d25a45",
+     "M 4 Bhava Phala( Nilakanti Tajika Manittha Tajaka Tajaka Bhushana) Padma",
+     false,
+     28,
+     28,
+     0
+    ],
+    [
      "6a949e3ff4b599840a464b08",
      "Naishadhiya Mahakavya With Tika Mss No 49 Sharada Alm 1 Panjab Uni",
      false,
@@ -16103,26 +16199,10 @@
      0
     ],
     [
-     "6a94cb0f8e2a2ffc91d25ed6",
-     "Malini Vijayotaram Sharada RSkt S Jammu No 23",
-     false,
-     59,
-     27,
-     0
-    ],
-    [
      "6a94a0e8bf723b215d8bd217",
      "Samvita Prakash Sharada RSkt S Jammu No 73",
      false,
      56,
-     27,
-     0
-    ],
-    [
-     "6a94cd3e8e2a2ffc91d26906",
-     "Manuscript 17 Gayathri Nitya Puja Paddhati ( Rudra Yamala, Manuscript In Sharada)",
-     false,
-     52,
      27,
      0
     ],
@@ -16153,6 +16233,14 @@
     [
      "6a948e0931b41d9c574463e8",
      "Aditya Vaara Vrata – Sankranti Udyapana",
+     false,
+     29,
+     27,
+     0
+    ],
+    [
+     "6a94d02c8e2a2ffc91d28295",
+     "MN 003265 Agama Shastra Vivaran Shankararya Sharada Manuscripts At Kurukshetra University",
      false,
      29,
      27,
@@ -16207,26 +16295,10 @@
      0
     ],
     [
-     "6a94d31e8e2a2ffc91d2894e",
-     "Mokshopaya Utpatti Prakaran Left Side KECSS Photocopied",
-     false,
-     142,
-     26,
-     0
-    ],
-    [
      "6a948c4431b41d9c57445695",
      "462 Garuda Purana DAM Sharada Paper",
      false,
      99,
-     26,
-     0
-    ],
-    [
-     "6a94d0db8e2a2ffc91d28773",
-     "MN 003306 Partialy Destroyed Sharada Manuscripts At Kurukshetra University",
-     false,
-     95,
      26,
      0
     ],
@@ -16313,14 +16385,6 @@
     [
      "6a949b2931b41d9c5744dbe9",
      "Manuscript 104– Janmashtami Vrata Udyapana Vidhi Dina Nath Raina",
-     false,
-     28,
-     26,
-     0
-    ],
-    [
-     "6a94c9c48e2a2ffc91d25a45",
-     "M 4 Bhava Phala( Nilakanti Tajika Manittha Tajaka Tajaka Bhushana) Padma",
      false,
      28,
      26,
@@ -20151,14 +20215,6 @@
      0
     ],
     [
-     "6a94d308c3eaca0630266876",
-     "Mokshopaya Sharada Manuscript 6",
-     false,
-     443,
-     24,
-     0
-    ],
-    [
      "69c6667c5ee2cfa2f502ccdf",
      "Harshacharita — Life of Emperor Harsha",
      false,
@@ -20279,14 +20335,6 @@
      0
     ],
     [
-     "6a94cebd8e2a2ffc91d2757d",
-     "Manuscript 6 – Garuda Purana Saroddhara Tika ( Manuscript In Sharada)",
-     false,
-     103,
-     24,
-     0
-    ],
-    [
      "6a94997b31b41d9c5744d047",
      "Kupwara 2 Deepa Shraddha Vidhi (दीप श्राद्ध विधिः)",
      false,
@@ -20345,6 +20393,14 @@
     [
      "6a94940f31b41d9c5744a8b5",
      "Dina Nath Raina Jammu Sharada Manuscript 5 – Karma Kanda",
+     false,
+     27,
+     24,
+     0
+    ],
+    [
+     "6a94cdb68e2a2ffc91d26ddd",
+     "Manuscript 23 Adbhuta Shanti Vidhi Parna Purusha Vidhi",
      false,
      27,
      24,
@@ -20535,14 +20591,6 @@
      0
     ],
     [
-     "6a94d02c8e2a2ffc91d28295",
-     "MN 003265 Agama Shastra Vivaran Shankararya Sharada Manuscripts At Kurukshetra University",
-     false,
-     29,
-     23,
-     0
-    ],
-    [
      "6a94c7d48e2a2ffc91d25037",
      "Kulgam 9 Ga Karadi Shri Ganapati Nama Sahasram (गकारदि श्रीगणपतिनामसहस्रम्)",
      false,
@@ -20615,27 +20663,19 @@
      0
     ],
     [
+     "6a94c7658e2a2ffc91d24de9",
+     "Kulgam 28 08 2023 Saundarya Lahari – Vedic Hymns ( Svasti Suktam Rudra Panchakam – Sandhyo",
+     false,
+     23,
+     23,
+     0
+    ],
+    [
      "6a94d0878e2a2ffc91d283b6",
      "MN 003274 Adhyatma Vidya Sharada Manuscripts At Kurukshetra University",
      false,
      23,
      23,
-     0
-    ],
-    [
-     "6a94d4318e2a2ffc91d29993",
-     "Nirvana Prakarana Purvardha Part II KECSS Photocopied",
-     false,
-     346,
-     22,
-     0
-    ],
-    [
-     "6a94ced28e2a2ffc91d275e7",
-     "Manuscript 7 Garuda Purana Saroddhara Tika ( Manuscript In Sharada)",
-     false,
-     93,
-     22,
      0
     ],
     [
@@ -20831,22 +20871,6 @@
      0
     ],
     [
-     "6a94d3d28e2a2ffc91d29288",
-     "Munshi Ahmad Ali Ghazi Hayat Te Khidmat Kashmiri Urdu Pahari Maqbool Sajid",
-     false,
-     186,
-     21,
-     0
-    ],
-    [
-     "6a94cad28e2a2ffc91d25ded",
-     "Mahartha Manjari With Parimal Sharada RSkt S Jammu No 75",
-     false,
-     42,
-     21,
-     0
-    ],
-    [
      "6a94a462bf723b215d8bdd32",
      "Sharada Panchang 2 Of 3 1976 77 Brahman Maha Mandal Kashmir Trust",
      false,
@@ -20875,14 +20899,6 @@
      "Panchang 3 In",
      false,
      30,
-     21,
-     0
-    ],
-    [
-     "6a94cdb68e2a2ffc91d26ddd",
-     "Manuscript 23 Adbhuta Shanti Vidhi Parna Purusha Vidhi",
-     false,
-     27,
      21,
      0
     ],
@@ -20927,16 +20943,16 @@
      0
     ],
     [
-     "6a94c7658e2a2ffc91d24de9",
-     "Kulgam 28 08 2023 Saundarya Lahari – Vedic Hymns ( Svasti Suktam Rudra Panchakam – Sandhyo",
+     "6a94c47f56cac2f882c85144",
+     "Jyotish Related Sharada Text From Kupwara Trust",
      false,
-     23,
+     22,
      21,
      0
     ],
     [
-     "6a94c47f56cac2f882c85144",
-     "Jyotish Related Sharada Text From Kupwara Trust",
+     "6a94cd898e2a2ffc91d26cf4",
+     "Manuscript 20 – Asya Vamasya Palitasya Suktam ( Manuscript In Sharada)",
      false,
      22,
      21,
@@ -21119,6 +21135,14 @@
      0
     ],
     [
+     "6a94cc2e8e2a2ffc91d265fb",
+     "Manuscript 103 – Chanturmasa Vrata Udyapana Vidhi Dina Nath Raina",
+     false,
+     21,
+     21,
+     0
+    ],
+    [
      "6a94cce08e2a2ffc91d268a4",
      "Manuscript 119 – Narakottaaranam Stotram Hari Nama Mala Stotram Dina Nath Raina",
      false,
@@ -21129,6 +21153,14 @@
     [
      "6a94d0298e2a2ffc91d2827d",
      "MN 003264 Ashtavakra Sharada Manuscripts At Kurukshetra University",
+     false,
+     21,
+     21,
+     0
+    ],
+    [
+     "6a94d1b3c3eaca063026641c",
+     "MN 003345 Mala Nirnaya Sharada Manuscripts At Kurukshetra University",
      false,
      21,
      21,
@@ -21155,6 +21187,22 @@
      "Charaka Samhita: Chikitsa Sthanam Vol. 3 (Sanskrit Medical Text)",
      false,
      1492,
+     20,
+     0
+    ],
+    [
+     "6a94cc4a8e2a2ffc91d26649",
+     "Manuscript 11 – Vishnu Sahasra Naam Tika ( Padma Purana) And Bhagavad Geeta Gudhartha Dipi",
+     false,
+     454,
+     20,
+     0
+    ],
+    [
+     "6a94d42a8e2a2ffc91d298a0",
+     "Nirvana Prakarana Purvardha I KECSS Photocopied",
+     false,
+     240,
      20,
      0
     ],
@@ -21215,16 +21263,16 @@
      0
     ],
     [
-     "6a94a6c5bf723b215d8beaa3",
-     "Shri Satya Narayana Katha ( From Reva Khanda) Sharada Manuscript From Anantnag",
+     "6a94cd918e2a2ffc91d26d0d",
+     "Manuscript 20 Kusumanjali Stotra ( By Jagaddhara Bhatta) Asya Vamasya Sukta ( Rigveda 1.16",
      false,
-     22,
+     23,
      20,
      0
     ],
     [
-     "6a94cd898e2a2ffc91d26cf4",
-     "Manuscript 20 – Asya Vamasya Palitasya Suktam ( Manuscript In Sharada)",
+     "6a94a6c5bf723b215d8beaa3",
+     "Shri Satya Narayana Katha ( From Reva Khanda) Sharada Manuscript From Anantnag",
      false,
      22,
      20,
@@ -21249,22 +21297,6 @@
     [
      "6a948dab31b41d9c57445f02",
      "Eka Chakra Rucha – Graha Shanti Gayathri Brahmanam",
-     false,
-     21,
-     20,
-     0
-    ],
-    [
-     "6a94cc2e8e2a2ffc91d265fb",
-     "Manuscript 103 – Chanturmasa Vrata Udyapana Vidhi Dina Nath Raina",
-     false,
-     21,
-     20,
-     0
-    ],
-    [
-     "6a94d1b3c3eaca063026641c",
-     "MN 003345 Mala Nirnaya Sharada Manuscripts At Kurukshetra University",
      false,
      21,
      20,
@@ -21663,8 +21695,24 @@
      0
     ],
     [
+     "6a94d043c3eaca0630266299",
+     "MN 003269 Kaivalyopanishad Deepika Sharada Manuscripts At Kurukshetra University",
+     false,
+     19,
+     18,
+     0
+    ],
+    [
      "6a94d1198e2a2ffc91d28809",
      "MN 003309 Ananta Katha Sara Sharada Manuscripts At Kurukshetra University",
+     false,
+     19,
+     18,
+     0
+    ],
+    [
+     "6a94d161c3eaca06302663a1",
+     "MN 003316 Partially Damaged Sharada Manuscripts At Kurukshetra University",
      false,
      19,
      18,
@@ -21775,10 +21823,10 @@
      0
     ],
     [
-     "6a94cd918e2a2ffc91d26d0d",
-     "Manuscript 20 Kusumanjali Stotra ( By Jagaddhara Bhatta) Asya Vamasya Sukta ( Rigveda 1.16",
+     "6a94cf128e2a2ffc91d276a1",
+     "Marthanda Brahmana – Samvatsarika Shraaddha",
      false,
-     23,
+     20,
      17,
      0
     ],
@@ -21815,8 +21863,8 @@
      0
     ],
     [
-     "6a94d043c3eaca0630266299",
-     "MN 003269 Kaivalyopanishad Deepika Sharada Manuscripts At Kurukshetra University",
+     "6a94c98d8e2a2ffc91d25985",
+     "M 18 This Manuscript Includes Veda Mantras ( Svasti Prayashchitta)",
      false,
      19,
      17,
@@ -22007,24 +22055,8 @@
      0
     ],
     [
-     "6a94c98d8e2a2ffc91d25985",
-     "M 18 This Manuscript Includes Veda Mantras ( Svasti Prayashchitta)",
-     false,
-     19,
-     16,
-     0
-    ],
-    [
      "6a94cb408e2a2ffc91d260fb",
      "Mantra Japa ( Asana Shodhana Others)",
-     false,
-     19,
-     16,
-     0
-    ],
-    [
-     "6a94d161c3eaca06302663a1",
-     "MN 003316 Partially Damaged Sharada Manuscripts At Kurukshetra University",
      false,
      19,
      16,
@@ -22231,14 +22263,6 @@
      0
     ],
     [
-     "6a94cf128e2a2ffc91d276a1",
-     "Marthanda Brahmana – Samvatsarika Shraaddha",
-     false,
-     20,
-     15,
-     0
-    ],
-    [
      "6a94e00bb24b5a49c27da9c6",
      "Stray Pages In Middle From 2nd Of 4 Texts From Composite Sharada Manuscript Found In Srina",
      false,
@@ -22391,22 +22415,6 @@
      0
     ],
     [
-     "6a94cc4a8e2a2ffc91d26649",
-     "Manuscript 11 – Vishnu Sahasra Naam Tika ( Padma Purana) And Bhagavad Geeta Gudhartha Dipi",
-     false,
-     454,
-     14,
-     0
-    ],
-    [
-     "6a94d42a8e2a2ffc91d298a0",
-     "Nirvana Prakarana Purvardha I KECSS Photocopied",
-     false,
-     240,
-     14,
-     0
-    ],
-    [
      "6a94c6078e2a2ffc91d248a1",
      "Kavya Prakasha ( By Mammata Bhatta)",
      false,
@@ -22443,6 +22451,14 @@
      "4208 UPSS Karna Sukta Pitri Sukta Sandhya Brahman Sharada 12 20",
      false,
      20,
+     14,
+     0
+    ],
+    [
+     "6a94c8c18e2a2ffc91d25518",
+     "Laghu Vritti ( Akhyata Prakarana)",
+     false,
+     19,
      14,
      0
     ],
@@ -23039,10 +23055,10 @@
      0
     ],
     [
-     "6a94c8c18e2a2ffc91d25518",
-     "Laghu Vritti ( Akhyata Prakarana)",
+     "6a94d4b48e2a2ffc91d29e50",
+     "Panchang 5 In",
      false,
-     19,
+     16,
      11,
      0
     ],
@@ -23143,6 +23159,14 @@
      0
     ],
     [
+     "6a94ccf18e2a2ffc91d268bc",
+     "Manuscript 12 – Satyanarayana Katha ( Manuscript In Sharada)",
+     false,
+     11,
+     11,
+     0
+    ],
+    [
      "6a94d6deb24b5a49c27d61c7",
      "Random Snaps Yoga Vasishtha Images First Dastur Meherji Rana Lib Zorastraian Coll First Pa",
      false,
@@ -23217,14 +23241,6 @@
     [
      "6a94c7bd8e2a2ffc91d25029",
      "Kulgam 7 Dharma Shastra Sangraha",
-     false,
-     11,
-     10,
-     0
-    ],
-    [
-     "6a94ccf18e2a2ffc91d268bc",
-     "Manuscript 12 – Satyanarayana Katha ( Manuscript In Sharada)",
      false,
      11,
      10,
@@ -23315,14 +23331,6 @@
      "Jaimini Patrani With Bhoj Commentary Sharada RSkt S Jammu No 5",
      false,
      17,
-     9,
-     0
-    ],
-    [
-     "6a94d4b48e2a2ffc91d29e50",
-     "Panchang 5 In",
-     false,
-     16,
      9,
      0
     ],
@@ -23455,6 +23463,14 @@
      0
     ],
     [
+     "6a94cc418e2a2ffc91d26613",
+     "Manuscript 108 Chanturmasa Vrata Udyapana Vidhi Dina Nath Raina",
+     false,
+     9,
+     9,
+     0
+    ],
+    [
      "6a94ce898e2a2ffc91d2739c",
      "Manuscript 34 – Shri Batuka Stotra ( Manuscript In Sharada)",
      false,
@@ -23513,14 +23529,6 @@
     [
      "6a94a807bf723b215d8bf97e",
      "Stava Chintamani Sharada RSkt S Jammu No 15",
-     false,
-     9,
-     8,
-     0
-    ],
-    [
-     "6a94cc418e2a2ffc91d26613",
-     "Manuscript 108 Chanturmasa Vrata Udyapana Vidhi Dina Nath Raina",
      false,
      9,
      8,
@@ -23591,6 +23599,14 @@
      0
     ],
     [
+     "6a94cdf18e2a2ffc91d26ea2",
+     "Manuscript 26 – Gayathri Japa Vidhi ( Manuscript In Sharada)",
+     false,
+     8,
+     8,
+     0
+    ],
+    [
      "6a94ce308e2a2ffc91d26f12",
      "Manuscript 30 – Parna Purusha Vidhi ( Manuscript In Sharada)",
      false,
@@ -23639,14 +23655,6 @@
      0
     ],
     [
-     "6a94cdf18e2a2ffc91d26ea2",
-     "Manuscript 26 – Gayathri Japa Vidhi ( Manuscript In Sharada)",
-     false,
-     8,
-     7,
-     0
-    ],
-    [
      "6a94ceb88e2a2ffc91d27572",
      "Manuscript 5 – Bala Bheemasena Ekaadashi Katha ( Padma Purana – Vasishta Dileepa Samvada, ",
      false,
@@ -23681,6 +23689,22 @@
     [
      "6a948b4f31b41d9c57444fde",
      "4217 UPPS Sangraha Utpala Deva",
+     false,
+     7,
+     7,
+     0
+    ],
+    [
+     "6a94cea38e2a2ffc91d27568",
+     "Manuscript 4 – Bheemasena Ekaadashi Katha ( Manuscript In Sharada)",
+     false,
+     7,
+     7,
+     0
+    ],
+    [
+     "6a94cf0f8e2a2ffc91d27697",
+     "Manuscript 99 – Magha Vrata Udyapana Vidhi Dina Nath Raina",
      false,
      7,
      7,
@@ -23737,22 +23761,6 @@
     [
      "6a94303dfc29dbd7ff1fb5ec",
      "Panchadashi ( By Shri Vidyaranya Muni)",
-     false,
-     7,
-     6,
-     0
-    ],
-    [
-     "6a94cea38e2a2ffc91d27568",
-     "Manuscript 4 – Bheemasena Ekaadashi Katha ( Manuscript In Sharada)",
-     false,
-     7,
-     6,
-     0
-    ],
-    [
-     "6a94cf0f8e2a2ffc91d27697",
-     "Manuscript 99 – Magha Vrata Udyapana Vidhi Dina Nath Raina",
      false,
      7,
      6,
@@ -23895,6 +23903,14 @@
      0
     ],
     [
+     "6a94cda0c3eaca0630266290",
+     "Manuscript 22 Avahana Mantras ( Manuscript In Sharada)",
+     false,
+     6,
+     5,
+     0
+    ],
+    [
      "6a919e251b85f2bf50ef0a48",
      "MS Indic gamma 45.",
      false,
@@ -23993,14 +24009,6 @@
     [
      "6a94c4c156cac2f882c851b5",
      "Jyotisha ( Raksha Mantra – Kalasha Puja)",
-     false,
-     6,
-     4,
-     0
-    ],
-    [
-     "6a94cda0c3eaca0630266290",
-     "Manuscript 22 Avahana Mantras ( Manuscript In Sharada)",
      false,
      6,
      4,
@@ -24151,6 +24159,14 @@
      0
     ],
     [
+     "6a94ccb58e2a2ffc91d26897",
+     "Manuscript 117– Puja Mantra ( Panchayatana) Dina Nath Raina",
+     false,
+     4,
+     3,
+     0
+    ],
+    [
      "6a94939131b41d9c5744a3dc",
      "Dehastha Devata Chakra Stotram Sharada RSkt S Jammu No 67",
      false,
@@ -24203,14 +24219,6 @@
      "Ishvar Pratyabhijna Vivritti Of Utpal First Two Third Of Sharada Manuscript Out Of 43 Foli",
      false,
      59,
-     2,
-     0
-    ],
-    [
-     "6a94ccb58e2a2ffc91d26897",
-     "Manuscript 117– Puja Mantra ( Panchayatana) Dina Nath Raina",
-     false,
-     4,
      2,
      0
     ],
@@ -24287,19 +24295,19 @@
      0
     ],
     [
-     "6a94ce878e2a2ffc91d27397",
-     "Manuscript 33 Mantras ( Manuscript In Sharada)",
+     "6a94ce218e2a2ffc91d26ec6",
+     "Manuscript 29 Puja Mantras ( Manuscript In Sharada)",
      false,
      2,
      2,
      0
     ],
     [
-     "6a94ce218e2a2ffc91d26ec6",
-     "Manuscript 29 Puja Mantras ( Manuscript In Sharada)",
+     "6a94ce878e2a2ffc91d27397",
+     "Manuscript 33 Mantras ( Manuscript In Sharada)",
      false,
      2,
-     1,
+     2,
      0
     ],
     [
@@ -24824,24 +24832,24 @@
     "sefaria-lurianic",
     "sefaria-cordovero"
    ],
-   "books": 598,
-   "readable_books": 349,
-   "pages_scanned": 158476,
-   "pages_transcribed": 126721,
-   "pages_translated": 112897,
+   "books": 627,
+   "readable_books": 368,
+   "pages_scanned": 170162,
+   "pages_transcribed": 142052,
+   "pages_translated": 123282,
    "canon_page_equivalents": 8860,
    "ocr_engines": [
     [
      "gemini-3-flash-preview",
-     99343
-    ],
-    [
-     "gemini-3.1-flash-lite-preview",
-     17375
+     99683
     ],
     [
      "gemini-3.1-flash-lite",
-     13339
+     28670
+    ],
+    [
+     "gemini-3.1-flash-lite-preview",
+     17035
     ],
     [
      "kraken/sophro-mhiro",
@@ -24875,19 +24883,19 @@
    "translation_models": [
     [
      "gemini-3-flash-preview",
-     77485
+     77476
     ],
     [
      "gemini-3.1-flash-lite-preview",
-     25508
+     25506
     ],
     [
      "gemini-3.1-flash-lite",
-     11786
+     22644
     ],
     [
      "unrecorded",
-     3891
+     3895
     ],
     [
      "gemini-2.5-flash",
@@ -24977,7 +24985,7 @@
      true,
      1007,
      1007,
-     999
+     998
     ],
     [
      "698420e35484bd017cef00ec",
@@ -24993,7 +25001,7 @@
      true,
      992,
      992,
-     983
+     982
     ],
     [
      "69528662ab34727b1f04c6f8",
@@ -25065,7 +25073,15 @@
      true,
      797,
      797,
-     797
+     796
+    ],
+    [
+     "69b51ec0ff09e4fe943b4246",
+     "Kabbalistic Disputation on the Soul and the Rhythmic Work of Abraham Ibn Ezra",
+     true,
+     810,
+     809,
+     795
     ],
     [
      "69b51ede47b06ecd58197cf9",
@@ -25074,6 +25090,14 @@
      806,
      789,
      779
+    ],
+    [
+     "69b51e15efd8df28f2db014b",
+     "Henrici Cornelii Agrippae Ab Nettesheym, Armatae Militiae Equitis aurati, & I.V. ad medici",
+     true,
+     842,
+     832,
+     763
     ],
     [
      "6984e84db96022f6fa69b4c8",
@@ -25154,6 +25178,14 @@
      703,
      703,
      697
+    ],
+    [
+     "69b51e1cefd8df28f2db0c37",
+     "The Works of Heinrich Cornelius Agrippa, Part 2",
+     true,
+     704,
+     700,
+     688
     ],
     [
      "6953ab9577f38f6761bd786e",
@@ -25254,7 +25286,7 @@
     [
      "69a5526e1e2c2347112f0300",
      "The Secret Teachings of All Ages",
-     true,
+     false,
      633,
      633,
      633
@@ -25308,6 +25340,14 @@
      599
     ],
     [
+     "69b51e45ff09e4fe943aaec9",
+     "Apologia Fratris Archangelus de Burgonovo ... pro defensione doctrinae Cabalae : contra re",
+     true,
+     624,
+     624,
+     596
+    ],
+    [
      "69b51e809a81ef7feb3d65e1",
      "Athanasii Kircheri E Soc. Iesv, Oedipvs Aegyptiacvs, Hoc Est Vniuersalis Hieroglyphicae Ve",
      true,
@@ -25340,6 +25380,14 @@
      569
     ],
     [
+     "69b51e3f47b06ecd5818c17c",
+     "Petri Galatini Opus de arcanis catholicae veritatis: Hoc est, In omnia difficilia loca Vet",
+     true,
+     718,
+     717,
+     566
+    ],
+    [
      "695932b8b91a6184ea943faf",
      "Elementary Treatise on Practical Magic",
      true,
@@ -25366,7 +25414,7 @@
     [
      "6990630be7b7642c081de08b",
      "The Book of Splendor",
-     true,
+     false,
      548,
      548,
      539
@@ -25401,7 +25449,7 @@
      true,
      752,
      577,
-     524
+     523
     ],
     [
      "697a30595f904ad9c01e0cdd",
@@ -25476,6 +25524,14 @@
      491
     ],
     [
+     "69b4cc42d2bf9b45ea4799d3",
+     "Henrici Cornelii Agrippae Opera Omnia",
+     true,
+     1218,
+     1216,
+     489
+    ],
+    [
      "694bf8d2343422769f237558",
      "Three Books on Occult Philosophy. A Spurious Book on Magical Ceremonies, Which is Consider",
      true,
@@ -25486,7 +25542,7 @@
     [
      "699246d2bc722ec0ee8144e6",
      "The Hebrew Book of Enoch",
-     true,
+     false,
      504,
      486,
      474
@@ -25506,6 +25562,14 @@
      498,
      492,
      469
+    ],
+    [
+     "69b51e509a81ef7feb3d2d99",
+     "Io. Francisci Bvddei P. P. Introdvctio Ad Historiam Philosophiae Ebraeorvm : Accedit Disse",
+     true,
+     608,
+     608,
+     468
     ],
     [
      "69528622ab34727b1f04c566",
@@ -25556,12 +25620,20 @@
      457
     ],
     [
+     "69b51e799a81ef7feb3d5c60",
+     "Six Books on Polygraphy",
+     true,
+     590,
+     587,
+     453
+    ],
+    [
      "69593280b91a6184ea9439f4",
      "Transcendental Magic, Volume 2: Ritual",
      true,
      457,
      455,
-     454
+     453
     ],
     [
      "6974b642457dd8909910b9e1",
@@ -25569,7 +25641,7 @@
      true,
      458,
      458,
-     451
+     449
     ],
     [
      "695592c47bd6d2cd1d61b10b",
@@ -25644,6 +25716,14 @@
      414
     ],
     [
+     "69b501241e6119e2dd8fae43",
+     "Von hylealischen Das ist pri-materialischen catholischen oder Algemeinem natürlichen Chaos",
+     true,
+     508,
+     508,
+     412
+    ],
+    [
      "695925a1aecc3a7338f95f0a",
      "Three Books on Occult Philosophy",
      true,
@@ -25660,6 +25740,14 @@
      410
     ],
     [
+     "69b51e83cf111105c429ead5",
+     "Steganography Vindicated, Unlocked, and Illustrated",
+     true,
+     428,
+     427,
+     409
+    ],
+    [
      "690c2476e0787282ad5930dd",
      "Biographies of Famous Men from the Times of the Restoration of the Sciences",
      true,
@@ -25668,12 +25756,36 @@
      408
     ],
     [
+     "69b51e5eff09e4fe943ad5a3",
+     "Zohar Symeonis Ben Jochai interprete Gulielmo Postello - BSB Clm 7428",
+     true,
+     2055,
+     1970,
+     402
+    ],
+    [
      "6a26bf4e0e247ebad6debeb4",
      "Galî rāzyâ : Gali Razia Occultorum Detectio, Hoc est: Monstratio Dogmatum, Quae Omnes Rabb",
      true,
      406,
      406,
      402
+    ],
+    [
+     "69b51ea1ff09e4fe943b2498",
+     "The Works of Ramon Llull on the Universal Art of Sciences",
+     true,
+     1234,
+     1218,
+     401
+    ],
+    [
+     "69b51e88768235dc659950db",
+     "The Steganography of Johannes Trithemius Vindicated, Unlocked, and Explained",
+     true,
+     416,
+     412,
+     401
     ],
     [
      "69819207379d5ce6675ec02e",
@@ -25745,7 +25857,7 @@
      true,
      388,
      388,
-     378
+     377
     ],
     [
      "0c19cab9-00d4-49b1-ace1-9122b5a45cc9",
@@ -25754,14 +25866,6 @@
      382,
      382,
      376
-    ],
-    [
-     "69b4cc42d2bf9b45ea4799d3",
-     "Henrici Cornelii Agrippae Opera Omnia",
-     true,
-     1218,
-     1214,
-     374
     ],
     [
      "6974b64719126e775cf6d7e7",
@@ -25793,7 +25897,15 @@
      true,
      374,
      374,
-     366
+     365
+    ],
+    [
+     "69b51e3bcf111105c4298b05",
+     "Petri Galatini Opus de arcanis catholicae veritatis : hoc est, in omnia difficilia loca ve",
+     true,
+     956,
+     955,
+     364
     ],
     [
      "6952daa277f38f6761bc6551",
@@ -25857,7 +25969,7 @@
      true,
      366,
      366,
-     356
+     355
     ],
     [
      "697a3055a3866af9498458ac",
@@ -25932,12 +26044,20 @@
      334
     ],
     [
+     "69b51e3eff09e4fe943aa31a",
+     "Opera Omnia Ioannis Pici, Mirandvlae Concordiaeque comitis, Theologorum & Philosophorum, s",
+     true,
+     964,
+     952,
+     329
+    ],
+    [
      "698255f30fc1d3bd62674a04",
      "Mosaicall philosophy: grounded upon the essentiall truth or eternal sapience. Written firs",
      true,
      337,
      337,
-     329
+     328
     ],
     [
      "69b51d36261c58d63664908a",
@@ -25946,6 +26066,22 @@
      340,
      340,
      327
+    ],
+    [
+     "69b51dbecf111105c428f5ed",
+     "Universal Medicine: Or, the Mystical Sanctuary of the Art of Healing",
+     true,
+     392,
+     389,
+     326
+    ],
+    [
+     "69b51e11261c58d63664ecb5",
+     "Henrici Cornelii Agrippae ab Nettesheym ... De occulta Philosophia : libri tres",
+     true,
+     376,
+     371,
+     325
     ],
     [
      "69c1bc068522835be8461209",
@@ -25964,19 +26100,19 @@
      324
     ],
     [
-     "69b51ec0ff09e4fe943b4246",
-     "Kabbalistic Disputation on the Soul and the Rhythmic Work of Abraham Ibn Ezra",
+     "69b51e4147b06ecd5818c44d",
+     "Joannis Pici Opera omnia et Joannis Franc. Pici opera in volumine secundo. 1",
      true,
-     810,
-     803,
+     1064,
+     1051,
      322
     ],
     [
-     "69b51e15efd8df28f2db014b",
-     "Henrici Cornelii Agrippae Ab Nettesheym, Armatae Militiae Equitis aurati, & I.V. ad medici",
+     "69b51e4ecf111105c429a518",
+     "Petri Galatini De Arcanis Catholicae Veritatis, Libri XII. : Quibus Pleraque Religionis Ch",
      true,
-     842,
-     821,
+     478,
+     476,
      321
     ],
     [
@@ -25988,14 +26124,6 @@
      321
     ],
     [
-     "69b51e1cefd8df28f2db0c37",
-     "The Works of Heinrich Cornelius Agrippa, Part 2",
-     true,
-     704,
-     699,
-     320
-    ],
-    [
      "6955d95d8407b7c9ae212d38",
      "The Book of the Sacred Magic of Abra-Melin the Mage",
      true,
@@ -26004,20 +26132,20 @@
      318
     ],
     [
-     "69b51e3f47b06ecd5818c17c",
-     "Petri Galatini Opus de arcanis catholicae veritatis: Hoc est, In omnia difficilia loca Vet",
-     true,
-     718,
-     714,
-     317
-    ],
-    [
      "6984e8498a2f054f912420bd",
      "Metaphysical, Physical, and Technical History of Both the Greater and Lesser Cosmos: In Tw",
      true,
      322,
      322,
      315
+    ],
+    [
+     "69b51e80cf111105c429e48e",
+     "Athanasii Kircheri E Soc. Iesv, Oedipvs Aegyptiacvs, Hoc Est Vniuersalis Hieroglyphicae Ve",
+     true,
+     630,
+     627,
+     313
     ],
     [
      "69593416b282844d7b277b86",
@@ -26034,6 +26162,14 @@
      314,
      314,
      313
+    ],
+    [
+     "69b51ea2cf111105c42a1ef5",
+     "Opera ea quae ad adinventam ab ipso artem universalem, scientiarum artiumque omnium brevi ",
+     true,
+     1196,
+     1191,
+     312
     ],
     [
      "697c8e114b63479c885455fa",
@@ -26078,7 +26214,7 @@
     [
      "6952b01e77f38f6761bc1e33",
      "Directory of Human Life / Exemplary Work against the Deceptions and Dangers of the World",
-     true,
+     false,
      303,
      303,
      303
@@ -26092,11 +26228,11 @@
      300
     ],
     [
-     "69b51e45ff09e4fe943aaec9",
-     "Apologia Fratris Archangelus de Burgonovo ... pro defensione doctrinae Cabalae : contra re",
+     "69b4cc4dd2bf9b45ea47a455",
+     "Omnia quae extant opera",
      true,
-     624,
-     624,
+     1538,
+     1529,
      299
     ],
     [
@@ -26106,6 +26242,14 @@
      304,
      304,
      299
+    ],
+    [
+     "69b51e9547b06ecd58193b99",
+     "Mysterium Magnum, Oder Erklärung über das Erste Buch Mosis, Von der Offenbahrung Göttliche",
+     true,
+     828,
+     827,
+     296
     ],
     [
      "69b4c04c6248be021e01ed20",
@@ -26180,6 +26324,14 @@
      281
     ],
     [
+     "69b51e41ff09e4fe943aa79c",
+     "Opera Omnia, Ioannis Pici, Mirandvlae Concordiaeqve Comitis, Theologorvm Et Philosophorvm,",
+     true,
+     1058,
+     1052,
+     278
+    ],
+    [
      "69804b94b7c36a3f69dfaa88",
      "Kabbalistic Prayers and Introduction",
      true,
@@ -26212,6 +26364,14 @@
      276
     ],
     [
+     "6a267db96c1f37c9c4f3b512",
+     "Magia Abraham oder Underricht von der Heiligen Cabala - Mscr.Dresd.N.111",
+     true,
+     302,
+     289,
+     274
+    ],
+    [
      "6909a8c1cf28baa1b4caee49",
      "Echo of the God-Enlightened Fraternity of the Praiseworthy Order R.C.",
      false,
@@ -26226,6 +26386,14 @@
      280,
      280,
      272
+    ],
+    [
+     "69b51dbe768235dc659875bf",
+     "Universal Medicine, or the Mystical Sanctuary of the Art of Healing",
+     true,
+     276,
+     274,
+     270
     ],
     [
      "6953ab3477f38f6761bd6997",
@@ -26302,7 +26470,7 @@
     [
      "69b3e5af304c1c6b39509880",
      "Bodleian Library MS. Oppenheim Add. fol. 2",
-     true,
+     false,
      378,
      354,
      247
@@ -26556,12 +26724,36 @@
      191
     ],
     [
+     "69b51e4547b06ecd5818caed",
+     "Opera quae extant omnia. 1.",
+     true,
+     586,
+     576,
+     189
+    ],
+    [
+     "69b51e35ff09e4fe943a9e86",
+     "Opera omnia",
+     true,
+     532,
+     529,
+     189
+    ],
+    [
      "695935dd7d148073487739da",
      "The Book of Raziel (Sepher Raziel)",
-     true,
+     false,
      189,
      188,
      188
+    ],
+    [
+     "69b51e39768235dc6598dede",
+     "On the Final Birth of the Mediator",
+     true,
+     204,
+     204,
+     187
     ],
     [
      "6991c57d3074a1745a4118d2",
@@ -26652,6 +26844,14 @@
      178
     ],
     [
+     "69b52596cced70d8e6d72a40",
+     " De creatione problemata XXX: / Menasseh ben Israel ; cum summarijs singulorum problematum",
+     true,
+     186,
+     185,
+     177
+    ],
+    [
      "697e23cbb5c17cc976123b56",
      "On the Secret External and Visible Fire of the Magi and Philosophers: That is, Philosophic",
      true,
@@ -26716,6 +26916,46 @@
      167
     ],
     [
+     "69b51e35768235dc6598dd57",
+     "Ioannis Reuchlin Phorcensis ... De arte cabalistica : libri tres, Leoni X. dicati",
+     true,
+     170,
+     170,
+     166
+    ],
+    [
+     "6a26ba9161b3857ed05b05e4",
+     "Destructio Cabale, seu Cabalistice perfidie ab Ioanne Reuchlin Capnione iampridem in lucem",
+     true,
+     168,
+     167,
+     166
+    ],
+    [
+     "69b51e359a81ef7feb3d1a02",
+     "Ioannis Revchlin Phorcensis LL. Doc. De Arte Cabalistica Libri Tres : Leoni X. Dicati",
+     true,
+     169,
+     164,
+     164
+    ],
+    [
+     "69b51e3fff09e4fe943aa6e1",
+     "On the Art of the Kabbalah",
+     true,
+     184,
+     166,
+     163
+    ],
+    [
+     "6a267f5288f11913ee9c8c6f",
+     "Pauli Bergeri, Ordinis Philosophorum in Academia Vitembergensi Assessoris, Cabbalismus Iud",
+     true,
+     164,
+     162,
+     162
+    ],
+    [
      "6992470ad263adc1aa7b0180",
      "The Apocalypse of Abraham",
      true,
@@ -26730,6 +26970,14 @@
      162,
      162,
      161
+    ],
+    [
+     "69b51e3e9a81ef7feb3d2398",
+     "Ioannis Pici Opera omnia : ... cum comment. in psalm. XV",
+     true,
+     336,
+     328,
+     160
     ],
     [
      "6970e3539b09d309d780a23c",
@@ -26761,6 +27009,14 @@
      true,
      162,
      162,
+     154
+    ],
+    [
+     "6a26ba3d61b3857ed05ae445",
+     "Joannis Iusti Losii, Hildesiensis Biga Dissertationum, Quarum Prima exhibet Sefer ha-tapūa",
+     true,
+     158,
+     157,
      154
     ],
     [
@@ -26798,7 +27054,7 @@
     [
      "69c7b18425ec2ba5ccd7f44e",
      "[Hebrew: Sefer pardes rimmonim]",
-     true,
+     false,
      348,
      302,
      150
@@ -26892,14 +27148,6 @@
      135
     ],
     [
-     "69b51e4ecf111105c429a518",
-     "Petri Galatini De Arcanis Catholicae Veritatis, Libri XII. : Quibus Pleraque Religionis Ch",
-     true,
-     478,
-     462,
-     132
-    ],
-    [
      "699ef9fc7543a5cb5d64cf08",
      "The Contest of Wisdom with Folly",
      true,
@@ -26953,6 +27201,14 @@
      true,
      131,
      131,
+     122
+    ],
+    [
+     "69b51df9cf111105c4294556",
+     "De Igne Magorvm Philosophorvmque secreto externo et visibili, das ist, Philosophische Erkl",
+     true,
+     128,
+     128,
      122
     ],
     [
@@ -27214,7 +27470,7 @@
     [
      "69c7a0a892b884e4f8173817",
      "Zohar chadash",
-     true,
+     false,
      188,
      144,
      95
@@ -27300,20 +27556,20 @@
      89
     ],
     [
-     "69dbcb081040d1d5e20b1456",
-     "Epistola Neumiae filii Haccanae de secretis. Epistola Haccanae filii Neumiae ad cognitione",
-     true,
-     97,
-     97,
-     89
-    ],
-    [
      "69751589a88d83c830d99e1c",
      "The Asiatic in His Nakedness",
      true,
      89,
      89,
      89
+    ],
+    [
+     "69dbcb081040d1d5e20b1456",
+     "Epistola Neumiae filii Haccanae de secretis. Epistola Haccanae filii Neumiae ad cognitione",
+     true,
+     97,
+     97,
+     88
     ],
     [
      "69b51ddc768235dc65988f14",
@@ -27338,6 +27594,14 @@
      84,
      84,
      81
+    ],
+    [
+     "6a26ba0161b3857ed05ad13d",
+     "Elucidarius Cabalisticus, Sive Reconditæ Hebræorum Philosophiæ Brevis &amp; Succincta Rece",
+     true,
+     82,
+     81,
+     79
     ],
     [
      "69592f6ca41e40e9146a45d7",
@@ -27388,20 +27652,20 @@
      71
     ],
     [
+     "69b51e7e47b06ecd581911ac",
+     "Clavis Steganographiae Joannis Trithemii Abbatis Spanheimensis",
+     true,
+     70,
+     70,
+     70
+    ],
+    [
      "6985ca729161b1d5fa8abc70",
      "Raphael or the Doctor-Angel",
      true,
      69,
      69,
      69
-    ],
-    [
-     "69b51e3bcf111105c4298b05",
-     "Petri Galatini Opus de arcanis catholicae veritatis : hoc est, in omnia difficilia loca ve",
-     true,
-     956,
-     949,
-     68
     ],
     [
      "690c27e6e0787282ad593281",
@@ -27466,6 +27730,14 @@
      56,
      56,
      56
+    ],
+    [
+     "69b51e79768235dc65993cff",
+     "Monas hieroglyphica",
+     true,
+     64,
+     64,
+     55
     ],
     [
      "6952dacd77f38f6761bc7016",
@@ -27566,7 +27838,7 @@
     [
      "6909c96acf28baa1b4cafbf3",
      "Declaration on the 13th Chapter of the Apocalypse, Against the Heretics",
-     true,
+     false,
      50,
      50,
      40
@@ -27601,14 +27873,6 @@
      true,
      44,
      43,
-     37
-    ],
-    [
-     "6a267db96c1f37c9c4f3b512",
-     "Magia Abraham oder Underricht von der Heiligen Cabala - Mscr.Dresd.N.111",
-     true,
-     302,
-     37,
      37
     ],
     [
@@ -27652,14 +27916,6 @@
      27
     ],
     [
-     "6a267f5288f11913ee9c8c6f",
-     "Pauli Bergeri, Ordinis Philosophorum in Academia Vitembergensi Assessoris, Cabbalismus Iud",
-     true,
-     164,
-     27,
-     27
-    ],
-    [
      "6a267d456c1f37c9c4f391d6",
      "Urim &amp; Thurim, sive Symbolum Physico-Chymicum Henrici Khunrathi Lips: ... De Chao-Phys",
      true,
@@ -27676,22 +27932,6 @@
      26
     ],
     [
-     "69b51dbecf111105c428f5ed",
-     "Universal Medicine: Or, the Mystical Sanctuary of the Art of Healing",
-     true,
-     392,
-     26,
-     26
-    ],
-    [
-     "69b51e509a81ef7feb3d2d99",
-     "Io. Francisci Bvddei P. P. Introdvctio Ad Historiam Philosophiae Ebraeorvm : Accedit Disse",
-     true,
-     608,
-     74,
-     25
-    ],
-    [
      "69b5259b6be6046083030428",
      "To his highnesse the Lord Protector of the Common-wealth of England, Scotland, and Ireland",
      true,
@@ -27706,86 +27946,6 @@
      190,
      28,
      25
-    ],
-    [
-     "69b51e3fff09e4fe943aa6e1",
-     "On the Art of the Kabbalah",
-     true,
-     184,
-     25,
-     25
-    ],
-    [
-     "6a26ba9161b3857ed05b05e4",
-     "Destructio Cabale, seu Cabalistice perfidie ab Ioanne Reuchlin Capnione iampridem in lucem",
-     true,
-     168,
-     25,
-     25
-    ],
-    [
-     "6a26ba3d61b3857ed05ae445",
-     "Joannis Iusti Losii, Hildesiensis Biga Dissertationum, Quarum Prima exhibet Sefer ha-tapūa",
-     true,
-     158,
-     25,
-     25
-    ],
-    [
-     "69b501241e6119e2dd8fae43",
-     "Von hylealischen Das ist pri-materialischen catholischen oder Algemeinem natürlichen Chaos",
-     true,
-     508,
-     387,
-     24
-    ],
-    [
-     "69b51e3e9a81ef7feb3d2398",
-     "Ioannis Pici Opera omnia : ... cum comment. in psalm. XV",
-     true,
-     336,
-     66,
-     24
-    ],
-    [
-     "69b51e4147b06ecd5818c44d",
-     "Joannis Pici Opera omnia et Joannis Franc. Pici opera in volumine secundo. 1",
-     true,
-     1064,
-     51,
-     24
-    ],
-    [
-     "69b51e41ff09e4fe943aa79c",
-     "Opera Omnia, Ioannis Pici, Mirandvlae Concordiaeqve Comitis, Theologorvm Et Philosophorvm,",
-     true,
-     1058,
-     51,
-     24
-    ],
-    [
-     "69b51ea1ff09e4fe943b2498",
-     "The Works of Ramon Llull on the Universal Art of Sciences",
-     true,
-     1234,
-     36,
-     24
-    ],
-    [
-     "69b51e35768235dc6598dd57",
-     "Ioannis Reuchlin Phorcensis ... De arte cabalistica : libri tres, Leoni X. dicati",
-     true,
-     170,
-     26,
-     24
-    ],
-    [
-     "69b51df9cf111105c4294556",
-     "De Igne Magorvm Philosophorvmque secreto externo et visibili, das ist, Philosophische Erkl",
-     true,
-     128,
-     26,
-     24
     ],
     [
      "69778932ea8c250fd9c79a17",
@@ -27810,54 +27970,6 @@
      58,
      58,
      23
-    ],
-    [
-     "69b51e3eff09e4fe943aa31a",
-     "Opera Omnia Ioannis Pici, Mirandvlae Concordiaeque comitis, Theologorum & Philosophorum, s",
-     true,
-     964,
-     51,
-     23
-    ],
-    [
-     "69b51dbe768235dc659875bf",
-     "Universal Medicine, or the Mystical Sanctuary of the Art of Healing",
-     true,
-     276,
-     30,
-     23
-    ],
-    [
-     "69b51e83cf111105c429ead5",
-     "Steganography Vindicated, Unlocked, and Illustrated",
-     true,
-     428,
-     27,
-     23
-    ],
-    [
-     "6a26ba0161b3857ed05ad13d",
-     "Elucidarius Cabalisticus, Sive Reconditæ Hebræorum Philosophiæ Brevis &amp; Succincta Rece",
-     true,
-     82,
-     25,
-     23
-    ],
-    [
-     "69b51e88768235dc659950db",
-     "The Steganography of Johannes Trithemius Vindicated, Unlocked, and Explained",
-     true,
-     416,
-     30,
-     22
-    ],
-    [
-     "69b51e799a81ef7feb3d5c60",
-     "Six Books on Polygraphy",
-     true,
-     590,
-     29,
-     22
     ],
     [
      "69b51cf247b06ecd58182718",
@@ -27908,14 +28020,6 @@
      17
     ],
     [
-     "69b51e39768235dc6598dede",
-     "On the Final Birth of the Mediator",
-     true,
-     204,
-     26,
-     17
-    ],
-    [
      "69525f53ab34727b1f046173",
      "Report concerning the canonization of Blessed Bonaventure. Oration to be said in the Mass ",
      false,
@@ -27930,14 +28034,6 @@
      672,
      26,
      16
-    ],
-    [
-     "69b51e5eff09e4fe943ad5a3",
-     "Zohar Symeonis Ben Jochai interprete Gulielmo Postello - BSB Clm 7428",
-     true,
-     2055,
-     75,
-     14
     ],
     [
      "695937303b43cb6630c91e62",
@@ -28044,14 +28140,6 @@
      0
     ],
     [
-     "69b4cc4dd2bf9b45ea47a455",
-     "Omnia quae extant opera",
-     true,
-     1538,
-     526,
-     0
-    ],
-    [
      "6a19bfcd9b13f9ea2b272c99",
      "The Kabbalah Unveiled, Containing the Following Books of the Zohar",
      false,
@@ -28084,38 +28172,6 @@
      0
     ],
     [
-     "69b51ea2cf111105c42a1ef5",
-     "Opera ea quae ad adinventam ab ipso artem universalem, scientiarum artiumque omnium brevi ",
-     true,
-     1196,
-     83,
-     0
-    ],
-    [
-     "69b51e80cf111105c429e48e",
-     "Athanasii Kircheri E Soc. Iesv, Oedipvs Aegyptiacvs, Hoc Est Vniuersalis Hieroglyphicae Ve",
-     true,
-     630,
-     77,
-     0
-    ],
-    [
-     "69b51e4547b06ecd5818caed",
-     "Opera quae extant omnia. 1.",
-     true,
-     586,
-     76,
-     0
-    ],
-    [
-     "69b51e35ff09e4fe943a9e86",
-     "Opera omnia",
-     true,
-     532,
-     75,
-     0
-    ],
-    [
      "69b4c05f6248be021e01ef7e",
      "Manly Palmer Hall Box 07",
      true,
@@ -28124,51 +28180,11 @@
      0
     ],
     [
-     "69b51e11261c58d63664ecb5",
-     "Henrici Cornelii Agrippae ab Nettesheym ... De occulta Philosophia : libri tres",
-     true,
-     376,
-     28,
-     0
-    ],
-    [
-     "69b51e359a81ef7feb3d1a02",
-     "Ioannis Revchlin Phorcensis LL. Doc. De Arte Cabalistica Libri Tres : Leoni X. Dicati",
-     true,
-     169,
-     26,
-     0
-    ],
-    [
      "69b51e7b768235dc65993fa9",
      "Monas hieroglyphica",
      false,
      116,
      26,
-     0
-    ],
-    [
-     "69b51e7e47b06ecd581911ac",
-     "Clavis Steganographiae Joannis Trithemii Abbatis Spanheimensis",
-     true,
-     70,
-     26,
-     0
-    ],
-    [
-     "69b51e79768235dc65993cff",
-     "Monas hieroglyphica",
-     true,
-     64,
-     26,
-     0
-    ],
-    [
-     "69b51e9547b06ecd58193b99",
-     "Mysterium Magnum, Oder Erklärung über das Erste Buch Mosis, Von der Offenbahrung Göttliche",
-     true,
-     828,
-     25,
      0
     ],
     [
@@ -28228,14 +28244,6 @@
      0
     ],
     [
-     "69b52596cced70d8e6d72a40",
-     " De creatione problemata XXX: / Menasseh ben Israel ; cum summarijs singulorum problematum",
-     true,
-     186,
-     2,
-     0
-    ],
-    [
      "69c1bccfb82ba5d5bed968ad",
      "Continuation of the General Preparation for Cabalistic Works",
      false,
@@ -28260,6 +28268,14 @@
      0
     ],
     [
+     "6ac4ee5201a80410b96e4f88",
+     "Zohar (Vat.ebr.206)",
+     false,
+     1144,
+     0,
+     0
+    ],
+    [
      "6a4a59c19050f0b4342fdbe8",
      "Kabbala Denudata Seu Doctrina Hebraeorum Transcendentalis Et Metaphysica Atqve Theologica ",
      false,
@@ -28276,6 +28292,54 @@
      0
     ],
     [
+     "6ac4ee3c01a80410b96e35a5",
+     "Latin translations of kabbalistic works (Vat.ebr.190)",
+     false,
+     956,
+     0,
+     0
+    ],
+    [
+     "6ac4ee4701a80410b96e4333",
+     "Extracts from the Zohar (Vat.ebr.199)",
+     false,
+     732,
+     0,
+     0
+    ],
+    [
+     "6ac4ee5701a80410b96e57a5",
+     "Zohar (Vat.ebr.208)",
+     false,
+     686,
+     0,
+     0
+    ],
+    [
+     "6ac4f6e7e4016f24baf9fb6e",
+     "Kabbalistic commentary on the aggadic parts of the Talmud (Vat.ebr.441)",
+     false,
+     580,
+     0,
+     0
+    ],
+    [
+     "6ac4f7c7e4016f24bafab2e3",
+     "Selections from the Zohar, Raʿaya Meheimna and Zohar Ḥadash (Vat.ebr.606)",
+     false,
+     506,
+     0,
+     0
+    ],
+    [
+     "6ac4ee4a01a80410b96e481b",
+     "Kabbalistic commentary on the Pentateuch (Vat.ebr.201)",
+     false,
+     500,
+     0,
+     0
+    ],
+    [
      "6a4a59ab9050f0b4342fce08",
      "Theodorici Hackspanii, SS. Theol. Et Linguarum Orient. Prof. Publ. Miscellaneorum Sacrorum",
      false,
@@ -28288,6 +28352,22 @@
      "Zohar (Neofiti.24)",
      false,
      492,
+     0,
+     0
+    ],
+    [
+     "6ac4f747e4016f24bafa5748",
+     "Kabbalistic commentary on the Pentateuch (Vat.ebr.505)",
+     false,
+     483,
+     0,
+     0
+    ],
+    [
+     "6ac4ee5501a80410b96e55c4",
+     "Zohar (Vat.ebr.207.pt.2)",
+     false,
+     478,
      0,
      0
     ],
@@ -28324,10 +28404,26 @@
      0
     ],
     [
+     "6ac4ee5301a80410b96e5403",
+     "Zohar (Vat.ebr.207.pt.1)",
+     false,
+     446,
+     0,
+     0
+    ],
+    [
      "6abe46b0932f450af8d09380",
      "Zohar (Neofiti.25)",
      false,
      436,
+     0,
+     0
+    ],
+    [
+     "6ac4f706e4016f24bafa1a6d",
+     "Zohar (Vat.ebr.456)",
+     false,
+     428,
      0,
      0
     ],
@@ -28356,10 +28452,66 @@
      0
     ],
     [
+     "6ac4e63ba52c373827898079",
+     "Chapters on the Pentateuch from Midrash ha-Neʿelam of the Zohar Ḥadash and from the Zohar ",
+     false,
+     406,
+     0,
+     0
+    ],
+    [
+     "6ac4ee6701a80410b96e66f7",
+     "Commentary on the kabbalistic work Sefer ha-Temunah (Vat.ebr.218)",
+     false,
+     365,
+     0,
+     0
+    ],
+    [
+     "6ac4e60ba52c373827895a16",
+     "Kabbalistic commentary on the Pentateuch (Vat.ebr.43)",
+     false,
+     360,
+     0,
+     0
+    ],
+    [
+     "6ac4ee5b01a80410b96e5cb7",
+     "Zohar (Vat.ebr.210)",
+     false,
+     358,
+     0,
+     0
+    ],
+    [
      "6a4a59b19050f0b4342fd071",
      "Der Spinozismus im Jüdenthumb, oder, die von dem heutigen Jüdenthumb und dessen Geheimen K",
      false,
      358,
+     0,
+     0
+    ],
+    [
+     "6ac4ee4f01a80410b96e4d7e",
+     "Tikkunei Zohar (Vat.ebr.204)",
+     false,
+     348,
+     0,
+     0
+    ],
+    [
+     "6ac4ee3601a80410b96e30e2",
+     "Extracts from Zohar (Vat.ebr.186)",
+     false,
+     332,
+     0,
+     0
+    ],
+    [
+     "6ac4f763e4016f24bafa6977",
+     "Kabbalistic commentary on the prayers (Vat.ebr.528)",
+     false,
+     332,
      0,
      0
     ],
@@ -28380,6 +28532,30 @@
      0
     ],
     [
+     "6ac4eeb301a80410b96e8c0c",
+     "Kabbalistic commentary on the Pentateuch (Genesis) (Vat.ebr.258)",
+     false,
+     290,
+     0,
+     0
+    ],
+    [
+     "6ac4ef2f01a80410b96eecf6",
+     "Collection of kabbalistic and philosophical works (Vat.ebr.335)",
+     false,
+     288,
+     0,
+     0
+    ],
+    [
+     "6ac4ef3701a80410b96ef3f3",
+     "Anonymous kabbalistic treatise on the soul (Vat.ebr.340)",
+     false,
+     274,
+     0,
+     0
+    ],
+    [
      "6abe46ae932f450af8d09094",
      "Zohar (Neofiti.23)",
      false,
@@ -28388,10 +28564,42 @@
      0
     ],
     [
+     "6ac4ee9a01a80410b96e7bac",
+     "Collection of extracts on practical Kabbalah (Vat.ebr.244)",
+     false,
+     244,
+     0,
+     0
+    ],
+    [
+     "6ac4e632a52c37382789779f",
+     "Hebrew traslation of the Zohar on Genesis (Vat.ebr.62)",
+     false,
+     214,
+     0,
+     0
+    ],
+    [
+     "6ac4f797e4016f24bafa959f",
+     "Commentary on Sifra de-Ẓeniuta from the Zohar (Vat.ebr.569)",
+     false,
+     209,
+     0,
+     0
+    ],
+    [
      "6a4a59b49050f0b4342fd4a8",
      "Ars cabalistica",
      false,
      208,
+     0,
+     0
+    ],
+    [
+     "6ac4e657a52c373827899a63",
+     "Kabbalistic commentary on Canticles (Vat.ebr.86)",
+     false,
+     198,
      0,
      0
     ],
@@ -28408,6 +28616,30 @@
      "Das ... Theil des Mineral-Wercks Johannis Isaci Hollandi : Alles mit fleiß aus dem Niedern",
      false,
      184,
+     0,
+     0
+    ],
+    [
+     "6ac4ee6b01a80410b96e6a1d",
+     "Sefer Pardes Rimmonei ha-Ḥokhmah va-ʿArugat Bosem [ha-Mezimah] (Vat.ebr.221)",
+     false,
+     156,
+     0,
+     0
+    ],
+    [
+     "6ac4ee6301a80410b96e64de",
+     "Commentary on the kabbalistic treatise Maʿarekhet ha-Elohut (Vat.ebr.215)",
+     false,
+     142,
+     0,
+     0
+    ],
+    [
+     "6ac4f7a0e4016f24bafa9d0d",
+     "Prayers, charms and practical Kabbalah (Vat.ebr.575)",
+     false,
+     137,
      0,
      0
     ],
@@ -28432,6 +28664,14 @@
      "Prognosticon aus der politischen Cabala und dem Staatsfirmament : die künfftigen Regierung",
      false,
      96,
+     0,
+     0
+    ],
+    [
+     "6ac4ef0301a80410b96ec74d",
+     "Kabbalistic commentary on the Passover Haggadah (Vat.ebr.309)",
+     false,
+     94,
      0,
      0
     ],
@@ -29695,7 +29935,7 @@
    "readable_books": 132,
    "pages_scanned": 28271,
    "pages_transcribed": 26418,
-   "pages_translated": 24977,
+   "pages_translated": 24974,
    "canon_page_equivalents": 52285,
    "ocr_engines": [
     [
@@ -29734,7 +29974,7 @@
     ],
     [
      "gemini-3-flash-preview",
-     9884
+     9881
     ],
     [
      "gemini-3.1-flash-lite",
@@ -29961,7 +30201,7 @@
     [
      "6a08a752871243dce9deeece",
      "Sharḥ Fuṣūṣ al-Ḥikam (Commentary on Ibn ʿArabī's Bezels of Wisdom)",
-     true,
+     false,
      362,
      361,
      350
@@ -30009,7 +30249,7 @@
     [
      "69d5ac49d0bd3547a5655d65",
      "Layli va Majnun",
-     true,
+     false,
      328,
      328,
      319
@@ -30020,7 +30260,7 @@
      true,
      311,
      311,
-     311
+     310
     ],
     [
      "69b6363a8ab57a1de53a75c8",
@@ -30196,7 +30436,7 @@
      true,
      176,
      172,
-     167
+     166
     ],
     [
      "69e534bbd48480a386966f5c",
@@ -30228,7 +30468,7 @@
      true,
      175,
      175,
-     158
+     157
     ],
     [
      "69b635962831a80d67f3a90b",
@@ -30305,7 +30545,7 @@
     [
      "69b63e602a1dde00d5a9d059",
      "The Bustan (Garden of Fragrance)",
-     true,
+     false,
      135,
      127,
      127
@@ -30465,7 +30705,7 @@
     [
      "69a55344627bcf18a5c33b06",
      "The Seven Valleys and The Four Valleys",
-     true,
+     false,
      68,
      68,
      62
@@ -30529,7 +30769,7 @@
     [
      "69935b2b8e28d8f4c5d3c6f6",
      "Kīmiyā-yi Saʿādat (Alchemy of Happiness, Persian Original)",
-     true,
+     false,
      43,
      43,
      42
@@ -30657,7 +30897,7 @@
     [
      "69935b4a8e28d8f4c5d3cf8c",
      "Fifteen Principal Upanishads",
-     true,
+     false,
      26,
      26,
      26
@@ -30801,7 +31041,7 @@
     [
      "69b63e99535439aaa4891686",
      "Maqalat-i Shams-i Tabrizi (Discourses)",
-     true,
+     false,
      11,
      11,
      11
@@ -30809,7 +31049,7 @@
     [
      "6953c83377f38f6761bdbf5a",
      "The Collection of Gheranda",
-     true,
+     false,
      11,
      11,
      11
@@ -31050,7 +31290,7 @@
    "readable_books": 22,
    "pages_scanned": 24556,
    "pages_transcribed": 9909,
-   "pages_translated": 7185,
+   "pages_translated": 7181,
    "canon_page_equivalents": 41462,
    "ocr_engines": [
     [
@@ -31081,7 +31321,7 @@
     ],
     [
      "gemini-3-flash-preview",
-     1156
+     1152
     ],
     [
      "unrecorded",
@@ -31191,7 +31431,7 @@
      true,
      290,
      290,
-     290
+     286
     ],
     [
      "69e748cd49abba5e98281879",
@@ -31228,7 +31468,7 @@
     [
      "69b63e602a1dde00d5a9d059",
      "The Bustan (Garden of Fragrance)",
-     true,
+     false,
      135,
      127,
      127
@@ -32411,19 +32651,19 @@
   "readable": 225,
   "list": "scripts/catalog-coverage/eternity-shelf-5513.json",
   "owner_issue": 5513,
-  "counted_at": "2026-10-05T14:29:53.593Z"
+  "counted_at": "2026-10-07T10:39:40.712Z"
  },
  "tengyur_draft": {
   "owner_issue": 5497,
   "volumes": 213,
-  "volumes_translated": 196,
+  "volumes_translated": 213,
   "volumes_partly": 0,
   "pages_imaged": 128639,
   "pages_with_text": 128369,
-  "pages_translated": 116703,
-  "spend_usd": 210.12,
-  "usage_rows": 669,
-  "usd_per_page": 0.0018,
+  "pages_translated": 128332,
+  "spend_usd": 232.92,
+  "usage_rows": 754,
+  "usd_per_page": 0.00181,
   "model": "gemini-3-flash-preview, prompt v13, Batch API, one page per request without neighbour context (#5497 arm B); the 5-volume pilot used 8-page chained blocks",
   "per_volume": [
    [
@@ -32509,7 +32749,7 @@
    [
     17,
     898,
-    895
+    897
    ],
    [
     18,
@@ -32519,7 +32759,7 @@
    [
     19,
     522,
-    519
+    522
    ],
    [
     20,
@@ -32544,7 +32784,7 @@
    [
     24,
     526,
-    525
+    526
    ],
    [
     25,
@@ -32564,7 +32804,7 @@
    [
     28,
     580,
-    578
+    579
    ],
    [
     29,
@@ -32619,7 +32859,7 @@
    [
     39,
     634,
-    633
+    634
    ],
    [
     40,
@@ -32629,7 +32869,7 @@
    [
     41,
     624,
-    621
+    623
    ],
    [
     42,
@@ -32674,7 +32914,7 @@
    [
     50,
     498,
-    494
+    496
    ],
    [
     51,
@@ -32804,17 +33044,17 @@
    [
     76,
     496,
-    0
+    495
    ],
    [
     77,
     688,
-    0
+    688
    ],
    [
     78,
     414,
-    0
+    414
    ],
    [
     79,
@@ -33399,7 +33639,7 @@
    [
     195,
     630,
-    630
+    629
    ],
    [
     196,
@@ -33424,74 +33664,74 @@
    [
     200,
     590,
-    0
+    590
    ],
    [
     201,
     679,
-    0
+    679
    ],
    [
     202,
     607,
-    0
+    607
    ],
    [
     203,
     552,
-    0
+    551
    ],
    [
     204,
     752,
-    0
+    752
    ],
    [
     205,
     584,
-    0
+    584
    ],
    [
     206,
     618,
-    0
+    617
    ],
    [
     207,
     718,
-    0
+    718
    ],
    [
     208,
     902,
-    0
+    901
    ],
    [
     209,
     847,
-    0
+    847
    ],
    [
     210,
     772,
-    0
+    772
    ],
    [
     211,
     747,
-    0
+    746
    ],
    [
     212,
     652,
-    0
+    652
    ],
    [
     213,
     1005,
-    0
+    1005
    ]
   ],
-  "counted_at": "2026-10-05T14:29:53.593Z"
+  "counted_at": "2026-10-07T10:39:40.712Z"
  }
 }

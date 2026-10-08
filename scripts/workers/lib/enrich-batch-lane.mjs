@@ -38,11 +38,31 @@
  * Status is never written: a book here is already past Phase 6/7's statuses, or not selected.
  */
 import { NOT_HELD } from '../../lib/pipeline-hold.mjs';
-import { createThenDeleteInput } from '../../lib/gemini-batch-input-file.mjs';
+import { isPaused } from '../../lib/pause.mjs';
+import { shouldBypassPause } from './selective-unpause.mjs';
+import { createThenDeleteInput, uploadBatchInputFile } from '../../lib/gemini-batch-input-file.mjs';
 import { logUsage, completeBatchUsage, calculateUsageCost, outputTokensFrom } from './supabase-usage-logger.mjs';
 
 const API = 'https://generativelanguage.googleapis.com/v1beta';
 const ENDPOINT = 'worker/hetzner-enrich-batch';
+/**
+ * What a pause means for one enrich-worker run (#5492, #5496 review B2).
+ *
+ * A pause stops SUBMISSION, never collection. Jobs in `enrich_batch_jobs` with status
+ * `submitted` are already paid; if a pause stopped the `--batch` run before its collect step,
+ * Gemini would expire them at 48 h and the money would buy nothing. So under a pause the batch
+ * lane still runs, collect-only; the realtime path (every call of which is new spend) skips.
+ *
+ * @returns {{ mode: 'run' | 'collect-only' | 'skip', reason: string | null }}
+ */
+export function enrichPauseMode(control, { batchMode }) {
+  const reason = isPaused(control, 'enrich') ? 'enrich step paused'
+    : !shouldBypassPause(control) ? 'pipeline paused'
+    : null;
+  if (!reason) return { mode: 'run', reason: null };
+  return { mode: batchMode ? 'collect-only' : 'skip', reason };
+}
+
 export const BOOKS_COLL = 'enrich_batch_books';
 export const JOBS_COLL = 'enrich_batch_jobs';
 
@@ -110,29 +130,8 @@ function apiKey() {
   return k;
 }
 
-async function uploadJsonl(body, displayName) {
-  const start = await fetch(`https://generativelanguage.googleapis.com/upload/v1beta/files?key=${apiKey()}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json', 'X-Goog-Upload-Protocol': 'resumable', 'X-Goog-Upload-Command': 'start',
-      'X-Goog-Upload-Header-Content-Length': String(Buffer.byteLength(body)), 'X-Goog-Upload-Header-Content-Type': 'text/plain',
-    },
-    body: JSON.stringify({ file: { displayName } }),
-  });
-  if (!start.ok) throw new Error(`upload start ${start.status}: ${await start.text()}`);
-  const url = start.headers.get('X-Goog-Upload-URL');
-  if (!url) throw new Error('no upload URL returned');
-  for (let attempt = 1; ; attempt++) {
-    const put = await fetch(url, { method: 'PUT', headers: { 'Content-Type': 'text/plain', 'X-Goog-Upload-Command': 'upload, finalize', 'X-Goog-Upload-Offset': '0' }, body })
-      .catch(e => ({ ok: false, status: e.message }));
-    if (put.ok) {
-      const info = await put.json();
-      if (!info.file?.name) throw new Error('upload returned no file name');
-      return info.file.name;
-    }
-    if (attempt >= 3) throw new Error(`upload PUT failed: ${put.status}`);
-    await new Promise(r => setTimeout(r, 30000));
-  }
+function uploadJsonl(body, displayName) {
+  return uploadBatchInputFile(body, displayName, apiKey());
 }
 
 async function createBatch(model, fileName, displayName) {

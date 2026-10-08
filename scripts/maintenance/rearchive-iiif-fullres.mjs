@@ -683,6 +683,11 @@ async function recordUpgradeEvent(book, { fromWidthCap, toMasterWidth, pagesUpda
 // ── Recovery mode (already-split books) ──
 
 async function recoverOne(book) {
+  // Recovery resets the book to archive_complete with pages_ocr 0 — a full paid re-OCR. A held
+  // book (scripts/lib/pipeline-hold.mjs) is one a human said not to spend on: skip it (#6122).
+  if (await db.collection('books').countDocuments({ id: book.id, 'pipeline_auto.hold': { $exists: true } })) {
+    return { skipped: 'held (pipeline_auto.hold) — release it first' };
+  }
   const pages = await db.collection('pages').find(
     { book_id: book.id },
     { projection: { id: 1, _id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, split_side: 1, split_from: 1 } },

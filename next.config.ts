@@ -406,6 +406,13 @@ const nextConfig: NextConfig = {
         destination: `/collections/${to}`,
         permanent: true,
       })),
+      // The processing page described the same steps as /how-it-works and drifted from
+      // it; one page now tells it (#6074).
+      {
+        source: '/about/processing',
+        destination: '/how-it-works',
+        permanent: true,
+      },
       {
         source: '/translation/:bookId/:pageId',
         destination: '/book/:bookId',

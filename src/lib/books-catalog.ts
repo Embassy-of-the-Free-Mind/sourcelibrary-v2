@@ -70,6 +70,10 @@ export interface CatalogBook {
    *  needed to tell an artwork from a text — see isArtworkRecord(). */
   content_type: string | null;
   resource_type: string | null;
+  /** True when this is a partial scan / preview of a larger work (e.g. only a
+   *  few page images of a much longer manuscript). Mirrors `books.preview`;
+   *  cards show a "Preview" badge when set. */
+  preview: boolean;
   /** original | period-translation | modern-translation — see src/lib/text-role.ts (#2395) */
   text_role: string | null;
   place_published: string | null;
@@ -116,6 +120,56 @@ export interface CatalogBookDetail extends CatalogBook {
 // the catalogue down rather than degrade it. They are attached from Mongo by
 // `attachCardVariants()` below instead.
 export const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_translated_es, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, content_type, resource_type, text_role, place_published, ft_verdict, ft_evidence_strength, ft_our_completeness, ft_source_screen, ft_translator_screen';
+
+// The extra columns search and the book-detail shell append after BOOK_SELECT.
+// `preview` is deliberately NOT in BOOK_SELECT: it only lands when the migration
+// (supabase/migrations/20261006084050_books_catalog_preview.sql) runs, and
+// PostgREST 42703s the ENTIRE query on a missing column (see the note above).
+// Every query goes through bookSelect() below, which appends `preview` only once
+// the column is actually present — so deploying the badge code before the
+// migration can never take a catalogue surface down; the badge simply stays off
+// until the column + sync land.
+const SEARCH_EXTRA = ', summary_text, doi, work_id';
+const DETAIL_EXTRA = ', visible, contributing_library, summary_text, publisher, place_published, doi, work_id, resource_type, source_url, provider_name, image_attribution, image_license, cover_image, dedication, subtitle, source_work_dates, ft_disposition, ft_reasoning, description, subject_keywords, created_at, updated_at';
+
+// Cached capability probe: has `books_catalog.preview` landed yet?
+// Probed once per serverless instance by attempting a select of the column —
+// the exact failure we are guarding against. A stale cache only delays the
+// badge appearing (until the next instance), never breaks a query.
+let previewColumnState: 'unknown' | 'yes' | 'no' = 'unknown';
+let previewColumnProbe: Promise<'yes' | 'no'> | null = null;
+
+async function previewColumnAvailable(): Promise<boolean> {
+  if (previewColumnState !== 'unknown') return previewColumnState === 'yes';
+  if (!previewColumnProbe) {
+    previewColumnProbe = (async () => {
+      try {
+        const { error } = await supabase.from('books_catalog').select('preview').limit(1);
+        return error ? 'no' : 'yes';
+      } catch {
+        return 'no';
+      }
+    })();
+  }
+  previewColumnState = await previewColumnProbe;
+  return previewColumnState === 'yes';
+}
+
+/** BOOK_SELECT, plus `preview` once the migration column is present. */
+async function bookSelect(): Promise<string> {
+  const preview = (await previewColumnAvailable()) ? ', preview' : '';
+  return `${BOOK_SELECT}${preview}`;
+}
+
+/** SEARCH_SELECT — BOOK_SELECT (+preview) + the search display fields. */
+async function searchSelect(): Promise<string> {
+  return `${await bookSelect()}${SEARCH_EXTRA}`;
+}
+
+/** BOOK_DETAIL_SELECT — BOOK_SELECT (+preview) + the detail shell fields. */
+async function bookDetailSelect(): Promise<string> {
+  return `${await bookSelect()}${DETAIL_EXTRA}`;
+}
 
 export type SortOption = 'popular' | 'title' | 'author' | 'year_asc' | 'year_desc' | 'recent' | 'last_translated' | 'quality';
 
@@ -191,7 +245,7 @@ export async function browseBooks(opts: {
 
   let query = supabase
     .from('books_catalog')
-    .select(BOOK_SELECT, { count: countMode })
+    .select(await bookSelect(), { count: countMode })
     .eq('visible', true);
 
   if (opts.hasPages !== false) query = query.gt('pages_count', 0);
@@ -235,7 +289,7 @@ export async function browseBooks(opts: {
     throw new Error(`books_catalog query failed: ${error.message}`);
   }
 
-  return { books: await attachCardVariants((data || []) as CatalogBook[]), total: count || 0 };
+  return { books: await attachCardVariants((data || []) as unknown as CatalogBook[]), total: count || 0 };
 }
 
 /**
@@ -505,9 +559,6 @@ export async function browseArtists(letter: string): Promise<{ name: string; cou
   return results.sort((a, b) => a.name.localeCompare(b.name));
 }
 
-/** Select string for search results — includes summary_text and doi for display */
-const SEARCH_SELECT = `${BOOK_SELECT}, summary_text, doi, work_id`;
-
 /**
  * Author alias groups. Each group lists name variants that should be treated as
  * equivalent at search time — querying any member surfaces records whose author
@@ -660,7 +711,7 @@ export async function searchBooksCatalog(
   return typedThenRelated(searchText, { isPhrase, authors: true }, limit, async (orFilter) => {
     let query = supabase
       .from('books_catalog')
-      .select(SEARCH_SELECT)
+      .select(await searchSelect())
       .eq('visible', true)
       .gt('pages_count', 0)
       .or(orFilter)
@@ -766,32 +817,8 @@ export async function getCategoryCounts(): Promise<Map<string, number>> {
   return counts;
 }
 
-// All fields needed for the book detail page shell
-const BOOK_DETAIL_SELECT = [
-  BOOK_SELECT,
-  'visible', // needed by the /book/[id] hidden-book gate (book-access.ts)
-  'contributing_library',
-  'summary_text',
-  'publisher',
-  'place_published',
-  'doi',
-  'work_id',
-  'resource_type',
-  'source_url',
-  'provider_name',
-  'image_attribution',
-  'image_license',
-  'cover_image',
-  'dedication',
-  'subtitle',
-  'source_work_dates',
-  'ft_disposition',
-  'ft_reasoning',
-  'description',
-  'subject_keywords',
-  'created_at',
-  'updated_at',
-].join(', ');
+// All fields needed for the book detail page shell — see bookDetailSelect()
+// (BOOK_SELECT + preview-when-available + the shell fields).
 
 /**
  * Fetch a single book by slug or id from Supabase books_catalog.
@@ -805,7 +832,7 @@ export async function getBookDetail(idOrSlug: string): Promise<{ book: CatalogBo
   // Try slug first (the common case for SEO URLs)
   const { data: bySlug } = await supabase
     .from('books_catalog')
-    .select(BOOK_DETAIL_SELECT)
+    .select(await bookDetailSelect())
     .eq('slug', idOrSlug)
     .limit(1)
     .maybeSingle();
@@ -817,7 +844,7 @@ export async function getBookDetail(idOrSlug: string): Promise<{ book: CatalogBo
   // Fall back to id
   const { data: byId } = await supabase
     .from('books_catalog')
-    .select(BOOK_DETAIL_SELECT)
+    .select(await bookDetailSelect())
     .eq('id', idOrSlug)
     .limit(1)
     .maybeSingle();

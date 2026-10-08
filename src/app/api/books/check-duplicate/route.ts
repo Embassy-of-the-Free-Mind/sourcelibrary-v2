@@ -3,6 +3,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
 import { checkHoldings, candidateFromInput, type HoldingCandidate, type HoldingReason } from '@/lib/holdings-check';
 import { semanticBookSearch } from '@/lib/semantic-search';
+import { GLOBAL_SCOPE } from '@/lib/tenant-search-scope';
 
 export const preferredRegion = 'fra1';
 
@@ -110,6 +111,9 @@ export async function GET(request: NextRequest) {
   if (title) {
     try {
       const semanticResults = await semanticBookSearch(`${title}${author ? ' by ' + author : ''}`, 8, {
+        // A pre-import duplicate check asks "do we hold this ANYWHERE" —
+        // dedup deliberately spans every tenant and hidden books (dedup.ts).
+        scope: GLOBAL_SCOPE,
         language: language || undefined,
         threshold: 0.63, // high recall for a pre-import look
       });

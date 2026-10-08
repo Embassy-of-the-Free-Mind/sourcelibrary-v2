@@ -48,11 +48,12 @@ import { logUsage as logUsageToSupabase, outputTokensFrom, calculateUsageCost } 
 import { createBookRevisions } from './lib/book-revisions.mjs';
 import { buildSummaryPrompt, SUMMARY_GEN_CONFIG } from './lib/summary-prompt.mjs';
 import { createClient } from '@supabase/supabase-js';
-import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
+import { hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { buildPageTexts, attributeEntityPages, entityCounters } from '../lib/entity-page-match.mjs';
 import { composeBookEmbeddingText } from '../lib/book-embedding-text.mjs';
 import { embedBookPages } from '../lib/embed-book-pages.mjs';
+import { assertStoreVector, GEMINI_TEXT_MODEL } from '../lib/vector-truth.mjs';
 import { computeEndPages } from '../lib/chapter-endpages.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { loadConfirmedCopies, copyGuard } from '../lib/confirmed-copies.mjs';
@@ -60,7 +61,7 @@ import { recordSweepActions } from '../lib/sweep-log.mjs';
 import { publicationFilter } from '../lib/publication.mjs';
 import { buildPageIndex, groundQuotes } from './lib/quote-grounding.mjs';
 import { startHeartbeat, startWorkerBeacon } from './lib/worker-heartbeat.mjs';
-import { runEnrichBatchLane } from './lib/enrich-batch-lane.mjs';
+import { runEnrichBatchLane, enrichPauseMode } from './lib/enrich-batch-lane.mjs';
 import fs from 'node:fs';
 import pg from 'pg';
 
@@ -250,7 +251,7 @@ const supabaseClient = SUPABASE_URL && SUPABASE_SERVICE_KEY
   ? createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, { auth: { persistSession: false } })
   : null;
 
-const EMBED_MODEL = 'gemini-embedding-2-preview';
+const EMBED_MODEL = GEMINI_TEXT_MODEL; // gemini-embedding-2 since #6170
 const EMBED_DIMS = 768;
 
 /**
@@ -333,6 +334,8 @@ async function upsertBookEmbedding(book, indexData) {
     const data = await res.json();
     const embedding = data?.embeddings?.[0]?.values;
     if (!embedding) return;
+    // The request above called EMBED_MODEL; refuse a vector that does not look like it (#6175).
+    assertStoreVector(embedding, { model: EMBED_MODEL });
 
     const yearMatch = (book.published || '').match(/\d{3,4}/);
     const { error } = await supabaseClient.from('book_embeddings').upsert({
@@ -462,7 +465,7 @@ Output as JSON:
   "people": ["Person Name 1", "Person Name 2"],
   "places": ["Place Name 1", "Place Name 2"],
   "concepts": ["Key concept 1", "Technical term 2"],
-  "summary": "2-3 sentence summary of what these pages cover and their key arguments. No em-dashes. No filler like 'delves into' or 'rich tapestry'. Short, direct sentences."
+  "summary": "2-3 sentence summary of what these pages cover and their key arguments. No em-dashes (—). No filler like 'delves into', 'rich tapestry', 'profound', 'pivotal', 'meticulous', 'intricate', 'vibrant', 'interplay', 'showcases', 'landscape of', 'a testament to', 'not only X but also Y'. Short, direct sentences."
 }
 
 CRITICAL for quotes:
@@ -1350,7 +1353,10 @@ async function prepareChapterExtraction(db, bookId) {
 
   const pages = await db.collection('pages')
     .find(
-      { book_id: bookId, 'ocr.data': { $exists: true, $ne: '' } },
+      // page_number > 0: a split book keeps its spreads as archived pages at page_number <= 0, still carrying
+      // their old OCR. Read here they anchored chapters at page -5 and stretched the last endPage past the
+      // book's length (#6114 wave A).
+      { book_id: bookId, page_number: { $gt: 0 }, 'ocr.data': { $exists: true, $ne: '' } },
       { projection: { id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1, page_type: 1 } }
     )
     .sort({ page_number: 1 })
@@ -1518,10 +1524,13 @@ async function main() {
 
   // Check pause status
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
-  // Selective unpause: scoped books enrich while globally paused; the explicit
-  // enrichment-phase pause still hard-stops regardless of scope.
-  if (control?.paused_phases?.includes('enrichment') || !shouldBypassPause(control)) {
-    const reason = control?.paused_phases?.includes('enrichment') ? 'enrichment phase paused' : 'pipeline paused';
+  // Selective unpause: scoped books enrich while globally paused; the step pause
+  // ('enrich', or the legacy 'enrichment' / 6 / 7 — scripts/lib/pause.mjs, #5492)
+  // still hard-stops regardless of scope. A pause stops SUBMISSION only: under one,
+  // --batch still collects its already-paid jobs and submits nothing (#5496 review B2).
+  const pause = enrichPauseMode(control, { batchMode: BATCH_MODE });
+  if (pause.mode === 'skip') {
+    const reason = pause.reason;
     console.log(`[ENRICH] ${reason}, exiting`);
     await db.collection('cron_runs').insertOne({
       cron: 'hetzner-enrich-worker', timestamp: new Date(),
@@ -1532,8 +1541,9 @@ async function main() {
     await client.close();
     return;
   }
+  if (pause.mode === 'collect-only') console.log(`[ENRICH] ${pause.reason} — batch lane collects finished jobs only, submits nothing`);
   // When globally paused with a scope, confine every candidate query to it.
-  if (control?.paused && hasScope(control)) {
+  if (pause.mode === 'run' && control?.paused && hasScope(control)) {
     const scopeIds = [...await resolveScopeBookIds(db, control)];
     SCOPE_FILTER = { id: { $in: scopeIds } };
     console.log(`[ENRICH] PAUSED globally, scope active — confining to ${scopeIds.length} allowlisted book(s).`);
@@ -1547,7 +1557,9 @@ async function main() {
   // The batch lane asks under its own label, so an envelope can be opened for it alone
   // (lanes: ['enrich-worker-batch']); an envelope laned 'enrich-worker' still opens both.
   const gateLabel = BATCH_MODE ? 'enrich-worker-batch' : 'enrich-worker';
-  const _gate = DRY_RUN ? { allowed: true, envelopeIds: null } : await budgetAllowsDispatchScoped(db, gateLabel, { control });
+  const _gate = pause.mode !== 'run' ? { allowed: false, envelopeIds: null }
+    : DRY_RUN ? { allowed: true, envelopeIds: null }
+    : await budgetAllowsDispatchScoped(db, gateLabel, { control });
   if (_gate.envelopeIds) {
     SCOPE_FILTER = { id: { $in: [..._gate.envelopeIds] } };
     console.log(`[ENRICH] Global dial closed, scope envelope open — confining to ${_gate.envelopeIds.size} envelope book(s).`);
@@ -1557,7 +1569,7 @@ async function main() {
     // Collecting is free and runs whatever the gate says; only submission needs it.
     const report = await runEnrichBatchLane({
       db, model: LITE_MODEL, dryRun: DRY_RUN, runTag: BATCH_RUN_TAG,
-      scopeFilter: SCOPE_FILTER, dispatchAllowed: DRY_RUN || _gate.allowed,
+      scopeFilter: SCOPE_FILTER, dispatchAllowed: pause.mode === 'run' && (DRY_RUN || _gate.allowed),
       maxUsd: BATCH_MAX_USD, limit: limitArg ? parseInt(limitArg) : 50,
       bookIds: BATCH_IDS_FILE ? fs.readFileSync(BATCH_IDS_FILE, 'utf8').split(/\s+/).filter(Boolean) : (SINGLE_BOOK ? [SINGLE_BOOK] : null),
       phases: {

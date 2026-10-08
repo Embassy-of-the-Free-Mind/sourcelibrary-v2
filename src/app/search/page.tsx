@@ -17,6 +17,7 @@ import { artworkTypeLabel } from '@/lib/artwork-record';
 import { localizedCollection } from '@/lib/localized';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { useEmbed } from '@/lib/EmbedContext';
+import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { useDebouncedCallback } from 'use-debounce';
 import { reportError } from '@/components/providers/ErrorReporter';
 import {
@@ -107,6 +108,9 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   const currentPathname = usePathname();
   const embedFromContext = useEmbed();
   const embed = forceEmbedded || embedFromContext;
+  // Host-based, unlike `embed`: true on a partner subdomain whichever route
+  // rendered this page. The Librarian is refused there (tenant-global-paths).
+  const isTenantSurface = useIsEmbedded();
 
   // The locale comes from the URL prefix; the `lang` prop that the `/es/search`
   // twin passes is the explicit form of the same answer. Defaulting to the
@@ -1971,7 +1975,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
           </>
         )}
         {/* Ask the Librarian — bottom CTA */}
-        {!noResults && !loading && query.length >= 3 && viewMode === defaultMode && (
+        {!noResults && !loading && query.length >= 3 && viewMode === defaultMode && !embed && !isTenantSurface && (
           <section className="mt-8 pt-6 border-t border-border-light">
             <Link
               href={`${lp('/librarian')}?q=${encodeURIComponent(query)}`}
