@@ -17,6 +17,7 @@
 import { MongoClient } from 'mongodb';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, guardTranslationText } from '../lib/translate-core.mjs';
+import { refusableReasoningLeak, REASONING_LEAK_REASON } from '../lib/page-integrity.mjs';
 import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
 
 /** Provenance identity of this collector (#4613): recorded on every page it writes as `run.collected_by`. */
@@ -301,6 +302,12 @@ async function processOneJob(db, job) {
         if (hidesPageInMeta(text)) {
           console.warn(`  HIDDEN META: refusing page ${pageId} — the translation is inside its continuity <meta>`);
           if (!DRY_RUN) await recordRefusedTranslation(db, { id: pageId, book_id: job.book_id }, text, HIDDEN_META_REASON, { jobId: jobIdStr, model: job.model });
+          failCount++; continue;
+        }
+        // #6117 — the model's reasoning or a chat reply is not a translation; same refusal as batch-collector.mjs.
+        if (refusableReasoningLeak(text)) {
+          console.warn(`  REASONING LEAK: refusing page ${pageId} — the text is the model's reasoning or a chat reply`);
+          if (!DRY_RUN) await recordRefusedTranslation(db, { id: pageId, book_id: job.book_id }, text, REASONING_LEAK_REASON, { jobId: jobIdStr, model: job.model });
           failCount++; continue;
         }
         // #5734 — same stray-script gate as batch-collector.mjs.
