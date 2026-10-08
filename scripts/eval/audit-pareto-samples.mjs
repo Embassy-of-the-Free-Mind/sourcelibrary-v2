@@ -621,6 +621,8 @@ const summary = { issue: 6304, drops, notes, generated_by: 'scripts/eval/audit-p
   sensitivity: Object.fromEntries(Object.entries(sensitivity).map(([k, v]) => [k, { excluded: v.excluded, translation: v.translation.map(({ y_shift, ...x }) => x), ocr: v.ocr.map(({ y_shift, ...x }) => x) }])) };
 fs.writeFileSync(`${OUT}/summary.json`, JSON.stringify(summary, null, 1));
 if (process.argv.includes('--write')) fs.writeFileSync(path.join(RESULTS, 'summary.json'), JSON.stringify(summary, null, 1) + '\n');
+// /quality states its figures from a digest of these files (#5918); keep it in step.
+if (process.argv.includes('--write')) log(`wrote ${(await import('./build-pareto-sample-digest.mjs')).writeDigest()}`);
 
 // heads only
 log(`rows ${rows.length} (translation ${rows.filter(r => r.family === 'translation').length}, ocr ${rows.filter(r => r.family === 'ocr').length})`);
