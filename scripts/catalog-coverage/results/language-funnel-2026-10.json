@@ -95,7 +95,16 @@
             "checked": "2026-10-08"
           }
         }
-      ]
+      ],
+      "holdings": {
+        "books": 51783,
+        "pages": 14284536,
+        "public_books": 15774,
+        "languages": [
+          "Latin"
+        ],
+        "counted": "2026-10-08"
+      }
     },
     {
       "id": "greek",
@@ -216,7 +225,16 @@
             "checked": "2026-10-08"
           }
         }
-      ]
+      ],
+      "holdings": {
+        "books": 4526,
+        "pages": 2205255,
+        "public_books": 1093,
+        "languages": [
+          "Greek"
+        ],
+        "counted": "2026-10-08"
+      }
     },
     {
       "id": "chinese",
@@ -357,7 +375,16 @@
             "checked": "2026-10-08"
           }
         }
-      ]
+      ],
+      "holdings": {
+        "books": 13128,
+        "pages": 2043956,
+        "public_books": 12785,
+        "languages": [
+          "Chinese"
+        ],
+        "counted": "2026-10-08"
+      }
     },
     {
       "id": "japanese",
@@ -422,7 +449,16 @@
             "checked": "2026-10-08"
           }
         }
-      ]
+      ],
+      "holdings": {
+        "books": 399,
+        "pages": 50865,
+        "public_books": 147,
+        "languages": [
+          "Japanese"
+        ],
+        "counted": "2026-10-08"
+      }
     },
     {
       "id": "sanskrit",
@@ -529,7 +565,16 @@
             "checked": "2026-10-08"
           }
         }
-      ]
+      ],
+      "holdings": {
+        "books": 5599,
+        "pages": 370917,
+        "public_books": 352,
+        "languages": [
+          "Sanskrit"
+        ],
+        "counted": "2026-10-08"
+      }
     },
     {
       "id": "tibetan",
@@ -675,7 +720,16 @@
             "checked": "2026-10-08"
           }
         }
-      ]
+      ],
+      "holdings": {
+        "books": 2334,
+        "pages": 927427,
+        "public_books": 1697,
+        "languages": [
+          "Tibetan"
+        ],
+        "counted": "2026-10-08"
+      }
     },
     {
       "id": "pali",
@@ -748,7 +802,16 @@
             "checked": "2026-10-08"
           }
         }
-      ]
+      ],
+      "holdings": {
+        "books": 57,
+        "pages": 20359,
+        "public_books": 25,
+        "languages": [
+          "Pali"
+        ],
+        "counted": "2026-10-08"
+      }
     },
     {
       "id": "arabic",
@@ -836,7 +899,17 @@
             "checked": "2026-10-08"
           }
         }
-      ]
+      ],
+      "holdings": {
+        "books": 1023,
+        "pages": 281566,
+        "public_books": 323,
+        "languages": [
+          "Arabic",
+          "Persian"
+        ],
+        "counted": "2026-10-08"
+      }
     },
     {
       "id": "hebrew",
@@ -982,7 +1055,16 @@
             "checked": "2026-10-08"
           }
         }
-      ]
+      ],
+      "holdings": {
+        "books": 978,
+        "pages": 322942,
+        "public_books": 226,
+        "languages": [
+          "Hebrew"
+        ],
+        "counted": "2026-10-08"
+      }
     },
     {
       "id": "syriac",
@@ -1045,7 +1127,16 @@
             "checked": "2026-10-08"
           }
         }
-      ]
+      ],
+      "holdings": {
+        "books": 492,
+        "pages": 151978,
+        "public_books": 82,
+        "languages": [
+          "Syriac"
+        ],
+        "counted": "2026-10-08"
+      }
     }
   ],
   "validated": "2026-10-08: own counts recounted from their sources; see each caveat."
