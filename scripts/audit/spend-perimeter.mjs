@@ -107,7 +107,7 @@ const UNATTENDED = [
     pauseKey: 'images', pausePath: [{ file: 'scripts/workers/image-extract-worker.mjs', fn: 'main' }] },
   { match: 'image-embeddings-cron.mjs', spends: true, gated: true, note: 'crontab.production; pause + scoped dial (#3826)',
     pauseKey: 'embeddings', pausePath: [{ file: 'scripts/workers/image-embeddings-cron.mjs', fn: 'main' }] },
-  { match: 'embed-site-pages.mjs', spends: true, gated: true, note: 'dial via budgetAllowsDispatchScoped; weekly, fractions of a cent (#1180)',
+  { match: 'embed-site-pages.mjs', spends: true, gated: true, note: 'dial via budgetAllowsDispatchScoped; daily, hash-diffed, fractions of a cent (#1180, #5945)',
     pauseKey: 'embeddings', pausePath: [{ file: 'scripts/workers/embed-site-pages.mjs', fn: 'main' }] },
   { match: 'batch-collector.mjs', spends: false, gated: false,
     note: 'collects finished batches; writes results, submits nothing' },
