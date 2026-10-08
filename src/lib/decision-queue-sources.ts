@@ -6,12 +6,14 @@
  * reader (same GITHUB_TOKEN, same contents API); this adds a GraphQL read of
  * tier:hold PRs beside it. Neither writes to GitHub: PR actions are queued in
  * Mongo for the Hetzner drainer (scripts/maintenance/decision-answers-drain.mjs).
+ * Pending API key requests are read from Mongo (`api_key_requests`), the same
+ * rows /admin/api-keys lists.
  */
 import type { Db } from 'mongodb';
 import {
   ANSWERS_COLLECTION, CODE_REPO, OPS_FILE, OPS_REPO,
-  applyAnswers, failingChecksOf, parseOpsDecisions, prCard, sortCards,
-  type CheckNode, type DecisionAnswer, type DecisionCard, type HoldPr,
+  applyAnswers, failingChecksOf, keyRequestCard, parseOpsDecisions, prCard, sortCards,
+  type CheckNode, type DecisionAnswer, type DecisionCard, type HoldPr, type PendingKeyRequest,
 } from './decision-queue';
 import {
   BRIEFS_COLLECTION, attachBriefs, groupCards,
@@ -95,6 +97,27 @@ export async function fetchIssueTitles(token: string, numbers: number[]): Promis
   }
 }
 
+/** Every API key request still waiting for review, oldest first. */
+export async function fetchPendingKeyRequests(db: Db): Promise<PendingKeyRequest[]> {
+  // The collection api-key-review.ts writes; named here rather than imported so
+  // this reader does not pull the key minter and the mailer into scripts.
+  const rows = await db.collection('api_key_requests')
+    .find({ status: 'pending' })
+    .project({ name: 1, email: 1, organization: 1, use_case: 1, requested_tier: 1, created_at: 1 })
+    .sort({ created_at: 1 })
+    .limit(100)
+    .toArray();
+  return rows.map((r) => ({
+    id: String(r._id),
+    name: String(r.name ?? ''),
+    email: String(r.email ?? ''),
+    organization: r.organization ? String(r.organization) : null,
+    use_case: String(r.use_case ?? ''),
+    requested_tier: String(r.requested_tier ?? 'full'),
+    created_at: r.created_at ? new Date(r.created_at).toISOString() : null,
+  }));
+}
+
 export interface QueueSnapshot {
   /** Every open card, in priority order, each with Claude's brief when one is current. */
   cards: BriefedCard[];
@@ -104,7 +127,7 @@ export interface QueueSnapshot {
   waiting: string[];
   /** One line per source that could not be read; shown on the page, never swallowed. */
   errors: string[];
-  counts: { pr: number; ops: number; answeredToday: number; briefed: number };
+  counts: { pr: number; ops: number; apikey: number; answeredToday: number; briefed: number };
 }
 
 /** Every pending card from every readable source, answered ones removed, in priority order. */
@@ -128,7 +151,14 @@ export async function loadQueue(db: Db, now = new Date()): Promise<QueueSnapshot
     else errors.push(`${OPS_FILE} could not be read: ${(ops.reason as Error).message}`);
   }
 
-  const all = [...prCards, ...opsCards];
+  let keyCards: DecisionCard[] = [];
+  try {
+    keyCards = (await fetchPendingKeyRequests(db)).map(keyRequestCard);
+  } catch (e) {
+    errors.push(`API key requests could not be read: ${(e as Error).message}`);
+  }
+
+  const all = [...prCards, ...opsCards, ...keyCards];
   const answers = await db.collection<DecisionAnswer>(ANSWERS_COLLECTION)
     .find({ card_id: { $in: all.map((c) => c.id) } })
     .project<Pick<DecisionAnswer, 'card_id' | 'choice' | 'status' | 'answered_at' | 'skip_until' | 'result'>>(
@@ -157,6 +187,7 @@ export async function loadQueue(db: Db, now = new Date()): Promise<QueueSnapshot
     counts: {
       pr: open.filter((c) => c.source === 'pr').length,
       ops: open.filter((c) => c.source === 'ops').length,
+      apikey: open.filter((c) => c.source === 'apikey').length,
       answeredToday,
       briefed: cards.filter((c) => c.brief).length,
     },
