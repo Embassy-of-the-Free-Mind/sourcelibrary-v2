@@ -2,7 +2,7 @@
 
 PRIOR ART: none in this repo — searched `.claude/docs`, `docs/`, `scripts/maintenance`, `src/lib` for decision/pending/hold tooling. The `/decisions` terminal command and DECISIONS-PENDING.md live in the private ops repo; `scripts/maintenance/safe-merge.sh` is reused, not replaced.
 
-**Read this when:** changing the decisions page, `src/lib/decision-queue*.ts`, `scripts/maintenance/decision-answers-drain.mjs`, or the `decision_answers` collection; or building stage 2 (the laptop session sync).
+**Read this when:** changing the decisions page, `src/lib/decision-queue*.ts`, `scripts/maintenance/decision-answers-drain.mjs`, or the `decision_answers` collection; the groups or briefs (`src/lib/decision-briefs.ts`, `scripts/maintenance/decision-briefs.ts`, `decision_briefs`); or building stage 2 (the laptop session sync).
 
 ## Who it is for
 
@@ -22,7 +22,7 @@ A PR card is keyed to its head sha, so a push after an answer is a new decision.
 
 ### Why PR actions are queued, not done in the web function
 
-A web function that can merge to `main` deploys production: the site would need a GitHub token with write on the code repo, and `safe-merge.sh` waits up to two minutes for GitHub to compute mergeability. So the page writes a `queued` row, and `scripts/maintenance/decision-answers-drain.mjs` acts on it every 5 min on Hetzner (line in `infrastructure/hetzner-crontab`, auto-applied by the git-pull cron), with the box's own `gh` login. It runs `safe-merge.sh` itself — one gate for the terminal and the page — and adds three guards: the PR is still open and `tier:hold`; its head is the sha Derek answered on; at most one merge per run, only when main's tip is ≥ 8 min old (as `auto-merge.mjs`). **Writing a `queued` row is actuation**: the drainer acts on it within about 5 minutes.
+A web function that can merge to `main` deploys production: the site would need a GitHub token with write on the code repo, and `safe-merge.sh` waits up to two minutes for GitHub to compute mergeability. So the page writes a `queued` row, and `scripts/maintenance/decision-answers-drain.mjs` acts on it every 5 min on Hetzner (line in `infrastructure/hetzner-crontab`; installed by hand on the live crontab on 2026-10-08, because nothing applies that file to the box: the live crontab is the source of truth and `scripts/workers/sync-crontab.sh` only reports drift. Verify with `crontab -l | grep "^[^#]" | grep decision-answers-drain` and `/var/log/sourcelibrary/decisions-drain.log`), with the box's own `gh` login. It runs `safe-merge.sh` itself — one gate for the terminal and the page — and adds three guards: the PR is still open and `tier:hold`; its head is the sha Derek answered on; at most one merge per run, only when main's tip is ≥ 8 min old (as `auto-merge.mjs`). **Writing a `queued` row is actuation**: the drainer acts on it within about 5 minutes.
 
 The answer route rebuilds the card from its live source and refuses (409) when it no longer exists, so a stale page cannot queue a merge of code Derek did not see. It accepts only a platform superadmin: `withAuth` lets the `CRON_SECRET` bearer through as `admin` without checking `minRole`, so the route checks the platform grant itself.
 
@@ -35,6 +35,19 @@ The file is edited by sessions with git, many times a day. A Mongo mirror needs 
 **Write-back (moving a row to `## Done`) is stage 2** and needs a new secret: `OPS_REPO_TOKEN`, a fine-grained PAT scoped to `Embassy-of-the-Free-Mind/sourcelibrary-ops` only, permission *Contents: read and write*, set in Vercel (Production). Until then,
 `node --env-file=.env.production.local scripts/maintenance/decision-answers-drain.mjs --list-ops`
 prints the recorded ops answers as `## Done` lines for a session to move by hand. When a session acts on a decision and deletes the row (the file's own rule), the card goes too.
+
+## Groups and briefs (#6280)
+
+On 2026-10-08 the queue held 91 cards (71 held PRs, 20 ops rows). Two things cut that down without hiding a decision.
+
+**Groups (no model).** `groupCards` in `src/lib/decision-briefs.ts`. PRs that name the same issue in their title are one group ("13 PRs on #6215: …"); ops rows under one section are one group; the first group is open and the rest are closed until tapped. A PR card whose Default cannot act (conflicts, `blocked`, stacked on another branch, a draft, a failing required check) is not Derek's to decide yet, so it sits in a closed "back with their author" list at the bottom and is not counted in "to decide".
+
+**Briefs (a Claude session's reading).** One row per card in Mongo `decision_briefs`: a two-sentence summary, a recommendation (`default` / `other` with the text to send / `skip`), one to three reasons that each name what was read, the risk if the recommendation is wrong, the other cards it goes with, and what the writer opened. The card shows the brief above the opener's own default, says when the two differ, and rings the recommended button. When the recommendation is Other, the Other box opens with the text filled in for Derek to edit.
+
+- **A brief is a note, not an action.** Nothing reads `decision_briefs` except the page. Only Derek's tap writes `decision_answers`. There is no "accept all recommendations" button and none should be added: held PRs are never merged on classification alone.
+- **A brief cannot go stale silently.** It is keyed to the card id, which changes with the PR's head sha or the ops row's text. After a push the card has no brief until someone reads it again, and says so.
+- **Who writes them.** A Claude Code session on the subscription, never an API key, so the web function cannot write one. `scripts/maintenance/decision-briefs.ts --packets <dir>` writes one evidence file per card without a brief (PR body, files, checks, last comments, linked issue, diff up to 40K characters; or the ops row in full) plus `INSTRUCTIONS.md`; the session reads them and writes `briefs/<card id>.json`; `--ingest <dir>` validates each against the live queue and upserts. `--status` counts what is briefed. Fan-out rule: at most eight readers, each writing files, never one reader per card.
+- **Not scheduled.** The writer has no cron. Until it does, briefs appear when a session runs the pass (the `/decisions` terminal command is the natural place).
 
 ## Stage 2 design: stuck background sessions (not built)
 
