@@ -79,6 +79,29 @@ def fleiss(runs, keys, field):
     Pbar = sum(P) / N; pj = [t / (N * n) for t in tot]; Pe = sum(p * p for p in pj)
     return None if Pe == 1 else (Pbar - Pe) / (1 - Pe)
 
+def kalpha(units, level='nominal'):
+    """Krippendorff's alpha; units = lists of values, None = missing (a page one run did not return). Same formula as
+    scripts/eval/second-reader/lib.mjs krippendorffAlpha, pinned there to Krippendorff (2011): 0.743 / 0.815 / 0.849."""
+    vals = [[v for v in u if v is not None] for u in units]
+    vals = [u for u in vals if len(u) >= 2]
+    if not vals: return None
+    cats = sorted({v for u in vals for v in u}); ix = {c: i for i, c in enumerate(cats)}; K = len(cats)
+    o = [[0.0] * K for _ in range(K)]
+    for u in vals:
+        m = len(u)
+        for i in range(m):
+            for j in range(m):
+                if i != j: o[ix[u[i]]][ix[u[j]]] += 1 / (m - 1)
+    nc = [sum(r) for r in o]; n = sum(nc)
+    def d2(c, k):
+        if level == 'nominal': return 0 if c == k else 1
+        if level == 'interval': return (cats[c] - cats[k]) ** 2
+        lo, hi = min(c, k), max(c, k)
+        return (sum(nc[lo:hi + 1]) - (nc[c] + nc[k]) / 2) ** 2
+    Do = sum(o[c][k] * d2(c, k) for c in range(K) for k in range(K)) / n
+    De = sum(nc[c] * nc[k] * d2(c, k) for c in range(K) for k in range(K)) / (n * (n - 1))
+    return None if De == 0 else 1 - Do / De
+
 def f(x): return '—' if x is None else f'{x:.2f}'
 
 runs = {}
@@ -107,5 +130,10 @@ for a, b in itertools.combinations(names, 2):
 common = set.intersection(*(set(runs[n][0]) for n in names))
 if len(names) > 2:
     print(f"\nFleiss κ across all {len(names)} runs, serious flag, {len(common)} pages: {f(fleiss([runs[n][0] for n in names], sorted(common, key=str), 'serious'))}")
+# Krippendorff's alpha over the UNION of pages: a page one run did not return is missing, not dropped (#6338).
+union = sorted(set().union(*(set(runs[n][0]) for n in names)), key=str)
+col = lambda fld: [[runs[n][0][k][fld] if k in runs[n][0] else None for n in names] for k in union]
+print(f"\nKrippendorff α across {len(names)} runs, {len(union)} pages (missing allowed): serious (nominal) {f(kalpha(col('serious')))}, "
+      f"OCR score (ordinal) {f(kalpha(col('ocr'), 'ordinal'))}, English score (ordinal) {f(kalpha(col('tr'), 'ordinal'))}")
 # per-stratum serious-rate stability
 print('\nserious-page rate by book-tradition prefix is in each run\'s overview-score report.')
