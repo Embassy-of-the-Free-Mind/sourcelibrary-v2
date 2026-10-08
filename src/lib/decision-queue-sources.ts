@@ -13,6 +13,10 @@ import {
   applyAnswers, parseOpsDecisions, prCard, sortCards,
   type DecisionAnswer, type DecisionCard, type HoldPr,
 } from './decision-queue';
+import {
+  BRIEFS_COLLECTION, attachBriefs, groupCards,
+  type BriefedCard, type CardGroup, type DecisionBrief,
+} from './decision-briefs';
 
 const UA = 'sourcelibrary-decision-queue';
 
@@ -55,11 +59,39 @@ export async function fetchOpsMarkdown(token: string): Promise<string> {
   return res.text();
 }
 
+/**
+ * Titles of the issues that name a group ("13 PRs on #6215: …"), in one
+ * request. A failure here only costs the group its name, so it returns {}.
+ */
+export async function fetchIssueTitles(token: string, numbers: number[]): Promise<Record<number, string>> {
+  if (!numbers.length) return {};
+  const [owner, name] = CODE_REPO.split('/');
+  const fields = numbers.map((n) => `i${n}: issueOrPullRequest(number: ${n}) { ... on Issue { title } ... on PullRequest { title } }`);
+  try {
+    const res = await fetch('https://api.github.com/graphql', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', 'User-Agent': UA },
+      body: JSON.stringify({ query: `query { repository(owner: "${owner}", name: "${name}") { ${fields.join(' ')} } }` }),
+      cache: 'no-store',
+    });
+    const json = await res.json();
+    const repo = (json.data?.repository ?? {}) as Record<string, { title?: string } | null>;
+    return Object.fromEntries(numbers.flatMap((n) => (repo[`i${n}`]?.title ? [[n, repo[`i${n}`]!.title!]] : [])));
+  } catch {
+    return {};
+  }
+}
+
 export interface QueueSnapshot {
-  cards: DecisionCard[];
+  /** Every open card, in priority order, each with Claude's brief when one is current. */
+  cards: BriefedCard[];
+  /** The cards Derek can decide, as groups (a card on its own is a group of one). */
+  groups: CardGroup[];
+  /** Ids of PR cards that cannot be merged yet: back with their author, off the main list. */
+  waiting: string[];
   /** One line per source that could not be read; shown on the page, never swallowed. */
   errors: string[];
-  counts: { pr: number; ops: number; answeredToday: number };
+  counts: { pr: number; ops: number; answeredToday: number; briefed: number };
 }
 
 /** Every pending card from every readable source, answered ones removed, in priority order. */
@@ -93,14 +125,27 @@ export async function loadQueue(db: Db, now = new Date()): Promise<QueueSnapshot
   startOfDay.setUTCHours(0, 0, 0, 0);
   const answeredToday = await db.collection(ANSWERS_COLLECTION).countDocuments({ answered_at: { $gte: startOfDay } });
 
-  const open = applyAnswers(all, answers, now);
+  const open = sortCards(applyAnswers(all, answers, now), now);
+  // Briefs are keyed to the card id, which changes with the PR head or the ops
+  // row, so a brief found here was written for exactly this version of the card.
+  const briefs = await db.collection<DecisionBrief>(BRIEFS_COLLECTION)
+    .find({ card_id: { $in: open.map((c) => c.id) } }).project<DecisionBrief>({ _id: 0 }).toArray();
+  const cards = attachBriefs(open, briefs);
+
+  const first = groupCards(open, now);
+  const issues = first.groups.flatMap((g) => (g.key.startsWith('issue:') ? [Number(g.key.slice(6))] : []));
+  const titles = token ? await fetchIssueTitles(token, issues) : {};
+  const { groups, waiting } = issues.length ? groupCards(open, now, titles) : first;
   return {
-    cards: sortCards(open, now),
+    cards,
+    groups,
+    waiting,
     errors,
     counts: {
       pr: open.filter((c) => c.source === 'pr').length,
       ops: open.filter((c) => c.source === 'ops').length,
       answeredToday,
+      briefed: cards.filter((c) => c.brief).length,
     },
   };
 }
