@@ -103,7 +103,7 @@ export function validateBrief(raw: unknown, liveIds: Set<string>, now: Date): De
     rationale: strList(r.rationale, 'rationale', 1, 3, LIMITS.reason),
     risk: str(r.risk, 'risk', LIMITS.risk),
     ...(same.length ? { same_decision_as: same } : {}),
-    read: strList(r.read, 'read', 1, 8, 80),
+    read: strList(r.read, 'read', 1, 8, 160),
     model: str(r.model, 'model', 60),
     written_by: str(r.written_by, 'written_by', 80),
     written_at: now,

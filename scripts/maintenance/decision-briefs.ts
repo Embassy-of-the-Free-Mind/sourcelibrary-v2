@@ -159,7 +159,7 @@ Rules:
 - A green check list says the PR can merge, not that it should. Say what the change does to a reader, to spend, or to data.
 - Say when a card is one of several on the same issue and in what order they merge (index.json lists every card with its issue).
 - A diff cut short in the packet was not read to the end: either read the rest (\`gh pr diff <n>\`) or say "diff (first 40K)" in \`read\`.
-- Limits: summary 500 characters, label 140, each reason 300, risk 300. The ingest refuses longer.
+- Limits: summary 500 characters, label 140, each reason 300, risk 300, each \`read\` entry 160 (up to 8 entries). The ingest refuses longer.
 - Plain words. State what the source says. No praise, no hedging adverbs.
 - The brief is stored and shown to Derek only. Writing it changes nothing else; do not merge, comment or label anything.
 `;
