@@ -1,0 +1,55 @@
+[
+{"id": "QIBNG", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "རྣམས་ཞེས་བྱ་བ་ནི་གསལ་བ་བརྗོད་པར་འདོད་པས་མང་པོའི་ཚིག་གོ", "english": "The word \"all\" [note: original: རྣམས་ \"rnams\"] is a plural term used to express clarity.", "why": "rnams is the plural marker, used because the individual instances (gsal ba = vyakti, particulars) are meant; not 'all' and not 'clarity'.", "fix": {"find": "The word \"all\" [note: original: རྣམས་ \"rnams\"] is a plural term used to express clarity.", "replace": "The plural [note: original: རྣམས་ \"rnams\"] is used because the individual instances (vyakti) are meant."}},
+  {"type": "term", "confidence": "medium", "tibetan": "རྟེན་གྱིས་འཇིག་པའི་གནས་བྱེད་ན", "english": "If a support makes the state of destruction occur through itself or another", "why": "The Tibetan says the support brings about the persistence (gnas) of the perishing thing, not a 'state of destruction'."},
+  {"type": "term", "confidence": "medium", "tibetan": "མཚམས་སྦྱོར་བར་བྱེད་པའི་ཡིད་ཀྱི་རྣམ་པར་ཤེས་པ", "english": "the mental consciousness itself, which performs the connection", "why": "mtshams sbyor ba is rebirth-linking (pratisandhi), a technical term lost in 'performs the connection'."},
+  {"type": "term", "confidence": "medium", "tibetan": "ཉེ་བར་ལེན་པ་དང་ཉེ་བར་ལེན་པ་ལས་བྱུང་བ་འོད་དང་སྒྲོན་མ་དག", "english": "the fuel (upādāna) appropriation/material cause and that which arises from the fuel—the light and the lamp", "why": "Upādāna here is the material cause (the lamp, with the light as its product), not 'fuel'; the following sentence on the faultless definition of material cause is also garbled."}
+ ],
+ "note": "Generally follows the Pramāṇa commentary, but several technical terms (plural/vyakti, pratisandhi, upādāna) are mishandled."},
+{"id": "QX82M", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "ཁྱེའུ་ཁ་འཐོན་པར་རུང་བར་མ་བྱས་པ་མ་ཉམས་པ་ཉིད་དུ་ཤེས་བཞིན་དུ", "english": "are viable [note: literally: \"fit for a youth to eat\"] and undamaged", "why": "rung bar ma byas pa is the Vinaya term 'not made allowable' (akalpikṛta), and khye'u kha 'thon pa refers to sprouts that have emerged; the English reverses the allowability condition into 'viable' with a wrong gloss and drops the sprouts.", "fix": {"find": "are viable [note: literally: \"fit for a youth to eat\"] and undamaged", "replace": "and sprouted shoots, not made allowable (akalpikṛta), are undamaged"}}
+ ],
+ "note": "Lists and the pāyattika etymology are handled well, but the key condition 'not made allowable' in the definition of the offence is mistranslated."},
+{"id": "QS8D8", "score": 3, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "high", "tibetan": "འཇིག་རྟེན་འདི་རུ་མ་སྨད་ཅིང་། །ཕ་རོལ་དུ་ཡང་བདེ་བ་ནི། །འདྲེན་པ་གང་ཡིན་དེ་བྱའོ།", "english": "Should not be despised in this world,\nAnd should perform those guiding actions\nThat lead to happiness in the next life.", "why": "The verse says the person should do what is not blamed in this world and brings happiness in the next; 'not blamed' qualifies the action, not the person.", "fix": {"find": "Should not be despised in this world,\nAnd should perform those guiding actions\nThat lead to happiness in the next life.", "replace": "Should do that which is not blamed in this world\nAnd which brings\nHappiness in the next as well."}},
+  {"type": "agent", "confidence": "medium", "tibetan": "བླ་མ་དག་ལྟ་བུའམ། རྗེ་བོ་བཞིན་", "english": "act like gurus or like a master—", "why": "The sentence (continued on the next side) says one should not despise others but treat them as gurus or as a lord; it is the others who are regarded as gurus."}
+ ],
+ "note": "The narrative and similes are rendered well; one verse misattributes its predicate and the closing clause misdirects the comparison."},
+{"id": "QBMUX", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "དགེ་འདུན་ལྷག་མ་", "english": "Sanskrit: sanghadisesa", "why": "Saṅghādisesa is the Pali form; the Mūlasarvāstivāda Sanskrit is saṃghāvaśeṣa."}
+ ],
+ "note": "A faithful rendering of the five modes of Prātimokṣa recitation and the reciter's and elder's duties."},
+{"id": "QTN7C", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "པ་དེས་མི་བདག་ནི། །བཞིན་གྱི་ཆུ་སྐྱེས་མཛེས་བྲལ་ཞིང་", "english": "downcast from pride, his lotus face became devoid of beauty", "why": "Completing ma bkur pa from the previous side (Skt. vimānena), the king's face lost its beauty through that dishonour, not 'from pride'."}
+ ],
+ "note": "The Tibetan verses are translated accurately; only the opening cause of the king's dejection is misread."},
+{"id": "QA0OE", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "A dense Pramāṇavārttika commentary passage on body and consciousness, rendered literally but faithfully."},
+{"id": "QAOWA", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "high", "tibetan": "དེ་ལྟ་ན་ཡང་ནུས་པ་ཐོགས་པ་མེད་པའི་དོན་མ་ཡིན་ཏེ", "english": "Even so, this does not mean the capacity is hindered.", "why": "The Tibetan says that in that case it is not something whose capacity is unhindered, and the next sentence explains why.", "fix": {"find": "Even so, this does not mean the capacity is hindered.", "replace": "In that case, however, it is not something whose capacity is unhindered."}},
+  {"type": "agent", "confidence": "medium", "tibetan": "རྒྱུ་ནི་འབྲས་བུ་མེད་པར་ཡོད་པ་ཡང་སྲིད་པས་དམིགས་པ་མེད་པ་ཡུལ་མེད་པ་མི་འགྲུབ་པོ་ཞེས་བྱ་བའི་ལན་", "english": "Since it is possible for a cause to exist without the result, the answer to the claim", "why": "'A cause can exist without its effect' is part of the objection being answered, not the author's reason."},
+  {"type": "structure", "confidence": "medium", "tibetan": "ཐམས་ཅད་མཁྱེན་པ་དག་འདོད་ཆགས་དང་བྲལ་བ་དག་འགོག་པར་བྱེད་པ", "english": "negate that the All-Knowing One is free from attachment", "why": "The Mīmāṃsakas negate omniscient beings and passion-free beings (two items), not the proposition that the omniscient one is passion-free."}
+ ],
+ "note": "The overall argument is traceable, but a negation is reversed and the objector's premise is given as the author's reason."},
+{"id": "QCZIR", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "medium", "tibetan": "འབད་པ་མེད་པར་དེ་ལྡོག་པར་ངེས་པས་ལྡོག་པར་འགྱུར་བ་མེད་པའི་ཕྱིར་རོ", "english": "because that reversal is not established through effort", "why": "The Tibetan says it does not become a vyatireka by being ascertained as excluded without effort ('without effort', not 'through effort')."}
+ ],
+ "note": "A sound rendering of the discussion of 'niścita' in the trairūpya definition, with helpful notes."},
+{"id": "QFCIH", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "སྒྲའི་རྣམ་པར་རྟོག་པ་ལ་སྣང་བའི་དོན་དེ་ཉིད་ལ་བསྙེན་པ་ཡང་མ་ཡིན་ཏེ", "english": "it is not even the case that one is referring to the very object appearing in the verbal conceptualization", "why": "bsnyen here stands for bsnyon (cf. the verse that follows: sgra don bsnyon pa med): there is no denial of the object appearing in verbal conceptuality, because words are applied to the object set in the mind."}
+ ],
+ "note": "Generally accurate on apoha and the verbal object, including the summary verses; one sentence misreads 'deny'."},
+{"id": "QEI9W", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "omission", "confidence": "medium", "tibetan": "ཏེ་དེ་ཡང་ཕྱིན་ཅི་ལོག་ཡིན་ནོ། །ལྷག་མ་རྣམས་ལ་ཡང་དེ་བཞིན་ནོ།", "english": "how could grasping it as such not be a distortion? To this, it is argued", "why": "'That too is a distortion. The same applies to the rest' is left untranslated."}
+ ],
+ "note": "Prasannapadā ch. 23 is rendered faithfully, with the verses kept as verse; one short commentary sentence is dropped."}
+]

@@ -1,0 +1,729 @@
+[
+  {
+    "book_id": "6a21994b4b61907ea5ffb7e5",
+    "slot": 21,
+    "title": "Lawa'ih",
+    "tradition": "arabic-persian",
+    "shelf_fit": "fits",
+    "shelf_note": "Jami's Lawa'ih, a core Persian Sufi treatise (wahdat al-wujud), in the 1906 Royal Asiatic Society facsimile with Whinfield/Qazvini English apparatus.",
+    "rights_flag": null,
+    "structure_note": "Mixed volume: a lithographed Persian facsimile followed by the 1906 English typeset matter. The English part is scanned in reverse order: the title page sits at page 123 of 124 and Appendix I (printed p. 59) at page 65. The 34 printed-number backsteps come from that reversal (I6), not from misread numerals. 18 of 124 pages have no OCR and 27 are untranslated. The English pages are 'translated' as English echoes of themselves, which does no harm. Whinfield's own 1906 English translation is in the volume, but a reader of the Persian pages gets only the AI translation.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 14,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "و ایضاً عموم خیالات لایقه بواسطه",
+            "image": "و ایضا عموم خلایق بواسطه",
+            "problem": "'the generality of people' misread as 'common suitable imaginations'; the subject of the sentence changes",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "و بادراک صادق آن محقق گردد",
+            "image": "و باحکام صادق آن متحقق گردد",
+            "problem": "'true judgements' read as 'true perception'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "پس باید که بکوشد و خود را از نظر خود و پیشه و یزدانی",
+            "image": "پس باید که بکوشی و خود را از نظر خود بپوشی و در ذاتی ...",
+            "problem": "last line garbled ('hide yourself from your own sight' becomes 'profession and divine')",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "-> ای بیخبر از چنین مقید چه کنی <- / -> از هر طرفی جمال مطلق تابان <-",
+            "image": "right-hand hemistich 'از هر طرفی جمال مطلق تابان' comes first",
+            "problem": "hemistich order reversed (RTL verse cells read left to right)",
+            "severity": "minor"
+          },
+          {
+            "ocr": "گر گلت اندیشه گلشنی",
+            "image": "گر گلست اندیشه تو گلشنی",
+            "problem": "words dropped from Rumi's verse",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "عموم خیالات لایقه",
+            "english": "common suitable imaginations ... have become such that they do not know how to distinguish themselves",
+            "problem": "carries the OCR misread: Jami says most PEOPLE are so absorbed in the body that they cannot tell themselves apart from it",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "از نظر خود و پیشه و یزدانی",
+            "english": "free oneself from one's own sight and from professional and divine...",
+            "problem": "fluent rendering of a garbled line",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 36,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "سر مرتبه از وجودی دارد | کر حفظ مراتب بکنی بیتی",
+            "image": "هر مرتبه از وجود حکمی دارد / گر حفظ مراتب نکنی زندیقی",
+            "problem": "the famous quatrain line ('every level of being has its rule; if you do not keep the levels you are a heretic') garbled: negation lost, 'zindiqi' becomes 'bayti'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "ای سرده کار که صاحب حقی | و در صفت صدق و صدقتی",
+            "image": "ای برده گمان که صاحب تحقیقی / وندر صفت صدق و یقین صدیقی",
+            "problem": "first couplet garbled",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "موجودیت یکی شرف است",
+            "image": "موجود حقیقی یکی بیش نیست",
+            "problem": "the thesis sentence 'the true Existent is only one' misread",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "الوهیت (line 3)",
+            "image": "الهیت",
+            "problem": "normalised spelling",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "کر حفظ مراتب بکنی بیتی",
+            "english": "If you preserve the levels, you will build a house <note>referring to spiritual stability</note>",
+            "problem": "the source warns that failing to keep the levels is heresy. The English invents a positive promise and explains it in a note",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "موجودیت یکی شرف است",
+            "english": "Being an \"existent\" is a single honor",
+            "problem": "Jami's central claim that there is only one true Existent becomes a meaningless sentence",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "خلقیت",
+            "english": "Creativity/Cureaturehood",
+            "problem": "the gloss gives a wrong option and a typo",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 65,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "English typeset appendix (Ghazali on tawhid, Ockley's translation) shown as its own 'translation'; harmless echo",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 123,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "A TREATISE ON ṢŪFISM",
+            "english": "A TREATISE ON <term>ṢŪFISM</term> <gloss>ISLAMIC MYSTICISM</gloss>",
+            "problem": "a gloss added inside a title-page line",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Title page is the second-to-last page of the book: the English section is in reverse order",
+            "severity": "moderate",
+            "class": "I6"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A core Sufi text in a public-domain 1906 edition. The Persian OCR misreads key doctrinal lines (the 'one true Existent' sentence and the 'keep the levels or be a heretic' quatrain), and the English renders those misreads fluently, with a reversed meaning in one place. The English back matter is in reverse order.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      65
+    ],
+    "reader_summary": "This is Jami's Lawa'ih in a lithographed Persian facsimile, with the 1906 Royal Asiatic Society English matter at the back. The transcription is of the right text and mostly sound in the prose, but it garbles verses and several doctrinal key sentences, and the English then states those garbles as Jami's meaning. A scholar should read the English against Whinfield's translation in the same volume, not on its own."
+  },
+  {
+    "book_id": "6958ea069659a6529d577c98",
+    "slot": 22,
+    "title": "Traite des medicaments (Jami al-Mufradat)",
+    "tradition": "arabic-persian",
+    "shelf_fit": "fits",
+    "shelf_note": "Ibn al-Baytar's pharmacopoeia, a major Arabic medical-botanical work; belongs on an Arabic science shelf.",
+    "rights_flag": null,
+    "structure_note": "Broken structure: 570 page records against pages_count 379. The manuscript appears to be held twice: an older set of unsplit two-page spreads under archived/ with negative page numbers (page -168 shows folios 161/162 as one spread) and a newer set of single leaves under pages/. 183 printed-number repeats and 161 backsteps are consistent with the double set. Negative page numbers are a structural defect in themselves (I2/I3).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": -168,
+        "right_page": "yes",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "### سلحفاة / من نوره هو النحاة ... ### سليخا ... ### سمن / ليس مخدراً",
+            "image": "entry headings on the left leaf read سلوى, سلور, سلاحة(?), سلطان الجبل; the tortoise (سلحفاة) entry is on the right leaf",
+            "problem": "the headings and most of the running text are confabulated; only the first line or two match the page",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "المصدوع",
+            "image": "المصروع",
+            "problem": "first-line slip",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "### سمن / ليس مخدراً",
+            "english": "### Ghee / It is not an anesthetic.",
+            "problem": "invented entry and statement",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "والبواسير العنز والبله والبرص",
+            "english": "stops the bleeding of wounds and hemorrhoids, and treats goats, idiocy, and leprosy",
+            "problem": "nonsense presented as a materia medica claim",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "Unsplit two-page spread shown as one page, with a negative page number",
+            "severity": "serious",
+            "class": "I3"
+          },
+          {
+            "note": "Translation opens with a <meta> paragraph of model commentary about the page ('This page continues the pharmacological survey...')",
+            "severity": "moderate",
+            "class": "T3"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 29,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "حر هذا ابن سجون الحمر أسود أحم بالايض هو الحمر العبي",
+            "image": "حرمل: ابن سمجون: الحرمل ابيض واحمر بالابيض هو الحرمل العربي",
+            "problem": "entry heading حرمل (harmal, Syrian rue) misread as حر/الحمر all through the entry",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "وسألت عنه بعض صاحب الحبشة",
+            "image": "وسألت عنه بعض اعراب",
+            "problem": "'some Bedouin' becomes 'an owner in Ethiopia'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "حر هذا ابن سجون الحمر",
+            "english": "Heat: this Ibn Sajun al-Hamr (Red Son of the Ages) is black, red...",
+            "problem": "the harmal entry becomes 'Heat' and a 'red plant'. The authority Ibn Samajun becomes an invented person, and the plant identity is lost",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "(garbled lines)",
+            "english": "glass bile <note>likely a mineral or salt</note> ... the <term>Bim</term> <gloss>a canal or vessel</gloss>",
+            "problem": "glosses invented over garbled text",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 160,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "زعم ان دم الخرفان اضرب يوم من الصرع",
+            "image": "زعم ان دم الخرفان اذا شرب نفع من الصرع (approx.)",
+            "problem": "'sheep's blood, if drunk, helps epilepsy' misread so that the benefit is lost",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "على افئدة الروافضة",
+            "image": "على افواه العروق(?)",
+            "problem": "misread into a sectarian word",
+            "severity": "serious",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "زعم ان دم الخرفان اضرب يوم من الصرع",
+            "english": "among them are those who claimed that sheep blood is more harmful than epilepsy",
+            "problem": "a remedy claim is inverted into a harm claim",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "الروافضة",
+            "english": "the hearts of the rawafida (rejectionists/sectarians)",
+            "problem": "Shi'i polemic invented in a medical text",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "الزوجة المخالطة",
+            "english": "the healing of the sticky wife <note>likely a metaphor for a bodily fluid</note>",
+            "problem": "لزوجة (viscosity) translated as 'wife'",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 234,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "الزمان (throughout)",
+            "image": "الرمان",
+            "problem": "pomegranate read as 'time' throughout; the gloss happens to recover it",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "(line 3 missing)",
+            "image": "دالوجه الرمان الحامض اذا جفف في الشمس ...",
+            "problem": "a whole line dropped",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "<margin>الزمان أسه فضا من عصارة ...</margin>",
+            "image": "that is the first line of the body, not a marginal note",
+            "problem": "body line duplicated as a margin note; other margin labels are invented or garbled",
+            "severity": "moderate",
+            "class": "O12"
+          },
+          {
+            "ocr": "الفروج الخبيثة",
+            "image": "القروح الخبيثة",
+            "problem": "malignant ulcers become 'vulvas'",
+            "severity": "serious",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "الفروج الخبيثة ... وجع حمام أو الفروج",
+            "english": "a stopper of malignant vulvas ... the pain of the bath or the vulvas",
+            "problem": "therapeutic indication misstated",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "(the rest of the page)",
+            "english": "<term>...</term> <gloss>a term</gloss> repeated a dozen times; 'jullanar is excess [that] dries from God'; 'arranged with the coffee of malhdhal'",
+            "problem": "word salad with placeholder glosses; not usable as a translation",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "The gloss '<gloss>a term</gloss>' is repeated through the reader text",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "An important manuscript of Ibn al-Baytar, but the OCR on all four pages is largely confabulated and the English is fluent nonsense that invents or inverts remedies. The record holds two image sets, one as unsplit spreads with negative page numbers.",
+    "fit_to_show": "do_not_show",
+    "showcase_pages": [],
+    "reader_summary": "This is a Maghribi-hand manuscript of Ibn al-Baytar's Jami' al-mufradat, the great Arabic dictionary of simples. The transcription drifts far from the page after the first lines, and the English states invented remedies with confidence ('treats goats, idiocy, and leprosy'; sheep's blood 'more harmful than epilepsy'). Nothing in the English can be trusted; use the images only."
+  },
+  {
+    "book_id": "6a20330818654bf8e1904060",
+    "slot": 23,
+    "title": "Dhikr Rifāʿī; the Javanese title Kitāb pangdikiran. Or. 7618",
+    "tradition": "arabic-persian",
+    "shelf_fit": "fits",
+    "shelf_note": "A Javanese Sufi dhikr manual (Rifa'i, with Shattari/Naqshbandi lines) in Arabic and Pegon; fits an Islamic/Sufi shelf, though the language field 'Arabic' understates the Javanese.",
+    "rights_flag": null,
+    "structure_note": "37 page records against pages_count 24; 24 pages with OCR and 19 translated. Some 13 records look like extra or duplicate leaves (possibly bindings or blanks); worth checking. The language field says Arabic, but the procedural sections are in Javanese (Pegon).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 6,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "برهان العارفين",
+            "image": "برهان العاشقين",
+            "problem": "'proof of the lovers' normalised to 'proof of the knowers'",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "أحمد البدوي الرفاعي",
+            "image": "احمد البدوي والرفاعي",
+            "problem": "the conjunction is dropped, merging two saints (al-Badawi and al-Rifa'i) into one name",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "أبو الفضل مغشورة الله قدس الله سره",
+            "english": "Abu al-Fadl, may God be pleased with him, may God sanctify his secret",
+            "problem": "an unread epithet is replaced with a stock formula",
+            "severity": "minor"
+          },
+          {
+            "source": "أحمد البدوي الرفاعي",
+            "english": "Master Shaykh Ahmad al-Badawi al-Rifa'i",
+            "problem": "two founders of different orders presented as one person",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "السلطان العارفين مالك اليمان",
+            "image": "السلطان الزمان مالك اليمن (approx.)",
+            "problem": "epithet slightly misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 16,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "ايكله فريتكه هيدوؤن كبور علم طريقة",
+            "image": "ايكله فرتيكاهي دوڠ ارڠ كبور علم طريقة",
+            "problem": "Javanese words in Pegon misread",
+            "severity": "moderate",
+            "class": "O10"
+          },
+          {
+            "ocr": "طريق الطاغين",
+            "image": "طريق القاطعين(?)",
+            "problem": "'transgressors' read for the seekers' path",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "فواس تلوؤ دينا ... ثلاث اربع خمس لن ارو ادوس",
+            "english": "This is four or five days, and three or four or five days, then you bathe.",
+            "problem": "the instruction to fast three days (puasa telung dina, on the 3rd/4th/5th days) is lost; the English is incoherent",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "صلاة نم/خم ركعة تلوڠ سلام",
+            "english": "you pray five rak'ahs in three sets of salutations",
+            "problem": "number likely wrong: three salams of two rak'ahs (as page 17 shows) is six, not five",
+            "severity": "moderate",
+            "class": "O7"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      },
+      {
+        "page_number": 17,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "سرت اندا شفاعة لن اندا تلوڠ لن اندا وارس",
+            "english": "for the intercession, for the... three times, for the... of the souls",
+            "problem": "Javanese petitions (asking intercession, help, healing) left as ellipses",
+            "severity": "moderate",
+            "class": "T9"
+          },
+          {
+            "source": "ائ ركعة كڠ اول",
+            "english": "Perform the second rak'ah. First, recite...",
+            "problem": "'in the first rak'ah' rendered as 'second'",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      }
+    ],
+    "book_verdict": "A rare Javanese-Arabic Rifa'i dhikr manual. The Arabic litany pages read well. The Javanese procedural pages are only partly understood, and the English drops or garbles the ritual instructions (fasting, rak'ah counts, petitions).",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      7
+    ],
+    "reader_summary": "This is a nineteenth-century Javanese dhikr manual of the Rifa'iyya, opening with an Arabic tawassul to the founders of the Sufi orders and giving ritual instructions in Javanese written in Arabic script. The Arabic lists of saints are transcribed and translated well, apart from small slips such as merging al-Badawi and al-Rifa'i. The Javanese instructions are not reliably translated: they should be flagged as provisional."
+  },
+  {
+    "book_id": "6a2032b518654bf8e19035c4",
+    "slot": 24,
+    "title": "Kifāyat al-Mabādiʾ ʿalá ʿAqīdah al-Mubtadiʾ Or. 7074",
+    "tradition": "arabic-persian",
+    "shelf_fit": "fits",
+    "shelf_note": "An Ash'ari creed ('aqida) text in the Sanusi tradition; fits the Arabic/Islamic shelf.",
+    "rights_flag": null,
+    "structure_note": "18 records, each an unsplit two-page spread, although the OCR claims a split at 500 (I3). Reading order inside a spread is inconsistent: on pages 6 and 10 the left leaf (later page, 23/31) is transcribed before the right leaf (22/30), so the text runs backwards; on page 14 the order is correct. The cover label reads 'Ar. 2887', not Or. 7074; this may be an older shelfmark, low confidence. The author attribution to Taftazani (d. 1390) is doubtful: the text cites al-Sanusi's al-Sughra (Sanusi died c. 1490), so this cannot be Taftazani's own composition (I7).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 2,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Ar. 2887",
+            "english": "Arabic 2887",
+            "problem": "shelfmark expanded",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Cover translated, with a <note> image description shown as reader text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 6,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "وجميع صفاته الجهورية",
+            "image": "وجميع صفاته الوجودية",
+            "problem": "'existential attributes' misread",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "صفاته الجهورية",
+            "english": "all His manifest attributes",
+            "problem": "carries the misread",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Leaf 23 (left) is transcribed and translated before leaf 22 (right), so the reader meets the continuation before its beginning",
+            "severity": "moderate",
+            "class": "I6"
+          },
+          {
+            "note": "Spread not split although split-position 500 is recorded",
+            "severity": "moderate",
+            "class": "I3"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 10,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "وجوى في غيرها على الاحوال",
+            "image": "وجرى في غيرها على نفي الاحوال",
+            "problem": "'negation of' dropped: Sanusi's position in his other works is reversed",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "والمعدومات كولك قيام زيد",
+            "image": "والمعدومات كولد ... والاحوال ككونه قادرا والاعتبارات كثبوت القيام لزيد",
+            "problem": "examples for ahwal and i'tibarat dropped; the i'tibar example is attached to 'non-existents'",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "فتكون الصفات الخمسة انتهى",
+            "image": "فتكون الصفات الواجبة اثنتي [عشرة] (catchword اثنتي)",
+            "problem": "the count of attributes is wrong ('five' for twelve)",
+            "severity": "serious",
+            "class": "O7"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "وجوى في غيرها على الاحوال",
+            "english": "following the ahwal in others",
+            "problem": "Sanusi's denial of the ahwal in his other works becomes affirmation",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "والمعدومات كولك قيام زيد",
+            "english": "non-existents are like your statement 'Zayd's standing' <note>referring to a potential action not currently realized</note>",
+            "problem": "wrong example, plus an invented explanatory note",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "فتكون الصفات الخمسة",
+            "english": "the attributes are five",
+            "problem": "wrong number at the conclusion of the argument",
+            "severity": "serious",
+            "class": "O7"
+          }
+        ],
+        "other": [
+          {
+            "note": "The whole translation of leaf 31 (the list of twelve attributes) is wrapped in a <meta>continues from previous page</meta> tag, so the reader may hide or mis-style real text",
+            "severity": "moderate",
+            "class": "T3"
+          },
+          {
+            "note": "Leaf 31 is transcribed before leaf 30 (reversed order within the spread)",
+            "severity": "moderate",
+            "class": "I6"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 14,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ووردت الخمس عقبة باذلتها السمعية",
+            "image": "وقد تمت الخمسون(?) عقيدة بادلتها الشريفة ولنذكر لك شيئا مما يجب اعتقاده من الامور التي ادلتها سمعية",
+            "problem": "a clause dropped and the sentence recast",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "والحمل يكون بعد الصراط",
+            "image": "والجهل بكونه بعد الصراط او قبله لا يضر",
+            "problem": "'ignorance' read as 'carrying'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "وتجب التوبة طالما ان الذنب",
+            "image": "وتجب التوبة حالا من الذنب",
+            "problem": "'immediately' becomes 'as long as'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "والحمل يكون بعد الصراط او قبله لا يضر ترده الخلائق",
+            "english": "the watering will be after or before the bridge. It does not harm the confusion of the creation",
+            "problem": "source: not knowing whether the Basin is before or after the Sirat does no harm; creatures come down to it. The English is garbled",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "ووردت الخمس عقبة",
+            "english": "The five articles of faith were mentioned",
+            "problem": "misstates the structure of the creed (the completed set of articles, then the scripturally proven ones)",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "طالما ان الذنب",
+            "english": "repentance is mandatory as long as the sin remains",
+            "problem": "doctrine softened: repentance is required immediately",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean, legible Naskh creed manuscript whose transcription is mostly good, but the page 10 spread inverts al-Sanusi's position on the ahwal and gives the wrong count of attributes. Spreads are unsplit and sometimes read in the wrong order, and the Taftazani attribution looks wrong.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      14
+    ],
+    "reader_summary": "This is a commentary on an Ash'ari creed in the line of al-Sanusi's al-Sughra, on the divine attributes, prophecy and eschatology. Its attribution to Taftazani cannot be right, since it cites Sanusi. The transcription is of the right text and largely accurate, and the English reads well, but in the technical passages on ahwal and i'tibarat it reverses a position and miscounts the attributes. Within some spreads the left page is read before the right."
+  }
+]

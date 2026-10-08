@@ -49,8 +49,10 @@ import {
   SURFACE, themeAttr, bookByline, TranscriptProvenanceChip, TextSourceLine, MachineDraftLine,
 } from './ReaderV2Bits';
 import { pageTextCorpus, pageTextSource, translationCorpus, transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTranslation } from '@/lib/text-provenance';
+import { isEnglishBook as isEnglishBookFn } from '@/lib/translation-pane-state';
 import type { CdliWitness } from '@/lib/types/book';
 import { translationVerdict, type TranslationStateSource } from '@/lib/translation-completeness';
+import { displayTranscription } from '@/lib/esukhia-apparatus';
 
 // ─── Variant 2c: "Study Desk" ────────────────────────────────────────────────
 // The scholarly reader: scan, OCR and translation side by side, a left tool
@@ -302,9 +304,12 @@ function PhonePanePicker({
   transition: string;
 }) {
   const t = getReaderStrings(useLocale()).panes;
+  // An English book's transcription and translation would both read "English"
+  // (#6092) — name the transcription segment "Original" instead.
+  const sameName = language.trim().toLowerCase() === translationLabel.trim().toLowerCase();
   const items: Array<{ key: 'scan' | 'ocr' | 'en' | 'translit'; label: string }> = [
     ...(hasScan ? [{ key: 'scan' as const, label: t.viewScan }] : []),
-    { key: 'ocr', label: language },
+    { key: 'ocr', label: sameName ? t.originalFallback : language },
     ...(showTranslit ? [{ key: 'translit' as const, label: t.viewRoman }] : []),
     { key: 'en', label: translationLabel },
   ];
@@ -1457,7 +1462,7 @@ function TraceToggle({ on, onToggle, language, disabledReason }: {
 function CopyTextButton({ page, kind }: { page: Page; kind: 'ocr' | 'translation' }) {
   const [copied, setCopied] = useState(false);
   const t = getReaderStrings(useLocale()).panes;
-  const text = (kind === 'ocr' ? page.ocr?.data : page.translation?.data) || '';
+  const text = (kind === 'ocr' ? displayTranscription(page.ocr) : page.translation?.data) || '';
   if (!text) return null;
   const label = kind === 'ocr' ? t.copyTranscription : t.copyTranslation;
   return (
@@ -3170,7 +3175,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     });
   }, [citation]);
 
-  const pageNum = r.currentPage?.page_number ?? '—';
+  const pageNum = r.currentPage?.page_number ?? '–';
   const scan = resolveScanUrls(r.currentPage);
   // Corpus editions (#4350): no scan exists, so a CDLI tablet-witness
   // photograph stands in — clearly captioned as a witness, not the source of
@@ -3254,7 +3259,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
 
   // Trace aligns the transcription against the English, so it needs both panes
   // showing, both texts present, and a book that isn't already in English.
-  const isEnglishBook = (r.book.language || '').toLowerCase().startsWith('english');
+  const isEnglishBook = isEnglishBookFn(r.book.language);
   // Spanish is another rendering of the same pane, not a fifth column: nobody
   // reads one page in two translations at once. Never offered while a citation
   // pins a version — the pin is on a specific English text.
@@ -3733,7 +3738,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 {deepzoomManifest && (
                   <PageDeepZoomButton
                     manifest={deepzoomManifest}
-                    title={`${r.book.display_title || r.book.title} — ${t.search.pageLabel(r.currentPage.page_number)}`}
+                    title={`${r.book.display_title || r.book.title}, ${t.search.pageLabel(r.currentPage.page_number)}`}
                   />
                 )}
               </div>
@@ -4135,7 +4140,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 {deepzoomManifest && (
                   <PageDeepZoomButton
                     manifest={deepzoomManifest}
-                    title={`${r.book.display_title || r.book.title} — ${t.search.pageLabel(r.currentPage.page_number)}`}
+                    title={`${r.book.display_title || r.book.title}, ${t.search.pageLabel(r.currentPage.page_number)}`}
                   />
                 )}
               </div>
@@ -4206,7 +4211,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
               </div>
               <div data-reader-panel className="px-[22px] pt-4 pb-6">
-                {!r.views.scan && !r.views.ocr && (
+                {!r.views.scan && !r.views.ocr && !isEnglishBook && (
                   /* The translation is all a phone shows by default, and nothing
                      said it was a translation of something you could look at.
                      One quiet line, and a way over (#5062). */

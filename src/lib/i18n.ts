@@ -90,6 +90,7 @@ export interface FooterStrings {
   favorites: string;
   // About column
   about: string;
+  howItWorks: string;
   vision: string;
   census: string;
   progress: string;
@@ -110,6 +111,7 @@ export interface FooterStrings {
   developers: string;
   giveFeedback: string;
   checkPages: string;
+  qualityCenter: string;
   licenseLine: string;
 }
 
@@ -216,6 +218,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     search: 'Search',
     favorites: 'Favorites',
     about: 'About',
+    howItWorks: 'How it works',
     vision: 'Our Vision',
     census: 'Translation Census',
     progress: 'Progress',
@@ -235,6 +238,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     developers: 'Developers',
     giveFeedback: 'Give Feedback',
     checkPages: 'Check a few pages',
+    qualityCenter: 'Quality Center',
     licenseLine: 'Public domain originals · Translations CC BY-SA 4.0 · AI training requires a license',
   },
   es: {
@@ -249,6 +253,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     search: 'Buscar',
     favorites: 'Favoritos',
     about: 'Acerca de',
+    howItWorks: 'Cómo funciona',
     vision: 'Nuestra visión',
     census: 'Censo de traducciones',
     progress: 'Progreso',
@@ -268,6 +273,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     developers: 'Desarrolladores',
     giveFeedback: 'Enviar comentarios',
     checkPages: 'Revisar algunas páginas',
+    qualityCenter: 'Centro de calidad',
     licenseLine: 'Originales de dominio público · Traducciones CC BY-SA 4.0 · El entrenamiento de IA requiere licencia',
   },
 };

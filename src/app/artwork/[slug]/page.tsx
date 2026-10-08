@@ -7,6 +7,8 @@ import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 import { isHiddenBook, findVisibleDuplicateKeeper } from '@/lib/book-access';
 import { pickArtworkRecord } from '@/lib/artwork-slug';
 import { resolveTitle, titleProvenanceNote } from '@/lib/title-provenance';
+import { jsonLdHtml } from '@/lib/json-ld';
+import { BASE_URL, PUBLIC_DOMAIN_MARK_URL, getLicenseUrl } from '@/components/seo/schema-utils';
 
 // Must be a finite number — `false` would cache a bad-render fallback forever
 // (e.g. the noindex metadata below) until the next deploy.
@@ -151,7 +153,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: artworkTitle.isDescriptive
         ? `${artworkTitle.citation} by ${artwork.author}`
         : `${artworkTitle.display} by ${artwork.author}`,
-      images: [artwork.thumbnail_blob || artwork.thumbnail || ''],
+      // Omit rather than emit an empty url when the record has no image.
+      ...((artwork.thumbnail_blob || artwork.thumbnail)
+        ? { images: [{ url: (artwork.thumbnail_blob || artwork.thumbnail) as string, alt: `${artworkTitle.display} \u2014 ${artwork.author}` }] }
+        : {}),
     },
   };
 }
@@ -166,8 +171,31 @@ export default async function ArtworkPage({ params }: PageProps) {
     notFound();
   }
 
+  const art = data.artwork;
+  const artTitle = resolveTitle(art);
+  const artImage = (art as any).archived_full_url || (art as any).commons_full_url || art.thumbnail_blob || art.thumbnail;
+  const artUrl = `${BASE_URL}/artwork/${art.slug || slug}`;
+  const artLicense = (art as any).commons_license as string | undefined;
+  const hasAuthor = art.author && !/^\s*(various|unknown|anonymous)\s*$/i.test(art.author);
+  const imageObject = {
+    '@context': 'https://schema.org',
+    '@type': 'ImageObject',
+    '@id': `${artUrl}#image`,
+    url: artUrl,
+    name: artTitle.display,
+    caption: `${artTitle.display}${hasAuthor ? `, by ${art.author}` : ''}${art.published && !/^\d{4}-\d{2}-\d{2}/.test(art.published) ? ` (${art.published})` : ''}`,
+    ...(artImage ? { contentUrl: artImage, thumbnailUrl: art.thumbnail_blob || art.thumbnail } : {}),
+    ...(hasAuthor ? { creator: { '@type': 'Person', name: art.author } } : {}),
+    // Only a real license URL is valid here; free-text values ("CC BY-SA 4.0") are omitted.
+    ...(!artLicense || /public domain/i.test(artLicense)
+      ? { license: PUBLIC_DOMAIN_MARK_URL }
+      : /^https?:/.test(getLicenseUrl(artLicense)) ? { license: getLicenseUrl(artLicense) } : {}),
+    acquireLicensePage: artUrl,
+  };
+
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdHtml(imageObject) }} />
       <SiteHeader variant="light" />
       <ArtworkInfo book={data.artwork} collections={data.collections} prevWork={data.prevWork} nextWork={data.nextWork} navByCollection={data.navByCollection} />
     </div>

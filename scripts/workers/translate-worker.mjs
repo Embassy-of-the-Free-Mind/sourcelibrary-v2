@@ -30,6 +30,7 @@ import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
 import {
   getTranslateModelForBook as getModelForBook,
   sanitizeTranslationTags,
+  guardTranslationText,
   contentHash,
   SKIP_TRANSLATION_PAGE_TYPES,
   isBlankFromOcr,
@@ -51,12 +52,14 @@ import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-r
 import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
 import { englishSource, sameLanguageTranslation } from '../lib/same-language.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
+import { isPaused } from '../lib/pause.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { phase4Lane, REALTIME_PRIORITY_FLOOR } from '../lib/translate-batch-chained.mjs';
 import { openRunBookIds, notInOpenRun } from './lib/self-dispatch-lane.mjs';
 import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
 import { illegibleGateEnabled, illegibleSourceVerdict, ILLEGIBLE_SOURCE_REASON } from '../lib/illegible-source-gate.mjs';
+import { applyPreTranslationGate } from '../lib/pre-translation-gate.mjs';
 import { geminiEngine, translationInput, translationProvenance, codeVersion, host } from '../lib/write-provenance.mjs';
 import { dropDriftedPages } from '../lib/block-drift.mjs';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
@@ -70,6 +73,25 @@ startWorkerBeacon(import.meta.url);
 let SCOPE_IDS = null;          // string[] of allowlisted book ids, or null
 let SCOPE_SET = null;          // Set form for cheap membership tests
 let SCOPE_FILTER = {};         // { id: { $in: SCOPE_IDS } } for collision-free queries
+
+// A run lasts up to 45 minutes, so the pause read at start is not enough: a pause set mid-run
+// must stop the drain at the next batch, not after the deadline (#5492 — the drill measures a
+// frozen CALL COUNT within ten minutes). Re-read at most once a minute; a read error keeps the
+// last answer rather than inventing one.
+const PAUSE_RECHECK_MS = 60 * 1000;
+let _pauseCheckedAt = 0;
+let _pauseReason = null;
+async function translatePausedMidRun(db) {
+  if (Date.now() - _pauseCheckedAt < PAUSE_RECHECK_MS) return _pauseReason;
+  _pauseCheckedAt = Date.now();
+  try {
+    const c = await db.collection('system_config').findOne({ _id: 'processing_control' });
+    _pauseReason = isPaused(c, 'translate') ? 'translate step paused' : (!shouldBypassPause(c) ? 'pipeline paused' : null);
+  } catch (e) {
+    console.log(`[TRANSLATE] pause re-check failed (${e.message}) — keeping the last answer`);
+  }
+  return _pauseReason;
+}
 
 // ── Config ──
 const CONCURRENCY = 40;          // Max books translating simultaneously
@@ -521,7 +543,8 @@ async function writePageTranslation(db, page, text, book, promptRef, call) {
 // T3 (#5148): a translation the model wrapped whole in <meta>/<note> renders as an empty page
 // and reads to the health gate as collapsed. Open the wrapper BEFORE judging or storing.
 function unwrapForWrite(page, text, book) {
-  const u = unwrapHiddenTranslation({ ocr: page.ocr?.data, tr: text, type: page.page_type });
+  // #5902: the model's definitions inside or bracketed after a <term> are stored as <note>s.
+  const u = unwrapHiddenTranslation({ ocr: page.ocr?.data, tr: guardTranslationText(text), type: page.page_type });
   if (u.unwrapped) console.log(`  [unwrap] ${page.id} p${page.page_number}: translation was inside <${u.wrapper}> (${u.wrapperLen} chars, body ${u.body}) — unwrapped`);
   // #5734: the measured Korean 그-for-"that" is repaired here; any other stray script is refused
   // by assessTranslationHealth ('stray-script') in the health gate that follows.
@@ -613,6 +636,9 @@ async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
   })));
 }
 
+// Pages the pre-translation gate refused this run, by reason (#5915) — reported in cron_runs.
+const preGateRefusals = {};
+
 // ── Process one book (sequential batches for context) ──
 async function processBook(db, book, job, globalCounter, deadline) {
   const label = (book.title || book.id).substring(0, 50);
@@ -677,6 +703,33 @@ async function processBook(db, book, job, globalCounter, deadline) {
     console.log(`  [${label}] LOOP SOURCE: refusing to translate ${loopSources.length} page(s) whose OCR is a repetition loop (#4850)`);
     const loopIds = new Set(loopSources.map(p => p.id));
     pages.splice(0, pages.length, ...pages.filter(p => !loopIds.has(p.id)));
+  }
+
+  // ── Pre-translation gate (#5915) — ON unless TRANSLATE_PRE_GATE=0 ─────────
+  // Pages the pipeline could not have read are refused before the call: an image too small for
+  // the text it is said to hold, a transcription that is word fragments, a page with no place in
+  // the book (duplicate number, the previous page's image again). Each refusal is stamped with
+  // its reason and measurement (`translation.refusal_reason`, `translation.refusal`) and with
+  // `translation.health_blocked`, which this query already excludes; a refused page is judged
+  // again whenever its book comes back, and released if its OCR or image has changed. A book
+  // under half transcribed stamps nothing: its job is cancelled and the book is parked, because
+  // "nothing left to translate" below would otherwise mark an unread book translate_complete.
+  const preGate = await applyPreTranslationGate(db, book.id, pages, { lane: `translate-worker (${job?.initiated_by || 'job'})` });
+  for (const [reason, n] of Object.entries(preGate.counts)) preGateRefusals[reason] = (preGateRefusals[reason] || 0) + n;
+  if (preGate.book) {
+    const { read, translatable, share } = preGate.book.detail;
+    const why = `pre-translation gate: ${preGate.book.reason} (${read} of ${translatable} pages transcribed, ${(100 * share).toFixed(1)}%; #5915)`;
+    console.log(`  [${label}] BOOK REFUSED: ${why}`);
+    await db.collection('jobs').updateOne({ id: job.id }, { $set: { status: 'cancelled', cancelled_at: new Date(), cancel_reason: why, updated_at: new Date() } });
+    await db.collection('books').updateOne(
+      { id: book.id, ...NOT_HELD },
+      { $set: { 'pipeline_auto.status': 'needs_attention', 'pipeline_auto.error': why, updated_at: new Date() }, $unset: { job: '' } },
+    );
+    return { translated: 0, failed: 0, completed: 0, inputTokens: 0, outputTokens: 0 };
+  }
+  if (preGate.refused.length > 0) {
+    console.log(`  [${label}] PRE-TRANSLATION GATE: refusing ${preGate.refused.length} page(s) — ${Object.entries(preGate.counts).map(([r, n]) => `${r} ${n}`).join(', ')} (#5915)`);
+    pages.splice(0, pages.length, ...preGate.pages);
   }
 
   // ── Illegible sources (#5305) — OFF unless TRANSLATE_ILLEGIBLE_GATE=1 ─────
@@ -789,6 +842,13 @@ async function processBook(db, book, job, globalCounter, deadline) {
     // Check run deadline
     if (deadline && Date.now() > deadline) {
       console.log(`  [${label}] Hit run deadline, parking`);
+      break;
+    }
+
+    // A pause set since the run started stops the drain here, before the next paid batch.
+    const pausedNow = await translatePausedMidRun(db);
+    if (pausedNow) {
+      console.log(`  [${label}] ${pausedNow} mid-run, parking`);
       break;
     }
 
@@ -1222,6 +1282,13 @@ async function selfDispatch(db, limit) {
   // Envelope-lane dispatch (#4540) is honored only via the module-level
   // SCOPE_FILTER set by the main-run gate — if the envelope opened but this
   // call's confinement isn't in place, refuse rather than dispatch unconfined.
+  // Self-dispatch creates paid work, so it re-reads the pause itself rather than trusting the
+  // read at run start: it is also called mid-run, up to 45 minutes later (#5492).
+  const _sdControl = await db.collection('system_config').findOne({ _id: 'processing_control' });
+  if (isPaused(_sdControl, 'translate') || !shouldBypassPause(_sdControl)) {
+    console.log('[TRANSLATE] self-dispatch: translate step or pipeline paused — dispatching nothing.');
+    return [];
+  }
   const _sdGate = await budgetAllowsDispatchScoped(db, 'translate-self-dispatch');
   if (!_sdGate.allowed) return [];
   if (_sdGate.envelopeIds && !SCOPE_IDS) {
@@ -1399,12 +1466,13 @@ async function main() {
 
   // Check pause status — no auto-resume (scheduler owns resume decisions)
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
-  const translationPhasePaused = control?.paused_phases?.includes('translation');
-  // Selective unpause: a configured scope (allow_book_ids/allow_collections)
-  // lets scoped books translate while globally paused. The translation-phase
-  // pause still hard-stops regardless of scope.
+  // The step key, through the one vocabulary (#5492): 'translate', or a legacy alias
+  // ('translation', 4, 5). Selective unpause: a configured scope (allow_book_ids/
+  // allow_collections) lets scoped books translate while globally paused. The step pause
+  // still hard-stops regardless of scope.
+  const translationPhasePaused = isPaused(control, 'translate');
   if (translationPhasePaused || !shouldBypassPause(control)) {
-    const reason = translationPhasePaused ? 'translation phase paused' : 'pipeline paused';
+    const reason = translationPhasePaused ? 'translate step paused' : 'pipeline paused';
     const pauseAgeMs = control.paused_at ? Date.now() - new Date(control.paused_at).getTime() : Infinity;
     console.log(`[TRANSLATE] ${reason} (${Math.round(pauseAgeMs / 60000)}min ago), exiting`);
     await db.collection('cron_runs').insertOne({
@@ -1641,6 +1709,8 @@ async function main() {
 
   // Fetch more books for the queue (excluding already processed)
   async function fetchMoreBooks(limit) {
+    // Backfill is the drain: a pause set mid-run stops it taking more books (#5492).
+    if (await translatePausedMidRun(db)) return [];
     const excludeIds = [...processedIds];
     const excludeSet = new Set(excludeIds);
     const fresh = await db.collection('books')
@@ -1779,6 +1849,8 @@ async function main() {
         output_tokens: totalOutputTokens,
         cost_usd: totalCost,
         rate_per_hour: rate,
+        pages_refused_pre_gate: Object.values(preGateRefusals).reduce((a, n) => a + n, 0),
+        pre_gate_refusals: preGateRefusals,
       },
       errors: [],
       error_count: totalFailed,

@@ -221,26 +221,6 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
         </section>
       )}
 
-      {/* Readers' favorites — the most-liked books, each card showing its ♥
-          count, with an invitation to like. Hidden until at least a few books
-          clear the minimum (MOST_LIKED_MIN in home-data.ts), so the shelf never
-          shows a row of lonely single votes. */}
-      {mostLiked.length >= 5 && (
-        <section className="bg-warm py-16 md:py-24">
-          <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
-            <div className="flex items-end justify-between gap-4 mb-3">
-              <h2 className="text-3xl md:text-4xl text-primary font-display">
-                {t.mostLikedHeading}
-              </h2>
-            </div>
-            <p className="text-muted mb-6 max-w-2xl">
-              {t.mostLikedSubtitle}
-            </p>
-            <BookSlider books={mostLiked as unknown as MiniBook[]} lang={lang} />
-          </div>
-        </section>
-      )}
-
       {/* Ask the source — the librarian's front door. Placed after the
           collections grid so the invitation lands once the visitor has seen
           the breadth of the library, and so it doesn't stack a second input
@@ -288,6 +268,27 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 </Link>
               </div>
             )}
+          </div>
+        </section>
+      )}
+
+      {/* Readers' favorites — the most-liked books, each card showing its ♥
+          count, with an invitation to like. Placed after the gallery, not
+          beside "Recently translated", so two book sliders never stack. Hidden
+          until at least a few books clear the minimum (MOST_LIKED_MIN in
+          home-data.ts), so the shelf never shows a row of lonely single votes. */}
+      {mostLiked.length >= 5 && (
+        <section className="bg-white py-16 md:py-24">
+          <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
+            <div className="flex items-end justify-between gap-4 mb-3">
+              <h2 className="text-3xl md:text-4xl text-primary font-display">
+                {t.mostLikedHeading}
+              </h2>
+            </div>
+            <p className="text-muted mb-6 max-w-2xl">
+              {t.mostLikedSubtitle}
+            </p>
+            <BookSlider books={mostLiked as unknown as MiniBook[]} lang={lang} />
           </div>
         </section>
       )}

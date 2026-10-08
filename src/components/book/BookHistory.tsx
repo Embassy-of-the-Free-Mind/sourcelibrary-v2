@@ -263,7 +263,7 @@ export default function BookHistory({ bookId }: BookHistoryProps) {
                   <span>Total AI cost: {formatCost(data.summary.total_ai_cost_usd)}</span>
                   {data.summary.first_event && data.summary.last_event && (
                     <span>
-                      {formatDate(data.summary.first_event)} — {formatDate(data.summary.last_event)}
+                      {formatDate(data.summary.first_event)} – {formatDate(data.summary.last_event)}
                     </span>
                   )}
                 </div>

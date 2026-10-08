@@ -54,6 +54,19 @@ describe('buildExperiments', () => {
     expect(problems.some((p) => p.includes('2026-10-02-marker.md') && p.includes('conflict'))).toBe(true);
   });
 
+  it('accepts a leading PRIOR ART line (bare or in a comment) above the heading and leaves it out of the ledger', () => {
+    const d = tmp({
+      'README.md': '# Log\n',
+      '2026-10-03-commented.md': '<!-- PRIOR ART: scripts/x.mjs — different defect -->\n## 2026-10-03 · commented (#1)\n',
+      '2026-10-02-bare.md': 'PRIOR ART: none — looked in scripts/eval\n\n## 2026-10-02 · bare (#2)\n',
+    });
+    const { text, problems } = buildExperiments(d);
+    expect(problems).toEqual([]);
+    expect(text).not.toContain('PRIOR ART');
+    expect(text).toContain('## 2026-10-03 · commented (#1)');
+    expect(text).toContain('## 2026-10-02 · bare (#2)');
+  });
+
   it('adoptOrphans moves an entry that a PR still wrote into EXPERIMENTS.md into its own file, once', () => {
     const d = tmp({
       'README.md': '# Log\n',

@@ -19,6 +19,7 @@ import type { GenerationConfig } from '@google/generative-ai';
 // thinkingConfig is not in @google/generative-ai 0.24.x types; it passes through verbatim.
 const THINKING_OFF = { thinkingConfig: { thinkingBudget: 0 } } as unknown as GenerationConfig;
 import { CLEAR_STALE_UNSET, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON } from '@/lib/translate-write';
+import { guardTranslationText } from '@/lib/translation-write-guard';
 import { strayScriptVerdict, STRAY_SCRIPT_REASON } from '@/lib/stray-script';
 
 export const dynamic = 'force-dynamic';
@@ -296,7 +297,7 @@ export async function POST(request: NextRequest) {
               // #5734: the Korean 그-for-"that" is repaired; any other script in the English that is in
               // neither the source nor the book's language is refused the same way.
               const stray = strayScriptVerdict(result.text, { ocr: ocrText, language: book.original_language || book.language });
-              result.text = stray.text;
+              result.text = guardTranslationText(stray.text); // #5902: term definitions → <note>
               const refusedReason = hidesPageInMeta(result.text) ? HIDDEN_META_REASON : stray.refuse ? STRAY_SCRIPT_REASON : null;
               const refused = !!refusedReason;
               if (refusedReason) {

@@ -221,6 +221,13 @@ export const STRATA = {
   'eebo-tcp-5488': { issue: 5488, seed: 5488, fromRefs: { source: /^EEBO-TCP / }, subs: [
     { name: 'by language × period', n: null, reference: 'EEBO-TCP same-edition transcription (CC0), leaf-checked' },
   ] },
+  // Latin print by century (#5126): the leaf-checked same-edition references built by
+  // latin-period-refs-5126.mjs (CAMENA, EEBO-TCP, la.wikisource), selected by the record's own `stratum`
+  // field because their sources overlap eebo-tcp-5488's. The #5695 T1 corrected transcriptions ride along
+  // in their own sub-strata: they are corrections of a served read and never enter a century cell.
+  'latin-period-5126': { issue: 5126, seed: 5126, fromRefs: { stratum: 'latin-period-5126', substratum: (r, base) => (r.reference_kind === 'corrected-served-ocr' ? `${base} (corrected-OCR reference)` : base) }, subs: [
+    { name: 'Latin by century of the edition', n: null, reference: 'same-edition transcription (CAMENA CC BY-SA, EEBO-TCP CC0, la.wikisource CC BY-SA), leaf-checked' },
+  ] },
 };
 
 const letters = s => ((s || '').match(/\p{L}/gu) || []).length;
@@ -332,15 +339,16 @@ async function drawScreened(db, stratum, sub, rand, books) {
 async function pagesFromRefs(db, stratum, cfg) {
   const refsDir = path.join(REG_DIR, 'refs');
   const recs = fs.readdirSync(refsDir).filter(f => f.endsWith('.json')).map(f => ({ slug: f.slice(0, -5), ...JSON.parse(fs.readFileSync(path.join(refsDir, f), 'utf8')) }))
-    .filter(r => cfg.fromRefs.source.test(r.source || '') && r.leaf_check?.status === 'ok').sort((a, b) => a.slug.localeCompare(b.slug));
+    .filter(r => (cfg.fromRefs.stratum ? r.stratum === cfg.fromRefs.stratum : cfg.fromRefs.source.test(r.source || '') && !r.stratum) && r.leaf_check?.status === 'ok').sort((a, b) => a.slug.localeCompare(b.slug));
   const pages = [];
   for (const r of recs) {
     const book = await db.collection('books').findOne({ $or: [{ id: r.book_id }, { _id: r.book_id }] }, { projection: { id: 1, title: 1, published: 1, language: 1, contributing_library: 1, image_source: 1 } });
     const page = await db.collection('pages').findOne({ book_id: r.book_id, page_number: r.page_number });
     if (!book || !page) { console.log(`  ! ${r.slug}: ${book ? 'page' : 'book'} not found — left out`); continue; }
     const year = yearOf(book.published); const language = String(book.language || '').split(/[;,]/)[0].trim() || null;
+    const base = `${language} ${year ? `${Math.floor(year / 100)}00s` : 'undated'}`;
     pages.push({
-      slug: r.slug, book_id: r.book_id, page_number: r.page_number, substratum: `${language} ${year ? `${Math.floor(year / 100)}00s` : 'undated'}`,
+      slug: r.slug, book_id: r.book_id, page_number: r.page_number, substratum: cfg.fromRefs.substratum ? cfg.fromRefs.substratum(r, base) : base,
       title: (book.title || '').slice(0, 120), year, published: book.published || null, language,
       provider: book.contributing_library || book.image_source?.provider || null,
       image_url: page.photo || getPageSource(page), stored_ocr_chars: page.ocr?.data ? page.ocr.data.length : 0,

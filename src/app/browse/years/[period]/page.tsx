@@ -55,7 +55,7 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
   if (!p) return { title: 'Not Found' };
   return {
     title: `${p.label}${page > 1 ? ` (page ${page})` : ''} - Source Library`,
-    description: `Browse all translated books from the ${p.label.toLowerCase()} in Source Library.`,
+    description: `Browse every book from the ${p.label.toLowerCase()} in Source Library.`,
     // Each page is its own canonical — see browse/titles/[letter].
     alternates: { canonical: browsePageHref(`/browse/years/${period}`, page) },
   };
@@ -96,7 +96,6 @@ export default async function BrowseYearsPage({ params, searchParams }: PageProp
       const result = await browseBooks({
         yearMin: p.min,
         yearMax: p.max,
-        hasTranslation: true,
         sort: 'year_asc',
         offset: (page - 1) * PER_PAGE,
         limit: PER_PAGE,

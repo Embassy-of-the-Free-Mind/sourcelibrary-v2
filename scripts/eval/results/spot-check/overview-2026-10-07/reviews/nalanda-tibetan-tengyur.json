@@ -1,0 +1,437 @@
+[
+  {
+    "book_id": "6abeace1896ea18127c80d7a",
+    "slot": 1,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཞི (Derge Tengyur, vol. 52)",
+    "tradition": "nalanda-tibetan-tengyur",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge Tengyur, rgyud 'grel vol. zhi: Mahāmudrā and dākinī symbol-instructions (Tilopa's 'Wish-Fulfilling Jewel' ends on p.603, followed by D2338 Karṇatantra-vajrapada). Correct shelf.",
+    "rights_flag": null,
+    "structure_note": "611 records, 610 with OCR and translation (one leaf, probably the cover, has none). No printed page numbers recorded. The scan-sequence number in the image margin is page_number+1 (e.g. 604 on page 603), a consistent offset rather than a misalignment: each transcription matches its own image. Book is visible:false; author and catalog_metadata are empty, so the many works inside the volume are not catalogued individually.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 101,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཆོས་ཉིད་ལ་ཐམས་ཅད་ཀྱིས་ཁྱབ་པ",
+            "english": "all is pervaded by the nature of reality",
+            "problem": "direction of pervasion reversed (dharmatā is pervaded by all); the argument is unchanged",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 291,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "མཉན་པས་འགྲོ་བ་དག་ནི་སྒྲོལ་བར་བྱེད",
+            "english": "By listening, beings are liberated.",
+            "problem": "mnyan pa here means 'ferryman' (ferrymen carry beings across). One symbol in the list is turned into a doctrinal statement about hearing",
+            "severity": "moderate"
+          },
+          {
+            "source": "ཁྲི་སྙན་ས་ལེ་སྙིང་རྗེ་ལྡན་པ་སྟེ",
+            "english": "The throne of the heart is endowed with compassion",
+            "problem": "obscure image translated by guess with no sign of uncertainty",
+            "severity": "moderate"
+          },
+          {
+            "source": "བླ་མ་ཟངས་གླིང་པ་ལ་ཀཔྤུ་ར་ལ",
+            "english": "to the Guru from Zanglingpa <note>the Copper Isle</note> at Kappura",
+            "problem": "Kappura/Karpura is probably a recipient's name, not a place (uncertain)",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The opening <meta> is a model-written description of the text ('a commentary on esoteric instructions involving symbolic codes or ciphers'), not a continuity marker",
+            "severity": "moderate",
+            "class": "T15"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 415,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "འདུ་ཤེས་ལས་བྱུང་ཏིང་འཛིན་སྐྱོན",
+            "english": "The faults of Samadhi arise from perception.",
+            "problem": "should read 'a samādhi born of ideation is a fault'",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 603,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "རྩིགས་ཀྱི་རྒྱ་མདུད་དང་བཅས་པ་ནཱ་རོ་པཎྜི་ཏའི་ཞལ་སྔ་ནས་དང་། ལོ་ཙཱ་བ་མར་པ་ཆོས་ཀྱི་བློ་གྲོས་ཀྱིས་...བསྒྱུར་བའོ",
+            "english": "It was received from the presence of the scholar Naropa and translated at the Pushpahari monastery by the translator Marpa Chokyi Lodro.",
+            "problem": "in the colophon Nāropa is co-translator with Marpa, not the source of the text; 'rtsigs kyi rgya mdud dang bcas pa' is dropped; 'monastery' is added",
+            "severity": "moderate"
+          },
+          {
+            "source": "སྐྱོན་ཡོན་དང་བཅས་ཆུང་ངུ་ཡིན་ཕྱིར་ཚོགས",
+            "english": "because the faults and virtues are small, they are gathered",
+            "problem": "this is the lesser grade of 'warmth' (with faults and qualities), i.e. the path of accumulation; the English makes no sense",
+            "severity": "moderate"
+          },
+          {
+            "source": "རབ་བཀྲམ་ཆེན་པོ་ཕྲག་བདུན་ཡོན་ཏན",
+            "english": "The seven hundred great qualities",
+            "problem": "a named stage (Great Expanse) becomes 'seven hundred great qualities'",
+            "severity": "moderate"
+          },
+          {
+            "source": "པཱུལླི",
+            "english": "Pulliramale",
+            "problem": "the name is expanded beyond what the source gives",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      101,
+      415
+    ],
+    "reader_summary": "A volume of the Derge Tengyur tantric commentaries: Mahāmudrā instructions, dākinī symbol-songs and Tilopa's Wish-Fulfilling Jewel. The transcription is the e-text of these Derge leaves, line for line. The English follows doctrinal prose reliably. In obscure images and colophons (translator credits, path stages) it guesses and gives no sign of doubt.",
+    "book_verdict": "Every leaf has the right text, and the English is readable and mostly faithful. Dense colophons and symbolic verse carry several confident mistranslations, and one page opens with a model-written description inside <meta>."
+  },
+  {
+    "book_id": "6abed698896ea18127c8e9f4",
+    "slot": 2,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཕེ (Derge Tengyur, vol. 183)",
+    "tradition": "nalanda-tibetan-tengyur",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge Tengyur, tshad ma vol. phe: a Pramāṇavārttika commentary (identity of pramāṇa and its result, yogic cognition of others' suffering, authorship of the Veda). Correct shelf.",
+    "rights_flag": null,
+    "structure_note": "573 records, 572 with OCR and translation (one leaf without). No printed numbers recorded. The margin scan number is page_number+1 (e.g. 238 on page 237), a consistent offset; the text matches each image. visible:false; no author or per-work catalogue data.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 125,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "སྣམ་བུ",
+            "english": "wool",
+            "problem": "snam bu is woven cloth, the whole made of threads. It is rendered 'wool' (a raw material) throughout, which garbles the part/whole example the whole page argues",
+            "severity": "serious",
+            "class": "other:key-term-mistranslated"
+          },
+          {
+            "source": "ཐག་བཟང",
+            "english": "the weaving",
+            "problem": "thag means loom; loose rendering",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 237,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "བྱ་བ་དང་བྱེད་པ་དག་དངོས་པོ་ཉིད་ཀྱི་ཐ་དད་པར་མཐོང་",
+            "english": "We see the act and the agent as distinct only in terms of their functional properties.",
+            "problem": "the sentence runs on to the next leaf; the translator completed it with the opposite claim (the source says 'seen as different in entity...')",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 313,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "གདུང་བ་དང་། གདུང་བ་མེད་པར་ཁས་ལེན་པ་དེའི་ཚེ",
+            "english": "one accepts being afflicted or not afflicted; at that time",
+            "problem": "clause garbled",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "'The phrase <note>from the source text</note> states:' is an empty, invented note",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 495,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "གཞོན་ནུ་འབྱུང་བ་ཅན་ལ་སོགས་པ་བཞིན་ནོ",
+            "english": "just like the works of Kumara <gloss>referring to Kumarila or similar young authors</gloss>",
+            "problem": "gzhon nu 'byung ba is Kālidāsa's Kumārasambhava, the example of a human-authored work. The gloss invents Kumārila, a Mīmāṃsaka, from the opponent's own school",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "ཚད་མ་ལ་ལྟོས",
+            "english": "because they are a source of valid knowledge",
+            "problem": "the reason clause is reconstructed loosely",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      237,
+      313
+    ],
+    "reader_summary": "A Pramāṇavārttika commentary from the Derge Tengyur, on perception, valid cognition and the authorship of the Veda. Each leaf has the right transcription. The English follows the shape of the debate, but it mistranslates technical vocabulary and adds glosses with false identifications ('wool' for cloth; Kumārasambhava glossed as Kumārila), so a specialist must check it against the Tibetan.",
+    "book_verdict": "The leaves are correct and the English gives a usable outline of the argument. Two of the four pages carry a serious error a pramāṇa specialist would catch at once: a key example term mistranslated, and a gloss with an invented identification."
+  },
+  {
+    "book_id": "6abee360a43718d234bf1fb5",
+    "slot": 3,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། ཉོ (Derge Tengyur, vol. 207)",
+    "tradition": "nalanda-tibetan-tengyur",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge Tengyur, sna tshogs vol. nyo: miscellaneous treatises (name-and-form and the sense bases, the five factors of killing, bodhisattva ordination aspirations, protective verses for the directions). Correct shelf.",
+    "rights_flag": null,
+    "structure_note": "720 records, 718 with OCR and translation (two leaves without). No printed numbers recorded. On the pages checked, the margin scan number is page_number+1 (84 on page 83, 182 on 181, 431 on 430); the text matches each image. visible:false; no per-work catalogue data.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 83,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 181,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "སྡོང་དུམ་ལ་སོགས་པ་ཡིན་ནོ་བའི་འདུ་ཤེས་ཀྱིས་...སྲོག་བཅད་པ་ཡིན་ནོ",
+            "image": "appears to read ...ཡིན་ནོ་སྙམ་པའི་འདུ་ཤེས... (low resolution)",
+            "problem": "syllables possibly dropped. As transcribed, the clause says that striking a being taken for a stump IS killing; the translation says it is not. Either the e-text or the translator departs from the other",
+            "severity": "moderate"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "གང་ཞེ་ན། ཞེས་བྱ་བ་ལ་སོགས་པ་གསུངས་སོ། །ཡན་ལག་ལྔ་དང་ལྡན་ན",
+            "english": "The text says: \"If it possesses five factors...\"",
+            "problem": "a sentence of the commentary is turned into a quotation of the root text",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      },
+      {
+        "page_number": 430,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "The translation ends '<unclear>one line of text partially cut off</unclear>'. This is false: the last line is complete and the sentence simply runs on to the next leaf",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 683,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "མོན་གྲུ་དང་ནི་མོན་གྲེ་དང་",
+            "english": "Abhijit, Shravana",
+            "problem": "wrong lunar mansions: mon gre is Dhaniṣṭhā and mon gru is Śatabhiṣaj",
+            "severity": "moderate"
+          },
+          {
+            "source": "ལྷ་མོ་གཞོན་ནུ་བརྒྱད་...རྣ་ཆ་སྐྲ་འདྲེས་མ་...སྟབས་མྱུར་སྲིད",
+            "english": "eight youthful goddesses: Karnamdhara, Keshini, ... along with Chavega",
+            "problem": "the eight goddesses become nine: one name is split in two, and the Sanskrit names are reconstructed by guess",
+            "severity": "moderate"
+          },
+          {
+            "source": "དེ་དག་བདག་པོ་རྒྱལ་པོ་ནི། །མི་ལ་ཞོན་པ་ལུས་ངན་པོ",
+            "english": "Their lord and king is Vaishravana",
+            "problem": "the name is supplied; the source has 'bad body' (Kubera)",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      83
+    ],
+    "reader_summary": "A miscellany volume of the Derge Tengyur: abhidharma on name-and-form, the five factors of killing, ordination aspirations, and protective verses for the directions. Each leaf has the correct transcription. The English is reliable for doctrinal prose, but in lists it reconstructs proper names by guesswork (goddesses, lunar mansions), and one page inserts a false note that text is cut off.",
+    "book_verdict": "The doctrinal pages are well translated. Name lists are reconstructed by guesswork, and an <unclear> tag claims text is missing when it is not."
+  },
+  {
+    "book_id": "6abeb4e5896ea18127c849f3",
+    "slot": 4,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཁི (Derge Tengyur, vol. 111)",
+    "tradition": "nalanda-tibetan-tengyur",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge Tengyur, dbu ma vol. khi: compendium material on bodhisattva conduct (Ākāśagarbha root downfalls, Buddha-name confession, the great aspirations) and a closing verse instruction. Correct shelf.",
+    "rights_flag": null,
+    "structure_note": "625 records, 624 with OCR and translation. No printed numbers recorded. The margin scan number is page_number+1 (81 on page 80). visible:false; no per-work catalogue data. Throughout this volume the transcription carries the source e-text's '#' markers inline (7-16 per sampled page); the other three volumes sampled have none.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 80,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "16 '#' markers from the source e-text inside the transcription, some mid-word (e.g. 'དུག་ཤིང་#གི', 'གསུག་#ཏུ')",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 188,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "དབང་པོ་ཏོག་གི་རྒྱལ་མཚན་གྱི་རྒྱལ་པོ",
+            "english": "King of the Victory Banner of Indomitable Power",
+            "problem": "Indraketu ('Indra's crest') is glossed as 'Indomitable Power'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "7 '#' markers in the transcription",
+            "severity": "moderate",
+            "class": "D1"
+          },
+          {
+            "note": "The summary says the page is 'part of the Bodhicharyavatara'; it is a Buddha-name homage and confession liturgy (Triskandhaka type)",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 319,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཆོས་ཀྱིས་ཡང་དག་པར་བསྡུ་བའི་སྦྱོར་བ་སྔོན་དུ་འགྲོ་བས",
+            "english": "By preceded by the application of correctly gathering the teachings",
+            "problem": "ungrammatical English",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "15 '#' markers in the transcription",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 473,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཉོན་མོངས་སྐྱེ་འགྲོ་ཐབས་ཀྱིས་སྤང་",
+            "english": "Through skillful means, abandon the afflictions of living beings.",
+            "problem": "advice to keep away from afflicted people by skilful means is turned into abandoning others' afflictions",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "15 '#' markers in the transcription",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [],
+    "reader_summary": "A Madhyamaka-section volume of the Derge Tengyur, mostly compendium material on bodhisattva conduct, confession and aspiration. Every leaf has the right transcription, but stray '#' markers from the source e-text are scattered through it. The English is plain and close, the most reliable on this shelf.",
+    "book_verdict": "The English is good and faithful on all four pages. The transcription pane is littered with '#' markers, some inside words, which a scholar would notice at once; strip them before showing this book."
+  }
+]

@@ -158,11 +158,29 @@ export const UA_FANOUT_MIN_SHARE = 0.15;
 // Above this ratio we report the network but do NOT call it a fleet.
 export const ENUMERATION_PAGES_PER_BOOK = 5;
 
+// Breadth: distinct books opened by ONE (user-agent, /24) in the window (#5995).
+// Every volume bar above is one a fleet can sit under by adding addresses; the
+// AS401560 fleet (#5993) did ~100 reads/day per /24 for three weeks. Breadth is
+// the axis a walker cannot shrink without walking slower. Measured over 14 days
+// to 2026-10-06 (48,151 day×UA×/24 units): readers p99 = 6 books/day, p99.9 =
+// 26; the fleet ran 100–150 books/day at 1.05–1.25 pages/book. Deep readers
+// that also go wide (40–68 books) read 4–23 pages per book, which is why the
+// pages-per-book ceiling here is far tighter than ENUMERATION_PAGES_PER_BOOK.
+// LOG-ONLY: every match is recorded to WALKER_COLLECTION for a week of
+// calibration before anything enforces on it.
+export const WALKER_MIN_BOOKS = 50;
+export const WALKER_MAX_PAGES_PER_BOOK = 1.5;
+export const WALKER_COLLECTION = 'walker_observations';
+// Mirrors TRIPWIRE_COLLECTION in src/lib/tripwire.ts (a .mjs worker cannot
+// import the TS module). Pinned equal by tests/unit/traffic-anomaly-alert.test.ts.
+export const TRIPWIRE_COLLECTION = 'tripwire_hits';
+
 // Hostnames allowed to serve reader traffic. Anything else answering content
 // is either a new alias nobody scoped, or a bypass. Both want a human look.
 export const EXPECTED_HOSTS = new Set([
   'sourcelibrary.org',
   'bph.sourcelibrary.org',
+  'kloss.sourcelibrary.org', // tenant reading room, same footing as bph
   'ficinosociety.org', // scoped to the society surface since #3438 — see below
 ]);
 
@@ -288,6 +306,12 @@ export function prefix16(ip) {
 export function looksLikeSpray(reads, nets) {
   if (!nets || nets < SPRAY_MIN_NETS) return false;
   return reads / nets <= SPRAY_MAX_READS_PER_NET;
+}
+
+/** Wide and shallow from one (UA, /24): see WALKER_* above. */
+export function looksLikeWalker(reads, books) {
+  if (!books || books < WALKER_MIN_BOOKS) return false;
+  return reads / books <= WALKER_MAX_PAGES_PER_BOOK;
 }
 
 export function looksLikeEnumeration(reads, books) {
@@ -615,6 +639,73 @@ async function run() {
       })),
       { ordered: false },
     ).catch((err) => console.error(`[traffic-anomaly] fingerprint write failed: ${err.message}`));
+  }
+
+  // ── 1e. Walkers and the tripwire (#5995) ──────────────────────────────────
+  // Breadth per (UA, /24), plus who fetched the invisible robots-disallowed
+  // link on book pages. Either alone is a warning; together — a client that
+  // walks wide AND ignores robots.txt — is the one combination with no
+  // innocent explanation we know of, so it is the only critical here.
+  const perWalker = await ev.aggregate([
+    { $match: { ...classified, traffic_class: 'human' } },
+    { $group: { _id: { ua: '$user_agent', ip: '$ip' }, n: { $sum: 1 }, books: { $addToSet: '$book_id' } } },
+    { $project: { n: 1, books: { $size: '$books' } } },
+    { $match: { books: { $gte: WALKER_MIN_BOOKS } } },
+  ], { allowDiskUse: true }).toArray();
+  const walkers = perWalker
+    .filter((w) => !isCdnEgress(w._id.ip) && looksLikeWalker(w.n, w.books))
+    .sort((a, b) => b.books - a.books);
+
+  const trips = await db.collection(TRIPWIRE_COLLECTION)
+    .find({ last_seen: { $gte: since } })
+    .project({ ip: 1, user_agent: 1, hits: 1 })
+    .toArray()
+    .catch(() => []);
+  const tripKey = (ip, ua) => `${ip}|${ua || ''}`;
+  const tripped = new Set(trips.map((t) => tripKey(t.ip, t.user_agent)));
+  const trippedWalkers = walkers.filter((w) => tripped.has(tripKey(w._id.ip, w._id.ua)));
+
+  const fmtWalker = (w) => `${w._id.ip}(${w.books} books/${w.n} reads, "${String(w._id.ua || '').slice(0, 50)}")`;
+  if (trippedWalkers.length) {
+    alerts.push({
+      level: 'critical',
+      check: 'walker_tripped_wire',
+      message: `${trippedWalkers.length} (user-agent, /24) pair(s) read ${WALKER_MIN_BOOKS}+ distinct books at <=${WALKER_MAX_PAGES_PER_BOOK} pages each in ${HOURS}h AND fetched the robots-disallowed tripwire link (src/lib/tripwire.ts). That is a scraper ignoring robots.txt, whatever UA it wears. Resolve the operator before acting: whois -h whois.cymru.com " -v <ip with last octet 1>". Hosting/leasing operator → refresh-blocked-asn-prefixes.mjs (as #5993). Consumer or VPN space (e.g. Cloudflare WARP 104.28.0.0/16) → do NOT block the network; this is what the breadth cap in #5995 is for. Pairs: ${trippedWalkers.slice(0, 6).map(fmtWalker).join(' ')}`,
+    });
+  }
+  if (walkers.length) {
+    alerts.push({
+      level: 'warning',
+      check: 'wide_shallow_walker',
+      message: `${walkers.length} (user-agent, /24) pair(s) opened ${WALKER_MIN_BOOKS}+ distinct books in ${HOURS}h at <=${WALKER_MAX_PAGES_PER_BOOK} pages per book (reader p99.9 is 26 books/day). Log-only during calibration (#5995); recorded to ${WALKER_COLLECTION}. Top: ${walkers.slice(0, 6).map(fmtWalker).join(' ')}`,
+    });
+  }
+  if (trips.length) {
+    const hits = trips.reduce((s, t) => s + (t.hits || 0), 0);
+    alerts.push({
+      level: 'warning',
+      check: 'tripwire_hits',
+      message: `${trips.length} (UA, /24) pair(s) fetched the tripwire in ${HOURS}h (${hits} hits). Alone this is evidence, not a verdict — link-prefetch extensions and some archivers trip it too. Top: ${trips.sort((a, b) => (b.hits || 0) - (a.hits || 0)).slice(0, 6).map((t) => `${t.ip}(${t.hits}, "${String(t.user_agent || '').slice(0, 40)}")`).join(' ')}`,
+    });
+  }
+
+  // The calibration log: one row per (UTC day, /24, UA). Re-written hourly with
+  // the latest 24h figures, so `books`/`reads` hold the day's high-water mark.
+  if (walkers.length) {
+    const day = new Date().toISOString().slice(0, 10);
+    await db.collection(WALKER_COLLECTION).bulkWrite(
+      walkers.map((w) => ({
+        updateOne: {
+          filter: { _id: `${day}|${w._id.ip}|${w._id.ua || ''}` },
+          update: {
+            $max: { books: w.books, reads: w.n },
+            $set: { day, ip: w._id.ip, user_agent: w._id.ua || '', tripped: tripped.has(tripKey(w._id.ip, w._id.ua)), last_seen: new Date() },
+          },
+          upsert: true,
+        },
+      })),
+      { ordered: false },
+    ).catch((err) => console.error(`[traffic-anomaly] walker write failed: ${err.message}`));
   }
 
   // ── 2. Unguarded / unexpected host ────────────────────────────────────────

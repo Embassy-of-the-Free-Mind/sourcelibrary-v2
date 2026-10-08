@@ -7,7 +7,7 @@ import type { CSSProperties, ReactNode } from 'react';
 // neutral hatch, because it is an absence of data, not a third category.
 export const ENGLISH = '#0b9488';
 export const NO_ENGLISH = '#c2610c';
-const HATCH: CSSProperties = {
+export const HATCH: CSSProperties = {
   backgroundColor: '#e7e5e4',
   backgroundImage: 'repeating-linear-gradient(135deg, #a8a29e 0 1.5px, transparent 1.5px 6px)',
 };
@@ -24,7 +24,7 @@ export function short(n: number): string {
   return String(n);
 }
 
-function Swatch({ style, label }: { style: CSSProperties; label: string }) {
+export function Swatch({ style, label }: { style: CSSProperties; label: string }) {
   return (
     <span className="inline-flex items-center gap-1.5 mr-4">
       <span className="inline-block w-3 h-3 rounded-[2px]" style={style} />
@@ -33,7 +33,7 @@ function Swatch({ style, label }: { style: CSSProperties; label: string }) {
   );
 }
 
-function Figure({ n, title, caption, children }: { n: number; title: string; caption: ReactNode; children: ReactNode }) {
+export function Figure({ n, title, caption, children }: { n: number; title: string; caption: ReactNode; children: ReactNode }) {
   return (
     <figure className="my-10 rounded-sm border border-stone-200 bg-white px-4 py-6 md:px-8 md:py-8">
       <div className="font-body text-xs tracking-wider uppercase text-stone-400 mb-1">Figure {n}</div>
@@ -46,12 +46,14 @@ function Figure({ n, title, caption, children }: { n: number; title: string; cap
 
 /* ---------- The two routes from a canon to English ---------- */
 
-function Step({ label, sub, skipped, tone }: { label: string; sub?: string; skipped?: boolean; tone?: 'source' | 'review' }) {
+export function Step({ label, sub, skipped, tone }: { label: string; sub?: string; skipped?: boolean; tone?: 'source' | 'review' | 'planned' }) {
   const base = 'rounded-sm px-3 py-2 font-body text-sm leading-tight min-w-0';
   const cls = skipped
     ? `${base} border border-dashed border-stone-300 text-stone-400 bg-transparent`
     : tone === 'review'
       ? `${base} bg-stone-800 text-white`
+      : tone === 'planned'
+        ? `${base} border border-dashed border-amber-400 bg-white text-stone-900`
       : tone === 'source'
         ? `${base} bg-white border border-stone-300 text-stone-900`
         : `${base} bg-amber-50 border border-amber-300 text-stone-900`;
@@ -63,7 +65,7 @@ function Step({ label, sub, skipped, tone }: { label: string; sub?: string; skip
   );
 }
 
-const Arrow = () => (
+export const Arrow = () => (
   <div aria-hidden className="text-stone-400 text-center md:self-center leading-none max-md:rotate-90 max-md:my-0.5">→</div>
 );
 
@@ -392,13 +394,13 @@ export function TengyurProgress({
     { n: fmt(pagesImaged), label: 'page images imported from BDRC (W23703)', href: 'https://library.bdrc.io/show/bdr:W23703' },
     { n: fmt(pagesWithText), label: 'pages carrying the Esukhia public-domain text, aligned folio by folio', href: 'https://github.com/Esukhia/derge-tengyur' },
     { n: fmt(pagesTranslated), label: `pages with a draft English translation, for $${fmt(Math.round(spendUsd))} in model costs` },
-    { n: `${drafted} / ${perVolume.length}`, label: 'volumes drafted in full; every page is an unreviewed machine draft' },
+    { n: `${drafted} / ${perVolume.length}`, label: 'volumes drafted in full; no page has yet been reviewed by a scholar' },
   ];
   return (
     <Figure
       n={n}
       title="The Derge Tengyur, volume by volume"
-      caption={`Each square is one of the ${perVolume.length} volumes we imported, in volume order. All are held from public view until their English has been checked. ${drafted} have a draft English translation for the whole volume${partly ? ` and ${partly} for part of it` : ''}.`}
+      caption={`Each square is one of the ${perVolume.length} volumes we imported, in volume order. All have been public since 7 October 2026, labelled as AI translations not yet reviewed by a scholar. ${drafted} have a draft English translation for the whole volume${partly ? ` and ${partly} for part of it` : ''}.`}
     >
       <div className="grid grid-cols-[repeat(auto-fill,minmax(14px,1fr))] gap-[3px] max-w-xl" role="img" aria-label={`${perVolume.length} volumes, ${drafted} drafted in English${partly ? `, ${partly} in part` : ''}`}>
         {perVolume.map((v) => (
@@ -541,6 +543,97 @@ export function ImprovementChart({ rows, n }: { rows: Improvement[]; n: number }
         <span>0</span>
         <span>50</span>
         <span>100</span>
+      </div>
+    </Figure>
+  );
+}
+
+/* ---------- How a translation is checked: the loop behind the improvement chart ---------- */
+
+function LoopStation({ k, title, what, example }: { k: number; title: string; what: string; example: ReactNode }) {
+  return (
+    <div className="rounded-sm bg-amber-50 border border-amber-300 px-3 py-3 font-body min-w-0">
+      <div className="flex items-baseline gap-2">
+        <span className="font-serif text-lg text-amber-800 tabular-nums leading-none">{k}</span>
+        <span className="text-sm font-semibold text-stone-900 leading-tight">{title}</span>
+      </div>
+      <div className="text-sm text-stone-700 mt-1.5 leading-snug">{what}</div>
+      <div className="text-xs text-stone-500 mt-2 pt-2 border-t border-amber-200 leading-snug">{example}</div>
+    </div>
+  );
+}
+
+export function QualityLoop({ n, adopted, tested, issueUrl, resultsHref }: { n: number; adopted: number; tested: number; issueUrl: string; resultsHref: string }) {
+  const stations = [
+    {
+      title: 'Compare with an outside text',
+      what: 'Set our English beside a published human translation of the same passage, and our reading beside a typed edition.',
+      example: '84000, SuttaCentral, GRETIL, Ganjoor, the Derge e-text',
+    },
+    {
+      title: 'Judge blind',
+      what: 'Two AI judges score fidelity from 1 to 5 without knowing which version is ours.',
+      example: 'A defect counts only when both judges flag it.',
+    },
+    {
+      title: 'Open the page',
+      what: 'Trace every low score on the page image: was the page misread, or mistranslated?',
+      example: '6 of the 20 worst Sanskrit, Pali and Chinese pages were misread, not mistranslated.',
+    },
+    {
+      title: 'Change one thing, retest',
+      what: 'Run the new method and the old one side by side on the same pages, with the same reference.',
+      example: 'Tengyur, one page at a time: English on the wrong page fell from 13.3 to 0.9 per 100.',
+    },
+  ];
+  return (
+    <Figure
+      n={n}
+      title="How we check the English"
+      caption={
+        <>
+          The same four steps run for each language and script, and again after every change. A change becomes the
+          default only when it beats the old method on the same pages;{' '}
+          <a href={resultsHref} className="text-amber-800 underline underline-offset-2">each result is charted here</a>. The
+          judges are AI models. Their scores will be compared with a scholar&rsquo;s reading of the same pages; the
+          first scholar review, on the Tengyur draft, is planned.{' '}
+          <a href={`${issueUrl}5800`} className="text-amber-800 underline underline-offset-2">#5800</a>
+        </>
+      }
+    >
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] gap-1 md:gap-2">
+        {stations.flatMap((s, i) => {
+          const card = <LoopStation key={s.title} k={i + 1} {...s} />;
+          return i === 0 ? [card] : [<Arrow key={`ar${i}`} />, card];
+        })}
+      </div>
+      <div aria-hidden className="hidden md:block mx-[12%] h-5 border-x border-b border-stone-300 rounded-b-md" />
+      <div className="font-body text-xs text-stone-500 text-center mt-1 md:mt-1.5">
+        then repeat with the next change
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-6">
+        <div className="rounded-sm border border-teal-700/40 bg-teal-50 px-3 py-3 font-body text-sm">
+          <div className="font-semibold text-teal-900">Better: it becomes the default</div>
+          <div className="text-stone-700 mt-1 leading-snug">
+            {adopted} of the {tested} changes tested so far passed and are in use.
+          </div>
+        </div>
+        <div className="rounded-sm border border-stone-300 bg-stone-50 px-3 py-3 font-body text-sm">
+          <div className="font-semibold text-stone-900">Not good enough: we hold back or withdraw</div>
+          <div className="text-stone-700 mt-1 leading-snug">
+            Persian manuscripts are not translated until a reading matches 90% of a typed text. English for the
+            Bhutanese Kangyur manuscripts was taken down when a reading model was found writing text that is not on
+            the page.
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-3 rounded-sm bg-stone-800 text-white px-3 py-3 font-body text-sm leading-snug">
+        <span className="font-semibold">On every page, for the reader:</span>{' '}
+        <span className="text-stone-300">
+          the scan, the reading and the English side by side, so any sentence can be checked against the original.
+        </span>
       </div>
     </Figure>
   );

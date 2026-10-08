@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA historicapolitica/weyhe1",
+  "edition": "Aulicus Politicus : Diversis Regulis, Vel Ut Iavolenus Loquitur, Definitionibus selectis, proborum voto probe instructus — Frankfurt am Main: Peter Kopff, 1615.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "6/7",
+    "pb_aligned_pages": "6/6"
+  },
+  "origin": "library",
+  "book_id": "6a42b7ee5207af7c42f63a27",
+  "page_number": 21,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 6956,
+    "to_char": 8086,
+    "overlap": 0.914,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'potui, & magis immergor vndis nominum'; ends 'et ita probabunt illud:' with catchword 'Prin.'. Single page photographed with ProQuest/Firenze border, running head EPISTOLA.",
+    "leaf_language": "lat (one short Italian italic quotation)",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:18:21.870Z",
+  "text_location": "repo",
+  "text_sha256": "7a897c28c61ef5186d054d1c5f2eccbe06b27607c994dda2ab8e7c0e94853cae",
+  "unit": {
+    "chars": 1130
+  },
+  "stratum": "latin-period-5126"
+}

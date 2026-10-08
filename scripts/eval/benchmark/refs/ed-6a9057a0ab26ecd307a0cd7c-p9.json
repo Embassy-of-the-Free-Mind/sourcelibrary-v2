@@ -1,0 +1,46 @@
+{
+  "source": "EEBO-TCP A44008",
+  "edition": "Problemata physica adjunctae sunt etiam propositiones duae de duplicatione cubi, & dimensione circul — H2255 (1662)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/textcreationpartnership/A44008",
+  "same_edition": {
+    "evidence": "catalogue-number",
+    "text_match_pages": "11/13",
+    "pb_aligned_pages": "11/11"
+  },
+  "origin": "library",
+  "book_id": "6a9057a0ab26ecd307a0cd7c",
+  "page_number": 9,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 3168,
+    "to_char": 3703,
+    "overlap": 0.941,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'stiae generali confidere consilium' (tail of Amnestiae); ends 'illorum decretis disertis verbis sub-'; small-format page, no header, ref has 'qualicunque, sed Amnestiae' padding and 'quorum est' after.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "none",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:30.859Z",
+  "text_location": "repo",
+  "text_sha256": "bf5ce3360ba276cc5dfb0f35371a4f825d729584c8e506476e1942552e83d573",
+  "unit": {
+    "chars": 535
+  },
+  "stratum": "latin-period-5126"
+}

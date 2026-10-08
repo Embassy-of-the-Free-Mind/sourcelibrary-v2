@@ -59,6 +59,8 @@ const SOURCES = [
   { path: 'scripts/eval/experiments/2026-10-03-open-engine-print-5660.md', what: 'PaddleOCR-VL-1.6 against Flash-Lite on Latin-script and Greek print, 632 pages, preregistered (#5684).' },
   { path: 'scripts/eval/experiments/2026-10-03-ocr-v20-tags-4195.md', what: 'OCR prompt v20 tag wording against v19.1, 275 pages: not adopted (#5681).' },
   { path: 'scripts/eval/experiments/2026-10-03-translation-vs-reference-t4-hebrew-arabic-persian-5695.md', what: 'T4, Hebrew and Aramaic, Arabic and Persian against 52 published translations: OCR as the cause of 14 of 23 low pages, levers, the judges’ blind spot (#5735).' },
+  { path: 'scripts/eval/experiments/2026-10-04-human-ceiling-translation-5762.md', what: 'A second published translator on the fidelity scale, Greek and Latin, 66 pages: human against human, Flash and Flash-Lite as a share of it, the tail (#5762; tables in scripts/eval/results/human-ceiling-5762-2026-10/translation/).' },
+  { path: 'scripts/eval/experiments/2026-10-04-human-ceiling-transcription-5762.md', what: 'Two human transcriptions of the same printed page, English, Greek and Chinese, 183 pages: the floor on character error, and our OCR against both (#5762; tables in scripts/eval/results/human-ceiling-5762-2026-10/transcription/).' },
 ] as const;
 
 function N({ n }: { n: number }) {
@@ -422,6 +424,99 @@ function TracksTable() {
               <td className="py-2 pr-3 text-secondary">{t.flashLite}</td>
               <td className="py-2 pr-3 text-muted">{t.floor}</td>
               <td className="py-2 text-secondary">{t.ceiling}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+/* Human ceiling (#5762): a second published translator judged against the first, same judges and rubric.
+   Source: scripts/eval/results/human-ceiling-5762-2026-10/translation/table.md. Share = (arm − 1) / (human − 1). */
+type CeilingRow = { label: string; sub?: boolean; pages: number; human: string; flash: string; lite: string; self: string; flashShare: string; liteShare: string; grade: string };
+const CEILING_ROWS: CeilingRow[] = [
+  { label: 'Greek', pages: 33, human: '4.21 (4.09–4.33)', flash: '3.79 (3.36–4.19)', lite: '3.38 (3.01–3.73)', self: '4.39 (4.25–4.51)', flashShare: '87% (73–100)', liteShare: '74% (62–86)', grade: 'directional' },
+  { label: 'transcription sound', sub: true, pages: 21, human: '4.21 (4.08–4.33)', flash: '4.39 (4.05–4.68)', lite: '3.92 (3.62–4.19)', self: '4.41 (4.29–4.54)', flashShare: '106% (95–115)', liteShare: '91% (81–101)', grade: 'exploratory' },
+  { label: 'transcription wrong', sub: true, pages: 12, human: '4.21 (3.96–4.46)', flash: '2.73 (2.08–3.40)', lite: '2.44 (1.90–3.00)', self: '4.35 (4.06–4.63)', flashShare: '54% (32–79)', liteShare: '45% (27–66)', grade: 'exploratory' },
+  { label: 'Latin', pages: 33, human: '4.14 (3.95–4.33)', flash: '4.30 (4.03–4.54)', lite: '4.08 (3.82–4.30)', self: '4.27 (4.11–4.43)', flashShare: '105% (95–115)', liteShare: '98% (88–108)', grade: 'directional' },
+  { label: 'both translators 19th–20th c.', sub: true, pages: 11, human: '4.57 (4.32–4.79)', flash: '4.43 (4.04–4.77)', lite: '3.98 (3.46–4.41)', self: '4.66 (4.43–4.86)', flashShare: '96% (82–110)', liteShare: '83% (67–99)', grade: 'exploratory' },
+  { label: 'one translator early-modern', sub: true, pages: 22, human: '3.93 (3.71–4.14)', flash: '4.24 (3.89–4.57)', lite: '4.13 (3.84–4.39)', self: '4.08 (3.90–4.26)', flashShare: '111% (97–124)', liteShare: '107% (96–118)', grade: 'exploratory' },
+];
+
+function CeilingTable() {
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full min-w-[820px] text-sm">
+        <thead>
+          <tr className="border-b border-light text-left text-muted align-bottom">
+            <th className="py-2 pr-3 font-medium">Pages</th>
+            <th className="py-2 pr-3 font-medium text-right">Books</th>
+            <th className="py-2 pr-3 font-medium">Second translator against the first</th>
+            <th className="py-2 pr-3 font-medium">Flash</th>
+            <th className="py-2 pr-3 font-medium">Flash-Lite</th>
+            <th className="py-2 pr-3 font-medium">Flash, share of the human score</th>
+            <th className="py-2 pr-3 font-medium">Flash-Lite, share</th>
+            <th className="py-2 pr-3 font-medium">Reference against itself</th>
+            <th className="py-2 font-medium">Grade</th>
+          </tr>
+        </thead>
+        <tbody className="tabular-nums">
+          {CEILING_ROWS.map(r => (
+            <tr key={r.label} className="border-b border-light align-top">
+              <td className={`py-2 pr-3 leading-snug ${r.sub ? 'pl-4 text-secondary' : 'text-primary'}`}>{r.label}</td>
+              <td className="py-2 pr-3 text-right text-secondary">{r.pages}</td>
+              <td className="py-2 pr-3 text-secondary">{r.human}</td>
+              <td className="py-2 pr-3 text-secondary">{r.flash}</td>
+              <td className="py-2 pr-3 text-secondary">{r.lite}</td>
+              <td className="py-2 pr-3 text-secondary">{r.flashShare}</td>
+              <td className="py-2 pr-3 text-secondary">{r.liteShare}</td>
+              <td className="py-2 pr-3 text-muted">{r.self}</td>
+              <td className="py-2 text-muted">{r.grade}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+/* Transcription floor (#5762): two human transcriptions of the same printed page, and our OCR against each.
+   Source: scripts/eval/results/human-ceiling-5762-2026-10/transcription/table.md (pooled CER, 95% CI over books). */
+type FloorRow = { label: string; sub?: boolean; pages: string; human: string; second: string; ours: string; grade: string };
+const FLOOR_ROWS: FloorRow[] = [
+  { label: 'English, same edition', pages: '84 (31)', human: '0.14% (0.08–0.21)', second: '0.23% (0.13–0.33)', ours: '2.61% (0.33–5.91) / 2.61% (0.33–5.94); median page 0.06% / 0.00%; 67 pages, 26 books', grade: 'directional' },
+  { label: 'Wikisource × Project Gutenberg', sub: true, pages: '62 (24)', human: '0.11% (0.05–0.19)', second: '0.16%', ours: '3.25% / 3.28%; median page 0.00%; 47 pages', grade: 'exploratory' },
+  { label: 'EEBO-TCP × Project Gutenberg (pre-1700)', sub: true, pages: '15 (5)', human: '0.13% (0.03–0.27)', second: '0.26%', ours: '0.77% (0.26–1.04) / 0.73% (0.16–1.02); 15 pages', grade: 'exploratory' },
+  { label: 'Wikisource × EEBO-TCP', sub: true, pages: '7 (3)', human: '0.36% (0.30–0.51)', second: '0.69%', ours: '2.95% / 2.74%; 5 pages', grade: 'exploratory' },
+  { label: 'Greek, same edition', pages: '41 (24)', human: '0.43% (0.08–0.76)', second: '1.09% (0.69–1.44)', ours: '0.15% / 0.12%; 4 pages of 2 books, a note only', grade: 'exploratory' },
+  { label: 'Perseus × First1KGreek', sub: true, pages: '24 (15)', human: '0.39% (0.03–0.67)', second: '0.76%', ours: '–', grade: 'exploratory' },
+  { label: 'Chinese, Taishō, CBETA × SAT', pages: '54 (52)', human: '2.87% (2.61–3.14)', second: '0.28% (0.20–0.38)', ours: '12%, 14%, 44% against CBETA; 3 pages of one volume, a note only', grade: 'decision-grade' },
+];
+
+function FloorTable() {
+  return (
+    <div className="overflow-x-auto my-4">
+      <table className="w-full min-w-[820px] text-sm">
+        <thead>
+          <tr className="border-b border-light text-left text-muted align-bottom">
+            <th className="py-2 pr-3 font-medium">Two transcriptions</th>
+            <th className="py-2 pr-3 font-medium text-right">Pages (books)</th>
+            <th className="py-2 pr-3 font-medium">Human against human, letters</th>
+            <th className="py-2 pr-3 font-medium">Second normalisation</th>
+            <th className="py-2 pr-3 font-medium">Our OCR against A / B</th>
+            <th className="py-2 font-medium">Grade</th>
+          </tr>
+        </thead>
+        <tbody className="tabular-nums">
+          {FLOOR_ROWS.map(r => (
+            <tr key={r.label} className="border-b border-light align-top">
+              <td className={`py-2 pr-3 leading-snug ${r.sub ? 'pl-4 text-secondary' : 'text-primary'}`}>{r.label}</td>
+              <td className="py-2 pr-3 text-right text-secondary">{r.pages}</td>
+              <td className="py-2 pr-3 text-secondary">{r.human}</td>
+              <td className="py-2 pr-3 text-secondary">{r.second}</td>
+              <td className="py-2 pr-3 text-secondary">{r.ours}</td>
+              <td className="py-2 text-muted">{r.grade}</td>
             </tr>
           ))}
         </tbody>
@@ -1154,7 +1249,7 @@ export default function ResearchQualityPage() {
       </div>
 
       <article className="prose-content max-w-none">
-        {/* ── Abstract (Derek's draft, verbatim, except the paragraph on published translations and the first sentence of the last, added 2026-10-03 for #5695) ── */}
+        {/* ── Abstract (Derek's draft, verbatim, except the paragraph on published translations and the first sentence of the last, added 2026-10-03 for #5695, and that paragraph's last sentence, added 2026-10-04 for #5762) ── */}
         <section className="border-l-2 border-accent-rust pl-5 md:pl-6 mb-10">
           <h2 className="text-xs uppercase tracking-[0.16em] text-muted font-semibold mb-4">Abstract</h2>
           <p className="text-secondary leading-relaxed mb-4">
@@ -1167,7 +1262,7 @@ export default function ResearchQualityPage() {
             <strong className="text-primary">Translation.</strong> A source-grounded model judge (Claude Opus) rated one random page from each of 311 books. With planted controls passing, it rated 89% of pages faithful to their transcription (95% CI 85–92), and 71% for non-Latin scripts. The judge reads text only. A model check of 20 of those pages against their scans found two that showed a different page from the one transcribed. The judge could not have seen either.
           </p>
           <p className="text-secondary leading-relaxed mb-4">
-            <strong className="text-primary">Against published translations.</strong> On 321 pages in 14 languages we also scored the served English against a published human translation of the same passage, with two model judges. It scores 4.4 of 5 on German, French, Italian, Dutch and Spanish print, 4.2 on Latin, 3.6 on Greek and on Sanskrit, Pali and Chinese, and 3.4 on Hebrew, Arabic and Persian. In Greek, Hebrew, Arabic and Persian most low pages begin with a wrong transcription, which no translator recovers. Flash translates more faithfully than Flash-Lite in every language group, and since 3 October it translates new pages in Greek, Hebrew, Aramaic, Arabic, Persian, Sanskrit, Pali and Chinese.
+            <strong className="text-primary">Against published translations.</strong> On 321 pages in 14 languages we also scored the served English against a published human translation of the same passage, with two model judges. It scores 4.4 of 5 on German, French, Italian, Dutch and Spanish print, 4.2 on Latin, 3.6 on Greek and on Sanskrit, Pali and Chinese, and 3.4 on Hebrew, Arabic and Persian. In Greek, Hebrew, Arabic and Persian most low pages begin with a wrong transcription, which no translator recovers. Flash translates more faithfully than Flash-Lite in every language group, and since 3 October it translates new pages in Greek, Hebrew, Aramaic, Arabic, Persian, Sanskrit, Pali and Chinese. A second published translator, scored the same way against the first, gets 4.2 on Greek and 4.1 on Latin, and on pages with a correct transcription Flash is at that level, but one of its pages in five scores 3 or lower, against one human page in thirty.
           </p>
           <p className="text-secondary leading-relaxed mb-4">
             <strong className="text-primary">By language.</strong> The picture is uneven. Latin, English and German, two-thirds of translated pages, have measured transcription (0.6–5.3% character error on the current engine) and the judge rated 92–97% of their pages faithful. Greek, a tenth of the library, is the largest gap: 11% character error on the current engine (6.6% on Flash) and 75% rated faithful. French, Italian, Dutch and Spanish, about 13% of translated pages, have no transcription measurement at all, and most smaller languages have too few judged books to compare with each other. Chinese shows 19–25% character error, but against other editions of the same texts, so part of that may be variant characters rather than misreads. The grid below gives every language.
@@ -1179,7 +1274,7 @@ export default function ResearchQualityPage() {
 
         {/* ── Key findings and contents ── */}
         <section aria-label="Key findings" className="mb-8">
-          <div className="flex flex-wrap items-baseline justify-between gap-2 mb-3"><h2 className="text-xs uppercase tracking-[0.16em] text-muted font-semibold">Key findings</h2><Link href="/research/quality/summary" className="text-sm text-accent-rust hover:underline">One-page summary, for printing</Link></div>
+          <div className="flex flex-wrap items-baseline justify-between gap-2 mb-3"><h2 className="text-xs uppercase tracking-[0.16em] text-muted font-semibold">Key findings</h2><span className="flex flex-wrap gap-x-4 gap-y-1"><Link href="/research/quality/open" className="text-sm text-accent-rust hover:underline">Open quality work</Link><Link href="/research/quality/summary" className="text-sm text-accent-rust hover:underline">One-page summary, for printing</Link></span></div>
           <KeyFindings />
         </section>
         <Contents />
@@ -1203,11 +1298,23 @@ export default function ResearchQualityPage() {
 
         <Block id="against-references" title="Translation against published human translations">
           <p className="text-secondary leading-relaxed mb-4">
-            On 3 October 2026 we scored the English we serve against a published human translation of the same passage. Five tracks cover 14 languages: 321 pages, one per book, each matched to the span of a translation that is mostly public domain or openly licensed. Two Claude Opus judges, blind to which English is ours, rate fidelity from 1 to 5 against the source, using the reference as a guide, and list omissions, reversals of meaning and inventions. A wrong page, a planted change of meaning and a duplicate pair were mixed into every packet. Both judges passed these controls in every track, and their ratings agree at a weighted κ of 0.79–0.94. This is a judgement against a human reference, not accuracy: the judges are models, and the reference is one translator&rsquo;s reading. On the same pages we ran the production model (Gemini Flash-Lite) twice to measure its own noise, then Flash, Flash with thinking, Flash-Lite without the neighbouring pages, and Flash-Lite on a transcription corrected by eye from the scan. Opus translated 10 to 20 pages per track as a ceiling. The Gemini calls cost about $8 in all. Each track holds 50 or more books, which is decision-grade for the pooled figure; most single languages within a track hold fewer than 30 books and are exploratory.
+            On 3 October 2026 we scored the English we serve against a published human translation of the same passage. Five tracks cover 14 languages: 321 pages, one per book, each matched to the span of a translation that is mostly public domain or openly licensed. Two Claude Opus judges, blind to which English is ours, rate fidelity from 1 to 5 against the source, using the reference as a guide, and list omissions, reversals of meaning and inventions. A wrong page, a planted change of meaning and a duplicate pair were mixed into every packet. Both judges passed these controls in every track, and their ratings agree at a weighted κ of 0.79–0.94. This is a judgement against a human reference, not accuracy: the judges are models, and the reference is one translator&rsquo;s reading. On the same pages we ran the production model (Gemini Flash-Lite) twice to measure its own noise, then Flash, Flash with thinking, Flash-Lite without the neighbouring pages, and Flash-Lite on a transcription corrected by eye from the scan. Opus translated 10 to 20 pages per track as a stronger-model comparison; a second human translator is scored below. The Gemini calls cost about $8 in all. Each track holds 50 or more books, which is decision-grade for the pooled figure; most single languages within a track hold fewer than 30 books and are exploratory.
           </p>
           <TracksTable />
           <p className="text-xs text-muted leading-relaxed mt-3 mb-6">
             Fidelity is the mean of two judges; differences are paired, on the same pages, with 95% intervals. &ldquo;Low pages&rdquo; are pages scored 3 or lower (in T3, the ten lowest-scoring pages); a model reader opened the scan of each and named the first cause. The corrected-transcription arm was judged against the corrected text, on pages chosen because they scored low or at random, so it is the effect on affected pages, not a corpus mean. Harness and controls<N n={17} />; tracks T1<N n={18} />, T2<N n={19} />, T3<N n={20} />, T4<N n={30} />, T5<N n={21} />.
+          </p>
+
+          <h3 id="human-ceiling" className="text-lg text-primary font-semibold mb-2 scroll-mt-24">How close is a second human translator?</h3>
+          <p className="text-secondary leading-relaxed mb-4">
+            A score of 4.2 means little until a human translation is scored the same way. On 66 of the Greek and Latin pages above (33 books each) a second public-domain translation could be cut to the same page. We put it in the candidate&rsquo;s seat: the same two blind Opus judges, with the same rubric, scored the second translation against the first, the first against the second, and Flash and Flash-Lite against each. The figure below is the mean of the two directions. It is one published translator judged against another, not the truth, and it is still a judgement against a human reference, not accuracy.<N n={31} />
+          </p>
+          <CeilingTable />
+          <p className="text-xs text-muted leading-relaxed mt-3 mb-4">
+            Fidelity 1–5, mean of two judges, 95% intervals over books; one page per book. Share of the human score is (arm − 1) / (human − 1), since 1 is the floor of the scale. &ldquo;Transcription wrong&rdquo; is the 12 Greek pages where T2 found the transcription wrong and corrected it from the scan: the machines translated the wrong transcription and are judged against the page as printed. That split was made on pages that had scored low, so it is partly selected on the outcome. Both judges caught 6 of 6 planted controls in each packet (the first build of one packet caught 2 of 3 and was rebuilt and re-gated), and agree at a weighted κ of 0.89 and 0.93. Grades count books: 30 to 49 directional, under 30 exploratory.<N n={31} />
+          </p>
+          <p className="text-secondary leading-relaxed mb-6">
+            Where the transcription is correct, Flash is at the level of a second published translator: 106% of the human score on sound Greek pages and 105% on Latin. Flash-Lite is at it on Latin (98%) and about 0.3 points short on Greek (91%). Over all Greek pages Flash reaches 87% and Flash-Lite 74%, and the gap is the 12 pages with a wrong transcription. The means hide a different tail. One machine page in five scores 3 or lower (Flash 20%, Flash-Lite 24% of page-judgements), against one human page in thirty (3%), and the judges quote a reversal of meaning on 11% of Flash and 17% of Flash-Lite pages against 3% of human ones, three to five times as often. The humans lose their points by leaving things out: an omission is marked on 46% of their pages, against 17% for Flash. The scale itself tops out near 4.3, not 5: the reference scored against its own source page gets 4.33, because the judges mark omissions on 42% of published translations, or of their cut to our page. Three threats limit the comparison. The second translators date from 1551 to 1936, not a professional translating our page today. Early-modern Englishings are loose and score lower, which is why the machines look above the human score on Latin; on the 11 Latin pages where both translators are of the 19th or 20th century, Flash reaches 96% and Flash-Lite 83%, with wide intervals. And 33 pages per language give each share an interval of about ±10 points.<N n={31} />
           </p>
 
           <h3 className="text-lg text-primary font-semibold mb-2">Where the transcription is wrong, the translator cannot help</h3>
@@ -1234,7 +1341,7 @@ export default function ResearchQualityPage() {
             A separate judge rated readability, register, terminology, ambiguity and transparency for both texts. Ours is a crib: more literal, and more open about its choices in notes and glosses. The published translations read better and keep the voice of the genre (register, Latin 3.68 against 4.73; vernaculars 3.68 against 4.75), and in Sanskrit, Pali and Chinese they resolve ambiguity silently. Where the two differ in meaning, the judge sided with ours about as often as with the reference in Latin (75 places against 72) and more often in the vernaculars (42 pages against 22). It sided with the reference more often in Sanskrit, Pali and Chinese (29 pages against 16) and in Hebrew, Arabic and Persian (94 places against 32).
           </p>
           <p className="text-secondary leading-relaxed mb-6">
-            The sample leans towards works someone has translated into English, mostly in printed editions. Obscure works and manuscripts, where the transcription fails most, are under-represented, so for them these means are likely upper bounds. Famous texts did not score consistently higher, which would be the sign of a model reciting a translation it remembers. Latin canonical pages scored 3.95 against 4.26, and Greek 3.50 against 3.66. Hebrew, Arabic and Persian scored 3.83 against 3.33, and Sanskrit, Pali and Chinese 3.66 against 3.55. The judges, the reader of the scans and the ceiling translator are all Claude Opus.
+            The sample leans towards works someone has translated into English, mostly in printed editions. Obscure works and manuscripts, where the transcription fails most, are under-represented, so for them these means are likely upper bounds. Famous texts did not score consistently higher, which would be the sign of a model reciting a translation it remembers. Latin canonical pages scored 3.95 against 4.26, and Greek 3.50 against 3.66. Hebrew, Arabic and Persian scored 3.83 against 3.33, and Sanskrit, Pali and Chinese 3.66 against 3.55. The judges, the reader of the scans and the stronger-model translator are all Claude Opus.
           </p>
 
           <h3 id="tengyur" className="text-lg text-primary font-semibold mb-2 scroll-mt-24">Tibetan: the Tengyur against 84000</h3>
@@ -1242,7 +1349,7 @@ export default function ResearchQualityPage() {
             The Derge Tengyur is translated from a typed e-text aligned to each folio, so no transcription error enters the chain. 84000 has published English for 16 Tengyur texts {cite('84000')}; 864 of their folio sides could be matched to our pages, and 113 were judged by two blind Opus judges, who passed 30 of 30 controls. The pilot lane translates eight pages per request, with the neighbouring pages as context. Against one page per request with no context, fidelity is the same (4.48 against 4.54), but English lands on the wrong side of the page turn on 15 sides against 1, and omissions fall from 15.5% to 3.5% of judgements. All 15 misplaced sides were inside a multi-page block. The full Tengyur (128,369 pages, about $220) therefore runs one page per request.<N n={22} />
           </p>
           <p className="text-secondary leading-relaxed mb-4">
-            On top of that lane, no prompt lever beat the noise floor. The same request run twice gives a net preference of +0.09; a glossary from the Mahāvyutpatti raised the pages with a reversed statement from 2 to 7; thinking doubled the omissions; a Sanskrit parallel could be aligned on only 6 of 113 sides; and a negation detector with a second pass by Gemini Pro was at chance out of sample, and of the 7 changes the Pro pass made, 5 were right and 1 was wrong. Opus with the same prompt was 0.5 points higher on 40 sides. A source-only review of the 1,269-page pilot found 33 of 40 sampled pages rated 4 or 5 (95% CI 68–91%) and a reversed statement on 4 of 40, three of them in Madhyamaka verse. Reversals stay at about 2 to 6 per 100 pages in every arm, so the English remains an unreviewed machine draft. The Tengyur books are not yet public, so no page links are given.<N n={23} /><N n={24} />
+            On top of that lane, no prompt lever beat the noise floor. The same request run twice gives a net preference of +0.09; a glossary from the Mahāvyutpatti raised the pages with a reversed statement from 2 to 7; thinking doubled the omissions; a Sanskrit parallel could be aligned on only 6 of 113 sides; and a negation detector with a second pass by Gemini Pro was at chance out of sample, and of the 7 changes the Pro pass made, 5 were right and 1 was wrong. Opus with the same prompt was 0.5 points higher on 40 sides. A source-only review of the 1,269-page pilot found 33 of 40 sampled pages rated 4 or 5 (95% CI 68–91%) and a reversed statement on 4 of 40, three of them in Madhyamaka verse. Reversals stay at about 2 to 6 per 100 pages in every arm, so the English remains an AI translation that no scholar has reviewed. The The Tengyur volumes have been public since 7 October 2026.<N n={23} /><N n={24} />
           </p>
 
           <h3 className="text-lg text-primary font-semibold mb-2">Prompts and page breaks</h3>
@@ -1369,6 +1476,16 @@ export default function ResearchQualityPage() {
           </P>
           <P>
             On Latin, with {LATIN_FLASH.books} referenced books, the median character error rate is {pc1(LATIN_FLASH.median)} for Gemini 3 Flash ({LATIN_FLASH.pages} aligned pages, 95% CI {pc1(LATIN_FLASH.ci[0])}–{pc1(LATIN_FLASH.ci[1])}) and {pc1(LATIN_LITE.median)} for Gemini 3.1 Flash-Lite, the cheaper engine that has read every new page in every language since 11 September 2026 ({LATIN_LITE.pages} pages, CI {pc1(LATIN_LITE.ci[0])}–{pc1(LATIN_LITE.ci[1])}). Both cells are decision-grade.<N n={1} /> Most cells are not. Of the {n0(ocrEvidence.totals.cells)} cells in the evidence table, {CELL_GRADES['decision-grade']} are decision-grade, {CELL_GRADES.directional} directional and {n0(CELL_GRADES.exploratory)} exploratory.<N n={1} /> The language grid above shows where the decision-grade cells fall. Japanese, Sanskrit, Arabic, Korean, Persian, Ge&rsquo;ez and Pali have no reference pages at all, and Hebrew has four, all in square script.<N n={2} /> For those scripts we cannot yet say how accurate the transcription is.
+          </P>
+          <P>
+            <strong id="transcription-floor" className="scroll-mt-24">How far apart are two human transcriptions?</strong> Every character error rate above is measured against one human transcription, which has errors of its own. To see how large they are, we found 183 pages, from 104 printed books or works, that two independent projects had transcribed from the same edition, and scored the two against each other with the same normalisation used for our OCR. The edition was checked on every pair: 22 pages were read against the page image, first and last line on both cuts, and the rest by title page, TEI header or shared line numbering; a pair from a different edition was kept apart, not forced. Pairs where one source was copied from the other were rejected (51 candidates, including the Kanripo and CBETA pair, which share a base text). This is agreement between two references, neither of them the truth; our OCR against each is accuracy against that reference.<N n={32} />
+          </P>
+          <FloorTable />
+          <p className="text-xs text-muted leading-relaxed mt-1 mb-4">
+            Pooled character error over each pair, both directions, with a 95% interval over books. Letters only: case, punctuation, spacing, diacritics and line breaks are folded. The second normalisation keeps diacritics (English, Greek accents and breathings) or, for Chinese, folds the 41 character pairs that recur five or more times in the same direction, a rule derived from these same pages. The Greek and Chinese pages we hold are too few to grade. Grades count books: under 30 exploratory, 30 to 49 directional, 50 or more decision-grade.<N n={32} />
+          </p>
+          <P>
+            Two careful transcriptions of English print differ by about one letter in 700 (0.14%), and 58% of pages have no letter difference. Our OCR&rsquo;s median page is inside that (0.06%), and on 46 of 67 pages it is no further from one transcription than the other transcription is. The pooled 2.6% is a tail: 10 of 67 pages exceed 1%, against 1 of 84 for the humans, and three pages of two books, set with shoulder notes or in two columns, reach 34–71% (<em>Thoughts on Art and Life</em>, <Link href="/book/6991eb102f801130a473f7be?page=66" className="text-accent-rust hover:underline">p. 66</Link> and <Link href="/book/6991eb102f801130a473f7be?page=84" className="text-accent-rust hover:underline">p. 84</Link>; <em>The Invention of Printing</em>, <Link href="/book/699200c37c226bdd25f97afd?page=395" className="text-accent-rust hover:underline">p. 395</Link>) because our text keeps marginal notes that both transcriptions leave out. Without them our figure is 0.59%. On the pre-1700 pages it is 0.75% against a human floor of 0.13%. Polytonic Greek has a floor of 0.43% on letters and 1.09% with accents and breathings: two keyings of one edition disagree on a diacritic about once in 90–180 letters. CBETA and SAT differ on 2.87% of the characters of the same Taishō page, and almost all of it is convention: one writes standard forms, the other the forms printed. Folded, they differ on 0.28%. So any Chinese character error measured against a reference in another glyph convention carries about 2.6 points of convention distance. In practice, a reported error below about 0.2% for English, 0.5% for Greek letters or 0.3% for Chinese is at the floor of the references themselves and should not be ranked. The floor is measured on clean prose pages; tables, verse and pages heavy with apparatus are under-represented.<N n={32} />
           </P>
           <P>
             One narrower accuracy check reads the numbers. On English books printed 1800–1930, every printed number on which two engines disagreed was cropped from the page image and read blind by a model, with no engine&rsquo;s reading on the sheet. Of 5,212 printed numbers across 82 books, the Internet Archive&rsquo;s own OCR had 5.1% wrong (CI 3.8–7.4) and Flash-Lite 1.8% (CI 1.1–3.1). This is directional, and the reader of the crops was a model, not a person.<N n={3} />
@@ -1528,7 +1645,7 @@ export default function ResearchQualityPage() {
             We will report, monthly and cumulatively: agreement with the judge, separately for pages it called sound and pages it called defective, each with n, the number of readers, and an interval that allows for one reader answering many pages; the overall figure, re-weighted to the draw&rsquo;s own mix because defective pages are over-represented; agreement between two readers, as κ, once 40 pages have been double-read; a catalogue of what readers found that the judge missed and the reverse, each with its page and the reader&rsquo;s words; and the response funnel, from letters sent to pages answered, by language. For agreement on sound pages (expected near 90%), 34 answers give an interval of ±10 points. For defective pages, where agreement may be nearer 50–70%, the same precision takes 78–93 answers; month 0 holds 47 such pages. Figures are marked preliminary until they reach these sizes. Sensitivity and specificity, treating readers as the reference, are reported only next to the reader–reader figure; per-language rates wait for 30 answers in a language.<N n={10} /><N n={13} />
           </P>
           <P>
-            Status on the date of this draft: the protocol is written and awaits sign-off and an ethics approval. No page has been sent and there are no results. Readers will be credited by name in the acknowledgements unless they prefer not to be.<N n={10} />
+            Status on the date of this draft: the protocol is written and awaits sign-off and an ethics approval. No page has been sent and there are no results. Readers will be credited by name in the acknowledgements unless they prefer not to be.<N n={10} /> For the canons of the Eternity programme, the first scholar round and what it asks of a reader are set out on <a href="/research/canon-quality" className="text-accent-rust hover:underline">how we check each canon</a>.
           </P>
         </Section>
 

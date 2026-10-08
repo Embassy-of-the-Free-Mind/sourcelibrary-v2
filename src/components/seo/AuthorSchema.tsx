@@ -98,7 +98,7 @@ export default function AuthorSchema({
     '@type': entityType === 'none' ? 'CollectionPage' : 'ProfilePage',
     '@id': pageUrl,
     url: pageUrl,
-    name: `${authorName} — Source Library`,
+    name: `${authorName} | Source Library`,
     ...(description && { description }),
     ...(entityType !== 'none' && { mainEntity: { '@id': `${pageUrl}#person` } }),
   };

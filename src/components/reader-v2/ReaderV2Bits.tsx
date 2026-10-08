@@ -7,11 +7,13 @@ import { useLocale } from '@/lib/i18n';
 import { getReaderStrings } from '@/lib/reader-strings';
 import { getPageDisplayUrl, getPageThumbUrl } from '@/lib/utils';
 import { getPageImageUrl } from '@/lib/page-image-url';
+import { usablePageFrame, frameForImage, framedImageBox, type PageFrame } from '@/lib/page-frame';
 import type { Book, Page } from '@/lib/types';
 import type { CdliWitness } from '@/lib/types/book';
 import { transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTranslation, type CorpusInfo } from '@/lib/text-provenance';
 import type { ReaderSettings } from './useReaderV2';
 import { PaneEmptyState, GatedPane } from './PaneEmptyState';
+import { displayTranscription } from '@/lib/esukhia-apparatus';
 
 // Shared presentational pieces for the v2 reader design previews. All values
 // map to existing Source Library tokens (globals.css) — no new primitives.
@@ -270,7 +272,8 @@ export function ReaderProse({
    */
   suppressBlockquote?: boolean;
 }) {
-  const raw = kind === 'ocr' ? (page.ocr?.data || '') : (page.translation?.data || '');
+  // Esukhia pages (#5497) carry their e-text apparatus verbatim; the pane shows the block reading.
+  const raw = kind === 'ocr' ? displayTranscription(page.ocr) : (page.translation?.data || '');
   const text = suppressBlockquote ? raw.replace(/^[ \t]*>[ \t]?/gm, '') : raw;
   const lang = kind === 'ocr' ? book.language : 'English';
 
@@ -443,15 +446,32 @@ export function ScanViewer({
   const [lensMag, setLensMag] = useState(2.4);
   const lastLensPoint = useRef<{ x: number; y: number } | null>(null);
 
+  // The page's frame (#5876): where the page sits inside a scan that also
+  // shows the dark scanner bed around it. The scan is shown cropped to it and
+  // never rewritten; the frame applies only to an image of the shape it was
+  // measured on, so a provider master framed differently shows whole.
+  const storedFrame = srcOverride ? null : usablePageFrame((page as unknown as { page_frame?: unknown }).page_frame);
+  const appliedFrame = useRef<PageFrame | null>(null);
+  const clipRef = useRef<HTMLDivElement>(null);
+
   // Size the page takes at 100% (contained in the pane). Zoom multiplies it.
-  const [fit, setFit] = useState<{ w: number; h: number } | null>(null);
+  // `natural` is the FRAMED size when a frame applies.
+  const [fit, setFit] = useState<{ w: number; h: number; frame: PageFrame | null } | null>(null);
   const natural = useRef<{ w: number; h: number } | null>(null);
   const measure = () => {
     const c = containerRef.current;
     const n = natural.current;
     if (!c || !n || !n.w || !n.h) return;
     const s = Math.min(c.clientWidth / n.w, c.clientHeight / n.h);
-    setFit({ w: Math.max(1, Math.round(n.w * s)), h: Math.max(1, Math.round(n.h * s)) });
+    setFit({ w: Math.max(1, Math.round(n.w * s)), h: Math.max(1, Math.round(n.h * s)), frame: appliedFrame.current });
+  };
+  const takeNatural = (nw: number, nh: number) => {
+    const f = frameForImage(storedFrame, nw, nh);
+    appliedFrame.current = f;
+    natural.current = f ? { w: nw * f.w, h: nh * f.h } : { w: nw, h: nh };
+    noteLoaded(natural.current.w);
+    onNaturalSize?.(natural.current);
+    measure();
   };
   useEffect(() => {
     const c = containerRef.current;
@@ -467,12 +487,7 @@ export function ScanViewer({
   // which silently disabled zoom entirely on a warm CDN. Read it directly too.
   useEffect(() => {
     const el = imgRef.current;
-    if (el?.complete && el.naturalWidth) {
-      natural.current = { w: el.naturalWidth, h: el.naturalHeight };
-      noteLoaded(el.naturalWidth);
-      onNaturalSize?.(natural.current);
-      measure();
-    }
+    if (el?.complete && el.naturalWidth) takeNatural(el.naturalWidth, el.naturalHeight);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page.id]);
 
@@ -490,10 +505,7 @@ export function ScanViewer({
     const poll = () => {
       if (natural.current) return;
       if (el.naturalWidth && el.naturalHeight) {
-        natural.current = { w: el.naturalWidth, h: el.naturalHeight };
-        noteLoaded(el.naturalWidth);
-        onNaturalSize?.(natural.current);
-        measure();
+        takeNatural(el.naturalWidth, el.naturalHeight);
         return;
       }
       if (Date.now() < deadline) frame = requestAnimationFrame(poll);
@@ -604,8 +616,11 @@ export function ScanViewer({
     const img = imgRef.current;
     const container = containerRef.current;
     if (!img || !container) return;
+    // A framed scan overhangs its clip: the lens follows what is visible, but
+    // magnifies from the whole image, whose rect it is positioned against.
     const r = img.getBoundingClientRect();
-    if (clientX < r.left || clientX > r.right || clientY < r.top || clientY > r.bottom) {
+    const seen = (fit?.frame && clipRef.current ? clipRef.current : img).getBoundingClientRect();
+    if (clientX < seen.left || clientX > seen.right || clientY < seen.top || clientY > seen.bottom) {
       setLens(null);
       return;
     }
@@ -838,34 +853,66 @@ export function ScanViewer({
           ? { width: fit.w * zoom, height: fit.h * zoom }
           : { width: '100%', height: '100%' }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          ref={imgRef}
-          src={src}
-          alt={alt}
-          draggable={false}
-          onError={() => { if (src === native && native !== display) setNativeFailed(native); }}
-          onLoad={e => {
-            const el = e.currentTarget;
-            natural.current = { w: el.naturalWidth, h: el.naturalHeight };
-            noteLoaded(el.naturalWidth);
-            onNaturalSize?.(natural.current);
-            measure();
-          }}
-          className={fit ? 'absolute top-0 left-0' : 'max-h-full max-w-full object-contain'}
-          style={{
-            width: fit ? fit.w : undefined,
-            height: fit ? fit.h : undefined,
-            transform: fit ? `scale(${zoom})` : undefined,
-            transformOrigin: '0 0',
-            // No transition: the scroll compensation that keeps the anchored
-            // point still is applied instantly, so an eased transform would
-            // slide out of step with it and read as a wobble.
-            willChange: 'transform',
-            boxShadow: '0 18px 40px -18px rgba(43, 34, 21, 0.55)',
-            filter: brightness ? `brightness(${brightness})` : undefined,
-          }}
-        />
+        {fit?.frame ? (
+          // Framed: a page-sized clip carries the zoom and the shadow; the
+          // whole scan sits inside it, offset so only the page shows.
+          <div
+            ref={clipRef}
+            className="absolute top-0 left-0 overflow-hidden"
+            style={{
+              width: fit.w,
+              height: fit.h,
+              transform: `scale(${zoom})`,
+              transformOrigin: '0 0',
+              willChange: 'transform',
+              boxShadow: '0 18px 40px -18px rgba(43, 34, 21, 0.55)',
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              ref={imgRef}
+              src={src}
+              alt={alt}
+              draggable={false}
+              onError={() => { if (src === native && native !== display) setNativeFailed(native); }}
+              onLoad={e => {
+                const el = e.currentTarget;
+                takeNatural(el.naturalWidth, el.naturalHeight);
+              }}
+              className="absolute max-w-none"
+              style={{
+                ...framedImageBox(fit.w, fit.h, fit.frame),
+                filter: brightness ? `brightness(${brightness})` : undefined,
+              }}
+            />
+          </div>
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            ref={imgRef}
+            src={src}
+            alt={alt}
+            draggable={false}
+            onError={() => { if (src === native && native !== display) setNativeFailed(native); }}
+            onLoad={e => {
+              const el = e.currentTarget;
+              takeNatural(el.naturalWidth, el.naturalHeight);
+            }}
+            className={fit ? 'absolute top-0 left-0' : 'max-h-full max-w-full object-contain'}
+            style={{
+              width: fit ? fit.w : undefined,
+              height: fit ? fit.h : undefined,
+              transform: fit ? `scale(${zoom})` : undefined,
+              transformOrigin: '0 0',
+              // No transition: the scroll compensation that keeps the anchored
+              // point still is applied instantly, so an eased transform would
+              // slide out of step with it and read as a wobble.
+              willChange: 'transform',
+              boxShadow: '0 18px 40px -18px rgba(43, 34, 21, 0.55)',
+              filter: brightness ? `brightness(${brightness})` : undefined,
+            }}
+          />
+        )}
       </div>
       {lens && lensOn && !zoomed && (
         <div

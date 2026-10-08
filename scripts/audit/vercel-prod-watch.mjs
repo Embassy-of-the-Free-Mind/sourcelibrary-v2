@@ -46,6 +46,7 @@ import { execFileSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { buildInputs as ignoreScriptInputs } from '../vercel-ignore-build.mjs';
 
 export const MIN_STREAK = 2;
 export const MAX_BEHIND_MIN = 60;
@@ -63,8 +64,13 @@ const IN_FLIGHT = new Set(['BUILDING', 'QUEUED', 'INITIALIZING']);
 const short = (sha) => (sha ? String(sha).slice(0, 7) : '(no sha)');
 const iso = (t) => (Number.isFinite(t) ? new Date(t).toISOString().replace('.000Z', 'Z') : '?');
 
-/** The paths Vercel's ignore step diffs, parsed from vercel.json's ignoreCommand (`… HEAD -- <paths>`). */
-export function buildInputsFromIgnoreCommand(cmd) {
+/**
+ * The paths Vercel's ignore step diffs. When vercel.json's ignoreCommand runs
+ * scripts/vercel-ignore-build.mjs, ask that script for its list (the same function Vercel runs);
+ * otherwise parse an inline `… HEAD -- <paths>` command.
+ */
+export function buildInputsFromIgnoreCommand(cmd, repo = REPO) {
+  if (/scripts\/vercel-ignore-build\.mjs/.test(String(cmd ?? ''))) return ignoreScriptInputs(repo);
   const m = /\bHEAD\s+--\s+(.+?)\s*$/.exec(String(cmd ?? ''));
   const paths = m ? m[1].split(/\s+/).filter(Boolean) : [];
   if (!paths.length) throw new Error(`could not read build-input paths from vercel.json ignoreCommand: ${JSON.stringify(cmd)}`);

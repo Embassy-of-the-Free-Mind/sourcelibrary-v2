@@ -76,7 +76,7 @@ export function MultiLineChart({
         {series.map(s =>
           s.data.map((v, i) => (
             <circle key={`${s.label}-${i}`} cx={xScale(i)} cy={yScale(v)} r={3} fill={s.color} opacity={0}>
-              <title>{`${s.label} — ${labels[i]}: ${yLabel(v)}`}</title>
+              <title>{`${s.label} · ${labels[i]}: ${yLabel(v)}`}</title>
             </circle>
           ))
         )}

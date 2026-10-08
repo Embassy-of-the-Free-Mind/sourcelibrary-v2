@@ -1,0 +1,645 @@
+[
+  {
+    "book_id": "69c7b18425ec2ba5ccd7f44e",
+    "slot": 17,
+    "title": "[Hebrew: Sefer pardes rimmonim]",
+    "tradition": "hebrew",
+    "shelf_fit": "fits",
+    "shelf_note": "Cordovero's Pardes Rimmonim, a core work of Safed Kabbalah; the scans are of that work (Gate 6 'Seder Amidatan', Gate 23 'Erkhei ha-Kinuyim', Gate 31 'Sha'ar ha-Neshamah').",
+    "rights_flag": null,
+    "structure_note": "Two record populations in one book: negative page numbers (-135, -32) are unsplit two-page openings (image names 0135-full.jpg, 0032-full.jpg) and positive numbers are split single pages (sp….jpg). page_records 521 against pages_count 348 and 40 printed numbers with 20 backsteps fit openings and split leaves being interleaved, so a reader probably meets the same text twice and in a broken order. Page numbers below 1 are a structural defect in themselves.",
+    "on_sight_defect": true,
+    "fit_to_show": "do_not_show",
+    "showcase_pages": [],
+    "reader_summary": "This is Cordovero's Pardes Rimmonim, and the headwords and running heads are mostly the right ones. The body of the transcription is not the printed text. The rabbinic (Rashi) type is read as streams of ס/ק-substituted nonsense, and the English turns that into fluent invented Kabbalah: angels named 'Mardiel' and 'Zevachiel', 'the numerical value is 15'. None of the English can be trusted.",
+    "pages": [
+      {
+        "page_number": -135,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "ענן ישכננו בדמים כככה ספ' שישיה מתעכבת מכל",
+            "image": "ענן הוא החסד ופירש הרשב\"י … נקרא ענן ושבעה ענני כבוד",
+            "problem": "entry body is not the printed text; Rashi-script body confabulated throughout the page, only the bold headwords are real",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "<header>שער כב שער ערכי הכנויים פרק טז</header>",
+            "image": "שער כג שער ערכי הכנויים פרק טו",
+            "problem": "gate and chapter numbers in the running head misread",
+            "severity": "moderate",
+            "class": "O7"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "קול קסד וסקס והלכה ב' י' ה' הדרכה מכל הסד",
+            "english": "This is Chesed … The numerical value is 15. It is the guidance from all of the Chesed",
+            "problem": "fluent Kabbalistic English made out of garbled OCR; the printed entry (ענף עץ עבות = ג' אבות) says something else",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "header שער כב … פרק טז",
+            "english": "Gate 22: The Gate of the Values of Epithets, Chapter 16",
+            "problem": "carries the misread gate number (the print has Gate 23, ch. 15)",
+            "severity": "moderate",
+            "class": "O7"
+          }
+        ],
+        "other": [
+          {
+            "note": "a two-page opening kept as one record; both pages' headwords are merged into one list",
+            "severity": "moderate",
+            "class": "I3"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": -32,
+        "right_page": "yes",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "מ\"ק אחר לוי' ישמעאל ראיתי' לת' חמרדי\"ל ומ' ידיד' זבחי'",
+            "image": "פ\"ק אמר רבי ישמעאל ראיתי את אכתריאל יה יו\"ד צבאו' וכו' והוא הוא המקבל התפלות",
+            "problem": "the famous Akatriel baraita is read as nonsense; the rest of the page's body is confabulated the same way",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "מ\"ק אחר לוי' ישמעאל ראיתי' לת' חמרדי\"ל",
+            "english": "After the Leviathan, I saw the angel Ishmael. I saw the authority of Mardiel and the beloved Zevachiel.",
+            "problem": "invented angels and a Leviathan; the source says 'R. Ishmael said: I saw Akatriel Yah'",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "unsplit two-page opening (Gate 6 ch. 2–5) stored as one record",
+            "severity": "moderate",
+            "class": "I3"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 70,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "ללא יסוד הדעת יסוד חכמה ובינה ומה נמלאו הלקח כמו שמר כסופא כפי הנראה",
+            "image": "אלא בסוד הדעת שהוא יחוד חכמה ובינה … (right column) / כמו שאמר בסופא כפי הנראה … (left column)",
+            "problem": "the two columns are read across, line by line, so every OCR line splices half a line from each column; many words are also misread",
+            "severity": "serious",
+            "class": "other:column-interleave"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "spliced column lines",
+            "english": "from the mastery of his grave and they arose … the secret of the nest of the two eggs",
+            "problem": "the English translates the spliced lines as if they were prose; it is not this page's argument (Gate 7, the channels/tsinorot)",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 335,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "<header>שער לא שער הנשמה ברכה ד</header>",
+            "image": "שער לא שער הנשמה פרק ד ה",
+            "problem": "'פרק' read as 'ברכה'",
+            "severity": "minor"
+          },
+          {
+            "ocr": "דימוס קמי' … ווי ליה דקא מחשב בענין טוב",
+            "image": "Zohar quotation in Rashi type, mostly not this",
+            "problem": "after the first line the body drifts into invented Aramaic",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "דימוס קמי'",
+            "english": "the dimus <gloss>pardon/release</gloss> is before Him",
+            "problem": "a gloss invented for a non-word; numbers appear inside <unclear> (160, 126, 146, 280) that are not on the page",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "<unclear>126</unclear> and similar numeric unclear tags are visible in the reader's English",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The right work, but the transcription of its Rashi-type body is confabulated on all four pages, and the English is fluent invention. Openings and split pages are also mixed in one record set under negative page numbers."
+  },
+  {
+    "book_id": "69e7490485f786e884a4d186",
+    "slot": 18,
+    "title": "שיר השירים (Shīr ha-Shīrīm / Song of Songs)",
+    "tradition": "hebrew",
+    "shelf_fit": "fits",
+    "shelf_note": "A Yemenite-type manuscript of the Song of Songs: the Hebrew verse, the Aramaic Targum, and Judeo-Arabic (tafsir) lines, with Masoretic notes at the foot of the page. It belongs on a Hebrew shelf; the Folkscanomy 'religion_bible' collection is a generic home for it.",
+    "rights_flag": null,
+    "structure_note": "33 records, all transcribed and translated. The catalogue gives 'published 1500' and author 'Solomon', but this is a manuscript, not a printed edition of 1500 (catalogue format wrong, I7). The 2 backsteps likely come from mixed numbering: the OCR takes a later pencil folio ('179') and turns it into a Hebrew header 'קעט'.",
+    "on_sight_defect": true,
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      3,
+      22
+    ],
+    "reader_summary": "This is the Targum to the Song of Songs, interleaved verse by verse with the Hebrew text, in a Yemenite-type manuscript. The Hebrew and Aramaic transcription is largely right, and the English follows the Targum well. Two things go wrong. On some pages the two columns are put in the wrong order. And the Judeo-Arabic lines are not recognised as Arabic, so they are rendered as garbled Aramaic or misread outright: Elijah becomes 'the Lord', and 'I said I will climb the palm' becomes 'your fingers'.",
+    "pages": [
+      {
+        "page_number": 3,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "וראך נבוכדנצר ארשע מלך בבלא / גלו נפח בבל נלבד וידיך אלי הו / אמר מן אלכסנדר עלי דיתי",
+            "image": "lines at the foot of the left column that read roughly נסרו נפחה כך נלכר וידיך אליהו / אמר מן אכמור עלי…; I cannot see 'Nebuchadnezzar' or 'Alexander'",
+            "problem": "probably Judeo-Arabic lines normalised into Aramaic with historical names supplied",
+            "severity": "moderate",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "וראך נבוכדנצר ארשע מלך בבלא … אמר מן אלכסנדר",
+            "english": "Nebuchadnezzar, the wicked king of Babylon, saw the exiles of Babylon... He said, \"From Alexander, upon me...\"",
+            "problem": "names that are probably not on the page",
+            "severity": "moderate",
+            "class": "O8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 15,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "left column (ודי אנחדר מן גבל גרשי שניך כעדר…) transcribed before the right column (ועמא דבציין לחגא…)",
+            "image": "in this RTL manuscript the right column (3:11–4:1) comes before the left (4:2–3)",
+            "problem": "the columns are put in reverse order",
+            "severity": "moderate",
+            "class": "other:rtl-column-order"
+          },
+          {
+            "ocr": "אכרכין ואנצרין א בנות ציון אלא ומלך סלימאן",
+            "image": "Judeo-Arabic tafsir line (≈ 'go out and look, daughters of Zion, at King Solomon')",
+            "problem": "Judeo-Arabic not identified and partly misread",
+            "severity": "moderate",
+            "class": "O10"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "אכרכין ואנצרין … אדי תוגתא המה יום ערסה",
+            "english": "They are circling and looking … and they are diminishing … this is the sorrow, [this] is the day of his wedding and the day of the opening of the battle",
+            "problem": "the Judeo-Arabic rendering of 3:11 is garbled; 'battle' is not there",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 22,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "left column (אנון עמודי עלמא …) first, then right column (וגנונתא מליא בוסמן …)",
+            "image": "the right column (5:13–15) precedes the left (5:15–6:1)",
+            "problem": "the columns are put in reverse order",
+            "severity": "moderate",
+            "class": "other:rtl-column-order"
+          },
+          {
+            "ocr": "<page-num>179</page-num><header>קעט</header>",
+            "image": "'179' is a later pencil foliation in the corner; there is no printed header",
+            "problem": "a later hand is made into a Hebrew running head",
+            "severity": "minor",
+            "class": "O13"
+          },
+          {
+            "ocr": "-> פאליזים ב' חד קמיץ … <-",
+            "image": "Masoretic note at the foot of the page",
+            "problem": "arrow markup in the transcription",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 27,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "באורחן דתקן קדמוהי היפמא ד / דאזלו אלהו ואליש יעבא ככלותון / קמו מיתא",
+            "image": "…היכמא דאזלו אליהו ואלישע נביא בצלותהון קמו מיתיא",
+            "problem": "Elijah and Elisha the prophets 'by their prayers' are misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "קלת אצצע פי וגלה אצבעו",
+            "image": "Judeo-Arabic 'qult asʿad fi al-nakhla' (I said I will climb the palm)",
+            "problem": "Judeo-Arabic read as Aramaic 'fingers'",
+            "severity": "moderate",
+            "class": "O10"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "דאזלו אלהו ואליש יעבא ככלותון קמו מיתא",
+            "english": "just as they went, the Lord and Elisha, as they were finished, the dead arose",
+            "problem": "Elijah turned into 'the Lord'; 'by their prayers' lost",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "קלת אצצע פי וגלה אצבעו",
+            "english": "Your fingers, the fingers of the palm, reach out to the heights",
+            "problem": "invented sense; the line is the Arabic version of 7:9 'I said, I will go up into the palm tree'",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A real manuscript of the Targum to the Song of Songs, with mostly sound Aramaic transcription and a usable English. The caveats are column order on some pages and Judeo-Arabic lines garbled as Aramaic. The catalogue also wrongly dates the manuscript as a 1500 edition."
+  },
+  {
+    "book_id": "69d5ac8c4dc55b8478dddcab",
+    "slot": 19,
+    "title": "Shulhan Arukh, Hoshen ha-Mishpat",
+    "tradition": "hebrew",
+    "shelf_fit": "fits",
+    "shelf_note": "Karo's Shulhan Arukh, Hoshen Mishpat, with a commentary ('פירוש') in the outer column; it fits a Hebrew shelf.",
+    "rights_flag": null,
+    "structure_note": "Date 1565 is doubtful: these pages carry a printed marginal commentary and handwritten Arabic page numbers (33, 62), which look like a later edition rather than the Venice 1565 first edition (low confidence). The 33 backsteps are probably misread Hebrew numerals plus the handwritten Arabic numbers, not a scan splice. 30 pages lack OCR.",
+    "on_sight_defect": true,
+    "fit_to_show": "do_not_show",
+    "showcase_pages": [],
+    "reader_summary": "This is Hoshen Mishpat with a marginal commentary, and the siman headings are the right text. The transcription of the main text is full of letter confusions (ס for ש, ח for א, 'נלחמות' for נאמנות), and the commentary in Rashi type is mostly lost. The English reconstructs the sense in places but twice reverses the ruling: 98:1 says one does not presume a waiver, and 341:1 says the lender may reclaim an unspecified loan at will. Siman numbers are also shifted (97–98 is rendered as 107–108). A halakhist could not rely on it.",
+    "pages": [
+      {
+        "page_number": 83,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "נלחמות",
+            "image": "נאמנות",
+            "problem": "the key legal term misread throughout the page (systematic ח/א, ס/ש confusion)",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "פג (inserted between sections)",
+            "image": "no פג on the page (signature לג א and pencil 33 at the foot)",
+            "problem": "a page number is invented mid-text",
+            "severity": "minor",
+            "class": "O11"
+          },
+          {
+            "ocr": "(ט) דין יש גב' דמיירי בפ' מפו' …",
+            "image": "commentary column in Rashi type",
+            "problem": "the commentary is largely garbled",
+            "severity": "moderate",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "וזומריס סלח. כתביהו",
+            "english": "and the lender claims that he loaned the manuscript to him",
+            "problem": "invented clause",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "יח / יט numbering",
+            "english": "18 … 19 … 18 If the lender died",
+            "problem": "section numbers duplicated and out of order",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 121,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "כססליק מוניח שטר חוב מקיים חומריס (א) ללוה סלס … מין חומריס מחל לו",
+            "image": "כשהמלוה מוציא שטר חוב מקויים אומרים ללוה שלם … אין אומרים מחל לו",
+            "problem": "אין read as מין and אומרים as חומריס, so the negation is lost",
+            "severity": "serious",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "אין אומרים מחל לו כיון ששהה כל כך שנים ולא תבעו (as printed)",
+            "english": "Some say (1) to the borrower, \"Do not pay for many years,\" … Some say, \"He waived it,\" since he spent so many years and did not claim it",
+            "problem": "ruling reversed: the code says we tell the borrower to pay and do NOT presume a waiver after years of silence",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "חושן המשפט הלכות גביית מלוה צז צח",
+            "english": "Laws of Collecting a Debt 107–108",
+            "problem": "Hebrew numerals converted wrongly (צז צח = 97–98); 'Chapter 108/109/100' in the commentary are wrong too",
+            "severity": "serious",
+            "class": "other:hebrew-numeral-misconverted"
+          },
+          {
+            "source": "ס\"ת (commentary abbreviations)",
+            "english": "Sefer Torah … Torah scroll … Chiddushei HaRashba",
+            "problem": "abbreviations expanded into invented sources",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 235,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "# חושן המשפט הלכות מקח וממכר רכב רכד רכה … (header and margin block given twice)",
+            "image": "one header 'רכב רכג רכד רכה'",
+            "problem": "header and commentary block duplicated; רכג dropped from the header",
+            "severity": "minor",
+            "class": "O4"
+          },
+          {
+            "ocr": "שתי עברים או שתי שרות",
+            "image": "שתי עבדים או שתי שדות",
+            "problem": "ד read as ר (the English corrects it)",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ד הרי שטיען … לח מכרתי לח מכרתי",
+            "english": "\"I did not sell, I did not sell, and I did not give me the money\" … \"I was not, I was not the seller\"",
+            "problem": "§4 (222:4) is translated from garbled OCR into an incoherent ruling",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 319,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "transcription starts at the header and then siman שמא",
+            "image": "about five lines at the top (end of siman 340) come before the siman שמא heading",
+            "problem": "top block silently omitted",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "הרי השואל (מונחו) בכל עת שירצה",
+            "image": "הרי המשאיל (חוזר) בכל עת שירצה",
+            "problem": "lender read as borrower",
+            "severity": "serious",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "השואל מחברו כלי או בהמה סתם הרי השואל (מונחו) בכל עת שירצה",
+            "english": "One who borrows an object or an animal from his fellow indefinitely, the borrower may use it whenever he wishes.",
+            "problem": "ruling reversed: for an unspecified loan the LENDER may take it back whenever he wishes",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "שמא",
+            "english": "Section 340",
+            "problem": "the siman is 341",
+            "severity": "moderate",
+            "class": "other:hebrew-numeral-misconverted"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The right code and the right simanim, but the OCR's letter confusions carry into an English that reverses two rulings and shifts siman numbers. It is not fit for a reader of halakha."
+  },
+  {
+    "book_id": "69c736b46a0f3d112faf76b0",
+    "slot": 20,
+    "title": "Jesuitici templi stupenda",
+    "tradition": "hebrew",
+    "shelf_fit": "doubtful",
+    "shelf_note": "The scans are Hayyim Vital's Etz Hayyim (Lurianic Kabbalah): the running heads read 'היכל א … שער מטי ולא מטי', there is a 'הקדמת עץ החיים' and the colophon says 'תם ונשלם ספר הקדוש עץ חיים'. The content belongs on a Kabbalah shelf, but the record calls it 'Jesuitici templi stupenda' by Joachim Beringer (1610), a Latin anti-Jesuit tract. The catalogue identity is wrong.",
+    "rights_flag": null,
+    "structure_note": "Catalogue identity wrong (I7: title, author and date belong to another work). Three of four sampled records have negative page numbers (-64, -19, -4) and are unsplit two-page openings, beside split positive pages (206). page_records 311 against pages_count 208 suggests openings and split leaves are mixed, as in slot 17. Only 20 of 208 counted pages are translated.",
+    "on_sight_defect": true,
+    "fit_to_show": "do_not_show",
+    "showcase_pages": [],
+    "reader_summary": "The scans are Etz Hayyim, catalogued under the wrong title as a Latin Jesuit pamphlet. No sampled page has a real transcription. Two are invented text: modern Hebrew prose about Temple gates, and a generic sermon on 'mati ve-lo mati'. The other two are letter-substituted garbage, and one of those repeats a line ten times. The English translates all of it as if it were the book.",
+    "pages": [
+      {
+        "page_number": -64,
+        "right_page": "yes",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "פונקציונליות של המבנה והמקדש, כפי שמתואר בטקסטים העתיקים. הדיון מתמקד במידות, בחלוקת השערים",
+            "image": "Etz Hayyim, היכל ה היכל זו\"א שער טו שער הארת המוחין פרק א ב, dense Lurianic text",
+            "problem": "the transcription is invented modern Hebrew summary prose, not the page",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "invented summary",
+            "english": "The functionality of the structure and the Temple … the order of service and the various roles of the priests and the Levites at the Gate of the Intellects",
+            "problem": "a page on the illumination of the mohin is presented as Temple architecture and priestly service",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "other": [
+          {
+            "note": "unsplit two-page opening as one record",
+            "severity": "moderate",
+            "class": "I3"
+          },
+          {
+            "note": "invented heading 'Palace of the Lord / The Second Palace: Gate 44'",
+            "severity": "moderate",
+            "class": "T16"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": -19,
+        "right_page": "yes",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "והנה דע כי הכלל הזה הוא כלל גדול ועיקר גדול … ואתם הדבקים בה' … וירא אליו ה' באלוני ממרא",
+            "image": "היכל א היכל א\"ק שער ה שער מטי ולא מטי פרק א, beginning 'להודיע…'; no such verse chain is visible",
+            "problem": "fluent invented Kabbalistic sermon in place of the page (only the running head is real)",
+            "severity": "serious",
+            "class": "O3"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "invented text",
+            "english": "This is the secret of the verse: 'But you who held fast to the Lord…' … Moses … the oaks of Mamre",
+            "problem": "faithful to the invented OCR, but not to the page",
+            "severity": "serious",
+            "class": "O3"
+          }
+        ],
+        "other": [
+          {
+            "note": "unsplit two-page opening as one record",
+            "severity": "moderate",
+            "class": "I3"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": -4,
+        "right_page": "yes",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "שחיזקנו וילדה מחלקות הפסקות למספר לא נעדרת … סמן דלס תינת' מנכסל",
+            "image": "Etz Hayyim introductions (הקדמה; 'הקדמת עץ החיים … חיים ויטאל' on the right page)",
+            "problem": "the body is letter-substituted nonsense; the left page is reduced to a single heading",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "garbled OCR",
+            "english": "I have seen the light of the eyes regarding the coming of the Messiah and the Temple … fifty-five in number",
+            "problem": "invented content in Vital's/Poppers' introduction",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "unsplit two-page opening as one record",
+            "severity": "moderate",
+            "class": "I3"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 206,
+        "right_page": "yes",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "הפסק ליונק כי לול חמה פניו פנים הסור כור … (same line ×10)",
+            "image": "היכל אבי\"ע שער י שער קיצור אבי\"ע פרק י, two columns, then the colophon and printers' lines",
+            "problem": "a repetition loop in place of the columns",
+            "severity": "serious",
+            "class": "O4"
+          },
+          {
+            "ocr": "(printers' lines absent)",
+            "image": "three ornamented lines naming the printers (…יעקב … אפרים; … אברהם … דוב בער; … צבי הירש … יוסף)",
+            "problem": "colophon printers' names omitted",
+            "severity": "moderate",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "repeated OCR line",
+            "english": "The interruption for the suckling, for if the sun were not its face, the face of the turning furnace … (repeated)",
+            "problem": "the loop is translated and repeated in the English",
+            "severity": "serious",
+            "class": "O4"
+          },
+          {
+            "source": "היכל אביט",
+            "english": "Palace of Atzilut <note>original: \"Avit\" appears to be a transcription error for \"Atzilut\"</note>",
+            "problem": "invented editorial note; the head reads אבי\"ע (the four worlds), not Atzilut",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Etz Hayyim catalogued as a Latin Jesuit tract. Every sampled page is fabricated, garbled or looped, and the English translates the invention. The record identity, the openings and the text all need to be redone."
+  }
+]

@@ -1,0 +1,44 @@
+{
+  "source": "CAMENA thesaurus/witzel1",
+  "edition": "Historiarum De Divis Tam Veteris Quam Novi Testamenti Tempore Celeberrimis, Omni Mythologia Libere Resecta, Liber Unus. Accessit Tuba Gratiae, per Christum factae, Et P�dagogiae Christianae initium, una cum nonnullis alijs ; Cum Indice locupleti�imo. — Basel: Jacobus Parcus, Joannes Oporinus, 1557.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-unit-by-eye",
+    "text_match_pages": null,
+    "pb_aligned_pages": null
+  },
+  "origin": "library",
+  "book_id": "69b64f1818b87551bfc907fb",
+  "page_number": 125,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "unit": "transcription-page",
+    "page_break_index": 120,
+    "probe": "none (located by eye)"
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-period-refs-5126.mjs",
+  "built_at": "2026-10-04T16:05:10.908Z",
+  "text_location": "repo",
+  "text_sha256": "18fd8eb85e6df1a4e4f3a0c5bfcf05c872f763a7941b54947caa63cea45fb1e1",
+  "unit": {
+    "chars": 1838
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts '& nunc etiam Longobardos' (first line under running head DE SANCTIS, printed page 88), ends 'ultra omnem' (print last line 'ultra om-' with catchword/continuation 'nem' beneath, which transcription completes). Boundaries match within a line; all text present. Transcription has OCR-like errors (Hungaris, Maliometica, po u[?]o, stray spaces) and keeps some tilde-abbreviations unexpanded (copluribus, etia). Same pagination content: strong evidence for same edition (Basel: Parcus/Oporinus 1557). Offset +5 (page 133 = pb 128). Single page.",
+    "leaf_language": "la",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "stratum": "latin-period-5126"
+}

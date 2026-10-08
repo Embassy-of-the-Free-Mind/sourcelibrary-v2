@@ -76,6 +76,27 @@ interface ImageArm {
   verdict?: 'confirmed' | 'denied' | 'exploratory' | null;
 }
 
+// A judged translation-fidelity cell (#5695 served English vs published translations; #5700 A5 re-read lift).
+// Its measure is a judge's 1–5 rating against a human reference, never CER, so it has its own table (#5828).
+interface FidelityCell {
+  cell_id: string;
+  measure: string;
+  measure_note: string;
+  kind: 'served' | 'reocr_lift';
+  run_id: string;
+  issue: number;
+  language: string;
+  n: number;
+  grade: string;
+  fidelity_mean?: number | null;
+  fidelity_ci95?: Interval;
+  flash_minus_lite?: { n: number; delta: number; ci95: Interval; better: number; worse: number } | null;
+  served_ocr_engine?: string;
+  fidelity_served_ocr?: number | null;
+  fidelity_reread?: number | null;
+  reread_lift?: { mean: number; ci95: Interval; better: number; same: number; worse: number } | null;
+}
+
 const DATA = evidence as unknown as {
   generated_from: { file: string }[];
   production_engine: string;
@@ -84,6 +105,7 @@ const DATA = evidence as unknown as {
   sufficiency: Sufficiency[];
   cells: Cell[];
   image_arms?: ImageArm[];
+  translation_fidelity?: FidelityCell[];
 };
 
 // The Tibetan table carries three metrics; the page shows the one an omission lowers (matched syllables).
@@ -115,7 +137,7 @@ const C = {
   dim: { color: '#8b949e' } as const,
 };
 
-const f3 = (x: number | null | undefined) => (x == null ? '—' : x.toFixed(3));
+const f3 = (x: number | null | undefined) => (x == null ? '–' : x.toFixed(3));
 
 function GradeChip({ grade }: { grade: Grade }) {
   const g = GRADE_STYLE[grade];
@@ -199,7 +221,7 @@ export default async function OcrEvidencePage({ searchParams }: { searchParams: 
                 <td style={{ ...C.td, ...C.num }}>{s.books}</td>
                 <td style={{ ...C.td, ...C.num, color: s.referenced ? '#e6edf3' : '#f85149' }}>{s.referenced}</td>
                 <td style={C.td}><GradeChip grade={s.grade} /></td>
-                <td style={{ ...C.td, ...C.num }}>{s.referenced_books_needed || '—'}</td>
+                <td style={{ ...C.td, ...C.num }}>{s.referenced_books_needed || '–'}</td>
               </tr>
             ))}
           </tbody>
@@ -246,25 +268,25 @@ export default async function OcrEvidencePage({ searchParams }: { searchParams: 
                         </td>
                         <td style={{ ...C.td, ...C.num }}>{c.cer_vs_reference?.n ?? 0}</td>
                         <td style={{ ...C.td, ...C.num }}>
-                          {c.cer_vs_reference ? f3(c.cer_vs_reference.median) : <span style={C.dim}>{c.cer_vs_proxy ? `proxy ${f3(c.cer_vs_proxy.median)}` : '—'}</span>}
+                          {c.cer_vs_reference ? f3(c.cer_vs_reference.median) : <span style={C.dim}>{c.cer_vs_proxy ? `proxy ${f3(c.cer_vs_proxy.median)}` : '–'}</span>}
                         </td>
                         <td style={{ ...C.td, ...C.num }}>
-                          {c.cer_vs_reference_answered ? f3(c.cer_vs_reference_answered.median) : '—'}
+                          {c.cer_vs_reference_answered ? f3(c.cer_vs_reference_answered.median) : '–'}
                         </td>
                         <td style={{ ...C.td, ...C.num, color: c.refused?.k ? '#d29922' : '#e6edf3' }} title={c.refused?.inferred ? `${c.refused.inferred} inferred from an empty output` : undefined}>
-                          {c.refused ? `${c.refused.k}/${c.refused.n}${c.refused.inferred ? '*' : ''}` : '—'}
+                          {c.refused ? `${c.refused.k}/${c.refused.n}${c.refused.inferred ? '*' : ''}` : '–'}
                         </td>
                         <td style={C.td}><IntervalBar cell={c} max={max} /></td>
-                        <td style={{ ...C.td, ...C.num }}>{c.coverage ? `${c.coverage.aligned}/${c.coverage.of}` : '—'}</td>
+                        <td style={{ ...C.td, ...C.num }}>{c.coverage ? `${c.coverage.aligned}/${c.coverage.of}` : '–'}</td>
                         <td style={C.td}>
                           {isProduction ? <span style={C.dim}>baseline</span> : p && p.n ? (
                             <>
                               <span style={{ fontVariantNumeric: 'tabular-nums' }}>{p.wins} / {p.losses} / {p.ties}</span>{' '}
-                              <span style={C.dim}>p {p.p_sign == null ? '—' : p.p_sign < 0.001 ? '<0.001' : p.p_sign} · {p.untied} untied</span>
+                              <span style={C.dim}>p {p.p_sign == null ? '–' : p.p_sign < 0.001 ? '<0.001' : p.p_sign} · {p.untied} untied</span>
                             </>
                           ) : <span style={C.dim}>no referenced pairs</span>}
                         </td>
-                        <td style={{ ...C.td, ...C.num, color: c.catastrophic?.k ? '#f85149' : '#e6edf3' }}>{c.catastrophic ? `${c.catastrophic.k}/${c.catastrophic.n}` : '—'}</td>
+                        <td style={{ ...C.td, ...C.num, color: c.catastrophic?.k ? '#f85149' : '#e6edf3' }}>{c.catastrophic ? `${c.catastrophic.k}/${c.catastrophic.n}` : '–'}</td>
                         <td style={{ ...C.td, ...C.num, color: c.loop.k ? '#f85149' : '#e6edf3' }}>{c.loop.k}/{c.loop.n}</td>
                         <td style={C.td}><GradeChip grade={c.grade} /></td>
                       </tr>
@@ -310,18 +332,68 @@ export default async function OcrEvidencePage({ searchParams }: { searchParams: 
                     <td style={{ ...C.td, ...C.num }}>{a.n}</td>
                     <td style={{ ...C.td, fontVariantNumeric: 'tabular-nums' }}>{a.wins} / {a.losses} / {a.ties}</td>
                     <td style={{ ...C.td, ...C.num, color: !a.counts ? '#e6edf3' : (a.median_gain ?? 0) > 0 ? '#3fb950' : '#f85149' }}>
-                      {a.median_gain == null ? '—' : a.median_gain > 0 ? `+${a.median_gain}` : a.median_gain}
+                      {a.median_gain == null ? '–' : a.median_gain > 0 ? `+${a.median_gain}` : a.median_gain}
                     </td>
-                    <td style={{ ...C.td, ...C.dim }}>{a.ci95 ? `${a.ci95[0]} to ${a.ci95[1]}` : '—'}</td>
-                    <td style={{ ...C.td, ...C.num }}>{a.p_sign == null ? '—' : a.p_sign < 0.001 ? '<0.001' : a.p_sign}</td>
+                    <td style={{ ...C.td, ...C.dim }}>{a.ci95 ? `${a.ci95[0]} to ${a.ci95[1]}` : '–'}</td>
+                    <td style={{ ...C.td, ...C.num }}>{a.p_sign == null ? '–' : a.p_sign < 0.001 ? '<0.001' : a.p_sign}</td>
                     <td style={C.td}>{a.counts ? ((a.median_gain ?? 0) > 0 ? 'helps' : 'hurts') : <span style={C.dim}>no</span>}</td>
                     <td style={C.td}>
-                      {a.verdict == null ? <span style={C.dim}>—</span> : a.verdict === 'exploratory' ? <span style={C.dim}>no prediction</span> : (
+                      {a.verdict == null ? <span style={C.dim}>–</span> : a.verdict === 'exploratory' ? <span style={C.dim}>no prediction</span> : (
                         <span style={{ color: a.verdict === 'confirmed' ? '#3fb950' : '#f85149' }}>{a.prediction} → {a.verdict}</span>
                       )}
                     </td>
                   </tr>
                 ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+
+      {(DATA.translation_fidelity?.length ?? 0) > 0 && (
+        <section id="translation-fidelity" style={{ marginBottom: 28 }}>
+          <h2 style={{ fontSize: 15, fontWeight: 600, margin: '0 0 4px' }}>Translation fidelity, judged against published translations (#5695, #5700)</h2>
+          <p style={{ ...C.dim, fontSize: 13, margin: '0 0 10px', maxWidth: 860 }}>
+            Not accuracy and not CER: two blind judges rate the served English from 1 to 5 against a published human translation, one
+            page per book. &ldquo;Flash − Lite&rdquo; is the same page translated by each model. &ldquo;Re-read&rdquo; is the same
+            page read again by Flash and translated again, split by the engine that made the served transcription.
+          </p>
+          <div style={{ ...C.card, overflowX: 'auto' }}>
+            <table style={{ borderCollapse: 'collapse', width: '100%', minWidth: 900 }}>
+              <thead>
+                <tr>
+                  <th style={C.th}>Language</th>
+                  <th style={C.th}>Cell</th>
+                  <th style={{ ...C.th, ...C.num }}>Books</th>
+                  <th style={{ ...C.th, ...C.num }}>Fidelity</th>
+                  <th style={{ ...C.th, ...C.num }}>Difference</th>
+                  <th style={C.th}>95 % interval</th>
+                  <th style={C.th}>Better / worse</th>
+                  <th style={C.th}>Grade</th>
+                </tr>
+              </thead>
+              <tbody>
+                {DATA.translation_fidelity!.map(c => {
+                  const d = c.kind === 'served' ? c.flash_minus_lite : c.reread_lift;
+                  const delta = c.kind === 'served' ? c.flash_minus_lite?.delta : c.reread_lift?.mean;
+                  return (
+                    <tr key={c.cell_id} id={c.cell_id}>
+                      <td style={C.td}>{c.language}</td>
+                      <td style={C.td}>
+                        {c.kind === 'served' ? 'served; Flash − Lite' : `re-read by Flash; served OCR by ${c.served_ocr_engine}`}{' '}
+                        <span style={C.dim}>· #{c.issue}</span>
+                      </td>
+                      <td style={{ ...C.td, ...C.num }}>{c.n}</td>
+                      <td style={{ ...C.td, ...C.num }}>
+                        {c.kind === 'served' ? (c.fidelity_mean ?? '–') : `${c.fidelity_served_ocr ?? '–'} → ${c.fidelity_reread ?? '–'}`}
+                      </td>
+                      <td style={{ ...C.td, ...C.num }}>{delta == null ? '–' : delta > 0 ? `+${delta}` : delta}</td>
+                      <td style={{ ...C.td, ...C.dim }}>{d?.ci95 ? `${d.ci95[0]} to ${d.ci95[1]}` : '–'}</td>
+                      <td style={{ ...C.td, fontVariantNumeric: 'tabular-nums' }}>{d ? `${d.better} / ${d.worse}` : '–'}</td>
+                      <td style={{ ...C.td, ...C.dim }}>{c.grade}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

@@ -23,6 +23,7 @@ const adminLinks: NavItem[] = [
   { href: '/admin/collections', label: 'Collections' },
   { href: '/admin/collection-proposals', label: 'Proposals' },
   { href: '/admin/duplicates', label: 'Duplicates' },
+  { href: '/admin/holdings', label: 'Holdings check' },
   { href: '/admin/catalog-coverage', label: 'Catalogue' },
   { href: '/admin/r2-coverage', label: 'R2 Storage' },
   {
