@@ -108,3 +108,25 @@ Their output goes through the same normalisation that run applied before scoring
 ## What this decides
 
 Nothing in production. A new arm that beats lite on a chart beyond the floor, at a cost it can carry, becomes a proposal on its own issue (eval-design §10), quoting this run's panel, n and date.
+
+## Amendment 1 (2026-10-08, job `cli-queue-6293`): the one Gemini arm runs through the CLI
+
+Committed before any CLI read of these pages exists. Everything above holds except what this section changes.
+
+**Why.** On 2026-10-08 Derek ruled out paid Gemini calls for this work: every Gemini model except `gemini-3.1-flash-lite` runs through the subscription CLI (`agy -p`), with no API fallback. The two Batch jobs above were cancelled with every request still pending (unbilled). `agy` is now installed and signed in on the Hetzner box.
+
+**Arm.** One model only: `gemini-3.8-flash-low` through `agy -p` (Antigravity CLI 1.3.1), on the same 908 pages (`pages.json` → `charts`), engine id `gemini-3.8-flash+antigravity-cli`, label "Gemini 3.8 Flash, CLI". 3.5 Flash-Lite, 3.6 and 3.7 Flash are **not run** in this job; their cost in calls and hours is reported so Derek can choose.
+
+**Request: what is the same.** The same sealed JPEG bytes; the same prompt per stratum (production OCR v19.1, `content_hash 9d8f959e053491362b2c4acec1e20c9a`, on `latin-period-5126`; the generic transcription prompt elsewhere), byte for byte.
+
+**Request: what differs (the route).**
+- The image is attached as a file the CLI reads (`<prompt> @./<page>.jpg`, the #6295 export's command shape), not sent inline. How the CLI encodes it is not visible.
+- The CLI exposes no temperature, output cap or thinking budget. It runs the model at its "low" thinking level; the API arms were preregistered at temperature 0, 16,000 output tokens, thinking budget 0.
+- Calls run one at a time, up to 4 attempts in place when the CLI returns empty output with no error (it does so intermittently on a long prompt + image). Each attempt is logged to `/var/log/sourcelibrary/agy-calls.jsonl`.
+- Gemini's safety filter can cut a read off part-way ("This request was blocked by Gemini's filters"): the message is stripped, the text before it is kept and scored as returned, and the page is counted. A read the filter left empty is a refusal under #5581 (meter `finishReason: SAFETY`).
+
+**Transport check.** Not run: the CLI-vs-API equivalence check would need a paid API read of gemini-3.8-flash, which the rule forbids. The point is labelled as a CLI run on the chart and in the experiment file.
+
+**Cost on the x axis.** $0 is billed. The CLI reports no tokens, so the point is placed at gemini-3.8-flash's API list price by the formula above with `r_in = 1` (the same request as lite's, prompt and image) and `r_out` = the arm's output characters over lite's stored output characters on the same pages; thinking is priced at 0, as the preregistered API arm would have run it. The chart's cost entry says "API price for comparison; $0 billed on the subscription".
+
+**Scoring.** Unchanged: `benchmark-score.mjs` over the bench → `results/ocr-pareto-6293/scored`, `score-syriac-retest.py` → `results/ocr-pareto-6293/syriac-gt-score.json`, and `build-ocr-pareto.mjs` takes only `gemini-3.8-flash+antigravity-cli` from them. The paired comparisons with lite and 3 Flash are reported as preregistered.
