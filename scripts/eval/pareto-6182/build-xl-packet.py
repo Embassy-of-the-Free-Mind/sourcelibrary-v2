@@ -8,6 +8,11 @@
 build-xl-packet.py — $0. Blinded reference-judge packet for #6182, every language but Tibetan.
 
   python3 scripts/eval/pareto-6182/build-xl-packet.py [--parts 64]
+  python3 scripts/eval/pareto-6182/build-xl-packet.py --cli [--c38 /root/cli38-6182/C38-full.jsonl] [--parts 24]
+      #6182's Antigravity-CLI arm (C38 = gemini-3.8-flash-low via `agy -p`) beside G38 and the page's production
+      engine (L31 or FP) only; same controls and seeds' pattern; every item to both judges. Writes
+      /root/cli38-6182/xljudge/ and scripts/eval/results/cli-arm-6182/xljudge/key.json. Stops if any of the 365
+      pages has no C38 text unless --allow-holes (a dry build for checking). Runbook: RUNBOOK-cli38-xl.md.
 
 Items: 365 pages × {L31, AA, FP, L35, G35, G36, G37, G38, PRO} (+ O, the track's own Opus arm, where it
 exists), labels shuffled per item. Controls per judge: 8 PLANT (the page's production English beside a
@@ -19,16 +24,23 @@ import json, os, random, subprocess, sys, glob
 
 W = "/root/pareto-6182"
 opt = lambda k, d: sys.argv[sys.argv.index(f"--{k}") + 1] if f"--{k}" in sys.argv else d
-JW, OUT = f"{W}/xljudge", "scripts/eval/results/pareto-6182/xljudge"
-PARTS = int(opt("parts", "64"))
+CLI = "--cli" in sys.argv
+JW, OUT = ("/root/cli38-6182/xljudge", "scripts/eval/results/cli-arm-6182/xljudge") if CLI else (f"{W}/xljudge", "scripts/eval/results/pareto-6182/xljudge")
+JW, OUT = opt("out", JW), opt("results", OUT)
+PARTS = int(opt("parts", "24" if CLI else "64"))
 os.makedirs(JW, exist_ok=True); os.makedirs(OUT, exist_ok=True)
-rng = random.Random(6182 + 1000)
+rng = random.Random(6182 + 1000 + (38 if CLI else 0))
 read = lambda p: [json.loads(l) for l in open(p) if l.strip()]
 GEM = ["L31", "AA", "FP", "L35", "G35", "G36", "G37", "G38", "PRO"]
 recs = {r["id"]: r for r in read(f"{W}/xl/records.jsonl") if r.get("reference_text")}
 units = {u["uid"]: u for u in read(f"{W}/units.jsonl") if u["set"] == "xl"}
 arm = {a: {r["uid"]: r["text"] for r in read(f"{W}/arms/{a}.jsonl") if r["uid"] in units and (r.get("text") or "").strip()} for a in GEM}
 PROD = {"gemini-3.1-flash-lite": "L31", "gemini-3-flash-preview": "FP"}
+if CLI:
+    arm["C38"] = {r["uid"]: r["text"] for r in read(opt("c38", "/root/cli38-6182/C38-full.jsonl")) if r["uid"] in units and (r.get("text") or "").strip()}
+    no_c38 = [u for u in units if u not in arm["C38"]]
+    if no_c38 and "--allow-holes" not in sys.argv: sys.exit(f"C38 has no text for {len(no_c38)} of {len(units)} xl pages")
+    units = {u: x for u, x in units.items() if u in arm["C38"]}
 # The track's own Opus arm (a context request, run on the subscription): judged beside, never a lane.
 opus = {}
 for uid, r in recs.items():
@@ -55,15 +67,16 @@ def item(uid, cands):
 
 items, refused = [], {}
 for uid in units:
-    have = {a: arm[a][uid] for a in GEM if uid in arm[a]}
-    for a in GEM:
+    mine = ["C38", "G38", PROD[units[uid]["prod_model"]]] if CLI else GEM
+    have = {a: arm[a][uid] for a in mine if uid in arm[a]}
+    for a in mine:
         if a not in have: refused.setdefault(a, []).append(uid)
-    if uid in opus: have["O"] = opus[uid]
+    if uid in opus and not CLI: have["O"] = opus[uid]
     it, lab = item(uid, have)
     items.append((it, {"kind": "ARMS", "page_id": uid, "lang": recs[uid]["lang"], "track": recs[uid]["track"], "prod": PROD[units[uid]["prod_model"]], "labels": lab}))
 ids = sorted(units); ctrl = rng.sample(ids, 20)
 prod_text = lambda uid: arm[PROD[units[uid]["prod_model"]]].get(uid)
-plant_js = "import { makePlanters } from './scripts/eval/tengyur-characterize/plants.mjs'; import { rng } from './scripts/eval/tengyur-characterize/common.mjs'; const p = makePlanters(rng(6182 + 1000)); const t = JSON.parse(process.argv[1]); console.log(JSON.stringify(t.map((x) => x ? p.plantReversal(x) : null)));"
+plant_js = "import { makePlanters } from './scripts/eval/tengyur-characterize/plants.mjs'; import { rng } from './scripts/eval/tengyur-characterize/common.mjs'; const p = makePlanters(rng(" + str(6182 + 1000 + (38 if CLI else 0)) + ")); const t = JSON.parse(process.argv[1]); console.log(JSON.stringify(t.map((x) => x ? p.plantReversal(x) : null)));"
 planted = json.loads(subprocess.check_output(["node", "--input-type=module", "-e", plant_js, json.dumps([prod_text(u) for u in ctrl[:16]])]))
 n_plant = 0
 for uid, pl in zip(ctrl[:16], planted):
@@ -83,7 +96,7 @@ for i, (it, k) in enumerate(items):
 json.dump({"items": key, "refused_after_retry": refused}, open(f"{OUT}/key.json", "w"), indent=1, ensure_ascii=False)
 for f in glob.glob(f"{JW}/in-*.jsonl"): os.remove(f)
 for j in ("J1", "J2"):
-    order = items[:] if j == "J1" else random.Random(6182 + 1001).sample(items, len(items))
+    order = items[:] if j == "J1" else random.Random(6182 + 1001 + (38 if CLI else 0)).sample(items, len(items))
     for p in range(PARTS):
         with open(f"{JW}/in-{j}-{p + 1:02d}.jsonl", "w") as f:
             for it, _ in order[p::PARTS]:
