@@ -34,6 +34,7 @@ const MARKDOWN = args.includes('--markdown');
 
 const keys = geminiKeys();
 if (!keys.length || !process.env.MONGODB_URI) { console.error('GEMINI_API_KEY* and MONGODB_URI required — could not measure'); process.exit(2); }
+// usage-ok: batches.get and files.get only — metadata reads, no generation, nothing billed.
 const clients = keys.map((apiKey) => new GoogleGenAI({ apiKey }));
 
 /** Is the result file still downloadable-in-principle? files.get is metadata only (free). */
