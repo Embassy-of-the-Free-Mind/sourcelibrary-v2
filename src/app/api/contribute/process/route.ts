@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
-import { DEFAULT_MODEL, extractPageType, extractColumns } from '@/lib/types';
+import { DEFAULT_MODEL, liftOcrTags } from '@/lib/types';
 import type { PromptReference } from '@/lib/types';
 import { extractTranslationMetadata } from '@/lib/translation-metadata';
 import { loopVerdict } from '@/lib/ocr-loop-guard';
@@ -18,7 +18,9 @@ import type { GenerationConfig } from '@google/generative-ai';
 // this spends a CONTRIBUTOR's money — reasoning tokens bill at the output rate (#4581).
 // thinkingConfig is not in @google/generative-ai 0.24.x types; it passes through verbatim.
 const THINKING_OFF = { thinkingConfig: { thinkingBudget: 0 } } as unknown as GenerationConfig;
-import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
+import { CLEAR_STALE_UNSET, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON } from '@/lib/translate-write';
+import { guardTranslationText } from '@/lib/translation-write-guard';
+import { strayScriptVerdict, STRAY_SCRIPT_REASON } from '@/lib/stray-script';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300; // 5 minutes max
@@ -228,8 +230,6 @@ export async function POST(request: NextRequest) {
               }
 
               // Update page with OCR result
-              const pageType = extractPageType(result.text);
-              const columns = extractColumns(result.text);
               await db.collection('pages').updateOne(
                 { _id: page._id },
                 {
@@ -248,8 +248,7 @@ export async function POST(request: NextRequest) {
                     'ocr.updated_at': new Date(),
                     'ocr.source': 'contributor',
                     'ocr.contributed_by': contributorName || 'Anonymous',
-                    ...(pageType && { page_type: pageType }),
-                    ...(columns && { columns }),
+                    ...liftOcrTags(result.text), // page_type, columns, script_type — whichever parsed
                   },
                 }
               );
@@ -292,32 +291,45 @@ export async function POST(request: NextRequest) {
                 previousText
               );
 
-              // Snapshot manual edits before overwriting
-              if (page.id) await createRevision(page.id, 'translation', `contribute-${bookId}`);
+              // The page's text inside its continuity <meta> is text no reader sees (#5376).
+              // Write nothing; the page is stamped with the reason and the text kept. The call
+              // is still logged and costed below — it was made either way.
+              // #5734: the Korean 그-for-"that" is repaired; any other script in the English that is in
+              // neither the source nor the book's language is refused the same way.
+              const stray = strayScriptVerdict(result.text, { ocr: ocrText, language: book.original_language || book.language });
+              result.text = guardTranslationText(stray.text); // #5902: term definitions → <note>
+              const refusedReason = hidesPageInMeta(result.text) ? HIDDEN_META_REASON : stray.refuse ? STRAY_SCRIPT_REASON : null;
+              const refused = !!refusedReason;
+              if (refusedReason) {
+                if (page.id) await recordRefusedTranslation(db, { id: page.id, book_id: bookId }, result.text, refusedReason, { jobId: `contribute-${bookId}`, model: DEFAULT_MODEL });
+              } else {
+                // Snapshot manual edits before overwriting
+                if (page.id) await createRevision(page.id, 'translation', `contribute-${bookId}`);
 
-              // Update page with translation result + harvest metadata tags
-              const translationMeta = extractTranslationMetadata(result.text);
-              await db.collection('pages').updateOne(
-                { _id: page._id },
-                {
-                  $set: {
-                    translation: {
-                      data: result.text,
-                      content_hash: contentHash(result.text),
-                      model: DEFAULT_MODEL,
-                      prompt_version: String(result.promptRef.version),
-                      prompt_id: result.promptRef.id,
-                      prompt_hash: result.promptRef.content_hash,
-                      prompt_name: result.promptRef.name,
-                      processed_at: new Date(),
-                      source: 'contributor',
-                      contributed_by: contributorName || 'Anonymous',
+                // Update page with translation result + harvest metadata tags
+                const translationMeta = extractTranslationMetadata(result.text);
+                await db.collection('pages').updateOne(
+                  { _id: page._id },
+                  {
+                    $set: {
+                      translation: {
+                        data: result.text,
+                        content_hash: contentHash(result.text),
+                        model: DEFAULT_MODEL,
+                        prompt_version: String(result.promptRef.version),
+                        prompt_id: result.promptRef.id,
+                        prompt_hash: result.promptRef.content_hash,
+                        prompt_name: result.promptRef.name,
+                        processed_at: new Date(),
+                        source: 'contributor',
+                        contributed_by: contributorName || 'Anonymous',
+                      },
+                      ...translationMeta,
                     },
-                    ...translationMeta,
-                  },
-                  $unset: CLEAR_STALE_UNSET,
-                }
-              );
+                    $unset: CLEAR_STALE_UNSET,
+                  }
+                );
+              }
 
               await logGeminiCall({
                 type: 'translation',
@@ -336,7 +348,8 @@ export async function POST(request: NextRequest) {
                 triggered_by: 'manual',
               });
 
-              previousText = result.text;
+              // A refused page is not context for the next one.
+              previousText = refused ? '' : result.text;
               const totalTokensThisCall = result.inputTokens + result.outputTokens;
               totalTokens += totalTokensThisCall;
               totalCostSpent += estimateCost(totalTokensThisCall);

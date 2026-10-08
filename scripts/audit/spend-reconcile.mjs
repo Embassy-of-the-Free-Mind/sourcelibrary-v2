@@ -171,6 +171,12 @@ const PROJECTS = [
   // every project holding a generativelanguage key, not to list the ones you use.
   { id: 'gen-lang-client-0181126711', name: 'sourcelibrary2', note: 'GEMINI_API_KEY_FREE lives here' },
   { id: 'gen-lang-client-0101787750', name: 'Gemini API', note: 'holds 2 keys; no traffic in September, listed so silence is a reading' },
+  // Added 2026-10-06 (#4599): first billed 2026-10-01 and $386 by 10-05, in no list
+  // here. The invoice section below saw them (it reads the whole billing account);
+  // this token section did not. The spend-reconcile service account has NO Monitoring
+  // role on either yet — they print UNREADABLE until one is granted, never zero.
+  { id: 'sl-gemini-batch-8', name: 'SL Gemini batch 8', note: 'first billed 2026-10-01' },
+  { id: 'sl-gemini-batch-9', name: 'SL Gemini batch 9', note: 'first billed 2026-10-01' },
 ];
 
 // Vercel production holds GEMINI_API_KEY (= booksplit "smartpaper", the key the
@@ -240,7 +246,7 @@ async function serviceAccountToken() {
   return j.access_token;
 }
 
-async function googleToken() {
+export async function googleToken() {
   if (process.env.GOOGLE_OAUTH_ACCESS_TOKEN) return process.env.GOOGLE_OAUTH_ACCESS_TOKEN;
   const sa = await serviceAccountToken();
   if (sa) return sa;
@@ -338,7 +344,7 @@ async function fetchSkus(token) {
  * export were ever re-created. Re-derive with:
  *   bq ls --project_id=gen-lang-client-0352480887 billing_export
  */
-const BILLING_EXPORT = {
+export const BILLING_EXPORT = {
   projectId: 'gen-lang-client-0352480887',
   table: '`gen-lang-client-0352480887.billing_export.gcp_billing_export_resource_v1_010186_B7EF88_329F51`',
   location: 'EU',
@@ -359,7 +365,7 @@ const BILLING_EXPORT = {
  * the caller can recognise a missing-permission message and say exactly what
  * is missing rather than guessing.
  */
-async function bigQuery(token, sql) {
+export async function bigQuery(token, sql) {
   const r = await fetch(
     `https://bigquery.googleapis.com/bigquery/v2/projects/${BILLING_EXPORT.projectId}/queries`,
     {
@@ -587,10 +593,13 @@ async function billedInput(token, projectId) {
 // meter" is worse than no number — it is the exact shape of the bug this file
 // exists to detect.
 
-/** Mongo fallback store, by model and by endpoint. */
-async function meteredMongo(db) {
+/**
+ * Mongo fallback store, by model and by endpoint. `win` defaults to this
+ * script's own window; paid-vs-got.mjs passes its weekly windows (#5499).
+ */
+export async function meteredMongo(db, win = { start, end }) {
   const rows = await db.collection('gemini_usage').aggregate([
-    { $match: { timestamp: { $gte: start, $lt: end } } },
+    { $match: { timestamp: { $gte: win.start, $lt: win.end } } },
     { $group: { _id: { model: '$model', endpoint: '$endpoint', status: '$status', mode: '$mode',
                        day: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } } },
                 calls: { $sum: 1 }, cost: { $sum: '$cost_usd' },
@@ -611,12 +620,12 @@ async function meteredMongo(db) {
  * (PGRST123), so page and sum client-side — with an explicit `order`, because
  * an unordered range samples the query plan rather than the population.
  */
-async function meteredSupabase() {
+export async function meteredSupabase(win = { start, end }) {
   const url = process.env.SUPABASE_URL || 'https://ykhxaecbbxaaqlujuzde.supabase.co';
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!key) return { error: 'SUPABASE_SERVICE_ROLE_KEY not set' };
   const groups = new Map();
-  const qs = `timestamp=gte.${start.toISOString()}&timestamp=lt.${end.toISOString()}`;
+  const qs = `timestamp=gte.${win.start.toISOString()}&timestamp=lt.${win.end.toISOString()}`;
   try {
     for (let from = 0; ; from += 1000) {
       // 600 pages = 600K rows/month. Past that the sum is truncated, which is a
@@ -939,17 +948,34 @@ async function main() {
 
     const billedOut = {}, billedIn = {}, billedOutByDay = {};
     let googleCalls = 0, searchRequests = 0;
+    const unreadableProjects = [];
     for (const p of PROJECTS) {
-      const [o, i, c, sq] = await Promise.all([
-        billedOutput(token, p.id), billedInput(token, p.id), googleCallCount(token, p.id),
-        billedSearchRequests(token, p.id),
-      ]);
+      // One project we cannot read must not blank the other five (trap E: name
+      // it, never skip it silently, and never let it read as $0).
+      let o, i, c, sq;
+      try {
+        [o, i, c, sq] = await Promise.all([
+          billedOutput(token, p.id), billedInput(token, p.id), googleCallCount(token, p.id),
+          billedSearchRequests(token, p.id),
+        ]);
+      } catch (err) {
+        unreadableProjects.push({ project: p.name, id: p.id, error: err.message });
+        continue;
+      }
       searchRequests += sq.count;
       for (const [m, v] of Object.entries(o.byModel)) billedOut[m] = (billedOut[m] || 0) + v;
       for (const [d, v] of Object.entries(o.byDay)) billedOutByDay[d] = (billedOutByDay[d] || 0) + v;
       for (const [m, v] of Object.entries(i)) billedIn[m] = (billedIn[m] || 0) + v;
       googleCalls += c;
     }
+
+    out.unreadableProjects = unreadableProjects;
+    for (const u of unreadableProjects) {
+      log(`!! UNREADABLE project ${u.project} (${u.id}): ${u.error}`);
+      log('   Its tokens are MISSING from the estimate and the gap check below — not zero.');
+      log(`   Grant (human step): roles/monitoring.viewer on ${u.id} for the spend-reconcile service account.`);
+    }
+    if (unreadableProjects.length) log('');
 
     // Positive control: a month with no series at all is a broken query, not a
     // quiet month. Say which, rather than reporting $0.

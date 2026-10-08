@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Identify an Artwork | Source Library',
   description:
-    'Photograph any print or engraving — on a museum wall or the open page of an old book — and find the original in Source Library, with the book it belongs to.',
+    'Photograph any print or engraving (on a museum wall or the open page of an old book) and find the original in Source Library, with the book it belongs to.',
   openGraph: {
     title: 'Every picture on these walls comes from a book',
     description:

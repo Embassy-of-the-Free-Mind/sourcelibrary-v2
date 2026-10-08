@@ -1,0 +1,21 @@
+{
+ "id": "69e7490d85f786e884a4d40e_00180",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "In the Kumārasambhava\n\n\"May you obtain unbroken love from your husband,\" thus addressed, the humble Umā was told by those women. However, by her, who shares half the body of him <note>referring to Shiva, who shares half his body with Pārvatī</note>, even the blessings of her affectionate kin were surpassed. || 28 ||\n\n\"Unbroken,\" etc. Umā, being humble, was addressed by those virtuous women with the words, \"May you obtain unbroken, unimpaired love from your husband, Shiva.\" <note>The use of the past tense marker 'sma' with the present tense 'uchyate' denotes a past action.</note> By her, the daughter of the mountain, who occupies half the body of him—that is, Hara—even the blessings offered by her dear relatives were made inferior, for she had already attained a reward greater than those blessings. || 28 ||\n\nThe mountain <note>Himālaya</note>, having skillfully completed all the duties appropriate to the wishes and the magnificence of his daughter, stood in the hall occupied by his friends, awaiting the arrival of the one who has the bull as his emblem <note>Shiva</note>. || 29 ||\n\n\"Wish,\" etc. The skillful one, worthy of the assembly, the mountain, having finished without remainder the duties appropriate to the desires and the wealth of Pārvatī, stood in the hall occupied by his kin, awaiting the arrival of Hara. || 29 ||\n\nMeanwhile, upon the mountain of Kubera <note>Mount Kailāsa</note>, the ornaments suitable for the wedding were placed before the destroyer of the cities <note>Shiva</note> by the Mothers <note>the seven divine mothers, such as Brāhmī</note>, who had been summoned for this purpose. || 30 ||\n\n\"Meanwhile,\" etc. At the very time that Pārvatī’s adornment was being performed, on the mountain of Kubera, the wedding finery was placed before the Lord by the seven Mothers, who had arrived with reverence. || 30 ||\n\n<summary>This passage describes the preparations for the divine wedding of Pārvatī and Shiva, highlighting the blessings received by Pārvatī and the arrival of wedding adornments brought by the divine Mothers on Mount Kailāsa.</summary>\n<keywords>Kumārasambhava, Kālidāsa, Pārvatī, Shiva, Himālaya, Wedding, Divine Mothers</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2525,
+ "outputTokens": 536,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.000717625,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1788,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

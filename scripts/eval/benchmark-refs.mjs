@@ -27,6 +27,7 @@ import path from 'path';
 import { execFileSync } from 'child_process';
 import { fileURLToPath } from 'url';
 import { foldGreekWord } from './build-greek-corpus.mjs';
+import { wordWindow } from './lib/edition-window.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const argOf = (n, d) => { const a = process.argv.find(x => x.startsWith(`--${n}=`)); return a ? a.slice(n.length + 3) : d; };
@@ -110,6 +111,18 @@ function loadCatalog() {
   }
   return catalog;
 }
+// Licence of each reference source, as the source states it (checked 2026-10-01). Every record
+// this script writes carries it, so the eval-design §4.1 rule can apply: NC or unknown licences
+// are usable for scoring and blocked from any export.
+export const REFERENCE_LICENCES = {
+  CBETA: { licence: 'CC-BY-NC-SA-4.0', licence_url: 'https://www.cbeta.org/copyright.php' },
+  Kanripo: { licence: 'CC-BY-SA', licence_url: 'https://www.kanripo.org/about', licence_note: 'version not stated by the source' },
+  'Perseus canonical-greekLit': { licence: 'CC-BY-SA-4.0', licence_url: 'https://github.com/PerseusDL/canonical-greekLit' },
+  First1KGreek: { licence: 'CC-BY-SA-4.0', licence_url: 'https://github.com/OpenGreekAndLatin/First1KGreek' },
+  'el.wikisource': { licence: 'CC-BY-SA-4.0', licence_url: 'https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use' },
+};
+export const licenceOf = source => ({ licence: 'unknown', ...REFERENCE_LICENCES[source], licence_checked: '2026-10-01' });
+
 const CN_NUM = { 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9, 十: 10 };
 function cnNumber(s) { // 卷十六 → 16 ; 卷一百四十 → 140
   let n = 0, cur = 0;
@@ -197,19 +210,7 @@ function loadCorpus() {
 // over-long window charges every engine for text the page never printed; with the trim on all
 // bigrams, Greek windows ran to 1.7× the probe because και/δε/τα bigrams occur everywhere in the
 // e-text around the page (measured on the sealed greek stratum, 2026-09-19).
-function wordWindow(words, probeWords, contentMin = 0) {
-  const P = new Set(); for (let i = 0; i + 1 < probeWords.length; i++) P.add(probeWords[i] + ' ' + probeWords[i + 1]);
-  const L = Math.max(40, Math.round(probeWords.length * 1.3));
-  const votes = new Float64Array(words.length + 1);
-  for (let i = 0; i + 1 < words.length; i++) if (P.has(words[i] + ' ' + words[i + 1])) votes[i] = 1;
-  let best = 0, at = 0, run = 0;
-  for (let i = 0; i < votes.length; i++) { run += votes[i]; if (i >= L) run -= votes[i - L]; if (run > best) { best = run; at = Math.max(0, i - L + 1); } }
-  const s = Math.max(0, at - Math.round(L * 0.15)), e = Math.min(words.length, at + L + Math.round(L * 0.15));
-  const content = i => words[i].length >= contentMin && words[i + 1].length >= contentMin;
-  let first = -1, last = -1; for (let i = s; i + 1 < e; i++) if (P.has(words[i] + ' ' + words[i + 1]) && content(i)) { if (first < 0) first = i; last = i + 2; }
-  const from = first < 0 ? s : Math.max(s, first - 3), to = first < 0 ? e : Math.min(e, last + 3);
-  return { window: words.slice(from, to).join(' '), from, to, overlap: P.size ? Math.min(1, best / P.size) : 0, shared: best };
-}
+// wordWindow lives in lib/edition-window.mjs (shared with build-edition-refs.mjs, #5488).
 
 // ── Greek (greek, greek-ext; #4925 step 2, #4744): local First1KGreek + Perseus corpus flattened by
 // build-greek-corpus.mjs (<id>.txt accented, <id>.fold.txt diacritic-folded), then el.wikisource ──
@@ -377,7 +378,7 @@ if (STRATUM === 'syriac') {
     const note = { slug: p.slug, substratum: p.substratum, title: p.title, probes: Object.keys(probes) };
     const src = await corpusLookup(probes);
     if (!src || src.overlap < 0.25) { note.reason = src ? `best text ${src.work} overlap ${src.overlap.toFixed(2)} < 0.25` : 'no corpus text shares ≥ 8 word bigrams with any engine output'; if (!DRY) fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); none++; console.log(`  – ${p.slug}: ${note.reason}`); continue; }
-    Object.assign(note, { source: src.source, work: src.work, work_title: src.work_title, url: src.url, overlap: +src.overlap.toFixed(3), probe_engine: src.probe_engine, shared_bigrams: src.shared_bigrams, window_words: src.window.split(' ').length });
+    Object.assign(note, { source: src.source, work: src.work, work_title: src.work_title, url: src.url, overlap: +src.overlap.toFixed(3), probe_engine: src.probe_engine, shared_bigrams: src.shared_bigrams, window_words: src.window.split(' ').length, ...licenceOf(src.source) });
     if (!DRY) { fs.writeFileSync(outTxt, src.window); fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); }
     built++; console.log(`  ✓ ${p.slug}: ${src.work} (${src.work_title}) overlap ${src.overlap.toFixed(2)} via ${src.probe_engine}`);
   }
@@ -404,6 +405,7 @@ if (STRATUM.startsWith('greek')) {
     if (!src) { note.reason = 'no work identified (corpus phrase vote < 3 distinct hits or tied; el.wikisource < 2 phrase hits)'; tally.none++; if (!DRY) fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); console.log(`  – ${p.slug}: ${note.reason} ${note.error || ''}`); continue; }
     Object.assign(note, { source: src.source, work: src.work, work_title: src.work_title, edition: src.edition, url: src.url, phrase_hits: src.phrase_hits, etext_chars: src.etext_chars, window_words: src.window_words, window_chars: src.window.length, overlap: +src.overlap.toFixed(3) });
     if (src.overlap < MIN_OVERLAP) { note.reason = `work identified but window overlap ${src.overlap.toFixed(2)} < ${MIN_OVERLAP} (probe too noisy, or the page is commentary/paratext around the work)`; tally.work_only++; if (!DRY) fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); console.log(`  ~ ${p.slug}: ${note.reason} (${src.source} ${src.work})`); continue; }
+    Object.assign(note, licenceOf(src.source));
     const trimmed = alignTrim(src.window, greekReads(p)); note.align_trim = trimmed.note; src.window = trimmed.window; note.window_chars = src.window.length;
     if (!DRY) { fs.writeFileSync(outTxt, src.window); fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); }
     tally.built++; tally.by_source[src.source] = (tally.by_source[src.source] || 0) + 1; tally.by_sub[p.substratum] = (tally.by_sub[p.substratum] || 0) + 1;
@@ -436,7 +438,7 @@ for (const p of pages) {
   }
   if (!src) { note.reason = note.reason || 'no work identified (CBETA search / Kanripo catalogue)'; if (!DRY) fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); none++; console.log(`  – ${p.slug}: ${note.reason} ${note.error || ''}`); continue; }
   const win = trimWindow(w.window, probe);
-  Object.assign(note, { source: src.source, work: src.work, work_title: src.work_title || null, juan: src.juan, url: src.url, etext_chars: src.etext.length, window_chars: win.length, overlap: +w.overlap.toFixed(3) });
+  Object.assign(note, { source: src.source, work: src.work, work_title: src.work_title || null, juan: src.juan, url: src.url, etext_chars: src.etext.length, window_chars: win.length, overlap: +w.overlap.toFixed(3), ...licenceOf(src.source) });
   if (w.overlap < MIN_OVERLAP) { note.reason = `overlap ${w.overlap.toFixed(2)} < ${MIN_OVERLAP}: page is not (cleanly) in this e-text`; if (!DRY) fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); none++; console.log(`  – ${p.slug}: ${note.reason} (${src.source} ${src.work})`); continue; }
   if (!DRY) { fs.writeFileSync(outTxt, win); fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); }
   built++; console.log(`  ✓ ${p.slug}: ${src.source} ${src.work} j${src.juan} overlap ${w.overlap.toFixed(2)} window ${win.length} / probe ${probe.length}`);

@@ -86,10 +86,11 @@ function bodyLen(text) {
 
 // A real collapse leaves only a sliver: the boundary note / summary wrapper with
 // almost no body. Require a short body so a long page that merely opens with a
-// "continued from previous page" note isn't mistaken for a collapse.
+// "continues from previous page" note isn't mistaken for a collapse. (The prompt writes
+// "continues"; older output says "continued" — match both, #5363.)
 const isCollapseSignature = tr =>
   bodyLen(tr) < 60 &&
-  (/continued from previous page/i.test(tr || '') || /<summary>/i.test(tr || ''));
+  (/continue[sd]?\s+from\s+(?:the\s+)?previous\s+page/i.test(tr || '') || /<summary>/i.test(tr || ''));
 
 // Absolute body cap — the decisive precision fix. Real collapses are short in
 // ABSOLUTE terms (empty or a sliver). Dense pages and pages with huge or

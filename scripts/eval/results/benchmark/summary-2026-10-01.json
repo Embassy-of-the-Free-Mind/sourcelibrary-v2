@@ -1,0 +1,747 @@
+{
+  "eebo-tcp-5488": {
+    "stratum": "eebo-tcp-5488",
+    "issue": 5488,
+    "date": "2026-10-01",
+    "n_pages": 72,
+    "n_with_ref": 72,
+    "ref_mismatch": [],
+    "textless": [
+      "ed-6ab5a4019e89e2a1f4139282-p94"
+    ],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3-flash-preview": {
+        "pages_run": 72,
+        "empty": 6,
+        "loop": 0,
+        "ref": {
+          "n": 72,
+          "median_cer": 0.045,
+          "mean_cer": 0.133,
+          "catastrophic": 6,
+          "median_gap": 0,
+          "median_seq": 0.95
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null
+        },
+        "invention": {
+          "median": 0.007,
+          "mean": 0.017,
+          "n_engines": 2,
+          "ref_median": 0.039,
+          "ref_mean": 0.061
+        },
+        "paired_vs_ref": {
+          "n": 72,
+          "wins": 52,
+          "losses": 14,
+          "ties": 6,
+          "median_delta_cer": 0.003,
+          "p_sign": 0,
+          "invention_wins": 56,
+          "invention_losses": 7
+        },
+        "worst": [
+          {
+            "slug": "ed-6990619a3d9181cce82fb669-p17",
+            "title": "The Witches of Northamptonshire",
+            "year": 1612,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6a4376a3e296c55144956689-p15",
+            "title": "Artis logic\u00e6 compendium.",
+            "year": 1691,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6a4a4551c0f3ec200c7de18c-p16",
+            "title": "Ad clerum. A sermon preached at a visitation holden at Grantham, Lincoln: Octob.8. 1641.",
+            "year": 1670,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6a58ec9ac6cd8f987106886f-p6",
+            "title": "Women's Speaking Justified, Proved and Allowed of by the Scriptures",
+            "year": 1666,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6a58ecd0c6cd8f987106893f-p9",
+            "title": "Concerning the Sum or Substance of Our Religion",
+            "year": 1666,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 72,
+        "empty": 1,
+        "loop": 0,
+        "ref": {
+          "n": 72,
+          "median_cer": 0.057,
+          "mean_cer": 0.079,
+          "catastrophic": 1,
+          "median_gap": 0,
+          "median_seq": 0.863
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null
+        },
+        "invention": {
+          "median": 0.055,
+          "mean": 0.124,
+          "n_engines": 2,
+          "ref_median": 0.168,
+          "ref_mean": 0.165
+        },
+        "worst": [
+          {
+            "slug": "ed-6a42eff906e6ead3ac54bab4-p16",
+            "title": "Endimion and Phoebe Ideas Latmus. Phoebus erit nostra princeps et carminis author",
+            "year": 1595,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6a42aecb5207af7c42f5333c-p17",
+            "title": "Linguarum cognatio, seu, De linguis in genere & de variarum linguarum harmonia dissertatio authore Thoma Hayne.",
+            "year": 1648,
+            "cer": 0.248,
+            "gap": 0.092,
+            "invention": 0.008,
+            "has_ref": true,
+            "unsupported": [
+              "\u03bc\u03b5\u03af\u03b6\u03b7"
+            ]
+          },
+          {
+            "slug": "ed-69905e152fd6a039938a0ebe-p46",
+            "title": "Cases of Conscience Concerning Evil Spirits",
+            "year": 1693,
+            "cer": 0.167,
+            "gap": 0.078,
+            "invention": 0.029,
+            "has_ref": true,
+            "unsupported": [
+              "befotted",
+              "d\u00e6mons",
+              "d\u00e6moniacis"
+            ]
+          },
+          {
+            "slug": "ed-6958e07cd34d35c8156624c8-p86",
+            "title": "Kalendarium Hortense: The Gardners Almanac",
+            "year": 1666,
+            "cer": 0.14,
+            "gap": 0,
+            "invention": 0.217,
+            "has_ref": true,
+            "unsupported": [
+              "hortenfe",
+              "rifes",
+              "fuccefs",
+              "juft",
+              "feafon",
+              "likewife",
+              "feeds",
+              "alfo"
+            ]
+          },
+          {
+            "slug": "ed-699fcd429ff0f1d2c4517fff-p28",
+            "title": "The Most Noble, Auncient, and Learned Playe, Called the Philosophers Game",
+            "year": 1563,
+            "cer": 0.139,
+            "gap": 0.011,
+            "invention": 0.227,
+            "has_ref": true,
+            "unsupported": [
+              "philofophers",
+              "fuperparticuler",
+              "propor",
+              "tion",
+              "contagneth",
+              "leffer",
+              "fure",
+              "teyneth"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "chinese-cohort-5547": {
+    "stratum": "chinese-cohort-5547",
+    "issue": 5547,
+    "date": "2026-10-01",
+    "n_pages": 526,
+    "n_with_ref": 441,
+    "ref_mismatch": [
+      "chinese-cohort-5547-16555c-p78",
+      "chinese-cohort-5547-1658bf-p55",
+      "chinese-cohort-5547-16603a-p101",
+      "chinese-cohort-5547-1af295-p17",
+      "chinese-cohort-5547-1ccdad-p29",
+      "chinese-cohort-5547-4a4e19-p10",
+      "chinese-cohort-5547-5cdd1a-p48",
+      "chinese-cohort-5547-5d1918-p32",
+      "chinese-cohort-5547-5eb975-p83",
+      "chinese-cohort-5547-8ed270-p146",
+      "chinese-cohort-5547-9d11ac-p88",
+      "chinese-cohort-5547-dec780-p54",
+      "chinese-cohort-5547-e256b2-p57",
+      "chinese-cohort-5547-e30b3a-p42"
+    ],
+    "textless": [
+      "chinese-cohort-5547-161907-p47",
+      "chinese-cohort-5547-162360-p48",
+      "chinese-cohort-5547-1c7ecc-p69",
+      "chinese-cohort-5547-1e2899-p41",
+      "chinese-cohort-5547-1fe0c5-p18",
+      "chinese-cohort-5547-217e81-p10",
+      "chinese-cohort-5547-21ea01-p107",
+      "chinese-cohort-5547-74e419-p78",
+      "chinese-cohort-5547-8e7851-p26",
+      "chinese-cohort-5547-8f0413-p14",
+      "chinese-cohort-5547-8f2f43-p60",
+      "chinese-cohort-5547-d7727e-p64",
+      "chinese-cohort-5547-d772f9-p97",
+      "chinese-cohort-5547-e2d4cb-p94"
+    ],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3-flash-preview": {
+        "pages_run": 526,
+        "empty": 1,
+        "loop": 5,
+        "ref": {
+          "n": 441,
+          "median_cer": 0.209,
+          "mean_cer": 0.241,
+          "catastrophic": 16,
+          "median_gap": 0,
+          "median_seq": 0.857
+        },
+        "proxy_vs_ref_engine": {
+          "n": 82,
+          "median_cer": 0.172,
+          "catastrophic": 28,
+          "median_gap": 0.004,
+          "median_bow": 0.93
+        },
+        "invention": {
+          "median": 0.034,
+          "mean": 0.08,
+          "n_engines": 3,
+          "ref_median": 0.14,
+          "ref_mean": 0.167
+        },
+        "paired_vs_ref": {
+          "n": 441,
+          "wins": 332,
+          "losses": 55,
+          "ties": 54,
+          "median_delta_cer": 0.013,
+          "p_sign": 0,
+          "invention_wins": 351,
+          "invention_losses": 65
+        },
+        "worst": [
+          {
+            "slug": "chinese-cohort-5547-4972d8-p21",
+            "title": "\u8aaa\u6587\u7e6b\u50b3\u8003\u7570\u00b7\u5377\u56db (vol 2)",
+            "year": null,
+            "cer": 18.054,
+            "gap": 0,
+            "invention": 0.667,
+            "has_ref": false,
+            "unsupported": [
+              "\u8aac\u6587\ud845",
+              "\u6587\ud845\udd32",
+              "\ud845\udd32\u4e0d",
+              "\udd32\u4e0d\u8aac",
+              "\u4eca\u8aac\ud845",
+              "\u8aac\ud845\udd32",
+              "\ud845\udd32\ud845",
+              "\udd32\ud845\udd32"
+            ]
+          },
+          {
+            "slug": "chinese-cohort-5547-d77176-p65",
+            "title": "\u62b1\u6734\u5b50 Baopuzi (Inner Chapters, vol. 1) \u2014 \u56db\u5eab\u5168\u66f8 Siku Quanshu edition",
+            "year": 343,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "\u592b\u5929\u5730",
+              "\u5929\u5730\u8005",
+              "\u5730\u8005\u4e07",
+              "\u8005\u4e07\u7269",
+              "\u4e07\u7269\u4e4b",
+              "\u7269\u4e4b\u9006",
+              "\u4e4b\u9006\u65c5",
+              "\u9006\u65c5\u5149"
+            ]
+          },
+          {
+            "slug": "chinese-cohort-5547-d77205-p29",
+            "title": "\u62b1\u6734\u5b50 Baopuzi (Inner Chapters, vol. 2)",
+            "year": 343,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "\u89b3\u81ea\u5728",
+              "\u81ea\u5728\u83e9",
+              "\u5728\u83e9\u85a9",
+              "\u83e9\u85a9\u884c",
+              "\u85a9\u884c\u6df1",
+              "\u884c\u6df1\u822c",
+              "\u6df1\u822c\u82e5",
+              "\u822c\u82e5\u6ce2"
+            ]
+          },
+          {
+            "slug": "chinese-cohort-5547-161f85-p40",
+            "title": "\u897f\u6e05\u53e4\u9451\u00b7\u5377\u4e09\u5341\u4e5d (vol 59)",
+            "year": null,
+            "cer": 0.996,
+            "gap": 0.019,
+            "invention": 0.881,
+            "has_ref": false,
+            "unsupported": [
+              "\u5149\u5929\u800c",
+              "\u5929\u800c\u5b89",
+              "\u800c\u5b89\u5929",
+              "\u5b89\u5929\u800c",
+              "\u5929\u5929\u65e5",
+              "\u5929\u65e5\u5929",
+              "\u65e5\u5929\u5929",
+              "\u5929\u5929\u6708"
+            ]
+          },
+          {
+            "slug": "chinese-cohort-5547-1e9e50-p50",
+            "title": "\u767d\u5b54\u516d\u5e16\u00b7\u5377\u4e94\u5341\u516b (vol 27)",
+            "year": null,
+            "cer": 0.996,
+            "gap": 0.617,
+            "invention": 0.212,
+            "has_ref": true,
+            "unsupported": [
+              "\u6b3d\u5b9a\u56db",
+              "\u5168\u66f8\u6208",
+              "\u66f8\u6208\u6bb3",
+              "\u6208\u6bb3\u77db",
+              "\u6bb3\u77db\u621f",
+              "\u516d\u5e16\u4e8c",
+              "\u5e16\u4e8c\u5341",
+              "\u5341\u4e94\u9663"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 526,
+        "empty": 6,
+        "loop": 24,
+        "ref": {
+          "n": 441,
+          "median_cer": 0.262,
+          "mean_cer": 0.303,
+          "catastrophic": 48,
+          "median_gap": 0.005,
+          "median_seq": 0.817
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null
+        },
+        "invention": {
+          "median": 0.068,
+          "mean": 0.133,
+          "n_engines": 3,
+          "ref_median": 0.185,
+          "ref_mean": 0.228
+        },
+        "worst": [
+          {
+            "slug": "chinese-cohort-5547-e32e5f-p43",
+            "title": "\u5fa1\u5b9a\u5b50\u53f2\u7cbe\u83ef\u00b7\u5377\u4e00\u767e\u56db\u5341\u4e00~\u5377\u4e00\u767e\u56db\u5341\u4e8c (vol 150)",
+            "year": null,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "\u6b21\u767b\u5712",
+              "\u767b\u5712\u4e0b",
+              "\u5712\u4e0b\u6c34",
+              "\u4e0b\u6c34\u51f6",
+              "\u6c34\u51f6\u63a1",
+              "\u51f6\u63a1\u706b",
+              "\u63a1\u706b\u6210",
+              "\u706b\u6210\u98df"
+            ]
+          },
+          {
+            "slug": "chinese-cohort-5547-e58c29-p55",
+            "title": "\u91cd\u4fee\u5ee3\u97fb\u00b7\u5377\u4e94 (vol 5)",
+            "year": null,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-cohort-5547-e30f6e-p57",
+            "title": "\u5fa1\u5b9a\u5b50\u53f2\u7cbe\u83ef\u00b7\u5377\u4e00\u767e\u56db\u5341\u4e03~\u5377\u4e00\u767e\u56db\u5341\u4e5d (vol 99)",
+            "year": null,
+            "cer": 0.969,
+            "gap": 0.691,
+            "invention": 0.98,
+            "has_ref": true,
+            "unsupported": [
+              "\u7cbe\u83ef\u5bdf",
+              "\u83ef\u5bdf\u4ee5",
+              "\u5bdf\u4ee5\u6b64",
+              "\u4ee5\u6b64\u793c",
+              "\u6b64\u793c\u6642",
+              "\u793c\u6642\u5f3e",
+              "\u6642\u5f3e\u4f59",
+              "\u5f3e\u4f59\u56e0"
+            ]
+          },
+          {
+            "slug": "chinese-cohort-5547-5caf81-p113",
+            "title": "\u5fa1\u5b9a\u4f69\u6587\u97fb\u5e9c\u00b7\u5377\u4e00\u767e\u516d\u4e4b\u4e00 (vol 727)",
+            "year": null,
+            "cer": 0.952,
+            "gap": 0.679,
+            "invention": 1,
+            "has_ref": true,
+            "unsupported": [
+              "\u5b9a\u80fd\u52d2",
+              "\u80fd\u52d2\u55e3",
+              "\u52d2\u55e3\u5236",
+              "\u55e3\u5236\u627f",
+              "\u5236\u627f\u5e38",
+              "\u627f\u5e38\u6709",
+              "\u5e38\u6709\u4ef2",
+              "\u6709\u4ef2\u5f01"
+            ]
+          },
+          {
+            "slug": "chinese-cohort-5547-8ebbdc-p81",
+            "title": "\u5fa1\u5b9a\u99e2\u5b57\u985e\u7de8\u00b7\u5377\u4e03\u5341\u4e94 \u2014 Imperial Parallel Characters (vol 257)",
+            "year": null,
+            "cer": 0.947,
+            "gap": 0.689,
+            "invention": 1,
+            "has_ref": true,
+            "unsupported": [
+              "\u9678\u7159\u6e80",
+              "\u7159\u6e80\u9580",
+              "\u6e80\u9580\u6210",
+              "\u9580\u6210\u7adc",
+              "\u6210\u7adc\u6240",
+              "\u7adc\u6240\u6ce8",
+              "\u6240\u6ce8\u63d0",
+              "\u6ce8\u63d0\u9580"
+            ]
+          }
+        ]
+      },
+      "paddleocr-vl-1.6": {
+        "pages_run": 526,
+        "empty": 6,
+        "loop": 5,
+        "ref": {
+          "n": 441,
+          "median_cer": 0.184,
+          "mean_cer": 0.214,
+          "catastrophic": 4,
+          "median_gap": 0,
+          "median_seq": 0.868
+        },
+        "proxy_vs_ref_engine": {
+          "n": 82,
+          "median_cer": 0.287,
+          "catastrophic": 33,
+          "median_gap": 0.005,
+          "median_bow": 0.899
+        },
+        "invention": {
+          "median": 0.061,
+          "mean": 0.093,
+          "n_engines": 3,
+          "ref_median": 0.123,
+          "ref_mean": 0.14
+        },
+        "paired_vs_ref": {
+          "n": 441,
+          "wins": 340,
+          "losses": 75,
+          "ties": 26,
+          "median_delta_cer": 0.023,
+          "p_sign": 0,
+          "invention_wins": 353,
+          "invention_losses": 85
+        },
+        "worst": [
+          {
+            "slug": "chinese-cohort-5547-e408b3-p48",
+            "title": "\u9109\u9ee8\u5716\u8003\u00b7\u5377\u4e00 (vol 1)",
+            "year": null,
+            "cer": 35.982,
+            "gap": 0.008,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "\u5717\u793c\u76f8",
+              "\u793c\u76f8\u64ef",
+              "\u76f8\u64ef\u4e0a",
+              "\u64ef\u4e0a\u4e2d",
+              "\u4e0a\u4e2d\u5edf",
+              "\u4e2d\u5edf\u5168",
+              "\u5edf\u5168\u3046",
+              "\u5168\u3046\u3066"
+            ]
+          },
+          {
+            "slug": "chinese-cohort-5547-5e64fd-p46",
+            "title": "\u4e03\u653f\u63a8\u6b65\u00b7\u5377\u4e94 (vol 3)",
+            "year": null,
+            "cer": 13.222,
+            "gap": 0.005,
+            "invention": 0.368,
+            "has_ref": false,
+            "unsupported": [
+              "\u8f2a\u5fc3\u5bae",
+              "\u5fc3\u5bae\u5ea6",
+              "\u5bae\u5ea6\u4e5d",
+              "\u5ea6\u4e5d\u5bae",
+              "\u4e00\u5bae\u52a0",
+              "\u5bae\u52a0\u6e1b",
+              "\u5206\u6bd4\u305f",
+              "\u6bd4\u305f\u306e"
+            ]
+          },
+          {
+            "slug": "chinese-cohort-5547-161f85-p40",
+            "title": "\u897f\u6e05\u53e4\u9451\u00b7\u5377\u4e09\u5341\u4e5d (vol 59)",
+            "year": null,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-cohort-5547-95b5eb-p28",
+            "title": "\u6821\u8a3b\u5a66\u4eba\u826f\u65b9\u5927\u5168 Furen Daquan Liangfang, Vol. 6",
+            "year": 1636,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-cohort-5547-e43482-p105",
+            "title": "\u91ce\u5ba2\u53e2\u66f8\u00b7\u5377\u5341\u4e09~\u5377\u5341\u516d (vol 4)",
+            "year": null,
+            "cer": 0.996,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      }
+    },
+    "by_class": {
+      "illustration": {
+        "n": 4,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 4,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.419,
+            "catastrophic": 2,
+            "median_unsupported": 0.411
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 4,
+            "empty": 0,
+            "loop": 1,
+            "median_cer": 0.52,
+            "catastrophic": 1,
+            "median_unsupported": 0.48
+          },
+          "paddleocr-vl-1.6": {
+            "n": 4,
+            "empty": 1,
+            "loop": 1,
+            "median_cer": 0.621,
+            "catastrophic": 2,
+            "median_unsupported": 0.125
+          }
+        }
+      },
+      "manuscript-regular": {
+        "n": 500,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 500,
+            "empty": 1,
+            "loop": 5,
+            "median_cer": 0.21,
+            "catastrophic": 41,
+            "median_unsupported": 0.033
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 500,
+            "empty": 4,
+            "loop": 21,
+            "median_cer": 0.258,
+            "catastrophic": 46,
+            "median_unsupported": 0.068
+          },
+          "paddleocr-vl-1.6": {
+            "n": 500,
+            "empty": 2,
+            "loop": 4,
+            "median_cer": 0.188,
+            "catastrophic": 33,
+            "median_unsupported": 0.06
+          }
+        }
+      },
+      "textless": {
+        "n": 2,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 2,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": null,
+            "catastrophic": 0,
+            "median_unsupported": 1
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 2,
+            "empty": 2,
+            "loop": 1,
+            "median_cer": null,
+            "catastrophic": 0,
+            "median_unsupported": null
+          },
+          "paddleocr-vl-1.6": {
+            "n": 2,
+            "empty": 2,
+            "loop": 0,
+            "median_cer": null,
+            "catastrophic": 0,
+            "median_unsupported": null
+          }
+        }
+      },
+      "typeset": {
+        "n": 2,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 2,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.342,
+            "catastrophic": 0,
+            "median_unsupported": 0.073
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 2,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.582,
+            "catastrophic": 1,
+            "median_unsupported": 0.523
+          },
+          "paddleocr-vl-1.6": {
+            "n": 2,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.316,
+            "catastrophic": 0,
+            "median_unsupported": 0.025
+          }
+        }
+      },
+      "woodblock": {
+        "n": 18,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 18,
+            "empty": 0,
+            "loop": 0,
+            "median_cer": 0.079,
+            "catastrophic": 1,
+            "median_unsupported": 0.068
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 18,
+            "empty": 0,
+            "loop": 1,
+            "median_cer": 0.349,
+            "catastrophic": 0,
+            "median_unsupported": 0.064
+          },
+          "paddleocr-vl-1.6": {
+            "n": 18,
+            "empty": 1,
+            "loop": 0,
+            "median_cer": 0.146,
+            "catastrophic": 2,
+            "median_unsupported": 0.096
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+ "id": "6a09ff4ffa20006dbaba901a_00263",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "5. Furthermore, monks, when a monk directs his mind to <term>rūpa</term> <gloss>form or material things</gloss>, his mind does not leap forward, does not find confidence, does not take a stand, and is not released in it. However, when he directs his mind to <term>arūpa</term> <gloss>the formless</gloss>, his mind leaps forward, finds confidence, takes a stand, and is released in it. His mind is well-directed, well-developed, well-uplifted, well-released, and well-detached from forms. Those <term>āsavā</term> <gloss>outflows or mental fermentations</gloss>, those distresses and fevers that arise conditioned by form—he is freed from them; he does not feel that kind of painful feeling. This is declared to be the escape from forms.\n\n6. Furthermore, monks, when a monk directs his mind to <term>sakkāya</term> <gloss>the existing body or identity</gloss>, his mind does not leap forward, does not find confidence, does not take a stand, and is not released in it. However, when he directs his mind to the cessation of identity, his mind leaps forward, finds confidence, takes a stand, and is released in it. His mind is well-directed, well-developed, well-uplifted, well-released, and well-detached from identity. Those outflows, those distresses and fevers that arise conditioned by identity—he is freed from them; he does not feel that kind of painful feeling. This is declared to be the escape from identity.\n\nIn such a one, delight in sensual pleasure does not persist, delight in ill-will does not persist, delight in cruelty does not persist, delight in form does not persist, and delight in identity does not persist. Because he is without the underlying tendency toward delight in sensual pleasure, ill-will, cruelty, form, and identity, he is called a monk without underlying tendencies. He has cut off <term>taṇha</term> <gloss>craving</gloss>, discarded the <term>samyojana</term> <gloss>fetters</gloss>, and through the right breakthrough of conceit, he has made an end of suffering.\n\nThese, monks, are the five elements of escape.\n\n->The Chapter on Brahmins, the twentieth.<-\n\n<summary>The text concludes a teaching on the five elements of escape, specifically detailing the liberation from form and personal identity to reach the end of suffering. It marks the end of the Twentieth Chapter, known as the Chapter on Brahmins.</summary>\n\n<keywords>Anguttara Nikaya, form, formless, identity, cessation, liberation, craving, fetters, suffering, Brahmanavagga</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2714,
+ "outputTokens": 592,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.0015664999999999998,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2240,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

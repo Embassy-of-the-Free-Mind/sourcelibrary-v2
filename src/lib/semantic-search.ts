@@ -1,5 +1,6 @@
-import { supabase } from '@/lib/supabase';
+import { supabase, supabaseAdmin } from '@/lib/supabase';
 import { expandLanguages } from '@/lib/language-utils';
+import { scopedMatch, type SearchScope } from '@/lib/tenant-search-scope';
 
 /**
  * Thrown when a semantic-search RPC fails. Do NOT swallow this into an empty
@@ -37,7 +38,27 @@ export class SemanticSearchError extends Error {
 // count to record from it. What embedding costs is measured on the writer side
 // instead (#4162, scripts/lib/embedding-usage.mjs); the two calls in this file
 // are one short query embedding per search.
-export async function getQueryEmbedding(query: string): Promise<number[] | null> {
+// One query embedding per distinct query, shared by the lanes that run in
+// parallel for a single search (book, site) — the promise is cached, so
+// concurrent callers await the same request instead of each paying for one.
+const QUERY_EMBEDDING_CACHE_MAX = 200;
+const queryEmbeddingCache = new Map<string, Promise<number[] | null>>();
+
+export function getQueryEmbedding(query: string): Promise<number[] | null> {
+  const cached = queryEmbeddingCache.get(query);
+  if (cached) return cached;
+  const p = fetchQueryEmbedding(query).then((v) => {
+    if (!v) queryEmbeddingCache.delete(query); // never cache a failure
+    return v;
+  });
+  if (queryEmbeddingCache.size >= QUERY_EMBEDDING_CACHE_MAX) {
+    queryEmbeddingCache.delete(queryEmbeddingCache.keys().next().value as string);
+  }
+  queryEmbeddingCache.set(query, p);
+  return p;
+}
+
+async function fetchQueryEmbedding(query: string): Promise<number[] | null> {
   const geminiKey = process.env.GEMINI_API_KEY;
   if (!geminiKey) return null;
 
@@ -84,26 +105,37 @@ export interface SemanticBookResult {
 /**
  * Semantic book discovery via book_embeddings table (HNSW, ~17K rows).
  * Replaces the broken hybrid_search on 3M+ page_translations.
+ *
+ * `scope` is REQUIRED (#4330). This function took a `tenantId` for months and
+ * passed it nowhere — `book_embeddings` has no tenant column — so "tenant
+ * scoped" callers ranked the whole library. A scope is a book set the ranker is
+ * confined to; main-site callers pass `GLOBAL_SCOPE` and say so.
  */
 export async function semanticBookSearch(
   query: string,
-  limit: number = 20,
-  opts?: { language?: string; yearMin?: number; yearMax?: number; threshold?: number; tenantId?: string }
+  limit: number,
+  opts: { scope: SearchScope; language?: string; yearMin?: number; yearMax?: number; threshold?: number }
 ): Promise<SemanticBookResult[]> {
+  if (opts.scope.kind === 'closed') return [];
   const queryEmbedding = await getQueryEmbedding(query);
   if (!queryEmbedding) return [];
 
-  const { data, error } = await supabase.rpc('match_books_semantic', {
+  const args = {
     query_embedding: JSON.stringify(queryEmbedding),
-    match_threshold: opts?.threshold ?? 0.3,
+    match_threshold: opts.threshold ?? 0.3,
     match_count: limit,
-    filter_language: opts?.language ?? null,
-    filter_year_min: opts?.yearMin ?? null,
-    filter_year_max: opts?.yearMax ?? null,
+    filter_language: opts.language ?? null,
+    filter_year_min: opts.yearMin ?? null,
+    filter_year_max: opts.yearMax ?? null,
+  };
+  const { rows: data, error, rpc } = await scopedMatch<any>(opts.scope, {
+    global: { fn: 'match_books_semantic', args },
+    scoped: { fn: 'match_books_semantic_in_books', args },
+    fallbackMaxCount: 200,
   });
 
   if (error) {
-    throw new SemanticSearchError('match_books_semantic', error.message);
+    throw new SemanticSearchError(rpc, error);
   }
 
   return (data || []).map((row: any) => ({
@@ -114,6 +146,50 @@ export async function semanticBookSearch(
     language: row.language,
     summary_text: row.summary_text,
     metadata: row.metadata,
+    similarity: Number(row.similarity) || 0,
+  }));
+}
+
+// ── Site content search (issue #1180) ─────────────────────────────
+
+export interface SemanticSiteResult {
+  url: string;
+  page_type: 'blog' | 'collection' | 'page' | 'feature';
+  title: string;
+  snippet: string;
+  similarity: number;
+}
+
+/**
+ * The site's own writing — blog essays, collection intros, editorial pages —
+ * from `site_pages` (written by scripts/workers/embed-site-pages.mjs). Best
+ * chunk per page. Main site only: `filter_tenant` NULL never returns a
+ * tenant's rows.
+ *
+ * Floor calibrated 2026-10-01 on 1,282 chunks: real queries 0.65–0.80
+ * ("how do you measure OCR quality" → the OCR-quality essay at 0.80, "how can
+ * I donate" → /support at 0.65); nonsense ("xyzzy qwerty") tops out at 0.59
+ * and "the" at 0.63.
+ */
+export const SITE_SIM_FLOOR = 0.64;
+
+export async function semanticSiteSearch(query: string, limit: number = 3): Promise<SemanticSiteResult[]> {
+  const queryEmbedding = await getQueryEmbedding(query);
+  if (!queryEmbedding) return [];
+
+  const { data, error } = await supabase.rpc('match_site_pages', {
+    query_embedding: JSON.stringify(queryEmbedding),
+    match_threshold: SITE_SIM_FLOOR,
+    match_count: limit,
+    filter_tenant: null,
+  });
+  if (error) throw new SemanticSearchError('match_site_pages', error.message);
+
+  return (data || []).map((row: any) => ({
+    url: row.url,
+    page_type: row.page_type,
+    title: row.title,
+    snippet: String(row.text || '').replace(/\s+/g, ' ').slice(0, 220),
     similarity: Number(row.similarity) || 0,
   }));
 }
@@ -182,24 +258,30 @@ async function getQueryEmbeddingFull(query: string): Promise<number[] | null> {
  */
 export async function semanticArtworkSearch(
   query: string,
-  limit: number = 20,
-  opts?: { genre?: string; period?: string; culture?: string; collection?: string; threshold?: number }
+  limit: number,
+  opts: { scope: SearchScope; genre?: string; period?: string; culture?: string; collection?: string; threshold?: number }
 ): Promise<SemanticArtworkResult[]> {
+  if (opts.scope.kind === 'closed') return [];
   const queryEmbedding = await getQueryEmbeddingFull(query);
   if (!queryEmbedding) return [];
 
-  const { data, error } = await supabase.rpc('match_artworks_semantic', {
+  const args = {
     query_embedding: JSON.stringify(queryEmbedding),
-    match_threshold: opts?.threshold ?? 0.3,
+    match_threshold: opts.threshold ?? 0.3,
     match_count: limit,
-    filter_genre: opts?.genre ?? null,
-    filter_period: opts?.period ?? null,
-    filter_culture: opts?.culture ?? null,
-    filter_collection: opts?.collection ?? null,
+    filter_genre: opts.genre ?? null,
+    filter_period: opts.period ?? null,
+    filter_culture: opts.culture ?? null,
+    filter_collection: opts.collection ?? null,
+  };
+  const { rows: data, error, rpc } = await scopedMatch<any>(opts.scope, {
+    global: { fn: 'match_artworks_semantic', args },
+    scoped: { fn: 'match_artworks_semantic_in_books', args },
+    fallbackMaxCount: 200,
   });
 
   if (error) {
-    throw new SemanticSearchError('match_artworks_semantic', error.message);
+    throw new SemanticSearchError(rpc, error);
   }
 
   return (data || []).map((row: any) => ({
@@ -257,10 +339,14 @@ function stripContinuityPrefix(text: string): { snippet: string; type: 'translat
 }
 
 export interface SemanticPageSearchOptions {
+  /**
+   * The book set this search is confined to (#4330). Required: the `tenantId`
+   * this used to take went to an RPC that ignores it.
+   */
+  scope: SearchScope;
   yearMin?: number;
   yearMax?: number;
   maxPerBook?: number;
-  tenantId?: string;
   language?: string;
   languages?: string[];
   excludeLanguages?: string[];
@@ -300,18 +386,20 @@ export function usesLangStore(textLang: string | undefined | null): boolean {
  * (3x the requested limit, capped at 50 — the RPC's hard ceiling) so that
  * filtering still yields close to the requested count when filters are tight.
  *
- * The `tenantId` parameter is accepted as the 2nd positional arg for backward
- * compatibility with earlier callers that passed (query, limit, tenantId).
+ * Under a tenant scope the search runs INSIDE the tenant's book set
+ * (`searchPagesInBookSet` below) — the global RPC is never consulted.
  */
 export async function semanticPageSearchGlobal(
   query: string,
-  limit: number = 15,
-  optsOrTenantId?: SemanticPageSearchOptions | string,
+  limit: number,
+  opts: SemanticPageSearchOptions,
 ): Promise<SemanticPageResult[]> {
-  const opts: SemanticPageSearchOptions =
-    typeof optsOrTenantId === 'string' ? { tenantId: optsOrTenantId } : (optsOrTenantId || {});
+  if (opts.scope.kind === 'closed') return [];
   const queryEmbedding = await getQueryEmbedding(query);
   if (!queryEmbedding) return [];
+  if (opts.scope.kind === 'tenant') {
+    return searchPagesInBookSet(queryEmbedding, limit, opts, opts.scope);
+  }
 
   // Over-request only for maxPerBook (JS post-hoc). Language filters (singular,
   // plural, exclude) now resolve in SQL via the seq-scan branch in match_semantic,
@@ -323,9 +411,9 @@ export async function semanticPageSearchGlobal(
 
   // The language-keyed store lives in its own table with its own RPC; the two
   // return identical column names on purpose, so only the call differs.
-  // `page_texts` carries no tenant column — neither does `page_translations`,
-  // whose RPC accepts filter_tenant_id and ignores it — so tenant scoping stays
-  // where it actually happens: the books join in the caller.
+  // Neither table carries a tenant column, and `match_semantic` accepts
+  // filter_tenant_id and ignores it — which is why a tenant request never
+  // reaches this point (see the scope branch above).
   const rpc = usesLangStore(opts.textLang) ? 'match_page_texts' : 'match_semantic';
   const { data, error } = usesLangStore(opts.textLang)
     ? await supabase.rpc('match_page_texts', {
@@ -343,7 +431,7 @@ export async function semanticPageSearchGlobal(
       query_embedding: JSON.stringify(queryEmbedding),
       match_threshold: 0.3,
       match_count: overRequest,
-      filter_tenant_id: opts.tenantId ?? null,
+      filter_tenant_id: null,
       filter_language: opts.language ?? null,
       filter_year_min: opts.yearMin ?? null,
       filter_year_max: opts.yearMax ?? null,
@@ -355,14 +443,16 @@ export async function semanticPageSearchGlobal(
     throw new SemanticSearchError(rpc, error.message);
   }
 
-  let rows = (data || []) as any[];
+  return shapePageRows((data || []) as any[], limit, opts.maxPerBook);
+}
 
-  if ((opts.maxPerBook ?? 0) > 0) {
+function shapePageRows(rows: any[], limit: number, maxPerBook?: number): SemanticPageResult[] {
+  if ((maxPerBook ?? 0) > 0) {
     const perBook = new Map<string, number>();
     rows = rows.filter(r => {
       const n = (perBook.get(r.book_id) || 0) + 1;
       perBook.set(r.book_id, n);
-      return n <= opts.maxPerBook!;
+      return n <= maxPerBook!;
     });
   }
 
@@ -383,6 +473,237 @@ export async function semanticPageSearchGlobal(
   });
 }
 
+/**
+ * Page search confined to a tenant's book set.
+ *
+ * English text: `match_pages_in_scope` — nearest books INSIDE the set, their
+ * pages ranked exactly, plus one HNSW pass. Not the deployed
+ * `match_pages_in_books`: given a tenant-sized id list the planner answers it
+ * through the vector index and filters afterwards, which returned ZERO rows on
+ * BPH for a query its shelf answers at 0.70 (measured 2026-10-06; the migration
+ * header has the numbers). Until the migration is applied this falls back to
+ * the global RPC filtered against the set — closed, and starved.
+ *
+ * Other languages: `match_page_texts_in_books`, which exists. Partner rooms
+ * have no localized surface (`i18n.md`), so this arm is correctness only.
+ *
+ * Language and year filters are applied to the returned rows. The scoped RPCs
+ * take none, and the over-request below is what keeps a tight filter from
+ * emptying the page; it is a post-filter and is not exact.
+ */
+async function searchPagesInBookSet(
+  queryEmbedding: number[],
+  limit: number,
+  opts: SemanticPageSearchOptions,
+  scope: Extract<SearchScope, { kind: 'tenant' }>,
+): Promise<SemanticPageResult[]> {
+  if (scope.bookIds.length === 0) return [];
+
+  const languages = (opts.languages?.length ?? 0) > 0 ? new Set(expandLanguages(opts.languages!)) : null;
+  const excluded = (opts.excludeLanguages?.length ?? 0) > 0 ? new Set(expandLanguages(opts.excludeLanguages!)) : null;
+  const postFiltered = !!(opts.language || languages || excluded
+    || opts.yearMin !== undefined || opts.yearMax !== undefined || (opts.maxPerBook ?? 0) > 0);
+  const count = postFiltered ? Math.min(limit * 3, 50) : limit;
+  const embedding = JSON.stringify(queryEmbedding);
+
+  let rows: any[];
+  if (usesLangStore(opts.textLang)) {
+    const { data, error } = await supabase.rpc('match_page_texts_in_books', {
+      query_embedding: embedding,
+      filter_lang: opts.textLang!,
+      book_ids: scope.bookIds,
+      match_threshold: 0.3,
+      match_count: count,
+    });
+    if (error) throw new SemanticSearchError('match_page_texts_in_books', error.message);
+    rows = ((data || []) as any[]).filter(r => scope.has(r.book_id));
+  } else {
+    const result = await scopedMatch<any>(scope, {
+      global: {
+        fn: 'match_semantic',
+        args: {
+          query_embedding: embedding, match_threshold: 0.3, match_count: count,
+          filter_tenant_id: null, filter_language: null, filter_year_min: null, filter_year_max: null,
+          filter_languages: null, filter_exclude_languages: null,
+        },
+      },
+      scoped: {
+        fn: 'match_pages_in_scope',
+        args: { query_embedding: embedding, match_threshold: 0.3, match_count: count },
+      },
+      // match_semantic's hard ceiling.
+      fallbackMaxCount: 50,
+    });
+    if (result.error) throw new SemanticSearchError(result.rpc, result.error);
+    rows = result.rows;
+  }
+
+  rows = rows.filter(r => {
+    if (opts.language && r.book_language !== opts.language) return false;
+    if (languages && !languages.has(r.book_language)) return false;
+    if (excluded && r.book_language && excluded.has(r.book_language)) return false;
+    if (opts.yearMin !== undefined && (r.book_year == null || r.book_year < opts.yearMin)) return false;
+    if (opts.yearMax !== undefined && (r.book_year == null || r.book_year > opts.yearMax)) return false;
+    return true;
+  });
+  return shapePageRows(rows, limit, opts.maxPerBook);
+}
+
+// ── Original-text lane: pages with no English (#5729) ───────────────
+
+/**
+ * `off` unless SEARCH_UNTRANSLATED_LANE=on. The lane reads an index that is
+ * built after the #5729 backfill, and it changes what a reader sees (results
+ * whose snippet is Latin, German, Chinese), so it is switched on by a person
+ * once the 40-query check passes:
+ *   scripts/eval/orig-lang-recall/untranslated-lane.mjs
+ */
+export function untranslatedLaneEnabled(): boolean {
+  return (process.env.SEARCH_UNTRANSLATED_LANE || '').trim().toLowerCase() === 'on';
+}
+
+/** Why the lane returned what it did. Only `ok` carries rows. */
+export type UntranslatedLaneState = 'ok' | 'off' | 'unavailable' | 'failed' | 'closed';
+
+export interface UntranslatedLaneResult {
+  rows: SemanticPageResult[];
+  state: UntranslatedLaneState;
+}
+
+// A missing function stays missing until someone applies the migration, so
+// one probe answers for ten minutes instead of every search paying a
+// round-trip to learn it again.
+const UNAVAILABLE_TTL_MS = 10 * 60_000;
+let untranslatedUnavailableUntil = 0;
+
+/** Test hook. */
+export function resetUntranslatedLaneProbe(): void {
+  untranslatedUnavailableUntil = 0;
+}
+
+/**
+ * Nearest pages among those with NO English translation, by the vector of
+ * their original text (`match_semantic_untranslated`, the partial HNSW index
+ * of scripts/migration/add-untranslated-pages-index.sql). Through the shared
+ * index these pages reach the top 10 for 0.10 of queries written for them; in
+ * a lane of their own, 0.64.
+ *
+ * This lane is ADDITIVE, so unlike its siblings it never throws: a caller
+ * fuses it with the English lane and must still answer when it is missing.
+ * The reason comes back in `state` so the response can say so.
+ *  - `unavailable`: the function is not deployed, or this server has no
+ *    service-role key (EXECUTE is granted to service_role only).
+ *  - `failed`: it timed out or errored on this call.
+ *
+ * Tenant scope: the function takes no book set, so under a tenant scope the
+ * match is over-fetched and cut to the tenant's books here. That is closed and
+ * starved, the same trade the other lanes made before their `_in_books` twins
+ * existed (#6132). A closed scope asks nothing.
+ *
+ * Rows come back with an empty `snippet`: `page_translations.translation` is
+ * empty for these pages by definition. The caller reads the page's OCR
+ * (concept-search.ts) and must not show a row it found no text for.
+ */
+export async function semanticPageSearchUntranslated(
+  query: string,
+  limit: number,
+  opts: SemanticPageSearchOptions,
+): Promise<UntranslatedLaneResult> {
+  if (!untranslatedLaneEnabled() || usesLangStore(opts.textLang)) return { rows: [], state: 'off' };
+  if (opts.scope.kind === 'closed') return { rows: [], state: 'closed' };
+  if (opts.scope.kind === 'tenant' && opts.scope.bookIds.length === 0) return { rows: [], state: 'closed' };
+  if (!supabaseAdmin || Date.now() < untranslatedUnavailableUntil) return { rows: [], state: 'unavailable' };
+  const queryEmbedding = await getQueryEmbedding(query);
+  if (!queryEmbedding) return { rows: [], state: 'failed' };
+
+  const languages = (opts.languages?.length ?? 0) > 0 ? new Set(expandLanguages(opts.languages!)) : null;
+  const excluded = (opts.excludeLanguages?.length ?? 0) > 0 ? new Set(expandLanguages(opts.excludeLanguages!)) : null;
+  const filtered = opts.scope.kind === 'tenant' || !!(opts.language || languages || excluded
+    || opts.yearMin !== undefined || opts.yearMax !== undefined);
+  let data: any[] | null = null;
+  try {
+    const res = await supabaseAdmin
+      .rpc('match_semantic_untranslated', {
+        query_embedding: JSON.stringify(queryEmbedding),
+        match_threshold: 0.3,
+        // The function sets ef_search 100, its ceiling on rows returned.
+        match_count: filtered ? 100 : Math.min(limit, 100),
+      })
+      .abortSignal(AbortSignal.timeout(4000));
+    if (res.error) {
+      const e = res.error as { code?: string; message?: string };
+      if (e.code === 'PGRST202' || e.code === '42883' || e.code === '42501' || /could not find the function|permission denied/i.test(e.message || '')) {
+        untranslatedUnavailableUntil = Date.now() + UNAVAILABLE_TTL_MS;
+        return { rows: [], state: 'unavailable' };
+      }
+      return { rows: [], state: 'failed' };
+    }
+    data = (res.data || []) as any[];
+  } catch {
+    return { rows: [], state: 'failed' };
+  }
+
+  const scope = opts.scope;
+  const rows = data.filter((r) => {
+    if (scope.kind === 'tenant' && !scope.has(r.book_id)) return false;
+    if (opts.language && r.book_language !== opts.language) return false;
+    if (languages && !languages.has(r.book_language)) return false;
+    if (excluded && r.book_language && excluded.has(r.book_language)) return false;
+    if (opts.yearMin !== undefined && (r.book_year == null || r.book_year < opts.yearMin)) return false;
+    if (opts.yearMax !== undefined && (r.book_year == null || r.book_year > opts.yearMax)) return false;
+    return true;
+  });
+  return {
+    state: 'ok',
+    rows: rows.slice(0, limit).map((row) => ({
+      page_id: row.page_id,
+      book_id: row.book_id,
+      page_number: row.page_number,
+      snippet: '',
+      snippet_type: 'ocr' as const,
+      score: Number(row.similarity) || 0,
+      book_title: row.book_title,
+      book_author: row.book_author,
+      book_language: row.book_language,
+      book_year: row.book_year,
+    })),
+  };
+}
+
+/**
+ * The concept lane (#6173, stage 1, EXPERIMENTAL): pages ranked by the
+ * embedding of a model-written abstract of their ideas (`page_concepts`,
+ * `scripts/migration/add-page-concepts.sql`) instead of their text. Built to
+ * put several traditions into a concept query's first ten results; it holds
+ * ~2,000 books, so it is reached only by an explicit flag (`lane=concept`) and
+ * is not part of any default search.
+ *
+ * The snippet is the PAGE's own text, never the abstract: the abstract is an
+ * index key, and a paraphrase shown as the page is a misquote
+ * (`quote-and-snippet-integrity.md`). The RPCs do not return it.
+ *
+ * Scope as everywhere else (#4330): closed returns nothing; a tenant ranks
+ * inside its book set (`match_page_concepts_in_books`, exact over the set).
+ */
+export async function semanticConceptSearch(
+  query: string,
+  limit: number,
+  opts: { scope: SearchScope; maxPerBook?: number },
+): Promise<SemanticPageResult[]> {
+  if (opts.scope.kind === 'closed') return [];
+  const queryEmbedding = await getQueryEmbedding(query);
+  if (!queryEmbedding) return [];
+  const count = (opts.maxPerBook ?? 0) > 0 ? Math.min(limit * 3, 100) : limit;
+  const embedding = JSON.stringify(queryEmbedding);
+  const result = await scopedMatch<any>(opts.scope, {
+    global: { fn: 'match_page_concepts', args: { query_embedding: embedding, match_threshold: 0.3, match_count: count } },
+    scoped: { fn: 'match_page_concepts_in_books', args: { query_embedding: embedding, match_threshold: 0.3, match_count: count } },
+    fallbackMaxCount: 100,
+  });
+  if (result.error) throw new SemanticSearchError(result.rpc, result.error);
+  return shapePageRows(result.rows, limit, opts.maxPerBook);
+}
+
 // ── Page-level scoped search (step 2: within specific books) ────────
 
 export interface SemanticPageResult {
@@ -400,7 +721,9 @@ export interface SemanticPageResult {
   full_text?: string;
   // 'translation' = verbatim source text (safe to quote)
   // 'summary'     = AI-written continuity preamble that we could not cleanly strip
-  snippet_type?: 'translation' | 'summary';
+  // 'ocr'         = the page's own untranslated text, in the edition's language
+  //                 (the original-text lane, #5729)
+  snippet_type?: 'translation' | 'summary' | 'ocr';
   score: number;
   book_title: string;
   book_author: string | null;

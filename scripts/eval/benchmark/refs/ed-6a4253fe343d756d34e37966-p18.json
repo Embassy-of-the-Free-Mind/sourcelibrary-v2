@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA cera/lange1",
+  "edition": "Epistolarum Medicinalium Volumen Tripartitum : Opus varia ac rara cum eruditione, tum rerum scitu dignissimarum explicat — Hanau: Wechel; Marnius, 1605.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "13/13",
+    "pb_aligned_pages": "13/13"
+  },
+  "origin": "library",
+  "book_id": "6a4253fe343d756d34e37966",
+  "page_number": 18,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 15138,
+    "to_char": 16331,
+    "overlap": 0.756,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'me, quod tot culti ingenii sui'; ends 'Sed ex Germanis (nam hi, quos nomi-'; ref omits three Greek words/phrases; running head PRAEFATIO.",
+    "leaf_language": "mixed (lat + several Greek words)",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:00.115Z",
+  "text_location": "repo",
+  "text_sha256": "dd8f2ef29cc3e9638ff35699bb3bd6aa5bb3e3f79f5efb547cd26bce2ec5a68c",
+  "unit": {
+    "chars": 1193
+  },
+  "stratum": "latin-period-5126"
+}

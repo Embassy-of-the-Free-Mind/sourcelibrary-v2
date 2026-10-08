@@ -1,0 +1,21 @@
+{
+ "id": "69e8b2642ff2a8dc09e778a1_00439",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "墨子卷之十二\n\nOne cannot claim that good or bad fortune is without omen or lack of omen. Because of this, government becomes chaotic and the state is endangered. Therefore, in the books of the ancient kings, it is also stated: The character <term>Qi</term> <gloss>original: 丌; formerly written as 亓</gloss> means arrogance. To act from such a state is inauspicious. This means that there are punishments for doing evil and rewards for doing good. \n\nMaster Mozi said to Gongmeng Zi, regarding funeral rites: When a ruler, father, mother, or wife dies, one observes a three-year mourning period. For uncles, brothers, and clan members, the period is five months. For aunts, sisters, maternal uncles, and nephews, there are mourning periods of several months. If, in the intervals between these mourning periods, one recites the three hundred Odes, plays the three hundred Odes on strings, sings the three hundred Odes, and performs the dances of the three hundred Odes, then when would a gentleman find the time to attend to governance, and when would the common people find the time to engage in their occupations? \n\nGongmeng Zi replied, If the state is in chaos, then govern it; when it is governed, then establish rituals and music. When the state is stable, then engage in occupations; when the state is wealthy, then establish rituals and music. \n\nMaster Mozi said, If the governance of a state <insert>Lu states that five characters are missing here: \"is the reason for order, therefore it is order\"</insert> is abandoned, then the governance of the state is also abandoned. If the state...\n\n<summary>This passage records a debate between Mozi and Gongmeng Zi concerning the practicality of ritual music during mourning periods and the importance of prioritizing governance over ceremonial excess.</summary>\n<keywords>Mozi, Gongmeng Zi, funeral rites, ritual music, governance</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2082,
+ "outputTokens": 418,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.00057375,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 444,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

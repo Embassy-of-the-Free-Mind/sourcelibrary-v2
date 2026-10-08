@@ -1,0 +1,119 @@
+{
+  "summary": {
+    "book_id": "6ab5a4089e89e2a1f4139348",
+    "title": "Samuel Hartlib His Legacy of Husbandry",
+    "published": "1655",
+    "source": "EEBO-TCP A45756",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "guard-refused": 1
+    },
+    "median_char_acc": 0.9733,
+    "median_char_acc_windowed": 0.9705,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6ab5a408-p26",
+      "page": 26,
+      "overlap": 1,
+      "probe_words": 352,
+      "ref_chars": 2201,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.084,
+      "char_acc": 0.9749,
+      "char_acc_windowed": 0.9749
+    },
+    {
+      "slug": "ed-6ab5a408-p47",
+      "page": 47,
+      "overlap": 0.967,
+      "probe_words": 382,
+      "ref_chars": 2263,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.079,
+      "char_acc": 0.9698,
+      "char_acc_windowed": 0.9643
+    },
+    {
+      "slug": "ed-6ab5a408-p48",
+      "page": 48,
+      "overlap": 1,
+      "probe_words": 411,
+      "ref_chars": 2292,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": false,
+      "guard_wer": 0.604,
+      "char_acc": 0.4155,
+      "char_acc_windowed": 0.9801,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-6ab5a408-p64",
+      "page": 64,
+      "overlap": 1,
+      "probe_words": 338,
+      "ref_chars": 2089,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.084,
+      "char_acc": 0.9763,
+      "char_acc_windowed": 0.9751
+    },
+    {
+      "slug": "ed-6ab5a408-p128",
+      "page": 128,
+      "overlap": 0.62,
+      "probe_words": 382,
+      "ref_chars": 1980,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.268,
+      "char_acc": 0.8311,
+      "char_acc_windowed": 0.6725
+    },
+    {
+      "slug": "ed-6ab5a408-p131",
+      "page": 131,
+      "overlap": 1,
+      "probe_words": 322,
+      "ref_chars": 1823,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.066,
+      "char_acc": 0.9733,
+      "char_acc_windowed": 0.9705
+    },
+    {
+      "slug": "ed-6ab5a408-p142",
+      "page": 142,
+      "overlap": 0.841,
+      "probe_words": 383,
+      "ref_chars": 2347,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.186,
+      "char_acc": 0.9222,
+      "char_acc_windowed": 0.9081
+    },
+    {
+      "slug": "ed-6ab5a408-p232",
+      "page": 232,
+      "overlap": 1,
+      "probe_words": 343,
+      "ref_chars": 2070,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.081,
+      "char_acc": 0.9794,
+      "char_acc_windowed": 0.9764
+    }
+  ]
+}

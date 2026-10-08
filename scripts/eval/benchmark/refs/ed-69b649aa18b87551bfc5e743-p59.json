@@ -1,0 +1,44 @@
+{
+  "source": "CAMENA poemata/bebel2",
+  "edition": "Opera Bebeliana sequentia: Triumphus Veneris [...]. — Pforzheim: Anshelm, 1509.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-unit-by-eye",
+    "text_match_pages": null,
+    "pb_aligned_pages": null
+  },
+  "origin": "library",
+  "book_id": "69b649aa18b87551bfc5e743",
+  "page_number": 59,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "unit": "transcription-page",
+    "page_break_index": 58,
+    "probe": "none (located by eye)"
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-period-refs-5126.mjs",
+  "built_at": "2026-10-04T16:05:10.906Z",
+  "text_location": "repo",
+  "text_sha256": "2e3c5d164604b50aa0d68d00379bcae867d8c53e8f557c070537a5c2d9e98115",
+  "unit": {
+    "chars": 1346
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts at 'Rurales aluere casae' (page's first line) and ends at 'Oleniae nec me retinet pluviale capellae' (last line before signature 'F ij'); all 29 verse lines present. Running head 'QVINTVS' and signature omitted. Marginal notes (Agasina, Apollonia danubiana, Puellae Tubingenses, Puellae alpestres pulcherrimae) are present but inlined into the verse; two are placed a line or two off from their printed position (Tubingenses inlined before 'Taliter' though printed beside 'Miserat urbs'; alpestres before 'Militiae' though printed beside 'Attamen alpestres'). Heavy abbreviation (q; = que, ã/ũ nasal macrons, ę = ae, & = et) silently expanded and u/v normalised; 'Danubius ... recessit' same. Same page boundaries, so the same edition. Offset: page_number = pb + 1.",
+    "leaf_language": "la",
+    "page_type": "verse",
+    "abbreviations": "many",
+    "human_spot_check": null
+  },
+  "stratum": "latin-period-5126"
+}

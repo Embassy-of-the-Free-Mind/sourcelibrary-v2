@@ -1,0 +1,111 @@
+{
+  "summary": {
+    "book_id": "6a4a4551c0f3ec200c7de18c",
+    "title": "Ad clerum. A sermon preached at a visitation holden at Grantham, Lincoln: Octob.8. 1641.",
+    "published": "1670",
+    "source": "EEBO-TCP A93958",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "probe-too-short": 1
+    },
+    "median_char_acc": 0.9625,
+    "median_char_acc_windowed": 0.9466,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a4a4551-p2",
+      "page": 2,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a4a4551-p6",
+      "page": 6,
+      "overlap": 1,
+      "probe_words": 253,
+      "ref_chars": 1567,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.083,
+      "char_acc": 0.9625,
+      "char_acc_windowed": 0.9466
+    },
+    {
+      "slug": "ed-6a4a4551-p9",
+      "page": 9,
+      "overlap": 1,
+      "probe_words": 263,
+      "ref_chars": 1657,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.076,
+      "char_acc": 0.9375,
+      "char_acc_windowed": 0.9259
+    },
+    {
+      "slug": "ed-6a4a4551-p15",
+      "page": 15,
+      "overlap": 1,
+      "probe_words": 299,
+      "ref_chars": 1703,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.07,
+      "char_acc": 0.971,
+      "char_acc_windowed": 0.9644
+    },
+    {
+      "slug": "ed-6a4a4551-p16",
+      "page": 16,
+      "overlap": 1,
+      "probe_words": 260,
+      "ref_chars": 1615,
+      "engine": "gemini-2.5-flash",
+      "aligned": true,
+      "guard_wer": 0.125,
+      "char_acc": 0.967,
+      "char_acc_windowed": 0.9654
+    },
+    {
+      "slug": "ed-6a4a4551-p17",
+      "page": 17,
+      "overlap": 0.941,
+      "probe_words": 306,
+      "ref_chars": 1893,
+      "engine": "gemini-2.5-flash",
+      "aligned": true,
+      "guard_wer": 0.235,
+      "char_acc": 0.8369,
+      "char_acc_windowed": 0.7857
+    },
+    {
+      "slug": "ed-6a4a4551-p18",
+      "page": 18,
+      "overlap": 0.789,
+      "probe_words": 321,
+      "ref_chars": 1870,
+      "engine": "gemini-2.5-flash",
+      "aligned": true,
+      "guard_wer": 0.306,
+      "char_acc": 0.745,
+      "char_acc_windowed": 0.7725
+    },
+    {
+      "slug": "ed-6a4a4551-p23",
+      "page": 23,
+      "overlap": 1,
+      "probe_words": 275,
+      "ref_chars": 1626,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.077,
+      "char_acc": 0.9847,
+      "char_acc_windowed": 0.9832
+    }
+  ]
+}

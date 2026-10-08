@@ -1,0 +1,104 @@
+{
+  "summary": {
+    "book_id": "6a506fd980b7658fae261d6e",
+    "title": "Cambrensium Caroleia. Quibus pr[a]ecepta necessaria ad rempublicam nostram foeliciter administrandum interxuntur [sic]: opera & studio Gulielmi Vaughanni militis.",
+    "published": "1630",
+    "source": "EEBO-TCP A14289",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 6,
+    "skips": {
+      "probe-too-short": 2
+    },
+    "median_char_acc": 0.9559,
+    "median_char_acc_windowed": 0.941,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a506fd9-p2",
+      "page": 2,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a506fd9-p6",
+      "page": 6,
+      "overlap": 0.784,
+      "probe_words": 209,
+      "ref_chars": 1624,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.176,
+      "char_acc": 0.9505,
+      "char_acc_windowed": 0.941
+    },
+    {
+      "slug": "ed-6a506fd9-p9",
+      "page": 9,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a506fd9-p14",
+      "page": 14,
+      "overlap": 0.68,
+      "probe_words": 201,
+      "ref_chars": 1740,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.265,
+      "char_acc": 0.9559,
+      "char_acc_windowed": 0.9244
+    },
+    {
+      "slug": "ed-6a506fd9-p15",
+      "page": 15,
+      "overlap": 0.81,
+      "probe_words": 190,
+      "ref_chars": 1619,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.17,
+      "char_acc": 0.9633,
+      "char_acc_windowed": 0.9541
+    },
+    {
+      "slug": "ed-6a506fd9-p16",
+      "page": 16,
+      "overlap": 0.759,
+      "probe_words": 205,
+      "ref_chars": 1695,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.176,
+      "char_acc": 0.9571,
+      "char_acc_windowed": 0.945
+    },
+    {
+      "slug": "ed-6a506fd9-p17",
+      "page": 17,
+      "overlap": 0.575,
+      "probe_words": 209,
+      "ref_chars": 1812,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.3,
+      "char_acc": 0.9529,
+      "char_acc_windowed": 0.914
+    },
+    {
+      "slug": "ed-6a506fd9-p22",
+      "page": 22,
+      "overlap": 0.583,
+      "probe_words": 145,
+      "ref_chars": 1429,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.323,
+      "char_acc": 0.954,
+      "char_acc_windowed": 0.9331
+    }
+  ]
+}

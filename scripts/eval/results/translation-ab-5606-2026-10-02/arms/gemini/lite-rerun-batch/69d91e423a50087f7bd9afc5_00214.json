@@ -1,0 +1,21 @@
+{
+ "id": "69d91e423a50087f7bd9afc5_00214",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Atharvaveda Commentary [Hymn 58, Verse 5]\n\nAnd for the sake of protection. May this cup of yours, which is the instrument of consumption, may this battle not slip away, may it not depart. The seer who envisions the mantra says that they should carry it.\n\nI offer into the sacrifice, which has the eye as its beginning and face, through speech, hearing, and the mind. May the gods, being of good mind, come to this sacrifice which has been extended by <term>Viśvakarman</term> <gloss>the all-creating deity/the creator of the world</gloss>. (5)\n\nThis verse has already been explained previously (A 2, 35, 5). I offer the senses, such as the eye, as being connected to the sacrifice, meaning I make them inclined toward it. May the gods, acting as if they are of good mind, come and reach this mental sacrifice which has been extended and spread out by <term>Viśvakarman</term> <gloss>the all-creating deity</gloss>. This is the summary.\n\nThose who are the priests of the gods, and those who are worthy of sacrifice, and those for whom the offering is made as their portion. May all the gods, having come with their wives to this sacrifice, take delight in the splendor. (6)\n\nThose who are the priests among the gods, who are the performers of sacrifice at the proper time. And those who are worthy of sacrifice, those who are to be worshipped. For both these groups of gods, the <term>havya</term> <gloss>oblation</gloss> is prepared and given as their <term>bhāgadheya</term> <gloss>allotted portion</gloss>. May all the gods, however many there are, being great in their splendor, come to this sacrifice along with their wives, such as <term>Indrāṇī</term> <gloss>Indra's wife</gloss> and others, and take delight, becoming satisfied by the acceptance of the offering.\n\nThus ends the fourth hymn in the seventh <term>anuvāka</term> <gloss>section</gloss>.\n\nThe hymn beginning \"You, O Agni, are the protector of vows\" is prescribed for use during the <term>darśa</term> <gloss>new moon</gloss> or <term>pūrṇamāsa</term> <gloss>full moon</gloss> rituals, in the event of an error, or during the offering of clarified butter, or during the peaceful placement of sacred firewood. Indeed, it is codified by <term>Kauśika</term> <gloss>the author of the Kausika-sutra</gloss> in the <term>Saṃhitā-vidhi</term> <gloss>rules for the collection of hymns</gloss>.\n\n<summary>This page provides a commentary on verses 5 and 6 of the 58th hymn of the Atharvaveda, detailing the ritual significance of the sacrifice and the invocation of the gods and their consorts. It concludes with the end of the fourth hymn of the seventh section and a note on the liturgical application of a subsequent hymn.</summary>\n<keywords>Atharvaveda, Viśvakarman, Vedic sacrifice, Yajña, ritual priests, oblation, Kausika-sutra</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2647,
+ "outputTokens": 724,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.0008738750000000001,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2107,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

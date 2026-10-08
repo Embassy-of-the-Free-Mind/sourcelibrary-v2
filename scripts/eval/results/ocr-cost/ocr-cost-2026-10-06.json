@@ -1,0 +1,35 @@
+{
+ "measure": "metered OCR spend per page: collected Gemini Batch usage rows (gemini_usage, type=ocr, mode=batch, status=success)",
+ "window": {
+  "from": "2026-09-06T13:29:25.743Z",
+  "to": "2026-10-06T13:29:25.743Z",
+  "days": 30
+ },
+ "generated_by": "scripts/eval/ocr-cost-snapshot.mjs",
+ "issue": 5983,
+ "models": {
+  "gemini-3-flash-preview": {
+   "usd_per_1k_pages": 2.709,
+   "pages": 97135,
+   "rows": 3126,
+   "usd": 263.15,
+   "input_tokens_per_page": 4000,
+   "output_tokens_per_page": 1139,
+   "rows_by_store": {
+    "supabase": 3126
+   }
+  },
+  "gemini-3.1-flash-lite": {
+   "usd_per_1k_pages": 1.279,
+   "pages": 678562,
+   "rows": 10975,
+   "usd": 867.75,
+   "input_tokens_per_page": 3736,
+   "output_tokens_per_page": 1082,
+   "rows_by_store": {
+    "supabase": 10967,
+    "mongo": 8
+   }
+  }
+ }
+}

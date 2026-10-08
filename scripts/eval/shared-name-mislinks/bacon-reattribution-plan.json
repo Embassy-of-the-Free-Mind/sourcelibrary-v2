@@ -1,0 +1,4623 @@
+{
+ "planned_at": "2026-10-06T11:38:19.858Z",
+ "summary": {
+  "surname": "Bacon",
+  "record_id": "6991f0edfb05b02a1539aeec",
+  "record_wikidata_id": "Q37388",
+  "books": 211,
+  "mentions": 504,
+  "proposed_moves": 351,
+  "needs_reader": 30,
+  "stay": 123,
+  "moves_by_person": {
+   "francis": 218,
+   "roger": 133
+  },
+  "moves_by_person_and_tier": {
+   "francis/printed": 85,
+   "roger/same-book": 84,
+   "francis/note": 51,
+   "francis/same-book": 82,
+   "roger/note": 12,
+   "roger/printed": 37
+  },
+  "stay_by_reason": {
+   "no-evidence": 88,
+   "both-in-book": 34,
+   "both-on-page": 1
+  },
+  "books_by_outcome": {
+   "francis": 72,
+   "stay": 68,
+   "roger": 43,
+   "francis+roger": 3,
+   "francis+stay": 16,
+   "roger+stay": 8,
+   "francis+roger+stay": 1
+  },
+  "target_records": {
+   "roger": [
+    {
+     "_id": "69529065c263a0240a48ef4d",
+     "name": "Roger Bacon",
+     "books": 470
+    }
+   ],
+   "francis": [
+    {
+     "_id": "695a4993c263a0240a490293",
+     "name": "Francis Bacon",
+     "books": 243
+    },
+    {
+     "_id": "699591a1fb05b02a153aa572",
+     "name": "Lord Bacon",
+     "books": 44
+    },
+    {
+     "_id": "69956fb3fb05b02a153a86dc",
+     "name": "Verulam (Francis Bacon)",
+     "books": 13
+    }
+   ]
+  }
+ },
+ "rows": [
+  {
+   "book_id": "6909d654cf28baa1b4cb0269",
+   "page": 62,
+   "book_year": 1751,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69520176ab34727b1f04136b",
+   "page": 615,
+   "book_year": 1617,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6952855fab34727b1f04b383",
+   "page": 451,
+   "book_year": 1648,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69528a4fab34727b1f04eab6",
+   "page": 107,
+   "book_year": 1877,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69528a4fab34727b1f04eab6",
+   "page": 459,
+   "book_year": 1877,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69528a4fab34727b1f04eab6",
+   "page": 463,
+   "book_year": 1877,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6953e51c77f38f6761befc93",
+   "page": 10,
+   "book_year": 1900,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "695434e11479a63c1108a3ab",
+   "page": 25,
+   "book_year": 1874,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "695434e11479a63c1108a3ab",
+   "page": 27,
+   "book_year": 1874,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "695575ce57e3b773024f25c2",
+   "page": null,
+   "book_year": 1636,
+   "person": "francis",
+   "tier": "same-book",
+   "precision": "section"
+  },
+  {
+   "book_id": "69557e1157e3b773024f44c6",
+   "page": 27,
+   "book_year": 1917,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69557e1157e3b773024f44c6",
+   "page": 28,
+   "book_year": 1917,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69557e1157e3b773024f44c6",
+   "page": 29,
+   "book_year": 1917,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69557e1157e3b773024f44c6",
+   "page": 31,
+   "book_year": 1917,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": false,
+   "precision": "page"
+  },
+  {
+   "book_id": "69557e1157e3b773024f44c6",
+   "page": 58,
+   "book_year": 1917,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69557e1157e3b773024f44c6",
+   "page": 63,
+   "book_year": 1917,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69557e1157e3b773024f44c6",
+   "page": 69,
+   "book_year": 1917,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69557e1157e3b773024f44c6",
+   "page": 148,
+   "book_year": 1917,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69557e1157e3b773024f44c6",
+   "page": 197,
+   "book_year": 1917,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69557e1157e3b773024f44c6",
+   "page": 198,
+   "book_year": 1917,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": false,
+   "precision": "page"
+  },
+  {
+   "book_id": "69557e1157e3b773024f44c6",
+   "page": 199,
+   "book_year": 1917,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69557e1157e3b773024f44c6",
+   "page": 200,
+   "book_year": 1917,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69557e1157e3b773024f44c6",
+   "page": 201,
+   "book_year": 1917,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69557e1157e3b773024f44c6",
+   "page": 210,
+   "book_year": 1917,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69557e1157e3b773024f44c6",
+   "page": 211,
+   "book_year": 1917,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": false,
+   "precision": "page"
+  },
+  {
+   "book_id": "69557e1157e3b773024f44c6",
+   "page": 212,
+   "book_year": 1917,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69557e1157e3b773024f44c6",
+   "page": 213,
+   "book_year": 1917,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69557e1157e3b773024f44c6",
+   "page": 214,
+   "book_year": 1917,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69557e1157e3b773024f44c6",
+   "page": 215,
+   "book_year": 1917,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69557e1157e3b773024f44c6",
+   "page": 222,
+   "book_year": 1917,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69557e1157e3b773024f44c6",
+   "page": 224,
+   "book_year": 1917,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "695592397bd6d2cd1d619e4b",
+   "page": 28,
+   "book_year": 1559,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "6955d3c828a09ca65927e1ef",
+   "page": 386,
+   "book_year": 1725,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6955d3cf28a09ca65927e813",
+   "page": 688,
+   "book_year": 1725,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6956956c8c9559f6c2db0f42",
+   "page": 87,
+   "book_year": 1871,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "695930a0a41e40e9146a50b8",
+   "page": 113,
+   "book_year": 1658,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "695aa959a87b789737e9dce2",
+   "page": 176,
+   "book_year": 1646,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "695aa959a87b789737e9dce2",
+   "page": 186,
+   "book_year": 1646,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6970e3859b09d309d780a2de",
+   "page": 22,
+   "book_year": 1782,
+   "person": "roger",
+   "tier": "note",
+   "name_printed": false,
+   "precision": "page"
+  },
+  {
+   "book_id": "6970e3859b09d309d780a2de",
+   "page": 23,
+   "book_year": 1782,
+   "person": "roger",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69819207379d5ce6675ec02e",
+   "page": 135,
+   "book_year": 1784,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69819207379d5ce6675ec02e",
+   "page": 232,
+   "book_year": 1784,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69819207379d5ce6675ec02e",
+   "page": 273,
+   "book_year": 1784,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69819207379d5ce6675ec02e",
+   "page": 278,
+   "book_year": 1784,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69819207379d5ce6675ec02e",
+   "page": 375,
+   "book_year": 1784,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69819207379d5ce6675ec02e",
+   "page": 376,
+   "book_year": 1784,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69819207379d5ce6675ec02e",
+   "page": 377,
+   "book_year": 1784,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": false,
+   "precision": "page"
+  },
+  {
+   "book_id": "69819207379d5ce6675ec02e",
+   "page": 394,
+   "book_year": 1784,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69819207379d5ce6675ec02e",
+   "page": 395,
+   "book_year": 1784,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69819207379d5ce6675ec02e",
+   "page": 396,
+   "book_year": 1784,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69819207379d5ce6675ec02e",
+   "page": 397,
+   "book_year": 1784,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69819207379d5ce6675ec02e",
+   "page": 398,
+   "book_year": 1784,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69819207379d5ce6675ec02e",
+   "page": 399,
+   "book_year": 1784,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "698192079534729403fc4db4",
+   "page": 1135,
+   "book_year": 1676,
+   "person": "roger",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "698192090262143fe66eb184",
+   "page": 262,
+   "book_year": 1776,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "698192090262143fe66eb184",
+   "page": 264,
+   "book_year": 1776,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6988a59f090ba3597e45028a",
+   "page": 198,
+   "book_year": 1801,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6988a59f85cb2dd0f1e56e5b",
+   "page": 33,
+   "book_year": 1746,
+   "person": "roger",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "699047e512d83c216b7e8c3f",
+   "page": null,
+   "book_year": 1814,
+   "person": null,
+   "tier": "no-evidence",
+   "precision": "section"
+  },
+  {
+   "book_id": "6990595eaaa7f10ed4cfade7",
+   "page": 21,
+   "book_year": 1912,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69905c8baaa7f10ed4cfc0d7",
+   "page": 122,
+   "book_year": 1869,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69905c8baaa7f10ed4cfc0d7",
+   "page": 127,
+   "book_year": 1869,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69905c8baaa7f10ed4cfc0d7",
+   "page": 210,
+   "book_year": 1869,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69905f1a40bc3a0478efa73d",
+   "page": 539,
+   "book_year": 1813,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69905f1a40bc3a0478efa73d",
+   "page": 543,
+   "book_year": 1813,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69905f1a40bc3a0478efa73d",
+   "page": 544,
+   "book_year": 1813,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69905f1a40bc3a0478efa73d",
+   "page": 625,
+   "book_year": 1813,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69905f1c40bc3a0478efa9d3",
+   "page": 131,
+   "book_year": 1818,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6990632fef12272ffdc900f2",
+   "page": 146,
+   "book_year": 1798,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69906352ef12272ffdc910f3",
+   "page": 199,
+   "book_year": 1893,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "699069002f82e0fda480401e",
+   "page": 4,
+   "book_year": 1928,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "699069e81cf6ed5fbc8f3f00",
+   "page": 29,
+   "book_year": 1854,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "699069ee1cf6ed5fbc8f4589",
+   "page": 155,
+   "book_year": 1929,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69906a011cf6ed5fbc8f4b46",
+   "page": 430,
+   "book_year": 1865,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69906a8d1cf6ed5fbc8f60c0",
+   "page": 60,
+   "book_year": 1886,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69906a991cf6ed5fbc8f71f5",
+   "page": 307,
+   "book_year": 1903,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69906ad11cf6ed5fbc8f7ffc",
+   "page": 360,
+   "book_year": 1898,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6990794eb621b177c1af6190",
+   "page": 457,
+   "book_year": 1926,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6991bc91dbc9a79256550cec",
+   "page": 16,
+   "book_year": 1907,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6991bc91dbc9a79256550cec",
+   "page": 53,
+   "book_year": 1907,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6991bccb879c23a0fef516a5",
+   "page": 24,
+   "book_year": 1680,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6991bce1879c23a0fef51a77",
+   "page": 14,
+   "book_year": 1902,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6991bd4e70254d38471e41a1",
+   "page": 10,
+   "book_year": 1836,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6991bd4e70254d38471e41a1",
+   "page": 21,
+   "book_year": 1836,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6991bd5d70254d38471e4f8d",
+   "page": 217,
+   "book_year": 1831,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6991bd5d70254d38471e4f8d",
+   "page": 218,
+   "book_year": 1831,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6991bd5d70254d38471e4f8d",
+   "page": 219,
+   "book_year": 1831,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6991bd5d70254d38471e4f8d",
+   "page": 261,
+   "book_year": 1831,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6991bd6170254d38471e5240",
+   "page": 51,
+   "book_year": 1851,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6991be03df9a711e30db81b8",
+   "page": 125,
+   "book_year": 1875,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6991e967e00017f4a9764e1a",
+   "page": 21,
+   "book_year": 1893,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6991ec1ee93551dd846a83a4",
+   "page": 554,
+   "book_year": 1610,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6991ec1ee93551dd846a83a4",
+   "page": 580,
+   "book_year": 1610,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6991ed578bec46532eb4a6a0",
+   "page": 142,
+   "book_year": 1572,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "699246eb8f106fccb284e122",
+   "page": 371,
+   "book_year": 1880,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "699246eb8f106fccb284e122",
+   "page": 383,
+   "book_year": 1880,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69925831ad311253224ce035",
+   "page": 94,
+   "book_year": 1851,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69925831ad311253224ce035",
+   "page": 129,
+   "book_year": 1851,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69925831ad311253224ce035",
+   "page": 150,
+   "book_year": 1851,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69a5537fbab4924e15759db4",
+   "page": 137,
+   "book_year": 1912,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69a565d45a8a09c1b325e8f2",
+   "page": 77,
+   "book_year": 1708,
+   "person": "roger",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69ac5fa34f76006bddda31c9",
+   "page": 354,
+   "book_year": 1967,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69ac5fa34f76006bddda31c9",
+   "page": 371,
+   "book_year": 1967,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69ac5fa34f76006bddda31c9",
+   "page": 380,
+   "book_year": 1967,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69ac5fa34f76006bddda31c9",
+   "page": 395,
+   "book_year": 1967,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": false,
+   "precision": "page"
+  },
+  {
+   "book_id": "69ac83df599137a9d3bf78f5",
+   "page": 81,
+   "book_year": 1672,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69ac83df599137a9d3bf78f5",
+   "page": 82,
+   "book_year": 1672,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": false,
+   "precision": "page"
+  },
+  {
+   "book_id": "69ac8530960d5ad0b473191a",
+   "page": 296,
+   "book_year": 1658,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69ad655875811c30866e1398",
+   "page": 202,
+   "book_year": 1875,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69ad656575811c30866e15aa",
+   "page": 164,
+   "book_year": 1875,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69ad656575811c30866e15aa",
+   "page": 168,
+   "book_year": 1875,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": false,
+   "precision": "page"
+  },
+  {
+   "book_id": "69ad656575811c30866e15aa",
+   "page": 394,
+   "book_year": 1875,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69ad65a60b6018c6ed1798c6",
+   "page": 522,
+   "book_year": 1855,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69ad65dd75811c30866e2324",
+   "page": 41,
+   "book_year": 1882,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69ad65dd75811c30866e2324",
+   "page": 500,
+   "book_year": 1882,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69ade7eeda7f32a00bedaa7c",
+   "page": 87,
+   "book_year": 1772,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69ade9a4bbdf273192a47116",
+   "page": 193,
+   "book_year": 1903,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69ade9acbbdf273192a47370",
+   "page": 94,
+   "book_year": 1907,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69ade9b4bbdf273192a474bc",
+   "page": 358,
+   "book_year": 1918,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69adea345bc19ec9b2edb734",
+   "page": 146,
+   "book_year": 1913,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69adea612b796bd38f434f0a",
+   "page": 150,
+   "book_year": 1858,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69adea612b796bd38f434f0a",
+   "page": 155,
+   "book_year": 1858,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69adea612b796bd38f434f0a",
+   "page": 210,
+   "book_year": 1858,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69ae8f1f74ca0595f6ec9533",
+   "page": 212,
+   "book_year": 1845,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": false,
+   "precision": "page"
+  },
+  {
+   "book_id": "69ae8f1f74ca0595f6ec9533",
+   "page": 213,
+   "book_year": 1845,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69ae8f1f74ca0595f6ec9533",
+   "page": 214,
+   "book_year": 1845,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": false,
+   "precision": "page"
+  },
+  {
+   "book_id": "69ae8f3d0cec1b9ab2cee821",
+   "page": 20,
+   "book_year": 1891,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aea5d80fefd7831dcdb226",
+   "page": 177,
+   "book_year": 1899,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aea703971abe996d21b09f",
+   "page": 187,
+   "book_year": 1798,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aea703971abe996d21b09f",
+   "page": 188,
+   "book_year": 1798,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aea703971abe996d21b09f",
+   "page": 189,
+   "book_year": 1798,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aea703971abe996d21b09f",
+   "page": 395,
+   "book_year": 1798,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aea88b1cbf28a363a5026c",
+   "page": 50,
+   "book_year": 1919,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aea88b1cbf28a363a5026c",
+   "page": 66,
+   "book_year": 1919,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aeab1767e6731bc1365f75",
+   "page": null,
+   "book_year": 1968,
+   "person": "francis",
+   "tier": "same-book",
+   "precision": "section"
+  },
+  {
+   "book_id": "69aeab5e67e6731bc136675b",
+   "page": 79,
+   "book_year": 1908,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aeab5e67e6731bc136675b",
+   "page": 250,
+   "book_year": 1908,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aeab5e67e6731bc136675b",
+   "page": 259,
+   "book_year": 1908,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aeab5e67e6731bc136675b",
+   "page": 268,
+   "book_year": 1908,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aeab6667e6731bc1366b69",
+   "page": 12,
+   "book_year": 1817,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aead3466bcc9447837d1de",
+   "page": 15,
+   "book_year": 1841,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aead3466bcc9447837d1de",
+   "page": 16,
+   "book_year": 1841,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aead3466bcc9447837d1de",
+   "page": 18,
+   "book_year": 1841,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aead3466bcc9447837d1de",
+   "page": 24,
+   "book_year": 1841,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aead3466bcc9447837d1de",
+   "page": 25,
+   "book_year": 1841,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aead3466bcc9447837d1de",
+   "page": 32,
+   "book_year": 1841,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aead3466bcc9447837d1de",
+   "page": 34,
+   "book_year": 1841,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aead3466bcc9447837d1de",
+   "page": 55,
+   "book_year": 1841,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aead3466bcc9447837d1de",
+   "page": 74,
+   "book_year": 1841,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aead3466bcc9447837d1de",
+   "page": 139,
+   "book_year": 1841,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aead3466bcc9447837d1de",
+   "page": 140,
+   "book_year": 1841,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aead3466bcc9447837d1de",
+   "page": 143,
+   "book_year": 1841,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aead3466bcc9447837d1de",
+   "page": 153,
+   "book_year": 1841,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aead3466bcc9447837d1de",
+   "page": 154,
+   "book_year": 1841,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aead3466bcc9447837d1de",
+   "page": 158,
+   "book_year": 1841,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aead3466bcc9447837d1de",
+   "page": 159,
+   "book_year": 1841,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aead8366bcc9447837d974",
+   "page": 34,
+   "book_year": 1908,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aead8366bcc9447837d974",
+   "page": 96,
+   "book_year": 1908,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aead9166bcc9447837db22",
+   "page": 60,
+   "book_year": 1919,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aead9166bcc9447837db22",
+   "page": 162,
+   "book_year": 1919,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 141,
+   "book_year": 1919,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 143,
+   "book_year": 1919,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 144,
+   "book_year": 1919,
+   "person": null,
+   "tier": "both-on-page",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 145,
+   "book_year": 1919,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 146,
+   "book_year": 1919,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 147,
+   "book_year": 1919,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 148,
+   "book_year": 1919,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 149,
+   "book_year": 1919,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 150,
+   "book_year": 1919,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 151,
+   "book_year": 1919,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 194,
+   "book_year": 1919,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 197,
+   "book_year": 1919,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 202,
+   "book_year": 1919,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 203,
+   "book_year": 1919,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 243,
+   "book_year": 1919,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 249,
+   "book_year": 1919,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 314,
+   "book_year": 1919,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 318,
+   "book_year": 1919,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 321,
+   "book_year": 1919,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 325,
+   "book_year": 1919,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 359,
+   "book_year": 1919,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 363,
+   "book_year": 1919,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 366,
+   "book_year": 1919,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 368,
+   "book_year": 1919,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebad46059efb05d4fca4a",
+   "page": 436,
+   "book_year": 1919,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebae86059efb05d4fcce8",
+   "page": 217,
+   "book_year": 1915,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebae86059efb05d4fcce8",
+   "page": 218,
+   "book_year": 1915,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebb116059efb05d4fcf8f",
+   "page": 100,
+   "book_year": 1874,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebb116059efb05d4fcf8f",
+   "page": 162,
+   "book_year": 1874,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebc7a0b218b96da7285d7",
+   "page": 40,
+   "book_year": 1907,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebc7a0b218b96da7285d7",
+   "page": 41,
+   "book_year": 1907,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebc7a0b218b96da7285d7",
+   "page": 42,
+   "book_year": 1907,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebc7a0b218b96da7285d7",
+   "page": 43,
+   "book_year": 1907,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebc7a0b218b96da7285d7",
+   "page": 383,
+   "book_year": 1907,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebc7a0b218b96da7285d7",
+   "page": 384,
+   "book_year": 1907,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebc7a0b218b96da7285d7",
+   "page": 405,
+   "book_year": 1907,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebc950b218b96da728a56",
+   "page": 41,
+   "book_year": 1924,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebe74a103e42dc941441c",
+   "page": null,
+   "book_year": 1604,
+   "person": null,
+   "tier": "no-evidence",
+   "precision": "section"
+  },
+  {
+   "book_id": "69aebe8c7dd4a7474d1f2d6b",
+   "page": 346,
+   "book_year": 1929,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aec18bb87be1eef391fd3f",
+   "page": 5,
+   "book_year": 1656,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aec1eeca7400b16b4f7649",
+   "page": 22,
+   "book_year": 1667,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aec1eeca7400b16b4f7649",
+   "page": 24,
+   "book_year": 1667,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aec41ba1e0be599604e642",
+   "page": 217,
+   "book_year": 1905,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aec41ba1e0be599604e642",
+   "page": 218,
+   "book_year": 1905,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aec41ba1e0be599604e642",
+   "page": 261,
+   "book_year": 1905,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aec5053b6ebce5e0ee8644",
+   "page": 238,
+   "book_year": 1795,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aec5053b6ebce5e0ee8644",
+   "page": 239,
+   "book_year": 1795,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aec5053b6ebce5e0ee8644",
+   "page": 240,
+   "book_year": 1795,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af0bf3fc8ed2165ccefb0b",
+   "page": 360,
+   "book_year": 1602,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": false,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af0c1a0b28ecdd1331d2a7",
+   "page": 360,
+   "book_year": 1555,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": false,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69af0c1d0b28ecdd1331d5e2",
+   "page": 360,
+   "book_year": 1581,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": false,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69af0da19f13b61d0a6c5b8b",
+   "page": 277,
+   "book_year": 1623,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af0da19f13b61d0a6c5b8b",
+   "page": 280,
+   "book_year": 1623,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af0da79f13b61d0a6c5f95",
+   "page": 22,
+   "book_year": 1636,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af0f71a940055c46680d3a",
+   "page": 232,
+   "book_year": 1697,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af0f71a940055c46680d3a",
+   "page": 234,
+   "book_year": 1697,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af0f71a940055c46680d3a",
+   "page": 294,
+   "book_year": 1697,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af0fbc6f6d83348c7fa013",
+   "page": 210,
+   "book_year": 1739,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af0fbc6f6d83348c7fa013",
+   "page": 687,
+   "book_year": 1739,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af22e7f98f6eff774cda13",
+   "page": 159,
+   "book_year": 1855,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af22e7f98f6eff774cda13",
+   "page": 164,
+   "book_year": 1855,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af39a3102120ca71f01256",
+   "page": 195,
+   "book_year": 1894,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af39a3102120ca71f01256",
+   "page": 637,
+   "book_year": 1894,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af3e00dec9c66a7172be1e",
+   "page": 75,
+   "book_year": 1906,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af4076c1333bab2648393a",
+   "page": 42,
+   "book_year": 1906,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af40f5c1333bab26483ca8",
+   "page": 104,
+   "book_year": 1900,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af40f5c1333bab26483ca8",
+   "page": 106,
+   "book_year": 1900,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af40f5c1333bab26483ca8",
+   "page": 135,
+   "book_year": 1900,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af40f5c1333bab26483ca8",
+   "page": 149,
+   "book_year": 1900,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af40f5c1333bab26483ca8",
+   "page": 150,
+   "book_year": 1900,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af40f5c1333bab26483ca8",
+   "page": 212,
+   "book_year": 1900,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af40f5c1333bab26483ca8",
+   "page": 219,
+   "book_year": 1900,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af41912a17c2103c8205a5",
+   "page": 113,
+   "book_year": 1886,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af41912a17c2103c8205a5",
+   "page": 119,
+   "book_year": 1886,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af41912a17c2103c8205a5",
+   "page": 120,
+   "book_year": 1886,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af41912a17c2103c8205a5",
+   "page": 122,
+   "book_year": 1886,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af41912a17c2103c8205a5",
+   "page": 332,
+   "book_year": 1886,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af41912a17c2103c8205a5",
+   "page": 457,
+   "book_year": 1886,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af41912a17c2103c8205a5",
+   "page": 475,
+   "book_year": 1886,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af41912a17c2103c8205a5",
+   "page": 541,
+   "book_year": 1886,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af41912a17c2103c8205a5",
+   "page": 711,
+   "book_year": 1886,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af41acb778f128264fc4b0",
+   "page": 143,
+   "book_year": 1899,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af429ceaef59aff2e0f6bc",
+   "page": 36,
+   "book_year": 1852,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af42b83bd5f6f35ab891b3",
+   "page": 97,
+   "book_year": 1910,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af5966522dc3dfdf725c38",
+   "page": 391,
+   "book_year": 1917,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af5966522dc3dfdf725c38",
+   "page": 392,
+   "book_year": 1917,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af5966522dc3dfdf725c38",
+   "page": 393,
+   "book_year": 1917,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af5966522dc3dfdf725c38",
+   "page": 394,
+   "book_year": 1917,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af5966522dc3dfdf725c38",
+   "page": 395,
+   "book_year": 1917,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af5966522dc3dfdf725c38",
+   "page": 396,
+   "book_year": 1917,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af5966522dc3dfdf725c38",
+   "page": 397,
+   "book_year": 1917,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af5966522dc3dfdf725c38",
+   "page": 398,
+   "book_year": 1917,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af5966522dc3dfdf725c38",
+   "page": 399,
+   "book_year": 1917,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af5966522dc3dfdf725c38",
+   "page": 400,
+   "book_year": 1917,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af5966522dc3dfdf725c38",
+   "page": 401,
+   "book_year": 1917,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af5966522dc3dfdf725c38",
+   "page": 402,
+   "book_year": 1917,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af5966522dc3dfdf725c38",
+   "page": 403,
+   "book_year": 1917,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af5966522dc3dfdf725c38",
+   "page": 404,
+   "book_year": 1917,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af5966522dc3dfdf725c38",
+   "page": 405,
+   "book_year": 1917,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af5966522dc3dfdf725c38",
+   "page": 406,
+   "book_year": 1917,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af5966522dc3dfdf725c38",
+   "page": 407,
+   "book_year": 1917,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af5966522dc3dfdf725c38",
+   "page": 408,
+   "book_year": 1917,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69afe233cf56258c93890546",
+   "page": 111,
+   "book_year": 1785,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69afe233cf56258c93890546",
+   "page": 243,
+   "book_year": 1785,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69afe233cf56258c93890546",
+   "page": 247,
+   "book_year": 1785,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b17be3938cbe91c8720452",
+   "page": 570,
+   "book_year": 1677,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b18aa6c4be2cdd0edc883b",
+   "page": 84,
+   "book_year": 1618,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b18aa6c4be2cdd0edc883b",
+   "page": 104,
+   "book_year": 1618,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b18aa6c4be2cdd0edc883b",
+   "page": 124,
+   "book_year": 1618,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b18aa6c4be2cdd0edc883b",
+   "page": 136,
+   "book_year": 1618,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b18aa6c4be2cdd0edc883b",
+   "page": 139,
+   "book_year": 1618,
+   "person": "roger",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b18aa6c4be2cdd0edc883b",
+   "page": 169,
+   "book_year": 1618,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b2ff88a1a4246ddb45b1e1",
+   "page": 496,
+   "book_year": 1653,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b2ff88a1a4246ddb45b1e1",
+   "page": 505,
+   "book_year": 1653,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": false,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b2ff88a1a4246ddb45b1e1",
+   "page": 512,
+   "book_year": 1653,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b2ff88a1a4246ddb45b1e1",
+   "page": 513,
+   "book_year": 1653,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": false,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b2ff88a1a4246ddb45b1e1",
+   "page": 515,
+   "book_year": 1653,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": false,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b3f74ba107e55a0ee1ca1a",
+   "page": 286,
+   "book_year": 1525,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69b41865f1200e2ab53cf7f4",
+   "page": -91,
+   "book_year": 1750,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b41865f1200e2ab53cf7f4",
+   "page": 52,
+   "book_year": 1750,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b41865f1200e2ab53cf7f4",
+   "page": 53,
+   "book_year": 1750,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b4188d2b0edf3eaa2dd39d",
+   "page": -71,
+   "book_year": 1620,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b4188d2b0edf3eaa2dd39d",
+   "page": 141,
+   "book_year": 1620,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b4188d2b0edf3eaa2dd39d",
+   "page": 150,
+   "book_year": 1620,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b4188d2b0edf3eaa2dd39d",
+   "page": 155,
+   "book_year": 1620,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b4cc30d2bf9b45ea4785b8",
+   "page": 82,
+   "book_year": 1618,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b4cc30d2bf9b45ea4785b8",
+   "page": 102,
+   "book_year": 1618,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b4cc30d2bf9b45ea4785b8",
+   "page": 167,
+   "book_year": 1618,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b4d641853c26e0d1560221",
+   "page": 365,
+   "book_year": 1567,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69b4d641853c26e0d1560221",
+   "page": 369,
+   "book_year": 1567,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69b4d641853c26e0d1560221",
+   "page": 372,
+   "book_year": 1567,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69b51d46f23ccdcced306fff",
+   "page": 439,
+   "book_year": 1613,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b51d46f23ccdcced306fff",
+   "page": 468,
+   "book_year": 1613,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b51d75261c58d63664a9f1",
+   "page": 524,
+   "book_year": 1617,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b51d8cff09e4fe943a6f1d",
+   "page": 84,
+   "book_year": 1618,
+   "person": "roger",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b51db9efd8df28f2da9dd3",
+   "page": 172,
+   "book_year": 1620,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b51dc0f23ccdcced309728",
+   "page": 120,
+   "book_year": 1629,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b51dceff09e4fe943a931a",
+   "page": 94,
+   "book_year": 1659,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b51dde261c58d63664bf05",
+   "page": 140,
+   "book_year": 1702,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b51dde261c58d63664bf05",
+   "page": 367,
+   "book_year": 1702,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b51dde261c58d63664bf05",
+   "page": 369,
+   "book_year": 1702,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b51df3261c58d63664d22c",
+   "page": 49,
+   "book_year": 1752,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b51df3261c58d63664d22c",
+   "page": 50,
+   "book_year": 1752,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b51df3261c58d63664d22c",
+   "page": 217,
+   "book_year": 1752,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b51df3261c58d63664d22c",
+   "page": 223,
+   "book_year": 1752,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b51e0cefd8df28f2daf7cd",
+   "page": 201,
+   "book_year": 1568,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b51e0cefd8df28f2daf7cd",
+   "page": 203,
+   "book_year": 1568,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69b51e0cefd8df28f2daf7cd",
+   "page": 204,
+   "book_year": 1568,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69b51e16cf111105c4296b94",
+   "page": 357,
+   "book_year": 1551,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69b51edaff09e4fe943b611b",
+   "page": 33,
+   "book_year": 1783,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b6422309a998b4c36dd80a",
+   "page": 146,
+   "book_year": 1912,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b6422909a998b4c36dd8f9",
+   "page": 188,
+   "book_year": 1845,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b6422909a998b4c36dd8f9",
+   "page": 192,
+   "book_year": 1845,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b64259535439aaa4893d4c",
+   "page": 35,
+   "book_year": 1874,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b64259535439aaa4893d4c",
+   "page": 173,
+   "book_year": 1874,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b64267535439aaa4894006",
+   "page": 150,
+   "book_year": 1855,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b69d32080b19f98fd0ac3e",
+   "page": 1142,
+   "book_year": 1650,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b6aeff6e2b8bd5c3cb3406",
+   "page": 648,
+   "book_year": 1671,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b6b4a396dc15d4a16e0aeb",
+   "page": 703,
+   "book_year": 1678,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b6b4a396dc15d4a16e0aeb",
+   "page": 704,
+   "book_year": 1678,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b6b4a396dc15d4a16e0aeb",
+   "page": 708,
+   "book_year": 1678,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69bd95476a23f5594be16970",
+   "page": 360,
+   "book_year": 1853,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": false,
+   "precision": "page"
+  },
+  {
+   "book_id": "69bd9ca46120d54bd037001f",
+   "page": 331,
+   "book_year": 1533,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69bd9d056120d54bd0372a3a",
+   "page": 117,
+   "book_year": 1561,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69bd9d056120d54bd0372a3a",
+   "page": 118,
+   "book_year": 1561,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69bd9d056120d54bd0372a3a",
+   "page": 123,
+   "book_year": 1561,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69bd9e066120d54bd037a8ad",
+   "page": 880,
+   "book_year": 1613,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69bd9e066120d54bd037a8ad",
+   "page": 881,
+   "book_year": 1613,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69bd9ecdf6d63c919747ccec",
+   "page": 137,
+   "book_year": 1651,
+   "person": "roger",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69bd9f0ef6d63c919747ded2",
+   "page": 95,
+   "book_year": 1659,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69bd9f0ef6d63c919747ded2",
+   "page": 551,
+   "book_year": 1659,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69bd9f0ef6d63c919747ded2",
+   "page": 939,
+   "book_year": 1659,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69bd9f0ef6d63c919747ded2",
+   "page": 941,
+   "book_year": 1659,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69bd9f35f6d63c919747fc30",
+   "page": 179,
+   "book_year": 1673,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69bd9f35f6d63c919747fc30",
+   "page": 190,
+   "book_year": 1673,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69bd9f35f6d63c919747fc30",
+   "page": 191,
+   "book_year": 1673,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": false,
+   "precision": "page"
+  },
+  {
+   "book_id": "69bda10bf6d63c919748cb55",
+   "page": 169,
+   "book_year": 1762,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69bda10bf6d63c919748cb55",
+   "page": 229,
+   "book_year": 1762,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69bda161f6d63c919748fc0f",
+   "page": 186,
+   "book_year": 1920,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69bda161f6d63c919748fc0f",
+   "page": 391,
+   "book_year": 1920,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69bda161f6d63c919748fc0f",
+   "page": 453,
+   "book_year": 1920,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69bda161f6d63c919748fc0f",
+   "page": 468,
+   "book_year": 1920,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69bda161f6d63c919748fc0f",
+   "page": 686,
+   "book_year": 1920,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69bda161f6d63c919748fc0f",
+   "page": 689,
+   "book_year": 1920,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c1aaa5b82ba5d5bed93dcc",
+   "page": 12,
+   "book_year": 1750,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c258b1b82ba5d5bed9f532",
+   "page": 25,
+   "book_year": 1782,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c27b8eb82ba5d5beda46af",
+   "page": 7,
+   "book_year": 1820,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c581e32e2f948a050a5054",
+   "page": -120,
+   "book_year": 1762,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c581e32e2f948a050a5054",
+   "page": -119,
+   "book_year": 1762,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c581e32e2f948a050a5054",
+   "page": -118,
+   "book_year": 1762,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": false,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c581e32e2f948a050a5054",
+   "page": -114,
+   "book_year": 1762,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c581e32e2f948a050a5054",
+   "page": 235,
+   "book_year": 1762,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c581e32e2f948a050a5054",
+   "page": 236,
+   "book_year": 1762,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c581e32e2f948a050a5054",
+   "page": 238,
+   "book_year": 1762,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c581e32e2f948a050a505c",
+   "page": -91,
+   "book_year": 1622,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c581e32e2f948a050a505c",
+   "page": -89,
+   "book_year": 1622,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c6332f3e8cae136d1496fd",
+   "page": -202,
+   "book_year": 1782,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c71b11da9771c71631684d",
+   "page": null,
+   "book_year": 1748,
+   "person": null,
+   "tier": "both-in-book",
+   "precision": "section"
+  },
+  {
+   "book_id": "69c73f1a6a0f3d112faf7a97",
+   "page": -13,
+   "book_year": 1766,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c73f1a6a0f3d112faf7a97",
+   "page": 24,
+   "book_year": 1766,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c771e96a0f3d112faf91b8",
+   "page": -104,
+   "book_year": 1631,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c771e96a0f3d112faf91b8",
+   "page": -103,
+   "book_year": 1631,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c771e96a0f3d112faf91b8",
+   "page": -101,
+   "book_year": 1631,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c771e96a0f3d112faf91b8",
+   "page": -99,
+   "book_year": 1631,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c774af6a0f3d112faf9362",
+   "page": null,
+   "book_year": 1531,
+   "person": null,
+   "tier": "date-only",
+   "precision": "section",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69c7b6c525ec2ba5ccd7f74d",
+   "page": -99,
+   "book_year": 1795,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c7cf0825ec2ba5ccd801a2",
+   "page": -166,
+   "book_year": 1762,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c7cf0825ec2ba5ccd801a2",
+   "page": 330,
+   "book_year": 1762,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c7cf0825ec2ba5ccd801a2",
+   "page": 331,
+   "book_year": 1762,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c7f4a26c6f3cc53c841975",
+   "page": null,
+   "book_year": 1670,
+   "person": null,
+   "tier": "no-evidence",
+   "precision": "section"
+  },
+  {
+   "book_id": "69c7faaf6c6f3cc53c842b61",
+   "page": 157,
+   "book_year": 1622,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c7faaf6c6f3cc53c842b61",
+   "page": 185,
+   "book_year": 1622,
+   "person": "roger",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c7faaf6c6f3cc53c842b61",
+   "page": 187,
+   "book_year": 1622,
+   "person": "roger",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c7faaf6c6f3cc53c842b61",
+   "page": 188,
+   "book_year": 1622,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c808636c6f3cc53c845d1a",
+   "page": -206,
+   "book_year": 1771,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c808636c6f3cc53c845d1a",
+   "page": 383,
+   "book_year": 1771,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c808636c6f3cc53c845d1a",
+   "page": 384,
+   "book_year": 1771,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c808636c6f3cc53c845d1a",
+   "page": 410,
+   "book_year": 1771,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c822d46c6f3cc53c84ae33",
+   "page": 44,
+   "book_year": 1774,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c8231f6c6f3cc53c84af44",
+   "page": -140,
+   "book_year": 1738,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c8231f6c6f3cc53c84af44",
+   "page": -136,
+   "book_year": 1738,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c825006c6f3cc53c84b72d",
+   "page": -251,
+   "book_year": 1728,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c828246c6f3cc53c84c283",
+   "page": 31,
+   "book_year": 1724,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c828ae6c6f3cc53c84c46c",
+   "page": 164,
+   "book_year": 1733,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c828c36c6f3cc53c84c49e",
+   "page": 161,
+   "book_year": 1700,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c831db6c6f3cc53c84ddef",
+   "page": 329,
+   "book_year": 1604,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c831db6c6f3cc53c84ddef",
+   "page": 331,
+   "book_year": 1604,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c831db6c6f3cc53c84ddef",
+   "page": 333,
+   "book_year": 1604,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c831db6c6f3cc53c84ddef",
+   "page": 335,
+   "book_year": 1604,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c831db6c6f3cc53c84ddef",
+   "page": 337,
+   "book_year": 1604,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c831db6c6f3cc53c84ddef",
+   "page": 339,
+   "book_year": 1604,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c831db6c6f3cc53c84ddef",
+   "page": 340,
+   "book_year": 1604,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c831db6c6f3cc53c84ddef",
+   "page": 670,
+   "book_year": 1604,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c831db6c6f3cc53c84ddef",
+   "page": 671,
+   "book_year": 1604,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c8597a6c6f3cc53c8545c9",
+   "page": -275,
+   "book_year": 1709,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c8597a6c6f3cc53c8545c9",
+   "page": -229,
+   "book_year": 1709,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c8597a6c6f3cc53c8545c9",
+   "page": -184,
+   "book_year": 1709,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c8597a6c6f3cc53c8545c9",
+   "page": 367,
+   "book_year": 1709,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c8597a6c6f3cc53c8545c9",
+   "page": 456,
+   "book_year": 1709,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c8597a6c6f3cc53c8545c9",
+   "page": 549,
+   "book_year": 1709,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c862ac6c6f3cc53c855bc2",
+   "page": 589,
+   "book_year": 1726,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c867a26c6f3cc53c8565d3",
+   "page": null,
+   "book_year": 1836,
+   "person": null,
+   "tier": "both-in-book",
+   "precision": "section"
+  },
+  {
+   "book_id": "69c8726c6c6f3cc53c85786f",
+   "page": -338,
+   "book_year": 1572,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69c8726c6c6f3cc53c85786f",
+   "page": -337,
+   "book_year": 1572,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69c8726c6c6f3cc53c85786f",
+   "page": -336,
+   "book_year": 1572,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c874af6c6f3cc53c857cd4",
+   "page": 191,
+   "book_year": 1928,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c874af6c6f3cc53c857cd4",
+   "page": 352,
+   "book_year": 1928,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c874af6c6f3cc53c857cd4",
+   "page": 354,
+   "book_year": 1928,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c87efc6c6f3cc53c858e17",
+   "page": null,
+   "book_year": 1643,
+   "person": null,
+   "tier": "no-evidence",
+   "precision": "section"
+  },
+  {
+   "book_id": "69c880a06c6f3cc53c8590fa",
+   "page": 190,
+   "book_year": 1909,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c880a06c6f3cc53c8590fa",
+   "page": 235,
+   "book_year": 1909,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c880a06c6f3cc53c8590fa",
+   "page": 238,
+   "book_year": 1909,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c880a06c6f3cc53c8590fa",
+   "page": 241,
+   "book_year": 1909,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c880a06c6f3cc53c8590fa",
+   "page": 245,
+   "book_year": 1909,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c880a06c6f3cc53c8590fa",
+   "page": 246,
+   "book_year": 1909,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c880a06c6f3cc53c8590fa",
+   "page": 247,
+   "book_year": 1909,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c880d16c6f3cc53c85916b",
+   "page": null,
+   "book_year": 1854,
+   "person": null,
+   "tier": "no-evidence",
+   "precision": "section"
+  },
+  {
+   "book_id": "69c881c06c6f3cc53c8593a3",
+   "page": 158,
+   "book_year": 1795,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c887ba6c6f3cc53c85a142",
+   "page": -120,
+   "book_year": 1870,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c890196c6f3cc53c85b551",
+   "page": -15,
+   "book_year": 1754,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c890196c6f3cc53c85b551",
+   "page": -9,
+   "book_year": 1754,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c890196c6f3cc53c85b551",
+   "page": 17,
+   "book_year": 1754,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c890196c6f3cc53c85b551",
+   "page": 29,
+   "book_year": 1754,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c890196c6f3cc53c85b551",
+   "page": 207,
+   "book_year": 1754,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c890fa6c6f3cc53c85b864",
+   "page": 188,
+   "book_year": 1806,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69d13b3e1c2a66dc094b151a",
+   "page": 294,
+   "book_year": 1678,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69d14b4a1c2a66dc094b4cc8",
+   "page": 51,
+   "book_year": 1790,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69dbc7e01040d1d5e2094dcd",
+   "page": 268,
+   "book_year": 1483,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69dc23be39623978967d7775",
+   "page": 96,
+   "book_year": 1923,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69e8b1842ff2a8dc09e76141",
+   "page": 10,
+   "book_year": 1859,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69e8b18b2ff2a8dc09e76378",
+   "page": 38,
+   "book_year": 1789,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69e8b18b2ff2a8dc09e76378",
+   "page": 39,
+   "book_year": 1789,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69ee4f106dd925d126f42acd",
+   "page": 246,
+   "book_year": 1827,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": false,
+   "precision": "page"
+  },
+  {
+   "book_id": "69f32f5c876dd827cbc45405",
+   "page": 16,
+   "book_year": 1337,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69f32f64876dd827cbc455bc",
+   "page": 12,
+   "book_year": 1329,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69f32f64876dd827cbc455bc",
+   "page": 13,
+   "book_year": 1329,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69f32f64876dd827cbc455bc",
+   "page": 20,
+   "book_year": 1329,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69f32f64876dd827cbc455bc",
+   "page": 25,
+   "book_year": 1329,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69f32f64876dd827cbc455bc",
+   "page": 28,
+   "book_year": 1329,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69f32f64876dd827cbc455bc",
+   "page": 29,
+   "book_year": 1329,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69f32f64876dd827cbc455bc",
+   "page": 41,
+   "book_year": 1329,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69f32f64876dd827cbc455bc",
+   "page": 44,
+   "book_year": 1329,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69f32f77876dd827cbc45797",
+   "page": 36,
+   "book_year": 1331,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69f32f7f876dd827cbc45808",
+   "page": 296,
+   "book_year": 1332,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "6a08f60650bd891addfba547",
+   "page": 410,
+   "book_year": 1893,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6a08f60650bd891addfba547",
+   "page": 411,
+   "book_year": 1893,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6a0a22fd0eca358f15e84063",
+   "page": 265,
+   "book_year": 1847,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6a0a22fd0eca358f15e84063",
+   "page": 290,
+   "book_year": 1847,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6a0a22fd0eca358f15e84063",
+   "page": 297,
+   "book_year": 1847,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6a0a22fd0eca358f15e84063",
+   "page": 307,
+   "book_year": 1847,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6a0a23090eca358f15e841e4",
+   "page": 12,
+   "book_year": 1869,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6a0a23090eca358f15e841e4",
+   "page": 13,
+   "book_year": 1869,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6a0a23090eca358f15e841e4",
+   "page": 14,
+   "book_year": 1869,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6a10093ff7172929509684a4",
+   "page": 83,
+   "book_year": 1702,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6a10093ff7172929509684a4",
+   "page": 392,
+   "book_year": 1702,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6a1009c3f71729295096b78b",
+   "page": 880,
+   "book_year": 1613,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6a1009c3f71729295096b78b",
+   "page": 881,
+   "book_year": 1613,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "8bee13ae-6d70-49e3-b939-3d1e667c6e4a",
+   "page": 155,
+   "book_year": 1652,
+   "person": "roger",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "c87fadfa-1543-44b9-a138-573c144246e6",
+   "page": 456,
+   "book_year": 1678,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "c87fadfa-1543-44b9-a138-573c144246e6",
+   "page": 474,
+   "book_year": 1678,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "c87fadfa-1543-44b9-a138-573c144246e6",
+   "page": 504,
+   "book_year": 1678,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "c87fadfa-1543-44b9-a138-573c144246e6",
+   "page": 507,
+   "book_year": 1678,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "c87fadfa-1543-44b9-a138-573c144246e6",
+   "page": 535,
+   "book_year": 1678,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c6fb29da9771c71631538c",
+   "page": 70,
+   "book_year": 1794,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69af0d072705dcc541045424",
+   "page": 167,
+   "book_year": 1615,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6909b22fcf28baa1b4caf185",
+   "page": 63,
+   "book_year": 1671,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6ab2371661b5fd3232b812d2",
+   "page": 32,
+   "book_year": 1858,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6ab230304ac37d55a21325a4",
+   "page": 106,
+   "book_year": 1907,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aebe60c0472fef6455a8f3",
+   "page": 275,
+   "book_year": 1648,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aea8acb3730458c4378ef8",
+   "page": 51,
+   "book_year": 1883,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aea8acb3730458c4378ef8",
+   "page": 54,
+   "book_year": 1883,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aea8acb3730458c4378ef8",
+   "page": 511,
+   "book_year": 1883,
+   "person": null,
+   "tier": "both-in-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69aea8acb3730458c4378ef8",
+   "page": 512,
+   "book_year": 1883,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c830ab6c6f3cc53c84dace",
+   "page": -359,
+   "book_year": 1692,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c830ab6c6f3cc53c84dace",
+   "page": -356,
+   "book_year": 1692,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c830ab6c6f3cc53c84dace",
+   "page": -354,
+   "book_year": 1692,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c830ab6c6f3cc53c84dace",
+   "page": -353,
+   "book_year": 1692,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c830ab6c6f3cc53c84dace",
+   "page": -352,
+   "book_year": 1692,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c830ab6c6f3cc53c84dace",
+   "page": -349,
+   "book_year": 1692,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c830ab6c6f3cc53c84dace",
+   "page": -348,
+   "book_year": 1692,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c830ab6c6f3cc53c84dace",
+   "page": -347,
+   "book_year": 1692,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c830ab6c6f3cc53c84dace",
+   "page": -346,
+   "book_year": 1692,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c830ab6c6f3cc53c84dace",
+   "page": -340,
+   "book_year": 1692,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6ab236bf61b5fd3232b80768",
+   "page": 40,
+   "book_year": 1855,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6ab236bf61b5fd3232b80768",
+   "page": 45,
+   "book_year": 1855,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6a26c2e4aad44c98627c69ce",
+   "page": 51,
+   "book_year": 1633,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6a26bd545189f4e1b4475518",
+   "page": 23,
+   "book_year": 1584,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "6a26b8f161b3857ed05a75cb",
+   "page": 7,
+   "book_year": 1627,
+   "person": "roger",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6a94b3d0281341c253e725a5",
+   "page": 227,
+   "book_year": 1907,
+   "person": "francis",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6ab2394b61b5fd3232b859aa",
+   "page": 24,
+   "book_year": 1880,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6ab2394b61b5fd3232b859aa",
+   "page": 33,
+   "book_year": 1880,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6ab2394b61b5fd3232b859aa",
+   "page": 43,
+   "book_year": 1880,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c88d266c6f3cc53c85ae04",
+   "page": 41,
+   "book_year": 1894,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69c88d266c6f3cc53c85ae04",
+   "page": 437,
+   "book_year": 1894,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6a98bb81ec48f9ad103e36f2",
+   "page": 484,
+   "book_year": 1918,
+   "person": "francis",
+   "tier": "printed",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69d66663bf5afe33937f955f",
+   "page": 18,
+   "book_year": 1798,
+   "person": "roger",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6a4a2049fd99a02b936ffe4a",
+   "page": 540,
+   "book_year": 1865,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6a3e750928fae891bf277fba",
+   "page": 230,
+   "book_year": 1879,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6a3e750928fae891bf277fba",
+   "page": 231,
+   "book_year": 1879,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "6a3e750928fae891bf277fba",
+   "page": 234,
+   "book_year": 1879,
+   "person": "francis",
+   "tier": "note",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69593225b91a6184ea943475",
+   "page": 78,
+   "book_year": 1801,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69593225b91a6184ea943475",
+   "page": 84,
+   "book_year": 1801,
+   "person": "roger",
+   "tier": "same-book",
+   "name_printed": true,
+   "precision": "page"
+  },
+  {
+   "book_id": "69b51e44768235dc6598e757",
+   "page": 964,
+   "book_year": 1587,
+   "person": null,
+   "tier": "date-only",
+   "name_printed": true,
+   "precision": "page",
+   "suggested": "roger"
+  },
+  {
+   "book_id": "69b1863dc4be2cdd0edc573a",
+   "page": 463,
+   "book_year": 1662,
+   "person": null,
+   "tier": "no-evidence",
+   "name_printed": true,
+   "precision": "page"
+  }
+ ]
+}

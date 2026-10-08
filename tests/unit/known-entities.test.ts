@@ -46,3 +46,24 @@ describe('matchKnownEntity', () => {
     expect(matchKnownEntity('a')).toBeNull();
   });
 });
+
+// #1180: tools are reachable by the name a reader types ("identify" → /identify),
+// without generic topic words ("map", "images") being captured as tool names.
+describe('matchKnownEntity — site features', () => {
+  it('resolves a tool by its name', () => {
+    expect(matchKnownEntity('identify')).toMatchObject({ href: '/identify', kind: 'feature' });
+    expect(matchKnownEntity('Ngram Viewer')).toMatchObject({ href: '/ngrams', kind: 'feature' });
+    expect(matchKnownEntity('ask the librarian')).toMatchObject({ href: '/librarian', kind: 'feature' });
+  });
+
+  it('does not capture topic words a reader searches the books for', () => {
+    for (const q of ['map', 'images', 'engravings', 'game', 'data', 'works', 'research']) {
+      expect(matchKnownEntity(q)).toBeNull();
+    }
+  });
+
+  it('lets a collection of the same name win over a tool', () => {
+    const collections = [{ slug: 'gallery', name: 'Gallery', description: '', subtitle: '' }];
+    expect(matchKnownEntity('gallery', { collections: collections as any })?.kind).toBe('collection');
+  });
+});

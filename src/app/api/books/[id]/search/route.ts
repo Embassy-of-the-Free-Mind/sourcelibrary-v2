@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
+import { expandPersonNames } from '@/lib/search/name-variants';
 import { semanticPageSearchScoped, lexicalPageSearchLang } from '@/lib/semantic-search';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
@@ -193,8 +194,10 @@ export async function GET(
         let usedAtlas = false;
 
         try {
+          // Other spellings of a person the query names (Drebbel → Drebelius); [] otherwise (#5888).
+          const nameVariants = await expandPersonNames(trimmedQuery);
           pages = await db.collection('pages').aggregate([
-            buildPageSearchStage(trimmedQuery, bookId),
+            buildPageSearchStage(trimmedQuery, bookId, { nameVariants }),
             { $match: { page_type: { $nin: NON_CONTENT_PAGE_TYPES } } },
             // NO { $sort: { page_number: 1 } }, { $limit: 50 }. Atlas returns in
             // score order; re-sorting by page number threw that away and then

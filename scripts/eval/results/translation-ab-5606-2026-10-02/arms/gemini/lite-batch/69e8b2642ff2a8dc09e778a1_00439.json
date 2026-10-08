@@ -1,0 +1,21 @@
+{
+ "id": "69e8b2642ff2a8dc09e778a1_00439",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "墨子卷之十二\n\nOne cannot claim that blessings or disasters are determined by omens, nor can one claim that there is no such thing as auspicious or inauspicious signs. To do so is to invite chaotic government and a state in peril. Therefore, in the writings of the former kings, it is said: The character <term>Qi</term> <note>original: \"丌\"; older editions read \"亓\"</note> refers to arrogance, and arrogance results in misfortune. This statement means that those who do evil receive punishment, and those who do good receive rewards. \n\nMozi said to Gongmengzi: \"Regarding the rites of mourning, when a ruler, parents, or a wife dies, one observes three years of mourning. For uncles, brothers, and kin, one observes five months. For aunts, sisters, maternal uncles, and nephews, all have mourning periods of several months. Yet, you suggest that during the times one is not mourning, one should recite the three hundred poems, play the three hundred poems on strings, sing the three hundred poems, and dance the three hundred poems. If we follow your words, when will a gentleman find time to attend to governance? When will the common people find time to attend to their work?\" \n\nGongmengzi replied: \"When the state is in chaos, one should govern it. When it is governed, one should enact rites and music. When the state is ordered, one should attend to work. When the state is wealthy, one should enact rites and music.\" \n\nMozi said: \"If the governance of a state <insert>Master Lu says: five characters 'governing it, thus order' are missing here</insert> falls into neglect, then the order of the state is also lost, and the state of the...\"\n\n<summary>Mozi critiques Gongmengzi's promotion of elaborate rites and music, arguing that such practices distract from the essential duties of governing and agricultural production.</summary>\n<keywords>Mozi, Gongmengzi, mourning rites, governance, labor, rites and music</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2082,
+ "outputTokens": 435,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.0005865,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 444,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

@@ -148,6 +148,8 @@ const SEED_PATHS = [
   '/explore/map',
   '/ngrams',
   '/libraries',
+  // The Librarian (#4330): refused on tenant hosts; a seed so its removal shows.
+  '/librarian',
 ];
 for (const p of SEED_PATHS) queue.push({ url: TARGET + p, depth: 0 });
 

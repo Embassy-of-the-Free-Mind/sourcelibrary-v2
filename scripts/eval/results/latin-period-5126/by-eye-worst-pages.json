@@ -1,0 +1,1943 @@
+{
+ "what": "By-eye read of the five worst pages per engine in the 1500s and 1600s cells and every page of the 1700s cell and the incunable sub-stratum: image opened (Sonnet readers; Opus opened the two catastrophic pages). A = flash-lite, B = flash-preview.",
+ "reference_error_drops": 0,
+ "arbitration": "Second readers marked three references not ok: Naogeorg 1538 p21 (the reference lacks a HANDWRITTEN marginal note both engines transcribed — not print, kept), Wassenberg 1641 p25 and ed-6a906153 p9 (the extra words are the builder's 3-word pad at each end, by design and equal for both engines — kept; the 1600s rule is re-run without them as a sensitivity).",
+ "rows": [
+  {
+   "slug": "ed-6a909914b7feee6e9c427a2a-p21",
+   "classes_A": {
+    "abbreviation": 0,
+    "long_s": 0,
+    "ligature": 1,
+    "misread": 2,
+    "omission": 0,
+    "addition_furniture": 8,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 0
+   },
+   "classes_B": {
+    "abbreviation": 0,
+    "long_s": 0,
+    "ligature": 1,
+    "misread": 5,
+    "omission": 0,
+    "addition_furniture": 8,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 0
+   },
+   "reference_errors_note": "Reference adds 'Aegyptiacis, in hanc clarissimam' (prev. leaf) and 'PROLOGUS Quid' (next leaf), ~7 words not on this leaf; omits the handwritten marginal note (~8 lines, ~25 words); 'primiciis' vs printed 'primicijs'.",
+   "main_cause_A": "reference lacks the handwritten margin note that A transcribes (plus signature B ii duplicated and 'Bii' at start; wrong year 1785)",
+   "main_cause_B": "same: reference lacks the handwritten margin note; B's margin transcription is garbled in places",
+   "reference_ok": false,
+   "reference_ok_reason": "Body is right but the reference has 2 passages from neighbouring leaves and omits the whole handwritten marginal note; the score mostly measures the marginalia.",
+   "better_reader_by_eye": "B",
+   "examples": [
+    {
+     "where": "line 11-12",
+     "image_prints": "primicijs (ij) / sanè",
+     "reference": "primiciis / sane",
+     "A": "primiciis / sanè",
+     "B": "primicijs / sane"
+    },
+    {
+     "where": "ref line 1",
+     "image_prints": "(not on leaf; page starts 'Lucem (irato')",
+     "reference": "Aegyptiacis, in hanc clarissimam",
+     "A": "absent",
+     "B": "absent"
+    },
+    {
+     "where": "margin",
+     "image_prints": "handwritten 'Doni cumulatur bonis, Stringensis Doct ... Vittebergen Laudes Deo G. Peterma[nnus] Baccal. Hung nat. ... Dresdae ... 9. Julii'",
+     "reference": "absent",
+     "A": "...Doct. in Vittebergen ... G. Petermannus Baccab. Hung. nat. Maus. V. Th. ac Ph. Sch. Dresdae 1785",
+     "B": "...Doct ri Vittebergen ... G. Peterma Baccal. Hung nat. Manus. V th. ad St. Joh Dresdae. 1585."
+    },
+    {
+     "where": "line 10",
+     "image_prints": "Quodq; (q with semicolon-abbrev)",
+     "reference": "Quodque",
+     "A": "Quodque",
+     "B": "Quodque"
+    },
+    {
+     "where": "signature",
+     "image_prints": "B ij at foot, Prologus catchword",
+     "reference": "absent (PROLOGUS Quid)",
+     "A": "'Bii' at start and 'B ii Prologus.' at end",
+     "B": "'B ii Prologus.' at start"
+    }
+   ],
+   "cell": "Latin 1500s",
+   "cer_A_lite": 0.266,
+   "cer_B_flash": 0.23,
+   "worst_for": [
+    "gemini-3.1-flash-lite",
+    "gemini-3-flash-preview"
+   ]
+  },
+  {
+   "slug": "ed-6a90658feb8fb726ee3b3f2a-p18",
+   "classes_A": {
+    "abbreviation": 0,
+    "long_s": 0,
+    "ligature": 1,
+    "misread": 1,
+    "omission": 0,
+    "addition_furniture": 1,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 0
+   },
+   "classes_B": {
+    "abbreviation": 0,
+    "long_s": 0,
+    "ligature": 1,
+    "misread": 1,
+    "omission": 0,
+    "addition_furniture": 1,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 0
+   },
+   "main_cause_A": "reference has an extra line from the previous leaf and trailing words from the next, plus Greek in beta-code ASCII; engine text itself is near-exact (only laeto->lato)",
+   "main_cause_B": "same as A; engine text near-exact (laeto->lato)",
+   "reference_ok": true,
+   "reference_ok_reason": "Usable but inflated: extra first line 'sicubi a gravioribus negotiis oppressa recumbit,' and trailing 'habeat etiam' are not on the leaf; Greek words are beta-code (kat' e)coxh\\n, a)ntidwron); 'testamentum' where print has testatu(m) (testatum); 'semet ipsam' split where print is joined; 'clementercommendatos' typo.",
+   "better_reader_by_eye": "tie",
+   "examples": [
+    {
+     "where": "line 1",
+     "image_prints": "bit, ex ijs ſemetipſam",
+     "reference": "[sicubi a gravioribus ... recumbit,] ex iis semet ipsam",
+     "A": "bit, ex iis semetipsam",
+     "B": "bit, ex iis semetipsam"
+    },
+    {
+     "where": "Greek",
+     "image_prints": "κατ' ἐξοχὴν / ἀντίδωρον in Greek type",
+     "reference": "kat' e)coxh\\n / a)ntidwron",
+     "A": "κατ’ ἐξοχὴν / ἀντίδωρον",
+     "B": "same as A"
+    },
+    {
+     "where": "line 9",
+     "image_prints": "teſtatu(m) fecit (macron)",
+     "reference": "testamentum fecit",
+     "A": "testatum",
+     "B": "testatum"
+    },
+    {
+     "where": "line 'quos ut C.T.'",
+     "image_prints": "læto (æ ligature)",
+     "reference": "laeto",
+     "A": "lato",
+     "B": "lato"
+    },
+    {
+     "where": "header/end",
+     "image_prints": "DEDICATIO header; catchword 'ha-'",
+     "reference": "'habeat etiam'",
+     "A": "DEDICATIO at end",
+     "B": "DEDICATIO at start"
+    }
+   ],
+   "cell": "Latin 1500s",
+   "cer_A_lite": 0.129,
+   "cer_B_flash": 0.118,
+   "worst_for": [
+    "gemini-3.1-flash-lite",
+    "gemini-3-flash-preview"
+   ]
+  },
+  {
+   "slug": "ed-69c821446c6f3cc53c84aa06-p433",
+   "classes_A": {
+    "abbreviation": 4,
+    "long_s": 25,
+    "ligature": 3,
+    "misread": 15,
+    "omission": 2,
+    "addition_furniture": 8,
+    "order": 1,
+    "invention": 2,
+    "reference_error": 0
+   },
+   "classes_B": {
+    "abbreviation": 2,
+    "long_s": 0,
+    "ligature": 2,
+    "misread": 8,
+    "omission": 1,
+    "addition_furniture": 8,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 0
+   },
+   "main_cause_A": "long-s read as f through the whole second half of the page (fit, fumus, fitulam, ingis for ignis) plus block re-ordering of the two columns and a dropped clause",
+   "main_cause_B": "clean read; remaining cost is a few word misreads (aliasque, differre, Praefare, incerta providentia) and convention (qv->qu)",
+   "reference_ok": true,
+   "reference_ok_reason": "Reference is a faithful diplomatic transcription (qv, ſ->s) with ~12 typos (Praedi catores, exerpsisset, nomien, megotiô, laudabillis, mutiplicatio, momeri) and extra text not on the leaf ('innocentiâ ac pietate, spectatus: ingenii vero' at start, 'qvod ajunt' after 'Argi-' at end); score usable.",
+   "better_reader_by_eye": "B",
+   "examples": [
+    {
+     "where": "col 1 line 12",
+     "image_prints": "circiter qvinqve millia excerpsiſſet, ingenti ſuô ac nonnullorum",
+     "reference": "circiter qvinqve millia exerpsisset, ingenti suô ac nonnullorum",
+     "A": "omits 'raraque, circiter quinque millia excerpsisset'; 'ingenti sub ac'",
+     "B": "raraque, circiter quinque millia excerpsisset, ingenti suo ac"
+    },
+    {
+     "where": "order",
+     "image_prints": "left page ends '...Exaudiat nos CHRISTVS!' then CAPUT XXVIII and Atqve haec est... (left page lower half) before page 272 text",
+     "reference": "left page then page 272",
+     "A": "after CHRISTVS! jumps to 'posse me credidi' (top of right page), then right page, and places 'Caput XXVIII ... Tqve haec est' at the end",
+     "B": "correct order"
+    },
+    {
+     "where": "p.272 line 20-24",
+     "image_prints": "ſi videre ſe putat tot aqvas, & tot ſitulas ... qvot exſtingvendo",
+     "reference": "si videre se putat tot aqvas, et tot situlas",
+     "A": "fi videre fe putat... fitulas ... ex-ftingvendo",
+     "B": "si videre se putat tot aquas, et tot situlas ... quot exstinguendo"
+    },
+    {
+     "where": "p.272 line 4",
+     "image_prints": "Atqvi in communi incendio cuivis ... qvâ ignis",
+     "reference": "cuivis ... qvâ ignis",
+     "A": "civis ... qvâ ingis",
+     "B": "cuivis ... qua ignis"
+    },
+    {
+     "where": "col 2 'Viri Caſpari Streſonis'",
+     "image_prints": "Caſpari Streſonis",
+     "reference": "Caspari Stresonis",
+     "A": "ViriCaesari Strefonis",
+     "B": "Caspari Strefonis"
+    },
+    {
+     "where": "Cap. heading",
+     "image_prints": "Præſtare hîc, qvid qvæſierit Author (marginal)",
+     "reference": "Praestare hîc, qvid qvaesierit Author",
+     "A": "Preflare hic, quid quæsierit",
+     "B": "Praefare hic, quid quaesierit"
+    }
+   ],
+   "cell": "Latin 1600s",
+   "cer_A_lite": 0.646,
+   "cer_B_flash": 0.07,
+   "worst_for": [
+    "gemini-3.1-flash-lite"
+   ]
+  },
+  {
+   "slug": "ed-6a4f92c0d7f4f9119ff22b41-p9",
+   "classes_A": {
+    "abbreviation": 3,
+    "long_s": 0,
+    "ligature": 1,
+    "misread": 2,
+    "omission": 0,
+    "addition_furniture": 1,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 0
+   },
+   "classes_B": {
+    "abbreviation": 1,
+    "long_s": 0,
+    "ligature": 3,
+    "misread": 2,
+    "omission": 0,
+    "addition_furniture": 1,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 0
+   },
+   "main_cause_A": "keeps print orthography (& , vt, etiámdum, hyphenated line-ends 'vi- sum') and drops the m of Epigrāmata; reference is modernised",
+   "main_cause_B": "orthography normalisation vs reference is small; remaining cost from reference's extra text and 'centuriare'",
+   "reference_ok": true,
+   "reference_ok_reason": "Reference adds 'Addictissimus Sebastianus Cramoisy' (not on leaf) and ends 'Poeta religioso aut' (leaf ends 'in' + catchword Poeta); 'centuriae' where print has 'centuriare'; 'qua' where print has quae; page is poor-quality scan, so everything is noisy but reference usable.",
+   "better_reader_by_eye": "B",
+   "examples": [
+    {
+     "where": "line 1",
+     "image_prints": "Epigrāmata (macron over a for mm)",
+     "reference": "Epigrammata",
+     "A": "EPigramata",
+     "B": "Epigrammata"
+    },
+    {
+     "where": "line 5",
+     "image_prints": "cuique",
+     "reference": "cuique",
+     "A": "cuiq̃",
+     "B": "cuique"
+    },
+    {
+     "where": "line 12-13",
+     "image_prints": "centuriare:",
+     "reference": "centuriae",
+     "A": "centuriare",
+     "B": "centuriare"
+    },
+    {
+     "where": "line 1",
+     "image_prints": "quæ adoleſcenti etiámdum, aut certè Iuuení",
+     "reference": "qua Adolescenti etiamdum aut certe iuveni",
+     "A": "quæ adolescenti etiámdum, aut certè iuveni",
+     "B": "quae adolescenti etiamdum, aut certe iuueni"
+    },
+    {
+     "where": "start",
+     "image_prints": "not on leaf",
+     "reference": "Addictissimus Sebastianus Cramoisy",
+     "A": "absent",
+     "B": "absent"
+    }
+   ],
+   "cell": "Latin 1600s",
+   "cer_A_lite": 0.128,
+   "cer_B_flash": 0.095,
+   "worst_for": [
+    "gemini-3.1-flash-lite"
+   ]
+  },
+  {
+   "slug": "ed-6a90a3b93a69baad5d30cf72-p9",
+   "classes_A": {
+    "abbreviation": 2,
+    "long_s": 0,
+    "ligature": 4,
+    "misread": 1,
+    "omission": 0,
+    "addition_furniture": 1,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 0
+   },
+   "classes_B": {
+    "abbreviation": 2,
+    "long_s": 0,
+    "ligature": 4,
+    "misread": 3,
+    "omission": 0,
+    "addition_furniture": 8,
+    "order": 0,
+    "invention": 1,
+    "reference_error": 0
+   },
+   "main_cause_A": "reference has ~5 extra words from next leaf; A misses macron expansions (rē->re, tā->ta) and clips ('ta aliqua')",
+   "main_cause_B": "adds stamp/ornament text ('BIBLIOTHECA REGIA MONACENSIS', markdown '#'), duplicates 'modoque' (AMPLISSIMO modoque), expands &c to 'et cetera'",
+   "reference_ok": true,
+   "reference_ok_reason": "Reference ends with 'aliqua virtutis eruditionisque, quam' which is not on this leaf (leaf ends 'tam a-/liqua'); 'saeculi' normalised from printed sæculi; otherwise sound.",
+   "better_reader_by_eye": "B",
+   "examples": [
+    {
+     "where": "last body line",
+     "image_prints": "rē ſuam ... nō tā a-liqua (macrons: rem, non tam)",
+     "reference": "rem suam ... non tam [aliqua virtutis eruditionisque, quam]",
+     "A": "re suam ... non ta aliqua",
+     "B": "rem suam ... non tam aliqua"
+    },
+    {
+     "where": "title",
+     "image_prints": "AMPLISSI-/moq́3 viro (moque)",
+     "reference": "AMPLISSImoque viro",
+     "A": "AMPLISSIMOque viro",
+     "B": "AMPLISSIMO modoque viro"
+    },
+    {
+     "where": "title",
+     "image_prints": "&c dignissimo",
+     "reference": "etc.",
+     "A": "&c",
+     "B": "et cetera"
+    },
+    {
+     "where": "stamp",
+     "image_prints": "oval library stamp, mostly illegible (…NAT… ROMA…)",
+     "reference": "absent",
+     "A": "absent",
+     "B": "BIBLIOTHECA REGIA MONACENSIS (not legible as such)"
+    },
+    {
+     "where": "line 2",
+     "image_prints": "ſæculi",
+     "reference": "saeculi",
+     "A": "seculi",
+     "B": "seculi"
+    }
+   ],
+   "cell": "Latin 1600s",
+   "cer_A_lite": 0.073,
+   "cer_B_flash": 0.115,
+   "worst_for": [
+    "gemini-3-flash-preview"
+   ]
+  },
+  {
+   "slug": "ed-69523495ab34727b1f044a45-p63",
+   "classes_A": {
+    "abbreviation": 45,
+    "long_s": 0,
+    "ligature": 0,
+    "misread": 22,
+    "omission": 2,
+    "addition_furniture": 1,
+    "order": 0,
+    "invention": 3,
+    "reference_error": 0
+   },
+   "classes_B": {
+    "abbreviation": 8,
+    "long_s": 0,
+    "ligature": 0,
+    "misread": 6,
+    "omission": 0,
+    "addition_furniture": 0,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 0
+   },
+   "main_cause_A": "wrong or unexpanded abbreviations (pmittit, semp, ptatem, opantur, hoies, deterioz, scitozuz viroz) and dropped columns reading garble in the second column",
+   "main_cause_B": "mostly right expansions; residual wrong expansions (hec->hoc, quia->quod/quoniam, quando->qui) and u/v, i/j normalisation vs the reference's u/v-faithful text",
+   "reference_ok": true,
+   "reference_ok_reason": "Reference is a good corrected transcription with expanded abbreviations, but ends with an extra keyword line ('Solutiones argumentorum, maleficas, vim generatiuam, ...') that is not printed on the leaf and contains a <column-break/> marker and 'xxvi' for the printed citation (unclear).",
+   "better_reader_by_eye": "B",
+   "examples": [
+    {
+     "where": "col 1 line 1",
+     "image_prints": "Patet ad primum.",
+     "reference": "Patet ad primum.",
+     "A": "Det ad primum, quod",
+     "B": "Patet ad primum. quod"
+    },
+    {
+     "where": "col 1 line 7",
+     "image_prints": "p hec etiam ad scõm patet",
+     "reference": "per hec etiam ad secundum patet",
+     "A": "Et hoc etiam ad secundum",
+     "B": "Et per hoc etiam ad secundum"
+    },
+    {
+     "where": "col1 line 14",
+     "image_prints": "ptātem restituendi",
+     "reference": "potestatem restituendi",
+     "A": "ptatem",
+     "B": "potestatem"
+    },
+    {
+     "where": "col2 line 3",
+     "image_prints": "qui omnia fecit. et p quē omīa facta sunt, p̃culdubio",
+     "reference": "per quem omnia facta sunt proculdubio",
+     "A": "per que omnia facta sunt, pseudubio",
+     "B": "per quem omnia facta sunt proculdubio"
+    },
+    {
+     "where": "col 2 mid",
+     "image_prints": "quia non semp vnus 7 idē aer ... pt̃ preci-pue qñ mouet",
+     "reference": "quia non semper vnus et idem aer ... precipue quando mouetur",
+     "A": "quod non sponus quod id est aer ... per preciam que mouet",
+     "B": "quod non sit unus et idem aer ... per precipue qui movetur"
+    },
+    {
+     "where": "last line",
+     "image_prints": "si demõ mouet vi cognitiuã iteriore aut hõ fac se objiciedo",
+     "reference": "si demon mouet vim cognitiuam interiorem aut hoc facit se obiiciendo",
+     "A": "si remo mouet vi cognitiua interiore aut si fac se obsaedo",
+     "B": "si demon movet vim cognitivam interiorem aut hoc facit se obiectando"
+    }
+   ],
+   "cell": "Latin 1400s (corrected-OCR reference)",
+   "cer_A_lite": 0.096,
+   "cer_B_flash": 0.069,
+   "worst_for": [
+    "all pages of this cell"
+   ]
+  },
+  {
+   "slug": "ed-69b51e69768235dc65992e2f-p15",
+   "classes_A": {
+    "abbreviation": 0,
+    "long_s": 0,
+    "ligature": 6,
+    "misread": 1,
+    "omission": 0,
+    "addition_furniture": 1,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 0
+   },
+   "classes_B": {
+    "abbreviation": 0,
+    "long_s": 0,
+    "ligature": 6,
+    "misread": 0,
+    "omission": 0,
+    "addition_furniture": 1,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 0
+   },
+   "main_cause_A": "reference includes text of neighbouring leaves (~12 words) and normalises j->i, oe->ae; A reads 'sentire' for printed 'sensere'",
+   "main_cause_B": "same reference problems; B's text is essentially exact",
+   "reference_ok": true,
+   "reference_ok_reason": "Reference adds first line 'ut universa provincia, et' and 'amplissimae' (print: plisimae), plus trailing 'BENEVOLO LECTORI S. D. IUstum' from next leaf; 'eius/iuxta/iustè/iussus/IACOBUS' for printed ej-/j-; 'caelestia/caelis' for printed coelestia/coelis; 'quottidie' for printed 'quotidie'. Scored text is mostly correct.",
+   "better_reader_by_eye": "B",
+   "examples": [
+    {
+     "where": "line 2",
+     "image_prints": "neceſſe habuere, & tempo-rum calamitatem nimium ſenſere",
+     "reference": "sensere",
+     "A": "sentire",
+     "B": "sensere"
+    },
+    {
+     "where": "line 7",
+     "image_prints": "cœ-leſtia quotidie",
+     "reference": "caelestia quottidie",
+     "A": "coelestia quotidie",
+     "B": "coelestia quotidie"
+    },
+    {
+     "where": "line 1",
+     "image_prints": "pliſſimæ ditiones, ejus",
+     "reference": "[ut universa provincia, et] amplissimae ditiones, eius",
+     "A": "plisimae ditiones, ejus (A in text: 'plisimae')",
+     "B": "plissimae ditiones, ejus"
+    },
+    {
+     "where": "line 3",
+     "image_prints": "juxta leges",
+     "reference": "iuxta",
+     "A": "juxta",
+     "B": "juxta"
+    },
+    {
+     "where": "end",
+     "image_prints": "leaf ends PHILIPPUS JACOBUS SPENERUS, D.",
+     "reference": "... PHILIPPUS IACOBUS SPENERUS, D. BENEVOLO LECTORI S. D. IUstum",
+     "A": "JACOBUS ... D.",
+     "B": "JACOBUS ... D."
+    }
+   ],
+   "cell": "Latin 1700s",
+   "cer_A_lite": 0.056,
+   "cer_B_flash": 0.053,
+   "worst_for": [
+    "all pages of this cell"
+   ]
+  },
+  {
+   "slug": "ed-69b6f32ab1a3146c05278d5a-p72",
+   "classes_A": {
+    "abbreviation": 0,
+    "long_s": 3,
+    "ligature": 10,
+    "misread": 2,
+    "omission": 0,
+    "addition_furniture": 1,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 0
+   },
+   "classes_B": {
+    "abbreviation": 0,
+    "long_s": 1,
+    "ligature": 10,
+    "misread": 1,
+    "omission": 0,
+    "addition_furniture": 1,
+    "order": 0,
+    "invention": 1,
+    "reference_error": 0
+   },
+   "main_cause_A": "long-s misreads (fed, fatis, exafciatum), 'Tuæ dignum' for Tua, and keeping print ligatures/& that the reference normalises",
+   "main_cause_B": "nearly exact; one long-s miss (fatis), and modernised date MDCCII for the printed cIↄIↄCCII",
+   "reference_ok": true,
+   "reference_ok_reason": "Reference is good; small slips: 'liberum, ad Te' (extra comma), 'CI. D. Ludwig' for Cl., ligatures normalised (oe/ae for printed œ/æ), date as 'CIC IC CCII'.",
+   "better_reader_by_eye": "B",
+   "examples": [
+    {
+     "where": "line 1",
+     "image_prints": "quod Tua dignum notitia",
+     "reference": "quod Tua dignum notitia",
+     "A": "quod Tuæ dignum",
+     "B": "quod Tua dignum"
+    },
+    {
+     "where": "line 12",
+     "image_prints": "ſed officium Tibi præſtare",
+     "reference": "sed officium Tibi praestare",
+     "A": "fed officium Tibi præstare",
+     "B": "sed officium Tibi praestare"
+    },
+    {
+     "where": "date line",
+     "image_prints": "A. clɔIɔccii.",
+     "reference": "A. CIC IC CCII.",
+     "A": "A. clɔIɔccii.",
+     "B": "A. MDCCII."
+    },
+    {
+     "where": "para 2 end",
+     "image_prints": "ſatis commode ibi vivit",
+     "reference": "satis commode",
+     "A": "fatis commode",
+     "B": "fatis commode"
+    },
+    {
+     "where": "line 3",
+     "image_prints": "pœniteat",
+     "reference": "poeniteat",
+     "A": "pœniteat",
+     "B": "poeniteat"
+    }
+   ],
+   "cell": "Latin 1700s",
+   "cer_A_lite": 0.033,
+   "cer_B_flash": 0.01,
+   "worst_for": [
+    "all pages of this cell"
+   ]
+  },
+  {
+   "slug": "ed-6a4f22748afd506469a564d5-p18",
+   "classes_A": {
+    "abbreviation": 0,
+    "long_s": 14,
+    "ligature": 15,
+    "misread": 6,
+    "omission": 1,
+    "addition_furniture": 1,
+    "order": 0,
+    "invention": 3,
+    "reference_error": 0
+   },
+   "classes_B": {
+    "abbreviation": 0,
+    "long_s": 1,
+    "ligature": 15,
+    "misread": 1,
+    "omission": 1,
+    "addition_furniture": 1,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 0
+   },
+   "main_cause_A": "long-s misreads in the lower third of the page (fatis, Befoldi, addifcant, ficuti, quafi, Metenfibus), dropped word 'vicini', and a degenerate 'marginalia marginalia marginalia' tail",
+   "main_cause_B": "nearly exact; only residual cost is reference typos and neighbouring-leaf words",
+   "reference_ok": true,
+   "reference_ok_reason": "Reference carries ~7 typos (Farmacius for Farinacius, Nobtlitate, similta, Renedictus, prasumptionibus, Hoping for Höping) and extra 'lucubrationes viderunt' after 'meas' (leaf ends 'meas'); no EPISTOLA header; ae/æ normalised.",
+   "better_reader_by_eye": "B",
+   "examples": [
+    {
+     "where": "para 4 last lines",
+     "image_prints": "ſicuti Servius, ... Metenſibus eſſe diſputandum",
+     "reference": "sicuti ... Metensibus",
+     "A": "ficuti ... Metenfibus",
+     "B": "sicuti ... Metensibus"
+    },
+    {
+     "where": "para 4",
+     "image_prints": "multum invideant vicini magnates",
+     "reference": "vicini magnates",
+     "A": "invideant magnates (omits vicini)",
+     "B": "vicini magnates"
+    },
+    {
+     "where": "para 3",
+     "image_prints": "Chriſtophori Beſoldi",
+     "reference": "Besoldi",
+     "A": "Befoldi",
+     "B": "Besoldi"
+    },
+    {
+     "where": "author list",
+     "image_prints": "Farinacius de deliĉtis",
+     "reference": "Farmacius",
+     "A": "Farinacius",
+     "B": "Farinacius"
+    },
+    {
+     "where": "end",
+     "image_prints": "leaf ends 'qui haſce / meas' (catchword)",
+     "reference": "qui hasce meas lucubrationes viderunt",
+     "A": "qui hasce meas marginalia marginalia marginalia",
+     "B": "qui hasce"
+    },
+    {
+     "where": "para 3",
+     "image_prints": "nonnullæ extent",
+     "reference": "nonnullae extent",
+     "A": "nonnulla extent",
+     "B": "nonnullæ extent"
+    }
+   ],
+   "cell": "Latin 1700s",
+   "cer_A_lite": 0.059,
+   "cer_B_flash": 0.036,
+   "worst_for": [
+    "all pages of this cell"
+   ]
+  },
+  {
+   "slug": "ed-69b64c9618b87551bfc76fcf-p20",
+   "counts_A": {
+    "abbreviation": 4,
+    "long_s": 0,
+    "ligature": 0,
+    "misread": 3,
+    "omission": 0,
+    "addition_furniture": 3,
+    "order": 2,
+    "invention": 2,
+    "reference_error": 1
+   },
+   "counts_B": {
+    "abbreviation": 2,
+    "long_s": 0,
+    "ligature": 0,
+    "misread": 0,
+    "omission": 0,
+    "addition_furniture": 3,
+    "order": 2,
+    "invention": 2,
+    "reference_error": 1
+   },
+   "main_cause_A": "unexpanded tilde abbreviations (incitata, Ansatu, erubescentia) plus marginal/header furniture and a garbled marginal note run into the text",
+   "main_cause_B": "marginal notes spliced into the body (ampli-ficat inside 'quicque subit animum', 'Unde ad scire debeat' before atque) and bold markup; text itself near-exact",
+   "reference_ok": true,
+   "reference_reason": "Reference is a clean, correct transcription of the main block (only omits header '16 PRAECEPTA', the two top-margin lines and the left marginalia, and normalizes u/v: 'vix', 'verecunde'). Image prints u for v and long s throughout.",
+   "better_reader_by_eye": "B",
+   "examples": [
+    {
+     "where": "line 2 'quidem confidenter'/'incitata'",
+     "image_prints": "cupiditatem with tilde on final a: incitatā",
+     "reference": "incitatam",
+     "A": "incitata (tilde not expanded)",
+     "B": "incitatam"
+    },
+    {
+     "where": "line 'Haec sunt apud alios atque alios aliusmodi'",
+     "image_prints": "aliuſmodi",
+     "reference": "aliusmodi",
+     "A": "eiusmodi",
+     "B": "aliusmodi"
+    },
+    {
+     "where": "line 'Ansatu, ut Plautus dixit'",
+     "image_prints": "Anſatū (tilde)",
+     "reference": "Ansatum",
+     "A": "Ansatu",
+     "B": "Ansatum"
+    },
+    {
+     "where": "left/right margin notes",
+     "image_prints": "handwritten marginalia 'Redit ad praecepta de moribus in congressu et colloquio' beside 'Decet'; short note at right of 'animum'",
+     "reference": "omitted",
+     "A": "'Nota ad finem debor ampli fiat tota gis Redit ad praecepta de morib. in co- loquiis et colloq.' placed at top before 'atque hoc'",
+     "B": "'Unde ad scire debeat' before atque; 'ampli- ficat' inserted inside 'subit animum et cupiditatem'; Redit ad praecepta... placed before 'Decet'"
+    },
+    {
+     "where": "u/v",
+     "image_prints": "u for consonantal v (uere, uitiosissime, uulgo)",
+     "reference": "mixed (vitiosissime, vulgo but uere not)",
+     "A": "keeps u (faithful)",
+     "B": "normalizes to v"
+    },
+    {
+     "where": "line ending 'ex/quiret'",
+     "image_prints": "ex- / quiret with hyphen at line break",
+     "reference": "exquiret",
+     "A": "ex- quiret (hyphen kept)",
+     "B": "exquiret; but 'colloquen tem' left split"
+    }
+   ],
+   "cell": "Latin 1500s",
+   "cer_A_lite": 0.141,
+   "cer_B_flash": 0.127,
+   "worst_for": [
+    "gemini-3.1-flash-lite",
+    "gemini-3-flash-preview"
+   ]
+  },
+  {
+   "slug": "ed-6a429a398e351c27eb859980-p20",
+   "counts_A": {
+    "abbreviation": 0,
+    "long_s": 1,
+    "ligature": 0,
+    "misread": 2,
+    "omission": 0,
+    "addition_furniture": 4,
+    "order": 2,
+    "invention": 1,
+    "reference_error": 14
+   },
+   "counts_B": {
+    "abbreviation": 0,
+    "long_s": 2,
+    "ligature": 0,
+    "misread": 2,
+    "omission": 0,
+    "addition_furniture": 4,
+    "order": 1,
+    "invention": 0,
+    "reference_error": 14
+   },
+   "main_cause_A": "marginal notes (Caluaria..., Quercus..., garbled Greek) spliced mid-sentence, hyphenated line-breaks kept, & and vt kept",
+   "main_cause_B": "u/v normalization throughout, two long-s misreads (existabat), marginalia moved to end of page",
+   "reference_ok": true,
+   "reference_reason": "Reference carries a lead-in ('ad adorandum imagine proposita. Et, si Plutarcho', ~7 words) and a tail ('protegebantur. Pausanias in') from neighbouring pages that are not on this leaf, and has typos ('Pompilisu', 'effgiem', 'attribuenam', 'alisque', 'autaruam', 'Nabonensem', 'testantur', 'Plutarcho'), ~3% of the page; the body is otherwise right so the score is still usable but inflated for both engines.",
+   "better_reader_by_eye": "tie",
+   "examples": [
+    {
+     "where": "line 'neque altare exstabat'",
+     "image_prints": "exſtabat",
+     "reference": "exstabat",
+     "A": "exstabat",
+     "B": "existabat (also 'existaret' for exſtaret)"
+    },
+    {
+     "where": "line 'in hunc vsum reseruatum'",
+     "image_prints": "reſeruatum",
+     "reference": "reseruatum",
+     "A": "referuatum (long s as f)",
+     "B": "reseruatum"
+    },
+    {
+     "where": "line 'Numa Pompilius ... aliquam Deo effigiem credere attribuendam'",
+     "image_prints": "Pompilius ... attribuendam",
+     "reference": "Pompilisu ... attribuenam ... effgiem",
+     "A": "correct",
+     "B": "correct"
+    },
+    {
+     "where": "line 'statuam aut aram dedicasse'",
+     "image_prints": "aut aram dedicaſſe",
+     "reference": "autaruam",
+     "A": "aut aram",
+     "B": "aut aram"
+    },
+    {
+     "where": "left margin Greek note beside 'quem in / mortuum'",
+     "image_prints": "handwritten Greek 'ὁ δὲ γέρας ἐστὶ θανόντων Hom:'",
+     "reference": "absent",
+     "A": "'τὸ ὧν χεῖρας ἐπὶ θαυόντων Hom:' inserted mid-sentence between 'quem in' and 'mortuum'",
+     "B": "'τὸ γὰρ γέρας ἐστὶ θανόντων Hom:' appended at end of page"
+    },
+    {
+     "where": "u/v",
+     "image_prints": "vt, vno, vſos, vllo, vna with v",
+     "reference": "vt, vno, vsos, vllo kept as v",
+     "A": "mostly v kept, 3 changed to u",
+     "B": "all ~12 changed to u (ut, uno, usos, ullo, una)"
+    }
+   ],
+   "cell": "Latin 1500s",
+   "cer_A_lite": 0.104,
+   "cer_B_flash": 0.064,
+   "worst_for": [
+    "gemini-3.1-flash-lite"
+   ]
+  },
+  {
+   "slug": "ed-6a42b1d25207af7c42f57a9c-p25",
+   "counts_A": {
+    "abbreviation": 0,
+    "long_s": 0,
+    "ligature": 0,
+    "misread": 0,
+    "omission": 1,
+    "addition_furniture": 4,
+    "order": 2,
+    "invention": 1,
+    "reference_error": 9
+   },
+   "counts_B": {
+    "abbreviation": 2,
+    "long_s": 1,
+    "ligature": 0,
+    "misread": 0,
+    "omission": 0,
+    "addition_furniture": 4,
+    "order": 2,
+    "invention": 0,
+    "reference_error": 9
+   },
+   "main_cause_A": "reference lead-in/tail mismatch plus ligature convention (æ kept vs ae) and a dropped word and an invented 'Matthia'",
+   "main_cause_B": "reference lead-in/tail mismatch plus ligature expansion æ->ae and marginal text moved to end",
+   "reference_ok": false,
+   "reference_reason": "Reference opens with a line from the PREVIOUS leaf ('Fabricium Secretatium misit: quibus, facinus repraehenderent,' ~7 words) and ends with 'moritur. A. 1619. 20. Mar' not on this page (about 12% of the reference); it also misplaces the marginal note mid-sentence (before 'Pragensem', breaking 'arcem ... Pragensem') and has typos ('Calvinisini', 'aliom', 'Secretatium'); the printed text begins 'præhenderent'.",
+   "better_reader_by_eye": "B",
+   "examples": [
+    {
+     "where": "line 'tutissimum alias alium, irrumpentes'",
+     "image_prints": "alias alium",
+     "reference": "alias aliom",
+     "A": "alias (alium dropped)",
+     "B": "alias alium"
+    },
+    {
+     "where": "line 'nullâ relicta prole, Matthias Imperator'",
+     "image_prints": "nulla relicta prole",
+     "reference": "nullâ relicta prole",
+     "A": "nullâ relicta Matthia prole (invented word)",
+     "B": "nulla relicta prole"
+    },
+    {
+     "where": "line 'in furias exarſerunt'",
+     "image_prints": "exarſerunt",
+     "reference": "exarserunt",
+     "A": "exarserunt",
+     "B": "exarferunt (long s as f)"
+    },
+    {
+     "where": "first line of page",
+     "image_prints": "præhenderent, juſſit",
+     "reference": "Fabricium Secretatium misit: quibus, facinus repraehenderent, jussit",
+     "A": "præhenderent",
+     "B": "praehenderent"
+    },
+    {
+     "where": "right margin 'Cæsaris consilia rios è fenestris deturbant. A. 1618. 23. Maii.'",
+     "image_prints": "marginal note",
+     "reference": "placed mid-text before 'Pragensem'",
+     "A": "after 'Septemvirorum'",
+     "B": "after 'proficiebant', 'A. ' expanded to 'Anno'"
+    },
+    {
+     "where": "ligatures",
+     "image_prints": "Cæſaris, Huſſitæ, ſæpiſſimè",
+     "reference": "Caesaris, Hussitae, saepissime",
+     "A": "keeps æ",
+     "B": "ae"
+    }
+   ],
+   "cell": "Latin 1600s",
+   "cer_A_lite": 0.197,
+   "cer_B_flash": 0.179,
+   "worst_for": [
+    "gemini-3.1-flash-lite",
+    "gemini-3-flash-preview"
+   ]
+  },
+  {
+   "slug": "ed-6a42acc65207af7c42f4db34-p13",
+   "counts_A": {
+    "abbreviation": 0,
+    "long_s": 0,
+    "ligature": 0,
+    "misread": 5,
+    "omission": 3,
+    "addition_furniture": 3,
+    "order": 1,
+    "invention": 1,
+    "reference_error": 8
+   },
+   "counts_B": {
+    "abbreviation": 0,
+    "long_s": 0,
+    "ligature": 0,
+    "misread": 1,
+    "omission": 0,
+    "addition_furniture": 2,
+    "order": 1,
+    "invention": 0,
+    "reference_error": 8
+   },
+   "main_cause_A": "Greek words garbled/dropped and 'invisum' invented, 'contempaverint'/'comperat' truncations, j->i, header moved to end",
+   "main_cause_B": "reference lacks Greek and has lead-in/tail from other leaves; B itself is near-exact (one 'Babyloniisque')",
+   "reference_ok": true,
+   "reference_reason": "Reference adds a lead-in line from the previous leaf ('ostendetur) ab origine & quasi ab ovo relegit', ~9 words) and 'PARS ALTERA. PEregi' (next leaf; page prints only catchword PARS), drops all Greek words, splits 'Babylonís/que' with stray line breaks and omits header. Body is otherwise right. Both engines are penalised equally for the Greek that B correctly supplies.",
+   "better_reader_by_eye": "B",
+   "examples": [
+    {
+     "where": "line 'interioris Atrii τῶν Ἐυμέτρων Tempora'",
+     "image_prints": "τῶ Ἐυμέτρων (Greek)",
+     "reference": "(blank)",
+     "A": "Ἐυμήτρε (no τῶν; letters wrong)",
+     "B": "τῶν Ἐμμέτρων"
+    },
+    {
+     "where": "line 'canticum Mosis ἐπινίκιον'",
+     "image_prints": "Greek word (ἐπινίκιον)",
+     "reference": "(blank)",
+     "A": "invisum (Latin invention for Greek)",
+     "B": "ἐπινίκιον"
+    },
+    {
+     "where": "line 'toti Bestiæ Septicipiti contemporaverint'",
+     "image_prints": "contemporaverint",
+     "reference": "contemporaverint",
+     "A": "contempaverint",
+     "B": "contemporaverint"
+    },
+    {
+     "where": "last line 'Ergò Effusio Phialarum contemporat Bestiæ'",
+     "image_prints": "contemporat",
+     "reference": "contemporat",
+     "A": "comperat",
+     "B": "contemporat"
+    },
+    {
+     "where": "line 'Itémque de ultimâ quâ effusâ'",
+     "image_prints": "ultimâ quâ effusâ",
+     "reference": "ultimâ quâ effusâ",
+     "A": "ultimâ quæ effusa",
+     "B": "ultimâ quâ effusâ"
+    },
+    {
+     "where": "line 'Babylonísq;'",
+     "image_prints": "Babylonísq;",
+     "reference": "Babylonís / que (split)",
+     "A": "Babylonísque;",
+     "B": "Babyloniisque;"
+    }
+   ],
+   "cell": "Latin 1600s",
+   "cer_A_lite": 0.116,
+   "cer_B_flash": 0.107,
+   "worst_for": [
+    "gemini-3.1-flash-lite"
+   ]
+  },
+  {
+   "slug": "ed-6a4263b1744db9e3105b1125-p23",
+   "counts_A": {
+    "abbreviation": 0,
+    "long_s": 0,
+    "ligature": 2,
+    "misread": 2,
+    "omission": 0,
+    "addition_furniture": 0,
+    "order": 0,
+    "invention": 1,
+    "reference_error": 9
+   },
+   "counts_B": {
+    "abbreviation": 1,
+    "long_s": 0,
+    "ligature": 2,
+    "misread": 1,
+    "omission": 0,
+    "addition_furniture": 0,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 9
+   },
+   "main_cause_A": "line-end hyphens kept (ref dehyphenated), æ vs ae, and a string of stray letters copied from the facing page's edge",
+   "main_cause_B": "line-end hyphens kept vs dehyphenated reference, æ vs ae, expansion of printed 'Reip.' to 'Reipublicæ'",
+   "reference_ok": true,
+   "reference_reason": "Reference has a lead-in not on the leaf ('insignis quidem Hippocraticae familiae', where the page starts 'milia Fautor') and tail ('perlegendis omnibus, quae', page ends 'per-'), ~5% extra; garbled 'sing larem', 'stud is'; normalizes ae. Remaining body correct.",
+   "better_reader_by_eye": "B",
+   "examples": [
+    {
+     "where": "line 'à juventute usque infuderat'",
+     "image_prints": "infu- / derat (long s resembles f)",
+     "reference": "infuderat",
+     "A": "insu- derat",
+     "B": "infu- derat"
+    },
+    {
+     "where": "tail of page",
+     "image_prints": "right edge shows partial letters of the next leaf (show-through)",
+     "reference": "absent",
+     "A": "'P p c n T p c q r i p n m a s r i c q' appended",
+     "B": "absent"
+    },
+    {
+     "where": "line 'negotiis suf-/furari'",
+     "image_prints": "Reip. negotiis",
+     "reference": "Reip. negotiis",
+     "A": "Reip.",
+     "B": "Reipublicæ (expanded)"
+    },
+    {
+     "where": "line 'breviter Sibi'",
+     "image_prints": "brevitèr",
+     "reference": "brevitèr",
+     "A": "breviter (accent lost)",
+     "B": "brevitèr"
+    },
+    {
+     "where": "first line",
+     "image_prints": "miliæ Fautor",
+     "reference": "insignis quidem Hippocraticae familiae Fautor",
+     "A": "milie",
+     "B": "milia"
+    },
+    {
+     "where": "line 'singularem res'",
+     "image_prints": "ſingularem",
+     "reference": "sing larem (garbled)",
+     "A": "singularem",
+     "B": "singularem"
+    }
+   ],
+   "cell": "Latin 1600s",
+   "cer_A_lite": 0.095,
+   "cer_B_flash": 0.108,
+   "worst_for": [
+    "gemini-3-flash-preview"
+   ]
+  },
+  {
+   "slug": "ed-699062f5ef12272ffdc8e9d5-p505",
+   "counts_A": {
+    "abbreviation": 100,
+    "long_s": 0,
+    "ligature": 0,
+    "misread": 18,
+    "omission": 1,
+    "addition_furniture": 0,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 2
+   },
+   "counts_B": {
+    "abbreviation": 8,
+    "long_s": 0,
+    "ligature": 0,
+    "misread": 8,
+    "omission": 0,
+    "addition_furniture": 0,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 2
+   },
+   "main_cause_A": "abbreviations (tilde, q, p, 7, z/etc.) mostly left unexpanded, ~15 further letter misreads and a 3-line omission",
+   "main_cause_B": "a few unexpanded or wrongly expanded abbreviations and ~8 misreads; otherwise a faithful full expansion",
+   "reference_ok": true,
+   "reference_reason": "Reference is a corrected full expansion of the printed text and matches the page except an appended line of keywords ('hebreo℞, christiani, sacrificia, demones, pphetas, ...') that is not on the page, and 'XIX' header. Score difference is dominated by whether the engine expanded abbreviations, which the prompt demanded.",
+   "better_reader_by_eye": "B",
+   "examples": [
+    {
+     "where": "col 1 line 1",
+     "image_prints": "deū monět ꝛ illū impāt colě ubique",
+     "reference": "deum monent et illum imperant colere ubique",
+     "A": "deum monet et illa impat cole ubique",
+     "B": "deum monet et illam impat colere ubique"
+    },
+    {
+     "where": "col 1 line 8 'deos quidem omnes recusauerunt: prohibitos'",
+     "image_prints": "deos quidē ōes recusauerūt: phibitos",
+     "reference": "deos quidem omnes recusauerunt: prohibitos",
+     "A": "deos quide eos reculauerut: phibitof",
+     "B": "deos quidem virtutes recusaverunt: prohibitos"
+    },
+    {
+     "where": "col 2 end",
+     "image_prints": "'Hec ē ciuitas eius: cuius rei mysteriū celebramꝰ oblationibꝰ nīis: qȝ fidelibꝰ note sunt: sicut i libris precedētibꝰ'",
+     "reference": "full line",
+     "A": "'Hec e ciuitas sicut i libris precedetib' (skips ~16 words)",
+     "B": "present, but 'mysteria'"
+    },
+    {
+     "where": "col 2 'in qua lege scriptū ē. Sacrificans'",
+     "image_prints": "abbreviated",
+     "reference": "scriptum est",
+     "A": "scriptū e",
+     "B": "scriptum est"
+    },
+    {
+     "where": "col 2 'sacrificari uetat intonās'",
+     "image_prints": "itonās (= intonans)",
+     "reference": "intonans",
+     "A": "itonas",
+     "B": "itonas (unexpanded)"
+    },
+    {
+     "where": "col 2 'sed apta et crebra colligē'",
+     "image_prints": "colligē (= colligere)",
+     "reference": "colligere",
+     "A": "collige",
+     "B": "colliguntur (wrong)"
+    }
+   ],
+   "cell": "Latin 1400s (corrected-OCR reference)",
+   "cer_A_lite": 0.204,
+   "cer_B_flash": 0.07,
+   "worst_for": [
+    "all pages of this cell"
+   ]
+  },
+  {
+   "slug": "ed-69b51e9947b06ecd581940dc-p309",
+   "counts_A": {
+    "abbreviation": 0,
+    "long_s": 0,
+    "ligature": 10,
+    "misread": 2,
+    "omission": 0,
+    "addition_furniture": 3,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 9
+   },
+   "counts_B": {
+    "abbreviation": 1,
+    "long_s": 0,
+    "ligature": 9,
+    "misread": 2,
+    "omission": 0,
+    "addition_furniture": 3,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 9
+   },
+   "main_cause_A": "reference normalizes æ/œ to ae/oe and drops accents, & vs et; plus header and signature; 2 letter misreads (complector, exilii)",
+   "main_cause_B": "same convention gap (æ/&/accents vs reference) plus header/signature and markdown headings; 2 small misreads",
+   "reference_ok": true,
+   "reference_reason": "Reference has an extra first line from the previous leaf ('fossis lumen abire genis:') and 'At mutata licet' not on the page (page ends with signature A4), the typo 'HAns' for HAnc, 'v. s.' for 'v. 5.', and silently normalizes accents (Quàm, à, divûm, propè). The printed folio is 301 (leaf label p309). Score is mostly convention gap.",
+   "better_reader_by_eye": "tie",
+   "examples": [
+    {
+     "where": "line 'Vos ego Tartareis complectar'",
+     "image_prints": "complectar",
+     "reference": "complectar",
+     "A": "complector",
+     "B": "complectar"
+    },
+    {
+     "where": "line 'Et spes exſilii commodioris adeſt'",
+     "image_prints": "exſilii",
+     "reference": "exsilii",
+     "A": "exilii",
+     "B": "exsilii"
+    },
+    {
+     "where": "subtitle 'Juxta illud Iſaia c. 59. v. 5.'",
+     "image_prints": "Iſaia c. 59. v. 5.",
+     "reference": "Isaiae c. 59. v. s.",
+     "A": "Isaia c. 59. v. 5.",
+     "B": "Isaiae c. 59. v. 5. (adds e)"
+    },
+    {
+     "where": "line 'Quàm caream vobis, cœlestia'",
+     "image_prints": "cœleſtia",
+     "reference": "caelestia",
+     "A": "cœlestia",
+     "B": "cælestia"
+    },
+    {
+     "where": "drop-cap line",
+     "image_prints": "H + Anc tu quam spectas",
+     "reference": "HAns tu",
+     "A": "HAnc",
+     "B": "**H**Anc"
+    },
+    {
+     "where": "first line",
+     "image_prints": "Quàm caream (no 'fossis lumen abire genis')",
+     "reference": "fossis lumen abire genis: Quam caream",
+     "A": "Quàm",
+     "B": "Quàm"
+    }
+   ],
+   "cell": "Latin 1700s",
+   "cer_A_lite": 0.089,
+   "cer_B_flash": 0.086,
+   "worst_for": [
+    "all pages of this cell"
+   ]
+  },
+  {
+   "slug": "ed-69dbc9491040d1d5e20a1afd-p87",
+   "counts_A": {
+    "abbreviation": 110,
+    "long_s": 0,
+    "ligature": 0,
+    "misread": 22,
+    "omission": 2,
+    "addition_furniture": 0,
+    "order": 0,
+    "invention": 3,
+    "reference_error": 3
+   },
+   "counts_B": {
+    "abbreviation": 0,
+    "long_s": 0,
+    "ligature": 0,
+    "misread": 6,
+    "omission": 0,
+    "addition_furniture": 0,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 3
+   },
+   "main_cause_A": "abbreviations (p, q, tilde, 9, 7) left unexpanded ~110 words, plus line splices/misreads and 'splendet' for 'comprehenderet', skipped word groups",
+   "main_cause_B": "fully expanded to classical Latin with a few over-regularizations (comprehenderit, vidissem, Sylla, quaestor, adipiscisci)",
+   "reference_ok": true,
+   "reference_reason": "Reference is a corrected expansion of the page (u/v mixed: uniuersas but vexatis); it adds a trailing keyword line ('Cicero, De Officiis, bellum civile, caritas, ...') not printed, and has a couple of its own choices ('Quam L. silla'; image 'Lhilla' i.e. Lsilla). The cell rewards expansion, so A's diplomatic reading scores 0.19.",
+   "better_reader_by_eye": "B",
+   "examples": [
+    {
+     "where": "line 1-2 'genere comprehenderet'",
+     "image_prints": "ge- / nere ɔphendet",
+     "reference": "comprehenderet",
+     "A": "splendet",
+     "B": "comprehenderit"
+    },
+    {
+     "where": "line 'perditis exteris nationibus ad exemplum amissi imperii'",
+     "image_prints": "pditis ... amiſſi impij",
+     "reference": "perditis ... imperii",
+     "A": "pdius ... amissum impn.",
+     "B": "perditis ... imperii"
+    },
+    {
+     "where": "line 'Multa preterea commemorare nephariam in socios'",
+     "image_prints": "ɔmemorare nepharia in socios",
+     "reference": "commemorarem nepharia in socios",
+     "A": "commemorare nephariam socios (drops 'in')",
+     "B": "commemorare nephariam in socios"
+    },
+    {
+     "where": "line 'quam L. Sylla cum vibrasset'",
+     "image_prints": "Quā L·ſilla cū vibraſſ",
+     "reference": "Quam L. silla cum vibrasset",
+     "A": "Qua Lhilla cu uibrass",
+     "B": "Quam Sylla cum vibrasset"
+    },
+    {
+     "where": "line 'hasta eadem non recessit'",
+     "image_prints": "hasta eatē nō receſſit",
+     "reference": "hasta eadem non recessit",
+     "A": "hasta eate no recessit",
+     "B": "hasta eadem non recessit"
+    },
+    {
+     "where": "final paragraph opener",
+     "image_prints": "Sod (rubricated initial) cū pſpicuū",
+     "reference": "Sed cum perspicuum",
+     "A": "Sed cui pspicuu",
+     "B": "Quod cum perspicuum (misread initial)"
+    }
+   ],
+   "cell": "Latin 1400s (corrected-OCR reference)",
+   "cer_A_lite": 0.187,
+   "cer_B_flash": 0.076,
+   "worst_for": [
+    "all pages of this cell"
+   ]
+  },
+  {
+   "slug": "ed-69b649aa18b87551bfc5e743-p59",
+   "A": {
+    "abbreviation": 2,
+    "long_s": 6,
+    "ligature": 14,
+    "misread": 6,
+    "omission": 0,
+    "addition_furniture": 3,
+    "order": 1,
+    "invention": 0,
+    "reference_error": 1
+   },
+   "B": {
+    "abbreviation": 0,
+    "long_s": 0,
+    "ligature": 1,
+    "misread": 2,
+    "omission": 0,
+    "addition_furniture": 2,
+    "order": 1,
+    "invention": 0,
+    "reference_error": 1
+   },
+   "main_cause_A": "kept the leaf's e-caudata as plain e (case, Nymphe, Napee, pulcherrime) where the reference reads ae, plus long-s read as f (Agafina, Tubingenfes, siluas) and one dropped/changed word",
+   "main_cause_B": "marginal notes (Agasina, Apollonia danubiana, Puellae Tubingenses...) and header interleaved at different positions than the reference; otherwise near-exact, u/v and et/& conventions",
+   "reference_ok": true,
+   "reference_reason": "Reference is a faithful line-by-line transcription of the leaf (marginal notes placed inline, ae-expansion of the printed e-caudata, u->v modernised); only minor issues (Quam vs 'Qua' printed with abbreviation mark).",
+   "better_reader_by_eye": "B",
+   "examples": [
+    {
+     "where": "line 3 margin/text",
+     "image_prints": "Agaſina Smichi (Hic Agaſina Smichi piſcoſa)",
+     "reference": "Agasina Hic Agasina Smichi piscosa",
+     "A": "Agafina Hic Agafina si mihi piscosa (long s read as f; Smichi re-expanded as 'si mihi')",
+     "B": "Agasina Hic Agasina Smichi piscosa"
+    },
+    {
+     "where": "line 1-2",
+     "image_prints": "caſę, Nymphę, Napeę (e-caudata)",
+     "reference": "casae, Nymphae, Napaeae",
+     "A": "case, Nymphe, Napee",
+     "B": "casae, Nymphae, Napaeae"
+    },
+    {
+     "where": "margin Puellę Tubingenſes",
+     "image_prints": "Tubingenſes",
+     "reference": "Tubingenses",
+     "A": "Tubingenfes",
+     "B": "Tubingenses"
+    },
+    {
+     "where": "line 'Apollonia danubiana' margin position",
+     "image_prints": "margin note beside 'Tertia viſa...'",
+     "reference": "Apollonia danubiana before Tertia",
+     "A": "before Tertia (matches)",
+     "B": "after 'iam iam' (placed after the line)"
+    },
+    {
+     "where": "header",
+     "image_prints": "QVINTVS ... F ij (signature at foot)",
+     "reference": "absent",
+     "A": "F ij QVINTVS ... F ij (signature twice)",
+     "B": "QVINTVS F ij"
+    }
+   ],
+   "cell": "Latin 1500s",
+   "cer_A_lite": 0.14,
+   "cer_B_flash": 0.143,
+   "worst_for": [
+    "gemini-3.1-flash-lite",
+    "gemini-3-flash-preview"
+   ]
+  },
+  {
+   "slug": "ed-6a94184aa4ed5935447a82d2-p9",
+   "A": {
+    "abbreviation": 2,
+    "long_s": 0,
+    "ligature": 0,
+    "misread": 1,
+    "omission": 1,
+    "addition_furniture": 3,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 4
+   },
+   "B": {
+    "abbreviation": 0,
+    "long_s": 0,
+    "ligature": 0,
+    "misread": 0,
+    "omission": 1,
+    "addition_furniture": 4,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 4
+   },
+   "main_cause_A": "reference carries lines that are not on the leaf (first and last lines) and uses ae/modern spellings; A's real error is one word: 'uideat' for 'uideatur' (abbreviation not expanded)",
+   "main_cause_B": "score is driven by the reference's extra passage and its spelling (saeculi, vestri) plus u/v and & vs et; B reads the leaf essentially perfectly",
+   "reference_ok": true,
+   "reference_reason": "Body text matches the leaf, but the reference adds a first line 'virtute, ac pietate ceteris' and last lines 'sicut alloquebatur sancta' that are not on this leaf (~8 words of ~110), and normalises 'seculi' to 'saeculi'; score inflated moderately, not meaningless.",
+   "better_reader_by_eye": "B",
+   "examples": [
+    {
+     "where": "line 'conferenda uideat̃'",
+     "image_prints": "uideat̃ (abbreviated -ur)",
+     "reference": "videatur",
+     "A": "uideat",
+     "B": "uideatur"
+    },
+    {
+     "where": "top of reference",
+     "image_prints": "page begins 'uestri ordinis adolescentib. præſtetis'",
+     "reference": "virtute, ac pietate ceteris / vestri ordinis ...",
+     "A": "starts at uestri",
+     "B": "starts at uestri"
+    },
+    {
+     "where": "bottom",
+     "image_prints": "'apud De-' then catchword 'um,'",
+     "reference": "'... apud Deum, sicut alloquebatur sancta'",
+     "A": "apud Deum,",
+     "B": "apud Deum,"
+    },
+    {
+     "where": "seculi",
+     "image_prints": "ſeculi",
+     "reference": "saeculi",
+     "A": "seculi",
+     "B": "seculi"
+    },
+    {
+     "where": "header/signature",
+     "image_prints": "NVNCVPATORIA. * 5",
+     "reference": "absent",
+     "A": "NVNCVPATORIA. 5",
+     "B": "NVNCVPATORIA. * 5"
+    }
+   ],
+   "cell": "Latin 1500s",
+   "cer_A_lite": 0.097,
+   "cer_B_flash": 0.101,
+   "worst_for": [
+    "gemini-3-flash-preview"
+   ]
+  },
+  {
+   "slug": "ed-69c8a3f26c6f3cc53c85e777-p36",
+   "A": {
+    "abbreviation": 0,
+    "long_s": 3,
+    "ligature": 22,
+    "misread": 6,
+    "omission": 0,
+    "addition_furniture": 6,
+    "order": 1,
+    "invention": 0,
+    "reference_error": 0
+   },
+   "B": {
+    "abbreviation": 30,
+    "long_s": 0,
+    "ligature": 2,
+    "misread": 3,
+    "omission": 0,
+    "addition_furniture": 2,
+    "order": 0,
+    "invention": 5,
+    "reference_error": 0
+   },
+   "main_cause_A": "bleed from the facing page (~45 words of marginal fragments of the right-hand leaf, appended at start and end) plus keeping the printed ligatures æ/œ/Æ that the reference expands to ae/oe",
+   "main_cause_B": "expands every printed reference abbreviation into full words with asterisk italics (lib.->liber, cap.->caput, Seneca, Plutarchus) and adds a few inventions (censuit, consenuissent, 'in republica suae', Zuingeri)",
+   "reference_ok": true,
+   "reference_reason": "Mostly good but with errors by the image: 'domi ititur teiam' (image: igitur te jam), 'Plauto' (Plato), 'Turletus', 'censorius' ok, 'Pflaunerkt', 'ruinas' fine; it also ends with 'Gratorolus. Et quod caute etiam vulgi' which is not on this leaf; ae/oe normalised from Æ/æ. Not meaningless, but ~6 reference errors.",
+   "better_reader_by_eye": "A",
+   "examples": [
+    {
+     "where": "line 'Cato'",
+     "image_prints": "censorius Cato / conſeſcerent",
+     "reference": "censorius Cato ... consenescerent",
+     "A": "censorius Cato ... consenescerent",
+     "B": "censuit Cato ... consenuissent"
+    },
+    {
+     "where": "'reipublicæ ſuæ'",
+     "image_prints": "in reipublicæ ſuæ uſum",
+     "reference": "in rei publicae suae usum",
+     "A": "in reipublicæ suæ usum",
+     "B": "in republica suae usum"
+    },
+    {
+     "where": "'domi igitur te jam'",
+     "image_prints": "domi igitur te jam contine",
+     "reference": "domi ititur teiam contine",
+     "A": "domi igitur te jam contine",
+     "B": "domi igitur te jam contine"
+    },
+    {
+     "where": "citations",
+     "image_prints": "Turlerus, lib.1.de peregrinat.cap.2.",
+     "reference": "Turlerus, lib. 1. de peregrinat. cap. 2.",
+     "A": "same as printed",
+     "B": "Hieronymus Turlerus, *liber 1. de peregrinatione caput 2.*"
+    },
+    {
+     "where": "end of A",
+     "image_prints": "facing leaf: 'libellum / norum c / num, Epi...' (not this page)",
+     "reference": "not present",
+     "A": "appended 'libel Quod id non de piendum mine tru aut faller men reli...' fragments",
+     "B": "not present"
+    },
+    {
+     "where": "Ægypto",
+     "image_prints": "Ægypto, ædificiorum",
+     "reference": "Aegypto, aedificiorum",
+     "A": "Ægypto, ædificiorum",
+     "B": "Aegypto, aedificiorum"
+    }
+   ],
+   "cell": "Latin 1600s",
+   "cer_A_lite": 0.152,
+   "cer_B_flash": 0.087,
+   "worst_for": [
+    "gemini-3.1-flash-lite"
+   ]
+  },
+  {
+   "slug": "ed-6a425bef744db9e3105a3b00-p18",
+   "A": {
+    "abbreviation": 0,
+    "long_s": 30,
+    "ligature": 12,
+    "misread": 3,
+    "omission": 0,
+    "addition_furniture": 4,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 6
+   },
+   "B": {
+    "abbreviation": 25,
+    "long_s": 0,
+    "ligature": 12,
+    "misread": 3,
+    "omission": 0,
+    "addition_furniture": 3,
+    "order": 0,
+    "invention": 14,
+    "reference_error": 6
+   },
+   "main_cause_A": "A is faithful to the leaf; its distance comes from the reference's own errors/extras and from long-s (ſ) and æ kept as printed (the leaf prints long s only in part)",
+   "main_cause_B": "expands the apothecary symbols (drachm/ounce signs) into words with wrong quantities and expands every abbreviation (Domine, Clarissime, Vale & Salve, die), i.e. invented content not on the page",
+   "reference_ok": true,
+   "reference_reason": "Reference has an extra first line 'expertus sum aliquoties, talis est:' and fragment 'rum.' and 'Me miserum' not on this leaf (page ends with catchword 'Me'), drops the Rx and all apothecary signs, and has typos (abenda, pigneribus, Turletus-style errors). ~6 errors, but body is usable.",
+   "better_reader_by_eye": "A",
+   "examples": [
+    {
+     "where": "recipe line 2",
+     "image_prints": "conf. alcherm. ʒiß.",
+     "reference": "conf. alcherm. j.",
+     "A": "conf. alcherm. 3iß.",
+     "B": "conf. alcherm. drachmas iij semis."
+    },
+    {
+     "where": "recipe line 'ʒijs' (2 1/2)",
+     "image_prints": "depurat. ʒijs.",
+     "reference": "depurat. ijs.",
+     "A": "depurat. 3js.",
+     "B": "depurat. uncias iij semis."
+    },
+    {
+     "where": "closing",
+     "image_prints": "V. & S. Geræ d. 25. April. 1626.",
+     "reference": "V. et S. Gerae d. 25. April. 1626.",
+     "A": "V. & S. Geræ d. 25. April. 1626.",
+     "B": "Vale & Salve. Geræ die 25. April. 1626."
+    },
+    {
+     "where": "syrup name",
+     "image_prints": "Syr. Diaſereos",
+     "reference": "Diasereos",
+     "A": "Diaſereos",
+     "B": "Diatereos"
+    },
+    {
+     "where": "verse",
+     "image_prints": "pignoribus",
+     "reference": "pigneribus",
+     "A": "pignoribus",
+     "B": "pignorbus"
+    },
+    {
+     "where": "'habenda erat'",
+     "image_prints": "habenda erat",
+     "reference": "abenda erat",
+     "A": "habenda",
+     "B": "habenda"
+    }
+   ],
+   "cell": "Latin 1600s",
+   "cer_A_lite": 0.081,
+   "cer_B_flash": 0.164,
+   "worst_for": [
+    "gemini-3-flash-preview"
+   ]
+  },
+  {
+   "slug": "ed-6a906153ce57ddf536207e42-p9",
+   "A": {
+    "abbreviation": 0,
+    "long_s": 0,
+    "ligature": 1,
+    "misread": 1,
+    "omission": 0,
+    "addition_furniture": 4,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 5
+   },
+   "B": {
+    "abbreviation": 0,
+    "long_s": 0,
+    "ligature": 0,
+    "misread": 0,
+    "omission": 0,
+    "addition_furniture": 4,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 5
+   },
+   "main_cause_A": "the reference, not the engine: stray first line and last two lines not on the leaf, MAIESTAS vs the leaf's printed MAJESTAS/'Maje-', & vs et; A also adds 'glo-' and one stabilitâ/comparatâ",
+   "main_cause_B": "the reference's extra text ('ac sponte in ma-' at the start, 'gloria, saeculorum Poetas' at the end), saeculorum/MAIESTATIS spellings and & vs et; B reads the leaf essentially perfectly",
+   "reference_ok": false,
+   "reference_reason": "Reference adds text not on this leaf at both ends ('ac sponte in ma-' / 'gloria, saeculorum Poetas' ~8 words of ~90) and changes J to I; on a 90-word leaf that is ~10% of the reference, so the 0.10 CER is mostly reference error.",
+   "better_reader_by_eye": "tie",
+   "examples": [
+    {
+     "where": "start",
+     "image_prints": "page starts 'nus ſeſe inſinuare' (header DEDICATORIA)",
+     "reference": "ac sponte in ma- / nus sese insinuare",
+     "A": "nus sese insinuare",
+     "B": "nus sese insinuare"
+    },
+    {
+     "where": "end",
+     "image_prints": "'comparatâ' then catchword 'glo-' and signature '* 3'",
+     "reference": "comparata / gloria, saeculorum Poetas",
+     "A": "comparatâ glo- * 3",
+     "B": "comparatâ (omits catchword)"
+    },
+    {
+     "where": "MAJESTATIS",
+     "image_prints": "MAJESTATIS (J)",
+     "reference": "MAIESTATIS",
+     "A": "MAJESTATIS",
+     "B": "MAJESTATIS"
+    },
+    {
+     "where": "adjicerem",
+     "image_prints": "adjicerem",
+     "reference": "adiicerem",
+     "A": "adjicerem",
+     "B": "adjicerem"
+    },
+    {
+     "where": "ampersand",
+     "image_prints": "& (printed ampersand)",
+     "reference": "et",
+     "A": "&",
+     "B": "et"
+    }
+   ],
+   "cell": "Latin 1600s",
+   "cer_A_lite": 0.101,
+   "cer_B_flash": 0.108,
+   "worst_for": [
+    "gemini-3-flash-preview"
+   ]
+  },
+  {
+   "slug": "ed-69afd0df775a23a98ee93a30-p420",
+   "A": {
+    "abbreviation": 120,
+    "long_s": 0,
+    "ligature": 6,
+    "misread": 70,
+    "omission": 5,
+    "addition_furniture": 1,
+    "order": 0,
+    "invention": 15,
+    "reference_error": 0
+   },
+   "B": {
+    "abbreviation": 10,
+    "long_s": 0,
+    "ligature": 2,
+    "misread": 10,
+    "omission": 40,
+    "addition_furniture": 0,
+    "order": 0,
+    "invention": 2,
+    "reference_error": 0
+   },
+   "main_cause_A": "Latin 1400s abbreviation-dense text: strips the abbreviation marks (pdest, ptus, qui for qui) and misreads many words, plus one duplicated passage (Dolores... Eun/dem line repeated); reaches the end of the page",
+   "main_cause_B": "degenerate repetition loop: after about 10 lines it repeats 'Et perdest. Aut si incipientibus prurire sit iuxta quod ederit...' ~500 times (54 KB output), so ~36 of 47 lines are omitted and the rest is garbage",
+   "reference_ok": true,
+   "reference_reason": "Reference follows the leaf closely and keeps the printed abbreviation marks (p̄, q̄, ⁹), line by line; only extra final keyword line 'Olympias thebana, uuluae, leporis usus, ...' is not on the leaf. Score is meaningful for the engines' failures.",
+   "better_reader_by_eye": "A",
+   "examples": [
+    {
+     "where": "line 1",
+     "image_prints": "na ſuccida appoſitu. Olympias thebana addidit hyſopu & nitrę",
+     "reference": "na succida appositu ... hysopu & nitru",
+     "A": "na lucida appositu ... hyoscyami et nitri",
+     "B": "na succida appositu ... hysope et nitro"
+    },
+    {
+     "where": "lines 7-9",
+     "image_prints": "Dolores earų iecur. Carneſq; lupi edeſſe parituris pdeſt. Aut ſi incipientib? pturire ſit iuxta q ederit",
+     "reference": "Dolores earū iecur. Carnesq; lupi edisse parituris prodest.",
+     "A": "Dolores earu etia cotra illita noxia ualeat. Et in pdest. (skips 'iecur Carnesq lupi edisse parituris' and jumps to the next line)",
+     "B": "Dolores earum etiam contra illita noxia ualeat. Et perdest. ... then repeats the same sentence ~500 times"
+    },
+    {
+     "where": "line 4",
+     "image_prints": "Inueniunt & oſſicula in corde & uulua pqutilia grauidis pturientibusq;",
+     "reference": "Inueniunt & ossicula in corde & uulua p̄q̄utilia grauidis pturientibusq;",
+     "A": "Inuenitur et officula in corde et uulua ptutilia grauidis pturientibus",
+     "B": "Inueniuntur et ossicula in corde et uulua perutilia grauidis prurientibusque (wrong: pturientibus = parturientibus)"
+    },
+    {
+     "where": "line 5",
+     "image_prints": "Nam d pumice q in uaccaq utero ſimili modo repit",
+     "reference": "Nam d̄ pumice q̄ in uaccaru utero simili modo repit",
+     "A": "Nam et pumice qui in uas utero dimio repit",
+     "B": "Nam de pumice qui in uaccae utero simili modo reperitur"
+    },
+    {
+     "where": "end of page",
+     "image_prints": "Itẽ a coitu equi Virgilio (last line)",
+     "reference": "Ite a coitu equi Virgilio / Olympias thebana, uuluae, ... Aeschines (extra keyword line)",
+     "A": "reaches 'Ite a coitu equi Virgilio'",
+     "B": "never reaches it"
+    }
+   ],
+   "cell": "Latin 1400s (corrected-OCR reference)",
+   "cer_A_lite": 0.179,
+   "cer_B_flash": 0.726,
+   "worst_for": [
+    "all pages of this cell"
+   ]
+  },
+  {
+   "slug": "ed-69b6e47ea8d7b8d17a676440-p218",
+   "A": {
+    "abbreviation": 0,
+    "long_s": 2,
+    "ligature": 2,
+    "misread": 3,
+    "omission": 0,
+    "addition_furniture": 3,
+    "order": 0,
+    "invention": 0,
+    "reference_error": 4
+   },
+   "B": {
+    "abbreviation": 2,
+    "long_s": 0,
+    "ligature": 0,
+    "misread": 0,
+    "omission": 0,
+    "addition_furniture": 5,
+    "order": 0,
+    "invention": 2,
+    "reference_error": 4
+   },
+   "main_cause_A": "~30 words of the facing leaf appended at the end (beni- benigni Grotii rum, pro celluit carminis ...), plus long-s as f (definent, Frifios) and cIɔ Iɔc read as CIO IOC",
+   "main_cause_B": "reference's own errors (separari, er lege, missing 'stolas'); B adds markdown italics/### and expands d./Dec. to datum/Decembris",
+   "reference_ok": true,
+   "reference_reason": "Good overall, but it lacks 'stolas' at the start of line 1, reads 'separari' (leaf: separati) and 'er lege' (et lege), 'CIC ICC' for cIɔ Iɔc; ~4 errors in 190 words.",
+   "better_reader_by_eye": "B",
+   "examples": [
+    {
+     "where": "line 1",
+     "image_prints": "ſtolas ſcripſiſſet.",
+     "reference": "scripsisset.",
+     "A": "stolas scripsisset.",
+     "B": "stolas scripsisset."
+    },
+    {
+     "where": "date",
+     "image_prints": "d. XXX. Dec. cIɔ Iɔc LXXIV.",
+     "reference": "d. XXX. Dec. CIC ICC LXXIV.",
+     "A": "d. XXX. Dec. CIO IOC LXXIV.",
+     "B": "datum XXX. Decembris CIƆ IƆC LXXIV."
+    },
+    {
+     "where": "'ſeparati'",
+     "image_prints": "ſeparati ab Imperio",
+     "reference": "separari",
+     "A": "separati",
+     "B": "separati"
+    },
+    {
+     "where": "'deſinent'",
+     "image_prints": "deſinent eſſe conciliatores",
+     "reference": "desinent",
+     "A": "definent",
+     "B": "desinent"
+    },
+    {
+     "where": "'et lege'",
+     "image_prints": "et lege violatae",
+     "reference": "er lege",
+     "A": "et lege",
+     "B": "et lege"
+    },
+    {
+     "where": "end",
+     "image_prints": "catchword 'beni-'; right is next leaf marginal fragments",
+     "reference": "ends at 'mihi'",
+     "A": "mihi beni- benigni Grotii rum, pro celluit ... (facing-page bleed)",
+     "B": "mihi beni-"
+    }
+   ],
+   "cell": "Latin 1700s",
+   "cer_A_lite": 0.135,
+   "cer_B_flash": 0.045,
+   "worst_for": [
+    "all pages of this cell"
+   ]
+  },
+  {
+   "slug": "ed-69dbcc3e0f8c5edf20f484a0-p330",
+   "A": {
+    "abbreviation": 250,
+    "long_s": 0,
+    "ligature": 0,
+    "misread": 80,
+    "omission": 5,
+    "addition_furniture": 2,
+    "order": 0,
+    "invention": 40,
+    "reference_error": 0
+   },
+   "B": {
+    "abbreviation": 15,
+    "long_s": 0,
+    "ligature": 0,
+    "misread": 5,
+    "omission": 0,
+    "addition_furniture": 3,
+    "order": 0,
+    "invention": 8,
+    "reference_error": 0
+   },
+   "main_cause_A": "dense scholastic abbreviation: leaves most printed abbreviations unexpanded or mangled (oe, ptus, vle, po, bo, et, fm) and loses the argument, with many misreads in the second column (bo/et/aial/cols)",
+   "main_cause_B": "expands abbreviations fluently and correctly for most of the page, but silently modernises (physicorum, universale) and in the second column invents plausible text (bonum for homo, 'rationem quam posuit universalia substantias' for platonem, 'ordo naturae... nam magis universale ut bonum animalis')",
+   "reference_ok": true,
+   "reference_reason": "Reference is a full expansion of the two columns matching the leaf; only a trailing keyword line 'Summa theologiae, Thomas Aquinas, uniuersalia, ...' is not on the page and the reference uses u/i orthography and 'phisicorum'.",
+   "better_reader_by_eye": "B",
+   "examples": [
+    {
+     "where": "col 1 line 1",
+     "image_prints": "Dtertium ſic pceditur. Uƒ qd magis vniuerſalia",
+     "reference": "Ad tertium sic proceditur. Uidetur quod magis uniuersalia",
+     "A": "Dtertium sic, proceditur. Ut si magis uniuersalia",
+     "B": "Ad tertium sic proceditur. Videtur quod magis universalia"
+    },
+    {
+     "where": "Aristotelian citation",
+     "image_prints": "phi. dicit in .j. phisi. diffinituz",
+     "reference": "philosophus dicit in primo phisicorum quod diffinitum",
+     "A": "phi. dicit in j. phisi. diffinituz",
+     "B": "philosophus dicit in primo physicorum quod definitum"
+    },
+    {
+     "where": "col 2 'sortes uel plato'",
+     "image_prints": "sor. vel pla.",
+     "reference": "sortes uel plato",
+     "A": "sor. vel pla.",
+     "B": "Socrates vel Plato"
+    },
+    {
+     "where": "col 2, Plato passage",
+     "image_prints": "ſed ſm platonem q poſuit vniuerſalia ſubſiſtentia",
+     "reference": "sed secundum platonem qui posuit uniuersalia subsistentia",
+     "A": "sed et tonem et posuit vniuersalia suba",
+     "B": "sed secundum rationem quam posuit universalia substantias"
+    },
+    {
+     "where": "col 2 end of 'homo quam animal'",
+     "image_prints": "ut homo quam animal. nature enim intentio",
+     "reference": "ut homo quam animal.",
+     "A": "vt et et bo aial.",
+     "B": "ut bonum animalis naturae intentione"
+    },
+    {
+     "where": "col 2 later",
+     "image_prints": "vt totum quidem ſecundum quod in magis vniuerſali",
+     "reference": "ut totum quidem secundum quod in magis uniuersali",
+     "A": "et totu quod fm et in magis vli",
+     "B": "ut totum quod secundum magis universale"
+    }
+   ],
+   "cell": "Latin 1400s (corrected-OCR reference)",
+   "cer_A_lite": 0.334,
+   "cer_B_flash": 0.07,
+   "worst_for": [
+    "all pages of this cell"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,21 @@
+{
+ "id": "69e7490585f786e884a4d1aa_00097",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "# The Latter Cloud <note>original: Uttaramegha</note>\n\n<margin>The term for women with parted hair signifies married women whose husbands are alive. The Amarakosha <note>an ancient Sanskrit thesaurus</note> states: \"Nari, Simantini, and Vadhu are synonyms.\"</margin>\n\nPresented by a friend <note>original: suhṛdupanataḥ</note>; having arrived through the medium of a friend. The word \"friend\" is used to remove any suspicion of a deceptive message. The news of her beloved <note>original: kāntodantaḥ</note>; news is defined by the Amarakosha as \"varta, pravritti, vrittanta, and udanta.\" It is slightly less than an actual reunion <note>original: saṃgamāt kiṃcidūnaḥ</note>, meaning it brings almost as much joy as the physical presence of the lover.\n\nNow he delivers the message:\n\nO Long-lived One, at my request and to do a favor for yourself, speak thus to her: \"Your companion, residing in the hermitages of Ramagiri, being separated from you but still alive, asks after your welfare, O fragile one. For living beings whose misfortunes are easily met, this is the very first thing to be declared.\" (41)\n\nDetailed explanation: O Long-lived One <note>original: āyuṣman</note>. The suffix denotes praise, implying a life made worthy by helping others. At my request <note>original: mama vacanāt</note> and to favor yourself <note>original: ātmanopकर्तुं</note>; meaning to make yourself successful through an act of charity. Although the self is the object of the act of favoring, the use of the genitive case <note>belonging to the self</note> is not incorrect, as seen in the works of Bharavi: \"That wealth is useful which serves others,\" and Sri Harsha: \"To favor the virtuous, to see wealth, and to travel through the sky.\" Thus, the grammarian Natha’s comment that the second case is seen elsewhere is merely a personal opinion. \n\nSpeak thus to that beloved: \"O fragile one <note>original: abale</note>, your companion <note>original: sahacaraḥ</note>, your husband, staying in the hermitages of Ramagiri <note>Chitrakoota</note>, being not dead <note>original: avyāpannaḥ</note>, asks after your well-being.\" He gives the reason for the inquiry: though suffering from separation <note>original: viyuktḥ</note>, he survives. This verb \"to ask\" takes two objects here. Indeed, for living beings for whom disasters are easily obtained <note>original: sulabhavipadām</note>, this inquiry into welfare is the very first thing that must necessarily be addressed. The suffix used here denotes necessity.\n\nWith his slender limb, your slender limb; with his scorched limb, your scorched limb; with his tearful limb, your limb flowing with tears; with his limb filled with constant longing, your longing limb...\n\n<note>\n1. Long-lived one. 2. He should speak. 3. One/Single. 4. Separated (feminine), Appointed. 5. This is the first thing to be said for beings whose disasters are easy; for in perishable bodies, this is the first breath. 6. O fair-limbed one, and slender. 7. Flow of tears.\n</note>\n\n<summary>The Yaksha instructs the Cloud on how to approach his wife, explaining that news from a friend is nearly as joyful as a reunion. He emphasizes the importance of inquiring after welfare as the first priority for those suffering in separation.</summary>\n<keywords>Meghaduta, Kalidasa, Ramagiri, Sanskrit commentary, Amarakosha, separation, welfare inquiry, poetic grammar</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2538,
+ "outputTokens": 839,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.0018930000000000002,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1891,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

@@ -1,0 +1,273 @@
+{
+ "library": {
+  "metric": "relative change in Syriac letters read vs the lane's production read (+ = more read)",
+  "floor_from": "base (downscale only) vs lane",
+  "noise_floor": {
+   "n": 40,
+   "median_abs": 0.0034,
+   "p90_abs": 0.0154,
+   "max_abs": 0.0545,
+   "identical": 4
+  },
+  "cells": {
+   "all/flatten": {
+    "n": 40,
+    "wins": 15,
+    "losses": 7,
+    "ties": 18,
+    "median_delta": 0.008,
+    "mean_delta": 0.0629,
+    "ci95": [
+     0.0012,
+     0.0165
+    ],
+    "sign_p": 0.1338,
+    "counts": false
+   },
+   "all/sauvola": {
+    "n": 40,
+    "wins": 26,
+    "losses": 3,
+    "ties": 11,
+    "median_delta": 0.0268,
+    "mean_delta": 0.2126,
+    "ci95": [
+     0.0139,
+     0.0342
+    ],
+    "sign_p": 0.0,
+    "counts": true
+   },
+   "all/auto": {
+    "n": 40,
+    "wins": 13,
+    "losses": 7,
+    "ties": 20,
+    "median_delta": 0.0069,
+    "mean_delta": 0.0566,
+    "ci95": [
+     0.0,
+     0.0136
+    ],
+    "sign_p": 0.2632,
+    "counts": false
+   },
+   "eye=clean/flatten": {
+    "n": 29,
+    "wins": 10,
+    "losses": 5,
+    "ties": 14,
+    "median_delta": 0.0078,
+    "mean_delta": 0.0503,
+    "ci95": [
+     0.0012,
+     0.0163
+    ],
+    "sign_p": 0.3018,
+    "counts": false
+   },
+   "eye=clean/sauvola": {
+    "n": 29,
+    "wins": 18,
+    "losses": 3,
+    "ties": 8,
+    "median_delta": 0.0268,
+    "mean_delta": 0.0394,
+    "ci95": [
+     0.0113,
+     0.0367
+    ],
+    "sign_p": 0.0015,
+    "counts": true
+   },
+   "eye=clean/auto": {
+    "n": 29,
+    "wins": 8,
+    "losses": 5,
+    "ties": 16,
+    "median_delta": 0.0068,
+    "mean_delta": 0.0416,
+    "ci95": [
+     0.0,
+     0.0135
+    ],
+    "sign_p": 0.5811,
+    "counts": false
+   },
+   "eye=dark/flatten": {
+    "n": 6,
+    "wins": 4,
+    "losses": 1,
+    "ties": 1,
+    "median_delta": 0.0227,
+    "mean_delta": 0.1244,
+    "ci95": [
+     -0.0184,
+     0.3688
+    ],
+    "sign_p": 0.375,
+    "counts": false
+   },
+   "eye=dark/sauvola": {
+    "n": 6,
+    "wins": 4,
+    "losses": 0,
+    "ties": 2,
+    "median_delta": 0.0241,
+    "mean_delta": 0.3194,
+    "ci95": [
+     0.0008,
+     0.9332
+    ],
+    "sign_p": 0.125,
+    "counts": false
+   },
+   "eye=dark/auto": {
+    "n": 6,
+    "wins": 4,
+    "losses": 1,
+    "ties": 1,
+    "median_delta": 0.0227,
+    "mean_delta": 0.1244,
+    "ci95": [
+     -0.0184,
+     0.3688
+    ],
+    "sign_p": 0.375,
+    "counts": false
+   },
+   "eye=bilevel/flatten": {
+    "n": 3,
+    "wins": 0,
+    "losses": 1,
+    "ties": 2,
+    "median_delta": -0.0067,
+    "mean_delta": -0.0094,
+    "ci95": [
+     -0.0227,
+     0.0012
+    ],
+    "sign_p": 1.0,
+    "counts": false
+   },
+   "eye=bilevel/sauvola": {
+    "n": 3,
+    "wins": 2,
+    "losses": 0,
+    "ties": 1,
+    "median_delta": 0.0177,
+    "mean_delta": 0.0148,
+    "ci95": [
+     0.0,
+     0.0267
+    ],
+    "sign_p": 0.5,
+    "counts": false
+   },
+   "eye=bilevel/auto": {
+    "n": 3,
+    "wins": 0,
+    "losses": 1,
+    "ties": 2,
+    "median_delta": -0.0067,
+    "mean_delta": -0.0094,
+    "ci95": [
+     -0.0227,
+     0.0012
+    ],
+    "sign_p": 1.0,
+    "counts": false
+   },
+   "classifier=clean/flatten": {
+    "n": 37,
+    "wins": 13,
+    "losses": 7,
+    "ties": 17,
+    "median_delta": 0.0078,
+    "mean_delta": 0.0612,
+    "ci95": [
+     0.0,
+     0.0163
+    ],
+    "sign_p": 0.2632,
+    "counts": false
+   },
+   "classifier=clean/sauvola": {
+    "n": 37,
+    "wins": 23,
+    "losses": 3,
+    "ties": 11,
+    "median_delta": 0.0251,
+    "mean_delta": 0.2174,
+    "ci95": [
+     0.0113,
+     0.0308
+    ],
+    "sign_p": 0.0001,
+    "counts": true
+   },
+   "classifier=clean/auto": {
+    "n": 37,
+    "wins": 13,
+    "losses": 7,
+    "ties": 17,
+    "median_delta": 0.0078,
+    "mean_delta": 0.0612,
+    "ci95": [
+     0.0,
+     0.0163
+    ],
+    "sign_p": 0.2632,
+    "counts": false
+   }
+  },
+  "classifier_vs_eye": {
+   "clean|clean": 26,
+   "clean|dark": 6,
+   "unsure|clean": 3,
+   "clean|bilevel": 3,
+   "clean|blank": 2
+  }
+ },
+ "gt_auto": {
+  "metric": "order-free line CER N2 (lower is better); gain = none - auto",
+  "cells": {
+   "jerusalem36": {
+    "n": 40,
+    "wins": 38,
+    "losses": 2,
+    "ties": 0,
+    "median_delta": 0.0376,
+    "mean_delta": 0.0424,
+    "ci95": [
+     0.0283,
+     0.051
+    ],
+    "sign_p": 0.0,
+    "arm_by_class": {
+     "sauvola": 40
+    },
+    "none_median": 0.1623,
+    "auto_median": 0.1114
+   },
+   "onb-syr1": {
+    "n": 40,
+    "wins": 40,
+    "losses": 0,
+    "ties": 0,
+    "median_delta": 0.1063,
+    "mean_delta": 0.1076,
+    "ci95": [
+     0.0926,
+     0.1245
+    ],
+    "sign_p": 0.0,
+    "arm_by_class": {
+     "flatten": 40
+    },
+    "none_median": 0.2485,
+    "auto_median": 0.1421
+   }
+  }
+ }
+}

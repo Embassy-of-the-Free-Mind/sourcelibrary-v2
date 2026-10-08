@@ -24,6 +24,8 @@
  * than hand-rolling the regexes again.
  */
 
+import { splitInlineTermDefinitions } from '@/lib/term-definitions';
+
 /** Tags marking text physically on the page, as opposed to AI commentary. */
 export const PAGE_MARK_TAGS = 'margin|gloss|insert|unclear';
 
@@ -68,14 +70,30 @@ export function unwrapPageMarks(text: string): string {
  */
 export function stripAiAnnotations(text: string): string {
   return text
+    // A mid-line note takes its leading space with it, so "Geomancy <note>…</note>,
+    // an art" reads "Geomancy, an art" — not "Geomancy , an art" or a double space.
+    // The body must not cross its own close tag: a lazy `[\s\S]*?` would, when the
+    // first note ends a paragraph, run on to the NEXT note's close and delete the
+    // page text between them (the paragraph break and "**Austromancy**", p.83).
+    .replace(/[ \t]+<(note|image-desc)(?:\s[^>]*)?>(?:(?!<\/\1>)[\s\S])*<\/\1>(?=[ \t,.;:!?)\]]|\n|$)/gi, '')
     .replace(/<(note|image-desc)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, '')
     .replace(/\n{3,}/g, '\n\n');
 }
 
 /**
  * The full notes-off transform, in the order the reader applies it. Whatever
- * survives is page text.
+ * survives is page text. Model definitions are first moved out of `<term>`
+ * chips into `<note>`s (#5895), so the toggle hides them with the rest of the
+ * commentary instead of unwrapping them into the book's text.
+ *
+ * Only shape 1 (the definition INSIDE the chip) runs here. Shape 2 — a
+ * `<gloss>` after a term, relabelled `<note>` for display — must not: it turns
+ * a headword line like `<term>Abba</term> <gloss>father</gloss>` into a
+ * term+note pair, and the glossary-line rule in `preprocessTerms` then deletes
+ * the book's own line (#5942: 7 of 800 pages). `preprocessTerms` already keeps
+ * the term and drops the gloss. So callers pass the text BEFORE
+ * `separateTermDefinitions`, which belongs to the notes-on path only.
  */
 export function applyNotesOff(text: string): string {
-  return stripAiAnnotations(unwrapPageMarks(preprocessTerms(text)));
+  return stripAiAnnotations(unwrapPageMarks(preprocessTerms(splitInlineTermDefinitions(text).text)));
 }

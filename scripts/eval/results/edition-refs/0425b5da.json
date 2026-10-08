@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "book_id": "0425b5da-2769-41ae-93dd-76624ba8236a",
+    "title": "Of Natural and Supernatural Things",
+    "published": "1670",
+    "source": "EEBO-TCP A26733",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 8,
+    "skips": {},
+    "median_char_acc": 0.9462,
+    "median_char_acc_windowed": 0.9462,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-0425b5da-p9",
+      "page": 9,
+      "overlap": 0.742,
+      "probe_words": 135,
+      "ref_chars": 783,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.234,
+      "char_acc": 0.9309,
+      "char_acc_windowed": 0.9309
+    },
+    {
+      "slug": "ed-0425b5da-p26",
+      "page": 26,
+      "overlap": 1,
+      "probe_words": 136,
+      "ref_chars": 798,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.127,
+      "char_acc": 0.9567,
+      "char_acc_windowed": 0.9567
+    },
+    {
+      "slug": "ed-0425b5da-p28",
+      "page": 28,
+      "overlap": 1,
+      "probe_words": 129,
+      "ref_chars": 790,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.133,
+      "char_acc": 0.9462,
+      "char_acc_windowed": 0.9462
+    },
+    {
+      "slug": "ed-0425b5da-p43",
+      "page": 43,
+      "overlap": 1,
+      "probe_words": 135,
+      "ref_chars": 811,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.163,
+      "char_acc": 0.8623,
+      "char_acc_windowed": 0.9652
+    },
+    {
+      "slug": "ed-0425b5da-p86",
+      "page": 86,
+      "overlap": 1,
+      "probe_words": 135,
+      "ref_chars": 791,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.147,
+      "char_acc": 0.9441,
+      "char_acc_windowed": 0.9441
+    },
+    {
+      "slug": "ed-0425b5da-p92",
+      "page": 92,
+      "overlap": 1,
+      "probe_words": 134,
+      "ref_chars": 795,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.115,
+      "char_acc": 0.9641,
+      "char_acc_windowed": 0.9641
+    },
+    {
+      "slug": "ed-0425b5da-p98",
+      "page": 98,
+      "overlap": 1,
+      "probe_words": 125,
+      "ref_chars": 782,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.092,
+      "char_acc": 0.9435,
+      "char_acc_windowed": 0.9435
+    },
+    {
+      "slug": "ed-0425b5da-p144",
+      "page": 144,
+      "overlap": 1,
+      "probe_words": 144,
+      "ref_chars": 836,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.067,
+      "char_acc": 0.9486,
+      "char_acc_windowed": 0.9441
+    }
+  ]
+}

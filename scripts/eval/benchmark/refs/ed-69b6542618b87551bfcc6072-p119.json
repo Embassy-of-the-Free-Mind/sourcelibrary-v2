@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA historicapolitica/curione1",
+  "edition": "Sarracenicae historiae libri tres, ab autore innumeris locis emendati atque expoliti : in quibus Sarracenorum, Turcarum, — Basel: Ioannes Oporinus, 1568.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "same-text",
+    "text_match_pages": "42/60",
+    "pb_aligned_pages": "0/42"
+  },
+  "origin": "library",
+  "book_id": "69b6542618b87551bfcc6072",
+  "page_number": 119,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 274890,
+    "to_char": 277035,
+    "overlap": 0.808,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'Sultanus cum copijs in Iberiam contendit'; ends 'altera expeditione suscepta,'; ref begins 'quem insequutus' (2 extra words not printed on the page, i.e. leak from the previous leaf) before the first printed word; margin line numbers 10, 20, 30 and bleed from the facing page text are ignored by the ref.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:05:05.271Z",
+  "text_location": "repo",
+  "text_sha256": "1362eca716eb4af7e06b84acc83e52a4474f5681fee1f236fc7dc6b31ebce3d7",
+  "unit": {
+    "chars": 2145
+  },
+  "stratum": "latin-period-5126"
+}

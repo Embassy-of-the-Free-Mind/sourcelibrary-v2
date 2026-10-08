@@ -1,0 +1,96 @@
+{
+ "measured_at": "2026-10-03T11:55:44.310Z",
+ "source": "books.pages_translated by books.language (cached counters, no pages scan)",
+ "langs": [
+  "Sanskrit",
+  "Pali",
+  "Chinese",
+  "Classical Chinese",
+  "Literary Chinese"
+ ],
+ "Chinese": {
+  "books": 13217,
+  "translated_pages": 134665,
+  "visible_translated_pages": 134263,
+  "by_period": {
+   "<1500": {
+    "books": 119,
+    "translated_pages": 10188
+   },
+   "unknown": {
+    "books": 11742,
+    "translated_pages": 30606
+   },
+   "1900-1949": {
+    "books": 26,
+    "translated_pages": 6446
+   },
+   "1500-1799": {
+    "books": 1122,
+    "translated_pages": 64793
+   },
+   "1800-1899": {
+    "books": 170,
+    "translated_pages": 21195
+   },
+   "1950+": {
+    "books": 38,
+    "translated_pages": 1437
+   }
+  }
+ },
+ "Pali": {
+  "books": 57,
+  "translated_pages": 13423,
+  "visible_translated_pages": 8319,
+  "by_period": {
+   "unknown": {
+    "books": 11,
+    "translated_pages": 357
+   },
+   "1800-1899": {
+    "books": 29,
+    "translated_pages": 8574
+   },
+   "1900-1949": {
+    "books": 13,
+    "translated_pages": 4104
+   },
+   "1950+": {
+    "books": 4,
+    "translated_pages": 388
+   }
+  }
+ },
+ "Sanskrit": {
+  "books": 2109,
+  "translated_pages": 109625,
+  "visible_translated_pages": 102162,
+  "by_period": {
+   "unknown": {
+    "books": 1615,
+    "translated_pages": 23073
+   },
+   "1900-1949": {
+    "books": 155,
+    "translated_pages": 37027
+   },
+   "1950+": {
+    "books": 95,
+    "translated_pages": 10193
+   },
+   "1800-1899": {
+    "books": 193,
+    "translated_pages": 30416
+   },
+   "1500-1799": {
+    "books": 13,
+    "translated_pages": 765
+   },
+   "<1500": {
+    "books": 38,
+    "translated_pages": 8151
+   }
+  }
+ }
+}

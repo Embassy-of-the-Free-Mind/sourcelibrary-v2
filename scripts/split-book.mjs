@@ -21,9 +21,14 @@ import { MongoClient, ObjectId } from 'mongodb';
 import sharp from 'sharp';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { extractPageType } from './lib/ocr-result-parse.mjs';
+import { NOT_HELD } from './lib/pipeline-hold.mjs';
 
 // --- Config ---
-const OVERLAP = 0.03;        // 3% overlap on each crop (#1491 lesson #6: 1% clipped tight gutters)
+// 3% overlap on each crop (#1491 lesson #6: 1% clipped tight gutters). `--overlap=<fraction>` overrides it for a book
+// whose text runs close to the fold, where 3% copies a column of the facing leaf into each half (#6099).
+const overlapArg = process.argv.find(a => a.startsWith('--overlap='))?.split('=')[1];
+const OVERLAP = overlapArg != null ? Number(overlapArg) : 0.03;
+if (!(OVERLAP >= 0 && OVERLAP <= 0.1)) { console.log(`--overlap must be 0–0.1, got "${overlapArg}"`); process.exit(1); }
 const CONCURRENCY = 3;       // Gemini / fetch concurrency
 const MAX_RETRIES = 3;       // Image fetch retries
 const FETCH_TIMEOUT = 15000; // 15s per image
@@ -48,11 +53,18 @@ if (APPROVE_SPLIT != null && !(APPROVE_SPLIT > 0 && APPROVE_SPLIT < 1000)) { con
 if ((APPROVE_CENTER || APPROVE_SPLIT != null) && !APPROVED_BY) { console.log('An approval needs --by=<name>'); process.exit(1); }
 if ((APPROVE_CENTER || APPROVE_SPLIT != null) && !GUTTER_ONLY) { console.log('Approvals apply to --gutter-only runs'); process.exit(1); }
 const APPROVAL_ARG = APPROVE_CENTER ? 500 : APPROVE_SPLIT;
+// Reviewed per-page folds (#6099): a JSON map { "<page_number>": <fold as % of width, 0–100> | null }, placed by eye
+// for a book the detectors cannot read (woodblock spreads whose inter-column gaps look like gutters). null = keep the
+// page whole. Replaces pixel/Gemini detection for every page; a page missing from the map stops the run. Gutter-only.
+const POSITIONS_FILE = args.find(a => a.startsWith('--positions-file='))?.split('=').slice(1).join('=') || null;
+if (POSITIONS_FILE && !GUTTER_ONLY) { console.log('--positions-file applies to --gutter-only runs'); process.exit(1); }
+if (POSITIONS_FILE && !APPROVED_BY) { console.log('--positions-file needs --by=<name> (who reviewed the positions)'); process.exit(1); }
+const REVIEWED_POSITIONS = POSITIONS_FILE ? JSON.parse((await import('node:fs')).readFileSync(POSITIONS_FILE, 'utf8')) : null;
 let detectGutterPixel; // lazy-loaded in gutter-only mode (avoids sharp import cost on OCR runs) // #2454: split images BEFORE OCR — cheap gutter detection, pages created without OCR
 const targetSlug = args.find(a => !a.startsWith('--'));
 
 if (!targetSlug) {
-  console.log('Usage: node scripts/split-book.mjs <slug-or-id> [--dry-run] [--with-ocr] [--gutter-only] [--page-order=ltr|rtl] [--approve-center | --approve-split=N] --by=<name>');
+  console.log('Usage: node scripts/split-book.mjs <slug-or-id> [--dry-run] [--with-ocr] [--gutter-only] [--page-order=ltr|rtl] [--approve-center | --approve-split=N | --positions-file=F] [--overlap=0.03] --by=<name>');
   process.exit(1);
 }
 
@@ -432,7 +444,11 @@ try {
     ars.sort((a, b) => a - b);
     const ar = ars[Math.floor(ars.length / 2)];
     const arList = ars.map(a => a.toFixed(2)).join(', ');
-    if (ar < MIN_SPREAD_AR) {
+    if (ar < MIN_SPREAD_AR && REVIEWED_POSITIONS) {
+      // #6114: a near-square open book (woodblock spreads measure 1.05–1.10) fails the gate, but a reviewer has
+      // placed a fold or a null on every page by eye — that review outranks a five-image aspect sample.
+      console.log(`  AR gate: median ${ar.toFixed(2)} < ${MIN_SPREAD_AR} over ${ars.length} samples [${arList}] — below the gate, but reviewed positions (${APPROVED_BY}) decide per page. Proceeding.`);
+    } else if (ar < MIN_SPREAD_AR) {
       console.log(`  AR gate: median ${ar.toFixed(2)} < ${MIN_SPREAD_AR} over ${ars.length} samples [${arList}] — portrait pages, not spreads. Skipping.`);
       if (!DRY_RUN) {
         await db.collection('books').updateOne({ id: book.id }, {
@@ -567,6 +583,17 @@ if (GUTTER_ONLY) {
         page._h = meta.height;
         const ar = meta.width / meta.height;
 
+        if (REVIEWED_POSITIONS) {
+          const key = String(page.page_number);
+          if (!(key in REVIEWED_POSITIONS)) throw new Error(`no reviewed position for p.${page.page_number} in ${POSITIONS_FILE}`);
+          const pct = REVIEWED_POSITIONS[key];
+          if (pct == null) { page._gutter = 'single'; page._splitMethod = `reviewed-single(${APPROVED_BY})`; stats.portrait++; return; }
+          if (!(pct > 20 && pct < 80)) throw new Error(`reviewed position ${pct} for p.${page.page_number} is outside 20–80%`);
+          page._gutter = Math.round(pct * 10); page._confidentPos = page._gutter;
+          page._splitMethod = `reviewed(${pct}%, ${APPROVED_BY})`; stats.agree++;
+          return;
+        }
+
         if (ar < MIN_SPREAD_AR) {
           page._gutter = 'single'; page._splitMethod = 'portrait'; stats.portrait++;
           return;
@@ -682,6 +709,7 @@ if (GUTTER_ONLY) {
     let snapped = 0;
     for (const p of existingPages) {
       if (p._error || p._gutter === 'single' && !p._uncertain && p._splitMethod === 'portrait') continue;
+      if (p._splitMethod?.startsWith('reviewed')) continue; // placed by a person: never snapped to the median
       if (typeof p._gutter === 'number' && typeof p._confidentPos === 'number' && Math.abs(p._confidentPos - median) <= OUTLIER_TOL) {
         continue; // confident & consistent → keep its own cut
       }
@@ -1025,7 +1053,8 @@ if (GUTTER_ONLY) {
   // #2454: pages were created without OCR — requeue the book so the normal
   // single-page batch OCR pipeline picks it up (needs_splitting is now false,
   // so no spread prompt and no Phase 1.5 skip).
-  await db.collection('books').updateOne({ id: book.id }, {
+  // A held book (#4790) stays held: its holder runs the OCR and releases it (#6114).
+  await db.collection('books').updateOne({ id: book.id, ...NOT_HELD }, {
     $set: { 'pipeline_auto.status': 'archive_complete', 'pipeline_auto.last_updated': new Date() },
     // A book released from the review gate (#4792) must not still read as parked.
     $unset: { 'pipeline_auto.split_review_needed': '', 'pipeline_auto.error': '' },

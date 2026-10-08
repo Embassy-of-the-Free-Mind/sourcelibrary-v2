@@ -30,5 +30,8 @@
       "gemini-3.1-flash-lite-b:0.15"
     ],
     "letters_after": 1092
-  }
+  },
+  "licence": "CC-BY-SA-4.0",
+  "licence_url": "https://github.com/PerseusDL/canonical-greekLit",
+  "licence_checked": "2026-10-01"
 }

@@ -1,0 +1,21 @@
+{
+ "id": "6a3c61b5879008ba7e15fd28_00117",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "一言 <gloss>a single word</gloss> may cover one person, and one deed may cover one moment, yet neither represents the whole. Feng of Hou-zhai said: Since he participated in the government and cast the legal code <note>original: \"參辟鑄刑書\", referring to the legalist reforms of Zi-chan in the state of Zheng</note>, it is true that his shortcomings were many. However, judged by the standards of the Spring and Autumn Annals, his knowledge of the Way of the Gentleman was indeed scarce. The words of the Sage <note>Confucius</note> praise without excessive beauty and criticize without excessive malice. The Collected Commentaries on the matter of \"employing the people with righteousness\" specifically follow the reality of his actions and cannot conceal them.\n\nHu said: The three years of mourning was the legacy of love taught by the disciples of Confucius. The cultivation of the fields was the legacy of love taught to our children and brothers. The spirit of Zi-chan is entirely centered on the word righteousness <term>yi</term>. As for the people’s praise of his kindness <term>hui</term> while claiming he did not know how to govern, this originally referred only to the single act of helping people cross the river.\n\n# The Master said: Yan Ping-zhong was skilled at interacting with people. Even after a long time, he maintained respect for them.\n\nYan Ping-zhong was a high official of the state of Qi named Ying. Master Cheng said: Usually, when people interact for a long time, their respect fades. To be able to maintain respect for a long duration—\n\n<summary>This page evaluates the character and governance of Zi-chan, contrasting his administrative kindness with the Confucian ideal of righteousness, and introduces the praise of Yan Ping-zhong for his lasting respect in social relationships.</summary>\n<keywords>Zi-chan, Yan Ping-zhong, Confucius, righteousness, kindness, social etiquette, respect, state of Qi, legal code</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2030,
+ "outputTokens": 420,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.0011375,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 387,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

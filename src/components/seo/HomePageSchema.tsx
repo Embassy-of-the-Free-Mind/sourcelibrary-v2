@@ -65,7 +65,7 @@ export default function HomePageSchema({ books, bookCount, translatedCount }: Ho
     '@id': `${baseUrl}/#collection`,
     url: baseUrl,
     name: 'Source Library Collection',
-    description: `A collection of ${bookCount} rare historical texts from the 15th-18th centuries, with ${translatedCount} translated into English.`,
+    description: `A collection of ${bookCount} rare historical texts from the 15th-18th centuries, ${translatedCount} of them readable in English.`,
     isPartOf: { '@id': `${baseUrl}/#website` },
     about: [
       { '@type': 'Thing', name: 'Hermeticism' },

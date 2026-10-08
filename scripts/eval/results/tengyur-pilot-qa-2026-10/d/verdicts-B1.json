@@ -1,0 +1,232 @@
+[
+ {
+  "cid": "D07",
+  "claim": "mu stegs can = tīrthika",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://scholar.84000.co/authority/entity-40456",
+  "evidence": "84000: Tibetan mu stegs pa, Sanskrit tīrthika, those of other religious orders",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 3
+ },
+ {
+  "cid": "D06",
+  "claim": "rab tu dga' ba (Joyous, first bhūmi) = pramuditā",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://en.wikipedia.org/wiki/Bhūmi_(Buddhism)",
+  "evidence": "The first bhūmi, the Very Joyous (Skt. pramuditā)",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 1
+ },
+ {
+  "cid": "D41",
+  "claim": "phyogs kyi glang po, author of the Compendium of Valid Cognition (Pramāṇasamuccaya) = Dignāga",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://en.wikipedia.org/wiki/Buddhist_logico-epistemology",
+  "evidence": "Dignāga defended only two pramāṇas ... in his magnum opus, the Pramāṇa-samuccaya",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 1
+ },
+ {
+  "cid": "D41",
+  "claim": "Dignāga was a fourth-century founder of the Yogācāra school",
+  "verdict": "wrong",
+  "correction": "Dignāga lived c. 480–540 CE and is known as founder of Buddhist logic/epistemology (pramāṇa), not founder of Yogācāra (Asaṅga/Vasubandhu tradition).",
+  "source_url": "https://en.wikipedia.org/wiki/Dignāga",
+  "evidence": "c. 470/480 – c. 530/540 CE; one of the Buddhist founders of Indian logic (hetu vidyā)",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 1
+ },
+ {
+  "cid": "D18",
+  "claim": "the sixteen word-meanings (tshig don bcu drug) are the sixteen categories of the Nyāya school",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://en.wikipedia.org/wiki/Nyaya",
+  "evidence": "The Nyāya metaphysics recognizes sixteen padarthas or categories (pramāṇa, prameya, ...)",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 1
+ },
+ {
+  "cid": "D08",
+  "claim": "byang chub kyi phyogs = bodhipākṣika-dharma",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://84000.co/translation/toh178",
+  "evidence": "Aids to enlightenment: Sanskrit bodhipakṣa / bodhipākṣika dharma, Tibetan byang chub kyi phyogs",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 2
+ },
+ {
+  "cid": "D43",
+  "claim": "mngon sum (direct perception) = Sanskrit anumāna",
+  "verdict": "wrong",
+  "correction": "mngon sum = pratyakṣa; anumāna is inference (rjes su dpag pa), the next word.",
+  "source_url": "https://en.wikipedia.org/wiki/Buddhist_logico-epistemology",
+  "evidence": "two pramāṇas: Pratyakṣa (perception), Anumāna (inference)",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 2
+ },
+ {
+  "cid": "D16",
+  "claim": "mi bskyod pa = Akṣobhya",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://en.wikipedia.org/wiki/Akshobhya",
+  "evidence": "Tibetan མི་བསྐྱོད་པ་ mi bskyod pa; Akshobhya means Immovable One",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 1
+ },
+ {
+  "cid": "D01",
+  "claim": "'phags pa ga yA mgo'i ri'i mdo = Gayāśīrṣa (Gayā head/hill) Sūtra",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://84000.co/section/O1JC76301JC10651.html",
+  "evidence": "Toh 3992: An Explanation ... Interwoven with The Noble Sūtra On Gayāśīrṣa Hill",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 3
+ },
+ {
+  "cid": "D04",
+  "claim": "tshul bzhin ma yin pa yid la byed pa = ayoniśo manasikāra",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://glossaries.dila.edu.tw/search?locale=en&term=tshul+bzhin+ma+yin+par+yid+la+byed+pa",
+  "evidence": "Hopkins: tshul bzhin ma yin par yid la byed pa'i nyes dmigs = ayoniśo-manasikārādīnava",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 2
+ },
+ {
+  "cid": "D14",
+  "claim": "Sanskrit of the body-vajra mantra: oṃ sarvatathāgatakāyavajrasvabhāvātmako 'haṃ",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "http://gretil.sub.uni-goettingen.de/gretil/1_sanskr/4_rellit/buddh/dipguhsu.htm",
+  "evidence": "Dīpaṅkarabhadra's Guhyasamājamaṇḍalavidhi: oṃ sarvatathāgatakāyavajrasvabhāvātmako 'ham",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 2
+ },
+ {
+  "cid": "D11",
+  "claim": "The Commentary on Bodhicitta (Bodhicittavivaraṇa) is attributed to Nāgārjuna",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://en.wikipedia.org/wiki/Nagarjuna",
+  "evidence": "Bodhicittavivaraṇa listed among works attributed to Nāgārjuna; authenticity contested (Williams)",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 1
+ },
+ {
+  "cid": "D10",
+  "claim": "the fourth arrow 'Fainter' (brgyal bar byed pa) is called 'Scorcher' in the verse",
+  "verdict": "unverifiable",
+  "correction": null,
+  "source_url": null,
+  "evidence": "The verse referred to is not on the page; no source found linking this arrow to 'Scorcher'.",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 0
+ },
+ {
+  "cid": "D02",
+  "claim": "ga yA mgo'i ri'i mdo = Gayāśīrṣa Sūtra",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://84000.co/section/O1JC76301JC10651.html",
+  "evidence": "84000 lists The Noble Sūtra On Gayāśīrṣa Hill commentaries Toh 3991-3992",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 0
+ },
+ {
+  "cid": "D13",
+  "claim": "rig pa'i dbang bskur = vidyābhiṣeka",
+  "verdict": "unverifiable",
+  "correction": null,
+  "source_url": null,
+  "evidence": "Fetched pages discuss rig pa'i rtsal dbang only; rywiki/rigpawiki blocked (403).",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 2
+ },
+ {
+  "cid": "D17",
+  "claim": "the gone / not-gone / currently-going analysis is in chapter 2 of the Mūlamadhyamakakārikā",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://en.wikipedia.org/wiki/Mūlamadhyamakakārikā",
+  "evidence": "Chapter 2: Gatāgataparīkṣā: Analysis of going and not going",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 1
+ },
+ {
+  "cid": "D03",
+  "claim": "skar rgyal = the Buddha Puṣya",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://www.wisdomlib.org/buddhism/book/maha-prajnaparamita-sastra/d/doc225480.html",
+  "evidence": "Bodhisattva Śākyamuni praised Buddha Puṣya (Tiṣya) for seven days and seven nights",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 2
+ },
+ {
+  "cid": "D20",
+  "claim": "ngo bo nyid = svabhāva",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://www.jstage.jst.go.jp/article/ibk1952/54/2/54_2_1057/_article/-char/ja/",
+  "evidence": "Klu'i rgyal mtshan rendered svabhāva as ngo bo nyid; Nyi ma grags as rang bzhin; synonyms",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 3
+ },
+ {
+  "cid": "D12",
+  "claim": "kun rdzob and don dam = saṃvṛti and paramārtha",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://en.wikipedia.org/wiki/Two_truths_doctrine",
+  "evidence": "Conventional truth saṁvṛti-satya; ultimate truth paramārtha-satya",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 1
+ },
+ {
+  "cid": "D19",
+  "claim": "the Examination of the Tathāgata is chapter 22 of the Mūlamadhyamakakārikā",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://en.wikipedia.org/wiki/Mūlamadhyamakakārikā",
+  "evidence": "Chapter 22: Tathāgataparīkṣā: Analysis of the Tathāgata",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 0
+ },
+ {
+  "cid": "D15",
+  "claim": "bzang po'i 'dug stangs = bhadrāsana",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://tsering.substack.com/p/seven-important-buddhist-asana-seated",
+  "evidence": "Tibetan name for bhadrāsana is བཟང་པོའི་འདུག་སྟངས་",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 2
+ },
+ {
+  "cid": "D05",
+  "claim": "sdom pa'i tshul khrims = saṃvara-śīla",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://studybuddhism.com/en/advanced-studies/lam-rim/karma-advanced/details-of-karma-the-sanskrit-tripitaka-presentation/assertions-about-karma-from-the-mahayana-sutra-basket",
+  "evidence": "Sanskrit śīla with saṃvara (vowed restraint); Tibetan sdom-pa'i tshul-khrims",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 3
+ },
+ {
+  "cid": "D09",
+  "claim": "pad ma can (Lotus-Lady) = the Padminī consort type",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://kalicape.com/anatomy-of-a-%E1%B8%8Dakini-consort-discourse/",
+  "evidence": "The Lotus Consort (pad+ma can) listed among consort types in Tibetan consort literature",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 2
+ }
+]

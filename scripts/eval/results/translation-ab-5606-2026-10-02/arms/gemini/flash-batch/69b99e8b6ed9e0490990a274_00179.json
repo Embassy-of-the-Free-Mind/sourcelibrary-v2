@@ -1,0 +1,21 @@
+{
+ "id": "69b99e8b6ed9e0490990a274_00179",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from the previous section where Māgandiya offers his daughter to the Buddha</meta>\n\n# The Octad Chapter <note>original: \"Atthakavagga\"</note>\n\n836. <note>Māgandiya speaks:</note> \"If you do not desire such a jewel, a woman sought after by many lords of men, then what kind of doctrine do you proclaim, regarding views, lives led according to habitual moral vows, and rebirth in future existences?\"\n\n837. <note>The Blessed One <gloss>Bhagavā</gloss> speaks:</note> \"Māgandiya,\" said the Blessed One, \"the thought 'I proclaim this' does not occur to the one who has reached a conclusion after grasping among doctrines. Looking among various views and not grasping them, I saw and searched for inner peace <note>original: \"ajjhattasanti\"</note>.\"\n\n838. <note>Māgandiya speaks:</note> \"O Sage <gloss>muni</gloss>,\" said Māgandiya, \"you speak of not grasping those conclusions that have been constructed. This matter called 'inner peace,' how is that explained by the wise?\"\n\n839. <note>The Blessed One speaks:</note> \"Māgandiya,\" said the Blessed One, \"one does not speak of purity <gloss>suddhim</gloss> through views, nor through learning, nor through knowledge, nor even through habitual moral vows. Nor is purity achieved through lack of views, lack of learning, lack of knowledge, or lack of vows. Having abandoned these without grasping, being peaceful and independent, one would not long for becoming <note>original: \"bhavaṃ,\" referring to future existence or rebirth</note>.\"\n\n840. <note>Māgandiya speaks:</note> \"If, as you say, one does not speak of purity through views, nor through learning, nor through knowledge, nor even through habitual moral vows...\"\n\n<summary>The Brahmin Māgandiya questions the Buddha on how purity and inner peace are attained if not through traditional religious vows or intellectual views. The Buddha explains that true peace comes from non-attachment to all views and future existences.</summary>\n<keywords>Magandiya Sutta, Atthakavagga, inner peace, views, purity, non-attachment, rebirth, Buddhist philosophy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2518,
+ "outputTokens": 515,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.001402,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1456,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

@@ -1,0 +1,119 @@
+{
+  "summary": {
+    "book_id": "699fcd429ff0f1d2c4517fff",
+    "title": "The Most Noble, Auncient, and Learned Playe, Called the Philosophers Game",
+    "published": "1563",
+    "source": "EEBO-TCP A05389",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "guard-refused": 1
+    },
+    "median_char_acc": 0.9137,
+    "median_char_acc_windowed": 0.8889,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-699fcd42-p9",
+      "page": 9,
+      "overlap": 1,
+      "probe_words": 116,
+      "ref_chars": 712,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.066,
+      "char_acc": 0.9415,
+      "char_acc_windowed": 0.9395
+    },
+    {
+      "slug": "ed-699fcd42-p17",
+      "page": 17,
+      "overlap": 0.857,
+      "probe_words": 104,
+      "ref_chars": 715,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.205,
+      "char_acc": 0.8964,
+      "char_acc_windowed": 0.8655
+    },
+    {
+      "slug": "ed-699fcd42-p26",
+      "page": 26,
+      "overlap": 0.837,
+      "probe_words": 52,
+      "ref_chars": 462,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.186,
+      "char_acc": 0.8728,
+      "char_acc_windowed": 0.8324
+    },
+    {
+      "slug": "ed-699fcd42-p28",
+      "page": 28,
+      "overlap": 0.884,
+      "probe_words": 73,
+      "ref_chars": 573,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.21,
+      "char_acc": 0.9375,
+      "char_acc_windowed": 0.8889
+    },
+    {
+      "slug": "ed-699fcd42-p43",
+      "page": 43,
+      "overlap": 1,
+      "probe_words": 131,
+      "ref_chars": 848,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.372,
+      "char_acc": 0.9477,
+      "char_acc_windowed": 0.9412,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-699fcd42-p53",
+      "page": 53,
+      "overlap": 1,
+      "probe_words": 42,
+      "ref_chars": 311,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.313,
+      "char_acc": 0.8702,
+      "char_acc_windowed": 0.8558
+    },
+    {
+      "slug": "ed-699fcd42-p76",
+      "page": 76,
+      "overlap": 1,
+      "probe_words": 121,
+      "ref_chars": 725,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.102,
+      "char_acc": 0.9137,
+      "char_acc_windowed": 0.9137
+    },
+    {
+      "slug": "ed-699fcd42-p94",
+      "page": 94,
+      "overlap": 1,
+      "probe_words": 69,
+      "ref_chars": 637,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.16,
+      "char_acc": 0.9272,
+      "char_acc_windowed": 0.9137
+    }
+  ]
+}

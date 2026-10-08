@@ -1,0 +1,112 @@
+{
+  "summary": {
+    "book_id": "69cfa93f80eb0ccd3e739280",
+    "title": "Micrographia: or some Physiological Descriptions of Minute Bodies made by Magnifying Glasses",
+    "published": "1665",
+    "source": "EEBO-TCP A44323",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "no-window": 1
+    },
+    "median_char_acc": 0.9865,
+    "median_char_acc_windowed": 0.9834,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-69cfa93f80eb0ccd3e739280-p96",
+      "page": 96,
+      "overlap": 1,
+      "probe_words": 571,
+      "ref_chars": 3381,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.012,
+      "char_acc": 0.9865,
+      "char_acc_windowed": 0.9861
+    },
+    {
+      "slug": "ed-69cfa93f80eb0ccd3e739280-p99",
+      "page": 99,
+      "overlap": 1,
+      "probe_words": 524,
+      "ref_chars": 3146,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.017,
+      "char_acc": 0.9873,
+      "char_acc_windowed": 0.9834
+    },
+    {
+      "slug": "ed-69cfa93f80eb0ccd3e739280-p100",
+      "page": 100,
+      "overlap": 1,
+      "probe_words": 558,
+      "ref_chars": 3304,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.014,
+      "char_acc": 0.9894,
+      "char_acc_windowed": 0.9887
+    },
+    {
+      "slug": "ed-69cfa93f80eb0ccd3e739280-p101",
+      "page": 101,
+      "overlap": 1,
+      "probe_words": 530,
+      "ref_chars": 3153,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.019,
+      "char_acc": 0.9897,
+      "char_acc_windowed": 0.9885
+    },
+    {
+      "slug": "ed-69cfa93f80eb0ccd3e739280-p102",
+      "page": 102,
+      "skipped": "no-window",
+      "overlap": 0.056
+    },
+    {
+      "slug": "ed-69cfa93f80eb0ccd3e739280-p168",
+      "page": 168,
+      "overlap": 1,
+      "probe_words": 571,
+      "ref_chars": 3385,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.021,
+      "char_acc": 0.9834,
+      "char_acc_windowed": 0.9805
+    },
+    {
+      "slug": "ed-69cfa93f80eb0ccd3e739280-p179",
+      "page": 179,
+      "overlap": 1,
+      "probe_words": 344,
+      "ref_chars": 1981,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.02,
+      "char_acc": 0.9808,
+      "char_acc_windowed": 0.9802
+    },
+    {
+      "slug": "ed-69cfa93f80eb0ccd3e739280-p373",
+      "page": 373,
+      "overlap": 1,
+      "probe_words": 411,
+      "ref_chars": 2790,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.019,
+      "char_acc": 0.9862,
+      "char_acc_windowed": 0.9806
+    }
+  ]
+}

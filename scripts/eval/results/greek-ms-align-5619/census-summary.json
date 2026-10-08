@@ -1,0 +1,121 @@
+{
+ "at": "2026-10-02T11:13:01.662Z",
+ "greek_tagged_books": 5421,
+ "candidates": 1283,
+ "spent_usd": 0.2793,
+ "kind": [
+  [
+   "print",
+   633
+  ],
+  [
+   "manuscript",
+   385
+  ],
+  [
+   "unknown",
+   248
+  ],
+  [
+   "other",
+   17
+  ]
+ ],
+ "kind_by": [
+  [
+   "image",
+   862
+  ],
+  [
+   "image-error",
+   248
+  ],
+  [
+   "ocr-envelope",
+   173
+  ]
+ ],
+ "manuscripts": {
+  "books": 385,
+  "pages": 149476,
+  "pages_ocr": 126268,
+  "pages_translated": 118208,
+  "visible_books": 355,
+  "visible_pages": 137189,
+  "hidden_books": 30,
+  "hidden_pages": 12287,
+  "with_work_id": 385,
+  "local_work_id": 295,
+  "by_provider": [
+   [
+    "bodleian",
+    134
+   ],
+   [
+    "laurenziana",
+    59
+   ],
+   [
+    "vatican",
+    46
+   ],
+   [
+    "gallica",
+    42
+   ],
+   [
+    "cambridge",
+    36
+   ],
+   [
+    "e-codices",
+    15
+   ],
+   [
+    "e-rara",
+    11
+   ],
+   [
+    "mdz",
+    10
+   ],
+   [
+    "harvard",
+    9
+   ],
+   [
+    "internet_archive",
+    7
+   ],
+   [
+    "leiden",
+    5
+   ],
+   [
+    "bph",
+    4
+   ],
+   [
+    "manchester",
+    3
+   ],
+   [
+    "contentdm",
+    1
+   ],
+   [
+    "bl",
+    1
+   ],
+   [
+    "bsb",
+    1
+   ],
+   [
+    "marciana",
+    1
+   ]
+  ],
+  "mostly_latin_text": 46
+ }
+}

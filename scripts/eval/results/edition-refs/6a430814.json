@@ -1,0 +1,111 @@
+{
+  "summary": {
+    "book_id": "6a4308144e06bc233ed03513",
+    "title": "Certaine grammar questions for the exercise of young schollers in the learning of the Accidence",
+    "published": "1590",
+    "source": "EEBO-TCP A68340",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "probe-too-short": 1
+    },
+    "median_char_acc": 0.955,
+    "median_char_acc_windowed": 0.8746,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a430814-p2",
+      "page": 2,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a430814-p6",
+      "page": 6,
+      "overlap": 1,
+      "probe_words": 260,
+      "ref_chars": 1667,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.066,
+      "char_acc": 0.9628,
+      "char_acc_windowed": 0.9621
+    },
+    {
+      "slug": "ed-6a430814-p9",
+      "page": 9,
+      "overlap": 1,
+      "probe_words": 252,
+      "ref_chars": 1667,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.098,
+      "char_acc": 0.8849,
+      "char_acc_windowed": 0.8746
+    },
+    {
+      "slug": "ed-6a430814-p14",
+      "page": 14,
+      "overlap": 1,
+      "probe_words": 216,
+      "ref_chars": 1482,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.09,
+      "char_acc": 0.9533,
+      "char_acc_windowed": 0.7021
+    },
+    {
+      "slug": "ed-6a430814-p15",
+      "page": 15,
+      "overlap": 1,
+      "probe_words": 269,
+      "ref_chars": 1673,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.076,
+      "char_acc": 0.9672,
+      "char_acc_windowed": 0.9648
+    },
+    {
+      "slug": "ed-6a430814-p16",
+      "page": 16,
+      "overlap": 1,
+      "probe_words": 183,
+      "ref_chars": 1247,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.111,
+      "char_acc": 0.9534,
+      "char_acc_windowed": 0.5438
+    },
+    {
+      "slug": "ed-6a430814-p17",
+      "page": 17,
+      "overlap": 0.763,
+      "probe_words": 158,
+      "ref_chars": 1588,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.21,
+      "char_acc": 0.955,
+      "char_acc_windowed": 0.5488
+    },
+    {
+      "slug": "ed-6a430814-p22",
+      "page": 22,
+      "overlap": 1,
+      "probe_words": 297,
+      "ref_chars": 1817,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.1,
+      "char_acc": 0.9721,
+      "char_acc_windowed": 0.9663
+    }
+  ]
+}

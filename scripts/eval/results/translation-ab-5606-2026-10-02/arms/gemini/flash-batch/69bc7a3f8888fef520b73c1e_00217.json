@@ -1,0 +1,21 @@
+{
+ "id": "69bc7a3f8888fef520b73c1e_00217",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>he returns within those seven days. For that monk, monks, the earlier period of the rainy season retreat is recognized and there is no offense regarding his promise. ||6||\n\nFurthermore, monks, he departs on some business seven days before the invitation ceremony <note>The <term>pavāranā</term> ceremony marking the end of the rainy season retreat</note>. Whether that monk returns to that residence or does not return, monks, that monk's earlier period is recognized and there is no offense regarding his promise. ||7||\n\nFurthermore, monks, a monk has promised to enter the rainy season retreat for the earlier period. Having gone to that residence, he performs the observance day <note>the <term>uposatha</term></note>, enters the monastery on the day after the full moon, prepares his lodging, sets out water for drinking and washing, and sweeps the cell. On that very day, he departs without having any business to attend to. For that monk, monks, the earlier period is not recognized and there is an offense of wrong-doing <note><term>dukkaṭa</term></note> regarding his promise. ||8||\n\nFurthermore, monks, <note>repeat of § 8</note> he departs on some business on that very day <note>omitted text</note> having stayed for two or three days, he departs without business <note>omitted text</note> having stayed for two or three days, he departs on some business <note>omitted text</note> having stayed for two or three days, he departs on business to be completed within seven days. He spends those seven days entirely outside the residence. For that monk, monks, the earlier period is not recognized and there is an offense of wrong-doing regarding his promise. ||9||\n\nHe stays for two or three days and departs on business to be completed within seven days. He returns within those seven days. For that monk, monks, the earlier period is recognized and there is no offense regarding his promise. If he departs seven days before <note>repeat of § 7</note> there is no offense. ||10||\n\nFurthermore, monks, a monk has promised to enter the rainy season retreat for the later period. While going to that residence, he performs the observance day outside. He enters the monastery on the day after the full moon, prepares his lodging, sets out water for drinking and washing, and sweeps the cell. On that very day, he departs without having any business to attend to. For that monk, monks, the later period is not recognized and there is an offense of wrong-doing regarding his promise. Furthermore <note>the whole passage is identical with sections 5 through 10; substitute \"later period\" for \"earlier period\" and substitute \"before the full moon day of the fourth month\" <note>the <term>komudī</term> or <term>cātumāsinī</term> festival</note> for \"before the invitation ceremony\"</note> there is no offense regarding the promise. ||11||14||\n\nThe third chapter, concerning the entry upon the rainy season retreat, is concluded.\n\nThe summary of the chapter:\nEntering the retreat, and when, how many, and during the rains,\nNot wishing to, and intentionally, postponing, and the lay follower.\n\n<summary>This page concludes the regulations for monks entering the rainy season retreat, detailing the conditions under which the retreat is considered valid or broken based on the monk's return and business. It defines the differences between the earlier and later retreat periods and lists the summary of the chapter.</summary>\n<keywords>monastic discipline, rainy season retreat, Vassa, Pavāranā, Uposatha, ecclesiastical offenses, Buddhist monks</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2791,
+ "outputTokens": 803,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.00190225,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2239,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

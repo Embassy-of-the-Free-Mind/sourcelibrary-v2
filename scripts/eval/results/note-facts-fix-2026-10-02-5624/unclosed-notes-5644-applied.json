@@ -1,0 +1,1562 @@
+[
+ {
+  "id": "69e77ac80fc6fc955e362177",
+  "book_id": "69e77ac80fc6fc955e362163",
+  "page": 20,
+  "balance_before": {
+   "opens": 10,
+   "closes": 9,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 10,
+   "closes": 10,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "9dfe51a670bf2704",
+  "after_hash": "49d52881dce0ee4e"
+ },
+ {
+  "id": "69e786b54a6785cfd60c94bb",
+  "book_id": "69e786b54a6785cfd60c9444",
+  "page": 119,
+  "balance_before": {
+   "opens": 2,
+   "closes": 1,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 2,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "00aa3d20697a0faf",
+  "after_hash": "22171a34c153fbbc"
+ },
+ {
+  "id": "69e7ab175f1a22ab19a92cc1",
+  "book_id": "69e7ab175f1a22ab19a92bbc",
+  "page": 261,
+  "balance_before": {
+   "opens": 1,
+   "closes": 0,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 1,
+   "closes": 1,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "1e88c09e6426b497",
+  "after_hash": "e2ea4e0a4157b834"
+ },
+ {
+  "id": "69e7ab745f1a22ab19a98e6a",
+  "book_id": "69e7ab745f1a22ab19a98dac",
+  "page": 190,
+  "balance_before": {
+   "opens": 8,
+   "closes": 7,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 8,
+   "closes": 8,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "7554610ca264b166",
+  "after_hash": "cc536d60fd9c6f34"
+ },
+ {
+  "id": "6a14e168311a9edd46220bd5",
+  "book_id": "6a14e168311a9edd46220ac1",
+  "page": 276,
+  "balance_before": {
+   "opens": 2,
+   "closes": 1,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 2,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "6f6637260cb783d8",
+  "after_hash": "ed45c2c4735a97dc"
+ },
+ {
+  "id": "69e7aad55f1a22ab19a8e312",
+  "book_id": "69e7aad55f1a22ab19a8e1f6",
+  "page": 284,
+  "balance_before": {
+   "opens": 4,
+   "closes": 3,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 4,
+   "closes": 4,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "390a0c844498fbc0",
+  "after_hash": "efd83023e4d418d1"
+ },
+ {
+  "id": "69e7ac695f1a22ab19aa7413",
+  "book_id": "69e7ac695f1a22ab19aa73c6",
+  "page": 77,
+  "balance_before": {
+   "opens": 24,
+   "closes": 23,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 24,
+   "closes": 24,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "e6b77c1fdb6b4a6b",
+  "after_hash": "b5de4066a462336e"
+ },
+ {
+  "id": "6a14e14d311a9edd4621ed41",
+  "book_id": "6a14e14d311a9edd4621ec4a",
+  "page": 247,
+  "balance_before": {
+   "opens": 2,
+   "closes": 0,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 2,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "307106dc8242bc8e",
+  "after_hash": "ca4622a0021037e5"
+ },
+ {
+  "id": "69e7ac745f1a22ab19aa7d4f",
+  "book_id": "69e7ac745f1a22ab19aa7cff",
+  "page": 80,
+  "balance_before": {
+   "opens": 6,
+   "closes": 4,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 6,
+   "closes": 6,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "279f36f73c21d596",
+  "after_hash": "1efafd2093a03eb7"
+ },
+ {
+  "id": "69e78f3a6cebc58893321b52",
+  "book_id": "69e78f3a6cebc58893321aca",
+  "page": 136,
+  "balance_before": {
+   "opens": 7,
+   "closes": 6,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 7,
+   "closes": 7,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "283b44e411811625",
+  "after_hash": "d68d74954df9bb0d"
+ },
+ {
+  "id": "69e7ab1a5f1a22ab19a92f6c",
+  "book_id": "69e7ab1a5f1a22ab19a92e84",
+  "page": 232,
+  "balance_before": {
+   "opens": 1,
+   "closes": 0,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 1,
+   "closes": 1,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "b7a30100bf18e8da",
+  "after_hash": "947f9ac263b822ed"
+ },
+ {
+  "id": "69e7ac6e5f1a22ab19aa78c1",
+  "book_id": "69e7ac6e5f1a22ab19aa784c",
+  "page": 117,
+  "balance_before": {
+   "opens": 6,
+   "closes": 5,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 6,
+   "closes": 6,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "53e87e71310313eb",
+  "after_hash": "9c3e90ce2208e6d3"
+ },
+ {
+  "id": "69e7ac745f1a22ab19aa7d4a",
+  "book_id": "69e7ac745f1a22ab19aa7cff",
+  "page": 75,
+  "balance_before": {
+   "opens": 4,
+   "closes": 3,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 4,
+   "closes": 4,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "e8176f0145f5c657",
+  "after_hash": "1acb89da6cbf4450"
+ },
+ {
+  "id": "69e7aad05f1a22ab19a8de0c",
+  "book_id": "69e7aad05f1a22ab19a8dce9",
+  "page": 291,
+  "balance_before": {
+   "opens": 6,
+   "closes": 5,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 6,
+   "closes": 6,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "fd6fb48944956814",
+  "after_hash": "0ba71261588ccc64"
+ },
+ {
+  "id": "69e7ab6b5f1a22ab19a9870d",
+  "book_id": "69e7ab6b5f1a22ab19a98677",
+  "page": 150,
+  "balance_before": {
+   "opens": 6,
+   "closes": 5,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 6,
+   "closes": 6,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "b10c90a3d5d4e8a3",
+  "after_hash": "13c0d432e0b60d57"
+ },
+ {
+  "id": "69e78f3a6cebc58893321b0c",
+  "book_id": "69e78f3a6cebc58893321aca",
+  "page": 66,
+  "balance_before": {
+   "opens": 4,
+   "closes": 3,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 4,
+   "closes": 4,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "589fc3583cee3bc3",
+  "after_hash": "d17fbd77cca9f94b"
+ },
+ {
+  "id": "6a14e153311a9edd4621f33a",
+  "book_id": "6a14e153311a9edd4621f29e",
+  "page": 156,
+  "balance_before": {
+   "opens": 2,
+   "closes": 1,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 2,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "f2c46853e09b0330",
+  "after_hash": "8a30d6353c9bb69b"
+ },
+ {
+  "id": "69e7aae25f1a22ab19a8f048",
+  "book_id": "69e7aae25f1a22ab19a8ef93",
+  "page": 181,
+  "balance_before": {
+   "opens": 6,
+   "closes": 5,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 6,
+   "closes": 6,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "875ee68bd336a3d7",
+  "after_hash": "6ee5169dad24af53"
+ },
+ {
+  "id": "69e788a14a6785cfd60d14b4",
+  "book_id": "69e788a14a6785cfd60d13f3",
+  "page": 193,
+  "balance_before": {
+   "opens": 2,
+   "closes": 1,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 2,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "422b4785053875f5",
+  "after_hash": "3fadb00418812d9b"
+ },
+ {
+  "id": "69e78f3a6cebc58893321ae9",
+  "book_id": "69e78f3a6cebc58893321aca",
+  "page": 31,
+  "balance_before": {
+   "opens": 17,
+   "closes": 16,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 17,
+   "closes": 17,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "0177f0e76816fbb8",
+  "after_hash": "3cf6039c8ef06fba"
+ },
+ {
+  "id": "69e7abee5f1a22ab19aa09ce",
+  "book_id": "69e7abee5f1a22ab19aa0921",
+  "page": 173,
+  "balance_before": {
+   "opens": 6,
+   "closes": 5,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 6,
+   "closes": 6,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "a2bc029b14103f75",
+  "after_hash": "42a1a4ddcd53dff2"
+ },
+ {
+  "id": "6a14e11d3c22df423f9fac1c",
+  "book_id": "6a14e11d3c22df423f9fab02",
+  "page": 282,
+  "balance_before": {
+   "opens": 3,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 3,
+   "closes": 3,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "24631cac8b2a19fb",
+  "after_hash": "289a86223d1570eb"
+ },
+ {
+  "id": "69e7ac805f1a22ab19aa88de",
+  "book_id": "69e7ac805f1a22ab19aa8870",
+  "page": 110,
+  "balance_before": {
+   "opens": 4,
+   "closes": 3,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 4,
+   "closes": 4,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "c6199144e5a77d6b",
+  "after_hash": "7e2e1d830a8ae9ba"
+ },
+ {
+  "id": "69e7ab6c5f1a22ab19a98865",
+  "book_id": "69e7ab6c5f1a22ab19a987ee",
+  "page": 119,
+  "balance_before": {
+   "opens": 5,
+   "closes": 4,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 5,
+   "closes": 5,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "c92e73a8bbd2a681",
+  "after_hash": "96a768c49bedd85e"
+ },
+ {
+  "id": "69e7ab6c5f1a22ab19a98864",
+  "book_id": "69e7ab6c5f1a22ab19a987ee",
+  "page": 118,
+  "balance_before": {
+   "opens": 6,
+   "closes": 5,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 6,
+   "closes": 6,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "915f33da9cab39cd",
+  "after_hash": "a952574cd586f03e"
+ },
+ {
+  "id": "69e7ac505f1a22ab19aa676e",
+  "book_id": "69e7ac505f1a22ab19aa6763",
+  "page": 11,
+  "balance_before": {
+   "opens": 5,
+   "closes": 3,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 5,
+   "closes": 5,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "99b917d2be93b7d4",
+  "after_hash": "bb1bc92fa0635bf3"
+ },
+ {
+  "id": "69e7ac6d5f1a22ab19aa77b7",
+  "book_id": "69e7ac6d5f1a22ab19aa7723",
+  "page": 148,
+  "balance_before": {
+   "opens": 3,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 3,
+   "closes": 3,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "778d9c01c6ab9c5d",
+  "after_hash": "ab3089a9e518a354"
+ },
+ {
+  "id": "69e7ab6f5f1a22ab19a98a57",
+  "book_id": "69e7ab6f5f1a22ab19a989fc",
+  "page": 91,
+  "balance_before": {
+   "opens": 2,
+   "closes": 1,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 2,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "3244c68a305c6922",
+  "after_hash": "a9f85f30f3912246"
+ },
+ {
+  "id": "69e786d96846fc56c490f364",
+  "book_id": "69e786d96846fc56c490f30a",
+  "page": 90,
+  "balance_before": {
+   "opens": 1,
+   "closes": 0,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 1,
+   "closes": 1,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "1ca3241db90cac4a",
+  "after_hash": "6592bcfddff8a4ad"
+ },
+ {
+  "id": "69e787134a6785cfd60ca95c",
+  "book_id": "69e787134a6785cfd60ca8b9",
+  "page": 163,
+  "balance_before": {
+   "opens": 2,
+   "closes": 1,
+   "malformed": 1,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 2,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "9257e59ceeff522c",
+  "after_hash": "5ec07bf14a16a3a4"
+ },
+ {
+  "id": "69e7abb05f1a22ab19a9c710",
+  "book_id": "69e7abb05f1a22ab19a9c661",
+  "page": 175,
+  "balance_before": {
+   "opens": 2,
+   "closes": 1,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 2,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "bcfde0c2a72938ad",
+  "after_hash": "e3867fb93430a6e8"
+ },
+ {
+  "id": "6a14e1c7311a9edd46223e79",
+  "book_id": "6a14e1c7311a9edd46223e1b",
+  "page": 94,
+  "balance_before": {
+   "opens": 1,
+   "closes": 0,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 1,
+   "closes": 1,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "f9401782feb07a86",
+  "after_hash": "7f56f7d7358ad93c"
+ },
+ {
+  "id": "69e788454a6785cfd60d029c",
+  "book_id": "69e788454a6785cfd60d0228",
+  "page": 116,
+  "balance_before": {
+   "opens": 4,
+   "closes": 3,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 4,
+   "closes": 4,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "4833713b33687589",
+  "after_hash": "ccd674bf03f068aa"
+ },
+ {
+  "id": "69e7ac555f1a22ab19aa69c5",
+  "book_id": "69e7ac555f1a22ab19aa697d",
+  "page": 72,
+  "balance_before": {
+   "opens": 3,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 3,
+   "closes": 3,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "a47f04295bd18ed3",
+  "after_hash": "f1e79a8984b1c957"
+ },
+ {
+  "id": "69e7ab775f1a22ab19a990a1",
+  "book_id": "69e7ab775f1a22ab19a99054",
+  "page": 77,
+  "balance_before": {
+   "opens": 5,
+   "closes": 4,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 5,
+   "closes": 5,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "407713da64ac0eaf",
+  "after_hash": "11fa7c06e2fe40e9"
+ },
+ {
+  "id": "6a14e17a311a9edd46221990",
+  "book_id": "6a14e17a311a9edd4622193f",
+  "page": 81,
+  "balance_before": {
+   "opens": 3,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 3,
+   "closes": 3,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "be4b0eea74681226",
+  "after_hash": "ee8b6c07a6bd50f1"
+ },
+ {
+  "id": "69e7ab6c5f1a22ab19a98841",
+  "book_id": "69e7ab6c5f1a22ab19a987ee",
+  "page": 83,
+  "balance_before": {
+   "opens": 3,
+   "closes": 2,
+   "malformed": 1,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 3,
+   "closes": 3,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "5a1d72264ebcc9e3",
+  "after_hash": "79795ee013c8c9ea"
+ },
+ {
+  "id": "69e7abbb5f1a22ab19a9d277",
+  "book_id": "69e7abbb5f1a22ab19a9d1ee",
+  "page": 137,
+  "balance_before": {
+   "opens": 7,
+   "closes": 6,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 7,
+   "closes": 7,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "56324424c4e0d103",
+  "after_hash": "c97e00d800c626a5"
+ },
+ {
+  "id": "6a14e1372f45ee330c2748e9",
+  "book_id": "6a14e1372f45ee330c27485e",
+  "page": 139,
+  "balance_before": {
+   "opens": 3,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 3,
+   "closes": 3,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "51e8f7ae220b8802",
+  "after_hash": "7c4d075816afba4d"
+ },
+ {
+  "id": "69e7ac7f5f1a22ab19aa87b5",
+  "book_id": "69e7ac7f5f1a22ab19aa874d",
+  "page": 104,
+  "balance_before": {
+   "opens": 5,
+   "closes": 4,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 5,
+   "closes": 5,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "ef1b479ea79c45fd",
+  "after_hash": "df64183220e936df"
+ },
+ {
+  "id": "69e7ac6c5f1a22ab19aa7639",
+  "book_id": "69e7ac6c5f1a22ab19aa760a",
+  "page": 47,
+  "balance_before": {
+   "opens": 5,
+   "closes": 4,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 5,
+   "closes": 5,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "d90d7b74242c973d",
+  "after_hash": "1d1cc05c63296ba3"
+ },
+ {
+  "id": "69e7aae15f1a22ab19a8ee55",
+  "book_id": "69e7aae15f1a22ab19a8edd5",
+  "page": 128,
+  "balance_before": {
+   "opens": 9,
+   "closes": 8,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 9,
+   "closes": 9,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "1b3de5202d90bd99",
+  "after_hash": "49c5cc14a6e4e67a"
+ },
+ {
+  "id": "69e7aae25f1a22ab19a8efdf",
+  "book_id": "69e7aae25f1a22ab19a8ef93",
+  "page": 76,
+  "balance_before": {
+   "opens": 11,
+   "closes": 10,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 11,
+   "closes": 11,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "6615772c24b28d4f",
+  "after_hash": "0400daf86cf5440b"
+ },
+ {
+  "id": "69e7ac7f5f1a22ab19aa87a7",
+  "book_id": "69e7ac7f5f1a22ab19aa874d",
+  "page": 90,
+  "balance_before": {
+   "opens": 10,
+   "closes": 9,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 10,
+   "closes": 10,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "6532fb925b8f3b5f",
+  "after_hash": "ce7c2d39d64e8982"
+ },
+ {
+  "id": "69e7ab8e5f1a22ab19a9a199",
+  "book_id": "69e7ab8e5f1a22ab19a9a137",
+  "page": 98,
+  "balance_before": {
+   "opens": 5,
+   "closes": 4,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 5,
+   "closes": 5,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "68ab5fd72223561a",
+  "after_hash": "20a672e46e832f46"
+ },
+ {
+  "id": "6a14e142311a9edd4621df30",
+  "book_id": "6a14e142311a9edd4621def8",
+  "page": 56,
+  "balance_before": {
+   "opens": 3,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 3,
+   "closes": 3,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "05a8a3c1e50b4172",
+  "after_hash": "976aaac1ba840b17"
+ },
+ {
+  "id": "69e7ab805f1a22ab19a99734",
+  "book_id": "69e7ab805f1a22ab19a9970f",
+  "page": 37,
+  "balance_before": {
+   "opens": 13,
+   "closes": 12,
+   "malformed": 1,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 13,
+   "closes": 13,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "df2c794c52dc55b9",
+  "after_hash": "bb7d774a75aa3d5e"
+ },
+ {
+  "id": "69e788454a6785cfd60d0251",
+  "book_id": "69e788454a6785cfd60d0228",
+  "page": 41,
+  "balance_before": {
+   "opens": 4,
+   "closes": 3,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 4,
+   "closes": 4,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "f128747ac10c1015",
+  "after_hash": "1a161e01e9d06343"
+ },
+ {
+  "id": "69e7abdb5f1a22ab19a9f8fa",
+  "book_id": "69e7abdb5f1a22ab19a9f8e2",
+  "page": 24,
+  "balance_before": {
+   "opens": 2,
+   "closes": 1,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 2,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "febdc3b7bb83796f",
+  "after_hash": "b50d0abb19295416"
+ },
+ {
+  "id": "69e7ac835f1a22ab19aa8a25",
+  "book_id": "69e7ac835f1a22ab19aa8a0e",
+  "page": 23,
+  "balance_before": {
+   "opens": 12,
+   "closes": 11,
+   "malformed": 1,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 12,
+   "closes": 12,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "0316f6dbe1bc9e30",
+  "after_hash": "c4c00311f54a5f6b"
+ },
+ {
+  "id": "69e788354a6785cfd60cfe0b",
+  "book_id": "69e788354a6785cfd60cfdce",
+  "page": 61,
+  "balance_before": {
+   "opens": 2,
+   "closes": 1,
+   "malformed": 1,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 2,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "75da260e01667684",
+  "after_hash": "b7256ec414b4ec65"
+ },
+ {
+  "id": "69e7ac745f1a22ab19aa7d25",
+  "book_id": "69e7ac745f1a22ab19aa7cff",
+  "page": 38,
+  "balance_before": {
+   "opens": 4,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 4,
+   "closes": 4,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "4e29eec46e62f475",
+  "after_hash": "14552fefd324e313"
+ },
+ {
+  "id": "69e7ac745f1a22ab19aa7d23",
+  "book_id": "69e7ac745f1a22ab19aa7cff",
+  "page": 36,
+  "balance_before": {
+   "opens": 5,
+   "closes": 4,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 5,
+   "closes": 5,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "bd3dce9fdee3e05e",
+  "after_hash": "8a577fcecebb8bd9"
+ },
+ {
+  "id": "6a14e18c311a9edd462221e1",
+  "book_id": "6a14e18c311a9edd462221b2",
+  "page": 47,
+  "balance_before": {
+   "opens": 2,
+   "closes": 1,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 2,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "df978ef25f63216b",
+  "after_hash": "686be5b4dc1897d3"
+ },
+ {
+  "id": "6a14e18c311a9edd462221e0",
+  "book_id": "6a14e18c311a9edd462221b2",
+  "page": 46,
+  "balance_before": {
+   "opens": 4,
+   "closes": 3,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 4,
+   "closes": 4,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "00b6c06e9f95d9eb",
+  "after_hash": "4ff193b5434242f3"
+ },
+ {
+  "id": "6a14e18c311a9edd462221df",
+  "book_id": "6a14e18c311a9edd462221b2",
+  "page": 45,
+  "balance_before": {
+   "opens": 4,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 4,
+   "closes": 4,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "e49611af332cc5ad",
+  "after_hash": "5bf0011c95febe99"
+ },
+ {
+  "id": "6a14e18c311a9edd462221db",
+  "book_id": "6a14e18c311a9edd462221b2",
+  "page": 41,
+  "balance_before": {
+   "opens": 5,
+   "closes": 4,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 5,
+   "closes": 5,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "d6d39ec2aceb29f3",
+  "after_hash": "2d824488639c820f"
+ },
+ {
+  "id": "69e788334a6785cfd60cfd2a",
+  "book_id": "69e788334a6785cfd60cfd28",
+  "page": 2,
+  "balance_before": {
+   "opens": 11,
+   "closes": 10,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 11,
+   "closes": 11,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "4c0411135b704ced",
+  "after_hash": "7396589db4cb72d5"
+ },
+ {
+  "id": "69e7ac905f1a22ab19aa927f",
+  "book_id": "69e7ac905f1a22ab19aa9269",
+  "page": 22,
+  "balance_before": {
+   "opens": 2,
+   "closes": 1,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 2,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "1c759071999d8e63",
+  "after_hash": "01afe7b38cbfcc36"
+ },
+ {
+  "id": "69e7abf95f1a22ab19aa14b5",
+  "book_id": "69e7abf95f1a22ab19aa14b2",
+  "page": 3,
+  "balance_before": {
+   "opens": 4,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 4,
+   "closes": 4,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "439c06a64f4706b3",
+  "after_hash": "30359ead64dc389e"
+ },
+ {
+  "id": "69e78b5c4a6785cfd60d5338",
+  "book_id": "69e78b5c4a6785cfd60d5329",
+  "page": 15,
+  "balance_before": {
+   "opens": 8,
+   "closes": 7,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 8,
+   "closes": 8,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "370f35fbad7d624e",
+  "after_hash": "28a2bd903e087573"
+ },
+ {
+  "id": "69e7aba15f1a22ab19a9b382",
+  "book_id": "69e7aba15f1a22ab19a9b381",
+  "page": 1,
+  "balance_before": {
+   "opens": 3,
+   "closes": 1,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 3,
+   "closes": 3,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "158ec82489839e78",
+  "after_hash": "51dd63e20f0d7e26"
+ },
+ {
+  "id": "69e788f84a6785cfd60d23dd",
+  "book_id": "69e788f84a6785cfd60d23c8",
+  "page": 21,
+  "balance_before": {
+   "opens": 2,
+   "closes": 1,
+   "malformed": 1,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 2,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "6e3df1ec3b890be6",
+  "after_hash": "15b7dbb6e1353df0"
+ },
+ {
+  "id": "69e788304a6785cfd60cfc00",
+  "book_id": "69e788304a6785cfd60cfbea",
+  "page": 22,
+  "balance_before": {
+   "opens": 3,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 3,
+   "closes": 3,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "49d4d2f2e24eb378",
+  "after_hash": "2e5d30aa441824a5"
+ },
+ {
+  "id": "69e7ab3c5f1a22ab19a9514c",
+  "book_id": "69e7ab3c5f1a22ab19a9514b",
+  "page": 1,
+  "balance_before": {
+   "opens": 1,
+   "closes": 0,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 1,
+   "closes": 1,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "a6fe7702565d010a",
+  "after_hash": "0b878a94d75f001e"
+ },
+ {
+  "id": "69e7616acc48e59ad74efa1e",
+  "book_id": "69e7616acc48e59ad74ef999",
+  "page": 133,
+  "balance_before": {
+   "opens": 18,
+   "closes": 17,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 18,
+   "closes": 18,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "648cf07c424ab34a",
+  "after_hash": "5026dcd0f7a149f2"
+ },
+ {
+  "id": "69e761fecc48e59ad74f2b7b",
+  "book_id": "69e761fecc48e59ad74f2abf",
+  "page": 188,
+  "balance_before": {
+   "opens": 2,
+   "closes": 1,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 2,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "20d2d95adc83725c",
+  "after_hash": "59ac86e083322182"
+ },
+ {
+  "id": "69e76212cc48e59ad74f31f1",
+  "book_id": "69e76212cc48e59ad74f316e",
+  "page": 131,
+  "balance_before": {
+   "opens": 6,
+   "closes": 5,
+   "malformed": 1,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 6,
+   "closes": 6,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "6c5017c9594135e8",
+  "after_hash": "04fa4c87d6f9118c"
+ },
+ {
+  "id": "69e761a2cc48e59ad74f0db3",
+  "book_id": "69e761a2cc48e59ad74f0c93",
+  "page": 288,
+  "balance_before": {
+   "opens": 8,
+   "closes": 7,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 8,
+   "closes": 8,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "f70f88a630e88d01",
+  "after_hash": "fab4e776231db8fa"
+ },
+ {
+  "id": "69e76212cc48e59ad74f31ac",
+  "book_id": "69e76212cc48e59ad74f316e",
+  "page": 62,
+  "balance_before": {
+   "opens": 8,
+   "closes": 6,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 8,
+   "closes": 8,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "bf8415d2cc018c69",
+  "after_hash": "d0f1a34bd653fd89"
+ },
+ {
+  "id": "69e76168cc48e59ad74ef989",
+  "book_id": "69e76168cc48e59ad74ef921",
+  "page": 104,
+  "balance_before": {
+   "opens": 14,
+   "closes": 13,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 14,
+   "closes": 14,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "b298316d79a61aaf",
+  "after_hash": "7ad615a8eb26e087"
+ },
+ {
+  "id": "69e7614bcc48e59ad74eefbe",
+  "book_id": "69e7614bcc48e59ad74eef64",
+  "page": 90,
+  "balance_before": {
+   "opens": 6,
+   "closes": 3,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 6,
+   "closes": 6,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "aaf069d0ebeee18a",
+  "after_hash": "531d8b5d86d97fb3"
+ },
+ {
+  "id": "69e7614bcc48e59ad74eefbc",
+  "book_id": "69e7614bcc48e59ad74eef64",
+  "page": 88,
+  "balance_before": {
+   "opens": 10,
+   "closes": 8,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 10,
+   "closes": 10,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "78fac3716961dbdf",
+  "after_hash": "1cf179db52119945"
+ },
+ {
+  "id": "69e7614bcc48e59ad74eefbb",
+  "book_id": "69e7614bcc48e59ad74eef64",
+  "page": 87,
+  "balance_before": {
+   "opens": 5,
+   "closes": 4,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 5,
+   "closes": 5,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "cd127120a603d2cb",
+  "after_hash": "9ce28ba453ab8e65"
+ },
+ {
+  "id": "69e7614bcc48e59ad74eefb5",
+  "book_id": "69e7614bcc48e59ad74eef64",
+  "page": 81,
+  "balance_before": {
+   "opens": 5,
+   "closes": 4,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 5,
+   "closes": 5,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "9ff9b2a676e815a6",
+  "after_hash": "7dc31eaaa1a43857"
+ },
+ {
+  "id": "69e761f5cc48e59ad74f26b6",
+  "book_id": "69e761f5cc48e59ad74f26a4",
+  "page": 18,
+  "balance_before": {
+   "opens": 5,
+   "closes": 4,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 5,
+   "closes": 5,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "959544a44ea41bd0",
+  "after_hash": "b146a4220ea0802d"
+ },
+ {
+  "id": "69e761eacc48e59ad74f2373",
+  "book_id": "69e761eacc48e59ad74f2348",
+  "page": 43,
+  "balance_before": {
+   "opens": 7,
+   "closes": 6,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 7,
+   "closes": 7,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "4d1f4085e13948aa",
+  "after_hash": "3726a65f2232849d"
+ },
+ {
+  "id": "69e761adcc48e59ad74f10a4",
+  "book_id": "69e761adcc48e59ad74f1088",
+  "page": 28,
+  "balance_before": {
+   "opens": 2,
+   "closes": 1,
+   "malformed": 0,
+   "balanced": false
+  },
+  "balance_after": {
+   "opens": 2,
+   "closes": 2,
+   "malformed": 0,
+   "balanced": true
+  },
+  "status": "written",
+  "before_hash": "bfa9fe5030e15688",
+  "after_hash": "0cb454d3909c1a83"
+ }
+]

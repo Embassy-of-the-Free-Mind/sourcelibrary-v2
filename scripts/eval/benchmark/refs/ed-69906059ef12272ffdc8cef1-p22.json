@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A44317",
+  "edition": "EEBO-TCP A44317 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "69906059ef12272ffdc8cef1",
+  "page_number": 22,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 33219,
+    "to_char": 35647,
+    "overlap": 1,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "Starts 'Arms are' with small pad; ends at catchword.",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:38.431Z",
+  "text_location": "repo",
+  "text_sha256": "81fbf5fa3924bf53c27fe5fa56933479bdb6809a7bb6b2f658ca657be06b682a",
+  "unit": {
+    "chars": 2428
+  }
+}

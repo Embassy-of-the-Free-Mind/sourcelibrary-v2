@@ -1,0 +1,21 @@
+{
+ "id": "6a31c8b74400787ae5a9d7a7_00042",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>The page belongs to the Chapter on Impurities <note>Pali: Malavaggo</note>, containing verses 250 through 255 of the Dhammapada with references to the accompanying commentary <note>Atthakatha</note> stories.</meta>\n\n# Chapter on Impurities\n\n250 But for one in whom this <note>referring to the faults mentioned in previous verses</note> is entirely cut off, uprooted at the foundation, and destroyed, he indeed, whether by day or by night, attains meditative absorption <term>samadhi</term> <gloss>a state of deep concentration and mental stillness</gloss>.\n<margin>8 The Story of the Young Tissa, Volume III, page 357</margin>\n\n251 There is no fire like lust; there is no grip like hatred. There is no net like delusion; there is no river like craving.\n<margin>9 The Story of the Five Lay-Devotees, Volume III, page 360</margin>\n\n252 The faults of others are easy to see, but one’s own are difficult to perceive. One winnows the faults of others like chaff, but hides one’s own faults as a dishonest gambler hides an unlucky throw of the dice.\n<margin>10 The Story of the Merchant Mendaka, Volume III, page 363</margin>\n\n253 For one who sees only the faults of others and is constantly irritable, their mental fermentations <term>asava</term> <gloss>deep-seated mental taints or pollutions</gloss> increase. Such a person is far from the destruction of these taints.\n<margin>11 The Story of the Elder Ujjhanasannin, Volume III, page 376</margin>\n\n254 There is no track in the sky. There is no true ascetic <term>samana</term> <gloss>one who has calmed the mind</gloss> outside the path. Mankind delights in worldliness and conceptual proliferation <term>papanca</term> <gloss>the tendency of the mind to expand on and complicate sensory input</gloss>, but the Awakened Ones <term>Tathagata</term> <gloss>those who have thus gone or thus come</gloss> are free from such proliferation.\n\n255 There is no track in the sky. There is no true ascetic outside the path. No conditioned things are eternal. There is no instability in the Buddhas.\n<margin>12 The Story of the Wanderer Subhadda, Volume III, page 377</margin>\n\n->EIGHTEENTH CHAPTER: IMPURITIES<-\n\n---\n\n<note>Footnotes indicate textual variations in different manuscripts (Bṝ, F, K, Sḝ) regarding spelling or word choice, and a cross-reference to Jataka III 223 for verse 252.</note>\n\n<summary>This page concludes the Chapter on Impurities, emphasizing the internal nature of spiritual progress and the necessity of self-reflection over criticizing others. It contrasts the worldly tendency toward mental proliferation with the stillness and stability of the Buddhas.</summary>\n<keywords>Dhammapada, Malavaggo, Samadhi, Asava, Tathagata, Buddhist ethics, self-reflection, craving, mental fermentation</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2349,
+ "outputTokens": 718,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.00166425,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1199,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

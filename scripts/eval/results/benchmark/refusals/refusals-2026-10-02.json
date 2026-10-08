@@ -1,0 +1,557 @@
+{
+  "date": "2026-10-02",
+  "issue": 5581,
+  "reasons": "finishReason in RECITATION|PROHIBITED_CONTENT|SAFETY|BLOCKLIST|SPII|IMAGE_SAFETY with an empty output; else inferred (API engine, zero-byte output, reference ≥ 200 chars)",
+  "strata": {
+    "armenian": {
+      "gemini-3-flash-preview": {
+        "outputs": 71,
+        "meter": true,
+        "refused": {
+          "armenian-53c6cb-p198": "RECITATION"
+        },
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite": {
+        "outputs": 71,
+        "meter": true,
+        "refused": {
+          "armenian-53c6cb-p198": "RECITATION",
+          "armenian-bd506c-p225": "PROHIBITED_CONTENT"
+        },
+        "inferred": []
+      },
+      "tesseract-hye": {
+        "outputs": 30,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "tesseract-hye_calfa": {
+        "outputs": 30,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      }
+    },
+    "chinese": {
+      "gemini-3-flash-preview": {
+        "outputs": 116,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite": {
+        "outputs": 116,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite-b": {
+        "outputs": 48,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "tesseract-chi_tra_vert": {
+        "outputs": 116,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      }
+    },
+    "chinese-cohort-5547": {
+      "gemini-3-flash-preview": {
+        "outputs": 540,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite": {
+        "outputs": 540,
+        "meter": true,
+        "refused": {
+          "chinese-cohort-5547-e2d4cb-p94": "RECITATION",
+          "chinese-cohort-5547-e58c29-p55": "RECITATION"
+        },
+        "inferred": []
+      },
+      "paddleocr-vl-1.6": {
+        "outputs": 540,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      }
+    },
+    "chinese-ext": {
+      "gemini-3-flash-preview": {
+        "outputs": 96,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite": {
+        "outputs": 96,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite-b": {
+        "outputs": 96,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      }
+    },
+    "german-fraktur": {
+      "gemini-3-flash-preview": {
+        "outputs": 29,
+        "meter": true,
+        "refused": {
+          "german-fraktur-089287-p301": "RECITATION"
+        },
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite": {
+        "outputs": 47,
+        "meter": true,
+        "refused": {
+          "german-fraktur-089287-p301": "RECITATION"
+        },
+        "inferred": []
+      },
+      "tesseract-deu": {
+        "outputs": 24,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "tesseract-frk": {
+        "outputs": 24,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      }
+    },
+    "greek": {
+      "gemini-3-flash-preview": {
+        "outputs": 38,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite": {
+        "outputs": 86,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite-b": {
+        "outputs": 38,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "kraken-greek-cllg": {
+        "outputs": 38,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "tesseract-grc": {
+        "outputs": 86,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      }
+    },
+    "greek-ext": {
+      "gemini-3-flash-preview": {
+        "outputs": 170,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite": {
+        "outputs": 170,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite-b": {
+        "outputs": 170,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "kraken-greek-cllg": {
+        "outputs": 134,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      }
+    },
+    "greek-ext2": {
+      "gemini-3-flash-preview": {
+        "outputs": 10,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite": {
+        "outputs": 10,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite-b": {
+        "outputs": 10,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "kraken-greek-cllg": {
+        "outputs": 9,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      }
+    },
+    "japanese": {
+      "gemini-3-flash-preview": {
+        "outputs": 47,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite": {
+        "outputs": 105,
+        "meter": true,
+        "refused": {
+          "japanese-b172fc-p31": "RECITATION"
+        },
+        "inferred": []
+      },
+      "tesseract-jpn_vert": {
+        "outputs": 105,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      }
+    },
+    "japanese-ext": {
+      "gemini-3-flash-preview": {
+        "outputs": 127,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite": {
+        "outputs": 127,
+        "meter": true,
+        "refused": {
+          "japanese-ext-f9ea78-p8": "RECITATION",
+          "japanese-ext-fa2ce6-p92": "RECITATION"
+        },
+        "inferred": []
+      }
+    },
+    "latin-1700s": {
+      "gemini-3-flash-preview": {
+        "outputs": 24,
+        "meter": true,
+        "refused": {
+          "latin-1700s-d3a64d-p196": "RECITATION"
+        },
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite": {
+        "outputs": 48,
+        "meter": true,
+        "refused": {
+          "latin-1700s-d3a64d-p196": "RECITATION"
+        },
+        "inferred": []
+      },
+      "tesseract-lat": {
+        "outputs": 24,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      }
+    },
+    "latin-pre1700": {
+      "gemini-3-flash-preview": {
+        "outputs": 23,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite": {
+        "outputs": 67,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "kraken-catmus": {
+        "outputs": 1,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "tesseract-lat": {
+        "outputs": 23,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      }
+    },
+    "longs-en-fr": {
+      "gemini-3-flash-preview": {
+        "outputs": 28,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite": {
+        "outputs": 66,
+        "meter": true,
+        "refused": {
+          "longs-en-fr-bc5eb1-p118": "RECITATION"
+        },
+        "inferred": []
+      },
+      "tesseract-eng-fra": {
+        "outputs": 28,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      }
+    },
+    "ref-pinned": {
+      "gemini-3-flash-preview": {
+        "outputs": 55,
+        "meter": true,
+        "refused": {
+          "german-herder-sprache-p44": "RECITATION",
+          "greek-hero-pneumatica-178": "RECITATION"
+        },
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite": {
+        "outputs": 55,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "kraken-greek-cllg": {
+        "outputs": 17,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "tesseract-chi_tra_vert": {
+        "outputs": 6,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "tesseract-deu": {
+        "outputs": 7,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "tesseract-frk": {
+        "outputs": 7,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "tesseract-grc": {
+        "outputs": 17,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "tesseract-hye": {
+        "outputs": 9,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "tesseract-hye_calfa": {
+        "outputs": 9,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "tesseract-lat": {
+        "outputs": 12,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      }
+    },
+    "ref-ws": {
+      "gemini-3-flash-preview": {
+        "outputs": 120,
+        "meter": true,
+        "refused": {
+          "ws-de-anette-von-droste-h-lshoff-des-arztes-verm-chtni-p3": "RECITATION",
+          "ws-el-apollonii-rhodii-argonautica-1900-djvu-p17": "RECITATION",
+          "ws-la-cornelii-taciti-agricola-djvu-p19": "RECITATION",
+          "ws-la-cuerpo-del-derecho-civil-romano-a-doble-texto-ia-p216": "RECITATION",
+          "ws-la-gesta-abbatum-monsterii-sancti-albani-vol-2-1290-p27": "RECITATION"
+        },
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite": {
+        "outputs": 120,
+        "meter": true,
+        "refused": {
+          "ws-de-anette-von-droste-h-lshoff-des-arztes-verm-chtni-p3": "RECITATION",
+          "ws-el-apollonii-rhodii-argonautica-1900-djvu-p17": "RECITATION",
+          "ws-la-cornelii-taciti-agricola-djvu-p19": "RECITATION",
+          "ws-la-cuerpo-del-derecho-civil-romano-a-doble-texto-ia-p216": "RECITATION",
+          "ws-la-gesta-abbatum-monsterii-sancti-albani-vol-2-1290-p27": "RECITATION"
+        },
+        "inferred": []
+      },
+      "kraken-greek-cllg": {
+        "outputs": 25,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "tesseract-deu": {
+        "outputs": 30,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "tesseract-frk": {
+        "outputs": 30,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "tesseract-grc": {
+        "outputs": 25,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "tesseract-lat": {
+        "outputs": 65,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      }
+    },
+    "syriac": {
+      "gemini-3-flash-preview": {
+        "outputs": 28,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite": {
+        "outputs": 66,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "kraken-sophro-mhiro-defaultseg": {
+        "outputs": 28,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "omnisyr": {
+        "outputs": 28,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "qoruyo-eastern": {
+        "outputs": 28,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "qoruyo-estrangela": {
+        "outputs": 28,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "sophro-defaultseg": {
+        "outputs": 28,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "tesseract-syr": {
+        "outputs": 29,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      }
+    },
+    "syriac-gt": {
+      "gemini-3-flash-preview": {
+        "outputs": 40,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite": {
+        "outputs": 40,
+        "meter": true,
+        "refused": {
+          "jerusalem36-0003_SMMJ_00036__008": "RECITATION"
+        },
+        "inferred": []
+      },
+      "omnisyr": {
+        "outputs": 40,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "qoruyo-eastern": {
+        "outputs": 40,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "qoruyo-estrangela": {
+        "outputs": 40,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "sophro-defaultseg": {
+        "outputs": 40,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      }
+    },
+    "syriac-print-loop": {
+      "gemini-3-flash-preview": {
+        "outputs": 8,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite": {
+        "outputs": 8,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+2026-10-01T17:10:33Z setup ok: paddle 3.2.1 paddleocr 3.7.0 paddlex 3.7.2 NVIDIA L4, 580.126.20
+2026-10-01T17:20:10Z setup ok: paddle 3.2.1 paddleocr 3.7.0 paddlex 3.7.2 NVIDIA L4, 580.126.20
+2026-10-01T17:20:10Z infer start: 3 workers, deadline 2026-10-01T20:20:10Z, 5332 manifest rows
+2026-10-01T17:25:34Z setup ok: paddle 3.2.1 paddleocr 3.7.0 paddlex 3.7.2 NVIDIA L4, 580.126.20
+2026-10-01T17:25:34Z infer start: 2 workers, deadline 2026-10-01T20:25:34Z, 5332 manifest rows
+2026-10-01T17:25:50Z infer done in 16 s
+2026-10-01T17:25:54Z collect: {"host":"sl-zh-paddle-5547","gpu":"NVIDIAL4","workers":2,"paddle_version":"3.2.1","paddleocr_version":"3.7.0","paddlex_version":"3.7.2","vl_model":"PaddleOCRVL()defaultpipeline","pages_out":116,"infer_secs":16,"wall_secs_per_page":0.14}
+2026-10-01T17:25:54Z DONE
+2026-10-01T17:26:43Z infer done in 393 s
+2026-10-01T17:26:46Z collect: {"host":"sl-zh-paddle-5547","gpu":"NVIDIAL4","workers":3,"paddle_version":"3.2.1","paddleocr_version":"3.7.0","paddlex_version":"3.7.2","vl_model":"PaddleOCRVL()defaultpipeline","pages_out":127,"infer_secs":393,"wall_secs_per_page":3.09}
+2026-10-01T17:26:46Z DONE
+2026-10-01T17:27:10Z setup ok: paddle 3.2.1 paddleocr 3.7.0 paddlex 3.7.2 NVIDIA L4, 580.126.20
+2026-10-01T17:27:10Z infer start: 2 workers, deadline 2026-10-01T20:27:10Z, 5332 manifest rows
+2026-10-01T17:35:59Z setup ok: paddle 3.2.1 paddleocr 3.7.0 paddlex 3.7.2 NVIDIA L4, 580.126.20
+2026-10-01T17:35:59Z infer start: 2 workers, deadline 2026-10-01T20:35:59Z, 5332 manifest rows
+2026-10-01T20:25:23Z worker 1 exited 0 — restarting
+2026-10-01T20:27:04Z worker 1 exited 0 — restarting
+2026-10-01T20:28:45Z worker 1 exited 0 — restarting
+2026-10-01T20:30:25Z worker 1 exited 0 — restarting
+2026-10-01T20:32:06Z worker 1 exited 0 — restarting
+2026-10-01T20:36:09Z infer done in 10810 s
+2026-10-01T20:36:12Z collect: {"host":"sl-zh-paddle-5547","gpu":"NVIDIAL4","workers":2,"paddle_version":"3.2.1","paddleocr_version":"3.7.0","paddlex_version":"3.7.2","vl_model":"PaddleOCRVL()defaultpipeline","pages_out":3422,"infer_secs":10810,"wall_secs_per_page":3.16}
+2026-10-01T20:36:12Z DONE

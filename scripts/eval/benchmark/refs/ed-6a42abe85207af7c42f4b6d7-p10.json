@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA thesaurus/thesaurus/Cluever_epitome_1.xml",
+  "edition": "Historiarum totius mundi epitome: A prima rerum Origine usque ad annum Christi MDCXXX, [... ]; Accessit per ipsum Author — Amsterdam: Johannes Ravestein, 1668.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "13/13",
+    "pb_aligned_pages": "13/13"
+  },
+  "origin": "library",
+  "book_id": "6a42abe85207af7c42f4b6d7",
+  "page_number": 10,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 12057,
+    "to_char": 13454,
+    "overlap": 0.792,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Printed page headed 'Praefatio'; starts 'idem tria Vae celeberrima conjicit'; ends 'Deo duce, ingredere.' then ornament and catchword 'JOHAN-'. Only upper third has text. Ref pad 'In quam tamen' and 'IOHANNIS CLUVERI EPITOMES'. Ref has 'Iesu' where print has 'Jesu'.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:05:10.847Z",
+  "text_location": "repo",
+  "text_sha256": "493166599a60c4608c377a6aad29c2c0b815fbd449eee579a23a7226054c93d4",
+  "unit": {
+    "chars": 1397
+  },
+  "stratum": "latin-period-5126"
+}

@@ -1,222 +1,182 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
-import { checkDuplicate, normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
-import { searchBookIds } from '@/lib/books-catalog';
+import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
+import { checkHoldings, candidateFromInput, type HoldingCandidate, type HoldingReason } from '@/lib/holdings-check';
 import { semanticBookSearch } from '@/lib/semantic-search';
+import { GLOBAL_SCOPE } from '@/lib/tenant-search-scope';
 
 export const preferredRegion = 'fra1';
 
 /**
- * GET /api/books/check-duplicate?title=X&author=Y&year=Z
+ * GET /api/books/check-duplicate?title=X&author=Y&year=Z  (or ?url=…)
  *
- * Pre-import dedup check. Returns potential matches across 4 tiers:
- *   1. Source fingerprint (exact: same provider+identifier)
- *   2. Title+Author normalization (fuzzy: same work, different source)
- *   3. Supabase trigram (keyword: title/author substring match)
- *   4. Semantic similarity (conceptual: different title, same work)
+ * The PUBLIC "do we already hold this?" — the MCP `check_duplicate` tool's
+ * backend. Matching is `checkHoldings()` (src/lib/holdings-check.ts, #6019),
+ * the same function behind the admin form and the CLI, plus a semantic tier
+ * for cross-lingual titles ("Panchatantra" → Kalila wa-Dimna).
+ *
+ * PUBLIC, so hidden and warehouse records are NOT described: they are counted
+ * (`held_not_public`, with the strongest reason) so a caller still learns we
+ * hold a copy, without a title or id of a record we have not published. The
+ * full view is /api/admin/holdings-check.
  *
  * Query params:
- *   title      — book title (required)
- *   author     — author name (optional but recommended)
- *   year       — publication year (optional, for ranking)
- *   ia_id      — Internet Archive identifier (optional, for fingerprint)
- *   manifest   — IIIF manifest URL (optional, for fingerprint)
- *   language   — language hint for semantic search (optional)
+ *   url        — a library URL or IIIF manifest (title then optional)
+ *   title      — book title (required unless url / ia_id / manifest)
+ *   author, year, language (semantic hint)
+ *   ia_id      — Internet Archive identifier
+ *   manifest   — IIIF manifest URL
  *
- * Response:
- *   { isDuplicate, confidence, matches[], suggestion }
+ * Response (shape kept for MCP clients; `verdict`, `held_not_public`,
+ * `limits` added):
+ *   { isDuplicate, confidence, verdict, suggestion, matches[], held_not_public, limits, normalization }
+ *
+ * Read-only: writes nothing (the earlier version logged a
+ * `dedup_shadow_decisions` row per lookup, polluting a measurement).
  */
+
+type Confidence = 'exact' | 'high' | 'medium' | 'low';
+
+// Keyed by string, not by HoldingReason: a reason added to holdings-check.ts
+// must not break this route's build; an unlisted one reads as 'medium'.
+const CONFIDENCE: Record<string, Confidence> = {
+  same_book: 'exact',
+  same_source_object: 'exact',
+  same_iiif_manifest: 'exact',
+  same_edition: 'high',
+  same_edition_year_unknown: 'high',
+  title_author_near_same_year: 'high',
+  other_edition: 'medium',
+  same_work: 'medium',
+  same_work_same_year: 'high',
+  title_author_near: 'medium',
+  near_title: 'low',
+};
+
+const confidenceOf = (reason: string): Confidence => CONFIDENCE[reason] ?? 'medium';
+
+interface Match {
+  book_id: string;
+  title: string;
+  author?: string;
+  language?: string;
+  year?: number;
+  match_type: HoldingReason | 'semantic';
+  reason?: string;
+  confidence: Confidence;
+  similarity?: number;
+  url: string;
+}
+
+const isPublic = (c: HoldingCandidate) => c.collection === 'books' && c.visible && !c.hidden;
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const title = searchParams.get('title') || '';
   const author = searchParams.get('author') || '';
-  const year = searchParams.get('year');
+  const yearRaw = searchParams.get('year');
+  const year = yearRaw ? parseInt(yearRaw, 10) || null : null;
   const iaId = searchParams.get('ia_id');
   const manifest = searchParams.get('manifest');
+  const url = searchParams.get('url') || manifest;
   const language = searchParams.get('language');
 
-  if (!title || title.length < 2) {
+  if ((!title || title.length < 2) && !url && !iaId) {
     return NextResponse.json(
-      { error: 'title parameter required (min 2 chars)' },
+      { error: 'title (min 2 chars), url, ia_id or manifest required' },
       { status: 400 }
     );
   }
 
   const db = await getReadDb();
+  const input = { url, identifier: iaId, title: title || null, author: author || null, year };
+  const holdings = await checkHoldings(db, input);
 
-  interface Match {
-    book_id: string;
-    slug?: string;
-    title: string;
-    display_title?: string;
-    author?: string;
-    language?: string;
-    year?: number;
-    match_type: 'source_fingerprint' | 'title_author' | 'iiif_manifest' | 'edition_key' | 'keyword' | 'semantic';
-    confidence: 'exact' | 'high' | 'medium' | 'low';
-    similarity?: number;
-    url: string;
-  }
+  const matches: Match[] = holdings.candidates.filter(isPublic).map((c) => ({
+    book_id: c.book_id,
+    title: c.title,
+    author: c.author ?? undefined,
+    language: c.language ?? undefined,
+    year: c.year ?? undefined,
+    match_type: c.reason,
+    reason: c.reason_detail,
+    confidence: confidenceOf(c.reason),
+    url: c.url,
+  }));
+  const notPublic = holdings.candidates.filter((c) => !isPublic(c));
+  const seen = new Set(holdings.candidates.map((c) => c.book_id));
 
-  const matches: Match[] = [];
-  const seenIds = new Set<string>();
-
-  // ── Tier 1 & 2: Existing dedup system (fingerprint + title+author) ──
-  const bookInput: any = { title, author };
-  if (iaId) bookInput.ia_identifier = iaId;
-  if (manifest) bookInput.image_source = { iiif_manifest: manifest };
-
-  const dedupResult = await checkDuplicate(db, bookInput);
-  if (dedupResult.matches.length > 0) {
-    // Enrich with full metadata
-    const ids = dedupResult.matches.map(m => m.matchedBookId);
-    const books = await db.collection('books')
-      .find({ id: { $in: ids } })
-      .project({ id: 1, slug: 1, title: 1, display_title: 1, author: 1, language: 1, year: 1 })
-      .toArray();
-    const bookMap = new Map(books.map(b => [b.id, b]));
-
-    for (const m of dedupResult.matches) {
-      seenIds.add(m.matchedBookId);
-      const book = bookMap.get(m.matchedBookId);
-      matches.push({
-        book_id: m.matchedBookId,
-        slug: book?.slug,
-        title: m.matchedTitle,
-        display_title: book?.display_title,
-        author: book?.author,
-        language: book?.language,
-        year: book?.year,
-        match_type: m.matchType,
-        confidence: m.confidence,
-        url: `https://sourcelibrary.org/book/${book?.slug || m.matchedBookId}`,
-      });
-    }
-  }
-
-  // ── Tier 3: Supabase trigram keyword search ──
-  // Catches partial title matches the normalization layer misses
-  const searchTerms = [title];
-  if (author && author.length >= 3) searchTerms.push(author);
-
-  for (const term of searchTerms) {
+  // Semantic tier — cross-lingual and alternate titles. Low-to-medium
+  // evidence; never makes a verdict by itself above "review".
+  if (title) {
     try {
-      const ids = await searchBookIds(term, { limit: 10 });
-      if (ids.length > 0) {
-        const newIds = ids.filter(id => !seenIds.has(id));
-        if (newIds.length > 0) {
-          const books = await db.collection('books')
-            .find({ id: { $in: newIds }, visible: true, pages_count: { $gt: 0 } })
-            .project({ id: 1, slug: 1, title: 1, display_title: 1, author: 1, language: 1, year: 1 })
-            .maxTimeMS(3000)
-            .toArray();
-
-          for (const book of books) {
-            if (seenIds.has(book.id)) continue;
-            seenIds.add(book.id);
-
-            // Score the match: how similar is the title?
-            const normInput = normalizeTitle(title);
-            const normBook = normalizeTitle(book.title || '');
-            const titleMatch = normInput === normBook ? 'high'
-              : normBook.includes(normInput) || normInput.includes(normBook) ? 'medium'
-              : 'low';
-
-            matches.push({
-              book_id: book.id,
-              slug: book.slug,
-              title: book.title,
-              display_title: book.display_title,
-              author: book.author,
-              language: book.language,
-              year: book.year,
-              match_type: 'keyword',
-              confidence: titleMatch as 'high' | 'medium' | 'low',
-              url: `https://sourcelibrary.org/book/${book.slug || book.id}`,
-            });
-          }
-        }
+      const semanticResults = await semanticBookSearch(`${title}${author ? ' by ' + author : ''}`, 8, {
+        // A pre-import duplicate check asks "do we hold this ANYWHERE" —
+        // dedup deliberately spans every tenant and hidden books (dedup.ts).
+        scope: GLOBAL_SCOPE,
+        language: language || undefined,
+        threshold: 0.63, // high recall for a pre-import look
+      });
+      for (const sem of semanticResults) {
+        if (seen.has(sem.book_id)) continue;
+        seen.add(sem.book_id);
+        matches.push({
+          book_id: sem.book_id,
+          title: sem.title,
+          author: sem.author || undefined,
+          language: sem.language || undefined,
+          year: sem.year || undefined,
+          match_type: 'semantic',
+          confidence: sem.similarity >= 0.78 ? 'medium' : 'low',
+          similarity: Math.round(sem.similarity * 1000) / 1000,
+          url: `https://sourcelibrary.org/book/${encodeURIComponent(sem.book_id)}`,
+        });
       }
     } catch {
-      // Non-fatal: keyword search can fail
+      // Non-fatal: semantic search can fail
     }
   }
 
-  // ── Tier 4: Semantic similarity ──
-  // Catches cross-lingual and alternate-title matches
-  // "Panchatantra" → Kalila wa-Dimna, "Muqaddimah" → "Prolegomenes"
-  try {
-    const searchQuery = `${title}${author ? ' by ' + author : ''}`;
-    const semanticResults = await semanticBookSearch(searchQuery, 8, {
-      language: language || undefined,
-      threshold: 0.63, // Lower threshold for dedup — prefer high recall (catch possible dupes)
-    });
+  const order: Record<Confidence, number> = { exact: 0, high: 1, medium: 2, low: 3 };
+  const semanticLast = (m: Match) => (m.match_type === 'semantic' ? 1 : 0);
+  matches.sort((a, b) => order[a.confidence] - order[b.confidence] || semanticLast(a) - semanticLast(b) || (b.similarity || 0) - (a.similarity || 0));
 
-    for (const sem of semanticResults) {
-      if (seenIds.has(sem.book_id)) continue;
-      seenIds.add(sem.book_id);
+  const strongestHidden = notPublic.length
+    ? notPublic.reduce((a, b) => (order[confidenceOf(b.reason)] < order[confidenceOf(a.reason)] ? b : a))
+    : null;
+  const best = [matches[0]?.confidence, strongestHidden && confidenceOf(strongestHidden.reason)]
+    .filter((c): c is Confidence => !!c)
+    .sort((a, b) => order[a] - order[b])[0];
+  const overall = best ?? 'none';
+  const isDuplicate = overall === 'exact' || overall === 'high';
 
-      // Fetch slug for URL
-      const book = await db.collection('books')
-        .findOne({ id: sem.book_id }, { projection: { slug: 1 } });
-
-      matches.push({
-        book_id: sem.book_id,
-        slug: book?.slug,
-        title: sem.title,
-        author: sem.author || undefined,
-        language: sem.language || undefined,
-        year: sem.year || undefined,
-        match_type: 'semantic',
-        confidence: sem.similarity >= 0.78 ? 'high' : sem.similarity >= 0.68 ? 'medium' : 'low',
-        similarity: Math.round(sem.similarity * 1000) / 1000,
-        url: `https://sourcelibrary.org/book/${book?.slug || sem.book_id}`,
-      });
-    }
-  } catch {
-    // Non-fatal: semantic search can fail
-  }
-
-  // ── Sort: exact > high > medium > low, then by similarity ──
-  const confidenceOrder = { exact: 0, high: 1, medium: 2, low: 3 };
-  matches.sort((a, b) => {
-    const ca = confidenceOrder[a.confidence];
-    const cb = confidenceOrder[b.confidence];
-    if (ca !== cb) return ca - cb;
-    return (b.similarity || 0) - (a.similarity || 0);
-  });
-
-  // ── Overall assessment ──
-  const hasExact = matches.some(m => m.confidence === 'exact');
-  const hasHigh = matches.some(m => m.confidence === 'high');
-  const hasMedium = matches.some(m => m.confidence === 'medium');
-
-  const isDuplicate = hasExact || hasHigh;
-  const overallConfidence = hasExact ? 'exact' : hasHigh ? 'high' : hasMedium ? 'medium' : 'none';
-
+  const hiddenNote = notPublic.length
+    ? ` We also hold ${notPublic.length} cop${notPublic.length === 1 ? 'y' : 'ies'} not yet public (strongest: ${strongestHidden!.reason.replace(/_/g, ' ')}).`
+    : '';
   let suggestion: string;
-  if (hasExact) {
-    suggestion = `Exact duplicate found: "${matches[0].title}". Do not import.`;
-  } else if (hasHigh) {
-    suggestion = `Likely duplicate: "${matches[0].title}" (${matches[0].match_type}). Check before importing.`;
-  } else if (hasMedium) {
-    suggestion = `Possible related work found. Review matches before importing.`;
-  } else if (matches.length > 0) {
-    suggestion = `No strong matches. Low-confidence semantic matches found — likely safe to import.`;
-  } else {
-    suggestion = `No matches found. Safe to import.`;
-  }
+  if (overall === 'exact') suggestion = `Already held (same scan).${matches[0]?.confidence === 'exact' ? ` "${matches[0].title}".` : ''} Do not import.${hiddenNote}`;
+  else if (overall === 'high') suggestion = `Likely already held (same edition).${matches[0]?.confidence === 'high' ? ` "${matches[0].title}".` : ''} Check before importing.${hiddenNote}`;
+  else if (overall === 'medium') suggestion = `Another edition or a related work is held. Review the matches before importing.${hiddenNote}`;
+  else if (overall === 'low') suggestion = `No strong matches; only similar titles. Likely safe to import.${hiddenNote}`;
+  else suggestion = 'No matches found. Safe to import.';
 
+  const cand = candidateFromInput(input);
   return NextResponse.json({
-    query: { title, author, year, language },
+    query: { title, author, year, url, language },
     isDuplicate,
-    confidence: overallConfidence,
+    confidence: overall,
+    verdict: holdings.verdict,
     suggestion,
     matches: matches.slice(0, 15),
+    held_not_public: notPublic.length
+      ? { count: notPublic.length, strongest_reason: strongestHidden!.reason }
+      : null,
+    limits: holdings.limits,
     normalization: {
       normalized_title: normalizeTitle(title),
       normalized_author: normalizeAuthor(author),
-      source_fingerprint: sourceFingerprint(bookInput),
+      source_fingerprint: sourceFingerprint(cand),
+      edition_key: holdings.query.edition_key,
     },
   }, {
     headers: {

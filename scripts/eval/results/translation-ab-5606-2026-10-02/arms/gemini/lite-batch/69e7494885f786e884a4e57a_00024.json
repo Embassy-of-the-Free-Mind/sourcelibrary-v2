@@ -1,0 +1,21 @@
+{
+ "id": "69e7494885f786e884a4e57a_00024",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "How can there be any certainty? Would you not look upon me? <note>This is a <term>fu</term> <gloss>narrative or descriptive mode</gloss>.</note>\n\n<note>\n<term>Mao</term> <gloss>covered/overspread</gloss>: read as <term>mu</term> <gloss>eye</gloss>.\n<term>Hu</term> <gloss>how</gloss>: read as <term>dao</term> <gloss>to/toward</gloss> inverted.\n<term>Bao</term> <gloss>recompense</gloss>: read as <term>fan</term> <gloss>inverted</gloss>.\n</note>\n\nO sun, O moon, you overspread the earth below. But this man, he departs and does not treat me well.\n\nHow can there be any certainty? Would you not make a response to me? <note>This is a <term>fu</term>.</note>\n\nO sun, O moon, you emerge from the east. But this man, his virtuous words are not good.\n\nHow can there be any certainty? Could he possibly forget me? <note>This is a <term>fu</term>.</note>\n\nO sun, O moon, from the east you emerge. O father, O mother, you did not finish rearing me. How can there be any certainty? You do not mention a response for me. <note>This is a <term>fu</term>. Lady <term>Zhuang Jiang</term> <gloss>consort of Duke Zhuang</gloss> was not answered by Duke Zhuang, thus she called upon the sun and moon to lament her situation, and composed this poem.</note>\n\n<note>This poem</note>\nThe \"Sun and Moon\" consists of four stanzas, each with six lines.\n\n<summary>This page contains the text of the poem \"Sun and Moon\" from the Odes of Bei, documenting the sorrow of Lady Zhuang Jiang who expresses her abandonment by her husband through an appeal to the celestial bodies.</summary>\n<keywords>Shijing, Classic of Poetry, Odes of Bei, Lady Zhuang Jiang, Duke Zhuang, Sun and Moon, filial longing</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2159,
+ "outputTokens": 475,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.0006261249999999999,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 862,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

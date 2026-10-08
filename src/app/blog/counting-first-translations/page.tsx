@@ -10,11 +10,11 @@ export const metadata: Metadata = {
     title: 'How Many First Translations, Really?',
     description:
       'A two-sided census of Source Library\'s first-translation claim: measuring both false positives and missed firsts with stratified sampling and per-book AI adjudication.',
-    images: [{ url: 'https://images.sourcelibrary.org/archived/69af0a0a4c57359b8d2d0f49/1.jpg', width: 1200, height: 630 }],
+    images: [{ url: 'https://images.sourcelibrary.org/archived/69af0a0a4c57359b8d2d0f49/8.jpg', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    images: [{ url: 'https://images.sourcelibrary.org/archived/69af0a0a4c57359b8d2d0f49/1.jpg' }],
+    images: [{ url: 'https://images.sourcelibrary.org/archived/69af0a0a4c57359b8d2d0f49/8.jpg' }],
   },
   alternates: {
     canonical: '/blog/counting-first-translations',
@@ -28,7 +28,7 @@ export default function CountingFirstTranslationsPage() {
         <ContentHeader
           title="How Many First Translations, Really?"
           subtitle="A census of a claim — measuring both the firsts we over-claim and the firsts we miss"
-          image="https://images.sourcelibrary.org/archived/69af0a0a4c57359b8d2d0f49/1.jpg"
+          image="https://images.sourcelibrary.org/archived/69af0a0a4c57359b8d2d0f49/8.jpg"
           imageAlt="Title page of Athanasius Kircher's Arithmologia, 1665 — a genuine first English translation"
         >
           <p className="text-stone-400 text-sm mt-4">19 June 2026 &middot; 11 min read</p>

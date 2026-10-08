@@ -1,0 +1,21 @@
+{
+ "id": "69e7490585f786e884a4d1aa_00097",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Uttaramegha.\n\nOf those whose hair is parted <note>referring to young wives who traditionally mark their status by parting their hair</note>. \"A woman whose hair is parted is a bride,\" according to the Amarakosha. [Brought by a friend] Having arrived, brought by a friend or through the mouth of a friend. The word \"friend\" is used to prevent any suspicion of infidelity. The news of the beloved is the news of the husband. \"News, information, event, and report are synonymous with Udanta,\" according to the Amarakosha. It means that the news is slightly less than the reunion itself, but it is just as joyful.\n\nNow, he delivers the message—\n\nO long-lived one, tell her, by my words and for your own benefit,\nSpeak thus: \"Your companion, residing in the hermitage of Ramagiri,\nAlive and well, asks after your welfare, O helpless one, though separated from you;\nFor this is the first thing that must be spoken to living beings who are prone to misfortune.\" || 41 ||\n\nTell her. O long-lived one. The suffix 'matup' implies praise, meaning one whose life is worthy because of performing favors for others. By my words, that is, the request, and also for your own benefit—that is, to fulfill yourself by performing a kindness for others. Even though the self is the object of the act of helping, the use of the genitive case 'atmanah' is not incorrect, as in phrases like \"he helps him.\" As Bharavi says, \"That is true fortune by which one helps others.\" Similarly, Sriharsha says, \"To help the righteous, to see fortune, to travel through the sky.\" Thus, the statement of the master—that this is a second case of the same usage—is an unnecessary statement. Tell her, your beloved, thus. What should you say? He says, O helpless one, your companion, your husband, residing in the hermitages of Ramagiri, also known as Chitrakuta, is alive—meaning not dead. He provides the reason for not being dead: although suffering from being separated, he asks after your welfare. The verb 'to ask' takes two objects due to the state of being distressed. Indeed, for living beings who easily meet with misfortune, this very question regarding welfare is the first thing that must be asked. The 'nyat' suffix is applied here to indicate necessity.\n\nWith a slender body against a slender body, with a fevered body against a fevered one,\nWith eyes full of tears against eyes full of tears, with an unceasing longing against one who is longing,\n\n1. Long-lived one. 2. You should speak. 3. One. 4. Separated, appointed. 5. This is the first greeting for living beings who are prone to misfortune; this is the first address for creatures whose instruments are prone to decay. 6. O slender one, and the body. 7. Flowing with tears.\n\n<summary>This page provides a scholarly commentary on verses from Kālidāsa's Meghadūta, specifically detailing the etymology of terms related to news of a beloved and interpreting the opening of the Yakṣa's message to his wife.</summary>\n<keywords>Meghadūta, Kālidāsa, Sanskrit commentary, Ramagiri, separation, literary analysis</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2538,
+ "outputTokens": 721,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.000858,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1891,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

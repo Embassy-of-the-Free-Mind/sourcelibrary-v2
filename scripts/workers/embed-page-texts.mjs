@@ -32,7 +32,7 @@
  *
  * Env: MONGODB_URI, SUPABASE_DB_URL, GEMINI_API_KEY_TIER3 (or GEMINI_API_KEY).
  *
- * COST — THIS IS BILLED. `gemini-embedding-2-preview` is $0.20 per 1M input
+ * COST — THIS IS BILLED. `gemini-embedding-2` is $0.20 per 1M input
  * tokens on the paid tier, and every GEMINI_API_KEY* in the env is a paid key.
  * At the measured 4.29 chars/token, the 38.6K-page Spanish corpus is ≈29.1M
  * tokens ≈ **$5.83 per full pass**, and `--force` pays it again from scratch.

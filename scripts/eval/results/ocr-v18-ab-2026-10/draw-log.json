@@ -1,0 +1,89 @@
+{
+ "seed": 4195,
+ "skipped": {
+  "S1": [
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e72cb6a409200ea79f54bc",
+    "page_number": 12,
+    "langs": [
+     "Syriac",
+     "Syriac"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69dfee89ce6bb8619e07f958",
+    "page_number": 40,
+    "langs": [
+     "Tibetan",
+     "Tibetan",
+     "Tibetan"
+    ]
+   }
+  ],
+  "S2": [
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e77a2e0fc6fc955e35e455",
+    "page_number": 104,
+    "langs": [
+     "Tibetan",
+     "Tibetan"
+    ]
+   }
+  ],
+  "S3": [
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e77a7d0fc6fc955e36037b",
+    "page_number": 59,
+    "langs": [
+     "Tibetan",
+     "Tibetan"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69943c6813c9a0dce2757890",
+    "page_number": 646,
+    "langs": [
+     "Syriac",
+     "Syriac"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69a5f469d4c2e3cf8ecb9324",
+    "page_number": 860,
+    "langs": [
+     "Syriac",
+     "Syriac"
+    ]
+   }
+  ]
+ },
+ "corpus_4149": {
+  "lines": 46805,
+  "parsed": 46805,
+  "skipped_unparseable": 0
+ },
+ "counts": {
+  "S1": 40,
+  "S2": 37,
+  "S3": 43,
+  "S4": 28,
+  "S5": 40
+ },
+ "skipped_counts": {
+  "S1": {
+   "tibetan-or-syriac": 2
+  },
+  "S2": {
+   "tibetan-or-syriac": 1
+  },
+  "S3": {
+   "tibetan-or-syriac": 3
+  }
+ }
+}

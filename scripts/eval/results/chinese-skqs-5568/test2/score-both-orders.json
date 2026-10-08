@@ -1,0 +1,101 @@
+{
+ "n_pairs": 192,
+ "position": {
+  "A": 111,
+  "B": 225,
+  "TIE": 48
+ },
+ "kinds": {
+  "L-P": {
+   "n": 40,
+   "order_consistent_better": 25,
+   "L_both_orders": 4,
+   "P_both_orders": 20,
+   "TIE_or_flip": 16,
+   "sign_p": 0.0015,
+   "material_both_orders": 35,
+   "material_both_rate": 0.875,
+   "material_both_wilson": [
+    0.739,
+    0.945
+   ],
+   "material_either": 38,
+   "material_order_agreement": 0.925
+  },
+  "P-K": {
+   "n": 36,
+   "order_consistent_better": 22,
+   "P_both_orders": 13,
+   "K_both_orders": 8,
+   "TIE_or_flip": 15,
+   "sign_p": 0.3833,
+   "material_both_orders": 25,
+   "material_both_rate": 0.694,
+   "material_both_wilson": [
+    0.531,
+    0.82
+   ],
+   "material_either": 32,
+   "material_order_agreement": 0.806
+  },
+  "L-K": {
+   "n": 36,
+   "order_consistent_better": 19,
+   "L_both_orders": 9,
+   "K_both_orders": 10,
+   "TIE_or_flip": 17,
+   "sign_p": 1,
+   "material_both_orders": 28,
+   "material_both_rate": 0.778,
+   "material_both_wilson": [
+    0.619,
+    0.883
+   ],
+   "material_either": 31,
+   "material_order_agreement": 0.917
+  },
+  "P-PP": {
+   "n": 40,
+   "order_consistent_better": 20,
+   "P_both_orders": 3,
+   "PP_both_orders": 12,
+   "TIE_or_flip": 25,
+   "sign_p": 0.0352,
+   "material_both_orders": 18,
+   "material_both_rate": 0.45,
+   "material_both_wilson": [
+    0.307,
+    0.602
+   ],
+   "material_either": 25,
+   "material_order_agreement": 0.825
+  },
+  "P-P2": {
+   "n": 40,
+   "order_consistent_better": 28,
+   "P_both_orders": 14,
+   "P2_both_orders": 10,
+   "TIE_or_flip": 16,
+   "sign_p": 0.5413,
+   "material_both_orders": 23,
+   "material_both_rate": 0.575,
+   "material_both_wilson": [
+    0.422,
+    0.715
+   ],
+   "material_either": 30,
+   "material_order_agreement": 0.825
+  }
+ },
+ "LP_vs_floor_both_orders": {
+  "only_first": 12,
+  "only_floor": 0,
+  "p": 0.0005
+ },
+ "PK_vs_floor_both_orders": {
+  "only_first": 8,
+  "only_floor": 4,
+  "p": 0.3877
+ },
+ "cost_usd": 0.748
+}

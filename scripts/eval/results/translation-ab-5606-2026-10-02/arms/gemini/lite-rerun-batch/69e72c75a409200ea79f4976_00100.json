@@ -1,0 +1,21 @@
+{
+ "id": "69e72c75a409200ea79f4976_00100",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "by means of wine to observe their principles, by mixing them with their surroundings to observe their expressions. Through these nine signs, even those who are unworthy can be recognized. When Zheng Kaofu <margin>A member of the ducal family of Song, tenth-generation ancestor of Confucius</margin> received his first appointment, he bowed his back <margin>scholar</margin> <margin>curved back</margin>. Upon his second appointment, he stooped <margin>official</margin> <margin>body bent low, not daring to walk in the center of the road</margin>. Upon his third appointment, he bent even further <margin>Kaofu's lineage is like this</margin>. Walking while clinging to the wall, who would dare not to follow his model? Those who act like this, at their first <margin>Who would dare not take this as a model?</margin> <margin>nine men</margin> appointment, they walk with their heads down and keep to the wall, so who would dare not to follow the rules?\n\n<margin>Calligraphy principle</margin> <margin>Calligraphy principle</margin> <margin>Calligraphy principle</margin> <margin>Calligraphy principle</margin> <margin>Calligraphy principle</margin> <margin>arrogant appearance</margin> <margin>riding a carriage with head held high</margin> <margin>calling elders by their names</margin>\n\nOthers like Lü Ju, upon their second appointment, dance on their carriages <margin>Alas, the virtue of Xu You's resignation!</margin>. Upon their third appointment, they call their elders by name <margin>To have a conscious mind for virtue is the thief of virtue</margin>. <margin>When the mind is engaged in matters of the eyebrows and eyelashes, virtue is even more destroyed</margin> <margin>Sentence structure</margin> <margin>Thus, looking back into the heart, it is chaotic and turbulent, and one can never achieve virtue or advance on the Way</margin> <margin>eyes, ears, nose, tongue, heart</margin> <margin>heart</margin>\n\n<unclear>Agreement</unclear> or harm? There is no greater thief of virtue than having a conscious mind, and when the mind has eyelashes <note>a metaphor for narrow vision</note>, it becomes swift; when it is swift, one looks inward. To look inward is to be defeated. There are five types of harmful virtue, and the central virtue\n\n<summary>This passage discusses the observation of character through conduct and contrasts the humble, respectful behavior of the virtuous Zheng Kaofu with the arrogant, disrespectful conduct of others like Lü Ju.</summary>\n<keywords>Zheng Kaofu, Lü Ju, virtue, conduct, Confucian lineage, humility, arrogance</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2316,
+ "outputTokens": 583,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.00072675,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 862,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

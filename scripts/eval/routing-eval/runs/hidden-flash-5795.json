@@ -1,0 +1,15 @@
+{
+  "run_id": "hidden-flash-5795",
+  "issue": 5795,
+  "note": "Written after the fact (#5828) so the stored run replays through routing-eval.mjs: `decide --run hidden-flash-5795`. The run itself was made by scripts/eval/hidden-flash-5795/*.mjs; its work directory is gone, so seal and arms are not re-runnable from here and must not be.",
+  "population": { "families": ["fas", "san", "pli", "ara", "gez"], "visibility": "hidden", "ocr_owed": true, "exclude_held": true, "created_before": "2026-10-04T00:00:00Z" },
+  "n_per_group": 30,
+  "seed": 5795,
+  "arms": { "lite": "gemini-3.1-flash-lite", "flash": "gemini-3-flash-preview" },
+  "baseline": "lite",
+  "candidate": "flash",
+  "adjudication_k": 10,
+  "rules": ["scripts/eval/routing-eval/rules/hidden-flash-5795-registered.json", "scripts/eval/routing-eval/rules/margin-v1.json"],
+  "results_dir": "scripts/eval/results/hidden-flash-5795",
+  "work_dir": "/data/scratch/sl/hidden-flash-5795-work"
+}

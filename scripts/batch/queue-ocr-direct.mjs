@@ -74,7 +74,7 @@ async function run() {
   const books = await db.collection('books')
     .find({ 'pipeline_auto.status': 'archive_complete', hidden: { $ne: true } })
     .sort({ read_count: -1 })
-    .project({ id: 1, title: 1, language: 1, 'image_source.provider': 1, pages_count: 1, job: 1 })
+    .project({ id: 1, title: 1, language: 1, visible: 1, created_at: 1, 'image_source.provider': 1, pages_count: 1, job: 1 })
     .limit(LIMIT)
     .toArray();
 

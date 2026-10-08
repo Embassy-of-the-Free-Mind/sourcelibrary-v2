@@ -7,6 +7,7 @@ import { geminiEngine, imageInput, ocrProvenance, notRecorded, NOT_RECORDED, cod
 import { getOcrPrompt } from '@/lib/prompts';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { withAuth } from '@/lib/auth-helpers';
+import { assertLaneGuards } from '@/lib/lane-guards';
 import { createRevision } from '@/lib/page-revisions';
 
 const CONCURRENCY_LIMIT = 10;
@@ -148,6 +149,8 @@ export const POST = withAuth(async (request: NextRequest) => {
     }
 
     const db = await getDb();
+    // Observe only (#5480): records a held book or an active pause in audit_log, never refuses.
+    if (autoSave) await assertLaneGuards(db, { route: '/api/process/batch', pageIds: pages.map((p) => p.pageId) });
     const allResults: BatchResult[] = [];
     const batchStartTime = performance.now();
 

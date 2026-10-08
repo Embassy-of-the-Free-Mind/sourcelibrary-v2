@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A36017",
+  "edition": "EEBO-TCP A36017 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6a42ec4006e6ead3ac544b8f",
+  "page_number": 14,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 11631,
+    "to_char": 13082,
+    "overlap": 0.99,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "Starts one verse before Ausit pulchra, ends atque is Qui",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:30.733Z",
+  "text_location": "repo",
+  "text_sha256": "1beef61d20205dabfc0d94104f6073a01b55c8407e69c3d57bfd058dd0c41c18",
+  "unit": {
+    "chars": 1451
+  }
+}

@@ -1,0 +1,249 @@
+{
+  "generated": "2026-10-01",
+  "seed": 20261001,
+  "sources": {
+    "audit": "results/translation-corpus-audit-2026-09-30",
+    "two_read": "results/two-read-garble-5313-2026-09-30"
+  },
+  "judge": {
+    "opus_vs_sonnet": {
+      "n": 107,
+      "exact": 0.673,
+      "weighted_kappa_quadratic": 0.733,
+      "weighted_kappa_quadratic_ci": [
+        0.6,
+        0.83
+      ],
+      "sound_vs_defective": {
+        "observed": 0.888,
+        "kappa": 0.562,
+        "ac1": 0.85,
+        "kappa_ci": [
+          0.324,
+          0.761
+        ],
+        "ac1_ci": [
+          0.747,
+          0.93
+        ],
+        "share_sound_first": 0.879,
+        "share_sound_second": 0.822
+      }
+    },
+    "opus_vs_itself": {
+      "n": 15,
+      "exact": 0.733,
+      "weighted_kappa_quadratic": 0.688,
+      "weighted_kappa_quadratic_ci": [
+        0.286,
+        0.93
+      ],
+      "sound_vs_defective": {
+        "observed": 0.933,
+        "kappa": 0.634,
+        "ac1": 0.919,
+        "kappa_ci": [
+          0,
+          1
+        ],
+        "ac1_ci": [
+          0.689,
+          1
+        ],
+        "share_sound_first": 0.933,
+        "share_sound_second": 0.867
+      }
+    }
+  },
+  "screen": {
+    "lite": {
+      "pages": 294,
+      "garbled": 27,
+      "auc": 0.79,
+      "auc_ci": [
+        0.698,
+        0.877
+      ],
+      "in_sample_at_0_7": {
+        "precision": 0.263,
+        "recall": 0.741,
+        "kappa": 0.292
+      },
+      "held_out_median": {
+        "precision": 0.294,
+        "recall": 0.545,
+        "note": "threshold chosen on a random half by F1 over 0.3/0.4/0.5/0.6/0.7/0.8/0.85/0.9/0.95, scored on the other half; median of 1,000 folds"
+      }
+    },
+    "flash": {
+      "pages": 307,
+      "garbled": 30,
+      "auc": 0.833,
+      "auc_ci": [
+        0.774,
+        0.885
+      ],
+      "in_sample_at_0_7": {
+        "precision": 0.273,
+        "recall": 0.7,
+        "kappa": 0.293
+      },
+      "held_out_median": {
+        "precision": 0.269,
+        "recall": 0.583,
+        "note": "threshold chosen on a random half by F1 over 0.3/0.4/0.5/0.6/0.7/0.8/0.85/0.9/0.95, scored on the other half; median of 1,000 folds"
+      }
+    }
+  },
+  "intervals": {
+    "leaf_signature_known_cases": {
+      "k": 6,
+      "n": 6,
+      "what": "wrong-leaf pages known before the screen ran (#5311) that carry the signature; a seventh was found by it",
+      "p": 1,
+      "ci": [
+        0.61,
+        1
+      ]
+    },
+    "leaf_signature_flagged_were_wrong_leaf": {
+      "k": 7,
+      "n": 7,
+      "what": "pages carrying the signature that proved, by eye, to show the wrong leaf",
+      "p": 1,
+      "ci": [
+        0.646,
+        1
+      ]
+    },
+    "leaf_signature_right_leaf_clear": {
+      "k": 258,
+      "n": 258,
+      "what": "by-eye right-leaf pages with three usable reads that do NOT carry the signature",
+      "p": 1,
+      "ci": [
+        0.985,
+        1
+      ]
+    },
+    "wrong_leaf_in_eye_sample": {
+      "k": 2,
+      "n": 20,
+      "what": "audited pages whose scan, read by a model, is a different page from the one transcribed",
+      "p": 0.1,
+      "ci": [
+        0.028,
+        0.301
+      ]
+    },
+    "judge_flags_confirmed": {
+      "k": 20,
+      "n": 21,
+      "what": "defects the judge flagged that the model read of the scan confirmed (one unverifiable, none rejected)",
+      "p": 0.952,
+      "ci": [
+        0.773,
+        0.992
+      ]
+    },
+    "control_swap": {
+      "k": 15,
+      "n": 15,
+      "what": "swapped translations rated 2 or lower",
+      "p": 1,
+      "ci": [
+        0.796,
+        1
+      ]
+    },
+    "control_drop": {
+      "k": 15,
+      "n": 15,
+      "what": "translations with the middle third removed flagged as omission",
+      "p": 1,
+      "ci": [
+        0.796,
+        1
+      ]
+    },
+    "control_repeat_exact": {
+      "k": 11,
+      "n": 15,
+      "what": "repeat items given the identical rating",
+      "p": 0.733,
+      "ci": [
+        0.48,
+        0.891
+      ]
+    }
+  },
+  "panel": {
+    "month0_pages": 311,
+    "month0_defective": 47,
+    "defective_share": 0.151,
+    "answers_per_stratum": [
+      {
+        "half_width": 0.15,
+        "expected_agreement": 0.9,
+        "answers_in_stratum": 15
+      },
+      {
+        "half_width": 0.15,
+        "expected_agreement": 0.7,
+        "answers_in_stratum": 33
+      },
+      {
+        "half_width": 0.15,
+        "expected_agreement": 0.5,
+        "answers_in_stratum": 39
+      },
+      {
+        "half_width": 0.1,
+        "expected_agreement": 0.9,
+        "answers_in_stratum": 34
+      },
+      {
+        "half_width": 0.1,
+        "expected_agreement": 0.7,
+        "answers_in_stratum": 78
+      },
+      {
+        "half_width": 0.1,
+        "expected_agreement": 0.5,
+        "answers_in_stratum": 93
+      },
+      {
+        "half_width": 0.075,
+        "expected_agreement": 0.9,
+        "answers_in_stratum": 63
+      },
+      {
+        "half_width": 0.075,
+        "expected_agreement": 0.7,
+        "answers_in_stratum": 141
+      },
+      {
+        "half_width": 0.075,
+        "expected_agreement": 0.5,
+        "answers_in_stratum": 167
+      },
+      {
+        "half_width": 0.05,
+        "expected_agreement": 0.9,
+        "answers_in_stratum": 141
+      },
+      {
+        "half_width": 0.05,
+        "expected_agreement": 0.7,
+        "answers_in_stratum": 320
+      },
+      {
+        "half_width": 0.05,
+        "expected_agreement": 0.5,
+        "answers_in_stratum": 381
+      }
+    ],
+    "random_order_total_for_40_defective": 265,
+    "note": "answers_in_stratum = smallest n whose 95% Wilson interval has the given half-width at the expected agreement. Under random order, defective pages arrive at defective_share of answers."
+  }
+}

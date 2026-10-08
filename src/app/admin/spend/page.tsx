@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import {
-  getSpendReport, redactForViewer, requireSpendViewer,
-  type SpendData, type SpendNarrative, type Grade, type LanguageRow,
+  getLatestPaidVsGot, getSpendReport, redactForViewer, requireSpendViewer,
+  type SpendData, type SpendNarrative, type Grade, type LanguageRow, type PaidVsGotDoc,
 } from '@/lib/spend-report';
 import { CompletionHistogram, DailyChart, MonthlyChart, SkuTable } from './SpendCharts';
 import { daysBefore, gcpWindow, type GcpWindow } from '@/lib/spend-windows';
@@ -102,7 +102,7 @@ function KpiGroup({ title, tiles }: { title: string; tiles: { v: string; l: stri
 }
 
 const NAV = [
-  ['charts', 'Charts'], ['output', 'Output'], ['languages', 'By language'], ['vendors', 'By vendor'], ['sku', 'By SKU'],
+  ['paid-vs-got', 'Paid vs got'], ['charts', 'Charts'], ['output', 'Output'], ['languages', 'By language'], ['vendors', 'By vendor'], ['sku', 'By SKU'],
   ['unit-costs', 'Unit costs'], ['roadmap', 'Roadmap'], ['notes', 'Notes'],
 ] as const;
 
@@ -117,7 +117,7 @@ function Findings({ items }: { items?: string[] }) {
 
 export default async function SpendPage() {
   const viewer = await requireSpendViewer();
-  const doc = await getSpendReport();
+  const [doc, ledger] = await Promise.all([getSpendReport(), getLatestPaidVsGot()]);
 
   if (!doc) {
     return (
@@ -169,7 +169,7 @@ export default async function SpendPage() {
           </div>
         </div>
         <nav className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
-          {NAV.map(([id, label]) => <a key={id} href={`#${id}`} className="text-accent-rust hover:underline">{label}</a>)}
+          {NAV.filter(([id]) => id !== 'paid-vs-got' || ledger).map(([id, label]) => <a key={id} href={`#${id}`} className="text-accent-rust hover:underline">{label}</a>)}
         </nav>
       </header>
 
@@ -188,6 +188,8 @@ export default async function SpendPage() {
           { v: grand ? Math.round(gcpAll / grand * 100) + '%' : '·', l: 'Google Cloud share', n: `${fmt0.format(gcpAll)} of ${fmt0.format(grand)} to date` },
         ]} />
       </div>
+
+      {ledger && <PaidVsGotSection doc={ledger} />}
 
       <div id="charts" className="grid gap-6 lg:grid-cols-2 scroll-mt-4">
         <Section title="Monthly, all vendors">
@@ -260,7 +262,7 @@ export default async function SpendPage() {
 
       {D.completion ? (
         <Section id="completion" title="How far along each book is"
-          intro="Books with at least one transcribed page. Each bar is one percentage point of a book's pages (for translation, of its translatable pages); the line is the same data smoothed. The 0% and 100% bars run off the top — their true counts are printed.">
+          intro="Books with at least one transcribed page. Each bar is one percentage point of a book's pages (for translation, of its translatable pages); the line is the same data smoothed. The 0% and 100% bars run off the top; their true counts are printed.">
           <div className="rounded border border-stone-200 bg-white p-3">
             <CompletionHistogram ocr={D.completion.ocr} translation={D.completion.translation}
               booksWithOcr={D.completion.books_with_ocr} nonEnglishWithOcr={D.completion.non_english_with_ocr} />
@@ -514,6 +516,42 @@ function LanguageSection({ rows, intro }: { rows: LanguageRow[]; intro?: string 
       <Table head={['Language', 'Books', 'Live', 'Done', '% done', 'Pages to transcribe', 'Pages to translate', 'Cost to finish, all', 'Live books only']}>
         {shown.map(r => row(r))}
         {row(total, true)}
+      </Table>
+    </Section>
+  );
+}
+
+const VERDICT_CLASS: Record<PaidVsGotDoc['verdict']['status'], string> = {
+  PASS: 'text-stone-700',
+  WARN: 'text-amber-700',
+  FAIL: 'text-red-700',
+};
+
+/** Yesterday's ledger from scripts/audit/paid-vs-got.mjs (#5499): one ops_reports row, one table. */
+function PaidVsGotSection({ doc }: { doc: PaidVsGotDoc }) {
+  const v = doc.verdict;
+  const c = doc.collection;
+  const intro = `Gemini spend on ${dayName(doc.day)} from collected usage rows (actual tokens), against pages written that day by page provenance. ` +
+    'Waste is pages paid more than once plus collected batches that wrote no page. Submit estimate is what the spend dial saw at submit.';
+  return (
+    <Section id="paid-vs-got" title={`Paid vs got, ${dayName(doc.day)}`} intro={intro}>
+      <p className={`text-sm ${VERDICT_CLASS[v.status] ?? ''}`}>
+        <b>{v.status}</b>
+        {[...v.fails, ...v.warns].length ? ` · ${[...v.fails, ...v.warns].join(' · ')}` : ''}
+        {c ? ` · ${int(c.open)} batches open (${int(c.at_gemini)} at Gemini), oldest ${c.oldest_h.toFixed(1)} h` : ''}
+      </p>
+      <Table head={['Lane', 'Paid', 'Of which batch', 'Submit estimate', 'Pages written', 'Per 1,000 pages', 'Waste']}>
+        {doc.headline.map(h => (
+          <tr key={h.lane}>
+            <td className={TD}>{h.lane}</td>
+            <td className={`${TD} text-right`}>{fmt2.format(h.paid_usd)}</td>
+            <td className={`${TD} text-right`}>{fmt2.format(h.batch_usd)}</td>
+            <td className={`${TD} text-right text-stone-500`}>{h.estimate_usd ? fmt2.format(h.estimate_usd) : '·'}</td>
+            <td className={`${TD} text-right`}>{h.pages_written == null ? '·' : int(h.pages_written)}</td>
+            <td className={`${TD} text-right`}>{h.per_1k_usd == null ? '·' : fmt2.format(h.per_1k_usd)}</td>
+            <td className={`${TD} text-right`}>{h.waste_usd ? `${fmt2.format(h.waste_usd)} (${h.waste_pct.toFixed(1)}%)` : '·'}</td>
+          </tr>
+        ))}
       </Table>
     </Section>
   );

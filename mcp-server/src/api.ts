@@ -114,14 +114,17 @@ export async function shareFindings(args: {
 }
 
 export async function checkDuplicate(args: {
-  title: string;
+  title?: string;
+  url?: string;
   author?: string;
   year?: string;
   language?: string;
   ia_id?: string;
   manifest?: string;
 }) {
-  const params = new URLSearchParams({ title: args.title });
+  const params = new URLSearchParams();
+  if (args.title) params.set("title", args.title);
+  if (args.url) params.set("url", args.url);
   if (args.author) params.set("author", args.author);
   if (args.year) params.set("year", args.year);
   if (args.language) params.set("language", args.language);
@@ -133,7 +136,10 @@ export async function checkDuplicate(args: {
   return {
     isDuplicate: result.isDuplicate,
     confidence: result.confidence,
+    verdict: result.verdict,
     suggestion: result.suggestion,
+    held_not_public: result.held_not_public,
+    limits: result.limits,
     matches: (result.matches as Array<Record<string, unknown>>)?.map((m) => ({
       book_id: m.book_id,
       title: m.title,
@@ -142,6 +148,7 @@ export async function checkDuplicate(args: {
       language: m.language,
       year: m.year,
       match_type: m.match_type,
+      reason: m.reason,
       confidence: m.confidence,
       similarity: m.similarity,
       url: m.url,
@@ -489,7 +496,7 @@ const QUOTE_TIP =
   "reconstruct from memory, even if you know this text from other sources. " +
   "Present the citation_link to the user alongside the quote. Render as:\n" +
   "> [exact translation text, verbatim]\n" +
-  "> — [Author], p. [N]. [citation_link]";
+  "> — [Author], [citation.locator]. [citation_link]";
 
 // Three-layer apparatus for non-Latin scripts (#3828). Appended only when the
 // page actually carries a romanization, so a Latin-script quote is never told
@@ -499,7 +506,7 @@ const ROMANIZED_TIP =
   "> [original, verbatim]\n" +
   "> [romanized]\n" +
   "> [translation, verbatim]\n" +
-  "> — [Author], p. [N]. [citation_link]\n" +
+  "> — [Author], [citation.locator]. [citation_link]\n" +
   "The `romanized` field is AI-generated reading apparatus, not a transcription — " +
   "never present it as the text printed on the page, and quote from `original` or " +
   "`translation` when quoting the source itself.";
@@ -518,7 +525,7 @@ const OCR_ORIGINAL_TIP =
   "verbatim text is in `original`. Copy it exactly and attribute it as the source's own words — " +
   "never call it a translation. Render as:\n" +
   "> [exact original text, verbatim]\n" +
-  "> — [Author], p. [N]. [citation_link]\n" +
+  "> — [Author], [citation.locator]. [citation_link]\n" +
   "It is an uncorrected AI transcription, preserving period spelling, long-s (ſ) and printer marks: " +
   "keep them as they stand, or say that any modernization is yours.";
 

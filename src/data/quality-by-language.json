@@ -1,0 +1,653 @@
+{
+  "generated": "2026-10-01",
+  "sources": {
+    "ocr": "src/data/ocr-benchmark-evidence.json (factor \"language\")",
+    "translation": [
+      "scripts/eval/results/translation-corpus-audit-2026-09-30",
+      "scripts/eval/results/translation-corpus-audit-monthly-2026-09"
+    ]
+  },
+  "notes": {
+    "share": "Share of live translated pages per catalogue language at the audit draw (the audit’s post-stratification weights).",
+    "ocr": "Median character error rate against a published e-text, one page per book. \"current\" is gemini-3.1-flash-lite, which reads every new OCR batch since 2026-09-11; \"flash\" is gemini-3-flash-preview.",
+    "translation": "Share of one-page-per-book samples, pooled across monthly audits with each book counted once, the source-grounded judge (Claude Opus) rated 4 or 5 of 5, with a 95% Wilson interval. A model judgement, not accuracy.",
+    "grade": "Books behind the cell: under 30 exploratory, 30–49 directional, 50 or more decision-grade."
+  },
+  "translation_books": 327,
+  "rows": [
+    {
+      "language": "Latin",
+      "share_of_translated_pages": 40.3,
+      "ocr": {
+        "current": {
+          "engine": "gemini-3.1-flash-lite",
+          "books_run": 132,
+          "books_referenced": 92,
+          "pages_scored": 77,
+          "median_cer": 0.037,
+          "ci": [
+            0.014,
+            0.057
+          ],
+          "grade": "decision-grade"
+        },
+        "flash": {
+          "engine": "gemini-3-flash-preview",
+          "books_run": 132,
+          "books_referenced": 92,
+          "pages_scored": 83,
+          "median_cer": 0.01,
+          "ci": [
+            0.007,
+            0.043
+          ],
+          "grade": "decision-grade"
+        }
+      },
+      "translation": {
+        "books": 60,
+        "rated_4_or_5": 56,
+        "share": 0.933,
+        "ci": [
+          0.841,
+          0.974
+        ],
+        "any_major_defect": 0.1,
+        "grade": "decision-grade"
+      },
+      "readers": {
+        "answers": 0,
+        "status": "not yet run"
+      },
+      "caveat": null
+    },
+    {
+      "language": "English",
+      "share_of_translated_pages": 15.9,
+      "ocr": {
+        "current": {
+          "engine": "gemini-3.1-flash-lite",
+          "books_run": 67,
+          "books_referenced": 57,
+          "pages_scored": 57,
+          "median_cer": 0.053,
+          "ci": [
+            0.042,
+            0.06
+          ],
+          "grade": "decision-grade"
+        },
+        "flash": {
+          "engine": "gemini-3-flash-preview",
+          "books_run": 67,
+          "books_referenced": 57,
+          "pages_scored": 57,
+          "median_cer": 0.039,
+          "ci": [
+            0.028,
+            0.047
+          ],
+          "grade": "decision-grade"
+        }
+      },
+      "translation": {
+        "books": 36,
+        "rated_4_or_5": 33,
+        "share": 0.917,
+        "ci": [
+          0.782,
+          0.971
+        ],
+        "any_major_defect": 0.083,
+        "grade": "directional"
+      },
+      "readers": {
+        "answers": 0,
+        "status": "not yet run"
+      },
+      "caveat": null
+    },
+    {
+      "language": "German",
+      "share_of_translated_pages": 12,
+      "ocr": {
+        "current": {
+          "engine": "gemini-3.1-flash-lite",
+          "books_run": 57,
+          "books_referenced": 37,
+          "pages_scored": 35,
+          "median_cer": 0.006,
+          "ci": [
+            0.004,
+            0.008
+          ],
+          "grade": "directional"
+        },
+        "flash": {
+          "engine": "gemini-3-flash-preview",
+          "books_run": 57,
+          "books_referenced": 37,
+          "pages_scored": 34,
+          "median_cer": 0.002,
+          "ci": [
+            0,
+            0.004
+          ],
+          "grade": "directional"
+        }
+      },
+      "translation": {
+        "books": 36,
+        "rated_4_or_5": 35,
+        "share": 0.972,
+        "ci": [
+          0.858,
+          0.995
+        ],
+        "any_major_defect": 0.056,
+        "grade": "directional"
+      },
+      "readers": {
+        "answers": 0,
+        "status": "not yet run"
+      },
+      "caveat": null
+    },
+    {
+      "language": "Greek",
+      "share_of_translated_pages": 10,
+      "ocr": {
+        "current": {
+          "engine": "gemini-3.1-flash-lite",
+          "books_run": 250,
+          "books_referenced": 176,
+          "pages_scored": 172,
+          "median_cer": 0.11,
+          "ci": [
+            0.093,
+            0.138
+          ],
+          "grade": "decision-grade"
+        },
+        "flash": {
+          "engine": "gemini-3-flash-preview",
+          "books_run": 250,
+          "books_referenced": 176,
+          "pages_scored": 172,
+          "median_cer": 0.066,
+          "ci": [
+            0.058,
+            0.081
+          ],
+          "grade": "decision-grade"
+        }
+      },
+      "translation": {
+        "books": 36,
+        "rated_4_or_5": 27,
+        "share": 0.75,
+        "ci": [
+          0.589,
+          0.862
+        ],
+        "any_major_defect": 0.222,
+        "grade": "directional"
+      },
+      "readers": {
+        "answers": 0,
+        "status": "not yet run"
+      },
+      "caveat": {
+        "text": "Many pages catalogued Greek are Latin (#4884); the largest weighted gap in the library.",
+        "issue": 5575
+      }
+    },
+    {
+      "language": "French",
+      "share_of_translated_pages": 6.2,
+      "ocr": {
+        "current": {
+          "engine": "gemini-3.1-flash-lite",
+          "books_run": 10,
+          "books_referenced": 0,
+          "median_cer": null,
+          "ci": null,
+          "grade": "not run"
+        },
+        "flash": {
+          "engine": "gemini-3-flash-preview",
+          "books_run": 10,
+          "books_referenced": 0,
+          "median_cer": null,
+          "ci": null,
+          "grade": "not run"
+        }
+      },
+      "translation": {
+        "books": 24,
+        "rated_4_or_5": 23,
+        "share": 0.958,
+        "ci": [
+          0.798,
+          0.993
+        ],
+        "any_major_defect": 0.042,
+        "grade": "exploratory"
+      },
+      "readers": {
+        "answers": 0,
+        "status": "not yet run"
+      },
+      "caveat": {
+        "text": "No OCR reference yet.",
+        "issue": 5124
+      }
+    },
+    {
+      "language": "Italian",
+      "share_of_translated_pages": 3.4,
+      "ocr": {
+        "current": {
+          "engine": "gemini-3.1-flash-lite",
+          "books_run": 0,
+          "books_referenced": 0,
+          "median_cer": null,
+          "ci": null,
+          "grade": "not run"
+        },
+        "flash": {
+          "engine": "gemini-3-flash-preview",
+          "books_run": 0,
+          "books_referenced": 0,
+          "median_cer": null,
+          "ci": null,
+          "grade": "not run"
+        }
+      },
+      "translation": {
+        "books": 18,
+        "rated_4_or_5": 16,
+        "share": 0.889,
+        "ci": [
+          0.672,
+          0.969
+        ],
+        "any_major_defect": 0.111,
+        "grade": "exploratory"
+      },
+      "readers": {
+        "answers": 0,
+        "status": "not yet run"
+      },
+      "caveat": {
+        "text": "No OCR reference yet.",
+        "issue": 5573
+      }
+    },
+    {
+      "language": "Dutch",
+      "share_of_translated_pages": 2.8,
+      "ocr": {
+        "current": {
+          "engine": "gemini-3.1-flash-lite",
+          "books_run": 0,
+          "books_referenced": 0,
+          "median_cer": null,
+          "ci": null,
+          "grade": "not run"
+        },
+        "flash": {
+          "engine": "gemini-3-flash-preview",
+          "books_run": 0,
+          "books_referenced": 0,
+          "median_cer": null,
+          "ci": null,
+          "grade": "not run"
+        }
+      },
+      "translation": {
+        "books": 18,
+        "rated_4_or_5": 15,
+        "share": 0.833,
+        "ci": [
+          0.608,
+          0.942
+        ],
+        "any_major_defect": 0.167,
+        "grade": "exploratory"
+      },
+      "readers": {
+        "answers": 0,
+        "status": "not yet run"
+      },
+      "caveat": {
+        "text": "No OCR reference yet.",
+        "issue": 5573
+      }
+    },
+    {
+      "language": "Chinese",
+      "share_of_translated_pages": 2.5,
+      "ocr": {
+        "current": {
+          "engine": "gemini-3.1-flash-lite",
+          "books_run": 126,
+          "books_referenced": 98,
+          "pages_scored": 95,
+          "median_cer": 0.252,
+          "ci": [
+            0.187,
+            0.31
+          ],
+          "grade": "decision-grade"
+        },
+        "flash": {
+          "engine": "gemini-3-flash-preview",
+          "books_run": 126,
+          "books_referenced": 98,
+          "pages_scored": 95,
+          "median_cer": 0.193,
+          "ci": [
+            0.168,
+            0.237
+          ],
+          "grade": "decision-grade"
+        }
+      },
+      "translation": {
+        "books": 18,
+        "rated_4_or_5": 14,
+        "share": 0.778,
+        "ci": [
+          0.548,
+          0.91
+        ],
+        "any_major_defect": 0.167,
+        "grade": "exploratory"
+      },
+      "readers": {
+        "answers": 0,
+        "status": "not yet run"
+      },
+      "caveat": {
+        "text": "OCR error is measured against other editions (Kanripo, CBETA); variant character forms may account for much of it.",
+        "issue": 5574
+      }
+    },
+    {
+      "language": "Sanskrit",
+      "share_of_translated_pages": 2.1,
+      "ocr": {
+        "current": {
+          "engine": "gemini-3.1-flash-lite",
+          "books_run": 0,
+          "books_referenced": 0,
+          "median_cer": null,
+          "ci": null,
+          "grade": "not run"
+        },
+        "flash": {
+          "engine": "gemini-3-flash-preview",
+          "books_run": 0,
+          "books_referenced": 0,
+          "median_cer": null,
+          "ci": null,
+          "grade": "not run"
+        }
+      },
+      "translation": {
+        "books": 14,
+        "rated_4_or_5": 6,
+        "share": 0.429,
+        "ci": [
+          0.214,
+          0.674
+        ],
+        "any_major_defect": 0.5,
+        "grade": "exploratory"
+      },
+      "readers": {
+        "answers": 0,
+        "status": "not yet run"
+      },
+      "caveat": null
+    },
+    {
+      "language": "Hebrew",
+      "share_of_translated_pages": 1.3,
+      "ocr": {
+        "current": {
+          "engine": "gemini-3.1-flash-lite",
+          "books_run": 4,
+          "books_referenced": 4,
+          "pages_scored": 4,
+          "median_cer": 0.055,
+          "ci": null,
+          "grade": "exploratory"
+        },
+        "flash": {
+          "engine": "gemini-3-flash-preview",
+          "books_run": 4,
+          "books_referenced": 4,
+          "pages_scored": 4,
+          "median_cer": 0.029,
+          "ci": null,
+          "grade": "exploratory"
+        }
+      },
+      "translation": {
+        "books": 16,
+        "rated_4_or_5": 13,
+        "share": 0.813,
+        "ci": [
+          0.57,
+          0.934
+        ],
+        "any_major_defect": 0.125,
+        "grade": "exploratory"
+      },
+      "readers": {
+        "answers": 0,
+        "status": "not yet run"
+      },
+      "caveat": null
+    },
+    {
+      "language": "Arabic",
+      "share_of_translated_pages": 1.2,
+      "ocr": {
+        "current": {
+          "engine": "gemini-3.1-flash-lite",
+          "books_run": 0,
+          "books_referenced": 0,
+          "median_cer": null,
+          "ci": null,
+          "grade": "not run"
+        },
+        "flash": {
+          "engine": "gemini-3-flash-preview",
+          "books_run": 0,
+          "books_referenced": 0,
+          "median_cer": null,
+          "ci": null,
+          "grade": "not run"
+        }
+      },
+      "translation": {
+        "books": 16,
+        "rated_4_or_5": 12,
+        "share": 0.75,
+        "ci": [
+          0.505,
+          0.898
+        ],
+        "any_major_defect": 0.063,
+        "grade": "exploratory"
+      },
+      "readers": {
+        "answers": 0,
+        "status": "not yet run"
+      },
+      "caveat": {
+        "text": "Catalogue label: one hand-read “Arabic” page was German."
+      }
+    },
+    {
+      "language": "Korean",
+      "share_of_translated_pages": 1.2,
+      "ocr": {
+        "current": {
+          "engine": "gemini-3.1-flash-lite",
+          "books_run": 0,
+          "books_referenced": 0,
+          "median_cer": null,
+          "ci": null,
+          "grade": "not run"
+        },
+        "flash": {
+          "engine": "gemini-3-flash-preview",
+          "books_run": 0,
+          "books_referenced": 0,
+          "median_cer": null,
+          "ci": null,
+          "grade": "not run"
+        }
+      },
+      "translation": {
+        "books": 8,
+        "rated_4_or_5": 5,
+        "share": 0.625,
+        "ci": [
+          0.306,
+          0.863
+        ],
+        "any_major_defect": 0.25,
+        "grade": "exploratory"
+      },
+      "readers": {
+        "answers": 0,
+        "status": "not yet run"
+      },
+      "caveat": {
+        "text": "Catalogue label: one hand-read “Korean” page was Classical Chinese."
+      }
+    },
+    {
+      "language": "Spanish",
+      "share_of_translated_pages": 0.5,
+      "ocr": {
+        "current": {
+          "engine": "gemini-3.1-flash-lite",
+          "books_run": 0,
+          "books_referenced": 0,
+          "median_cer": null,
+          "ci": null,
+          "grade": "not run"
+        },
+        "flash": {
+          "engine": "gemini-3-flash-preview",
+          "books_run": 0,
+          "books_referenced": 0,
+          "median_cer": null,
+          "ci": null,
+          "grade": "not run"
+        }
+      },
+      "translation": {
+        "books": 7,
+        "rated_4_or_5": 7,
+        "share": 1,
+        "ci": [
+          0.646,
+          1
+        ],
+        "any_major_defect": 0,
+        "grade": "exploratory"
+      },
+      "readers": {
+        "answers": 0,
+        "status": "not yet run"
+      },
+      "caveat": {
+        "text": "No OCR reference yet.",
+        "issue": 5573
+      }
+    },
+    {
+      "language": "Japanese",
+      "share_of_translated_pages": 0.4,
+      "ocr": {
+        "current": {
+          "engine": "gemini-3.1-flash-lite",
+          "books_run": 155,
+          "books_referenced": 0,
+          "median_cer": null,
+          "ci": null,
+          "grade": "not run"
+        },
+        "flash": {
+          "engine": "gemini-3-flash-preview",
+          "books_run": 155,
+          "books_referenced": 0,
+          "median_cer": null,
+          "ci": null,
+          "grade": "not run"
+        }
+      },
+      "translation": {
+        "books": 7,
+        "rated_4_or_5": 4,
+        "share": 0.571,
+        "ci": [
+          0.25,
+          0.842
+        ],
+        "any_major_defect": 0.429,
+        "grade": "exploratory"
+      },
+      "readers": {
+        "answers": 0,
+        "status": "not yet run"
+      },
+      "caveat": null
+    },
+    {
+      "language": "Tibetan",
+      "share_of_translated_pages": 0.3,
+      "ocr": {
+        "current": {
+          "engine": "gemini-3.1-flash-lite",
+          "books_run": 0,
+          "books_referenced": 0,
+          "median_cer": null,
+          "ci": null,
+          "grade": "not run"
+        },
+        "flash": {
+          "engine": "gemini-3-flash-preview",
+          "books_run": 0,
+          "books_referenced": 0,
+          "median_cer": null,
+          "ci": null,
+          "grade": "not run"
+        }
+      },
+      "translation": {
+        "books": 13,
+        "rated_4_or_5": 8,
+        "share": 0.615,
+        "ci": [
+          0.355,
+          0.823
+        ],
+        "any_major_defect": 0.231,
+        "grade": "exploratory"
+      },
+      "readers": {
+        "answers": 0,
+        "status": "not yet run"
+      },
+      "caveat": null
+    }
+  ]
+}

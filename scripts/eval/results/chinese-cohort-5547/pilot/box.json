@@ -1,0 +1,12 @@
+{
+ "host": "sl-zh-paddle-5547",
+ "gpu": "NVIDIA L4",
+ "workers": 2,
+ "paddle_version": "3.2.1",
+ "paddleocr_version": "3.7.0",
+ "paddlex_version": "3.7.2",
+ "vl_model": "PaddleOCRVL() default pipeline",
+ "pages_out": 3422,
+ "infer_secs": 10810,
+ "wall_secs_per_page": 3.16
+}

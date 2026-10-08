@@ -1,0 +1,625 @@
+{
+ "at": "2026-10-03T10:59:18.535Z",
+ "arms": [
+  13,
+  16
+ ],
+ "model": "gemini-3.1-flash-lite",
+ "n_pages": 319,
+ "dropped": 1,
+ "verified_rate": {
+  "a": {
+   "rate": 0.8803418803418803,
+   "ci": [
+    0.7913043478260869,
+    0.9574468085106383
+   ],
+   "n": 319,
+   "denom": 117
+  },
+  "b": {
+   "rate": 0.912621359223301,
+   "ci": [
+    0.828996282527881,
+    0.975609756097561
+   ],
+   "n": 319,
+   "denom": 309
+  },
+  "paired_n": 25,
+  "paired_delta": {
+   "delta": 0.0071428571428572285,
+   "ci": [
+    -0.1233333333333334,
+    0.13714285714285723
+   ],
+   "decisive": false
+  },
+  "better": 3,
+  "worse": 4,
+  "sign_p": 0.9999999999999998
+ },
+ "note_emission": {
+  "a": 0.3667711598746082,
+  "b": 0.9686520376175548,
+  "relative": 1.6410256410256407,
+  "delta": {
+   "delta": 0.6018808777429466,
+   "ci": [
+    0.21316614420062696,
+    1.0564263322884013
+   ],
+   "decisive": true
+  }
+ },
+ "gates": [
+  {
+   "label": "invented tags / page",
+   "a": 0.01567398119122257,
+   "b": 0.012539184952978056,
+   "delta": -0.003134796238244513,
+   "relative": -0.19999999999999996,
+   "ci": [
+    -0.04075235109717868,
+    0.034482758620689655
+   ],
+   "decisive": false,
+   "floor": 0,
+   "regressed": false
+  },
+  {
+   "label": "housekeeping tags / page",
+   "a": 0.27586206896551724,
+   "b": 0.03134796238244514,
+   "delta": -0.2445141065830721,
+   "relative": -0.8863636363636364,
+   "ci": [
+    -0.36363636363636365,
+    -0.13166144200626959
+   ],
+   "decisive": true,
+   "floor": 0,
+   "regressed": false
+  },
+  {
+   "label": "glossary block (0/1)",
+   "a": 0,
+   "b": 0,
+   "delta": 0,
+   "relative": null,
+   "ci": [
+    0,
+    0
+   ],
+   "decisive": false,
+   "floor": 0,
+   "regressed": false
+  },
+  {
+   "label": "em-dashes / page",
+   "a": 0.3981191222570533,
+   "b": 0.6050156739811913,
+   "delta": 0.20689655172413796,
+   "relative": 0.5196850393700788,
+   "ci": [
+    0.00626959247648895,
+    0.41692789968652033
+   ],
+   "decisive": true,
+   "floor": 0,
+   "regressed": true
+  },
+  {
+   "label": "body chars / page",
+   "a": 2717.8401253918496,
+   "b": 2093.0595611285266,
+   "delta": -624.780564263323,
+   "relative": -0.22988127904441916,
+   "ci": [
+    -1643.984326018809,
+    119.55172413793093
+   ],
+   "decisive": false,
+   "floor": 0.1,
+   "regressed": false
+  },
+  {
+   "label": "inline terms / page",
+   "a": 4.047021943573668,
+   "b": 4.128526645768025,
+   "delta": 0.08150470219435668,
+   "relative": 0.020139426800929342,
+   "ci": [
+    -1.4827586206896548,
+    1.5329153605015673
+   ],
+   "decisive": false,
+   "floor": 0.2,
+   "regressed": false
+  }
+ ],
+ "descriptive": {
+  "terms_total": {
+   "a": 2.35423197492163,
+   "b": 2.5673981191222572
+  },
+  "keywords": {
+   "a": 6.921630094043887,
+   "b": 7.006269592476489
+  }
+ },
+ "body_relative_all_pages": -0.22988127904441916,
+ "body_relative": -0.13868465107627442,
+ "loops": {
+  "a": 1,
+  "b": 0,
+  "normal_pages": 318,
+  "of": 319
+ },
+ "interp_notes": {
+  "a": 1.244514106583072,
+  "b": 0.8871473354231975,
+  "relative": -0.2871536523929471,
+  "paired": {
+   "delta": -0.3573667711598746,
+   "ci": [
+    -0.6112852664576802,
+    -0.12539184952978055
+   ],
+   "decisive": true,
+   "n": 319
+  }
+ },
+ "by_stratum": [
+  {
+   "stratum": "latin-print",
+   "n": 40,
+   "a": {
+    "rate": 1,
+    "ci": [
+     1,
+     1
+    ],
+    "n": 40,
+    "denom": 27
+   },
+   "b": {
+    "rate": 0.8260869565217391,
+    "ci": [
+     0.5294117647058824,
+     1
+    ],
+    "n": 40,
+    "denom": 23
+   },
+   "verified_delta": {
+    "delta": -0.17391304347826086,
+    "ci": [
+     -0.47058823529411764,
+     0
+    ],
+    "decisive": false,
+    "n": 40
+   },
+   "emit_a": 0.675,
+   "emit_b": 0.575,
+   "emit_delta": {
+    "delta": -0.1,
+    "ci": [
+     -0.825,
+     0.5
+    ],
+    "decisive": false,
+    "n": 40
+   },
+   "interp_a": 0.875,
+   "interp_b": 0.65,
+   "interp_delta": {
+    "delta": -0.225,
+    "ci": [
+     -0.475,
+     0.05
+    ],
+    "decisive": false,
+    "n": 40
+   },
+   "loops_a": 0,
+   "loops_b": 0
+  },
+  {
+   "stratum": "german-print",
+   "n": 40,
+   "a": {
+    "rate": 1,
+    "ci": [
+     1,
+     1
+    ],
+    "n": 40,
+    "denom": 14
+   },
+   "b": {
+    "rate": 0.9615384615384616,
+    "ci": [
+     0.9354838709677419,
+     1
+    ],
+    "n": 40,
+    "denom": 26
+   },
+   "verified_delta": {
+    "delta": -0.038461538461538436,
+    "ci": [
+     -0.06451612903225812,
+     0
+    ],
+    "decisive": false,
+    "n": 40
+   },
+   "emit_a": 0.35,
+   "emit_b": 0.65,
+   "emit_delta": {
+    "delta": 0.3,
+    "ci": [
+     -0.3,
+     1.125
+    ],
+    "decisive": false,
+    "n": 40
+   },
+   "interp_a": 1.4,
+   "interp_b": 0.75,
+   "interp_delta": {
+    "delta": -0.65,
+    "ci": [
+     -1.65,
+     0.025
+    ],
+    "decisive": false,
+    "n": 40
+   },
+   "loops_a": 0,
+   "loops_b": 0
+  },
+  {
+   "stratum": "greek-print",
+   "n": 39,
+   "a": {
+    "rate": 1,
+    "ci": [
+     1,
+     1
+    ],
+    "n": 39,
+    "denom": 11
+   },
+   "b": {
+    "rate": 0.775,
+    "ci": [
+     0.581081081081081,
+     0.9818181818181818
+    ],
+    "n": 39,
+    "denom": 80
+   },
+   "verified_delta": {
+    "delta": -0.22499999999999998,
+    "ci": [
+     -0.419047619047619,
+     -0.018181818181818188
+    ],
+    "decisive": true,
+    "n": 39
+   },
+   "emit_a": 0.28205128205128205,
+   "emit_b": 2.051282051282051,
+   "emit_delta": {
+    "delta": 1.7692307692307692,
+    "ci": [
+     0.3076923076923077,
+     3.769230769230769
+    ],
+    "decisive": true,
+    "n": 39
+   },
+   "interp_a": 1.0512820512820513,
+   "interp_b": 0.6666666666666666,
+   "interp_delta": {
+    "delta": -0.38461538461538464,
+    "ci": [
+     -0.9487179487179487,
+     0.07692307692307693
+    ],
+    "decisive": false,
+    "n": 39
+   },
+   "loops_a": 0,
+   "loops_b": 0
+  },
+  {
+   "stratum": "hebrew",
+   "n": 40,
+   "a": {
+    "rate": 0.7777777777777778,
+    "ci": [
+     0.4666666666666667,
+     1
+    ],
+    "n": 40,
+    "denom": 18
+   },
+   "b": {
+    "rate": 0.98989898989899,
+    "ci": [
+     0.9393939393939394,
+     1
+    ],
+    "n": 40,
+    "denom": 99
+   },
+   "verified_delta": {
+    "delta": 0.21212121212121215,
+    "ci": [
+     -0.021739130434782594,
+     0.5275974025974026
+    ],
+    "decisive": false,
+    "n": 40
+   },
+   "emit_a": 0.45,
+   "emit_b": 2.475,
+   "emit_delta": {
+    "delta": 2.025,
+    "ci": [
+     0.225,
+     4.525
+    ],
+    "decisive": true,
+    "n": 40
+   },
+   "interp_a": 2.425,
+   "interp_b": 1.95,
+   "interp_delta": {
+    "delta": -0.475,
+    "ci": [
+     -1.45,
+     0.4
+    ],
+    "decisive": false,
+    "n": 40
+   },
+   "loops_a": 1,
+   "loops_b": 0
+  },
+  {
+   "stratum": "arabic",
+   "n": 40,
+   "a": {
+    "rate": 0.7142857142857143,
+    "ci": [
+     0.4166666666666667,
+     1
+    ],
+    "n": 40,
+    "denom": 21
+   },
+   "b": {
+    "rate": 1,
+    "ci": [
+     1,
+     1
+    ],
+    "n": 40,
+    "denom": 15
+   },
+   "verified_delta": {
+    "delta": 0.2857142857142857,
+    "ci": [
+     0,
+     0.5833333333333333
+    ],
+    "decisive": false,
+    "n": 40
+   },
+   "emit_a": 0.525,
+   "emit_b": 0.375,
+   "emit_delta": {
+    "delta": -0.15,
+    "ci": [
+     -0.775,
+     0.3
+    ],
+    "decisive": false,
+    "n": 40
+   },
+   "interp_a": 1.825,
+   "interp_b": 1.175,
+   "interp_delta": {
+    "delta": -0.65,
+    "ci": [
+     -1.975,
+     0.3
+    ],
+    "decisive": false,
+    "n": 40
+   },
+   "loops_a": 0,
+   "loops_b": 0
+  },
+  {
+   "stratum": "cjk-print",
+   "n": 40,
+   "a": {
+    "rate": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "n": 40,
+    "denom": 2
+   },
+   "b": {
+    "rate": 0.9302325581395349,
+    "ci": [
+     0.875,
+     1
+    ],
+    "n": 40,
+    "denom": 43
+   },
+   "verified_delta": {
+    "delta": 0.9302325581395349,
+    "ci": [
+     0.875,
+     1
+    ],
+    "decisive": true,
+    "n": 40
+   },
+   "emit_a": 0.05,
+   "emit_b": 1.075,
+   "emit_delta": {
+    "delta": 1.025,
+    "ci": [
+     0.2,
+     2.2
+    ],
+    "decisive": true,
+    "n": 40
+   },
+   "interp_a": 1.05,
+   "interp_b": 0.975,
+   "interp_delta": {
+    "delta": -0.075,
+    "ci": [
+     -0.6,
+     0.5
+    ],
+    "decisive": false,
+    "n": 40
+   },
+   "loops_a": 0,
+   "loops_b": 0
+  },
+  {
+   "stratum": "bph-mss",
+   "n": 40,
+   "a": {
+    "rate": 1,
+    "ci": [
+     1,
+     1
+    ],
+    "n": 40,
+    "denom": 7
+   },
+   "b": {
+    "rate": 1,
+    "ci": [
+     1,
+     1
+    ],
+    "n": 40,
+    "denom": 15
+   },
+   "verified_delta": {
+    "delta": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "decisive": false,
+    "n": 40
+   },
+   "emit_a": 0.175,
+   "emit_b": 0.375,
+   "emit_delta": {
+    "delta": 0.2,
+    "ci": [
+     -0.075,
+     0.575
+    ],
+    "decisive": false,
+    "n": 40
+   },
+   "interp_a": 0.5,
+   "interp_b": 0.375,
+   "interp_delta": {
+    "delta": -0.125,
+    "ci": [
+     -0.35,
+     0.075
+    ],
+    "decisive": false,
+    "n": 40
+   },
+   "loops_a": 0,
+   "loops_b": 0
+  },
+  {
+   "stratum": "tibetan-mss",
+   "n": 40,
+   "a": {
+    "rate": 0.8823529411764706,
+    "ci": [
+     0.6363636363636364,
+     1
+    ],
+    "n": 40,
+    "denom": 17
+   },
+   "b": {
+    "rate": 1,
+    "ci": [
+     1,
+     1
+    ],
+    "n": 40,
+    "denom": 8
+   },
+   "verified_delta": {
+    "delta": 0.11764705882352944,
+    "ci": [
+     0,
+     0.36363636363636365
+    ],
+    "decisive": false,
+    "n": 40
+   },
+   "emit_a": 0.425,
+   "emit_b": 0.2,
+   "emit_delta": {
+    "delta": -0.225,
+    "ci": [
+     -0.6,
+     0.125
+    ],
+    "decisive": false,
+    "n": 40
+   },
+   "interp_a": 0.825,
+   "interp_b": 0.55,
+   "interp_delta": {
+    "delta": -0.275,
+    "ci": [
+     -0.575,
+     0.025
+    ],
+    "decisive": false,
+    "n": 40
+   },
+   "loops_a": 0,
+   "loops_b": 0
+  }
+ ],
+ "criteria": {
+  "paired CI on verified-rate excludes zero and is positive": false,
+  "verified-rate gain >= 3pp": true,
+  "note emission not down more than 20%": true,
+  "body length not down more than 10% (pages where neither arm looped)": false,
+  "interpretive notes not down more than 15%": false,
+  "no regression gate fired": false
+ },
+ "recommendation": "DO NOT FLIP (not established)",
+ "note": "The blind Claude regression judge (--judge-packet) is a separate gate and is NOT included above; both must pass."
+}

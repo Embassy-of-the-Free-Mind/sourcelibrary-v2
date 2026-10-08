@@ -13,9 +13,9 @@ import { useMemo, useState, type ReactNode } from 'react';
 
 import { SERIES, fmtFull, fmtK, fmtUsd } from './dashboard-format';
 
-export type Unit = 'count' | 'usd' | 'usd2';
-const axisFmt = (u: Unit) => (u === 'count' ? fmtK : fmtUsd);
-const valueFmt = (u: Unit) => (u === 'count' ? fmtFull : u === 'usd' ? (n: number) => '$' + Math.round(n).toLocaleString('en-US') : (n: number) => '$' + n.toFixed(2));
+export type Unit = 'count' | 'usd' | 'usd2' | 'pct';
+const axisFmt = (u: Unit) => (u === 'count' ? fmtK : u === 'pct' ? (n: number | null) => (n == null ? '–' : Math.round(n) + '%') : fmtUsd);
+const valueFmt = (u: Unit) => (u === 'count' ? fmtFull : u === 'pct' ? (n: number) => n.toFixed(1) + '%' : u === 'usd' ? (n: number) => '$' + Math.round(n).toLocaleString('en-US') : (n: number) => '$' + n.toFixed(2));
 export { SERIES, RAMP } from './dashboard-format';
 
 function niceMax(v: number) {
@@ -98,7 +98,7 @@ export function LineChart({ labels, series, unit = 'count', height = H, log = fa
       {hi != null && (
         <div className="pointer-events-none absolute top-1 rounded border border-stone-200 bg-white px-2.5 py-1.5 text-xs text-stone-800 shadow-sm" style={{ left: `${Math.min(80, Math.max(2, (x(hi) / W) * 100))}%`, transform: x(hi) > W * 0.7 ? 'translateX(-105%)' : 'none' }}>
           <div className="font-medium">{labels[hi]}</div>
-          {series.map((s, si) => <div key={si} className="flex items-center gap-1.5"><i className="inline-block w-2 h-2 rounded-sm" style={{ background: s.color ?? SERIES[si] }} />{s.name}: {s.data[hi] == null ? '—' : vf(s.data[hi] as number)}</div>)}
+          {series.map((s, si) => <div key={si} className="flex items-center gap-1.5"><i className="inline-block w-2 h-2 rounded-sm" style={{ background: s.color ?? SERIES[si] }} />{s.name}: {s.data[hi] == null ? '–' : vf(s.data[hi] as number)}</div>)}
         </div>
       )}
     </div>
@@ -108,16 +108,18 @@ export function LineChart({ labels, series, unit = 'count', height = H, log = fa
 export interface BarSeries { name: string; data: number[]; color?: string }
 
 /** Vertical bars; several series stack. Hover shows the column's values. */
-export function Bars({ labels, series, unit = 'count', height = H, ariaLabel, w: W = 560 }: {
+export function Bars({ labels, series, unit = 'count', height = H, ariaLabel, w: W = 560, grouped = false }: {
   labels: string[]; series: BarSeries[]; unit?: Unit; height?: number; ariaLabel: string; w?: number;
+  /** Side-by-side bars per label (compare series) instead of a stack (sum series). */
+  grouped?: boolean;
 }) {
   const [hi, setHi] = useState<number | null>(null);
   const format = axisFmt(unit);
   const n = labels.length;
   const iw = W - PAD.l - PAD.r, ih = height - PAD.t - PAD.b;
   const totals = labels.map((_, i) => series.reduce((a, s) => a + (s.data[i] || 0), 0));
-  const max = niceMax(Math.max(1, ...totals));
-  const slot = iw / Math.max(1, n), bw = Math.min(24, slot * 0.7);
+  const max = unit === 'pct' ? 100 : niceMax(Math.max(1, ...(grouped ? series.flatMap(s => s.data) : totals)));
+  const slot = iw / Math.max(1, n), bw = Math.min(24, (slot * 0.7) / (grouped ? series.length : 1));
   const vf = valueFmt(unit);
   const xTicks = useMemo(() => { const step = Math.max(1, Math.ceil(n / Math.max(4, Math.floor(W / 90)))); return labels.map((l, i) => (i % step === 0 ? i : -1)).filter(i => i >= 0); }, [labels, n, W]);
   return (
@@ -137,7 +139,12 @@ export function Bars({ labels, series, unit = 'count', height = H, ariaLabel, w:
               <rect x={PAD.l + slot * i} y={PAD.t} width={slot} height={ih} fill="transparent" />
               {series.map((s, si) => {
                 const v = s.data[i] || 0; if (!v) return null;
-                const h = (ih * v) / max; acc += v;
+                const h = (ih * v) / max;
+                if (grouped) {
+                  const gx = cx - (bw * series.length + 2 * (series.length - 1)) / 2 + si * (bw + 2);
+                  return <rect key={si} x={gx} y={PAD.t + ih - h} width={bw} height={h} fill={s.color ?? SERIES[si]} rx={3} />;
+                }
+                acc += v;
                 const top = PAD.t + ih - (ih * acc) / max;
                 return <rect key={si} x={cx - bw / 2} y={top + (si > 0 ? 1 : 0)} width={bw} height={Math.max(0, h - (si > 0 ? 1 : 0))} fill={s.color ?? SERIES[si]} rx={si === series.length - 1 ? 3 : 0} />;
               })}
@@ -150,7 +157,7 @@ export function Bars({ labels, series, unit = 'count', height = H, ariaLabel, w:
         <div className="pointer-events-none absolute top-1 rounded border border-stone-200 bg-white px-2.5 py-1.5 text-xs text-stone-800 shadow-sm" style={{ left: `${Math.min(80, Math.max(2, ((PAD.l + slot * hi + slot / 2) / W) * 100))}%`, transform: hi > n * 0.7 ? 'translateX(-105%)' : 'none' }}>
           <div className="font-medium">{labels[hi]}</div>
           {series.map((s, si) => <div key={si} className="flex items-center gap-1.5"><i className="inline-block w-2 h-2 rounded-sm" style={{ background: s.color ?? SERIES[si] }} />{s.name}: {vf(s.data[hi] || 0)}</div>)}
-          {series.length > 1 && <div className="text-stone-500">Total {vf(totals[hi])}</div>}
+          {series.length > 1 && !grouped && <div className="text-stone-500">Total {vf(totals[hi])}</div>}
         </div>
       )}
     </div>
@@ -158,8 +165,8 @@ export function Bars({ labels, series, unit = 'count', height = H, ariaLabel, w:
 }
 
 /** Horizontal bar list: one row per item, segments stack left to right; the number at the end is the row total. */
-export function HBars({ rows, colors = SERIES, labelWidth = 150, sub }: {
-  rows: { label: string; values: number[]; sub?: string; title?: string }[]; colors?: string[]; labelWidth?: number; sub?: boolean;
+export function HBars({ rows, colors = SERIES, labelWidth = 150, sub, suffix = '' }: {
+  rows: { label: string; values: number[]; sub?: string; title?: string }[]; colors?: string[]; labelWidth?: number; sub?: boolean; suffix?: string;
 }) {
   const max = Math.max(1, ...rows.map(r => r.values.reduce((a, b) => a + b, 0)));
   return (
@@ -171,7 +178,7 @@ export function HBars({ rows, colors = SERIES, labelWidth = 150, sub }: {
             <div className="min-w-0 truncate text-stone-800">{r.label}{sub && r.sub && <span className="block text-[11px] text-stone-500">{r.sub}</span>}</div>
             <div className="flex items-center gap-0.5 h-[18px] min-w-0">
               {r.values.map((v, i) => v > 0 && <div key={i} className="h-full" style={{ width: `${(82 * v) / max}%`, background: colors[i % colors.length], borderRadius: i === r.values.length - 1 || r.values.slice(i + 1).every(x => !x) ? '0 4px 4px 0' : 0 }} />)}
-              <span className="pl-1.5 font-mono text-xs text-stone-600 whitespace-nowrap">{fmtFull(tot)}</span>
+              <span className="pl-1.5 font-mono text-xs text-stone-600 whitespace-nowrap">{fmtFull(tot)}{suffix}</span>
             </div>
           </div>
         );

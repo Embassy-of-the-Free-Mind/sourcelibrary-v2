@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "book_id": "69ac7f0f20878c5c9ba524b5",
+    "title": "Resuscitatio, or, Bringing into Publick Light Severall Pieces",
+    "published": "1657",
+    "source": "EEBO-TCP A28378",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 8,
+    "skips": {},
+    "median_char_acc": 0.9794,
+    "median_char_acc_windowed": 0.9765,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-69ac7f0f20878c5c9ba524b5-p350",
+      "page": 350,
+      "overlap": 1,
+      "probe_words": 412,
+      "ref_chars": 2481,
+      "engine": "gemini-2.5-flash",
+      "aligned": true,
+      "guard_wer": 0.042,
+      "char_acc": 0.9758,
+      "char_acc_windowed": 0.9737
+    },
+    {
+      "slug": "ed-69ac7f0f20878c5c9ba524b5-p352",
+      "page": 352,
+      "overlap": 1,
+      "probe_words": 447,
+      "ref_chars": 2746,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.035,
+      "char_acc": 0.9794,
+      "char_acc_windowed": 0.9766
+    },
+    {
+      "slug": "ed-69ac7f0f20878c5c9ba524b5-p355",
+      "page": 355,
+      "overlap": 1,
+      "probe_words": 480,
+      "ref_chars": 2828,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.033,
+      "char_acc": 0.9749,
+      "char_acc_windowed": 0.973
+    },
+    {
+      "slug": "ed-69ac7f0f20878c5c9ba524b5-p358",
+      "page": 358,
+      "overlap": 1,
+      "probe_words": 489,
+      "ref_chars": 2747,
+      "engine": "gemini-2.5-flash",
+      "aligned": true,
+      "guard_wer": 0.06,
+      "char_acc": 0.9759,
+      "char_acc_windowed": 0.9717
+    },
+    {
+      "slug": "ed-69ac7f0f20878c5c9ba524b5-p366",
+      "page": 366,
+      "overlap": 1,
+      "probe_words": 465,
+      "ref_chars": 2733,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.03,
+      "char_acc": 0.982,
+      "char_acc_windowed": 0.9797
+    },
+    {
+      "slug": "ed-69ac7f0f20878c5c9ba524b5-p380",
+      "page": 380,
+      "overlap": 0.895,
+      "probe_words": 103,
+      "ref_chars": 604,
+      "engine": "gemini-2.5-flash",
+      "aligned": true,
+      "guard_wer": 0.063,
+      "char_acc": 0.9764,
+      "char_acc_windowed": 0.9657
+    },
+    {
+      "slug": "ed-69ac7f0f20878c5c9ba524b5-p388",
+      "page": 388,
+      "overlap": 1,
+      "probe_words": 447,
+      "ref_chars": 2789,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.042,
+      "char_acc": 0.9802,
+      "char_acc_windowed": 0.9765
+    },
+    {
+      "slug": "ed-69ac7f0f20878c5c9ba524b5-p415",
+      "page": 415,
+      "overlap": 0.942,
+      "probe_words": 163,
+      "ref_chars": 990,
+      "engine": "gemini-2.5-flash",
+      "aligned": true,
+      "guard_wer": 0.067,
+      "char_acc": 0.9882,
+      "char_acc_windowed": 0.9856
+    }
+  ]
+}

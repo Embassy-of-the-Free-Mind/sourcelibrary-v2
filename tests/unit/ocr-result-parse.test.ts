@@ -30,6 +30,7 @@ import {
   extractPageType,
   extractColumns,
   extractScriptType,
+  liftOcrTags,
   parseMultiPageOcr,
   parseDetectedImages,
 } from '@/lib/types/prompts/defaults';
@@ -41,6 +42,7 @@ import {
   extractPageType as extractPageTypeJs,
   extractColumns as extractColumnsJs,
   extractScriptType as extractScriptTypeJs,
+  liftOcrTags as liftOcrTagsJs,
   parseMultiPageOcr as parseMultiPageOcrJs,
   parseDetectedImages as parseDetectedImagesJs,
 } from '../../scripts/lib/ocr-result-parse.mjs';
@@ -171,6 +173,13 @@ describe('TS canonical and scripts JS twin agree — the rest', () => {
   it('extractScriptType', () => {
     for (const [name, text] of Object.entries(scriptFixtures)) {
       expect(extractScriptTypeJs(text), name).toBe(extractScriptType(text));
+    }
+  });
+
+  it('liftOcrTags', () => {
+    const all = { ...pageTypeFixtures, ...columnsFixtures, ...scriptFixtures };
+    for (const [name, text] of Object.entries(all)) {
+      expect(liftOcrTagsJs(text), name).toEqual(liftOcrTags(text));
     }
   });
 
@@ -399,5 +408,16 @@ describe('twin tolerates the nullish input scripts actually pass', () => {
     // read `ocr.data` off documents where it can be absent.
     expect(parseDetectedImagesJs(null)).toEqual([]);
     expect(parseDetectedImagesJs(undefined)).toEqual([]);
+  });
+});
+
+describe('liftOcrTags behaviour (#4195 item 4)', () => {
+  it('lifts script_type alongside page_type and columns — the field the Batch lanes dropped', () => {
+    const text = 'body\n<page-type>text</page-type>\n<columns>2</columns>\n<script>Handwritten</script>';
+    expect(liftOcrTags(text)).toEqual({ page_type: 'text', columns: 2, script_type: 'handwritten' });
+  });
+  it('omits every field that did not parse, so a spread never writes undefined or null', () => {
+    expect(liftOcrTags('plain text, no tags')).toEqual({});
+    expect(liftOcrTags('<columns>1</columns><script>cursive</script>')).toEqual({});
   });
 });

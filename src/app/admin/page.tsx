@@ -6,10 +6,11 @@ import { getSession } from '@/lib/auth-helpers';
 import { readFreshDashboardSnapshot } from '@/lib/dashboard-snapshot';
 import { getSpendReport, redactForViewer, resolveSpendViewer, type SpendData } from '@/lib/spend-report';
 import {
-  readHomepageStats, readLibraryDashboard, readMetricsHistory, readMetricsSnapshot,
+  RATES, readHomepageStats, readLibraryDashboard, readMetricsHistory, readMetricsSnapshot,
   type Ladder, type LibraryDashboard, type Rung,
 } from '@/lib/library-dashboard';
 import { Bars, HBars, Legend, LineChart, Panel, PipelineCumulative } from './DashboardCharts';
+import { Grid2, Section, Tiles } from './dashboard-layout';
 import { RAMP, SERIES, dayLabel, fmtFull, fmtK, fmtUsd, monthLabel } from './dashboard-format';
 
 /**
@@ -24,43 +25,11 @@ export const metadata: Metadata = { title: 'Dashboard', robots: { index: false, 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-const pct = (a: number, b: number) => (b ? `${((100 * a) / b).toFixed(1)}%` : '—');
+const pct = (a: number, b: number) => (b ? `${((100 * a) / b).toFixed(1)}%` : '–');
 const signed = (n: number) => `${n >= 0 ? '+' : '−'}${fmtK(Math.abs(n))}`;
 const ago = (ms: number) => ms < 3600e3 ? `${Math.max(1, Math.round(ms / 60e3))} min ago` : ms < 48 * 3600e3 ? `${Math.round(ms / 3600e3)} h ago` : `${Math.round(ms / 86400e3)} days ago`;
 const RUNG_NAME: Record<Rung, string> = { no_text: 'No text', transcribing: 'Transcribing', transcribed: 'Transcribed', translating: 'Translating', readable: 'Readable', complete: 'Complete' };
-const RATES = { ocr: [0.00106, 0.00138], tr: [0.00058, 0.00174] } as const; // September 2026 measured, per page (ops spend report)
 const usdRange = (lo: number, hi: number) => `${fmtUsd(lo)} – ${fmtUsd(hi)}`;
-
-function Section({ id, title, intro, link, children }: { id: string; title: string; intro?: ReactNode; link?: { href: string; label: string }; children: ReactNode }) {
-  return (
-    <section id={id} className="grid gap-3 content-start min-w-0 scroll-mt-16">
-      <div className="flex items-baseline justify-between gap-3 flex-wrap">
-        <h2 className="text-xl font-semibold text-stone-900">{title}</h2>
-        {link && <Link href={link.href} className="text-xs text-accent-rust hover:underline">{link.label} →</Link>}
-      </div>
-      {intro && <p className="text-sm text-stone-600 max-w-3xl leading-snug">{intro}</p>}
-      {children}
-    </section>
-  );
-}
-
-function Tiles({ tiles }: { tiles: { l: string; v: string; n?: string; up?: boolean }[] }) {
-  return (
-    <div className="grid gap-px rounded border border-stone-200 bg-stone-200 overflow-hidden" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))' }}>
-      {tiles.map(t => (
-        <div key={t.l} className="bg-white px-4 py-3 grid gap-0.5 content-start min-w-0">
-          <div className="text-xs text-stone-600">{t.l}</div>
-          <div className="text-2xl font-semibold text-stone-900 leading-tight">{t.v}</div>
-          {t.n && <div className={`text-[11px] font-mono ${t.up ? 'text-green-800' : 'text-stone-500'}`}>{t.n}</div>}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function Grid2({ children }: { children: ReactNode }) {
-  return <div className="grid gap-3 min-w-0" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 440px), 1fr))' }}>{children}</div>;
-}
 
 const NAV = [['glance', 'At a glance'], ['library', 'The library'], ['pipeline', 'Pipeline'], ['backlog', 'What’s left'], ['spend', 'Spend'], ['readers', 'Readers'], ['storage', 'Storage'], ['defs', 'Definitions']] as const;
 
@@ -133,10 +102,10 @@ export default async function AdminDashboard() {
             { l: 'Transcribed', v: pct(live.ocr, live.pages), n: lastDay && monthAgo && lastDay.ocr != null && monthAgo.ocr != null ? `${fmtK(live.ocr)} live pages · ${signed(lastDay.ocr - monthAgo.ocr)} in 30 days (all books)` : `${fmtK(live.ocr)} live pages` },
             { l: 'Translated', v: pct(live.translated, live.pages), n: lastDay && monthAgo && lastDay.translated != null && monthAgo.translated != null ? (lastDay.translated < monthAgo.translated ? `${fmtK(live.translated)} live pages · ${fmtK(monthAgo.translated - lastDay.translated)} withheld in 30 days` : `${fmtK(live.translated)} live pages · ${signed(lastDay.translated - monthAgo.translated)} in 30 days (all books)`) : `${fmtK(live.translated)} live pages` },
             { l: 'First translations', v: fmtFull(home?.firstTranslationCount ?? snap?.data.canon.first_translations ?? 0), n: home?.firstTranslatedWorksProvisional ? `${fmtFull(home.firstTranslatedWorksProvisional)} provisional` : undefined },
-            { l: 'Languages', v: String(home?.languageCount ?? '—'), n: home ? `${fmtFull(home.authorCount)} authors` : undefined },
+            { l: 'Languages', v: String(home?.languageCount ?? '–'), n: home ? `${fmtFull(home.authorCount)} authors` : undefined },
             { l: 'Collections', v: fmtFull(L.totals.visibleCollections), n: home ? `${fmtK(home.illustrationCount)} illustrations · ${fmtK(home.artworkCount)} artworks` : undefined },
-            { l: 'Readers, 30 days', v: metrics ? fmtK(metrics.engagement.mau) : '—', n: metrics ? `${fmtFull(metrics.engagement.avgDau)} a day on average` : undefined },
-            { l: 'Accounts', v: metrics ? fmtFull(metrics.users.total) : '—', n: metrics ? `${signed(metrics.users.new7)} in 7 days` : undefined, up: !!metrics && metrics.users.new7 > 0 },
+            { l: 'Readers, 30 days', v: metrics ? fmtK(metrics.engagement.mau) : '–', n: metrics ? `${fmtFull(metrics.engagement.avgDau)} a day on average` : undefined },
+            { l: 'Accounts', v: metrics ? fmtFull(metrics.users.total) : '–', n: metrics ? `${signed(metrics.users.new7)} in 7 days` : undefined, up: !!metrics && metrics.users.new7 > 0 },
             { l: latestSpendMonth ? `Spend, ${monthLabel(latestSpendMonth.month)}` : 'Spend', v: latestSpendMonth ? fmtUsd(monthTotal(latestSpendMonth)) : 'allow-listed', n: latestSpendMonth ? 'vendors, before people' : 'see /admin/spend' },
             { l: 'Open feedback', v: fmtFull(L.totals.feedbackOpen), n: metrics?.social ? `${metrics.social.feedbackUnread} unread` : undefined },
           ]} />
@@ -165,6 +134,7 @@ export default async function AdminDashboard() {
             <Panel title="Books by century" note={`By the numeric publication year. ${fmtFull(L.yearMissing)} live books have no year (most of the Chinese canon and many manuscripts) and are not on this chart.`}>
               <Bars labels={L.byCentury.map(c => c.label)} series={[{ name: 'Books', data: L.byCentury.map(c => c.books) }]} height={220} ariaLabel="Live books by century" />
             </Panel>
+            {L.completion && <Completion L={L} />}
             <Panel title="Where the scans come from" note={`Books with a named contributing library. ${fmtFull(L.noLibrary)} live books do not name one yet; /libraries is where institutions are credited.`}>
               <HBars rows={L.libraries.map(r => ({ label: r.name, values: [r.books] }))} labelWidth={200} />
             </Panel>
@@ -172,7 +142,7 @@ export default async function AdminDashboard() {
               <div className="overflow-x-auto"><table className="text-sm min-w-full">
                 <thead><tr className="text-[11px] uppercase tracking-wider text-stone-500"><th className="text-left py-1 pr-2 font-medium">Collection</th><th className="text-right py-1 px-2 font-medium">Texts</th><th className="text-right py-1 px-2 font-medium">Readable</th><th className="text-right py-1 pl-2 font-medium">Artworks</th></tr></thead>
                 <tbody>{L.collections.map(c => (
-                  <tr key={c.slug} className="border-t border-stone-100"><td className="py-1 pr-2"><Link href={`/collections/${c.slug}`} className="hover:underline">{c.name}</Link></td><td className="text-right py-1 px-2 tabular-nums">{fmtFull(c.texts)}</td><td className="text-right py-1 px-2 tabular-nums">{fmtFull(c.readable)}</td><td className="text-right py-1 pl-2 tabular-nums">{c.art ? fmtFull(c.art) : '—'}</td></tr>
+                  <tr key={c.slug} className="border-t border-stone-100"><td className="py-1 pr-2"><Link href={`/collections/${c.slug}`} className="hover:underline">{c.name}</Link></td><td className="text-right py-1 px-2 tabular-nums">{fmtFull(c.texts)}</td><td className="text-right py-1 px-2 tabular-nums">{fmtFull(c.readable)}</td><td className="text-right py-1 pl-2 tabular-nums">{c.art ? fmtFull(c.art) : '–'}</td></tr>
                 ))}</tbody>
               </table></div>
             </Panel>
@@ -296,7 +266,7 @@ export default async function AdminDashboard() {
               { l: 'Images on R2', v: `${(s.r2_bytes / 1e12).toFixed(1)} TB`, n: `${fmtK(s.r2_objects)} objects` },
               { l: 'Text held', v: `${(s.text_bytes_est / 1e9).toFixed(0)} GB`, n: `OCR and translation, ${fmtK(s.pages_total)} page records` },
               { l: 'Held books', v: fmtFull(L.totals.held), n: 'kept out of every lane on purpose' },
-              { l: 'Enriched', v: snap ? fmtFull(snap.data.enrichment.with_summary) : '—', n: snap ? `summaries · ${fmtFull(snap.data.enrichment.with_index)} indexes · ${fmtFull(snap.data.enrichment.with_images)} with images` : undefined },
+              { l: 'Enriched', v: snap ? fmtFull(snap.data.enrichment.with_summary) : '–', n: snap ? `summaries · ${fmtFull(snap.data.enrichment.with_index)} indexes · ${fmtFull(snap.data.enrichment.with_images)} with images` : undefined },
             ]} />
           ) : null; })()}
           <Grid2>
@@ -324,6 +294,61 @@ export default async function AdminDashboard() {
         </div>
       </Section>
     </main>
+  );
+}
+
+/** What the totals hide: how complete each live book is, and the same by century and by every language. */
+function Completion({ L }: { L: LibraryDashboard }) {
+  const C = L.completion!;
+  const binLabel = (i: number) => (i === 0 ? '0–5' : i === C.bins - 1 ? '95–100' : `${(100 * i) / C.bins}`);
+  const share = (arr: number[], from: number, to: number) => arr.slice(from, to).reduce((a, b) => a + b, 0);
+  const trNone = share(C.translated, 0, 1), trFull = share(C.translated, C.bins - 1, C.bins), trMid = C.books - trNone - trFull;
+  const ocrNone = share(C.ocr, 0, 1), ocrFull = share(C.ocr, C.bins - 1, C.bins);
+  const cents = L.byCentury.filter(c => c.books > 0 && c.meanOcrPct != null);
+  const langs = (L.languagesAll ?? []).filter(l => l.name !== '(none)');
+  const top = langs.slice(0, 25);
+  const th = 'py-1 px-2 font-medium whitespace-nowrap';
+  return (
+    <>
+      <div className="md:col-span-full min-w-0">
+        <Panel title="How complete each live book is" note={<>Each bar is a 5% band of a book’s pages. Translated: <b className="text-stone-900">{fmtFull(trNone)}</b> books have under 5% of their pages translated, <b className="text-stone-900">{fmtFull(trMid)}</b> are somewhere in between, and <b className="text-stone-900">{fmtFull(trFull)}</b> are at 95% or more. Transcribed: {fmtFull(ocrNone)} under 5%, {fmtFull(ocrFull)} at 95% or more. A book counts as readable only in the last two bands, which is why page totals run far ahead of book counts.</>}>
+          <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 440px), 1fr))' }}>
+            <div className="min-w-0 grid gap-1">
+              <div className="text-xs text-stone-600">Share of pages transcribed, per book ({fmtFull(C.books)} live books)</div>
+              <Bars labels={C.ocr.map((_, i) => binLabel(i))} series={[{ name: 'Books', data: C.ocr, color: SERIES[2] }]} height={220} ariaLabel="Histogram of per-book share of pages transcribed" />
+            </div>
+            <div className="min-w-0 grid gap-1">
+              <div className="text-xs text-stone-600">Share of translatable pages translated, per book</div>
+              <Bars labels={C.translated.map((_, i) => binLabel(i))} series={[{ name: 'Books', data: C.translated, color: SERIES[1] }]} height={220} ariaLabel="Histogram of per-book share of pages translated" />
+            </div>
+          </div>
+        </Panel>
+      </div>
+      <div className="md:col-span-full min-w-0">
+        <Panel title="Mean completion by century" note="Average per-book share of pages transcribed and translated, live books with a numeric year. Hover a century for the readable count.">
+          <Legend names={['Mean % transcribed', 'Mean % translated', 'Readable books, % of century']} colors={[SERIES[2], SERIES[1], SERIES[0]]} />
+          <Bars grouped unit="pct" w={1100} height={240} labels={cents.map(c => c.label)} series={[
+            { name: 'Mean % transcribed', color: SERIES[2], data: cents.map(c => c.meanOcrPct ?? 0) },
+            { name: 'Mean % translated', color: SERIES[1], data: cents.map(c => c.meanTrPct ?? 0) },
+            { name: 'Readable books, %', color: SERIES[0], data: cents.map(c => (c.books ? (100 * (c.readable ?? 0)) / c.books : 0)) },
+          ]} ariaLabel="Mean completion by century" />
+        </Panel>
+      </div>
+      <div className="md:col-span-full min-w-0">
+        <Panel title="Mean completion by language" note={`Top 25 languages by live books; the full table below has all ${fmtFull(langs.length)}. The number at the end of each bar is the mean share of pages translated per book; the grey text is readable books out of live books in that language.`}>
+          <HBars labelWidth={210} sub suffix="%" colors={[SERIES[1]]} rows={top.map(l => ({ label: l.name, sub: `${fmtFull(l.readable)} of ${fmtFull(l.books)} readable`, values: [l.meanTrPct], title: `${l.name}: mean ${l.meanTrPct}% translated, ${l.meanOcrPct}% transcribed per book; ${fmtFull(l.readable)} of ${fmtFull(l.books)} books readable` }))} />
+          <details className="text-sm">
+            <summary className="cursor-pointer text-stone-700">Every language ({fmtFull(langs.length)})</summary>
+            <div className="overflow-x-auto mt-2"><table className="text-xs min-w-[760px] w-full">
+              <thead><tr className="text-[11px] uppercase tracking-wider text-stone-500 text-right"><th className={`${th} text-left`}>Language</th><th className={th}>Books</th><th className={th}>Pages</th><th className={th}>Pages transcribed</th><th className={th}>Pages translated</th><th className={th}>Mean book transcribed</th><th className={th}>Mean book translated</th><th className={th}>Readable</th><th className={th}>Readable share</th><th className={th}>English originals</th></tr></thead>
+              <tbody>{langs.map(l => (
+                <tr key={l.name} className="border-t border-stone-100 text-right tabular-nums"><td className="py-0.5 px-2 text-left">{l.name}</td><td className="py-0.5 px-2">{fmtFull(l.books)}</td><td className="py-0.5 px-2">{fmtFull(l.pages)}</td><td className="py-0.5 px-2">{pct(l.ocr, l.pages)}</td><td className="py-0.5 px-2">{pct(l.translated, l.pages)}</td><td className="py-0.5 px-2">{l.meanOcrPct}%</td><td className="py-0.5 px-2">{l.meanTrPct}%</td><td className="py-0.5 px-2">{fmtFull(l.readable)}</td><td className="py-0.5 px-2">{pct(l.readable, l.books)}</td><td className="py-0.5 px-2">{l.english ? fmtFull(l.english) : '–'}</td></tr>
+              ))}</tbody>
+            </table></div>
+          </details>
+        </Panel>
+      </div>
+    </>
   );
 }
 
@@ -366,7 +391,7 @@ function Backlog({ L }: { L: LibraryDashboard }) {
             <div className="overflow-x-auto"><table className="text-sm min-w-[640px] w-full">
               <thead><tr className="text-[11px] uppercase tracking-wider text-stone-500"><th className="text-left py-1 pr-2 font-medium">Step</th><th className="text-right py-1 px-2 font-medium">Books</th><th className="text-right py-1 px-2 font-medium">Pages</th><th className="text-right py-1 px-2 font-medium">Cost at today’s rates</th><th className="text-left py-1 pl-2 font-medium">Who does it</th></tr></thead>
               <tbody>{rendered.map(r => (
-                <tr key={r.name} className="border-t border-stone-100 align-top"><td className="py-1.5 pr-2">{r.name}<span className="block text-xs text-stone-500">{r.sub}</span></td><td className="py-1.5 px-2 text-right tabular-nums">{r.b != null ? fmtFull(r.b) : '—'}</td><td className="py-1.5 px-2 text-right tabular-nums">{r.pages ? fmtFull(r.pages) : '—'}</td><td className="py-1.5 px-2 text-right tabular-nums whitespace-nowrap">{r.c ? usdRange(r.c[0], r.c[1]) : r.key === 'archive' ? 'unmetered' : r.key === 'enrich' ? 'small' : '—'}</td><td className="py-1.5 pl-2 text-stone-700">{r.lane}</td></tr>
+                <tr key={r.name} className="border-t border-stone-100 align-top"><td className="py-1.5 pr-2">{r.name}<span className="block text-xs text-stone-500">{r.sub}</span></td><td className="py-1.5 px-2 text-right tabular-nums">{r.b != null ? fmtFull(r.b) : '–'}</td><td className="py-1.5 px-2 text-right tabular-nums">{r.pages ? fmtFull(r.pages) : '–'}</td><td className="py-1.5 px-2 text-right tabular-nums whitespace-nowrap">{r.c ? usdRange(r.c[0], r.c[1]) : r.key === 'archive' ? 'unmetered' : r.key === 'enrich' ? 'small' : '–'}</td><td className="py-1.5 pl-2 text-stone-700">{r.lane}</td></tr>
               ))}</tbody>
               <tfoot><tr className="border-t border-stone-300 font-semibold"><td className="py-1.5 pr-2">All steps that spend money</td><td className="py-1.5 px-2 text-right tabular-nums">{fmtFull(tb)}</td><td className="py-1.5 px-2 text-right tabular-nums">{fmtFull(tp)} model pages</td><td className="py-1.5 px-2 text-right tabular-nums whitespace-nowrap">{usdRange(lo, hi)}</td><td /></tr></tfoot>
             </table></div>

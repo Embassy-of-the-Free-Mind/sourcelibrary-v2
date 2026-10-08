@@ -1,0 +1,21 @@
+{
+ "id": "69b99e496ed9e04909909f8f_00220",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "5. 9. SUBHASUTTAM. (99).\n\nThere are, young man, these five hindrances. What are the five? The hindrance of sensual desire, the hindrance of ill-will, the hindrance of sloth and torpor, the hindrance of restlessness and worry, and the hindrance of doubt. These, young man, are the five hindrances. By these five hindrances, the Brahmin Pokkharasāti of the Opamañña clan, a resident of Subhaga, is obstructed, hindered, covered, and enveloped. That he should know, see, or realize a state of supernormal human achievement, a distinction in noble knowledge and vision, is a situation that does not exist. \n\nThere are, young man, these five strands of sense-desire. What are the five? Forms cognizable by the eye that are desirable, pleasing, delightful, attractive, accompanied by sensual desire, and stimulating; sounds cognizable by the ear, <note>abbreviated passage</note> scents cognizable by the nose, tastes cognizable by the tongue, and tactile objects cognizable by the body that are desirable, pleasing, delightful, attractive, accompanied by sensual desire, and stimulating. These, young man, are the five strands of sense-desire. Bound, infatuated, and deeply engrossed in these five strands of sense-desire, the Brahmin Pokkharasāti of the Opamañña clan, a resident of Subhaga, consumes them without seeing the danger and without knowing the escape. That he should know, see, or realize a state of supernormal human achievement, a distinction in noble knowledge and vision, is a situation that does not exist. \n\nWhat do you think, young man? Whether one were to kindle a fire by relying on a supply of grass and wood, or whether one were to kindle a fire without relying on a supply of grass and wood, which of these fires would be more radiant, more colorful, and more brilliant?\n\nIf, Master Gotama, one could kindle a fire without relying on a supply of grass and wood, that fire would be more radiant, more colorful, and more brilliant.\n\nThat is an impossible situation, young man, it is not possible that one could kindle a fire without relying on a supply of grass and wood, unless one were possessed of psychic power. Just as, young man, a fire burns by relying on a supply of grass and wood, so do I speak of this zest, this zest that...\n\n<summary>The Buddha explains that the Brahmin Pokkharasāti cannot achieve higher states of consciousness because he is clouded by the five hindrances and attached to the five strands of sense-desire, illustrating the necessity of fuel for both physical fire and spiritual progress.</summary>\n<keywords>five hindrances, strands of sense-desire, Pokkharasāti, spiritual attainment, metaphor of fire</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2844,
+ "outputTokens": 601,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.00080625,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2266,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

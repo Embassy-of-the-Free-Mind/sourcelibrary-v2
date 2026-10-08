@@ -1,0 +1,1072 @@
+{
+ "generated": "2026-10-04T00:51:08.866Z",
+ "seed": 5762,
+ "measure": "agreement between two human transcriptions (not accuracy: neither is the truth); ours-vs-reference is accuracy against that reference",
+ "normalisation": "scripts/eval/lib/metrics.mjs normalizeForScript v2 / normalizeCJK + windowedErrorRate, identical for every pair",
+ "cjk_fold": {
+  "file": "cjk-recurring-pairs.json",
+  "pairs": 41
+ },
+ "n_pages": 183,
+ "groups": {
+  "English · same-edition": {
+   "pages": 84,
+   "books": 31,
+   "human_vs_human": {
+    "pooled_cer": 0.0014,
+    "ci": [
+     0.0008,
+     0.0021
+    ],
+    "books": 31,
+    "chars": 244242,
+    "median_page_cer": 0,
+    "pages_identical": 49
+   },
+   "human_vs_human_with_marks": {
+    "pooled_cer": 0.0023,
+    "ci": [
+     0.0013,
+     0.0033
+    ],
+    "books": 31,
+    "chars": 239386,
+    "pages_identical": 41
+   },
+   "on_pages_we_hold": {
+    "pages": 67,
+    "human_vs_human": {
+     "pooled_cer": 0.0015,
+     "ci": [
+      0.0008,
+      0.0023
+     ],
+     "books": 26,
+     "chars": 200607
+    },
+    "ours_vs_a": {
+     "pooled_cer": 0.0261,
+     "ci": [
+      0.0033,
+      0.0591
+     ],
+     "books": 26,
+     "chars": 100274,
+     "median_page_cer": 0.0006
+    },
+    "ours_vs_b": {
+     "pooled_cer": 0.0261,
+     "ci": [
+      0.0033,
+      0.0594
+     ],
+     "books": 26,
+     "chars": 100333,
+     "median_page_cer": 0
+    },
+    "human_vs_human_with_marks": {
+     "pooled_cer": 0.0025,
+     "ci": [
+      0.0013,
+      0.0037
+     ],
+     "books": 26,
+     "chars": 196678
+    },
+    "ours_with_marks_vs_a": {
+     "pooled_cer": 0.027,
+     "ci": [
+      0.0039,
+      0.0598
+     ],
+     "books": 26,
+     "chars": 98320,
+     "median_page_cer": 0.001
+    },
+    "ours_with_marks_vs_b": {
+     "pooled_cer": 0.0264,
+     "ci": [
+      0.0034,
+      0.0596
+     ],
+     "books": 26,
+     "chars": 98358,
+     "median_page_cer": 0.0006
+    },
+    "ours_within_human_floor": {
+     "note": "pages where our OCR is no further from A than B is",
+     "pages": 46,
+     "of": 67
+    },
+    "ours_models": {
+     "gemini-3-flash-preview": 37,
+     "gemini-3.1-flash-lite-preview": 21,
+     "gemini-3.1-flash-lite": 7,
+     "ia-ocr/0.0.21": 2
+    }
+   }
+  },
+  "English · same-edition · EEBO-TCP vs Project Gutenberg": {
+   "pages": 15,
+   "books": 5,
+   "human_vs_human": {
+    "pooled_cer": 0.0013,
+    "ci": [
+     0.0003,
+     0.0027
+    ],
+    "books": 5,
+    "chars": 48978,
+    "median_page_cer": 0,
+    "pages_identical": 8
+   },
+   "human_vs_human_with_marks": {
+    "pooled_cer": 0.0026,
+    "ci": [
+     0.0016,
+     0.004
+    ],
+    "books": 5,
+    "chars": 48116,
+    "pages_identical": 3
+   },
+   "on_pages_we_hold": {
+    "pages": 15,
+    "human_vs_human": {
+     "pooled_cer": 0.0013,
+     "ci": [
+      0.0003,
+      0.0027
+     ],
+     "books": 5,
+     "chars": 48978
+    },
+    "ours_vs_a": {
+     "pooled_cer": 0.0077,
+     "ci": [
+      0.0026,
+      0.0104
+     ],
+     "books": 5,
+     "chars": 24480,
+     "median_page_cer": 0.0019
+    },
+    "ours_vs_b": {
+     "pooled_cer": 0.0073,
+     "ci": [
+      0.0016,
+      0.0102
+     ],
+     "books": 5,
+     "chars": 24498,
+     "median_page_cer": 0.0031
+    },
+    "human_vs_human_with_marks": {
+     "pooled_cer": 0.0026,
+     "ci": [
+      0.0016,
+      0.004
+     ],
+     "books": 5,
+     "chars": 48116
+    },
+    "ours_with_marks_vs_a": {
+     "pooled_cer": 0.0089,
+     "ci": [
+      0.0039,
+      0.0114
+     ],
+     "books": 5,
+     "chars": 24056,
+     "median_page_cer": 0.0049
+    },
+    "ours_with_marks_vs_b": {
+     "pooled_cer": 0.0073,
+     "ci": [
+      0.0016,
+      0.0103
+     ],
+     "books": 5,
+     "chars": 24060,
+     "median_page_cer": 0.0032
+    },
+    "ours_within_human_floor": {
+     "note": "pages where our OCR is no further from A than B is",
+     "pages": 7,
+     "of": 15
+    },
+    "ours_models": {
+     "gemini-3-flash-preview": 9,
+     "gemini-3.1-flash-lite-preview": 5,
+     "gemini-3.1-flash-lite": 1
+    }
+   }
+  },
+  "English · same-edition · Wikisource vs Project Gutenberg": {
+   "pages": 62,
+   "books": 24,
+   "human_vs_human": {
+    "pooled_cer": 0.0011,
+    "ci": [
+     0.0005,
+     0.0019
+    ],
+    "books": 24,
+    "chars": 172677,
+    "median_page_cer": 0,
+    "pages_identical": 41
+   },
+   "human_vs_human_with_marks": {
+    "pooled_cer": 0.0016,
+    "ci": [
+     0.0006,
+     0.0028
+    ],
+    "books": 24,
+    "chars": 169139,
+    "pages_identical": 38
+   },
+   "on_pages_we_hold": {
+    "pages": 47,
+    "human_vs_human": {
+     "pooled_cer": 0.0013,
+     "ci": [
+      0.0004,
+      0.0023
+     ],
+     "books": 19,
+     "chars": 132003
+    },
+    "ours_vs_a": {
+     "pooled_cer": 0.0325,
+     "ci": [
+      0.0007,
+      0.0801
+     ],
+     "books": 19,
+     "chars": 65989,
+     "median_page_cer": 0
+    },
+    "ours_vs_b": {
+     "pooled_cer": 0.0328,
+     "ci": [
+      0.0007,
+      0.0844
+     ],
+     "books": 19,
+     "chars": 66014,
+     "median_page_cer": 0
+    },
+    "human_vs_human_with_marks": {
+     "pooled_cer": 0.0019,
+     "ci": [
+      0.0006,
+      0.0035
+     ],
+     "books": 19,
+     "chars": 129313
+    },
+    "ours_with_marks_vs_a": {
+     "pooled_cer": 0.0331,
+     "ci": [
+      0.0012,
+      0.0811
+     ],
+     "books": 19,
+     "chars": 64648,
+     "median_page_cer": 0
+    },
+    "ours_with_marks_vs_b": {
+     "pooled_cer": 0.0331,
+     "ci": [
+      0.0009,
+      0.0816
+     ],
+     "books": 19,
+     "chars": 64665,
+     "median_page_cer": 0
+    },
+    "ours_within_human_floor": {
+     "note": "pages where our OCR is no further from A than B is",
+     "pages": 37,
+     "of": 47
+    },
+    "ours_models": {
+     "gemini-3.1-flash-lite": 6,
+     "gemini-3.1-flash-lite-preview": 13,
+     "gemini-3-flash-preview": 26,
+     "ia-ocr/0.0.21": 2
+    }
+   }
+  },
+  "English · same-edition · Wikisource vs EEBO-TCP": {
+   "pages": 7,
+   "books": 3,
+   "human_vs_human": {
+    "pooled_cer": 0.0036,
+    "ci": [
+     0.003,
+     0.0051
+    ],
+    "books": 3,
+    "chars": 22587,
+    "median_page_cer": 0.0039,
+    "pages_identical": 0
+   },
+   "human_vs_human_with_marks": {
+    "pooled_cer": 0.0069,
+    "ci": [
+     0.0065,
+     0.009
+    ],
+    "books": 3,
+    "chars": 22131,
+    "pages_identical": 0
+   },
+   "on_pages_we_hold": {
+    "pages": 5,
+    "human_vs_human": {
+     "pooled_cer": 0.0035,
+     "ci": [
+      0.003,
+      0.0051
+     ],
+     "books": 2,
+     "chars": 19626
+    },
+    "ours_vs_a": {
+     "pooled_cer": 0.0295,
+     "ci": [
+      0.0019,
+      0.0372
+     ],
+     "books": 2,
+     "chars": 9805,
+     "median_page_cer": 0.0238
+    },
+    "ours_vs_b": {
+     "pooled_cer": 0.0274,
+     "ci": [
+      0.0033,
+      0.0342
+     ],
+     "books": 2,
+     "chars": 9821,
+     "median_page_cer": 0.0176
+    },
+    "human_vs_human_with_marks": {
+     "pooled_cer": 0.0065,
+     "ci": [
+      0.0065,
+      0.0067
+     ],
+     "books": 2,
+     "chars": 19249
+    },
+    "ours_with_marks_vs_a": {
+     "pooled_cer": 0.0306,
+     "ci": [
+      0.0019,
+      0.0386
+     ],
+     "books": 2,
+     "chars": 9616,
+     "median_page_cer": 0.0242
+    },
+    "ours_with_marks_vs_b": {
+     "pooled_cer": 0.0293,
+     "ci": [
+      0.0048,
+      0.0361
+     ],
+     "books": 2,
+     "chars": 9633,
+     "median_page_cer": 0.0191
+    },
+    "ours_within_human_floor": {
+     "note": "pages where our OCR is no further from A than B is",
+     "pages": 2,
+     "of": 5
+    },
+    "ours_models": {
+     "gemini-3.1-flash-lite-preview": 3,
+     "gemini-3-flash-preview": 2
+    }
+   }
+  },
+  "English · edition-mismatch": {
+   "pages": 4,
+   "books": 2,
+   "human_vs_human": {
+    "pooled_cer": 0.0052,
+    "ci": [
+     0,
+     0.0078
+    ],
+    "books": 2,
+    "chars": 11209,
+    "median_page_cer": 0.0047,
+    "pages_identical": 2
+   },
+   "human_vs_human_with_marks": {
+    "pooled_cer": 0.0055,
+    "ci": [
+     0,
+     0.0082
+    ],
+    "books": 2,
+    "chars": 10954,
+    "pages_identical": 2
+   },
+   "on_pages_we_hold": {
+    "pages": 4,
+    "human_vs_human": {
+     "pooled_cer": 0.0052,
+     "ci": [
+      0,
+      0.0078
+     ],
+     "books": 2,
+     "chars": 11209
+    },
+    "ours_vs_a": {
+     "pooled_cer": 0.0009,
+     "ci": [
+      0,
+      0.0013
+     ],
+     "books": 2,
+     "chars": 5604,
+     "median_page_cer": 0.0012
+    },
+    "ours_vs_b": {
+     "pooled_cer": 0.005,
+     "ci": [
+      0,
+      0.0075
+     ],
+     "books": 2,
+     "chars": 5605,
+     "median_page_cer": 0.0043
+    },
+    "human_vs_human_with_marks": {
+     "pooled_cer": 0.0055,
+     "ci": [
+      0,
+      0.0082
+     ],
+     "books": 2,
+     "chars": 10954
+    },
+    "ours_with_marks_vs_a": {
+     "pooled_cer": 0.0009,
+     "ci": [
+      0,
+      0.0014
+     ],
+     "books": 2,
+     "chars": 5475,
+     "median_page_cer": 0.0013
+    },
+    "ours_with_marks_vs_b": {
+     "pooled_cer": 0.0053,
+     "ci": [
+      0,
+      0.008
+     ],
+     "books": 2,
+     "chars": 5479,
+     "median_page_cer": 0.0054
+    },
+    "ours_within_human_floor": {
+     "note": "pages where our OCR is no further from A than B is",
+     "pages": 4,
+     "of": 4
+    },
+    "ours_models": {
+     "gemini-3-flash-preview": 4
+    }
+   }
+  },
+  "English · edition-mismatch · Wikisource vs EEBO-TCP": {
+   "pages": 2,
+   "books": 1,
+   "human_vs_human": {
+    "pooled_cer": 0.0078,
+    "ci": null,
+    "books": 1,
+    "chars": 7437,
+    "median_page_cer": 0.0118,
+    "pages_identical": 0
+   },
+   "human_vs_human_with_marks": {
+    "pooled_cer": 0.0082,
+    "ci": null,
+    "books": 1,
+    "chars": 7274,
+    "pages_identical": 0
+   },
+   "on_pages_we_hold": {
+    "pages": 2,
+    "human_vs_human": {
+     "pooled_cer": 0.0078,
+     "ci": null,
+     "books": 1,
+     "chars": 7437
+    },
+    "ours_vs_a": {
+     "pooled_cer": 0.0013,
+     "ci": null,
+     "books": 1,
+     "chars": 3718,
+     "median_page_cer": 0.0014
+    },
+    "ours_vs_b": {
+     "pooled_cer": 0.0075,
+     "ci": null,
+     "books": 1,
+     "chars": 3719,
+     "median_page_cer": 0.0118
+    },
+    "human_vs_human_with_marks": {
+     "pooled_cer": 0.0082,
+     "ci": null,
+     "books": 1,
+     "chars": 7274
+    },
+    "ours_with_marks_vs_a": {
+     "pooled_cer": 0.0014,
+     "ci": null,
+     "books": 1,
+     "chars": 3635,
+     "median_page_cer": 0.0015
+    },
+    "ours_with_marks_vs_b": {
+     "pooled_cer": 0.008,
+     "ci": null,
+     "books": 1,
+     "chars": 3639,
+     "median_page_cer": 0.0114
+    },
+    "ours_within_human_floor": {
+     "note": "pages where our OCR is no further from A than B is",
+     "pages": 2,
+     "of": 2
+    },
+    "ours_models": {
+     "gemini-3-flash-preview": 2
+    }
+   }
+  },
+  "English · edition-mismatch · Wikisource vs Project Gutenberg": {
+   "pages": 2,
+   "books": 1,
+   "human_vs_human": {
+    "pooled_cer": 0,
+    "ci": null,
+    "books": 1,
+    "chars": 3772,
+    "median_page_cer": 0,
+    "pages_identical": 2
+   },
+   "human_vs_human_with_marks": {
+    "pooled_cer": 0,
+    "ci": null,
+    "books": 1,
+    "chars": 3680,
+    "pages_identical": 2
+   },
+   "on_pages_we_hold": {
+    "pages": 2,
+    "human_vs_human": {
+     "pooled_cer": 0,
+     "ci": null,
+     "books": 1,
+     "chars": 3772
+    },
+    "ours_vs_a": {
+     "pooled_cer": 0,
+     "ci": null,
+     "books": 1,
+     "chars": 1886,
+     "median_page_cer": 0
+    },
+    "ours_vs_b": {
+     "pooled_cer": 0,
+     "ci": null,
+     "books": 1,
+     "chars": 1886,
+     "median_page_cer": 0
+    },
+    "human_vs_human_with_marks": {
+     "pooled_cer": 0,
+     "ci": null,
+     "books": 1,
+     "chars": 3680
+    },
+    "ours_with_marks_vs_a": {
+     "pooled_cer": 0,
+     "ci": null,
+     "books": 1,
+     "chars": 1840,
+     "median_page_cer": 0
+    },
+    "ours_with_marks_vs_b": {
+     "pooled_cer": 0,
+     "ci": null,
+     "books": 1,
+     "chars": 1840,
+     "median_page_cer": 0
+    },
+    "ours_within_human_floor": {
+     "note": "pages where our OCR is no further from A than B is",
+     "pages": 2,
+     "of": 2
+    },
+    "ours_models": {
+     "gemini-3-flash-preview": 2
+    }
+   }
+  },
+  "Greek · same-edition": {
+   "pages": 41,
+   "books": 24,
+   "human_vs_human": {
+    "pooled_cer": 0.0043,
+    "ci": [
+     0.0008,
+     0.0076
+    ],
+    "books": 24,
+    "chars": 70056,
+    "median_page_cer": 0,
+    "pages_identical": 25
+   },
+   "human_vs_human_with_marks": {
+    "pooled_cer": 0.0109,
+    "ci": [
+     0.0069,
+     0.0144
+    ],
+    "books": 24,
+    "chars": 70284,
+    "pages_identical": 4
+   },
+   "on_pages_we_hold": {
+    "pages": 4,
+    "human_vs_human": {
+     "pooled_cer": 0.0007,
+     "ci": [
+      0,
+      0.0028
+     ],
+     "books": 2,
+     "chars": 8270
+    },
+    "ours_vs_a": {
+     "pooled_cer": 0.0015,
+     "ci": [
+      0.0003,
+      0.0047
+     ],
+     "books": 2,
+     "chars": 4136,
+     "median_page_cer": 0.0009
+    },
+    "ours_vs_b": {
+     "pooled_cer": 0.0012,
+     "ci": [
+      0.0003,
+      0.0038
+     ],
+     "books": 2,
+     "chars": 4134,
+     "median_page_cer": 0.0009
+    },
+    "human_vs_human_with_marks": {
+     "pooled_cer": 0.0082,
+     "ci": [
+      0.0047,
+      0.0094
+     ],
+     "books": 2,
+     "chars": 8313
+    },
+    "ours_with_marks_vs_a": {
+     "pooled_cer": 0.0113,
+     "ci": [
+      0.0103,
+      0.014
+     ],
+     "books": 2,
+     "chars": 4171,
+     "median_page_cer": 0.0115
+    },
+    "ours_with_marks_vs_b": {
+     "pooled_cer": 0.0051,
+     "ci": [
+      0.0023,
+      0.0131
+     ],
+     "books": 2,
+     "chars": 4142,
+     "median_page_cer": 0.0044
+    },
+    "ours_within_human_floor": {
+     "note": "pages where our OCR is no further from A than B is",
+     "pages": 2,
+     "of": 4
+    },
+    "ours_models": {
+     "gemini-3-flash-preview": 3,
+     "gemini-3.1-flash-lite-preview": 1
+    }
+   }
+  },
+  "Greek · same-edition · Perseus vs First1KGreek": {
+   "pages": 24,
+   "books": 15,
+   "human_vs_human": {
+    "pooled_cer": 0.0039,
+    "ci": [
+     0.0003,
+     0.0067
+    ],
+    "books": 15,
+    "chars": 41192,
+    "median_page_cer": 0.0009,
+    "pages_identical": 12
+   },
+   "human_vs_human_with_marks": {
+    "pooled_cer": 0.0076,
+    "ci": [
+     0.0031,
+     0.0109
+    ],
+    "books": 15,
+    "chars": 41268,
+    "pages_identical": 4
+   },
+   "on_pages_we_hold": null
+  },
+  "Greek · same-edition · Perseus vs Project Gutenberg": {
+   "pages": 3,
+   "books": 1,
+   "human_vs_human": {
+    "pooled_cer": 0,
+    "ci": null,
+    "books": 1,
+    "chars": 6152,
+    "median_page_cer": 0,
+    "pages_identical": 3
+   },
+   "human_vs_human_with_marks": {
+    "pooled_cer": 0.0094,
+    "ci": null,
+    "books": 1,
+    "chars": 6179,
+    "pages_identical": 0
+   },
+   "on_pages_we_hold": {
+    "pages": 3,
+    "human_vs_human": {
+     "pooled_cer": 0,
+     "ci": null,
+     "books": 1,
+     "chars": 6152
+    },
+    "ours_vs_a": {
+     "pooled_cer": 0.0003,
+     "ci": null,
+     "books": 1,
+     "chars": 3076,
+     "median_page_cer": 0
+    },
+    "ours_vs_b": {
+     "pooled_cer": 0.0003,
+     "ci": null,
+     "books": 1,
+     "chars": 3076,
+     "median_page_cer": 0
+    },
+    "human_vs_human_with_marks": {
+     "pooled_cer": 0.0094,
+     "ci": null,
+     "books": 1,
+     "chars": 6179
+    },
+    "ours_with_marks_vs_a": {
+     "pooled_cer": 0.0103,
+     "ci": null,
+     "books": 1,
+     "chars": 3103,
+     "median_page_cer": 0.011
+    },
+    "ours_with_marks_vs_b": {
+     "pooled_cer": 0.0023,
+     "ci": null,
+     "books": 1,
+     "chars": 3076,
+     "median_page_cer": 0.0017
+    },
+    "ours_within_human_floor": {
+     "note": "pages where our OCR is no further from A than B is",
+     "pages": 2,
+     "of": 3
+    },
+    "ours_models": {
+     "gemini-3-flash-preview": 3
+    }
+   }
+  },
+  "Greek · same-edition · Perseus vs Wikisource": {
+   "pages": 13,
+   "books": 7,
+   "human_vs_human": {
+    "pooled_cer": 0.0067,
+    "ci": [
+     0.0004,
+     0.014
+    ],
+    "books": 7,
+    "chars": 21038,
+    "median_page_cer": 0,
+    "pages_identical": 9
+   },
+   "human_vs_human_with_marks": {
+    "pooled_cer": 0.0184,
+    "ci": [
+     0.0108,
+     0.0241
+    ],
+    "books": 7,
+    "chars": 21162,
+    "pages_identical": 0
+   },
+   "on_pages_we_hold": {
+    "pages": 1,
+    "human_vs_human": {
+     "pooled_cer": 0.0028,
+     "ci": null,
+     "books": 1,
+     "chars": 2118
+    },
+    "ours_vs_a": {
+     "pooled_cer": 0.0047,
+     "ci": null,
+     "books": 1,
+     "chars": 1060,
+     "median_page_cer": 0.0047
+    },
+    "ours_vs_b": {
+     "pooled_cer": 0.0038,
+     "ci": null,
+     "books": 1,
+     "chars": 1058,
+     "median_page_cer": 0.0038
+    },
+    "human_vs_human_with_marks": {
+     "pooled_cer": 0.0047,
+     "ci": null,
+     "books": 1,
+     "chars": 2134
+    },
+    "ours_with_marks_vs_a": {
+     "pooled_cer": 0.014,
+     "ci": null,
+     "books": 1,
+     "chars": 1068,
+     "median_page_cer": 0.014
+    },
+    "ours_with_marks_vs_b": {
+     "pooled_cer": 0.0131,
+     "ci": null,
+     "books": 1,
+     "chars": 1066,
+     "median_page_cer": 0.0131
+    },
+    "ours_within_human_floor": {
+     "note": "pages where our OCR is no further from A than B is",
+     "pages": 0,
+     "of": 1
+    },
+    "ours_models": {
+     "gemini-3.1-flash-lite-preview": 1
+    }
+   }
+  },
+  "Greek · same-edition · First1KGreek vs Wikisource": {
+   "pages": 1,
+   "books": 1,
+   "human_vs_human": {
+    "pooled_cer": 0,
+    "ci": null,
+    "books": 1,
+    "chars": 1674,
+    "median_page_cer": 0,
+    "pages_identical": 1
+   },
+   "human_vs_human_with_marks": {
+    "pooled_cer": 0.0024,
+    "ci": null,
+    "books": 1,
+    "chars": 1675,
+    "pages_identical": 0
+   },
+   "on_pages_we_hold": null
+  },
+  "Chinese · same-edition": {
+   "pages": 54,
+   "books": 52,
+   "human_vs_human": {
+    "pooled_cer": 0.0287,
+    "ci": [
+     0.0261,
+     0.0314
+    ],
+    "books": 52,
+    "chars": 145138,
+    "median_page_cer": 0.029,
+    "pages_identical": 0
+   },
+   "human_vs_human_with_marks": {
+    "pooled_cer": 0.0028,
+    "ci": [
+     0.002,
+     0.0038
+    ],
+    "books": 52,
+    "chars": 145138,
+    "pages_identical": 11
+   },
+   "on_pages_we_hold": {
+    "pages": 3,
+    "human_vs_human": {
+     "pooled_cer": 0.0193,
+     "ci": null,
+     "books": 1,
+     "chars": 7890
+    },
+    "ours_vs_a": {
+     "pooled_cer": 0.2109,
+     "ci": null,
+     "books": 1,
+     "chars": 3945,
+     "median_page_cer": 0.1424
+    },
+    "ours_vs_b": {
+     "pooled_cer": 0.2241,
+     "ci": null,
+     "books": 1,
+     "chars": 3945,
+     "median_page_cer": 0.1628
+    },
+    "human_vs_human_with_marks": {
+     "pooled_cer": 0.0025,
+     "ci": null,
+     "books": 1,
+     "chars": 7890
+    },
+    "ours_with_marks_vs_a": {
+     "pooled_cer": 0.2109,
+     "ci": null,
+     "books": 1,
+     "chars": 3945,
+     "median_page_cer": 0.1424
+    },
+    "ours_with_marks_vs_b": {
+     "pooled_cer": 0.2109,
+     "ci": null,
+     "books": 1,
+     "chars": 3945,
+     "median_page_cer": 0.1431
+    },
+    "ours_within_human_floor": {
+     "note": "pages where our OCR is no further from A than B is",
+     "pages": 0,
+     "of": 3
+    },
+    "ours_models": {
+     "gemini-3.1-flash-lite": 3
+    }
+   }
+  },
+  "Chinese · same-edition · CBETA vs SAT": {
+   "pages": 54,
+   "books": 52,
+   "human_vs_human": {
+    "pooled_cer": 0.0287,
+    "ci": [
+     0.0261,
+     0.0314
+    ],
+    "books": 52,
+    "chars": 145138,
+    "median_page_cer": 0.029,
+    "pages_identical": 0
+   },
+   "human_vs_human_with_marks": {
+    "pooled_cer": 0.0028,
+    "ci": [
+     0.002,
+     0.0038
+    ],
+    "books": 52,
+    "chars": 145138,
+    "pages_identical": 11
+   },
+   "on_pages_we_hold": {
+    "pages": 3,
+    "human_vs_human": {
+     "pooled_cer": 0.0193,
+     "ci": null,
+     "books": 1,
+     "chars": 7890
+    },
+    "ours_vs_a": {
+     "pooled_cer": 0.2109,
+     "ci": null,
+     "books": 1,
+     "chars": 3945,
+     "median_page_cer": 0.1424
+    },
+    "ours_vs_b": {
+     "pooled_cer": 0.2241,
+     "ci": null,
+     "books": 1,
+     "chars": 3945,
+     "median_page_cer": 0.1628
+    },
+    "human_vs_human_with_marks": {
+     "pooled_cer": 0.0025,
+     "ci": null,
+     "books": 1,
+     "chars": 7890
+    },
+    "ours_with_marks_vs_a": {
+     "pooled_cer": 0.2109,
+     "ci": null,
+     "books": 1,
+     "chars": 3945,
+     "median_page_cer": 0.1424
+    },
+    "ours_with_marks_vs_b": {
+     "pooled_cer": 0.2109,
+     "ci": null,
+     "books": 1,
+     "chars": 3945,
+     "median_page_cer": 0.1431
+    },
+    "ours_within_human_floor": {
+     "note": "pages where our OCR is no further from A than B is",
+     "pages": 0,
+     "of": 3
+    },
+    "ours_models": {
+     "gemini-3.1-flash-lite": 3
+    }
+   }
+  }
+ },
+ "edition_checked_by_eye": 22
+}

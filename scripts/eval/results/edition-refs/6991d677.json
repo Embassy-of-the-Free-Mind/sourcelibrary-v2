@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "book_id": "6991d6778c1030b12444b4d4",
+    "title": "The Wonders of Gods Creation Manifested",
+    "published": "1695",
+    "source": "EEBO-TCP A49873",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 8,
+    "skips": {},
+    "median_char_acc": 0.9605,
+    "median_char_acc_windowed": 0.9578,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6991d677-p9",
+      "page": 9,
+      "overlap": 0.984,
+      "probe_words": 62,
+      "ref_chars": 441,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.194,
+      "char_acc": 0.9064,
+      "char_acc_windowed": 0.8977
+    },
+    {
+      "slug": "ed-6991d677-p17",
+      "page": 17,
+      "overlap": 1,
+      "probe_words": 162,
+      "ref_chars": 899,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.083,
+      "char_acc": 0.9665,
+      "char_acc_windowed": 0.9651
+    },
+    {
+      "slug": "ed-6991d677-p26",
+      "page": 26,
+      "overlap": 1,
+      "probe_words": 151,
+      "ref_chars": 888,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.064,
+      "char_acc": 0.9557,
+      "char_acc_windowed": 0.9543
+    },
+    {
+      "slug": "ed-6991d677-p28",
+      "page": 28,
+      "overlap": 1,
+      "probe_words": 154,
+      "ref_chars": 881,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.087,
+      "char_acc": 0.9645,
+      "char_acc_windowed": 0.9631
+    },
+    {
+      "slug": "ed-6991d677-p43",
+      "page": 43,
+      "overlap": 1,
+      "probe_words": 141,
+      "ref_chars": 791,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.095,
+      "char_acc": 0.9546,
+      "char_acc_windowed": 0.9546
+    },
+    {
+      "slug": "ed-6991d677-p53",
+      "page": 53,
+      "overlap": 1,
+      "probe_words": 149,
+      "ref_chars": 850,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.118,
+      "char_acc": 0.9676,
+      "char_acc_windowed": 0.9676
+    },
+    {
+      "slug": "ed-6991d677-p76",
+      "page": 76,
+      "overlap": 1,
+      "probe_words": 162,
+      "ref_chars": 916,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.071,
+      "char_acc": 0.9605,
+      "char_acc_windowed": 0.9578
+    },
+    {
+      "slug": "ed-6991d677-p94",
+      "page": 94,
+      "overlap": 0.904,
+      "probe_words": 54,
+      "ref_chars": 371,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.175,
+      "char_acc": 0.8836,
+      "char_acc_windowed": 0.8801
+    }
+  ]
+}

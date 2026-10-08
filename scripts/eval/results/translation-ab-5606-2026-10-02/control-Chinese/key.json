@@ -1,0 +1,21 @@
+{
+ "seed": 5607,
+ "positive_control_page": "69e72c7da409200ea79f4a01_00053",
+ "same_arm_pages": {},
+ "pages": {
+  "69e72c7da409200ea79f4a01_00053": {
+   "T1": "reference",
+   "T2": "lite",
+   "T3": "lite-rerun",
+   "T4": "flash"
+  }
+ },
+ "text_hash": {
+  "69e72c7da409200ea79f4a01_00053": {
+   "T1": "20b522099719198a",
+   "T2": "356223e3f9b63ae1",
+   "T3": "f6a0e4ccbd63b5ea",
+   "T4": "0d75d6d4a4075eed"
+  }
+ }
+}

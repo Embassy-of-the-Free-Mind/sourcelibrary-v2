@@ -1,0 +1,364 @@
+{
+ "flash-translation-5740": {
+  "T2": {
+   "card": "routing",
+   "tier": "large",
+   "needs": {
+    "grade": "decision",
+    "pool_or_replication": false,
+    "replication": true
+   },
+   "sufficient": false,
+   "missing": [
+    "preregistration: margin and minimum effect were not fixed before the run",
+    "judge: not calibrated against readers of the original (required: large stake, absolute threshold, or same model family as the candidate)",
+    "replication: none on ≥ 30 fresh books under the same rule"
+   ],
+   "languages": {
+    "Greek": {
+     "n": 75,
+     "grade": "decision",
+     "cleared": true,
+     "short_by": 0,
+     "why": []
+    }
+   },
+   "cleared": [
+    "Greek"
+   ],
+   "pooling": {
+    "usable": false,
+    "pass": null,
+    "offenders": [],
+    "voters": 0
+   }
+  },
+  "T4": {
+   "card": "routing",
+   "tier": "medium",
+   "needs": {
+    "grade": "directional",
+    "pool_or_replication": true,
+    "replication": false
+   },
+   "sufficient": false,
+   "missing": [
+    "preregistration: margin and minimum effect were not fixed before the run",
+    "per-language evidence: Arabic (n 20, short by 10), Persian (n 12, short by 18), Hebrew (n 15, short by 15), Aramaic (n 5, short by 25)"
+   ],
+   "languages": {
+    "Arabic": {
+     "n": 20,
+     "grade": "exploratory",
+     "cleared": false,
+     "short_by": 10,
+     "why": [
+      "20 referenced books (exploratory); needs directional"
+     ]
+    },
+    "Persian": {
+     "n": 12,
+     "grade": "exploratory",
+     "cleared": false,
+     "short_by": 18,
+     "why": [
+      "12 referenced books (exploratory); needs directional"
+     ]
+    },
+    "Hebrew": {
+     "n": 15,
+     "grade": "exploratory",
+     "cleared": false,
+     "short_by": 15,
+     "why": [
+      "15 referenced books (exploratory); needs directional"
+     ]
+    },
+    "Aramaic": {
+     "n": 5,
+     "grade": "exploratory",
+     "cleared": false,
+     "short_by": 25,
+     "why": [
+      "5 referenced books (exploratory); needs directional"
+     ]
+    }
+   },
+   "cleared": [],
+   "pooling": {
+    "usable": true,
+    "pass": true,
+    "offenders": [],
+    "voters": 3
+   }
+  },
+  "T5": {
+   "card": "routing",
+   "tier": "large",
+   "needs": {
+    "grade": "decision",
+    "pool_or_replication": false,
+    "replication": true
+   },
+   "sufficient": false,
+   "missing": [
+    "preregistration: margin and minimum effect were not fixed before the run",
+    "judge: not calibrated against readers of the original (required: large stake, absolute threshold, or same model family as the candidate)",
+    "per-language evidence: Pali (n 16, short by 14), Sanskrit (n 28, short by 2), Chinese (n 24, short by 6)",
+    "replication: none on ≥ 30 fresh books under the same rule"
+   ],
+   "languages": {
+    "Pali": {
+     "n": 16,
+     "grade": "exploratory",
+     "cleared": false,
+     "short_by": 14,
+     "why": [
+      "16 referenced books (exploratory); needs decision"
+     ]
+    },
+    "Sanskrit": {
+     "n": 28,
+     "grade": "exploratory",
+     "cleared": false,
+     "short_by": 2,
+     "why": [
+      "28 referenced books (exploratory); needs decision"
+     ]
+    },
+    "Chinese": {
+     "n": 24,
+     "grade": "exploratory",
+     "cleared": false,
+     "short_by": 6,
+     "why": [
+      "24 referenced books (exploratory); needs decision"
+     ]
+    }
+   },
+   "cleared": [],
+   "pooling": {
+    "usable": true,
+    "pass": true,
+    "offenders": [],
+    "voters": 3
+   }
+  }
+ },
+ "reocr-backfill-a5-5700": {
+  "card": "backfill",
+  "tier": "large",
+  "needs": {
+   "grade": "decision",
+   "pool_or_replication": false,
+   "replication": true
+  },
+  "sufficient": false,
+  "missing": [
+   "preregistration: margin and minimum effect were not fixed before the run",
+   "sample: pages were selected (low scorers); a backfill is sized on a random page of the stratum",
+   "undo: no revision row per page with a restore proven on one page",
+   "judge: wrong-page, planted-change and duplicate controls did not all pass",
+   "judge: not calibrated against readers of the original (required: large stake, absolute threshold, or same model family as the candidate)",
+   "per-language evidence: Arabic (n 9, short by 41), Chinese (n 5, short by 45), Greek (n 14, short by 36), Pali (n 6, short by 44), Persian (n 6, short by 44), Sanskrit (n 10, short by 40)",
+   "replication: none on ≥ 30 fresh books under the same rule"
+  ],
+  "languages": {
+   "Arabic": {
+    "n": 9,
+    "grade": "exploratory",
+    "cleared": false,
+    "short_by": 41,
+    "why": [
+     "9 referenced books (exploratory); needs decision"
+    ]
+   },
+   "Chinese": {
+    "n": 5,
+    "grade": "exploratory",
+    "cleared": false,
+    "short_by": 45,
+    "why": [
+     "5 referenced books (exploratory); needs decision"
+    ]
+   },
+   "Greek": {
+    "n": 14,
+    "grade": "exploratory",
+    "cleared": false,
+    "short_by": 36,
+    "why": [
+     "14 referenced books (exploratory); needs decision"
+    ]
+   },
+   "Pali": {
+    "n": 6,
+    "grade": "exploratory",
+    "cleared": false,
+    "short_by": 44,
+    "why": [
+     "6 referenced books (exploratory); needs decision"
+    ]
+   },
+   "Persian": {
+    "n": 6,
+    "grade": "exploratory",
+    "cleared": false,
+    "short_by": 44,
+    "why": [
+     "6 referenced books (exploratory); needs decision"
+    ]
+   },
+   "Sanskrit": {
+    "n": 10,
+    "grade": "exploratory",
+    "cleared": false,
+    "short_by": 40,
+    "why": [
+     "10 referenced books (exploratory); needs decision"
+    ]
+   }
+  },
+  "cleared": [],
+  "pooling": {
+   "usable": false,
+   "pass": null,
+   "offenders": [],
+   "voters": 0
+  }
+ },
+ "folio-markers-5678": {
+  "card": "prompt",
+  "tier": "medium",
+  "needs": {
+   "grade": "directional",
+   "pool_or_replication": true,
+   "replication": false
+  },
+  "sufficient": false,
+  "missing": [
+   "guards: a preregistered guard failed",
+   "per-language evidence: latin (n 70: the effect does not clear the floor and the minimum effect), non_latin (n 30: the effect does not clear the floor and the minimum effect)",
+   "pool or replication: a medium stake needs a registered homogeneous pool at decision grade, decision grade alone, or a replication"
+  ],
+  "languages": {
+   "latin": {
+    "n": 70,
+    "grade": "decision",
+    "cleared": false,
+    "short_by": 0,
+    "why": [
+     "effect does not clear the floor and the minimum effect"
+    ]
+   },
+   "non_latin": {
+    "n": 30,
+    "grade": "directional",
+    "cleared": false,
+    "short_by": 0,
+    "why": [
+     "effect does not clear the floor and the minimum effect"
+    ]
+   }
+  },
+  "cleared": [],
+  "pooling": {
+   "usable": false,
+   "pass": true,
+   "offenders": [],
+   "voters": 0
+  }
+ },
+ "persian-hidden-flash-5795": {
+  "card": "routing",
+  "tier": "medium",
+  "needs": {
+   "grade": "directional",
+   "pool_or_replication": true,
+   "replication": false
+  },
+  "sufficient": false,
+  "missing": [
+   "preregistration: margin and minimum effect were not fixed before the run",
+   "per-language evidence: Persian (n 27, short by 3)",
+   "pool or replication: a medium stake needs a registered homogeneous pool at decision grade, decision grade alone, or a replication"
+  ],
+  "languages": {
+   "Persian": {
+    "n": 27,
+    "grade": "exploratory",
+    "cleared": false,
+    "short_by": 3,
+    "why": [
+     "27 referenced books (exploratory); needs directional"
+    ]
+   }
+  },
+  "cleared": [],
+  "pooling": {
+   "usable": false,
+   "pass": null,
+   "offenders": [],
+   "voters": 0
+  }
+ },
+ "ocr-trust-gate-5761": {
+  "card": "gate",
+  "kind": "hold",
+  "sufficient": false,
+  "provisional": true,
+  "missing": [
+   "preregistration: the threshold was not fixed before the run",
+   "stratum Latin incunabula: upper bound 4.21 is not under 4"
+  ],
+  "strata": {
+   "Greek manuscripts": {
+    "n": 12,
+    "mean": 2.54,
+    "ci": [
+     1.86,
+     3.23
+    ],
+    "status": "provisional",
+    "short_by": 18
+   },
+   "Greek print 1450–1599": {
+    "n": 15,
+    "mean": 3.4,
+    "ci": [
+     2.86,
+     3.94
+    ],
+    "status": "provisional",
+    "short_by": 15
+   },
+   "Persian": {
+    "n": 12,
+    "mean": 2.96,
+    "ci": [
+     2.39,
+     3.52
+    ],
+    "status": "provisional",
+    "short_by": 18
+   },
+   "Latin incunabula": {
+    "n": 10,
+    "mean": 3.55,
+    "ci": [
+     2.89,
+     4.21
+    ],
+    "status": "not supported",
+    "short_by": 20
+   }
+  }
+ },
+ "vernacular-pooling-t3": {
+  "pass": false,
+  "offenders": [
+   "French"
+  ],
+  "voters": 3
+ }
+}

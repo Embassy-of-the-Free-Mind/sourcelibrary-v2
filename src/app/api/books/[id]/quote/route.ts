@@ -48,10 +48,10 @@ const QUOTE_BOOK_PROJECTION = {
  * Page — resolveQuoteText: translation.data, ocr.data, translations,
  * translation_es; romanizedForQuote: transliteration, ocr.data;
  * containsMarginalia: ocr.data; getPageImageUrl(page, 'display') for
- * ?include_image=true: the image-field family below; citation: id.
+ * ?include_image=true: the image-field family below; citation: id, printed_page.
  */
 const QUOTE_PAGE_PROJECTION = {
-  _id: 0, id: 1, page_number: 1,
+  _id: 0, id: 1, page_number: 1, printed_page: 1,
   'ocr.data': 1, 'translation.data': 1, translations: 1, translation_es: 1, transliteration: 1,
   photo: 1, photo_original: 1, archived_photo: 1, display_photo: 1, cropped_photo: 1, enhanced_photo: 1,
   thumbnail: 1, thumbnail_blob: 1, image_thumb: 1, crop: 1, split_from_spread: 1,
@@ -108,7 +108,14 @@ interface QuoteResponse {
      * transliteration that is still current against its OCR.
      */
     romanized?: string;
+    /** The scan index: the N in ?page=N and in the reader URL. */
     page: number;
+    /**
+     * The page number printed on the leaf, where the book's own pagination vouches for it
+     * (#4291): "217" on Fludd's scan 219. Cite it, not `page`: the citation formats already
+     * do ("p. 217 [scan 219]"). Absent where no printed number was fitted.
+     */
+    printed_page?: string;
     book_id: string;
     book_title: string;
     display_title?: string;
@@ -245,6 +252,11 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
     const editions = (book.editions || []) as TranslationEdition[];
     const currentEdition = editions.find(e => e.status === 'published');
 
+    // The citation links follow the edition actually served, never the one
+    // asked for — a `/es` URL for a book we fell back on would 307 straight
+    // back to English.
+    const citation = generateCitations(book, pageNumber, resolvedBookId, page.id, getRequestBaseUrl(request.headers), currentEdition, quotable.lang, page.printed_page);
+
     // Build response
     const response: QuoteResponse = {
       quote: {
@@ -273,6 +285,7 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
           ? { contains_marginalia: true, marginalia_note: MARGINALIA_NOTE }
           : {}),
         page: pageNumber,
+        ...(citation.printed_page ? { printed_page: citation.printed_page } : {}),
         book_id: book.id,
         book_title: book.title,
         display_title: book.display_title,
@@ -281,10 +294,7 @@ export const GET = withApiAuth(async (request: NextRequest, context: RouteContex
         language: book.language,
         ...languageApparatusFields(book),
       },
-      // The citation links follow the edition actually served, never the one
-      // asked for — a `/es` URL for a book we fell back on would 307 straight
-      // back to English.
-      citation: generateCitations(book, pageNumber, resolvedBookId, page.id, getRequestBaseUrl(request.headers), currentEdition, quotable.lang),
+      citation,
       license: CONTENT_LICENSE,
     };
 

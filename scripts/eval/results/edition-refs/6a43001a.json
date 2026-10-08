@@ -1,0 +1,104 @@
+{
+  "summary": {
+    "book_id": "6a43001a4e06bc233ecf5ef6",
+    "title": "Amoris Christiani Mnēmoneutikón: sive concio ad clerum, habita in visitatione metropoliticâ Ecclesiæ Cathedralis Sarum. Jul. 12. anno Domini, 1686. Ab Edvardo Young, E.S.P.",
+    "published": "1686",
+    "source": "EEBO-TCP A67819",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 6,
+    "skips": {
+      "probe-too-short": 2
+    },
+    "median_char_acc": 0.9017,
+    "median_char_acc_windowed": 0.9017,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a43001a-p2",
+      "page": 2,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a43001a-p6",
+      "page": 6,
+      "overlap": 0.827,
+      "probe_words": 53,
+      "ref_chars": 385,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.279,
+      "char_acc": 0.8842,
+      "char_acc_windowed": 0.8842
+    },
+    {
+      "slug": "ed-6a43001a-p9",
+      "page": 9,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a43001a-p14",
+      "page": 14,
+      "overlap": 0.912,
+      "probe_words": 61,
+      "ref_chars": 516,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.215,
+      "char_acc": 0.8465,
+      "char_acc_windowed": 0.8465
+    },
+    {
+      "slug": "ed-6a43001a-p15",
+      "page": 15,
+      "overlap": 0.859,
+      "probe_words": 65,
+      "ref_chars": 506,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.333,
+      "char_acc": 0.9017,
+      "char_acc_windowed": 0.9017
+    },
+    {
+      "slug": "ed-6a43001a-p16",
+      "page": 16,
+      "overlap": 0.889,
+      "probe_words": 75,
+      "ref_chars": 558,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.319,
+      "char_acc": 0.8962,
+      "char_acc_windowed": 0.8916
+    },
+    {
+      "slug": "ed-6a43001a-p17",
+      "page": 17,
+      "overlap": 0.852,
+      "probe_words": 65,
+      "ref_chars": 529,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.247,
+      "char_acc": 0.9318,
+      "char_acc_windowed": 0.9294
+    },
+    {
+      "slug": "ed-6a43001a-p22",
+      "page": 22,
+      "overlap": 0.754,
+      "probe_words": 64,
+      "ref_chars": 492,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.286,
+      "char_acc": 0.9124,
+      "char_acc_windowed": 0.9124
+    }
+  ]
+}

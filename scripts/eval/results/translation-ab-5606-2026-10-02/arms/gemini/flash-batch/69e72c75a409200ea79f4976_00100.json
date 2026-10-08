@@ -1,0 +1,21 @@
+{
+ "id": "69e72c75a409200ea79f4976_00100",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "Give them wine to drink to observe their patterns and rules of conduct. Place them in a mix of company to observe their composure and facial expression. Through these nine tests <note>nine ways of evaluating character mentioned in the preceding text</note>, even those who are unworthy will be revealed.\n\nWhen Zheng Kaofu <margin>A member of the ducal clan of the state of Song and a tenth-generation ancestor of Confucius</margin> received his first commission <margin>The rank of an officer</margin>, he walked with his head bowed <margin>Bending the back</margin>. When he received his second commission <margin>The rank of a Great Officer</margin>, he walked with his back stooped. When he received his third commission <margin>The rank of a High Minister</margin>, he walked with his body bent low <margin>Bowing the body, not daring to take up space on the road</margin>. He followed along the walls while running <margin>Such was the record of Kaofu. Who would dare not take him as a model?</margin>. Who would dare not follow such a standard?\n\nBut as for an ordinary man <margin>Literally nine men, referring to common people</margin>, when he receives his first commission, he becomes arrogant and self-important <margin>Appearance of pride and conceit</margin>. Upon his second commission, he dances atop his carriage <margin>Riding in a carriage with a haughty air</margin>. Upon his third commission, he addresses his paternal uncles by their personal names <margin>Calling his elders by name</margin>.\n\nHow great was the yielding virtue of Xu You in the past! <margin>How great was Xu You's virtue in declining the throne</margin>. Having a conscious intention to be virtuous is the thief of virtue <margin>To act with a calculated mind for virtue is to destroy virtue</margin>. When the mind is enslaved by the appearance of the eyes and lashes, virtue becomes even more of a pretense <margin>The more one forces it through the senses, the further virtue is falsified</margin>. If one looks inward from this state, the mind remains in constant turmoil and can never achieve true virtue or advance toward the Dao <margin>Looking inward with a cluttered mind prevents spiritual progress</margin>. \n\nAmong the harmful forms of virtue, there are five <margin>Referring to the disturbances caused by the eyes, ears, nose, tongue, and mind</margin>, and the mind <margin>The center of these disturbances</margin> is the chief among them. <unclear>協</unclear> <note>The character is unclear but appears to be a scribal mark or corrupted text</note> Tang <note>The Emperor Yao</note> and Xu <note>Xu You</note> said: There is no greater thief than a virtue held with conscious intent, for such a mind looks through its own eyelashes <note>Meaning it is limited by its own perceptions and ego</note>. When the mind acts with such superficial quickness, it focuses on internal appearances, and by focusing on internal appearances, it is ruined. There are five harmful forms of virtue, and the central one is the most destructive.\n\n<summary>This page contrasts the humility of the ancestor Zheng Kaofu with the arrogance of common men when granted power, while also warning that intentional, self-conscious virtue is a hindrance to the Dao.</summary>\n<keywords>Zheng Kaofu, humility, arrogance, Xu You, virtue, inner vision, Daoist ethics, nine tests of character</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2316,
+ "outputTokens": 739,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.0016874999999999998,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 862,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

@@ -351,6 +351,14 @@ export interface ReaderStrings {
     transcriptChipIaTitle: (agreement: number | null) => string;
     transcriptChipManual: string;
     transcriptChipCorpus: (shortName: string) => string;
+    /** Open e-text fitted to the scan (#5571): "Text: CBETA, CC BY-NC-SA 4.0". The pane line passes the full name. */
+    transcriptChipTextSource: (shortName: string, license: string) => string;
+    /** Drawer form: full source name, version when known, licence. */
+    textSourceTranscript: (name: string, license: string, version: string | null) => string;
+    /** Translation pane line and drawer line for an unreviewed machine translation (#5571). */
+    machineDraftNotice: string;
+    licenceLink: string;
+    sourceLink: string;
     corpusTranslation: (name: string) => string;
     corpusNotice: string;
     corpusAiNotice: (name: string) => string;
@@ -393,6 +401,16 @@ export interface ReaderStrings {
     blankPage: string;
     readyToTranslate: string;
     readyToTranslateBody: string;
+    /**
+     * An English edition with no `translation.data` is not "untranslated" —
+     * the pipeline never translates English. The transcription is the
+     * reading text; say so, with no request CTA and no pipeline button.
+     */
+    englishReadingText: string;
+    englishReadingTextBody: string;
+    /** Pre-1700 English: a modernized reading (same field) could be made but has not been (#4958). */
+    notModernized: string;
+    notModernizedBody: string;
     signInToRequest: string;
     requestTranslation: string;
     /** The request POST failed, so nothing was queued. */
@@ -834,6 +852,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         (agreement != null ? ` · agrees with our sample reading on ${Math.round(agreement * 100)}% of words` : ''),
       transcriptChipManual: 'Manual',
       transcriptChipCorpus: (shortName) => `Corpus: ${shortName}`,
+      transcriptChipTextSource: (shortName, license) => `Text: ${shortName}, ${license}`,
+      textSourceTranscript: (name, license, version) => `Text: ${name}${version ? ` (${version})` : ''}, ${license}`,
+      machineDraftNotice: 'AI translation, not yet reviewed by a scholar.',
+      licenceLink: 'licence',
+      sourceLink: 'source',
       corpusTranslation: (name) => `Scholarly translation from the ${name} — not machine-made`,
       corpusNotice: 'This page reproduces a scholarly corpus edition: the transliteration and translation are the work of its editors, not of AI. The page divisions are ours — the corpus divides the text by lines, not pages.',
       corpusAiNotice: (name) => `The transliteration follows the ${name}; the English is a machine translation of it and may contain errors.`,
@@ -858,6 +881,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       blankPage: 'Blank page.',
       readyToTranslate: 'Ready to translate',
       readyToTranslateBody: 'OCR is complete for this page. It has not been translated into English yet.',
+      englishReadingText: 'English edition',
+      englishReadingTextBody: 'This book is in English — the transcription is the reading text. There is nothing to translate.',
+      notModernized: 'Not yet modernized',
+      notModernizedBody: 'This book is in Early Modern English. A modernized reading has not been made yet; the transcription is the reading text.',
       signInToRequest: 'Sign in to request a translation',
       requestTranslation: 'Request translation',
       requestFailed: 'That request did not go through. Try again in a moment.',
@@ -1266,6 +1293,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         (agreement != null ? ` · coincide con nuestra lectura de muestra en el ${Math.round(agreement * 100)}% de las palabras` : ''),
       transcriptChipManual: 'Manual',
       transcriptChipCorpus: (shortName) => `Corpus: ${shortName}`,
+      transcriptChipTextSource: (shortName, license) => `Texto: ${shortName}, ${license === 'public domain' ? 'dominio público' : license}`,
+      textSourceTranscript: (name, license, version) => `Texto: ${name}${version ? ` (${version})` : ''}, ${license === 'public domain' ? 'dominio público' : license}`,
+      machineDraftNotice: 'Traducción por IA, aún no revisada por un especialista.',
+      licenceLink: 'licencia',
+      sourceLink: 'fuente',
       corpusTranslation: (name) => `Traducción académica procedente de ${name} — no es obra de una máquina`,
       corpusNotice: 'Esta página reproduce una edición académica de corpus: la transliteración y la traducción son obra de sus editores, no de la IA. La división en páginas es nuestra — el corpus divide el texto por líneas, no por páginas.',
       corpusAiNotice: (name) => `La transliteración sigue ${name}; el inglés es una traducción automática de ella y puede contener errores.`,
@@ -1290,6 +1322,10 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       blankPage: 'Página en blanco.',
       readyToTranslate: 'Lista para traducir',
       readyToTranslateBody: 'La transcripción de esta página está completa. Todavía no se ha traducido al inglés.',
+      englishReadingText: 'Edición en inglés',
+      englishReadingTextBody: 'Este libro está en inglés — la transcripción es el texto de lectura. No hay nada que traducir.',
+      notModernized: 'Aún sin modernizar',
+      notModernizedBody: 'Este libro está en inglés moderno temprano. Todavía no se ha hecho una lectura modernizada; la transcripción es el texto de lectura.',
       signInToRequest: 'Inicia sesión para pedir una traducción',
       requestTranslation: 'Pedir la traducción',
       requestFailed: 'La solicitud no se ha enviado. Inténtalo de nuevo en un momento.',

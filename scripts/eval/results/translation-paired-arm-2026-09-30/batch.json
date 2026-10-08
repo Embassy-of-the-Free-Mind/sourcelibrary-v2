@@ -1,0 +1,57 @@
+{
+  "key_env": "GEMINI_API_KEY_TIER3",
+  "estimate_usd": 1.7643,
+  "jobs": [
+    {
+      "model": "gemini-3.1-flash-lite",
+      "job_name": "batches/8mkg7a3xurhmraaw1gj9oy1wduyyk0dm1vz7",
+      "file_name": "files/6wc8aple2n1i",
+      "requests": 610,
+      "submitted_at": "2026-09-30T09:43:17.786Z",
+      "collected_at": "2026-09-30T09:45:36.280Z",
+      "responses": 610,
+      "outcomes": {
+        "text": 608,
+        "empty": 2
+      },
+      "in_tokens": 1872594,
+      "out_tokens": 413198,
+      "cost_usd": 0.54397275,
+      "usage_logged": true
+    },
+    {
+      "model": "gemini-3-flash-preview",
+      "job_name": "batches/dsi8n9ngh8b4rnn26whgikjazknf48a7jk7p",
+      "file_name": "files/jb6b9rw9ofvb",
+      "requests": 305,
+      "submitted_at": "2026-09-30T09:43:25.845Z",
+      "collected_at": "2026-09-30T09:45:37.186Z",
+      "responses": 305,
+      "outcomes": {
+        "error": 305
+      },
+      "in_tokens": 0,
+      "out_tokens": 0,
+      "cost_usd": 0,
+      "usage_logged": true
+    },
+    {
+      "model": "gemini-3-flash-preview",
+      "job_name": "batches/q6cm21qu9yy6n7j63z61p0qecrgxdpcvb5m0",
+      "file_name": "files/dn059vnfs53s",
+      "requests": 305,
+      "submitted_at": "2026-09-30T09:46:37.262Z",
+      "retry": true,
+      "collected_at": "2026-09-30T09:50:44.324Z",
+      "responses": 305,
+      "outcomes": {
+        "text": 304,
+        "refusal": 1
+      },
+      "in_tokens": 936297,
+      "out_tokens": 219202,
+      "cost_usd": 0.56287725,
+      "usage_logged": true
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+ "model": "Qwen/Qwen3-8B",
+ "pairs": 18587,
+ "steps": 1162,
+ "wall_s": 3771.1,
+ "tokens_seen": 22861784,
+ "attn": "flash_attention_2",
+ "padding_free": true,
+ "bs": 8,
+ "accum": 2,
+ "probe": false,
+ "final_loss": 0.7391,
+ "gpu": "NVIDIA H100 80GB HBM3",
+ "lora": {"r": 16, "alpha": 32, "dropout": 0, "targets": "q,k,v,o,gate,up,down"},
+ "lr": "2e-4 cosine, warmup 3%",
+ "epochs": 1,
+ "note": "copied from adapter-qwen/train-summary.json as printed on the pod (the file itself is inside the adapter tarball in R2)"
+}

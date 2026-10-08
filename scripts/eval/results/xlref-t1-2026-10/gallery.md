@@ -1,0 +1,28 @@
+# T1 Latin — gallery (served English vs public-domain reference), #5695
+
+15 pages: 5 best / 5 median / 5 worst by mean fidelity of two blind Opus judges. Every reference here is public domain, so every item is `publishable: true` (source, reference and our English may all be quoted in full). Full side-by-side text: `gallery-served.md` (harness output). Cause labels for the worst five come from opening the page image (`image-check/`).
+
+| | page | work (our edition) → reference | fidelity | defect class | one-sentence diagnosis | cause | publishable |
+|---|---|---|---|---|---|---|---|
+| best | [Newton, *Principia* 1687 p347](https://sourcelibrary.org/book/15c5d8e4-cea3-4b5b-9859-f3528660ecc8?page=347) | Motte 1729 | 5 | none | A geometrical proof rendered clause for clause; ratios and letters all intact. | — | true |
+| best | [*Asclepius* 1532 p159](https://sourcelibrary.org/book/690989d5cf28baa1b4cae1c9?page=159) | Mead 1906 | 5 | none | Plain crib where Mead is hieratic; same meaning throughout. | — | true |
+| best | [Agrippa, *De occulta philosophia* 1550 p277](https://sourcelibrary.org/book/694bf8d2343422769f237558?page=277) | J.F. 1651 | 5 | none | Ours keeps clauses the 1651 version folds together. | — | true |
+| best | [Geber, *Summa perfectionis* 1542 p167](https://sourcelibrary.org/book/695262d8ab34727b1f046ade?page=167) | Russell 1678 | 5 | none | Technical recipe prose; cover-names (Luna, Mars) translated and glossed. | — | true |
+| best | [Bacon, *Historia vitae et mortis* 1623 p237](https://sourcelibrary.org/book/69529509b184004c526a2793?page=237) | Spedding 1858 | 5 | none | Short aphoristic page, nothing lost. | — | true |
+| median | [Paracelsus, *Aurora* 1577 p29](https://sourcelibrary.org/book/69520185ab34727b1f0416bc?page=29) | Waite 1894 | 4 | mistranslation (minor), T10 | "sui duplo … lunae" (twice its weight) became "twice as much of their own Moon"; a continuity note states the wrong previous page. | translation | true |
+| median | [*Gloria mundi*, Musaeum Hermeticum 1678 p250](https://sourcelibrary.org/book/695203a5ab34727b1f041c53?page=250) | Waite 1893 | 4 | mistranslation (minor) | "gratis reperiatur" (found for nothing) became "found by grace". | translation | true |
+| median | [Geber, *Alchemiae Gebri* 1545 p108](https://sourcelibrary.org/book/69526191ab34727b1f046982?page=108) | Russell 1678 | 4 | mistranslation (minor) | "ligneum" (wooden) in a margin became "iron [rod]". | translation | true |
+| median | [Van Helmont, *Ortus medicinae* 1648 p434](https://sourcelibrary.org/book/6952855fab34727b1f04b383?page=434) | Chandler 1662 | 4 | mistranslation (minor) | Adds "or elsewhere" that the Latin does not have. | translation | true |
+| median | [Swedenborg, *Vera Christiana Religio* 1771 p499](https://sourcelibrary.org/book/6952872cab34727b1f04d284?page=499) | Ager 1907 | 4 | T8 (minor) | Drops "modo" (only): a qualifier, not the claim. | translation | true |
+| worst | [Boyle, *De fluiditate* 1667 p389](https://sourcelibrary.org/book/69b2ffad5545150b61b4901a?page=389) | Boyle's own English 1669 | 1 | T4 block shift | The served English is the text of the PREVIOUS page; the OCR matches the image word for word. | page seam / block shift | true |
+| worst | [Cicero, *De officiis* 1465 p87](https://sourcelibrary.org/book/69dbc9491040d1d5e20a1afd?page=87) | Miller 1913 | 2 | T8, T7 | Fust–Schoeffer type: the OCR dropped nearly every abbreviation mark (48 of ~190 words wrong; image "iniuste imperanti", OCR "iuste imperati"), and the English renders the misreading fluently: "rightly governed". | OCR (abbreviations) | true |
+| worst | [Sendivogius, *Novum lumen* 1628 p81](https://sourcelibrary.org/book/690986dccf28baa1b4cae0e3?page=81) | Waite 1893 | 2 | T9 | The OCR holds a two-page spread, the image and the English only the second page; the "omission" is a pairing defect, not a dropped passage. | page seam (spread) | true |
+| worst | [Aquinas, *Summa* I 1484 p330](https://sourcelibrary.org/book/69dbcc3e0f8c5edf20f484a0?page=330) | Dominican Fathers 1920 | 2.5 | T8, T9 | Heavily abbreviated gothic: ~270 of ~900 words unresolved or skipped in the OCR; the English fills the gaps. With a corrected transcription the same model scores 5. | OCR (abbreviations) | true |
+| worst | [Erasmus, *Moriae encomium* 1540 p196](https://sourcelibrary.org/book/69b2ff19a1a4246ddb45ae6a?page=196) | Wilson 1668 | 3 | T8 | "nemini non invidens" (envying everyone) became "envying no one": a double negative read as a single one; the OCR is exact. | translation | true |
+
+## Two pages where ours and the reference make different legitimate choices (for the principles discussion, not errors)
+
+1. **Erasmus, *Colloquia* 1636, [p223](https://sourcelibrary.org/book/69b21c6c429e087c6f8646f6?page=223)** — Bailey (1725) recasts the dialogue into racy colloquial English of his own day ("a Dose of Fuddle"); ours follows the Latin word by word in neutral modern English. Fidelity 4.5. Bailey keeps the *genre* (a comic dialogue that should sound spoken); ours keeps the *words*. Stance: reference free, ours literal.
+2. **Hermes, *Asclepius* 1532, [p159](https://sourcelibrary.org/book/690989d5cf28baa1b4cae1c9?page=159)** — Mead (1906) archaises into a hieratic, rhythmic voice and re-Hellenises the Latin's terms (Cosmos, ensouled); ours is a plain crib of the Latin as printed. Fidelity 5. Mead translates the *lost Greek behind* the Latin; ours translates *this* text. Stance: reference literal-archaising, ours literal-plain.
+
+Other strong candidates in `dimensions.json` (`legit_choice_pages`, 54 of 71 pages): Lipsius/Stradling 1594 (oratorical doublets vs plain), Milton/Washington 1692 (Senatus → Parliament), Gilbert/Thompson (period "versatory" vs glossed "dip").

@@ -7,7 +7,7 @@
 // of page images for OCR↔image alignment — needs the image bytes, which the mirror does not
 // hold). Nothing in scripts/audit/ or scripts/lib/ reads <page-num> or the catchword.
 /**
- * page-integrity — five exact checks over text we already store (local mirror, no model).
+ * page-integrity — exact checks over text we already store (local mirror, no model).
  *
  * The OCR prompt (v4.2026-02 on) tags every page with the PRINTED page number (<page-num>),
  * the catchword (<meta>catchword: …</meta>), running head and signature. An early printed book
@@ -17,9 +17,12 @@
  *
  *   1. catchwordBoundary()  — does page N+1 open with page N's catchword?
  *   2. pageNumberBreaks()   — is the printed number sequence monotone at the book's rate?
+ *      fitPrintedPages()    — the same fit, read the other way: which printed page is each scan?
  *   3. duplicateScan()      — is OCR N+1 (nearly) the same text as OCR N?
  *   4. truncationRatio()    — is the translation far shorter than its source?
  *   5. echoedSource()       — does the "translation" contain the source verbatim?
+ *   (6–7, the page-error taxonomy checks, are listed at their section below)
+ *   8. metaPayload()        — is page text hidden inside the continuity <meta>?
  *
  * Every detector returns an explicit UNJUDGEABLE state (null / { judged: false, why }) for an
  * input it cannot read — a caseless or CJK "catchword" that is really the fore-edge title, a
@@ -299,7 +302,10 @@ export function parsePageNum(ocr) {
 export const MAX_SCAN_GAP = 4;
 export const MAX_OUTLIER_RUN = 2;
 export const MIN_FIT_SHARE = 0.75;
-export function pageNumberBreaks(pages) {
+
+/** The numbered text pages of a book, split by numbering kind (shared by pageNumberBreaks and
+ *  fitPrintedPages, so both read one sequence). */
+function numberedByKind(pages) {
   const byKind = { arabic: [], roman: [], folio: [] };
   let tagged = 0, other = 0;
   pages.forEach((r, idx) => {
@@ -312,53 +318,72 @@ export function pageNumberBreaks(pages) {
     if (v.kind === 'other') { other++; return; }
     byKind[v.kind].push({ idx, p: r.p, value: v.value, span: v.span });
   });
-  const out = { tagged, other, kinds: {}, breaks: [], outliers: [] };
-  for (const [kind, seq] of Object.entries(byKind)) {
-    if (seq.length < 4) { if (seq.length) out.kinds[kind] = { n: seq.length, judged: false, why: 'too-few' }; continue; }
-    const ratios = [];
-    for (let k = 1; k < seq.length; k++) {
-      const ds = seq[k].p - seq[k - 1].p, dv = seq[k].value - seq[k - 1].value;
-      if (ds >= 1 && ds <= 2 && dv > 0 && dv <= 4) ratios.push(dv / ds);
-    }
-    if (ratios.length < 3) { out.kinds[kind] = { n: seq.length, judged: false, why: 'no-rate' }; continue; }
-    ratios.sort((a, b) => a - b);
-    const med = ratios[Math.floor(ratios.length / 2)];
-    const rate = [0.5, 1, 2].find(r => Math.abs(med - r) < 0.01);
-    if (rate == null) { out.kinds[kind] = { n: seq.length, judged: false, why: 'irregular', median: med }; continue; }
-    // Offset of each number from its scan position, in scan units: constant along a clean run.
-    const off = (e) => e.value / rate - e.p;
-    // A "page number" that is really a section, entry or plate number (10, 10, 10, 11, …) or
-    // two interleaved sequences fits its own rate on few adjacent pairs: not a pagination.
-    let near = 0, fit = 0;
-    for (let k = 1; k < seq.length; k++) {
-      if (seq[k].p - seq[k - 1].p > MAX_SCAN_GAP) continue;
-      near++; if (off(seq[k]) === off(seq[k - 1])) fit++;
-    }
-    const fitShare = near ? fit / near : 0;
-    if (fitShare < MIN_FIT_SHARE) { out.kinds[kind] = { n: seq.length, judged: false, why: 'irregular', rate, fitShare: +fitShare.toFixed(2) }; continue; }
-    // Runs of equal offset; a run of ≤ MAX_OUTLIER_RUN numbers whose neighbouring runs share one
-    // offset is a misprint or an OCR misread (…, 111, 118, 18, 114, …), not a leaf problem.
-    let runs = [];
-    for (const e of seq) {
-      const last = runs[runs.length - 1];
-      if (last && off(last[0]) === off(e)) last.push(e); else runs.push([e]);
-    }
-    for (let changed = true; changed;) {
-      changed = false;
-      for (let r = 1; r + 1 < runs.length && !changed; r++) {
-        // try the next 1..m runs together (two different misreads in a row are two runs)
-        for (let m = 1; r + m < runs.length; m++) {
-          const mid = runs.slice(r, r + m).flat();
-          if (mid.length > MAX_OUTLIER_RUN) break;
-          const prev = runs[r - 1], next = runs[r + m];
-          if (off(prev[0]) !== off(next[0]) || next[0].p - prev[prev.length - 1].p > MAX_SCAN_GAP + MAX_OUTLIER_RUN) continue;
-          for (const e of mid) out.outliers.push({ numbering: kind, p: e.p, value: e.value, expected: Math.round((off(prev[0]) + e.p) * rate) });
-          runs.splice(r - 1, m + 2, [...prev, ...next]);
-          changed = true;
-          break;
-        }
+  return { byKind, tagged, other };
+}
+
+/**
+ * Fit ONE numbering's sequence: its rate, then runs of constant offset with short off-line runs
+ * (misprints, misreads) merged away. Returns { judged:false, ... } for a sequence that is not a
+ * pagination, else { judged:true, rate, fitShare, off, runs, outliers }.
+ */
+function fitNumbering(kind, seq) {
+  if (seq.length < 4) return { info: { n: seq.length, judged: false, why: 'too-few' } };
+  const ratios = [];
+  for (let k = 1; k < seq.length; k++) {
+    const ds = seq[k].p - seq[k - 1].p, dv = seq[k].value - seq[k - 1].value;
+    if (ds >= 1 && ds <= 2 && dv > 0 && dv <= 4) ratios.push(dv / ds);
+  }
+  if (ratios.length < 3) return { info: { n: seq.length, judged: false, why: 'no-rate' } };
+  ratios.sort((a, b) => a - b);
+  const med = ratios[Math.floor(ratios.length / 2)];
+  const rate = [0.5, 1, 2].find(r => Math.abs(med - r) < 0.01);
+  if (rate == null) return { info: { n: seq.length, judged: false, why: 'irregular', median: med } };
+  // Offset of each number from its scan position, in scan units: constant along a clean run.
+  const off = (e) => e.value / rate - e.p;
+  // A "page number" that is really a section, entry or plate number (10, 10, 10, 11, …) or
+  // two interleaved sequences fits its own rate on few adjacent pairs: not a pagination.
+  let near = 0, fit = 0;
+  for (let k = 1; k < seq.length; k++) {
+    if (seq[k].p - seq[k - 1].p > MAX_SCAN_GAP) continue;
+    near++; if (off(seq[k]) === off(seq[k - 1])) fit++;
+  }
+  const fitShare = near ? fit / near : 0;
+  if (fitShare < MIN_FIT_SHARE) return { info: { n: seq.length, judged: false, why: 'irregular', rate, fitShare: +fitShare.toFixed(2) } };
+  // Runs of equal offset; a run of ≤ MAX_OUTLIER_RUN numbers whose neighbouring runs share one
+  // offset is a misprint or an OCR misread (…, 111, 118, 18, 114, …), not a leaf problem.
+  const outliers = [];
+  let runs = [];
+  for (const e of seq) {
+    const last = runs[runs.length - 1];
+    if (last && off(last[0]) === off(e)) last.push(e); else runs.push([e]);
+  }
+  for (let changed = true; changed;) {
+    changed = false;
+    for (let r = 1; r + 1 < runs.length && !changed; r++) {
+      // try the next 1..m runs together (two different misreads in a row are two runs)
+      for (let m = 1; r + m < runs.length; m++) {
+        const mid = runs.slice(r, r + m).flat();
+        if (mid.length > MAX_OUTLIER_RUN) break;
+        const prev = runs[r - 1], next = runs[r + m];
+        if (off(prev[0]) !== off(next[0]) || next[0].p - prev[prev.length - 1].p > MAX_SCAN_GAP + MAX_OUTLIER_RUN) continue;
+        for (const e of mid) outliers.push({ numbering: kind, p: e.p, value: e.value, expected: Math.round((off(prev[0]) + e.p) * rate) });
+        runs.splice(r - 1, m + 2, [...prev, ...next]);
+        changed = true;
+        break;
       }
     }
+  }
+  return { judged: true, rate, fitShare, off, runs, outliers };
+}
+
+export function pageNumberBreaks(pages) {
+  const { byKind, tagged, other } = numberedByKind(pages);
+  const out = { tagged, other, kinds: {}, breaks: [], outliers: [] };
+  for (const [kind, seq] of Object.entries(byKind)) {
+    const f = fitNumbering(kind, seq);
+    if (!f.judged) { if (seq.length) out.kinds[kind] = f.info; continue; }
+    const { rate, runs } = f;
+    out.outliers.push(...f.outliers);
     const keep = runs.flat();
     let judged = 0, nBreaks = 0;
     for (let k = 1; k < keep.length; k++) {
@@ -427,6 +452,104 @@ export function pageNumMisreads(pages) {
     else cause = 'misread';
     return { p: o.p, numbering: o.numbering, tag: raw, value: o.value, expected: o.expected, expectedPrinted, cause };
   });
+}
+
+// ── 2b. the printed page a reader holds (#4291) ───────────────────────────────────────────
+
+/**
+ * The running-head number of a page whose OCR predates the <page-num> tag. Those vintages
+ * transcribed the head as the first line ("DE TRIPL. ANIM. IN CORP. VISION. 217",
+ * "210 TRACT. I. SECT. I. LIB. X."). Returns the arabic number standing first or last on a
+ * short first line, else null. Tagged OCR never qualifies: there a missing <page-num> is the
+ * model saying the leaf carries none, and the first line is a tag. One head is trusted no more
+ * than one tag; fitPrintedPages keeps only numbers the book's own sequence corroborates.
+ */
+export function runningHeadNumber(ocr) {
+  const o = String(ocr || '');
+  if (/<(?:page-num|page-type|language|header)\b/i.test(o)) return null;
+  const line = o.split('\n').map(l => l.replace(/&nbsp;/g, ' ').replace(/^[\s#*_>|]+|[\s*_|]+$/g, '')).find(Boolean);
+  if (!line || line.length > 100) return null;
+  const toks = line.split(/\s+/);
+  for (const t of [toks[0], toks[toks.length - 1]]) {
+    const d = asciiDigits(t).replace(/^[[(]+|[\]).,:;]+$/g, '');
+    if (/^\d{1,4}$/.test(d)) return d;
+  }
+  return null;
+}
+
+/** A scan must sit in a run of at least this many numbers at one offset to be labelled. */
+export const PRINTED_MIN_RUN = 3;
+
+function printedLabel(kind, rate, value) {
+  const fmt = (v) => kind === 'roman' ? toRoman(v) : String(v);
+  if (kind === 'folio') return `${value >> 1}${value & 1 ? 'v' : 'r'}`;
+  if (rate === 0.5) return Number.isInteger(value) ? `${fmt(value)}r` : `${fmt(Math.floor(value))}v`; // numbered rectos: leaves
+  if (rate === 2) return `${fmt(value)}–${fmt(value + 1)}`; // one scan, two printed pages
+  return fmt(value);
+}
+
+/**
+ * The printed page number of every scan the book's own pagination vouches for (#4291): a
+ * per-book offset model, never one page's say-so. `pages` = rows in scan order {p, ocr, type}.
+ * Per numbering kind it runs the fit pageNumberBreaks uses, then labels a scan only when it
+ * sits in a run of ≥ PRINTED_MIN_RUN numbers at one offset:
+ *   method 'read'          its own number lies on the run's line
+ *   method 'interpolated'  it carries no number (a chapter opening, a plate inside the
+ *                          pagination) and lies between two run members ≤ MAX_SCAN_GAP scans
+ *                          apart, so the constant offset fixes it
+ * Never labelled: an outlier (a misread or a misprint; either way a citation from it is
+ * wrong), a member of a shorter run, a scan two numberings both claim.
+ * { head: true } also reads runningHeadNumber() on untagged OCR (source 'head', else 'tag').
+ *
+ * Returns { kinds, labels: Map<p, { label, numbering, rate, method, source, run_len,
+ * fit_share }>, skipped: { outlier, short_run, conflict } }. `label` is a string: romans
+ * ("xii"), leaves ("12v") and spreads ("12–13") are not integers.
+ */
+export function fitPrintedPages(pages, { head = false, minRun = PRINTED_MIN_RUN } = {}) {
+  const source = new Map();
+  const rows = pages.map((r) => {
+    if (/<page-num>/i.test(r.ocr || '')) { source.set(r.p, 'tag'); return r; }
+    const h = head ? runningHeadNumber(r.ocr) : null;
+    if (h == null) return r;
+    source.set(r.p, 'head');
+    return { ...r, ocr: `<page-num>${h}</page-num>` };
+  });
+  const { byKind } = numberedByKind(rows);
+  const kinds = {}, claims = new Map();
+  const skipped = { outlier: 0, short_run: 0, conflict: 0 };
+  for (const [kind, seq] of Object.entries(byKind)) {
+    const f = fitNumbering(kind, seq);
+    if (!f.judged) { if (seq.length) kinds[kind] = f.info; continue; }
+    const fitShare = +f.fitShare.toFixed(2);
+    kinds[kind] = { n: seq.length, judged: true, rate: f.rate, fitShare };
+    const outP = new Set(f.outliers.map(o => o.p));
+    const numberedP = new Set(seq.map(e => e.p));
+    skipped.outlier += outP.size;
+    for (const run of f.runs) {
+      if (run.length < minRun) { skipped.short_run += run.length; continue; }
+      const o = f.off(run[0]);
+      const claim = (p, method) => {
+        const value = (p + o) * f.rate;
+        if (!(value > 0)) return;
+        const c = { label: printedLabel(kind, f.rate, value), numbering: kind, rate: f.rate, method,
+          ...(method === 'read' ? { source: source.get(p) } : {}), run_len: run.length, fit_share: fitShare };
+        claims.set(p, [...(claims.get(p) || []), c]);
+      };
+      for (let k = 0; k < run.length; k++) {
+        claim(run[k].p, 'read');
+        const next = run[k + 1];
+        if (next && next.p - run[k].p <= MAX_SCAN_GAP) {
+          for (let p = run[k].p + 1; p < next.p; p++) if (!outP.has(p) && !numberedP.has(p)) claim(p, 'interpolated');
+        }
+      }
+    }
+  }
+  const labels = new Map();
+  for (const [p, cs] of claims) {
+    if (cs.length === 1) labels.set(p, cs[0]);
+    else skipped.conflict++;
+  }
+  return { kinds, labels, skipped };
 }
 
 /** Positive evidence that scan i+1 follows scan i: the catchword chains, or a word broken with
@@ -509,6 +632,95 @@ export function ocrReasoningLeak(ocr) {
   const head = String(ocr || '').slice(0, 600);
   // Not a line merely starting with the English word "thought" — 19 of 20 such hits were prose.
   return /the user wants (?:a|me to|the)\b|\*\*\d\.\s*identify (?:the )?language|^\s*thought\s*\n+\s*(?:the user|okay|ok,|let me|i need|i will|\*\*)/i.test(head);
+}
+/**
+ * The TRANSLATION model's reasoning stored as the page's English (#6056, taxonomy T17, the twin of O15):
+ * "*Wait, the prompt says:* Style: warm museum label", drafts and re-drafts, a checklist of its own rules.
+ * A reader meets it as plain English under the book's title.
+ *
+ * TRANSLATION_LEAK_PREFILTER is the wide net the corpus walk hands to the server
+ * (scripts/audit/translation-reasoning-leak.mjs); it must match every text translationReasoningLeak() matches,
+ * and the unit test pins that on the fixtures. Change the two together, and re-walk after widening the net.
+ */
+export const TRANSLATION_LEAK_PREFILTER = new RegExp([
+  'the prompt (?:says|asks|states|specifies|requires|wants|mentions|said|tells)',
+  'wait, (?:the|i need|i should|i must|i missed|i see|let me|actually|looking at|no,)',
+  '\\*\\(?wait[,:]',
+  'warm museum',
+  'the user (?:wants|asked|has provided|provided|is asking|says|said)',
+  '[*(] ?self-correction|self-correction\\)?\\*?:',
+  "let(?:'s| me) re-?(?:check|read|verify|examine|evaluate|think|translate)",
+  '\\*revised (?:translation|note)',
+  '(?:^|[\\n*(])(?:final )?final (?:check|polish|output|plan|structure)\\b',
+  'writing response',
+  '(?:^|\\n)thought\\n',
+  "i (?:will|should|need to|must|'ll) (?:translate|transcribe|add a note|output|treat the|wrap)",
+  'system prompt',
+  '\\*[^*\\n]{0,50}\\b(?:check|correction|polish|drafting|refinement|formatting|constraints?)\\b[^*\\n]{0,40}:\\*',
+  '(?:source|target) language:?\\*\\*',
+  'the ocr (?:has|says|reads|shows|provides|lists|includes|gives|text (?:has|says|reads|is))',
+  '<(?:meta|note|vocab|term|gloss|summary|keywords)>`? tags?\\b',
+  'please (?:paste|provide|share|supply) the',
+  'once you provide',
+  "(?:text|input|transcription|ocr) (?:that )?you(?:'ve| have)? provided|the provided (?:text|ocr|transcription|input)",
+  'ready to translate',
+].join('|'), 'i');
+/** The phrases that are the model talking to itself about the job, read off the corpus walk's candidates
+ *  (2026-10-06). Each names the prompt, the user, the OCR as an input, a tag as a tag, or is a markdown
+ *  scratchpad label. Bare first-person lines ("I will translate…", "Wait, I…") are NOT here: sermons, dialogues
+ *  and translators' prefaces say them. */
+const TRANSLATION_LEAK_RULE = new RegExp([
+  'warm museum',
+  'the prompt (?:says|asks|states|specifies|requires|wants|mentions|said|tells)',
+  'the user (?:wants|asked|has provided|provided|is asking)',
+  '\\* ?\\(?self-correction|\\(self-correction (?:during|on|while)\\b|\\(self-correction\\)?:',
+  '\\*\\(?wait, (?:the (?:prompt|ocr|greek|latin|text|source|original|input|instructions?)\\b|looking at|i need|i should|i must|i missed|actually|let me)',
+  'wait, (?:the (?:prompt|ocr|source|input|instructions?|user)\\b|the (?:text|original) (?:says|has|reads)|looking at the (?:ocr|source|image|text|prompt))',
+  '\\*(?!(?:we|i|you|they|he|she|let us|to) )[^*\\n]{3,50} check:\\*|\\*(?:final polish|formatting|drafting|constraints?)\\b[^*\\n]{0,40}:\\*',
+  '(?:^|[\\n*(])(?:final )?final (?:check|polish|output|plan|structure)\\b[^\\n]{0,20}:',
+  '\\(ready\\)\\.? writing response',
+  '(?:source|target) language:?\\*\\*',
+  '`<(?:meta|note|vocab|term|gloss|summary|keywords|margin)>` tags?\\b',
+  'system prompt',
+  "let(?:'s| me) re-?(?:check|read|verify|examine|evaluate|translate) (?:the (?:ocr|source|latin|greek|german|text|english|first|prompt|instructions?|translation)|carefully)",
+  "i (?:will|should|need to|must|'ll) (?:translate|transcribe|add a note|output|wrap)[^.\\n]{0,100}(?:the ocr|the prompt|the user|`<|museum|xml|markdown|as requested)",
+].join('|'), 'i');
+/** The model answering whoever sent the request instead of translating: the whole page is a chat reply. */
+const TRANSLATION_REPLY_RULE = /please (?:paste|provide|share|supply) the (?:text|ocr|transcription|source|latin|page)|once you provide (?:the|me with the) (?:text|ocr|transcription|input|source|latin|page)|(?:text|input|transcription|ocr) (?:that )?you(?:'ve| have)? provided/i;
+/** The model naming its input ("the provided OCR begins mid-word"). Mostly inside <meta>, where no reader sees it. */
+const TRANSLATION_INPUT_TALK = /the provided (?:ocr|transcription|input)\b|the provided text (?:is|was|appears|contains|seems|has)/i;
+/** What the reader's metadata panel holds and the page body does not (NotesRenderer, showMetadata=false). */
+const TRANSLATION_PANEL_BLOCKS = /<(meta|summary|keywords|vocab)>[\s\S]*?<\/\1>/gi;
+const TRANSLATION_PIPELINE_TALK = /the ocr (?:has|says|reads|shows|provides|lists|includes|gives|text (?:has|says|reads|is))|<(?:meta|note|vocab|term|gloss|summary|keywords|margin)> tags?\b/i;
+
+/**
+ * { kind, phrase, readerVisible } when a stored translation carries the model talking about its job, else null.
+ * Kinds, strongest first; a page gets the first that matches:
+ *   'reasoning'        the scratchpad: one of TRANSLATION_LEAK_RULE's phrases
+ *   'assistant-reply'  a chat reply to the requester ("Please provide the OCR transcription you would like…")
+ *   'thought-token'    the page opens with the bare word "thought" on its own line (the thinking channel's label)
+ *   'input-talk'       "the provided OCR/transcription/text is …": the model naming its input
+ * readerVisible: the phrase is in the page body, not only inside a block the reader keeps in its metadata panel.
+ */
+export function translationReasoningLeak(text) {
+  const t = String(text || '');
+  const body = t.replace(TRANSLATION_PANEL_BLOCKS, ' ');
+  const hit = (kind, m, readerVisible) => ({ kind, phrase: m[0].replace(/\s+/g, ' ').trim(), readerVisible });
+  let m;
+  if ((m = body.match(TRANSLATION_LEAK_RULE))) return hit('reasoning', m, true);
+  if ((m = body.match(TRANSLATION_REPLY_RULE))) return hit('assistant-reply', m, true);
+  if (/^thought[ \t]*\n/.test(t)) return { kind: 'thought-token', phrase: 'thought', readerVisible: true };
+  if ((m = t.match(TRANSLATION_LEAK_RULE))) return hit('reasoning', m, false);
+  if ((m = t.match(TRANSLATION_REPLY_RULE))) return hit('assistant-reply', m, false);
+  if ((m = body.match(TRANSLATION_INPUT_TALK))) return hit('input-talk', m, true);
+  if ((m = t.match(TRANSLATION_INPUT_TALK))) return hit('input-talk', m, false);
+  return null;
+}
+/** A milder, separate thing: a translator's note that tells the reader what "the OCR" reads or what "the
+ *  <gloss> tags" hold. Not reasoning, but pipeline vocabulary in the page body. True only when it survives
+ *  outside the metadata-panel blocks. */
+export function translationPipelineTalk(text) {
+  return TRANSLATION_PIPELINE_TALK.test(String(text || '').replace(TRANSLATION_PANEL_BLOCKS, ' '));
 }
 export const DESCRIBED_PAGE = /^\W{0,3}(?:the image|this image|this page|the page (?:is|appears|shows|contains)|image (?:shows|of)|this (?:is a|appears)|a (?:blank|largely blank))/i;
 
@@ -811,4 +1023,72 @@ export function repeatedBlocks(ocr) {
     judged: true, units: units.length, K, longest: best.len, copies, share, period, ttr: +types.toFixed(3), kind, unsegmented,
     flag: kind === 'block', sample: run.slice(0, unsegmented ? 60 : 24).join(unsegmented ? '' : ' '),
   };
+}
+
+// ── 8. text hidden in the continuity <meta> ────────────────────────────────────────────────
+
+export const META_PAYLOAD_MIN_WORDS = 8;
+export const META_COPIED_SHARE = 0.6;
+export const META_UNMATCHED_SHARE = 0.2;
+export const META_WHOLE_PAGE_SHARE = 0.8;
+
+const CONT_MARKER = /^[\s.…]*continue[sd]?\s+from\s+(?:the\s+)?previous\s+page\b/i;
+// "continues from previous page's discussion of …", "…, where the author …": a sentence ABOUT
+// the previous page (the v2–v5 page summary), not text standing in for it.
+const DESCRIPTIVE_LEAD = /^(?:['’]s\b|\s*,|\s+(?:and|where|which|in which|with|discussing|detailing|describing|regarding|concerning|about)\b)/i;
+const tagless = (t) => String(t || '').replace(/<\/?[a-zA-Z][^>]*>/g, ' ');
+const trigrams = (w) => { const g = new Set(); for (let i = 0; i + 3 <= w.length; i++) g.add(w.slice(i, i + 3).join(' ')); return g; };
+
+/**
+ * The continuity <meta> of a translation — `<meta>continues from previous page…</meta>`, the
+ * marker the translation prompt asks for when a page opens mid-sentence — or null when there is
+ * none. `form` is 'bare' (the marker alone), 'descriptive' (a sentence about the previous page)
+ * or 'text' (the marker, then `payload`: words standing where page text would).
+ */
+export function continuityMeta(tr) {
+  for (const m of String(tr || '').matchAll(/<meta>([\s\S]*?)<\/meta>/gi)) {
+    const mk = m[1].match(CONT_MARKER);
+    if (!mk) continue;
+    const rest = m[1].slice(mk[0].length);
+    if (DESCRIPTIVE_LEAD.test(rest)) return { form: 'descriptive', payload: '', words: 0 };
+    const payload = tagless(rest).replace(/^[\s:.…,;—–-]+/, '').replace(/\s+/g, ' ').trim();
+    const n = words(payload).length;
+    return { form: n ? 'text' : 'bare', payload, words: n };
+  }
+  return null;
+}
+
+/**
+ * Is page text hidden inside the continuity <meta>? Every reader and export strips <meta>,
+ * content and all (stripEditorialWrappers), so whatever the translator writes after the marker
+ * is text no reader sees. Returns null when the page has no continuity meta, else
+ *   { judged:true, form, words, shape, wholePage, inPrev?, text? }  with shape
+ *     'bare' | 'descriptive'  nothing hidden
+ *     'short'        a payload under META_PAYLOAD_MIN_WORDS — too few words to compare
+ *     'copied'       ≥ META_COPIED_SHARE of the payload's word trigrams are in the previous
+ *                    page's translation: the continuity context handed back, a hidden duplicate
+ *     'hidden-text'  < META_UNMATCHED_SHARE are: the words are not the previous page's. Hand-read
+ *                    (EXPERIMENTS.md 2026-09-30, tq9) they are this page's OWN opening lines,
+ *                    translated into the meta, far more often than an invented lead-in — either
+ *                    way the reader meets the page without them
+ *     'partial'      in between
+ *   { judged:false, why:'no-previous-translation', form, words, wholePage }  a payload with
+ *                    nothing to compare it to
+ * `wholePage`: the payload is ≥ META_WHOLE_PAGE_SHARE of everything the translation says — the
+ * page reads as empty.
+ */
+export function metaPayload({ tr, prevTr }) {
+  const cm = continuityMeta(tr);
+  if (!cm) return null;
+  if (cm.form !== 'text') return { judged: true, form: cm.form, words: 0, shape: cm.form, wholePage: false };
+  const hidden = readingLength(cm.payload), shown = readingLength(trProseOf(tr));
+  const wholePage = cm.words >= META_PAYLOAD_MIN_WORDS && hidden / Math.max(1, hidden + shown) >= META_WHOLE_PAGE_SHARE;
+  const base = { form: 'text', words: cm.words, wholePage };
+  if (cm.words < META_PAYLOAD_MIN_WORDS) return { judged: true, ...base, shape: 'short' };
+  if (!prevTr || !String(prevTr).trim()) return { judged: false, why: 'no-previous-translation', ...base };
+  const prev = trigrams(words(tagless(prevTr)));
+  const mine = [...trigrams(words(cm.payload))];
+  const inPrev = mine.filter(g => prev.has(g)).length / Math.max(1, mine.length);
+  const shape = inPrev >= META_COPIED_SHARE ? 'copied' : inPrev < META_UNMATCHED_SHARE ? 'hidden-text' : 'partial';
+  return { judged: true, ...base, shape, inPrev: +inPrev.toFixed(2), text: cm.payload.slice(0, 200) };
 }

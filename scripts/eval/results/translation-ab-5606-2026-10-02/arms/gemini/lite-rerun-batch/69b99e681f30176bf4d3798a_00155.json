@@ -1,0 +1,21 @@
+{
+ "id": "69b99e681f30176bf4d3798a_00155",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Aṅguttara-Nikāya. LXXIII 2-6\n\nThese, monks, are ten things that are desirable, pleasing, delightful, and difficult to obtain in the world.\n\n3. Regarding these ten things, monks, which are desirable, pleasing, delightful, and difficult to obtain in the world, there are ten obstacles:\n\n4. Laziness and lack of initiative are obstacles to wealth. Lack of grooming and lack of adornment are obstacles to one's appearance. Engaging in things that are not suitable are obstacles to health. Bad friendship is an obstacle to morality. Lack of restraint of the senses is an obstacle to the holy life. Deceiving friends is an obstacle to friendship. Not reciting or studying is an obstacle to great learning. Lack of desire to hear and lack of questioning are obstacles to wisdom. Lack of application and lack of reflection are obstacles to the <term>dhamma</term> <gloss>teachings/principles</gloss>. Wrong practice is an obstacle to the heavenly realms.\n\nThese, monks, are the ten obstacles to those ten things that are desirable, pleasing, delightful, and difficult to obtain in the world.\n\n5. Regarding these ten things, monks, which are desirable, pleasing, delightful, and difficult to obtain in the world, there are ten sustaining conditions:\n\n6. Diligence and initiative are the sustenance for wealth. Grooming and adornment are the sustenance for one's appearance. Engaging in suitable things is the sustenance for health. Good friendship is the sustenance for morality. Restraint of the senses is the sustenance for the holy life. Not deceiving friends is the sustenance for friendship. Recitation and study are the sustenance for great learning. The desire to hear and questioning are the sustenance for wisdom. Application and reflection are the sustenance for the <term>dhamma</term> <gloss>teachings/principles</gloss>. Right practice is the sustenance for the heavenly realms.\n\nThese, monks, are the ten sustaining conditions for those ten things that are desirable, pleasing, delightful, and difficult to obtain in the world.\n\n<summary>This text enumerates ten desirable states, their corresponding obstacles, and the sustaining conditions required to achieve them.</summary>\n<keywords>Buddhism, Dhamma, Pali Canon, obstacles, wealth, morality, wisdom, heavenly realms</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2560,
+ "outputTokens": 479,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.00067925,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1868,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

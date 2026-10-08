@@ -1,0 +1,21 @@
+{
+ "id": "6a3c5f3c879008ba7e153862_00029",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "金剛般若波羅蜜經 <note>Diamond Prajñā-pāramitā Sūtra</note>\n\nForms, sounds, scents, tastes, touchables, and mental objects are called stream-enterers <term>Srota-āpanna</term> <gloss>one who has entered the stream of the holy life</gloss>.\nSubhuti, what do you think? Can a once-returner <term>Sakṛdāgāmin</term> <gloss>one who will return to the world of desire only once more</gloss> think to themselves, I have attained the fruit of a once-returner?\nSubhuti said, No, World-Honored One. Why is this? A once-returner means one who goes once, but in reality, there is no coming or going. Therefore, they are called a once-returner.\nSubhuti, what do you think? Can a non-returner <term>Anāgāmin</term> <gloss>one who will not return to the world of desire</gloss> think to themselves, I have attained the fruit of a non-returner?\nSubhuti said, No, World-Honored One. Why is this? A non-returner means one who does not come, but in reality, there is no non-coming. Therefore, they are called a non-returner.\n\n<summary>This passage clarifies that the titles of Buddhist attainment stages are empty designations, emphasizing that enlightened beings do not perceive themselves as having achieved a specific status or fruit.</summary>\n<keywords>Diamond Sutra, Srota-āpanna, Sakṛdāgāmin, Anāgāmin, non-attachment, emptiness</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1986,
+ "outputTokens": 376,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.0005302499999999999,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 337,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

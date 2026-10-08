@@ -1,0 +1,13 @@
+{
+ "arm": "latin-layout",
+ "backend": "server",
+ "workers": 8,
+ "max_side": 0,
+ "layout": 1,
+ "page_batch": 1,
+ "pages": 632,
+ "errors": 0,
+ "wall_secs": 617.3,
+ "load_secs_max": 8.5,
+ "wall_secs_after_load": 608.8
+}

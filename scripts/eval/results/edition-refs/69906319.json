@@ -1,0 +1,111 @@
+{
+  "summary": {
+    "book_id": "69906319ef12272ffdc8f380",
+    "title": "Satan's Invisible World Discovered",
+    "published": "1685",
+    "source": "EEBO-TCP A60284",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "probe-too-short": 1
+    },
+    "median_char_acc": 0.9722,
+    "median_char_acc_windowed": 0.9695,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-69906319-p26",
+      "page": 26,
+      "overlap": 0.966,
+      "probe_words": 274,
+      "ref_chars": 1733,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.103,
+      "char_acc": 0.9729,
+      "char_acc_windowed": 0.9729
+    },
+    {
+      "slug": "ed-69906319-p94",
+      "page": 94,
+      "overlap": 1,
+      "probe_words": 236,
+      "ref_chars": 1329,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.062,
+      "char_acc": 0.9671,
+      "char_acc_windowed": 0.9671
+    },
+    {
+      "slug": "ed-69906319-p97",
+      "page": 97,
+      "overlap": 1,
+      "probe_words": 215,
+      "ref_chars": 1251,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.036,
+      "char_acc": 0.9722,
+      "char_acc_windowed": 0.9702
+    },
+    {
+      "slug": "ed-69906319-p107",
+      "page": 107,
+      "overlap": 1,
+      "probe_words": 223,
+      "ref_chars": 1246,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.062,
+      "char_acc": 0.9749,
+      "char_acc_windowed": 0.9739
+    },
+    {
+      "slug": "ed-69906319-p118",
+      "page": 118,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-69906319-p121",
+      "page": 121,
+      "overlap": 1,
+      "probe_words": 218,
+      "ref_chars": 1211,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.067,
+      "char_acc": 0.9737,
+      "char_acc_windowed": 0.9695
+    },
+    {
+      "slug": "ed-69906319-p140",
+      "page": 140,
+      "overlap": 1,
+      "probe_words": 193,
+      "ref_chars": 1097,
+      "engine": "gemini-2.5-flash",
+      "aligned": true,
+      "guard_wer": 0.061,
+      "char_acc": 0.9702,
+      "char_acc_windowed": 0.9668
+    },
+    {
+      "slug": "ed-69906319-p219",
+      "page": 219,
+      "overlap": 1,
+      "probe_words": 207,
+      "ref_chars": 1211,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.038,
+      "char_acc": 0.9703,
+      "char_acc_windowed": 0.9693
+    }
+  ]
+}

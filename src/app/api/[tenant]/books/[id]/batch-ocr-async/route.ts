@@ -5,11 +5,11 @@ import { getOcrPrompt } from '@/lib/prompts';
 import { logGeminiCall, outputTokensFrom } from '@/lib/gemini-logger';
 import { getTriggerSource } from '@/lib/cron-auth';
 import { images } from '@/lib/api-client';
-import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages, parseMultiPageOcr } from '@/lib/types/prompts/defaults';
+import { PROMPT_VERSION, liftOcrTags, parseDetectedImages, parseMultiPageOcr } from '@/lib/types/prompts/defaults';
 import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
 import { loopVerdict } from '@/lib/ocr-loop-guard';
-import { isTruncatedCandidate } from '@/lib/truncated-response';
+import { isTruncatedCandidate, candidateText } from '@/lib/truncated-response';
 import { findPendingBatchJob } from '@/lib/translate-write';
 import { batchJobProvenance, engineFromBatchJob, imageInput, notRecorded, ocrProvenance, contentHash, codeVersion, host } from '@/lib/write-provenance';
 import { nanoid } from 'nanoid';
@@ -700,7 +700,7 @@ export const GET = withAuth(async (request, session, context) => {
           for (let ri = 0; ri < responses.length; ri++) {
             const response = responses[ri];
             const candidate = response.response?.candidates?.[0];
-            const responseText = candidate?.content?.parts?.[0]?.text;
+            const responseText = candidateText(candidate);
             if (!responseText) {
               console.warn(`[batch-ocr] Response ${ri}: empty (no text in candidate)`);
               failCount++;
@@ -748,7 +748,7 @@ export const GET = withAuth(async (request, session, context) => {
             }
 
             const candidate = response.response?.candidates?.[0];
-            const text = candidate?.content?.parts?.[0]?.text;
+            const text = candidateText(candidate);
             if (!text) {
               failCount++;
               continue;
@@ -801,8 +801,7 @@ export const GET = withAuth(async (request, session, context) => {
               continue;
             }
 
-            const pageType = extractPageType(text);
-            const columns = extractColumns(text);
+            const tags = liftOcrTags(text);
             const detectedImages = parseDetectedImages(text);
 
             // Snapshot manual edits before overwriting
@@ -832,8 +831,7 @@ export const GET = withAuth(async (request, session, context) => {
                   'ocr.prompt_name': jobDoc.prompt_name || 'Standard OCR',
                   'ocr.batch_job_id': jobDoc.job_name,
                   ...(jobDoc.pages_per_request > 1 && { 'ocr.pages_per_request': jobDoc.pages_per_request }),
-                  ...(pageType && { page_type: pageType }),
-                  ...(columns && { columns }),
+                  ...tags, // page_type, columns, script_type — whichever parsed
                   ...(detectedImages.length > 0 && { detected_images: detectedImages }),
                   updated_at: new Date()
                 },

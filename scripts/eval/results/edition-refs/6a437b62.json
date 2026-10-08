@@ -1,0 +1,104 @@
+{
+  "summary": {
+    "book_id": "6a437b6257a09c2c0fcb48d7",
+    "title": "Barnabæ itinerarium, Mirtili & Faustuli nominibus insignitum viatoris solatio nuperrimè editum, aptissimis numeris redactum, veterique Tono Barnabæ, publicè decantatum.",
+    "published": "1636",
+    "source": "EEBO-TCP A16649",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 6,
+    "skips": {
+      "probe-too-short": 2
+    },
+    "median_char_acc": 0.9689,
+    "median_char_acc_windowed": 0.7919,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a437b62-p2",
+      "page": 2,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a437b62-p6",
+      "page": 6,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a437b62-p9",
+      "page": 9,
+      "overlap": 0.96,
+      "probe_words": 27,
+      "ref_chars": 249,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.242,
+      "char_acc": 0.9689,
+      "char_acc_windowed": 0.7888
+    },
+    {
+      "slug": "ed-6a437b62-p14",
+      "page": 14,
+      "overlap": 0.864,
+      "probe_words": 23,
+      "ref_chars": 218,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.276,
+      "char_acc": 0.9615,
+      "char_acc_windowed": 0.8269
+    },
+    {
+      "slug": "ed-6a437b62-p15",
+      "page": 15,
+      "overlap": 0.913,
+      "probe_words": 24,
+      "ref_chars": 236,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.267,
+      "char_acc": 0.9827,
+      "char_acc_windowed": 0.7919
+    },
+    {
+      "slug": "ed-6a437b62-p16",
+      "page": 16,
+      "overlap": 0.762,
+      "probe_words": 22,
+      "ref_chars": 257,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.3,
+      "char_acc": 0.9358,
+      "char_acc_windowed": 0.7914
+    },
+    {
+      "slug": "ed-6a437b62-p17",
+      "page": 17,
+      "overlap": 0.833,
+      "probe_words": 25,
+      "ref_chars": 249,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.281,
+      "char_acc": 0.9061,
+      "char_acc_windowed": 0.7514
+    },
+    {
+      "slug": "ed-6a437b62-p22",
+      "page": 22,
+      "overlap": 0.87,
+      "probe_words": 25,
+      "ref_chars": 192,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.25,
+      "char_acc": 0.9857,
+      "char_acc_windowed": 0.8857
+    }
+  ]
+}

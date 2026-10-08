@@ -1,0 +1,21 @@
+{
+ "id": "69b99e551f30176bf4d37774_00306",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "25. (5) Fruits 1.\n\n2. There are these four bases of psychic power, monks. These are the four bases of psychic power.\n\n3. Because these four bases of psychic power have been developed and cultivated, monks, one of two fruits may be expected: final knowledge <note>original: \"aññā\" meaning supreme wisdom or Arahantship</note> in this very life, or, if there is a remainder of clinging, the state of a non-returner.\n\n26. (6) Fruits 2.\n\n2. There are these four bases of psychic power, monks. These are these four bases of psychic power.\n\n3. Because these four bases of psychic power have been developed and cultivated, monks, seven fruits and seven benefits may be expected. Which are the seven fruits and seven benefits?\n\n4. One attains final knowledge in this very life. If one does not attain final knowledge in this very life, one attains it at the time of death. If one does not attain it at the time of death, then with the destruction of the five lower fetters, one becomes an attainer of final liberation in the interval. One becomes an attainer of final liberation upon landing. One becomes an attainer of final liberation without exertion. One becomes an attainer of final liberation with exertion. One becomes one who goes upstream, heading toward the Akaniṭṭha realm <note>the highest of the pure abodes in Buddhist cosmology</note>.\n\n5. Because these four bases of psychic power have been developed and cultivated, monks, these seven fruits and seven benefits may be expected.\n\n27. (7) Ānanda 1.\n\n1. At Sāvatthī.\n\n2. Then the Venerable Ānanda approached the Blessed One. Having approached, he sat to one side. Sitting to one side, the Venerable Ānanda said this to the Blessed One: What is indeed\n\n<summary>This page contains two discourses regarding the benefits of cultivating the four bases of psychic power, followed by the introduction to a discourse involving the Venerable Ānanda.</summary>\n<keywords>Bases of psychic power, iddhipāda, fruits of practice, non-returner, anāgāmi, Ānanda, Sāvatthī</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2620,
+ "outputTokens": 482,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.0006889999999999999,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1884,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

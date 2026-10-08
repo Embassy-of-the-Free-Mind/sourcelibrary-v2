@@ -6,8 +6,9 @@
  * Usage: secret-lover run -- node scripts/collect-multipage-ocr.mjs [--dry-run]
  */
 
-// usage-ok: polls batch job status and downloads results — no generation, no
-// spend at this call site. The batch row is closed by completeBatchUsage().
+// Generates nothing, but it is where this batch's tokens become known, so it closes
+// out the submit-time usage row with completeBatchUsage() (#3452). Until 2026-10-06
+// this comment claimed that happened while no code did it (#4599).
 
 import { MongoClient } from 'mongodb';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
@@ -16,9 +17,9 @@ import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance } from '../l
 
 /** Provenance identity of this collector (#4613). */
 const COLLECTOR_CALL_SITE = 'scripts/batch/collect-multipage-ocr.mjs';
-import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
-import { isTruncatedCandidate } from '../lib/truncated-response.mjs';
-import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
+import { liftOcrTags, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
+import { isTruncatedCandidate, candidateText } from '../lib/truncated-response.mjs';
+import { outputTokensFrom, sumBatchResponseUsage, completeBatchUsage } from '../workers/lib/supabase-usage-logger.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
 
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
@@ -127,7 +128,7 @@ async function main() {
       let pageCount = 0;
       for (const r of responses) {
         if (r.error) { console.log(`  Response error: ${JSON.stringify(r.error).slice(0, 100)}`); continue; }
-        const text = r.response?.candidates?.[0]?.content?.parts?.[0]?.text;
+        const text = candidateText(r.response?.candidates?.[0]);
         if (!text) { console.log('  Empty response'); continue; }
         const parsed = parseMultiPageOcr(text, { lenient: true });
         pageCount += parsed.size;
@@ -152,7 +153,7 @@ async function main() {
         continue;
       }
       const candidate = result.response?.candidates?.[0];
-      const text = candidate?.content?.parts?.[0]?.text;
+      const text = candidateText(candidate);
       if (!text) {
         console.warn(`  Response ${ri}: empty`);
         failCount++;
@@ -186,8 +187,7 @@ async function main() {
           continue;
         }
 
-        const pageType = extractPageType(ocrText);
-        const columns = extractColumns(ocrText);
+        const tags = liftOcrTags(ocrText);
         const detectedImages = parseDetectedImages(ocrText);
 
         // First ensure the page has an ocr object (some pages have ocr: null)
@@ -225,8 +225,7 @@ async function main() {
                 }));
                 return { 'ocr.content_hash': prov.content_hash, 'ocr.engine': prov.engine };
               })(),
-              ...(pageType && { page_type: pageType }),
-              ...(columns && { columns }),
+              ...tags, // page_type, columns, script_type — whichever parsed
               ...(detectedImages.length > 0 && { detected_images: detectedImages }),
               updated_at: now,
             },
@@ -261,6 +260,18 @@ async function main() {
         },
       }
     );
+
+    // Close out the usage row: every response is billed, refused ones included.
+    const billed = sumBatchResponseUsage(responses);
+    await completeBatchUsage({
+      type: 'ocr', mode: 'batch', model: job.model,
+      book_id: job.book_id, page_ids: job.page_ids,
+      page_count: job.page_count || job.page_ids?.length || successCount,
+      input_tokens: billed.inputTokens, output_tokens: billed.outputTokens,
+      status: successCount > 0 ? 'success' : 'failed',
+      batch_job_id: job.id || String(job._id),
+      endpoint: job.submitted_by || COLLECTOR_CALL_SITE,
+    }, db).catch(err => console.warn(`  Usage close-out failed: ${err.message}`));
 
     // Update book page counts — VISIBLE pages only (page_number > 0). See
     // scripts/lib/page-counts.mjs and issue #3293. Soft-hidden pages never

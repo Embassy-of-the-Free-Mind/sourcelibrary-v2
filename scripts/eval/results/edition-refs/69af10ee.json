@@ -1,0 +1,147 @@
+{
+  "summary": {
+    "book_id": "69af10ee266659b71a3227f9",
+    "title": "De Architectura Libri Decem",
+    "published": "1567",
+    "source": "Source Library OCR of Krohn 1912 (Teubner), book 69af1100c59ddc7f44a8550d",
+    "licence": "public-domain",
+    "script": "latin",
+    "pages_tried": 15,
+    "referenced": 1,
+    "skips": {
+      "no-window": 10,
+      "guard-refused": 4
+    },
+    "median_char_acc": 0.8317,
+    "median_char_acc_windowed": 0.6659,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-69af10ee-p26",
+      "page": 26,
+      "skipped": "no-window",
+      "overlap": 0.195
+    },
+    {
+      "slug": "ed-69af10ee-p94",
+      "page": 94,
+      "skipped": "no-window",
+      "overlap": 0.123
+    },
+    {
+      "slug": "ed-69af10ee-p200",
+      "page": 200,
+      "skipped": "no-window",
+      "overlap": 0.197
+    },
+    {
+      "slug": "ed-69af10ee-p207",
+      "page": 207,
+      "skipped": "no-window",
+      "overlap": 0.327
+    },
+    {
+      "slug": "ed-69af10ee-p211",
+      "page": 211,
+      "skipped": "no-window",
+      "overlap": 0.172
+    },
+    {
+      "slug": "ed-69af10ee-p214",
+      "page": 214,
+      "skipped": "no-window",
+      "overlap": 0.127
+    },
+    {
+      "slug": "ed-69af10ee-p240",
+      "page": 240,
+      "skipped": "no-window",
+      "overlap": 0.114
+    },
+    {
+      "slug": "ed-69af10ee-p244",
+      "page": 244,
+      "overlap": 0.425,
+      "probe_words": 679,
+      "ref_chars": 3848,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.501,
+      "char_acc": 0.7526,
+      "char_acc_windowed": 0.4503,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-69af10ee-p251",
+      "page": 251,
+      "skipped": "no-window",
+      "overlap": 0.179
+    },
+    {
+      "slug": "ed-69af10ee-p254",
+      "page": 254,
+      "overlap": 0.358,
+      "probe_words": 801,
+      "ref_chars": 1534,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.374,
+      "char_acc": 0.9243,
+      "char_acc_windowed": 0.6178,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-69af10ee-p257",
+      "page": 257,
+      "overlap": 0.49,
+      "probe_words": 733,
+      "ref_chars": 6065,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.304,
+      "char_acc": 0.8317,
+      "char_acc_windowed": 0.6659
+    },
+    {
+      "slug": "ed-69af10ee-p263",
+      "page": 263,
+      "skipped": "no-window",
+      "overlap": 0.169
+    },
+    {
+      "slug": "ed-69af10ee-p272",
+      "page": 272,
+      "overlap": 0.395,
+      "probe_words": 625,
+      "ref_chars": 3867,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.361,
+      "char_acc": 0.8039,
+      "char_acc_windowed": 0.5308,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-69af10ee-p281",
+      "page": 281,
+      "skipped": "no-window",
+      "overlap": 0.299
+    },
+    {
+      "slug": "ed-69af10ee-p364",
+      "page": 364,
+      "overlap": 0.381,
+      "probe_words": 722,
+      "ref_chars": 3725,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.501,
+      "char_acc": 0.7443,
+      "char_acc_windowed": 0.5139,
+      "skipped": "guard-refused"
+    }
+  ]
+}

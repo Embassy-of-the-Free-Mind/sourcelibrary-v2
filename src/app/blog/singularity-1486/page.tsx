@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'The Singularity Was Published in 1486',
     description: 'Pico della Mirandola, Gustav Fechner, and Johannes Kepler wrote the source code for transhumanism, panpsychism, and the cosmic mind. The original texts, newly translated.',
-    images: [{ url: 'https://images.sourcelibrary.org/archived/6fc11c7d-782a-47c3-a855-f3b4415e797b/10.jpg', width: 1200, height: 630 }],
+    images: [{ url: 'https://images.sourcelibrary.org/artwork/art-durer-melencolia-i-bartsch-74-gdut4008.jpg', width: 2000, height: 2508, alt: 'Albrecht Dürer, Melencolia I, engraving, 1514' }],
   },
   twitter: {
     card: 'summary_large_image',
-    images: [{ url: 'https://images.sourcelibrary.org/archived/6fc11c7d-782a-47c3-a855-f3b4415e797b/10.jpg' }],
+    images: [{ url: 'https://images.sourcelibrary.org/artwork/art-durer-melencolia-i-bartsch-74-gdut4008.jpg', alt: 'Albrecht Dürer, Melencolia I, engraving, 1514' }],
   },
   alternates: {
     canonical: '/blog/singularity-1486',

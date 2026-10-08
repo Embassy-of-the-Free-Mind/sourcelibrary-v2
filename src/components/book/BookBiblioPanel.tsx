@@ -100,7 +100,7 @@ export default function BookBiblioPanel({
                   <Link href={src.source_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 hover:underline" style={{ color: '#a5503d' }}>
                     {src.provider_name || 'Original record'}<ExternalLink className="w-3 h-3" />
                   </Link>
-                ) : (src.provider_name || '—')}
+                ) : (src.provider_name || '–')}
               </Row>
             )}
             {src.contributing_library && <Row label="Provided by">{src.contributing_library}</Row>}

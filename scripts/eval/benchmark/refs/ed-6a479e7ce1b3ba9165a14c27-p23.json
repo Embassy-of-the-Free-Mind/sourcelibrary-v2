@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA historicapolitica/bornitz2",
+  "edition": "De nummis in republica percutiendis et conservandis libri duo. — Hanau, 1608.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "10/14",
+    "pb_aligned_pages": "10/10"
+  },
+  "origin": "library",
+  "book_id": "6a479e7ce1b3ba9165a14c27",
+  "page_number": 23,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 12248,
+    "to_char": 12965,
+    "overlap": 0.934,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'IN NVMMOS V. Cl. Virtutis, Doctrinae...' (commendatory poem to Bornitius); ends 'IOANN. HARTIGIUS Sittanus, Medicus.'; page number 19, signature C 2; ref has 'ARNOLDUS V. I. D. f. Gorlitii...' padding before and 'DE RE NUMMARIA' after (longer than 3 words).",
+    "leaf_language": "lat",
+    "page_type": "verse",
+    "abbreviations": "none",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:31.410Z",
+  "text_location": "repo",
+  "text_sha256": "7f4946a39971a6bb9441f6c9e09568628511b25402670bc61e18fb16a4aff0d6",
+  "unit": {
+    "chars": 717
+  },
+  "stratum": "latin-period-5126"
+}

@@ -1,0 +1,605 @@
+{
+ "seed": 5489,
+ "draw": [
+  {
+   "stratum": "english-1850-1899",
+   "book": "6a087e84b2a99026ccf6f2ec",
+   "page": 196
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "6a4a1caefd99a02b936fd663",
+   "page": 254
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "69e416a83fbf94798ce2596c",
+   "page": 213
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "69906483ef12272ffdc939a5",
+   "page": 42
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "69ee64a07b983848aff58240",
+   "page": 45
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "69c886236c6f3cc53c859d1d",
+   "page": 311
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "699065623dc2ed39a49f0c60",
+   "page": 460
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "6992598b3d2d40d1b05915ba",
+   "page": 71
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "6a58a3da08c84bb29c91cbcd",
+   "page": 622
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "6955836b57e3b773024f86a8",
+   "page": 69
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "69c88f316c6f3cc53c85b2ea",
+   "page": 34
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "69906352ef12272ffdc910f3",
+   "page": 404
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "699247034c402ed78ad6979d",
+   "page": 209
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "6a4a3dfcf0f4a3b75e908270",
+   "page": 416
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "69e00add846d79f28d5680de",
+   "page": 44
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "6a58ed26c6cd8f9871068d2b",
+   "page": 70
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "69b9a2cb6ed9e0490990b8b8",
+   "page": 150
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "69a552e542054c7ce7176515",
+   "page": 35
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "69e8b2852ff2a8dc09e77f6d",
+   "page": 60
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "6a087e9cb2a99026ccf6f965",
+   "page": 442
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "6ab6d18ba2486b6d5d7b4776",
+   "page": 70
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "69aea5d80fefd7831dcdb226",
+   "page": 134
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "69e53460d48480a386965df0",
+   "page": 239
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "6a98dbd9b874e8f9ed696ad9",
+   "page": 72
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "6992541f59cdabeb78f1bfcd",
+   "page": 521
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "69ee4f476dd925d126f4368e",
+   "page": 243
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "695435001479a63c1108a7ed",
+   "page": 287
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "695592cd7bd6d2cd1d61b759",
+   "page": 172
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "6a8b78abddf894921a43401a",
+   "page": 376
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "6a582ed04ac7eedebd4f3ace",
+   "page": 178
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "699259843d2d40d1b0590fe6",
+   "page": 371
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "69e4168a01fba13948b2d1d2",
+   "page": 16
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "699246d4bc722ec0ee814cbe",
+   "page": 345
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "69924f5d5976b55115ffe2fd",
+   "page": 221
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "699246bebc722ec0ee812869",
+   "page": 353
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "6a3f035097e91e1768f69f31",
+   "page": 286
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "6953e32f77f38f6761bebc95",
+   "page": 496
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "699246cfbc722ec0ee813fa3",
+   "page": 358
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "69ac80931aa2dc787a684edc",
+   "page": 546
+  },
+  {
+   "stratum": "english-1850-1899",
+   "book": "69e72bbaa409200ea79f355b",
+   "page": 355
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "69b62fc21c1c21a3737fa3b3",
+   "page": 57
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "6a085d0349638a50931ce8b7",
+   "page": 27
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "69b2221008069e96e8432231",
+   "page": 650
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "6a084fcd15c643eb1af45cfe",
+   "page": 470
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "6a08525615c643eb1af4cc1f",
+   "page": 277
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "6a26be870e247ebad6de788d",
+   "page": 9
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "6a08507649638a50931b647b",
+   "page": 479
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "6a425fc9dfbbb4d07aa64653",
+   "page": 21
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "6a42aee3466deeb51e55c025",
+   "page": 21
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "69942ceeb2f6748db4abf2f1",
+   "page": 124
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "6a424dd880ec989e1e67b7a9",
+   "page": 15
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "6a460591896a4826cccdf804",
+   "page": 22
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "6a45875031e306b7843359e4",
+   "page": 20
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "69b62f951c1c21a3737f74ab",
+   "page": 138
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "69b51eba47b06ecd581960d3",
+   "page": 17
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "6a4f7ce9a13ff00e22df1a94",
+   "page": 17
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "69aec89af24f28c970822728",
+   "page": 55
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "69b65a5d18b87551bfd01f6b",
+   "page": 28
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "6a26bb834045b346e6ad1d09",
+   "page": 19
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "69c112ed37989a445ae9f973",
+   "page": 18
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "69c7e5c5fb10016c3f389ba4",
+   "page": -143
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "6a26be250e247ebad6de6ddd",
+   "page": 24
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "69b2232756715b0e32476687",
+   "page": 324
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "69942ea1d607f8e57e4b9af3",
+   "page": 172
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "69b51e39cf111105c4298955",
+   "page": 12
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "69c843136c6f3cc53c850e95",
+   "page": 22
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "699064b9ef12272ffdc940f3",
+   "page": 116
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "6a51eaf8689f6d0dbe2e0c5b",
+   "page": 17
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "6957eb74cbe1dcad7b76baed",
+   "page": 124
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "6a4f7ecf2a450f51978d060e",
+   "page": 24
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "6a08512049638a50931b8042",
+   "page": 179
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "6984e8498a2f054f912420c9",
+   "page": 225
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "69b51e34768235dc6598dd10",
+   "page": 22
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "6a0852b149638a50931bb440",
+   "page": 94
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "69b2f446f9f1ad2b3b152166",
+   "page": 296
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "69b655d718b87551bfcd8c08",
+   "page": 15
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "6a426ee128e9db2e39c09486",
+   "page": 16
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "69b66177b3f4fc044153c0d0",
+   "page": 118
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "69b51ebacf111105c42a3824",
+   "page": 75
+  },
+  {
+   "stratum": "latin-1500-1599",
+   "book": "6a45b133ea488df8c60a45cb",
+   "page": 24
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69b51e95cf111105c42a07b8",
+   "page": 18
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69b51e2f9a81ef7feb3d1205",
+   "page": 24
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "6985ca72d53aa86216a37add",
+   "page": 77
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69bda02cf6d63c9197485097",
+   "page": 489
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69099ab2cf28baa1b4cae97f",
+   "page": 116
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69c852796c6f3cc53c8533c7",
+   "page": 440
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69bda0dcf6d63c919748b7f1",
+   "page": 250
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "698420e4e8a1d0539ce47e1d",
+   "page": 980
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69592a08c6f388ea5a33c552",
+   "page": 392
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69b51dcfcf111105c4290a13",
+   "page": 8
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69c836fb6c6f3cc53c84ed48",
+   "page": 223
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69c860616c6f3cc53c8557a7",
+   "page": 641
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69b51e2fcf111105c429800b",
+   "page": 31
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "6a26c1e6aad44c98627c0f95",
+   "page": 3
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "6984e84f8e42dbf1a2806f54",
+   "page": 85
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69c804966c6f3cc53c844ef0",
+   "page": -25
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "6a1008f9f717292950967524",
+   "page": 13
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "6a267d526c1f37c9c4f3926e",
+   "page": 41
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69b51e6347b06ecd5818edef",
+   "page": 142
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "697b0799083a1eb33f8e8112",
+   "page": 336
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "6a267c536c1f37c9c4f35e89",
+   "page": 30
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69b51d1d47b06ecd58183c53",
+   "page": 13
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69b51dccff09e4fe943a9209",
+   "page": 8
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "698255f2ab25735ca679857d",
+   "page": 70
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69c80b4f6c6f3cc53c8466f0",
+   "page": 43
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69b51e759a81ef7feb3d55df",
+   "page": 17
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "6970e3619b09d309d780a26c",
+   "page": 26
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69ac8e58e54b190acc1d3b1d",
+   "page": 15
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69c738816a0f3d112faf7800",
+   "page": 20
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69a0278d6bc332f148ccf4a4",
+   "page": -306
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "6a267c356c1f37c9c4f35a7b",
+   "page": 38
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "6909c8ebcf28baa1b4cafbb7",
+   "page": 47
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69c83b886c6f3cc53c84f6bc",
+   "page": 91
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "6a26c1d1aad44c98627c0bdb",
+   "page": 23
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69b51e6dcf111105c429cb30",
+   "page": 75
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69b51d71261c58d63664a930",
+   "page": 11
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "697e23ca32fdac74c7ee6f47",
+   "page": 65
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69c82d9c6c6f3cc53c84d36a",
+   "page": 108
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69a02790c2c6e5c837e27908",
+   "page": 80
+  },
+  {
+   "stratum": "german-1600-1799",
+   "book": "69c738e16a0f3d112faf780c",
+   "page": 23
+  }
+ ]
+}

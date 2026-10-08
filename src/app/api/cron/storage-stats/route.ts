@@ -84,14 +84,15 @@ export async function GET(request: NextRequest) {
       db.collection('system_config').findOne({ _id: 'storage_stats' } as object),
       // All index-backed — a naive full $group scans 1.8 GB of book docs and
       // exceeds the lambda's 45s socket timeout under pipeline load.
-      // Requires indexes: hidden_1, is_fully_translated_1, a visible-leading
+      // Requires indexes: hidden_1, translation_state_rung_english, a visible-leading
       // index, and pages_sums_covered (all present as of 2026-07-05).
       (async () => {
         const books = db.collection('books');
         const [total, notVisible, fully_translated, sums] = await Promise.all([
           books.estimatedDocumentCount(),
           books.countDocuments({ $or: [{ hidden: true }, { visible: false }] }),
-          books.countDocuments({ is_fully_translated: true }),
+          // The `complete` rung of translation_state (#5286, translation-state.md).
+          books.countDocuments({ 'translation_state.rung': 'complete' }),
           books
             .aggregate(
               [

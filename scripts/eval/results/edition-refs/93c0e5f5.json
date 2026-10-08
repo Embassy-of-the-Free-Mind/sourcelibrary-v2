@@ -1,0 +1,108 @@
+{
+  "summary": {
+    "book_id": "93c0e5f5-40e5-4f9a-b07b-1d67ed2d05a2",
+    "title": "Orbis Sensualium Pictus",
+    "published": "1658",
+    "source": "EEBO-TCP A34111",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 3,
+    "skips": {
+      "guard-refused": 3,
+      "probe-too-short": 2
+    },
+    "median_char_acc": 0.9075,
+    "median_char_acc_windowed": 0.7975,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-93c0e5f5-p26",
+      "page": 26,
+      "overlap": 0.615,
+      "probe_words": 46,
+      "ref_chars": 397,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.449,
+      "char_acc": 0.9095,
+      "char_acc_windowed": 0.6897,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-93c0e5f5-p43",
+      "page": 43,
+      "overlap": 0.69,
+      "probe_words": 85,
+      "ref_chars": 758,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.506,
+      "char_acc": 0.6932,
+      "char_acc_windowed": 0.6014,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-93c0e5f5-p61",
+      "page": 61,
+      "overlap": 0.734,
+      "probe_words": 110,
+      "ref_chars": 627,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.3,
+      "char_acc": 0.9075,
+      "char_acc_windowed": 0.815
+    },
+    {
+      "slug": "ed-93c0e5f5-p68",
+      "page": 68,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-93c0e5f5-p93",
+      "page": 93,
+      "overlap": 0.713,
+      "probe_words": 97,
+      "ref_chars": 725,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.473,
+      "char_acc": 0.7663,
+      "char_acc_windowed": 0.6831,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-93c0e5f5-p147",
+      "page": 147,
+      "overlap": 0.977,
+      "probe_words": 136,
+      "ref_chars": 864,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.294,
+      "char_acc": 0.0236,
+      "char_acc_windowed": 0.6965
+    },
+    {
+      "slug": "ed-93c0e5f5-p166",
+      "page": 166,
+      "overlap": 0.662,
+      "probe_words": 74,
+      "ref_chars": 372,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.17,
+      "char_acc": 0.9494,
+      "char_acc_windowed": 0.7975
+    },
+    {
+      "slug": "ed-93c0e5f5-p278",
+      "page": 278,
+      "skipped": "probe-too-short"
+    }
+  ]
+}

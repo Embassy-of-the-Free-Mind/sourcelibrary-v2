@@ -1,0 +1,90 @@
+{
+ "Sanskrit": {
+  "books": 2111,
+  "pages_ocr": 167348,
+  "untranslated": 40088,
+  "untranslated_visible_books": 2954,
+  "withheld_or_blocked": 838,
+  "eligible_untranslated": 39250,
+  "cost_batch": {
+   "lite": 40.43,
+   "flash": 85.02,
+   "delta": 44.59
+  }
+ },
+ "Pali": {
+  "books": 59,
+  "pages_ocr": 16835,
+  "untranslated": 3580,
+  "untranslated_visible_books": 511,
+  "withheld_or_blocked": 240,
+  "eligible_untranslated": 3340,
+  "cost_batch": {
+   "lite": 2.66,
+   "flash": 5.7,
+   "delta": 3.04
+  }
+ },
+ "rates": {
+  "Sanskrit": {
+   "flash": {
+    "pages": 21,
+    "usd_per_page_batch": 0.002166,
+    "in_tokens_mean": 2767,
+    "out_tokens_mean": 983
+   },
+   "lite": {
+    "pages": 21,
+    "usd_per_page_batch": 0.00103,
+    "in_tokens_mean": 2767,
+    "out_tokens_mean": 912
+   },
+   "lite-rerun": {
+    "pages": 21,
+    "usd_per_page_batch": 0.001023,
+    "in_tokens_mean": 2767,
+    "out_tokens_mean": 902
+   }
+  },
+  "Chinese": {
+   "flash": {
+    "pages": 20,
+    "usd_per_page_batch": 0.001461,
+    "in_tokens_mean": 2143,
+    "out_tokens_mean": 617
+   },
+   "lite": {
+    "pages": 20,
+    "usd_per_page_batch": 0.000679,
+    "in_tokens_mean": 2143,
+    "out_tokens_mean": 549
+   },
+   "lite-rerun": {
+    "pages": 20,
+    "usd_per_page_batch": 0.000663,
+    "in_tokens_mean": 2143,
+    "out_tokens_mean": 526
+   }
+  },
+  "Pali": {
+   "flash": {
+    "pages": 16,
+    "usd_per_page_batch": 0.001706,
+    "in_tokens_mean": 2687,
+    "out_tokens_mean": 690
+   },
+   "lite": {
+    "pages": 16,
+    "usd_per_page_batch": 0.000797,
+    "in_tokens_mean": 2687,
+    "out_tokens_mean": 615
+   },
+   "lite-rerun": {
+    "pages": 16,
+    "usd_per_page_batch": 0.000813,
+    "in_tokens_mean": 2687,
+    "out_tokens_mean": 636
+   }
+  }
+ }
+}

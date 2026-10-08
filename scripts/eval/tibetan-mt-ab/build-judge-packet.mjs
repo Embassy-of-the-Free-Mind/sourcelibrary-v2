@@ -20,6 +20,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 
 const args = process.argv.slice(2);
 const opt = (n, d) => { const i = args.indexOf(`--${n}`); return i >= 0 && args[i + 1] != null ? args[i + 1] : d; };
@@ -31,8 +32,13 @@ if (!DATA || !ARMS || !OUT) { console.error('--data, --arms, --out required'); p
 const ENGINE_SPEC = opt('engines', 'flash=gemini/gemini-3-flash-preview,lite=gemini/gemini-3.1-flash-lite,mitra=mitra');
 const ENGINES = Object.fromEntries(ENGINE_SPEC.split(',').map((kv) => kv.split('=')).map(([name, dir]) => [name, (id) => path.join(ARMS, dir, `${id}.json`)]));
 const SRC = opt('src', null);
-const POSITIVE_CONTROL_PAGE = '69e7abdd5f1a22ab19a9fade_00002'; // Toh 552, two-side reference window (tight)
-const SAME_ARM_PAGES = ['69e7ab535f1a22ab19a96a78_00266', '69e7ab365f1a22ab19a94b87_00537', '69e7abe75f1a22ab19aa00d4_00566', '69e7aaeb5f1a22ab19a8f91f_00432'];
+// --positive-control <id> / --same-arm id,id,… / --generic --language <name> (#5606): other samples,
+// one packet per language, no page image, the line carries {language, work, located, reference_source,
+// coverage_note} instead of the Tibetan {image, toh, reference_sides, source_lines}. Defaults = #4742.
+const POSITIVE_CONTROL_PAGE = opt('positive-control', '69e7abdd5f1a22ab19a9fade_00002'); // Toh 552, two-side reference window (tight)
+const SAME_ARM_PAGES = opt('same-arm', '69e7ab535f1a22ab19a96a78_00266,69e7ab365f1a22ab19a94b87_00537,69e7abe75f1a22ab19aa00d4_00566,69e7aaeb5f1a22ab19a8f91f_00432').split(',');
+const GENERIC = args.includes('--generic'); const LANGUAGE = opt('language', null);
+const sha = (t) => createHash('sha256').update(t).digest('hex').slice(0, 16);
 
 // mulberry32 — deterministic, recorded seed
 let s = SEED >>> 0;
@@ -42,16 +48,19 @@ const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = Math
 const ids = fs.readFileSync(path.join(DATA, 'ids-final.txt'), 'utf8').trim().split('\n').map((l) => { const [b, p] = l.trim().split(/\s+/); return `${b}_${String(p).padStart(5, '0')}`; });
 const refs = JSON.parse(fs.readFileSync(path.join(DATA, 'refs-final.json'), 'utf8'));
 fs.mkdirSync(OUT, { recursive: true });
-const key = { seed: SEED, positive_control_page: POSITIVE_CONTROL_PAGE, same_arm_pages: {}, pages: {} };
+const key = { seed: SEED, positive_control_page: POSITIVE_CONTROL_PAGE, same_arm_pages: {}, pages: {}, text_hash: {} };
 const lines = [];
 const summary = [];
 for (const id of ids) {
   const cands = [];
   for (const [arm, f] of Object.entries(ENGINES)) {
     const j = JSON.parse(fs.readFileSync(f(id), 'utf8'));
-    cands.push({ arm, text: (j.text || '').trim() });
+    // generic: a refusal (RECITATION/SAFETY → empty text) is shown as what it is, not as a blank page (#5581)
+    const text = (j.text || '').trim() || (GENERIC && j.finishReason && j.finishReason !== 'STOP' ? `[no translation returned: the model refused (finishReason ${j.finishReason})]` : '');
+    cands.push({ arm, text });
   }
-  if (id === POSITIVE_CONTROL_PAGE) cands.push({ arm: 'reference', text: refs[id].text.replace(/⟦F\.[^⟧]*⟧/g, '').replace(/[ \t]+/g, ' ').trim() });
+  // generic: the control candidate is the located span only — lines marked [context] lie outside the page
+  if (id === POSITIVE_CONTROL_PAGE) cands.push({ arm: 'reference', text: refs[id].text.replace(/⟦F\.[^⟧]*⟧/g, '').split('\n').filter((l) => !(GENERIC && l.startsWith('[context]'))).join('\n').replace(/[ \t]+/g, ' ').trim() });
   if (SAME_ARM_PAGES.includes(id)) {
     const names = Object.keys(ENGINES); const dup = names[Math.floor(rnd() * names.length)];
     cands.push({ arm: `${dup}#dup`, text: cands.find((c) => c.arm === dup).text });
@@ -60,7 +69,16 @@ for (const id of ids) {
   shuffle(cands);
   const labels = cands.map((_, i) => `T${i + 1}`);
   key.pages[id] = Object.fromEntries(labels.map((l, i) => [l, cands[i].arm]));
+  // pin exactly what the judge read (eval-design §8): a regenerated packet cannot silently differ
+  key.text_hash[id] = Object.fromEntries(labels.map((l, i) => [l, sha(cands[i].text)]));
   const source = fs.readFileSync(SRC ? path.join(SRC, `${id}.txt`) : path.join(DATA, 'yig', `mtab-yig-${id}.txt`), 'utf8').trim();
+  if (GENERIC) {
+    lines.push(JSON.stringify({ id, language: LANGUAGE, work: refs[id].title_en, located: refs[id].toh, reference_source: refs[id].sides,
+      coverage_note: refs[id].coverage_note, source, reference: refs[id].text, n: cands.length,
+      translations: Object.fromEntries(labels.map((l, i) => [l, cands[i].text])) }));
+    summary.push(`${id} n=${cands.length} ${cands.map((c) => `${c.arm}:${c.text.length}`).join(' ')}`);
+    continue;
+  }
   // Yigdzin drops one manuscript line on some two-leaf pages (peer finding, 2026-09-25): count the
   // lines so the judge can attribute a one-line omission to the source, not to an engine
   const sourceLines = source.split('\n').filter((l) => l.trim()).length;

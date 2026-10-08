@@ -1,0 +1,1749 @@
+{
+ "script": "scripts/maintenance/dedupe-cleanup-6019.mjs",
+ "issue": {
+  "$numberInt": "6019"
+ },
+ "by": "script:dedupe-cleanup-6019",
+ "started_at": {
+  "$date": {
+   "$numberLong": "1791323297066"
+  }
+ },
+ "books": {
+  "6a516e1dc337fd5f57a095a7": {
+   "_id": {
+    "$oid": "6a516e1dc337fd5f57a095a7"
+   },
+   "before": {
+    "duplicate_of": {
+     "value": "69b631a51c1c21a373809403"
+    },
+    "visible": {
+     "value": true
+    },
+    "hidden": {
+     "value": false
+    },
+    "hidden_reason": {
+     "absent": true
+    },
+    "hidden_at": {
+     "absent": true
+    },
+    "publication": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1791087979479"
+      }
+     }
+    },
+    "pages_ocr": {
+     "value": {
+      "$numberInt": "370"
+     }
+    },
+    "pages_translated": {
+     "value": {
+      "$numberInt": "362"
+     }
+    },
+    "pages_blank": {
+     "value": {
+      "$numberInt": "7"
+     }
+    }
+   }
+  },
+  "69b634031c1c21a37381d488": {
+   "_id": {
+    "$oid": "69db854cf4c595498deb94aa"
+   },
+   "before": {
+    "duplicate_of": {
+     "absent": true
+    },
+    "visible": {
+     "value": true
+    },
+    "hidden": {
+     "value": false
+    },
+    "hidden_reason": {
+     "absent": true
+    },
+    "hidden_at": {
+     "absent": true
+    },
+    "publication": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1790597978560"
+      }
+     }
+    },
+    "pages_ocr": {
+     "value": {
+      "$numberInt": "11"
+     }
+    },
+    "pages_translated": {
+     "value": {
+      "$numberInt": "11"
+     }
+    },
+    "pages_blank": {
+     "value": {
+      "$numberInt": "0"
+     }
+    }
+   }
+  },
+  "69b6498818b87551bfc5dd9f": {
+   "_id": {
+    "$oid": "69db84dcf4c595498deb9468"
+   },
+   "before": {
+    "duplicate_of": {
+     "absent": true
+    },
+    "visible": {
+     "value": true
+    },
+    "hidden": {
+     "value": false
+    },
+    "hidden_reason": {
+     "absent": true
+    },
+    "hidden_at": {
+     "absent": true
+    },
+    "publication": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1790597978560"
+      }
+     }
+    },
+    "pages_ocr": {
+     "value": {
+      "$numberInt": "19"
+     }
+    },
+    "pages_translated": {
+     "value": {
+      "$numberInt": "16"
+     }
+    },
+    "pages_blank": {
+     "value": {
+      "$numberInt": "3"
+     }
+    }
+   }
+  },
+  "69b65a7418b87551bfd02b65": {
+   "_id": {
+    "$oid": "69b65a7418b87551bfd02b65"
+   },
+   "before": {
+    "duplicate_of": {
+     "absent": true
+    },
+    "visible": {
+     "value": true
+    },
+    "hidden": {
+     "value": false
+    },
+    "hidden_reason": {
+     "absent": true
+    },
+    "hidden_at": {
+     "absent": true
+    },
+    "publication": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1790597978563"
+      }
+     }
+    },
+    "pages_ocr": {
+     "value": {
+      "$numberInt": "11"
+     }
+    },
+    "pages_translated": {
+     "value": {
+      "$numberInt": "11"
+     }
+    },
+    "pages_blank": {
+     "value": {
+      "$numberInt": "0"
+     }
+    }
+   }
+  },
+  "69b6608bb3f4fc04415330ab": {
+   "_id": {
+    "$oid": "69b6608bb3f4fc04415330ab"
+   },
+   "before": {
+    "duplicate_of": {
+     "absent": true
+    },
+    "visible": {
+     "value": true
+    },
+    "hidden": {
+     "value": false
+    },
+    "hidden_reason": {
+     "absent": true
+    },
+    "hidden_at": {
+     "absent": true
+    },
+    "publication": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1790597978563"
+      }
+     }
+    },
+    "pages_ocr": {
+     "value": {
+      "$numberInt": "11"
+     }
+    },
+    "pages_translated": {
+     "value": {
+      "$numberInt": "11"
+     }
+    },
+    "pages_blank": {
+     "value": {
+      "$numberInt": "0"
+     }
+    }
+   }
+  },
+  "69b6596818b87551bfcfb415": {
+   "_id": {
+    "$oid": "69b6596818b87551bfcfb415"
+   },
+   "before": {
+    "duplicate_of": {
+     "absent": true
+    },
+    "visible": {
+     "value": true
+    },
+    "hidden": {
+     "value": false
+    },
+    "hidden_reason": {
+     "absent": true
+    },
+    "hidden_at": {
+     "absent": true
+    },
+    "publication": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1790597978563"
+      }
+     }
+    },
+    "pages_ocr": {
+     "value": {
+      "$numberInt": "23"
+     }
+    },
+    "pages_translated": {
+     "value": {
+      "$numberInt": "22"
+     }
+    },
+    "pages_blank": {
+     "value": {
+      "$numberInt": "1"
+     }
+    }
+   }
+  },
+  "69b6596f18b87551bfcfb45b": {
+   "_id": {
+    "$oid": "69b6596f18b87551bfcfb45b"
+   },
+   "before": {
+    "duplicate_of": {
+     "absent": true
+    },
+    "visible": {
+     "value": true
+    },
+    "hidden": {
+     "value": false
+    },
+    "hidden_reason": {
+     "absent": true
+    },
+    "hidden_at": {
+     "absent": true
+    },
+    "publication": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1790597978563"
+      }
+     }
+    },
+    "pages_ocr": {
+     "value": {
+      "$numberInt": "7"
+     }
+    },
+    "pages_translated": {
+     "value": {
+      "$numberInt": "7"
+     }
+    },
+    "pages_blank": {
+     "value": {
+      "$numberInt": "0"
+     }
+    }
+   }
+  },
+  "6a4261a8744db9e3105aac94": {
+   "_id": {
+    "$oid": "6a4261a8744db9e3105aac94"
+   },
+   "before": {
+    "duplicate_of": {
+     "value": "69b66857b3f4fc0441569673"
+    },
+    "visible": {
+     "value": true
+    },
+    "hidden": {
+     "value": false
+    },
+    "hidden_reason": {
+     "absent": true
+    },
+    "hidden_at": {
+     "absent": true
+    },
+    "publication": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1791087979027"
+      }
+     }
+    },
+    "pages_ocr": {
+     "value": {
+      "$numberInt": "25"
+     }
+    },
+    "pages_translated": {
+     "value": {
+      "$numberInt": "0"
+     }
+    },
+    "pages_blank": {
+     "value": {
+      "$numberInt": "4"
+     }
+    }
+   }
+  },
+  "69b66857b3f4fc0441569673": {
+   "_id": {
+    "$oid": "69b66857b3f4fc0441569673"
+   },
+   "before": {
+    "duplicate_of": {
+     "absent": true
+    },
+    "visible": {
+     "absent": true
+    },
+    "hidden": {
+     "value": true
+    },
+    "hidden_reason": {
+     "value": "launch_curation"
+    },
+    "hidden_at": {
+     "absent": true
+    },
+    "publication": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1791087979584"
+      }
+     }
+    },
+    "pages_ocr": {
+     "value": {
+      "$numberInt": "174"
+     }
+    },
+    "pages_translated": {
+     "value": {
+      "$numberInt": "0"
+     }
+    },
+    "pages_blank": {
+     "value": {
+      "$numberInt": "4"
+     }
+    }
+   }
+  },
+  "69b6ae73dc00a90e322b11c7": {
+   "_id": {
+    "$oid": "69b6ae73dc00a90e322b11c7"
+   },
+   "before": {
+    "duplicate_of": {
+     "value": "6a4fb2576c11f99c0e42501a"
+    },
+    "visible": {
+     "value": true
+    },
+    "hidden": {
+     "value": false
+    },
+    "hidden_reason": {
+     "absent": true
+    },
+    "hidden_at": {
+     "absent": true
+    },
+    "publication": {
+     "value": {
+      "state": "public",
+      "reason": null,
+      "note": "Drebbel witness (#5811): Derek \"yes publish\" 2026-10-06",
+      "since": {
+       "$date": {
+        "$numberLong": "1791243254423"
+       }
+      },
+      "by": "derek@sourcelibrary.org",
+      "version": {
+       "$numberInt": "1"
+      },
+      "issue": {
+       "$numberInt": "5811"
+      }
+     }
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1791319845780"
+      }
+     }
+    },
+    "pages_ocr": {
+     "value": {
+      "$numberInt": "463"
+     }
+    },
+    "pages_translated": {
+     "value": {
+      "$numberInt": "339"
+     }
+    },
+    "pages_blank": {
+     "value": {
+      "$numberInt": "7"
+     }
+    }
+   }
+  },
+  "6a4fb2576c11f99c0e42501a": {
+   "_id": {
+    "$oid": "6a4fb2576c11f99c0e42501a"
+   },
+   "before": {
+    "duplicate_of": {
+     "absent": true
+    },
+    "visible": {
+     "value": false
+    },
+    "hidden": {
+     "value": true
+    },
+    "hidden_reason": {
+     "absent": true
+    },
+    "hidden_at": {
+     "absent": true
+    },
+    "publication": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1791087979421"
+      }
+     }
+    },
+    "pages_ocr": {
+     "value": {
+      "$numberInt": "9"
+     }
+    },
+    "pages_translated": {
+     "value": {
+      "$numberInt": "0"
+     }
+    },
+    "pages_blank": {
+     "value": {
+      "$numberInt": "5"
+     }
+    }
+   }
+  },
+  "6a4a5c2c9050f0b43431a984": {
+   "_id": {
+    "$oid": "6a4a5c2c9050f0b43431a984"
+   },
+   "before": {
+    "duplicate_of": {
+     "absent": true
+    },
+    "visible": {
+     "value": false
+    },
+    "hidden": {
+     "value": true
+    },
+    "hidden_reason": {
+     "absent": true
+    },
+    "hidden_at": {
+     "absent": true
+    },
+    "publication": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1791087979158"
+      }
+     }
+    },
+    "pages_ocr": {
+     "value": {
+      "$numberInt": "0"
+     }
+    },
+    "pages_translated": {
+     "value": {
+      "$numberInt": "0"
+     }
+    },
+    "pages_blank": {
+     "value": {
+      "$numberInt": "0"
+     }
+    }
+   }
+  },
+  "69b632c01c1c21a37381328d": {
+   "_id": {
+    "$oid": "69b632c01c1c21a37381328d"
+   },
+   "before": {
+    "duplicate_of": {
+     "absent": true
+    },
+    "visible": {
+     "absent": true
+    },
+    "hidden": {
+     "value": true
+    },
+    "hidden_reason": {
+     "value": "launch_curation"
+    },
+    "hidden_at": {
+     "absent": true
+    },
+    "publication": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1791087979198"
+      }
+     }
+    },
+    "pages_ocr": {
+     "value": {
+      "$numberInt": "0"
+     }
+    },
+    "pages_translated": {
+     "value": {
+      "$numberInt": "0"
+     }
+    },
+    "pages_blank": {
+     "value": {
+      "$numberInt": "0"
+     }
+    }
+   }
+  },
+  "6a4a58a69050f0b4342ecd62": {
+   "_id": {
+    "$oid": "6a4a58a69050f0b4342ecd62"
+   },
+   "before": {
+    "duplicate_of": {
+     "absent": true
+    },
+    "visible": {
+     "value": false
+    },
+    "hidden": {
+     "value": true
+    },
+    "hidden_reason": {
+     "absent": true
+    },
+    "hidden_at": {
+     "absent": true
+    },
+    "publication": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1791087979149"
+      }
+     }
+    },
+    "pages_ocr": {
+     "value": {
+      "$numberInt": "0"
+     }
+    },
+    "pages_translated": {
+     "value": {
+      "$numberInt": "0"
+     }
+    },
+    "pages_blank": {
+     "value": {
+      "$numberInt": "0"
+     }
+    }
+   }
+  },
+  "69b67d9d70c69d645a705447": {
+   "_id": {
+    "$oid": "69b67d9d70c69d645a705447"
+   },
+   "before": {
+    "duplicate_of": {
+     "absent": true
+    },
+    "visible": {
+     "absent": true
+    },
+    "hidden": {
+     "value": true
+    },
+    "hidden_reason": {
+     "value": "launch_curation"
+    },
+    "hidden_at": {
+     "absent": true
+    },
+    "publication": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1791087979247"
+      }
+     }
+    },
+    "pages_ocr": {
+     "value": {
+      "$numberInt": "0"
+     }
+    },
+    "pages_translated": {
+     "value": {
+      "$numberInt": "0"
+     }
+    },
+    "pages_blank": {
+     "value": {
+      "$numberInt": "0"
+     }
+    }
+   }
+  },
+  "69b51e2a47b06ecd5818ad8a": {
+   "_id": {
+    "$oid": "69b51e2a47b06ecd5818ad8a"
+   },
+   "before": {
+    "duplicate_of": {
+     "absent": true
+    },
+    "visible": {
+     "value": true
+    },
+    "hidden": {
+     "value": false
+    },
+    "hidden_reason": {
+     "absent": true
+    },
+    "hidden_at": {
+     "absent": true
+    },
+    "publication": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1790882141509"
+      }
+     }
+    },
+    "pages_ocr": {
+     "value": {
+      "$numberInt": "89"
+     }
+    },
+    "pages_translated": {
+     "value": {
+      "$numberInt": "0"
+     }
+    },
+    "pages_blank": {
+     "value": {
+      "$numberInt": "7"
+     }
+    }
+   }
+  },
+  "69b63f1ca85a63b8ab1957d2": {
+   "_id": {
+    "$oid": "69b63f1ca85a63b8ab1957d2"
+   },
+   "before": {
+    "duplicate_of": {
+     "absent": true
+    },
+    "visible": {
+     "value": true
+    },
+    "hidden": {
+     "absent": true
+    },
+    "hidden_reason": {
+     "absent": true
+    },
+    "hidden_at": {
+     "absent": true
+    },
+    "publication": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1791087978267"
+      }
+     }
+    },
+    "pages_ocr": {
+     "value": {
+      "$numberInt": "269"
+     }
+    },
+    "pages_translated": {
+     "value": {
+      "$numberInt": "253"
+     }
+    },
+    "pages_blank": {
+     "value": {
+      "$numberInt": "7"
+     }
+    }
+   }
+  },
+  "69b51e6947b06ecd5818faf1": {
+   "_id": {
+    "$oid": "69db92818ee26ccc99864e77"
+   },
+   "before": {
+    "duplicate_of": {
+     "value": "69c4ec33a3a4a7c546ee611b"
+    },
+    "visible": {
+     "value": false
+    },
+    "hidden": {
+     "value": true
+    },
+    "hidden_reason": {
+     "value": "duplicate"
+    },
+    "hidden_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1791058424533"
+      }
+     }
+    },
+    "publication": {
+     "value": {
+      "state": "hidden",
+      "reason": "duplicate",
+      "note": "collection-copy-collapse-2026-10-03",
+      "since": {
+       "$date": {
+        "$numberLong": "1791058424533"
+       }
+      },
+      "by": "collection-copies-5689",
+      "version": {
+       "$numberInt": "1"
+      },
+      "issue": {
+       "$numberInt": "5689"
+      },
+      "duplicate_of": "69c4ec33a3a4a7c546ee611b"
+     }
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1791058424533"
+      }
+     }
+    },
+    "pages_ocr": {
+     "value": {
+      "$numberInt": "473"
+     }
+    },
+    "pages_translated": {
+     "value": {
+      "$numberInt": "300"
+     }
+    },
+    "pages_blank": {
+     "value": {
+      "$numberInt": "7"
+     }
+    }
+   }
+  },
+  "6985ca72b037546226b9db91": {
+   "_id": {
+    "$oid": "6985ca72b037546226b9db92"
+   },
+   "before": {
+    "duplicate_of": {
+     "value": "68fb0dc412055a03a58d3281"
+    },
+    "visible": {
+     "value": true
+    },
+    "hidden": {
+     "value": false
+    },
+    "hidden_reason": {
+     "absent": true
+    },
+    "hidden_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1773482985560"
+      }
+     }
+    },
+    "publication": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1791087978124"
+      }
+     }
+    },
+    "pages_ocr": {
+     "value": {
+      "$numberInt": "532"
+     }
+    },
+    "pages_translated": {
+     "value": {
+      "$numberInt": "526"
+     }
+    },
+    "pages_blank": {
+     "value": {
+      "$numberInt": "6"
+     }
+    }
+   }
+  },
+  "68fb0dc412055a03a58d3281": {
+   "_id": {
+    "$oid": "68fb0dc412055a03a58d3282"
+   },
+   "before": {
+    "duplicate_of": {
+     "value": "6985ca72b037546226b9db91"
+    },
+    "visible": {
+     "value": false
+    },
+    "hidden": {
+     "value": true
+    },
+    "hidden_reason": {
+     "value": "duplicate"
+    },
+    "hidden_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1788096215706"
+      }
+     }
+    },
+    "publication": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1791087978087"
+      }
+     }
+    },
+    "pages_ocr": {
+     "value": {
+      "$numberInt": "471"
+     }
+    },
+    "pages_translated": {
+     "value": {
+      "$numberInt": "466"
+     }
+    },
+    "pages_blank": {
+     "value": {
+      "$numberInt": "5"
+     }
+    }
+   }
+  },
+  "699067e68da6face82f779a6": {
+   "_id": {
+    "$oid": "699067e68da6face82f779a6"
+   },
+   "before": {
+    "duplicate_of": {
+     "value": "6953ab3677f38f6761bd6ab2"
+    },
+    "visible": {
+     "value": true
+    },
+    "hidden": {
+     "value": false
+    },
+    "hidden_reason": {
+     "absent": true
+    },
+    "hidden_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1773482985560"
+      }
+     }
+    },
+    "publication": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1791087978134"
+      }
+     }
+    },
+    "pages_ocr": {
+     "value": {
+      "$numberInt": "444"
+     }
+    },
+    "pages_translated": {
+     "value": {
+      "$numberInt": "415"
+     }
+    },
+    "pages_blank": {
+     "value": {
+      "$numberInt": "29"
+     }
+    }
+   }
+  },
+  "699067f8249ce014347d530c": {
+   "_id": {
+    "$oid": "699067f8249ce014347d530c"
+   },
+   "before": {
+    "duplicate_of": {
+     "value": "6953ab1477f38f6761bd68ea"
+    },
+    "visible": {
+     "value": true
+    },
+    "hidden": {
+     "value": false
+    },
+    "hidden_reason": {
+     "absent": true
+    },
+    "hidden_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1773482985560"
+      }
+     }
+    },
+    "publication": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1788182081225"
+      }
+     }
+    },
+    "pages_ocr": {
+     "value": {
+      "$numberInt": "170"
+     }
+    },
+    "pages_translated": {
+     "value": {
+      "$numberInt": "151"
+     }
+    },
+    "pages_blank": {
+     "value": {
+      "$numberInt": "19"
+     }
+    }
+   }
+  },
+  "697a5562c915282d8f071f74": {
+   "_id": {
+    "$oid": "697a5562c915282d8f071f75"
+   },
+   "before": {
+    "duplicate_of": {
+     "value": "6909c96acf28baa1b4cafbf3"
+    },
+    "visible": {
+     "value": false
+    },
+    "hidden": {
+     "value": true
+    },
+    "hidden_reason": {
+     "value": "duplicate"
+    },
+    "hidden_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1788096215827"
+      }
+     }
+    },
+    "publication": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1791087978110"
+      }
+     }
+    },
+    "pages_ocr": {
+     "value": {
+      "$numberInt": "40"
+     }
+    },
+    "pages_translated": {
+     "value": {
+      "$numberInt": "40"
+     }
+    },
+    "pages_blank": {
+     "value": {
+      "$numberInt": "0"
+     }
+    }
+   }
+  }
+ },
+ "pages": {
+  "69b634031c1c21a37381d494": {
+   "_id": {
+    "$oid": "69dfe3062e48086c70da5901"
+   },
+   "book_id": "69b634031c1c21a37381d488",
+   "page_number": {
+    "$numberInt": "12"
+   },
+   "moved_from_page": "6a425a70744db9e31059f069",
+   "before": {
+    "ocr": {
+     "absent": true
+    },
+    "page_type": {
+     "absent": true
+    },
+    "script_type": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1784997713644"
+      }
+     }
+    }
+   }
+  },
+  "69b6498818b87551bfc5ddb3": {
+   "_id": {
+    "$oid": "69dfe3032e48086c70da2499"
+   },
+   "book_id": "69b6498818b87551bfc5dd9f",
+   "page_number": {
+    "$numberInt": "20"
+   },
+   "moved_from_page": "6a4579cf31e306b78433502f",
+   "before": {
+    "ocr": {
+     "absent": true
+    },
+    "page_type": {
+     "absent": true
+    },
+    "script_type": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1784997726684"
+      }
+     }
+    }
+   }
+  },
+  "69b65a7418b87551bfd02b71": {
+   "_id": {
+    "$oid": "69dd90f1c762bec37d1e1f8a"
+   },
+   "book_id": "69b65a7418b87551bfd02b65",
+   "page_number": {
+    "$numberInt": "12"
+   },
+   "moved_from_page": "6a46d87281ea9ca9ee565633",
+   "before": {
+    "ocr": {
+     "absent": true
+    },
+    "page_type": {
+     "absent": true
+    },
+    "script_type": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1784997712546"
+      }
+     }
+    }
+   }
+  },
+  "69b6608bb3f4fc04415330b7": {
+   "_id": {
+    "$oid": "69dd9820c762bec37d1e2b17"
+   },
+   "book_id": "69b6608bb3f4fc04415330ab",
+   "page_number": {
+    "$numberInt": "12"
+   },
+   "moved_from_page": "6a509b90ad1859a71f41bce1",
+   "before": {
+    "ocr": {
+     "absent": true
+    },
+    "page_type": {
+     "absent": true
+    },
+    "script_type": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1784997704957"
+      }
+     }
+    }
+   }
+  },
+  "69b6596818b87551bfcfb42d": {
+   "_id": {
+    "$oid": "69dd90f0c762bec37d1e1e54"
+   },
+   "book_id": "69b6596818b87551bfcfb415",
+   "page_number": {
+    "$numberInt": "24"
+   },
+   "moved_from_page": "6a9079bf7f9d520dd42e605e",
+   "before": {
+    "ocr": {
+     "absent": true
+    },
+    "page_type": {
+     "absent": true
+    },
+    "script_type": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1784997729349"
+      }
+     }
+    }
+   }
+  },
+  "69b6596f18b87551bfcfb463": {
+   "_id": {
+    "$oid": "69dd90efc762bec37d1e1a20"
+   },
+   "book_id": "69b6596f18b87551bfcfb45b",
+   "page_number": {
+    "$numberInt": "8"
+   },
+   "moved_from_page": "6a90618bce57ddf536208f7f",
+   "before": {
+    "ocr": {
+     "absent": true
+    },
+    "page_type": {
+     "absent": true
+    },
+    "script_type": {
+     "absent": true
+    },
+    "updated_at": {
+     "value": {
+      "$date": {
+       "$numberLong": "1784997703943"
+      }
+     }
+    }
+   }
+  }
+ },
+ "gallery_images": {
+  "69b63f1ca85a63b8ab1957d2": [
+   {
+    "$oid": "69db3fbc719415c98bc07095"
+   }
+  ]
+ },
+ "revisions": [
+  "a47c239063c0",
+  "4310a815e4d8",
+  "a7f54e696856",
+  "223d84424f19",
+  "cf3967051092",
+  "d629bb3f6d84"
+ ],
+ "actions": [
+  {
+   "decision": {
+    "$numberInt": "1"
+   },
+   "action": "hide_and_link",
+   "book": "6a516e1dc337fd5f57a095a7",
+   "to": "69b631a51c1c21a373809403",
+   "why": "second visible copy of one e-rara object (e-rara:11045422)",
+   "title": "Summula confessionis",
+   "state": "public",
+   "book_counts": "370 pp, 370 transcribed, 362 translated",
+   "keeper_counts": "370 pp, 370 transcribed, 364 translated",
+   "status": "todo"
+  },
+  {
+   "decision": {
+    "$numberInt": "1"
+   },
+   "action": "move_ocr",
+   "fingerprint": "e-rara:13280717",
+   "title": "Centiloquium",
+   "keeper": "69b634031c1c21a37381d488",
+   "copy": "6a425a70744db9e31059f05d",
+   "page_number": {
+    "$numberInt": "12"
+   },
+   "keeper_page_id": "69b634031c1c21a37381d494",
+   "copy_page_id": "6a425a70744db9e31059f069",
+   "chars": {
+    "$numberInt": "948"
+   },
+   "page_type": "blank",
+   "check": {
+    "read_from": "https://www.e-rara.ch/i3f/v20/13280730/full/full/0/default.jpg",
+    "read_basis": "OCR is earlier than the archive (or there is none), so it read the source image",
+    "same_source_page": true,
+    "read_vs_keeper_shown": {
+     "$numberInt": "2"
+    },
+    "read_vs_keeper_source": {
+     "$numberInt": "0"
+    }
+   },
+   "status": "todo"
+  },
+  {
+   "decision": {
+    "$numberInt": "1"
+   },
+   "action": "move_ocr",
+   "fingerprint": "e-rara:20963300",
+   "title": "Melopoiae sive harmoniae tetracenticae super XXII genera carminum heroicorum elegiacorum lyriacorum et ecclesiasticorum hymnorum per Petrum ",
+   "keeper": "69b6498818b87551bfc5dd9f",
+   "copy": "6a4579cf31e306b78433501b",
+   "page_number": {
+    "$numberInt": "20"
+   },
+   "keeper_page_id": "69b6498818b87551bfc5ddb3",
+   "copy_page_id": "6a4579cf31e306b78433502f",
+   "chars": {
+    "$numberInt": "558"
+   },
+   "page_type": "blank",
+   "check": {
+    "read_from": "https://www.e-rara.ch/i3f/v20/20963322/full/full/0/default.jpg",
+    "read_basis": "OCR is earlier than the archive (or there is none), so it read the source image",
+    "same_source_page": true,
+    "read_vs_keeper_shown": {
+     "$numberInt": "4"
+    },
+    "read_vs_keeper_source": {
+     "$numberInt": "0"
+    }
+   },
+   "status": "todo"
+  },
+  {
+   "decision": {
+    "$numberInt": "1"
+   },
+   "action": "move_ocr",
+   "fingerprint": "e-rara:2100026",
+   "title": "De acquirenda, retinenda, et amittenda possessione enunciationes C",
+   "keeper": "69b65a7418b87551bfd02b65",
+   "copy": "6a46d87281ea9ca9ee565627",
+   "page_number": {
+    "$numberInt": "12"
+   },
+   "keeper_page_id": "69b65a7418b87551bfd02b71",
+   "copy_page_id": "6a46d87281ea9ca9ee565633",
+   "chars": {
+    "$numberInt": "1264"
+   },
+   "page_type": "text",
+   "check": {
+    "read_from": "https://www.e-rara.ch/i3f/v20/2100040/full/full/0/default.jpg",
+    "read_basis": "OCR is earlier than the archive (or there is none), so it read the source image",
+    "same_source_page": true,
+    "read_vs_keeper_shown": {
+     "$numberInt": "5"
+    },
+    "read_vs_keeper_source": {
+     "$numberInt": "0"
+    }
+   },
+   "status": "todo"
+  },
+  {
+   "decision": {
+    "$numberInt": "1"
+   },
+   "action": "move_ocr",
+   "fingerprint": "e-rara:368128",
+   "title": "Theou megaloio hekēti, Ad theses hasce de locorum affectorum cognitione generali",
+   "keeper": "69b6608bb3f4fc04415330ab",
+   "copy": "6a509b90ad1859a71f41bcd4",
+   "page_number": {
+    "$numberInt": "12"
+   },
+   "keeper_page_id": "69b6608bb3f4fc04415330b7",
+   "copy_page_id": "6a509b90ad1859a71f41bce1",
+   "chars": {
+    "$numberInt": "300"
+   },
+   "page_type": "colophon",
+   "check": {
+    "read_from": "https://www.e-rara.ch/i3f/v20/281710/full/full/0/default.jpg",
+    "read_basis": "OCR is earlier than the archive (or there is none), so it read the source image",
+    "same_source_page": true,
+    "read_vs_keeper_shown": {
+     "$numberInt": "2"
+    },
+    "read_vs_keeper_source": {
+     "$numberInt": "0"
+    }
+   },
+   "status": "todo"
+  },
+  {
+   "decision": {
+    "$numberInt": "1"
+   },
+   "action": "move_ocr",
+   "fingerprint": "e-rara:38667",
+   "title": "De tabe et phthisi pronunciata",
+   "keeper": "69b6596818b87551bfcfb415",
+   "copy": "6a9079bf7f9d520dd42e6046",
+   "page_number": {
+    "$numberInt": "24"
+   },
+   "keeper_page_id": "69b6596818b87551bfcfb42d",
+   "copy_page_id": "6a9079bf7f9d520dd42e605e",
+   "chars": {
+    "$numberInt": "277"
+   },
+   "page_type": "blank",
+   "check": {
+    "read_from": "https://www.e-rara.ch/i3f/v20/38692/full/full/0/default.jpg",
+    "read_basis": "OCR is earlier than the archive (or there is none), so it read the source image",
+    "same_source_page": true,
+    "read_vs_keeper_shown": {
+     "$numberInt": "7"
+    },
+    "read_vs_keeper_source": {
+     "$numberInt": "0"
+    }
+   },
+   "status": "todo"
+  },
+  {
+   "decision": {
+    "$numberInt": "1"
+   },
+   "action": "move_ocr",
+   "fingerprint": "e-rara:38743",
+   "title": "Theses hasce",
+   "keeper": "69b6596f18b87551bfcfb45b",
+   "copy": "6a90618bce57ddf536208f63",
+   "page_number": {
+    "$numberInt": "8"
+   },
+   "keeper_page_id": "69b6596f18b87551bfcfb463",
+   "copy_page_id": "6a90618bce57ddf536208f7f",
+   "chars": {
+    "$numberInt": "745"
+   },
+   "page_type": "text",
+   "check": {
+    "read_from": "https://www.e-rara.ch/i3f/v20/38752/full/full/0/default.jpg",
+    "read_basis": "OCR is earlier than the archive (or there is none), so it read the source image",
+    "same_source_page": true,
+    "read_vs_keeper_shown": {
+     "$numberInt": "4"
+    },
+    "read_vs_keeper_source": {
+     "$numberInt": "0"
+    }
+   },
+   "status": "todo"
+  },
+  {
+   "decision": {
+    "$numberInt": "1"
+   },
+   "action": "clear_pointer",
+   "book": "6a4261a8744db9e3105aac94",
+   "to": null,
+   "why": "same e-rara object (e-rara:1752458); the visible copy pointed at the hidden one",
+   "title": "Scholæ in duos titulos Digestorum de pactis, et de transactionibus. Opus postumum",
+   "state": "public",
+   "from": "69b66857b3f4fc0441569673",
+   "status": "todo"
+  },
+  {
+   "decision": {
+    "$numberInt": "1"
+   },
+   "action": "set_pointer",
+   "book": "69b66857b3f4fc0441569673",
+   "to": "6a4261a8744db9e3105aac94",
+   "why": "same e-rara object (e-rara:1752458); the hidden copy now points at the visible one",
+   "title": "Francisci Hotmani I. C. celeberrimi Scholae in duos tit. XXVIII libri Digestorum: de Testamentis : I. Qui testamenta facere possunt, et quamadmodum testamenta fiant, II. De liberis et postumis heredib. instituend. vel exheredandis : in quo, celebrem illam l. Galluls, copiose et accurate expositam videbis",
+   "state": "unpublished",
+   "from": null,
+   "status": "todo"
+  },
+  {
+   "decision": {
+    "$numberInt": "1"
+   },
+   "action": "clear_pointer",
+   "book": "69b6ae73dc00a90e322b11c7",
+   "to": null,
+   "why": "same e-rara object (e-rara:15151935); the visible copy pointed at the hidden one",
+   "title": "Hug. Grotii poemata omnia",
+   "state": "public",
+   "from": "6a4fb2576c11f99c0e42501a",
+   "status": "todo"
+  },
+  {
+   "decision": {
+    "$numberInt": "1"
+   },
+   "action": "set_pointer",
+   "book": "6a4fb2576c11f99c0e42501a",
+   "to": "69b6ae73dc00a90e322b11c7",
+   "why": "same e-rara object (e-rara:15151935); the hidden copy now points at the visible one",
+   "title": "Poemata omnia",
+   "state": "hidden",
+   "from": null,
+   "status": "todo"
+  },
+  {
+   "decision": {
+    "$numberInt": "2"
+   },
+   "action": "set_pointer",
+   "book": "6a4a5c2c9050f0b43431a984",
+   "to": "6a492bb817814bcc1598d7eb",
+   "why": "hidden copy of the same edition: Popp, De Pestilitate (Frankfurt 1625)",
+   "title": "De Pestilitate: Das ist, Von dem Vrsprung der Pestilentz vnd derselben eygentlichen Cur : Darinnen Viel heimliche recept, und arcana, auch probirte Puluer, schwitzträncklein, neben andern medicamenten, so der Natur gemäß, vnd in dieser Seuch gantz dienstlich zugebrauchen, gefunden werden. Auch: Wie zur zeit der Pestilentz, ein jeder gesundter vnd krancker, jung vnd alt, Mann: vnd Weibs-Person sich mit allem praeserviren vnd curiren soll",
+   "state": "hidden",
+   "from": null,
+   "status": "todo"
+  },
+  {
+   "decision": {
+    "$numberInt": "2"
+   },
+   "action": "set_pointer",
+   "book": "69b632c01c1c21a37381328d",
+   "to": "6a45414189beae48d3af8758",
+   "why": "hidden copy of the same edition: Eyb, Praecepta artis rhetoricae ([Basel, not after 1488])",
+   "title": "[Aeneae Silvii Senensis praecepta artis rhetoricae]",
+   "state": "unpublished",
+   "from": null,
+   "status": "todo"
+  },
+  {
+   "decision": {
+    "$numberInt": "2"
+   },
+   "action": "set_pointer",
+   "book": "6a4a58a69050f0b4342ecd62",
+   "to": "6a26c250aad44c98627c29b6",
+   "why": "hidden copy of the same edition: Hornung, Cista medica (Nuremberg [1626])",
+   "title": "Cista medica :qua in epistolae clarissimorum Germaniae medicorum, familiares, & in re medica, tam quoad hermetica & chymica, quam etiam Galenica principia, lectu jucundae & utiles, cum diu reconditis experimentis asservantur",
+   "state": "hidden",
+   "from": null,
+   "status": "todo"
+  },
+  {
+   "decision": {
+    "$numberInt": "2"
+   },
+   "action": "set_pointer",
+   "book": "69b67d9d70c69d645a705447",
+   "to": "6a42f4802a88606fd148ce21",
+   "why": "hidden copy of the same edition: Gretser, Commentariolus (Ingolstadt 1610)",
+   "title": "Iacobi Gretseri Societatis Iesu theologi commentariolus De imperatorum, regum ac principum christianorum in sedem apostolicam munificentia",
+   "state": "unpublished",
+   "from": null,
+   "status": "todo"
+  },
+  {
+   "decision": {
+    "$numberInt": "2"
+   },
+   "action": "hide_and_link",
+   "book": "69b51e2a47b06ecd5818ad8a",
+   "to": "69b51e2acf111105c429798f",
+   "why": "Mylius, Memorabilia Bibliothecae Academicae Ienensis (Jena 1746). Neither copy has a translated page (0 and 0), so the tie goes to the copy with more transcribed pages: 374 against 89.",
+   "title": "Memorabilia Bibliothecae Academiae Jenensis ...",
+   "state": "public",
+   "book_counts": "680 pp, 89 transcribed, 0 translated",
+   "keeper_counts": "678 pp, 374 transcribed, 0 translated",
+   "status": "todo"
+  },
+  {
+   "decision": {
+    "$numberInt": "2"
+   },
+   "action": "hide_and_link",
+   "book": "69b63f1ca85a63b8ab1957d2",
+   "to": "69bf60f6065df5d87d778aa2",
+   "why": "Todd, The Books of the Vaudois (1865). 254 translated pages against 253; the keeper also carries the authors' names where the other says 'Various'.",
+   "title": "The Books of the Vaudois (Waldensian Texts)",
+   "state": "public",
+   "book_counts": "269 pp, 269 transcribed, 253 translated",
+   "keeper_counts": "270 pp, 270 transcribed, 254 translated",
+   "status": "todo"
+  },
+  {
+   "decision": {
+    "$numberInt": "3"
+   },
+   "action": "clear_pointer",
+   "book": "69b51e6947b06ecd5818faf1",
+   "to": null,
+   "why": "Magia Adamica Sammelband (474 pp) against the tract alone (89 pp). Both open on the same title page (Amsterdam 1704, Eugenius Philaletha). The copy is a BSB Sammelband with an Augsburg Collegium Evangelicum bookplate that binds three more tracts after it; the target is the BPH copy of the one tract. Same printing of the first tract, not the same book.",
+   "title": "Magia Adamica oder das Alterthum der Magie [Sammelband, with: Anthroposophia theomagica; Anima magica abscondita; Chymische Hochzeit Christiani Rosencreutz]",
+   "state": "hidden",
+   "from": "69c4ec33a3a4a7c546ee611b",
+   "status": "todo"
+  },
+  {
+   "decision": {
+    "$numberInt": "4"
+   },
+   "action": "clear_pointer",
+   "book": "6985ca72b037546226b9db91",
+   "to": null,
+   "why": "Pymander: Rosselli's commentary, Liber III (Kraków 1586), visible. Not the same book as its target. This one is Pymander Mercurii Trismegisti cum commento Hannibalis Rosseli, Liber III, Kraków, Lazarus 1586; the target is the Basel 1532 Pymander with Asclepius, Iamblichus and Proclus.",
+   "title": "Pymander",
+   "state": "public",
+   "from": "68fb0dc412055a03a58d3281",
+   "status": "todo"
+  },
+  {
+   "decision": {
+    "$numberInt": "4"
+   },
+   "action": "clear_pointer",
+   "book": "68fb0dc412055a03a58d3281",
+   "to": null,
+   "why": "Pymander, Asclepius, Iamblichus, Proclus (Basel 1532), hidden. The other half of the same cycle, and for the same reason not a duplicate. Stays hidden; a candidate to unhide.",
+   "title": "Pymander, de potestate et sapientia Dei",
+   "state": "hidden",
+   "from": "6985ca72b037546226b9db91",
+   "status": "todo"
+  },
+  {
+   "decision": {
+    "$numberInt": "4"
+   },
+   "action": "clear_pointer",
+   "book": "699067e68da6face82f779a6",
+   "to": null,
+   "why": "Liber Razielis, Vat. Reg. lat. 1300, visible. The same Vatican manuscript and the same photographs as the hidden record. The hidden record keeps its pointer at this one; only the visible book's pointer back is cleared.",
+   "title": "Liber Razielis Archangeli",
+   "state": "public",
+   "from": "6953ab3677f38f6761bd6ab2",
+   "status": "todo"
+  },
+  {
+   "decision": {
+    "$numberInt": "4"
+   },
+   "action": "clear_pointer",
+   "book": "699067f8249ce014347d530c",
+   "to": null,
+   "why": "Hermetic and alchemical anthology, Vat. Pal. lat. 1328, visible. The same Vatican manuscript and the same photographs as the hidden record. The hidden record keeps its pointer at this one; only the visible book's pointer back is cleared.",
+   "title": "Hermetic and Alchemical Anthology",
+   "state": "public",
+   "from": "6953ab1477f38f6761bd68ea",
+   "status": "todo"
+  },
+  {
+   "decision": {
+    "$numberInt": "4"
+   },
+   "action": "clear_pointer",
+   "book": "697a5562c915282d8f071f74",
+   "to": null,
+   "why": "Doni, Dichiaratione (Venice 1562), 40-page record, hidden. Both records are BPH photographs of the Venice 1562 Giolito edition and both are hidden: the 50-page one for its page order (#5900), this one as its duplicate. This is the intact record, so it should not point at the broken one. The broken record keeps its pointer here. Stays hidden; a candidate to unhide.",
+   "title": "Dichiaratione sopra il XIII. cap. dell'Apocalisse",
+   "state": "hidden",
+   "from": "6909c96acf28baa1b4cafbf3",
+   "status": "todo"
+  }
+ ]
+}

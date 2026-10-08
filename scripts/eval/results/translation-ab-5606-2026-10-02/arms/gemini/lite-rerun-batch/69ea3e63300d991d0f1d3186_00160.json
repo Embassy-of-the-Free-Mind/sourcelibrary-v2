@@ -1,0 +1,21 @@
+{
+ "id": "69ea3e63300d991d0f1d3186_00160",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "[Section 44] The Superintendent of Courtesans 125\n\nA courtesan who refuses to approach a man at the King's order shall receive a thousand lashes or a fine of five thousand <term>panas</term> <gloss>units of currency</gloss>.\nFor accepting a fee and then showing aversion, the fine is double the fee.\nFor seizing a fee and refusing to grant lodging, she shall pay eight times the fee, except in cases of illness or the unsuitability of the man.\nIf she insults a man or attempts to drown herself, she shall be punished.\nFor stealing a courtesan’s ornaments or her fee, the fine is eight times the value.\nThe courtesan shall report her earnings, her future income, and her patrons.\nBy this rule, the women of actors, dancers, singers, musicians, life-long performers, stage players, rope dancers, jugglers, and bards, as well as those living by secret means, are also governed.\nFor a visiting troupe, a performance fee of five <term>panas</term> shall be paid.\nProfessional prostitutes shall pay a monthly tax equal to two days of their earnings.\nA courtesan shall cause her female slaves and those who live by stage performance to learn singing, playing instruments, reading, dancing, acting, writing, painting, playing the <term>vina</term> <gloss>lute</gloss>, the flute, and the drum; as well as knowledge of other people's thoughts, perfumery, garland making, hypnotism, massage, and the arts of the courtesan. They shall earn their livelihood from the royal circle. They shall ensure that the sons of courtesans and those who live by the stage become leaders. They shall also be trained in all aspects of rhythmic performance.\n\nWomen who are skilled in secret codes and foreign languages shall be employed among them, and their relatives and carriages shall be utilized for the purpose of espionage, assassinations, and identifying lapses in security.\n\nThus ends the twenty-seventh chapter, the Superintendent of Courtesans, in the Book of the Superintendents.\nForty-eighth from the beginning.\n\n<note>The original text notes indicate alternative readings for \"men\" (purusebhyah), \"for the sake of ornaments\" (bharanartham), and \"the performance of all rhythms\" (talapacarams ca).</note>\n\n<summary>This page details the legal, financial, and professional regulations governing courtesans and performing artists under the authority of the Superintendent, including their mandatory training, taxation, and utility as intelligence assets for the state.</summary>\n<keywords>Arthaśastra, courtesans, taxation, espionage, performing arts, state regulation, Kautilya</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2342,
+ "outputTokens": 578,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.0007262499999999999,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1284,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

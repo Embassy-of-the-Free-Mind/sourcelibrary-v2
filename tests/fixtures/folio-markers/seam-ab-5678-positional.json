@@ -1,0 +1,928 @@
+{
+ "_about": "Seam A/B (#5701) marker blocks whose literal parse failed. expected = spans from the ORIGINAL folio-markers.mjs parser (#5682) plus the harness Amendment 2 positional reading (what the blind judges read), hashed; raw responses are in scripts/eval/results/seam-ab-5678/outputs.jsonl. null = the page had no English. Generated once for #5678; regenerate only if outputs.jsonl changes.",
+ "blocks": [
+  {
+   "unit": "6a4cde4859e2a5b6929d8a99:21",
+   "arm": "B",
+   "pages": [
+    21,
+    22
+   ],
+   "markers": [
+    97,
+    98
+   ],
+   "shape": "mis-numbered",
+   "expected": [
+    {
+     "sha256_16": "c4db4cea2636b54e",
+     "length": 4271,
+     "head": "Manuscript in Ecclesiastical Theology 8; he himself, however",
+     "tail": "otate what seems to the learned to be his style of speaking."
+    },
+    {
+     "sha256_16": "b9755555cfb9028b",
+     "length": 3590,
+     "head": "How Aulus Gellius—who in book 12, number 2, not only cites j",
+     "tail": "ues.</note>\n\n<note>From the printing house of GOEBEL.</note>"
+    }
+   ]
+  },
+  {
+   "unit": "6a43b2493c91e2a63d4db6fb:20",
+   "arm": "B",
+   "pages": [
+    20,
+    21
+   ],
+   "markers": [
+    18,
+    19
+   ],
+   "shape": "mis-numbered",
+   "expected": [
+    {
+     "sha256_16": "b897ca814e2b395c",
+     "length": 2471,
+     "head": "with incipient pains, and indeed (if they are to operate mor",
+     "tail": "a third part. Let 3 drams be taken then in the morning hours"
+    },
+    {
+     "sha256_16": "2ea5e4c50ddb846c",
+     "length": 2487,
+     "head": "so that the dose may be repeated until the bowels are gently",
+     "tail": "άργυρον\"</note>, it is left to each to hold his own opinion."
+    }
+   ]
+  },
+  {
+   "unit": "6a51e5fe2d94f05f3e408249:9",
+   "arm": "B",
+   "pages": [
+    9,
+    10
+   ],
+   "markers": [
+    10
+   ],
+   "shape": "opener-missing",
+   "expected": [
+    {
+     "sha256_16": "10416b09f8ff3bfd",
+     "length": 777,
+     "head": "->*I was stunned, my hair stood on end, and my voice*<-\n->*s",
+     "tail": "yself, undeterred by all things, as a prepared Messenger and"
+    },
+    {
+     "sha256_16": "1004b160d45f390b",
+     "length": 859,
+     "head": "Actor. This, if it might not stop the unspeakable and execra",
+     "tail": "ion, *Listeners*? Oh, most wickedly shameless investigators!"
+    }
+   ]
+  },
+  {
+   "unit": "6a4a88380cf770dd0072144a:18",
+   "arm": "B",
+   "pages": [
+    18,
+    19
+   ],
+   "markers": [
+    14,
+    15
+   ],
+   "shape": "mis-numbered",
+   "expected": [
+    {
+     "sha256_16": "1a5d6e7809c0128a",
+     "length": 1837,
+     "head": "### §. II.\n\nFestus provided this Apostle, standing before th",
+     "tail": "y* in the following verse, 8, indicates not obscurely, since"
+    },
+    {
+     "sha256_16": "026c864b56bb816e",
+     "length": 1724,
+     "head": "from it, it is gathered that there were three main heads of ",
+     "tail": "rough the benefit of the *Appeal*, sought to secure his life"
+    }
+   ]
+  },
+  {
+   "unit": "6a4a078b4ef72f5607b5d1ea:14",
+   "arm": "B",
+   "pages": [
+    14,
+    15
+   ],
+   "markers": [
+    15
+   ],
+   "shape": "opener-missing",
+   "expected": [
+    {
+     "sha256_16": "b1d6f5999c0a0c41",
+     "length": 1700,
+     "head": "<header>WEASEL.</header>\n\nmuch. But although I do not have t",
+     "tail": "m the common people. For common names are not to be despised"
+    },
+    {
+     "sha256_16": "151ec5a6364f7c2a",
+     "length": 1745,
+     "head": "if Latin ones are lacking.\n<margin>Wisela, Wisel, herminna, ",
+     "tail": "s. Pliny: \"Great, because of their hunting, are the ferrets\""
+    }
+   ]
+  },
+  {
+   "unit": "6a4bb3453828881918f94f43:12",
+   "arm": "B",
+   "pages": [
+    12,
+    13
+   ],
+   "markers": [
+    13
+   ],
+   "shape": "opener-missing",
+   "expected": [
+    {
+     "sha256_16": "f39c1243f86ef0b9",
+     "length": 1981,
+     "head": "to be left unburied to be torn apart by beasts and birds, fo",
+     "tail": "ieves that the owner of the brute could redeem his life only"
+    },
+    {
+     "sha256_16": "632a8874cc3c01c5",
+     "length": 2081,
+     "head": "if he could not be soundly convicted of gross negligence.\n\nT",
+     "tail": "ervals it was accustomed to dry up so that it was considered"
+    }
+   ]
+  },
+  {
+   "unit": "6a43b1593c91e2a63d4db091:14",
+   "arm": "B",
+   "pages": [
+    14,
+    15
+   ],
+   "markers": [
+    10,
+    11
+   ],
+   "shape": "mis-numbered",
+   "expected": [
+    {
+     "sha256_16": "3d17348e28940b0b",
+     "length": 2091,
+     "head": ", always and continuously hindering the healing of the ulcer",
+     "tail": "nd that it was not perforated—as we had conjectured from the"
+    },
+    {
+     "sha256_16": "77cfbc254db06e9a",
+     "length": 2177,
+     "head": "obvious support of the discharge <note>The Latin here implie",
+     "tail": "bled the face of a dissected uterus when in the final months"
+    }
+   ]
+  },
+  {
+   "unit": "69e9c969625ec74a14473450:33",
+   "arm": "B",
+   "pages": [
+    33,
+    34
+   ],
+   "markers": [
+    34
+   ],
+   "shape": "opener-missing",
+   "expected": [
+    {
+     "sha256_16": "0b80320d8a79e0f8",
+     "length": 2075,
+     "head": "we shall say they exist. Many affirm they have seen ships ca",
+     "tail": "t have sufficiently explored. Because of the brevity of time"
+    },
+    {
+     "sha256_16": "f7026f7fe12a2ab8",
+     "length": 7567,
+     "head": "and the scarcity of interpreters, the rest of the customs of",
+     "tail": "ep, heifers, and many others along with those of their kind."
+    }
+   ]
+  },
+  {
+   "unit": "6a4f225a8afd506469a564bb:21",
+   "arm": "B",
+   "pages": [
+    21,
+    22
+   ],
+   "markers": [
+    22
+   ],
+   "shape": "opener-missing",
+   "expected": [
+    {
+     "sha256_16": "a937d31960436a49",
+     "length": 3283,
+     "head": "the breast of the Christians, the feet of the Petrobrusians,",
+     "tail": "ancients that departed further from the truth of faith, they"
+    },
+    {
+     "sha256_16": "397150a6a478ef8d",
+     "length": 3245,
+     "head": "were either of short duration or confined to small spaces of",
+     "tail": "en if <margin>...</margin> Arian, or Nestorian, or Eutychian"
+    }
+   ]
+  },
+  {
+   "unit": "6a4ba774ee24ce21bf792571:21",
+   "arm": "B",
+   "pages": [
+    21,
+    22
+   ],
+   "markers": [
+    21
+   ],
+   "shape": "unmarked",
+   "expected": [
+    null,
+    null
+   ]
+  },
+  {
+   "unit": "6a490eb4a9e39181572dc9ff:9",
+   "arm": "B",
+   "pages": [
+    9,
+    10
+   ],
+   "markers": [
+    10
+   ],
+   "shape": "opener-missing",
+   "expected": [
+    {
+     "sha256_16": "4b3dbdc0def10f49",
+     "length": 3572,
+     "head": "Pererius also urges this, saying:\n> Since that translation o",
+     "tail": "ollowing Dissertation. That one who is about to bid farewell"
+    },
+    {
+     "sha256_16": "8a0709e18984ea21",
+     "length": 3034,
+     "head": "is JOHANNES HEINRICUS AMELONGUS, a local from Gera, the son ",
+     "tail": "ing</gloss> from memory. / Ebersd. Var. P. P. June 16, 1664."
+    }
+   ]
+  },
+  {
+   "unit": "6a4a59093a479d44b0033e78:20",
+   "arm": "B",
+   "pages": [
+    20,
+    21
+   ],
+   "markers": [
+    590,
+    591
+   ],
+   "shape": "mis-numbered",
+   "expected": [
+    {
+     "sha256_16": "6addfe6845ad9191",
+     "length": 2358,
+     "head": "Look at those words, and consider that greatest of all falsi",
+     "tail": "omen curse and detest him every year, every month, every day"
+    },
+    {
+     "sha256_16": "ea6ba1613c29f326",
+     "length": 2734,
+     "head": "and execrate him. If you are turning some other person over ",
+     "tail": " has borne our sicknesses and carried our pains,\" and so on."
+    }
+   ]
+  },
+  {
+   "unit": "6a4bcd91241e69221d270f25:18",
+   "arm": "B",
+   "pages": [
+    18,
+    19
+   ],
+   "markers": [
+    17
+   ],
+   "shape": "opener-missing",
+   "expected": [
+    {
+     "sha256_16": "357d215f355375dc",
+     "length": 2811,
+     "head": "The bowels are excellently softened by turpentine mixed with",
+     "tail": "ancients, such as Aetius, Trallianus, and others, as well as"
+    },
+    {
+     "sha256_16": "f81e7e38a211640f",
+     "length": 2968,
+     "head": "those following them, Sennertus in his specific treatise on ",
+     "tail": "of aloe, myrrh, and saffron</gloss> is beneficial. Paracelsi"
+    }
+   ]
+  },
+  {
+   "unit": "6a4f0caee39e71f6b6e3d31d:13",
+   "arm": "B",
+   "pages": [
+    13,
+    14
+   ],
+   "markers": [
+    14
+   ],
+   "shape": "opener-missing",
+   "expected": [
+    {
+     "sha256_16": "2550c0782c778a38",
+     "length": 3151,
+     "head": "Rhosny <note>likely Maximilien de Béthune, Duke of Sully</no",
+     "tail": "have never seen better counsel given, but there is something"
+    },
+    {
+     "sha256_16": "e29196194c9478a1",
+     "length": 2944,
+     "head": "else that drives these men off course, namely the sweet scen",
+     "tail": "ss of mind. This is different from the ways of the ancients."
+    }
+   ]
+  },
+  {
+   "unit": "6a4cbdb0a4a65af01ae26e70:9",
+   "arm": "B",
+   "pages": [
+    9,
+    10
+   ],
+   "markers": [
+    10
+   ],
+   "shape": "opener-missing",
+   "expected": [
+    {
+     "sha256_16": "b37d43fdf6c1cf3d",
+     "length": 1502,
+     "head": "flesh. Whence it is necessary to go over deeds done in war, ",
+     "tail": "ith the protection of their glorious voice, defend the hope,"
+    },
+    {
+     "sha256_16": "a5a6c105e2a66f76",
+     "length": 1366,
+     "head": "life, and descendants of the struggling. Hence, it is known ",
+     "tail": "ken (which honor, when it is snatched away from the learned,"
+    }
+   ]
+  },
+  {
+   "unit": "69b2f32b21208ea9dc277b5e:285",
+   "arm": "B",
+   "pages": [
+    285,
+    286
+   ],
+   "markers": [
+    277,
+    278
+   ],
+   "shape": "mis-numbered",
+   "expected": [
+    {
+     "sha256_16": "01942f82620f2409",
+     "length": 2601,
+     "head": "PYTHAGORAS. BOOK VIII.\n\n<margin>A</margin>When Pythagoras se",
+     "tail": " are burdensome and little suited to health. When asked when"
+    },
+    {
+     "sha256_16": "10759147b1bafe63",
+     "length": 2812,
+     "head": "one should have intercourse, he said: \"When you wish to beco",
+     "tail": "their bodies with dried and soft figs and wheat, as he says."
+    }
+   ]
+  },
+  {
+   "unit": "69b4c06a6248be021e01f03c:175",
+   "arm": "B",
+   "pages": [
+    175,
+    176
+   ],
+   "markers": [
+    165,
+    166
+   ],
+   "shape": "mis-numbered",
+   "expected": [
+    {
+     "sha256_16": "a4954694873616fe",
+     "length": 1136,
+     "head": "the leaven, that is to say one part of the leaven and three ",
+     "tail": " firmament we see that the sun is the principle and the fire"
+    },
+    {
+     "sha256_16": "12527b8fc2b7a11c",
+     "length": 780,
+     "head": "of all the planets and they all have need of its light, for ",
+     "tail": "rfully without mixture of the perfect medicine, although the"
+    }
+   ]
+  },
+  {
+   "unit": "6a4e39dcc030cbc5f406e03a:11",
+   "arm": "B",
+   "pages": [
+    11,
+    12
+   ],
+   "markers": [
+    12
+   ],
+   "shape": "opener-missing",
+   "expected": [
+    {
+     "sha256_16": "4f141d104c35ff36",
+     "length": 1542,
+     "head": "and lightness of the elements, as Empedocles <note>a Greek p",
+     "tail": "he benefit of the species than to any particular individual."
+    },
+    {
+     "sha256_16": "a7ab2a83d6c79fc5",
+     "length": 906,
+     "head": "Although, on account of the variety of temperaments, locatio",
+     "tail": "tomed to happen a little differently.\n\n->PRAISE BE TO GOD.<-"
+    }
+   ]
+  },
+  {
+   "unit": "6a4aa70c0a459d47e0cfe457:17",
+   "arm": "B",
+   "pages": [
+    17,
+    18
+   ],
+   "markers": [
+    15,
+    16
+   ],
+   "shape": "mis-numbered",
+   "expected": [
+    {
+     "sha256_16": "55cc7d1d568c6cfb",
+     "length": 2184,
+     "head": "PHILOSOPHICA.\n# XII. IOANNES CONRADVS FINCKHER, CELLENSIS.\n#",
+     "tail": "n existence; it differs formally.\n\n## EX LOGICA.\n### XXXVII."
+    },
+    {
+     "sha256_16": "c96ebe32ce6224f3",
+     "length": 1866,
+     "head": "ASSERTIONES\n<note>A decorative initial letter 'D' features a",
+     "tail": "d therefore necessary consequence, but not an argumentation."
+    }
+   ]
+  },
+  {
+   "unit": "6a4ed93fdf0b2269c3dbdd8e:19",
+   "arm": "B",
+   "pages": [
+    19,
+    20
+   ],
+   "markers": [
+    20
+   ],
+   "shape": "opener-missing",
+   "expected": [
+    {
+     "sha256_16": "19518908dd07e55a",
+     "length": 1313,
+     "head": "<note>A horizontal decorative band at the top of the page co",
+     "tail": "ture inhabitants, pitying our final life, remove our perils."
+    },
+    {
+     "sha256_16": "1b63ba1a700c1258",
+     "length": 1325,
+     "head": "Let us therefore sing praises to the Divinity, which is one ",
+     "tail": "München.</note>\nBayerische\nStaatsbibliothek\nMUNICH\n</insert>"
+    }
+   ]
+  },
+  {
+   "unit": "6a4eeb115180d313013557dc:13",
+   "arm": "B",
+   "pages": [
+    13,
+    14
+   ],
+   "markers": [
+    11,
+    12
+   ],
+   "shape": "mis-numbered",
+   "expected": [
+    {
+     "sha256_16": "9f250b5b09671081",
+     "length": 1093,
+     "head": "### The Monastery of Hierostephanianum, commonly known as We",
+     "tail": "worthy that the pain which was there before should return.<-"
+    },
+    {
+     "sha256_16": "033ff55ce1af5030",
+     "length": 1328,
+     "head": "### *Saints Peter and Paul, patrons of the monastery of Neus",
+     "tail": "of two Stephens,\nOne of his martyr, the other of his bishop."
+    }
+   ]
+  },
+  {
+   "unit": "6a4930ba1bbf4176e1e90166:10",
+   "arm": "B",
+   "pages": [
+    10,
+    11
+   ],
+   "markers": [
+    54,
+    55
+   ],
+   "shape": "mis-numbered",
+   "expected": [
+    {
+     "sha256_16": "ebc319ff46f1a125",
+     "length": 2025,
+     "head": "# ORATIO.\n\nwhat ought to be kept secret, he tells to a frien",
+     "tail": "will cry out that they gave *Nothing* with a religious hand."
+    },
+    {
+     "sha256_16": "e39b8f0dbdecc0d5",
+     "length": 2199,
+     "head": "# O R A T I O.\n\nPraetors and other citizens and wealthy rust",
+     "tail": "indymus</term> in both fortunes, but he was perfidious to me"
+    }
+   ]
+  },
+  {
+   "unit": "6a22c153a71b5f5ffb2e4dc5:257",
+   "arm": "C",
+   "pages": [
+    257,
+    258
+   ],
+   "markers": [
+    235,
+    236
+   ],
+   "shape": "mis-numbered",
+   "expected": [
+    {
+     "sha256_16": "8abad06a98241fe1",
+     "length": 4064,
+     "head": "<margin>w. 6.</margin>\nOtherwise, from here, not unlike the ",
+     "tail": "divided.\n1.\n2.\n3.\n4.</margin> <margin>h, π.\ni, p.p.</margin>"
+    },
+    {
+     "sha256_16": "50e818eb18c39e75",
+     "length": 4043,
+     "head": "constituting the calf, whence they are also called the Sural",
+     "tail": " veins; however, there is no part which, because of the per-"
+    }
+   ]
+  },
+  {
+   "unit": "6a43b2493c91e2a63d4db6fb:20",
+   "arm": "C",
+   "pages": [
+    20,
+    21
+   ],
+   "markers": [
+    18,
+    19
+   ],
+   "shape": "mis-numbered",
+   "expected": [
+    {
+     "sha256_16": "78dfc3de11e180d2",
+     "length": 2583,
+     "head": "at the beginning of the pains, and indeed <note>if they are ",
+     "tail": "sumed. Then let three drachms be taken in the morning hours,"
+    },
+    {
+     "sha256_16": "9dc617acae59f4b9",
+     "length": 2488,
+     "head": "and let the dose be repeated until the bowels are gently mov",
+     "tail": "hydrargyrum</term>, it is left to each man’s own preference."
+    }
+   ]
+  },
+  {
+   "unit": "6a4f67241cba01ec54e75998:5",
+   "arm": "C",
+   "pages": [
+    5,
+    6
+   ],
+   "markers": [
+    5,
+    378
+   ],
+   "shape": "mis-numbered",
+   "expected": [
+    {
+     "sha256_16": "a565c14f135cf906",
+     "length": 1536,
+     "head": "<note>An ornamental header featuring repeating floral and sc",
+     "tail": "ellect had to be restrained rather than exhausted by anxious"
+    },
+    {
+     "sha256_16": "666f29be34a784bb",
+     "length": 1818,
+     "head": "meditation. But if someone wished to add the other points of",
+     "tail": " estate, and on the other, a subversion of the public good,*"
+    }
+   ]
+  },
+  {
+   "unit": "6a4a88380cf770dd0072144a:18",
+   "arm": "C",
+   "pages": [
+    18,
+    19
+   ],
+   "markers": [
+    14,
+    15
+   ],
+   "shape": "mis-numbered",
+   "expected": [
+    {
+     "sha256_16": "c506245712d27319",
+     "length": 1836,
+     "head": "### §. II.\n\nThe occasion for appealing to Caesar was given t",
+     "tail": "* in the following *Verse 8* indicates clearly enough, since"
+    },
+    {
+     "sha256_16": "2503b4e1e3d16db3",
+     "length": 1761,
+     "head": "indeed it is gathered from it that there were three primary ",
+     "tail": "fore Festus, by the benefit of *Appeal*, [defended] his life"
+    }
+   ]
+  },
+  {
+   "unit": "6a4ba071debad28d8e8dccff:15",
+   "arm": "C",
+   "pages": [
+    15,
+    16
+   ],
+   "markers": [
+    51,
+    52
+   ],
+   "shape": "mis-numbered",
+   "expected": [
+    {
+     "sha256_16": "5bbc6556a875b0c1",
+     "length": 2502,
+     "head": "§ XXIX. It is disputed, however, whether both parents, or on",
+     "tail": "ersons were punished by hanging after death, as among others"
+    },
+    {
+     "sha256_16": "41e0e35fb1cd8ee5",
+     "length": 2619,
+     "head": "<term>Obadiah de Sforno</term> testifies in the <term>Biur a",
+     "tail": "enice edition, folio 162, column 4.\n\n->GLORY TO GOD ALONE.<-"
+    }
+   ]
+  },
+  {
+   "unit": "6a4a59093a479d44b0033e78:20",
+   "arm": "C",
+   "pages": [
+    20,
+    21
+   ],
+   "markers": [
+    590,
+    591
+   ],
+   "shape": "mis-numbered",
+   "expected": [
+    {
+     "sha256_16": "d034ae39e0c61c3c",
+     "length": 2501,
+     "head": "regarding these words, look at that greatest falsifier of th",
+     "tail": " mourn him. Men and women every year, every month, every day"
+    },
+    {
+     "sha256_16": "8eecb6a2ae1cfe3c",
+     "length": 2757,
+     "head": "execrate and detest him. But if you have some other person i",
+     "tail": "ely he has borne our sicknesses and carried our pains,\" etc."
+    }
+   ]
+  },
+  {
+   "unit": "6a4bcca0241e69221d270dbc:18",
+   "arm": "C",
+   "pages": [
+    18,
+    19
+   ],
+   "markers": [
+    16,
+    17
+   ],
+   "shape": "mis-numbered",
+   "expected": [
+    {
+     "sha256_16": "6e076abb5ffc17be",
+     "length": 2939,
+     "head": "change subsequently provided the cause for the greatest uphe",
+     "tail": "es are brought out. But the *Ottoman* dominion is far larger"
+    },
+    {
+     "sha256_16": "f77c44f9fd8cb217",
+     "length": 2717,
+     "head": "than the Austrian, since out of the 60 Counties into which a",
+     "tail": "uins, can boast of their antiquity more than their strength."
+    }
+   ]
+  },
+  {
+   "unit": "6a4bd0de7dacabf69cff6b11:6",
+   "arm": "C",
+   "pages": [
+    6,
+    7
+   ],
+   "markers": [
+    6,
+    8
+   ],
+   "shape": "mis-numbered",
+   "expected": [
+    {
+     "sha256_16": "a227316121e4dbba",
+     "length": 1734,
+     "head": "and Monachus write. Less correctly. For prescription does no",
+     "tail": "umed from the lapse of so many years that an Investiture was"
+    },
+    {
+     "sha256_16": "0dd2da75683c3dff",
+     "length": 1437,
+     "head": "made; but even in that case where it is established that som",
+     "tail": "ative view finds a patron not so <unclear>long ago</unclear>"
+    }
+   ]
+  },
+  {
+   "unit": "6a08524849638a50931b9d75:87",
+   "arm": "C",
+   "pages": [
+    87,
+    88
+   ],
+   "markers": [
+    46,
+    47
+   ],
+   "shape": "mis-numbered",
+   "expected": [
+    {
+     "sha256_16": "1a55ea3c8cb5f7dc",
+     "length": 6750,
+     "head": "Virgil. Some are <term>hexaptota</term> <gloss>having six ca",
+     "tail": "le</gloss> of Venus, <term>fimus</term> <gloss>dung</gloss>,"
+    },
+    {
+     "sha256_16": "19ff87ff608c2a74",
+     "length": 8255,
+     "head": "<term>penus</term> <gloss>food</gloss>, <term>fumus</term> <",
+     "tail": ">nundinum</term> and <term>trinundinum</term> are also read."
+    }
+   ]
+  },
+  {
+   "unit": "69b2f32b21208ea9dc277b5e:285",
+   "arm": "C",
+   "pages": [
+    285,
+    286
+   ],
+   "markers": [
+    277,
+    278
+   ],
+   "shape": "mis-numbered",
+   "expected": [
+    {
+     "sha256_16": "752f9f6a3dd4f398",
+     "length": 2382,
+     "head": "When Pythagoras had begun to write on nature, he spoke thus ",
+     "tail": "re burdensome and not at all conducive to health. When asked"
+    },
+    {
+     "sha256_16": "62abfc0b7f5f746b",
+     "length": 2668,
+     "head": "one should engage in intercourse, he said: \"Whenever you wis",
+     "tail": "with dried and soft figs and wheat, as the same author says."
+    }
+   ]
+  },
+  {
+   "unit": "6a100903f7172929509675f0:249",
+   "arm": "C",
+   "pages": [
+    249,
+    250
+   ],
+   "markers": [
+    238,
+    239
+   ],
+   "shape": "mis-numbered",
+   "expected": [
+    {
+     "sha256_16": "60e55c678ebd9c11",
+     "length": 2157,
+     "head": "and by her providence, as it were, reborn, to restore them o",
+     "tail": "inis\"</note>, through these hands of mine.\" And, having cast"
+    },
+    {
+     "sha256_16": "8a5301ee974cf981",
+     "length": 2338,
+     "head": "his right hand upon me, the very courteous old man leads me ",
+     "tail": "bind both me for my speech and you for your curiosity</note>"
+    }
+   ]
+  },
+  {
+   "unit": "6a4eeb115180d313013557dc:13",
+   "arm": "C",
+   "pages": [
+    13,
+    14
+   ],
+   "markers": [
+    11,
+    12
+   ],
+   "shape": "mis-numbered",
+   "expected": [
+    {
+     "sha256_16": "8c2cb168bca0b2d8",
+     "length": 1227,
+     "head": "### The Monastery of the Holy Stephen, commonly called Weihe",
+     "tail": "worthy that the pain which was there before should return.<-"
+    },
+    {
+     "sha256_16": "2c41e147d236be6c",
+     "length": 1484,
+     "head": "### *Saints Peter and Paul, Patrons of the Monastery of Neus",
+     "tail": "aint Stephen the Martyr and Saint Stephen the Bishop</note>."
+    }
+   ]
+  },
+  {
+   "unit": "6a4c1fe96831c6094ae55bf4:10",
+   "arm": "C",
+   "pages": [
+    10,
+    11
+   ],
+   "markers": [
+    6,
+    7
+   ],
+   "shape": "mis-numbered",
+   "expected": [
+    {
+     "sha256_16": "d82519d70b9669c9",
+     "length": 2653,
+     "head": "the custom of Saxony has approved, as witnessed by <term>Car",
+     "tail": "nder the title on the law of dowries, number 11, at the end."
+    },
+    {
+     "sha256_16": "365045165adaef97",
+     "length": 2328,
+     "head": "## THESIS VIII.\n\nLet us proceed to the FORM, of which mentio",
+     "tail": "ge can exist, but the dowry can never exist without the same"
+    }
+   ]
+  }
+ ]
+}

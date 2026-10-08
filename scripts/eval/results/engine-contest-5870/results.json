@@ -1,0 +1,897 @@
+{
+ "issue": 5870,
+ "run_id": "engine-contest-5870",
+ "scored_at": "2026-10-05T11:14:10.990Z",
+ "measure": "judged against a human reference: two blind Opus judges score the Lite (prompt v13) English made from each engine's read, fidelity 1–5, source = the by-eye corrected transcription; not accuracy",
+ "protocol": "gemini-3.1-flash-lite, prompt `Standard Translation` v13 (content_hash 516510147237b6a79d9d3f6e797bba7f, the A5 prompt; asserted before every call), one page per request, no neighbour context, temperature 0, thinking off, Batch API. The flash arm's English is A5's stored `lite-reocr`; the served arm's is A5's `lite-ocr` (shown to the judges as a third candidate, not in the rule).",
+ "models": {
+  "kraken": "kraken 7.1 (greek-cllg | openiti persian_best | openiti arabic_best)",
+  "flash": "gemini-3-flash-preview (A5 reocr)"
+ },
+ "baseline": "flash",
+ "candidate": "kraken",
+ "gate": {
+  "pass": true,
+  "by_judge": {
+   "j1": {
+    "wrong_page": [
+     {
+      "id": "69afd049ae982b9d51d6dd32_00292",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     },
+     {
+      "id": "69e7933580b52390feb18277_00263",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     }
+    ],
+    "planted": [
+     {
+      "id": "69e7933d80b52390feb1841a_00027",
+      "op": "drop-negation",
+      "from": "would not",
+      "to": "would",
+      "planted_fidelity": 3,
+      "base_fidelity": 3,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     },
+     {
+      "id": "69e74ef95cf1eaf3ad80e04c_00131",
+      "op": "add-negation",
+      "from": "was ",
+      "to": "was not ",
+      "planted_fidelity": 3,
+      "base_fidelity": 4,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     }
+    ],
+    "duplicate": [
+     {
+      "id": "6a08550315c643eb1af5470c_00099",
+      "arm": "kraken",
+      "fidelity": [
+       3,
+       3
+      ],
+      "tier": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "69e7538b095c302d3fddb092_00355",
+      "arm": "served",
+      "fidelity": [
+       2,
+       2
+      ],
+      "tier": [
+       2,
+       2
+      ],
+      "tie": true
+     }
+    ],
+    "missing": [],
+    "summary": {
+     "wrong_page": "2/2 scored ≤ 2",
+     "planted": "2/2 caught (2 located the planted word)",
+     "duplicate": "2/2 tied"
+    },
+    "pass": true
+   },
+   "j2": {
+    "wrong_page": [
+     {
+      "id": "69afd049ae982b9d51d6dd32_00292",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     },
+     {
+      "id": "69e7933580b52390feb18277_00263",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     }
+    ],
+    "planted": [
+     {
+      "id": "69e7933d80b52390feb1841a_00027",
+      "op": "drop-negation",
+      "from": "would not",
+      "to": "would",
+      "planted_fidelity": 2,
+      "base_fidelity": 3,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     },
+     {
+      "id": "69e74ef95cf1eaf3ad80e04c_00131",
+      "op": "add-negation",
+      "from": "was ",
+      "to": "was not ",
+      "planted_fidelity": 3,
+      "base_fidelity": 4,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     }
+    ],
+    "duplicate": [
+     {
+      "id": "6a08550315c643eb1af5470c_00099",
+      "arm": "kraken",
+      "fidelity": [
+       3,
+       3
+      ],
+      "tier": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "69e7538b095c302d3fddb092_00355",
+      "arm": "served",
+      "fidelity": [
+       2,
+       2
+      ],
+      "tier": [
+       2,
+       2
+      ],
+      "tie": true
+     }
+    ],
+    "missing": [],
+    "summary": {
+     "wrong_page": "2/2 scored ≤ 2",
+     "planted": "2/2 caught (2 located the planted word)",
+     "duplicate": "2/2 tied"
+    },
+    "pass": true
+   }
+  },
+  "problems": [],
+  "n_problems": 0,
+  "forced": false
+ },
+ "agreement": {
+  "judges": [
+   "j1",
+   "j2"
+  ],
+  "n": 78,
+  "fidelity_exact": 0.833,
+  "within_1": 1,
+  "weighted_kappa": 0.908
+ },
+ "families": {
+  "greek-print-le1699": {
+   "sealed": 11,
+   "with_text": 11,
+   "adjudication": null
+  },
+  "arabic-script-print": {
+   "sealed": 15,
+   "with_text": 15,
+   "adjudication": null
+  }
+ },
+ "pages": [
+  {
+   "slug": "grc-01",
+   "family": "greek-print-le1699",
+   "id": "697b079711cc8928b55ea3a8_00659",
+   "book_id": "697b079711cc8928b55ea3a8",
+   "page_number": 659,
+   "script": "Greek",
+   "served_engine": "flash",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 3,
+    "kraken": 3,
+    "served": 3.5
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": null
+    },
+    "kraken": {
+     "catastrophic": null,
+     "finishReason": "STOP",
+     "seconds": 307.8,
+     "chars": 3874
+    }
+   }
+  },
+  {
+   "slug": "fas-01",
+   "family": "arabic-script-print",
+   "id": "699249c5a2d53df4853bfdaf_00012",
+   "book_id": "699249c5a2d53df4853bfdaf",
+   "page_number": 12,
+   "script": "Persian",
+   "served_engine": "flash",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 3,
+    "kraken": 1,
+    "served": 3
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": null
+    },
+    "kraken": {
+     "catastrophic": "unreadable_fill",
+     "finishReason": "STOP",
+     "seconds": 78.3,
+     "chars": 763
+    }
+   }
+  },
+  {
+   "slug": "fas-02",
+   "family": "arabic-script-print",
+   "id": "6992cf0970ab3737555456ae_00100",
+   "book_id": "6992cf0970ab3737555456ae",
+   "page_number": 100,
+   "script": "Persian",
+   "served_engine": "flash",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 3,
+    "kraken": 1,
+    "served": 3
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": null
+    },
+    "kraken": {
+     "catastrophic": "unreadable_fill",
+     "finishReason": "STOP",
+     "seconds": 116.1,
+     "chars": 2373
+    }
+   }
+  },
+  {
+   "slug": "grc-02",
+   "family": "greek-print-le1699",
+   "id": "69938d615d28b693146cee47_00697",
+   "book_id": "69938d615d28b693146cee47",
+   "page_number": 697,
+   "script": "Greek",
+   "served_engine": "flash",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 3,
+    "kraken": 4,
+    "served": 2.5
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": null
+    },
+    "kraken": {
+     "catastrophic": null,
+     "finishReason": "STOP",
+     "seconds": 189.4,
+     "chars": 1714
+    }
+   }
+  },
+  {
+   "slug": "grc-03",
+   "family": "greek-print-le1699",
+   "id": "69938df1d5a98fd66f42f9be_00068",
+   "book_id": "69938df1d5a98fd66f42f9be",
+   "page_number": 68,
+   "script": "Greek",
+   "served_engine": "lite",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 3.5,
+    "kraken": 4,
+    "served": 2
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": "unreadable_fill"
+    },
+    "kraken": {
+     "catastrophic": "unreadable_fill",
+     "finishReason": "STOP",
+     "seconds": 183.2,
+     "chars": 1605
+    }
+   }
+  },
+  {
+   "slug": "grc-04",
+   "family": "greek-print-le1699",
+   "id": "69938dfed5a98fd66f42fd32_00217",
+   "book_id": "69938dfed5a98fd66f42fd32",
+   "page_number": 217,
+   "script": "Greek",
+   "served_engine": "flash",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 4,
+    "kraken": 4.5,
+    "served": 2.5
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": "unreadable_fill"
+    },
+    "kraken": {
+     "catastrophic": null,
+     "finishReason": "STOP",
+     "seconds": 186.7,
+     "chars": 1635
+    }
+   }
+  },
+  {
+   "slug": "grc-05",
+   "family": "greek-print-le1699",
+   "id": "69938e26d5a98fd66f4307b0_00136",
+   "book_id": "69938e26d5a98fd66f4307b0",
+   "page_number": 136,
+   "script": "Greek",
+   "served_engine": "flash",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 3,
+    "kraken": 4,
+    "served": 4
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": "unreadable_fill"
+    },
+    "kraken": {
+     "catastrophic": null,
+     "finishReason": "STOP",
+     "seconds": 468.7,
+     "chars": 4497
+    }
+   }
+  },
+  {
+   "slug": "grc-06",
+   "family": "greek-print-le1699",
+   "id": "699438446879ff0184cb8593_00431",
+   "book_id": "699438446879ff0184cb8593",
+   "page_number": 431,
+   "script": "Greek",
+   "served_engine": "flash",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 4.5,
+    "kraken": 3,
+    "served": 5
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": null
+    },
+    "kraken": {
+     "catastrophic": null,
+     "finishReason": "STOP",
+     "seconds": 329.2,
+     "chars": 1802
+    }
+   }
+  },
+  {
+   "slug": "fas-03",
+   "family": "arabic-script-print",
+   "id": "69afd049ae982b9d51d6dd32_00292",
+   "book_id": "69afd049ae982b9d51d6dd32",
+   "page_number": 292,
+   "script": "Persian",
+   "served_engine": "flash",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 3.5,
+    "kraken": 2.5,
+    "served": 3
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": null
+    },
+    "kraken": {
+     "catastrophic": null,
+     "finishReason": "STOP",
+     "seconds": 65.9,
+     "chars": 552
+    }
+   }
+  },
+  {
+   "slug": "grc-07",
+   "family": "greek-print-le1699",
+   "id": "69b2fedda1a4246ddb45a8df_00318",
+   "book_id": "69b2fedda1a4246ddb45a8df",
+   "page_number": 318,
+   "script": "Greek",
+   "served_engine": "flash",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 2,
+    "kraken": 3,
+    "served": 2
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": "unreadable_fill"
+    },
+    "kraken": {
+     "catastrophic": null,
+     "finishReason": "STOP",
+     "seconds": 596,
+     "chars": 8130
+    }
+   }
+  },
+  {
+   "slug": "grc-08",
+   "family": "greek-print-le1699",
+   "id": "69b6848470c69d645a737f80_00588",
+   "book_id": "69b6848470c69d645a737f80",
+   "page_number": 588,
+   "script": "Greek",
+   "served_engine": "lite",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 3,
+    "kraken": 4,
+    "served": 2
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": null
+    },
+    "kraken": {
+     "catastrophic": null,
+     "finishReason": "STOP",
+     "seconds": 227.4,
+     "chars": 1921
+    }
+   }
+  },
+  {
+   "slug": "grc-09",
+   "family": "greek-print-le1699",
+   "id": "69bd9d6a6120d54bd0376a04_00060",
+   "book_id": "69bd9d6a6120d54bd0376a04",
+   "page_number": 60,
+   "script": "Greek",
+   "served_engine": "lite",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 4,
+    "kraken": 3,
+    "served": 2
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": null
+    },
+    "kraken": {
+     "catastrophic": "unreadable_fill",
+     "finishReason": "STOP",
+     "seconds": 147.3,
+     "chars": 1196
+    }
+   }
+  },
+  {
+   "slug": "ara-01",
+   "family": "arabic-script-print",
+   "id": "69d5abf3d0bd3547a5654427_00104",
+   "book_id": "69d5abf3d0bd3547a5654427",
+   "page_number": 104,
+   "script": "Arabic",
+   "served_engine": "lite",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 3,
+    "kraken": 2,
+    "served": 2
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": null
+    },
+    "kraken": {
+     "catastrophic": "unreadable_fill",
+     "finishReason": "STOP",
+     "seconds": 140.7,
+     "chars": 5132
+    }
+   }
+  },
+  {
+   "slug": "ara-02",
+   "family": "arabic-script-print",
+   "id": "69e53454d48480a386965c84_00230",
+   "book_id": "69e53454d48480a386965c84",
+   "page_number": 230,
+   "script": "Arabic",
+   "served_engine": "lite",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 4,
+    "kraken": 4,
+    "served": 4
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": null
+    },
+    "kraken": {
+     "catastrophic": null,
+     "finishReason": "STOP",
+     "seconds": 72.1,
+     "chars": 1234
+    }
+   }
+  },
+  {
+   "slug": "fas-04",
+   "family": "arabic-script-print",
+   "id": "69e7299ba409200ea79f0b56_00211",
+   "book_id": "69e7299ba409200ea79f0b56",
+   "page_number": 211,
+   "script": "Persian",
+   "served_engine": "lite",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 3.5,
+    "kraken": 2,
+    "served": 3
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": null
+    },
+    "kraken": {
+     "catastrophic": null,
+     "finishReason": "STOP",
+     "seconds": 106.9,
+     "chars": 3038
+    }
+   }
+  },
+  {
+   "slug": "fas-05",
+   "family": "arabic-script-print",
+   "id": "69e729a7a409200ea79f0e08_00279",
+   "book_id": "69e729a7a409200ea79f0e08",
+   "page_number": 279,
+   "script": "Persian",
+   "served_engine": "lite",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 4,
+    "kraken": 2,
+    "served": 2
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": null
+    },
+    "kraken": {
+     "catastrophic": "unreadable_fill",
+     "finishReason": "STOP",
+     "seconds": 100.2,
+     "chars": 3002
+    }
+   }
+  },
+  {
+   "slug": "fas-06",
+   "family": "arabic-script-print",
+   "id": "69e748da49abba5e98281b25_00103",
+   "book_id": "69e748da49abba5e98281b25",
+   "page_number": 103,
+   "script": "Persian",
+   "served_engine": "lite",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 4,
+    "kraken": 2,
+    "served": 4
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": null
+    },
+    "kraken": {
+     "catastrophic": "unreadable_fill",
+     "finishReason": "STOP",
+     "seconds": 80.6,
+     "chars": 1215
+    }
+   }
+  },
+  {
+   "slug": "fas-07",
+   "family": "arabic-script-print",
+   "id": "69e74ef95cf1eaf3ad80e04c_00131",
+   "book_id": "69e74ef95cf1eaf3ad80e04c",
+   "page_number": 131,
+   "script": "Persian",
+   "served_engine": "flash",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 4,
+    "kraken": 2.5,
+    "served": 2
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": null
+    },
+    "kraken": {
+     "catastrophic": null,
+     "finishReason": "STOP",
+     "seconds": 99,
+     "chars": 1163
+    }
+   }
+  },
+  {
+   "slug": "grc-10",
+   "family": "greek-print-le1699",
+   "id": "69e7538b095c302d3fddb092_00355",
+   "book_id": "69e7538b095c302d3fddb092",
+   "page_number": 355,
+   "script": "Greek",
+   "served_engine": "lite",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 4,
+    "kraken": 3,
+    "served": 2
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": null
+    },
+    "kraken": {
+     "catastrophic": "unreadable_fill",
+     "finishReason": "STOP",
+     "seconds": 139.5,
+     "chars": 1202
+    }
+   }
+  },
+  {
+   "slug": "ara-03",
+   "family": "arabic-script-print",
+   "id": "69e7933580b52390feb18277_00263",
+   "book_id": "69e7933580b52390feb18277",
+   "page_number": 263,
+   "script": "Arabic",
+   "served_engine": "lite",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 3.5,
+    "kraken": 1,
+    "served": 2
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": null
+    },
+    "kraken": {
+     "catastrophic": "unreadable_fill",
+     "finishReason": "STOP",
+     "seconds": 159,
+     "chars": 1661
+    }
+   }
+  },
+  {
+   "slug": "ara-04",
+   "family": "arabic-script-print",
+   "id": "69e7933d80b52390feb1841a_00027",
+   "book_id": "69e7933d80b52390feb1841a",
+   "page_number": 27,
+   "script": "Arabic",
+   "served_engine": "lite",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 4,
+    "kraken": 3,
+    "served": 2
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": null
+    },
+    "kraken": {
+     "catastrophic": null,
+     "finishReason": "STOP",
+     "seconds": 185.1,
+     "chars": 4646
+    }
+   }
+  },
+  {
+   "slug": "ara-05",
+   "family": "arabic-script-print",
+   "id": "69e7934280b52390feb18445_00049",
+   "book_id": "69e7934280b52390feb18445",
+   "page_number": 49,
+   "script": "Arabic",
+   "served_engine": "lite",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 4,
+    "kraken": 1,
+    "served": 4
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": null
+    },
+    "kraken": {
+     "catastrophic": "unreadable_fill",
+     "finishReason": "STOP",
+     "seconds": 136.9,
+     "chars": 750
+    }
+   }
+  },
+  {
+   "slug": "ara-06",
+   "family": "arabic-script-print",
+   "id": "69e8b0fd839ca3f47ec56c17_00048",
+   "book_id": "69e8b0fd839ca3f47ec56c17",
+   "page_number": 48,
+   "script": "Arabic",
+   "served_engine": "lite",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 4,
+    "kraken": 4,
+    "served": 4
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": null
+    },
+    "kraken": {
+     "catastrophic": null,
+     "finishReason": "STOP",
+     "seconds": 113.9,
+     "chars": 910
+    }
+   }
+  },
+  {
+   "slug": "ara-07",
+   "family": "arabic-script-print",
+   "id": "69e96123390d3ed634590b97_00226",
+   "book_id": "69e96123390d3ed634590b97",
+   "page_number": 226,
+   "script": "Arabic",
+   "served_engine": "lite",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 4,
+    "kraken": 3,
+    "served": 4
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": null
+    },
+    "kraken": {
+     "catastrophic": null,
+     "finishReason": "STOP",
+     "seconds": 95.5,
+     "chars": 1714
+    }
+   }
+  },
+  {
+   "slug": "ara-08",
+   "family": "arabic-script-print",
+   "id": "69ea3e91300d991d0f1d37ee_00092",
+   "book_id": "69ea3e91300d991d0f1d37ee",
+   "page_number": 92,
+   "script": "Arabic",
+   "served_engine": "lite",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 3,
+    "kraken": 3.5,
+    "served": 3.5
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": "unreadable_fill"
+    },
+    "kraken": {
+     "catastrophic": null,
+     "finishReason": "STOP",
+     "seconds": 123.3,
+     "chars": 1773
+    }
+   }
+  },
+  {
+   "slug": "grc-11",
+   "family": "greek-print-le1699",
+   "id": "6a08550315c643eb1af5470c_00099",
+   "book_id": "6a08550315c643eb1af5470c",
+   "page_number": 99,
+   "script": "Greek",
+   "served_engine": "flash",
+   "page_class": "text",
+   "label_ok": "yes",
+   "fidelity": {
+    "flash": 2,
+    "kraken": 3,
+    "served": 2
+   },
+   "arms": {
+    "flash": {
+     "catastrophic": "unreadable_fill"
+    },
+    "kraken": {
+     "catastrophic": null,
+     "finishReason": "STOP",
+     "seconds": 606.9,
+     "chars": 5734
+    }
+   }
+  }
+ ]
+}

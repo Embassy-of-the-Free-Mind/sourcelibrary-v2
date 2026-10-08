@@ -1,0 +1,21 @@
+{
+ "id": "6a3c5f3c879008ba7e153862_00029",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "# Diamond Prajna Paramita Sutra <note>The Diamond Sutra</note>\n\n<note>original: 金剛般若波羅蜜經</note>\n\n<meta>This page continues the discussion of the four stages of enlightenment and whether a practitioner who has attained them would cling to the concept of having achieved a specific rank or fruit.</meta>\n\nForm, sound, smell, taste, touch, and mental objects <note>referring to the six sense objects or spheres</note>; this is why one is called a <term>Srota-apanna</term> <gloss>Stream-enterer</gloss>.\n\"What do you think? Does a <term>Sakridagamin</term> <gloss>Once-returner</gloss> have this thought: 'I have attained the fruit of a Once-returner'?\"\nSubhuti replied, \"No, World-Honored One. Why? Because although a <term>Sakridagamin</term> is named a 'Once-returner,' in reality there is no such thing as going or coming. Therefore, he is named a <term>Sakridagamin</term>.\"\n\"Subhuti, what do you think? Does an <term>Anagamin</term> <gloss>Non-returner</gloss> have this thought: 'I have attained the fruit of a Non-returner'?\"\nSubhuti replied, \"No, World-Honored One. Why? Because an <term>Anagamin</term> is named a 'Non-returner,' but in reality there is no such thing as not coming. For this reason, he is named an <term>Anagamin</term>.\"\n\n<summary>This page discusses the second and third stages of Buddhist sainthood, explaining that those who attain these levels do not perceive themselves as possessing a fixed status or identity. The text emphasizes that true enlightenment involves transcending the labels of coming and going.</summary>\n<keywords>Subhuti, Sakridagamin, Anagamin, Diamond Sutra, emptiness, enlightenment, non-attachment, Once-returner, Non-returner</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1986,
+ "outputTokens": 458,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.0011835,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 337,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

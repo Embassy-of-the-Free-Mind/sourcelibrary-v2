@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "book_id": "69b18625c4be2cdd0edc549e",
+    "title": "Seder Olam, or the Order of Ages",
+    "published": "1694",
+    "source": "EEBO-TCP A43282",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 8,
+    "skips": {},
+    "median_char_acc": 0.9349,
+    "median_char_acc_windowed": 0.9219,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-69b18625-p26",
+      "page": 26,
+      "overlap": 0.98,
+      "probe_words": 220,
+      "ref_chars": 1345,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.096,
+      "char_acc": 0.9718,
+      "char_acc_windowed": 0.9671
+    },
+    {
+      "slug": "ed-69b18625-p43",
+      "page": 43,
+      "overlap": 0.968,
+      "probe_words": 74,
+      "ref_chars": 585,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.217,
+      "char_acc": 0.92,
+      "char_acc_windowed": 0.8773
+    },
+    {
+      "slug": "ed-69b18625-p116",
+      "page": 116,
+      "overlap": 0.942,
+      "probe_words": 255,
+      "ref_chars": 1487,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.152,
+      "char_acc": 0.9243,
+      "char_acc_windowed": 0.9157
+    },
+    {
+      "slug": "ed-69b18625-p134",
+      "page": 134,
+      "overlap": 1,
+      "probe_words": 239,
+      "ref_chars": 1427,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.171,
+      "char_acc": 0.484,
+      "char_acc_windowed": 0.9243
+    },
+    {
+      "slug": "ed-69b18625-p137",
+      "page": 137,
+      "overlap": 0.824,
+      "probe_words": 215,
+      "ref_chars": 1396,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.202,
+      "char_acc": 0.9449,
+      "char_acc_windowed": 0.9219
+    },
+    {
+      "slug": "ed-69b18625-p147",
+      "page": 147,
+      "overlap": 0.942,
+      "probe_words": 212,
+      "ref_chars": 1357,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.108,
+      "char_acc": 0.9794,
+      "char_acc_windowed": 0.9738
+    },
+    {
+      "slug": "ed-69b18625-p184",
+      "page": 184,
+      "overlap": 0.621,
+      "probe_words": 232,
+      "ref_chars": 1527,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.33,
+      "char_acc": 0.9349,
+      "char_acc_windowed": 0.8959
+    },
+    {
+      "slug": "ed-69b18625-p246",
+      "page": 246,
+      "overlap": 1,
+      "probe_words": 83,
+      "ref_chars": 643,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.11,
+      "char_acc": 0.9233,
+      "char_acc_windowed": 0.9165
+    }
+  ]
+}

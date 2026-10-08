@@ -125,6 +125,31 @@ export function extractScriptType(ocrText: string): 'printed' | 'handwritten' | 
   return undefined;
 }
 
+/** Page-level fields lifted from OCR tags; only the ones that parsed are present. */
+export interface LiftedOcrTags {
+  page_type?: string;
+  columns?: number;
+  script_type?: 'printed' | 'handwritten' | 'mixed';
+}
+
+/**
+ * The page-level fields an OCR transcription carries in its own tags, as a
+ * `$set`-ready object (#4195 item 4). Every OCR writer lifts through this, so a
+ * new tag is added once and no collector can drop it — `script_type` was parsed
+ * here for months but lifted only by the realtime Lambda writer. Mirrored in
+ * `scripts/lib/ocr-result-parse.mjs`; parity-tested.
+ */
+export function liftOcrTags(ocrText: string): LiftedOcrTags {
+  const pageType = extractPageType(ocrText);
+  const columns = extractColumns(ocrText);
+  const scriptType = extractScriptType(ocrText);
+  return {
+    ...(pageType ? { page_type: pageType } : {}),
+    ...(columns ? { columns } : {}),
+    ...(scriptType ? { script_type: scriptType } : {}),
+  };
+}
+
 // Vocabulary moved to `src/lib/gallery-image-types.ts` (#3419) — it was written out
 // verbatim here and in the gallery re-tag route, and the extraction write path
 // consulted neither, which is how 99 rows came to hold raw model output.

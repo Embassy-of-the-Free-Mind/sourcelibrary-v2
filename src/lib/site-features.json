@@ -1,0 +1,252 @@
+[
+  {
+    "href": "/identify",
+    "title": "Identify an Artwork",
+    "description": "Photograph any print or engraving — on a museum wall or the open page of an old book — and find the original in Source Library, with the book it belongs to.",
+    "aliases": [
+      "identify",
+      "identify artwork",
+      "identify an artwork",
+      "identify image",
+      "reverse image search",
+      "image lookup",
+      "find this engraving"
+    ]
+  },
+  {
+    "href": "/ngrams",
+    "title": "Ngram Viewer",
+    "description": "Chart how words and phrases rise and fall across five centuries of primary sources — alchemy, Hermetica, Kabbalah, and early science — then click through to the pages themselves.",
+    "aliases": [
+      "ngram",
+      "ngrams",
+      "ngram viewer",
+      "n-gram",
+      "word frequency",
+      "word trends"
+    ]
+  },
+  {
+    "href": "/librarian",
+    "title": "The Librarian",
+    "description": "Ask the Librarian about any text in the collection. Alchemy, Hermetica, Kabbalah, astrology, natural philosophy — thousands of rare books, many translated into English for the first time.",
+    "aliases": [
+      "librarian",
+      "the librarian",
+      "ask the librarian",
+      "ai librarian"
+    ]
+  },
+  {
+    "href": "/explore",
+    "title": "Explore",
+    "description": "Interactive visualizations of 12,500+ people, places, and concepts from the Western esoteric tradition. Century heatmaps, era highlights, and data source breakdowns.",
+    "aliases": [
+      "explore",
+      "visualizations",
+      "heatmap"
+    ]
+  },
+  {
+    "href": "/explore/map",
+    "title": "Map",
+    "description": "Interactive map of 10,000+ books plotted by publication city, author birthplace, and the heartland of each text’s tradition.",
+    "aliases": [
+      "book map",
+      "explore map",
+      "map of books"
+    ]
+  },
+  {
+    "href": "/gallery",
+    "title": "Image Gallery",
+    "description": "Browse illustrations, engravings, woodcuts, alchemical emblems, and diagrams extracted from rare historical texts — searchable by subject, technique, and period.",
+    "aliases": [
+      "gallery",
+      "image gallery"
+    ]
+  },
+  {
+    "href": "/encyclopedia",
+    "title": "Encyclopedia",
+    "description": "Explore people, places, and concepts from historical texts. Discover connections between alchemists, philosophers, and esoteric ideas across the collection.",
+    "aliases": [
+      "encyclopedia",
+      "people places concepts"
+    ]
+  },
+  {
+    "href": "/rithmomachia",
+    "title": "Rithmomachia — Play the Battle of Numbers",
+    "description": "Play Rithmomachia, the medieval mathematical board game. Capture opponents through arithmetic — addition, subtraction, multiplication, and division. Win by creating Pythagorean harmonies.",
+    "aliases": [
+      "rithmomachia",
+      "battle of numbers",
+      "board game"
+    ]
+  },
+  {
+    "href": "/catalog",
+    "title": "Catalogue",
+    "description": "Browse the complete Source Library catalogue — thousands of translated primary sources in alchemy, philosophy, theology, and the esoteric traditions.",
+    "aliases": [
+      "catalog",
+      "catalogue"
+    ]
+  },
+  {
+    "href": "/census",
+    "title": "Translation Census",
+    "description": "A living record of which pre-modern European texts have been translated into English. Validated estimate: ~85% of all early-modern print — and ~93% of Renaissance-composed Latin — has never been Englished.",
+    "aliases": [
+      "census",
+      "translation census"
+    ]
+  },
+  {
+    "href": "/topics",
+    "title": "Browse by Topic",
+    "description": "Explore historical texts across six dimensions: tradition, domain, form, cultural sphere, era, and epistemic mode. Filter and combine to find exactly what you're looking for.",
+    "aliases": [
+      "topics",
+      "browse by topic"
+    ]
+  },
+  {
+    "href": "/languages",
+    "title": "Languages",
+    "description": "Browse Source Library by language — Latin, German, French, Greek, Hebrew, Arabic, and 30+ more languages spanning 5,000 years of human thought.",
+    "aliases": [
+      "languages",
+      "browse by language"
+    ]
+  },
+  {
+    "href": "/data",
+    "title": "The Collection",
+    "description": "Live data on the Source Library collection: books, languages, centuries, topics, and source institutions.",
+    "aliases": [
+      "collection data",
+      "collection statistics"
+    ]
+  },
+  {
+    "href": "/dataset",
+    "title": "Dataset",
+    "description": "Structured parallel-text training data from 19,000+ historical texts in 200+ languages. Page-aligned OCR, English translations, and scholarly metadata.",
+    "aliases": [
+      "dataset",
+      "training data",
+      "parallel text"
+    ]
+  },
+  {
+    "href": "/volunteers",
+    "title": "Welcome, volunteers",
+    "description": "You've been invited to help curate Source Library. A few seconds per item, no signup needed.",
+    "aliases": [
+      "volunteer",
+      "volunteers",
+      "help curate"
+    ]
+  },
+  {
+    "href": "/tablets",
+    "title": "Cuneiform Tablet Corpus",
+    "description": "107 cuneiform tablets from CDLI with photos, metadata, and scholarly ATF transliterations.",
+    "aliases": [
+      "tablets",
+      "cuneiform tablets",
+      "cdli"
+    ]
+  },
+  {
+    "href": "/research",
+    "title": "Research",
+    "description": "A working library is also an instrument. The questions we are trying to answer with it: whether machines read historical pages or recite them, what makes a scan readable, how much has never been translated, and what a first translation actually is.",
+    "aliases": [
+      "research questions",
+      "research program"
+    ]
+  },
+  {
+    "href": "/podcast",
+    "title": "Source Library Deep Dive — Podcast",
+    "description": "AI-generated scholarly podcasts exploring rare books from the 15th-18th centuries. Alchemy, Hermetica, Kabbalah, and the Western esoteric tradition — grounded in primary sources.",
+    "aliases": [
+      "podcast",
+      "deep dive"
+    ]
+  },
+  {
+    "href": "/works",
+    "title": "Works",
+    "description": "Works held in several editions across several centuries — the same text as manuscript, early printing, and modern edition, each one readable page by page.",
+    "aliases": [
+      "works index"
+    ]
+  },
+  {
+    "href": "/browse",
+    "title": "Browse",
+    "description": "Browse the Source Library collection alphabetically by title, author, or publication year.",
+    "aliases": [
+      "browse",
+      "browse books",
+      "a-z",
+      "all books"
+    ]
+  },
+  {
+    "href": "/curated",
+    "title": "Curated Collections",
+    "description": "Thematic exhibitions across the library, stories that cut across traditions and centuries.",
+    "aliases": [
+      "curated",
+      "exhibitions",
+      "curated collections"
+    ]
+  },
+  {
+    "href": "/hieroglyphs",
+    "title": "Hieroglyph OCR Eval",
+    "description": "Side-by-side evaluation of Gemini AI hieroglyphic OCR against Budge's Egyptian Reading Book (1896).",
+    "aliases": [
+      "hieroglyphs",
+      "hieroglyph ocr"
+    ]
+  },
+  {
+    "href": "/developers",
+    "title": "Developers",
+    "description": "Open API over 15,000+ rare pre-modern texts translated to English — theology, philosophy, history, science, mysticism, literature. No auth required — call /api/mcp from curl, the browser, or any MCP client. 15 research tools, REST endpoints, CLI.",
+    "aliases": [
+      "developers",
+      "api",
+      "mcp",
+      "mcp server"
+    ]
+  },
+  {
+    "href": "/review",
+    "title": "Help curate",
+    "description": "Spot AI mistakes in our image-extraction pipeline. A few seconds per page.",
+    "aliases": [
+      "check pages",
+      "review pages",
+      "proofread",
+      "proofreading"
+    ]
+  },
+  {
+    "href": "/support",
+    "title": "Support",
+    "description": "Support the digitization and translation of rare historical texts from the Bibliotheca Philosophica Hermetica.",
+    "aliases": [
+      "donate",
+      "donation",
+      "donations",
+      "support"
+    ]
+  }
+]

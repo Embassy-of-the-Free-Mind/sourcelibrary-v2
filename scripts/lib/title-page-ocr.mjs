@@ -14,17 +14,16 @@
  *  - Title pages hyphenate across line breaks: "GVER- RA DI NICOLO MACHIAVEL-".
  *    Join before collapsing whitespace or the newline is already gone.
  */
+import { stripMarkupTags } from './strip-markup-tags.mjs';
 
 /** Strip OCR scaffolding down to the words actually printed on the page. */
 export function pageProse(raw) {
-  return String(raw ?? '')
+  // stripMarkupTags removes the centring markers BEFORE the tags: `VII.<-` … `->New York`
+  // reads as one <…> tag otherwise, and everything between them — the title, on the
+  // Maimonides page that exposed it (#4815) — vanishes with it.
+  return stripMarkupTags(String(raw ?? '')
     .replace(/<(warning|meta|image-desc|insert|note|margin|vocab|figure)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
-    .replace(/([A-Za-zÀ-ÿ])[-‐‑—]\s*\n\s*([A-Za-zÀ-ÿ])/g, '$1$2')
-    // The centring markers go BEFORE the tag strip: `VII.<-` … `->New York` reads as
-    // one <…> tag otherwise, and everything between them — the title, on the
-    // Maimonides page that exposed it (#4815) — vanishes with it.
-    .replace(/->|<-/g, ' ')
-    .replace(/<[^>]+>/g, ' ')
+    .replace(/([A-Za-zÀ-ÿ])[-‐‑—]\s*\n\s*([A-Za-zÀ-ÿ])/g, '$1$2'))
     .replace(/^#+\s*/gm, ' ')
     .replace(/[*_`>]+/g, ' ')
     .replace(/\s+/g, ' ')

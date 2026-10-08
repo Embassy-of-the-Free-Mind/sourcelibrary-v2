@@ -4,7 +4,13 @@
  *   - timeline_filters: language and collection lists for filter dropdowns
  *   - timeline_overview: full decade buckets with language breakdown + summary stats
  *
- * Run periodically or after large imports. Avoids 30-80s aggregations at request time.
+ * Avoids 30-80s aggregations at request time. Runs weekly on Hetzner
+ * (scripts/workers/crontab.production, Sunday 06:15 UTC; #5501 — it was a one-off
+ * seed for 170 days and /timeline's decades froze). Read-only apart from the two
+ * system_config upserts; safe to re-run at any time.
+ *
+ * Scope is the canonical live filter (visible && pages_count > 0) — the same one
+ * /timeline uses for its live headline total, so the decade bars sum to it.
  *
  * Usage: set -a; source .env.production.local; set +a; node scripts/seed-timeline-filters.mjs
  */
@@ -18,7 +24,7 @@ const client = new MongoClient(uri);
 try {
   await client.connect();
   const db = client.db('bookstore');
-  const baseFilter = { hidden: { $ne: true }, year: { $exists: true, $ne: null } };
+  const baseFilter = { visible: true, pages_count: { $gt: 0 }, year: { $exists: true, $ne: null } };
 
   // 1. Filters
   console.log('Fetching distinct languages...');
@@ -46,7 +52,7 @@ try {
       },
     },
     { $sort: { _id: 1 } },
-  ]).toArray();
+  ], { allowDiskUse: true, maxTimeMS: 300000 }).toArray();
 
   const decades = rawDecades.map(d => {
     const langCounts = {};

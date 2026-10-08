@@ -1,0 +1,80 @@
+{
+ "english-1850-1899": {
+  "pages": 40,
+  "compared": 24,
+  "refusals": {
+   "IA": 12,
+   "IA2": 8,
+   "IB": 10
+  },
+  "glyph_long_s_in_output": {
+   "IA": 0,
+   "IB": 0
+  },
+  "word_disagreement": {
+   "A_vs_A2_noise": {
+    "median": 0,
+    "mean": 0.0417
+   },
+   "A_vs_B": {
+    "median": 0,
+    "mean": 0.0194
+   },
+   "pages_B_moved_more": 2,
+   "pages_B_moved_less": 6,
+   "p": 0.2891
+  }
+ },
+ "latin-1500-1599": {
+  "pages": 40,
+  "compared": 39,
+  "refusals": {
+   "IA": 0,
+   "IA2": 1,
+   "IB": 1
+  },
+  "glyph_long_s_in_output": {
+   "IA": 0,
+   "IB": 663
+  },
+  "word_disagreement": {
+   "A_vs_A2_noise": {
+    "median": 0.0421,
+    "mean": 0.055
+   },
+   "A_vs_B": {
+    "median": 0.0629,
+    "mean": 0.1121
+   },
+   "pages_B_moved_more": 26,
+   "pages_B_moved_less": 11,
+   "p": 0.0201
+  }
+ },
+ "german-1600-1799": {
+  "pages": 40,
+  "compared": 40,
+  "refusals": {
+   "IA": 0,
+   "IA2": 0,
+   "IB": 0
+  },
+  "glyph_long_s_in_output": {
+   "IA": 0,
+   "IB": 95
+  },
+  "word_disagreement": {
+   "A_vs_A2_noise": {
+    "median": 0,
+    "mean": 0.0003
+   },
+   "A_vs_B": {
+    "median": 0.0192,
+    "mean": 0.0548
+   },
+   "pages_B_moved_more": 38,
+   "pages_B_moved_less": 1,
+   "p": 0
+  }
+ }
+}

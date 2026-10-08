@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A44322",
+  "edition": "EEBO-TCP A44322 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "695595ec7bd6d2cd1d620aba",
+  "page_number": 26,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 41097,
+    "to_char": 42460,
+    "overlap": 1,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "Ends with 'Dr. Pappins Letter'; start pad ~6 words.",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:39.496Z",
+  "text_location": "repo",
+  "text_sha256": "a38ac1574a2e58ff28af77bd8487f45aa878fd75413f8f7419e51e821a8cb5b1",
+  "unit": {
+    "chars": 1363
+  }
+}

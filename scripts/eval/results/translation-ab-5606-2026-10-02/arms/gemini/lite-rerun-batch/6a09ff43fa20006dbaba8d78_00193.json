@@ -1,0 +1,21 @@
+{
+ "id": "6a09ff43fa20006dbaba8d78_00193",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "MAHÂ-VAGGA. [III. 61. 2.\n\nI say this to them: If, venerable ones, it is because of past actions that people will be killers of living creatures, takers of what is not given, unchaste, speakers of falsehood, speakers of malicious words, speakers of harsh words, gossipers, covetous, malevolent, and holders of wrong views, then for those who fall back on past deeds as the essential reason, there is no desire or effort to say \"this should be done\" or \"this should not be done.\" Thus, for those who do not establish as a truth or reality what should and should not be done, and who live with confused mindfulness and unguarded faculties, there is no firm basis for a rightful doctrine <note>or \"a valid argument in the Dhamma\"</note>.\n\nThis, monks, is my first rightful refutation of those ascetics and brahmins who hold such views and opinions.\n\n3. Regarding this, monks, to those ascetics and brahmins who hold such views and opinions—that whatever pleasure, pain, or neutral feeling a person experiences is all caused by the creation of a supreme deity <term>issaranimmânahetu</term> <gloss>caused by a supreme deity's creation</gloss>—I approach them and say: Is it true, venerable ones, that you hold this view?\n\nIf they, being asked by me, answer \"Yes,\" I say to them: If so, venerable ones, you will be killers of living creatures because of a supreme deity's creation... <note>The text uses an ellipsis to indicate the repetition of the previously mentioned unwholesome actions</note> ...you will be holders of wrong views because of a supreme deity's creation. For those who fall back on a supreme deity's creation as the essential reason, there is no desire or effort to say \"this should be done\" or \"this should not be done.\" Thus, for those who do not establish as a truth or reality what should and should not be done, and who live with confused mindfulness and unguarded faculties, there is no firm basis for a rightful doctrine.\n\nThis, monks, is my second rightful refutation of those ascetics and brahmins who hold such views and opinions.\n\n<meta>The text notes variations in the manuscripts regarding certain Pali terms and spellings, specifically noting the variants for malicious/harsh speech, the verb form for \"returning/falling back,\" and the affirmative particle \"yes.\"</meta>\n\n<summary>The Buddha refutes two deterministic views: the belief that all human experience is caused by past actions (kamma) or by the will of a supreme deity, arguing that both views remove the necessity for moral effort and free will.</summary>\n<keywords>kamma, determinism, supreme deity, moral responsibility, right view, asceticism, refutation</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2687,
+ "outputTokens": 610,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.000793375,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2296,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}
