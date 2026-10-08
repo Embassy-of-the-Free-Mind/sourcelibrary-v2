@@ -283,3 +283,55 @@ describe('Gemini-side listing: every key, aliases walked once, no silent truncat
     expect(bad.unknown[0]).toMatch(/not newest-first/);
   });
 });
+
+describe('Gemini-side ledger: usage rows metered one per book', () => {
+  // The #6276 false page: 22 `ep-plain`/`ep-prefix` jobs were collected to disk and their usage
+  // rows closed, but the rows are keyed `<display name>:<book id>` and matched nothing.
+  const usage = [
+    { batch_job_id: 'ep-plain-0-abc:6a3cb8513dce6cfad748d3b7', status: 'success', output_tokens: 0, page_count: 40 },
+    { batch_job_id: 'ep-prefix-0-abc:6a3cb8513dce6cfad748d3b7', status: 'submitted', output_tokens: 0, page_count: 40 },
+  ];
+  const inRange = (q: { $gte: string; $lt: string }, id: string) => id >= q.$gte && id < q.$lt;
+  const fakeDb = (seen: unknown[]) => ({
+    collection: (name: string) => ({
+      find: (q: { $or?: { batch_job_id?: { $gte: string; $lt: string } }[] }) => ({
+        toArray: async () => {
+          if (name !== 'gemini_usage' || !q.$or) return [];
+          seen.push(q);
+          return usage.filter((u) => q.$or!.some((c) => c.batch_job_id && inRange(c.batch_job_id, u.batch_job_id)));
+        },
+      }),
+    }),
+  });
+  const jobs = new Map([
+    ['batches/read', job('batches/read', 'JOB_STATE_SUCCEEDED', 10, 9, 'ep-plain-0-abc')],
+    ['batches/unread', job('batches/unread', 'JOB_STATE_SUCCEEDED', 10, 9, 'ep-prefix-0-abc')],
+    ['batches/nobody', job('batches/nobody', 'JOB_STATE_SUCCEEDED', 10, 9, 'ep-plain-0-ab')],
+    ['batches/unsafe', job('batches/unsafe', 'JOB_STATE_SUCCEEDED', 10, 9, 'eval/x y*')],
+  ]);
+
+  it('a closed per-book row makes the job collected; a placeholder does not; a shorter name does not borrow it', async () => {
+    const seen: unknown[] = [];
+    const records = await G.readLedgerRecords(fakeDb(seen), jobs);
+    const { findings } = G.classifyLedger({ jobs, records, now: NOW });
+    const cls = Object.fromEntries(findings.map((f: { name: string; class: string }) => [f.name, f.class]));
+    expect(cls).toEqual({ 'batches/unread': 'succeeded_uncollected', 'batches/nobody': 'unknown_to_db', 'batches/unsafe': 'unknown_to_db' });
+    expect(JSON.stringify(seen)).not.toContain('eval/x');
+  });
+
+  it('the Supabase reader asks for `<display name>:*` and maps the row back to its job', async () => {
+    const urls: string[] = [];
+    const fetchImpl = async (url: string) => {
+      urls.push(decodeURIComponent(url));
+      const hit = /like\.ep-plain-0-abc:\*/.test(decodeURIComponent(url));
+      return { ok: true, status: 200, json: async () => (hit ? [usage[0]] : []) };
+    };
+    const reader = G.makeSupabaseUsageReader({ url: 'https://x', key: 'k', fetchImpl });
+    const rows = await reader(['batches/read'], ['batches/read'], G.perBookPrefixes([...jobs.values()]));
+    expect(rows).toHaveLength(1);
+    expect(urls.some((u) => u.includes('eval/x'))).toBe(false);
+    const byKey = new Map([['ep-plain-0-abc', 'batches/read']]);
+    expect(G.jobForUsageId(rows[0].batch_job_id, byKey)).toBe('batches/read');
+    expect(G.jobForUsageId('ep-plain-0-abcd:6a3c', byKey)).toBeUndefined();
+  });
+});
