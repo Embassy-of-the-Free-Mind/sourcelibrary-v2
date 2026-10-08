@@ -2,6 +2,7 @@
 // `src/lib/i18n.ts` about why server code (this catalogue may be read from
 // `layout.tsx`'s generateMetadata) must not import `@/lib/i18n` itself.
 import type { Locale } from '@/lib/locale-path';
+import type { WarningKind } from '@/lib/book-warnings';
 
 /**
  * Chrome strings for the redesigned reader (`reader-v2`, currently
@@ -353,6 +354,19 @@ export interface ReaderStrings {
     textSourceTranscript: (name: string, license: string, version: string | null) => string;
     /** Translation pane line and drawer line for an unreviewed machine translation (#5571). */
     machineDraftNotice: string;
+    /**
+     * Quality warnings from stored checks (#6199). Voice: .claude/docs/quality-statements.md — what was found, by
+     * whom, when; no softening, no verdict adjectives. Each `qualityKinds` value is a clause that follows "found that".
+     */
+    qualityKinds: Record<WarningKind, string>;
+    /** Joins the clauses of one page: at most two are named, `more` says others were found. */
+    qualityFindings: (clauses: string[], more: boolean) => string;
+    qualityPageReview: (o: { ai: boolean; image: boolean; findings: string; date: string }) => string;
+    qualityPageDetector: (date: string) => string;
+    /** `serious` is null when the check kept no per-page record. */
+    qualityBook: (o: { ai: boolean; image: boolean; read: number; serious: number | null; date: string }) => string;
+    qualitySeeReview: string;
+    qualityDetectorLink: string;
     licenceLink: string;
     sourceLink: string;
     corpusTranslation: (name: string) => string;
@@ -842,6 +856,34 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `Text: ${shortName}, ${license}`,
       textSourceTranscript: (name, license, version) => `Text: ${name}${version ? ` (${version})` : ''}, ${license}`,
       machineDraftNotice: 'AI translation, not yet reviewed by a scholar.',
+      qualityKinds: {
+        wrong_page: 'the scan and the text are from different pages',
+        english_other_page: 'the English belongs to a different page',
+        invented_transcription: 'the transcription has text that is not on the page',
+        model_notes: 'the model’s own notes stand where the text should be',
+        garble_translated: 'the English translates a garbled transcription as if it were sound',
+        meaning_reversed: 'the English reverses a statement or drops a qualifier',
+        misread_meaning: 'a misread word changes the meaning',
+        unsupported_notes: 'the notes state things the page does not say',
+        missing_transcription: 'part of the page is missing from the transcription',
+        missing_english: 'part of the page is missing from the English',
+        number_misread: 'a number, date or quantity is misread',
+        repeated_text: 'a passage is repeated that appears once on the page',
+        serious_transcription: 'the transcription has a serious error',
+        serious_english: 'the English has a serious error',
+        serious_other: 'the page has a serious error',
+      },
+      qualityFindings: (clauses, more) => clauses.join(', and that ') + (more ? ', among other serious errors' : ''),
+      qualityPageReview: ({ ai, image, findings, date }) =>
+        `${ai ? 'An AI reviewer' : 'A reviewer'} reading this page ${image ? 'against the scan' : 'as text, without the scan,'} found that ${findings} (${date}).`,
+      qualityPageDetector: (date) => `Flagged by an automated check, not yet read by a person (${date}).`,
+      qualityBook: ({ ai, image, read, serious, date }) => {
+        const start = `A check by ${ai ? 'an AI reviewer' : 'a reviewer'} read ${read} ${read === 1 ? 'page' : 'pages'} of this book${image ? (read === 1 ? ' against the scan' : ' against the scans') : ''} on ${date}`;
+        if (serious === null) return `${start} and found serious errors.`;
+        return `${start} and found serious errors on ${read === 1 ? 'it' : `${serious} of them`}.`;
+      },
+      qualitySeeReview: 'See the review',
+      qualityDetectorLink: 'What the check looks for',
       licenceLink: 'licence',
       sourceLink: 'source',
       corpusTranslation: (name) => `Scholarly translation from the ${name} — not machine-made`,
@@ -1274,6 +1316,34 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `Texto: ${shortName}, ${license === 'public domain' ? 'dominio público' : license}`,
       textSourceTranscript: (name, license, version) => `Texto: ${name}${version ? ` (${version})` : ''}, ${license === 'public domain' ? 'dominio público' : license}`,
       machineDraftNotice: 'Traducción por IA, aún no revisada por un especialista.',
+      qualityKinds: {
+        wrong_page: 'la imagen y el texto son de páginas distintas',
+        english_other_page: 'la traducción corresponde a otra página',
+        invented_transcription: 'la transcripción contiene texto que no está en la página',
+        model_notes: 'las notas del propio modelo ocupan el lugar del texto',
+        garble_translated: 'la traducción da por bueno un pasaje mal transcrito',
+        meaning_reversed: 'la traducción invierte una afirmación u omite un matiz',
+        misread_meaning: 'una palabra mal leída cambia el sentido',
+        unsupported_notes: 'las notas afirman cosas que la página no dice',
+        missing_transcription: 'falta parte de la página en la transcripción',
+        missing_english: 'falta parte de la página en la traducción',
+        number_misread: 'un número, una fecha o una cantidad están mal leídos',
+        repeated_text: 'se repite un pasaje que aparece una sola vez en la página',
+        serious_transcription: 'la transcripción tiene un error grave',
+        serious_english: 'la traducción tiene un error grave',
+        serious_other: 'la página tiene un error grave',
+      },
+      qualityFindings: (clauses, more) => clauses.join(', y que ') + (more ? ', entre otros errores graves' : ''),
+      qualityPageReview: ({ ai, image, findings, date }) =>
+        `${ai ? 'Un revisor de IA' : 'Un revisor'}, al leer esta página ${image ? 'junto a la imagen' : 'solo como texto, sin la imagen'}, encontró que ${findings} (${date}).`,
+      qualityPageDetector: (date) => `Señalada por una comprobación automática; aún no la ha leído una persona (${date}).`,
+      qualityBook: ({ ai, image, read, serious, date }) => {
+        const start = `Una revisión hecha por ${ai ? 'un revisor de IA' : 'un revisor'} leyó ${read} ${read === 1 ? 'página' : 'páginas'} de este libro${image ? (read === 1 ? ' junto a la imagen' : ' junto a las imágenes') : ''} el ${date}`;
+        if (serious === null) return `${start} y encontró errores graves.`;
+        return `${start} y encontró errores graves en ${read === 1 ? 'ella' : `${serious} de ellas`}.`;
+      },
+      qualitySeeReview: 'Ver la revisión',
+      qualityDetectorLink: 'Qué busca la comprobación',
       licenceLink: 'licencia',
       sourceLink: 'fuente',
       corpusTranslation: (name) => `Traducción académica procedente de ${name} — no es obra de una máquina`,

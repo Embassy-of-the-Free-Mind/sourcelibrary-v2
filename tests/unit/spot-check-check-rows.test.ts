@@ -12,7 +12,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
-import { derivedFortnightly, packetProvenance, runCost } from '../../scripts/eval/spot-check/check-rows.mjs';
+import { derivedFortnightly, packetProvenance, runCost, pageFindings } from '../../scripts/eval/spot-check/check-rows.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
 import { provenanceFromPage } from '../../scripts/lib/book-checks.mjs';
@@ -56,5 +56,26 @@ describe('runCost', () => {
     writeFileSync(join(meta, 'korean-2.json'), JSON.stringify({ total_cost_usd: 100 }));
     expect(runCost(meta, 'korean')).toEqual({ usd: 3.75, model: 'claude-opus-x' });
     expect(runCost(join(meta, 'nope'), 'korean')).toBeNull();
+  });
+});
+
+// pageFindings (#6199): only serious errors and wrong leaves become page findings; a private run keeps its sentences.
+describe('pageFindings', () => {
+  const pages = [
+    page({ page_number: 3 }),
+    page({ page_number: 4, ocr_errors: [{ severity: 'minor', problem: 'long s' }], tr_errors: [{ severity: 'serious', class: 'T8', problem: ' sense inverted ' }] }),
+    page({ page_number: 5, right_page: 'no' }),
+  ];
+
+  it('lists a page only when it has a serious error or is the wrong leaf', () => {
+    expect(pageFindings(pages)).toEqual([
+      { page_number: 4, errors: [{ stage: 'translation', class: 'T8', problem: 'sense inverted' }] },
+      { page_number: 5, wrong_page: true, errors: [] },
+    ]);
+    expect(pageFindings([page()])).toEqual([]);
+  });
+
+  it('carries the class but not the reviewer sentence when the evidence is private', () => {
+    expect(pageFindings(pages, { withProblem: false })[0]).toEqual({ page_number: 4, errors: [{ stage: 'translation', class: 'T8' }] });
   });
 });
