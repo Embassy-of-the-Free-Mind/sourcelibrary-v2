@@ -4,13 +4,16 @@ second-reader calibration (#6338); the design and decision rule are in ../PREREG
 
 # Second-reader calibration (#6338): runbook for one script
 
+On the main Hetzner box, steps 0–3 and 5 for the Latin script run as a headless job: `JOB-latin.md` (its header has
+the start command). It stops before step 4, which needs `agy`.
+
 `R` is the run directory, OUTSIDE the repository until step 9 (for example `/root/claude-jobs/second-reader-6338/latin`):
 the planted-error key in `R/private/` must not be readable by any reader before every read is done. `S` is the
 script (`latin`, `han`, `arabic`), with the seed and languages from the preregistration table.
 
 | step | where | command |
 |---|---|---|
-| 0. frame inputs | box with the corpus mirror | `node scripts/audit/page-integrity.mjs --out=/root/pi-6338` (fresh dir), then `node scripts/eval/second-reader/second-reader.mjs flagged --run R --from /root/pi-6338` and `… exclude --run R` |
+| 0. frame inputs | box with the corpus mirror | `node scripts/audit/page-integrity.mjs --calibrate --out=/root/pi-6338`, then the same without `--calibrate` (fresh dir), then `node scripts/eval/second-reader/second-reader.mjs flagged --run R --from /root/pi-6338` and `… exclude --run R` |
 | 1. draw | Mongo + network (Hetzner) | `node --env-file=.env.production.local scripts/eval/second-reader/draw.mjs --out R --script S --languages "<list>" --n 100 --seed <seed> --flagged R/flagged.json --exclude R/exclude.json` |
 | 2. plant + packets | anywhere | `node scripts/eval/second-reader/second-reader.mjs packets --run R --per-packet 5` (or `1` if the pilot says so) |
 | 3. Opus reads | claude CLI | `scripts/eval/second-reader/run-readers.sh R opus-a claude opus` then the same with `opus-b` |
