@@ -416,7 +416,9 @@ export interface TranslationData extends ProcessingMetadata {
  * `WITHHOLD_REASONS` in `scripts/lib/stale-translation.mjs` — that module owns
  * the rule; this is the reading half of the same contract.
  */
-export type WithheldTranslationReason = 'stale_after_reocr' | 'ocr_unreadable';
+export type WithheldTranslationReason =
+  | 'stale_after_reocr' | 'ocr_unreadable' | 'source_loop' | 'unverified_script_ocr'
+  | 'illegible_source' | 'invented_by_eye';
 
 export interface WithheldTranslation extends Omit<TranslationData, 'data'> {
   reason: WithheldTranslationReason;

@@ -58,6 +58,10 @@
  *   … --illegible-arm     also withhold translations made from an ILLEGIBLE transcription
  *                         (#5305: no legible body, or the OCR says it could not read the
  *                         page); needs --book/--books-file, see ILLEGIBLE_ARM below
+ *   … --by-eye-pages=100,101,102|all  withhold the named pages of ONE book because a person
+ *                         opened the images and the English is not what is on the leaf (#6048);
+ *                         needs --book, --evidence="…" and a pipeline hold on the book, see BY_EYE
+ *   … --issue=N           with --by-eye-pages: the issue that carries the by-eye notes
  *   … --limit=N           stop after N books (dry-run sizing)
  *   … --report=PATH
  *   … --skip-supabase-mirror   don't re-sync the Supabase `pages` mirror per book
@@ -69,9 +73,11 @@ import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import {
   STALE_CANDIDATE_FILTER, LOOP_CANDIDATE_FILTER, UNVERIFIED_SCRIPT_CANDIDATE_FILTER,
-  WITHHOLD_REVISION_SOURCE,
-  staleTranslationReason, withholdUpdate, translationText,
+  WITHHOLD_REVISION_SOURCE, WITHHOLD_REASONS,
+  staleTranslationReason, withholdUpdate, translationText, isPlaceholderTranslation,
 } from '../lib/stale-translation.mjs';
+import { isHeld } from '../lib/pipeline-hold.mjs';
+import { recordSweepAction } from '../lib/sweep-log.mjs';
 
 const ARG = (n, d) => process.argv.find((a) => a.startsWith(`${n}=`))?.split('=').slice(1).join('=') ?? d;
 const APPLY = process.argv.includes('--apply');
@@ -109,6 +115,30 @@ const COHORT_SCRIPT = ARG('--cohort-script', null);
  * the #5305 report carries the corpus fire rate and the hand read; the go is Derek's.
  */
 const ILLEGIBLE_ARM = process.argv.includes('--illegible-arm');
+/**
+ * BY EYE (#6048): withhold named pages of one book because a person read them against the image.
+ * Unlike every arm above this is a verdict, not a predicate — a fluent English page built on a
+ * recited or guessed transcription carries no marker — so it takes a page list (or `all`, when
+ * the read is wrong throughout) and a sentence of evidence, which goes to `sweep_log` with the
+ * page numbers. It refuses a book that is not held: the translate lanes read a withheld page as
+ * an untranslated one, and without the hold they would pay to translate the same transcription
+ * again (`pipeline-status-truth.md`). Undo with `restore-withheld-translation.mjs`.
+ */
+const BY_EYE_RAW = ARG('--by-eye-pages', null);
+const BY_EYE_ALL = BY_EYE_RAW === 'all';
+const BY_EYE = BY_EYE_RAW === null || BY_EYE_ALL ? null
+  : new Set(BY_EYE_RAW.split(',').map((n) => Number(n.trim())));
+const EVIDENCE = ARG('--evidence', null);
+const ISSUE = Number(ARG('--issue', '0')) || null;
+if (BY_EYE_RAW !== null) {
+  const bad = BY_EYE && (!BY_EYE.size || [...BY_EYE].some((n) => !Number.isInteger(n) || n < 1));
+  if (!ONLY_BOOK || !EVIDENCE || bad) {
+    console.error('--by-eye-pages needs --book=<id>, --evidence="what the image shows", and a list of page numbers or `all`.');
+    process.exit(2);
+  }
+}
+// A placeholder (`[Blank page]`) is not English anyone invented; `all` leaves it where it is.
+const byEyeNamed = (p) => (BY_EYE_ALL || (BY_EYE !== null && BY_EYE.has(p.page_number))) && !isPlaceholderTranslation(p.translation);
 if (COHORT_SCRIPT && !UNVERIFIED_SCRIPT_ARM) {
   console.error('--cohort-script only means something with --unverified-script-arm.');
   process.exit(2);
@@ -119,6 +149,8 @@ const CANDIDATE_FILTER = {
     ...(LOOP_ARM ? [LOOP_CANDIDATE_FILTER] : []),
     ...(UNVERIFIED_SCRIPT_ARM ? [UNVERIFIED_SCRIPT_CANDIDATE_FILTER] : []),
     ...(ILLEGIBLE_ARM ? [LOOP_CANDIDATE_FILTER] : []),  // same shape: every translated page with OCR
+    ...(BY_EYE_ALL ? [{ translation: { $exists: true } }] : []),
+    ...(BY_EYE ? [{ page_number: { $in: [...BY_EYE] }, translation: { $exists: true } }] : []),
   ],
 };
 for (const [on, flag, filter] of [[LOOP_ARM, '--loop-arm', 'LOOP_CANDIDATE_FILTER'],
@@ -135,6 +167,15 @@ const mongo = new MongoClient(process.env.MONGODB_URI);
 await mongo.connect();
 const db = mongo.db('bookstore');
 const pages = db.collection('pages');
+
+if (BY_EYE_RAW !== null) {
+  const held = await db.collection('books').findOne({ id: ONLY_BOOK }, { projection: { pipeline_auto: 1 } });
+  if (!isHeld(held)) {
+    console.error(`--by-eye-pages: ${ONLY_BOOK} is not held. Hold it first (scripts/maintenance/hold-pipeline-books.mjs --ids … --reason … --release …), or the translate lanes will re-translate the withheld pages.`);
+    await mongo.close();
+    process.exit(2);
+  }
+}
 
 fs.mkdirSync(REPORT.replace(/\/[^/]+$/, ''), { recursive: true });
 const report = fs.createWriteStream(REPORT, { flags: 'a' });
@@ -280,7 +321,8 @@ for (const bookId of bookIds) {
   const keptOther = [];
   for (const p of candidates) {
     if (p.translation_withheld?.reason) withheldPageNumbers.add(p.page_number);
-    const reason = staleTranslationReason(p, { unverifiedScriptArm: UNVERIFIED_SCRIPT_ARM, cohortScript: COHORT_SCRIPT, illegibleArm: ILLEGIBLE_ARM });
+    const reason = (byEyeNamed(p) && translationText(p.translation) ? WITHHOLD_REASONS.INVENTED_BY_EYE : null)
+      ?? staleTranslationReason(p, { unverifiedScriptArm: UNVERIFIED_SCRIPT_ARM, cohortScript: COHORT_SCRIPT, illegibleArm: ILLEGIBLE_ARM });
     if (!reason) {
       // Arm 4 keeps the English on other-script pages of the same books (Latin,
       // Hebrew, Arabic in a Syriac book). Count them, so the report shows what
@@ -404,6 +446,16 @@ for (const bookId of bookIds) {
       T.mirrorSynced++;
     } catch (e) {
       rec({ book: bookId, status: 'supabase-pages-mirror-sync-failed', error: String(e.message).slice(0, 160) });
+    }
+  }
+
+  if (BY_EYE_RAW !== null) {
+    const byEyePages = targets.filter((t) => t.reason === WITHHOLD_REASONS.INVENTED_BY_EYE).map((t) => t.page.page_number).sort((a, b) => a - b);
+    if (byEyePages.length) {
+      await recordSweepAction(db, {
+        sweep: 'withhold-by-eye', book_id: bookId, action: 'translation-withheld-by-eye',
+        detail: { pages: byEyePages, requested: BY_EYE_RAW, evidence: EVIDENCE, issue: ISSUE, revision_source: WITHHOLD_REVISION_SOURCE },
+      });
     }
   }
 
