@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseOpsDecisions, prCard, type HoldPr } from '@/lib/decision-queue';
+import { failingChecksOf, parseOpsDecisions, prCard, type HoldPr } from '@/lib/decision-queue';
 import {
   attachBriefs, groupCards, isWaitingOnAuthor, issueOfPr, validateBrief, type DecisionBrief,
 } from '@/lib/decision-briefs';
@@ -75,6 +75,44 @@ describe('groupCards', () => {
     // b is 7 days old, so its group outranks the 3-day-old PR on its own.
     const order = groupCards([alone, a, b], now).groups.map((g) => g.key);
     expect(order.indexOf('issue:6215')).toBeLessThan(order.indexOf(`one:${alone.id}`));
+  });
+});
+
+describe('failing checks send a PR back to its author', () => {
+  it('counts finished, failed checks; sets Vercel aside; ignores passing, skipped and running ones', () => {
+    expect(failingChecksOf([
+      { name: 'test', conclusion: 'FAILURE' },
+      { name: 'DCO', conclusion: 'ACTION_REQUIRED' },
+      { context: 'Vercel', state: 'FAILURE' },
+      { name: 'next-build', conclusion: 'SUCCESS' },
+      { name: 'field-sprawl', conclusion: 'SKIPPED' },
+      { name: 'search-eval', conclusion: null },
+      { context: 'blog-links', state: 'ERROR' },
+    ])).toEqual(['DCO', 'blog-links', 'test']);
+    expect(failingChecksOf([{ context: 'Vercel', state: 'FAILURE' }])).toEqual([]);
+  });
+
+  it('a cancelled duplicate run beside a passing run of the same check is not a failure', () => {
+    expect(failingChecksOf([{ name: 'tier', conclusion: 'CANCELLED' }, { name: 'tier', conclusion: 'SUCCESS' }])).toEqual([]);
+    expect(failingChecksOf([{ name: 'tier', conclusion: 'CANCELLED' }])).toEqual(['tier']);
+  });
+
+  it('a CLEAN PR is never sent back on its check list', () => {
+    const clean = prCard(holdPr(108, 'docs: y', { mergeStateStatus: 'CLEAN', failingChecks: ['tier'] }));
+    expect(clean.defaultActionable).toBe(true);
+  });
+
+  it('a PR with a failing check cannot be merged from the card, and says which check', () => {
+    const red = prCard(holdPr(106, 'copy: part 1 (#6215)', { mergeStateStatus: 'UNSTABLE', failingChecks: ['blog-links'] }));
+    expect(red.defaultActionable).toBe(false);
+    expect(red.defaultDoes).toContain('a check is failing (blog-links)');
+    expect(isWaitingOnAuthor(red)).toBe(true);
+  });
+
+  it('UNSTABLE with only Vercel red still goes to Derek, as safe-merge.sh allows it', () => {
+    const vercelOnly = prCard(holdPr(107, 'docs: x', { mergeStateStatus: 'UNSTABLE', failingChecks: [] }));
+    expect(vercelOnly.defaultActionable).toBe(true);
+    expect(isWaitingOnAuthor(vercelOnly)).toBe(false);
   });
 });
 

@@ -77,6 +77,37 @@ export interface HoldPr {
   changedFiles: number;
   author: string | null;
   body?: string | null;
+  /** Names of finished checks that did not pass, Vercel set aside (see failingChecksOf). Absent = not fetched. */
+  failingChecks?: string[];
+}
+
+/** One entry of a commit's check rollup, as GitHub GraphQL returns it (CheckRun or StatusContext). */
+export interface CheckNode {
+  name?: string | null;
+  conclusion?: string | null;
+  context?: string | null;
+  state?: string | null;
+}
+
+/**
+ * The checks safe-merge.sh would refuse on: finished and not passing. Vercel is
+ * set aside exactly as safe-merge.sh and auto-merge.mjs do (previews are opt-in,
+ * so a red Vercel check is not gating). A check still running is not a failure.
+ */
+export function failingChecksOf(nodes: CheckNode[]): string[] {
+  const failed = new Set<string>();
+  const passed = new Set<string>();
+  for (const n of nodes) {
+    const name = n.name ?? n.context ?? '';
+    if (!name || name === 'Vercel') continue;
+    const verdict = (n.conclusion ?? n.state ?? '').toUpperCase();
+    if (['FAILURE', 'ERROR', 'TIMED_OUT', 'ACTION_REQUIRED', 'CANCELLED', 'STARTUP_FAILURE'].includes(verdict)) failed.add(name);
+    if (['SUCCESS', 'NEUTRAL', 'SKIPPED'].includes(verdict)) passed.add(name);
+  }
+  // A check that ran twice on one commit (a label event re-triggers `tier`, and the
+  // concurrency group cancels the first run) shows a cancelled run beside a passing
+  // one. On 2026-10-08 that was 24 of 74 held PRs: it is not a failure.
+  return [...failed].filter((name) => !passed.has(name)).sort();
 }
 
 /**
@@ -92,6 +123,12 @@ export function prMergeBlocker(pr: HoldPr): string | null {
   if (pr.mergeable === 'CONFLICTING' || pr.mergeStateStatus === 'DIRTY') return 'it has merge conflicts';
   if (pr.mergeStateStatus === 'BEHIND') return 'it is behind main';
   if (pr.mergeStateStatus === 'BLOCKED') return 'a required check is failing or still running';
+  // safe-merge.sh refuses a PR with a finished, failed check, so a merge tap would
+  // only bounce: the PR is its author's to fix before it is Derek's to decide (#6280).
+  // CLEAN is GitHub's own verdict and safe-merge.sh takes it before reading any check.
+  if (pr.failingChecks?.length && pr.mergeStateStatus !== 'CLEAN') {
+    return `${pr.failingChecks.length === 1 ? 'a check is' : 'checks are'} failing (${pr.failingChecks.slice(0, 4).join(', ')})`;
+  }
   return null;
 }
 
