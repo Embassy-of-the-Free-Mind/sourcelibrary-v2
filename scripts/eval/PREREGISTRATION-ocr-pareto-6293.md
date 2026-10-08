@@ -39,7 +39,7 @@ Every arm reads the sealed JPEG bytes that every charted engine read (≤ 2400 p
 - **Prompt:**
   - `latin-period-5126` (82 pages): the production OCR prompt v19.1, `content_hash 9d8f959e053491362b2c4acec1e20c9a`. It is the live default today, loaded through `lib/production-prompt.mjs`, and the run stops if the hash differs.
   - Every other stratum: the generic transcription prompt of `benchmark-run-api.mjs`.
-- **Image and settings:** the image follows the prompt inline, `temperature 0` and `maxOutputTokens 8000`, with no media-resolution or safety override. This is what `lib/runners.mjs` sent for the stored arms.
+- **Image and settings:** the image follows the prompt inline, `temperature 0` and `maxOutputTokens 16000`, with no media-resolution or safety override. This is what `benchmark-run-api.mjs` sends through `lib/runners.mjs` for the stored arms.
 - **Thinking**, as production's OCR request sets it (`OCR_GENERATION_CONFIG`, `thinkingBudget: 0`):
   - 3.6, 3.7 and 3.8 Flash take budget 0.
   - 3.5 Flash-Lite refuses budget 0 (400, probed 2026-10-07 in #6182). It gets `thinkingLevel: 'minimal'`, its lowest setting; its thinking tokens are metered and priced.
