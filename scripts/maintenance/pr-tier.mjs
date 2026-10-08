@@ -74,6 +74,32 @@ function addedLinesOf(diff) {
   return diff.split('\n').filter((l) => l.startsWith('+') && !l.startsWith('+++')).map((l) => l.slice(1));
 }
 
+const ignoreRes = (RULES.diffIgnoreGlobs || []).map(globToRe);
+// A line that is only a comment: `//`, `*` / `/*` (block comment body), `#` (shell, yaml), `<!--`.
+const COMMENT_LINE = /^\s*(\/\/|\/?\*|#(\s|!|$)|<!--)/;
+
+/**
+ * The added lines a diffPattern may fire on: lines that can EXECUTE. Measured
+ * 2026-10-08 on 13 PRs held for "data deletion or migration in the diff":
+ * several fired only on a comment (`* 3. $unset the stale fields`) or on prose
+ * and result files (an eval write-up quoting a script name). A comment and a
+ * markdown file delete nothing. Real `$unset` / `deleteMany` code still holds,
+ * including in a script that "already ran": merging cannot know that.
+ */
+export function scannableAddedLines(diff) {
+  const out = [];
+  let file = '';
+  for (const l of diff.split('\n')) {
+    if (l.startsWith('+++ ')) { file = l.slice(4).replace(/^b\//, ''); continue; }
+    if (!l.startsWith('+') || l.startsWith('+++')) continue;
+    if (ignoreRes.some((re) => re.test(file))) continue;
+    const line = l.slice(1);
+    if (RULES.diffIgnoreCommentLines && COMMENT_LINE.test(line)) continue;
+    out.push(line);
+  }
+  return out;
+}
+
 function dependabotMajor(title) {
   // "Bump stripe from 20.4.1 to 22.6.2" / grouped "Bump the security group ... with 2 updates"
   const m = title.match(/from (\d+)\.[\d.]+ to (\d+)\./);
@@ -81,11 +107,37 @@ function dependabotMajor(title) {
   return /with \d+ updates/.test(title) ? 'group' : false;
 }
 
+/**
+ * A grouped dependabot PR hides its members, so read them from the diff: every
+ * `"name": "^1.2.3"` line removed and re-added under the same name is one bump.
+ * A bump is breaking when the major changes, or the minor changes on a 0.x
+ * package (semver gives 0.x no compatibility promise). Returns the breaking
+ * bumps and how many pairs were read; zero pairs means the diff could not be
+ * read this way and the caller keeps the hold.
+ */
+export function groupedBumps(diff) {
+  const VERSION_LINE = /^\s*"([^"]+)":\s*"[\^~]?(\d+)\.(\d+)\.[^"]*",?\s*$/;
+  const removed = new Map();
+  const bumps = [];
+  for (const l of diff.split('\n')) {
+    if (l.startsWith('---') || l.startsWith('+++')) continue;
+    const m = l.slice(1).match(VERSION_LINE);
+    if (!m) continue;
+    if (l.startsWith('-')) removed.set(m[1], [m[2], m[3]]);
+    else if (l.startsWith('+') && removed.has(m[1])) {
+      const [maj, min] = removed.get(m[1]);
+      removed.delete(m[1]);
+      bumps.push({ name: m[1], from: `${maj}.${min}`, to: `${m[2]}.${m[3]}`, breaking: maj !== m[2] || (maj === '0' && min !== m[3]) });
+    }
+  }
+  return { pairs: bumps.length, breaking: bumps.filter((b) => b.breaking) };
+}
+
 function classifyPR(number) {
   const pr = JSON.parse(sh(`gh pr view ${number} --json number,title,author,isDraft,labels,files,url,comments`));
   const paths = (pr.files || []).map((f) => f.path);
   const diff = sh(`gh pr diff ${number}`);
-  const result = classifyPaths(paths, addedLinesOf(diff));
+  const result = classifyPaths(paths, scannableAddedLines(diff));
   const author = pr.author?.login || '';
   const isBot = /dependabot/.test(author);
   if (!RULES.autoMergeAuthors.some((a) => a === author || a.replace('app/', '') === author)) {
@@ -95,9 +147,15 @@ function classifyPR(number) {
     const maj = dependabotMajor(pr.title);
     if (maj === true) result.reasons.push({ reason: 'dependabot MAJOR version bump', paths: [], lines: [] });
     if (maj === 'group') {
-      // A grouped PR hides its members in the body; count package.json version lines for a human to eyeball.
-      const jumps = addedLinesOf(diff).filter((l) => /"[^"]+": "\^?\d+\./.test(l));
-      result.reasons.push({ reason: `dependabot grouped bump — ${jumps.length} version lines; verify no major jump by eye`, paths: [], lines: jumps.slice(0, 4).map((l) => l.trim()) });
+      // A grouped PR hides its members in the body, so the bumps are read from the diff.
+      // It holds when one of them is breaking, or when no bump could be read at all.
+      const { pairs, breaking } = groupedBumps(diff);
+      if (breaking.length) {
+        result.reasons.push({ reason: `dependabot grouped bump with ${breaking.length} breaking jump${breaking.length === 1 ? '' : 's'} (of ${pairs} read)`, paths: [], lines: breaking.slice(0, 6).map((b) => `${b.name} ${b.from} → ${b.to}`) });
+      } else if (!pairs) {
+        const jumps = addedLinesOf(diff).filter((l) => /"[^"]+": "\^?\d+\./.test(l));
+        result.reasons.push({ reason: `dependabot grouped bump — ${jumps.length} version lines, none readable as a from/to pair; verify no major jump by eye`, paths: [], lines: jumps.slice(0, 4).map((l) => l.trim()) });
+      }
     }
   }
   const labels = (pr.labels || []).map((l) => l.name);
