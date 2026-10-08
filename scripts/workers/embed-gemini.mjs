@@ -40,6 +40,8 @@
  *   --book ID     Process a single book
  *   --books-file PATH  Embed every page with text and no row, for a JSON array
  *                 of book ids (translated or not)
+ *   --pages-file PATH  RE-embed exactly these page ids (JSON array), row or no
+ *                 row — the repair lane for wrong vectors (#6175). Works with --batch.
  *   --limit N     Stop after N pages
  *   --dry-run     Count pages without embedding
  *
@@ -69,6 +71,11 @@
  *                 Closes the submit-time usage rows with the BILLED tokens (batch
  *                 results carry usageMetadata; realtime ones do not). Free: it
  *                 runs whatever the dial says. --collect-concurrency N (default 3).
+ *                 --collect-jobs id,id collects only those jobs (and takes ones
+ *                 parked with status 'held').
+ *                 --collect-resume skips a page whose row already has the job's
+ *                 model and the page's current source timestamp (a re-run after
+ *                 an interrupted collect then rewrites nothing).
  *
  * Env: MONGODB_URI, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, SUPABASE_DB_URL,
  *      GEMINI_API_KEY_TIER3 (preferred, no training opt-in) or GEMINI_API_KEY
@@ -84,6 +91,7 @@ import fs from 'node:fs';
 import crypto from 'node:crypto';
 import { cleanPageText, pageEmbeddingInput, buildPageEmbeddingRow, PAGE_EMBEDDING_COLUMNS } from '../lib/page-embedding-text.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
+import { isPaused } from '../lib/pause.mjs';
 import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage, estimateUsd, estimateTextTokens, usdForTokens, FLUSH_EVERY_TEXTS } from '../lib/embedding-usage.mjs';
 import { pageSourceTs, incrementalSourceFilter, nextWatermark, readWatermark, writeWatermark } from '../lib/embed-watermark.mjs';
 import { createThenDeleteInput, uploadBatchInputFile, streamBatchResponses } from '../lib/gemini-batch-input-file.mjs';
@@ -128,6 +136,11 @@ const BOOKS_FILE = args.find((_, i, a) => a[i - 1] === '--books-file');
 // translation. For budget-capped backfills, where translated pages are the ones
 // readers and the Librarian search by meaning (#5869).
 const TRANSLATED_ONLY = args.includes('--translated-only');
+// --pages-file PATH: RE-embed exactly these page ids (JSON array), whether or not
+// they already have a row. The repair lane for rows whose vector is wrong — an
+// e5 vector under a Gemini label, a vector of text the page no longer holds
+// (#6175). --books-file cannot do it: it only fills pages with NO row.
+const PAGES_FILE = args.find((_, i, a) => a[i - 1] === '--pages-file');
 const LIMIT = parseInt(args.find((_, i, a) => a[i - 1] === '--limit') || '0') || 0;
 const WORKER_ID = parseInt(args.find((_, i, a) => a[i - 1] === '--worker-id') || '0');
 const WORKER_COUNT = parseInt(args.find((_, i, a) => a[i - 1] === '--worker-count') || '1');
@@ -135,11 +148,19 @@ const BATCH_MODE = args.includes('--batch');
 const COLLECT_MODE = args.includes('--collect');
 const JOB_PAGES = parseInt(args.find((_, i, a) => a[i - 1] === '--job-pages') || '20000');
 const COLLECT_CONCURRENCY = parseInt(args.find((_, i, a) => a[i - 1] === '--collect-concurrency') || '3');
+// --collect-jobs id,id: collect ONLY these jobs, including ones set aside with status 'held'.
+// A plain --collect takes every finished job, whoever submitted it; a job composed by a newer
+// checkout than the collector's fails the text-hash check page by page and is lost (#6175).
+const COLLECT_JOBS = (args.find((_, i, a) => a[i - 1] === '--collect-jobs') || '').split(',').filter(Boolean);
+// --collect-resume: skip a page whose row already carries this job's model and the page's current
+// source timestamp — it was written by an earlier, interrupted collect of the same job. Every
+// rewrite is a non-HOT update and a new HNSW insertion on a table that takes 2–50 rows/s (#6175).
+const COLLECT_RESUME = args.includes('--collect-resume');
 const MAX_RUNNING = parseInt(args.find((_, i, a) => a[i - 1] === '--max-running') || '0') || 0;
-if (BATCH_MODE && !BOOKS_FILE) {
+if (BATCH_MODE && !BOOKS_FILE && !PAGES_FILE) {
   // A batch job is priced and attributed per book; an open-ended batch --full
   // would enqueue the whole corpus' spend in one go. Name the books.
-  console.error('--batch needs --books-file');
+  console.error('--batch needs --books-file or --pages-file');
   process.exit(1);
 }
 
@@ -203,7 +224,7 @@ let usageTotalChars = 0;   // characters recorded, for the closing summary
 // way would read $0 against its budget however much it spent (#5869). The
 // streaming incremental run keeps one unattributed accumulator — its pages span
 // thousands of books per flush window and it is never envelope-capped by book.
-const ATTRIBUTE_PER_BOOK = Boolean(BOOKS_FILE || BOOK_ID);
+const ATTRIBUTE_PER_BOOK = Boolean(BOOKS_FILE || PAGES_FILE || BOOK_ID);
 const bookUsage = new Map(); // book_id → accumulator
 let bookUsageTexts = 0;
 
@@ -381,7 +402,9 @@ async function addToEmbedJob(item) {
   // Mongo read; the hash lets the collector refuse a vector for changed text.
   const line = JSON.stringify({
     key: `${item.page.book_id}|${item.page.id}|${textHash(item.text)}`,
-    request: { content: { parts: [{ text: item.text }] }, outputDimensionality: DIMS },
+    // toWellFormed: the 8,000-char cut can split a surrogate pair, and the Batch API rejects the
+    // WHOLE job on one lone surrogate (#6175). The key keeps the hash of the composed text.
+    request: { content: { parts: [{ text: item.text.toWellFormed() }] }, outputDimensionality: DIMS },
   });
   embedJob.lines.push(line);
   embedJob.bytes += Buffer.byteLength(line) + 1;
@@ -432,7 +455,7 @@ async function submitEmbedJob() {
   await jobs.insertOne({
     _id: jobId, status: 'creating', model: MODEL, dims: DIMS, books_file: BOOKS_FILE || null,
     book_ids: [...job.books.keys()], page_ids: job.pageIds, requests: job.lines.length, bytes: job.bytes,
-    est_usd: +estUsd.toFixed(4), created_at: new Date(),
+    pages_file: PAGES_FILE || null, est_usd: +estUsd.toFixed(4), created_at: new Date(),
   });
   let created;
   try {
@@ -499,8 +522,9 @@ async function collectEmbedJobs() {
   if (!SUPABASE_DB_URL) { console.error('--collect needs SUPABASE_DB_URL'); process.exit(1); }
   const jobs = db.collection(EMBED_JOBS);
   const staleClaim = new Date(Date.now() - 2 * 3600e3);
+  const open = { $or: [{ status: 'submitted' }, { status: 'collecting', collecting_at: { $lt: staleClaim } }] };
   const todo = await jobs.find(
-    { $or: [{ status: 'submitted' }, { status: 'collecting', collecting_at: { $lt: staleClaim } }] },
+    COLLECT_JOBS.length ? { _id: { $in: COLLECT_JOBS }, $or: [...open.$or, { status: 'held' }] } : open,
     { projection: { page_ids: 0 } },
   ).sort({ created_at: 1 }).toArray();
   console.log(`[collect] ${todo.length} job(s) to check`);
@@ -512,8 +536,8 @@ async function collectEmbedJobs() {
       try { await collectEmbedJob(job, report); } catch (e) { report.errored++; console.error(`[collect] ${job._id}: ${e.message}`); }
     }
   }));
-  const open = await jobs.countDocuments({ status: { $in: ['submitted', 'collecting'] } });
-  console.log(`[collect] ${JSON.stringify(report)} — ${open} job(s) still open`);
+  const stillOpen = await jobs.countDocuments({ status: { $in: ['submitted', 'collecting', 'held'] } });
+  console.log(`[collect] ${JSON.stringify(report)} — ${stillOpen} job(s) still open`);
 }
 
 async function collectEmbedJob(job, report) {
@@ -544,7 +568,7 @@ async function collectEmbedJob(job, report) {
 
   const client = await openPg();
   const perBook = new Map(); // bookId → { tokens, pages }
-  const counts = { responses: 0, written: 0, changed: 0, failedRequests: 0, missing: 0 };
+  const counts = { responses: 0, written: 0, changed: 0, failedRequests: 0, missing: 0, already: 0 };
   let buf = [];
   const flush = async () => {
     if (!buf.length) return;
@@ -572,6 +596,13 @@ async function collectEmbedJob(job, report) {
       rows.set(pageId, buildPageEmbeddingRow({ page, book, text: composed.text, hasTranslation: composed.hasTranslation, embedding: values, model: job.model }));
       b.pages++;
     }
+    if (COLLECT_RESUME && rows.size) {
+      const { rows: have } = await client.query('SELECT page_id, mongo_updated_at FROM page_translations WHERE page_id = ANY($1) AND embedding_model = $2 AND embedding IS NOT NULL', [[...rows.keys()], job.model]);
+      for (const h of have) {
+        const want = rows.get(h.page_id)?.mongo_updated_at;
+        if (want && h.mongo_updated_at && new Date(want).getTime() === new Date(h.mongo_updated_at).getTime()) { rows.delete(h.page_id); counts.already++; }
+      }
+    }
     for (let attempt = 1; ; attempt++) {
       try { await upsertManyPg(client, [...rows.values()]); break; } catch (e) {
         if (attempt >= 4) throw new Error(`upsert failed 4×: ${e.message}`);
@@ -582,7 +613,12 @@ async function collectEmbedJob(job, report) {
     counts.written += rows.size;
   };
   try {
-    for await (const line of streamBatchResponses(responsesFile, GEMINI_KEY)) {
+    // Download the whole results file BEFORE the first upsert. Fed straight from the stream, a
+    // slow table (minutes per 200 rows) leaves the download idle until the server cuts it, and
+    // the job fails with "terminated" after writing part of its rows (2 of 16 jobs, #6175).
+    const lines = [];
+    for await (const line of streamBatchResponses(responsesFile, GEMINI_KEY)) lines.push(line);
+    for (const line of lines) {
       counts.responses++;
       buf.push(line);
       if (buf.length >= 200) await flush();
@@ -609,7 +645,7 @@ async function collectEmbedJob(job, report) {
   report.written += counts.written;
   report.changed += counts.changed;
   report.failedRequests += counts.failedRequests;
-  console.log(`  ${job._id}: collected — ${counts.written.toLocaleString()} rows, ${counts.changed} changed since submit, ${counts.failedRequests} failed requests, ${counts.missing} pages gone; ${billedTokens.toLocaleString()} tokens ≈ $${actualUsd.toFixed(4)} (est $${(job.est_usd || 0).toFixed(4)})`);
+  console.log(`  ${job._id}: collected — ${counts.written.toLocaleString()} rows, ${counts.changed} changed since submit, ${counts.failedRequests} failed requests, ${counts.missing} pages gone, ${counts.already} already written; ${billedTokens.toLocaleString()} tokens ≈ $${actualUsd.toFixed(4)} (est $${(job.est_usd || 0).toFixed(4)})`);
 }
 
 // Legacy mark: max(updated_at) over every writer's rows. Used ONCE, to seed the
@@ -628,7 +664,7 @@ async function getLegacySyncTime() {
 
 const start = Date.now();
 console.log(`Embedding model: ${MODEL} (${DIMS} dims)`);
-console.log(`Mode: ${FULL_MODE ? 'full' : RESTALE ? 'restale' : MISSING_ONLY ? 'missing-only' : BOOKS_FILE ? 'books-file ' + BOOKS_FILE : BOOK_ID ? 'book ' + BOOK_ID : 'incremental'}${WORKER_COUNT > 1 ? ` (worker ${WORKER_ID}/${WORKER_COUNT})` : ''}`);
+console.log(`Mode: ${FULL_MODE ? 'full' : RESTALE ? 'restale' : MISSING_ONLY ? 'missing-only' : PAGES_FILE ? 'pages-file ' + PAGES_FILE : BOOKS_FILE ? 'books-file ' + BOOKS_FILE : BOOK_ID ? 'book ' + BOOK_ID : 'incremental'}${WORKER_COUNT > 1 ? ` (worker ${WORKER_ID}/${WORKER_COUNT})` : ''}`);
 
 /** Books the open scope envelope allows, when the global dial is closed (#4865). */
 let ENVELOPE_IDS = null;
@@ -654,8 +690,8 @@ if (COLLECT_MODE) {
 {
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
   if (!BOOK_ID) {
-    if (control?.paused) {
-      console.log('[embed-gemini] Pipeline paused — exiting.');
+    if (control?.paused || isPaused(control, 'embeddings')) {
+      console.log(`[embed-gemini] ${control?.paused ? 'Pipeline' : 'embeddings step'} paused — exiting.`);
       await mongoClient.close();
       process.exit(0);
     }
@@ -732,6 +768,25 @@ if (BOOK_ID) {
   globalThis.MISSING_PAGE_IDS = new Set(myRows.map(r => r.page_id));
   pageQuery.book_id = { $in: myBookIds };
   console.log(`Processing ${myRows.length.toLocaleString()} missing pages across ${myBookIds.length.toLocaleString()} books`);
+} else if (PAGES_FILE) {
+  const ids = JSON.parse(fs.readFileSync(PAGES_FILE, 'utf8')).map(String);
+  if (!ids.length) { console.error(`--pages-file ${PAGES_FILE} is empty`); process.exit(1); }
+  const owners = await db.collection('pages').find({ id: { $in: ids } }, { projection: { book_id: 1 } }).toArray();
+  const bookIds = [...new Set(owners.map(p => String(p.book_id)))];
+  // Every listed page is re-embedded, row or no row. Only pages already in an
+  // uncollected Batch job are skipped, so a re-run resumes rather than pays twice.
+  const skip = new Set();
+  if (BATCH_MODE) {
+    const inflight = db.collection(EMBED_JOBS).find(
+      { page_ids: { $in: ids }, $or: [{ status: { $in: ['submitted', 'collecting', 'held'] } }, { status: 'creating', created_at: { $gt: new Date(Date.now() - 3600e3) } }] },
+      { projection: { page_ids: 1 } },
+    );
+    for await (const j of inflight) for (const id of j.page_ids || []) skip.add(id);
+  }
+  globalThis.SKIP_PAGE_IDS = skip;
+  pageQuery.id = { $in: ids };
+  pageQuery.book_id = { $in: bookIds };
+  console.log(`${ids.length.toLocaleString()} listed pages across ${bookIds.length.toLocaleString()} books; ${skip.size} already in an uncollected Batch job.`);
 } else if (BOOKS_FILE) {
   let targetIds = JSON.parse(fs.readFileSync(BOOKS_FILE, 'utf8'));
   if (!Array.isArray(targetIds) || !targetIds.length) {
@@ -918,7 +973,7 @@ if (DRY_RUN) {
 // Watermark bookkeeping (#5869). Anything that confines the book set makes the
 // run "scoped": it may read new pages, but it cannot vouch for the pages it
 // did not look at, so it must not move the mark.
-const INCREMENTAL = !FULL_MODE && !RESTALE && !MISSING_ONLY && !BOOKS_FILE && !BOOK_ID;
+const INCREMENTAL = !FULL_MODE && !RESTALE && !MISSING_ONLY && !BOOKS_FILE && !PAGES_FILE && !BOOK_ID;
 const RUN_SCOPED = Boolean(ENVELOPE_IDS) || WORKER_COUNT > 1;
 let maxReadTs = null;
 
@@ -952,7 +1007,7 @@ for await (const page of cursor) {
     continue;
   }
   // --books-file: skip pages already in page_translations; embed only the rest.
-  if (BOOKS_FILE && globalThis.SKIP_PAGE_IDS.has(page.id)) {
+  if ((BOOKS_FILE || PAGES_FILE) && globalThis.SKIP_PAGE_IDS.has(page.id)) {
     skipped++;
     processed++;
     continue;

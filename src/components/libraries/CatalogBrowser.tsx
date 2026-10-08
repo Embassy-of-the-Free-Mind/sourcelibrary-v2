@@ -614,16 +614,16 @@ export default function CatalogBrowser({
                         )}
                       </td>
                       <td className="px-3 py-2 align-top text-secondary hidden sm:table-cell">
-                        {displayAuthor || <span className="text-muted">—</span>}
+                        {displayAuthor || <span className="text-muted">–</span>}
                       </td>
                       <td className="px-3 py-2 align-top text-secondary tabular-nums">
-                        {yearDisplay(w) || <span className="text-muted">—</span>}
+                        {yearDisplay(w) || <span className="text-muted">–</span>}
                       </td>
                       <td className="px-3 py-2 align-top text-secondary hidden md:table-cell">
-                        {w.place || <span className="text-muted">—</span>}
+                        {w.place || <span className="text-muted">–</span>}
                       </td>
                       <td className="px-3 py-2 align-top text-secondary font-mono text-xs hidden md:table-cell">
-                        {w.shelf_mark || <span className="text-muted">—</span>}
+                        {w.shelf_mark || <span className="text-muted">–</span>}
                       </td>
                       <td className="px-3 py-2 align-top hidden lg:table-cell">
                         {w.keywords ? (
@@ -631,7 +631,7 @@ export default function CatalogBrowser({
                             {w.keywords}
                           </span>
                         ) : (
-                          <span className="text-muted">—</span>
+                          <span className="text-muted">–</span>
                         )}
                       </td>
                     </tr>

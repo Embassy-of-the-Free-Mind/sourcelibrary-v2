@@ -15,14 +15,14 @@ export const revalidate = 21600;
 export const maxDuration = 60;
 
 export const metadata: Metadata = {
-  title: 'Timeline — Explore — Source Library',
+  title: 'Timeline · Explore | Source Library',
   description:
     'Interactive timeline of 2,900+ historical figures from the Western esoteric tradition, plotted by birth and death dates from Wikidata.',
   openGraph: {
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
-    title: 'Timeline — Explore — Source Library',
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
+    title: 'Timeline · Explore | Source Library',
     description:
-      'Lifespans of historical figures — who was alive when, and how intellectual movements clustered.',
+      'Lifespans of historical figures: who was alive when, and how intellectual movements clustered.',
     url: 'https://sourcelibrary.org/explore/timeline',
     siteName: 'Source Library',
     type: 'website',

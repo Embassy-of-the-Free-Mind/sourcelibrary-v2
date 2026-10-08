@@ -1254,7 +1254,7 @@ export default function CurateClient() {
                   className="text-white/70 hover:text-white text-xs max-w-sm truncate hidden sm:inline-flex items-center gap-1 transition-colors"
                   onClick={e => e.stopPropagation()}
                 >
-                  {item.bookTitle}{item.author ? ` — ${formatAuthor(item.author).name}` : ''}{item.year ? ` (${item.year})` : ''}
+                  {item.bookTitle}{item.author ? `, ${formatAuthor(item.author).name}` : ''}{item.year ? ` (${item.year})` : ''}
                   <ExternalLink className="w-3 h-3 flex-shrink-0" />
                 </a>
                 {item.type && (

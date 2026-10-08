@@ -95,7 +95,7 @@ export default function ShareButton({
     }
 
     if (citation) {
-      parts.push(`— ${citation}`);
+      parts.push(citation);
     }
 
     return parts.join('\n\n');
@@ -119,7 +119,7 @@ export default function ShareButton({
   const shareToBluesky = () => {
     const bskyUrl = new URL('https://bsky.app/intent/compose');
     const fullText = text
-      ? `"${text.substring(0, 250)}"\n\n— ${citation}\n\n${shareUrl}`
+      ? `"${text.substring(0, 250)}"\n\n${citation}\n\n${shareUrl}`
       : `${citation}\n\n${shareUrl}`;
     bskyUrl.searchParams.set('text', fullText);
     window.open(bskyUrl.toString(), '_blank', 'width=550,height=420');
@@ -129,7 +129,7 @@ export default function ShareButton({
 
   const shareToWhatsApp = () => {
     const waText = text
-      ? `"${text.substring(0, 500)}"\n\n— ${citation}\n\n${shareUrl}`
+      ? `"${text.substring(0, 500)}"\n\n${citation}\n\n${shareUrl}`
       : `${citation}\n${shareUrl}`;
     const waUrl = `https://wa.me/?text=${encodeURIComponent(waText)}`;
     window.open(waUrl, '_blank');
@@ -139,8 +139,8 @@ export default function ShareButton({
 
   const shareToPinterest = () => {
     const desc = text
-      ? `"${text.substring(0, 300)}" — ${citation}`
-      : `${citation} — Source Library`;
+      ? `"${text.substring(0, 300)}" (${citation})`
+      : `${citation} | Source Library`;
     const pinUrl = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(shareUrl)}&description=${encodeURIComponent(desc)}`;
     window.open(pinUrl, '_blank', 'width=750,height=550');
     logShare('pinterest');
@@ -149,7 +149,7 @@ export default function ShareButton({
 
   const copyLink = async () => {
     const textToCopy = text
-      ? `"${text}"\n\n— ${citation}\n${doi ? `DOI: ${doi}\n` : ''}${shareUrl}`
+      ? `"${text}"\n\n${citation}\n${doi ? `DOI: ${doi}\n` : ''}${shareUrl}`
       : shareUrl;
 
     await navigator.clipboard.writeText(textToCopy);
@@ -161,7 +161,7 @@ export default function ShareButton({
 
   const copyQuote = async () => {
     if (!text) return;
-    const quoteToCopy = `"${text}"\n\n— ${citation}${doi ? `\nDOI: ${doi}` : ''}`;
+    const quoteToCopy = `"${text}"\n\n${citation}${doi ? `\nDOI: ${doi}` : ''}`;
     await navigator.clipboard.writeText(quoteToCopy);
     setCopied(true);
     trackEvent('quote_copy', { url: shareUrl, page, hasDoi: !!doi });

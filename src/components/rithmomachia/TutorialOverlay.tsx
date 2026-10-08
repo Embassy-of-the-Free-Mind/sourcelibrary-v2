@@ -144,7 +144,7 @@ export default function TutorialOverlay({ onClose }: TutorialOverlayProps) {
                       </span>
                       <span>
                         {src.author} ({src.year}){ref.page ? `, p. ${ref.page}` : ''}
-                        {ref.detail && <span className="text-muted/70 ml-1">&mdash; {ref.detail}</span>}
+                        {ref.detail && <span className="text-muted/70 ml-1">· {ref.detail}</span>}
                       </span>
                     </a>
                   );

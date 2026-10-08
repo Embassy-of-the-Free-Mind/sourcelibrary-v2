@@ -23,7 +23,7 @@ const ALLOWED = new Set([
 
 // Vector RPCs that rank an embedding table. Not listed: `match_site_pages*`
 // (the table has its own tenant column and the RPC filters on it).
-const VECTOR_RPC = /\.rpc\(\s*['"`](match_(?:semantic|books_semantic|artworks_semantic|artworks|gallery_text|clip_text|clip_images|clip_in_books|pages_in_books|pages_in_scope|page_texts|page_texts_in_books|books_semantic_in_books|artworks_semantic_in_books|gallery_text_in_books)[a-z0-9_]*)['"`]/g;
+const VECTOR_RPC = /\.rpc\(\s*['"`](match_(?:semantic|books_semantic|artworks_semantic|artworks|gallery_text|clip_text|clip_images|clip_in_books|pages_in_books|pages_in_scope|page_texts|page_texts_in_books|books_semantic_in_books|artworks_semantic_in_books|gallery_text_in_books|page_concepts|page_concepts_in_books)[a-z0-9_]*)['"`]/g;
 
 function walk(dir: string, out: string[] = []): string[] {
   for (const name of readdirSync(dir)) {
