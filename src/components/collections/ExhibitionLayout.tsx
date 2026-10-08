@@ -205,7 +205,7 @@ function HookBlock({ text, attribution }: { text: string; attribution?: string }
         </p>
         {attribution && (
           <p className="mt-4 text-sm text-white/60 font-body">
-            — {attribution}
+            {attribution}
           </p>
         )}
       </div>
@@ -399,7 +399,7 @@ function QuotesBlock({ quotes, books, title }: {
           </p>
         )}
         <footer className={`mt-3 text-sm text-muted ${isHero ? 'pl-6' : ''}`}>
-          — <AuthorName author={q.author} />
+          <AuthorName author={q.author} />
           {q.year && <span className="text-muted/60"> ({q.year})</span>}
           {bookHref ? (
             <Link href={bookHref} className="text-accent-rust hover:underline ml-1">

@@ -296,6 +296,99 @@ export const BOOK_STRINGS: Record<Locale, BookStrings> = {
     fullPage: 'Ficha completa (en inglés)',
     fullPageNote: 'bibliografía, ediciones, ilustraciones, citas.',
   },
+  // Latin (#6254). Draft copy, to be read by a Latinist before launch.
+  // "Conversio" throughout means the ENGLISH translation: nothing is translated
+  // into Latin, and on `/la` the Latin text is the book itself.
+  la: {
+    backToCollection: 'Libri Latini',
+    read: 'Lege',
+    readInSpanish: 'Latine lege',
+    readThisBook: 'Hunc librum lege',
+    originalTitle: 'Titulus primigenius',
+    originalLanguage: 'Lingua primigenia',
+    published: 'Editus',
+    written: 'Scriptus',
+    pages: 'paginae',
+    spanishEdition: 'Editio Latina',
+    spanishEditionOf: (es, total) => `${es} ex ${total} paginis Latine`,
+    firstTranslation: 'Prima conversio',
+    noPriorTranslation: 'Nulla conversio prior reperta',
+    author: 'Auctor',
+    editedBy: 'edidit',
+    scans: (n) => `${n} imagines photographicae`,
+    scansTooltip: 'Imagines photographicae, tegumentis et paginis vacuis inclusis.',
+    pagesOfText: (n) => `${n} ${n === 1 ? 'pagina' : 'paginae'} textus`,
+    textEditionTooltip: 'Haec est editio textus. Imagines paginarum huius operis nullae sunt.',
+    textEditionBy: (who) => `Editio textus, quam descripsit et edidit ${who}. Imagines paginarum huius operis nullae sunt.`,
+    textEdition: 'Editio textus. Imagines paginarum huius operis nullae sunt.',
+    textEditionWitnesses: (n) => `Editio textus: imagines paginarum nullae exstant. Photographemata ${n === 1 ? 'tabulam fictilem' : `${n} tabulas fictiles`} ostendunt ubi opus servatur (per CDLI); textus ex iis non legitur.`,
+    images: (n) => `${n} ${n === 1 ? 'imago' : 'imagines'}`,
+    notTranscribed: 'Imagines tantum: nondum transcriptus',
+    ocr: 'OCR',
+    translated: 'Conversio',
+    translationComplete: 'Absoluta',
+    ocrTooltip: (done, total) => `${done} ex ${total} paginis transcriptae`,
+    translatedTooltip: (n) => `${n} paginae Anglice conversae`,
+    notTranscribedTooltip: (total) => `${total} imagines praesto sunt; nulla pagina adhuc transcripta`,
+    firstTranslationTooltip: 'Prima conversio Anglica',
+    noPriorTranslationTooltip: 'Catalogos perscrutati nullam priorem conversionem Anglicam repperimus: hoc inquisitionis testimonium est, non argumentum nullam exstare',
+    pageAbbrev: (n) => `p. ${n}`,
+
+    summary: 'De hoc libro',
+    summaryIsEnglish: 'Summarium Anglice praesto est.',
+    readingGuide: 'Dux legendi',
+    englishText: 'Anglice.',
+    contents: 'Index capitum',
+    contentsAsPrinted: 'Index capitum, ut impressus est',
+    viewScan: 'Imaginem specta →',
+    index: 'Index',
+    indexTerms: (n) => `${n} vocabula`,
+    majorThemes: 'Argumenta praecipua',
+    filterIndex: (n) => `In ${n} lemmatis indicis quaere...`,
+    indexShowing: (shown, total) => `${shown} ex ${total} lemmatis ostenduntur.`,
+    indexHiddenHapax: (n) => ` ${n} vocabula semel memorata celantur.`,
+    indexNoMatch: (q) => `Nullum lemma congruit cum “${q}”`,
+    more: (n) => `+${n} plura`,
+    bibliographicInformation: 'Notitia bibliographica',
+    bookHistory: 'Historia libri',
+    searchThisBook: 'In hoc libro quaere',
+    searchPlaceholder: 'Verbum, nomen, locutionem quaere…',
+
+    pagesHeading: 'Paginae',
+    pagesShownOf: (shown, total) => `${shown} ex ${total}`,
+    pagesDigitizedBy: (who) => `Omnes paginae ex exemplari photographice descriptae, cura ${who}.`,
+    pagesInReadingOrder: 'Omnes paginae exemplaris, ordine legendi.',
+    loadMore: (remaining) => `Plures ostende (${remaining} supersunt)`,
+    overview: 'Conspectus',
+    readAsOneDocument: 'Ut unum scriptum lege',
+    noPagesYet: 'Nullae adhuc paginae',
+
+    illustrations: 'Imagines',
+    illustrationsNote: 'Tabulae, diagrammata, figurae in paginis repertae.',
+    viewAllIllustrations: (n) => `Omnes ${n} imagines specta`,
+    relatedBooks: 'Libri cognati',
+    relatedBooksNote: 'Alia volumina huic auctore, argumento, loco, aetate propinqua.',
+
+    tlEarlierEnglishTranslation: 'Conversio Anglica prior',
+    tlFirstEnglishPublished: 'Prima conversio Anglica edita',
+    tlEnglishEditionPublished: 'Editio Anglica edita',
+    tlNewEditionPublished: 'Nova editio edita',
+    tlEarlier: 'Prius',
+    tlAiTranslationBy: 'Conversio Anglica textus primigenii, intellegentia artificiali adiuvante facta, quam confecit et edidit',
+    tlVersion: (v) => `Versio ${v}`,
+    tlDigitizedBy: (who) => `Photographice descripsit ${who}`,
+    tlDigitized: 'Photographice descriptus',
+    tlAddedToSourceLibrary: 'In Source Library receptus',
+    tlEarlierTranslationExists: 'Prior huius operis conversio Anglica edita est.',
+    view: 'Specta →',
+
+    temporarilyUnavailable: 'Ad tempus non praesto',
+    temporarilyUnavailableBody: 'Hic liber tardius quam exspectatum est aperitur. Paulo post iterum tempta, quaeso.',
+    returnToLibrary: 'Ad bibliothecam redi',
+
+    fullPage: 'Notitia plena (Anglice)',
+    fullPageNote: 'bibliographia, editiones, imagines, citationes.',
+  },
 };
 
 /**
@@ -585,6 +678,97 @@ export const READER_STRINGS: Record<Locale, ReaderStrings> = {
     nextPageLink: (n) => `Página ${n} \u2192`,
     allPagesLink: (n) => `Las ${n} páginas`,
   },
+  // Latin (#6254). Draft copy, to be read by a Latinist before launch. The
+  // `panel*` labels are ACCUSATIVE: their one use is as the object of `toggle`.
+  la: {
+    previousPage: 'Pagina prior',
+    nextPage: 'Pagina sequens',
+    jumpToPage: 'Paginam pete',
+    jumpToPageAria: (total) => `Paginam pete (1 ad ${total})`,
+    pageOfAria: (n, total) => `Pagina ${n} ex ${total}. Preme ut ad paginam eas`,
+    arrowKeysHint: 'Sagittis ← → naviga',
+    swipeHint: 'Laevorsum vel dextrorsum trahe ut naviges',
+
+    panelVisibility: 'Tabulae ostendendae',
+    image: 'Imago',
+    ocr: 'OCR',
+    romanized: 'Litteris Latinis',
+    german: 'Deutsch',
+    translationTab: 'Conversio',
+    modernizedTab: 'Sermone hodierno',
+    toggle: (shown, what) => `${shown ? 'Cela' : 'Ostende'} ${what}`,
+    panelSourceImage: 'imaginem fontis',
+    panelOriginalText: 'textum primigenium',
+    panelRomanized: 'textum litteris Latinis scriptum',
+    panelGerman: 'conversionem Germanicam doctam',
+    panelTranslation: 'conversionem',
+    selectAPanel: 'Tabulam elige quam spectes',
+
+    sourceImage: 'Imago fontis',
+    tabletPhoto: 'Photographema tabulae',
+    source: 'Fons',
+    noImage: 'Imago nulla praesto est',
+    download: 'Deprome',
+    downloadFullRes: 'Imaginem plenae magnitudinis deprome',
+    viewAt: (provider) => `Apud ${provider} specta`,
+
+    notes: 'Notae',
+    notesOff: 'Notae celatae',
+    hideNotes: 'Notas et metadata cela',
+    showNotes: 'Notas et metadata ostende',
+    info: 'Notitia',
+    viewPageMetadata: 'Metadata paginae specta',
+    copy: 'Exscribe',
+    copied: 'Exscriptum',
+
+    readingSettings: 'Optiones legendi',
+    fontSize: 'Magnitudo litterarum',
+    smaller: 'Minores (Cmd+-)',
+    resetSize: 'Ad solitam magnitudinem redi (Cmd+0)',
+    larger: 'Maiores (Cmd+=)',
+    theme: 'Color',
+    themePaper: 'Charta',
+    themeSepia: 'Sepia',
+    themeNight: 'Nox',
+    typeface: 'Typi',
+    typeOriginal: 'Prisci',
+    typeModern: 'Hodierni',
+    typeOriginalTitle: 'Typis quibus hic liber impressus est',
+    typeModernTitle: 'Typis quibus tota bibliotheca utitur',
+    typeCaption: 'Typi Romani Francisci Griffi pro Aldo Manutio, ex libro De Aetna anni 1496 expressi.',
+
+    likeThisPage: 'Hanc paginam proba',
+    likeSavePrefix: 'ut eam serves inter',
+    likeSavedPrefix: 'Servata inter',
+    likeFavoritesWord: 'dilecta',
+    searchThisBook: 'In hoc libro quaere...',
+    searchWithinBook: 'In hoc libro quaere',
+    clearSearch: 'Quaestionem dele',
+    translationIssue: 'Mendum in conversione animadvertisti? Fac nos certiores.',
+    feedbackThanks: 'Gratias agimus: monitis tuis haec conversio emendatur.',
+    feedbackWhat: 'Quid animadvertisti?',
+    feedbackPlaceholder: 'Verbum falsum, locutio dura, aliquid omissum...',
+    cancel: 'Omitte',
+    send: 'Mitte',
+    sending: 'Mittitur...',
+
+    contents: 'Index capitum',
+    tableOfContents: 'Index capitum',
+    chapterCount: (n) => `${n} capita`,
+    chapterAria: (title) => `Caput: ${title}`,
+    chapterShort: (n) => `Cap. ${n}`,
+    toc: 'Index',
+    close: 'Claude',
+    pageAbbrev: (n) => `p. ${n}`,
+
+    readingLanguage: 'Lingua legendi',
+    pageNavigation: 'Navigatio paginarum',
+    metaPageOf: (n, title) => `Pagina ${n} libri "${title}"`,
+    metaTitle: (title, n) => `${title} - Pagina ${n}`,
+    prevPageLink: (n) => `← Pagina ${n}`,
+    nextPageLink: (n) => `Pagina ${n} →`,
+    allPagesLink: (n) => `Omnes ${n} paginae`,
+  },
 };
 
 /**
@@ -609,8 +793,20 @@ const LANGUAGE_NAMES_ES: Record<string, string> = {
   'maya hieroglyphs': 'jeroglíficos mayas', 'nahuatl-spanish': 'náhuatl y español', 'spanish / latin': 'español y latín',
 };
 
+/**
+ * Latin names (#6254), as the feminine adjective that agrees with `lingua`:
+ * "Lingua primigenia: Latina". An unlisted value is shown as stored.
+ */
+const LANGUAGE_NAMES_LA: Record<string, string> = {
+  latin: 'Latina', greek: 'Graeca', 'ancient greek': 'Graeca antiqua', german: 'Germanica', french: 'Francogallica',
+  english: 'Anglica', italian: 'Italica', spanish: 'Hispanica', portuguese: 'Lusitana', dutch: 'Batava',
+  hebrew: 'Hebraica', arabic: 'Arabica', persian: 'Persica', sanskrit: 'Sanscrita', chinese: 'Sinica',
+  russian: 'Russica', akkadian: 'Accadica', sumerian: 'Sumerica', syriac: 'Syriaca', coptic: 'Coptica', tibetan: 'Tibetana',
+};
+
+const LANGUAGE_NAMES: Partial<Record<Locale, Record<string, string>>> = { es: LANGUAGE_NAMES_ES, la: LANGUAGE_NAMES_LA };
+
 export function languageName(lang: string | undefined | null, locale: Locale): string {
   if (!lang) return '';
-  if (locale !== 'es') return lang;
-  return LANGUAGE_NAMES_ES[lang.toLowerCase()] || lang;
+  return LANGUAGE_NAMES[locale]?.[lang.toLowerCase()] || lang;
 }

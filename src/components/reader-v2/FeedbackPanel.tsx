@@ -145,7 +145,7 @@ export function FeedbackPanel({ page, book, url }: { page: Page; book: Book; url
       {/* Said plainly rather than left implicit: the note carries the page,
           and a reader should know that before they write it. */}
       <p className="font-sans text-[11.5px] leading-snug pt-4" style={{ color: 'var(--text-faint)' }}>
-        {t.aboutPage(page.page_number ?? '—')}
+        {t.aboutPage(page.page_number ?? '–')}
         {book.display_title || book.title ? ` ${book.display_title || book.title}` : ''}
       </p>
     </div>

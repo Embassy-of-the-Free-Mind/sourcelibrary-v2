@@ -330,3 +330,33 @@ describe('inferHistoricalGeneration — what pre-#4613 rows can be said to have 
     }
   });
 });
+
+describe('a read through a subscription CLI is a recorded api, with the CLI named', () => {
+  const cliArgs = () => ({ ...ocrArgs(), api: 'cli' as const, cli: { name: 'agy', version: '1.2.3' }, model: 'gemini-3.8-flash-low', generationConfig: mjs.notRecorded('the CLI exposes no generation settings') });
+
+  it('both twins build the same block, and the checker passes it with generation as a marker', () => {
+    const a = mjs.geminiEngine(cliArgs());
+    const b = ts.geminiEngine(cliArgs());
+    expect(a.api).toBe('cli');
+    expect(a.cli).toEqual({ name: 'agy', version: '1.2.3' });
+    // each twin names itself in recorded_by; everything else must agree
+    expect(JSON.parse(JSON.stringify({ ...b, recorded_by: null }))).toEqual(JSON.parse(JSON.stringify({ ...a, recorded_by: null })));
+    const sub = { data: 'text', source: 'ai', updated_at: new Date(), ...mjs.ocrProvenance('text', a) };
+    const m = mjs.missingProvenance('ocr', sub);
+    expect(m.missing).toEqual([]);
+    expect(m.markers).toContain('ocr.engine.generation');
+    expect(ts.missingProvenance('ocr', sub).missing).toEqual([]);
+  });
+
+  it('a CLI read without the CLI named, or with invented generation settings, is refused', () => {
+    expect(() => mjs.geminiEngine({ ...cliArgs(), cli: undefined })).toThrow(/cli/);
+    expect(() => ts.geminiEngine({ ...cliArgs(), cli: undefined })).toThrow(/cli/);
+    expect(() => mjs.geminiEngine({ ...cliArgs(), generationConfig: { temperature: 0.1 } })).toThrow(/notRecorded/);
+    // the "prove it red" step: strip the CLI from a stored block and the checker flags it
+    const e = mjs.geminiEngine(cliArgs());
+    const stripped = { ...e, cli: undefined };
+    const sub = { data: 'text', source: 'ai', updated_at: new Date(), content_hash: mjs.contentHash('text'), engine: stripped };
+    expect(mjs.missingProvenance('ocr', sub).missing).toContain('ocr.engine.cli');
+    expect(ts.missingProvenance('ocr', sub as never).missing).toContain('ocr.engine.cli');
+  });
+});

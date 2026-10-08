@@ -68,7 +68,7 @@ function deriveYear(book) {
   return null;
 }
 
-function transformBook(book) {
+function transformBook(book, previewColumn) {
   return {
     id: book.id,
     slug: book.slug || null,
@@ -96,8 +96,9 @@ function transformBook(book) {
     is_first_translation: book.is_first_translation === true,
     // Partial-scan / preview flag — mirrored so catalogue-fed cards can show
     // the "Preview" badge. Must move together with `preview: 1` in the
-    // projection below (a field here but not there writes NULL for every book).
-    preview: book.preview === true,
+    // projection. Only written once the migration column exists, else the
+    // upsert 42703s and takes the whole sync down (see previewColumnAvailable).
+    ...(previewColumn ? { preview: book.preview === true } : {}),
     // LISTING predicate: matches the canonical public-listing filter
     // (visible: true), so Mongo's unset-visible legacy books collapse to
     // false here. This is intentionally STRICTER than the reader gate
@@ -204,6 +205,23 @@ async function getLastSyncTime() {
   return data?.[0]?.updated_at ? new Date(data[0].updated_at) : null;
 }
 
+// Has `books_catalog.preview` landed yet? Probed once per run by attempting a
+// select of the column — the exact write that fails until the migration runs.
+// Until it exists we must NOT write `preview`, or PostgREST 42703s every upsert
+// batch and the whole incremental sync dies (0 synced, N errors). Mirrors the
+// read-side fallback in src/lib/books-catalog.ts (bookSelect()).
+let previewColumnKnown = null; // null = unknown, true/false = resolved
+async function previewColumnAvailable() {
+  if (previewColumnKnown !== null) return previewColumnKnown;
+  try {
+    const { error } = await supabase.from('books_catalog').select('preview').limit(1);
+    previewColumnKnown = error ? false : true;
+  } catch {
+    previewColumnKnown = false;
+  }
+  return previewColumnKnown;
+}
+
 // ── Main ─────────────────────────────────────────────────────────────
 
 const start = Date.now();
@@ -271,12 +289,20 @@ const cursor = db.collection('books')
   .find(query, { projection })
   .batchSize(BATCH_SIZE);
 
+// Resolve once whether the `preview` column exists — until it does we must not
+// write it (see previewColumnAvailable). Logged so a run that omits preview is
+// explainable rather than looking like a missing field in the row builder.
+const previewColumn = await previewColumnAvailable();
+if (!previewColumn) {
+  console.warn('books_catalog.preview column absent — omitting preview from upserts (badge off until the migration runs).');
+}
+
 let synced = 0;
 let errors = 0;
 let batch = [];
 
 for await (const book of cursor) {
-  batch.push(transformBook(book));
+  batch.push(transformBook(book, previewColumn));
 
   if (batch.length >= BATCH_SIZE) {
     const { error } = await supabase

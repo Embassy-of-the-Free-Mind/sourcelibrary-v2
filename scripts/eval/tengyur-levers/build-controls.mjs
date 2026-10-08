@@ -26,18 +26,23 @@ import { makePlanters } from '../tengyur-characterize/plants.mjs';
 
 const argv = process.argv.slice(2);
 const opt = (k, d) => { const i = argv.indexOf(`--${k}`); return i >= 0 ? argv[i + 1] : d; };
-const R2 = opt('round', '1') === '2';
+// --round 3 (#6182): fresh plants for the fresh reviewer sample, with round 2's defect filter; every page
+// of rounds 1–3 (samples, aligned sides, all earlier controls) is skipped.
+const R3 = opt('round', '1') === '3';
+const R2 = opt('round', '1') === '2' || R3;
 const ATTEMPT = Number(opt('attempt', 1));
 const CALIB = argv.includes('--calib');
 const out = 'scripts/eval/results/tengyur-levers-6121';
 const work = '/root/tlev';
-const SEED = R2 ? 6121 * 7 + 100 + ATTEMPT : 6121 * 7 + 2;
+const SEED = R3 ? 6182 * 7 + ATTEMPT : R2 ? 6121 * 7 + 100 + ATTEMPT : 6121 * 7 + 2;
 const R = mkRng(SEED);
 const { plantReversal, plantAgent, plantTerm, bodySentences } = makePlanters(R);
 const sample = JSON.parse(fs.readFileSync(path.join(out, 'sample.json'), 'utf8'));
 const used = new Set(sample.pages.map((p) => p.page_id));
 if (R2) {
-  const prior = ['/root/tlev/controls.jsonl', ...Array.from({ length: ATTEMPT - 1 }, (_, i) => `/root/tlev2/controls-${i + 1}.jsonl`)];
+  const prior = R3 ? ['/root/tlev/controls.jsonl', '/root/tlev2/controls-1.jsonl', '/root/tlev2/controls-2.jsonl', '/root/tlev2/controls-3.jsonl', '/root/tlev/ref-pages.jsonl', '/root/pareto-6182/rev/sample-pages.jsonl',
+    ...Array.from({ length: ATTEMPT - 1 }, (_, i) => `/root/pareto-6182/rev/controls-${i + 1}.jsonl`)]
+    : ['/root/tlev/controls.jsonl', ...Array.from({ length: ATTEMPT - 1 }, (_, i) => `/root/tlev2/controls-${i + 1}.jsonl`)];
   for (const f of prior.filter((f) => fs.existsSync(f))) for (const l of fs.readFileSync(f, 'utf8').split('\n').filter(Boolean)) used.add(JSON.parse(l).page_id);
 }
 const SECTIONS = Object.keys(sample.plan);
@@ -107,8 +112,8 @@ for (const kind of plan) {
     break;
   }
 }
-const cFile = R2 ? `/root/tlev2/controls-${ATTEMPT}.jsonl` : path.join(work, 'controls.jsonl');
-const lFile = R2 ? `scripts/eval/results/tengyur-models-6121/controls-log-${ATTEMPT}.json` : path.join(out, 'controls-log.json');
+const cFile = R3 ? `/root/pareto-6182/rev/controls-${ATTEMPT}.jsonl` : R2 ? `/root/tlev2/controls-${ATTEMPT}.jsonl` : path.join(work, 'controls.jsonl');
+const lFile = R3 ? `scripts/eval/results/pareto-6182/tib-rev/controls-log-${ATTEMPT}.json` : R2 ? `scripts/eval/results/tengyur-models-6121/controls-log-${ATTEMPT}.json` : path.join(out, 'controls-log.json');
 fs.mkdirSync(path.dirname(cFile), { recursive: true }); fs.mkdirSync(path.dirname(lFile), { recursive: true });
 fs.writeFileSync(cFile, shuffle(items, R).map((x) => JSON.stringify(x)).join('\n') + '\n');
 fs.writeFileSync(lFile, JSON.stringify({ seed: SEED, calib: CALIB, plants: log }, null, 1));

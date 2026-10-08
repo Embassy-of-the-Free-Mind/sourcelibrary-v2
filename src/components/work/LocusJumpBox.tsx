@@ -18,7 +18,7 @@ function MissNotice() {
   return (
     <p className="text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mt-3">
       No leaf in our registered editions carries &ldquo;{missed}&rdquo;. The reference may be
-      outside the ranges we hold anchors for — nothing is interpolated, so we only land on
+      outside the ranges we hold anchors for. Nothing is interpolated, so we only land on
       pages where the number was actually printed.
     </p>
   );
@@ -51,7 +51,7 @@ export default function LocusJumpBox({
         Jump to a {systemLabel} reference
       </label>
       <p className="text-xs text-stone-500 mt-0.5 mb-2">
-        Standard citations land on the exact leaf — e.g. {example}.
+        Standard citations land on the exact leaf, e.g. {example}.
       </p>
       <div className="flex gap-2">
         <input
