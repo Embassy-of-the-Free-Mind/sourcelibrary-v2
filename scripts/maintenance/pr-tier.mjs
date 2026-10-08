@@ -119,8 +119,12 @@ export function groupedBumps(diff) {
   const VERSION_LINE = /^\s*"([^"]+)":\s*"[\^~]?(\d+)\.(\d+)\.[^"]*",?\s*$/;
   const removed = new Map();
   const bumps = [];
+  let inManifest = false;
   for (const l of diff.split('\n')) {
-    if (l.startsWith('---') || l.startsWith('+++')) continue;
+    // Only package.json states what was asked for. A lockfile repeats `"version": "…"`
+    // under every package, which pairs unrelated packages with each other.
+    if (l.startsWith('+++ ')) { inManifest = /(^|\/)package\.json$/.test(l.slice(4).replace(/^b\//, '')); removed.clear(); continue; }
+    if (l.startsWith('---') || !inManifest) continue;
     const m = l.slice(1).match(VERSION_LINE);
     if (!m) continue;
     if (l.startsWith('-')) removed.set(m[1], [m[2], m[3]]);

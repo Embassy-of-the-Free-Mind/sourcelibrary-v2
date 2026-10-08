@@ -62,6 +62,13 @@ describe('pr-tier: a grouped dependabot bump is read from the diff', () => {
     expect(groupedBumps(pkg(['-    "sharp": "^0.33.5",', '+    "sharp": "^0.34.0",'])).breaking).toHaveLength(1);
   });
 
+  it('a lockfile is not read: its repeated "version" keys would pair unrelated packages', () => {
+    const lock = ['--- a/package-lock.json', '+++ b/package-lock.json', '@@ -1,4 +1,4 @@', '-      "version": "1.2.3",', '+      "version": "7.0.0",'].join('\n');
+    expect(groupedBumps(lock).pairs).toBe(0);
+    const both = [pkg(['-    "zod": "^4.1.0",', '+    "zod": "^4.3.2",']), lock].join('\n');
+    expect(groupedBumps(both)).toEqual({ pairs: 1, breaking: [] });
+  });
+
   it('a newly added dependency is not a pair; a diff with no pairs reads as zero so the caller keeps the hold', () => {
     expect(groupedBumps(pkg(['+    "left-pad": "^1.3.0",'])).pairs).toBe(0);
     expect(groupedBumps('').pairs).toBe(0);
