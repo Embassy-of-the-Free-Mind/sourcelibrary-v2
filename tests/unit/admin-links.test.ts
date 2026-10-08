@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { existsSync } from 'fs';
+import { existsSync, readdirSync } from 'fs';
 import { join } from 'path';
-import { ADMIN_SECTIONS, adminMenuLinks, adminSectionsFor } from '@/lib/admin-links';
+import { ADMIN_SECTIONS, UNLISTED_ADMIN_PAGES, adminMenuLinks, adminSectionsFor } from '@/lib/admin-links';
 
 /** The page file a link opens, under src/app (route groups like (protected) are not in the URL). */
 function pageExists(href: string): boolean {
@@ -18,6 +18,16 @@ describe('admin links', () => {
   it('every link opens a page that exists, and none is listed twice', () => {
     expect(all.filter((l) => !pageExists(l.href)).map((l) => l.href)).toEqual([]);
     expect(new Set(all.map((l) => l.href)).size).toBe(all.length);
+  });
+
+  it('every /admin page is linked or listed as unlisted with its reason', () => {
+    const listed = new Set(all.map((l) => l.href));
+    const pages = readdirSync('src/app/admin', { withFileTypes: true })
+      .filter((d) => d.isDirectory() && existsSync(join('src/app/admin', d.name, 'page.tsx')))
+      .map((d) => `/admin/${d.name}`);
+    expect(pages.filter((p) => !listed.has(p) && !UNLISTED_ADMIN_PAGES[p])).toEqual([]);
+    // An unlisted entry for a page that is gone, or that is also linked, is stale.
+    expect(Object.keys(UNLISTED_ADMIN_PAGES).filter((p) => !pages.includes(p) || listed.has(p))).toEqual([]);
   });
 
   it('the account menu shows the same pages to a superadmin as the bar marks for it, Decisions first', () => {

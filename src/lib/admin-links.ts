@@ -53,6 +53,7 @@ export const ADMIN_SECTIONS: AdminSection[] = [
       { href: '/admin/introductions', label: 'Introductions', menu: true },
       { href: '/feedback', label: 'Feedback', menu: true },
       { href: '/admin/api-keys', label: 'API keys', menu: true },
+      { href: '/admin/shared-findings', label: 'Shared findings' },
       { href: '/admin/users', label: 'Users' },
       { href: '/admin/members', label: 'Members' },
     ],
@@ -69,6 +70,7 @@ export const ADMIN_SECTIONS: AdminSection[] = [
       { href: '/admin/holdings', label: 'Holdings check' },
       { href: '/admin/catalog-coverage', label: 'Catalogue' },
       { href: '/admin/r2-coverage', label: 'R2 storage' },
+      { href: '/admin/knowledge-graph', label: 'Knowledge graph' },
     ],
   },
   {
@@ -77,6 +79,7 @@ export const ADMIN_SECTIONS: AdminSection[] = [
       { href: '/admin/pipeline', label: 'Pipeline' },
       { href: '/admin/processing', label: 'Processing' },
       { href: '/admin/quality', label: 'Quality' },
+      { href: '/admin/scan-evaluation', label: 'Scan review' },
       { href: '/admin/realtime', label: 'Realtime' },
       { href: '/admin/bots', label: 'Bots' },
       { href: '/admin/system-map', label: 'System map' },
@@ -96,6 +99,18 @@ export const ADMIN_SECTIONS: AdminSection[] = [
     ],
   },
 ];
+
+/**
+ * Admin pages deliberately left out of the list above, each with the door that
+ * reaches it. tests/unit/admin-links.test.ts fails on an /admin page in neither
+ * list, so a new page gets a link or a stated reason, never silence.
+ */
+export const UNLISTED_ADMIN_PAGES: Record<string, string> = {
+  '/admin/book-collections': 'edited from /admin/collections',
+  '/admin/covers': 'concept covers, never applied to a book; reached by URL on purpose',
+  '/admin/feedback': 'the triage view /feedback links to',
+  '/admin/identity-review': 'redirects to /curation/identity-review',
+};
 
 export interface AdminViewer {
   role: string | undefined;
