@@ -48,7 +48,7 @@ import {
   resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote, BAR_CONTROL, barControlStyle, useDialogFocus,
   SURFACE, themeAttr, bookByline, TranscriptProvenanceChip, TextSourceLine, MachineDraftLine,
 } from './ReaderV2Bits';
-import { pageTextCorpus, pageTextSource, translationCorpus, transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTranslation } from '@/lib/text-provenance';
+import { pageTextCorpus, pageTextSource, translationCorpus, transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTranslation, KRAKEN_EVIDENCE_URL } from '@/lib/text-provenance';
 import { isEnglishBook as isEnglishBookFn } from '@/lib/translation-pane-state';
 import type { CdliWitness } from '@/lib/types/book';
 import { translationVerdict, type TranslationStateSource } from '@/lib/translation-completeness';
@@ -1613,6 +1613,15 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
           </dl>
           <p className="mt-2.5 font-sans text-[11.5px] leading-relaxed" style={{ color: 'var(--text-faint)' }}>
             {trCorpus ? t.corpusNotice : ocrCorpus ? t.corpusAiNotice(ocrCorpus.name) : krakenRoute ? t.krakenNotice(krakenRoute) : t.machineNotice}
+            {/* The notice cites a by-eye check; the reader can open it (#4883). */}
+            {!trCorpus && !ocrCorpus && krakenRoute && (
+              <>
+                {' '}
+                <a href={KRAKEN_EVIDENCE_URL} target="_blank" rel="noreferrer" className="underline" style={{ color: 'var(--accent-rust)' }}>
+                  {t.krakenEvidenceLink}
+                </a>
+              </>
+            )}
           </p>
         </>
         );

@@ -181,6 +181,9 @@ export type TranscriptProvenance =
  * engine and the Archive's OCR date; the provisional test pages of 2026-09-12
  * carry only the engine string in `ocr.model` and no `ocr.ia` at all.
  */
+/** The by-eye check the reader's Syriac Kraken notice cites (ten pages, 2026-09-18). */
+export const KRAKEN_EVIDENCE_URL = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/4883#issuecomment-6055359829';
+
 export function transcriptProvenance(page: Pick<Page, 'ocr'>): TranscriptProvenance | null {
   const ocr = page.ocr;
   if (!ocr) return null;
