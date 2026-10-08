@@ -46,10 +46,11 @@ import { usePairedEdition, PairedBadgeRow, PairedTranscriptionProse, PairedTrans
 import {
   CapsLabel, AiChip, CorpusChip, WitnessCaption, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS, SCAN_ZOOM_MAX,
   resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote, BAR_CONTROL, barControlStyle, useDialogFocus,
-  SURFACE, themeAttr, bookByline, TranscriptProvenanceChip, TextSourceLine, MachineDraftLine,
+  SURFACE, themeAttr, bookByline, TranscriptProvenanceChip, TextSourceLine, MachineDraftLine, QualityWarningLine,
 } from './ReaderV2Bits';
 import { pageTextCorpus, pageTextSource, translationCorpus, transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTranslation, KRAKEN_EVIDENCE_URL } from '@/lib/text-provenance';
 import { isEnglishBook as isEnglishBookFn } from '@/lib/translation-pane-state';
+import type { QualityWarnings } from '@/lib/book-warnings';
 import type { CdliWitness } from '@/lib/types/book';
 import { translationVerdict, type TranslationStateSource } from '@/lib/translation-completeness';
 import { displayTranscription } from '@/lib/esukhia-apparatus';
@@ -166,6 +167,8 @@ interface Reader2CProps {
   initialBook: Book;
   initialPage: Page;
   initialPageList: Page[];
+  /** Warnings from stored quality checks of this book (#6199); the whole book's, so client page turns need no refetch. */
+  qualityWarnings?: QualityWarnings;
 }
 
 /** Desktop tool rail button (the rail is the desktop navigation). */
@@ -2482,7 +2485,7 @@ function PanelContent({
   );
 }
 
-export default function Reader2C({ initialBook, initialPage, initialPageList }: Reader2CProps) {
+export default function Reader2C({ initialBook, initialPage, initialPageList, qualityWarnings }: Reader2CProps) {
   const r = useReaderV2('2c', initialBook, initialPage, initialPageList, { scan: true, ocr: true, en: true, translit: false });
   const browserTranslated = useBrowserTranslation();
   const t = getReaderStrings(useLocale());
@@ -3877,6 +3880,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 >
                   <div key={r.currentPageId} className="rv2-page-in">
                     {!paired && !showingSpanish && <MachineDraftLine page={displayPage} />}
+                    {!paired && !showingSpanish && <QualityWarningLine warnings={qualityWarnings} pageNumber={r.currentPage.page_number} bookPath={r.book.slug || r.book.id} />}
                     {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} page={r.currentPage} paired={!!paired} />}
                     {!paired && <ReadCautionNote page={r.currentPage} book={r.book} />}
                     {paired
@@ -4247,6 +4251,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   </p>
                 )}
                 {!paired && !showingSpanish && <MachineDraftLine page={displayPage} />}
+                    {!paired && !showingSpanish && <QualityWarningLine warnings={qualityWarnings} pageNumber={r.currentPage.page_number} bookPath={r.book.slug || r.book.id} />}
                 {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} page={r.currentPage} paired={!!paired} />}
                 {!paired && <ReadCautionNote page={r.currentPage} book={r.book} />}
                 {paired
