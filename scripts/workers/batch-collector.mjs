@@ -37,6 +37,7 @@ import { isTruncatedCandidate, truncationFailReason, candidateText } from '../li
 import { repairTexGreek, texGreekRepairEnabled } from '../lib/tex-greek.mjs';
 import { liftOcrTags, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
+import { endBatchJob, endNamelessBatchJobs } from '../lib/end-batch-job.mjs';
 import { resolvePreviewStub, previewStubGuardEnforced, recordPreviewStubRefusal, GUARD_PROJECTION } from '../lib/preview-stub-guard.mjs';
 import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
 import { normalizeBbox, normalizeRotation } from '../lib/bbox.mjs';
@@ -130,8 +131,9 @@ function calculateCost(model, inputTokens, outputTokens) {
  */
 async function getJobData(jobName) {
   const probe = await probeBatchJob(jobName, SDK_CLIENTS, UNIQUE_KEYS);
-  if (probe.verdict === 'exists') return { sdkJob: probe.sdkJob, apiKey: UNIQUE_KEYS[probe.keyIndex], keyIndex: probe.keyIndex };
-  return { sdkJob: null, verdict: probe.verdict, attempts: probe.attempts };
+  // The probe travels with the answer: it is the evidence endBatchJob() requires (#6276).
+  if (probe.verdict === 'exists') return { sdkJob: probe.sdkJob, apiKey: UNIQUE_KEYS[probe.keyIndex], keyIndex: probe.keyIndex, probe };
+  return { sdkJob: null, verdict: probe.verdict, attempts: probe.attempts, probe };
 }
 
 /**
@@ -210,13 +212,15 @@ async function processOneJob(db, job) {
   // Type allowlist (#3725): the save path below treats anything that isn't
   // 'ocr'/'image_extraction' as a translation, so a typo'd type on a new
   // submitter would silently write model output into translation.data.
-  // Refuse to collect unknown types and mark the job so it stops re-matching.
+  // Refuse to collect unknown types and mark the job so it stops re-matching —
+  // but only once Gemini says the job is dead (#6276). A SUCCEEDED or running job
+  // stays open, so paid-vs-got's 40 h check puts it in front of a human instead.
   if (!KNOWN_JOB_TYPES.has(job.type)) {
-    console.error(`  UNKNOWN job type '${job.type}' on ${job.id || job._id} — refusing to collect; marking failed for human triage.`);
-    await db.collection('batch_jobs').updateOne(
-      { _id: job._id },
-      { $set: { status: 'failed', error: `unknown job type '${job.type}' — collector allowlist refused (#3725)`, updated_at: new Date() } }
-    );
+    const error = `unknown job type '${job.type}' — collector allowlist refused (#3725)`;
+    const ended = DRY_RUN ? { action: 'dry-run' } : await endBatchJob(db, job, {
+      status: 'failed', reason: error, by: COLLECTOR_CALL_SITE, set: { error }, clients: SDK_CLIENTS, keys: UNIQUE_KEYS,
+    });
+    console.error(`  UNKNOWN job type '${job.type}' on ${job.id || job._id} — refusing to collect; end as failed: ${ended.action}${ended.why ? ` (${ended.why})` : ''}.`);
     return { status: 'unknown_type' };
   }
 
@@ -1042,10 +1046,17 @@ async function processOneJob(db, job) {
           }
         } catch (_) { /* best effort */ }
 
-        await db.collection('batch_jobs').updateOne(
-          { _id: job._id },
-          { $set: { status: 'failed', gemini_state: state, error: `Stale: PENDING for ${jobAge.toFixed(1)}h with no progress`, updated_at: new Date() } }
-        );
+        // Gemini is asked again AFTER the cancel: only a job it now calls CANCELLED is
+        // written failed. One still RUNNING (or that SUCCEEDED in the meantime) stays open
+        // and the next cycle collects or ends it on Gemini's word (#6276).
+        const error = `Stale: PENDING for ${jobAge.toFixed(1)}h with no progress`;
+        const ended = await endBatchJob(db, job, {
+          status: 'failed', reason: error, by: COLLECTOR_CALL_SITE, set: { error }, clients: SDK_CLIENTS, keys: UNIQUE_KEYS,
+        });
+        if (ended.action !== 'written') {
+          console.log(`  Stale job not ended: ${ended.action} (${ended.why})`);
+          return { status: 'pending', state };
+        }
       }
       return { status: 'failed', state: 'STALE_PENDING', bookId: job.book_id, bookIds: job.book_ids || [job.book_id], type: job.type };
     }
@@ -1068,16 +1079,17 @@ async function processOneJob(db, job) {
       console.log(`  GEMINI_CANCELLED: ${job.book_id || 'cross-book'} | age ${jobAge.toFixed(1)}h | ${jobName}`);
     }
     if (!DRY_RUN) {
-      await db.collection('batch_jobs').updateOne(
-        { _id: job._id },
-        { $set: {
-          status: 'failed',
-          gemini_state: state,
-          error: `Gemini state: ${state}`,
-          job_age_hours: parseFloat(jobAge.toFixed(1)),
-          updated_at: new Date(),
-        } }
-      );
+      // Gemini's own answer is the evidence; a state outside FAILED/CANCELLED/EXPIRED
+      // (a new one, or UNKNOWN) is refused and the row stays open for a human (#6276).
+      const ended = await endBatchJob(db, job, {
+        status: 'failed', reason: `Gemini state: ${state}`, by: COLLECTOR_CALL_SITE,
+        gemini: result.probe, keyCount: SDK_CLIENTS.length,
+        set: { error: `Gemini state: ${state}`, job_age_hours: parseFloat(jobAge.toFixed(1)) },
+      });
+      if (ended.action !== 'written') {
+        console.log(`  Not ending ${jobName}: ${ended.action} (${ended.why})`);
+        return { status: 'pending', state };
+      }
       // Close the submit-time usage placeholder — a job that never ran spent
       // nothing, but the row must say so rather than sit at 'submitted'
       // forever, indistinguishable from a batch still in flight (#3452).
@@ -1447,15 +1459,12 @@ async function run() {
         const jobToFail = batch[j];
         if (jobToFail && !DRY_RUN) {
           try {
-            await db.collection('batch_jobs').updateOne(
-              { _id: jobToFail._id },
-              { $set: {
-                status: 'failed',
-                error: GHOST_ERROR,
-                ghost_verdict: { probed_at: new Date(), verdict: 'not_found', keys_tried: val.attempts?.length || 0, attempts: val.attempts || [] },
-                updated_at: new Date(),
-              } }
-            );
+            const ended = await endBatchJob(db, jobToFail, {
+              status: 'failed', reason: GHOST_ERROR, by: COLLECTOR_CALL_SITE,
+              gemini: { verdict: 'not_found', attempts: val.attempts || [] }, keyCount: SDK_CLIENTS.length,
+              set: { error: GHOST_ERROR, ghost_verdict: { probed_at: new Date(), verdict: 'not_found', keys_tried: val.attempts?.length || 0, attempts: val.attempts || [] } },
+            });
+            if (ended.action !== 'written') { console.log(`  NOT_FOUND not ended: ${ended.why}`); continue; }
             await closeUsagePlaceholder(db, jobToFail, GHOST_ERROR);
             console.log(`  NOT_FOUND -> failed: ${jobToFail.gemini_job_name || jobToFail.job_name} (book: ${jobToFail.book_id})`);
             // Track for pipeline advance so book can be requeued
@@ -1664,18 +1673,15 @@ async function run() {
   let namelessReaped = 0;
   try {
     const thirtyMinAgo = new Date(Date.now() - 30 * 60 * 1000);
-    const namelessResult = await db.collection('batch_jobs').updateMany(
-      {
-        status: { $in: ['pending', 'processing'] },
-        created_at: { $lt: thirtyMinAgo },
-        $and: [
-          { $or: [{ job_name: { $exists: false } }, { job_name: null }, { job_name: '' }] },
-          { $or: [{ gemini_job_name: { $exists: false } }, { gemini_job_name: null }, { gemini_job_name: '' }] },
-        ],
-        parent_job_id: { $exists: false }, // Don't reap parent jobs (they never have job_name)
-      },
-      { $set: { status: 'failed', error: 'Nameless: created in DB but never submitted to Gemini', updated_at: new Date() } }
-    );
+    // endNamelessBatchJobs ANDs the no-name clauses onto this filter itself (#6276).
+    const namelessResult = DRY_RUN ? { modifiedCount: 0 } : await endNamelessBatchJobs(db, {
+      status: { $in: ['pending', 'processing'] },
+      created_at: { $lt: thirtyMinAgo },
+      parent_job_id: { $exists: false }, // Don't reap parent jobs (they never have job_name)
+    }, {
+      status: 'failed', reason: 'Nameless: created in DB but never submitted to Gemini', by: `${COLLECTOR_CALL_SITE}#nameless-reaper`,
+      set: { error: 'Nameless: created in DB but never submitted to Gemini' },
+    });
     namelessReaped = namelessResult.modifiedCount;
     if (namelessReaped > 0) console.log(`\n[nameless-reaper] Failed ${namelessReaped} batch jobs with no Gemini job name (>30min old)`);
   } catch (e) { console.error(`[nameless-reaper] Error: ${e.message}`); }
