@@ -68,9 +68,26 @@ function armsFor(p) {
 }
 
 fs.mkdirSync(path.join(W, 'refs'), { recursive: true });
+// --fixed-refs: the page set and each page's window record come from the committed score file, so an arm added
+// later can neither move a window (its fit would join the vote) nor give a reference to a page that had none.
+const PRIOR = FIXED ? new Map(JSON.parse(fs.readFileSync(OUT, 'utf8')).pages.map((p) => [p.slug, p])) : null;
 const out = [];
 for (const p of pages) {
   const arms = armsFor(p);
+  if (FIXED) {
+    const prior = PRIOR.get(p.slug), refFile = path.join(W, 'refs', `${p.slug}.txt`);
+    if (!prior?.reference || !fs.existsSync(refFile)) { out.push({ ...(prior || { slug: p.slug }), arms_read: Object.keys(arms).sort() }); console.log(p.slug, 'NO REFERENCE (fixed)'); continue; }
+    const ref = fs.readFileSync(refFile, 'utf8');
+    if (syriacCer('', ref).ref_chars !== prior.reference.ref_chars) throw new Error(`${p.slug}: refs/ window differs from the committed one`);
+    const scores = {};
+    for (const [arm, text] of Object.entries(arms)) {
+      const s = syriacCer(text, ref);
+      scores[arm] = s && { cer: +s.cer.toFixed(4), cer_capped: +Math.min(1, s.cer).toFixed(4), hyp_chars: s.hyp_chars, length_ratio: +s.length_ratio.toFixed(3), fit_wer: prior.scores[arm]?.fit_wer ?? null, voted: prior.reference.voters.includes(arm) };
+    }
+    out.push({ ...prior, arms_read: Object.keys(arms).sort(), scores });
+    console.log(p.slug, Object.entries(scores).map(([a, s]) => `${a} ${s ? s.cer_capped.toFixed(2) : '-'}`).join(' '));
+    continue;
+  }
   // Each arm locates itself in each of the book's matched texts; it keeps its best fit.
   const fits = {};
   for (const [arm, text] of Object.entries(arms)) {
@@ -99,6 +116,17 @@ for (const p of pages) {
   out.push({ ...row, reference: { dsc_text: target, from_char: from, to_char: to, ref_chars: syriacCer('', ref).ref_chars, voters: vs.map(([a]) => a).sort() }, scores });
   console.log(p.slug, `dsc ${target.slice(0, 24)}`, `voters ${vs.length}`, Object.entries(scores).map(([a, s]) => `${a} ${s ? s.cer_capped.toFixed(2) : '-'}`).join(' '));
 }
+// CLI arms (route "cli"): who ran them and which reads Gemini's safety filter cut short (the text before the
+// filter's message is kept and scored; the message itself is stripped when the rows are copied into arms/).
+const cliArms = {};
+for (const [a, rows] of Object.entries(batchArms)) {
+  const rs = Object.values(rows); if (!rs.some((r) => r.route === 'cli')) continue;
+  cliArms[a] = { rows: rs.length, model: rs[0].model, route: 'cli', run_date: rs.map((r) => String(r.date).slice(0, 10)).sort()[0], blocked: rs.filter((r) => r.blocked).map((r) => r.uid).sort() };
+}
+for (const [a, info] of Object.entries(cliArms)) {
+  const base = a.replace(/-b$/, '');
+  if (base !== a && batchArms[base]) info.identical_to_a = Object.values(batchArms[a]).filter((r) => (batchArms[base][r.uid]?.text ?? null) === r.text).length;
+}
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
-fs.writeFileSync(OUT, JSON.stringify({ issue: 6295, scorer: SYRIAC_CER_VERSION, generated_by: 'scripts/eval/syriac-pareto-6295/score-ocr.mjs', reference: 'Digital Syriac Corpus (srophe/syriac-corpus, CC BY 4.0) TEI, window voted across arms (PREREGISTRATION-syriac-pareto-6295.md)', date: new Date().toISOString().slice(0, 10), pages: out }, null, 1) + '\n');
+fs.writeFileSync(OUT, JSON.stringify({ issue: 6295, scorer: SYRIAC_CER_VERSION, generated_by: 'scripts/eval/syriac-pareto-6295/score-ocr.mjs', reference: 'Digital Syriac Corpus (srophe/syriac-corpus, CC BY 4.0) TEI, window voted across arms (PREREGISTRATION-syriac-pareto-6295.md)', date: new Date().toISOString().slice(0, 10), ...(Object.keys(cliArms).length ? { cli_arms: cliArms } : {}), pages: out }, null, 1) + '\n');
 console.log('wrote', OUT);

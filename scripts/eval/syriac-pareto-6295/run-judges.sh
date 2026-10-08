@@ -3,10 +3,10 @@
 # session; a headless job has no subagent fan-out, so this runs each packet part as its own `claude -p --model opus`
 # session. ANTHROPIC_API_KEY is unset so the CLI can only use the subscription sign-in, never an API key.
 #
-#   scripts/eval/syriac-pareto-6295/run-judges.sh <work-dir> [max-parallel]
-# Reads <work>/judge/in-J{1,2}-NN.jsonl, writes <work>/judge/out-J{1,2}-NN.jsonl (skips parts already complete).
+#   scripts/eval/syriac-pareto-6295/run-judges.sh <work-dir> [max-parallel] [judge-dir, default judge; judge-c38 for --round c38]
+# Reads <work>/<judge-dir>/in-J{1,2}-NN.jsonl, writes <work>/<judge-dir>/out-J{1,2}-NN.jsonl (skips parts already complete).
 set -u
-W="$1"; P="${2:-4}"
+W="$1"; P="${2:-4}"; D="${3:-judge}"
 HERE="$(cd "$(dirname "$0")" && pwd)"
 PROMPT="$(cat "$HERE/JUDGE-PROMPT.md")"
 run_part() {
@@ -20,4 +20,4 @@ run_part() {
   echo "$(basename "$in") → $(grep -c . "$out" 2>/dev/null || echo 0)/$n"
 }
 export -f run_part; export PROMPT
-ls "$W"/judge/in-J*-*.jsonl | xargs -P "$P" -I{} bash -c 'run_part "$@"' _ {}
+ls "$W/$D"/in-J*-*.jsonl | xargs -P "$P" -I{} bash -c 'run_part "$@"' _ {}

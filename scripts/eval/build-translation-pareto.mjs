@@ -14,7 +14,8 @@
  *   #5497        results/tengyur-arms-2026-10/ (judge families F1, F2 and the metered cost.json)
  *   #6121        results/tengyur-levers-6121/ (round 1) and results/tengyur-models-6121/ (round 2):
  *                refjudge/scores.json per-side rows and arms/ledger.jsonl billed cost; one panel each
- *   #6295        results/syriac-pareto-6295/translation-summary.json (one translator, two inputs, judged gate)
+ *   #6295        results/syriac-pareto-6295/translation-summary.json (one translator, two inputs, judged gate) and
+ *                translation-summary-c38.json (the gemini-3.8-flash CLI arm, its own read; cost from cli-cost.json)
  *   production   scripts/lib/translate-core.mjs getTranslateModelForBook, the router for new pages
  * Writes src/data/translation-pareto.json. No timestamps: unchanged inputs give an identical file.
  *   node scripts/eval/build-translation-pareto.mjs           # write
@@ -533,6 +534,8 @@ for (const [lang, trackId] of LANGS) {
 // English translation (none was located for these pages), so this panel is fidelity to the source text.
 const SYR_FILE = path.join(RES, 'syriac-pareto-6295', 'translation-summary.json');
 const SYR_WRITEUP = 'scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md';
+const SYR_C38_FILE = path.join(RES, 'syriac-pareto-6295', 'translation-summary-c38.json');
+const SYR_CLI_COST = path.join(RES, 'syriac-pareto-6295', 'cli-cost.json');
 if (fs.existsSync(SYR_FILE)) {
   const s = JSON.parse(fs.readFileSync(SYR_FILE, 'utf8'));
   if (!s.gate_pass) throw new Error('syriac-pareto-6295: the judge gate did not pass, so no Syriac translation number may be plotted');
@@ -563,8 +566,46 @@ if (fs.existsSync(SYR_FILE)) {
     }],
     not_on_shared_pages: [],
     not_tested: NOT_TESTED,
-    pending: ['Gemini 3.8 Flash', 'Gemini 3 Flash', 'Gemini 3.5 Flash-Lite', 'Gemini 3.7 Flash'],
+    pending: [...(fs.existsSync(SYR_C38_FILE) ? [] : ['Gemini 3.8 Flash']), 'Gemini 3 Flash', 'Gemini 3.5 Flash-Lite', 'Gemini 3.7 Flash'],
   });
+  // The CLI arm (gemini-3.8-flash through `agy -p`, subscription, $0 billed; 2026-10-08): its own blinded read, with
+  // round 1's two Flash-Lite drafts in every item as anchors, so it is its own panel and compared only within it.
+  // Placed at the API's list price at the Batch rate for the same requests (cli-cost.json), as #6182's CLI arm is.
+  if (fs.existsSync(SYR_C38_FILE)) {
+    const c = JSON.parse(fs.readFileSync(SYR_C38_FILE, 'utf8'));
+    if (!c.gate_pass) throw new Error('syriac-pareto-6295 (c38): the judge gate did not pass, so no Syriac CLI number may be plotted');
+    const C38 = 'gemini-3.8-flash+antigravity-cli';
+    LABEL[C38] = LABEL[C38] || 'Gemini 3.8 Flash, CLI';
+    const cpt = (arm, engine, label, production, cost) => {
+      const a = c.arms[arm];
+      return { engine, label, production, fidelity: a.fidelity, fidelity_ci95: a.fidelity_ci95, share_ge4: a.share_ge4,
+        reversals: { pages: a.inversion_pages, n: c.n_pages, per_100: a.reversals_per_100, ci95: a.reversals_ci95 }, cost: { usd_per_1k: a.usd_per_1k_batch, ...cost } };
+    };
+    const lite = { basis: 'metered', detail: `billed tokens of round 1's run at the Batch rate (these are its drafts, re-judged); averaged over these ${c.n_pages} pages`, source: SYR_WRITEUP };
+    const cli = { basis: 'API price for comparison; $0 billed on the subscription', detail: `run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at gemini-3.8-flash's API list price at the Batch rate, thinking 0, for the same requests (input tokens as billed to Flash-Lite for them, output from the CLI English's length)`, source: rel(SYR_CLI_COST) };
+    const cplaced = [
+      cpt('K', `${LITE}|kraken`, `${LABEL[LITE]} on the Kraken text`, true, lite), cpt('R', `${LITE}|etext`, `${LABEL[LITE]} on the typed e-text`, false, lite),
+      cpt('C38-K', `${C38}|kraken`, `${LABEL[C38]} on the Kraken text`, false, cli), cpt('C38-R', `${C38}|etext`, `${LABEL[C38]} on the typed e-text`, false, cli),
+    ];
+    for (const a of cplaced) a.on_frontier = !cplaced.some(b => b !== a
+      && b.cost.usd_per_1k <= a.cost.usd_per_1k && b.fidelity >= a.fidelity && (b.cost.usd_per_1k < a.cost.usd_per_1k || b.fidelity > a.fidelity));
+    cplaced.sort((a, b) => a.cost.usd_per_1k - b.cost.usd_per_1k || a.engine.localeCompare(b.engine));
+    const g = c.gate, kr = c.k_minus_r;
+    charts.at(-1).panels.push({
+      kind: 'gemini-cli-6295', heading: 'Gemini 3.8 Flash through the CLI, 8 Oct 2026 (#6295)', n_pages: c.n_pages, n_books: c.n_books,
+      frontier: true, frontier_note: null, judges: 2,
+      references: [{ stratum: 'syriac-print-6295', reference: 'the typed Syriac text of the same passage (Digital Syriac Corpus); the judges read the Syriac, not a published English translation', pages: c.n_pages, date: dateOf(SYR_WRITEUP) }],
+      date: dateOf(SYR_WRITEUP), files: [SYR_WRITEUP, rel(SYR_C38_FILE), rel(SYR_CLI_COST)],
+      notes: [
+        "A separate read from the panel above: every item held Flash-Lite's two drafts beside Gemini 3.8 Flash's two, so scores are compared only within this panel (Flash-Lite's drafts scored lower here than above: the scale is relative)",
+        `Gemini 3.8 Flash, CLI is the same model run through Google's Antigravity command-line tool on a subscription, which billed nothing; it is drawn at the API's list price for the same request`,
+        'The frontier runs through the e-text points, the ceiling for each model; production has only the Kraken text, so a reader gets one of the two Kraken-text points',
+        `From the Kraken text against from the e-text, Gemini 3.8 Flash: ${kr.mean} [${kr.ci95.join(', ')}], beyond the noise floor of ${c.noise_floor.f} measured above; reversed statements on ${c.arms['C38-K'].inversion_pages} of ${c.n_pages} pages from the Kraken text, against ${c.arms.K.inversion_pages} for Flash-Lite`,
+        `Judge check passed: planted reversals caught ${g.J1.plants_caught}/${g.J1.plants} and ${g.J2.plants_caught}/${g.J2.plants}, identical drafts tied ${g.J1.dups_tied}/${g.J1.dups} and ${g.J2.dups_tied}/${g.J2.dups}`,
+      ],
+      placed: cplaced, no_cost: [],
+    });
+  }
 }
 
 const out = {
