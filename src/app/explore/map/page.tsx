@@ -99,11 +99,11 @@ export const revalidate = 86400;
 export const maxDuration = 60;
 
 export const metadata: Metadata = {
-  title: 'Map — Explore — Source Library',
+  title: 'Map · Explore | Source Library',
   description:
     'Interactive map of 10,000+ books plotted by publication city, author birthplace, and the heartland of each text’s tradition.',
   openGraph: {
-    title: 'Map — Explore — Source Library',
+    title: 'Map · Explore | Source Library',
     description:
       'Geographic distribution of historical texts across 500+ cities worldwide.',
     url: 'https://sourcelibrary.org/explore/map',
@@ -114,13 +114,13 @@ export const metadata: Metadata = {
         url: 'https://sourcelibrary.org/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Source Library map — historical texts plotted by publication city and author birthplace',
+        alt: 'Source Library map: historical texts plotted by publication city and author birthplace',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Map — Explore — Source Library',
+    title: 'Map · Explore | Source Library',
     description:
       'Geographic distribution of historical texts across 500+ cities worldwide.',
     images: ['https://sourcelibrary.org/og-image.jpg'],
@@ -203,7 +203,7 @@ export default async function MapPage() {
         header={
           <ContentHeader maxWidth="wide"
             title="Map"
-            subtitle={`${locationCount.toLocaleString('en-US')} places worldwide — publication cities, author birthplaces, and the heartlands of the traditions we hold`}
+            subtitle={`${locationCount.toLocaleString('en-US')} places worldwide: publication cities, author birthplaces, and the heartlands of the traditions we hold`}
           >
             <div className="mt-5">
               <ExploreTabBar />

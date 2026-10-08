@@ -162,6 +162,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 - Any OCR/translation benchmark, A/B, reference set or judge packet → `../eval-design.md` (**accuracy ≠ agreement ≠ stability, only the first is quality; compare engines only on shared pages; a run lands on main + `EXPERIMENTS.md` + dashboard + issue**)
 - Quoting a usage number, analytics read/write paths, alarms, health probes, **a scheduled detector that files its findings as issues**, using a model as a judge/screen, or **any ranked/related list a reader reads as meaningful** (connections, recommendations, "see also") → `measurement-instruments.md`
 - Writing a test that pins behaviour, or a fixture for one → `tests-that-are-not-guards.md`
+- **Telling readers how good a text is** (draft labels, quality pages, collection blurbs, partner reports) → `../quality-statements.md` (**direct, not harsh, not sugarcoated: measured value and measured errors, with n and date**)
 - Normalising, folding, comparing or validating TEXT (names, quotes, dedup keys, detectors) → `non-latin-text-operations.md`
 - Naming a page defect, or designing an OCR/translation detector, prompt or judge → `../page-error-taxonomy.md` (44 classes, by eye)
 
@@ -205,7 +206,7 @@ Detect the work domain from the user's prompt and load the right context automat
 - **Reference docs:** `.claude/docs/` (read on demand, never all at once)
 - **How the knowledge layer itself works** — what belongs in `CLAUDE.md` vs `docs/` vs `memory/` vs `skills/` vs `handoffs/` vs the private ops repo, and how a lesson moves between them: **`.claude/docs/knowledge-layer.md`**. Read it before adding a new doc, skill, or memory file.
 - **Doc lifecycle:** a **date in the filename means snapshot, not doctrine** — one-off audits live in `.claude/docs/archive/` and must never be cited as current. Undated docs are living: update them, or archive them under their last-accurate date. Archived docs are kept (they're provenance), never deleted. **Archiving is deletion-class: `git grep` for inbound refs first** — dated audits are routinely still referenced by code, and one is a script's *write target*.
-- **Use `git grep`, not `grep -r`, to count references in this repo.** `grep -r` over `.claude/` crawls dozens of full worktree checkouts (they live in `.claude/worktrees/`). Don't patch that with `--exclude-dir`: `grep` here may be **ugrep**, whose `--exclude-dir` semantics differ from GNU grep's — the same query returned 134, then 0, then 2 hits depending on the binary and whether a file was mixed in with the directory args, and the "0" nearly archived five live docs. `git grep` searches tracked files only and never enters a worktree.
+- **Use `git grep`, not `grep -r`, to count references in this repo.** `grep -r` over `.claude/` crawls the worktree checkouts in `.claude/worktrees/`, and `--exclude-dir` is not a fix (`grep` here may be ugrep; incident → `main-checkout-and-worktrees.md`). `git grep` searches tracked files only.
 
 ### Optional: code-review-graph
 

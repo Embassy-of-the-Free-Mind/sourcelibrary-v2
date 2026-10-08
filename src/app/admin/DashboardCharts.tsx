@@ -14,7 +14,7 @@ import { useMemo, useState, type ReactNode } from 'react';
 import { SERIES, fmtFull, fmtK, fmtUsd } from './dashboard-format';
 
 export type Unit = 'count' | 'usd' | 'usd2' | 'pct';
-const axisFmt = (u: Unit) => (u === 'count' ? fmtK : u === 'pct' ? (n: number | null) => (n == null ? '—' : Math.round(n) + '%') : fmtUsd);
+const axisFmt = (u: Unit) => (u === 'count' ? fmtK : u === 'pct' ? (n: number | null) => (n == null ? '–' : Math.round(n) + '%') : fmtUsd);
 const valueFmt = (u: Unit) => (u === 'count' ? fmtFull : u === 'pct' ? (n: number) => n.toFixed(1) + '%' : u === 'usd' ? (n: number) => '$' + Math.round(n).toLocaleString('en-US') : (n: number) => '$' + n.toFixed(2));
 export { SERIES, RAMP } from './dashboard-format';
 
@@ -98,7 +98,7 @@ export function LineChart({ labels, series, unit = 'count', height = H, log = fa
       {hi != null && (
         <div className="pointer-events-none absolute top-1 rounded border border-stone-200 bg-white px-2.5 py-1.5 text-xs text-stone-800 shadow-sm" style={{ left: `${Math.min(80, Math.max(2, (x(hi) / W) * 100))}%`, transform: x(hi) > W * 0.7 ? 'translateX(-105%)' : 'none' }}>
           <div className="font-medium">{labels[hi]}</div>
-          {series.map((s, si) => <div key={si} className="flex items-center gap-1.5"><i className="inline-block w-2 h-2 rounded-sm" style={{ background: s.color ?? SERIES[si] }} />{s.name}: {s.data[hi] == null ? '—' : vf(s.data[hi] as number)}</div>)}
+          {series.map((s, si) => <div key={si} className="flex items-center gap-1.5"><i className="inline-block w-2 h-2 rounded-sm" style={{ background: s.color ?? SERIES[si] }} />{s.name}: {s.data[hi] == null ? '–' : vf(s.data[hi] as number)}</div>)}
         </div>
       )}
     </div>

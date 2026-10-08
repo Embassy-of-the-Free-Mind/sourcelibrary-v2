@@ -402,11 +402,12 @@ const LANG_NAMES: Record<Locale, string> = { en: 'English', es: 'Spanish' };
 // Replaces the prior executeSearchCollection (keyword-only) and
 // executeSearchSemantic (book-then-page only) with a single unified path.
 async function executeSearch(query: string, collection?: string | null): Promise<{
-  passages: Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; text: string; score: number; source: string; year?: number; language?: string; textRole?: string }>;
+  passages: Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; text: string; score: number; source: string; year?: number; language?: string; textRole?: string; untranslated?: boolean; tradition?: string[] }>;
   books: Array<{ id: string; title: string; author?: string; authorSlug?: string; year?: number; slug?: string }>;
   collectionUsed: string | null;
 }> {
   const { hybridSearch } = await import('@/lib/search/librarian-search');
+  const { defaultDiversity } = await import('@/lib/search/diversity');
   // The model may pass a slug, a name, or a loose topic phrase — normalize it to
   // a real slug (or null → plain global search). Weighting is soft, so a missed
   // resolution just searches the whole library unweighted.
@@ -419,6 +420,10 @@ async function executeSearch(query: string, collection?: string | null): Promise
     // Ad fontes: at comparable relevance, hand the model the 1591 imprint
     // before the 1928 handbook that paraphrases it (#4704).
     preferPeriodEditions: true,
+    // A concept question gets passages from several traditions, not one
+    // tradition's ten nearest pages; a quoted phrase or a dated item keeps
+    // the fused order (#3514).
+    diversity: defaultDiversity(query),
     // collectionWeight defaults to 2 in hybridSearch.
   });
   return { passages, books, collectionUsed };
@@ -988,7 +993,14 @@ async function executeTool(
           // model cannot prefer the source over the compendium quoting it
           // unless it can see which is which (#4704: 35% of page citations
           // landed on 1850–1949 English compendia).
-          context += `\n--- ${p.bookTitle}${editionTag(p)} by ${p.bookAuthor}, Page ${p.page_number} (${url})${langTag} ---\n${p.text}\n`;
+          // An original-text hit (#5729): the page has no English yet, and the
+          // text below is the page's own. Say so, or the model quotes Latin as
+          // if it were our translation, or "translates" it inside quote marks.
+          const untranslatedTag = p.untranslated && !/^english$/i.test(p.language || '')
+            ? ` [untranslated: the text below is the original ${p.language || 'language'}, not an English translation. Quote it only in the original; any English you give is your own paraphrase and must be labelled as such]`
+            : '';
+          const traditionTag = p.tradition?.length ? ` [tradition: ${p.tradition.join(', ')}]` : '';
+          context += `\n--- ${p.bookTitle}${editionTag(p)} by ${p.bookAuthor}, Page ${p.page_number} (${url})${langTag}${traditionTag}${untranslatedTag} ---\n${p.text}\n`;
         }
       }
       if (totalFound === 0) context = 'No results found for this query.';

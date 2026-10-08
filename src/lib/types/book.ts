@@ -87,6 +87,12 @@ export interface Book {
   image_source_url?: string;   // Original source URL (Wikimedia, IA, etc.) — provenance only, never displayed
   categories?: string[];
   faceted_tags?: FacetedTags;
+  /**
+   * 0–2 of the 31 tradition labels in src/lib/taxonomy/traditions.json (#4773): the
+   * tradition of the WORK, not of the edition's language. `[]` = read, none
+   * discernible; absent = never read. Written by scripts/maintenance/tradition-4773.mjs.
+   */
+  tradition?: string[];
   pages_count?: number;
   pages_translated?: number;  // CACHED — synced from pages collection by cron every 6h + inline by workers
   pages_ocr?: number;         // CACHED — synced from pages collection by cron every 6h + inline by workers

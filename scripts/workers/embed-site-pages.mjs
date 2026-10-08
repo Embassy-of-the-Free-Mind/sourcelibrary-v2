@@ -34,6 +34,7 @@ import crypto from 'node:crypto';
 import pg from 'pg';
 import { MongoClient } from 'mongodb';
 import { embedTexts, EMBED_MODEL } from '../lib/page-embedding-text.mjs';
+import { assertStoreVector } from '../lib/vector-truth.mjs';
 import { newEmbedUsage, logEmbeddingUsage, estimateUsd } from '../lib/embedding-usage.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import SITE_FEATURES from '../../src/lib/site-features.json' with { type: 'json' };
@@ -234,13 +235,14 @@ async function main() {
       const vectors = await embedTexts(batch.map((r) => `${r.title}\n\n${r.text}`), apiKey, { usage });
       for (let j = 0; j < batch.length; j++) {
         const r = batch[j];
+        assertStoreVector(vectors[j], { model: vectors.model }); // #6175: the label is the writer's, never a default
         await client.query(
           `INSERT INTO site_pages (id, url, chunk, page_type, title, text, tenant_id, content_hash, embedding, embedding_model, indexed_at)
            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10, now())
            ON CONFLICT (id) DO UPDATE SET url = EXCLUDED.url, chunk = EXCLUDED.chunk, page_type = EXCLUDED.page_type,
              title = EXCLUDED.title, text = EXCLUDED.text, tenant_id = EXCLUDED.tenant_id, content_hash = EXCLUDED.content_hash,
              embedding = EXCLUDED.embedding, embedding_model = EXCLUDED.embedding_model, indexed_at = now()`,
-          [r.id, r.url, r.chunk, r.page_type, r.title, r.text, r.tenant_id, r.content_hash, JSON.stringify(vectors[j]), EMBED_MODEL],
+          [r.id, r.url, r.chunk, r.page_type, r.title, r.text, r.tenant_id, r.content_hash, JSON.stringify(vectors[j]), vectors.model],
         );
         written++;
       }

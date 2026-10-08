@@ -328,7 +328,7 @@ async function readEnvelopes(db, control, { usage, pages24, now }) {
   for (const env of readScopeEnvelopes(control)) {
     const ids = await envelopeIds(db, env);
     const idList = [...ids];
-    const meter = idList.length ? await getScopeSpendUsd(db, { ids: idList, since: env.created_at }) : { usd: 0, rows: 0, meterError: null };
+    const meter = idList.length ? await getScopeSpendUsd(db, { ids: idList, since: env.created_at, endpoints: env.meter_endpoints }) : { usd: 0, rows: 0, meterError: null };
     const createdT = ms(env.created_at) || 0;
     let paid24 = 0, last = null, spend72 = 0;
     for (const r of usage.byTime) {

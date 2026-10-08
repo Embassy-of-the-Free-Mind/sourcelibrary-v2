@@ -84,7 +84,8 @@ describe('embed-gemini spend attribution for envelope-funded runs', () => {
 
   it('--books-file / --book runs log gemini_usage with a book_id, so a scope envelope can meter them', () => {
     // spend-guard getScopeSpendUsd attributes by book_id; a null book_id reads as $0.
-    expect(src).toMatch(/ATTRIBUTE_PER_BOOK\s*=\s*Boolean\(BOOKS_FILE \|\| BOOK_ID\)/);
+    // --pages-file (the #6175 repair lane) names a known book set too, so it attributes per book.
+    expect(src).toMatch(/ATTRIBUTE_PER_BOOK\s*=\s*Boolean\(BOOKS_FILE \|\| PAGES_FILE \|\| BOOK_ID\)/);
     expect(src).toMatch(/logEmbeddingUsage\(usage, \{ model: MODEL, bookId,/);
   });
 });

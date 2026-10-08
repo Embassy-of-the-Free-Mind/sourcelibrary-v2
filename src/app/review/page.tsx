@@ -4,7 +4,7 @@ import ReviewStats from '@/components/review/ReviewStats';
 import TranslationCheckSummary from '@/components/review/TranslationCheckSummary';
 
 export const metadata: Metadata = {
-  title: 'Help curate — Source Library',
+  title: 'Help curate | Source Library',
   description: 'Spot AI mistakes in our image-extraction pipeline. A few seconds per page.',
 };
 
@@ -15,7 +15,7 @@ const QUEUES = [
     blurb:
       'Do you read Latin, Greek or Arabic? Almost every translation here was made by a machine ' +
       'and almost none has been read by someone who knows the language. Tell us whether our ' +
-      'English says what the original says — and whether we transcribed the page correctly ' +
+      'English says what the original says, and whether we transcribed the page correctly ' +
       'in the first place.',
     status: 'live',
     timePerItem: '~5 minutes',
@@ -24,7 +24,7 @@ const QUEUES = [
     slug: 'page-check',
     title: 'Page check',
     blurb:
-      'We point you at a page — a blog post, a collection, a book record — and you tell us ' +
+      'We point you at a page (a blog post, a collection, a book record) and you tell us ' +
       'whether anything is wrong with it. No expertise needed beyond reading it carefully.',
     status: 'live',
     timePerItem: '~2 minutes',
@@ -61,7 +61,7 @@ const QUEUES = [
     title: 'OCR hallucination check',
     blurb:
       "Our OCR sometimes invents illustrations on stained or blank pages. " +
-      "Compare the AI's description to the page image — does it match?",
+      "Compare the AI's description to the page image. Does it match?",
     status: 'live',
     timePerItem: '~10 seconds',
   },
@@ -86,7 +86,7 @@ export default function ReviewLandingPage() {
     <main className="max-w-4xl mx-auto px-6 py-12">
       <h1 className="text-3xl font-serif font-bold text-stone-900 mb-3">Help curate Source Library</h1>
       <p className="text-stone-700 mb-2 leading-relaxed">
-        Our AI pipeline reads thousands of historical books, but it makes mistakes — especially on the
+        Our AI pipeline reads thousands of historical books, but it makes mistakes, especially on the
         beautiful, weird, hand-printed pages we care most about. Five minutes of human judgment goes
         a long way.
       </p>

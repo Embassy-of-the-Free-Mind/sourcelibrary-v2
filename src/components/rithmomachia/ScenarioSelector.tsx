@@ -70,7 +70,7 @@ export default function ScenarioSelector() {
         <h1 className="font-serif text-3xl md:text-4xl text-primary mb-2">Strategy Scenarios</h1>
         <p className="text-muted text-sm max-w-lg mx-auto">
           Interactive puzzles from five Renaissance treatises. Each scenario teaches a specific
-          capture method, victory formation, or strategic concept &mdash; with citations to the
+          capture method, victory formation, or strategic concept, with citations to the
           original pages.
         </p>
       </div>

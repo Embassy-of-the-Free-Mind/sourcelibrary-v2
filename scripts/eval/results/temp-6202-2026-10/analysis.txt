@@ -1,0 +1,279 @@
+gate {"lite":true,"flash":true}; dropped {"lite":0,"flash":1}; rows 2392
+
+## lite / all: n 150; floor fid 0.04 (T1b−T1a -0.04 [-0.147, 0.067]), rev 2/100
+  T1a     fid 3.843 [3.733, 3.953]  rev/100 8 [4, 12.667]  ≥4 0.667  om/100 37.33  $/pg 0.00188
+  T1b     fid 3.803 [3.683, 3.927]  rev/100 10 [5.333, 15.333]  ≥4 0.627  om/100 36  $/pg 0.00187
+  T1c     fid 3.83 [3.713, 3.947]  rev/100 8.667 [4.667, 13.333]  ≥4 0.66  om/100 32  $/pg 0.00188
+  T02a    fid 3.903 [3.787, 4.013]  rev/100 8 [4, 12.667]  ≥4 0.727  om/100 28  $/pg 0.00187
+  T02b    fid 3.93 [3.82, 4.043]  rev/100 6 [2.667, 10]  ≥4 0.72  om/100 30.67  $/pg 0.00187
+  T0a     fid 3.933 [3.81, 4.05]  rev/100 4.667 [1.333, 8]  ≥4 0.727  om/100 29.33  $/pg 0.00185
+  T0b     fid 3.933 [3.813, 4.05]  rev/100 4.667 [1.333, 8]  ≥4 0.727  om/100 29.33  $/pg 0.00185
+  BO3     fid 3.953 [3.84, 4.063]  rev/100 7.333 [3.333, 11.333]  ≥4 0.747  om/100 28  $/pg 0.0078
+  ORACLE  fid 4.113 [4.003, 4.22]  rev/100 2.667 [0.667, 5.333]  ≥4 0.8  om/100 30.67  $/pg 0.00187
+  WORST3  fid 3.513 [3.4, 3.63]  rev/100 17.333 [11.333, 23.333]  ≥4 0.453  om/100 43.33  $/pg 0.00189
+  MEAN3   fid 3.826 [3.726, 3.927]  rev/100 8.889 [5.556, 12.444]  ≥4 0.507  om/100 35.11  $/pg 0.00187
+  T1b-T1a                  Δfid -0.04 [-0.147, 0.063]  Δrev/100 2 [-2.7, 7.3]  pages +33/−39/=78  beats:no  not_worse:true
+  T02a-T1a                 Δfid 0.06 [-0.03, 0.157]  Δrev/100 0 [-4.7, 4.7]  pages +34/−24/=92  beats:no  not_worse:true  two_draw_agrees:true
+  T0a-T1a                  Δfid 0.09 [-0.003, 0.19]  Δrev/100 -3.3 [-8, 0.7]  pages +37/−25/=88  beats:no  not_worse:true  two_draw_agrees:true
+  BO3-T1a                  Δfid 0.11 [0.037, 0.193]  Δrev/100 -0.7 [-4, 2.7]  pages +26/−10/=114  beats:fidelity  not_worse:true
+  ORACLE-T1a               Δfid 0.27 [0.197, 0.347]  Δrev/100 -5.3 [-9.3, -2]  pages +48/−0/=102  beats:fidelity  not_worse:true
+  T02mean-T1mean           Δfid 0.093 [0.012, 0.175]  Δrev/100 -2 [-5.3, 1.3]  pages +55/−32/=63  beats:fidelity  not_worse:true  transfers:false
+  T0mean-T1mean            Δfid 0.11 [0.025, 0.197]  Δrev/100 -4.3 [-7.7, -1.3]  pages +58/−33/=59  beats:fidelity  not_worse:true  transfers:false
+  BO3-MEAN3 (picker lift)  Δfid 0.128 [0.077, 0.18]  Δrev/100 -1.6 [-4.4, 1.3]  pages +67/−25/=58  beats:fidelity  not_worse:true
+  movement {"T1":{"pages_moving_ge1":39,"share":0.26,"byte_identical":0,"mean_abs_diff":0.4,"reversal_flips":15},"T02":{"pages_moving_ge1":14,"share":0.093,"byte_identical":1,"mean_abs_diff":0.153,"reversal_flips":7},"T0":{"pages_moving_ge1":0,"share":0,"byte_identical":150,"mean_abs_diff":0,"reversal_flips":0}}
+  picks {"picked":{"T1c":41,"T1b":50,"T1a":59},"picked_a_top_draw":118,"picked_a_bottom_draw_when_they_differ":25,"pages_where_draws_differ":98,"fallback":0}
+
+## lite / tengyur: n 50; floor fid 0.06 (T1b−T1a -0.06 [-0.22, 0.1]), rev 2/100
+  T1a     fid 3.92 [3.81, 4.03]  rev/100 2 [0, 6]  ≥4 0.8  om/100 40  $/pg 0.00164
+  T1b     fid 3.86 [3.71, 4.02]  rev/100 4 [0, 10]  ≥4 0.66  om/100 30  $/pg 0.00161
+  T1c     fid 3.93 [3.79, 4.07]  rev/100 4 [0, 10]  ≥4 0.78  om/100 32  $/pg 0.00164
+  T02a    fid 3.92 [3.8, 4.05]  rev/100 4 [0, 10]  ≥4 0.78  om/100 28  $/pg 0.00162
+  T02b    fid 3.96 [3.82, 4.1]  rev/100 2 [0, 6]  ≥4 0.8  om/100 30  $/pg 0.00161
+  T0a     fid 3.99 [3.86, 4.12]  rev/100 2 [0, 6]  ≥4 0.82  om/100 26  $/pg 0.00161
+  T0b     fid 3.99 [3.86, 4.12]  rev/100 2 [0, 6]  ≥4 0.82  om/100 26  $/pg 0.00161
+  BO3     fid 4.03 [3.89, 4.17]  rev/100 2 [0, 6]  ≥4 0.88  om/100 22  $/pg 0.00697
+  ORACLE  fid 4.22 [4.09, 4.36]  rev/100 0 [0, 0]  ≥4 0.94  om/100 30  $/pg 0.00165
+  WORST3  fid 3.56 [3.44, 3.68]  rev/100 10 [2, 20]  ≥4 0.44  om/100 46  $/pg 0.00163
+  MEAN3   fid 3.903 [3.813, 3.997]  rev/100 3.333 [0.667, 6.667]  ≥4 0.54  om/100 34  $/pg 0.00163
+  T1b-T1a                  Δfid -0.06 [-0.22, 0.1]  Δrev/100 2 [-4, 8]  pages +11/−15/=24  beats:no  not_worse:false
+  T02a-T1a                 Δfid 0 [-0.15, 0.16]  Δrev/100 2 [-4, 8]  pages +9/−11/=30  beats:no  not_worse:true  two_draw_agrees:false
+  T0a-T1a                  Δfid 0.07 [-0.08, 0.22]  Δrev/100 0 [-6, 6]  pages +10/−8/=32  beats:no  not_worse:true  two_draw_agrees:true
+  BO3-T1a                  Δfid 0.11 [-0.04, 0.26]  Δrev/100 0 [-6, 6]  pages +11/−5/=34  beats:no  not_worse:true
+  ORACLE-T1a               Δfid 0.3 [0.18, 0.44]  Δrev/100 -2 [-6, 0]  pages +17/−0/=33  beats:fidelity  not_worse:true
+  T02mean-T1mean           Δfid 0.05 [-0.095, 0.19]  Δrev/100 0 [-4, 5]  pages +20/−12/=18  beats:no  not_worse:true  transfers:false
+  T0mean-T1mean            Δfid 0.1 [-0.05, 0.24]  Δrev/100 -1 [-6, 5]  pages +21/−10/=19  beats:no  not_worse:true  transfers:false
+  BO3-MEAN3 (picker lift)  Δfid 0.127 [0.027, 0.227]  Δrev/100 -1.3 [-4.7, 2.7]  pages +25/−10/=15  beats:fidelity  not_worse:true
+  movement {"T1":{"pages_moving_ge1":13,"share":0.26,"byte_identical":0,"mean_abs_diff":0.4,"reversal_flips":3},"T02":{"pages_moving_ge1":5,"share":0.1,"byte_identical":0,"mean_abs_diff":0.18,"reversal_flips":1},"T0":{"pages_moving_ge1":0,"share":0,"byte_identical":50,"mean_abs_diff":0,"reversal_flips":0}}
+  picks {"picked":{"T1c":13,"T1b":19,"T1a":18},"picked_a_top_draw":39,"picked_a_bottom_draw_when_they_differ":10,"pages_where_draws_differ":36,"fallback":0}
+
+## lite / t4: n 50; floor fid 0.17 (T1b−T1a 0.17 [-0.01, 0.37]), rev 2/100
+  T1a     fid 3.4 [3.2, 3.61]  rev/100 12 [4, 22]  ≥4 0.36  om/100 42  $/pg 0.0023
+  T1b     fid 3.57 [3.35, 3.79]  rev/100 14 [6, 24]  ≥4 0.46  om/100 50  $/pg 0.00226
+  T1c     fid 3.51 [3.29, 3.74]  rev/100 16 [6, 26]  ≥4 0.42  om/100 42  $/pg 0.00227
+  T02a    fid 3.54 [3.32, 3.77]  rev/100 12 [4, 22]  ≥4 0.52  om/100 32  $/pg 0.0023
+  T02b    fid 3.59 [3.38, 3.8]  rev/100 10 [2, 18]  ≥4 0.5  om/100 36  $/pg 0.00229
+  T0a     fid 3.54 [3.31, 3.77]  rev/100 6 [0, 14]  ≥4 0.48  om/100 42  $/pg 0.00223
+  T0b     fid 3.54 [3.3, 3.77]  rev/100 6 [0, 14]  ≥4 0.48  om/100 42  $/pg 0.00223
+  BO3     fid 3.63 [3.43, 3.84]  rev/100 12 [4, 22]  ≥4 0.54  om/100 38  $/pg 0.00938
+  ORACLE  fid 3.8 [3.6, 4.01]  rev/100 2 [0, 6]  ≥4 0.58  om/100 42  $/pg 0.00226
+  WORST3  fid 3.16 [2.96, 3.36]  rev/100 26 [14, 40]  ≥4 0.24  om/100 50  $/pg 0.00232
+  MEAN3   fid 3.493 [3.303, 3.68]  rev/100 14 [7.333, 21.333]  ≥4 0.28  om/100 44.67  $/pg 0.00228
+  T1b-T1a                  Δfid 0.17 [-0.01, 0.36]  Δrev/100 2 [-10, 14]  pages +17/−8/=25  beats:no  not_worse:false
+  T02a-T1a                 Δfid 0.14 [-0.04, 0.33]  Δrev/100 0 [-12, 12]  pages +16/−7/=27  beats:no  not_worse:false  two_draw_agrees:true
+  T0a-T1a                  Δfid 0.14 [-0.04, 0.35]  Δrev/100 -6 [-16, 4]  pages +16/−11/=23  beats:no  not_worse:true  two_draw_agrees:true
+  BO3-T1a                  Δfid 0.23 [0.09, 0.4]  Δrev/100 0 [-8, 8]  pages +12/−1/=37  beats:fidelity  not_worse:true
+  ORACLE-T1a               Δfid 0.4 [0.25, 0.56]  Δrev/100 -10 [-20, -2]  pages +23/−0/=27  beats:fidelity  not_worse:true
+  T02mean-T1mean           Δfid 0.08 [-0.04, 0.2]  Δrev/100 -2 [-9, 5]  pages +16/−10/=24  beats:no  not_worse:true  transfers:false
+  T0mean-T1mean            Δfid 0.055 [-0.095, 0.22]  Δrev/100 -7 [-14, -1]  pages +17/−15/=18  beats:reversals  not_worse:true  transfers:false
+  BO3-MEAN3 (picker lift)  Δfid 0.137 [0.05, 0.23]  Δrev/100 -2 [-8.7, 4.7]  pages +23/−9/=18  beats:no  not_worse:true
+  movement {"T1":{"pages_moving_ge1":14,"share":0.28,"byte_identical":0,"mean_abs_diff":0.43,"reversal_flips":9},"T02":{"pages_moving_ge1":7,"share":0.14,"byte_identical":1,"mean_abs_diff":0.19,"reversal_flips":5},"T0":{"pages_moving_ge1":0,"share":0,"byte_identical":50,"mean_abs_diff":0,"reversal_flips":0}}
+  picks {"picked":{"T1a":23,"T1b":14,"T1c":13},"picked_a_top_draw":38,"picked_a_bottom_draw_when_they_differ":9,"pages_where_draws_differ":34,"fallback":0}
+
+## lite / latin: n 50; floor fid 0.23 (T1b−T1a -0.23 [-0.4, -0.07]), rev 2/100
+  T1a     fid 4.21 [4.02, 4.39]  rev/100 10 [2, 20]  ≥4 0.84  om/100 30  $/pg 0.0017
+  T1b     fid 3.98 [3.76, 4.18]  rev/100 12 [4, 22]  ≥4 0.76  om/100 28  $/pg 0.00172
+  T1c     fid 4.05 [3.84, 4.25]  rev/100 6 [0, 14]  ≥4 0.78  om/100 22  $/pg 0.00172
+  T02a    fid 4.25 [4.05, 4.44]  rev/100 8 [2, 16]  ≥4 0.88  om/100 24  $/pg 0.0017
+  T02b    fid 4.24 [4.06, 4.4]  rev/100 6 [0, 14]  ≥4 0.86  om/100 26  $/pg 0.00171
+  T0a     fid 4.27 [4.08, 4.44]  rev/100 6 [0, 14]  ≥4 0.88  om/100 20  $/pg 0.00171
+  T0b     fid 4.27 [4.09, 4.45]  rev/100 6 [0, 14]  ≥4 0.88  om/100 20  $/pg 0.00171
+  BO3     fid 4.2 [4.01, 4.4]  rev/100 8 [2, 16]  ≥4 0.82  om/100 24  $/pg 0.00704
+  ORACLE  fid 4.32 [4.14, 4.49]  rev/100 6 [0, 14]  ≥4 0.88  om/100 20  $/pg 0.0017
+  WORST3  fid 3.82 [3.59, 4.03]  rev/100 16 [6, 28]  ≥4 0.68  om/100 34  $/pg 0.00172
+  MEAN3   fid 4.08 [3.893, 4.253]  rev/100 9.333 [3.333, 16.667]  ≥4 0.7  om/100 26.67  $/pg 0.00171
+  T1b-T1a                  Δfid -0.23 [-0.39, -0.07]  Δrev/100 2 [-4, 8]  pages +5/−16/=29  beats:no  not_worse:false
+  T02a-T1a                 Δfid 0.04 [-0.09, 0.18]  Δrev/100 -2 [-6, 0]  pages +9/−6/=35  beats:no  not_worse:true  two_draw_agrees:true
+  T0a-T1a                  Δfid 0.06 [-0.09, 0.2]  Δrev/100 -4 [-10, 0]  pages +11/−6/=33  beats:no  not_worse:true  two_draw_agrees:true
+  BO3-T1a                  Δfid -0.01 [-0.08, 0.06]  Δrev/100 -2 [-6, 0]  pages +3/−4/=43  beats:no  not_worse:true
+  ORACLE-T1a               Δfid 0.11 [0.04, 0.19]  Δrev/100 -4 [-10, 0]  pages +8/−0/=42  beats:no  not_worse:true
+  T02mean-T1mean           Δfid 0.15 [0.015, 0.295]  Δrev/100 -4 [-9, 0]  pages +19/−10/=21  beats:no  not_worse:true  transfers:false
+  T0mean-T1mean            Δfid 0.175 [0.02, 0.33]  Δrev/100 -5 [-10, -1]  pages +20/−8/=22  beats:reversals  not_worse:true  transfers:false
+  BO3-MEAN3 (picker lift)  Δfid 0.12 [0.047, 0.197]  Δrev/100 -1.3 [-6, 3.3]  pages +19/−6/=25  beats:no  not_worse:true
+  movement {"T1":{"pages_moving_ge1":12,"share":0.24,"byte_identical":0,"mean_abs_diff":0.37,"reversal_flips":3},"T02":{"pages_moving_ge1":2,"share":0.04,"byte_identical":0,"mean_abs_diff":0.09,"reversal_flips":1},"T0":{"pages_moving_ge1":0,"share":0,"byte_identical":50,"mean_abs_diff":0,"reversal_flips":0}}
+  picks {"picked":{"T1b":17,"T1c":15,"T1a":18},"picked_a_top_draw":41,"picked_a_bottom_draw_when_they_differ":6,"pages_where_draws_differ":28,"fallback":0}
+
+## flash / all: n 149; floor fid 0.047 (T1b−T1a -0.047 [-0.144, 0.044]), rev 0.67/100
+  T1a     fid 4.054 [3.933, 4.168]  rev/100 10.067 [5.369, 15.436]  ≥4 0.785  om/100 18.79  $/pg 0.00393
+  T1b     fid 4.007 [3.889, 4.128]  rev/100 10.738 [6.04, 16.107]  ≥4 0.745  om/100 28.19  $/pg 0.00392
+  T1c     fid 4.023 [3.916, 4.134]  rev/100 9.396 [4.698, 14.094]  ≥4 0.772  om/100 27.52  $/pg 0.00393
+  T02a    fid 4.181 [4.07, 4.289]  rev/100 8.725 [4.698, 13.423]  ≥4 0.812  om/100 25.5  $/pg 0.00393
+  T02b    fid 4.124 [4.017, 4.232]  rev/100 9.396 [4.698, 14.094]  ≥4 0.772  om/100 24.16  $/pg 0.00391
+  T0a     fid 4.107 [3.99, 4.221]  rev/100 8.054 [4.027, 12.752]  ≥4 0.765  om/100 21.48  $/pg 0.00394
+  T0b     fid 4.111 [4, 4.218]  rev/100 6.711 [3.356, 10.738]  ≥4 0.785  om/100 20.81  $/pg 0.00394
+  BO3     fid 4.104 [3.993, 4.211]  rev/100 8.054 [4.027, 12.752]  ≥4 0.805  om/100 21.48  $/pg 0.01405
+  ORACLE  fid 4.258 [4.151, 4.366]  rev/100 5.369 [2.013, 9.396]  ≥4 0.859  om/100 16.78  $/pg 0.00395
+  WORST3  fid 3.762 [3.654, 3.872]  rev/100 17.45 [11.409, 24.161]  ≥4 0.638  om/100 26.17  $/pg 0.00392
+  MEAN3   fid 4.028 [3.923, 4.13]  rev/100 10.067 [6.04, 14.094]  ≥4 0.664  om/100 24.83  $/pg 0.00393
+  T1b-T1a                  Δfid -0.047 [-0.144, 0.047]  Δrev/100 0.7 [-4.7, 6]  pages +29/−40/=80  beats:no  not_worse:true
+  T02a-T1a                 Δfid 0.128 [0.04, 0.215]  Δrev/100 -1.3 [-6.7, 4]  pages +45/−23/=81  beats:fidelity  not_worse:true  two_draw_agrees:true
+  T0a-T1a                  Δfid 0.054 [-0.034, 0.141]  Δrev/100 -2 [-7.4, 2.7]  pages +36/−25/=88  beats:no  not_worse:true  two_draw_agrees:true
+  BO3-T1a                  Δfid 0.05 [-0.023, 0.124]  Δrev/100 -2 [-6, 2]  pages +28/−22/=99  beats:no  not_worse:true
+  ORACLE-T1a               Δfid 0.205 [0.144, 0.268]  Δrev/100 -4.7 [-8.7, -1.3]  pages +36/−0/=113  beats:fidelity  not_worse:true
+  T02mean-T1mean           Δfid 0.122 [0.052, 0.195]  Δrev/100 -1.3 [-5.4, 2.7]  pages +59/−26/=64  beats:fidelity  not_worse:true  transfers:false
+  T0mean-T1mean            Δfid 0.079 [0.01, 0.149]  Δrev/100 -3 [-7, 1.3]  pages +52/−28/=69  beats:fidelity  not_worse:true  transfers:true
+  BO3-MEAN3 (picker lift)  Δfid 0.076 [0.029, 0.122]  Δrev/100 -2 [-4.3, 0.2]  pages +57/−27/=65  beats:fidelity  not_worse:true
+  movement {"T1":{"pages_moving_ge1":37,"share":0.248,"byte_identical":0,"mean_abs_diff":0.376,"reversal_flips":15},"T02":{"pages_moving_ge1":20,"share":0.134,"byte_identical":0,"mean_abs_diff":0.198,"reversal_flips":7},"T0":{"pages_moving_ge1":8,"share":0.054,"byte_identical":74,"mean_abs_diff":0.084,"reversal_flips":2}}
+  picks {"picked":{"T1a":51,"T1b":54,"T1c":44},"picked_a_top_draw":116,"picked_a_bottom_draw_when_they_differ":27,"pages_where_draws_differ":88,"fallback":0}
+
+## flash / tengyur: n 50; floor fid 0.03 (T1b−T1a -0.03 [-0.2, 0.15]), rev 0/100
+  T1a     fid 4.11 [3.97, 4.24]  rev/100 6 [0, 14]  ≥4 0.88  om/100 12  $/pg 0.00355
+  T1b     fid 4.08 [3.94, 4.22]  rev/100 6 [0, 14]  ≥4 0.84  om/100 20  $/pg 0.00355
+  T1c     fid 4.08 [3.96, 4.2]  rev/100 4 [0, 10]  ≥4 0.92  om/100 26  $/pg 0.00355
+  T02a    fid 4.27 [4.13, 4.42]  rev/100 4 [0, 10]  ≥4 0.94  om/100 16  $/pg 0.00353
+  T02b    fid 4.15 [4.01, 4.29]  rev/100 6 [0, 14]  ≥4 0.86  om/100 24  $/pg 0.00353
+  T0a     fid 4.09 [3.96, 4.23]  rev/100 6 [0, 14]  ≥4 0.84  om/100 18  $/pg 0.00354
+  T0b     fid 4.14 [4.01, 4.26]  rev/100 2 [0, 6]  ≥4 0.9  om/100 20  $/pg 0.00354
+  BO3     fid 4.17 [4.03, 4.3]  rev/100 4 [0, 10]  ≥4 0.9  om/100 16  $/pg 0.01286
+  ORACLE  fid 4.36 [4.25, 4.48]  rev/100 0 [0, 0]  ≥4 1  om/100 6  $/pg 0.00356
+  WORST3  fid 3.78 [3.66, 3.89]  rev/100 14 [6, 24]  ≥4 0.68  om/100 24  $/pg 0.00355
+  MEAN3   fid 4.09 [4, 4.183]  rev/100 5.333 [2, 10]  ≥4 0.74  om/100 19.33  $/pg 0.00355
+  T1b-T1a                  Δfid -0.03 [-0.21, 0.15]  Δrev/100 0 [-10, 10]  pages +10/−15/=25  beats:no  not_worse:false
+  T02a-T1a                 Δfid 0.16 [0, 0.33]  Δrev/100 -2 [-10, 6]  pages +15/−9/=26  beats:no  not_worse:true  two_draw_agrees:true
+  T0a-T1a                  Δfid -0.02 [-0.19, 0.14]  Δrev/100 0 [-10, 10]  pages +10/−13/=27  beats:no  not_worse:false  two_draw_agrees:false
+  BO3-T1a                  Δfid 0.06 [-0.08, 0.21]  Δrev/100 -2 [-10, 6]  pages +10/−9/=31  beats:no  not_worse:true
+  ORACLE-T1a               Δfid 0.25 [0.13, 0.39]  Δrev/100 -6 [-14, 0]  pages +13/−0/=37  beats:fidelity  not_worse:true
+  T02mean-T1mean           Δfid 0.115 [0.005, 0.23]  Δrev/100 -1 [-6, 4]  pages +16/−12/=22  beats:fidelity  not_worse:true  transfers:false
+  T0mean-T1mean            Δfid 0.02 [-0.09, 0.135]  Δrev/100 -2 [-7, 3]  pages +13/−14/=23  beats:no  not_worse:true  transfers:true
+  BO3-MEAN3 (picker lift)  Δfid 0.08 [-0.007, 0.167]  Δrev/100 -1.3 [-5.3, 3.3]  pages +21/−10/=19  beats:no  not_worse:true
+  movement {"T1":{"pages_moving_ge1":13,"share":0.26,"byte_identical":0,"mean_abs_diff":0.41,"reversal_flips":6},"T02":{"pages_moving_ge1":9,"share":0.18,"byte_identical":0,"mean_abs_diff":0.28,"reversal_flips":3},"T0":{"pages_moving_ge1":5,"share":0.1,"byte_identical":19,"mean_abs_diff":0.17,"reversal_flips":2}}
+  picks {"picked":{"T1a":16,"T1b":21,"T1c":13},"picked_a_top_draw":36,"picked_a_bottom_draw_when_they_differ":10,"pages_where_draws_differ":34,"fallback":0}
+
+## flash / t4: n 50; floor fid 0.04 (T1b−T1a -0.04 [-0.19, 0.12]), rev 2/100
+  T1a     fid 3.7 [3.46, 3.94]  rev/100 20 [10, 32]  ≥4 0.56  om/100 32  $/pg 0.00472
+  T1b     fid 3.66 [3.42, 3.9]  rev/100 18 [8, 30]  ≥4 0.54  om/100 44  $/pg 0.00469
+  T1c     fid 3.67 [3.45, 3.89]  rev/100 16 [6, 26]  ≥4 0.52  om/100 36  $/pg 0.00472
+  T02a    fid 3.82 [3.61, 4.03]  rev/100 12 [4, 22]  ≥4 0.62  om/100 40  $/pg 0.00475
+  T02b    fid 3.81 [3.6, 4.01]  rev/100 14 [6, 24]  ≥4 0.58  om/100 32  $/pg 0.00467
+  T0a     fid 3.8 [3.57, 4.02]  rev/100 12 [4, 22]  ≥4 0.58  om/100 28  $/pg 0.00478
+  T0b     fid 3.79 [3.57, 4.01]  rev/100 12 [4, 22]  ≥4 0.58  om/100 22  $/pg 0.00478
+  BO3     fid 3.72 [3.51, 3.93]  rev/100 14 [6, 24]  ≥4 0.6  om/100 32  $/pg 0.01676
+  ORACLE  fid 3.9 [3.67, 4.12]  rev/100 12 [4, 22]  ≥4 0.64  om/100 32  $/pg 0.00475
+  WORST3  fid 3.43 [3.21, 3.65]  rev/100 28 [16, 40]  ≥4 0.42  om/100 40  $/pg 0.00468
+  MEAN3   fid 3.677 [3.467, 3.893]  rev/100 18 [9.333, 27.333]  ≥4 0.44  om/100 37.33  $/pg 0.00471
+  T1b-T1a                  Δfid -0.04 [-0.19, 0.12]  Δrev/100 -2 [-12, 8]  pages +9/−14/=27  beats:no  not_worse:false
+  T02a-T1a                 Δfid 0.12 [-0.02, 0.26]  Δrev/100 -8 [-20, 2]  pages +15/−7/=28  beats:no  not_worse:true  two_draw_agrees:true
+  T0a-T1a                  Δfid 0.1 [-0.05, 0.25]  Δrev/100 -8 [-18, 0]  pages +13/−5/=32  beats:no  not_worse:true  two_draw_agrees:true
+  BO3-T1a                  Δfid 0.02 [-0.11, 0.15]  Δrev/100 -6 [-12, 0]  pages +10/−10/=30  beats:no  not_worse:true
+  ORACLE-T1a               Δfid 0.2 [0.1, 0.31]  Δrev/100 -8 [-16, -2]  pages +12/−0/=38  beats:fidelity  not_worse:true
+  T02mean-T1mean           Δfid 0.135 [0.03, 0.245]  Δrev/100 -6 [-15, 2]  pages +20/−6/=24  beats:fidelity  not_worse:true  transfers:false
+  T0mean-T1mean            Δfid 0.115 [0.01, 0.215]  Δrev/100 -7 [-16, 1]  pages +18/−5/=27  beats:fidelity  not_worse:true  transfers:false
+  BO3-MEAN3 (picker lift)  Δfid 0.043 [-0.033, 0.123]  Δrev/100 -4 [-8, -0.7]  pages +16/−11/=23  beats:reversals  not_worse:true
+  movement {"T1":{"pages_moving_ge1":12,"share":0.24,"byte_identical":0,"mean_abs_diff":0.36,"reversal_flips":7},"T02":{"pages_moving_ge1":5,"share":0.1,"byte_identical":0,"mean_abs_diff":0.17,"reversal_flips":3},"T0":{"pages_moving_ge1":2,"share":0.04,"byte_identical":29,"mean_abs_diff":0.05,"reversal_flips":0}}
+  picks {"picked":{"T1c":20,"T1a":15,"T1b":15},"picked_a_top_draw":37,"picked_a_bottom_draw_when_they_differ":11,"pages_where_draws_differ":28,"fallback":0}
+
+## flash / latin: n 49; floor fid 0.071 (T1b−T1a -0.071 [-0.245, 0.092]), rev 4.08/100
+  T1a     fid 4.357 [4.204, 4.51]  rev/100 4.082 [0, 10.204]  ≥4 0.918  om/100 12.24  $/pg 0.0035
+  T1b     fid 4.286 [4.092, 4.469]  rev/100 8.163 [2.041, 16.327]  ≥4 0.857  om/100 20.41  $/pg 0.00351
+  T1c     fid 4.327 [4.153, 4.49]  rev/100 8.163 [2.041, 16.327]  ≥4 0.878  om/100 20.41  $/pg 0.00353
+  T02a    fid 4.459 [4.286, 4.622]  rev/100 10.204 [2.041, 20.408]  ≥4 0.878  om/100 20.41  $/pg 0.00349
+  T02b    fid 4.418 [4.235, 4.592]  rev/100 8.163 [2.041, 16.327]  ≥4 0.878  om/100 16.33  $/pg 0.00351
+  T0a     fid 4.439 [4.255, 4.612]  rev/100 6.122 [0, 14.286]  ≥4 0.878  om/100 18.37  $/pg 0.0035
+  T0b     fid 4.408 [4.224, 4.582]  rev/100 6.122 [0, 14.286]  ≥4 0.878  om/100 20.41  $/pg 0.0035
+  BO3     fid 4.429 [4.265, 4.592]  rev/100 6.122 [0, 14.286]  ≥4 0.918  om/100 16.33  $/pg 0.01248
+  ORACLE  fid 4.52 [4.367, 4.673]  rev/100 4.082 [0, 10.204]  ≥4 0.939  om/100 12.24  $/pg 0.00351
+  WORST3  fid 4.082 [3.898, 4.255]  rev/100 10.204 [2.041, 20.408]  ≥4 0.816  om/100 14.29  $/pg 0.00351
+  MEAN3   fid 4.323 [4.167, 4.469]  rev/100 6.803 [1.361, 13.605]  ≥4 0.816  om/100 17.69  $/pg 0.00352
+  T1b-T1a                  Δfid -0.071 [-0.245, 0.082]  Δrev/100 4.1 [0, 10.2]  pages +10/−11/=28  beats:no  not_worse:false
+  T02a-T1a                 Δfid 0.102 [-0.051, 0.255]  Δrev/100 6.1 [0, 14.3]  pages +15/−7/=27  beats:no  not_worse:false  two_draw_agrees:true
+  T0a-T1a                  Δfid 0.082 [-0.061, 0.224]  Δrev/100 2 [-4.1, 10.2]  pages +13/−7/=29  beats:no  not_worse:false  two_draw_agrees:true
+  BO3-T1a                  Δfid 0.071 [-0.02, 0.173]  Δrev/100 2 [0, 6.1]  pages +8/−3/=38  beats:no  not_worse:true
+  ORACLE-T1a               Δfid 0.163 [0.082, 0.255]  Δrev/100 0 [0, 0]  pages +11/−0/=38  beats:fidelity  not_worse:true
+  T02mean-T1mean           Δfid 0.117 [-0.026, 0.25]  Δrev/100 3.1 [-3.1, 10.2]  pages +23/−8/=18  beats:no  not_worse:false  transfers:false
+  T0mean-T1mean            Δfid 0.102 [-0.036, 0.24]  Δrev/100 0 [-7.1, 7.1]  pages +21/−9/=19  beats:no  not_worse:true  transfers:false
+  BO3-MEAN3 (picker lift)  Δfid 0.105 [0.034, 0.177]  Δrev/100 -0.7 [-4.8, 3.4]  pages +20/−6/=23  beats:fidelity  not_worse:true
+  movement {"T1":{"pages_moving_ge1":12,"share":0.245,"byte_identical":0,"mean_abs_diff":0.357,"reversal_flips":2},"T02":{"pages_moving_ge1":6,"share":0.122,"byte_identical":0,"mean_abs_diff":0.143,"reversal_flips":1},"T0":{"pages_moving_ge1":1,"share":0.02,"byte_identical":26,"mean_abs_diff":0.031,"reversal_flips":0}}
+  picks {"picked":{"T1a":20,"T1c":11,"T1b":18},"picked_a_top_draw":43,"picked_a_bottom_draw_when_they_differ":6,"pages_where_draws_differ":26,"fallback":0}
+
+## production-routed / all: n 149; floor fid 0.101 (T1b−T1a -0.101 [-0.195, -0.003]), rev 0/100
+  T1a     fid 4.013 [3.896, 4.128]  rev/100 12.081 [7.383, 17.45]  ≥4 0.758  om/100 24.16  $/pg 0.00339
+  T1b     fid 3.913 [3.795, 4.034]  rev/100 12.081 [7.383, 17.45]  ≥4 0.711  om/100 31.54  $/pg 0.00339
+  T1c     fid 3.936 [3.826, 4.047]  rev/100 8.725 [4.698, 13.423]  ≥4 0.738  om/100 28.19  $/pg 0.0034
+  T02a    fid 4.114 [4.003, 4.232]  rev/100 8.054 [4.027, 12.752]  ≥4 0.812  om/100 26.85  $/pg 0.0034
+  T02b    fid 4.067 [3.963, 4.174]  rev/100 8.725 [4.698, 13.423]  ≥4 0.765  om/100 28.19  $/pg 0.00337
+  T0a     fid 4.054 [3.94, 4.168]  rev/100 8.054 [4.027, 12.752]  ≥4 0.765  om/100 22.82  $/pg 0.00341
+  T0b     fid 4.067 [3.96, 4.174]  rev/100 6.711 [2.685, 11.409]  ≥4 0.785  om/100 21.48  $/pg 0.00341
+  BO3     fid 4.037 [3.923, 4.144]  rev/100 8.725 [4.698, 13.423]  ≥4 0.772  om/100 24.16  $/pg 0.01242
+  ORACLE  fid 4.198 [4.084, 4.305]  rev/100 6.04 [2.685, 10.067]  ≥4 0.839  om/100 19.46  $/pg 0.00341
+  WORST3  fid 3.681 [3.567, 3.795]  rev/100 19.463 [13.423, 26.174]  ≥4 0.591  om/100 32.89  $/pg 0.00338
+  MEAN3   fid 3.954 [3.848, 4.062]  rev/100 10.962 [6.935, 15.436]  ≥4 0.624  om/100 27.96  $/pg 0.00339
+  T1b-T1a                  Δfid -0.101 [-0.198, -0.003]  Δrev/100 0 [-5.4, 5.4]  pages +24/−43/=82  beats:no  not_worse:false
+  T02a-T1a                 Δfid 0.101 [0.013, 0.185]  Δrev/100 -4 [-8.7, 0.7]  pages +38/−22/=89  beats:no  not_worse:true  two_draw_agrees:true
+  T0a-T1a                  Δfid 0.04 [-0.05, 0.128]  Δrev/100 -4 [-9.4, 0.7]  pages +31/−23/=95  beats:no  not_worse:true  two_draw_agrees:true
+  BO3-T1a                  Δfid 0.023 [-0.044, 0.091]  Δrev/100 -3.4 [-7.4, 0]  pages +23/−22/=104  beats:no  not_worse:true
+  ORACLE-T1a               Δfid 0.185 [0.124, 0.248]  Δrev/100 -6 [-10.1, -2.7]  pages +33/−0/=116  beats:fidelity  not_worse:true
+  T02mean-T1mean           Δfid 0.128 [0.057, 0.196]  Δrev/100 -3.7 [-7.7, -0.3]  pages +53/−28/=68  beats:fidelity  not_worse:true  transfers:false
+  T0mean-T1mean            Δfid 0.097 [0.025, 0.171]  Δrev/100 -4.7 [-8.7, -1.3]  pages +49/−27/=73  beats:reversals  not_worse:true  transfers:false
+  BO3-MEAN3 (picker lift)  Δfid 0.083 [0.036, 0.131]  Δrev/100 -2.2 [-4.7, 0.2]  pages +56/−26/=67  beats:no  not_worse:true
+  movement {"T1":{"pages_moving_ge1":37,"share":0.248,"byte_identical":0,"mean_abs_diff":0.376,"reversal_flips":16},"T02":{"pages_moving_ge1":15,"share":0.101,"byte_identical":0,"mean_abs_diff":0.174,"reversal_flips":7},"T0":{"pages_moving_ge1":7,"share":0.047,"byte_identical":93,"mean_abs_diff":0.074,"reversal_flips":2}}
+  picks {"picked":{"T1a":50,"T1b":53,"T1c":46},"picked_a_top_draw":114,"picked_a_bottom_draw_when_they_differ":26,"pages_where_draws_differ":89,"fallback":0}
+
+## production-routed / tengyur: n 50; floor fid 0.03 (T1b−T1a -0.03 [-0.21, 0.15]), rev 0/100
+  T1a     fid 4.11 [3.97, 4.25]  rev/100 6 [0, 12]  ≥4 0.88  om/100 12  $/pg 0.00355
+  T1b     fid 4.08 [3.94, 4.22]  rev/100 6 [0, 12]  ≥4 0.84  om/100 20  $/pg 0.00355
+  T1c     fid 4.08 [3.96, 4.2]  rev/100 4 [0, 10]  ≥4 0.92  om/100 26  $/pg 0.00355
+  T02a    fid 4.27 [4.12, 4.42]  rev/100 4 [0, 10]  ≥4 0.94  om/100 16  $/pg 0.00353
+  T02b    fid 4.15 [4.01, 4.29]  rev/100 6 [0, 14]  ≥4 0.86  om/100 24  $/pg 0.00353
+  T0a     fid 4.09 [3.95, 4.23]  rev/100 6 [0, 14]  ≥4 0.84  om/100 18  $/pg 0.00354
+  T0b     fid 4.14 [4.02, 4.26]  rev/100 2 [0, 6]  ≥4 0.9  om/100 20  $/pg 0.00354
+  BO3     fid 4.17 [4.04, 4.3]  rev/100 4 [0, 10]  ≥4 0.9  om/100 16  $/pg 0.01286
+  ORACLE  fid 4.36 [4.25, 4.48]  rev/100 0 [0, 0]  ≥4 1  om/100 6  $/pg 0.00356
+  WORST3  fid 3.78 [3.66, 3.9]  rev/100 14 [6, 24]  ≥4 0.68  om/100 24  $/pg 0.00355
+  MEAN3   fid 4.09 [4, 4.183]  rev/100 5.333 [2, 9.333]  ≥4 0.74  om/100 19.33  $/pg 0.00355
+  T1b-T1a                  Δfid -0.03 [-0.2, 0.15]  Δrev/100 0 [-10, 10]  pages +10/−15/=25  beats:no  not_worse:false
+  T02a-T1a                 Δfid 0.16 [-0.01, 0.33]  Δrev/100 -2 [-10, 6]  pages +15/−9/=26  beats:no  not_worse:true  two_draw_agrees:true
+  T0a-T1a                  Δfid -0.02 [-0.19, 0.15]  Δrev/100 0 [-10, 10]  pages +10/−13/=27  beats:no  not_worse:false  two_draw_agrees:false
+  BO3-T1a                  Δfid 0.06 [-0.08, 0.21]  Δrev/100 -2 [-10, 6]  pages +10/−9/=31  beats:no  not_worse:true
+  ORACLE-T1a               Δfid 0.25 [0.13, 0.39]  Δrev/100 -6 [-14, 0]  pages +13/−0/=37  beats:fidelity  not_worse:true
+  T02mean-T1mean           Δfid 0.115 [0.01, 0.225]  Δrev/100 -1 [-6, 4]  pages +16/−12/=22  beats:fidelity  not_worse:true  transfers:false
+  T0mean-T1mean            Δfid 0.02 [-0.09, 0.125]  Δrev/100 -2 [-7, 3]  pages +13/−14/=23  beats:no  not_worse:true  transfers:true
+  BO3-MEAN3 (picker lift)  Δfid 0.08 [-0.007, 0.163]  Δrev/100 -1.3 [-5.3, 2.7]  pages +21/−10/=19  beats:no  not_worse:true
+  movement {"T1":{"pages_moving_ge1":13,"share":0.26,"byte_identical":0,"mean_abs_diff":0.41,"reversal_flips":6},"T02":{"pages_moving_ge1":9,"share":0.18,"byte_identical":0,"mean_abs_diff":0.28,"reversal_flips":3},"T0":{"pages_moving_ge1":5,"share":0.1,"byte_identical":19,"mean_abs_diff":0.17,"reversal_flips":2}}
+  picks {"picked":{"T1a":16,"T1b":21,"T1c":13},"picked_a_top_draw":36,"picked_a_bottom_draw_when_they_differ":10,"pages_where_draws_differ":34,"fallback":0}
+
+## production-routed / t4: n 50; floor fid 0.04 (T1b−T1a -0.04 [-0.19, 0.12]), rev 2/100
+  T1a     fid 3.7 [3.47, 3.93]  rev/100 20 [10, 32]  ≥4 0.56  om/100 32  $/pg 0.00472
+  T1b     fid 3.66 [3.41, 3.89]  rev/100 18 [8, 30]  ≥4 0.54  om/100 44  $/pg 0.00469
+  T1c     fid 3.67 [3.45, 3.89]  rev/100 16 [6, 26]  ≥4 0.52  om/100 36  $/pg 0.00472
+  T02a    fid 3.82 [3.61, 4.03]  rev/100 12 [4, 22]  ≥4 0.62  om/100 40  $/pg 0.00475
+  T02b    fid 3.81 [3.6, 4.02]  rev/100 14 [6, 24]  ≥4 0.58  om/100 32  $/pg 0.00467
+  T0a     fid 3.8 [3.57, 4.02]  rev/100 12 [4, 22]  ≥4 0.58  om/100 28  $/pg 0.00478
+  T0b     fid 3.79 [3.57, 4.01]  rev/100 12 [4, 22]  ≥4 0.58  om/100 22  $/pg 0.00478
+  BO3     fid 3.72 [3.5, 3.94]  rev/100 14 [6, 24]  ≥4 0.6  om/100 32  $/pg 0.01676
+  ORACLE  fid 3.9 [3.67, 4.13]  rev/100 12 [4, 22]  ≥4 0.64  om/100 32  $/pg 0.00475
+  WORST3  fid 3.43 [3.2, 3.65]  rev/100 28 [16, 40]  ≥4 0.42  om/100 40  $/pg 0.00468
+  MEAN3   fid 3.677 [3.46, 3.89]  rev/100 18 [9.333, 28]  ≥4 0.44  om/100 37.33  $/pg 0.00471
+  T1b-T1a                  Δfid -0.04 [-0.2, 0.11]  Δrev/100 -2 [-12, 8]  pages +9/−14/=27  beats:no  not_worse:false
+  T02a-T1a                 Δfid 0.12 [-0.01, 0.25]  Δrev/100 -8 [-20, 2]  pages +15/−7/=28  beats:no  not_worse:true  two_draw_agrees:true
+  T0a-T1a                  Δfid 0.1 [-0.05, 0.24]  Δrev/100 -8 [-18, 0]  pages +13/−5/=32  beats:no  not_worse:true  two_draw_agrees:true
+  BO3-T1a                  Δfid 0.02 [-0.11, 0.15]  Δrev/100 -6 [-14, 0]  pages +10/−10/=30  beats:no  not_worse:true
+  ORACLE-T1a               Δfid 0.2 [0.1, 0.31]  Δrev/100 -8 [-16, -2]  pages +12/−0/=38  beats:fidelity  not_worse:true
+  T02mean-T1mean           Δfid 0.135 [0.025, 0.245]  Δrev/100 -6 [-15, 2]  pages +20/−6/=24  beats:fidelity  not_worse:true  transfers:false
+  T0mean-T1mean            Δfid 0.115 [0.015, 0.215]  Δrev/100 -7 [-16, 1]  pages +18/−5/=27  beats:fidelity  not_worse:true  transfers:false
+  BO3-MEAN3 (picker lift)  Δfid 0.043 [-0.033, 0.123]  Δrev/100 -4 [-8, -0.7]  pages +16/−11/=23  beats:reversals  not_worse:true
+  movement {"T1":{"pages_moving_ge1":12,"share":0.24,"byte_identical":0,"mean_abs_diff":0.36,"reversal_flips":7},"T02":{"pages_moving_ge1":5,"share":0.1,"byte_identical":0,"mean_abs_diff":0.17,"reversal_flips":3},"T0":{"pages_moving_ge1":2,"share":0.04,"byte_identical":29,"mean_abs_diff":0.05,"reversal_flips":0}}
+  picks {"picked":{"T1c":20,"T1a":15,"T1b":15},"picked_a_top_draw":37,"picked_a_bottom_draw_when_they_differ":11,"pages_where_draws_differ":28,"fallback":0}
+
+## production-routed / latin: n 49; floor fid 0.235 (T1b−T1a -0.235 [-0.408, -0.071]), rev 2.04/100
+  T1a     fid 4.235 [4.041, 4.429]  rev/100 10.204 [2.041, 20.408]  ≥4 0.837  om/100 28.57  $/pg 0.00187
+  T1b     fid 4 [3.765, 4.224]  rev/100 12.245 [4.082, 22.449]  ≥4 0.755  om/100 30.61  $/pg 0.00189
+  T1c     fid 4.061 [3.857, 4.265]  rev/100 6.122 [0, 12.245]  ≥4 0.776  om/100 22.45  $/pg 0.00189
+  T02a    fid 4.255 [4.061, 4.439]  rev/100 8.163 [2.041, 16.327]  ≥4 0.878  om/100 24.49  $/pg 0.00188
+  T02b    fid 4.245 [4.061, 4.418]  rev/100 6.122 [0, 14.286]  ≥4 0.857  om/100 28.57  $/pg 0.00188
+  T0a     fid 4.276 [4.092, 4.449]  rev/100 6.122 [0, 14.286]  ≥4 0.878  om/100 22.45  $/pg 0.00188
+  T0b     fid 4.276 [4.082, 4.449]  rev/100 6.122 [0, 14.286]  ≥4 0.878  om/100 22.45  $/pg 0.00188
+  BO3     fid 4.224 [4.01, 4.418]  rev/100 8.163 [2.041, 16.327]  ≥4 0.816  om/100 24.49  $/pg 0.00755
+  ORACLE  fid 4.337 [4.153, 4.52]  rev/100 6.122 [0, 14.286]  ≥4 0.878  om/100 20.41  $/pg 0.00187
+  WORST3  fid 3.837 [3.602, 4.061]  rev/100 16.327 [6.122, 26.531]  ≥4 0.673  om/100 34.69  $/pg 0.00189
+  MEAN3   fid 4.099 [3.912, 4.282]  rev/100 9.524 [3.401, 17.007]  ≥4 0.694  om/100 27.21  $/pg 0.00189
+  T1b-T1a                  Δfid -0.235 [-0.398, -0.082]  Δrev/100 2 [-4.1, 10.2]  pages +5/−14/=30  beats:no  not_worse:false
+  T02a-T1a                 Δfid 0.02 [-0.112, 0.153]  Δrev/100 -2 [-6.1, 0]  pages +8/−6/=35  beats:no  not_worse:true  two_draw_agrees:true
+  T0a-T1a                  Δfid 0.041 [-0.092, 0.173]  Δrev/100 -4.1 [-10.2, 0]  pages +8/−5/=36  beats:no  not_worse:true  two_draw_agrees:true
+  BO3-T1a                  Δfid -0.01 [-0.071, 0.041]  Δrev/100 -2 [-6.1, 0]  pages +3/−3/=43  beats:no  not_worse:true
+  ORACLE-T1a               Δfid 0.102 [0.041, 0.173]  Δrev/100 -4.1 [-10.2, 0]  pages +8/−0/=41  beats:no  not_worse:true
+  T02mean-T1mean           Δfid 0.133 [-0.01, 0.276]  Δrev/100 -4.1 [-9.2, 0]  pages +17/−10/=22  beats:no  not_worse:true  transfers:false
+  T0mean-T1mean            Δfid 0.158 [0.01, 0.327]  Δrev/100 -5.1 [-11.2, -1]  pages +18/−8/=23  beats:reversals  not_worse:true  transfers:false
+  BO3-MEAN3 (picker lift)  Δfid 0.126 [0.054, 0.204]  Δrev/100 -1.4 [-6.1, 3.4]  pages +19/−5/=25  beats:no  not_worse:true
+  movement {"T1":{"pages_moving_ge1":12,"share":0.245,"byte_identical":0,"mean_abs_diff":0.357,"reversal_flips":3},"T02":{"pages_moving_ge1":1,"share":0.02,"byte_identical":0,"mean_abs_diff":0.071,"reversal_flips":1},"T0":{"pages_moving_ge1":0,"share":0,"byte_identical":45,"mean_abs_diff":0,"reversal_flips":0}}
+  picks {"picked":{"T1b":17,"T1c":13,"T1a":19},"picked_a_top_draw":41,"picked_a_bottom_draw_when_they_differ":5,"pages_where_draws_differ":27,"fallback":0}
+
+transfer {"n":149,"flash_minus_lite_fidelity":{"at_T1":{"n":149,"mean":0.211,"ci":[0.136,0.289]},"at_T02":{"n":149,"mean":0.24,"ci":[0.138,0.342]},"at_T0":{"n":149,"mean":0.176,"ci":[0.079,0.275]}},"gap_T0_minus_gap_T1":{"n":149,"mean":-0.035,"ci":[-0.149,0.077]},"gap_T02_minus_gap_T1":{"n":149,"mean":0.029,"ci":[-0.069,0.131]},"flash_minus_lite_reversals_per_100":{"at_T1":{"n":149,"mean":1.342,"ci":[-3.356,6.04]},"at_T0":{"n":149,"mean":2.685,"ci":[-1.678,7.047]}}}

@@ -770,7 +770,7 @@ export default function ImageWithMagnifier({
               e.stopPropagation();
               toggleLens();
             }}
-            title={lensEnabled ? 'Magnifier on — click to turn off' : 'Turn on magnifier'}
+            title={lensEnabled ? 'Magnifier on. Click to turn off' : 'Turn on magnifier'}
             aria-label={lensEnabled ? 'Turn off magnifier' : 'Turn on magnifier'}
             aria-pressed={lensEnabled}
             style={{ top: toggleTop, zIndex: OVERLAY_CONTROL_Z }}

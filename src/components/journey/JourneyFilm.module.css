@@ -68,6 +68,7 @@
 .btn:hover { border-color: var(--rubric); color: var(--rubric); }
 .btn:focus-visible, .seg:focus-visible { outline: 2px solid var(--rubric); outline-offset: 2px; }
 .btn svg { width: 14px; height: 14px; fill: currentColor; }
+.speed { width: auto; min-width: 36px; padding: 0 8px; border-radius: 18px; font: 500 12px/1 var(--f-label); font-variant-numeric: tabular-nums; }
 .track { flex: 1; min-width: 0; display: flex; gap: 6px; height: 36px; align-items: stretch; cursor: pointer; touch-action: none; }
 .seg {
   position: relative; min-width: 0; border: 0; padding: 0; background: transparent; color: var(--ink-soft);

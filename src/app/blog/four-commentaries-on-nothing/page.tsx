@@ -33,6 +33,8 @@ export const metadata: Metadata = {
 const P = 'text-secondary leading-relaxed mb-6 font-body';
 const H2 = 'font-serif text-2xl md:text-3xl text-primary mb-6';
 const A = 'text-accent-rust hover:underline';
+const TH = 'text-left font-medium text-primary py-2 pr-4 border-b border-border-light';
+const TD = 'py-2 pr-4 align-top border-b border-border-light text-secondary';
 const QUOTE = 'border-l-4 border-accent-rust pl-6 my-8 text-secondary font-body leading-relaxed';
 const CITE = 'block text-sm text-muted mt-3 not-italic';
 
@@ -65,6 +67,67 @@ function Page({ src, alt, caption, href }: { src: string; alt: string; caption: 
         <img src={src} alt={alt} loading="lazy" className="w-full max-w-md mx-auto rounded-lg shadow-md" />
       </a>
       <figcaption className="text-center text-sm text-muted mt-3 italic">{caption}</figcaption>
+    </figure>
+  );
+}
+
+// אין (ayin, "nothing") and אני (ani, "I"): the same three letters, as Knorr notes on p. 80.
+// Hebrew reads right to left, so the letters are placed right to left.
+function AyinAniDiagram() {
+  const row1 = [{ ch: 'א', x: 300 }, { ch: 'י', x: 240 }, { ch: 'ן', x: 180 }];
+  const row2 = [{ ch: 'א', x: 300 }, { ch: 'נ', x: 240 }, { ch: 'י', x: 180 }];
+  const links: [number, number][] = [[300, 300], [240, 180], [180, 240]];
+  return (
+    <figure className="my-8">
+      <svg viewBox="0 0 400 190" className="w-full max-w-md mx-auto text-primary" role="img"
+        aria-label="The Hebrew words ayin (aleph, yod, final nun) and ani (aleph, nun, yod) drawn one above the other, with lines joining each letter to the same letter in the other word.">
+        {links.map(([a, b], i) => (
+          <line key={i} x1={a} y1={62} x2={b} y2={128} stroke="currentColor" strokeOpacity={0.35} strokeWidth={1.5} />
+        ))}
+        {row1.map((l) => (
+          <text key={`a${l.x}`} x={l.x} y={50} textAnchor="middle" fontSize={40} fill="currentColor">{l.ch}</text>
+        ))}
+        {row2.map((l) => (
+          <text key={`b${l.x}`} x={l.x} y={170} textAnchor="middle" fontSize={40} fill="currentColor">{l.ch}</text>
+        ))}
+        <text x={20} y={34} fontSize={14} fill="currentColor">ayin, “nothing”</text>
+        <text x={20} y={52} fontSize={12} fill="currentColor" fillOpacity={0.7}>Kether, the first sefirah</text>
+        <text x={20} y={154} fontSize={14} fill="currentColor">ani, “I”</text>
+        <text x={20} y={172} fontSize={12} fill="currentColor" fillOpacity={0.7}>Malchuth, the last</text>
+      </svg>
+      <figcaption className="text-center text-sm text-muted mt-3 italic">
+        The same three letters, aleph, yod and nun, in a different order.
+      </figcaption>
+    </figure>
+  );
+}
+
+// Eck 1519, scan 65: four columns on the paper, three in our transcription.
+function EckColumnsDiagram() {
+  const box = 'rounded border px-2 py-2 text-xs leading-snug';
+  const ok = `${box} border-border-light text-secondary`;
+  const bad = `${box} border-accent-rust text-secondary`;
+  return (
+    <figure className="my-8">
+      <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-3 items-stretch text-sm font-body">
+        <div className="text-muted self-center">Printed</div>
+        <div className="grid grid-cols-4 gap-2">
+          <div className={ok}><strong>(no heading)</strong><br />Greek</div>
+          <div className={ok}><strong>Sarracenus</strong><br />his Latin</div>
+          <div className={ok}><strong>Ficinus</strong><br />Ficino’s Latin</div>
+          <div className={ok}><strong>Camaldulen.</strong><br />Traversari’s Latin</div>
+        </div>
+        <div className="text-muted self-center">Transcribed</div>
+        <div className="grid grid-cols-4 gap-2">
+          <div className={bad}><strong>Sarracenus</strong><br />Greek</div>
+          <div className={bad}><strong>Ficinus</strong><br />Sarracenus’s Latin</div>
+          <div className={`${box} border-dashed border-accent-rust text-muted`}>Ficino’s Latin: missing</div>
+          <div className={ok}><strong>Camaldulen.</strong><br />Traversari’s Latin</div>
+        </div>
+      </div>
+      <figcaption className="text-center text-sm text-muted mt-3 italic">
+        Scan 65 of Eck’s 1519 edition, as printed and as transcribed. Boxes outlined in red are wrong.
+      </figcaption>
     </figure>
   );
 }
@@ -213,6 +276,26 @@ export default function FourCommentariesOnNothingPage() {
             and the page now reads: “It is so, World-Honored One. The Tathagata possesses the
             Buddha-eye.”
           </p>
+          <div className="overflow-x-auto mb-6">
+            <table className="w-full text-sm font-body">
+              <thead>
+                <tr><th className={TH}>Page</th><th className={TH}>First English</th><th className={TH}>Stronger model, 3 runs</th><th className={TH}>Cheaper model, 3 runs</th></tr>
+              </thead>
+              <tbody>
+                <tr><td className={TD}>1787 commentary, Buddha-eye</td><td className={TD}>“No”</td><td className={TD}>“Yes” 3 of 3</td><td className={TD}>“Yes” 3 of 3</td></tr>
+                <tr><td className={TD}>1787 commentary, flesh-eye and others</td><td className={TD}>“It is not so”</td><td className={TD}>“Yes” 3 of 3</td><td className={TD}>reversed 3 of 3</td></tr>
+                <tr><td className={TD}>Huineng’s commentary, Dharma-eye and Buddha-eye</td><td className={TD}>“It is not so”</td><td className={TD}>“Yes” 3 of 3</td><td className={TD}>reversed 3 of 3</td></tr>
+                <tr><td className={TD}>Huineng’s commentary, the sand</td><td className={TD}>“Yes”</td><td className={TD}>“So it is” 3 of 3</td><td className={TD}>“Yes” 3 of 3</td></tr>
+                <tr><td className={TD}>1496 Korean woodblock, Buddha-eye and sand</td><td className={TD}>“Indeed”</td><td className={TD}>“Yes” 3 of 3</td><td className={TD}>Buddha-eye answer lost its “yes”, 3 of 3</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <Page
+            src="https://images.sourcelibrary.org/archived/6992cd7543713c66ea63699e/74.jpg"
+            alt="Woodcut of the Chan master Huineng seated on a mat beside a rock and a vase of flowers, labelled 慧能大師."
+            caption={<>“Great Master Huineng” (慧能大師), the Sixth Patriarch, to whom the line “Originally there is not a single thing” is attributed. <em>Sancai tuhui</em> (1609), vol. 29.</>}
+            href="https://sourcelibrary.org/book/6992cd7543713c66ea63699e?page=74"
+          />
           <p className={P}>
             Chan turned the same teaching into dialogue. Xiufu Wukong was a tenth-century master at
             the Qingliang monastery, which the ruler of the Southern Tang built and invited him to lead. His name, 悟空,
@@ -304,6 +387,13 @@ export default function FourCommentariesOnNothingPage() {
             for the first sefirah and Ani for the last, and blessing flows down through the channels from
             the one to the other.
           </p>
+          <AyinAniDiagram />
+          <Page
+            src="https://images.sourcelibrary.org/cropped/69804b901fb2ba7cf1d43a18/6982913e7a27b2f1693ad779.jpg"
+            alt="An engraved diagram of the ten sefirot as linked circles on a central trunk, set inside concentric rings, with a paper flap folded over the lower part of the plate."
+            caption={<>One of the sefirot diagrams among the plates of the <em>Kabbala denudata</em>, with its paper flap still in place.</>}
+            href="https://sourcelibrary.org/book/69804b901fb2ba7cf1d43a18?page=1690"
+          />
           <p className={P}>
             <strong>The English.</strong> It keeps Ayin, Kether, En-Soph and Malchuth as names, gives
             the Hebrew, and puts Knorr’s Latin <em>Nihil</em> in a note. It also adds a guess in a
@@ -367,6 +457,7 @@ export default function FourCommentariesOnNothingPage() {
             Sarracenus’s Latin appears under Ficino’s name. The English translates this rearranged text
             accurately, so nothing in it warns the reader.
           </p>
+          <EckColumnsDiagram />
         </section>
 
         <section className="mb-16">

@@ -1,0 +1,6208 @@
+{
+ "generated": "2026-10-07T16:29:15.167Z",
+ "empty_twice_excluded": {
+  "flash": [
+   "6952872cab34727b1f04d284_499"
+  ]
+ },
+ "rule": {
+  "seed": 6202,
+  "resamples": 4000,
+  "fid_margin": 0.15,
+  "rev_margin": 0.1
+ },
+ "judges": "two blind Opus judges (claude -p --model opus, subscription), translation-vs-reference harness unchanged",
+ "gate": {
+  "lite": {
+   "pass": true,
+   "forced": false,
+   "by_judge": {
+    "j1": {
+     "wrong_page": "3/3 scored ≤ 2",
+     "planted": "3/3 caught (3 located the planted word)",
+     "duplicate": "3/3 tied",
+     "pass": true
+    },
+    "j2": {
+     "wrong_page": "3/3 scored ≤ 2",
+     "planted": "3/3 caught (3 located the planted word)",
+     "duplicate": "3/3 tied",
+     "pass": true
+    }
+   }
+  },
+  "flash": {
+   "pass": true,
+   "forced": false,
+   "by_judge": {
+    "j1": {
+     "wrong_page": "3/3 scored ≤ 2",
+     "planted": "3/3 caught (3 located the planted word)",
+     "duplicate": "3/3 tied",
+     "pass": true
+    },
+    "j2": {
+     "wrong_page": "3/3 scored ≤ 2",
+     "planted": "3/3 caught (3 located the planted word)",
+     "duplicate": "3/3 tied",
+     "pass": true
+    }
+   }
+  }
+ },
+ "agreement": {
+  "lite": {
+   "judges": [
+    "j1",
+    "j2"
+   ],
+   "n": 899,
+   "fidelity_exact": 0.836,
+   "within_1": 1,
+   "weighted_kappa": 0.855
+  },
+  "flash": {
+   "judges": [
+    "j1",
+    "j2"
+   ],
+   "n": 975,
+   "fidelity_exact": 0.822,
+   "within_1": 1,
+   "weighted_kappa": 0.832
+  }
+ },
+ "dropped": {
+  "lite": [],
+  "flash": [
+   {
+    "id": "6952872cab34727b1f04d284_499",
+    "set": "latin",
+    "missing": [
+     "empty twice (registered exclusion)"
+    ]
+   }
+  ]
+ },
+ "by_model": {
+  "lite": {
+   "all": {
+    "n": 150,
+    "floor": {
+     "fidelity": 0.04,
+     "reversals_per_100": 2,
+     "T1b_minus_T1a_fidelity": {
+      "n": 150,
+      "mean": -0.04,
+      "ci": [
+       -0.147,
+       0.067
+      ]
+     },
+     "T1b_minus_T1a_reversals_per_100": {
+      "n": 150,
+      "mean": 2,
+      "ci": [
+       -2.667,
+       7.333
+      ]
+     }
+    },
+    "arms": {
+     "T1a": {
+      "fidelity": {
+       "n": 150,
+       "mean": 3.843,
+       "ci": [
+        3.733,
+        3.953
+       ]
+      },
+      "reversals_per_100": {
+       "n": 150,
+       "mean": 8,
+       "ci": [
+        4,
+        12.667
+       ]
+      },
+      "omission_per_100": 37.33,
+      "share_fid_ge4": 0.667,
+      "cost_per_page_realtime": 0.00188
+     },
+     "T1b": {
+      "fidelity": {
+       "n": 150,
+       "mean": 3.803,
+       "ci": [
+        3.683,
+        3.927
+       ]
+      },
+      "reversals_per_100": {
+       "n": 150,
+       "mean": 10,
+       "ci": [
+        5.333,
+        15.333
+       ]
+      },
+      "omission_per_100": 36,
+      "share_fid_ge4": 0.627,
+      "cost_per_page_realtime": 0.00187
+     },
+     "T1c": {
+      "fidelity": {
+       "n": 150,
+       "mean": 3.83,
+       "ci": [
+        3.713,
+        3.947
+       ]
+      },
+      "reversals_per_100": {
+       "n": 150,
+       "mean": 8.667,
+       "ci": [
+        4.667,
+        13.333
+       ]
+      },
+      "omission_per_100": 32,
+      "share_fid_ge4": 0.66,
+      "cost_per_page_realtime": 0.00188
+     },
+     "T02a": {
+      "fidelity": {
+       "n": 150,
+       "mean": 3.903,
+       "ci": [
+        3.787,
+        4.013
+       ]
+      },
+      "reversals_per_100": {
+       "n": 150,
+       "mean": 8,
+       "ci": [
+        4,
+        12.667
+       ]
+      },
+      "omission_per_100": 28,
+      "share_fid_ge4": 0.727,
+      "cost_per_page_realtime": 0.00187
+     },
+     "T02b": {
+      "fidelity": {
+       "n": 150,
+       "mean": 3.93,
+       "ci": [
+        3.82,
+        4.043
+       ]
+      },
+      "reversals_per_100": {
+       "n": 150,
+       "mean": 6,
+       "ci": [
+        2.667,
+        10
+       ]
+      },
+      "omission_per_100": 30.67,
+      "share_fid_ge4": 0.72,
+      "cost_per_page_realtime": 0.00187
+     },
+     "T0a": {
+      "fidelity": {
+       "n": 150,
+       "mean": 3.933,
+       "ci": [
+        3.81,
+        4.05
+       ]
+      },
+      "reversals_per_100": {
+       "n": 150,
+       "mean": 4.667,
+       "ci": [
+        1.333,
+        8
+       ]
+      },
+      "omission_per_100": 29.33,
+      "share_fid_ge4": 0.727,
+      "cost_per_page_realtime": 0.00185
+     },
+     "T0b": {
+      "fidelity": {
+       "n": 150,
+       "mean": 3.933,
+       "ci": [
+        3.813,
+        4.05
+       ]
+      },
+      "reversals_per_100": {
+       "n": 150,
+       "mean": 4.667,
+       "ci": [
+        1.333,
+        8
+       ]
+      },
+      "omission_per_100": 29.33,
+      "share_fid_ge4": 0.727,
+      "cost_per_page_realtime": 0.00185
+     },
+     "BO3": {
+      "fidelity": {
+       "n": 150,
+       "mean": 3.953,
+       "ci": [
+        3.84,
+        4.063
+       ]
+      },
+      "reversals_per_100": {
+       "n": 150,
+       "mean": 7.333,
+       "ci": [
+        3.333,
+        11.333
+       ]
+      },
+      "omission_per_100": 28,
+      "share_fid_ge4": 0.747,
+      "cost_per_page_realtime": 0.0078
+     },
+     "ORACLE": {
+      "fidelity": {
+       "n": 150,
+       "mean": 4.113,
+       "ci": [
+        4.003,
+        4.22
+       ]
+      },
+      "reversals_per_100": {
+       "n": 150,
+       "mean": 2.667,
+       "ci": [
+        0.667,
+        5.333
+       ]
+      },
+      "omission_per_100": 30.67,
+      "share_fid_ge4": 0.8,
+      "cost_per_page_realtime": 0.00187
+     },
+     "WORST3": {
+      "fidelity": {
+       "n": 150,
+       "mean": 3.513,
+       "ci": [
+        3.4,
+        3.63
+       ]
+      },
+      "reversals_per_100": {
+       "n": 150,
+       "mean": 17.333,
+       "ci": [
+        11.333,
+        23.333
+       ]
+      },
+      "omission_per_100": 43.33,
+      "share_fid_ge4": 0.453,
+      "cost_per_page_realtime": 0.00189
+     },
+     "MEAN3": {
+      "fidelity": {
+       "n": 150,
+       "mean": 3.826,
+       "ci": [
+        3.726,
+        3.927
+       ]
+      },
+      "reversals_per_100": {
+       "n": 150,
+       "mean": 8.889,
+       "ci": [
+        5.556,
+        12.444
+       ]
+      },
+      "omission_per_100": 35.11,
+      "share_fid_ge4": 0.507,
+      "cost_per_page_realtime": 0.00187
+     }
+    },
+    "vs": {
+     "T1b-T1a": {
+      "d_fidelity": {
+       "n": 150,
+       "mean": -0.04,
+       "ci": [
+        -0.147,
+        0.063
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 150,
+       "mean": 2,
+       "ci": [
+        -2.7,
+        7.3
+       ]
+      },
+      "pages": {
+       "up": 33,
+       "down": 39,
+       "tie": 78
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true
+     },
+     "T02a-T1a": {
+      "d_fidelity": {
+       "n": 150,
+       "mean": 0.06,
+       "ci": [
+        -0.03,
+        0.157
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 150,
+       "mean": 0,
+       "ci": [
+        -4.7,
+        4.7
+       ]
+      },
+      "pages": {
+       "up": 34,
+       "down": 24,
+       "tie": 92
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true,
+      "two_draw_agrees": true
+     },
+     "T0a-T1a": {
+      "d_fidelity": {
+       "n": 150,
+       "mean": 0.09,
+       "ci": [
+        -0.003,
+        0.19
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 150,
+       "mean": -3.3,
+       "ci": [
+        -8,
+        0.7
+       ]
+      },
+      "pages": {
+       "up": 37,
+       "down": 25,
+       "tie": 88
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true,
+      "two_draw_agrees": true
+     },
+     "BO3-T1a": {
+      "d_fidelity": {
+       "n": 150,
+       "mean": 0.11,
+       "ci": [
+        0.037,
+        0.193
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 150,
+       "mean": -0.7,
+       "ci": [
+        -4,
+        2.7
+       ]
+      },
+      "pages": {
+       "up": 26,
+       "down": 10,
+       "tie": 114
+      },
+      "beats_production": true,
+      "by": "fidelity",
+      "not_worse": true
+     },
+     "ORACLE-T1a": {
+      "d_fidelity": {
+       "n": 150,
+       "mean": 0.27,
+       "ci": [
+        0.197,
+        0.347
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 150,
+       "mean": -5.3,
+       "ci": [
+        -9.3,
+        -2
+       ]
+      },
+      "pages": {
+       "up": 48,
+       "down": 0,
+       "tie": 102
+      },
+      "beats_production": true,
+      "by": "fidelity",
+      "not_worse": true
+     },
+     "T02mean-T1mean": {
+      "d_fidelity": {
+       "n": 150,
+       "mean": 0.093,
+       "ci": [
+        0.012,
+        0.175
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 150,
+       "mean": -2,
+       "ci": [
+        -5.3,
+        1.3
+       ]
+      },
+      "pages": {
+       "up": 55,
+       "down": 32,
+       "tie": 63
+      },
+      "beats_production": true,
+      "by": "fidelity",
+      "not_worse": true,
+      "transfers": false
+     },
+     "T0mean-T1mean": {
+      "d_fidelity": {
+       "n": 150,
+       "mean": 0.11,
+       "ci": [
+        0.025,
+        0.197
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 150,
+       "mean": -4.3,
+       "ci": [
+        -7.7,
+        -1.3
+       ]
+      },
+      "pages": {
+       "up": 58,
+       "down": 33,
+       "tie": 59
+      },
+      "beats_production": true,
+      "by": "fidelity",
+      "not_worse": true,
+      "transfers": false
+     },
+     "BO3-MEAN3 (picker lift)": {
+      "d_fidelity": {
+       "n": 150,
+       "mean": 0.128,
+       "ci": [
+        0.077,
+        0.18
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 150,
+       "mean": -1.6,
+       "ci": [
+        -4.4,
+        1.3
+       ]
+      },
+      "pages": {
+       "up": 67,
+       "down": 25,
+       "tie": 58
+      },
+      "beats_production": true,
+      "by": "fidelity",
+      "not_worse": true
+     }
+    },
+    "movement": {
+     "T1": {
+      "pages_moving_ge1": 39,
+      "share": 0.26,
+      "byte_identical": 0,
+      "mean_abs_diff": 0.4,
+      "reversal_flips": 15
+     },
+     "T02": {
+      "pages_moving_ge1": 14,
+      "share": 0.093,
+      "byte_identical": 1,
+      "mean_abs_diff": 0.153,
+      "reversal_flips": 7
+     },
+     "T0": {
+      "pages_moving_ge1": 0,
+      "share": 0,
+      "byte_identical": 150,
+      "mean_abs_diff": 0,
+      "reversal_flips": 0
+     }
+    },
+    "picks": {
+     "picked": {
+      "T1c": 41,
+      "T1b": 50,
+      "T1a": 59
+     },
+     "picked_a_top_draw": 118,
+     "picked_a_bottom_draw_when_they_differ": 25,
+     "pages_where_draws_differ": 98,
+     "fallback": 0
+    }
+   },
+   "tengyur": {
+    "n": 50,
+    "floor": {
+     "fidelity": 0.06,
+     "reversals_per_100": 2,
+     "T1b_minus_T1a_fidelity": {
+      "n": 50,
+      "mean": -0.06,
+      "ci": [
+       -0.22,
+       0.1
+      ]
+     },
+     "T1b_minus_T1a_reversals_per_100": {
+      "n": 50,
+      "mean": 2,
+      "ci": [
+       -4,
+       8
+      ]
+     }
+    },
+    "arms": {
+     "T1a": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.92,
+       "ci": [
+        3.81,
+        4.03
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 2,
+       "ci": [
+        0,
+        6
+       ]
+      },
+      "omission_per_100": 40,
+      "share_fid_ge4": 0.8,
+      "cost_per_page_realtime": 0.00164
+     },
+     "T1b": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.86,
+       "ci": [
+        3.71,
+        4.02
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 4,
+       "ci": [
+        0,
+        10
+       ]
+      },
+      "omission_per_100": 30,
+      "share_fid_ge4": 0.66,
+      "cost_per_page_realtime": 0.00161
+     },
+     "T1c": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.93,
+       "ci": [
+        3.79,
+        4.07
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 4,
+       "ci": [
+        0,
+        10
+       ]
+      },
+      "omission_per_100": 32,
+      "share_fid_ge4": 0.78,
+      "cost_per_page_realtime": 0.00164
+     },
+     "T02a": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.92,
+       "ci": [
+        3.8,
+        4.05
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 4,
+       "ci": [
+        0,
+        10
+       ]
+      },
+      "omission_per_100": 28,
+      "share_fid_ge4": 0.78,
+      "cost_per_page_realtime": 0.00162
+     },
+     "T02b": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.96,
+       "ci": [
+        3.82,
+        4.1
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 2,
+       "ci": [
+        0,
+        6
+       ]
+      },
+      "omission_per_100": 30,
+      "share_fid_ge4": 0.8,
+      "cost_per_page_realtime": 0.00161
+     },
+     "T0a": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.99,
+       "ci": [
+        3.86,
+        4.12
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 2,
+       "ci": [
+        0,
+        6
+       ]
+      },
+      "omission_per_100": 26,
+      "share_fid_ge4": 0.82,
+      "cost_per_page_realtime": 0.00161
+     },
+     "T0b": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.99,
+       "ci": [
+        3.86,
+        4.12
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 2,
+       "ci": [
+        0,
+        6
+       ]
+      },
+      "omission_per_100": 26,
+      "share_fid_ge4": 0.82,
+      "cost_per_page_realtime": 0.00161
+     },
+     "BO3": {
+      "fidelity": {
+       "n": 50,
+       "mean": 4.03,
+       "ci": [
+        3.89,
+        4.17
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 2,
+       "ci": [
+        0,
+        6
+       ]
+      },
+      "omission_per_100": 22,
+      "share_fid_ge4": 0.88,
+      "cost_per_page_realtime": 0.00697
+     },
+     "ORACLE": {
+      "fidelity": {
+       "n": 50,
+       "mean": 4.22,
+       "ci": [
+        4.09,
+        4.36
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 0,
+       "ci": [
+        0,
+        0
+       ]
+      },
+      "omission_per_100": 30,
+      "share_fid_ge4": 0.94,
+      "cost_per_page_realtime": 0.00165
+     },
+     "WORST3": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.56,
+       "ci": [
+        3.44,
+        3.68
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 10,
+       "ci": [
+        2,
+        20
+       ]
+      },
+      "omission_per_100": 46,
+      "share_fid_ge4": 0.44,
+      "cost_per_page_realtime": 0.00163
+     },
+     "MEAN3": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.903,
+       "ci": [
+        3.813,
+        3.997
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 3.333,
+       "ci": [
+        0.667,
+        6.667
+       ]
+      },
+      "omission_per_100": 34,
+      "share_fid_ge4": 0.54,
+      "cost_per_page_realtime": 0.00163
+     }
+    },
+    "vs": {
+     "T1b-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": -0.06,
+       "ci": [
+        -0.22,
+        0.1
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": 2,
+       "ci": [
+        -4,
+        8
+       ]
+      },
+      "pages": {
+       "up": 11,
+       "down": 15,
+       "tie": 24
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": false
+     },
+     "T02a-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0,
+       "ci": [
+        -0.15,
+        0.16
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": 2,
+       "ci": [
+        -4,
+        8
+       ]
+      },
+      "pages": {
+       "up": 9,
+       "down": 11,
+       "tie": 30
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true,
+      "two_draw_agrees": false
+     },
+     "T0a-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.07,
+       "ci": [
+        -0.08,
+        0.22
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": 0,
+       "ci": [
+        -6,
+        6
+       ]
+      },
+      "pages": {
+       "up": 10,
+       "down": 8,
+       "tie": 32
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true,
+      "two_draw_agrees": true
+     },
+     "BO3-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.11,
+       "ci": [
+        -0.04,
+        0.26
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": 0,
+       "ci": [
+        -6,
+        6
+       ]
+      },
+      "pages": {
+       "up": 11,
+       "down": 5,
+       "tie": 34
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true
+     },
+     "ORACLE-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.3,
+       "ci": [
+        0.18,
+        0.44
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -2,
+       "ci": [
+        -6,
+        0
+       ]
+      },
+      "pages": {
+       "up": 17,
+       "down": 0,
+       "tie": 33
+      },
+      "beats_production": true,
+      "by": "fidelity",
+      "not_worse": true
+     },
+     "T02mean-T1mean": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.05,
+       "ci": [
+        -0.095,
+        0.19
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": 0,
+       "ci": [
+        -4,
+        5
+       ]
+      },
+      "pages": {
+       "up": 20,
+       "down": 12,
+       "tie": 18
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true,
+      "transfers": false
+     },
+     "T0mean-T1mean": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.1,
+       "ci": [
+        -0.05,
+        0.24
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -1,
+       "ci": [
+        -6,
+        5
+       ]
+      },
+      "pages": {
+       "up": 21,
+       "down": 10,
+       "tie": 19
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true,
+      "transfers": false
+     },
+     "BO3-MEAN3 (picker lift)": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.127,
+       "ci": [
+        0.027,
+        0.227
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -1.3,
+       "ci": [
+        -4.7,
+        2.7
+       ]
+      },
+      "pages": {
+       "up": 25,
+       "down": 10,
+       "tie": 15
+      },
+      "beats_production": true,
+      "by": "fidelity",
+      "not_worse": true
+     }
+    },
+    "movement": {
+     "T1": {
+      "pages_moving_ge1": 13,
+      "share": 0.26,
+      "byte_identical": 0,
+      "mean_abs_diff": 0.4,
+      "reversal_flips": 3
+     },
+     "T02": {
+      "pages_moving_ge1": 5,
+      "share": 0.1,
+      "byte_identical": 0,
+      "mean_abs_diff": 0.18,
+      "reversal_flips": 1
+     },
+     "T0": {
+      "pages_moving_ge1": 0,
+      "share": 0,
+      "byte_identical": 50,
+      "mean_abs_diff": 0,
+      "reversal_flips": 0
+     }
+    },
+    "picks": {
+     "picked": {
+      "T1c": 13,
+      "T1b": 19,
+      "T1a": 18
+     },
+     "picked_a_top_draw": 39,
+     "picked_a_bottom_draw_when_they_differ": 10,
+     "pages_where_draws_differ": 36,
+     "fallback": 0
+    }
+   },
+   "t4": {
+    "n": 50,
+    "floor": {
+     "fidelity": 0.17,
+     "reversals_per_100": 2,
+     "T1b_minus_T1a_fidelity": {
+      "n": 50,
+      "mean": 0.17,
+      "ci": [
+       -0.01,
+       0.37
+      ]
+     },
+     "T1b_minus_T1a_reversals_per_100": {
+      "n": 50,
+      "mean": 2,
+      "ci": [
+       -10,
+       14
+      ]
+     }
+    },
+    "arms": {
+     "T1a": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.4,
+       "ci": [
+        3.2,
+        3.61
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 12,
+       "ci": [
+        4,
+        22
+       ]
+      },
+      "omission_per_100": 42,
+      "share_fid_ge4": 0.36,
+      "cost_per_page_realtime": 0.0023
+     },
+     "T1b": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.57,
+       "ci": [
+        3.35,
+        3.79
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 14,
+       "ci": [
+        6,
+        24
+       ]
+      },
+      "omission_per_100": 50,
+      "share_fid_ge4": 0.46,
+      "cost_per_page_realtime": 0.00226
+     },
+     "T1c": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.51,
+       "ci": [
+        3.29,
+        3.74
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 16,
+       "ci": [
+        6,
+        26
+       ]
+      },
+      "omission_per_100": 42,
+      "share_fid_ge4": 0.42,
+      "cost_per_page_realtime": 0.00227
+     },
+     "T02a": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.54,
+       "ci": [
+        3.32,
+        3.77
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 12,
+       "ci": [
+        4,
+        22
+       ]
+      },
+      "omission_per_100": 32,
+      "share_fid_ge4": 0.52,
+      "cost_per_page_realtime": 0.0023
+     },
+     "T02b": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.59,
+       "ci": [
+        3.38,
+        3.8
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 10,
+       "ci": [
+        2,
+        18
+       ]
+      },
+      "omission_per_100": 36,
+      "share_fid_ge4": 0.5,
+      "cost_per_page_realtime": 0.00229
+     },
+     "T0a": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.54,
+       "ci": [
+        3.31,
+        3.77
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 6,
+       "ci": [
+        0,
+        14
+       ]
+      },
+      "omission_per_100": 42,
+      "share_fid_ge4": 0.48,
+      "cost_per_page_realtime": 0.00223
+     },
+     "T0b": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.54,
+       "ci": [
+        3.3,
+        3.77
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 6,
+       "ci": [
+        0,
+        14
+       ]
+      },
+      "omission_per_100": 42,
+      "share_fid_ge4": 0.48,
+      "cost_per_page_realtime": 0.00223
+     },
+     "BO3": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.63,
+       "ci": [
+        3.43,
+        3.84
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 12,
+       "ci": [
+        4,
+        22
+       ]
+      },
+      "omission_per_100": 38,
+      "share_fid_ge4": 0.54,
+      "cost_per_page_realtime": 0.00938
+     },
+     "ORACLE": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.8,
+       "ci": [
+        3.6,
+        4.01
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 2,
+       "ci": [
+        0,
+        6
+       ]
+      },
+      "omission_per_100": 42,
+      "share_fid_ge4": 0.58,
+      "cost_per_page_realtime": 0.00226
+     },
+     "WORST3": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.16,
+       "ci": [
+        2.96,
+        3.36
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 26,
+       "ci": [
+        14,
+        40
+       ]
+      },
+      "omission_per_100": 50,
+      "share_fid_ge4": 0.24,
+      "cost_per_page_realtime": 0.00232
+     },
+     "MEAN3": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.493,
+       "ci": [
+        3.303,
+        3.68
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 14,
+       "ci": [
+        7.333,
+        21.333
+       ]
+      },
+      "omission_per_100": 44.67,
+      "share_fid_ge4": 0.28,
+      "cost_per_page_realtime": 0.00228
+     }
+    },
+    "vs": {
+     "T1b-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.17,
+       "ci": [
+        -0.01,
+        0.36
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": 2,
+       "ci": [
+        -10,
+        14
+       ]
+      },
+      "pages": {
+       "up": 17,
+       "down": 8,
+       "tie": 25
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": false
+     },
+     "T02a-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.14,
+       "ci": [
+        -0.04,
+        0.33
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": 0,
+       "ci": [
+        -12,
+        12
+       ]
+      },
+      "pages": {
+       "up": 16,
+       "down": 7,
+       "tie": 27
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": false,
+      "two_draw_agrees": true
+     },
+     "T0a-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.14,
+       "ci": [
+        -0.04,
+        0.35
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -6,
+       "ci": [
+        -16,
+        4
+       ]
+      },
+      "pages": {
+       "up": 16,
+       "down": 11,
+       "tie": 23
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true,
+      "two_draw_agrees": true
+     },
+     "BO3-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.23,
+       "ci": [
+        0.09,
+        0.4
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": 0,
+       "ci": [
+        -8,
+        8
+       ]
+      },
+      "pages": {
+       "up": 12,
+       "down": 1,
+       "tie": 37
+      },
+      "beats_production": true,
+      "by": "fidelity",
+      "not_worse": true
+     },
+     "ORACLE-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.4,
+       "ci": [
+        0.25,
+        0.56
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -10,
+       "ci": [
+        -20,
+        -2
+       ]
+      },
+      "pages": {
+       "up": 23,
+       "down": 0,
+       "tie": 27
+      },
+      "beats_production": true,
+      "by": "fidelity",
+      "not_worse": true
+     },
+     "T02mean-T1mean": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.08,
+       "ci": [
+        -0.04,
+        0.2
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -2,
+       "ci": [
+        -9,
+        5
+       ]
+      },
+      "pages": {
+       "up": 16,
+       "down": 10,
+       "tie": 24
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true,
+      "transfers": false
+     },
+     "T0mean-T1mean": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.055,
+       "ci": [
+        -0.095,
+        0.22
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -7,
+       "ci": [
+        -14,
+        -1
+       ]
+      },
+      "pages": {
+       "up": 17,
+       "down": 15,
+       "tie": 18
+      },
+      "beats_production": true,
+      "by": "reversals",
+      "not_worse": true,
+      "transfers": false
+     },
+     "BO3-MEAN3 (picker lift)": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.137,
+       "ci": [
+        0.05,
+        0.23
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -2,
+       "ci": [
+        -8.7,
+        4.7
+       ]
+      },
+      "pages": {
+       "up": 23,
+       "down": 9,
+       "tie": 18
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true
+     }
+    },
+    "movement": {
+     "T1": {
+      "pages_moving_ge1": 14,
+      "share": 0.28,
+      "byte_identical": 0,
+      "mean_abs_diff": 0.43,
+      "reversal_flips": 9
+     },
+     "T02": {
+      "pages_moving_ge1": 7,
+      "share": 0.14,
+      "byte_identical": 1,
+      "mean_abs_diff": 0.19,
+      "reversal_flips": 5
+     },
+     "T0": {
+      "pages_moving_ge1": 0,
+      "share": 0,
+      "byte_identical": 50,
+      "mean_abs_diff": 0,
+      "reversal_flips": 0
+     }
+    },
+    "picks": {
+     "picked": {
+      "T1a": 23,
+      "T1b": 14,
+      "T1c": 13
+     },
+     "picked_a_top_draw": 38,
+     "picked_a_bottom_draw_when_they_differ": 9,
+     "pages_where_draws_differ": 34,
+     "fallback": 0
+    }
+   },
+   "latin": {
+    "n": 50,
+    "floor": {
+     "fidelity": 0.23,
+     "reversals_per_100": 2,
+     "T1b_minus_T1a_fidelity": {
+      "n": 50,
+      "mean": -0.23,
+      "ci": [
+       -0.4,
+       -0.07
+      ]
+     },
+     "T1b_minus_T1a_reversals_per_100": {
+      "n": 50,
+      "mean": 2,
+      "ci": [
+       -4,
+       8
+      ]
+     }
+    },
+    "arms": {
+     "T1a": {
+      "fidelity": {
+       "n": 50,
+       "mean": 4.21,
+       "ci": [
+        4.02,
+        4.39
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 10,
+       "ci": [
+        2,
+        20
+       ]
+      },
+      "omission_per_100": 30,
+      "share_fid_ge4": 0.84,
+      "cost_per_page_realtime": 0.0017
+     },
+     "T1b": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.98,
+       "ci": [
+        3.76,
+        4.18
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 12,
+       "ci": [
+        4,
+        22
+       ]
+      },
+      "omission_per_100": 28,
+      "share_fid_ge4": 0.76,
+      "cost_per_page_realtime": 0.00172
+     },
+     "T1c": {
+      "fidelity": {
+       "n": 50,
+       "mean": 4.05,
+       "ci": [
+        3.84,
+        4.25
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 6,
+       "ci": [
+        0,
+        14
+       ]
+      },
+      "omission_per_100": 22,
+      "share_fid_ge4": 0.78,
+      "cost_per_page_realtime": 0.00172
+     },
+     "T02a": {
+      "fidelity": {
+       "n": 50,
+       "mean": 4.25,
+       "ci": [
+        4.05,
+        4.44
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 8,
+       "ci": [
+        2,
+        16
+       ]
+      },
+      "omission_per_100": 24,
+      "share_fid_ge4": 0.88,
+      "cost_per_page_realtime": 0.0017
+     },
+     "T02b": {
+      "fidelity": {
+       "n": 50,
+       "mean": 4.24,
+       "ci": [
+        4.06,
+        4.4
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 6,
+       "ci": [
+        0,
+        14
+       ]
+      },
+      "omission_per_100": 26,
+      "share_fid_ge4": 0.86,
+      "cost_per_page_realtime": 0.00171
+     },
+     "T0a": {
+      "fidelity": {
+       "n": 50,
+       "mean": 4.27,
+       "ci": [
+        4.08,
+        4.44
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 6,
+       "ci": [
+        0,
+        14
+       ]
+      },
+      "omission_per_100": 20,
+      "share_fid_ge4": 0.88,
+      "cost_per_page_realtime": 0.00171
+     },
+     "T0b": {
+      "fidelity": {
+       "n": 50,
+       "mean": 4.27,
+       "ci": [
+        4.09,
+        4.45
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 6,
+       "ci": [
+        0,
+        14
+       ]
+      },
+      "omission_per_100": 20,
+      "share_fid_ge4": 0.88,
+      "cost_per_page_realtime": 0.00171
+     },
+     "BO3": {
+      "fidelity": {
+       "n": 50,
+       "mean": 4.2,
+       "ci": [
+        4.01,
+        4.4
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 8,
+       "ci": [
+        2,
+        16
+       ]
+      },
+      "omission_per_100": 24,
+      "share_fid_ge4": 0.82,
+      "cost_per_page_realtime": 0.00704
+     },
+     "ORACLE": {
+      "fidelity": {
+       "n": 50,
+       "mean": 4.32,
+       "ci": [
+        4.14,
+        4.49
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 6,
+       "ci": [
+        0,
+        14
+       ]
+      },
+      "omission_per_100": 20,
+      "share_fid_ge4": 0.88,
+      "cost_per_page_realtime": 0.0017
+     },
+     "WORST3": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.82,
+       "ci": [
+        3.59,
+        4.03
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 16,
+       "ci": [
+        6,
+        28
+       ]
+      },
+      "omission_per_100": 34,
+      "share_fid_ge4": 0.68,
+      "cost_per_page_realtime": 0.00172
+     },
+     "MEAN3": {
+      "fidelity": {
+       "n": 50,
+       "mean": 4.08,
+       "ci": [
+        3.893,
+        4.253
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 9.333,
+       "ci": [
+        3.333,
+        16.667
+       ]
+      },
+      "omission_per_100": 26.67,
+      "share_fid_ge4": 0.7,
+      "cost_per_page_realtime": 0.00171
+     }
+    },
+    "vs": {
+     "T1b-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": -0.23,
+       "ci": [
+        -0.39,
+        -0.07
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": 2,
+       "ci": [
+        -4,
+        8
+       ]
+      },
+      "pages": {
+       "up": 5,
+       "down": 16,
+       "tie": 29
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": false
+     },
+     "T02a-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.04,
+       "ci": [
+        -0.09,
+        0.18
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -2,
+       "ci": [
+        -6,
+        0
+       ]
+      },
+      "pages": {
+       "up": 9,
+       "down": 6,
+       "tie": 35
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true,
+      "two_draw_agrees": true
+     },
+     "T0a-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.06,
+       "ci": [
+        -0.09,
+        0.2
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -4,
+       "ci": [
+        -10,
+        0
+       ]
+      },
+      "pages": {
+       "up": 11,
+       "down": 6,
+       "tie": 33
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true,
+      "two_draw_agrees": true
+     },
+     "BO3-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": -0.01,
+       "ci": [
+        -0.08,
+        0.06
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -2,
+       "ci": [
+        -6,
+        0
+       ]
+      },
+      "pages": {
+       "up": 3,
+       "down": 4,
+       "tie": 43
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true
+     },
+     "ORACLE-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.11,
+       "ci": [
+        0.04,
+        0.19
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -4,
+       "ci": [
+        -10,
+        0
+       ]
+      },
+      "pages": {
+       "up": 8,
+       "down": 0,
+       "tie": 42
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true
+     },
+     "T02mean-T1mean": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.15,
+       "ci": [
+        0.015,
+        0.295
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -4,
+       "ci": [
+        -9,
+        0
+       ]
+      },
+      "pages": {
+       "up": 19,
+       "down": 10,
+       "tie": 21
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true,
+      "transfers": false
+     },
+     "T0mean-T1mean": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.175,
+       "ci": [
+        0.02,
+        0.33
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -5,
+       "ci": [
+        -10,
+        -1
+       ]
+      },
+      "pages": {
+       "up": 20,
+       "down": 8,
+       "tie": 22
+      },
+      "beats_production": true,
+      "by": "reversals",
+      "not_worse": true,
+      "transfers": false
+     },
+     "BO3-MEAN3 (picker lift)": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.12,
+       "ci": [
+        0.047,
+        0.197
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -1.3,
+       "ci": [
+        -6,
+        3.3
+       ]
+      },
+      "pages": {
+       "up": 19,
+       "down": 6,
+       "tie": 25
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true
+     }
+    },
+    "movement": {
+     "T1": {
+      "pages_moving_ge1": 12,
+      "share": 0.24,
+      "byte_identical": 0,
+      "mean_abs_diff": 0.37,
+      "reversal_flips": 3
+     },
+     "T02": {
+      "pages_moving_ge1": 2,
+      "share": 0.04,
+      "byte_identical": 0,
+      "mean_abs_diff": 0.09,
+      "reversal_flips": 1
+     },
+     "T0": {
+      "pages_moving_ge1": 0,
+      "share": 0,
+      "byte_identical": 50,
+      "mean_abs_diff": 0,
+      "reversal_flips": 0
+     }
+    },
+    "picks": {
+     "picked": {
+      "T1b": 17,
+      "T1c": 15,
+      "T1a": 18
+     },
+     "picked_a_top_draw": 41,
+     "picked_a_bottom_draw_when_they_differ": 6,
+     "pages_where_draws_differ": 28,
+     "fallback": 0
+    }
+   }
+  },
+  "flash": {
+   "all": {
+    "n": 149,
+    "floor": {
+     "fidelity": 0.047,
+     "reversals_per_100": 0.67,
+     "T1b_minus_T1a_fidelity": {
+      "n": 149,
+      "mean": -0.047,
+      "ci": [
+       -0.144,
+       0.044
+      ]
+     },
+     "T1b_minus_T1a_reversals_per_100": {
+      "n": 149,
+      "mean": 0.671,
+      "ci": [
+       -4.698,
+       6.04
+      ]
+     }
+    },
+    "arms": {
+     "T1a": {
+      "fidelity": {
+       "n": 149,
+       "mean": 4.054,
+       "ci": [
+        3.933,
+        4.168
+       ]
+      },
+      "reversals_per_100": {
+       "n": 149,
+       "mean": 10.067,
+       "ci": [
+        5.369,
+        15.436
+       ]
+      },
+      "omission_per_100": 18.79,
+      "share_fid_ge4": 0.785,
+      "cost_per_page_realtime": 0.00393
+     },
+     "T1b": {
+      "fidelity": {
+       "n": 149,
+       "mean": 4.007,
+       "ci": [
+        3.889,
+        4.128
+       ]
+      },
+      "reversals_per_100": {
+       "n": 149,
+       "mean": 10.738,
+       "ci": [
+        6.04,
+        16.107
+       ]
+      },
+      "omission_per_100": 28.19,
+      "share_fid_ge4": 0.745,
+      "cost_per_page_realtime": 0.00392
+     },
+     "T1c": {
+      "fidelity": {
+       "n": 149,
+       "mean": 4.023,
+       "ci": [
+        3.916,
+        4.134
+       ]
+      },
+      "reversals_per_100": {
+       "n": 149,
+       "mean": 9.396,
+       "ci": [
+        4.698,
+        14.094
+       ]
+      },
+      "omission_per_100": 27.52,
+      "share_fid_ge4": 0.772,
+      "cost_per_page_realtime": 0.00393
+     },
+     "T02a": {
+      "fidelity": {
+       "n": 149,
+       "mean": 4.181,
+       "ci": [
+        4.07,
+        4.289
+       ]
+      },
+      "reversals_per_100": {
+       "n": 149,
+       "mean": 8.725,
+       "ci": [
+        4.698,
+        13.423
+       ]
+      },
+      "omission_per_100": 25.5,
+      "share_fid_ge4": 0.812,
+      "cost_per_page_realtime": 0.00393
+     },
+     "T02b": {
+      "fidelity": {
+       "n": 149,
+       "mean": 4.124,
+       "ci": [
+        4.017,
+        4.232
+       ]
+      },
+      "reversals_per_100": {
+       "n": 149,
+       "mean": 9.396,
+       "ci": [
+        4.698,
+        14.094
+       ]
+      },
+      "omission_per_100": 24.16,
+      "share_fid_ge4": 0.772,
+      "cost_per_page_realtime": 0.00391
+     },
+     "T0a": {
+      "fidelity": {
+       "n": 149,
+       "mean": 4.107,
+       "ci": [
+        3.99,
+        4.221
+       ]
+      },
+      "reversals_per_100": {
+       "n": 149,
+       "mean": 8.054,
+       "ci": [
+        4.027,
+        12.752
+       ]
+      },
+      "omission_per_100": 21.48,
+      "share_fid_ge4": 0.765,
+      "cost_per_page_realtime": 0.00394
+     },
+     "T0b": {
+      "fidelity": {
+       "n": 149,
+       "mean": 4.111,
+       "ci": [
+        4,
+        4.218
+       ]
+      },
+      "reversals_per_100": {
+       "n": 149,
+       "mean": 6.711,
+       "ci": [
+        3.356,
+        10.738
+       ]
+      },
+      "omission_per_100": 20.81,
+      "share_fid_ge4": 0.785,
+      "cost_per_page_realtime": 0.00394
+     },
+     "BO3": {
+      "fidelity": {
+       "n": 149,
+       "mean": 4.104,
+       "ci": [
+        3.993,
+        4.211
+       ]
+      },
+      "reversals_per_100": {
+       "n": 149,
+       "mean": 8.054,
+       "ci": [
+        4.027,
+        12.752
+       ]
+      },
+      "omission_per_100": 21.48,
+      "share_fid_ge4": 0.805,
+      "cost_per_page_realtime": 0.01405
+     },
+     "ORACLE": {
+      "fidelity": {
+       "n": 149,
+       "mean": 4.258,
+       "ci": [
+        4.151,
+        4.366
+       ]
+      },
+      "reversals_per_100": {
+       "n": 149,
+       "mean": 5.369,
+       "ci": [
+        2.013,
+        9.396
+       ]
+      },
+      "omission_per_100": 16.78,
+      "share_fid_ge4": 0.859,
+      "cost_per_page_realtime": 0.00395
+     },
+     "WORST3": {
+      "fidelity": {
+       "n": 149,
+       "mean": 3.762,
+       "ci": [
+        3.654,
+        3.872
+       ]
+      },
+      "reversals_per_100": {
+       "n": 149,
+       "mean": 17.45,
+       "ci": [
+        11.409,
+        24.161
+       ]
+      },
+      "omission_per_100": 26.17,
+      "share_fid_ge4": 0.638,
+      "cost_per_page_realtime": 0.00392
+     },
+     "MEAN3": {
+      "fidelity": {
+       "n": 149,
+       "mean": 4.028,
+       "ci": [
+        3.923,
+        4.13
+       ]
+      },
+      "reversals_per_100": {
+       "n": 149,
+       "mean": 10.067,
+       "ci": [
+        6.04,
+        14.094
+       ]
+      },
+      "omission_per_100": 24.83,
+      "share_fid_ge4": 0.664,
+      "cost_per_page_realtime": 0.00393
+     }
+    },
+    "vs": {
+     "T1b-T1a": {
+      "d_fidelity": {
+       "n": 149,
+       "mean": -0.047,
+       "ci": [
+        -0.144,
+        0.047
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 149,
+       "mean": 0.7,
+       "ci": [
+        -4.7,
+        6
+       ]
+      },
+      "pages": {
+       "up": 29,
+       "down": 40,
+       "tie": 80
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true
+     },
+     "T02a-T1a": {
+      "d_fidelity": {
+       "n": 149,
+       "mean": 0.128,
+       "ci": [
+        0.04,
+        0.215
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 149,
+       "mean": -1.3,
+       "ci": [
+        -6.7,
+        4
+       ]
+      },
+      "pages": {
+       "up": 45,
+       "down": 23,
+       "tie": 81
+      },
+      "beats_production": true,
+      "by": "fidelity",
+      "not_worse": true,
+      "two_draw_agrees": true
+     },
+     "T0a-T1a": {
+      "d_fidelity": {
+       "n": 149,
+       "mean": 0.054,
+       "ci": [
+        -0.034,
+        0.141
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 149,
+       "mean": -2,
+       "ci": [
+        -7.4,
+        2.7
+       ]
+      },
+      "pages": {
+       "up": 36,
+       "down": 25,
+       "tie": 88
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true,
+      "two_draw_agrees": true
+     },
+     "BO3-T1a": {
+      "d_fidelity": {
+       "n": 149,
+       "mean": 0.05,
+       "ci": [
+        -0.023,
+        0.124
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 149,
+       "mean": -2,
+       "ci": [
+        -6,
+        2
+       ]
+      },
+      "pages": {
+       "up": 28,
+       "down": 22,
+       "tie": 99
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true
+     },
+     "ORACLE-T1a": {
+      "d_fidelity": {
+       "n": 149,
+       "mean": 0.205,
+       "ci": [
+        0.144,
+        0.268
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 149,
+       "mean": -4.7,
+       "ci": [
+        -8.7,
+        -1.3
+       ]
+      },
+      "pages": {
+       "up": 36,
+       "down": 0,
+       "tie": 113
+      },
+      "beats_production": true,
+      "by": "fidelity",
+      "not_worse": true
+     },
+     "T02mean-T1mean": {
+      "d_fidelity": {
+       "n": 149,
+       "mean": 0.122,
+       "ci": [
+        0.052,
+        0.195
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 149,
+       "mean": -1.3,
+       "ci": [
+        -5.4,
+        2.7
+       ]
+      },
+      "pages": {
+       "up": 59,
+       "down": 26,
+       "tie": 64
+      },
+      "beats_production": true,
+      "by": "fidelity",
+      "not_worse": true,
+      "transfers": false
+     },
+     "T0mean-T1mean": {
+      "d_fidelity": {
+       "n": 149,
+       "mean": 0.079,
+       "ci": [
+        0.01,
+        0.149
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 149,
+       "mean": -3,
+       "ci": [
+        -7,
+        1.3
+       ]
+      },
+      "pages": {
+       "up": 52,
+       "down": 28,
+       "tie": 69
+      },
+      "beats_production": true,
+      "by": "fidelity",
+      "not_worse": true,
+      "transfers": true
+     },
+     "BO3-MEAN3 (picker lift)": {
+      "d_fidelity": {
+       "n": 149,
+       "mean": 0.076,
+       "ci": [
+        0.029,
+        0.122
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 149,
+       "mean": -2,
+       "ci": [
+        -4.3,
+        0.2
+       ]
+      },
+      "pages": {
+       "up": 57,
+       "down": 27,
+       "tie": 65
+      },
+      "beats_production": true,
+      "by": "fidelity",
+      "not_worse": true
+     }
+    },
+    "movement": {
+     "T1": {
+      "pages_moving_ge1": 37,
+      "share": 0.248,
+      "byte_identical": 0,
+      "mean_abs_diff": 0.376,
+      "reversal_flips": 15
+     },
+     "T02": {
+      "pages_moving_ge1": 20,
+      "share": 0.134,
+      "byte_identical": 0,
+      "mean_abs_diff": 0.198,
+      "reversal_flips": 7
+     },
+     "T0": {
+      "pages_moving_ge1": 8,
+      "share": 0.054,
+      "byte_identical": 74,
+      "mean_abs_diff": 0.084,
+      "reversal_flips": 2
+     }
+    },
+    "picks": {
+     "picked": {
+      "T1a": 51,
+      "T1b": 54,
+      "T1c": 44
+     },
+     "picked_a_top_draw": 116,
+     "picked_a_bottom_draw_when_they_differ": 27,
+     "pages_where_draws_differ": 88,
+     "fallback": 0
+    }
+   },
+   "tengyur": {
+    "n": 50,
+    "floor": {
+     "fidelity": 0.03,
+     "reversals_per_100": 0,
+     "T1b_minus_T1a_fidelity": {
+      "n": 50,
+      "mean": -0.03,
+      "ci": [
+       -0.2,
+       0.15
+      ]
+     },
+     "T1b_minus_T1a_reversals_per_100": {
+      "n": 50,
+      "mean": 0,
+      "ci": [
+       -10,
+       10
+      ]
+     }
+    },
+    "arms": {
+     "T1a": {
+      "fidelity": {
+       "n": 50,
+       "mean": 4.11,
+       "ci": [
+        3.97,
+        4.24
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 6,
+       "ci": [
+        0,
+        14
+       ]
+      },
+      "omission_per_100": 12,
+      "share_fid_ge4": 0.88,
+      "cost_per_page_realtime": 0.00355
+     },
+     "T1b": {
+      "fidelity": {
+       "n": 50,
+       "mean": 4.08,
+       "ci": [
+        3.94,
+        4.22
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 6,
+       "ci": [
+        0,
+        14
+       ]
+      },
+      "omission_per_100": 20,
+      "share_fid_ge4": 0.84,
+      "cost_per_page_realtime": 0.00355
+     },
+     "T1c": {
+      "fidelity": {
+       "n": 50,
+       "mean": 4.08,
+       "ci": [
+        3.96,
+        4.2
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 4,
+       "ci": [
+        0,
+        10
+       ]
+      },
+      "omission_per_100": 26,
+      "share_fid_ge4": 0.92,
+      "cost_per_page_realtime": 0.00355
+     },
+     "T02a": {
+      "fidelity": {
+       "n": 50,
+       "mean": 4.27,
+       "ci": [
+        4.13,
+        4.42
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 4,
+       "ci": [
+        0,
+        10
+       ]
+      },
+      "omission_per_100": 16,
+      "share_fid_ge4": 0.94,
+      "cost_per_page_realtime": 0.00353
+     },
+     "T02b": {
+      "fidelity": {
+       "n": 50,
+       "mean": 4.15,
+       "ci": [
+        4.01,
+        4.29
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 6,
+       "ci": [
+        0,
+        14
+       ]
+      },
+      "omission_per_100": 24,
+      "share_fid_ge4": 0.86,
+      "cost_per_page_realtime": 0.00353
+     },
+     "T0a": {
+      "fidelity": {
+       "n": 50,
+       "mean": 4.09,
+       "ci": [
+        3.96,
+        4.23
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 6,
+       "ci": [
+        0,
+        14
+       ]
+      },
+      "omission_per_100": 18,
+      "share_fid_ge4": 0.84,
+      "cost_per_page_realtime": 0.00354
+     },
+     "T0b": {
+      "fidelity": {
+       "n": 50,
+       "mean": 4.14,
+       "ci": [
+        4.01,
+        4.26
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 2,
+       "ci": [
+        0,
+        6
+       ]
+      },
+      "omission_per_100": 20,
+      "share_fid_ge4": 0.9,
+      "cost_per_page_realtime": 0.00354
+     },
+     "BO3": {
+      "fidelity": {
+       "n": 50,
+       "mean": 4.17,
+       "ci": [
+        4.03,
+        4.3
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 4,
+       "ci": [
+        0,
+        10
+       ]
+      },
+      "omission_per_100": 16,
+      "share_fid_ge4": 0.9,
+      "cost_per_page_realtime": 0.01286
+     },
+     "ORACLE": {
+      "fidelity": {
+       "n": 50,
+       "mean": 4.36,
+       "ci": [
+        4.25,
+        4.48
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 0,
+       "ci": [
+        0,
+        0
+       ]
+      },
+      "omission_per_100": 6,
+      "share_fid_ge4": 1,
+      "cost_per_page_realtime": 0.00356
+     },
+     "WORST3": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.78,
+       "ci": [
+        3.66,
+        3.89
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 14,
+       "ci": [
+        6,
+        24
+       ]
+      },
+      "omission_per_100": 24,
+      "share_fid_ge4": 0.68,
+      "cost_per_page_realtime": 0.00355
+     },
+     "MEAN3": {
+      "fidelity": {
+       "n": 50,
+       "mean": 4.09,
+       "ci": [
+        4,
+        4.183
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 5.333,
+       "ci": [
+        2,
+        10
+       ]
+      },
+      "omission_per_100": 19.33,
+      "share_fid_ge4": 0.74,
+      "cost_per_page_realtime": 0.00355
+     }
+    },
+    "vs": {
+     "T1b-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": -0.03,
+       "ci": [
+        -0.21,
+        0.15
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": 0,
+       "ci": [
+        -10,
+        10
+       ]
+      },
+      "pages": {
+       "up": 10,
+       "down": 15,
+       "tie": 25
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": false
+     },
+     "T02a-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.16,
+       "ci": [
+        0,
+        0.33
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -2,
+       "ci": [
+        -10,
+        6
+       ]
+      },
+      "pages": {
+       "up": 15,
+       "down": 9,
+       "tie": 26
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true,
+      "two_draw_agrees": true
+     },
+     "T0a-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": -0.02,
+       "ci": [
+        -0.19,
+        0.14
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": 0,
+       "ci": [
+        -10,
+        10
+       ]
+      },
+      "pages": {
+       "up": 10,
+       "down": 13,
+       "tie": 27
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": false,
+      "two_draw_agrees": false
+     },
+     "BO3-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.06,
+       "ci": [
+        -0.08,
+        0.21
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -2,
+       "ci": [
+        -10,
+        6
+       ]
+      },
+      "pages": {
+       "up": 10,
+       "down": 9,
+       "tie": 31
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true
+     },
+     "ORACLE-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.25,
+       "ci": [
+        0.13,
+        0.39
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -6,
+       "ci": [
+        -14,
+        0
+       ]
+      },
+      "pages": {
+       "up": 13,
+       "down": 0,
+       "tie": 37
+      },
+      "beats_production": true,
+      "by": "fidelity",
+      "not_worse": true
+     },
+     "T02mean-T1mean": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.115,
+       "ci": [
+        0.005,
+        0.23
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -1,
+       "ci": [
+        -6,
+        4
+       ]
+      },
+      "pages": {
+       "up": 16,
+       "down": 12,
+       "tie": 22
+      },
+      "beats_production": true,
+      "by": "fidelity",
+      "not_worse": true,
+      "transfers": false
+     },
+     "T0mean-T1mean": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.02,
+       "ci": [
+        -0.09,
+        0.135
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -2,
+       "ci": [
+        -7,
+        3
+       ]
+      },
+      "pages": {
+       "up": 13,
+       "down": 14,
+       "tie": 23
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true,
+      "transfers": true
+     },
+     "BO3-MEAN3 (picker lift)": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.08,
+       "ci": [
+        -0.007,
+        0.167
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -1.3,
+       "ci": [
+        -5.3,
+        3.3
+       ]
+      },
+      "pages": {
+       "up": 21,
+       "down": 10,
+       "tie": 19
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true
+     }
+    },
+    "movement": {
+     "T1": {
+      "pages_moving_ge1": 13,
+      "share": 0.26,
+      "byte_identical": 0,
+      "mean_abs_diff": 0.41,
+      "reversal_flips": 6
+     },
+     "T02": {
+      "pages_moving_ge1": 9,
+      "share": 0.18,
+      "byte_identical": 0,
+      "mean_abs_diff": 0.28,
+      "reversal_flips": 3
+     },
+     "T0": {
+      "pages_moving_ge1": 5,
+      "share": 0.1,
+      "byte_identical": 19,
+      "mean_abs_diff": 0.17,
+      "reversal_flips": 2
+     }
+    },
+    "picks": {
+     "picked": {
+      "T1a": 16,
+      "T1b": 21,
+      "T1c": 13
+     },
+     "picked_a_top_draw": 36,
+     "picked_a_bottom_draw_when_they_differ": 10,
+     "pages_where_draws_differ": 34,
+     "fallback": 0
+    }
+   },
+   "t4": {
+    "n": 50,
+    "floor": {
+     "fidelity": 0.04,
+     "reversals_per_100": 2,
+     "T1b_minus_T1a_fidelity": {
+      "n": 50,
+      "mean": -0.04,
+      "ci": [
+       -0.19,
+       0.12
+      ]
+     },
+     "T1b_minus_T1a_reversals_per_100": {
+      "n": 50,
+      "mean": -2,
+      "ci": [
+       -12,
+       8
+      ]
+     }
+    },
+    "arms": {
+     "T1a": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.7,
+       "ci": [
+        3.46,
+        3.94
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 20,
+       "ci": [
+        10,
+        32
+       ]
+      },
+      "omission_per_100": 32,
+      "share_fid_ge4": 0.56,
+      "cost_per_page_realtime": 0.00472
+     },
+     "T1b": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.66,
+       "ci": [
+        3.42,
+        3.9
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 18,
+       "ci": [
+        8,
+        30
+       ]
+      },
+      "omission_per_100": 44,
+      "share_fid_ge4": 0.54,
+      "cost_per_page_realtime": 0.00469
+     },
+     "T1c": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.67,
+       "ci": [
+        3.45,
+        3.89
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 16,
+       "ci": [
+        6,
+        26
+       ]
+      },
+      "omission_per_100": 36,
+      "share_fid_ge4": 0.52,
+      "cost_per_page_realtime": 0.00472
+     },
+     "T02a": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.82,
+       "ci": [
+        3.61,
+        4.03
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 12,
+       "ci": [
+        4,
+        22
+       ]
+      },
+      "omission_per_100": 40,
+      "share_fid_ge4": 0.62,
+      "cost_per_page_realtime": 0.00475
+     },
+     "T02b": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.81,
+       "ci": [
+        3.6,
+        4.01
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 14,
+       "ci": [
+        6,
+        24
+       ]
+      },
+      "omission_per_100": 32,
+      "share_fid_ge4": 0.58,
+      "cost_per_page_realtime": 0.00467
+     },
+     "T0a": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.8,
+       "ci": [
+        3.57,
+        4.02
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 12,
+       "ci": [
+        4,
+        22
+       ]
+      },
+      "omission_per_100": 28,
+      "share_fid_ge4": 0.58,
+      "cost_per_page_realtime": 0.00478
+     },
+     "T0b": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.79,
+       "ci": [
+        3.57,
+        4.01
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 12,
+       "ci": [
+        4,
+        22
+       ]
+      },
+      "omission_per_100": 22,
+      "share_fid_ge4": 0.58,
+      "cost_per_page_realtime": 0.00478
+     },
+     "BO3": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.72,
+       "ci": [
+        3.51,
+        3.93
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 14,
+       "ci": [
+        6,
+        24
+       ]
+      },
+      "omission_per_100": 32,
+      "share_fid_ge4": 0.6,
+      "cost_per_page_realtime": 0.01676
+     },
+     "ORACLE": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.9,
+       "ci": [
+        3.67,
+        4.12
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 12,
+       "ci": [
+        4,
+        22
+       ]
+      },
+      "omission_per_100": 32,
+      "share_fid_ge4": 0.64,
+      "cost_per_page_realtime": 0.00475
+     },
+     "WORST3": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.43,
+       "ci": [
+        3.21,
+        3.65
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 28,
+       "ci": [
+        16,
+        40
+       ]
+      },
+      "omission_per_100": 40,
+      "share_fid_ge4": 0.42,
+      "cost_per_page_realtime": 0.00468
+     },
+     "MEAN3": {
+      "fidelity": {
+       "n": 50,
+       "mean": 3.677,
+       "ci": [
+        3.467,
+        3.893
+       ]
+      },
+      "reversals_per_100": {
+       "n": 50,
+       "mean": 18,
+       "ci": [
+        9.333,
+        27.333
+       ]
+      },
+      "omission_per_100": 37.33,
+      "share_fid_ge4": 0.44,
+      "cost_per_page_realtime": 0.00471
+     }
+    },
+    "vs": {
+     "T1b-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": -0.04,
+       "ci": [
+        -0.19,
+        0.12
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -2,
+       "ci": [
+        -12,
+        8
+       ]
+      },
+      "pages": {
+       "up": 9,
+       "down": 14,
+       "tie": 27
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": false
+     },
+     "T02a-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.12,
+       "ci": [
+        -0.02,
+        0.26
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -8,
+       "ci": [
+        -20,
+        2
+       ]
+      },
+      "pages": {
+       "up": 15,
+       "down": 7,
+       "tie": 28
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true,
+      "two_draw_agrees": true
+     },
+     "T0a-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.1,
+       "ci": [
+        -0.05,
+        0.25
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -8,
+       "ci": [
+        -18,
+        0
+       ]
+      },
+      "pages": {
+       "up": 13,
+       "down": 5,
+       "tie": 32
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true,
+      "two_draw_agrees": true
+     },
+     "BO3-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.02,
+       "ci": [
+        -0.11,
+        0.15
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -6,
+       "ci": [
+        -12,
+        0
+       ]
+      },
+      "pages": {
+       "up": 10,
+       "down": 10,
+       "tie": 30
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true
+     },
+     "ORACLE-T1a": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.2,
+       "ci": [
+        0.1,
+        0.31
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -8,
+       "ci": [
+        -16,
+        -2
+       ]
+      },
+      "pages": {
+       "up": 12,
+       "down": 0,
+       "tie": 38
+      },
+      "beats_production": true,
+      "by": "fidelity",
+      "not_worse": true
+     },
+     "T02mean-T1mean": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.135,
+       "ci": [
+        0.03,
+        0.245
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -6,
+       "ci": [
+        -15,
+        2
+       ]
+      },
+      "pages": {
+       "up": 20,
+       "down": 6,
+       "tie": 24
+      },
+      "beats_production": true,
+      "by": "fidelity",
+      "not_worse": true,
+      "transfers": false
+     },
+     "T0mean-T1mean": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.115,
+       "ci": [
+        0.01,
+        0.215
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -7,
+       "ci": [
+        -16,
+        1
+       ]
+      },
+      "pages": {
+       "up": 18,
+       "down": 5,
+       "tie": 27
+      },
+      "beats_production": true,
+      "by": "fidelity",
+      "not_worse": true,
+      "transfers": false
+     },
+     "BO3-MEAN3 (picker lift)": {
+      "d_fidelity": {
+       "n": 50,
+       "mean": 0.043,
+       "ci": [
+        -0.033,
+        0.123
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 50,
+       "mean": -4,
+       "ci": [
+        -8,
+        -0.7
+       ]
+      },
+      "pages": {
+       "up": 16,
+       "down": 11,
+       "tie": 23
+      },
+      "beats_production": true,
+      "by": "reversals",
+      "not_worse": true
+     }
+    },
+    "movement": {
+     "T1": {
+      "pages_moving_ge1": 12,
+      "share": 0.24,
+      "byte_identical": 0,
+      "mean_abs_diff": 0.36,
+      "reversal_flips": 7
+     },
+     "T02": {
+      "pages_moving_ge1": 5,
+      "share": 0.1,
+      "byte_identical": 0,
+      "mean_abs_diff": 0.17,
+      "reversal_flips": 3
+     },
+     "T0": {
+      "pages_moving_ge1": 2,
+      "share": 0.04,
+      "byte_identical": 29,
+      "mean_abs_diff": 0.05,
+      "reversal_flips": 0
+     }
+    },
+    "picks": {
+     "picked": {
+      "T1c": 20,
+      "T1a": 15,
+      "T1b": 15
+     },
+     "picked_a_top_draw": 37,
+     "picked_a_bottom_draw_when_they_differ": 11,
+     "pages_where_draws_differ": 28,
+     "fallback": 0
+    }
+   },
+   "latin": {
+    "n": 49,
+    "floor": {
+     "fidelity": 0.071,
+     "reversals_per_100": 4.08,
+     "T1b_minus_T1a_fidelity": {
+      "n": 49,
+      "mean": -0.071,
+      "ci": [
+       -0.245,
+       0.092
+      ]
+     },
+     "T1b_minus_T1a_reversals_per_100": {
+      "n": 49,
+      "mean": 4.082,
+      "ci": [
+       0,
+       10.204
+      ]
+     }
+    },
+    "arms": {
+     "T1a": {
+      "fidelity": {
+       "n": 49,
+       "mean": 4.357,
+       "ci": [
+        4.204,
+        4.51
+       ]
+      },
+      "reversals_per_100": {
+       "n": 49,
+       "mean": 4.082,
+       "ci": [
+        0,
+        10.204
+       ]
+      },
+      "omission_per_100": 12.24,
+      "share_fid_ge4": 0.918,
+      "cost_per_page_realtime": 0.0035
+     },
+     "T1b": {
+      "fidelity": {
+       "n": 49,
+       "mean": 4.286,
+       "ci": [
+        4.092,
+        4.469
+       ]
+      },
+      "reversals_per_100": {
+       "n": 49,
+       "mean": 8.163,
+       "ci": [
+        2.041,
+        16.327
+       ]
+      },
+      "omission_per_100": 20.41,
+      "share_fid_ge4": 0.857,
+      "cost_per_page_realtime": 0.00351
+     },
+     "T1c": {
+      "fidelity": {
+       "n": 49,
+       "mean": 4.327,
+       "ci": [
+        4.153,
+        4.49
+       ]
+      },
+      "reversals_per_100": {
+       "n": 49,
+       "mean": 8.163,
+       "ci": [
+        2.041,
+        16.327
+       ]
+      },
+      "omission_per_100": 20.41,
+      "share_fid_ge4": 0.878,
+      "cost_per_page_realtime": 0.00353
+     },
+     "T02a": {
+      "fidelity": {
+       "n": 49,
+       "mean": 4.459,
+       "ci": [
+        4.286,
+        4.622
+       ]
+      },
+      "reversals_per_100": {
+       "n": 49,
+       "mean": 10.204,
+       "ci": [
+        2.041,
+        20.408
+       ]
+      },
+      "omission_per_100": 20.41,
+      "share_fid_ge4": 0.878,
+      "cost_per_page_realtime": 0.00349
+     },
+     "T02b": {
+      "fidelity": {
+       "n": 49,
+       "mean": 4.418,
+       "ci": [
+        4.235,
+        4.592
+       ]
+      },
+      "reversals_per_100": {
+       "n": 49,
+       "mean": 8.163,
+       "ci": [
+        2.041,
+        16.327
+       ]
+      },
+      "omission_per_100": 16.33,
+      "share_fid_ge4": 0.878,
+      "cost_per_page_realtime": 0.00351
+     },
+     "T0a": {
+      "fidelity": {
+       "n": 49,
+       "mean": 4.439,
+       "ci": [
+        4.255,
+        4.612
+       ]
+      },
+      "reversals_per_100": {
+       "n": 49,
+       "mean": 6.122,
+       "ci": [
+        0,
+        14.286
+       ]
+      },
+      "omission_per_100": 18.37,
+      "share_fid_ge4": 0.878,
+      "cost_per_page_realtime": 0.0035
+     },
+     "T0b": {
+      "fidelity": {
+       "n": 49,
+       "mean": 4.408,
+       "ci": [
+        4.224,
+        4.582
+       ]
+      },
+      "reversals_per_100": {
+       "n": 49,
+       "mean": 6.122,
+       "ci": [
+        0,
+        14.286
+       ]
+      },
+      "omission_per_100": 20.41,
+      "share_fid_ge4": 0.878,
+      "cost_per_page_realtime": 0.0035
+     },
+     "BO3": {
+      "fidelity": {
+       "n": 49,
+       "mean": 4.429,
+       "ci": [
+        4.265,
+        4.592
+       ]
+      },
+      "reversals_per_100": {
+       "n": 49,
+       "mean": 6.122,
+       "ci": [
+        0,
+        14.286
+       ]
+      },
+      "omission_per_100": 16.33,
+      "share_fid_ge4": 0.918,
+      "cost_per_page_realtime": 0.01248
+     },
+     "ORACLE": {
+      "fidelity": {
+       "n": 49,
+       "mean": 4.52,
+       "ci": [
+        4.367,
+        4.673
+       ]
+      },
+      "reversals_per_100": {
+       "n": 49,
+       "mean": 4.082,
+       "ci": [
+        0,
+        10.204
+       ]
+      },
+      "omission_per_100": 12.24,
+      "share_fid_ge4": 0.939,
+      "cost_per_page_realtime": 0.00351
+     },
+     "WORST3": {
+      "fidelity": {
+       "n": 49,
+       "mean": 4.082,
+       "ci": [
+        3.898,
+        4.255
+       ]
+      },
+      "reversals_per_100": {
+       "n": 49,
+       "mean": 10.204,
+       "ci": [
+        2.041,
+        20.408
+       ]
+      },
+      "omission_per_100": 14.29,
+      "share_fid_ge4": 0.816,
+      "cost_per_page_realtime": 0.00351
+     },
+     "MEAN3": {
+      "fidelity": {
+       "n": 49,
+       "mean": 4.323,
+       "ci": [
+        4.167,
+        4.469
+       ]
+      },
+      "reversals_per_100": {
+       "n": 49,
+       "mean": 6.803,
+       "ci": [
+        1.361,
+        13.605
+       ]
+      },
+      "omission_per_100": 17.69,
+      "share_fid_ge4": 0.816,
+      "cost_per_page_realtime": 0.00352
+     }
+    },
+    "vs": {
+     "T1b-T1a": {
+      "d_fidelity": {
+       "n": 49,
+       "mean": -0.071,
+       "ci": [
+        -0.245,
+        0.082
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 49,
+       "mean": 4.1,
+       "ci": [
+        0,
+        10.2
+       ]
+      },
+      "pages": {
+       "up": 10,
+       "down": 11,
+       "tie": 28
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": false
+     },
+     "T02a-T1a": {
+      "d_fidelity": {
+       "n": 49,
+       "mean": 0.102,
+       "ci": [
+        -0.051,
+        0.255
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 49,
+       "mean": 6.1,
+       "ci": [
+        0,
+        14.3
+       ]
+      },
+      "pages": {
+       "up": 15,
+       "down": 7,
+       "tie": 27
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": false,
+      "two_draw_agrees": true
+     },
+     "T0a-T1a": {
+      "d_fidelity": {
+       "n": 49,
+       "mean": 0.082,
+       "ci": [
+        -0.061,
+        0.224
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 49,
+       "mean": 2,
+       "ci": [
+        -4.1,
+        10.2
+       ]
+      },
+      "pages": {
+       "up": 13,
+       "down": 7,
+       "tie": 29
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": false,
+      "two_draw_agrees": true
+     },
+     "BO3-T1a": {
+      "d_fidelity": {
+       "n": 49,
+       "mean": 0.071,
+       "ci": [
+        -0.02,
+        0.173
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 49,
+       "mean": 2,
+       "ci": [
+        0,
+        6.1
+       ]
+      },
+      "pages": {
+       "up": 8,
+       "down": 3,
+       "tie": 38
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true
+     },
+     "ORACLE-T1a": {
+      "d_fidelity": {
+       "n": 49,
+       "mean": 0.163,
+       "ci": [
+        0.082,
+        0.255
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 49,
+       "mean": 0,
+       "ci": [
+        0,
+        0
+       ]
+      },
+      "pages": {
+       "up": 11,
+       "down": 0,
+       "tie": 38
+      },
+      "beats_production": true,
+      "by": "fidelity",
+      "not_worse": true
+     },
+     "T02mean-T1mean": {
+      "d_fidelity": {
+       "n": 49,
+       "mean": 0.117,
+       "ci": [
+        -0.026,
+        0.25
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 49,
+       "mean": 3.1,
+       "ci": [
+        -3.1,
+        10.2
+       ]
+      },
+      "pages": {
+       "up": 23,
+       "down": 8,
+       "tie": 18
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": false,
+      "transfers": false
+     },
+     "T0mean-T1mean": {
+      "d_fidelity": {
+       "n": 49,
+       "mean": 0.102,
+       "ci": [
+        -0.036,
+        0.24
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 49,
+       "mean": 0,
+       "ci": [
+        -7.1,
+        7.1
+       ]
+      },
+      "pages": {
+       "up": 21,
+       "down": 9,
+       "tie": 19
+      },
+      "beats_production": false,
+      "by": null,
+      "not_worse": true,
+      "transfers": false
+     },
+     "BO3-MEAN3 (picker lift)": {
+      "d_fidelity": {
+       "n": 49,
+       "mean": 0.105,
+       "ci": [
+        0.034,
+        0.177
+       ]
+      },
+      "d_reversals_per_100": {
+       "n": 49,
+       "mean": -0.7,
+       "ci": [
+        -4.8,
+        3.4
+       ]
+      },
+      "pages": {
+       "up": 20,
+       "down": 6,
+       "tie": 23
+      },
+      "beats_production": true,
+      "by": "fidelity",
+      "not_worse": true
+     }
+    },
+    "movement": {
+     "T1": {
+      "pages_moving_ge1": 12,
+      "share": 0.245,
+      "byte_identical": 0,
+      "mean_abs_diff": 0.357,
+      "reversal_flips": 2
+     },
+     "T02": {
+      "pages_moving_ge1": 6,
+      "share": 0.122,
+      "byte_identical": 0,
+      "mean_abs_diff": 0.143,
+      "reversal_flips": 1
+     },
+     "T0": {
+      "pages_moving_ge1": 1,
+      "share": 0.02,
+      "byte_identical": 26,
+      "mean_abs_diff": 0.031,
+      "reversal_flips": 0
+     }
+    },
+    "picks": {
+     "picked": {
+      "T1a": 20,
+      "T1c": 11,
+      "T1b": 18
+     },
+     "picked_a_top_draw": 43,
+     "picked_a_bottom_draw_when_they_differ": 6,
+     "pages_where_draws_differ": 26,
+     "fallback": 0
+    }
+   }
+  }
+ },
+ "production_routed": {
+  "n_flash_pages": 106,
+  "n_lite_pages": 43,
+  "all": {
+   "n": 149,
+   "floor": {
+    "fidelity": 0.101,
+    "reversals_per_100": 0,
+    "T1b_minus_T1a_fidelity": {
+     "n": 149,
+     "mean": -0.101,
+     "ci": [
+      -0.195,
+      -0.003
+     ]
+    },
+    "T1b_minus_T1a_reversals_per_100": {
+     "n": 149,
+     "mean": 0,
+     "ci": [
+      -5.369,
+      5.369
+     ]
+    }
+   },
+   "arms": {
+    "T1a": {
+     "fidelity": {
+      "n": 149,
+      "mean": 4.013,
+      "ci": [
+       3.896,
+       4.128
+      ]
+     },
+     "reversals_per_100": {
+      "n": 149,
+      "mean": 12.081,
+      "ci": [
+       7.383,
+       17.45
+      ]
+     },
+     "omission_per_100": 24.16,
+     "share_fid_ge4": 0.758,
+     "cost_per_page_realtime": 0.00339
+    },
+    "T1b": {
+     "fidelity": {
+      "n": 149,
+      "mean": 3.913,
+      "ci": [
+       3.795,
+       4.034
+      ]
+     },
+     "reversals_per_100": {
+      "n": 149,
+      "mean": 12.081,
+      "ci": [
+       7.383,
+       17.45
+      ]
+     },
+     "omission_per_100": 31.54,
+     "share_fid_ge4": 0.711,
+     "cost_per_page_realtime": 0.00339
+    },
+    "T1c": {
+     "fidelity": {
+      "n": 149,
+      "mean": 3.936,
+      "ci": [
+       3.826,
+       4.047
+      ]
+     },
+     "reversals_per_100": {
+      "n": 149,
+      "mean": 8.725,
+      "ci": [
+       4.698,
+       13.423
+      ]
+     },
+     "omission_per_100": 28.19,
+     "share_fid_ge4": 0.738,
+     "cost_per_page_realtime": 0.0034
+    },
+    "T02a": {
+     "fidelity": {
+      "n": 149,
+      "mean": 4.114,
+      "ci": [
+       4.003,
+       4.232
+      ]
+     },
+     "reversals_per_100": {
+      "n": 149,
+      "mean": 8.054,
+      "ci": [
+       4.027,
+       12.752
+      ]
+     },
+     "omission_per_100": 26.85,
+     "share_fid_ge4": 0.812,
+     "cost_per_page_realtime": 0.0034
+    },
+    "T02b": {
+     "fidelity": {
+      "n": 149,
+      "mean": 4.067,
+      "ci": [
+       3.963,
+       4.174
+      ]
+     },
+     "reversals_per_100": {
+      "n": 149,
+      "mean": 8.725,
+      "ci": [
+       4.698,
+       13.423
+      ]
+     },
+     "omission_per_100": 28.19,
+     "share_fid_ge4": 0.765,
+     "cost_per_page_realtime": 0.00337
+    },
+    "T0a": {
+     "fidelity": {
+      "n": 149,
+      "mean": 4.054,
+      "ci": [
+       3.94,
+       4.168
+      ]
+     },
+     "reversals_per_100": {
+      "n": 149,
+      "mean": 8.054,
+      "ci": [
+       4.027,
+       12.752
+      ]
+     },
+     "omission_per_100": 22.82,
+     "share_fid_ge4": 0.765,
+     "cost_per_page_realtime": 0.00341
+    },
+    "T0b": {
+     "fidelity": {
+      "n": 149,
+      "mean": 4.067,
+      "ci": [
+       3.96,
+       4.174
+      ]
+     },
+     "reversals_per_100": {
+      "n": 149,
+      "mean": 6.711,
+      "ci": [
+       2.685,
+       11.409
+      ]
+     },
+     "omission_per_100": 21.48,
+     "share_fid_ge4": 0.785,
+     "cost_per_page_realtime": 0.00341
+    },
+    "BO3": {
+     "fidelity": {
+      "n": 149,
+      "mean": 4.037,
+      "ci": [
+       3.923,
+       4.144
+      ]
+     },
+     "reversals_per_100": {
+      "n": 149,
+      "mean": 8.725,
+      "ci": [
+       4.698,
+       13.423
+      ]
+     },
+     "omission_per_100": 24.16,
+     "share_fid_ge4": 0.772,
+     "cost_per_page_realtime": 0.01242
+    },
+    "ORACLE": {
+     "fidelity": {
+      "n": 149,
+      "mean": 4.198,
+      "ci": [
+       4.084,
+       4.305
+      ]
+     },
+     "reversals_per_100": {
+      "n": 149,
+      "mean": 6.04,
+      "ci": [
+       2.685,
+       10.067
+      ]
+     },
+     "omission_per_100": 19.46,
+     "share_fid_ge4": 0.839,
+     "cost_per_page_realtime": 0.00341
+    },
+    "WORST3": {
+     "fidelity": {
+      "n": 149,
+      "mean": 3.681,
+      "ci": [
+       3.567,
+       3.795
+      ]
+     },
+     "reversals_per_100": {
+      "n": 149,
+      "mean": 19.463,
+      "ci": [
+       13.423,
+       26.174
+      ]
+     },
+     "omission_per_100": 32.89,
+     "share_fid_ge4": 0.591,
+     "cost_per_page_realtime": 0.00338
+    },
+    "MEAN3": {
+     "fidelity": {
+      "n": 149,
+      "mean": 3.954,
+      "ci": [
+       3.848,
+       4.062
+      ]
+     },
+     "reversals_per_100": {
+      "n": 149,
+      "mean": 10.962,
+      "ci": [
+       6.935,
+       15.436
+      ]
+     },
+     "omission_per_100": 27.96,
+     "share_fid_ge4": 0.624,
+     "cost_per_page_realtime": 0.00339
+    }
+   },
+   "vs": {
+    "T1b-T1a": {
+     "d_fidelity": {
+      "n": 149,
+      "mean": -0.101,
+      "ci": [
+       -0.198,
+       -0.003
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 149,
+      "mean": 0,
+      "ci": [
+       -5.4,
+       5.4
+      ]
+     },
+     "pages": {
+      "up": 24,
+      "down": 43,
+      "tie": 82
+     },
+     "beats_production": false,
+     "by": null,
+     "not_worse": false
+    },
+    "T02a-T1a": {
+     "d_fidelity": {
+      "n": 149,
+      "mean": 0.101,
+      "ci": [
+       0.013,
+       0.185
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 149,
+      "mean": -4,
+      "ci": [
+       -8.7,
+       0.7
+      ]
+     },
+     "pages": {
+      "up": 38,
+      "down": 22,
+      "tie": 89
+     },
+     "beats_production": false,
+     "by": null,
+     "not_worse": true,
+     "two_draw_agrees": true
+    },
+    "T0a-T1a": {
+     "d_fidelity": {
+      "n": 149,
+      "mean": 0.04,
+      "ci": [
+       -0.05,
+       0.128
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 149,
+      "mean": -4,
+      "ci": [
+       -9.4,
+       0.7
+      ]
+     },
+     "pages": {
+      "up": 31,
+      "down": 23,
+      "tie": 95
+     },
+     "beats_production": false,
+     "by": null,
+     "not_worse": true,
+     "two_draw_agrees": true
+    },
+    "BO3-T1a": {
+     "d_fidelity": {
+      "n": 149,
+      "mean": 0.023,
+      "ci": [
+       -0.044,
+       0.091
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 149,
+      "mean": -3.4,
+      "ci": [
+       -7.4,
+       0
+      ]
+     },
+     "pages": {
+      "up": 23,
+      "down": 22,
+      "tie": 104
+     },
+     "beats_production": false,
+     "by": null,
+     "not_worse": true
+    },
+    "ORACLE-T1a": {
+     "d_fidelity": {
+      "n": 149,
+      "mean": 0.185,
+      "ci": [
+       0.124,
+       0.248
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 149,
+      "mean": -6,
+      "ci": [
+       -10.1,
+       -2.7
+      ]
+     },
+     "pages": {
+      "up": 33,
+      "down": 0,
+      "tie": 116
+     },
+     "beats_production": true,
+     "by": "fidelity",
+     "not_worse": true
+    },
+    "T02mean-T1mean": {
+     "d_fidelity": {
+      "n": 149,
+      "mean": 0.128,
+      "ci": [
+       0.057,
+       0.196
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 149,
+      "mean": -3.7,
+      "ci": [
+       -7.7,
+       -0.3
+      ]
+     },
+     "pages": {
+      "up": 53,
+      "down": 28,
+      "tie": 68
+     },
+     "beats_production": true,
+     "by": "fidelity",
+     "not_worse": true,
+     "transfers": false
+    },
+    "T0mean-T1mean": {
+     "d_fidelity": {
+      "n": 149,
+      "mean": 0.097,
+      "ci": [
+       0.025,
+       0.171
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 149,
+      "mean": -4.7,
+      "ci": [
+       -8.7,
+       -1.3
+      ]
+     },
+     "pages": {
+      "up": 49,
+      "down": 27,
+      "tie": 73
+     },
+     "beats_production": true,
+     "by": "reversals",
+     "not_worse": true,
+     "transfers": false
+    },
+    "BO3-MEAN3 (picker lift)": {
+     "d_fidelity": {
+      "n": 149,
+      "mean": 0.083,
+      "ci": [
+       0.036,
+       0.131
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 149,
+      "mean": -2.2,
+      "ci": [
+       -4.7,
+       0.2
+      ]
+     },
+     "pages": {
+      "up": 56,
+      "down": 26,
+      "tie": 67
+     },
+     "beats_production": false,
+     "by": null,
+     "not_worse": true
+    }
+   },
+   "movement": {
+    "T1": {
+     "pages_moving_ge1": 37,
+     "share": 0.248,
+     "byte_identical": 0,
+     "mean_abs_diff": 0.376,
+     "reversal_flips": 16
+    },
+    "T02": {
+     "pages_moving_ge1": 15,
+     "share": 0.101,
+     "byte_identical": 0,
+     "mean_abs_diff": 0.174,
+     "reversal_flips": 7
+    },
+    "T0": {
+     "pages_moving_ge1": 7,
+     "share": 0.047,
+     "byte_identical": 93,
+     "mean_abs_diff": 0.074,
+     "reversal_flips": 2
+    }
+   },
+   "picks": {
+    "picked": {
+     "T1a": 50,
+     "T1b": 53,
+     "T1c": 46
+    },
+    "picked_a_top_draw": 114,
+    "picked_a_bottom_draw_when_they_differ": 26,
+    "pages_where_draws_differ": 89,
+    "fallback": 0
+   }
+  },
+  "tengyur": {
+   "n": 50,
+   "floor": {
+    "fidelity": 0.03,
+    "reversals_per_100": 0,
+    "T1b_minus_T1a_fidelity": {
+     "n": 50,
+     "mean": -0.03,
+     "ci": [
+      -0.21,
+      0.15
+     ]
+    },
+    "T1b_minus_T1a_reversals_per_100": {
+     "n": 50,
+     "mean": 0,
+     "ci": [
+      -10,
+      10
+     ]
+    }
+   },
+   "arms": {
+    "T1a": {
+     "fidelity": {
+      "n": 50,
+      "mean": 4.11,
+      "ci": [
+       3.97,
+       4.25
+      ]
+     },
+     "reversals_per_100": {
+      "n": 50,
+      "mean": 6,
+      "ci": [
+       0,
+       12
+      ]
+     },
+     "omission_per_100": 12,
+     "share_fid_ge4": 0.88,
+     "cost_per_page_realtime": 0.00355
+    },
+    "T1b": {
+     "fidelity": {
+      "n": 50,
+      "mean": 4.08,
+      "ci": [
+       3.94,
+       4.22
+      ]
+     },
+     "reversals_per_100": {
+      "n": 50,
+      "mean": 6,
+      "ci": [
+       0,
+       12
+      ]
+     },
+     "omission_per_100": 20,
+     "share_fid_ge4": 0.84,
+     "cost_per_page_realtime": 0.00355
+    },
+    "T1c": {
+     "fidelity": {
+      "n": 50,
+      "mean": 4.08,
+      "ci": [
+       3.96,
+       4.2
+      ]
+     },
+     "reversals_per_100": {
+      "n": 50,
+      "mean": 4,
+      "ci": [
+       0,
+       10
+      ]
+     },
+     "omission_per_100": 26,
+     "share_fid_ge4": 0.92,
+     "cost_per_page_realtime": 0.00355
+    },
+    "T02a": {
+     "fidelity": {
+      "n": 50,
+      "mean": 4.27,
+      "ci": [
+       4.12,
+       4.42
+      ]
+     },
+     "reversals_per_100": {
+      "n": 50,
+      "mean": 4,
+      "ci": [
+       0,
+       10
+      ]
+     },
+     "omission_per_100": 16,
+     "share_fid_ge4": 0.94,
+     "cost_per_page_realtime": 0.00353
+    },
+    "T02b": {
+     "fidelity": {
+      "n": 50,
+      "mean": 4.15,
+      "ci": [
+       4.01,
+       4.29
+      ]
+     },
+     "reversals_per_100": {
+      "n": 50,
+      "mean": 6,
+      "ci": [
+       0,
+       14
+      ]
+     },
+     "omission_per_100": 24,
+     "share_fid_ge4": 0.86,
+     "cost_per_page_realtime": 0.00353
+    },
+    "T0a": {
+     "fidelity": {
+      "n": 50,
+      "mean": 4.09,
+      "ci": [
+       3.95,
+       4.23
+      ]
+     },
+     "reversals_per_100": {
+      "n": 50,
+      "mean": 6,
+      "ci": [
+       0,
+       14
+      ]
+     },
+     "omission_per_100": 18,
+     "share_fid_ge4": 0.84,
+     "cost_per_page_realtime": 0.00354
+    },
+    "T0b": {
+     "fidelity": {
+      "n": 50,
+      "mean": 4.14,
+      "ci": [
+       4.02,
+       4.26
+      ]
+     },
+     "reversals_per_100": {
+      "n": 50,
+      "mean": 2,
+      "ci": [
+       0,
+       6
+      ]
+     },
+     "omission_per_100": 20,
+     "share_fid_ge4": 0.9,
+     "cost_per_page_realtime": 0.00354
+    },
+    "BO3": {
+     "fidelity": {
+      "n": 50,
+      "mean": 4.17,
+      "ci": [
+       4.04,
+       4.3
+      ]
+     },
+     "reversals_per_100": {
+      "n": 50,
+      "mean": 4,
+      "ci": [
+       0,
+       10
+      ]
+     },
+     "omission_per_100": 16,
+     "share_fid_ge4": 0.9,
+     "cost_per_page_realtime": 0.01286
+    },
+    "ORACLE": {
+     "fidelity": {
+      "n": 50,
+      "mean": 4.36,
+      "ci": [
+       4.25,
+       4.48
+      ]
+     },
+     "reversals_per_100": {
+      "n": 50,
+      "mean": 0,
+      "ci": [
+       0,
+       0
+      ]
+     },
+     "omission_per_100": 6,
+     "share_fid_ge4": 1,
+     "cost_per_page_realtime": 0.00356
+    },
+    "WORST3": {
+     "fidelity": {
+      "n": 50,
+      "mean": 3.78,
+      "ci": [
+       3.66,
+       3.9
+      ]
+     },
+     "reversals_per_100": {
+      "n": 50,
+      "mean": 14,
+      "ci": [
+       6,
+       24
+      ]
+     },
+     "omission_per_100": 24,
+     "share_fid_ge4": 0.68,
+     "cost_per_page_realtime": 0.00355
+    },
+    "MEAN3": {
+     "fidelity": {
+      "n": 50,
+      "mean": 4.09,
+      "ci": [
+       4,
+       4.183
+      ]
+     },
+     "reversals_per_100": {
+      "n": 50,
+      "mean": 5.333,
+      "ci": [
+       2,
+       9.333
+      ]
+     },
+     "omission_per_100": 19.33,
+     "share_fid_ge4": 0.74,
+     "cost_per_page_realtime": 0.00355
+    }
+   },
+   "vs": {
+    "T1b-T1a": {
+     "d_fidelity": {
+      "n": 50,
+      "mean": -0.03,
+      "ci": [
+       -0.2,
+       0.15
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 50,
+      "mean": 0,
+      "ci": [
+       -10,
+       10
+      ]
+     },
+     "pages": {
+      "up": 10,
+      "down": 15,
+      "tie": 25
+     },
+     "beats_production": false,
+     "by": null,
+     "not_worse": false
+    },
+    "T02a-T1a": {
+     "d_fidelity": {
+      "n": 50,
+      "mean": 0.16,
+      "ci": [
+       -0.01,
+       0.33
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 50,
+      "mean": -2,
+      "ci": [
+       -10,
+       6
+      ]
+     },
+     "pages": {
+      "up": 15,
+      "down": 9,
+      "tie": 26
+     },
+     "beats_production": false,
+     "by": null,
+     "not_worse": true,
+     "two_draw_agrees": true
+    },
+    "T0a-T1a": {
+     "d_fidelity": {
+      "n": 50,
+      "mean": -0.02,
+      "ci": [
+       -0.19,
+       0.15
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 50,
+      "mean": 0,
+      "ci": [
+       -10,
+       10
+      ]
+     },
+     "pages": {
+      "up": 10,
+      "down": 13,
+      "tie": 27
+     },
+     "beats_production": false,
+     "by": null,
+     "not_worse": false,
+     "two_draw_agrees": false
+    },
+    "BO3-T1a": {
+     "d_fidelity": {
+      "n": 50,
+      "mean": 0.06,
+      "ci": [
+       -0.08,
+       0.21
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 50,
+      "mean": -2,
+      "ci": [
+       -10,
+       6
+      ]
+     },
+     "pages": {
+      "up": 10,
+      "down": 9,
+      "tie": 31
+     },
+     "beats_production": false,
+     "by": null,
+     "not_worse": true
+    },
+    "ORACLE-T1a": {
+     "d_fidelity": {
+      "n": 50,
+      "mean": 0.25,
+      "ci": [
+       0.13,
+       0.39
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 50,
+      "mean": -6,
+      "ci": [
+       -14,
+       0
+      ]
+     },
+     "pages": {
+      "up": 13,
+      "down": 0,
+      "tie": 37
+     },
+     "beats_production": true,
+     "by": "fidelity",
+     "not_worse": true
+    },
+    "T02mean-T1mean": {
+     "d_fidelity": {
+      "n": 50,
+      "mean": 0.115,
+      "ci": [
+       0.01,
+       0.225
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 50,
+      "mean": -1,
+      "ci": [
+       -6,
+       4
+      ]
+     },
+     "pages": {
+      "up": 16,
+      "down": 12,
+      "tie": 22
+     },
+     "beats_production": true,
+     "by": "fidelity",
+     "not_worse": true,
+     "transfers": false
+    },
+    "T0mean-T1mean": {
+     "d_fidelity": {
+      "n": 50,
+      "mean": 0.02,
+      "ci": [
+       -0.09,
+       0.125
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 50,
+      "mean": -2,
+      "ci": [
+       -7,
+       3
+      ]
+     },
+     "pages": {
+      "up": 13,
+      "down": 14,
+      "tie": 23
+     },
+     "beats_production": false,
+     "by": null,
+     "not_worse": true,
+     "transfers": true
+    },
+    "BO3-MEAN3 (picker lift)": {
+     "d_fidelity": {
+      "n": 50,
+      "mean": 0.08,
+      "ci": [
+       -0.007,
+       0.163
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 50,
+      "mean": -1.3,
+      "ci": [
+       -5.3,
+       2.7
+      ]
+     },
+     "pages": {
+      "up": 21,
+      "down": 10,
+      "tie": 19
+     },
+     "beats_production": false,
+     "by": null,
+     "not_worse": true
+    }
+   },
+   "movement": {
+    "T1": {
+     "pages_moving_ge1": 13,
+     "share": 0.26,
+     "byte_identical": 0,
+     "mean_abs_diff": 0.41,
+     "reversal_flips": 6
+    },
+    "T02": {
+     "pages_moving_ge1": 9,
+     "share": 0.18,
+     "byte_identical": 0,
+     "mean_abs_diff": 0.28,
+     "reversal_flips": 3
+    },
+    "T0": {
+     "pages_moving_ge1": 5,
+     "share": 0.1,
+     "byte_identical": 19,
+     "mean_abs_diff": 0.17,
+     "reversal_flips": 2
+    }
+   },
+   "picks": {
+    "picked": {
+     "T1a": 16,
+     "T1b": 21,
+     "T1c": 13
+    },
+    "picked_a_top_draw": 36,
+    "picked_a_bottom_draw_when_they_differ": 10,
+    "pages_where_draws_differ": 34,
+    "fallback": 0
+   }
+  },
+  "t4": {
+   "n": 50,
+   "floor": {
+    "fidelity": 0.04,
+    "reversals_per_100": 2,
+    "T1b_minus_T1a_fidelity": {
+     "n": 50,
+     "mean": -0.04,
+     "ci": [
+      -0.19,
+      0.12
+     ]
+    },
+    "T1b_minus_T1a_reversals_per_100": {
+     "n": 50,
+     "mean": -2,
+     "ci": [
+      -12,
+      8
+     ]
+    }
+   },
+   "arms": {
+    "T1a": {
+     "fidelity": {
+      "n": 50,
+      "mean": 3.7,
+      "ci": [
+       3.47,
+       3.93
+      ]
+     },
+     "reversals_per_100": {
+      "n": 50,
+      "mean": 20,
+      "ci": [
+       10,
+       32
+      ]
+     },
+     "omission_per_100": 32,
+     "share_fid_ge4": 0.56,
+     "cost_per_page_realtime": 0.00472
+    },
+    "T1b": {
+     "fidelity": {
+      "n": 50,
+      "mean": 3.66,
+      "ci": [
+       3.41,
+       3.89
+      ]
+     },
+     "reversals_per_100": {
+      "n": 50,
+      "mean": 18,
+      "ci": [
+       8,
+       30
+      ]
+     },
+     "omission_per_100": 44,
+     "share_fid_ge4": 0.54,
+     "cost_per_page_realtime": 0.00469
+    },
+    "T1c": {
+     "fidelity": {
+      "n": 50,
+      "mean": 3.67,
+      "ci": [
+       3.45,
+       3.89
+      ]
+     },
+     "reversals_per_100": {
+      "n": 50,
+      "mean": 16,
+      "ci": [
+       6,
+       26
+      ]
+     },
+     "omission_per_100": 36,
+     "share_fid_ge4": 0.52,
+     "cost_per_page_realtime": 0.00472
+    },
+    "T02a": {
+     "fidelity": {
+      "n": 50,
+      "mean": 3.82,
+      "ci": [
+       3.61,
+       4.03
+      ]
+     },
+     "reversals_per_100": {
+      "n": 50,
+      "mean": 12,
+      "ci": [
+       4,
+       22
+      ]
+     },
+     "omission_per_100": 40,
+     "share_fid_ge4": 0.62,
+     "cost_per_page_realtime": 0.00475
+    },
+    "T02b": {
+     "fidelity": {
+      "n": 50,
+      "mean": 3.81,
+      "ci": [
+       3.6,
+       4.02
+      ]
+     },
+     "reversals_per_100": {
+      "n": 50,
+      "mean": 14,
+      "ci": [
+       6,
+       24
+      ]
+     },
+     "omission_per_100": 32,
+     "share_fid_ge4": 0.58,
+     "cost_per_page_realtime": 0.00467
+    },
+    "T0a": {
+     "fidelity": {
+      "n": 50,
+      "mean": 3.8,
+      "ci": [
+       3.57,
+       4.02
+      ]
+     },
+     "reversals_per_100": {
+      "n": 50,
+      "mean": 12,
+      "ci": [
+       4,
+       22
+      ]
+     },
+     "omission_per_100": 28,
+     "share_fid_ge4": 0.58,
+     "cost_per_page_realtime": 0.00478
+    },
+    "T0b": {
+     "fidelity": {
+      "n": 50,
+      "mean": 3.79,
+      "ci": [
+       3.57,
+       4.01
+      ]
+     },
+     "reversals_per_100": {
+      "n": 50,
+      "mean": 12,
+      "ci": [
+       4,
+       22
+      ]
+     },
+     "omission_per_100": 22,
+     "share_fid_ge4": 0.58,
+     "cost_per_page_realtime": 0.00478
+    },
+    "BO3": {
+     "fidelity": {
+      "n": 50,
+      "mean": 3.72,
+      "ci": [
+       3.5,
+       3.94
+      ]
+     },
+     "reversals_per_100": {
+      "n": 50,
+      "mean": 14,
+      "ci": [
+       6,
+       24
+      ]
+     },
+     "omission_per_100": 32,
+     "share_fid_ge4": 0.6,
+     "cost_per_page_realtime": 0.01676
+    },
+    "ORACLE": {
+     "fidelity": {
+      "n": 50,
+      "mean": 3.9,
+      "ci": [
+       3.67,
+       4.13
+      ]
+     },
+     "reversals_per_100": {
+      "n": 50,
+      "mean": 12,
+      "ci": [
+       4,
+       22
+      ]
+     },
+     "omission_per_100": 32,
+     "share_fid_ge4": 0.64,
+     "cost_per_page_realtime": 0.00475
+    },
+    "WORST3": {
+     "fidelity": {
+      "n": 50,
+      "mean": 3.43,
+      "ci": [
+       3.2,
+       3.65
+      ]
+     },
+     "reversals_per_100": {
+      "n": 50,
+      "mean": 28,
+      "ci": [
+       16,
+       40
+      ]
+     },
+     "omission_per_100": 40,
+     "share_fid_ge4": 0.42,
+     "cost_per_page_realtime": 0.00468
+    },
+    "MEAN3": {
+     "fidelity": {
+      "n": 50,
+      "mean": 3.677,
+      "ci": [
+       3.46,
+       3.89
+      ]
+     },
+     "reversals_per_100": {
+      "n": 50,
+      "mean": 18,
+      "ci": [
+       9.333,
+       28
+      ]
+     },
+     "omission_per_100": 37.33,
+     "share_fid_ge4": 0.44,
+     "cost_per_page_realtime": 0.00471
+    }
+   },
+   "vs": {
+    "T1b-T1a": {
+     "d_fidelity": {
+      "n": 50,
+      "mean": -0.04,
+      "ci": [
+       -0.2,
+       0.11
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 50,
+      "mean": -2,
+      "ci": [
+       -12,
+       8
+      ]
+     },
+     "pages": {
+      "up": 9,
+      "down": 14,
+      "tie": 27
+     },
+     "beats_production": false,
+     "by": null,
+     "not_worse": false
+    },
+    "T02a-T1a": {
+     "d_fidelity": {
+      "n": 50,
+      "mean": 0.12,
+      "ci": [
+       -0.01,
+       0.25
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 50,
+      "mean": -8,
+      "ci": [
+       -20,
+       2
+      ]
+     },
+     "pages": {
+      "up": 15,
+      "down": 7,
+      "tie": 28
+     },
+     "beats_production": false,
+     "by": null,
+     "not_worse": true,
+     "two_draw_agrees": true
+    },
+    "T0a-T1a": {
+     "d_fidelity": {
+      "n": 50,
+      "mean": 0.1,
+      "ci": [
+       -0.05,
+       0.24
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 50,
+      "mean": -8,
+      "ci": [
+       -18,
+       0
+      ]
+     },
+     "pages": {
+      "up": 13,
+      "down": 5,
+      "tie": 32
+     },
+     "beats_production": false,
+     "by": null,
+     "not_worse": true,
+     "two_draw_agrees": true
+    },
+    "BO3-T1a": {
+     "d_fidelity": {
+      "n": 50,
+      "mean": 0.02,
+      "ci": [
+       -0.11,
+       0.15
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 50,
+      "mean": -6,
+      "ci": [
+       -14,
+       0
+      ]
+     },
+     "pages": {
+      "up": 10,
+      "down": 10,
+      "tie": 30
+     },
+     "beats_production": false,
+     "by": null,
+     "not_worse": true
+    },
+    "ORACLE-T1a": {
+     "d_fidelity": {
+      "n": 50,
+      "mean": 0.2,
+      "ci": [
+       0.1,
+       0.31
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 50,
+      "mean": -8,
+      "ci": [
+       -16,
+       -2
+      ]
+     },
+     "pages": {
+      "up": 12,
+      "down": 0,
+      "tie": 38
+     },
+     "beats_production": true,
+     "by": "fidelity",
+     "not_worse": true
+    },
+    "T02mean-T1mean": {
+     "d_fidelity": {
+      "n": 50,
+      "mean": 0.135,
+      "ci": [
+       0.025,
+       0.245
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 50,
+      "mean": -6,
+      "ci": [
+       -15,
+       2
+      ]
+     },
+     "pages": {
+      "up": 20,
+      "down": 6,
+      "tie": 24
+     },
+     "beats_production": true,
+     "by": "fidelity",
+     "not_worse": true,
+     "transfers": false
+    },
+    "T0mean-T1mean": {
+     "d_fidelity": {
+      "n": 50,
+      "mean": 0.115,
+      "ci": [
+       0.015,
+       0.215
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 50,
+      "mean": -7,
+      "ci": [
+       -16,
+       1
+      ]
+     },
+     "pages": {
+      "up": 18,
+      "down": 5,
+      "tie": 27
+     },
+     "beats_production": true,
+     "by": "fidelity",
+     "not_worse": true,
+     "transfers": false
+    },
+    "BO3-MEAN3 (picker lift)": {
+     "d_fidelity": {
+      "n": 50,
+      "mean": 0.043,
+      "ci": [
+       -0.033,
+       0.123
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 50,
+      "mean": -4,
+      "ci": [
+       -8,
+       -0.7
+      ]
+     },
+     "pages": {
+      "up": 16,
+      "down": 11,
+      "tie": 23
+     },
+     "beats_production": true,
+     "by": "reversals",
+     "not_worse": true
+    }
+   },
+   "movement": {
+    "T1": {
+     "pages_moving_ge1": 12,
+     "share": 0.24,
+     "byte_identical": 0,
+     "mean_abs_diff": 0.36,
+     "reversal_flips": 7
+    },
+    "T02": {
+     "pages_moving_ge1": 5,
+     "share": 0.1,
+     "byte_identical": 0,
+     "mean_abs_diff": 0.17,
+     "reversal_flips": 3
+    },
+    "T0": {
+     "pages_moving_ge1": 2,
+     "share": 0.04,
+     "byte_identical": 29,
+     "mean_abs_diff": 0.05,
+     "reversal_flips": 0
+    }
+   },
+   "picks": {
+    "picked": {
+     "T1c": 20,
+     "T1a": 15,
+     "T1b": 15
+    },
+    "picked_a_top_draw": 37,
+    "picked_a_bottom_draw_when_they_differ": 11,
+    "pages_where_draws_differ": 28,
+    "fallback": 0
+   }
+  },
+  "latin": {
+   "n": 49,
+   "floor": {
+    "fidelity": 0.235,
+    "reversals_per_100": 2.04,
+    "T1b_minus_T1a_fidelity": {
+     "n": 49,
+     "mean": -0.235,
+     "ci": [
+      -0.408,
+      -0.071
+     ]
+    },
+    "T1b_minus_T1a_reversals_per_100": {
+     "n": 49,
+     "mean": 2.041,
+     "ci": [
+      -4.082,
+      10.204
+     ]
+    }
+   },
+   "arms": {
+    "T1a": {
+     "fidelity": {
+      "n": 49,
+      "mean": 4.235,
+      "ci": [
+       4.041,
+       4.429
+      ]
+     },
+     "reversals_per_100": {
+      "n": 49,
+      "mean": 10.204,
+      "ci": [
+       2.041,
+       20.408
+      ]
+     },
+     "omission_per_100": 28.57,
+     "share_fid_ge4": 0.837,
+     "cost_per_page_realtime": 0.00187
+    },
+    "T1b": {
+     "fidelity": {
+      "n": 49,
+      "mean": 4,
+      "ci": [
+       3.765,
+       4.224
+      ]
+     },
+     "reversals_per_100": {
+      "n": 49,
+      "mean": 12.245,
+      "ci": [
+       4.082,
+       22.449
+      ]
+     },
+     "omission_per_100": 30.61,
+     "share_fid_ge4": 0.755,
+     "cost_per_page_realtime": 0.00189
+    },
+    "T1c": {
+     "fidelity": {
+      "n": 49,
+      "mean": 4.061,
+      "ci": [
+       3.857,
+       4.265
+      ]
+     },
+     "reversals_per_100": {
+      "n": 49,
+      "mean": 6.122,
+      "ci": [
+       0,
+       12.245
+      ]
+     },
+     "omission_per_100": 22.45,
+     "share_fid_ge4": 0.776,
+     "cost_per_page_realtime": 0.00189
+    },
+    "T02a": {
+     "fidelity": {
+      "n": 49,
+      "mean": 4.255,
+      "ci": [
+       4.061,
+       4.439
+      ]
+     },
+     "reversals_per_100": {
+      "n": 49,
+      "mean": 8.163,
+      "ci": [
+       2.041,
+       16.327
+      ]
+     },
+     "omission_per_100": 24.49,
+     "share_fid_ge4": 0.878,
+     "cost_per_page_realtime": 0.00188
+    },
+    "T02b": {
+     "fidelity": {
+      "n": 49,
+      "mean": 4.245,
+      "ci": [
+       4.061,
+       4.418
+      ]
+     },
+     "reversals_per_100": {
+      "n": 49,
+      "mean": 6.122,
+      "ci": [
+       0,
+       14.286
+      ]
+     },
+     "omission_per_100": 28.57,
+     "share_fid_ge4": 0.857,
+     "cost_per_page_realtime": 0.00188
+    },
+    "T0a": {
+     "fidelity": {
+      "n": 49,
+      "mean": 4.276,
+      "ci": [
+       4.092,
+       4.449
+      ]
+     },
+     "reversals_per_100": {
+      "n": 49,
+      "mean": 6.122,
+      "ci": [
+       0,
+       14.286
+      ]
+     },
+     "omission_per_100": 22.45,
+     "share_fid_ge4": 0.878,
+     "cost_per_page_realtime": 0.00188
+    },
+    "T0b": {
+     "fidelity": {
+      "n": 49,
+      "mean": 4.276,
+      "ci": [
+       4.082,
+       4.449
+      ]
+     },
+     "reversals_per_100": {
+      "n": 49,
+      "mean": 6.122,
+      "ci": [
+       0,
+       14.286
+      ]
+     },
+     "omission_per_100": 22.45,
+     "share_fid_ge4": 0.878,
+     "cost_per_page_realtime": 0.00188
+    },
+    "BO3": {
+     "fidelity": {
+      "n": 49,
+      "mean": 4.224,
+      "ci": [
+       4.01,
+       4.418
+      ]
+     },
+     "reversals_per_100": {
+      "n": 49,
+      "mean": 8.163,
+      "ci": [
+       2.041,
+       16.327
+      ]
+     },
+     "omission_per_100": 24.49,
+     "share_fid_ge4": 0.816,
+     "cost_per_page_realtime": 0.00755
+    },
+    "ORACLE": {
+     "fidelity": {
+      "n": 49,
+      "mean": 4.337,
+      "ci": [
+       4.153,
+       4.52
+      ]
+     },
+     "reversals_per_100": {
+      "n": 49,
+      "mean": 6.122,
+      "ci": [
+       0,
+       14.286
+      ]
+     },
+     "omission_per_100": 20.41,
+     "share_fid_ge4": 0.878,
+     "cost_per_page_realtime": 0.00187
+    },
+    "WORST3": {
+     "fidelity": {
+      "n": 49,
+      "mean": 3.837,
+      "ci": [
+       3.602,
+       4.061
+      ]
+     },
+     "reversals_per_100": {
+      "n": 49,
+      "mean": 16.327,
+      "ci": [
+       6.122,
+       26.531
+      ]
+     },
+     "omission_per_100": 34.69,
+     "share_fid_ge4": 0.673,
+     "cost_per_page_realtime": 0.00189
+    },
+    "MEAN3": {
+     "fidelity": {
+      "n": 49,
+      "mean": 4.099,
+      "ci": [
+       3.912,
+       4.282
+      ]
+     },
+     "reversals_per_100": {
+      "n": 49,
+      "mean": 9.524,
+      "ci": [
+       3.401,
+       17.007
+      ]
+     },
+     "omission_per_100": 27.21,
+     "share_fid_ge4": 0.694,
+     "cost_per_page_realtime": 0.00189
+    }
+   },
+   "vs": {
+    "T1b-T1a": {
+     "d_fidelity": {
+      "n": 49,
+      "mean": -0.235,
+      "ci": [
+       -0.398,
+       -0.082
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 49,
+      "mean": 2,
+      "ci": [
+       -4.1,
+       10.2
+      ]
+     },
+     "pages": {
+      "up": 5,
+      "down": 14,
+      "tie": 30
+     },
+     "beats_production": false,
+     "by": null,
+     "not_worse": false
+    },
+    "T02a-T1a": {
+     "d_fidelity": {
+      "n": 49,
+      "mean": 0.02,
+      "ci": [
+       -0.112,
+       0.153
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 49,
+      "mean": -2,
+      "ci": [
+       -6.1,
+       0
+      ]
+     },
+     "pages": {
+      "up": 8,
+      "down": 6,
+      "tie": 35
+     },
+     "beats_production": false,
+     "by": null,
+     "not_worse": true,
+     "two_draw_agrees": true
+    },
+    "T0a-T1a": {
+     "d_fidelity": {
+      "n": 49,
+      "mean": 0.041,
+      "ci": [
+       -0.092,
+       0.173
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 49,
+      "mean": -4.1,
+      "ci": [
+       -10.2,
+       0
+      ]
+     },
+     "pages": {
+      "up": 8,
+      "down": 5,
+      "tie": 36
+     },
+     "beats_production": false,
+     "by": null,
+     "not_worse": true,
+     "two_draw_agrees": true
+    },
+    "BO3-T1a": {
+     "d_fidelity": {
+      "n": 49,
+      "mean": -0.01,
+      "ci": [
+       -0.071,
+       0.041
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 49,
+      "mean": -2,
+      "ci": [
+       -6.1,
+       0
+      ]
+     },
+     "pages": {
+      "up": 3,
+      "down": 3,
+      "tie": 43
+     },
+     "beats_production": false,
+     "by": null,
+     "not_worse": true
+    },
+    "ORACLE-T1a": {
+     "d_fidelity": {
+      "n": 49,
+      "mean": 0.102,
+      "ci": [
+       0.041,
+       0.173
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 49,
+      "mean": -4.1,
+      "ci": [
+       -10.2,
+       0
+      ]
+     },
+     "pages": {
+      "up": 8,
+      "down": 0,
+      "tie": 41
+     },
+     "beats_production": false,
+     "by": null,
+     "not_worse": true
+    },
+    "T02mean-T1mean": {
+     "d_fidelity": {
+      "n": 49,
+      "mean": 0.133,
+      "ci": [
+       -0.01,
+       0.276
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 49,
+      "mean": -4.1,
+      "ci": [
+       -9.2,
+       0
+      ]
+     },
+     "pages": {
+      "up": 17,
+      "down": 10,
+      "tie": 22
+     },
+     "beats_production": false,
+     "by": null,
+     "not_worse": true,
+     "transfers": false
+    },
+    "T0mean-T1mean": {
+     "d_fidelity": {
+      "n": 49,
+      "mean": 0.158,
+      "ci": [
+       0.01,
+       0.327
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 49,
+      "mean": -5.1,
+      "ci": [
+       -11.2,
+       -1
+      ]
+     },
+     "pages": {
+      "up": 18,
+      "down": 8,
+      "tie": 23
+     },
+     "beats_production": true,
+     "by": "reversals",
+     "not_worse": true,
+     "transfers": false
+    },
+    "BO3-MEAN3 (picker lift)": {
+     "d_fidelity": {
+      "n": 49,
+      "mean": 0.126,
+      "ci": [
+       0.054,
+       0.204
+      ]
+     },
+     "d_reversals_per_100": {
+      "n": 49,
+      "mean": -1.4,
+      "ci": [
+       -6.1,
+       3.4
+      ]
+     },
+     "pages": {
+      "up": 19,
+      "down": 5,
+      "tie": 25
+     },
+     "beats_production": false,
+     "by": null,
+     "not_worse": true
+    }
+   },
+   "movement": {
+    "T1": {
+     "pages_moving_ge1": 12,
+     "share": 0.245,
+     "byte_identical": 0,
+     "mean_abs_diff": 0.357,
+     "reversal_flips": 3
+    },
+    "T02": {
+     "pages_moving_ge1": 1,
+     "share": 0.02,
+     "byte_identical": 0,
+     "mean_abs_diff": 0.071,
+     "reversal_flips": 1
+    },
+    "T0": {
+     "pages_moving_ge1": 0,
+     "share": 0,
+     "byte_identical": 45,
+     "mean_abs_diff": 0,
+     "reversal_flips": 0
+    }
+   },
+   "picks": {
+    "picked": {
+     "T1b": 17,
+     "T1c": 13,
+     "T1a": 19
+    },
+    "picked_a_top_draw": 41,
+    "picked_a_bottom_draw_when_they_differ": 5,
+    "pages_where_draws_differ": 27,
+    "fallback": 0
+   }
+  }
+ },
+ "transfer": {
+  "n": 149,
+  "flash_minus_lite_fidelity": {
+   "at_T1": {
+    "n": 149,
+    "mean": 0.211,
+    "ci": [
+     0.136,
+     0.289
+    ]
+   },
+   "at_T02": {
+    "n": 149,
+    "mean": 0.24,
+    "ci": [
+     0.138,
+     0.342
+    ]
+   },
+   "at_T0": {
+    "n": 149,
+    "mean": 0.176,
+    "ci": [
+     0.079,
+     0.275
+    ]
+   }
+  },
+  "gap_T0_minus_gap_T1": {
+   "n": 149,
+   "mean": -0.035,
+   "ci": [
+    -0.149,
+    0.077
+   ]
+  },
+  "gap_T02_minus_gap_T1": {
+   "n": 149,
+   "mean": 0.029,
+   "ci": [
+    -0.069,
+    0.131
+   ]
+  },
+  "flash_minus_lite_reversals_per_100": {
+   "at_T1": {
+    "n": 149,
+    "mean": 1.342,
+    "ci": [
+     -3.356,
+     6.04
+    ]
+   },
+   "at_T0": {
+    "n": 149,
+    "mean": 2.685,
+    "ci": [
+     -1.678,
+     7.047
+    ]
+   }
+  }
+ }
+}

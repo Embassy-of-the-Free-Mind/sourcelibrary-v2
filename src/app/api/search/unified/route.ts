@@ -24,6 +24,7 @@ import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
 import { fetchWorkFanouts } from '@/lib/search/work-fanout';
 import { stemmedQueryRegex } from '@/lib/search/word-forms';
 import { findNameChoices, type NameChoices } from '@/lib/search/name-chooser';
+import { searchCanonTexts } from '@/lib/search/canon-texts';
 
 const ENTITIES_SEARCH_INDEX = 'entities_search';
 const GALLERY_SEARCH_INDEX = 'gallery_search';
@@ -203,6 +204,23 @@ export async function GET(request: NextRequest) {
           resolve(fallback);
         }, ms)),
       ]);
+
+    // Canon texts (#6145): a Derge Tengyur volume holds ~16 texts by as many authors and is titled
+    // by volume, so the book lane cannot find "Nagarjuna" in it. This lane matches the texts'
+    // catalogue entries and returns each as a page result at the text's opening page. Same book
+    // filters as the keyword lane, applied in the query.
+    const canonFilter: Record<string, unknown> = { visible: true, pages_count: { $gt: 0 } };
+    if (tenantContext.id) canonFilter.tenantId = tenantContext.id;
+    if (language) canonFilter.language = language;
+    if (category) canonFilter.categories = category;
+    if (firstTranslation) canonFilter.is_first_translation = true;
+    if (hasTranslation) canonFilter.pages_translated = { $gt: 0 };
+    if (library) canonFilter.$or = [{ held_by: library }, { 'image_source.provider': library }];
+    if (yearRange) canonFilter.year = { ...(yearFrom !== undefined ? { $gte: yearFrom } : {}), ...(yearTo !== undefined ? { $lte: yearTo } : {}) };
+    const canonPromise = withTimeout(
+      searchCanonTexts(db as any, matchQuery, canonFilter, 3).catch((err) => { console.error('Canon text search error:', err); return []; }),
+      [], 'canon', 4000,
+    );
 
     const emptyBooks = {
       results: [] as SearchResult[], total: 0, hasMore: false,
@@ -399,14 +417,19 @@ export async function GET(request: NextRequest) {
     // `groups` / `workKeyByBookId` are internal plumbing for the collapse — they
     // carry raw catalogue rows and must never reach the wire.
     const { groups: _bookGroups, workKeyByBookId: _bookWorkKeys, ...booksResultPublic } = booksResultRaw;
+    const keywordBooks = booksResultRaw.results.map((book: any) => ({
+      ...book,
+      tenant_slug: tenantIdByBookId.get(book.id)
+        ? tenantSlugById.get(tenantIdByBookId.get(book.id)) || null
+        : null,
+    }));
+    // Canon texts sit after the two strongest book rows, so a reader who typed an author sees the
+    // author's own editions first and the texts inside canon volumes before the long tail.
+    const canonHits = await canonPromise;
     const booksResult = {
       ...booksResultPublic,
-      results: booksResultRaw.results.map((book: any) => ({
-        ...book,
-        tenant_slug: tenantIdByBookId.get(book.id)
-          ? tenantSlugById.get(tenantIdByBookId.get(book.id)) || null
-          : null,
-      })),
+      total: (booksResultPublic.total || 0) + canonHits.length,
+      results: [...keywordBooks.slice(0, 2), ...canonHits, ...keywordBooks.slice(2)],
     };
 
     const collectionsWithTenantSlug = {
