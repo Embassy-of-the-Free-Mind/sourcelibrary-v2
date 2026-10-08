@@ -64,8 +64,10 @@ a different defect, #5913).
   a middle sentence of the English dropped, the whole text replaced by another book's page (wrong leaf). A page that
   cannot take its class takes the next. Plants are spliced into the page's own text, so its line breaks and markup
   are unchanged and a planted page looks like any other. The key stays in `private/` until all reads are done.
-  28% rather than 50%: readers who meet errors on half the pages learn to over-flag (the prevalence effect), and the
-  false-alarm rate would not carry to production, where about 1 page in 6 is serious.
+  28% rather than 50%: in human visual search, how often a target appears changes how often it is missed (Wolfe et
+  al. 2005). By analogy, a reader meeting errors on half the pages works under a different error density from
+  production, where about 1 page in 6 is serious, so its miss and false-alarm rates might not carry over. 28% keeps
+  the task closer to production while leaving enough planted errors to measure recall.
 - **Packets:** 5 books per call. If the #6338 pilot shows a Gemini call cannot hold 5 single-page books, 1 per call for
   every reader (recorded in the run's README before the first read).
 

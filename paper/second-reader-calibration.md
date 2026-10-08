@@ -5,8 +5,12 @@
   STATUS: method written; NO RESULT EXISTS YET. Every result sentence below is a placeholder naming the field of
   src/data/second-reader-6338.json it will be generated from. Do not type a number into this file: numbers are
   filled from that file, and every one is listed in paper/VERIFICATION-second-reader.md with its source.
-  Target: a workshop short paper (LaTeCH-CLfL or NLP4DH) if only the Latin-script round is done; a long paper (CHR,
-  or a journal such as ACM JOCCH / DSH) with all three scripts. Check each venue's current deadline and AI-use policy.
+  Venues (checked 2026-10-08): CHR 2027 (Manchester, 5–8 Jan 2027) closed on 14 Aug 2026, so not this one.
+  LaTeCH-CLfL 2027 has no call yet; its last three deadlines fell 18 Dec 2023, 30 Jan 2025 and 5 Jan 2026, so expect
+  about December 2026–January 2027: the realistic first target, as a short paper on whichever scripts are scored by
+  then. With all three scripts: a journal (ACM JOCCH or Digital Scholarship in the Humanities, rolling) or CHR 2028.
+  The CHR journal's "Peripheries" issue (deadline 17 Jan 2027) is only a fit if the paper leads with the non-Latin
+  scripts. Check each venue's AI-use and authorship policy before submission.
   Voice for any claim about text quality: .claude/docs/quality-statements.md (say "AI reviewers"; n, date, interval).
 -->
 
@@ -45,22 +49,26 @@ Gemini models, which raises both a shared-blind-spot and a self-preference conce
 
 ## 2. Related work
 
-*Double keying and its blind spots.* Text-creation projects reach very low error rates by keying each text twice
-and reconciling, with a proofread sample (the Text Creation Partnership); double keying fails exactly where both
-keyers err the same way (Haaf, Wiegand & Geyken 2013). Our same-family arm tests the model analogue of that failure.
+*Double keying.* Text-creation projects reach very low error rates by keying each text twice, comparing the two and
+proofreading a sample; on the Deutsches Textarchiv, proofreading a large body of double-keyed text bore out the
+advertised accuracy (Haaf, Wiegand & Geyken 2013). Comparison is blind by construction to an error both keyers make
+alike. Two readers from one model family risk exactly that, which is what our same-family arm measures.
 
-*AI reviewers and judges.* Language models used as judges prefer outputs like their own (self-preference bias;
-arXiv 2410.21819 *[verify title and authors]*). A reviewer that cannot do the task can also answer "clean" rather
-than "unable" (the library's own Flash-Lite judge case, *[cite measurement-instruments note]*). Planted errors with
-known answers measure sensitivity directly, where agreement on easy cases cannot.
+*AI reviewers and judges.* Language models used as judges rate text more highly when it is familiar to them, and
+some prefer their own outputs (Wataoka, Takahashi & Ri 2024). A reviewer that cannot do the task can also answer
+"clean" rather than "unable" (the library's own Flash-Lite judge case, *[cite measurement-instruments note]*).
+Planted errors with known answers measure sensitivity directly, where agreement on easy cases cannot.
 
-*Negation and numbers.* Negation is a known failure of machine translation (Hossain et al. 2020 *[verify]*); in our
-corpus OCR drops negations and the English then asserts the opposite *[cite #6184]*.
+*Negation and numbers.* Negation degrades machine translation, by more than 60% in some translation directions
+(Hossain, Anastasopoulos, Blanco & Palmer 2020); in our corpus OCR drops negations and the English then asserts the
+opposite *[cite #6184]*.
 
-*Measurement.* Krippendorff's α for agreement with missing data (Krippendorff 2011); the prevalence effect, by which
-searchers miss rare targets and over-report common ones (Wolfe, Horowitz & Kenner 2005), which sets our planted share;
-capture–recapture estimates of errors no reader finds *[cite an inspection-literature source]*, whose independence
-assumption we test directly with a by-eye sample.
+*Measurement.* Krippendorff's α for agreement with missing data (Krippendorff 2011). In human visual search, how
+often a target appears changes how often it is missed (Wolfe, Horowitz & Kenner 2005); by analogy, and only by
+analogy, we keep planted errors near a realistic rate rather than on half the pages, so the miss and false-alarm
+rates we measure are not those of an unrealistically error-dense task. Capture–recapture estimates of the errors no
+inspector finds (Vander Wiel & Votta 1993) assume inspectors miss independently; we test that assumption directly
+with a by-eye sample of pages no reader flagged.
 
 ## 3. Method
 
@@ -168,11 +176,16 @@ adjudications), CC BY-SA 4.0 for the library's text, images by URL and sha256, t
 DOI *[Zenodo]*. Harness, tests and preregistration: `scripts/eval/second-reader/`, `tests/unit/second-reader-6338.test.ts`.
 
 ## References
-*(Each to be verified against the source before freeze; see the VERIFICATION file.)*
-- Haaf, S., Wiegand, F., & Geyken, A. (2013). Measuring the correctness of double-keying. *Journal of the Text
-  Encoding Initiative* 4.
-- Hossain, M. M., et al. (2020). An analysis of negation in machine translation (or related title) *[verify]*.
-- Krippendorff, K. (2011). Computing Krippendorff's alpha-reliability. Annenberg School for Communication.
-- Wolfe, J. M., Horowitz, T. S., & Kenner, N. M. (2005). Rare items often missed in visual searches. *Nature* 435.
-- arXiv 2410.21819, self-preference bias in LLM-as-a-judge *[verify]*.
-- *[Capture–recapture for inspection]*.
+*(Bibliographic details checked 2026-10-08; see the VERIFICATION file for what was read in full.)*
+- Haaf, S., Wiegand, F., & Geyken, A. (2013). Measuring the correctness of double-keying: error classification and
+  quality control in a large corpus of TEI-annotated historical text. *Journal of the Text Encoding Initiative* 4.
+  doi:10.4000/jtei.739
+- Hossain, M. M., Anastasopoulos, A., Blanco, E., & Palmer, A. (2020). It's not a non-issue: negation as a source of
+  error in machine translation. *Findings of EMNLP 2020*, 3869–3885. doi:10.18653/v1/2020.findings-emnlp.345
+- Krippendorff, K. (2011). Computing Krippendorff's alpha-reliability. Annenberg School for Communication,
+  University of Pennsylvania.
+- Vander Wiel, S. A., & Votta, L. G. (1993). Assessing software designs using capture-recapture methods. *IEEE
+  Transactions on Software Engineering* 19(11), 1045–1054.
+- Wataoka, K., Takahashi, T., & Ri, R. (2024). Self-preference bias in LLM-as-a-judge. arXiv:2410.21819.
+- Wolfe, J. M., Horowitz, T. S., & Kenner, N. M. (2005). Rare items often missed in visual searches. *Nature* 435,
+  439–440. doi:10.1038/435439a
