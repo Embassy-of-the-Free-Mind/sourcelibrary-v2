@@ -31,7 +31,7 @@ type Source = {
   caveat?: string;
   produced_by?: string;
 };
-type Language = { id: string; language: string; scope: string; unit: string; bars: Record<StageKey, Bar>; notes: string[]; figures: Source[] };
+type Language = { id: string; language: string; scope: string; unit: string; bars: Record<StageKey, Bar>; notes: string[]; figures: Source[]; holdings?: { books: number; pages: number; public_books: number } };
 
 const LANGUAGES = funnel.languages as unknown as Language[];
 
@@ -90,6 +90,12 @@ function Panel({ lang }: { lang: Language }) {
           );
         })}
       </div>
+      {lang.holdings && (
+        <div className="font-body text-xs text-stone-700 leading-snug mt-3 pt-2 border-t border-dotted border-stone-200">
+          <span className="text-stone-500">In Source Library:</span> {lang.holdings.books.toLocaleString('en-US')} books,{' '}
+          {lang.holdings.pages.toLocaleString('en-US')} pages scanned; {lang.holdings.public_books.toLocaleString('en-US')} books public.
+        </div>
+      )}
       {lang.notes.length > 0 && (
         <ul className="font-body text-xs text-stone-500 leading-snug mt-3 space-y-1">
           {lang.notes.map((note) => (
@@ -111,7 +117,7 @@ export function LanguageFunnel({ n }: { n: number }) {
           Bars are to scale within one language and not across languages, because each tradition is counted in its
           own unit (manuscripts, printed editions, copies, pages). The hatched bar is an estimate. &ldquo;No published
           figure&rdquo; means we found no source we could quote, and we did not fill the gap with a guess. Figures
-          marked &ldquo;our count&rdquo; come from our own scripts over open catalogues. Compiled {funnel.compiled};
+          marked &ldquo;our count&rdquo; come from our own scripts over open catalogues. &ldquo;In Source Library&rdquo; counts the scanned books we hold in that language, one record per volume, so it is not in the same unit as the bars. Compiled {funnel.compiled};
           a script re-fetched every web source and found the quoted sentence on the page.
         </>
       }
