@@ -15,7 +15,7 @@ const HERO_ALT =
 
 const TITLE = 'One Sentence of Hermes, Copied for Sixteen Hundred Years';
 const DESCRIPTION =
-  'A late-antique translator misread one Greek word in the Asclepius. We followed the sentence through a manuscript, four printed editions, a commentary and a critical edition, and found our own OCR making the copyists’ mistakes.';
+  'A late-antique translator misread one Greek word in the Asclepius. We followed the sentence through a manuscript, five printed editions, a commentary and a critical edition, and found our own OCR making the copyists’ mistakes.';
 
 export const metadata: Metadata = {
   title: `${TITLE} - Research Notes - Source Library`,
@@ -37,6 +37,8 @@ const BOOK = {
   rosseli: '/book/69b51e19261c58d63664f8d4',
   patrizi: '/book/69b51ebb47b06ecd5819628b',
   apuleius: '/book/6a10090bf717292950967757',
+  aldine: '/book/69b51eb747b06ecd58195d39',
+  tournes: '/book/6952ca2a77f38f6761bc33bf',
 };
 
 const linkClass = 'text-accent-rust underline hover:text-accent-gold-dark';
@@ -63,7 +65,7 @@ export default function OneSentenceOfHermesPage() {
           image={HERO}
           imageAlt={HERO_ALT}
         >
-          <p className="text-stone-400 text-sm mt-4">8 October 2026 &middot; 10 min read</p>
+          <p className="text-stone-400 text-sm mt-4">8 October 2026 &middot; 12 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -80,17 +82,34 @@ export default function OneSentenceOfHermesPage() {
       <article className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8">
           The <em>Asclepius</em> is a dialogue in which Hermes Trismegistus teaches his pupils about God, the world and
-          the human soul. It was written in Greek, probably in the second or third century, and translated into Latin by the early
-          fifth, when Augustine quoted the Latin in the <em>City of God</em>. For most of the dialogue, including the
-          passage followed here, the Greek is lost. Every reader since late antiquity has known it through that one
-          Latin translation.
+          the human soul. It was written in Greek, probably in the third century, and translated into Latin by the early fifth,
+          when Augustine quoted the Latin in the <em>City of God</em>. For most of the dialogue, including the passage
+          followed here, the Greek is lost. Every reader since late antiquity has known it through that one Latin
+          translation.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          A little of the Greek does survive. Its title was the <em>Logos teleios</em>, the &ldquo;Perfect
+          Discourse&rdquo;. Lactantius, writing about 310, quotes it in Greek and refers to three different parts of it. The prayer that
+          closes the dialogue is preserved in Greek in a magical papyrus now in the Louvre. A Coptic translation of
+          chapters 21 to 29 and of the prayer was found at Nag Hammadi in 1945. None of these reaches chapter 32.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The Latin is not Marsilio Ficino&rsquo;s, though it is often taken for his. Ficino translated the fourteen
+          Greek treatises of the <em>Pimander</em> in 1463, and their Greek survives. From the early sixteenth century
+          printers bound the old Latin <em>Asclepius</em> in with his <em>Pimander</em>, as the Aldine press did in
+          1516, and the two have travelled together since. The <em>Asclepius</em> translation is a thousand years
+          older than Ficino. The manuscripts credit it to Apuleius, which Scott and other modern editors reject, and
+          its translator is unknown.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
           This note follows a single sentence from chapter 32 through the copies of it we hold: a fifteenth-century
-          manuscript, printed editions of 1532, 1593 and 1778, a Franciscan commentary of 1590, and Walter Scott&rsquo;s
-          critical edition of the 1920s. Each copy was read against its scan. The sentence turned out to carry almost
-          every kind of error a text can pick up on its way to us, including some we added ourselves this year.
+          manuscript, printed editions of 1516, 1532, 1549, 1593 and 1778, a Franciscan commentary of 1590, and Walter
+          Scott&rsquo;s critical edition of the 1920s. Each copy was read against its scan. The sentence turned out to
+          carry almost every kind of error a text can pick up on its way to us, including some we added ourselves this
+          year.
         </p>
 
         <h2 className="text-2xl font-serif font-bold mt-12 mb-4 text-primary">The sentence</h2>
@@ -171,8 +190,16 @@ export default function OneSentenceOfHermesPage() {
             fifteenth-century manuscript
           </Link>{' '}
           now in the Biblioteca Laurenziana in Florence, the{' '}
+          <Link href={`${BOOK.aldine}?page=268`} className={linkClass}>
+            Aldine edition of 1516
+          </Link>
+          , the{' '}
           <Link href={`${BOOK.basel}?page=163`} className={linkClass}>
             Basel edition of 1532
+          </Link>
+          , Jean de Tournes&rsquo;s{' '}
+          <Link href={`${BOOK.tournes}?page=530`} className={linkClass}>
+            Lyon edition of 1549
           </Link>
           , Francesco Patrizi&rsquo;s{' '}
           <Link href={`${BOOK.patrizi}?page=163`} className={linkClass}>
@@ -217,8 +244,32 @@ export default function OneSentenceOfHermesPage() {
           <Link href={`${BOOK.scottText}?page=360`} className={linkClass}>
             p. 356
           </Link>
-          ). The printed editions inherit the split. Basel in 1532 has <em>naturae qualitate &amp; sensus mundi</em>;
-          the Apuleius of 1778 has <em>naturae et qualitatis sensus mundi</em>.
+          ). The printed editions inherit the split. The Aldine of 1516 has{' '}
+          <em>naturae, &amp; qualitatis, &amp; sensus mundi</em>; Basel in 1532 has{' '}
+          <em>naturae qualitate &amp; sensus mundi</em>; the Apuleius of 1778 has{' '}
+          <em>naturae et qualitatis sensus mundi</em>.
+        </p>
+
+        <Figure
+          src={`${DIR}/1516-aldine.jpg`}
+          alt="The passage in the Aldine edition of 1516, set in small roman type across a folio page."
+        >
+          The Aldine edition (Venice, 1516), in which the <em>Asclepius</em> follows Ficino&rsquo;s translations of
+          Iamblichus, Proclus and the <em>Pimander</em> (
+          <Link href={`${BOOK.aldine}?page=268`} className={linkClass}>
+            read the page
+          </Link>
+          ). Copy: Bayerische Staatsbibliothek.
+        </Figure>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Sixteen years separate the Aldine from the Basel edition, and in that time a clause went missing. After{' '}
+          <em>umbra dignoscitur</em> the Aldine continues <em>ubi enim quid temporum dimensione cognoscitur, ubi sunt
+          mendacia</em>: &ldquo;for where anything is known by the measure of time, there are falsehoods&rdquo;. In the Basel edition <em>dignoscitur</em> is followed directly by{' '}
+          <em>Vbi sunt mendacia</em>. Six words have dropped out: the eye went from <em>dignoscitur. ubi</em> to <em>cognoscitur. ubi</em>. Patrizi&rsquo;s
+          edition of 1593 has the same gap, and the Lyon edition of 1549 and the Apuleius of 1778 do not. A shared
+          omission of this kind is how editors work out which copy was made from which: Patrizi&rsquo;s text belongs
+          to the Basel line, not the Aldine one.
         </p>
 
         <Figure
@@ -267,7 +318,7 @@ export default function OneSentenceOfHermesPage() {
         <p className="text-secondary leading-relaxed mb-6">
           Source Library&rsquo;s transcriptions are made by AI models reading the page images, and its translations by
           AI models reading the transcriptions. When we checked our text of this passage against the scans, we found
-          our own copies of it had picked up two of the old kinds of error.
+          our own copies of it had picked up three of the old kinds of error.
         </p>
 
         <h3 className="text-xl font-serif font-semibold mt-8 mb-3 text-primary">The long s</h3>
@@ -294,8 +345,9 @@ export default function OneSentenceOfHermesPage() {
         </Figure>
 
         <p className="text-secondary leading-relaxed mb-6">
-          All three printed editions whose scans we checked print <em>secunda</em>, with the long s. Our OCR read all three as{' '}
-          <em>fecunda</em>, &ldquo;fruitful&rdquo;, and our translations follow it:
+          All five printed editions whose scans we checked print <em>secunda</em>, with the long s. Our OCR read
+          four of them as <em>fecunda</em>, &ldquo;fruitful&rdquo;, and our translations follow it. It read the fifth
+          correctly:
         </p>
 
         <div className="overflow-x-auto my-6">
@@ -311,6 +363,16 @@ export default function OneSentenceOfHermesPage() {
             <tbody>
               <tr>
                 <td className={td}>
+                  <Link href={`${BOOK.aldine}?page=268`} className={linkClass}>
+                    Venice, 1516
+                  </Link>
+                </td>
+                <td className={td}><em>secunda</em> (long s)</td>
+                <td className={td}><em>fecunda</em></td>
+                <td className={td}>&ldquo;Eternity, which is fruitful&rdquo;</td>
+              </tr>
+              <tr>
+                <td className={td}>
                   <Link href={`${BOOK.basel}?page=163`} className={linkClass}>
                     Basel, 1532
                   </Link>
@@ -318,6 +380,16 @@ export default function OneSentenceOfHermesPage() {
                 <td className={td}><em>secunda</em> (long s)</td>
                 <td className={td}><em>fecunda</em></td>
                 <td className={td}>&ldquo;Eternity, which is fruitful&rdquo;</td>
+              </tr>
+              <tr>
+                <td className={td}>
+                  <Link href={`${BOOK.tournes}?page=530`} className={linkClass}>
+                    Lyon, 1549
+                  </Link>
+                </td>
+                <td className={td}><em>secunda</em> (long s)</td>
+                <td className={td}><em>secunda</em></td>
+                <td className={td}>&ldquo;Eternity, which is second in rank&rdquo;</td>
               </tr>
               <tr>
                 <td className={td}>
@@ -346,6 +418,22 @@ export default function OneSentenceOfHermesPage() {
         <p className="text-secondary leading-relaxed mb-8">
           <em>Fecunda</em> is a real Latin word, and &ldquo;fruitful eternity&rdquo; sounds like something Hermes might
           say. The wrong reading is easy to accept because it is plausible.
+        </p>
+
+        <h3 className="text-xl font-serif font-semibold mt-8 mb-3 text-primary">The skipped lines</h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The Aldine page is a folio set in long lines of small type, and on it our OCR made the same slip as
+          Patrizi&rsquo;s compositor, in almost the same place. The last four lines of the Aldine crop shown earlier read{' '}
+          <em>
+            hoc autem differt intellectus a sensu, quod intellectus noster, ad qualitatem sensus mundi intelligendam
+            &hellip; &amp; sic contingit nobis hominibus
+          </em>
+          . Our transcription has <em>hoc autem intellectus a sensu, quod intellectus noster, git nobis
+          hominibus</em>. It stopped at the end of one line, at <em>noster</em>, and resumed two lines further down,
+          in the middle of the word <em>contingit</em>. Two lines of Hermes are missing from our text of that page,
+          and the English built on it reads &ldquo;our intellect grants us humans that we might see those things that
+          are in heaven as if through a mist&rdquo;, a sentence assembled from the two ends of the gap.
         </p>
 
         <h3 className="text-xl font-serif font-semibold mt-8 mb-3 text-primary">The easier reading</h3>
@@ -405,7 +493,7 @@ export default function OneSentenceOfHermesPage() {
         <h3 className="text-xl font-serif font-semibold mt-8 mb-3 text-primary">A fluent translation of a broken sentence</h3>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The third problem is quieter. Scott says the Latin of the sentence &ldquo;is impossible to make sense
+          The last problem is quieter. Scott says the Latin of the sentence &ldquo;is impossible to make sense
           of&rdquo;. Our English of the 1532 text reads:
         </p>
 
@@ -457,8 +545,8 @@ export default function OneSentenceOfHermesPage() {
 
         <p className="text-sm text-muted leading-relaxed mb-4">
           <strong>Our errors in this passage.</strong> In the passage followed here, we checked our transcriptions
-          against the scans of three printed editions and one manuscript. All three printed transcriptions misread{' '}
-          <em>secunda</em> (printed with a long s) as <em>fecunda</em>. The
+          against the scans of five printed editions and one manuscript. Four of the five printed transcriptions misread{' '}
+          <em>secunda</em> (printed with a long s) as <em>fecunda</em>, and the 1516 transcription skips two lines. The
           manuscript transcription had at least three readings that are not on the leaf. These are logged with the
           other manuscript and early-print OCR cases on{' '}
           <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/4877" className={linkClass}>
@@ -471,6 +559,8 @@ export default function OneSentenceOfHermesPage() {
         <p className="text-sm text-muted leading-relaxed">
           Sources: Walter Scott, <em>Hermetica</em>, vol. 1 (Oxford, 1924), for the Latin text and translation of the{' '}
           <em>Asclepius</em>, and vol. 3 (1926) for his commentary on chapter 32; the Laurenziana manuscript Plut. 89 sup. 71;{' '}
+          <em>Iamblichus de mysteriis Aegyptiorum</em> and other works (Venice: Aldus, 1516), and the Lyon edition of the same collection (Jean de
+          Tournes, 1549);{' '}
           <em>Pymander, Asclepius, De mysteriis Aegyptiorum</em> (Basel, 1532); Hannibal Rosseli,{' '}
           <em>Asclepius Mercurii Trismegisti cum commento</em> (Kraków, 1590); Francesco Patrizi,{' '}
           <em>Magia philosophica</em> (Hamburg, 1593); Apuleius, <em>Opera</em>, vol. 2 (1778). All are

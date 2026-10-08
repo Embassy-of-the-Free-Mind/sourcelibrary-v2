@@ -81,9 +81,9 @@ export const posts: BlogPost[] = [
     slug: 'one-sentence-of-hermes',
     title: 'One Sentence of Hermes, Copied for Sixteen Hundred Years',
     subtitle:
-      'A late-antique translator misread one Greek word in the Asclepius. We followed the sentence through a manuscript, four printed editions, a commentary and a critical edition, and found our own OCR making the copyists’ mistakes.',
+      'A late-antique translator misread one Greek word in the Asclepius. We followed the sentence through a manuscript, five printed editions, a commentary and a critical edition, and found our own OCR making the copyists’ mistakes.',
     date: '8 October 2026',
-    readTime: '10 min read',
+    readTime: '12 min read',
     kind: 'stories',
     // A printed page because the page is the evidence: the sentence itself, and ſecunda below it.
     image: '/blog/one-sentence-of-hermes/1532-asclepius-32.jpg',
