@@ -27,6 +27,7 @@
 
 import { probeBatchJob } from '../workers/lib/batch-reconcile.mjs';
 import { COLLECTABLE_BATCH_STATUSES } from './batch-job-filters.mjs';
+import { sumBatchResponseUsage, PLACEHOLDER_STATUSES } from '../workers/lib/supabase-usage-logger.mjs';
 
 export const LOSS_STATUSES = Object.freeze(['cancelled', 'failed', 'expired']);
 /** Gemini states after which no output will ever exist to collect. */
@@ -178,6 +179,63 @@ export async function markRecovered(db, job, { gemini, by, recovery, dryRun = fa
     { $set: { results_collected: true, gemini_state: state, recovery: { ...recovery, by, at: now }, updated_at: now } },
   );
   return { action: 'marked', why: `Gemini state ${state}; result held`, modified: res?.modifiedCount ?? 0 };
+}
+
+/**
+ * Close out a recovered job's usage row from the responses Gemini returned (#6276, #4599) — the
+ * same close-out batch-collector.mjs does when it collects: tokens summed per RESPONSE
+ * (sumBatchResponseUsage), written through completeBatchUsage() (passed in as `complete`).
+ *
+ * A per-request error line carries no usageMetadata and adds 0 tokens: Gemini bills tokens, and an
+ * errored request produced none. It is counted in `errored` and named in the row's error_message.
+ *
+ * Idempotent against the rows the job already has (`existing`, both stores, read by the caller):
+ *   - a closed (non-placeholder) row with these exact tokens, $0 close-outs included → 'skipped'
+ *   - a closed row with OTHER non-zero tokens → 'refused' (someone else's reading; never overwrite)
+ *   - more than one row → 'refused' (the double-count shape completeBatchUsage exists to stop)
+ *   - no row and no tokens → 'skipped' (nothing was billed; a $0 row adds nothing)
+ *   - otherwise the placeholder, a zero close-out, or no row at all is closed via `complete`.
+ * Inserted rows carry the job's own created_at, so September spend never lands on today's dial.
+ * @param {any} job batch_jobs row
+ * @param {any[]} responses result lines
+ * @param {{ existing?: any[], complete: (p: any) => Promise<string>, dryRun?: boolean, placeholderStatuses?: string[] }} opts
+ * Returns { action: 'closed'|'skipped'|'refused', why, result?, params, errored, responded }.
+ */
+export async function meterRecovered(job, responses, { existing = [], complete, dryRun = false, placeholderStatuses = PLACEHOLDER_STATUSES } = /** @type {any} */ ({})) {
+  const batchJobId = job?.id || (job?._id && String(job._id));
+  if (!batchJobId) throw new Error('meterRecovered: the row has neither id nor _id');
+  if (typeof complete !== 'function') throw new Error('meterRecovered: complete (completeBatchUsage) is required');
+  const { inputTokens: input, outputTokens: output } = sumBatchResponseUsage(responses);
+  const errored = (responses || []).filter((r) => r?.error).length;
+  const responded = (responses || []).length;
+  const metered = input + output > 0;
+  const params = {
+    type: job.type || 'ocr',
+    mode: 'batch',
+    model: job.model,
+    book_id: job.book_id,
+    page_count: job.page_count || job.page_ids?.length || 0,
+    input_tokens: input,
+    output_tokens: output,
+    status: metered ? 'success' : 'failed',
+    error_message: errored ? `${errored}/${responded} responses were per-request errors (no usageMetadata, 0 tokens); recovered #6276` : null,
+    batch_job_id: batchJobId,
+    endpoint: 'hetzner/pipeline-orchestrator',
+    triggered_by: 'manual',
+    timestamp: new Date(job.created_at || Date.now()).toISOString(),
+    insertIfMissing: metered,
+  };
+  const out = (action, why, result) => ({ action, why, result, params, errored, responded });
+  const tok = (r) => (r.input_tokens || 0) + (r.output_tokens || 0);
+  if (existing.length > 1) return out('refused', `${existing.length} usage rows for one batch job`);
+  const [row] = existing;
+  if (row && !placeholderStatuses.includes(row.status)) {
+    if ((row.input_tokens || 0) === input && (row.output_tokens || 0) === output) return out('skipped', 'already metered with these tokens');
+    if (tok(row) > 0) return out('refused', `closed row holds other tokens (${row.input_tokens}/${row.output_tokens})`);
+  }
+  if (!row && !metered) return out('skipped', 'no usage row and no tokens billed');
+  if (dryRun) return out('closed', `dry run (${row ? `would close ${row.status} row` : 'would insert'})`);
+  return out('closed', row ? `closed ${row.status} row` : 'inserted', await complete(params));
 }
 
 /**

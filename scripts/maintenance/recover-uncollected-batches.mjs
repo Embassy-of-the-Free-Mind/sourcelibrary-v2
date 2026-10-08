@@ -22,13 +22,20 @@
  *              Every write is filtered on the page STILL having no text, carries provenance
  *              (ocr.source 'batch_recovery', engine, prompt_version, batch job, recovered_at,
  *              content hash), and a sweep_log row.
- *   mark       stamps the recovered batch_jobs rows `recovery` + results_collected (no status write).
+ *   mark       stamps the recovered batch_jobs rows `recovery` + results_collected (no status write),
+ *              then meters each one (below).
+ *   meter      closes out each recovered job's gemini_usage row from the result file's
+ *              usageMetadata, summed per response, via completeBatchUsage() — what the collector
+ *              does on collection (#4599). Idempotent: a job already metered is skipped. Writes
+ *              the meter only (dry run unless --apply). `mark` ran before metering existed
+ *              (2026-10-08), so its 283 rows were backfilled with `meter --apply`.
  *
  * Usage:
  *   node --env-file=.env.production.local scripts/maintenance/recover-uncollected-batches.mjs download --out=$JOB_SCRATCH
  *   … classify --out=$JOB_SCRATCH
  *   … apply --out=$JOB_SCRATCH [--limit=20] [--apply]
  *   … mark --out=$JOB_SCRATCH [--apply]
+ *   … meter --out=$JOB_SCRATCH [--apply]
  *
  * Undo: every page written here has ocr.source / translation.source 'batch_recovery' and
  * `recovery.run_id`; it had no text before, so undo is $unset of the written fields on those pages
@@ -38,10 +45,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
 import crypto from 'node:crypto';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import { GoogleGenAI } from '@google/genai';
 import { probeBatchJob } from '../workers/lib/batch-reconcile.mjs';
 import { geminiKeys } from '../audit/paid-vs-got.mjs';
+import { completeBatchUsage, calculateUsageCost } from '../workers/lib/supabase-usage-logger.mjs';
 
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 const args = process.argv.slice(2);
@@ -412,6 +420,75 @@ async function mark(db, { write }) {
     if (r.action === 'refused') console.log(`refused ${m.job_id} ${m.job}: ${r.why}`);
   }
   console.log(JSON.stringify(tally));
+  await meter(db, { write });
+}
+
+// ── meter ───────────────────────────────────────────────────────────────────
+
+/**
+ * The Mongo gemini_usage rows for these jobs, in ONE query: `batch_job_id` is unindexed on a
+ * multi-million-row collection, so the scan is bounded by `_id` time (as spend-guard.mjs selects)
+ * from the day before the earliest job was created — a row about a job cannot predate the job.
+ */
+async function mongoUsageByJob(db, rows) {
+  const since = new Date(Math.min(...rows.map((r) => new Date(r.created_at).getTime())) - 86400e3);
+  const ids = rows.map((r) => r.id || String(r._id));
+  const found = await db.collection('gemini_usage').find(
+    { _id: { $gte: ObjectId.createFromTime(Math.floor(since.getTime() / 1000)) }, batch_job_id: { $in: ids } },
+    { projection: { batch_job_id: 1, status: 1, input_tokens: 1, output_tokens: 1, cost_usd: 1 } }).toArray();
+  const by = new Map();
+  for (const r of found) by.set(r.batch_job_id, [...(by.get(r.batch_job_id) || []), { ...r, store: 'mongo' }]);
+  return by;
+}
+
+/** Every Supabase gemini_usage row the job has. With the Mongo rows: both stores spend-guard sums. */
+async function supabaseUsageRows(batchJobId) {
+  const url = process.env.SUPABASE_URL || 'https://ykhxaecbbxaaqlujuzde.supabase.co';
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!key) throw new Error('SUPABASE_SERVICE_ROLE_KEY unset — cannot tell a metered job from an unmetered one');
+  const resp = await fetch(`${url}/rest/v1/gemini_usage?batch_job_id=eq.${encodeURIComponent(batchJobId)}&select=id,status,input_tokens,output_tokens,cost_usd`,
+    { headers: { apikey: key, Authorization: `Bearer ${key}` } });
+  if (!resp.ok) throw new Error(`gemini_usage read ${resp.status}: ${(await resp.text()).slice(0, 200)}`);
+  return resp.json();
+}
+
+/**
+ * Close out each recovered job's usage row from its downloaded result (meterRecovered in
+ * scripts/lib/end-batch-job.mjs → completeBatchUsage). Only rows marked recovered by THIS
+ * script are metered, and nothing but the meter is written.
+ */
+async function meter(db, { write }) {
+  const { meterRecovered } = await import('../lib/end-batch-job.mjs');
+  const tally = { jobs: 0, responses: 0, errored: 0, input_tokens: 0, output_tokens: 0, est_usd: 0, rows_before: {} };
+  const actions = {};
+  const manifest = readManifest();
+  const jobRows = new Map();
+  for (const m of manifest) jobRows.set(m.job, await rowForJob(db, m.job));
+  const mongoRows = await mongoUsageByJob(db, [...jobRows.values()]);
+  for (const m of manifest) {
+    const row = jobRows.get(m.job);
+    if (row.recovery?.by !== CALL_SITE) { actions['not marked recovered'] = (actions['not marked recovered'] || 0) + 1; continue; }
+    const onDisk = fs.readFileSync(m.file);
+    if (sha256(onDisk) !== m.sha256) throw new Error(`${m.file}: sha256 changed since download`);
+    const batchJobId = row.id || String(row._id);
+    const existing = [...await supabaseUsageRows(batchJobId), ...(mongoRows.get(batchJobId) || [])];
+    const before = existing.length ? existing.map((e) => `${e.store || 'supabase'}:${e.status}`).join('+') : 'none';
+    tally.rows_before[before] = (tally.rows_before[before] || 0) + 1;
+    const r = await meterRecovered(row, readResults(m), { existing, complete: (p) => completeBatchUsage(p, db), dryRun: !write });
+    tally.jobs++;
+    tally.responses += r.responded;
+    tally.errored += r.errored;
+    if (r.action === 'closed') {
+      tally.input_tokens += r.params.input_tokens;
+      tally.output_tokens += r.params.output_tokens;
+      tally.est_usd += calculateUsageCost(r.params.model, r.params.input_tokens, r.params.output_tokens, true);
+    }
+    const k = `${r.action}: ${r.result ? `${r.why} → ${r.result}` : r.why}`;
+    actions[k] = (actions[k] || 0) + 1;
+    if (r.action === 'refused') console.log(`refused ${m.job}: ${r.why}`);
+  }
+  tally.est_usd = +tally.est_usd.toFixed(4);
+  console.log(JSON.stringify({ write, ...tally, actions }, null, 1));
 }
 
 async function main() {
@@ -423,7 +500,8 @@ async function main() {
     else if (cmd === 'classify') await classify(db);
     else if (cmd === 'apply') await apply(db, { write: args.includes('--apply') });
     else if (cmd === 'mark') await mark(db, { write: args.includes('--apply') });
-    else { console.error(`unknown command '${cmd}' (download | classify | apply | mark)`); process.exitCode = 2; }
+    else if (cmd === 'meter') await meter(db, { write: args.includes('--apply') });
+    else { console.error(`unknown command '${cmd}' (download | classify | apply | mark | meter)`); process.exitCode = 2; }
   } finally { await client.close().catch(() => {}); }
 }
 await main();
