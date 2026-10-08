@@ -33,12 +33,12 @@ async function liveBookCount(db: Db): Promise<number> {
 export const maxDuration = 30;
 
 export const metadata: Metadata = {
-  title: 'Explore — Source Library',
+  title: 'Explore | Source Library',
   description: 'Interactive visualizations of the people, places, and concepts indexed across the library. Century heatmaps, era highlights, and data source breakdowns.',
   alternates: { canonical: '/explore' },
   openGraph: {
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
-    title: 'Explore — Source Library',
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
+    title: 'Explore | Source Library',
     description: 'Interactive visualizations of the Western esoteric tradition, enriched with Wikidata.',
   },
 };
@@ -274,7 +274,7 @@ export default async function ExplorePage() {
       header={
         <ContentHeader maxWidth="wide"
           title="Explore"
-          subtitle="Interactive visualizations of the people, places, and concepts indexed across the library — enriched with Wikidata."
+          subtitle="Interactive visualizations of the people, places, and concepts indexed across the library, enriched with Wikidata."
         />
       }
       maxWidth="wide"

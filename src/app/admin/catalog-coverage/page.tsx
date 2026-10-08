@@ -262,8 +262,8 @@ node scripts/catalog-coverage/build.mjs`}
                 Of these, <strong>{pct(t.with_translation, nonEnglish)}%</strong> of non-English editions have a known English translation.
                 Scan coverage is uneven: <strong>{pct(nonEngScans, nonEnglish)}%</strong> of continental editions
                 have been digitized via BSB, Gallica, e-rara, and Biblissima, while only{' '}
-                <strong>{pct(engScans, engEditions)}%</strong> of English editions appear{' '}
-                {'\u2014'} not because they haven&apos;t been scanned, but because EEBO, HathiTrust, and the
+                <strong>{pct(engScans, engEditions)}%</strong> of English editions appear,
+                not because they haven&apos;t been scanned, but because EEBO, HathiTrust, and the
                 Bodleian are not yet in our harvest.
               </p>
             </div>
@@ -505,7 +505,7 @@ function LanguageTable({ data, onLanguageClick }: { data: LanguageStat[]; onLang
                       {gap.toLocaleString('en-US')}
                     </button>
                   ) : (
-                    <span className="text-[#d4cfc4]">{'\u2014'}</span>
+                    <span className="text-[#d4cfc4]">{'\u2013'}</span>
                   )}
                 </td>
               </tr>
@@ -602,7 +602,7 @@ function SearchResultsTable({ results }: { results: SearchResult[] }) {
                     )}
                   </div>
                 ) : (
-                  <span className="text-[#d4cfc4]">{'\u2014'}</span>
+                  <span className="text-[#d4cfc4]">{'\u2013'}</span>
                 )}
               </td>
               <td className="py-3 px-3 text-center">
@@ -611,7 +611,7 @@ function SearchResultsTable({ results }: { results: SearchResult[] }) {
                     {r.translation_sources?.[0] || 'yes'}
                   </span>
                 ) : (
-                  <span className="text-[#d4cfc4]">{'\u2014'}</span>
+                  <span className="text-[#d4cfc4]">{'\u2013'}</span>
                 )}
               </td>
               <td className="py-3 pl-3 text-center">
@@ -620,7 +620,7 @@ function SearchResultsTable({ results }: { results: SearchResult[] }) {
                     yes
                   </Link>
                 ) : (
-                  <span className="text-[#d4cfc4]">{'\u2014'}</span>
+                  <span className="text-[#d4cfc4]">{'\u2013'}</span>
                 )}
               </td>
             </tr>

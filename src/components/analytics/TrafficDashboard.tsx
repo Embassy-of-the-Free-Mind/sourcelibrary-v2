@@ -34,7 +34,7 @@ const BINS: { value: TrafficBin | 'auto'; label: string }[] = [
 type Metric = 'pageviews' | 'visitors';
 
 function pctDelta(cur: number, prev: number): { text: string; up: boolean | null } {
-  if (prev === 0) return { text: cur > 0 ? 'new' : '—', up: cur > 0 ? true : null };
+  if (prev === 0) return { text: cur > 0 ? 'new' : '–', up: cur > 0 ? true : null };
   const d = ((cur - prev) / prev) * 100;
   const r = Math.round(d);
   if (r === 0) return { text: '0%', up: null };
@@ -162,7 +162,7 @@ export default function TrafficDashboard() {
               label="Unique visitors"
               value={data.summary.visitors}
               delta={pctDelta(data.summary.visitors, data.summary.prevVisitors)}
-              hint="approx — anonymized IP"
+              hint="approx., anonymized IP"
             />
           </div>
 
@@ -335,7 +335,7 @@ function ClassificationCard({ rows }: { rows: { class: string; count: number }[]
 
       {total === 0 ? (
         <p className="text-sm py-2" style={{ color: 'var(--text-muted)' }}>
-          No classified traffic yet — this begins accruing now that ingestion records it.
+          No classified traffic yet. This begins accruing now that ingestion records it.
         </p>
       ) : (
         <>

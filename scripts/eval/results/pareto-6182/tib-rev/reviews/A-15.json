@@ -1,0 +1,58 @@
+[
+{"id": "Q6H48", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Faithful rendering of MMK 23.24-25 with commentary and the opening verses of ch. 24 (24.1-6) plus the start of the commentary; notes are reasonable."},
+{"id": "Q3J63", "score": 4, "verdict": "light", "span": "ok", "errors": [
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "གཟུགས་སྐྱེད་པ་ལ་གེགས་བྱར་མེད་པའི་ནུས་པ་དང་ལྡན་པ་རྟོགས་པའི་ནང་དུ་འདུས་པ",
+   "english": "is solely included within the cognition that possesses the unimpeded capacity to generate form",
+   "why": "It is the cause (of the taste) that possesses the unimpeded capacity to produce form; the cognition is a cognition OF that cause, not a cognition possessing the capacity."}],
+ "note": "A sound rendering of a dense Pramāṇa argument on inferring form from taste; one misattached qualifier at the opening."},
+{"id": "QWCQN", "score": 4, "verdict": "light", "span": "ok", "errors": [
+  {"type": "addition", "confidence": "medium",
+   "tibetan": "ཀླུ་སྒྲུབ་དེ་ལྟར་བཞེད་པ་ཡིན",
+   "english": "the foundational master of the Middle Way school, circa 2nd century CE",
+   "why": "The verse simply says 'Nāgārjuna holds thus'; the description and dating are unmarked translator additions inside a verse line."}],
+ "note": "Verses from the Yuktiṣaṣṭikā, MMK 15.6 and the Cārvāka verse are rendered faithfully; only unmarked explanatory insertions intrude."},
+{"id": "QF1FG", "score": 3, "verdict": "light", "span": "ok", "errors": [
+  {"type": "agent", "confidence": "high",
+   "tibetan": "དེ་ཡི་བཀའ་ཡིས་དགེ་སློང་ནི། །ཤཱ་རིའི་བུ་དང་ལྷན་ཅིག་ཏུ།",
+   "english": "Then, having requested the Bhagavan, and following his command, the monk [note: Sudatta/Anathapindada] went to the city of Shravasti together with Shariputra.",
+   "why": "The monk is Śāriputra, sent by the Buddha's command to accompany Anāthapiṇḍada (Skt. tadādiṣṭena sahitaḥ śāriputreṇa bhikṣuṇā); Anāthapiṇḍada is a layman, not a monk.",
+   "fix": {"find": "Then, having requested the Bhagavan, and following his command, the monk [note: Sudatta/Anathapindada] went to the city of Shravasti together with Shariputra.",
+           "replace": "Then, having taken leave of the Bhagavan, he [note: Anathapindada] went to the city of Shravasti together with the monk Shariputra, who was assigned to him by the Bhagavan's command."}}],
+ "note": "The Jetavana narrative is otherwise faithful; the bilingual Sanskrit lines duplicate the Tibetan and are rightly not translated twice."},
+{"id": "QA67F", "score": 3, "verdict": "light", "span": "ok", "errors": [
+  {"type": "reversal", "confidence": "high",
+   "tibetan": "གལ་ཏེ་དོན་དམ་པ་ཞེས་བྱ་བ་འདོད་པའི་བདག་ཉིད་མོས་པས་ཡུལ་དུ་བྱེད་པ་ཡིན་ནོ། །འདི་ནི་འདོད་པ་ཁོ་ནའོ།",
+   "english": "If you claim that the \"ultimate\" is an object of interest for one who desires it, then it is merely a desire.",
+   "why": "The first horn of the dilemma is conceded: if 'ultimate' means taking the ultimate as object through devoted interest (adhimukti), 'that is simply accepted' (འདོད་པ་ཁོ་ན); only the path-of-seeing horn is then attacked.",
+   "fix": {"find": "If you claim that the \"ultimate\" is an object of interest for one who desires it, then it is merely a desire.",
+           "replace": "If by \"ultimate\" you mean that it takes the ultimate as its object through devoted interest (adhimukti), that we simply accept."}}],
+ "note": "The path-stage similes are rendered correctly; the refutation of the other commentators misreads its concession, and inline unmarked glosses are frequent."},
+{"id": "QDGUK", "score": 4, "verdict": "light", "span": "ok", "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "ཁྲ་བོ་ལ་སོགས་པའི་ཁྱད་པར་མཐའ་དག",
+   "english": "all the specific qualities of a brindled cow",
+   "why": "ཁྱད་པར་ here are the particular individuals (the spotted cow and the others), all of which are unmixed with horse, not the qualities of one brindled cow."}],
+ "note": "A generally sound rendering of the apoha discussion; the trailing 'one line of text follows' is a stray artefact rather than translation."},
+{"id": "QQUBF", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Faithful rendering of the sūtra passage on the karmic results of slandering the two Dharma-preaching monks; hells and figures are correct."},
+{"id": "QXOPK", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Faithful rendering of the Daśabhūmika citation and the discussion of ignorance and the view associated with it."},
+{"id": "Q1A89", "score": 4, "verdict": "light", "span": "ok", "errors": [
+  {"type": "gloss", "confidence": "medium",
+   "tibetan": "དེས་ན་དེ་མེད་པའི་ཕྱིར་སྡུག་བསྔལ་དེ་ཉིད་དམ།",
+   "english": "Thus, in the absence of that [note: happiness]",
+   "why": "The 'that' whose absence lets suffering be felt as pleasure is the habituated fear just mentioned, not happiness; the note makes the sentence incoherent."}],
+ "note": "The argument on habituation, pleasure and suffering is followed correctly; one misleading bracketed referent."},
+{"id": "QRE87", "score": 3, "verdict": "work", "span": "ok", "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "རེས་འགའ་སྨྲ་བ་ཉིད་རང་དབང་དུ་བསྒྲུབ་པར་འདོད་པ་ཡིན་ནམ།",
+   "english": "Does one intend to establish the act of speaking itself as an independent thesis",
+   "why": "The question is whether 'being a speaker' (vaktṛtva) is put forward as the reason in an independent (svatantra) proof or in a prasaṅga; it is the probans, not a thesis to be established."},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "མ་བརྟགས་ན་ཉམས་དགའ་བ་ཉིད་ཀྱི་ལུང་ཙམ་",
+   "english": "if one does not analyze it, it appears pleasant; but",
+   "why": "'Pleasing only when unexamined' qualifies the mere scripture (āgama) on which the property is known to the opponent; it is not a remark that the prasaṅga itself looks pleasant."}],
+ "note": "The thread of the Tattvasaṃgraha commentary is followable, but the logical vocabulary of the svatantra/prasaṅga dilemma is misparsed in places."}
+]

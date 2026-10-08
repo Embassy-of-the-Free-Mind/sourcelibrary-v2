@@ -29,7 +29,7 @@
 import { MongoClient } from 'mongodb';
 import { mkdirSync, writeFileSync, appendFileSync, readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { translationReasoningLeak, translationPipelineTalk, TRANSLATION_LEAK_PREFILTER } from '../lib/page-integrity.mjs';
+import { translationReasoningLeak, refusableReasoningLeak, translationPipelineTalk, TRANSLATION_LEAK_PREFILTER } from '../lib/page-integrity.mjs';
 
 const [mode, ...args] = process.argv.slice(2);
 const opt = (k, d) => { const i = args.indexOf(`--${k}`); return i >= 0 ? args[i + 1] : d; };
@@ -111,7 +111,7 @@ if (mode === 'report') {
     if (seen.has(r._id)) continue; // a range re-read after a kill appends its candidates twice
     seen.add(r._id);
     const v = translationReasoningLeak(r.text);
-    if (v) rows.push({ ...r, text: undefined, kind: v.kind, phrase: v.phrase, reader_visible: v.readerVisible });
+    if (v) rows.push({ ...r, text: undefined, kind: v.kind, phrase: v.phrase, reader_visible: v.readerVisible, refusable: !!refusableReasoningLeak(r.text) });
     else if (translationPipelineTalk(r.text)) talk.push({ book_id: r.book_id, page_number: r.page_number });
   }
   const ids = [...new Set(rows.map((r) => r.book_id))];
@@ -130,8 +130,8 @@ if (mode === 'report') {
   const tally = (list, f) => list.reduce((m, r) => { const k = f(r) ?? 'none'; m[k] = (m[k] || 0) + 1; return m; }, {});
   const live = rows.filter((r) => r.live), shown = live.filter((r) => r.reader_visible);
   // The headline: what a reader of a public book meets as the page's English.
-  const STRONG = new Set(['reasoning', 'assistant-reply']);
-  const head = shown.filter((r) => STRONG.has(r.kind));
+  // `refusable` is the write gate's own predicate (refusableReasoningLeak), so the headline is what it refuses.
+  const head = live.filter((r) => r.refusable);
   const summary = {
     issue: 6056, measured_at: new Date().toISOString(),
     walk_complete: ck.ranges.every((r) => r.done),

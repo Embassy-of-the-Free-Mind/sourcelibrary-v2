@@ -127,7 +127,7 @@ export default function DemoMode({ onExit }: DemoModeProps) {
         <div>
           {/* Current player indicator */}
           <div className="text-center text-sm text-muted mb-2">
-            Turn {state.turnNumber} &mdash;{' '}
+            Turn {state.turnNumber} ·{' '}
             {state.victory ? (
               <span className="text-accent-rust font-medium">Game Over</span>
             ) : moveCountRef.current >= maxMoves ? (

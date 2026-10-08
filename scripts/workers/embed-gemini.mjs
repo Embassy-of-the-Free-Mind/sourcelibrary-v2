@@ -71,6 +71,11 @@
  *                 Closes the submit-time usage rows with the BILLED tokens (batch
  *                 results carry usageMetadata; realtime ones do not). Free: it
  *                 runs whatever the dial says. --collect-concurrency N (default 3).
+ *                 --collect-jobs id,id collects only those jobs (and takes ones
+ *                 parked with status 'held').
+ *                 --collect-resume skips a page whose row already has the job's
+ *                 model and the page's current source timestamp (a re-run after
+ *                 an interrupted collect then rewrites nothing).
  *
  * Env: MONGODB_URI, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, SUPABASE_DB_URL,
  *      GEMINI_API_KEY_TIER3 (preferred, no training opt-in) or GEMINI_API_KEY
@@ -86,6 +91,7 @@ import fs from 'node:fs';
 import crypto from 'node:crypto';
 import { cleanPageText, pageEmbeddingInput, buildPageEmbeddingRow, PAGE_EMBEDDING_COLUMNS } from '../lib/page-embedding-text.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
+import { isPaused } from '../lib/pause.mjs';
 import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage, estimateUsd, estimateTextTokens, usdForTokens, FLUSH_EVERY_TEXTS } from '../lib/embedding-usage.mjs';
 import { pageSourceTs, incrementalSourceFilter, nextWatermark, readWatermark, writeWatermark } from '../lib/embed-watermark.mjs';
 import { createThenDeleteInput, uploadBatchInputFile, streamBatchResponses } from '../lib/gemini-batch-input-file.mjs';
@@ -142,6 +148,14 @@ const BATCH_MODE = args.includes('--batch');
 const COLLECT_MODE = args.includes('--collect');
 const JOB_PAGES = parseInt(args.find((_, i, a) => a[i - 1] === '--job-pages') || '20000');
 const COLLECT_CONCURRENCY = parseInt(args.find((_, i, a) => a[i - 1] === '--collect-concurrency') || '3');
+// --collect-jobs id,id: collect ONLY these jobs, including ones set aside with status 'held'.
+// A plain --collect takes every finished job, whoever submitted it; a job composed by a newer
+// checkout than the collector's fails the text-hash check page by page and is lost (#6175).
+const COLLECT_JOBS = (args.find((_, i, a) => a[i - 1] === '--collect-jobs') || '').split(',').filter(Boolean);
+// --collect-resume: skip a page whose row already carries this job's model and the page's current
+// source timestamp — it was written by an earlier, interrupted collect of the same job. Every
+// rewrite is a non-HOT update and a new HNSW insertion on a table that takes 2–50 rows/s (#6175).
+const COLLECT_RESUME = args.includes('--collect-resume');
 const MAX_RUNNING = parseInt(args.find((_, i, a) => a[i - 1] === '--max-running') || '0') || 0;
 if (BATCH_MODE && !BOOKS_FILE && !PAGES_FILE) {
   // A batch job is priced and attributed per book; an open-ended batch --full
@@ -508,8 +522,9 @@ async function collectEmbedJobs() {
   if (!SUPABASE_DB_URL) { console.error('--collect needs SUPABASE_DB_URL'); process.exit(1); }
   const jobs = db.collection(EMBED_JOBS);
   const staleClaim = new Date(Date.now() - 2 * 3600e3);
+  const open = { $or: [{ status: 'submitted' }, { status: 'collecting', collecting_at: { $lt: staleClaim } }] };
   const todo = await jobs.find(
-    { $or: [{ status: 'submitted' }, { status: 'collecting', collecting_at: { $lt: staleClaim } }] },
+    COLLECT_JOBS.length ? { _id: { $in: COLLECT_JOBS }, $or: [...open.$or, { status: 'held' }] } : open,
     { projection: { page_ids: 0 } },
   ).sort({ created_at: 1 }).toArray();
   console.log(`[collect] ${todo.length} job(s) to check`);
@@ -521,8 +536,8 @@ async function collectEmbedJobs() {
       try { await collectEmbedJob(job, report); } catch (e) { report.errored++; console.error(`[collect] ${job._id}: ${e.message}`); }
     }
   }));
-  const open = await jobs.countDocuments({ status: { $in: ['submitted', 'collecting'] } });
-  console.log(`[collect] ${JSON.stringify(report)} — ${open} job(s) still open`);
+  const stillOpen = await jobs.countDocuments({ status: { $in: ['submitted', 'collecting', 'held'] } });
+  console.log(`[collect] ${JSON.stringify(report)} — ${stillOpen} job(s) still open`);
 }
 
 async function collectEmbedJob(job, report) {
@@ -553,7 +568,7 @@ async function collectEmbedJob(job, report) {
 
   const client = await openPg();
   const perBook = new Map(); // bookId → { tokens, pages }
-  const counts = { responses: 0, written: 0, changed: 0, failedRequests: 0, missing: 0 };
+  const counts = { responses: 0, written: 0, changed: 0, failedRequests: 0, missing: 0, already: 0 };
   let buf = [];
   const flush = async () => {
     if (!buf.length) return;
@@ -581,6 +596,13 @@ async function collectEmbedJob(job, report) {
       rows.set(pageId, buildPageEmbeddingRow({ page, book, text: composed.text, hasTranslation: composed.hasTranslation, embedding: values, model: job.model }));
       b.pages++;
     }
+    if (COLLECT_RESUME && rows.size) {
+      const { rows: have } = await client.query('SELECT page_id, mongo_updated_at FROM page_translations WHERE page_id = ANY($1) AND embedding_model = $2 AND embedding IS NOT NULL', [[...rows.keys()], job.model]);
+      for (const h of have) {
+        const want = rows.get(h.page_id)?.mongo_updated_at;
+        if (want && h.mongo_updated_at && new Date(want).getTime() === new Date(h.mongo_updated_at).getTime()) { rows.delete(h.page_id); counts.already++; }
+      }
+    }
     for (let attempt = 1; ; attempt++) {
       try { await upsertManyPg(client, [...rows.values()]); break; } catch (e) {
         if (attempt >= 4) throw new Error(`upsert failed 4×: ${e.message}`);
@@ -591,7 +613,12 @@ async function collectEmbedJob(job, report) {
     counts.written += rows.size;
   };
   try {
-    for await (const line of streamBatchResponses(responsesFile, GEMINI_KEY)) {
+    // Download the whole results file BEFORE the first upsert. Fed straight from the stream, a
+    // slow table (minutes per 200 rows) leaves the download idle until the server cuts it, and
+    // the job fails with "terminated" after writing part of its rows (2 of 16 jobs, #6175).
+    const lines = [];
+    for await (const line of streamBatchResponses(responsesFile, GEMINI_KEY)) lines.push(line);
+    for (const line of lines) {
       counts.responses++;
       buf.push(line);
       if (buf.length >= 200) await flush();
@@ -618,7 +645,7 @@ async function collectEmbedJob(job, report) {
   report.written += counts.written;
   report.changed += counts.changed;
   report.failedRequests += counts.failedRequests;
-  console.log(`  ${job._id}: collected — ${counts.written.toLocaleString()} rows, ${counts.changed} changed since submit, ${counts.failedRequests} failed requests, ${counts.missing} pages gone; ${billedTokens.toLocaleString()} tokens ≈ $${actualUsd.toFixed(4)} (est $${(job.est_usd || 0).toFixed(4)})`);
+  console.log(`  ${job._id}: collected — ${counts.written.toLocaleString()} rows, ${counts.changed} changed since submit, ${counts.failedRequests} failed requests, ${counts.missing} pages gone, ${counts.already} already written; ${billedTokens.toLocaleString()} tokens ≈ $${actualUsd.toFixed(4)} (est $${(job.est_usd || 0).toFixed(4)})`);
 }
 
 // Legacy mark: max(updated_at) over every writer's rows. Used ONCE, to seed the
@@ -663,8 +690,8 @@ if (COLLECT_MODE) {
 {
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
   if (!BOOK_ID) {
-    if (control?.paused) {
-      console.log('[embed-gemini] Pipeline paused — exiting.');
+    if (control?.paused || isPaused(control, 'embeddings')) {
+      console.log(`[embed-gemini] ${control?.paused ? 'Pipeline' : 'embeddings step'} paused — exiting.`);
       await mongoClient.close();
       process.exit(0);
     }
@@ -751,7 +778,7 @@ if (BOOK_ID) {
   const skip = new Set();
   if (BATCH_MODE) {
     const inflight = db.collection(EMBED_JOBS).find(
-      { page_ids: { $in: ids }, $or: [{ status: { $in: ['submitted', 'collecting'] } }, { status: 'creating', created_at: { $gt: new Date(Date.now() - 3600e3) } }] },
+      { page_ids: { $in: ids }, $or: [{ status: { $in: ['submitted', 'collecting', 'held'] } }, { status: 'creating', created_at: { $gt: new Date(Date.now() - 3600e3) } }] },
       { projection: { page_ids: 1 } },
     );
     for await (const j of inflight) for (const id of j.page_ids || []) skip.add(id);

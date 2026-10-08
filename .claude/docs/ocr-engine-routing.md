@@ -60,7 +60,7 @@ Production is read from `getOcrModelForBook` with `OCR_LITE_ONLY` on, the defaul
 | Arabic (`ara`) | 113K (45K) | flash (visible, new); lite (hidden backlog) | — | — | served 3.50 (20); flash − lite +0.43 [−0.02, +0.80]; flash re-read of a lite read +0.39 [−0.06, +0.78] (9) | #5795: relabel (#4884) (every rule) | 1 decided, 3 pending, 1 unjudged (#5700, #5795) |
 | Persian (`fas`) | 89K (59K) | flash (visible, new, hidden backlog) | — | — | served 2.96 (12); flash − lite +0.63 [+0.33, +0.92]; flash re-read of a lite read +1.00 [+0.33, +1.67] (6) | #5795: stay on lite (hidden-flash-5795-registered); route to flash (margin-v1) | 2 decided, 3 pending, 1 unjudged (#5700, #5795) |
 | Mongolian (`mon`) | 83K (83K) | lite | — | — | — | — | — |
-| Syriac (`syc`) | 73K (18K) | lite | Kraken (`syriac-kraken-lane`, #4883); never Gemini | — | — | — | 1 decided (#4883) |
+| Syriac (`syc`) | 73K (18K) | lite | Kraken (`syriac-kraken-lane`, #4883); never Gemini | — | — | — | 1 decided, 1 unjudged (#4883, #6295) |
 | Korean (`kor`) | 70K (6.1K) | lite | — | — | — | — | 1 unjudged |
 | Spanish (`spa`) | 70K (36K) | lite | — | — | served 4.08 (6); flash − lite +0.25 [−0.17, +0.67] | — | — |
 | Javanese (`jav`) | 56K (52K) | lite | — | — | — | — | — |

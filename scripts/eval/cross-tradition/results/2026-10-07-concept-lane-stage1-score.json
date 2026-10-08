@@ -1,0 +1,1083 @@
+{
+ "date": "2026-10-07",
+ "stage1_books": 1216,
+ "queries": 25,
+ "relevant": "gold passage or by-eye grade 2",
+ "tradition": "traditionFamily(books.tradition)",
+ "unjudged_slots": 8,
+ "summary": {
+  "page_all": {
+   "rel_trad_at_10": 3.36,
+   "p_at_10": 0.7,
+   "trad_at_10_any_page": 4.12,
+   "books_at_10": 8.1,
+   "queries_le1_rel_trad": 3,
+   "gold_in_top10": 0.04
+  },
+  "page_s1": {
+   "rel_trad_at_10": 2.92,
+   "p_at_10": 0.7,
+   "trad_at_10_any_page": 3.64,
+   "books_at_10": 6.8,
+   "queries_le1_rel_trad": 3,
+   "gold_in_top10": 0.08
+  },
+  "page_s1_div": {
+   "rel_trad_at_10": 3.76,
+   "p_at_10": 0.684,
+   "trad_at_10_any_page": 4.92,
+   "books_at_10": 7.8,
+   "queries_le1_rel_trad": 1,
+   "gold_in_top10": 0.08
+  },
+  "concept": {
+   "rel_trad_at_10": 3.4,
+   "p_at_10": 0.756,
+   "trad_at_10_any_page": 4,
+   "books_at_10": 8.5,
+   "queries_le1_rel_trad": 0,
+   "gold_in_top10": 0.08
+  },
+  "concept_div": {
+   "rel_trad_at_10": 4.36,
+   "p_at_10": 0.732,
+   "trad_at_10_any_page": 5.52,
+   "books_at_10": 9.1,
+   "queries_le1_rel_trad": 0,
+   "gold_in_top10": 0.08
+  }
+ },
+ "diffs": {
+  "concept − page_s1 (rel_trad)": {
+   "mean": 0.48,
+   "ci95": [
+    -0.12,
+    1.08
+   ],
+   "better": 12,
+   "worse": 6
+  },
+  "concept − page_s1 (P@10)": {
+   "mean": 0.056,
+   "ci95": [
+    -0.05,
+    0.16
+   ],
+   "better": 12,
+   "worse": 9
+  },
+  "concept_div − page_s1_div (rel_trad)": {
+   "mean": 0.6,
+   "ci95": [
+    0.16,
+    1
+   ],
+   "better": 14,
+   "worse": 2
+  },
+  "concept_div − page_s1_div (P@10)": {
+   "mean": 0.048,
+   "ci95": [
+    -0.05,
+    0.14
+   ],
+   "better": 13,
+   "worse": 10
+  },
+  "concept_div − page_all (rel_trad)": {
+   "mean": 1,
+   "ci95": [
+    0.44,
+    1.52
+   ],
+   "better": 16,
+   "worse": 4
+  },
+  "concept_div − page_all (P@10)": {
+   "mean": 0.032,
+   "ci95": [
+    -0.06,
+    0.13
+   ],
+   "better": 10,
+   "worse": 11
+  }
+ },
+ "per_query": [
+  {
+   "qid": "c01",
+   "query": "the soul's ascent through the heavens to the divine",
+   "page_all": {
+    "rel_trad": 3,
+    "p10": 0.4,
+    "trad": 6,
+    "books": 10,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 2,
+    "p10": 0.7,
+    "trad": 3,
+    "books": 5,
+    "gold": 0
+   },
+   "page_s1_div": {
+    "rel_trad": 3,
+    "p10": 0.6,
+    "trad": 6,
+    "books": 8,
+    "gold": 0
+   },
+   "concept": {
+    "rel_trad": 3,
+    "p10": 0.6,
+    "trad": 4,
+    "books": 9,
+    "gold": 0
+   },
+   "concept_div": {
+    "rel_trad": 3,
+    "p10": 0.4,
+    "trad": 7,
+    "books": 10,
+    "gold": 0
+   }
+  },
+  {
+   "qid": "c02",
+   "query": "prima materia: the first matter from which all things are made",
+   "page_all": {
+    "rel_trad": 3,
+    "p10": 0.5,
+    "trad": 3,
+    "books": 9,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 2,
+    "p10": 0.8,
+    "trad": 2,
+    "books": 4,
+    "gold": 0
+   },
+   "page_s1_div": {
+    "rel_trad": 3,
+    "p10": 0.8,
+    "trad": 3,
+    "books": 7,
+    "gold": 0
+   },
+   "concept": {
+    "rel_trad": 2,
+    "p10": 0.6,
+    "trad": 2,
+    "books": 8,
+    "gold": 0
+   },
+   "concept_div": {
+    "rel_trad": 3,
+    "p10": 0.7,
+    "trad": 4,
+    "books": 8,
+    "gold": 0
+   }
+  },
+  {
+   "qid": "c03",
+   "query": "emptiness: things have no fixed nature of their own",
+   "page_all": {
+    "rel_trad": 2,
+    "p10": 0.8,
+    "trad": 2,
+    "books": 9,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 2,
+    "p10": 0.9,
+    "trad": 2,
+    "books": 7,
+    "gold": 0
+   },
+   "page_s1_div": {
+    "rel_trad": 3,
+    "p10": 0.9,
+    "trad": 3,
+    "books": 7,
+    "gold": 0
+   },
+   "concept": {
+    "rel_trad": 3,
+    "p10": 0.9,
+    "trad": 3,
+    "books": 10,
+    "gold": 0
+   },
+   "concept_div": {
+    "rel_trad": 3,
+    "p10": 0.9,
+    "trad": 3,
+    "books": 10,
+    "gold": 0
+   }
+  },
+  {
+   "qid": "c04",
+   "query": "what makes a human life go well; the highest good and true flourishing for a person",
+   "page_all": {
+    "rel_trad": 3,
+    "p10": 1,
+    "trad": 3,
+    "books": 7,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 4,
+    "p10": 0.8,
+    "trad": 4,
+    "books": 6,
+    "gold": 0
+   },
+   "page_s1_div": {
+    "rel_trad": 7,
+    "p10": 1,
+    "trad": 7,
+    "books": 9,
+    "gold": 0
+   },
+   "concept": {
+    "rel_trad": 2,
+    "p10": 0.8,
+    "trad": 3,
+    "books": 5,
+    "gold": 0
+   },
+   "concept_div": {
+    "rel_trad": 5,
+    "p10": 0.9,
+    "trad": 6,
+    "books": 8,
+    "gold": 0
+   }
+  },
+  {
+   "qid": "c05",
+   "query": "the annihilation of the self in union with the divine",
+   "page_all": {
+    "rel_trad": 4,
+    "p10": 1,
+    "trad": 4,
+    "books": 9,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 3,
+    "p10": 0.8,
+    "trad": 3,
+    "books": 6,
+    "gold": 0
+   },
+   "page_s1_div": {
+    "rel_trad": 3,
+    "p10": 0.9,
+    "trad": 3,
+    "books": 5,
+    "gold": 0
+   },
+   "concept": {
+    "rel_trad": 3,
+    "p10": 1,
+    "trad": 3,
+    "books": 9,
+    "gold": 0
+   },
+   "concept_div": {
+    "rel_trad": 3,
+    "p10": 1,
+    "trad": 3,
+    "books": 9,
+    "gold": 0
+   }
+  },
+  {
+   "qid": "c06",
+   "query": "spirits that stand between gods and humans",
+   "page_all": {
+    "rel_trad": 3,
+    "p10": 0.7,
+    "trad": 5,
+    "books": 9,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 1,
+    "p10": 0.1,
+    "trad": 4,
+    "books": 5,
+    "gold": 0
+   },
+   "page_s1_div": {
+    "rel_trad": 2,
+    "p10": 0.2,
+    "trad": 6,
+    "books": 7,
+    "gold": 0
+   },
+   "concept": {
+    "rel_trad": 5,
+    "p10": 0.7,
+    "trad": 5,
+    "books": 10,
+    "gold": 0
+   },
+   "concept_div": {
+    "rel_trad": 5,
+    "p10": 0.7,
+    "trad": 5,
+    "books": 10,
+    "gold": 0
+   }
+  },
+  {
+   "qid": "c07",
+   "query": "the human being as a small copy of the whole universe",
+   "page_all": {
+    "rel_trad": 5,
+    "p10": 0.9,
+    "trad": 6,
+    "books": 10,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 4,
+    "p10": 0.8,
+    "trad": 4,
+    "books": 8,
+    "gold": 0
+   },
+   "page_s1_div": {
+    "rel_trad": 4,
+    "p10": 0.8,
+    "trad": 5,
+    "books": 8,
+    "gold": 0
+   },
+   "concept": {
+    "rel_trad": 2,
+    "p10": 0.6,
+    "trad": 2,
+    "books": 8,
+    "gold": 0
+   },
+   "concept_div": {
+    "rel_trad": 4,
+    "p10": 0.5,
+    "trad": 5,
+    "books": 10,
+    "gold": 0
+   }
+  },
+  {
+   "qid": "c08",
+   "query": "the divine is beyond every name and description",
+   "page_all": {
+    "rel_trad": 1,
+    "p10": 0.1,
+    "trad": 5,
+    "books": 5,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 1,
+    "p10": 0.5,
+    "trad": 4,
+    "books": 9,
+    "gold": 0
+   },
+   "page_s1_div": {
+    "rel_trad": 2,
+    "p10": 0.5,
+    "trad": 5,
+    "books": 10,
+    "gold": 0
+   },
+   "concept": {
+    "rel_trad": 3,
+    "p10": 0.7,
+    "trad": 5,
+    "books": 9,
+    "gold": 0
+   },
+   "concept_div": {
+    "rel_trad": 4,
+    "p10": 0.7,
+    "trad": 6,
+    "books": 9,
+    "gold": 0
+   }
+  },
+  {
+   "qid": "c09",
+   "query": "light as the nature of the divine or of the mind",
+   "page_all": {
+    "rel_trad": 4,
+    "p10": 1,
+    "trad": 4,
+    "books": 7,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 4,
+    "p10": 0.8,
+    "trad": 4,
+    "books": 8,
+    "gold": 0
+   },
+   "page_s1_div": {
+    "rel_trad": 4,
+    "p10": 0.7,
+    "trad": 5,
+    "books": 9,
+    "gold": 0
+   },
+   "concept": {
+    "rel_trad": 2,
+    "p10": 0.8,
+    "trad": 3,
+    "books": 9,
+    "gold": 0
+   },
+   "concept_div": {
+    "rel_trad": 5,
+    "p10": 0.6,
+    "trad": 7,
+    "books": 9,
+    "gold": 0
+   }
+  },
+  {
+   "qid": "c10",
+   "query": "how the many things come forth from the One",
+   "page_all": {
+    "rel_trad": 2,
+    "p10": 1,
+    "trad": 2,
+    "books": 5,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 2,
+    "p10": 0.4,
+    "trad": 3,
+    "books": 7,
+    "gold": 0
+   },
+   "page_s1_div": {
+    "rel_trad": 4,
+    "p10": 0.5,
+    "trad": 4,
+    "books": 8,
+    "gold": 0
+   },
+   "concept": {
+    "rel_trad": 4,
+    "p10": 0.9,
+    "trad": 4,
+    "books": 9,
+    "gold": 0
+   },
+   "concept_div": {
+    "rel_trad": 5,
+    "p10": 0.9,
+    "trad": 6,
+    "books": 10,
+    "gold": 0
+   }
+  },
+  {
+   "qid": "c12",
+   "query": "the soul is reborn in another body after death",
+   "page_all": {
+    "rel_trad": 2,
+    "p10": 0.8,
+    "trad": 3,
+    "books": 9,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 2,
+    "p10": 1,
+    "trad": 2,
+    "books": 8,
+    "gold": 1
+   },
+   "page_s1_div": {
+    "rel_trad": 4,
+    "p10": 0.9,
+    "trad": 5,
+    "books": 8,
+    "gold": 1
+   },
+   "concept": {
+    "rel_trad": 3,
+    "p10": 0.5,
+    "trad": 4,
+    "books": 6,
+    "gold": 0
+   },
+   "concept_div": {
+    "rel_trad": 4,
+    "p10": 0.6,
+    "trad": 5,
+    "books": 8,
+    "gold": 0
+   }
+  },
+  {
+   "qid": "c13",
+   "query": "acting without striving; letting go of one's own will",
+   "page_all": {
+    "rel_trad": 1,
+    "p10": 0.5,
+    "trad": 1,
+    "books": 9,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 1,
+    "p10": 0.6,
+    "trad": 1,
+    "books": 6,
+    "gold": 0
+   },
+   "page_s1_div": {
+    "rel_trad": 1,
+    "p10": 0.6,
+    "trad": 1,
+    "books": 6,
+    "gold": 0
+   },
+   "concept": {
+    "rel_trad": 2,
+    "p10": 0.7,
+    "trad": 2,
+    "books": 7,
+    "gold": 0
+   },
+   "concept_div": {
+    "rel_trad": 2,
+    "p10": 0.7,
+    "trad": 2,
+    "books": 7,
+    "gold": 0
+   }
+  },
+  {
+   "qid": "c14",
+   "query": "the heart as the organ of spiritual knowledge",
+   "page_all": {
+    "rel_trad": 2,
+    "p10": 0.7,
+    "trad": 2,
+    "books": 6,
+    "gold": 1
+   },
+   "page_s1": {
+    "rel_trad": 3,
+    "p10": 0.5,
+    "trad": 5,
+    "books": 9,
+    "gold": 1
+   },
+   "page_s1_div": {
+    "rel_trad": 3,
+    "p10": 0.4,
+    "trad": 6,
+    "books": 9,
+    "gold": 1
+   },
+   "concept": {
+    "rel_trad": 4,
+    "p10": 0.5,
+    "trad": 5,
+    "books": 9,
+    "gold": 1
+   },
+   "concept_div": {
+    "rel_trad": 4,
+    "p10": 0.5,
+    "trad": 6,
+    "books": 9,
+    "gold": 1
+   }
+  },
+  {
+   "qid": "c15",
+   "query": "the creative power of the divine word, name, letters or sound",
+   "page_all": {
+    "rel_trad": 5,
+    "p10": 0.9,
+    "trad": 5,
+    "books": 9,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 3,
+    "p10": 0.9,
+    "trad": 3,
+    "books": 7,
+    "gold": 0
+   },
+   "page_s1_div": {
+    "rel_trad": 4,
+    "p10": 0.9,
+    "trad": 4,
+    "books": 8,
+    "gold": 0
+   },
+   "concept": {
+    "rel_trad": 3,
+    "p10": 0.8,
+    "trad": 4,
+    "books": 10,
+    "gold": 0
+   },
+   "concept_div": {
+    "rel_trad": 5,
+    "p10": 0.8,
+    "trad": 5,
+    "books": 10,
+    "gold": 0
+   }
+  },
+  {
+   "qid": "c17",
+   "query": "the stages of the spiritual path",
+   "page_all": {
+    "rel_trad": 0,
+    "p10": 0,
+    "trad": 2,
+    "books": 9,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 3,
+    "p10": 0.9,
+    "trad": 3,
+    "books": 7,
+    "gold": 0
+   },
+   "page_s1_div": {
+    "rel_trad": 5,
+    "p10": 1,
+    "trad": 5,
+    "books": 9,
+    "gold": 0
+   },
+   "concept": {
+    "rel_trad": 3,
+    "p10": 0.6,
+    "trad": 7,
+    "books": 9,
+    "gold": 0
+   },
+   "concept_div": {
+    "rel_trad": 3,
+    "p10": 0.6,
+    "trad": 7,
+    "books": 9,
+    "gold": 0
+   }
+  },
+  {
+   "qid": "c22",
+   "query": "know yourself and you will know the divine",
+   "page_all": {
+    "rel_trad": 3,
+    "p10": 0.3,
+    "trad": 3,
+    "books": 5,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 5,
+    "p10": 0.5,
+    "trad": 6,
+    "books": 7,
+    "gold": 0
+   },
+   "page_s1_div": {
+    "rel_trad": 4,
+    "p10": 0.4,
+    "trad": 6,
+    "books": 8,
+    "gold": 0
+   },
+   "concept": {
+    "rel_trad": 5,
+    "p10": 0.8,
+    "trad": 5,
+    "books": 10,
+    "gold": 1
+   },
+   "concept_div": {
+    "rel_trad": 5,
+    "p10": 0.8,
+    "trad": 6,
+    "books": 10,
+    "gold": 1
+   }
+  },
+  {
+   "qid": "c23",
+   "query": "fasting and bodily austerity as purification",
+   "page_all": {
+    "rel_trad": 3,
+    "p10": 0.3,
+    "trad": 6,
+    "books": 9,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 3,
+    "p10": 0.4,
+    "trad": 4,
+    "books": 9,
+    "gold": 0
+   },
+   "page_s1_div": {
+    "rel_trad": 3,
+    "p10": 0.4,
+    "trad": 6,
+    "books": 10,
+    "gold": 0
+   },
+   "concept": {
+    "rel_trad": 2,
+    "p10": 0.7,
+    "trad": 3,
+    "books": 8,
+    "gold": 0
+   },
+   "concept_div": {
+    "rel_trad": 4,
+    "p10": 0.5,
+    "trad": 7,
+    "books": 10,
+    "gold": 0
+   }
+  },
+  {
+   "qid": "c24",
+   "query": "the elements and how they change into one another",
+   "page_all": {
+    "rel_trad": 4,
+    "p10": 1,
+    "trad": 4,
+    "books": 9,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 3,
+    "p10": 0.8,
+    "trad": 5,
+    "books": 8,
+    "gold": 0
+   },
+   "page_s1_div": {
+    "rel_trad": 3,
+    "p10": 0.5,
+    "trad": 6,
+    "books": 8,
+    "gold": 0
+   },
+   "concept": {
+    "rel_trad": 4,
+    "p10": 0.9,
+    "trad": 4,
+    "books": 7,
+    "gold": 0
+   },
+   "concept_div": {
+    "rel_trad": 4,
+    "p10": 0.9,
+    "trad": 4,
+    "books": 7,
+    "gold": 0
+   }
+  },
+  {
+   "qid": "c25",
+   "query": "dreams as a source of knowledge or revelation",
+   "page_all": {
+    "rel_trad": 5,
+    "p10": 0.8,
+    "trad": 6,
+    "books": 9,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 4,
+    "p10": 0.9,
+    "trad": 4,
+    "books": 9,
+    "gold": 0
+   },
+   "page_s1_div": {
+    "rel_trad": 5,
+    "p10": 0.8,
+    "trad": 6,
+    "books": 9,
+    "gold": 0
+   },
+   "concept": {
+    "rel_trad": 3,
+    "p10": 0.8,
+    "trad": 3,
+    "books": 7,
+    "gold": 0
+   },
+   "concept_div": {
+    "rel_trad": 6,
+    "p10": 0.9,
+    "trad": 6,
+    "books": 8,
+    "gold": 0
+   }
+  },
+  {
+   "qid": "c26",
+   "query": "what happens to the soul after death; judgment of the dead",
+   "page_all": {
+    "rel_trad": 7,
+    "p10": 1,
+    "trad": 7,
+    "books": 10,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 4,
+    "p10": 1,
+    "trad": 4,
+    "books": 6,
+    "gold": 0
+   },
+   "page_s1_div": {
+    "rel_trad": 5,
+    "p10": 0.9,
+    "trad": 5,
+    "books": 8,
+    "gold": 0
+   },
+   "concept": {
+    "rel_trad": 5,
+    "p10": 0.8,
+    "trad": 7,
+    "books": 10,
+    "gold": 0
+   },
+   "concept_div": {
+    "rel_trad": 5,
+    "p10": 0.8,
+    "trad": 7,
+    "books": 10,
+    "gold": 0
+   }
+  },
+  {
+   "qid": "c28",
+   "query": "the divine dwells within every being",
+   "page_all": {
+    "rel_trad": 4,
+    "p10": 0.8,
+    "trad": 4,
+    "books": 7,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 2,
+    "p10": 0.8,
+    "trad": 3,
+    "books": 4,
+    "gold": 0
+   },
+   "page_s1_div": {
+    "rel_trad": 4,
+    "p10": 0.7,
+    "trad": 5,
+    "books": 6,
+    "gold": 0
+   },
+   "concept": {
+    "rel_trad": 4,
+    "p10": 0.9,
+    "trad": 4,
+    "books": 9,
+    "gold": 0
+   },
+   "concept_div": {
+    "rel_trad": 6,
+    "p10": 0.8,
+    "trad": 7,
+    "books": 10,
+    "gold": 0
+   }
+  },
+  {
+   "qid": "c29",
+   "query": "compassion for all living beings; do to others as you would have done to you",
+   "page_all": {
+    "rel_trad": 5,
+    "p10": 0.8,
+    "trad": 6,
+    "books": 8,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 4,
+    "p10": 0.9,
+    "trad": 4,
+    "books": 5,
+    "gold": 0
+   },
+   "page_s1_div": {
+    "rel_trad": 4,
+    "p10": 0.9,
+    "trad": 4,
+    "books": 5,
+    "gold": 0
+   },
+   "concept": {
+    "rel_trad": 4,
+    "p10": 0.7,
+    "trad": 4,
+    "books": 9,
+    "gold": 0
+   },
+   "concept_div": {
+    "rel_trad": 5,
+    "p10": 0.7,
+    "trad": 6,
+    "books": 10,
+    "gold": 0
+   }
+  },
+  {
+   "qid": "c31",
+   "query": "correspondence between the heavens and things on earth",
+   "page_all": {
+    "rel_trad": 3,
+    "p10": 0.7,
+    "trad": 3,
+    "books": 6,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 2,
+    "p10": 0.3,
+    "trad": 2,
+    "books": 3,
+    "gold": 0
+   },
+   "page_s1_div": {
+    "rel_trad": 4,
+    "p10": 0.4,
+    "trad": 4,
+    "books": 5,
+    "gold": 0
+   },
+   "concept": {
+    "rel_trad": 6,
+    "p10": 0.8,
+    "trad": 6,
+    "books": 10,
+    "gold": 0
+   },
+   "concept_div": {
+    "rel_trad": 6,
+    "p10": 0.8,
+    "trad": 6,
+    "books": 10,
+    "gold": 0
+   }
+  },
+  {
+   "qid": "c32",
+   "query": "silence and stillness of mind as the way to truth",
+   "page_all": {
+    "rel_trad": 4,
+    "p10": 0.7,
+    "trad": 5,
+    "books": 9,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 4,
+    "p10": 0.6,
+    "trad": 5,
+    "books": 9,
+    "gold": 0
+   },
+   "page_s1_div": {
+    "rel_trad": 5,
+    "p10": 0.6,
+    "trad": 6,
+    "books": 8,
+    "gold": 0
+   },
+   "concept": {
+    "rel_trad": 4,
+    "p10": 0.9,
+    "trad": 4,
+    "books": 10,
+    "gold": 0
+   },
+   "concept_div": {
+    "rel_trad": 5,
+    "p10": 0.6,
+    "trad": 7,
+    "books": 10,
+    "gold": 0
+   }
+  },
+  {
+   "qid": "c33",
+   "query": "how the world first came into being",
+   "page_all": {
+    "rel_trad": 6,
+    "p10": 0.8,
+    "trad": 6,
+    "books": 9,
+    "gold": 0
+   },
+   "page_s1": {
+    "rel_trad": 5,
+    "p10": 0.8,
+    "trad": 7,
+    "books": 9,
+    "gold": 0
+   },
+   "page_s1_div": {
+    "rel_trad": 5,
+    "p10": 0.8,
+    "trad": 7,
+    "books": 9,
+    "gold": 0
+   },
+   "concept": {
+    "rel_trad": 4,
+    "p10": 0.9,
+    "trad": 4,
+    "books": 6,
+    "gold": 0
+   },
+   "concept_div": {
+    "rel_trad": 5,
+    "p10": 1,
+    "trad": 5,
+    "books": 7,
+    "gold": 0
+   }
+  }
+ ]
+}

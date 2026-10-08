@@ -182,6 +182,84 @@
         "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md",
         "measured_on": "2026-10-06"
       }
+    ],
+    "omnisyr": [
+      {
+        "charts": [
+          "syriac-print"
+        ],
+        "basis": "compute",
+        "usd_per_1k": 0.11,
+        "hardware": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads",
+        "quote": "Kraken (any of the four models) **$0.11 per 1,000 pages**",
+        "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md",
+        "measured_on": "2026-10-08"
+      }
+    ],
+    "omnisyr-nosplit": [
+      {
+        "charts": [
+          "syriac-print"
+        ],
+        "basis": "compute",
+        "usd_per_1k": 0.11,
+        "hardware": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads",
+        "quote": "Kraken (any of the four models) **$0.11 per 1,000 pages**",
+        "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md",
+        "measured_on": "2026-10-08"
+      }
+    ],
+    "sophro-mhiro": [
+      {
+        "charts": [
+          "syriac-print"
+        ],
+        "basis": "compute",
+        "usd_per_1k": 0.11,
+        "hardware": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads",
+        "quote": "Kraken (any of the four models) **$0.11 per 1,000 pages**",
+        "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md",
+        "measured_on": "2026-10-08"
+      }
+    ],
+    "qoruyo-eastern": [
+      {
+        "charts": [
+          "syriac-print"
+        ],
+        "basis": "compute",
+        "usd_per_1k": 0.11,
+        "hardware": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads",
+        "quote": "Kraken (any of the four models) **$0.11 per 1,000 pages**",
+        "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md",
+        "measured_on": "2026-10-08"
+      }
+    ],
+    "qoruyo-estrangela": [
+      {
+        "charts": [
+          "syriac-print"
+        ],
+        "basis": "compute",
+        "usd_per_1k": 0.11,
+        "hardware": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads",
+        "quote": "Kraken (any of the four models) **$0.11 per 1,000 pages**",
+        "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md",
+        "measured_on": "2026-10-08"
+      }
+    ],
+    "mineru": [
+      {
+        "charts": [
+          "syriac-print"
+        ],
+        "basis": "compute",
+        "usd_per_1k": 0.38,
+        "hardware": "Hetzner cax41 (16 cores, about €32/month), 641 s for 24 pages, the whole box",
+        "quote": "MinerU **$0.38 per 1,000 pages**",
+        "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md",
+        "measured_on": "2026-10-08"
+      }
     ]
   }
 }

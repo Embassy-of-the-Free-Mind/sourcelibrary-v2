@@ -1,13 +1,15 @@
 /**
  * The diagrams on /how-it-works (#5861), written for a library or a partner project
  * deciding whether to work with Source Library: how the whole line runs (and the checks
- * that loop over published pages), the two ways a page gets its text, what is recorded
- * with every page, and where people come in.
+ * that loop over published pages), the two ways a page gets its text, how one page is
+ * tied to the rest of the library, what is recorded with every page, where people come
+ * in, and what a partner library gives and gets back.
  *
  * Server components, HTML + CSS only: they read at phone width, need no client JS,
  * and every value shown is passed in from a record or a results file by the page.
  */
 import type { ReactNode } from 'react';
+import type { JourneyConnect } from '@/lib/journey/types';
 
 const fmt = (n: number) => n.toLocaleString('en-US');
 
@@ -191,7 +193,7 @@ export function TextRoutesFigure({
   );
 }
 
-/* ── Figure 3: the record behind one page ───────────────────────────────────── */
+/* ── Figure 4: the record behind one page ───────────────────────────────────── */
 
 export type PageRecord = {
   pageLabel: string;
@@ -219,7 +221,7 @@ const Code = ({ children }: { children: ReactNode }) => (
 export function RecordFigure({ r }: { r: PageRecord }) {
   return (
     <Figure
-      n={3}
+      n={4}
       title="What we keep with every page"
       caption={
         <>
@@ -274,13 +276,13 @@ export function RecordFigure({ r }: { r: PageRecord }) {
   );
 }
 
-/* ── Figure 4: where people come in ─────────────────────────────────────────── */
+/* ── Figure 5: where people come in ─────────────────────────────────────────── */
 
 export function PeopleFigure({ draftLabel }: { draftLabel: string }) {
   const box = 'rounded-sm border px-4 py-4';
   return (
     <Figure
-      n={4}
+      n={5}
       title="Where people come in"
       caption={
         <>
@@ -315,6 +317,167 @@ export function PeopleFigure({ draftLabel }: { draftLabel: string }) {
           <p className="mt-2 text-base italic text-primary">“{draftLabel}”</p>
           <p className="font-sans text-sm text-secondary leading-relaxed mt-2">Any reader can report a problem on any page.</p>
         </div>
+      </div>
+    </Figure>
+  );
+}
+
+/* ── Figure 3: one page, tied to the rest of the library ────────────────────── */
+
+const A = 'text-accent-rust hover:underline';
+
+function Lane({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div className="rounded-sm border border-border-light bg-white px-4 py-4">
+      <div className="font-sans text-xs font-semibold uppercase tracking-[0.1em] text-accent-rust mb-3">{label}</div>
+      {children}
+    </div>
+  );
+}
+
+/**
+ * The Connect step for the film's page, drawn from the same `JourneyConnect` the film's
+ * Connect screens use: the search that finds it, the names its book's index ties to it,
+ * and the other editions of the work. A lane with nothing in it is not drawn.
+ */
+export function ConnectFigure({ pageLabel, readerUrl, connect }: { pageLabel: string; readerUrl: string; connect: JourneyConnect }) {
+  const { search, index, editions } = connect;
+  if (!search && !index.length && !editions.length) return null;
+  const link = <span aria-hidden className="hidden md:block h-px bg-border-medium" />;
+  return (
+    <Figure
+      n={3}
+      title="One page, tied to the rest of the library"
+      caption="What the library holds for this page today. The search is re-run each day, and a connection that stops holding is dropped from the figure."
+    >
+      <div className="grid gap-3 md:gap-0 md:grid-cols-[1fr_1.5rem_13rem_1.5rem_1fr] md:items-center">
+        <div>
+          {search && (
+            <Lane label="Found by meaning">
+              <p className="font-sans text-sm text-secondary leading-snug mb-3">
+                A search of the whole library for <span className="text-primary">“{search.query}”</span>:
+              </p>
+              <ol className="space-y-1.5">
+                {search.results.slice(0, 5).map((r, i) => (
+                  <li key={r.href} className={`flex gap-2 font-sans text-[13px] leading-snug ${r.here ? 'text-primary font-medium' : 'text-secondary'}`}>
+                    <span className="text-muted tabular-nums">{i + 1}</span>
+                    <a href={r.href} className={r.here ? A : 'hover:underline'}>
+                      {r.title}, p. {r.page}
+                      {r.here && <span className="text-accent-rust"> · this page</span>}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </Lane>
+          )}
+        </div>
+        {search ? link : <span />}
+        <a
+          href={readerUrl}
+          className="block rounded-sm border-2 border-accent-rust bg-white px-4 py-5 text-center hover:bg-cream transition-colors"
+        >
+          <span className="block font-sans text-xs font-semibold uppercase tracking-[0.1em] text-accent-rust mb-2">The page</span>
+          <span className="block font-serif text-lg text-primary leading-snug">{pageLabel}</span>
+          <span className="block font-sans text-[13px] text-muted mt-2">scan · transcription · English</span>
+        </a>
+        {index.length || editions.length ? link : <span />}
+        <div className="space-y-3">
+          {index.length > 0 && (
+            <Lane label="Named in the book’s index">
+              <ul className="flex flex-wrap gap-1.5">
+                {index.slice(0, 10).map(x => (
+                  <li key={x.href}>
+                    <a
+                      href={x.href}
+                      className="inline-block rounded-sm border border-border-light px-2 py-0.5 font-sans text-[13px] text-secondary hover:border-accent-rust hover:text-accent-rust"
+                    >
+                      {x.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <p className="font-sans text-[12px] text-muted leading-snug mt-2">Each name leads to the other books in the library where it appears.</p>
+            </Lane>
+          )}
+          {editions.length > 0 && (
+            <Lane label="Other editions of the work">
+              <ul className="space-y-1.5">
+                {editions.slice(0, 5).map(e => (
+                  <li key={e.href} className="font-sans text-[13px] text-secondary leading-snug">
+                    <a href={e.href} className="hover:underline">{e.title}</a>
+                    {(e.published || e.language) && (
+                      <span className="text-muted"> · {[e.published, e.language].filter(Boolean).join(', ')}</span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </Lane>
+          )}
+        </div>
+      </div>
+    </Figure>
+  );
+}
+
+/* ── Figure 6: what a library gives, and what comes back ────────────────────── */
+
+function Column({ label, items, accent }: { label: string; items: ReactNode[]; accent?: boolean }) {
+  return (
+    <div className={`rounded-sm border px-4 py-4 h-full bg-white ${accent ? 'border-accent-rust/50' : 'border-border-light'}`}>
+      <div className="font-sans text-xs font-semibold uppercase tracking-[0.1em] text-accent-rust mb-3">{label}</div>
+      <ul className="space-y-2.5">
+        {items.map((it, i) => (
+          <li key={i} className="font-sans text-sm text-secondary leading-snug">{it}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+const Flow = () => (
+  <span aria-hidden className="flex items-center justify-center text-muted text-xl py-1 md:py-0">
+    <span className="md:hidden">↓</span>
+    <span className="hidden md:inline">→</span>
+  </span>
+);
+
+export function ExchangeFigure() {
+  return (
+    <Figure n={6} title="What a library gives, and what comes back">
+      <div className="grid md:grid-cols-[1fr_2rem_1fr_2rem_1.4fr] md:items-stretch">
+        <Column
+          label="The library gives"
+          items={['Its page images, through IIIF or its own download.', 'A typed text of the book, where one has been made.']}
+        />
+        <Flow />
+        <Column
+          label="Source Library does"
+          accent
+          items={[
+            'Find, read, translate, connect and publish (Figure 1).',
+            'Checks on the published pages, again and again, with every correction kept as a revision.',
+          ]}
+        />
+        <Flow />
+        <Column
+          label="What comes back"
+          items={[
+            <>
+              <strong className="text-primary font-medium">Credit.</strong> The library is named on every book, and its pages
+              link back to the original scan. <a href="/libraries" className={A}>Libraries</a>.
+            </>,
+            <>
+              <strong className="text-primary font-medium">A reading room.</strong> The library’s books on their own site, as
+              the Embassy of the Free Mind’s{' '}
+              <a href="https://bph.sourcelibrary.org" className={A}>Bibliotheca Philosophica Hermetica</a> has.
+            </>,
+            <>
+              <strong className="text-primary font-medium">Nothing locked in.</strong> A IIIF manifest and a full-text download
+              for every book, a stable link to every page, DOIs for finished editions, and a{' '}
+              <a href="/connect" className={A}>connector</a> for AI assistants.
+            </>,
+          ]}
+        />
       </div>
     </Figure>
   );

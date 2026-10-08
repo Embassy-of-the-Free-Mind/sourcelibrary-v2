@@ -179,7 +179,7 @@ export default function ReaderPresence({ variant }: { variant: 'hero' | 'chip' }
         {isChip ? 'reading now' : 'people are reading right now'}
         {!isChip && titleList && (
           <span className="text-white/60">
-            {' '}— including <span className="italic">{titleList}</span>
+            , including <span className="italic">{titleList}</span>
           </span>
         )}
       </span>

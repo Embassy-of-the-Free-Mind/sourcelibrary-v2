@@ -137,7 +137,7 @@ const C = {
   dim: { color: '#8b949e' } as const,
 };
 
-const f3 = (x: number | null | undefined) => (x == null ? '—' : x.toFixed(3));
+const f3 = (x: number | null | undefined) => (x == null ? '–' : x.toFixed(3));
 
 function GradeChip({ grade }: { grade: Grade }) {
   const g = GRADE_STYLE[grade];
@@ -221,7 +221,7 @@ export default async function OcrEvidencePage({ searchParams }: { searchParams: 
                 <td style={{ ...C.td, ...C.num }}>{s.books}</td>
                 <td style={{ ...C.td, ...C.num, color: s.referenced ? '#e6edf3' : '#f85149' }}>{s.referenced}</td>
                 <td style={C.td}><GradeChip grade={s.grade} /></td>
-                <td style={{ ...C.td, ...C.num }}>{s.referenced_books_needed || '—'}</td>
+                <td style={{ ...C.td, ...C.num }}>{s.referenced_books_needed || '–'}</td>
               </tr>
             ))}
           </tbody>
@@ -268,25 +268,25 @@ export default async function OcrEvidencePage({ searchParams }: { searchParams: 
                         </td>
                         <td style={{ ...C.td, ...C.num }}>{c.cer_vs_reference?.n ?? 0}</td>
                         <td style={{ ...C.td, ...C.num }}>
-                          {c.cer_vs_reference ? f3(c.cer_vs_reference.median) : <span style={C.dim}>{c.cer_vs_proxy ? `proxy ${f3(c.cer_vs_proxy.median)}` : '—'}</span>}
+                          {c.cer_vs_reference ? f3(c.cer_vs_reference.median) : <span style={C.dim}>{c.cer_vs_proxy ? `proxy ${f3(c.cer_vs_proxy.median)}` : '–'}</span>}
                         </td>
                         <td style={{ ...C.td, ...C.num }}>
-                          {c.cer_vs_reference_answered ? f3(c.cer_vs_reference_answered.median) : '—'}
+                          {c.cer_vs_reference_answered ? f3(c.cer_vs_reference_answered.median) : '–'}
                         </td>
                         <td style={{ ...C.td, ...C.num, color: c.refused?.k ? '#d29922' : '#e6edf3' }} title={c.refused?.inferred ? `${c.refused.inferred} inferred from an empty output` : undefined}>
-                          {c.refused ? `${c.refused.k}/${c.refused.n}${c.refused.inferred ? '*' : ''}` : '—'}
+                          {c.refused ? `${c.refused.k}/${c.refused.n}${c.refused.inferred ? '*' : ''}` : '–'}
                         </td>
                         <td style={C.td}><IntervalBar cell={c} max={max} /></td>
-                        <td style={{ ...C.td, ...C.num }}>{c.coverage ? `${c.coverage.aligned}/${c.coverage.of}` : '—'}</td>
+                        <td style={{ ...C.td, ...C.num }}>{c.coverage ? `${c.coverage.aligned}/${c.coverage.of}` : '–'}</td>
                         <td style={C.td}>
                           {isProduction ? <span style={C.dim}>baseline</span> : p && p.n ? (
                             <>
                               <span style={{ fontVariantNumeric: 'tabular-nums' }}>{p.wins} / {p.losses} / {p.ties}</span>{' '}
-                              <span style={C.dim}>p {p.p_sign == null ? '—' : p.p_sign < 0.001 ? '<0.001' : p.p_sign} · {p.untied} untied</span>
+                              <span style={C.dim}>p {p.p_sign == null ? '–' : p.p_sign < 0.001 ? '<0.001' : p.p_sign} · {p.untied} untied</span>
                             </>
                           ) : <span style={C.dim}>no referenced pairs</span>}
                         </td>
-                        <td style={{ ...C.td, ...C.num, color: c.catastrophic?.k ? '#f85149' : '#e6edf3' }}>{c.catastrophic ? `${c.catastrophic.k}/${c.catastrophic.n}` : '—'}</td>
+                        <td style={{ ...C.td, ...C.num, color: c.catastrophic?.k ? '#f85149' : '#e6edf3' }}>{c.catastrophic ? `${c.catastrophic.k}/${c.catastrophic.n}` : '–'}</td>
                         <td style={{ ...C.td, ...C.num, color: c.loop.k ? '#f85149' : '#e6edf3' }}>{c.loop.k}/{c.loop.n}</td>
                         <td style={C.td}><GradeChip grade={c.grade} /></td>
                       </tr>
@@ -332,13 +332,13 @@ export default async function OcrEvidencePage({ searchParams }: { searchParams: 
                     <td style={{ ...C.td, ...C.num }}>{a.n}</td>
                     <td style={{ ...C.td, fontVariantNumeric: 'tabular-nums' }}>{a.wins} / {a.losses} / {a.ties}</td>
                     <td style={{ ...C.td, ...C.num, color: !a.counts ? '#e6edf3' : (a.median_gain ?? 0) > 0 ? '#3fb950' : '#f85149' }}>
-                      {a.median_gain == null ? '—' : a.median_gain > 0 ? `+${a.median_gain}` : a.median_gain}
+                      {a.median_gain == null ? '–' : a.median_gain > 0 ? `+${a.median_gain}` : a.median_gain}
                     </td>
-                    <td style={{ ...C.td, ...C.dim }}>{a.ci95 ? `${a.ci95[0]} to ${a.ci95[1]}` : '—'}</td>
-                    <td style={{ ...C.td, ...C.num }}>{a.p_sign == null ? '—' : a.p_sign < 0.001 ? '<0.001' : a.p_sign}</td>
+                    <td style={{ ...C.td, ...C.dim }}>{a.ci95 ? `${a.ci95[0]} to ${a.ci95[1]}` : '–'}</td>
+                    <td style={{ ...C.td, ...C.num }}>{a.p_sign == null ? '–' : a.p_sign < 0.001 ? '<0.001' : a.p_sign}</td>
                     <td style={C.td}>{a.counts ? ((a.median_gain ?? 0) > 0 ? 'helps' : 'hurts') : <span style={C.dim}>no</span>}</td>
                     <td style={C.td}>
-                      {a.verdict == null ? <span style={C.dim}>—</span> : a.verdict === 'exploratory' ? <span style={C.dim}>no prediction</span> : (
+                      {a.verdict == null ? <span style={C.dim}>–</span> : a.verdict === 'exploratory' ? <span style={C.dim}>no prediction</span> : (
                         <span style={{ color: a.verdict === 'confirmed' ? '#3fb950' : '#f85149' }}>{a.prediction} → {a.verdict}</span>
                       )}
                     </td>
@@ -385,11 +385,11 @@ export default async function OcrEvidencePage({ searchParams }: { searchParams: 
                       </td>
                       <td style={{ ...C.td, ...C.num }}>{c.n}</td>
                       <td style={{ ...C.td, ...C.num }}>
-                        {c.kind === 'served' ? (c.fidelity_mean ?? '—') : `${c.fidelity_served_ocr ?? '—'} → ${c.fidelity_reread ?? '—'}`}
+                        {c.kind === 'served' ? (c.fidelity_mean ?? '–') : `${c.fidelity_served_ocr ?? '–'} → ${c.fidelity_reread ?? '–'}`}
                       </td>
-                      <td style={{ ...C.td, ...C.num }}>{delta == null ? '—' : delta > 0 ? `+${delta}` : delta}</td>
-                      <td style={{ ...C.td, ...C.dim }}>{d?.ci95 ? `${d.ci95[0]} to ${d.ci95[1]}` : '—'}</td>
-                      <td style={{ ...C.td, fontVariantNumeric: 'tabular-nums' }}>{d ? `${d.better} / ${d.worse}` : '—'}</td>
+                      <td style={{ ...C.td, ...C.num }}>{delta == null ? '–' : delta > 0 ? `+${delta}` : delta}</td>
+                      <td style={{ ...C.td, ...C.dim }}>{d?.ci95 ? `${d.ci95[0]} to ${d.ci95[1]}` : '–'}</td>
+                      <td style={{ ...C.td, fontVariantNumeric: 'tabular-nums' }}>{d ? `${d.better} / ${d.worse}` : '–'}</td>
                       <td style={{ ...C.td, ...C.dim }}>{c.grade}</td>
                     </tr>
                   );

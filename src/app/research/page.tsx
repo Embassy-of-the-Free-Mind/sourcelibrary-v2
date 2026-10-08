@@ -109,6 +109,7 @@ const QUESTIONS: { title: string; refs: Ref[] }[] = [
       { href: '/research/concept-diffusion', label: 'Concept diffusion' },
       { href: '/research/atlas', label: 'Text atlas' },
       { href: '/research/image-atlas', label: 'Image atlas' },
+      { href: '/about/meaning', label: 'Search by meaning' },
     ],
   },
 ];

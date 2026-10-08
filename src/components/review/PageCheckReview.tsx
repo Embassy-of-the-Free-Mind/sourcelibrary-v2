@@ -60,7 +60,7 @@ export default function PageCheckReview() {
 
       <p className="text-xs text-stone-500">
         Open it, read it, come back. If something is off, the box below is the important
-        part &mdash; the buttons only tell us the page has been looked at.
+        part. The buttons only tell us the page has been looked at.
       </p>
     </div>
   ) : null;

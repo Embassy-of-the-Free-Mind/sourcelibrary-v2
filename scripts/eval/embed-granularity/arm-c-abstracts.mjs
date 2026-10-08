@@ -20,29 +20,19 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { callGemini } from '../../lib/gemini-script-client.mjs';
 import { arg, flag, loadPool, embedAll, saveVecs, ENDPOINT } from './lib.mjs';
+import { CONCEPT_ABSTRACT_HEAD, CONCEPT_ABSTRACT_MODEL, CONCEPT_ABSTRACT_PROMPT_VERSION, CONCEPT_ABSTRACT_PAGES_PER_CALL } from '../../lib/concept-abstract.mjs';
 
 const DIR = arg('--dir');
 const LIMIT = Number(arg('--limit', 0));
-const PER_CALL = 6;
-const GEN_MODEL = 'gemini-3.1-flash-lite';
-export const PROMPT_VERSION = 'concept-abstract-v1';
+const PER_CALL = CONCEPT_ABSTRACT_PAGES_PER_CALL;
+const GEN_MODEL = CONCEPT_ABSTRACT_MODEL;
+export const PROMPT_VERSION = CONCEPT_ABSTRACT_PROMPT_VERSION;
 const pool = loadPool(DIR);
 const outFile = path.join(DIR, 'abstracts.jsonl');
 
-const HEAD = `You index pages of historical religious, philosophical and scientific texts so that readers can find the same IDEA across different traditions.
-
-For each numbered page below, write 2 to 4 plain sentences stating the ideas on that page: what it claims or shows about reality, the divine, the self or soul, knowledge, practice, nature or ethics. If the page is narrative, ritual or recipe, say what is done and what it is taken to mean.
-
-Rules:
-- Use neutral modern language that a student of ANY tradition would recognise. Do not use the tradition's own technical terms, and do not use proper names, titles of works, or the names of gods, sages, schools or religions. Say what a term means instead of naming it.
-- State the idea itself, not that "the text discusses" it.
-- Use only what is on the page. Do not add background you know from elsewhere.
-- If a page has no ideas to state (an index, a title page, a table, a bare list of names), write NONE.
-
-Answer with one line per page, in order, in exactly this form:
-[1] <abstract>
-[2] <abstract>
-`;
+// The prompt now lives in scripts/lib/concept-abstract.mjs, unchanged, so the
+// stage-1 lane (scripts/batch/concept-abstracts.mjs) sends the same text.
+const HEAD = CONCEPT_ABSTRACT_HEAD;
 
 const done = new Map();
 if (fs.existsSync(outFile)) for (const l of fs.readFileSync(outFile, 'utf8').trim().split('\n')) { if (l) { const r = JSON.parse(l); done.set(r.i, r); } }
