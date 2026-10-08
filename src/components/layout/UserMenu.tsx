@@ -178,6 +178,21 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
             </Link>
             {isAdmin && (
               <>
+                {/* The decision queue (#6258): tier:hold PRs and ops rows that
+                    wait on Derek, as phone-sized cards. First because it is the
+                    page that asks something of you. Gated like Spend: the
+                    platform layout behind it is requireSuperAdmin, so the link
+                    shows only to accounts the page will admit. */}
+                {role === 'superadmin' && (
+                  <Link
+                    href="/platform/admin/decisions"
+                    className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+                    style={{ color: 'var(--text-primary)' }}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Decisions
+                  </Link>
+                )}
                 {/* The one-page library dashboard (#3943): holdings, pipeline,
                     what's left, spend (allow-listed), readers. First because it
                     is the page an admin opens to see where things stand. */}
