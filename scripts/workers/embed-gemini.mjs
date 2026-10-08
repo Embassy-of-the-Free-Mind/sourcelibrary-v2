@@ -73,6 +73,9 @@
  *                 runs whatever the dial says. --collect-concurrency N (default 3).
  *                 --collect-jobs id,id collects only those jobs (and takes ones
  *                 parked with status 'held').
+ *                 --collect-resume skips a page whose row already has the job's
+ *                 model and the page's current source timestamp (a re-run after
+ *                 an interrupted collect then rewrites nothing).
  *
  * Env: MONGODB_URI, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, SUPABASE_DB_URL,
  *      GEMINI_API_KEY_TIER3 (preferred, no training opt-in) or GEMINI_API_KEY
@@ -148,6 +151,10 @@ const COLLECT_CONCURRENCY = parseInt(args.find((_, i, a) => a[i - 1] === '--coll
 // A plain --collect takes every finished job, whoever submitted it; a job composed by a newer
 // checkout than the collector's fails the text-hash check page by page and is lost (#6175).
 const COLLECT_JOBS = (args.find((_, i, a) => a[i - 1] === '--collect-jobs') || '').split(',').filter(Boolean);
+// --collect-resume: skip a page whose row already carries this job's model and the page's current
+// source timestamp — it was written by an earlier, interrupted collect of the same job. Every
+// rewrite is a non-HOT update and a new HNSW insertion on a table that takes 2–50 rows/s (#6175).
+const COLLECT_RESUME = args.includes('--collect-resume');
 const MAX_RUNNING = parseInt(args.find((_, i, a) => a[i - 1] === '--max-running') || '0') || 0;
 if (BATCH_MODE && !BOOKS_FILE && !PAGES_FILE) {
   // A batch job is priced and attributed per book; an open-ended batch --full
@@ -560,7 +567,7 @@ async function collectEmbedJob(job, report) {
 
   const client = await openPg();
   const perBook = new Map(); // bookId → { tokens, pages }
-  const counts = { responses: 0, written: 0, changed: 0, failedRequests: 0, missing: 0 };
+  const counts = { responses: 0, written: 0, changed: 0, failedRequests: 0, missing: 0, already: 0 };
   let buf = [];
   const flush = async () => {
     if (!buf.length) return;
@@ -588,6 +595,13 @@ async function collectEmbedJob(job, report) {
       rows.set(pageId, buildPageEmbeddingRow({ page, book, text: composed.text, hasTranslation: composed.hasTranslation, embedding: values, model: job.model }));
       b.pages++;
     }
+    if (COLLECT_RESUME && rows.size) {
+      const { rows: have } = await client.query('SELECT page_id, mongo_updated_at FROM page_translations WHERE page_id = ANY($1) AND embedding_model = $2 AND embedding IS NOT NULL', [[...rows.keys()], job.model]);
+      for (const h of have) {
+        const want = rows.get(h.page_id)?.mongo_updated_at;
+        if (want && h.mongo_updated_at && new Date(want).getTime() === new Date(h.mongo_updated_at).getTime()) { rows.delete(h.page_id); counts.already++; }
+      }
+    }
     for (let attempt = 1; ; attempt++) {
       try { await upsertManyPg(client, [...rows.values()]); break; } catch (e) {
         if (attempt >= 4) throw new Error(`upsert failed 4×: ${e.message}`);
@@ -598,7 +612,12 @@ async function collectEmbedJob(job, report) {
     counts.written += rows.size;
   };
   try {
-    for await (const line of streamBatchResponses(responsesFile, GEMINI_KEY)) {
+    // Download the whole results file BEFORE the first upsert. Fed straight from the stream, a
+    // slow table (minutes per 200 rows) leaves the download idle until the server cuts it, and
+    // the job fails with "terminated" after writing part of its rows (2 of 16 jobs, #6175).
+    const lines = [];
+    for await (const line of streamBatchResponses(responsesFile, GEMINI_KEY)) lines.push(line);
+    for (const line of lines) {
       counts.responses++;
       buf.push(line);
       if (buf.length >= 200) await flush();
@@ -625,7 +644,7 @@ async function collectEmbedJob(job, report) {
   report.written += counts.written;
   report.changed += counts.changed;
   report.failedRequests += counts.failedRequests;
-  console.log(`  ${job._id}: collected — ${counts.written.toLocaleString()} rows, ${counts.changed} changed since submit, ${counts.failedRequests} failed requests, ${counts.missing} pages gone; ${billedTokens.toLocaleString()} tokens ≈ $${actualUsd.toFixed(4)} (est $${(job.est_usd || 0).toFixed(4)})`);
+  console.log(`  ${job._id}: collected — ${counts.written.toLocaleString()} rows, ${counts.changed} changed since submit, ${counts.failedRequests} failed requests, ${counts.missing} pages gone, ${counts.already} already written; ${billedTokens.toLocaleString()} tokens ≈ $${actualUsd.toFixed(4)} (est $${(job.est_usd || 0).toFixed(4)})`);
 }
 
 // Legacy mark: max(updated_at) over every writer's rows. Used ONCE, to seed the
