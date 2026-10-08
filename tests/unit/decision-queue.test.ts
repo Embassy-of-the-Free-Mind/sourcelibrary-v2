@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
-  applyAnswers, buildAnswer, cardPriority, parseCostUsd, parseOpsDecisions, prCard, prMergeBlocker, sortCards,
-  type DecisionCard, type HoldPr,
+  applyAnswers, buildAnswer, cardPriority, keyRequestCard, parseCostUsd, parseOpsDecisions, prCard, prMergeBlocker, sortCards,
+  type DecisionCard, type HoldPr, type PendingKeyRequest,
 } from '@/lib/decision-queue';
 
 // Synthetic rows in the shape of the ops DECISIONS-PENDING.md (the real file is
@@ -198,5 +198,43 @@ describe('applyAnswers', () => {
       { card_id: c.id, choice: 'default', status: 'refused', answered_at: at(1), result: 'REFUSED #6238: entities interlock exited 1' },
     ], now);
     expect(back[0].lastAttempt).toMatch(/refused: REFUSED #6238: entities interlock/);
+  });
+});
+
+describe('keyRequestCard', () => {
+  const now = new Date('2026-10-08T12:00:00Z');
+  const req = (o: Partial<PendingKeyRequest> = {}): PendingKeyRequest => ({
+    id: '0123456789abcdef01234567', name: 'Ada Reader', email: 'ada@example.org', organization: 'Example Lab',
+    use_case: 'Corpus\n  study of   alchemical terms', requested_tier: 'explorer', created_at: '2026-10-01T09:00:00.000Z', ...o,
+  });
+
+  it('asks about the requester, defaults to approving the requested tier, and keys the card to the request', () => {
+    const c = keyRequestCard(req());
+    expect(c.source).toBe('apikey');
+    expect(c.id).toMatch(/^apikey:[0-9a-f]{16}$/);
+    expect(c.id).toBe(keyRequestCard(req({ use_case: 'edited' })).id);
+    expect(c.question).toBe('Give Ada Reader (Example Lab) an API key?');
+    expect(c.defaultLabel).toBe('Approve, explorer tier');
+    expect(c.defaultDoes).toMatch(/emails it to ada@example\.org/);
+    expect(c.otherDoes).toMatch(/Denies/);
+    expect(c.details[1]).toBe('Use: Corpus study of alchemical terms');
+    expect(c.raisedAt).toBe('2026-10-01T09:00:00.000Z');
+    expect(c.ref).toEqual({ keyRequest: '0123456789abcdef01234567', section: 'API key requests' });
+    expect(keyRequestCard(req({ organization: null })).question).toBe('Give Ada Reader an API key?');
+  });
+
+  it('an approve answer is acted on at once (acting); a deny needs its note; a skip is recorded', () => {
+    const c = keyRequestCard(req());
+    expect(buildAnswer({ card: c, choice: 'default' }, 'd@x', now)).toMatchObject({ status: 'acting', choice: 'default' });
+    expect(() => buildAnswer({ card: c, choice: 'other', text: ' ' }, 'd@x', now)).toThrow(/written answer/);
+    expect(buildAnswer({ card: c, choice: 'other', text: 'not a research use' }, 'd@x', now)).toMatchObject({ status: 'acting', text: 'not a research use' });
+    expect(buildAnswer({ card: c, choice: 'skip' }, 'd@x', now).status).toBe('recorded');
+    expect(() => buildAnswer({ card: { ...c, ref: { section: 'API key requests' } }, choice: 'default' }, 'd@x', now)).toThrow(/request id/);
+  });
+
+  it('a failed approval brings the card back with the reason', () => {
+    const c = keyRequestCard(req());
+    const back = applyAnswers([c], [{ card_id: c.id, choice: 'default', status: 'failed', answered_at: now, result: 'Invalid tier: gold' }], now);
+    expect(back[0].lastAttempt).toMatch(/failed: Invalid tier: gold/);
   });
 });

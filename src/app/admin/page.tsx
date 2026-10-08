@@ -57,9 +57,14 @@ function Missing({ what, how }: { what: string; how: string }) {
 export default async function AdminDashboard() {
   const db = await getDb();
   const session = await getSession();
-  const [lib, snap, metricsRead, history, home, spendViewer] = await Promise.all([
+  // The one live read on this page: a count over api_key_requests, a collection
+  // of a few hundred rows at most. It is the queue, not a statistic, so a
+  // snapshot would show requests already answered.
+  const [lib, snap, metricsRead, history, home, spendViewer, keyRequests] = await Promise.all([
     readLibraryDashboard(db), readFreshDashboardSnapshot(db), readMetricsSnapshot(db), readMetricsHistory(db), readHomepageStats(db), resolveSpendViewer(session),
+    db.collection('api_key_requests').countDocuments({ status: 'pending' }).catch(() => null),
   ]);
+  const isSuperadmin = (session?.user as { role?: string } | undefined)?.role === 'superadmin';
   const metrics = metricsRead?.data ?? null, metricsAge = metricsRead?.ageMs ?? null;
   let spend: SpendData | null = null;
   if (spendViewer) { const doc = await getSpendReport(); if (doc) spend = redactForViewer(doc.data, spendViewer); }
@@ -87,6 +92,8 @@ export default async function AdminDashboard() {
           breakdowns {lib ? ago(lib.ageMs) : 'missing'}{lib?.stale ? ' (stale)' : ''} · totals {snap ? ago(snap.ageMs) : 'missing'} · readers {metricsAge != null ? ago(metricsAge) : 'missing'}
         </p>
       </header>
+
+      <WaitingOnYou keyRequests={keyRequests} feedbackOpen={L?.totals.feedbackOpen ?? null} isSuperadmin={isSuperadmin} />
 
       <nav className="sticky top-0 z-10 -mx-4 sm:-mx-6 px-4 sm:px-6 py-2 bg-[var(--bg-warm,#f7f5f2)] border-b border-stone-200 flex gap-1 overflow-x-auto text-xs" aria-label="Sections">
         {NAV.map(([id, l]) => <a key={id} href={`#${id}`} className="shrink-0 px-2.5 py-1 rounded-full text-stone-700 hover:bg-stone-200/60">{l}</a>)}
@@ -298,6 +305,32 @@ export default async function AdminDashboard() {
 }
 
 /** What the totals hide: how complete each live book is, and the same by century and by every language. */
+/**
+ * What is waiting on a person, above the statistics. Decisions holds the
+ * tier:hold PRs, the ops rows and the API key requests (#6258); its count needs
+ * GitHub, so it is a link here, not a number.
+ */
+function WaitingOnYou({ keyRequests, feedbackOpen, isSuperadmin }: {
+  keyRequests: number | null; feedbackOpen: number | null; isSuperadmin: boolean;
+}) {
+  const items: { href: string; label: string; n?: number | null }[] = [
+    ...(isSuperadmin ? [{ href: '/platform/admin/decisions', label: 'Decisions' }] : []),
+    { href: '/admin/api-keys', label: 'API key requests', n: keyRequests },
+    { href: '/admin/introductions', label: 'Introductions' },
+    { href: '/feedback', label: 'Open feedback', n: feedbackOpen },
+  ];
+  return (
+    <section aria-label="Waiting on you" className="flex flex-wrap items-baseline gap-x-5 gap-y-2 text-sm">
+      <span className="text-[11px] uppercase tracking-wider text-stone-500 font-mono">Waiting on you</span>
+      {items.map((i) => (
+        <Link key={i.href} href={i.href} className="text-stone-800 underline decoration-stone-300 underline-offset-4 hover:decoration-stone-600">
+          {i.label}{i.n != null ? <b className={i.n > 0 ? 'text-stone-900' : 'text-stone-500 font-normal'}> {fmtFull(i.n)}</b> : null}
+        </Link>
+      ))}
+    </section>
+  );
+}
+
 function Completion({ L }: { L: LibraryDashboard }) {
   const C = L.completion!;
   const binLabel = (i: number) => (i === 0 ? '0–5' : i === C.bins - 1 ? '95–100' : `${(100 * i) / C.bins}`);

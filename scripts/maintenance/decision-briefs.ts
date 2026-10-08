@@ -181,7 +181,9 @@ async function main() {
     const packetsDir = value('--packets');
     if (packetsDir) {
       // Cards back with their author get no brief: there is nothing for Derek to decide on them yet.
-      let todo = queue.cards.filter((c) => !isWaitingOnAuthor(c) && (flag('--all') || !c.brief));
+      // API key requests get none either: the card is the whole decision, and its
+      // packet would copy a requester's name and email into a working directory.
+      let todo = queue.cards.filter((c) => !isWaitingOnAuthor(c) && c.source !== 'apikey' && (flag('--all') || !c.brief));
       const limit = Number(value('--limit'));
       if (Number.isInteger(limit) && limit > 0) todo = todo.slice(0, limit);
       mkdirSync(join(packetsDir, 'briefs'), { recursive: true });
@@ -192,7 +194,7 @@ async function main() {
       }
       writeFileSync(join(packetsDir, 'INSTRUCTIONS.md'), INSTRUCTIONS);
       // Every open card, so a reader can name the others a card goes with.
-      writeFileSync(join(packetsDir, 'index.json'), JSON.stringify(queue.cards.map((c) => ({
+      writeFileSync(join(packetsDir, 'index.json'), JSON.stringify(queue.cards.filter((c) => c.source !== 'apikey').map((c) => ({
         card_id: c.id, question: c.question, issue: c.source === 'pr' ? issueOfPr(c.question) : null,
         section: c.ref.section ?? null, waiting_on_author: isWaitingOnAuthor(c), has_brief: Boolean(c.brief),
         packet: todo.includes(c) ? `${c.id.replace(':', '-')}.md` : null,
