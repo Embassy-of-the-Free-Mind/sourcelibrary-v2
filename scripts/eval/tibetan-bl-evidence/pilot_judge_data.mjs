@@ -37,7 +37,7 @@ for (const r of chosen) {
   fs.writeFileSync(path.join(J, 'img', `${id}.jpg`), Buffer.from(await res.arrayBuffer()));
   fs.writeFileSync(path.join(J, 'src', `${id}.txt`), pages[r.page_id].src);
   fs.writeFileSync(path.join(J, 'arms/pilot', `${id}.json`), JSON.stringify({ text: A[r.page_id].text, via: A[r.page_id].via }));
-  fs.writeFileSync(path.join(J, 'arms/current', `${id}.json`), JSON.stringify({ text: pages[r.page_id].current_en, model: pages[r.page_id].current_en_model }));
+  fs.writeFileSync(path.join(J, 'arms/current', `${id}.json`), JSON.stringify({ text: pages[r.page_id].current_en || '[no English is stored for this page]', model: pages[r.page_id].current_en_model }));
   ids.push(`${r.vol} ${r.page_number}`);
 }
 await c.close();
