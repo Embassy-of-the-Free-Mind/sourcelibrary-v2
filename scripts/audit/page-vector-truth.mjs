@@ -17,7 +17,8 @@
  * band of rows whose vector was made from text the row no longer holds.
  *
  * PER SAMPLED ROW (default 3 rows per book, chosen by md5(page_id || seed)):
- *   model-free  dims / NaN / zero / norm, e5 signature (vector-truth.mjs), the Mongo page exists,
+ *   model-free  dims / NaN / zero / norm, e5 signature (vector-truth.mjs), the Mongo page exists
+ *               and is not archived (page_number <= 0, #6270),
  *               same book_id, same page_number, source newer than mongo_updated_at (stale),
  *               a snippet still served after the Mongo translation was removed, snippet starting with the page's AI
  *               summary (the #2232 misquote class), duplicate vectors within the sample and,
@@ -36,7 +37,8 @@
  *
  * POSITIVE CONTROL. --plant adds synthetic defects to the sample IN MEMORY (an e5-shaped vector,
  * a zero vector, NaN, 512 dims, a vector copied from another page, a wrong book_id, a stale
- * watermark, an unrelated vector) and exits 2 unless every one is caught. Writes nothing.
+ * watermark, an unrelated vector, an archived page) and exits 2 unless every one is caught.
+ * Writes nothing.
  *
  * USAGE
  *   node --env-file=.env.production.local scripts/audit/page-vector-truth.mjs --books 200 --seed 1 --plant
@@ -96,6 +98,9 @@ const MAX_SHAPE_ROWS = Number(flag('--max-shape-rows', 0));
 const MAX_WRONG_BOOK_ROWS = Number(flag('--max-wrong-book-rows', 0));
 const MAX_SUMMARY_LEAK_ROWS = Number(flag('--max-summary-leak-rows', 0));
 const MAX_DUP_ROWS = Number(flag('--max-dup-rows', 0));
+// Report-only until #6270's one-time withdrawal has run; then set it to 0 in the cron line.
+const MAX_ARCHIVED_SERVED_ROWS = Number(flag('--max-archived-served-rows', Infinity));
+const WRITER_MIN_CHARS = 20;
 const ISSUE_PREFIX = 'Page vector truth: ';
 
 /**
@@ -240,6 +245,9 @@ function freeChecks(r, page) {
   if (!page) { r.flags.push('page-missing'); return; }
   if (String(page.book_id) !== String(r.book_id)) r.flags.push('wrong-book');
   if (page.page_number !== r.page_number) r.flags.push('page-number-drift');
+  // An archived page (a spread superseded by its halves, a deduped leaf) is never embedded by the
+  // writer, but a row written before it was archived stays and is served (#6270).
+  if (!(page.page_number > 0)) r.flags.push('archived-page-served');
   const src = page.translation?.updated_at || page.ocr?.updated_at || page.updated_at;
   if (src && (!r.mongo_updated_at || new Date(src) > new Date(r.mongo_updated_at))) r.flags.push('stale');
   if (r.translation && !(typeof page.translation?.data === 'string' && page.translation.data.trim())) {
@@ -251,7 +259,14 @@ function freeChecks(r, page) {
   }
   const sum = typeof page.translation_summary === 'string' ? page.translation_summary.trim() : '';
   if (sum.length >= 20 && r.translation && r.translation.startsWith(sum.slice(0, 40))) r.flags.push('summary-in-snippet');
-  const input = pageEmbeddingInput(page);
+  // The same floor as the writer (embed-gemini composeEmbedText): a translation that cleans to
+  // under 20 characters falls back to the OCR, and a page with neither is not embedded at all.
+  // Without it a stub like "WIFE" was compared with a correct OCR vector and read as off-space.
+  let input = pageEmbeddingInput(page);
+  if (input && input.text.length < WRITER_MIN_CHARS) {
+    const ocr = cleanPageText(page.ocr?.data);
+    input = ocr.length >= WRITER_MIN_CHARS ? { text: ocr, hasTranslation: false } : null;
+  }
   r.target = input?.text || null;
   if (!input) r.flags.push('no-source-text'); // a vector for a page that has no text to embed now
   if (input?.hasTranslation && r.translation !== input.text.slice(0, 50000)) r.flags.push('snippet-differs');
@@ -299,8 +314,11 @@ async function probeDuplicates(rows) {
 // ── Positive control ─────────────────────────────────────────────────
 
 function plant(rows) {
-  const donors = rows.filter(r => r.vec && r.vec.length === EMBED_DIMS && r.target);
-  if (donors.length < 9) throw new Error('--plant needs at least 9 sampled rows with a vector and text');
+  // Donors with distinct text: two donors holding the same text (blank leaves, both halves of a
+  // repeated plate) make the planted shared vector a legitimate duplicate, and the control misses.
+  const seenText = new Set();
+  const donors = rows.filter(r => r.vec && r.vec.length === EMBED_DIMS && r.target && !seenText.has(r.target) && seenText.add(r.target));
+  if (donors.length < 10) throw new Error('--plant needs at least 10 sampled rows with a vector and text');
   const planted = [];
   const clone = (r, tag, mut) => { const c = { ...r, flags: [], planted: tag, page_id: `${r.page_id}#${tag}` }; mut(c); planted.push(c); };
   const src = (s) => { const v = new Array(EMBED_DIMS).fill(0); v[s % EMBED_DIMS] = 1; return v; };
@@ -332,6 +350,7 @@ function plant(rows) {
   clone(donors[6], 'wrong-book', c => { c.book_id = 'planted-wrong-book'; });
   clone(donors[7], 'stale', c => { c.mongo_updated_at = new Date('2000-01-01'); });
   clone(donors[8], 'unrelated', c => { c.vec = src(17); }); // in-space shape, unrelated content → off-space by cosine
+  clone(donors[9], 'archived', c => { c._page = { ...c._page, page_number: -Math.abs(c._page?.page_number || 1) }; }); // the page was archived after its row was written
   return planted;
 }
 
@@ -342,6 +361,7 @@ function plantCaught(r) {
     dims: f.some(x => x.startsWith('shape:dims')), dup: f.includes('dup-vector'), 'dup-src': f.includes('dup-vector'),
     'wrong-book': f.includes('wrong-book'), stale: f.includes('stale'),
     unrelated: EMBED === 'none' ? true : r.cls === 'off-space',
+    archived: f.includes('archived-page-served'),
   }[r.planted];
 }
 
@@ -592,7 +612,12 @@ function finish({ rows, planted, books, noRows, probed, batch = null }) {
   }
   const caught = planted.map(p => ({ planted: p.planted, caught: !!plantCaught(p), flags: p.flags, cls: p.cls ?? null }));
   const misses = caught.filter(c => !c.caught);
-  const offSpaceBooks = new Set(rows.filter(r => r.cls === 'off-space' || r.flags.includes('e5-signature')).map(r => r.sampled_book));
+  // A wrong vector on a page the writer would embed. Rows on archived pages, on pages that are
+  // gone and on pages with no text to embed cannot be repaired by a re-embed: they are counted
+  // under their own flags (archived-page-served → #6270, page-missing, no-source-text).
+  const unrepairable = (r) => ['archived-page-served', 'page-missing', 'no-source-text'].some(f => r.flags.includes(f));
+  const offSpaceBooks = new Set(rows.filter(r => (r.cls === 'off-space' || r.flags.includes('e5-signature')) && !unrepairable(r)).map(r => r.sampled_book));
+  const archivedServed = rows.filter(r => r.flags.includes('archived-page-served') && !r.flags.includes('e5-signature')).length;
   const count = (pred) => rows.filter(pred).length;
   const shapeRows = count(r => r.flags.some(f => f.startsWith('shape:')));
   const wrongBook = count(r => r.flags.includes('wrong-book'));
@@ -615,6 +640,7 @@ function finish({ rows, planted, books, noRows, probed, batch = null }) {
   if (!rows.length) { log('FAIL: sampled zero rows — the probe is broken, not the corpus'); return 2; }
   const fails = [];
   if (offSpaceBooks.size > MAX_OFF_SPACE_BOOKS) fails.push(`off-space books ${offSpaceBooks.size} > ${MAX_OFF_SPACE_BOOKS}`);
+  if (archivedServed > MAX_ARCHIVED_SERVED_ROWS) fails.push(`archived pages with a served vector ${archivedServed} > ${MAX_ARCHIVED_SERVED_ROWS} (#6270)`);
   if (shapeRows > MAX_SHAPE_ROWS) fails.push(`bad-shape rows ${shapeRows} > ${MAX_SHAPE_ROWS}`);
   if (wrongBook > MAX_WRONG_BOOK_ROWS) fails.push(`wrong-book rows ${wrongBook} > ${MAX_WRONG_BOOK_ROWS}`);
   if (leak > MAX_SUMMARY_LEAK_ROWS) fails.push(`summary-in-snippet rows ${leak} > ${MAX_SUMMARY_LEAK_ROWS}`);
