@@ -19,8 +19,10 @@ import { READER_UI_STRINGS } from '@/lib/reader-strings';
  *
  * Reviewer sentences are shown only when the evidence file is public: a row whose evidence is in the private ops
  * repo (`ops:`) shows its defect classes and nothing a reviewer wrote.
+ *
+ * The same for every visitor, and edge-cached by the `/book/:path*` CDN rule like the reader and the book page, so
+ * a new check can take up to a day to appear here.
  */
-export const dynamic = 'force-dynamic';
 export const preferredRegion = 'fra1';
 
 interface PageProps {
