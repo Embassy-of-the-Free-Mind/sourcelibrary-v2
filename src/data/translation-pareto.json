@@ -4828,6 +4828,115 @@
        "note": "run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
       }
      ]
+    },
+    {
+     "kind": "gemini-cli-6182",
+     "heading": "Gemini 3.8 Flash through the CLI, 8 Oct 2026 (#6182)",
+     "n_pages": 113,
+     "n_books": 8,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "Tib",
+       "reference": "84000's published English",
+       "pages": 113,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-cli-arm-tengyur-113-6182.md"
+     ],
+     "notes": [
+      "A separate read from the other Tibetan panels, with C38, G38 and production in one item per side, so its scores are compared only within this panel",
+      "Gemini 3.8 Flash, CLI is the same model run through Google's Antigravity command-line tool on a subscription, which billed nothing; it is drawn at the API's price for the same request so the two runs can be compared"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.553,
+       "fidelity_ci95": [
+        4.46,
+        4.646
+       ],
+       "share_ge4": 0.973,
+       "reversals": {
+        "pages": 8,
+        "n": 113,
+        "per_100": 7.1,
+        "ci95": [
+         3.6,
+         13.4
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.77,
+        "basis": "metered",
+        "detail": "billed tokens of the #5497 run these outputs come from, at the Batch rate; averaged over its 113 pages",
+        "source": "scripts/eval/experiments/2026-10-03-tengyur-quality-arms-5497.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.836,
+       "fidelity_ci95": [
+        4.774,
+        4.898
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 2,
+        "n": 113,
+        "per_100": 1.8,
+        "ci95": [
+         0.5,
+         6.2
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.293,
+        "basis": "metered",
+        "detail": "billed tokens of the #6182 API run at the Batch rate, thinking included; averaged over these 113 pages",
+        "source": "scripts/eval/experiments/2026-10-07-tengyur-pareto-replication-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash, CLI",
+       "production": false,
+       "fidelity": 4.863,
+       "fidelity_ci95": [
+        4.801,
+        4.92
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 3,
+        "n": 113,
+        "per_100": 2.7,
+        "ci95": [
+         0.9,
+         7.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.293,
+        "basis": "API price for comparison; $0 billed on the subscription",
+        "detail": "run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at what the same model and prompt billed on the API for these pages (the Gemini 3.8 Flash run, Batch rate), for comparison. Its English is 1.034× as long",
+        "source": "scripts/eval/experiments/2026-10-08-cli-arm-tengyur-113-6182.md"
+       },
+       "on_frontier": true
+      }
+     ],
+     "no_cost": []
     }
    ],
    "not_on_shared_pages": [],

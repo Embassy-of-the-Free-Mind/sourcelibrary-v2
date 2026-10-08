@@ -394,6 +394,55 @@ for (const [lang, trackId] of LANGS) {
   tib.not_tested = tib.not_tested.filter(t => !/Gemini 3\.1 Pro/.test(t));
 }
 
+// #6182, the Antigravity-CLI arm: gemini-3.8-flash run through Google's CLI on the subscription (C38) beside the
+// API's run of the same model (G38) and production (FP = #5497's B2 outputs) on the 113 84000 sides, one blinded
+// item per side, two blind Opus judges. Its own read, so its own panel. C38 billed $0; it is placed at what the
+// same model and prompt billed on the API on these sides (G38's Batch dollars), and its cost basis says so.
+{
+  const CLI = { writeup: 'scripts/eval/experiments/2026-10-08-cli-arm-tengyur-113-6182.md', file: 'cli-arm-6182/refjudge113/scores.json',
+    g38: 'scripts/eval/experiments/2026-10-07-tengyur-pareto-replication-6182.md' };
+  const C38 = 'gemini-3.8-flash+antigravity-cli';
+  LABEL[C38] = 'Gemini 3.8 Flash, CLI';
+  const tib = charts.find(c => c.id === 'tibetan');
+  if (!tib) throw new Error('no Tibetan chart for the CLI panel');
+  const sc = JSON.parse(fs.readFileSync(path.join(RES, CLI.file), 'utf8'));
+  const fpCall = JSON.parse(fs.readFileSync(path.join(TIB_DIR, 'cost.json'), 'utf8'))[`B2|${FLASH}`];
+  const engine = { FP: FLASH, G38, C38 };
+  const fid = (r, a) => avg(Object.values(r.J).map(j => j[a].fid));
+  const rev = (r, a) => Object.values(r.J).some(j => j[a].inv > 0);
+  const g38 = sc.cost.G38_api_batch_usd_per_1k;
+  const cost = {
+    FP: { usd_per_1k: r3(fpCall.batch_usd_per_call * 1000), basis: 'metered', detail: `billed tokens of the #5497 run these outputs come from, at the Batch rate; averaged over its ${fpCall.calls} pages`, source: TIB_WRITEUP },
+    G38: { usd_per_1k: g38, basis: 'metered', detail: `billed tokens of the #6182 API run at the Batch rate, thinking included; averaged over these ${sc.cost.pages} pages`, source: CLI.g38 },
+    C38: { usd_per_1k: g38, basis: 'API price for comparison; $0 billed on the subscription',
+      detail: `run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at what the same model and prompt billed on the API for these pages (the Gemini 3.8 Flash run, Batch rate), for comparison. Its English is ${sc.cost.C38_over_G38_output_chars}× as long`, source: CLI.writeup },
+  };
+  const placed = Object.entries(engine).map(([a, e]) => {
+    const p = { engine: e, label: LABEL[e], production: e === tib.production_engine,
+      ...stats(sc.rows.map(r => ({ fidelity: fid(r, a), reversal: rev(r, a) })), hash(`Tibetan|cli-6182|${a}`)), cost: cost[a] };
+    const own = sc.pooled[a];
+    if (sc.rows.length !== sc.pooled.sides || Math.abs(p.fidelity - own.fidelity_mean) > 0.0005 || p.reversals.pages !== own.inversion_sides_either) {
+      throw new Error(`${CLI.file}: parse does not reproduce scores.json for ${a}`);
+    }
+    return p;
+  });
+  for (const a of placed) a.on_frontier = !placed.some(b => b !== a
+    && b.cost.usd_per_1k <= a.cost.usd_per_1k && b.fidelity >= a.fidelity && (b.cost.usd_per_1k < a.cost.usd_per_1k || b.fidelity > a.fidelity));
+  placed.sort((a, b) => a.cost.usd_per_1k - b.cost.usd_per_1k || a.engine.localeCompare(b.engine));
+  const date = dateOf(CLI.writeup);
+  tib.panels.push({
+    kind: 'gemini-cli-6182', heading: 'Gemini 3.8 Flash through the CLI, 8 Oct 2026 (#6182)', n_pages: sc.rows.length, n_books: new Set(sc.rows.map(r => r.toh)).size,
+    frontier: true, frontier_note: null, judges: 2,
+    references: [{ stratum: 'Tib', reference: REFERENCE.Tib, pages: sc.rows.length, date }],
+    date, files: [CLI.writeup],
+    notes: [
+      'A separate read from the other Tibetan panels, with C38, G38 and production in one item per side, so its scores are compared only within this panel',
+      `Gemini 3.8 Flash, CLI is the same model run through Google's Antigravity command-line tool on a subscription, which billed nothing; it is drawn at the API's price for the same request so the two runs can be compared`,
+    ],
+    placed, no_cost: [],
+  });
+}
+
 // #6182, every language but Tibetan: eight Gemini models on the same #5695/#5873 reference pages (one per
 // book), all arms of a page in one blinded item, two blind Opus judges (J2 on a preregistered quarter of
 // the pages; a page's fidelity is the mean of the judges that read it), production's one-page request

@@ -13,6 +13,9 @@ writes results/.../refjudge/scores.json (no quotes).
   --round cli6182 #6182 Antigravity-CLI arm (C38 beside G38 and FP on the 58 sides): round 2's judge gate, then
                  the gate preregistered on #6182 (C38 − G38 by-text bootstrap lower bound > −0.15, and C38
                  inversion sides ≤ G38's + 2), per text and pooled
+  --round cli6182-113 the same arms and gate on #6182's 113 fresh 84000 sides (tib-ref113;
+                 experiments/2026-10-08-cli-arm-tengyur-113-6182.md), per text with >= 25 sides, plus the 171-side
+                 pool with --round cli6182's rows (descriptive). [--exclude drops.json] drops those sides (#6304)
   --round 6182xl #6182, every language but Tibetan (365 pages × 9 Gemini arms + the tracks' Opus): #5695's
                  judge schema (one reversal, boolean omission), so gate, strata and rule B are score-xl.py's
 """
@@ -38,11 +41,13 @@ if ROUND == "6182xl":  # J1 on every item, J2 on the preregistered subset (J2-su
     m.run(key=key, J=J, OUT=OUT, subset=subset)
     sys.exit(0)
 P6182 = ROUND == "6182"
-CLI = ROUND == "cli6182"
+C113 = ROUND == "cli6182-113"
+CLI = ROUND == "cli6182" or C113
 R2 = ROUND == "2" or P6182 or CLI  # 6182 applies round 2's rule (PREREG.md rule A), FP in A's place
 OUT = {"1": "scripts/eval/results/tengyur-levers-6121/refjudge", "2": "scripts/eval/results/tengyur-models-6121/refjudge",
-       "6182": "scripts/eval/results/pareto-6182/tibjudge", "cli6182": "scripts/eval/results/cli-arm-6182/refjudge"}[ROUND]
-JW = {"1": "/root/tlev/refjudge", "2": "/root/tlev2/refjudge", "6182": "/root/pareto-6182/tibjudge", "cli6182": "/root/tlev3/refjudge"}[ROUND]
+       "6182": "scripts/eval/results/pareto-6182/tibjudge", "cli6182": "scripts/eval/results/cli-arm-6182/refjudge",
+       "cli6182-113": "scripts/eval/results/cli-arm-6182/refjudge113"}[ROUND]
+JW = {"1": "/root/tlev/refjudge", "2": "/root/tlev2/refjudge", "6182": "/root/pareto-6182/tibjudge", "cli6182": "/root/tlev3/refjudge", "cli6182-113": "/root/cli38-6182/refjudge113"}[ROUND]
 BASE = "FP" if P6182 or CLI else "A"  # the production rerun: planted twin and rule-A floor
 key = json.load(open(f"{OUT}/key.json"))
 if P6182:  # this key has no toh: the 113 take it from #5497's key, the 58 from the set's text label
@@ -107,6 +112,10 @@ for iid, k in key.items():
         per[j] = {a: {"fid": sc[a]["fidelity"], "inv": len(sc[a]["inversions"]), "om": len(sc[a]["omissions"]), "inven": len(sc[a]["inventions"]),
                       "span_off": sc[a]["span"] != "same", "inven_n": len(sc[a]["inventions"]), "rank": next(i for i, t in enumerate(rk) if a in t)} for a in ARMS}
     rows.append({"id": iid, "page_id": k["page_id"], "toh": k["toh"], "set": k.get("set"), "J": per})
+DROPPED = []
+if "--exclude" in sys.argv:  # #6304's drops.json: {"drops": [{"page": …}]}; reported beside the primary, never instead of it
+    drop = {d["page"] for d in json.load(open(sys.argv[sys.argv.index("--exclude") + 1]))["drops"]}
+    DROPPED = sorted(r["page_id"] for r in rows if r["page_id"] in drop)
 NJ = len(J)
 
 
@@ -167,6 +176,9 @@ if P6182:  # rule A's numbers above; strata, by-text CIs and rule B live beside 
     sys.exit(0)
 if CLI:  # the gate preregistered on #6182 (2026-10-08 "taking this: … Antigravity CLI" comment)
     B, SECTION = 2000, {"D4231": "Pramana", "D3862": "Madhyamaka"}
+    if C113:  # per text only where a text has >= 25 sides (prereg); the rest are in the pool
+        n_by = collections.Counter(r["toh"] for r in rows)
+        SECTION = {t: t for t, n in n_by.items() if n >= 25}
     fid = lambda r, a: sum(r["J"][j][a]["fid"] for j in J) / NJ
 
     def boot(rs, stat, seed=6182):  # score-tib.py's two-stage by-text bootstrap: texts, then sides within each
@@ -209,6 +221,21 @@ if CLI:  # the gate preregistered on #6182 (2026-10-08 "taking this: … Antigra
                           "inversions_ok": P["C38"]["inversion_sides_either"] <= P["G38"]["inversion_sides_either"] + 2}
     res["prereg_gate"]["pass"] = res["judge_gate_pass"] and res["prereg_gate"]["lower_bound_gt_-0.15"] and res["prereg_gate"]["inversions_ok"]
     res["judge_fid_agree_within_1"] = round(sum(abs(r["J"]["J1"][a]["fid"] - r["J"]["J2"][a]["fid"]) <= 1 for r in rows for a in ARMS) / (len(ARMS) * len(rows)), 3)
+    if C113:  # descriptive: these 113 + #6277's 58 (another prompt, other references), by-text over 10 texts
+        r58 = json.load(open("scripts/eval/results/cli-arm-6182/refjudge/scores.json"))["rows"]
+        res["pooled_171"] = stratum(rows + r58)
+        res["pooled_171"]["gate_rule_applied"] = {"lower_bound_gt_-0.15": res["pooled_171"]["C38-G38"]["ci_by_text"][0] > -0.15,
+                                                   "inversions_ok": res["pooled_171"]["C38"]["inversion_sides_either"] <= res["pooled_171"]["G38"]["inversion_sides_either"] + 2}
+        # The chart's x for G38 (and C38's API comparison): the API G38 run's billed Batch dollars on these sides
+        # (pareto-6182 arms, thinking included). C38 itself billed $0 (subscription).
+        g = {o["uid"]: o for o in map(json.loads, open("/root/pareto-6182/arms/G38.jsonl")) if o["uid"] in {r["page_id"] for r in rows}}
+        assert len(g) == len(rows), "G38 cost rows missing"
+        res["cost"] = {"G38_api_batch_usd_per_1k": round(1000 * sum(o["usd_batch"] for o in g.values()) / len(g), 3), "pages": len(g),
+                       "G38_thinking_tokens_total": sum(o.get("thinking") or 0 for o in g.values()), "C38_billed_usd": 0,
+                       "C38_over_G38_output_chars": round(sum(len(t) for t in {o["uid"]: o["text"] for f in sorted(glob.glob("/root/cli38-6182/C38-*.jsonl"))
+                                                                                     for o in map(json.loads, open(f)) if o["uid"] in g}.values())
+                                                          / sum(len(o["text"]) for o in g.values()), 3)}
+        res["exclude"] = {"dropped_sides": DROPPED, **({"pooled_without": stratum([r for r in rows if r["page_id"] not in DROPPED])} if DROPPED else {})}
     res["rows"] = rows
     json.dump(res, open(f"{OUT}/scores.json", "w"), indent=1)
     print(json.dumps({k: v for k, v in res.items() if k != "rows"}, indent=1))
