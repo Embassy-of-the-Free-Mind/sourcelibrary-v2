@@ -29,7 +29,7 @@ import { fileURLToPath } from 'node:url';
 import { makeRng } from '../lib/paired-stats.mjs';
 import {
   keyOf, plantErrors, redactRecord, validateOutput, extractIssues, clusterIssues, caughtSeed, krippendorffAlpha,
-  weightedMeanCI, wilson, yieldOn, blockOf, OMISSION_RE, OMISSION_CLASSES, SEED_CLASSES, recoverArray, auditTranscript,
+  weightedMeanCI, wilson, yieldOn, blockOf, signTestOneSided, OMISSION_RE, OMISSION_CLASSES, SEED_CLASSES, recoverArray, auditTranscript,
 } from './lib.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -274,8 +274,8 @@ else if (cmd === 'score') {
   for (const c of clusters) if (!judged.has(c.id) && !plantedKeys.has(c.key) && clusterReaders.every((r) => c.by[r] === 'serious')) verdictOf.set(c.id, { confirmedSerious: true, by: 'all_readers' });
 
   const byKey = new Map(); for (const c of clusters) { if (!byKey.has(c.key)) byKey.set(c.key, []); byKey.get(c.key).push(c); }
-  const natural = units.filter((u) => !u.planted && (!interim || u.block === 1));
-  const plantedUnits = units.filter((u) => u.planted && (!interim || u.block === 1));
+  const natural = units.filter((u) => !u.planted);
+  const plantedUnits = units.filter((u) => u.planted);
 
   // Per reader: returned pages, recall on planted errors, false alarms and confirmed finds on natural pages.
   const perReader = {};
@@ -301,30 +301,32 @@ else if (cmd === 'score') {
     };
   }
 
-  // The decision quantity: (primary ∪ candidate) − (primary ∪ control), confirmed serious issues per page.
+  // The decision (preregistration, amended 2026-10-08 after the power simulation in power.mjs, before any data).
+  // Error-level test: among confirmed serious issues the PRIMARY missed, b = found by the candidate and not the
+  // control, c = found by the control and not the candidate; one-sided exact sign test, alpha 0.025 per candidate
+  // (Bonferroni over two). Practical yardstick: the weighted gain (primary ∪ candidate) − (primary ∪ control) per
+  // page, point estimate ≥ GAIN_BAR. False alarms at most FA_MARGIN per page above the primary's.
+  const GAIN_BAR = 0.03, FA_MARGIN = 0.03, ALPHA = 0.025;
   const gain = (cand, us) => weightedMeanCI(us.map((u) => yieldOn(byKey.get(u.key) || [], verdictOf, [P, cand]) - yieldOn(byKey.get(u.key) || [], verdictOf, [P, C])), us.map((u) => u.weight));
-  const b1 = natural.filter((u) => u.block === 1), b2 = natural.filter((u) => u.block === 2);
-  const b1Recall = (r) => { const us = plantedUnits.filter((u) => u.block === 1); let k = 0; for (const u of us) k += caughtSeed(plantedKey.find((x) => x.key === u.key), issues[r], R_[r].pages.get(u.key), texts.get(u.key).translation).serious; return us.length ? k / us.length : 0; };
-  const choice = cands.map((c) => ({ c, recall: b1Recall(c), gain: gain(c, b1).est ?? 0, fa: perReader[c].false_alarms_per100.est ?? 0 }))
-    .sort((a, b) => (Math.abs(a.recall - b.recall) > 0.05 ? b.recall - a.recall : Math.abs(a.gain - b.gain) > 0.01 ? b.gain - a.gain : a.fa - b.fa));
-  const chosen = choice[0]?.c;
+  const missedByP = natural.flatMap((u) => (byKey.get(u.key) || []).filter((c) => verdictOf.get(c.id)?.confirmedSerious && !c.by[P]));
+  const faP = perReader[P].false_alarms_per100.est ?? 0;
+  const tests = cands.map((cand) => {
+    const b = missedByP.filter((c) => c.by[cand] && !c.by[C]).length, c = missedByP.filter((x) => x.by[C] && !x.by[cand]).length;
+    const g = gain(cand, natural), fa = perReader[cand].false_alarms_per100.est ?? 0;
+    const p = signTestOneSided(b, c);
+    return { candidate: cand, b, c, p, gain: g, fa, passes: p < ALPHA && g.est != null && g.est >= GAIN_BAR && fa <= faP + FA_MARGIN };
+  });
+  const passing = tests.filter((t) => t.passes).sort((x, y) => (Math.abs(x.gain.est - y.gain.est) > 0.01 ? y.gain.est - x.gain.est : 0));
+  // Does a second Opus read earn its place? yield(primary ∪ control) − yield(primary) on the same pages.
+  const o2 = weightedMeanCI(natural.map((u) => yieldOn(byKey.get(u.key) || [], verdictOf, [P, C]) - yieldOn(byKey.get(u.key) || [], verdictOf, [P])), natural.map((u) => u.weight));
   let decision;
   if (interim) {
-    const futile = cands.every((c) => { const g = gain(c, b1); return g.ci99 && g.ci99[1] * 100 < 5; });
-    decision = { stage: 'interim (block 1)', verdict: futile ? 'STOP — futility: no candidate can reach +5 per 100 pages (99% interval)' : 'CONTINUE to block 2', gains: Object.fromEntries(cands.map((c) => [c, gain(c, b1)])) };
+    const futile = tests.every((t) => t.b <= t.c);
+    decision = { stage: 'interim (after the first script)', tests, verdict: futile ? 'STOP — futility: no candidate found more of the primary\'s misses than the control did' : 'CONTINUE to the other scripts' };
   } else {
-    const g = gain(chosen, b2);
-    const faC = perReader[chosen].false_alarms_per100.est, faP = perReader[P].false_alarms_per100.est;
-    // False alarms: no more than FA_MARGIN per 100 pages above the primary's (preregistered; a false alarm costs a
-    // minute of adjudication, a missed serious error misleads a reader).
-    const FA_MARGIN = 0.03;
-    const adopt = g.est != null && g.est * 100 >= 5 && g.ci95[0] > 0 && faC <= faP + FA_MARGIN;
-    // If Gemini does not earn its place, does a second Opus read? yield(primary ∪ control) − yield(primary), block 2.
-    const o2 = weightedMeanCI(b2.map((u) => yieldOn(byKey.get(u.key) || [], verdictOf, [P, C]) - yieldOn(byKey.get(u.key) || [], verdictOf, [P])), b2.map((u) => u.weight));
-    const o2meets = o2.est != null && o2.est * 100 >= 5 && o2.ci95[0] > 0;
-    decision = { stage: 'final (model chosen on block 1, reported on block 2)', chosen, choice, gain_block2: g, gain_all: gain(chosen, natural), fa_candidate: faC, fa_primary: faP,
-      second_opus_gain_block2: o2,
-      verdict: adopt ? `ADOPT ${chosen} as a second reader` : `DO NOT ADOPT ${chosen}${o2meets ? `; a second ${C} read meets the bar instead` : ''}` };
+    decision = { stage: 'final (this script; the pooled decision across scripts is made by `export`)', tests, chosen: passing[0]?.candidate ?? null, gain_all: passing[0]?.gain ?? null,
+      fa_primary: faP, second_opus_gain: o2, missed_by_primary: missedByP.length,
+      verdict: passing.length ? `ADOPT ${passing[0].candidate} for this script` : 'NOT SHOWN for this script' };
   }
 
   // Agreement on natural pages: Krippendorff's alpha (missing pages allowed).
@@ -394,8 +396,9 @@ else if (cmd === 'export') {
     return {
       script: r.script, scored_at: r.scored_at, complete: !r.incomplete,
       pages: r.n_units, natural_pages: r.n_natural, planted_pages: r.n_planted,
-      verdict: r.decision.verdict, chosen: r.decision.chosen ?? null,
-      gain_per100_block2: per100(r.decision.gain_block2), second_opus_gain_per100_block2: per100(r.decision.second_opus_gain_block2),
+      verdict: r.decision.verdict, chosen: r.decision.chosen ?? null, missed_by_primary: r.decision.missed_by_primary,
+      tests: r.decision.tests.map((t) => ({ candidate: t.candidate, b: t.b, c: t.c, p: +t.p.toFixed(4), gain_per100: per100(t.gain), false_alarms_per100: r1(100 * t.fa), passes: t.passes })),
+      second_opus_gain_per100: per100(r.decision.second_opus_gain),
       readers: Object.fromEntries(Object.entries(r.per_reader).map(([name, x]) => [name, {
         returned: x.returned, missing: x.missing, fabricated_quotes: x.fabricated_quotes,
         recall_serious: rate(x.recall.all.serious, x.recall.all.n), recall_detected: rate(x.recall.all.detected, x.recall.all.n),
@@ -407,8 +410,23 @@ else if (cmd === 'export') {
       upset: r.upset, hypotheses: r.hypotheses,
     };
   });
+  // The PRIMARY decision, pooled over the scored scripts (preregistration, amended): per candidate, the summed b and
+  // c, the one-sided sign test, the mean of the scripts' weighted gains (each script counts once), and every script
+  // within the false-alarm margin. Final only when all three scripts are scored and complete.
+  const cands = [...new Set(scripts.flatMap((s) => s.tests.map((t) => t.candidate)))];
+  const pooledTests = cands.map((cand) => {
+    const ts = scripts.map((s) => s.tests.find((t) => t.candidate === cand)).filter(Boolean);
+    const b = ts.reduce((x, t) => x + t.b, 0), c = ts.reduce((x, t) => x + t.c, 0), p = signTestOneSided(b, c);
+    const gains = ts.map((t) => t.gain_per100.est).filter((x) => x != null);
+    const gain = gains.length ? r1(gains.reduce((x, y) => x + y, 0) / gains.length) : null;
+    const faOk = scripts.every((s) => { const t = s.tests.find((x) => x.candidate === cand); const pr = Object.values(s.readers)[0]; return !t || t.false_alarms_per100 <= (pr.false_alarms_per100.est ?? 0) + 3; });
+    return { candidate: cand, scripts: ts.length, b, c, p: +p.toFixed(4), gain_per100_mean: gain, false_alarms_within_margin: faOk, passes: p < 0.025 && gain != null && gain >= 3 && faOk };
+  });
+  const final = scripts.length >= 3 && scripts.every((s) => s.complete);
+  const winner = pooledTests.filter((t) => t.passes).sort((x, y) => y.gain_per100_mean - x.gain_per100_mean)[0];
+  const pooled = { final, tests: pooledTests, verdict: !scripts.length ? 'not yet run' : `${final ? '' : 'PROVISIONAL (not all scripts scored): '}${winner ? `ADOPT ${winner.candidate} as a second reader` : 'NOT SHOWN: no candidate passes'}` };
   const data = {
-    issue: 6338, schema: 1,
+    issue: 6338, schema: 2, pooled,
     measure: 'AI reviewers (Claude Opus, Gemini) reading page images; recall on planted errors; serious issues confirmed by blind adjudication and by eye',
     preregistration: 'scripts/eval/PREREGISTRATION-second-reader-6338.md',
     status: !scripts.length ? 'not yet run' : scripts.every((s) => s.complete) && scripts.length >= 3 ? 'complete' : 'in progress',
@@ -498,17 +516,12 @@ function markdown(r) {
   if (r.incomplete) L.push(`**INCOMPLETE:** ${r.incomplete.by_eye_needed.length} adjudication items still need a by-eye verdict (listed in report.json). Numbers below treat them as not confirmed.`, '');
   L.push(`${r.n_units} pages (one per book): ${r.n_natural} natural pages scored for yield, ${r.n_planted} with a planted error scored for recall.`, '');
   L.push(`**Decision (${r.decision.stage}):** ${r.decision.verdict}`, '');
-  if (r.decision.gain_block2) {
-    const g = r.decision.gain_block2;
-    L.push(`- Gain of ${r.decision.chosen} over the control reader, block 2: **${g.est == null ? '—' : (100 * g.est).toFixed(1)} confirmed serious issues per 100 pages** ${ci(g.ci95)} (95%, by book, weighted to the frame; n = ${g.n}). Rule: ≥ 5 with the interval above 0.`);
-    L.push(`- False alarms per 100 pages: ${r.decision.chosen} ${f2(r.decision.fa_candidate * 100)}, primary ${f2(r.decision.fa_primary * 100)}. Rule: candidate ≤ primary + 3.`);
-    const o2 = r.decision.second_opus_gain_block2;
-    L.push(`- For comparison, what the control reader adds to the primary, block 2: ${o2.est == null ? '—' : (100 * o2.est).toFixed(1)} per 100 pages ${ci(o2.ci95)}.`);
-    L.push(`- Model choice on block 1: ${r.decision.choice.map((c) => `${c.c} (recall ${pct(c.recall)}, gain ${(100 * c.gain).toFixed(1)}, false alarms ${(100 * c.fa).toFixed(1)})`).join('; ')}.`, '');
-  } else if (r.decision.gains) {
-    for (const [c, g] of Object.entries(r.decision.gains)) L.push(`- ${c}: gain ${g.est == null ? '—' : (100 * g.est).toFixed(1)} per 100 pages, 99% ${ci(g.ci99)}`);
-    L.push('');
+  for (const t of r.decision.tests) {
+    L.push(`- **${t.candidate}**: of the confirmed serious issues the primary missed, ${t.b} found by ${t.candidate} and not the control, ${t.c} by the control and not ${t.candidate} (one-sided sign test p = ${t.p.toFixed(3)}; rule < 0.025). ` +
+      `Gain over the control: ${t.gain.est == null ? '—' : (100 * t.gain.est).toFixed(1)} per 100 pages ${ci(t.gain.ci95)} (weighted, 95% by book; rule ≥ 3). False alarms ${(100 * t.fa).toFixed(1)} per 100 (rule ≤ primary + 3). ${t.passes ? '**Passes.**' : 'Does not pass.'}`);
   }
+  if (r.decision.second_opus_gain) L.push(`- What the control (a second ${r.readers[1]} read) adds to the primary: ${r.decision.second_opus_gain.est == null ? '—' : (100 * r.decision.second_opus_gain.est).toFixed(1)} per 100 pages ${ci(r.decision.second_opus_gain.ci95)}.`);
+  L.push('');
   L.push('| reader | pages returned | missing | fabricated quotes | recall, planted (detected / serious) | omission rule on natural pages | serious raised | false alarms / settled | confirmed per 100 pages | marker filled |');
   L.push('|---|---:|---:|---:|---|---:|---:|---:|---|---:|');
   for (const [name, x] of Object.entries(r.per_reader)) {

@@ -57,7 +57,8 @@ a different defect, #5913).
   flagged one with probability 0.8, else uniform over its eligible pages. Every pick records π (book) and q (page);
   books rejected for having no eligible page or no image are replaced, and the acceptance rate per stratum enters π.
   Rates are Hájek-weighted back to "a book at random, then a page at random". Unweighted rates are reported beside.
-- **Reading order** is random (seeded); **block 1** is the first 50 pages, **block 2** the last 50.
+- **Reading order** is random (seeded). Blocks (the first and last 50 pages) are recorded but, since amendment 1,
+  decide nothing.
 - **Planted errors:** 28 of the 100 pages (`plantErrors`, seed = draw seed + 1), five classes in rotation: negation
   removed in the English, a number multiplied in the English, a sentence from another book of the same script inserted,
   a middle sentence of the English dropped, the whole text replaced by another book's page (wrong leaf). A page that
@@ -80,7 +81,7 @@ taxonomy — and the same pinned image files, with model names and URLs removed 
 | `opus-b` (control) | claude | opus, a second independent run |
 | `gemini-pro` | agy | gemini-3.1-pro-high |
 | `gemini-flash` | agy | gemini-3.8-flash-high |
-| `gemini-retest` | agy | the model chosen on block 1, re-run on the Latin script only (Gemini's own floor) |
+| `gemini-retest` | agy | gemini-3.1-pro-high re-run on the Latin script only (Gemini's own test–retest floor) |
 
 A call that writes nothing is retried once; a page still missing counts as **not found** for that reader.
 
@@ -107,25 +108,38 @@ A call that writes nothing is retried once; a page still missing counts as **not
   claimed as an inverted sense).
 - **Blind:** each item shows the image, the texts and the claim as structured fields only (lane, class, quoted
   span), never the reader's wording, in random order (`ADJUDICATOR.md`).
-- **Two adjudicators:** Opus and the Gemini model not chosen as the candidate, each blind. Where they agree (and
+- **Two adjudicators:** Opus and Gemini 3.1 Pro, each blind (one from each family, so neither family settles its
+  own findings alone). Where they agree (and
   neither says unsure), that is the verdict. Every split, plus a random 20 items, is read by eye (Derek, or Claude
   reading the image with the item, labelled as such), and the eye's verdict wins. "Unsure" never confirms.
 - **Shared misses:** 20 natural pages no reader called serious, read by eye; the share with a serious error is
   reported with a Wilson interval. This is the number capture–recapture cannot give when readers fail alike.
 
-## Decision rule (per script)
+## Decision rule (amendment 1, 2026-10-08, before any data — see "Amendments")
 
-1. **Model choice on block 1:** the Gemini model with the higher serious recall on block-1 planted pages; within 5
-   points, the higher yield gain over the control; within 1 per 100 pages, the fewer false alarms.
-2. **Interim look after block 1:** stop the script with a null if, for every Gemini model, the 99% interval of the
-   gain lies below +5 per 100 pages. No early stop for success.
-3. **Final, on block 2, the chosen model only:** **ADOPT** Gemini as a standing second reader for the script if the
-   gain `yield(opus-a ∪ gemini) − yield(opus-a ∪ opus-b)` is **≥ 5 confirmed serious issues per 100 pages**, its 95%
-   interval (bootstrap by book, weighted) is above 0, **and** Gemini's false-alarm rate is at most 3 per 100 pages
-   above opus-a's (a false alarm costs a minute of adjudication; a missed serious error misleads a reader).
-   Otherwise **DO NOT ADOPT**; if `yield(opus-a ∪ opus-b) − yield(opus-a)` meets the same bar, recommend a second
-   Opus read instead.
-4. H2 and H3 are reported, with intervals, and decide nothing.
+**The unit of the test is the error, not the page.** For each Gemini model *g*, among the confirmed serious issues on
+natural pages that **opus-a missed**: *b* = found by *g* (at any severity) and not by opus-b; *c* = found by opus-b
+and not by *g*. Both Gemini models are tested; there is no model choice and no block split in the decision.
+
+1. **Primary decision, pooled over the three scripts.** *g* passes if, with *b* and *c* summed over the scripts,
+   the one-sided exact sign test gives **p < 0.025** (Bonferroni over the two models), **and** the mean over the
+   scripts of the weighted gain `yield(opus-a ∪ g) − yield(opus-a ∪ opus-b)` is **≥ 3 confirmed serious issues per
+   100 pages** (point estimate; its 95% interval is reported), **and** in every script *g*'s false alarms are at
+   most 3 per 100 pages above opus-a's. **ADOPT** the passing model with the larger gain as a standing second reader;
+   if neither passes, **NOT SHOWN**. Reported as provisional until all three scripts are scored.
+2. **Per script, the same test on that script's counts.** Reported for every script with its power stated (about
+   half the pooled test's; see `power.mjs`). A script that fails while the pooled test passes is reported as "not
+   shown for this script", never as "no".
+3. **Interim look after the first script (Latin):** stop with a null if for both models *b ≤ c*. No early stop for
+   success.
+4. **Second Opus read.** `yield(opus-a ∪ opus-b) − yield(opus-a)` is reported per script with its interval: what
+   reading twice with the same model buys.
+5. H2 and H3 are reported, with intervals, and decide nothing.
+
+*Why 3, not 5, per 100 pages:* under plausible rates (opus-a finds 60% of serious issues; a second Opus re-finds
+20% of its misses), +5 per 100 pages needs Gemini to catch about 40 points more of opus-a's misses than a second
+Opus does. +3 is a confirmed serious error found on one extra page in 33, for a read that costs CLI quota and no
+money; the false-alarm cap bounds what it costs to adjudicate.
 
 ## Stop conditions before scoring
 
@@ -159,8 +173,8 @@ committed number differs. The site renders from that file; the paper's tables ar
 1. Per script and reader: pages returned, recall on planted errors (detected / serious, Wilson 95%), false alarms
    per 100 pages, confirmed serious issues per 100 pages (weighted, 95% by book).
 2. Recall by planted class × reader (figure).
-3. Gain of the chosen Gemini over the control on block 2, per script, against the +5 line (figure), with the
-   second-Opus gain beside it.
+3. Per Gemini model, pooled and per script: *b*, *c*, the sign-test p, and the weighted gain over the control
+   against the +3 line (figure), with the second-Opus gain beside it.
 4. Which readers found which confirmed issues (UpSet figure).
 5. Krippendorff's α per pair against the Opus–Opus floor and the Gemini retest floor.
 6. Adjudicator accuracy on planted claims and against the eye; shared-miss rate.
@@ -169,6 +183,16 @@ committed number differs. The site renders from that file; the paper's tables ar
 
 **Deviations** from this document are listed in the paper's method section with the date and reason; an analysis
 not listed here is labelled *post hoc* wherever it appears.
+
+## Amendments
+
+**1 (2026-10-08, before any page was drawn).** A simulation of the first decision rule (`second-reader/power.mjs`)
+showed it could not do its job: with block 2 alone (about 36 natural pages a script) and page-level weighting, a
+true gain of +6.3 per 100 pages was adopted 34% of the time (+9.4: 60%). Replaced by the error-level sign test above,
+pooled over scripts: 93% at +6.3, 75% at +4.7, under 1% when Gemini adds nothing (600 simulated studies each).
+Changed with it: no block split or model choice in the decision (both models tested, Bonferroni); the practical bar
+from 5 to 3 per 100 pages (reason under the rule); the second adjudicator fixed as Gemini 3.1 Pro; the retest model
+fixed as Gemini 3.1 Pro. Sample, readers, planting, matching and adjudication are unchanged.
 
 ## Limits to state in any write-up
 

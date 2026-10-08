@@ -79,8 +79,7 @@ translation, are not front or back matter or plates, and have an image that down
 One page from each of 100 books per script. A third of the books are drawn from those with a page flagged by
 model-free integrity checks (truncation, echoed source, repeated blocks, hidden text, duplicate scans), and within
 such a book the flagged page is chosen with probability 0.8. Every page's inclusion probability is recorded, and
-rates are Hájek-weighted back to "a book at random, then a page at random". Reading order is random; the first half
-(block 1) chooses between Gemini models and the second half (block 2) reports.
+rates are Hájek-weighted back to "a book at random, then a page at random". Reading order is random.
 
 ### 3.3 Planted errors
 On 28% of pages a model-free procedure plants one error, five classes in rotation: a negation removed from the
@@ -93,8 +92,8 @@ over-report them, and false-alarm rates would not transfer to a corpus where abo
 Four readers read every page against its image with the same frozen brief: Claude Opus (primary), a second
 independent Claude Opus run (**control**), Gemini 3.1 Pro and Gemini 3.8 Flash. Model names and URLs are removed from
 what readers see; each reader runs in a sealed folder holding only the brief, the packet and its images (for Claude,
-enforced by the command-line tool's restricted mode). The Gemini model with the higher recall on block 1 is the
-candidate; on the Latin script it is re-run once to measure its own test–retest floor.
+enforced by the command-line tool's restricted mode). Both Gemini models are candidates; on the Latin script
+Gemini 3.1 Pro is re-run once to measure its own test–retest floor.
 
 ### 3.5 Matching and adjudication
 Findings are matched across readers by a fixed rule: the same page and lane, with quotes that overlap or touch the
@@ -105,9 +104,14 @@ further 20 pages no reader flagged are read by eye to measure errors all readers
 
 ### 3.6 Measures and decision rule
 Recall on planted errors per reader and class; confirmed serious issues per 100 pages (weighted, 95% bootstrap
-by book); false alarms per 100 pages; Krippendorff's α. The candidate is adopted for a script if the **gain of
-Opus + Gemini over Opus + Opus** is at least 5 confirmed serious issues per 100 pages on block 2, with the 95%
-interval above zero, and its false alarms are at most 3 per 100 pages above the primary's.
+by book); false alarms per 100 pages; Krippendorff's α. The decision is made on errors, not pages: among confirmed
+serious errors the primary Opus missed, we count those the Gemini reader found and the second Opus did not (*b*)
+against the reverse (*c*), and apply a one-sided exact sign test (α = 0.025 per Gemini model, Bonferroni over two),
+pooled over the three scripts. A model is adopted if the test passes, the weighted **gain of Opus + Gemini over
+Opus + Opus** is at least 3 confirmed serious errors per 100 pages, and its false alarms are at most 3 per 100 pages
+above the primary's. The same test is reported per script. This rule replaced a page-level rule before any data was
+drawn, after a simulation showed the first had 34% power at a true gain of 6.3 per 100 pages; the amended rule has
+93%, with under 1% false adoption (§3.8).
 
 ### 3.7 Testing the harness
 Before reading any real page the harness was run on a synthetic study whose every reported number was known in
@@ -118,7 +122,9 @@ command-line tool's tool allow-list did not confine a headless reader in our env
 did. *[cite experiment entry 2026-10-08-second-reader-harness-synthetic-check-6338]*
 
 ### 3.8 Deviations from the preregistration
-*[List, with date and reason, or "none".]*
+Amendment 1 (2026-10-08, before any page was drawn): the decision rule above replaced a page-level rule (block 2
+only, gain ≥ 5 per 100 pages with its interval above zero) after a power simulation (`second-reader/power.mjs`).
+*[Any later deviation, with date and reason.]*
 
 ## 4. Results
 
@@ -132,8 +138,9 @@ per 100, confirmed per 100.]*
 *[Figure 2 from `scripts[].readers[].recall_by_class`.]*
 
 ### 4.3 Does a second family add more than a second read?
-*[Figure 3 from `scripts[].gain_per100_block2` and `second_opus_gain_per100_block2`, against the +5 line; the
-verdict per script from `scripts[].verdict`. Figure 4 (UpSet) from `scripts[].upset`.]*
+*[The pooled decision from `pooled.tests[]` (b, c, p, mean gain) and `pooled.verdict`. Figure 3 from
+`scripts[].tests[].gain_per100` and `scripts[].second_opus_gain_per100`, against the +3 line; per-script verdicts from
+`scripts[].verdict`. Figure 4 (UpSet) from `scripts[].upset`.]*
 
 ### 4.4 Agreement and the adjudicators
 *[Table from `scripts[].agreement` against the Opus–Opus and Gemini retest floors; adjudicator accuracy on planted

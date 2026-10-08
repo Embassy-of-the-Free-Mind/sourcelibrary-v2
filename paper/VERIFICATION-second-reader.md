@@ -9,7 +9,8 @@ each pointing at a field of `src/data/second-reader-6338.json` (itself checked i
 
 | # | Claim in draft | Source of truth | Status |
 |---|---|---|---|
-| 1 | Design numbers: 100 pages per script, 1 per book, a third enriched, λ 0.8, 28% planted, five classes, blocks of 50, decision bar +5 per 100, false-alarm margin 3 per 100 | `scripts/eval/PREREGISTRATION-second-reader-6338.md` at the commit cited in §3 | ☐ |
+| 1 | Design numbers: 100 pages per script, 1 per book, a third enriched, λ 0.8, 28% planted, five classes, sign test α 0.025 per model, gain bar +3 per 100, false-alarm margin 3 per 100 | `scripts/eval/PREREGISTRATION-second-reader-6338.md` at the commit cited in §3 (amendment 1) | ☐ |
+| 1b | Power: first rule 34% at +6.3/100 (60% at +9.4); amended pooled rule 93% at +6.3, 75% at +4.7, < 1% at 0 | `node scripts/eval/second-reader/power.mjs --reps 600` (seeded) | ☐ |
 | 2 | Same-model agreement κ 0.85–0.92 on the serious flag | `scripts/eval/experiments/2026-10-07-script-run-reviewers-6174.md` | ☐ |
 | 3 | "roughly one page in five" serious on random public books | `scripts/eval/experiments/_series-fortnightly-spot-check.md` (latest rolling window; quote with its n and interval) | ☐ |
 | 4 | Four harness defects; allow-list did not confine, restricted mode did | `scripts/eval/experiments/2026-10-08-second-reader-harness-synthetic-check-6338.md` | ☐ |

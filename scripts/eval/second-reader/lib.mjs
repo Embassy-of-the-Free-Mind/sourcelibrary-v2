@@ -402,6 +402,16 @@ export function weightedMeanCI(values, weights, { iters = 4000, seed = 6338 } = 
   return { est: wm([...Array(n).keys()]), ci95: [q(0.025), q(0.975)], ci99: [q(0.005), q(0.995)], n };
 }
 
+/** One-sided exact sign test: P(X ≥ b) for X ~ Binomial(b + c, 1/2). 1 when there are no discordant pairs. */
+export function signTestOneSided(b, c) {
+  const n = b + c;
+  if (!n) return 1;
+  const logC = (nn, kk) => { let s = 0; for (let i = 0; i < kk; i++) s += Math.log(nn - i) - Math.log(i + 1); return s; };
+  let p = 0;
+  for (let i = b; i <= n; i++) p += Math.exp(logC(n, i) - n * Math.LN2);
+  return Math.min(1, p);
+}
+
 /** Wilson 95% interval for k of n. */
 export function wilson(k, n, z = 1.959964) {
   if (!n) return null;

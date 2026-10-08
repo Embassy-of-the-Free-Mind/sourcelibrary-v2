@@ -17,16 +17,18 @@ script (`latin`, `han`, `arabic`), with the seed and languages from the preregis
 | 4. Gemini reads | where `agy` is signed in | `scripts/eval/second-reader/run-readers.sh R gemini-pro agy gemini-3.1-pro-high` then `gemini-flash agy gemini-3.8-flash-high` |
 | 5. collect + audit | anywhere | `node scripts/eval/second-reader/second-reader.mjs collect --run R --reader <name>` for each reader. A READ outside the sealed folder: delete that packet's review and re-run it (stop rule in the preregistration). |
 | 6. cluster | anywhere | `node scripts/eval/second-reader/second-reader.mjs cluster --run R --readers opus-a,opus-b,gemini-pro,gemini-flash` |
-| 7. adjudicate | claude + agy | `run-readers.sh R adj-opus claude opus adjudicate` and `run-readers.sh R adj-gemini agy <the model NOT chosen> adjudicate`, then `collect --role adjudicate` for each |
+| 7. adjudicate | claude + agy | `run-readers.sh R adj-opus claude opus adjudicate` and `run-readers.sh R adj-gemini agy gemini-3.1-pro-high adjudicate`, then `collect --role adjudicate` for each |
 | 8. by eye, interim, score | a person | Fill `R/adjudication/by-eye.json` (template: `by-eye-todo.json`; `score` lists any split still unsettled). Interim: `score … --interim`. Final: `node scripts/eval/second-reader/second-reader.mjs score --run R --primary opus-a --control opus-b --candidates gemini-pro,gemini-flash --adjudicators adj-opus,adj-gemini` |
 | 9. commit | worktree | copy `R` (with `private/`) to `scripts/eval/results/second-reader-6338/S/`, minus the images if they exceed the repo's size habits (their sha256 stays in the packets); one experiment file; verdict comment on #6338 |
 
 Notes
-- **Model choice happens before adjudication is final**: the scorer picks the Gemini model on block 1. To choose
-  which Gemini runs as the second adjudicator (step 7), run `score` once after step 6 with adjudication missing; it
-  reports the block-1 recall that decides the choice, which needs no adjudication. Recall is the primary key.
-- **The retest** (Latin only): after the choice, `run-readers.sh R gemini-retest agy <chosen model>`, add it to
-  `cluster --readers` and pass `--retest <chosen>=gemini-retest` to `score`.
+- **Both Gemini models are tested** (amendment 1): there is no model choice before scoring. The per-script `score`
+  gives each model's *b*, *c* and gain; `export` makes the pooled decision across the scored scripts.
+- **The interim look** is after the Latin round: `score … --interim`; stop if both models show *b ≤ c*.
+- **The retest** (Latin only): `run-readers.sh R gemini-retest agy gemini-3.1-pro-high`, add it to
+  `cluster --readers` and pass `--retest gemini-pro=gemini-retest` to `score`.
+- **After each script:** commit the run dir, then `second-reader.mjs export` and commit `src/data/second-reader-6338.json`
+  in the same PR (CI's `export --check` test fails otherwise).
 - **Never commit `R` before step 8 is done.** A reader that could read the repo could read the key; the sealed
   folder is the guard, and committing early removes the reason it holds.
 - A packet the CLI refuses outright (content filter) stays missing; it counts as not found, and the report shows

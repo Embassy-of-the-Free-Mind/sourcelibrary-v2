@@ -12,7 +12,7 @@ import path from 'path';
 import { spawnSync } from 'child_process';
 import {
   PLANTERS, plantErrors, splitUnits, locate, normSpan, sameIssue, clusterIssues, validateOutput, extractIssues,
-  caughtSeed, krippendorffAlpha, drawEnriched, weightedMeanCI, redactRecord, recoverArray, auditTranscript, pageScript, keyOf,
+  caughtSeed, krippendorffAlpha, drawEnriched, weightedMeanCI, redactRecord, recoverArray, auditTranscript, pageScript, keyOf, signTestOneSided,
 } from '../../scripts/eval/second-reader/lib.mjs';
 import { makeRng } from '../../scripts/eval/lib/paired-stats.mjs';
 
@@ -344,15 +344,35 @@ describe('end to end on a synthetic run', () => {
     expect(rep.per_reader.G.false_alarms).toBe(expected);
     expect(rep.per_reader.A.false_alarms).toBe(0);
   });
-  it('the gain of G over the control on block 2 equals the count built in', () => {
-    const b2 = natural.filter((u: any) => u.block === 2);
-    const gainPages = b2.filter((u: any) => hasErr(idx(u.key)) && !(idx(u.key) % 2 === 0) && !(idx(u.key) % 6 === 1)).length;
-    expect(rep.decision.chosen).toBe('G');
-    expect(rep.decision.gain_block2.est).toBeCloseTo(gainPages / b2.length, 10);
-    expect(rep.decision.gain_block2.n).toBe(b2.length);
-    // What B adds to A: the real errors on i % 6 === 1 pages (odd, so A missed them).
-    const bAdds = b2.filter((u: any) => hasErr(idx(u.key)) && idx(u.key) % 6 === 1).length;
-    expect(rep.decision.second_opus_gain_block2.est).toBeCloseTo(bAdds / b2.length, 10);
+  it('the error-level test counts exactly the discordant misses built in, and the rule picks the reader that passes', () => {
+    const i = (u: any) => idx(u.key);
+    const missedByA = natural.filter((u: any) => hasErr(i(u)) && i(u) % 2 !== 0);
+    const bFinds = (u: any) => i(u) % 6 === 1;
+    const fMissing = new Set(JSON.parse(fs.readFileSync(path.join(dir, 'packets', packets[0]), 'utf8')).map((r: any) => keyOf(r.book_id, 5)));
+    const G = rep.decision.tests.find((t: any) => t.candidate === 'G'), F = rep.decision.tests.find((t: any) => t.candidate === 'F');
+    // G finds every miss of A; B finds some; so b = misses B did not find, c = 0.
+    expect(G).toMatchObject({ b: missedByA.filter((u: any) => !bFinds(u)).length, c: 0 });
+    expect(G.gain.est).toBeCloseTo(missedByA.filter((u: any) => !bFinds(u)).length / natural.length, 10);
+    // F is G without its false claims, minus the packet it never returned (those count as not found).
+    expect(F).toMatchObject({
+      b: missedByA.filter((u: any) => !bFinds(u) && !fMissing.has(u.key)).length,
+      c: missedByA.filter((u: any) => bFinds(u) && fMissing.has(u.key)).length,
+    });
+    // G's false alarms exceed the primary's by more than 3 per 100 pages, so G fails whatever its test says.
+    expect(G.fa * 100).toBeGreaterThan(3);
+    expect(G.passes).toBe(false);
+    // F passes exactly when its own counts clear the bar (one script is often too small to: see the pooled test).
+    expect(F.p).toBeCloseTo(signTestOneSided(F.b, F.c), 12);
+    expect(F.passes).toBe(F.p < 0.025 && F.gain.est >= 0.03 && F.fa <= 0.03);
+    expect(rep.decision.verdict).toBe(F.passes ? 'ADOPT F for this script' : 'NOT SHOWN for this script');
+    // What a second Opus read (B) adds to A: the real errors on i % 6 === 1 pages that A missed.
+    expect(rep.decision.second_opus_gain.est).toBeCloseTo(missedByA.filter(bFinds).length / natural.length, 10);
+  });
+  it('the sign test matches hand-computed binomial tails', () => {
+    expect(signTestOneSided(8, 1)).toBeCloseTo(10 / 512, 12);
+    expect(signTestOneSided(5, 5)).toBeCloseTo(638 / 1024, 12);
+    expect(signTestOneSided(0, 0)).toBe(1);
+    expect(signTestOneSided(0, 4)).toBe(1);
   });
   it('confirmed finds per page: A finds the even pages, G all of them', () => {
     expect(rep.per_reader.G.confirmed_per100.est).toBeCloseTo(natural.filter((u: any) => hasErr(idx(u.key))).length / natural.length, 10);
@@ -387,7 +407,23 @@ describe('end to end on a synthetic run', () => {
     const data = JSON.parse(fs.readFileSync(out, 'utf8'));
     expect(data.status).toBe('in progress');
     expect(data.scripts[0].readers.G.recall_serious).toMatchObject({ k: 10, n: 10, est: 100 });
-    expect(data.scripts[0].gain_per100_block2.est).toBeCloseTo(100 * rep.decision.gain_block2.est, 1);
+    expect(data.scripts[0].tests.find((t: any) => t.candidate === 'G').gain_per100.est).toBeCloseTo(100 * rep.decision.tests[0].gain.est, 1);
+    // One script scored: the pooled verdict is provisional, and pools that script's counts.
+    expect(data.pooled.final).toBe(false);
+    expect(data.pooled.verdict).toMatch(/^PROVISIONAL \(not all scripts scored\): /);
+    expect(data.pooled.tests.find((t: any) => t.candidate === 'G')).toMatchObject({ b: rep.decision.tests[0].b, c: rep.decision.tests[0].c, passes: false });
+    // Three scripts (the same run three times): the counts add, the pooled test has the power one script lacks,
+    // and with every script complete the verdict is final.
+    for (const s of ['han', 'arabic']) fs.cpSync(dir, path.join(results, s), { recursive: true });
+    expect(ex().status).toBe(0);
+    const three = JSON.parse(fs.readFileSync(out, 'utf8'));
+    const F1 = rep.decision.tests.find((t: any) => t.candidate === 'F');
+    const Fp = three.pooled.tests.find((t: any) => t.candidate === 'F');
+    expect(Fp).toMatchObject({ scripts: 3, b: 3 * F1.b, c: 3 * F1.c });
+    expect(Fp.p).toBeLessThan(F1.p);
+    expect(three.pooled.final).toBe(true);
+    expect(three.pooled.verdict).toBe(Fp.passes ? 'ADOPT F as a second reader' : 'NOT SHOWN: no candidate passes');
+    expect(Fp.passes).toBe(true);
     expect(ex('--check').status).toBe(0);
     fs.writeFileSync(out, fs.readFileSync(out, 'utf8').replace('"est": 100', '"est": 99'));
     expect(ex('--check').status).toBe(1);
