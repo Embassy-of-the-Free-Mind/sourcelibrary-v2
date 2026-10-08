@@ -41,6 +41,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { randomBytes } from 'node:crypto';
 import { computeTextShiftMoves, SHIFT_FIELDS } from '../lib/text-shift.mjs';
+import { recountBook } from '../lib/page-counts.mjs';
 import { isHumanEditedTranslation, resyncMirrors } from '../lib/translation-text-repair.mjs';
 
 const args = process.argv.slice(2);
@@ -133,9 +134,7 @@ try {
   console.log(`  pages written: ${res.modifiedCount}/${ops.length}; revisions ${revisions.length}; backup ${backupFile}`);
   if (res.modifiedCount !== ops.length) console.log('  [WARN] some pages changed under us — inspect before purging');
 
-  const pagesOcr = await db.collection('pages').countDocuments({ book_id: BOOK, 'ocr.data': { $exists: true, $nin: ['', null] } });
-  const pagesTr = await db.collection('pages').countDocuments({ book_id: BOOK, 'translation.data': { $exists: true, $nin: ['', null] } });
-  await db.collection('books').updateOne({ id: BOOK }, { $set: { pages_ocr: pagesOcr, pages_translated: pagesTr, updated_at: now } });
+  await recountBook(db, BOOK, { reason: 'repair-text-shift-run', now });
   await db.collection('book_events').insertOne({
     book_id: BOOK, type: 'text_shift_repair', at: now, source: 'repair-text-shift-run',
     details: { run: `${FROM}-${TO}`, dir: DIR, pages: moves.length, cleared: cleared.map((m) => m.page_number), revisions: revisions.length, revision_source: SOURCE, map: MAP, adjudicated: ADJ, adjudicated_why: ADJ_WHY || undefined, issue: ISSUE, backup: backupFile },
