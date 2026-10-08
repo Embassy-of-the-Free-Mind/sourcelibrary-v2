@@ -221,35 +221,106 @@
     {
       "id": "chinese",
       "language": "Chinese",
-      "scope": "Books made before 1912, held in mainland China",
-      "unit": "copies (部)",
+      "scope": "Books made before 1912, surviving in China",
+      "unit": "titles (种)",
       "bars": {
         "estimated": {
-          "value": 3000000,
-          "derived": true,
-          "label": "about 3 million copies expected",
-          "figure": "chinese-census"
+          "value": 200000,
+          "label": "about 200,000 titles, in over 50 million volumes",
+          "figure": "chinese-rmrb"
         },
         "catalogued": {
-          "value": 2700000,
-          "label": "over 2.7 million copies",
-          "figure": "chinese-census"
+          "value": 200000,
+          "label": "close to 200,000 titles in the union catalogue",
+          "figure": "chinese-zongmu"
         },
         "scanned": {
-          "value": 100000,
-          "partial": true,
-          "label": "100,000 on the National Library's platform",
-          "figure": "chinese-nlc"
+          "value": 80000,
+          "label": "no more than 80,000 titles digitised",
+          "figure": "chinese-rmrb-scan"
         },
         "translated": {
           "missing": "No published figure. Our own catalogue match finds evidence of English for 65 of 10,141 works in the Kanseki Repository, which is a floor."
         }
       },
       "notes": [
-        "Counted as distinct titles, the national union catalogue lists close to 200,000 surviving works.",
-        "The expected total is derived: the census says 2.7 million is over 90% of what it expects to find."
+        "Fewer than 40,000 titles have typed text; the rest of the digitised ones are page images only.",
+        "Digitised is not the same as open: libraries in China have published images of over 161,000 copies and items free to read online, most of them on the National Library’s platform.",
+        "Counted as copies, the national census has registered over 2.7 million, which it says is over 90% of what it expects to find."
       ],
       "figures": [
+        {
+          "id": "chinese-rmrb",
+          "stage": "estimated",
+          "value": 200000,
+          "unit": "titles (种)",
+          "what": "Ancient books surviving in China: about 200,000 titles in more than 50 million volumes or items",
+          "source_title": "加快古籍数字化进程",
+          "body": "王敏光, People's Daily (人民日报), page 5",
+          "year": 2024,
+          "url": "https://paper.people.com.cn/rmrb/html/2024-11/04/nw.D110000renmrb_20241104_7-05.htm",
+          "quote": "我国现存古籍约20万种5000多万册（件）",
+          "kind": "secondary",
+          "caveat": "A commentary in the People's Daily that says 'according to statistics' without naming them. A 2022 report of the census gives 30 million volumes registered.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "chinese-zongmu",
+          "stage": "catalogued",
+          "value": 200000,
+          "unit": "titles (种)",
+          "what": "Surviving Chinese ancient books worldwide, as distinct titles, in the union catalogue 中国古籍总目",
+          "source_title": "年投资数亿元整理出版古籍",
+          "body": "sinoss.net (Ministry of Education social-science portal)",
+          "year": 2010,
+          "url": "https://www.sinoss.net/c/2010-09-14/529402.shtml",
+          "quote": "《中国古籍总目》将于年内出版,预计收书近20万种",
+          "kind": "secondary",
+          "caveat": "An announcement before publication: 'expected to include close to 200,000 titles'.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "chinese-rmrb-scan",
+          "stage": "scanned",
+          "value": 80000,
+          "unit": "titles (种)",
+          "what": "Titles digitised in any form; most as page images only, fewer than 40,000 with typed text",
+          "source_title": "加快古籍数字化进程",
+          "body": "王敏光, People's Daily (人民日报), page 5",
+          "year": 2024,
+          "url": "https://paper.people.com.cn/rmrb/html/2024-11/04/nw.D110000renmrb_20241104_7-05.htm",
+          "quote": "但实现数字化的不超过8万种，大多数只是完成了初步的影像扫描，真正实现文本数字化的不足4万种",
+          "kind": "secondary",
+          "caveat": "An upper bound ('no more than'), and it includes commercial and library-only databases, so the openly readable share is smaller.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
+        {
+          "id": "chinese-open",
+          "stage": "scanned",
+          "value": 161000,
+          "unit": "copies or items (部/件)",
+          "what": "Ancient books and special-collection items with images published free online by Chinese libraries, after the eleventh joint release (December 2025); over 107,000 of them on the National Library’s platform",
+          "source_title": "国家图书馆（国家古籍保护中心）召开“古籍数字智慧应用与第十一次古籍数字资源联合发布座谈会”",
+          "body": "Xinhua",
+          "year": 2025,
+          "url": "https://www.news.cn/culture/20251230/de788d350c7b4d379af22e518e8862b0/c.html",
+          "quote": "全国累计发布古籍及特藏文献影像资源将超16.1万部/件",
+          "kind": "secondary",
+          "caveat": "Copies and items, not titles; includes rubbings, maps and other special collections.",
+          "check": {
+            "status": "quote_found",
+            "checked": "2026-10-08"
+          }
+        },
         {
           "id": "chinese-census",
           "stage": "catalogued",
@@ -269,36 +340,18 @@
           }
         },
         {
-          "id": "chinese-nlc",
-          "stage": "scanned",
-          "value": 100000,
-          "unit": "copies or items (部/件)",
-          "what": "Ancient books and special-collection items with images published on the National Library of China's Chinese Ancient Books Resource Database",
-          "source_title": "激活古籍里的文字——赓续生生不息的中华文脉",
-          "body": "China News Service",
-          "year": 2022,
-          "url": "https://www.chinanews.com.cn/cul/2022/06-01/9768679.shtml",
-          "quote": "目前已累计发布古籍及特藏数字资源10万部(件)",
-          "kind": "secondary",
-          "caveat": "One platform only, and it includes rubbings and other special collections. Other libraries' scans are not counted.",
-          "check": {
-            "status": "quote_found",
-            "checked": "2026-10-08"
-          }
-        },
-        {
-          "id": "chinese-zongmu",
+          "id": "chinese-census-volumes",
           "stage": "catalogued",
-          "value": 200000,
-          "unit": "titles (种)",
-          "what": "Surviving Chinese ancient books worldwide, as distinct titles, in the union catalogue 中国古籍总目",
-          "source_title": "年投资数亿元整理出版古籍",
+          "value": 30000000,
+          "unit": "volumes (册/件)",
+          "what": "Volumes registered by the national census of ancient books",
+          "source_title": "守正创新，古籍出版迈向高质量发展",
           "body": "sinoss.net (Ministry of Education social-science portal)",
-          "year": 2010,
-          "url": "https://www.sinoss.net/c/2010-09-14/529402.shtml",
-          "quote": "《中国古籍总目》将于年内出版,预计收书近20万种",
+          "year": 2022,
+          "url": "https://www.sinoss.net/c/2022-09-21/626119.shtml",
+          "quote": "全国古籍普查登记工作基本完成，3000万册（件）古籍有了“身份证”",
           "kind": "secondary",
-          "caveat": "An announcement before publication: 'expected to include close to 200,000 titles'.",
+          "caveat": "Volumes, not titles.",
           "check": {
             "status": "quote_found",
             "checked": "2026-10-08"
