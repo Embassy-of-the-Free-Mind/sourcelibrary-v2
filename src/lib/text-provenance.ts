@@ -167,6 +167,9 @@ export type TranscriptProvenance =
   | { kind: 'ia'; engine: string | null; year: string | null; agreement: number | null }
   /** Written or corrected by a person; `model` is what they started from, if known. */
   | { kind: 'manual'; model: string | null }
+  /** Syriac read by a specialist Kraken model (#4883): Sophro Mhiro for
+   *  manuscripts, omnisyr for print. Named, with its measured accuracy. */
+  | { kind: 'kraken'; route: 'manuscript' | 'print' }
   /** Read from the scan by a model in the ordinary pipeline. */
   | { kind: 'model'; model: string };
 
@@ -178,6 +181,9 @@ export type TranscriptProvenance =
  * engine and the Archive's OCR date; the provisional test pages of 2026-09-12
  * carry only the engine string in `ocr.model` and no `ocr.ia` at all.
  */
+/** The by-eye check the reader's Syriac Kraken notice cites (ten pages, 2026-09-18). */
+export const KRAKEN_EVIDENCE_URL = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/4883#issuecomment-6055359829';
+
 export function transcriptProvenance(page: Pick<Page, 'ocr'>): TranscriptProvenance | null {
   const ocr = page.ocr;
   if (!ocr) return null;
@@ -196,6 +202,10 @@ export function transcriptProvenance(page: Pick<Page, 'ocr'>): TranscriptProvena
     return { kind: 'ia', engine, year, agreement: typeof median === 'number' ? median : null };
   }
   if (ocr.source === 'manual') return { kind: 'manual', model: ocr.model || null };
+  const engine = ocr.engine;
+  if (engine && engine.name === 'kraken') {
+    return { kind: 'kraken', route: 'route' in engine && engine.route === 'print' ? 'print' : 'manuscript' };
+  }
   if (ocr.model) return { kind: 'model', model: ocr.model };
   return null;
 }
@@ -239,6 +249,10 @@ export function transcriptProvenanceLabel(
       return form === 'short'
         ? t.transcriptChipManual
         : t.manualTranscript(prov.model ? modelDisplayName(prov.model) : null);
+    case 'kraken':
+      return form === 'short'
+        ? (prov.route === 'print' ? 'omnisyr (Kraken)' : 'Sophro Mhiro (Kraken)')
+        : t.krakenTranscript(prov.route);
     case 'model':
       return form === 'short' ? modelDisplayName(prov.model) : t.transcribedBy(prov.model);
   }

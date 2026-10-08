@@ -332,6 +332,12 @@ export interface ReaderStrings {
      *  translation too) is the corpus editors' scholarly work, not AI's. */
     corpusNoScan: (witnessCount: number) => string;
     corpusTranscript: (name: string, org?: string) => string;
+    /** Syriac pages read by a specialist Kraken model (#4883), by route: Sophro Mhiro for
+     *  manuscripts, omnisyr for print. Replaces transcribedBy + machineNotice on those pages. */
+    krakenTranscript: (route: 'manuscript' | 'print') => string;
+    krakenNotice: (route: 'manuscript' | 'print') => string;
+    /** Label for the link under krakenNotice to the by-eye check it cites (KRAKEN_EVIDENCE_URL). */
+    krakenEvidenceLink: string;
     /** Text taken from the Internet Archive's own OCR of the scan (ocr.source === 'ia_djvu'). */
     iaTranscript: (engine: string | null, year: string | null, agreement: number | null) => string;
     /** Written or corrected by a person; `model` is the display name of what they started from, if known. */
@@ -829,6 +835,16 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         ? `None — this is a digital text edition. The composition survives on ${witnessCount} clay tablet${witnessCount === 1 ? '' : 's'} catalogued at CDLI.`
         : 'None — this is a digital text edition; no page images exist.',
       corpusTranscript: (name, org) => `Composite transliteration from the ${name}${org ? ` (${org})` : ''}`,
+      krakenTranscript: (route) => route === 'print'
+        ? 'Read from the scan by omnisyr, a model trained on printed Syriac.'
+        : 'Read from the scan by Sophro Mhiro (Beth Mardutho), a model trained on Syriac manuscripts.',
+      krakenNotice: (route) =>
+        'Machine transcription, not checked by a person. ' +
+        (route === 'print'
+          ? 'We read five printed pages against their scans (September 2026): the words were right on all five, and on two of them lines from separate columns ran together.'
+          : 'We read five manuscript pages against their scans (September 2026): three were read correctly, and two damaged pages came out as fragments.') +
+        ' Check the scan wherever a reading matters.',
+      krakenEvidenceLink: 'How we checked',
       iaTranscript: (engine, year, agreement) =>
         `Read from the scan by the Internet Archive's OCR${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
         (agreement != null ? `, taken because it agrees with our own reading of this book's sample pages (${Math.round(agreement * 100)}% of words)` : ''),
@@ -1261,6 +1277,16 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         ? `Ninguno — es una edición digital de texto. La composición sobrevive en ${witnessCount} tablilla${witnessCount === 1 ? '' : 's'} de arcilla catalogada${witnessCount === 1 ? '' : 's'} en CDLI.`
         : 'Ninguno — es una edición digital de texto; no existen imágenes de página.',
       corpusTranscript: (name, org) => `Transliteración compuesta procedente de ${name}${org ? ` (${org})` : ''}`,
+      krakenTranscript: (route) => route === 'print'
+        ? 'Leída del escaneo por omnisyr, un modelo entrenado con siríaco impreso.'
+        : 'Leída del escaneo por Sophro Mhiro (Beth Mardutho), un modelo entrenado con manuscritos siríacos.',
+      krakenNotice: (route) =>
+        'Transcripción automática, no revisada por una persona. ' +
+        (route === 'print'
+          ? 'Leímos cinco páginas impresas junto a sus escaneos (septiembre de 2026): las palabras eran correctas en las cinco, y en dos se mezclaron líneas de columnas distintas.'
+          : 'Leímos cinco páginas manuscritas junto a sus escaneos (septiembre de 2026): tres se leyeron bien, y dos páginas dañadas salieron en fragmentos.') +
+        ' Consulta el escaneo siempre que una lectura sea importante.',
+      krakenEvidenceLink: 'Cómo lo comprobamos',
       iaTranscript: (engine, year, agreement) =>
         `Leída del escaneo por el OCR del Internet Archive${engine ? ` (${engine}${year ? `, ${year}` : ''})` : year ? ` (${year})` : ''}` +
         (agreement != null ? `, aceptada porque coincide con nuestra propia lectura de las páginas de muestra de este libro (${Math.round(agreement * 100)}% de las palabras)` : ''),
