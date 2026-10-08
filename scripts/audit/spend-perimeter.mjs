@@ -141,6 +141,8 @@ const UNATTENDED = [
     note: 'production-deploy watch: reads the Vercel REST API + origin/main; files/closes one GitHub issue, pages ntfy; no model call, no Vercel function invocation (#5708)' },
   { match: 'model-usage-snapshot.mjs', spends: false, gated: false,
     note: '/about/models counts: checkpointed walk over pages + gallery_images, Supabase count estimates; writes one ops_reports row; no model call (#5601)' },
+  { match: 'decision-answers-drain.mjs', spends: false, gated: false,
+    note: 'decision queue drainer: reads decision_answers, runs safe-merge.sh / gh pr comment for answers Derek gave on /platform/admin/decisions; no model call (#6258)' },
   { match: 'warm-author-pages.mjs', spends: false, gated: false, note: 'HTTP warm' },
   { match: 'prewarm-browse.mjs', spends: false, gated: false, note: 'HTTP warm' },
   { match: 'catalog-csv-snapshot.mjs', spends: false, gated: false, note: 'reads only' },

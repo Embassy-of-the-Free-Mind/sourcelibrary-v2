@@ -88,6 +88,11 @@
 
 # ── Maintenance ──
 
+# Decision queue drainer (#6258): acts on PR answers from /platform/admin/decisions
+# (every 5 min). Default → safe-merge.sh (one merge per run, main tip ≥ 8 min old);
+# Other → PR comment + `blocked`. Uses this box's gh auth; reads/writes decision_answers.
+*/5 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-decisions.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/decision-answers-drain.mjs" >> /var/log/sourcelibrary/decisions-drain.log 2>&1
+
 # Pipeline health alert: every 4h (catches translation stalls, orphan states)
 0 */4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-health.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/pipeline-health-alert.mjs" >> /var/log/sourcelibrary/health-alert.log 2>&1
 
