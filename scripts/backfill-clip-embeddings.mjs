@@ -26,6 +26,7 @@ import pg from 'pg';
 
 const { Client: PgClient } = pg;
 
+import { embedAuthHeaders } from './workers/lib/embed-auth.mjs';
 const CLIP_URL = process.env.CLIP_URL || process.argv.find(a => a.startsWith('--clip-url='))?.split('=')[1] || 'http://localhost:3457';
 const ARTWORKS_ONLY = process.argv.includes('--artworks-only');
 const COVERS_ONLY = process.argv.includes('--covers-only');
@@ -243,7 +244,7 @@ async function main() {
     try {
       const resp = await fetch(`${CLIP_URL}/embed-images`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: embedAuthHeaders(),
         body: JSON.stringify({ urls }),
       });
 
