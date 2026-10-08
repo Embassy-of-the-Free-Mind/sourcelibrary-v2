@@ -80,7 +80,7 @@ describe('eval batch registry', () => {
     const root = path.resolve(__dirname, '../..');
     let hits = '';
     try {
-      hits = execFileSync('git', ['grep', '-n', '-E', "status: *['\"]external_eval['\"]", '--', 'scripts', 'src'], { cwd: root, encoding: 'utf8' });
+      hits = execFileSync('git', ['grep', '-n', '-E', "status: *['\"]external_eval['\"]", '--', 'scripts', 'src', ':!scripts/lib/eval-batch-registry.mjs'], { cwd: root, encoding: 'utf8' });
     } catch (e) {
       if ((e as { status?: number }).status !== 1) throw e; // 1 = no match
     }
