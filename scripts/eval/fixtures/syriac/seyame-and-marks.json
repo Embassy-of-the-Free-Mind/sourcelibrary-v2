@@ -1,0 +1,9 @@
+{
+ "script": "syriac",
+ "name": "seyame-and-marks",
+ "reference": "ܥܡ ܐܚܐ ܘܪܫܝܥܐ",
+ "hypothesis": "ܥܰܡ ܐܚ̈ܐ ܘܪ̈ܫܝܥܐ",
+ "expected_cer": 0,
+ "tolerance": 0,
+ "why": "seyame (U+0308, a combining mark) marks a plural; it is not a letter"
+}

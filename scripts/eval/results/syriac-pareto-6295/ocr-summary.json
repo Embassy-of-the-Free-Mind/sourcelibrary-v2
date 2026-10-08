@@ -1,0 +1,640 @@
+{
+ "issue": 6295,
+ "generated_by": "scripts/eval/syriac-pareto-6295/analyze-ocr.mjs",
+ "scorer": "syriac-cer/1",
+ "date": "2026-10-08",
+ "grade": "directional (under 30 books)",
+ "n_sealed": 24,
+ "n_scored": 20,
+ "n_books": 20,
+ "n_editions": 18,
+ "unscored": [
+  {
+   "slug": "69943f7b_732",
+   "label": "Jacob of Sarug, Bedjan vol. 1 (copy A)",
+   "why": "no arm aligned with span word error < 0.5"
+  },
+  {
+   "slug": "69943f85_836",
+   "label": "Jacob of Sarug, Bedjan vol. 2",
+   "why": "no arm aligned with span word error < 0.5"
+  },
+  {
+   "slug": "69a5f3f0_555",
+   "label": "Patrologia Syriaca I.2 (copy B)",
+   "why": "no arm aligned with span word error < 0.5"
+  },
+  {
+   "slug": "69a5f02c_183",
+   "label": "Bar Hebraeus, Chronicon Ecclesiasticum vol. 1",
+   "why": "no arm aligned with span word error < 0.5"
+  }
+ ],
+ "bootstrap": "2000 resamples of editions, seed 6295",
+ "panel": [
+  {
+   "arm": "L-ocr",
+   "n_pages": 20,
+   "n_books": 20,
+   "n_editions": 18,
+   "median_cer": 0.683,
+   "cer_ci95": [
+    0.626,
+    0.711
+   ],
+   "accuracy": 0.317,
+   "accuracy_ci95": [
+    0.289,
+    0.374
+   ],
+   "pages_cer_le_010": 0,
+   "pages_cer_ge_050": 20
+  },
+  {
+   "arm": "L-ocr-b",
+   "n_pages": 20,
+   "n_books": 20,
+   "n_editions": 18,
+   "median_cer": 0.685,
+   "cer_ci95": [
+    0.638,
+    0.717
+   ],
+   "accuracy": 0.315,
+   "accuracy_ci95": [
+    0.283,
+    0.362
+   ],
+   "pages_cer_le_010": 0,
+   "pages_cer_ge_050": 20
+  },
+  {
+   "arm": "mineru",
+   "n_pages": 20,
+   "n_books": 20,
+   "n_editions": 18,
+   "median_cer": 1,
+   "cer_ci95": [
+    1,
+    1
+   ],
+   "accuracy": 0,
+   "accuracy_ci95": [
+    0,
+    0
+   ],
+   "pages_cer_le_010": 0,
+   "pages_cer_ge_050": 20
+  },
+  {
+   "arm": "omnisyr",
+   "n_pages": 20,
+   "n_books": 20,
+   "n_editions": 18,
+   "median_cer": 0.13,
+   "cer_ci95": [
+    0.076,
+    0.168
+   ],
+   "accuracy": 0.87,
+   "accuracy_ci95": [
+    0.832,
+    0.924
+   ],
+   "pages_cer_le_010": 7,
+   "pages_cer_ge_050": 0
+  },
+  {
+   "arm": "omnisyr-nosplit",
+   "n_pages": 20,
+   "n_books": 20,
+   "n_editions": 18,
+   "median_cer": 0.14,
+   "cer_ci95": [
+    0.076,
+    0.176
+   ],
+   "accuracy": 0.86,
+   "accuracy_ci95": [
+    0.824,
+    0.924
+   ],
+   "pages_cer_le_010": 7,
+   "pages_cer_ge_050": 0
+  },
+  {
+   "arm": "qoruyo-eastern",
+   "n_pages": 20,
+   "n_books": 20,
+   "n_editions": 18,
+   "median_cer": 0.14,
+   "cer_ci95": [
+    0.108,
+    0.222
+   ],
+   "accuracy": 0.86,
+   "accuracy_ci95": [
+    0.778,
+    0.892
+   ],
+   "pages_cer_le_010": 5,
+   "pages_cer_ge_050": 0
+  },
+  {
+   "arm": "qoruyo-estrangela",
+   "n_pages": 20,
+   "n_books": 20,
+   "n_editions": 18,
+   "median_cer": 0.156,
+   "cer_ci95": [
+    0.078,
+    0.213
+   ],
+   "accuracy": 0.844,
+   "accuracy_ci95": [
+    0.787,
+    0.922
+   ],
+   "pages_cer_le_010": 7,
+   "pages_cer_ge_050": 0
+  },
+  {
+   "arm": "served-lane",
+   "n_pages": 20,
+   "n_books": 20,
+   "n_editions": 18,
+   "median_cer": 0.13,
+   "cer_ci95": [
+    0.076,
+    0.168
+   ],
+   "accuracy": 0.87,
+   "accuracy_ci95": [
+    0.832,
+    0.924
+   ],
+   "pages_cer_le_010": 7,
+   "pages_cer_ge_050": 0
+  },
+  {
+   "arm": "sophro-mhiro",
+   "n_pages": 20,
+   "n_books": 20,
+   "n_editions": 18,
+   "median_cer": 0.193,
+   "cer_ci95": [
+    0.09,
+    0.398
+   ],
+   "accuracy": 0.807,
+   "accuracy_ci95": [
+    0.602,
+    0.91
+   ],
+   "pages_cer_le_010": 6,
+   "pages_cer_ge_050": 4
+  }
+ ],
+ "stored": [
+  {
+   "arm": "stored-gemini-flash",
+   "n_pages": 9,
+   "n_books": 9,
+   "n_editions": 9,
+   "median_cer": 0.474,
+   "cer_ci95": [
+    0.342,
+    0.667
+   ],
+   "accuracy": 0.526,
+   "accuracy_ci95": [
+    0.333,
+    0.658
+   ],
+   "pages_cer_le_010": 0,
+   "pages_cer_ge_050": 3,
+   "vs_served_lane_on_same_pages": {
+    "arm": "served-lane",
+    "n_pages": 9,
+    "n_books": 9,
+    "n_editions": 9,
+    "median_cer": 0.114,
+    "cer_ci95": [
+     0.063,
+     0.189
+    ],
+    "accuracy": 0.886,
+    "accuracy_ci95": [
+     0.811,
+     0.937
+    ],
+    "pages_cer_le_010": 4,
+    "pages_cer_ge_050": 0
+   }
+  },
+  {
+   "arm": "stored-gemini-lite",
+   "n_pages": 9,
+   "n_books": 9,
+   "n_editions": 8,
+   "median_cer": 1,
+   "cer_ci95": [
+    0.609,
+    1
+   ],
+   "accuracy": 0,
+   "accuracy_ci95": [
+    0,
+    0.391
+   ],
+   "pages_cer_le_010": 0,
+   "pages_cer_ge_050": 9,
+   "vs_served_lane_on_same_pages": {
+    "arm": "served-lane",
+    "n_pages": 9,
+    "n_books": 9,
+    "n_editions": 8,
+    "median_cer": 0.167,
+    "cer_ci95": [
+     0.069,
+     0.174
+    ],
+    "accuracy": 0.833,
+    "accuracy_ci95": [
+     0.826,
+     0.931
+    ],
+    "pages_cer_le_010": 3,
+    "pages_cer_ge_050": 0
+   }
+  }
+ ],
+ "column_splitter": {
+  "a": "omnisyr",
+  "b": "omnisyr-nosplit",
+  "median_diff": 0,
+  "ci95": [
+   0,
+   0
+  ],
+  "pages_split": 4,
+  "verdict": "no difference shown (CI includes 0)"
+ },
+ "lite_a_vs_a": {
+  "median_abs_diff": 0.053,
+  "identical_pages": 0,
+  "n": 20
+ },
+ "lever": {
+  "best": "omnisyr",
+  "overlapping_best": [
+   "omnisyr",
+   "omnisyr-nosplit",
+   "qoruyo-eastern",
+   "qoruyo-estrangela",
+   "served-lane",
+   "sophro-mhiro"
+  ],
+  "finetune_recommended": true
+ },
+ "per_page": [
+  {
+   "slug": "69920b97_271",
+   "edition": "New Testament, Pinkerton-Gwilliam 1905",
+   "tier": "same-edition",
+   "cer": {
+    "omnisyr": 0.1139,
+    "omnisyr-nosplit": 0.1139,
+    "sophro-mhiro": 0.1139,
+    "qoruyo-eastern": 0.129,
+    "qoruyo-estrangela": 0.1487,
+    "served-lane": 0.1139,
+    "stored-gemini-flash": 0.5103,
+    "L-ocr-b": 0.6717,
+    "L-ocr": 1,
+    "mineru": 1
+   }
+  },
+  {
+   "slug": "69a5ea9a_391",
+   "edition": "Narsai, Mingana 1905",
+   "tier": "same-edition",
+   "cer": {
+    "omnisyr": 0.0405,
+    "omnisyr-nosplit": 0.0405,
+    "sophro-mhiro": 0.0895,
+    "qoruyo-eastern": 0.0448,
+    "qoruyo-estrangela": 0.0414,
+    "served-lane": 0.0405,
+    "stored-gemini-lite": 0.6605,
+    "L-ocr-b": 0.5895,
+    "L-ocr": 0.6807,
+    "mineru": 1
+   }
+  },
+  {
+   "slug": "69943ce1_628",
+   "edition": "Narsai, Mingana 1905",
+   "tier": "same-edition",
+   "cer": {
+    "omnisyr": 0.0694,
+    "omnisyr-nosplit": 0.0694,
+    "sophro-mhiro": 0.0768,
+    "qoruyo-eastern": 0.0776,
+    "qoruyo-estrangela": 0.071,
+    "served-lane": 0.0694,
+    "stored-gemini-lite": 1,
+    "L-ocr-b": 1,
+    "L-ocr": 0.5797,
+    "mineru": 1
+   }
+  },
+  {
+   "slug": "69a5eaa3_611",
+   "edition": "Jacob of Sarug, Bedjan vol. 1",
+   "tier": "same-edition",
+   "cer": {
+    "omnisyr": 0.0792,
+    "omnisyr-nosplit": 0.0792,
+    "sophro-mhiro": 0.1925,
+    "qoruyo-eastern": 0.0792,
+    "qoruyo-estrangela": 0.0745,
+    "served-lane": 0.0792,
+    "stored-gemini-lite": 0.5311,
+    "L-ocr-b": 0.6242,
+    "L-ocr": 0.5714,
+    "mineru": 1
+   }
+  },
+  {
+   "slug": "69943c78_154",
+   "edition": "Isaac of Nineveh, Bedjan 1909",
+   "tier": "same-edition",
+   "cer": {
+    "omnisyr": 0.0762,
+    "omnisyr-nosplit": 0.0762,
+    "sophro-mhiro": 0.1667,
+    "qoruyo-eastern": 0.0762,
+    "qoruyo-estrangela": 0.1111,
+    "served-lane": 0.0762,
+    "stored-gemini-flash": 0.4742,
+    "L-ocr-b": 0.6382,
+    "L-ocr": 0.7106,
+    "mineru": 1
+   }
+  },
+  {
+   "slug": "69943c68_564",
+   "edition": "Philoxenus, Budge 1894",
+   "tier": "same-edition",
+   "cer": {
+    "omnisyr": 0.0705,
+    "omnisyr-nosplit": 0.0705,
+    "sophro-mhiro": 0.0836,
+    "qoruyo-eastern": 0.1259,
+    "qoruyo-estrangela": 0.0645,
+    "served-lane": 0.0705,
+    "stored-gemini-flash": 0.4894,
+    "L-ocr-b": 0.7482,
+    "L-ocr": 0.7543,
+    "mineru": 1
+   }
+  },
+  {
+   "slug": "69a5eaa8_205",
+   "edition": "Ephrem/Rabbula/Balai, Overbeck 1865",
+   "tier": "same-edition",
+   "cer": {
+    "omnisyr": 0.062,
+    "omnisyr-nosplit": 0.062,
+    "sophro-mhiro": 0.0751,
+    "qoruyo-eastern": 0.1088,
+    "qoruyo-estrangela": 0.0653,
+    "served-lane": 0.062,
+    "stored-gemini-flash": 0.3417,
+    "L-ocr-b": 0.6942,
+    "L-ocr": 0.7018,
+    "mineru": 1
+   }
+  },
+  {
+   "slug": "69943c94_125",
+   "edition": "Aphrahat, Parisot PS I.1",
+   "tier": "same-edition",
+   "cer": {
+    "omnisyr": 0.1218,
+    "omnisyr-nosplit": 0.2195,
+    "sophro-mhiro": 1,
+    "qoruyo-eastern": 0.1079,
+    "qoruyo-estrangela": 0.1624,
+    "served-lane": 0.1218,
+    "stored-gemini-flash": 1,
+    "L-ocr-b": 0.5419,
+    "L-ocr": 0.5457,
+    "mineru": 1
+   }
+  },
+  {
+   "slug": "69a5f3e0_197",
+   "edition": "Aphrahat, Parisot PS I.1",
+   "tier": "same-edition",
+   "cer": {
+    "omnisyr": 0.174,
+    "omnisyr-nosplit": 0.1879,
+    "sophro-mhiro": 1,
+    "qoruyo-eastern": 0.3178,
+    "qoruyo-estrangela": 0.3644,
+    "served-lane": 0.174,
+    "stored-gemini-lite": 1,
+    "L-ocr-b": 1,
+    "L-ocr": 0.686,
+    "mineru": 1
+   }
+  },
+  {
+   "slug": "6994400f_296",
+   "edition": "Patrologia Syriaca I.2",
+   "tier": "same-edition",
+   "cer": {
+    "omnisyr": 0.1673,
+    "omnisyr-nosplit": 0.1614,
+    "sophro-mhiro": 1,
+    "qoruyo-eastern": 0.2862,
+    "qoruyo-estrangela": 0.3263,
+    "served-lane": 0.1673,
+    "stored-gemini-lite": 1,
+    "L-ocr-b": 0.9658,
+    "L-ocr": 0.8092,
+    "mineru": 1
+   }
+  },
+  {
+   "slug": "69a5f031_235",
+   "edition": "Bar Hebraeus, Chronicon Ecclesiasticum vol. 2",
+   "tier": "same-edition",
+   "cer": {
+    "omnisyr": 0.138,
+    "omnisyr-nosplit": 0.138,
+    "sophro-mhiro": 1,
+    "qoruyo-eastern": 0.1962,
+    "qoruyo-estrangela": 0.2598,
+    "served-lane": 0.138,
+    "stored-gemini-lite": 1,
+    "L-ocr-b": 1,
+    "L-ocr": 0.7199,
+    "mineru": 1
+   }
+  },
+  {
+   "slug": "6aaafbb1_300",
+   "edition": "Chronicle of Zuqnin pt 4, Chabot 1895",
+   "tier": "same-edition",
+   "cer": {
+    "omnisyr": 0.1075,
+    "omnisyr-nosplit": 0.1075,
+    "sophro-mhiro": 0.0894,
+    "qoruyo-eastern": 0.1427,
+    "qoruyo-estrangela": 0.1635,
+    "served-lane": 0.1075,
+    "L-ocr-b": 0.6649,
+    "L-ocr": 0.6107,
+    "mineru": 1
+   }
+  },
+  {
+   "slug": "6aaafba3_151",
+   "edition": "Joshua the Stylite, Wright 1882",
+   "tier": "same-edition",
+   "cer": {
+    "omnisyr": 0.164,
+    "omnisyr-nosplit": 0.164,
+    "sophro-mhiro": 0.1974,
+    "qoruyo-eastern": 0.2259,
+    "qoruyo-estrangela": 0.1994,
+    "served-lane": 0.164,
+    "L-ocr-b": 0.6346,
+    "L-ocr": 0.6316,
+    "mineru": 1
+   }
+  },
+  {
+   "slug": "69a5eb6b_205",
+   "edition": "Acta Martyrum II, Bedjan",
+   "tier": "same-edition",
+   "cer": {
+    "omnisyr": 0.1889,
+    "omnisyr-nosplit": 0.1889,
+    "sophro-mhiro": 0.2671,
+    "qoruyo-eastern": 0.1853,
+    "qoruyo-estrangela": 0.2022,
+    "served-lane": 0.1889,
+    "stored-gemini-flash": 0.3574,
+    "L-ocr-b": 0.7172,
+    "L-ocr": 0.7028,
+    "mineru": 1
+   }
+  },
+  {
+   "slug": "69a5e9f0_81",
+   "edition": "Book of the Laws of Countries, Nau 1899",
+   "tier": "other-edition",
+   "cer": {
+    "omnisyr": 0.1686,
+    "omnisyr-nosplit": 0.1686,
+    "sophro-mhiro": 0.0723,
+    "qoruyo-eastern": 0.2399,
+    "qoruyo-estrangela": 0.0819,
+    "served-lane": 0.1686,
+    "stored-gemini-lite": 0.6089,
+    "L-ocr-b": 0.6329,
+    "L-ocr": 0.6387,
+    "mineru": 1
+   }
+  },
+  {
+   "slug": "69a5eb4d_529",
+   "edition": "Acta Martyrum III (Acts of Thomas)",
+   "tier": "other-edition",
+   "cer": {
+    "omnisyr": 0.2171,
+    "omnisyr-nosplit": 0.2171,
+    "sophro-mhiro": 0.3977,
+    "qoruyo-eastern": 0.2221,
+    "qoruyo-estrangela": 0.2233,
+    "served-lane": 0.2171,
+    "stored-gemini-lite": 1,
+    "L-ocr-b": 0.7077,
+    "L-ocr": 0.7265,
+    "mineru": 1
+   }
+  },
+  {
+   "slug": "69a5eb54_268",
+   "edition": "Acta Martyrum IV (Life of Rabbula)",
+   "tier": "other-edition",
+   "cer": {
+    "omnisyr": 0.0626,
+    "omnisyr-nosplit": 0.0626,
+    "sophro-mhiro": 0.124,
+    "qoruyo-eastern": 0.0682,
+    "qoruyo-estrangela": 0.0782,
+    "served-lane": 0.0626,
+    "stored-gemini-flash": 0.2838,
+    "L-ocr-b": 1,
+    "L-ocr": 0.6257,
+    "mineru": 1
+   }
+  },
+  {
+   "slug": "69a5eb64_461",
+   "edition": "Acta Martyrum VI (Julian Romance)",
+   "tier": "other-edition",
+   "cer": {
+    "omnisyr": 0.1429,
+    "omnisyr-nosplit": 0.1429,
+    "sophro-mhiro": 0.1938,
+    "qoruyo-eastern": 0.1373,
+    "qoruyo-estrangela": 0.1329,
+    "served-lane": 0.1429,
+    "stored-gemini-flash": 0.3499,
+    "L-ocr-b": 0.6766,
+    "L-ocr": 0.6224,
+    "mineru": 1
+   }
+  },
+  {
+   "slug": "69943c4f_169",
+   "edition": "Odes of Solomon, Harris-Mingana 1916",
+   "tier": "other-edition",
+   "cer": {
+    "omnisyr": 0.1711,
+    "omnisyr-nosplit": 0.1764,
+    "sophro-mhiro": 0.2116,
+    "qoruyo-eastern": 0.231,
+    "qoruyo-estrangela": 0.2346,
+    "served-lane": 0.1711,
+    "stored-gemini-lite": 0.6138,
+    "L-ocr-b": 0.6296,
+    "L-ocr": 0.6261,
+    "mineru": 1
+   }
+  },
+  {
+   "slug": "699443fa_308",
+   "edition": "Carmina Nisibena, Bickell 1866",
+   "tier": "other-edition",
+   "cer": {
+    "omnisyr": 0.2141,
+    "omnisyr-nosplit": 0.2141,
+    "sophro-mhiro": 0.4747,
+    "qoruyo-eastern": 0.2441,
+    "qoruyo-estrangela": 0.2947,
+    "served-lane": 0.2141,
+    "stored-gemini-flash": 0.667,
+    "L-ocr-b": 0.7042,
+    "L-ocr": 0.698,
+    "mineru": 1
+   }
+  }
+ ]
+}

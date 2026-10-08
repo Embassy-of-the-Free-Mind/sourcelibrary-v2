@@ -182,6 +182,72 @@
     "detail": "Claude Opus 5.5 via OpenRouter (Anthropic), effort low; metered API spend, realtime prices, measured 2026-10-06",
     "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
    }
+  ],
+  "omnisyr": [
+   {
+    "charts": [
+     "syriac-print"
+    ],
+    "usd_per_1k": 0.11,
+    "basis": "compute",
+    "detail": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads; inference time only, measured 2026-10-08",
+    "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+   }
+  ],
+  "omnisyr-nosplit": [
+   {
+    "charts": [
+     "syriac-print"
+    ],
+    "usd_per_1k": 0.11,
+    "basis": "compute",
+    "detail": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads; inference time only, measured 2026-10-08",
+    "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+   }
+  ],
+  "sophro-mhiro": [
+   {
+    "charts": [
+     "syriac-print"
+    ],
+    "usd_per_1k": 0.11,
+    "basis": "compute",
+    "detail": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads; inference time only, measured 2026-10-08",
+    "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+   }
+  ],
+  "qoruyo-eastern": [
+   {
+    "charts": [
+     "syriac-print"
+    ],
+    "usd_per_1k": 0.11,
+    "basis": "compute",
+    "detail": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads; inference time only, measured 2026-10-08",
+    "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+   }
+  ],
+  "qoruyo-estrangela": [
+   {
+    "charts": [
+     "syriac-print"
+    ],
+    "usd_per_1k": 0.11,
+    "basis": "compute",
+    "detail": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads; inference time only, measured 2026-10-08",
+    "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+   }
+  ],
+  "mineru": [
+   {
+    "charts": [
+     "syriac-print"
+    ],
+    "usd_per_1k": 0.38,
+    "basis": "compute",
+    "detail": "Hetzner cax41 (16 cores, about €32/month), 641 s for 24 pages, the whole box; inference time only, measured 2026-10-08",
+    "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+   }
   ]
  },
  "charts": [
@@ -3934,6 +4000,239 @@
     "Qwen3-VL 32B",
     "GPT (vision)",
     "Google Cloud Vision"
+   ]
+  },
+  {
+   "id": "syriac-print",
+   "title": "Syriac print",
+   "production_engine": "omnisyr",
+   "production_label": "Kraken (OmniSyr)",
+   "panels": [
+    {
+     "kind": "most-pages",
+     "n_pages": 20,
+     "n_books": 20,
+     "frontier": true,
+     "frontier_note": null,
+     "references": [
+      {
+       "stratum": "syriac-print-6295",
+       "reference": "Digital Syriac Corpus e-texts, the window voted across engines",
+       "pages": 20,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/results/syriac-pareto-6295/ocr-summary.json"
+     ],
+     "placed": [
+      {
+       "engine": "omnisyr",
+       "label": "Kraken (OmniSyr)",
+       "production": true,
+       "median_cer": 0.13,
+       "cer_ci95": [
+        0.076,
+        0.168
+       ],
+       "accuracy": 0.87,
+       "accuracy_ci95": [
+        0.832,
+        0.924
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.11,
+        "basis": "compute",
+        "detail": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads; inference time only, measured 2026-10-08",
+        "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "omnisyr-nosplit",
+       "label": "Kraken (OmniSyr), no column split",
+       "production": false,
+       "median_cer": 0.14,
+       "cer_ci95": [
+        0.076,
+        0.176
+       ],
+       "accuracy": 0.86,
+       "accuracy_ci95": [
+        0.824,
+        0.924
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.11,
+        "basis": "compute",
+        "detail": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads; inference time only, measured 2026-10-08",
+        "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "qoruyo-eastern",
+       "label": "Kraken (Qoruyo East)",
+       "production": false,
+       "median_cer": 0.14,
+       "cer_ci95": [
+        0.108,
+        0.222
+       ],
+       "accuracy": 0.86,
+       "accuracy_ci95": [
+        0.778,
+        0.892
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.11,
+        "basis": "compute",
+        "detail": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads; inference time only, measured 2026-10-08",
+        "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "qoruyo-estrangela",
+       "label": "Kraken (Qoruyo Estrangela)",
+       "production": false,
+       "median_cer": 0.156,
+       "cer_ci95": [
+        0.078,
+        0.213
+       ],
+       "accuracy": 0.844,
+       "accuracy_ci95": [
+        0.787,
+        0.922
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.11,
+        "basis": "compute",
+        "detail": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads; inference time only, measured 2026-10-08",
+        "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "sophro-mhiro",
+       "label": "Kraken (Sophro Mhiro)",
+       "production": false,
+       "median_cer": 0.193,
+       "cer_ci95": [
+        0.09,
+        0.398
+       ],
+       "accuracy": 0.807,
+       "accuracy_ci95": [
+        0.602,
+        0.91
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.11,
+        "basis": "compute",
+        "detail": "Hetzner cax41 (16 cores, about €32/month), 60.7 s/page at 2 threads; inference time only, measured 2026-10-08",
+        "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "mineru",
+       "label": "MinerU",
+       "production": false,
+       "median_cer": 1,
+       "cer_ci95": [
+        1,
+        1
+       ],
+       "accuracy": 0,
+       "accuracy_ci95": [
+        0,
+        0
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.38,
+        "basis": "compute",
+        "detail": "Hetzner cax41 (16 cores, about €32/month), 641 s for 24 pages, the whole box; inference time only, measured 2026-10-08",
+        "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": false,
+       "median_cer": 0.683,
+       "cer_ci95": [
+        0.626,
+        0.711
+       ],
+       "accuracy": 0.317,
+       "accuracy_ci95": [
+        0.289,
+        0.374
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 1.279,
+        "basis": "metered",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [],
+     "heading": "Printed Syriac, 20 pages from 18 editions (#6295)",
+     "notes": [
+      "Directional: 20 books, under the 30 a decision needs; intervals resample editions (2,000 draws)",
+      "Pages were drawn from those whose Kraken lane read could be located in the Digital Syriac Corpus, so the draw leans towards pages Kraken reads; 4 of the 24 sealed pages had no e-text window and are not scored",
+      "Error is counted on the consonants (vowel points and Syriac punctuation folded, a Latin column ignored), scripts/eval/syriac-pareto-6295/syriac-cer.mjs",
+      "Column split (the lane's gutter cut) against no split: median difference 0 [0, 0]; the cut changed the score on 4 pages, so no difference shown (CI includes 0)",
+      "Gemini 3.1 Flash-Lite read every page twice: 0 of 20 reads identical, median difference 5.3 points",
+      "Kraken and MinerU priced on this box's CPU time (a Hetzner cax41, about €32 a month), Gemini at its metered Batch rate"
+     ]
+    }
+   ],
+   "not_on_shared_pages": [
+    {
+     "label": "Gemini 3 Flash, stored read",
+     "pages": 9,
+     "why": "the read each page had before the Kraken lane: 53% against 89% for the lane on the same pages"
+    },
+    {
+     "label": "Gemini 3.1 Flash-Lite, stored read",
+     "pages": 9,
+     "why": "the read each page had before the Kraken lane: 0% against 83% for the lane on the same pages"
+    }
+   ],
+   "not_tested": [
+    "olmOCR 2 7B",
+    "Surya 2",
+    "dots.mocr",
+    "DeepSeek-OCR",
+    "Qwen3-VL 8B",
+    "Chandra OCR 2",
+    "Mistral OCR 4.1",
+    "Claude Opus 5.5",
+    "Claude Sonnet 5.5",
+    "Qwen3-VL 32B",
+    "GPT (vision)",
+    "Google Cloud Vision",
+    "PaddleOCR-VL 1.6 and GLM-OCR (not run here: no stored Syriac read, and no GPU rental under the 2026-10-08 spend rule)"
+   ],
+   "pending": [
+    "Gemini 3.8 Flash",
+    "Gemini 3 Flash (fresh read)",
+    "Gemini 3.5 Flash-Lite",
+    "Gemini 3.7 Flash"
    ]
   }
  ],
