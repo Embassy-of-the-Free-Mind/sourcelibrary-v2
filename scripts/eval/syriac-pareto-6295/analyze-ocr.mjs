@@ -45,7 +45,11 @@ const arm = (name, pages, seed) => {
 const has = (p, a) => p.scores[a] != null;
 const full = ARMS.filter((a) => scored.every((p) => has(p, a)));
 const shared = scored;
-const panel = full.map((a, i) => arm(a, shared, 6295 + i));
+// Seeds follow the panel's original arm order; an arm added later (the CLI arms) takes the next seeds, so adding
+// one never moves the intervals already published.
+const LATER = (a) => /^C\d/.test(a);
+const seedOrder = [...full.filter((a) => !LATER(a)), ...full.filter(LATER)];
+const panel = full.map((a) => arm(a, shared, 6295 + seedOrder.indexOf(a)));
 // Stored Gemini reads, each on the pages that have one; paired against the served lane on the same pages.
 const storedArms = ARMS.filter((a) => a.startsWith('stored-')).map((a, i) => {
   const ps = scored.filter((p) => has(p, a));
@@ -60,6 +64,27 @@ split.verdict = split.ci95[1] < 0 ? 'split beats whole' : split.ci95[0] > 0 ? 'w
 // A-vs-A floor for lite: L-ocr vs L-ocr-b.
 const aa = full.includes('L-ocr') && full.includes('L-ocr-b') ? { median_abs_diff: r3(median(shared.map((p) => Math.abs(p.scores['L-ocr'].cer_capped - p.scores['L-ocr-b'].cer_capped)))),
   identical_pages: shared.filter((p) => p.scores['L-ocr'].cer_capped === p.scores['L-ocr-b'].cer_capped).length, n: shared.length } : null;
+// gemini-3.8-flash through the CLI (C38, run 2026-10-08 on the laptop). The repeat (C38-ocr-b) stopped at 16 of
+// 24 pages when the CLI account hit its quota, so its A-vs-A is on the scored pages it reached. Some reads were cut
+// off by Gemini's safety filter mid-page; they are scored as returned (a reader would get the same stub) and the
+// arm is also given on the pages neither read was blocked on, beside the lane on the same pages.
+const c38 = (() => {
+  const cli = S.cli_arms || {};
+  if (!full.includes('C38-ocr') || !cli['C38-ocr']) return null;
+  const blockedA = new Set(cli['C38-ocr'].blocked), blockedB = new Set(cli['C38-ocr-b']?.blocked || []);
+  const pairs = scored.filter((p) => has(p, 'C38-ocr') && has(p, 'C38-ocr-b'));
+  const clean = scored.filter((p) => !blockedA.has(p.slug));
+  return {
+    model: cli['C38-ocr'].model, route: cli['C38-ocr'].route, run_date: cli['C38-ocr'].run_date,
+    blocked_pages: scored.filter((p) => blockedA.has(p.slug)).length, blocked_sealed: blockedA.size, reads: cli['C38-ocr'].rows,
+    unblocked: clean.length >= 5 ? { ...arm('C38-ocr', clean, 9295), lane_on_same_pages: arm('omnisyr', clean, 9296) } : null,
+    a_vs_a: { n_repeat_reads: cli['C38-ocr-b']?.rows ?? 0, repeat_blocked: blockedB.size, identical_texts: cli['C38-ocr-b']?.identical_to_a ?? null,
+      n_scored_pairs: pairs.length,
+      median_abs_diff: r3(median(pairs.map((p) => Math.abs(p.scores['C38-ocr'].cer_capped - p.scores['C38-ocr-b'].cer_capped)))),
+      median_cer_a: r3(median(pairs.map((p) => p.scores['C38-ocr'].cer_capped))), median_cer_b: r3(median(pairs.map((p) => p.scores['C38-ocr-b'].cer_capped))),
+      pairs_either_blocked: pairs.filter((p) => blockedA.has(p.slug) || blockedB.has(p.slug)).length },
+  };
+})();
 // Rule 2 (OCR lever): the best arm by accuracy; the cheapest whose accuracy CI overlaps it; fine-tune only if no arm reaches CER ≤ 0.10.
 const best = [...panel].sort((x, y) => y.accuracy - x.accuracy)[0];
 const overlapping = panel.filter((p) => p.accuracy_ci95[1] >= best.accuracy_ci95[0]).map((p) => p.arm);
@@ -67,7 +92,7 @@ const finetune = !panel.some((p) => p.median_cer <= 0.10);
 const out = {
   issue: 6295, generated_by: 'scripts/eval/syriac-pareto-6295/analyze-ocr.mjs', scorer: S.scorer, date: S.date, grade: 'directional (under 30 books)',
   n_sealed: S.pages.length, n_scored: scored.length, n_books: new Set(scored.map((p) => p.book_id)).size, n_editions: editionsOf(scored).length,
-  unscored, bootstrap: `${B} resamples of editions, seed 6295`, panel, stored: storedArms, column_splitter: split, lite_a_vs_a: aa,
+  unscored, bootstrap: `${B} resamples of editions, seed 6295`, panel, stored: storedArms, column_splitter: split, lite_a_vs_a: aa, ...(c38 ? { cli_c38: c38 } : {}),
   lever: { best: best.arm, overlapping_best: overlapping, finetune_recommended: finetune },
   per_page: scored.map((p) => ({ slug: p.slug, edition: p.edition, tier: p.tier, cer: Object.fromEntries(Object.entries(p.scores).filter(([, s]) => s).map(([a, s]) => [a, s.cer_capped])) })),
 };
@@ -75,3 +100,4 @@ fs.writeFileSync(`${DIR}/ocr-summary.json`, JSON.stringify(out, null, 1) + '\n')
 for (const p of panel) console.log(p.arm.padEnd(20), `CER ${p.median_cer} [${p.cer_ci95}]`, `≤0.10: ${p.pages_cer_le_010}/${p.n_pages}`);
 for (const s of storedArms) console.log(s.arm, s.n_pages, s.median_cer, s.cer_ci95, 'served on same', s.vs_served_lane_on_same_pages?.median_cer);
 console.log('split', split, 'aa', aa, 'lever', out.lever);
+if (c38) console.log('c38', JSON.stringify(c38));

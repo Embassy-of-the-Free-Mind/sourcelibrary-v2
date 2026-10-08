@@ -248,6 +248,17 @@
     "detail": "Hetzner cax41 (16 cores, about €32/month), 641 s for 24 pages, the whole box; inference time only, measured 2026-10-08",
     "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
    }
+  ],
+  "gemini-3.8-flash+antigravity-cli": [
+   {
+    "charts": [
+     "syriac-print"
+    ],
+    "usd_per_1k": 4.463,
+    "basis": "API price for comparison; $0 billed on the subscription",
+    "detail": "run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at gemini-3.8-flash's API list price at the Batch rate, thinking 0, for the same requests (input tokens as billed to Flash-Lite for them, output from the CLI text's length)",
+    "source": "scripts/eval/results/syriac-pareto-6295/cli-cost.json"
+   }
   ]
  },
  "charts": [
@@ -3881,6 +3892,29 @@
         "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
        },
        "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash, CLI",
+       "production": false,
+       "median_cer": 0.433,
+       "cer_ci95": [
+        0.373,
+        0.632
+       ],
+       "accuracy": 0.567,
+       "accuracy_ci95": [
+        0.368,
+        0.627
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 4.463,
+        "basis": "API price for comparison; $0 billed on the subscription",
+        "detail": "run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at gemini-3.8-flash's API list price at the Batch rate, thinking 0, for the same requests (input tokens as billed to Flash-Lite for them, output from the CLI text's length)",
+        "source": "scripts/eval/results/syriac-pareto-6295/cli-cost.json"
+       },
+       "on_frontier": false
       }
      ],
      "no_cost": [],
@@ -3891,7 +3925,10 @@
       "Error is counted on the consonants (vowel points and Syriac punctuation folded, a Latin column ignored), scripts/eval/syriac-pareto-6295/syriac-cer.mjs",
       "Column split (the lane's gutter cut) against no split: median difference 0 [0, 0]; the cut changed the score on 4 pages, so no difference shown (CI includes 0)",
       "Gemini 3.1 Flash-Lite read every page twice: 0 of 20 reads identical, median difference 5.3 points",
-      "Kraken and MinerU priced on this box's CPU time (a Hetzner cax41, about €32 a month), Gemini at its metered Batch rate"
+      "Gemini 3.8 Flash, CLI is gemini-3.8-flash-low run through Google's Antigravity command-line tool on a subscription (2026-10-08), which billed nothing; it is drawn at the API's list price for the same requests",
+      "Gemini's safety filter stopped 5 of its 20 scored reads part-way down the page; they are scored as returned. On the 15 pages it was not stopped on, its median error is 41% [36%–45%], against 14% for the Kraken lane on the same pages",
+      "Its repeat read stopped at 16 of the 24 sealed pages when the subscription's quota ran out: 0 of 16 repeat reads identical, median difference 4.5 points on the 14 scored pages",
+      "Kraken and MinerU priced on this box's CPU time (a Hetzner cax41, about €32 a month), Gemini 3.1 Flash-Lite at its metered Batch rate, Gemini 3.8 Flash at its list Batch price"
      ]
     }
    ],
@@ -3923,7 +3960,6 @@
     "PaddleOCR-VL 1.6 and GLM-OCR (not run here: no stored Syriac read, and no GPU rental under the 2026-10-08 spend rule)"
    ],
    "pending": [
-    "Gemini 3.8 Flash",
     "Gemini 3 Flash (fresh read)",
     "Gemini 3.5 Flash-Lite",
     "Gemini 3.7 Flash"

@@ -5092,6 +5092,147 @@
       }
      ],
      "no_cost": []
+    },
+    {
+     "kind": "gemini-cli-6295",
+     "heading": "Gemini 3.8 Flash through the CLI, 8 Oct 2026 (#6295)",
+     "n_pages": 20,
+     "n_books": 20,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "syriac-print-6295",
+       "reference": "the typed Syriac text of the same passage (Digital Syriac Corpus); the judges read the Syriac, not a published English translation",
+       "pages": 20,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md",
+      "scripts/eval/results/syriac-pareto-6295/translation-summary-c38.json",
+      "scripts/eval/results/syriac-pareto-6295/cli-cost.json"
+     ],
+     "notes": [
+      "A separate read from the panel above: every item held Flash-Lite's two drafts beside Gemini 3.8 Flash's two, so scores are compared only within this panel (Flash-Lite's drafts scored lower here than above: the scale is relative)",
+      "Gemini 3.8 Flash, CLI is the same model run through Google's Antigravity command-line tool on a subscription, which billed nothing; it is drawn at the API's list price for the same request",
+      "The frontier runs through the e-text points, the ceiling for each model; production has only the Kraken text, so a reader gets one of the two Kraken-text points",
+      "From the Kraken text against from the e-text, Gemini 3.8 Flash: -0.975 [-1.184, -0.778], beyond the noise floor of 0.275 measured above; reversed statements on 1 of 20 pages from the Kraken text, against 12 for Flash-Lite",
+      "Judge check passed: planted reversals caught 8/8 and 8/8, identical drafts tied 4/4 and 4/4"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite|etext",
+       "label": "Gemini 3.1 Flash-Lite on the typed e-text",
+       "production": false,
+       "fidelity": 4.025,
+       "fidelity_ci95": [
+        3.775,
+        4.275
+       ],
+       "share_ge4": 0.65,
+       "reversals": {
+        "pages": 7,
+        "n": 20,
+        "per_100": 35,
+        "ci95": [
+         18.1,
+         56.7
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.742,
+        "basis": "metered",
+        "detail": "billed tokens of round 1's run at the Batch rate (these are its drafts, re-judged); averaged over these 20 pages",
+        "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.1-flash-lite|kraken",
+       "label": "Gemini 3.1 Flash-Lite on the Kraken text",
+       "production": true,
+       "fidelity": 2.925,
+       "fidelity_ci95": [
+        2.643,
+        3.222
+       ],
+       "share_ge4": 0.2,
+       "reversals": {
+        "pages": 12,
+        "n": 20,
+        "per_100": 60,
+        "ci95": [
+         38.7,
+         78.1
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.79,
+        "basis": "metered",
+        "detail": "billed tokens of round 1's run at the Batch rate (these are its drafts, re-judged); averaged over these 20 pages",
+        "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli|etext",
+       "label": "Gemini 3.8 Flash, CLI on the typed e-text",
+       "production": false,
+       "fidelity": 4.85,
+       "fidelity_ci95": [
+        4.711,
+        4.955
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 20,
+        "per_100": 0,
+        "ci95": [
+         0,
+         16.1
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.103,
+        "basis": "API price for comparison; $0 billed on the subscription",
+        "detail": "run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at gemini-3.8-flash's API list price at the Batch rate, thinking 0, for the same requests (input tokens as billed to Flash-Lite for them, output from the CLI English's length)",
+        "source": "scripts/eval/results/syriac-pareto-6295/cli-cost.json"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli|kraken",
+       "label": "Gemini 3.8 Flash, CLI on the Kraken text",
+       "production": false,
+       "fidelity": 3.875,
+       "fidelity_ci95": [
+        3.675,
+        4.056
+       ],
+       "share_ge4": 0.75,
+       "reversals": {
+        "pages": 1,
+        "n": 20,
+        "per_100": 5,
+        "ci95": [
+         0.9,
+         23.6
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.195,
+        "basis": "API price for comparison; $0 billed on the subscription",
+        "detail": "run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at gemini-3.8-flash's API list price at the Batch rate, thinking 0, for the same requests (input tokens as billed to Flash-Lite for them, output from the CLI English's length)",
+        "source": "scripts/eval/results/syriac-pareto-6295/cli-cost.json"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": []
     }
    ],
    "not_on_shared_pages": [],
@@ -5101,7 +5242,6 @@
     "GPT"
    ],
    "pending": [
-    "Gemini 3.8 Flash",
     "Gemini 3 Flash",
     "Gemini 3.5 Flash-Lite",
     "Gemini 3.7 Flash"

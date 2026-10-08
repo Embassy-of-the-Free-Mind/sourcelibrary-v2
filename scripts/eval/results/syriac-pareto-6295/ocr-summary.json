@@ -33,6 +33,24 @@
  "bootstrap": "2000 resamples of editions, seed 6295",
  "panel": [
   {
+   "arm": "C38-ocr",
+   "n_pages": 20,
+   "n_books": 20,
+   "n_editions": 18,
+   "median_cer": 0.433,
+   "cer_ci95": [
+    0.373,
+    0.632
+   ],
+   "accuracy": 0.567,
+   "accuracy_ci95": [
+    0.368,
+    0.627
+   ],
+   "pages_cer_le_010": 0,
+   "pages_cer_ge_050": 8
+  },
+  {
    "arm": "L-ocr",
    "n_pages": 20,
    "n_books": 20,
@@ -285,6 +303,60 @@
   "identical_pages": 0,
   "n": 20
  },
+ "cli_c38": {
+  "model": "gemini-3.8-flash-low",
+  "route": "cli",
+  "run_date": "2026-10-08",
+  "blocked_pages": 5,
+  "blocked_sealed": 5,
+  "reads": 24,
+  "unblocked": {
+   "arm": "C38-ocr",
+   "n_pages": 15,
+   "n_books": 15,
+   "n_editions": 13,
+   "median_cer": 0.405,
+   "cer_ci95": [
+    0.355,
+    0.447
+   ],
+   "accuracy": 0.595,
+   "accuracy_ci95": [
+    0.553,
+    0.645
+   ],
+   "pages_cer_le_010": 0,
+   "pages_cer_ge_050": 3,
+   "lane_on_same_pages": {
+    "arm": "omnisyr",
+    "n_pages": 15,
+    "n_books": 15,
+    "n_editions": 13,
+    "median_cer": 0.138,
+    "cer_ci95": [
+     0.071,
+     0.171
+    ],
+    "accuracy": 0.862,
+    "accuracy_ci95": [
+     0.829,
+     0.929
+    ],
+    "pages_cer_le_010": 5,
+    "pages_cer_ge_050": 0
+   }
+  },
+  "a_vs_a": {
+   "n_repeat_reads": 16,
+   "repeat_blocked": 5,
+   "identical_texts": 0,
+   "n_scored_pairs": 14,
+   "median_abs_diff": 0.045,
+   "median_cer_a": 0.433,
+   "median_cer_b": 0.467,
+   "pairs_either_blocked": 5
+  }
+ },
  "lever": {
   "best": "omnisyr",
   "overlapping_best": [
@@ -310,6 +382,8 @@
     "qoruyo-estrangela": 0.1487,
     "served-lane": 0.1139,
     "stored-gemini-flash": 0.5103,
+    "C38-ocr-b": 0.3434,
+    "C38-ocr": 0.3552,
     "L-ocr-b": 0.6717,
     "L-ocr": 1,
     "mineru": 1
@@ -327,6 +401,8 @@
     "qoruyo-estrangela": 0.0414,
     "served-lane": 0.0405,
     "stored-gemini-lite": 0.6605,
+    "C38-ocr-b": 0.984,
+    "C38-ocr": 0.3041,
     "L-ocr-b": 0.5895,
     "L-ocr": 0.6807,
     "mineru": 1
@@ -344,6 +420,7 @@
     "qoruyo-estrangela": 0.071,
     "served-lane": 0.0694,
     "stored-gemini-lite": 1,
+    "C38-ocr": 0.4145,
     "L-ocr-b": 1,
     "L-ocr": 0.5797,
     "mineru": 1
@@ -361,6 +438,8 @@
     "qoruyo-estrangela": 0.0745,
     "served-lane": 0.0792,
     "stored-gemini-lite": 0.5311,
+    "C38-ocr-b": 0.3261,
+    "C38-ocr": 0.3727,
     "L-ocr-b": 0.6242,
     "L-ocr": 0.5714,
     "mineru": 1
@@ -378,6 +457,8 @@
     "qoruyo-estrangela": 0.1111,
     "served-lane": 0.0762,
     "stored-gemini-flash": 0.4742,
+    "C38-ocr-b": 1,
+    "C38-ocr": 1,
     "L-ocr-b": 0.6382,
     "L-ocr": 0.7106,
     "mineru": 1
@@ -395,6 +476,8 @@
     "qoruyo-estrangela": 0.0645,
     "served-lane": 0.0705,
     "stored-gemini-flash": 0.4894,
+    "C38-ocr-b": 0.433,
+    "C38-ocr": 0.4471,
     "L-ocr-b": 0.7482,
     "L-ocr": 0.7543,
     "mineru": 1
@@ -412,6 +495,8 @@
     "qoruyo-estrangela": 0.0653,
     "served-lane": 0.062,
     "stored-gemini-flash": 0.3417,
+    "C38-ocr-b": 0.407,
+    "C38-ocr": 0.3645,
     "L-ocr-b": 0.6942,
     "L-ocr": 0.7018,
     "mineru": 1
@@ -429,6 +514,7 @@
     "qoruyo-estrangela": 0.1624,
     "served-lane": 0.1218,
     "stored-gemini-flash": 1,
+    "C38-ocr": 0.632,
     "L-ocr-b": 0.5419,
     "L-ocr": 0.5457,
     "mineru": 1
@@ -446,6 +532,7 @@
     "qoruyo-estrangela": 0.3644,
     "served-lane": 0.174,
     "stored-gemini-lite": 1,
+    "C38-ocr": 0.203,
     "L-ocr-b": 1,
     "L-ocr": 0.686,
     "mineru": 1
@@ -463,6 +550,8 @@
     "qoruyo-estrangela": 0.3263,
     "served-lane": 0.1673,
     "stored-gemini-lite": 1,
+    "C38-ocr-b": 0.2132,
+    "C38-ocr": 0.2203,
     "L-ocr-b": 0.9658,
     "L-ocr": 0.8092,
     "mineru": 1
@@ -480,6 +569,8 @@
     "qoruyo-estrangela": 0.2598,
     "served-lane": 0.138,
     "stored-gemini-lite": 1,
+    "C38-ocr-b": 0.6536,
+    "C38-ocr": 0.4181,
     "L-ocr-b": 1,
     "L-ocr": 0.7199,
     "mineru": 1
@@ -496,6 +587,7 @@
     "qoruyo-eastern": 0.1427,
     "qoruyo-estrangela": 0.1635,
     "served-lane": 0.1075,
+    "C38-ocr": 1,
     "L-ocr-b": 0.6649,
     "L-ocr": 0.6107,
     "mineru": 1
@@ -512,6 +604,8 @@
     "qoruyo-eastern": 0.2259,
     "qoruyo-estrangela": 0.1994,
     "served-lane": 0.164,
+    "C38-ocr-b": 0.9813,
+    "C38-ocr": 1,
     "L-ocr-b": 0.6346,
     "L-ocr": 0.6316,
     "mineru": 1
@@ -529,6 +623,7 @@
     "qoruyo-estrangela": 0.2022,
     "served-lane": 0.1889,
     "stored-gemini-flash": 0.3574,
+    "C38-ocr": 0.4633,
     "L-ocr-b": 0.7172,
     "L-ocr": 0.7028,
     "mineru": 1
@@ -546,6 +641,8 @@
     "qoruyo-estrangela": 0.0819,
     "served-lane": 0.1686,
     "stored-gemini-lite": 0.6089,
+    "C38-ocr-b": 0.9913,
+    "C38-ocr": 0.9335,
     "L-ocr-b": 0.6329,
     "L-ocr": 0.6387,
     "mineru": 1
@@ -563,6 +660,8 @@
     "qoruyo-estrangela": 0.2233,
     "served-lane": 0.2171,
     "stored-gemini-lite": 1,
+    "C38-ocr-b": 0.4806,
+    "C38-ocr": 0.5809,
     "L-ocr-b": 0.7077,
     "L-ocr": 0.7265,
     "mineru": 1
@@ -580,6 +679,8 @@
     "qoruyo-estrangela": 0.0782,
     "served-lane": 0.0626,
     "stored-gemini-flash": 0.2838,
+    "C38-ocr-b": 0.2961,
+    "C38-ocr": 0.9609,
     "L-ocr-b": 1,
     "L-ocr": 0.6257,
     "mineru": 1
@@ -597,6 +698,8 @@
     "qoruyo-estrangela": 0.1329,
     "served-lane": 0.1429,
     "stored-gemini-flash": 0.3499,
+    "C38-ocr-b": 0.454,
+    "C38-ocr": 0.4053,
     "L-ocr-b": 0.6766,
     "L-ocr": 0.6224,
     "mineru": 1
@@ -614,6 +717,7 @@
     "qoruyo-estrangela": 0.2346,
     "served-lane": 0.1711,
     "stored-gemini-lite": 0.6138,
+    "C38-ocr": 0.2945,
     "L-ocr-b": 0.6296,
     "L-ocr": 0.6261,
     "mineru": 1
@@ -631,6 +735,8 @@
     "qoruyo-estrangela": 0.2947,
     "served-lane": 0.2141,
     "stored-gemini-flash": 0.667,
+    "C38-ocr-b": 0.6101,
+    "C38-ocr": 0.6122,
     "L-ocr-b": 0.7042,
     "L-ocr": 0.698,
     "mineru": 1

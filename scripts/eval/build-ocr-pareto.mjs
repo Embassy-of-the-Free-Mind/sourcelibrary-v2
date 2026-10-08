@@ -204,11 +204,22 @@ for (const [file, only, fixedDate] of SYRIAC_SOURCES) {
 // Syriac print (#6295): one sealed page per book, scored by scripts/eval/syriac-pareto-6295/analyze-ocr.mjs. Its
 // intervals resample EDITIONS (four editions are held twice), as preregistered; they replace the page bootstrap below.
 // The served lane text scores identically to the omnisyr re-run (same model, same split) and the stored Gemini reads
-// exist on only some pages, so neither is an engine here; L-ocr-b is the A-vs-A repeat.
+// exist on only some pages, so neither is an engine here; L-ocr-b and C38-ocr-b are the A-vs-A repeats.
+// C38-ocr is gemini-3.8-flash through the Antigravity CLI on the subscription ($0 billed), placed at the API's list
+// price at the Batch rate for the same requests (results/syriac-pareto-6295/cli-cost.json), as #6182's CLI arm is.
 const SYRIAC_PRINT_FILE = path.join(__dirname, 'results', 'syriac-pareto-6295', 'ocr-summary.json');
+const SYRIAC_CLI_COST_FILE = path.join(__dirname, 'results', 'syriac-pareto-6295', 'cli-cost.json');
+const C38_CLI = 'gemini-3.8-flash+antigravity-cli';
+LABEL[C38_CLI] = 'Gemini 3.8 Flash, CLI';
 const SYRIAC_PRINT_ARMS = { omnisyr: 'omnisyr', 'omnisyr-nosplit': 'omnisyr-nosplit', 'sophro-mhiro': 'sophro-mhiro', 'qoruyo-eastern': 'qoruyo-eastern',
-  'qoruyo-estrangela': 'qoruyo-estrangela', 'L-ocr': 'gemini-3.1-flash-lite', mineru: 'mineru' };
+  'qoruyo-estrangela': 'qoruyo-estrangela', 'L-ocr': 'gemini-3.1-flash-lite', mineru: 'mineru', 'C38-ocr': C38_CLI };
 const syriacPrint = fs.existsSync(SYRIAC_PRINT_FILE) ? JSON.parse(fs.readFileSync(SYRIAC_PRINT_FILE, 'utf8')) : null;
+if (syriacPrint?.cli_c38) {
+  const cc = JSON.parse(fs.readFileSync(SYRIAC_CLI_COST_FILE, 'utf8'));
+  COST[C38_CLI] = [{ charts: ['syriac-print'], usd_per_1k: r3(cc.ocr.usd_per_1k_batch), basis: 'API price for comparison; $0 billed on the subscription',
+    detail: `run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at ${cc.model}'s API list price at the Batch rate, thinking 0, for the same requests (input tokens as billed to Flash-Lite for them, output from the CLI text's length)`,
+    source: path.relative(REPO, SYRIAC_CLI_COST_FILE) }];
+}
 const syriacPrintRows = [];
 if (syriacPrint) for (const pg of syriacPrint.per_page) for (const [arm, engine] of Object.entries(SYRIAC_PRINT_ARMS)) {
   if (pg.cer[arm] == null) continue;
@@ -292,7 +303,8 @@ function syriacPrintPanel(p) {
     'Error is counted on the consonants (vowel points and Syriac punctuation folded, a Latin column ignored), scripts/eval/syriac-pareto-6295/syriac-cer.mjs',
     `Column split (the lane's gutter cut) against no split: median difference ${split.median_diff} [${split.ci95.join(', ')}]; the cut changed the score on ${split.pages_split} pages, so ${split.verdict}`,
     aa ? `Gemini 3.1 Flash-Lite read every page twice: ${aa.identical_pages} of ${aa.n} reads identical, median difference ${(aa.median_abs_diff * 100).toFixed(1)} points` : null,
-    'Kraken and MinerU priced on this box\'s CPU time (a Hetzner cax41, about €32 a month), Gemini at its metered Batch rate',
+    ...(s.cli_c38 ? c38Notes(s.cli_c38, s.n_scored) : []),
+    `Kraken and MinerU priced on this box's CPU time (a Hetzner cax41, about €32 a month), Gemini 3.1 Flash-Lite at its metered Batch rate${s.cli_c38 ? ', Gemini 3.8 Flash at its list Batch price' : ''}`,
   ].filter(Boolean);
 }
 function syriacPrintExtra() {
@@ -301,8 +313,16 @@ function syriacPrintExtra() {
     elsewhere: st.map(x => ({ label: x.arm === 'stored-gemini-flash' ? 'Gemini 3 Flash, stored read' : 'Gemini 3.1 Flash-Lite, stored read', pages: x.n_pages,
       why: `the read each page had before the Kraken lane: ${pctOf(x.accuracy)} against ${pctOf(x.vs_served_lane_on_same_pages.accuracy)} for the lane on the same pages` })),
     notRun: ['PaddleOCR-VL 1.6 and GLM-OCR (not run here: no stored Syriac read, and no GPU rental under the 2026-10-08 spend rule)'],
-    pending: ['Gemini 3.8 Flash', 'Gemini 3 Flash (fresh read)', 'Gemini 3.5 Flash-Lite', 'Gemini 3.7 Flash'],
+    pending: [...(syriacPrint.cli_c38 ? [] : ['Gemini 3.8 Flash']), 'Gemini 3 Flash (fresh read)', 'Gemini 3.5 Flash-Lite', 'Gemini 3.7 Flash'],
   };
+}
+function c38Notes(c, n) {
+  const aa = c.a_vs_a, u = c.unblocked;
+  return [
+    `Gemini 3.8 Flash, CLI is ${c.model} run through Google's Antigravity command-line tool on a subscription (${c.run_date}), which billed nothing; it is drawn at the API's list price for the same requests`,
+    `Gemini's safety filter stopped ${c.blocked_pages} of its ${n} scored reads part-way down the page; they are scored as returned. On the ${u.n_pages} pages it was not stopped on, its median error is ${pctOf(u.median_cer)} [${pctOf(u.cer_ci95[0])}–${pctOf(u.cer_ci95[1])}], against ${pctOf(u.lane_on_same_pages.median_cer)} for the Kraken lane on the same pages`,
+    `Its repeat read stopped at ${aa.n_repeat_reads} of the 24 sealed pages when the subscription's quota ran out: ${aa.identical_texts} of ${aa.n_repeat_reads} repeat reads identical, median difference ${(aa.median_abs_diff * 100).toFixed(1)} points on the ${aa.n_scored_pairs} scored pages`,
+  ];
 }
 const pctOf = x => (x == null ? '—' : `${Math.round(x * 100)}%`);
 

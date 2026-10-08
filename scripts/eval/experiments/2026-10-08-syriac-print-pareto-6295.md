@@ -99,3 +99,78 @@ subscription. No page written, no routing changed.
 `translation-summary.json`, judge keys; numbers only, no e-text), `scripts/eval/syriac-pareto-6295/` (scorer, window
 vote, units, packet, judge prompt and runner). The e-text windows, drafts and judge packets stay on the box
 (`/mnt/HC_Volume_105839809/jobs/syriac-pareto-6295/`).
+
+### Addendum 2026-10-08 — Gemini 3.8 Flash through the CLI (the first CLI arm; scored on the box, $0)
+
+**What ran.** Gemini 3.8 Flash (`gemini-3.8-flash-low`) through `agy -p` on Derek's Mac, on the subscription ($0
+billed), 2026-10-08, from the box's export: the same 24 sealed pages, the byte-identical production OCR prompt (v19.1)
+and one-page translation requests (v13). The rows came back as `C38-ocr` (24 pages), `C38-ocr-b` (the A-vs-A
+repeat, **n = 16**: it stopped when the CLI account hit its quota), `T-C38-R` and `T-C38-K` (20 each). No Gemini
+call was made on the box.
+
+**Cleaning.** None of the 80 rows had a CLI preamble ("Here is the transcription…"); the translations needed no
+change (`sanitizeTranslationTags` is a no-op on all 40). **10 OCR rows (5 of 24 in the first read, 5 of 16 in the
+repeat) ended in Gemini's safety-filter message** ("This request was blocked by Gemini's filters…") part-way down
+the page, after the header or a line or two of Syriac. The message was cut and the text before it kept and scored
+as returned, because a reader would get the same stub. The message does not say what triggered it. Pages: Isaac of
+Nineveh (both reads), Joshua the Stylite (both), Book of the Laws of Countries (both), Zuqnin pt 4 and Life of
+Rabbula (first read only), Narsai copy A and Bar Hebraeus vol. 1 (repeat only).
+
+**OCR** (`score-ocr.mjs --fixed-refs`, the same 20 windows. `--fixed-refs` now also keeps each page's committed
+window record, and a page with no window stays unscored, so a new arm can move nothing. Every earlier arm's score
+reproduces exactly; `analyze-ocr.mjs` keeps the earlier arms' bootstrap seeds.)
+
+| engine | median CER [95%, by edition] | accuracy | pages ≤ 10 % | pages ≥ 50 % | cost per 1,000 pages |
+|---|---|---|---|---|---|
+| Kraken OmniSyr, the lane | 0.130 [0.076, 0.168] | 87 % | 7 | 0 | $0.11 (CPU) |
+| **Gemini 3.8 Flash, CLI** | **0.433 [0.373, 0.632]** | 57 % | 0 | 8 | $4.46 (list price, Batch; $0 billed) |
+| Gemini 3.1 Flash-Lite, fresh read | 0.683 [0.626, 0.711] | 32 % | 0 | 20 | $1.28 (metered) |
+
+- On the 15 pages the filter did not stop: **0.405 [0.355, 0.447]**, against 0.138 for the lane on the same pages.
+- It is better than Flash-Lite on 14 of 20 pages, but no better than the lane on any page. Its best page is the
+  Aphrahat two-column page (0.20 against the lane's 0.17).
+- **A-vs-A (n = 16):** 0 of 16 repeat reads are identical to the first. On the 14 repeat pages that have a window,
+  the median difference is 4.5 CER points (medians 0.433 and 0.467); 5 of those 14 pairs include a filtered read.
+- **OCR lever rule, re-run with this arm:** OmniSyr is still best, C38's interval does not overlap it, and no arm
+  reaches CER ≤ 0.10, so the rule still says **a Kraken fine-tune (#5730)**.
+
+**Translation.** Round `c38` (`build-packet.py --round c38`, `run-judges.sh <work> 4 judge-c38`,
+`score-translation.py --round c38`). Each item holds four drafts of a page: round 1's two Flash-Lite drafts (R, K) as
+anchors, beside Gemini 3.8 Flash from the e-text (C38-R) and from the Kraken text (C38-K). Labels are shuffled.
+Controls are made from C38-R: 8 planted reversals and 4 duplicates, with their own seeds. Two blind Opus judges ran
+(`claude -p --model opus`, subscription), with the same prompt as round 1. **Judge gate: PASS.** J1 and J2 each
+caught 8/8 plants and tied 4/4 duplicates, and the two judges agree within 1 point on 100 % of page × draft pairs.
+Round 1's packet and summary rebuild byte for byte with the round option in place.
+
+| draft (same items, same judges) | fidelity 1–5 [95%] | share ≥ 4 | pages with a reversed statement | omission pages | invention pages | cost per 1,000 pages |
+|---|---|---|---|---|---|---|
+| Flash-Lite, from the e-text (R) | 4.03 [3.78, 4.28] | 65 % | 7 / 20 | 3 | 8 | $0.74 (metered) |
+| Flash-Lite, from the Kraken text (K) | 2.93 [2.64, 3.22] | 20 % | 12 / 20 | 17 | 18 | $0.79 (metered) |
+| **3.8 Flash CLI, from the e-text (C38-R)** | **4.85 [4.71, 4.96]** | 100 % | 0 / 20 | 0 | 3 | $2.10 (list, Batch) |
+| **3.8 Flash CLI, from the Kraken text (C38-K)** | **3.88 [3.68, 4.06]** | 75 % | 1 / 20 | 14 | 13 | $2.20 (list, Batch) |
+
+- **C38-K − C38-R = −0.98 [−1.18, −0.78].** The CLI arm has no repeat, so the floor is round 1's f = 0.275. The lower
+  bound is far below −f, so **outside the noise floor** (the reversal condition, 1 ≤ 0 + 2, holds).
+- Within this read: C38-R − R = +0.83 [+0.58, +1.10]; C38-K − K = +0.95 [+0.72, +1.18]; Flash-Lite's K − R =
+  −1.10 [−1.48, −0.68] (round 1: −1.33).
+- Flash-Lite's anchors scored lower here than in round 1 (R 4.03 against 4.33; K 2.93 against 3.00), so the scale is
+  relative. Compare within this table, never across reads. The chart gives this read its own panel.
+
+**Cost axis.** $0 was billed (CLI, subscription). Each point sits at what the same requests would cost on the API at
+gemini-3.8-flash's list price ($0.75 / $3.75 per 1M tokens, `model-pricing.mjs`) at the Batch rate, with thinking at
+0. Input tokens are what Flash-Lite was billed for the byte-identical request; output tokens are the CLI text's
+length times the tokens per character Flash-Lite was billed for the same kind of output (`cli-cost.mjs`,
+`cli-cost.json`). The standard rate is twice that: OCR $8.93, translation $4.21 / $4.39. The CLI ran at its "low"
+thinking level and reports no tokens, so any thinking is missing from the figure.
+
+**Do the decisions change?** No.
+1. **Re-translation:** under the preregistered rule the Kraken-text English stays **withheld** with 3.8 Flash too: its
+   own K − R is a full point below its ceiling. What 3.8 Flash changes is the size of the harm. From the same
+   Kraken text it reverses a statement on 1 page of 20, against Flash-Lite's 12, and scores 3.88, close to
+   Flash-Lite translating the typed e-text in the same read (4.03). That is an observation, not the rule.
+2. **OCR lever:** 3.8 Flash reads 57 % of consonants right against the lane's 87 %, and the safety filter stops a
+   quarter of its reads. It is not an alternative reader, and the fine-tune recommendation stands.
+
+**Still pending (CLI):** Gemini 3 Flash (fresh read), 3.5 Flash-Lite, 3.7 Flash.
+
+**Spend.** $0: no Gemini call from the box; judges on the subscription; no database write.
