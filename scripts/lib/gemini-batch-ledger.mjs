@@ -190,7 +190,7 @@ export function recordFromLaneJob(store, r) {
 }
 
 /**
- * gemini_usage (either store), keyed by Gemini name, `name#run`, display name, or a batch_jobs id.
+ * gemini_usage (either store), keyed as jobForUsageId() reads it.
  * A usage row proves the output was READ only when it carries tokens or a success status — a
  * placeholder closed at $0 with status 'failed' (closeUsagePlaceholder) proves the opposite.
  */
@@ -199,6 +199,26 @@ export function recordFromUsage(r) {
   const placeholder = ['submitted', 'pending'].includes(r.status);
   return { store: `gemini_usage:${r.store || 'supabase'}`, id: r.batch_job_id, status: r.status, collected: read,
     open: !read && placeholder, pages: r.page_count || 0, created_at: r.timestamp || null, endpoint: r.endpoint || null };
+}
+
+/**
+ * Display names safe to use as a usage-id prefix: the per-book lanes name their jobs
+ * `embed-<id>` / `ep-<format>-<n>-<id>`. Anything with a space, slash or wildcard is left out
+ * rather than quoted into a filter.
+ */
+const PER_BOOK_SAFE = /^[\w.-]+$/;
+export const perBookPrefixes = (jobs) => [...new Set(jobs.map((j) => j.displayName).filter((d) => d && PER_BOOK_SAFE.test(d)))];
+
+/**
+ * The listed job a usage row belongs to. A usage id is the job's Gemini name, `name#run`, its
+ * display name, a batch_jobs id, or `<display name>:<book id>`. The last is the embedding
+ * lanes' one-row-per-book metering (embed-gemini.mjs, eval/embed-format/batch-embed.mjs); their
+ * collect step closes those rows, so a closed one proves the output was read.
+ */
+export function jobForUsageId(batchJobId, byKey) {
+  const id = String(batchJobId || '');
+  const colon = id.lastIndexOf(':');
+  return byKey.get(id) || byKey.get(id.split('#')[0]) || (colon > 0 ? byKey.get(id.slice(0, colon)) : undefined);
 }
 
 // ─────────────────────────────────────────── classification (pure)
@@ -328,11 +348,17 @@ export async function readLedgerRecords(db, jobs, { supabaseUsage = null, log = 
         { projection: { _id: 0, batch_job_id: 1, status: 1, output_tokens: 1, page_count: 1, endpoint: 1, timestamp: 1 } }).toArray();
       for (const r of rows) add(records, byKey.get(r.batch_job_id), recordFromUsage({ ...r, store: 'mongo' }));
     }
+    // Per-book rows, `<display name>:<book id>`. A range per prefix (';' follows ':') stays on the index.
+    const prefixes = perBookPrefixes(need);
+    for (const ch of chunk(prefixes, 50)) {
+      const rows = await db.collection('gemini_usage').find({ $or: ch.map((p) => ({ batch_job_id: { $gte: `${p}:`, $lt: `${p};` } })) },
+        { projection: { _id: 0, batch_job_id: 1, status: 1, output_tokens: 1, page_count: 1, endpoint: 1, timestamp: 1 } }).toArray();
+      for (const r of rows) add(records, jobForUsageId(r.batch_job_id, byKey), recordFromUsage({ ...r, store: 'mongo' }));
+    }
     if (supabaseUsage) {
-      const rows = await supabaseUsage(keysList, need.map((j) => j.name));
+      const rows = await supabaseUsage(keysList, need.map((j) => j.name), prefixes);
       for (const r of rows) {
-        const id = String(r.batch_job_id || '');
-        const name = byKey.get(id) || byKey.get(id.split('#')[0]);
+        const name = jobForUsageId(r.batch_job_id, byKey);
         if (name) add(records, name, recordFromUsage({ ...r, store: 'supabase' }));
       }
     }
@@ -379,7 +405,7 @@ export function twinIdsFromDisplayName(displayName) {
 
 /**
  * Supabase gemini_usage rows for exact ids, plus `name#…` prefixes (the chained lane meters
- * `${jobName}#${runId}`). Throws on any non-OK response — an unreadable store is UNKNOWN.
+ * `${jobName}#${runId}`) and `<display name>:…` prefixes (the per-book lanes). Throws on any non-OK response — an unreadable store is UNKNOWN.
  */
 export function makeSupabaseUsageReader({ url, key, fetchImpl = fetch }) {
   if (!url || !key) return null;
@@ -398,12 +424,16 @@ export function makeSupabaseUsageReader({ url, key, fetchImpl = fetch }) {
     }
     return out;
   };
-  return async (ids, names) => {
+  return async (ids, names, prefixes = []) => {
     const rows = [];
     const enc = (s) => encodeURIComponent(`"${String(s).replace(/"/g, '')}"`);
     for (const ch of chunk(ids, 80)) rows.push(...await get(`batch_job_id=in.(${ch.map(enc).join(',')})`));
     for (const ch of chunk(names, 40)) {
       const ors = ch.map((n) => `batch_job_id.like.${n}#*`).join(',');
+      rows.push(...await get(`or=(${encodeURIComponent(ors)})`));
+    }
+    for (const ch of chunk(prefixes, 40)) {
+      const ors = ch.map((p) => `batch_job_id.like.${p}:*`).join(',');
       rows.push(...await get(`or=(${encodeURIComponent(ors)})`));
     }
     return rows;
