@@ -35,7 +35,7 @@ import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { geminiEngine, imageInput, ocrProvenance, notRecorded, contentHash, codeVersion, host } from '../lib/write-provenance.mjs';
 import { liftOcrTags, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { loopVerdict } from '../lib/ocr-loop-guard.mjs';
-import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
+import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-ocr.mjs';
@@ -168,8 +168,8 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
 
 if (APPLY) {
   for (const [bookId, { nums, models }] of Object.entries(books)) {
-    const [counts] = await db.collection('pages').aggregate(buildVisiblePageCountPipeline(bookId)).toArray();
-    await db.collection('books').updateOne({ id: bookId }, { $set: { pages_ocr: counts?.with_ocr ?? 0, updated_at: new Date() } });
+    // The one counter writer (#5325): three of these pages may have had no OCR before.
+    await recountBook(db, bookId, { reason: 'cli-ocr' });
     await db.collection('book_events').insertOne({ book_id: bookId, type: 'ocr_reread', at: new Date(), source: CALL_SITE, details: { run: runId, api: 'cli', models: [...models], pages: nums.length, page_numbers: nums.sort((a, b) => a - b), reason: REASON } });
   }
 }
