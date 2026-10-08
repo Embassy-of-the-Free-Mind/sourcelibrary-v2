@@ -60,8 +60,7 @@ strictly above the other candidate).
   - a protective wish is reversed: "may someone create obstacles" (Toh 8, p.206);
   - an invented closing clause (Toh 114, p.116);
   - an invented note about "scribal additions" (Toh 9, p.253);
-  - a wrong buddha name, "Ratnaketu" for gser dang rin po che'i 'byung gnas (Golden Light, p.587; shared with
-    current).
+  - a wrong buddha name, "Ratnaketu" for gser dang rin po che'i 'byung gnas (Golden Light, p.587).
 
   The current English has 0 inversions.
 - **By eye (5 pilot pages, read from image + source + 84000):**
