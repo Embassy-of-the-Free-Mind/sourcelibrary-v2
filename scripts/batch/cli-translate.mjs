@@ -90,7 +90,9 @@ if (STAGE === 'read') {
       t0 = new Date();
       // cwd is an empty scratch dir, so the CLI's workspace holds nothing to wander into.
       const ws = fs.mkdtempSync(path.join(os.tmpdir(), 'cli-tr-'));
-      r = spawnSync(CLI, ['-p', sent, '--model', MODEL, '--dangerously-skip-permissions', '--print-timeout', '420s'], { encoding: 'utf8', cwd: ws, maxBuffer: 64 * 1024 * 1024, timeout: 480_000 });
+      r = spawnSync(CLI,
+      // Plan mode: the CLI is an agent, and it must not run tools here (never auto-approve; see cli-ocr.mjs).
+      ['-p', sent, '--model', MODEL, '--mode', 'plan', '--print-timeout', '120s'], { encoding: 'utf8', cwd: ws, maxBuffer: 64 * 1024 * 1024, timeout: 180_000 });
       fs.rmSync(ws, { recursive: true, force: true });
       text = (r.stdout || '').trim();
       const quota = /RESOURCE_EXHAUSTED|quota/i.test(`${r.stdout}${r.stderr}`) && text.length < 200;
