@@ -19,8 +19,8 @@
           "figure": "latin-ustc"
         },
         "scanned": {
-          "value": 189529,
-          "label": "189,529 matched to an open scan",
+          "value": 65483,
+          "label": "at least 65,483 open scans matched to a Latin edition",
           "figure": "latin-scan"
         },
         "translated": {
@@ -48,29 +48,29 @@
           "quote": null,
           "kind": "ours",
           "produced_by": "Supabase ustc_editions, language_1 = 'Latin', counted 2026-10-08",
-          "caveat": "The USTC records editions known to bibliographers, including some with no surviving copy.",
+          "caveat": "The USTC records editions known to bibliographers, including some with no surviving copy. Recounted 2026-10-08 by three query paths: 503,360 with Latin as first language, 499,604 of them dated 1450 to 1700, and 29,808 more with Latin as a second language.",
           "check": {
             "status": "own_measurement",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
           "id": "latin-scan",
           "stage": "scanned",
-          "value": 189529,
-          "unit": "editions",
-          "what": "USTC Latin editions that our catalogue join matched to an openly available IIIF scan",
+          "value": 65483,
+          "unit": "scans",
+          "what": "Distinct open IIIF scans, from seven libraries, that our catalogue join matched to a Latin edition in the USTC",
           "source_title": "Source Library catalogue coverage build",
           "body": "Source Library",
           "year": 2026,
           "url": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/scripts/catalog-coverage/build.mjs",
           "quote": null,
           "kind": "ours",
-          "produced_by": "scripts/catalog-coverage/build.mjs (has_iiif_scan), built 2026-08-09, counted 2026-10-08",
-          "caveat": "An automated title and author match, not checked by hand. Scans without a IIIF manifest are missed, so the true figure is higher.",
+          "produced_by": "Mongo catalog_coverage (scripts/catalog-coverage/build.mjs): distinct iiif_manifest_url where language = Latin, counted 2026-10-08",
+          "caveat": "A floor. The join matches on title, so one scan is attached to every edition of that title: 251,549 edition rows share these 65,483 scans, which is why this bar counts scans and not editions. In a random sample of 55 matches opened on 2026-10-08, 37 named the same year as the USTC record, about 13 were another edition of the same title, and about 5 were a different work. Scans outside the seven libraries are not counted.",
           "check": {
             "status": "own_measurement",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -92,7 +92,7 @@
           "caveat": "Measured on works, drawn here against editions. The human gold-standard check of the sample is not finished.",
           "check": {
             "status": "own_measurement",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         }
       ]
@@ -140,7 +140,7 @@
           "caveat": "Undated page; 'over 70,000'.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -158,7 +158,7 @@
           "caveat": "An independent count of the Diktyon list, consistent with Diktyon's own 'over 70,000'.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -176,7 +176,7 @@
           "caveat": "Princeton's database does not print its own total. The same article says under 5% of the manuscripts in Greece are digitised.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -194,7 +194,7 @@
           "caveat": "Subscription corpus of edited texts; counts works, not manuscripts.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -213,7 +213,7 @@
           "caveat": "The author calls it her own estimate, with no official statistic behind it. Science and philosophy only.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         }
       ]
@@ -265,7 +265,7 @@
           "caveat": "News report of an official's statement. Counts copies held by institutions, so one work appears many times. Mainland China only.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -283,7 +283,7 @@
           "caveat": "One platform only, and it includes rubbings and other special collections. Other libraries' scans are not counted.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -301,7 +301,7 @@
           "caveat": "An announcement before publication: 'expected to include close to 200,000 titles'.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         }
       ]
@@ -348,7 +348,7 @@
           "caveat": "A round figure in a paper's abstract, given without its own source. The paper also says the vast majority have not been transcribed into modern Japanese characters.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -366,7 +366,7 @@
           "caveat": "Records and items are holdings, so one work can appear several times.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         }
       ]
@@ -419,7 +419,7 @@
           "caveat": "The same briefing also says 'estimated at over five million works'. The high end, 30 million, is David Pingree's spoken estimate as recalled by Dominik Wujastyk.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -437,7 +437,7 @@
           "caveat": "A recalled remark on a scholarly mailing list; Wujastyk notes he never learned how the figure was reached.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -455,7 +455,7 @@
           "caveat": "44.07 lakh is 4,407,000. A record in the database, not a full catalogue description.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -473,7 +473,7 @@
           "caveat": "3.5 lakh is 350,000. Digitised is not the same as online: far fewer are openly viewable.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         }
       ]
@@ -525,7 +525,7 @@
           "caveat": "The same release gives 'the 70,000 page Tibetan Kangyur'. A closed canon, so the estimate is a count.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -541,10 +541,10 @@
           "quote": null,
           "kind": "ours",
           "produced_by": "scripts/catalog-coverage/canon-gap-map.mjs, run 2026-10-01",
-          "caveat": "The catalogue's own page counts sum to 198,236, a little under 84000's round figure.",
+          "caveat": "The catalogue's own page counts sum to 198,236, a little under 84000's round figure. The catalogue address stopped serving the catalogue by 2026-10-08 (it redirects to 84000.co/reading-room), so this count could not be repeated; it stands as read on 2026-10-01.",
           "check": {
             "status": "own_measurement",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -560,10 +560,10 @@
           "quote": null,
           "kind": "ours",
           "produced_by": "scripts/catalog-coverage/canon-gap-map.mjs (pairing)",
-          "caveat": "One edition (Derge). Other editions are also scanned.",
+          "caveat": "One edition (Derge). Other editions are also scanned. Checked 2026-10-08 against our holdings: 213 Tengyur volumes with 128,639 pages and 104 Kangyur books with 65,887 pages.",
           "check": {
             "status": "own_measurement",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -579,10 +579,10 @@
           "quote": null,
           "kind": "ours",
           "produced_by": "scripts/catalog-coverage/canon-gap-map.mjs, run 2026-10-01",
-          "caveat": "84000 only. Other publishers have translated some of these texts, so this is a floor.",
+          "caveat": "84000 only. Other publishers have translated some of these texts, so this is a floor. The catalogue address stopped serving the catalogue by 2026-10-08 (it redirects to 84000.co/reading-room), so this count could not be repeated; it stands as read on 2026-10-01.",
           "check": {
             "status": "own_measurement",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -601,7 +601,7 @@
           "caveat": "",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -619,7 +619,7 @@
           "caveat": "Not Tibetan only; BDRC also holds Sanskrit, Pali, Chinese, Khmer and other collections.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         }
       ]
@@ -669,10 +669,10 @@
           "quote": null,
           "kind": "ours",
           "produced_by": "scripts/catalog-coverage/canon-gap-map.mjs, run 2026-10-01",
-          "caveat": "One edition of a closed canon. Later Pali literature outside it is not counted.",
+          "caveat": "One edition of a closed canon. Later Pali literature outside it is not counted. File sizes re-read from the repository on 2026-10-08 match the 1 October run byte for byte.",
           "check": {
             "status": "own_measurement",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -689,10 +689,10 @@
           "quote": null,
           "kind": "ours",
           "produced_by": "scripts/catalog-coverage/canon-gap-map.mjs, run 2026-10-01",
-          "caveat": "One open catalogue. Print-only translations are not counted, so this is a floor.",
+          "caveat": "One open catalogue. Print-only translations are not counted, so this is a floor. Recounted from the repository on 2026-10-08: 52.1%.",
           "check": {
             "status": "own_measurement",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         }
       ]
@@ -744,7 +744,7 @@
           "caveat": "Undated. Other writers give up to 7 million.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -762,7 +762,7 @@
           "caveat": "News report of ministry figures. Turkey only; includes rare printed books.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -780,7 +780,7 @@
           "caveat": "An interview. Iran only; all languages held there. He also reports data on over 180,000 Persian manuscripts in the Indian subcontinent.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         }
       ]
@@ -835,7 +835,7 @@
           "caveat": "A quoted passage on a reference site. The Encyclopaedia Judaica gives about 60,000 codices and 200,000 fragments.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -853,7 +853,7 @@
           "caveat": "An older estimate.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -872,7 +872,7 @@
           "caveat": "Read from the Internet Archive's copy, because the library's site refuses scripted requests. Filmed is taken here as catalogued.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -890,7 +890,7 @@
           "caveat": "A directory description, undated. Many images are scans of microfilm.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -908,7 +908,7 @@
           "caveat": "Images, not fragments.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -926,7 +926,7 @@
           "caveat": "Typed texts in a curated library, in several languages; not a share of all Hebrew literature.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         }
       ]
@@ -971,7 +971,7 @@
           "caveat": "An encyclopedia entry's round figure.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         },
         {
@@ -989,10 +989,11 @@
           "caveat": "Typed text, not page images.",
           "check": {
             "status": "quote_found",
-            "checked": "2026-10-07"
+            "checked": "2026-10-08"
           }
         }
       ]
     }
-  ]
+  ],
+  "validated": "2026-10-08: own counts recounted from their sources; see each caveat."
 }
