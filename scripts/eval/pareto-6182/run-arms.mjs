@@ -112,10 +112,9 @@ async function batchArm(label, modelOpt, sets) {
           saveJobs();
           await logUsage({ type: 'translation', mode: 'batch', model, page_count: us.length, input_tokens: 0, output_tokens: 0, status: 'submitted', batch_job_id: created.name, endpoint: ENDPOINT, prompt_version: '13', triggered_by: 'manual' });
           const { withMongo } = await import('../../lib/mongo.mjs');
-          await withMongo((d) => d.collection('batch_jobs').updateOne({ gemini_job_name: created.name }, { $setOnInsert: {
-            id: `pareto-6182-${label}-${model}`, job_name: created.name, gemini_job_name: created.name, status: 'external_eval', type: 'eval', model,
-            page_count: us.length, created_at: new Date(job.submitted_at), updated_at: new Date(), issue: 6182,
-            note: 'hand-submitted eval Batch (scripts/eval/pareto-6182/run-arms.mjs); results go to files only, never to pages' } }, { upsert: true }));
+          const { registerEvalBatch } = await import('../../lib/eval-batch-registry.mjs');
+          await withMongo((d) => registerEvalBatch(d, { jobName: created.name, id: `pareto-6182-${label}-${model}`, model, pageCount: us.length,
+            submittedAt: job.submitted_at, issue: 6182, submittedBy: 'scripts/eval/pareto-6182/run-arms.mjs' }));
           console.log(`${key}: submitted ${created.name} (key ${k}), registered external_eval`);
           break;
         } catch (e) {
@@ -161,6 +160,12 @@ async function collect(pollMin) {
       }
       fs.appendFileSync(LEDGER, JSON.stringify({ arm: job.label, model: job.model, mode: 'batch', n: responses.length, in: inputTokens, out: outputTokens, thinking: think, usd, job: job.name, at: new Date().toISOString() }) + '\n');
       job.collected = got.state; job.usd = usd; job.written = n; job.failed = fail; job.thinking = think; saveJobs();
+      {
+        // The responses are on disk: end the `external_eval` registration (#5897).
+        const { withMongo } = await import('../../lib/mongo.mjs');
+        const { closeEvalBatch } = await import('../../lib/eval-batch-registry.mjs');
+        await withMongo((d) => closeEvalBatch(d, job.name, { evidence: `${n} responses written to ${outFile}`, usage: { cost_usd: Number(usd.toFixed(4)), input_tokens: inputTokens, output_tokens: outputTokens } }));
+      }
       console.log(`${key}: collected ${n} written, ${fail} empty, thinking ${think}, $${usd.toFixed(4)} (${(usd / Math.max(1, n) * 1000).toFixed(2)}/1K Batch)`);
     }
     if (Date.now() - t0 > pollMin * 60000) { console.log(`spent $${spent().toFixed(3)}, pending $${pending().toFixed(3)}`); return; }
