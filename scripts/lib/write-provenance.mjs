@@ -61,6 +61,8 @@
  * TS twin: src/lib/write-provenance.ts. tests/unit/write-provenance.test.ts asserts they agree.
  */
 import { createHash } from 'crypto';
+import { readFileSync, realpathSync } from 'fs';
+import { relative, sep } from 'path';
 import os from 'os';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
@@ -103,7 +105,32 @@ export async function codeVersion() {
     _codeVersion = stdout.trim() || null;
   } catch { _codeVersion = null; }
   if (!_codeVersion) _codeVersion = process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 9) || NOT_RECORDED;
+  _entryScript = await entryScriptState();
   return _codeVersion;
+}
+
+/**
+ * A commit sha names the code only if the script that is running is the one in that commit. A writer run from
+ * a scratch copy, an unmerged branch file or an edited checkout stamps HEAD's sha all the same: on 2026-10-08
+ * 167 translations recorded a commit that did not contain the script that wrote them (#6307). So when the entry
+ * script (process.argv[1]) is modified, untracked or outside the checkout, runBlock() adds
+ * `run.entry_script = { path, sha256, state }` beside code_version. A clean, tracked script adds nothing.
+ * It checks the entry script only, not the modules it imports. Primed by codeVersion(), which every writer awaits.
+ */
+let _entryScript = null;
+export async function entryScriptState(script = process.argv[1], cwd = process.cwd()) {
+  if (!script) return null;
+  try {
+    const { stdout: top } = await execFileAsync('git', ['rev-parse', '--show-toplevel'], { cwd });
+    const root = realpathSync(top.trim()), file = realpathSync(script);
+    const sha256 = createHash('sha256').update(readFileSync(file)).digest('hex');
+    if (!file.startsWith(root + sep)) return { path: file, sha256, state: 'outside-checkout' };
+    const path = relative(root, file);
+    const { stdout } = await execFileAsync('git', ['status', '--porcelain', '--ignored', '--', path], { cwd: root });
+    if (!stdout.trim()) return null;
+    const code = stdout.slice(0, 2);
+    return { path, sha256, state: code === '??' || code === '!!' ? 'untracked' : 'modified' };
+  } catch { return null; }   // no git here (Vercel, a Lambda): code_version already says what is known
 }
 
 export const host = () => os.hostname();
@@ -210,6 +237,7 @@ function runBlock(run) {
   if (!out.code_version) throw new Error('write-provenance: run.code_version is required (await codeVersion())');
   if (!out.host) throw new Error('write-provenance: run.host is required (host())');
   if (!out.at) out.at = new Date();
+  if (_entryScript && !out.entry_script) out.entry_script = _entryScript;
   return out;
 }
 
@@ -431,7 +459,6 @@ export function missingProvenance(field, sub) {
 //
 // A row the table cannot place (writer ambiguous, or before any dated constant) comes back
 // `not_recorded` with the reason. Never write the returned value onto a page as `engine`.
-import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
