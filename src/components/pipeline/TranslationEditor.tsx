@@ -766,7 +766,7 @@ export default function TranslationEditor({
     if (traceStatus === 'unavailable') {
       toast.info("Tracing isn't available for this page.");
     } else if (traceStatus === 'rate_limited') {
-      toast.info('Tracing limit reached — sign in (free) to keep going.');
+      toast.info('Tracing limit reached. Sign in (free) to keep going.');
     }
   }, [traceStatus, traceMode]);
 
@@ -1784,7 +1784,7 @@ export default function TranslationEditor({
         {hasRashiScript && (
           <div className="px-4 py-2 bg-amber-50 border-b border-amber-200 text-sm text-amber-800 flex items-center gap-2">
             <span className="font-bold flex-shrink-0">⚠</span>
-            <span><span className="font-medium">Rashi script</span> — current AI models struggle with this typeface. OCR and translation quality is low.</span>
+            <span><span className="font-medium">Rashi script:</span> current AI models struggle with this typeface. OCR and translation quality is low.</span>
           </div>
         )}
 
@@ -1795,7 +1795,7 @@ export default function TranslationEditor({
           <div className="px-4 py-2 bg-accent-gold/10 border-b border-accent-gold/20 text-xs flex items-center gap-2" style={{ color: 'var(--accent-gold-dark)' }}>
             <BookOpen className="w-3.5 h-3.5 flex-shrink-0" />
             <span>
-              <span className="font-medium">Reading text from the critical edition</span> — Berthelot &amp; Ruelle 1887–88, folio {paired.folio}. The manuscript&rsquo;s own AI transcription is unverified; verify any quotation against the edition or the facsimile.
+              <span className="font-medium">Reading text from the critical edition:</span> Berthelot &amp; Ruelle 1887–88, folio {paired.folio}. The manuscript&rsquo;s own AI transcription is unverified; verify any quotation against the edition or the facsimile.
             </span>
           </div>
         )}
@@ -1867,7 +1867,7 @@ export default function TranslationEditor({
                         </div>
                       )}
                       {page.deepzoom && (
-                        <PageDeepZoomButton manifest={page.deepzoom} title={`${book.title} — page ${page.page_number}`} />
+                        <PageDeepZoomButton manifest={page.deepzoom} title={`${book.title}, page ${page.page_number}`} />
                       )}
                     </div>
                     {/* Image metadata + download */}
@@ -1932,7 +1932,7 @@ export default function TranslationEditor({
                               {currentWitness.designation}
                             </div>
                             <div className="text-xs truncate" style={{ color: 'var(--text-muted)' }}>
-                              {[currentWitness.museum, currentWitness.period].filter(Boolean).join(' — ')}
+                              {[currentWitness.museum, currentWitness.period].filter(Boolean).join(' · ')}
                               {witnessesWithPhotos.length > 1 && (
                                 <span className="ml-1">({currentWitnessIndex + 1}/{witnessesWithPhotos.length})</span>
                               )}
@@ -2186,7 +2186,7 @@ export default function TranslationEditor({
                           className="px-4 py-2 rounded-lg text-sm font-medium text-white transition-all hover:opacity-90"
                           style={{ background: 'var(--accent-rust)' }}
                         >
-                          Sign in — free
+                          Sign in (free)
                         </Link>
                       </div>
                     ) : page.ocr?.data ? (
@@ -2470,7 +2470,7 @@ export default function TranslationEditor({
                                       method: 'POST',
                                       headers: { 'Content-Type': 'application/json' },
                                       body: JSON.stringify({
-                                        message: `Translation requested for "${book.display_title || book.title}" (${book.language || 'unknown language'}) — page ${page.page_number}`,
+                                        message: `Translation requested for "${book.display_title || book.title}" (${book.language || 'unknown language'}), page ${page.page_number}`,
                                         page: `/book/${book.id}/page/${page.id}`,
                                         email: sessionEmail && sessionEmail.includes('@') ? sessionEmail : null,
                                       }),
@@ -2806,7 +2806,7 @@ export default function TranslationEditor({
       {hasRashiScript && (
         <div className="px-4 py-2 bg-amber-50 border-b border-amber-200 text-sm text-amber-800 flex items-center gap-2">
           <span className="font-bold flex-shrink-0">⚠</span>
-          <span><span className="font-medium">Rashi script</span> — current AI models struggle with this typeface. OCR and translation quality is low.</span>
+          <span><span className="font-medium">Rashi script:</span> current AI models struggle with this typeface. OCR and translation quality is low.</span>
         </div>
       )}
 
@@ -2836,7 +2836,7 @@ export default function TranslationEditor({
             <div className="flex-1 overflow-auto p-4" data-reader-panel>
               <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', ...(page.display_brightness && page.display_brightness !== 1.0 ? { filter: `brightness(${page.display_brightness})` } : {}) }}>
                 {page.deepzoom && (
-                  <PageDeepZoomButton manifest={page.deepzoom} title={`${book.title} — page ${page.page_number}`} />
+                  <PageDeepZoomButton manifest={page.deepzoom} title={`${book.title}, page ${page.page_number}`} />
                 )}
                 {pageDisplayUrl ? (
                   <ImageWithMagnifier src={pageDisplayUrl} thumbnail={pageThumbUrl} highResSrc={pageFullUrl} alt={`Page ${page.page_number}`} scrollable inlineZoomable />
@@ -2877,7 +2877,7 @@ export default function TranslationEditor({
                         {currentWitness.designation}
                       </a>
                       <div className="text-xs truncate" style={{ color: 'var(--text-muted)' }}>
-                        {[currentWitness.museum, currentWitness.period].filter(Boolean).join(' — ')}
+                        {[currentWitness.museum, currentWitness.period].filter(Boolean).join(' · ')}
                         {witnessesWithPhotos.length > 1 && (
                           <span className="ml-1">({currentWitnessIndex + 1}/{witnessesWithPhotos.length})</span>
                         )}

@@ -17,6 +17,7 @@
 import { MongoClient } from 'mongodb';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, guardTranslationText } from '../lib/translate-core.mjs';
+import { refusableReasoningLeak, REASONING_LEAK_REASON } from '../lib/page-integrity.mjs';
 import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
 
 /** Provenance identity of this collector (#4613): recorded on every page it writes as `run.collected_by`. */
@@ -27,6 +28,7 @@ import { isTruncatedCandidate, candidateText } from '../lib/truncated-response.m
 import { outputTokensFrom, sumBatchResponseUsage, completeBatchUsage } from '../workers/lib/supabase-usage-logger.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
 import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
+import { endBatchJob } from '../lib/end-batch-job.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
@@ -144,11 +146,15 @@ const KNOWN_JOB_TYPES = new Set(['ocr', 'translation', 'translate', 'image_extra
 
 async function processOneJob(db, job) {
   if (!KNOWN_JOB_TYPES.has(job.type)) {
-    console.error(`  UNKNOWN job type '${job.type}' on ${job.id || job._id} — refusing to collect; marking failed for human triage.`);
-    await db.collection('batch_jobs').updateOne(
-      { _id: job._id },
-      { $set: { status: 'failed', error: `unknown job type '${job.type}' — collector allowlist refused (#3725)`, updated_at: new Date() } }
-    );
+    // Ended only on Gemini's word (#6276): a SUCCEEDED or running job is left open for a human.
+    const name = job.job_name || job.gemini_job_name;
+    const found = name ? await getJobData(name) : null;
+    const error = `unknown job type '${job.type}' — collector allowlist refused (#3725)`;
+    const ended = await endBatchJob(db, job, {
+      status: 'failed', reason: error, by: COLLECTOR_CALL_SITE, set: { error },
+      gemini: found ? { verdict: 'exists', state: getJobState(found.data) } : null,
+    });
+    console.error(`  UNKNOWN job type '${job.type}' on ${job.id || job._id} — refusing to collect; end as failed: ${ended.action} (${ended.why}).`);
     return { status: 'unknown_type' };
   }
   const jobName = job.job_name || job.gemini_job_name;
@@ -303,6 +309,12 @@ async function processOneJob(db, job) {
           if (!DRY_RUN) await recordRefusedTranslation(db, { id: pageId, book_id: job.book_id }, text, HIDDEN_META_REASON, { jobId: jobIdStr, model: job.model });
           failCount++; continue;
         }
+        // #6117 — the model's reasoning or a chat reply is not a translation; same refusal as batch-collector.mjs.
+        if (refusableReasoningLeak(text)) {
+          console.warn(`  REASONING LEAK: refusing page ${pageId} — the text is the model's reasoning or a chat reply`);
+          if (!DRY_RUN) await recordRefusedTranslation(db, { id: pageId, book_id: job.book_id }, text, REASONING_LEAK_REASON, { jobId: jobIdStr, model: job.model });
+          failCount++; continue;
+        }
         // #5734 — same stray-script gate as batch-collector.mjs.
         const stray = await strayScriptGate(db, { id: pageId, book_id: job.book_id }, text, { language: job.language, jobId: jobIdStr, model: job.model, dryRun: DRY_RUN });
         if (stray.refused) { console.warn(`  STRAY SCRIPT: refusing page ${pageId}`); failCount++; continue; }
@@ -395,12 +407,11 @@ async function processOneJob(db, job) {
 
   } else if (['JOB_STATE_PENDING', 'JOB_STATE_RUNNING', 'BATCH_STATE_PENDING', 'BATCH_STATE_RUNNING'].includes(state)) {
     return { status: 'pending' };
-  } else if (['JOB_STATE_FAILED', 'JOB_STATE_CANCELLED', 'JOB_STATE_EXPIRED', 'BATCH_STATE_FAILED', 'BATCH_STATE_CANCELLED'].includes(state)) {
-    await db.collection('batch_jobs').updateOne(
-      { _id: job._id },
-      { $set: { status: 'failed', gemini_state: state, updated_at: new Date() } }
-    );
-    return { status: 'failed', state };
+  } else if (['JOB_STATE_FAILED', 'JOB_STATE_CANCELLED', 'JOB_STATE_EXPIRED', 'BATCH_STATE_FAILED', 'BATCH_STATE_CANCELLED', 'BATCH_STATE_EXPIRED'].includes(state)) {
+    const ended = await endBatchJob(db, job, {
+      status: 'failed', reason: `Gemini state: ${state}`, by: COLLECTOR_CALL_SITE, gemini: { verdict: 'exists', state },
+    });
+    return { status: ended.action === 'written' ? 'failed' : 'unknown', state };
   } else {
     return { status: 'unknown', state };
   }

@@ -27,7 +27,7 @@ export default function CategorySchema({
     '@type': 'CollectionPage',
     '@id': pageUrl,
     url: pageUrl,
-    name: `${name} — Source Library`,
+    name: `${name} | Source Library`,
     ...(description && { description }),
     numberOfItems: bookCount,
     isPartOf: {

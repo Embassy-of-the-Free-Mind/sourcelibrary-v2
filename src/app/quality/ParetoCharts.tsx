@@ -38,11 +38,19 @@ type Point = {
 };
 type Panel = {
   kind: string; n_pages: number; n_books: number; frontier: boolean; frontier_note: string | null;
+  /** a panel that is its own read (another packet) names itself; otherwise the heading follows `kind` */
+  heading?: string;
   references: { stratum: string; reference: string; pages: number; date: string }[]; date: string;
   judges?: number; notes?: string[];
   placed: Point[]; no_cost: Point[];
 };
-export type Chart = { id: string; title: string; production_label: string; panels: Panel[]; not_on_shared_pages: { label: string; pages: number; why?: string }[]; not_tested: string[] };
+export type Chart = {
+  id: string; title: string; production_label: string; panels: Panel[]; not_on_shared_pages: { label: string; pages: number; why?: string }[]; not_tested: string[];
+  /** engines to be run on these same pages on the subscription, not yet run (#6295) */
+  pending?: string[];
+};
+const PENDING = 'CLI arm pending';
+const pendingText = (c: Chart) => `${PENDING} (to run on these same pages through the command-line tool on the subscription, not yet run): ${c.pending!.join(', ')}.`;
 type NoChartRow = { title: string; why: string; source: string };
 
 /** Everything that differs between the OCR and the translation figures. No figures in here either. */
@@ -169,7 +177,7 @@ const usd = (x: number) => `$${x < 0.1 ? x.toFixed(3) : x.toFixed(2)}`;
 const plural = (n: number, w: string) => `${n} ${w}${n === 1 ? '' : 's'}`;
 const listOf = (xs: string[]) => (xs.length <= 1 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`);
 
-const panelHeading = (p: Panel) => (p.kind === 'most-pages' ? 'The engines read on the most pages' : 'The most engines read on the same pages');
+const panelHeading = (p: Panel) => p.heading ?? (p.kind === 'most-pages' ? 'The engines read on the most pages' : 'The most engines read on the same pages');
 
 /** "28 pages from 28 books" — always on the face of the figure. */
 function sample(p: Panel) {
@@ -355,6 +363,7 @@ function ExportSvg({ chart, panel, m }: { chart: Chart; panel: Panel; m: Measure
     ...(m.judgesNote(panel) ? [m.judgesNote(panel)] : []),
     ...(panel.notes || []).map(n => `${n}.`),
     `Reference: ${panel.references.map(r => `${r.reference} (${r.pages})`).join('; ')}. Scored ${panel.date}.`,
+    ...(chart.pending?.length ? [pendingText(chart)] : []),
     `Not yet tested on this ${m.unit}: ${chart.not_tested.join(', ')}.`,
     `Source Library, sourcelibrary.org/quality/pareto#${anchorOf(m, chart, panel)}`,
   ];
@@ -438,6 +447,13 @@ function PanelView({ chart, panel, m, present }: { chart: Chart; panel: Panel; m
             </>)}
           </tr>
         ))}
+        {chart.panels.indexOf(panel) === 0 && (chart.pending || []).map(label => (
+          <tr key={`pending-${label}`} className="border-b border-stone-100 align-top">
+            <td className="py-1 pr-1" />
+            <td className="py-1 pr-2 text-stone-600">{label}</td>
+            <td colSpan={3} className="py-1 text-right text-stone-600">{PENDING}</td>
+          </tr>
+        ))}
       </tbody>
     </table></div>
   );
@@ -496,6 +512,7 @@ function Caption({ chart, m, present }: { chart: Chart; m: Measure; present?: bo
       {chart.not_on_shared_pages.length > 0 && (
         <p>{m.key === 'ocr' ? 'Also run here, on too few of the same pages to compare' : 'Also run, not compared here'}: {chart.not_on_shared_pages.map(e => `${e.label} (${plural(e.pages, 'page')}${e.why ? `: ${e.why}` : ''})`).join('; ')}.</p>
       )}
+      {chart.pending?.length ? <p>{pendingText(chart)}</p> : null}
       <p>Not yet tested on this {m.unit}: {chart.not_tested.join(', ')}.</p>
     </figcaption>
   );

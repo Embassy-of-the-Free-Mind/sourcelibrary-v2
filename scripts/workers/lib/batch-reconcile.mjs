@@ -32,6 +32,7 @@
  */
 
 import { createHash } from 'node:crypto';
+import { endBatchJob, endNamelessBatchJobs } from '../../lib/end-batch-job.mjs';
 
 export const ACTIVE_STATES = new Set(['JOB_STATE_PENDING', 'JOB_STATE_RUNNING']);
 
@@ -212,10 +213,11 @@ export async function reconcileBatchState(db, deps) {
     const oneHourAgo = new Date(now() - 3600000);
     const staleZombies = zombies.filter(z => new Date(z.created_at) < oneHourAgo);
     if (staleZombies.length > 0 && !dryRun) {
-      await db.collection('batch_jobs').updateMany(
-        { _id: { $in: staleZombies.map(z => z._id) } },
-        { $set: { status: 'cancelled', cancelled_at: new Date(now()), cancel_reason: 'batch-health: zombie (no gemini_job_name, >1h old)' } }
-      );
+      // Nameless rows only — endNamelessBatchJobs re-checks that at write time (#6276).
+      await endNamelessBatchJobs(db, { _id: { $in: staleZombies.map(z => z._id) } }, {
+        status: 'cancelled', reason: 'batch-health: zombie (no gemini_job_name, >1h old)', by: 'batch-reconcile/zombie',
+        set: { cancelled_at: new Date(now()), cancel_reason: 'batch-health: zombie (no gemini_job_name, >1h old)' }, now: new Date(now()),
+      });
       result.dbZombies = staleZombies.length;
       result.issues.push(`Auto-cancelled ${staleZombies.length} DB zombie jobs`);
     }
@@ -301,17 +303,21 @@ export async function reconcileBatchState(db, deps) {
       }
       continue;
     }
-    confirmed.push({ job, record });
+    confirmed.push({ job, record, probe });
   }
   result.ghostsConfirmed = confirmed.length;
   result.ghostsDetected = confirmed.length;
   if (confirmed.length > 0) {
     if (!dryRun) {
-      for (const { job, record } of confirmed) {
-        await db.collection('batch_jobs').updateOne(
-          { _id: job._id, status: { $in: DB_ACTIVE_STATUSES } },
-          { $set: { status: 'failed', error: GHOST_ERROR, ghost_verdict: record, updated_at: new Date(now()) } }
-        );
+      for (const { job, record, probe } of confirmed) {
+        // The probe IS the evidence: endBatchJob re-checks that every key said 404 (#6276).
+        const ended = await endBatchJob(db, job, {
+          status: 'failed', reason: GHOST_ERROR, by: 'batch-reconcile/ghost',
+          gemini: probe, keyCount: clients.length,
+          filter: { status: { $in: DB_ACTIVE_STATUSES } },
+          set: { error: GHOST_ERROR, ghost_verdict: record }, now: new Date(now()),
+        });
+        if (ended.action !== 'written') continue;
         if (closePlaceholder) {
           try { await closePlaceholder(db, job, GHOST_ERROR); } catch (_) { /* best-effort meter close */ }
         }

@@ -78,6 +78,19 @@ export const UNLISTED_PAGES: Record<string, string> = {
 
 export const posts: BlogPost[] = [
   {
+    slug: 'one-sentence-of-hermes',
+    title: 'One Sentence of Hermes, Copied for Sixteen Hundred Years',
+    subtitle:
+      'A late-antique translator misread one Greek word in the Asclepius. We followed the sentence through a manuscript, five printed editions, a commentary and a critical edition, and found our own OCR making the copyists’ mistakes.',
+    date: '8 October 2026',
+    readTime: '12 min read',
+    kind: 'stories',
+    // A printed page because the page is the evidence: the sentence itself, and ſecunda below it.
+    image: '/blog/one-sentence-of-hermes/1532-asclepius-32.jpg',
+    imageAlt:
+      'The Asclepius, chapter 32, in the Basel edition of 1532: the sentence on the intelligence of the human sense.',
+  },
+  {
     slug: 'four-commentaries-on-nothing',
     title: 'Four Commentaries on Nothing',
     subtitle:

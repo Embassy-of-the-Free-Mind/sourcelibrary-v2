@@ -108,7 +108,7 @@ export default function AdminSharedFindingsPage() {
                   >
                     {c.book_id} · p.{c.page}
                   </a>
-                  {c.note && <span className="text-stone-500"> — {c.note}</span>}
+                  {c.note && <span className="text-stone-500">: {c.note}</span>}
                 </li>
               ))}
             </ol>

@@ -286,9 +286,9 @@ function getDescription(book: Book, translatedCount: number, pageCount: number):
     if (!inst || inst.role === 'corporate-author') {
       parts.push(`by ${bylineName}`);
     } else if (inst.role === 'holder') {
-      parts.push(`— ${bylineName} ${inst.qualifier || 'collection'}`);
+      parts.push(`· ${bylineName} ${inst.qualifier || 'collection'}`);
     } else {
-      parts.push(`— ${inst.qualifier || 'issued by'} ${bylineName}`);
+      parts.push(`· ${inst.qualifier || 'issued by'} ${bylineName}`);
     }
   }
 

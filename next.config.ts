@@ -406,6 +406,14 @@ const nextConfig: NextConfig = {
         destination: `/collections/${to}`,
         permanent: true,
       })),
+      // Say-aloud addresses for the Latin site (#6254). `/la` stays the real URL
+      // (the locale prefix, same shape as `/es`); these are what goes on a slide
+      // or into a podcast: sourcelibrary.org/latin. 307, not 308, so the names
+      // stay ours to repoint.
+      ...['latin', 'latine', 'latina'].flatMap((name) => [
+        { source: `/${name}`, destination: '/la', permanent: false },
+        { source: `/${name}/:path*`, destination: '/la/:path*', permanent: false },
+      ]),
       // The processing page described the same steps as /how-it-works and drifted from
       // it; one page now tells it (#6074).
       {
