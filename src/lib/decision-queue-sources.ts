@@ -10,8 +10,8 @@
 import type { Db } from 'mongodb';
 import {
   ANSWERS_COLLECTION, CODE_REPO, OPS_FILE, OPS_REPO,
-  applyAnswers, parseOpsDecisions, prCard, sortCards,
-  type DecisionAnswer, type DecisionCard, type HoldPr,
+  applyAnswers, failingChecksOf, parseOpsDecisions, prCard, sortCards,
+  type CheckNode, type DecisionAnswer, type DecisionCard, type HoldPr,
 } from './decision-queue';
 import {
   BRIEFS_COLLECTION, attachBriefs, groupCards,
@@ -28,6 +28,10 @@ const HOLD_PRS_QUERY = `query($q: String!) {
       additions deletions changedFiles body
       author { login }
       labels(first: 20) { nodes { name } }
+      commits(last: 1) { nodes { commit { statusCheckRollup { contexts(first: 60) { nodes {
+        ... on CheckRun { name conclusion }
+        ... on StatusContext { context state }
+      } } } } } }
     } }
   }
 }`;
@@ -43,10 +47,19 @@ export async function fetchHoldPrs(token: string): Promise<{ prs: HoldPr[]; tota
   if (!res.ok) throw new Error(`GitHub GraphQL ${res.status}`);
   const json = await res.json();
   if (json.errors?.length) throw new Error(`GitHub GraphQL: ${json.errors[0].message}`);
-  type Node = Omit<HoldPr, 'labels' | 'author'> & { labels: { nodes: { name: string }[] }; author: { login: string } | null };
+  type Node = Omit<HoldPr, 'labels' | 'author' | 'failingChecks'> & {
+    labels: { nodes: { name: string }[] };
+    author: { login: string } | null;
+    commits?: { nodes: { commit: { statusCheckRollup: { contexts: { nodes: CheckNode[] } } | null } }[] };
+  };
   const prs = (json.data.search.nodes as Node[])
     .filter((n) => typeof n?.number === 'number')
-    .map((n) => ({ ...n, labels: n.labels.nodes.map((l) => l.name), author: n.author?.login ?? null }));
+    .map(({ commits, ...n }) => ({
+      ...n,
+      labels: n.labels.nodes.map((l) => l.name),
+      author: n.author?.login ?? null,
+      failingChecks: failingChecksOf(commits?.nodes[0]?.commit.statusCheckRollup?.contexts.nodes ?? []),
+    }));
   return { prs, total: json.data.search.issueCount as number };
 }
 
