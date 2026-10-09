@@ -1,0 +1,29 @@
+{
+ "issue": 6293,
+ "generated_by": "scripts/eval/ocr-pareto-6293/cli-cost.mjs",
+ "engine": "gemini-3.8-flash-high+antigravity-cli",
+ "model": "gemini-3.8-flash",
+ "price_per_1m": {
+  "input": 0.75,
+  "output": 3.75
+ },
+ "batch_multiplier": 0.5,
+ "basis": "the preregistered x axis: lite's metered production Batch tokens per page (3736 in, 1082 out) scaled by r_in = 1 (identical request) and r_out = CLI characters / lite characters on the same pages, at gemini-3.8-flash's list price and the Batch rate; thinking not counted (the CLI ran at its \"high\" level and reports no per-request tokens); $0 was billed (CLI, subscription)",
+ "all": {
+  "pages_both_text": 158,
+  "r_out": 1.017,
+  "usd_per_1k_batch": 3.465
+ },
+ "charts": {
+  "latin": {
+   "pages_both_text": 129,
+   "r_out": 1.02,
+   "usd_per_1k_batch": 3.471
+  },
+  "english": {
+   "pages_both_text": 29,
+   "r_out": 1.002,
+   "usd_per_1k_batch": 3.433
+  }
+ }
+}
