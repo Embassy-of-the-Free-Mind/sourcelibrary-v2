@@ -8,14 +8,14 @@ export const revalidate = 3600;
 export const maxDuration = 60;
 
 export const metadata: Metadata = {
-  title: 'Corporate Sponsorship — Source Library',
+  title: 'Corporate Sponsorship | Source Library',
   description:
     'Sponsor the translation of the Renaissance. Half a million Latin works survive from 1450–1700; fewer than 3% have been read in English. Source Library is fixing that, openly.',
   alternates: { canonical: '/sponsors' },
 };
 
 const PARTNERSHIP_EMAIL = 'team@sourcelibrary.org';
-const PARTNERSHIP_SUBJECT = 'Corporate%20partnership%20inquiry%20%E2%80%94%20Source%20Library';
+const PARTNERSHIP_SUBJECT = 'Corporate%20partnership%20inquiry%3A%20Source%20Library';
 
 const MEMBERSHIP_INCLUDES = [
   'Explicit licence covering current translations for commercial model training, with attribution',
@@ -31,7 +31,7 @@ const STEWARDS_TIERS = [
     audience: 'For individuals',
     benefits: [
       'Your name on the stewards roll',
-      'The annual stewardship report — what was preserved, translated, and opened this year',
+      'The annual stewardship report: what was preserved, translated, and opened this year',
     ],
   },
   {
@@ -61,7 +61,7 @@ const SPONSORSHIP_EXAMPLES = [
     label: 'Scholar-in-Residence',
     range: '$25K – $75K',
     description:
-      'Fund a year of work by a named expert on a specific collection — vetting translations, writing critical apparatus, contributing a foreword and launch lecture. Both the scholar’s name and yours appear on the collection. Concrete deliverable, real scholarship — not just a name on a page.',
+      'Fund a year of work by a named expert on a specific collection: vetting translations, writing critical apparatus, contributing a foreword and launch lecture. Both the scholar’s name and yours appear on the collection. Concrete deliverable, real scholarship, not just a name on a page.',
   },
   {
     label: 'Annual gathering at the BPH',
@@ -139,7 +139,7 @@ export default async function SponsorsPage() {
           </h1>
           <p className="text-lg md:text-xl text-stone-600 leading-relaxed max-w-3xl">
             Half a million Latin works survive from 1450–1700. Fewer than three percent have ever
-            been read in English. Source Library is fixing that — and publishing the results free
+            been read in English. Source Library is fixing that, and publishing the results free
             for anyone who wants to read them.
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
@@ -190,7 +190,7 @@ export default async function SponsorsPage() {
             </div>
           </div>
           <p className="text-lg text-stone-600 leading-relaxed max-w-3xl">
-            Ficino, Bruno, Della Porta, Cardano, Kircher, Della Mirandola — most of the figures who
+            Ficino, Bruno, Della Porta, Cardano, Kircher, Della Mirandola: most of the figures who
             actually shaped Renaissance thought have never been read in English. They wrote in
             Latin, and modern publishing never caught up. The same is true for Sanskrit, Classical
             Arabic, Hebrew, and Tibetan. We&apos;re working through them, book by book, with
@@ -234,8 +234,8 @@ export default async function SponsorsPage() {
                 </ul>
                 <div className="mt-6 pt-5 border-t border-stone-100 text-xs text-stone-500 leading-relaxed">
                   <span className="font-semibold text-stone-600">Scope:</span> first-ever English
-                  translations with the original-language source aligned at the page level — see
-                  the live count in the stats above. Languages with working translation pipelines:
+                  translations with the original-language source aligned at the page level (see
+                  the live count in the stats above). Languages with working translation pipelines:
                   Latin, Greek, Hebrew, German, French, Italian, Dutch. Sanskrit, Classical
                   Arabic, and Tibetan in progress.
                 </div>
@@ -247,7 +247,7 @@ export default async function SponsorsPage() {
                 <div className="font-display text-2xl text-stone-900 mb-1">From $250K / yr</div>
                 <div className="text-xs text-stone-500 mb-3">Multi-year preferred</div>
                 <p className="text-sm text-stone-600 leading-relaxed mb-6">
-                  Scope set in conversation. Wire, stock, DAF, or annual invoice — whatever your
+                  Scope set in conversation. Wire, stock, DAF, or annual invoice, whatever your
                   procurement team prefers.
                 </p>
                 <OutboundLink
@@ -281,7 +281,7 @@ export default async function SponsorsPage() {
                 </h3>
                 <p className="text-sm text-stone-300 leading-relaxed">
                   Founding Stewards are named in every published volume, on the library, and in
-                  the project&apos;s history — not just for the term of their membership, but
+                  the project&apos;s history, not just for the term of their membership, but
                   permanently. Once two are named, the door closes; no third Founding Steward,
                   ever. After that, the regular Stewardship Membership is the way in.
                 </p>
@@ -306,8 +306,8 @@ export default async function SponsorsPage() {
           </div>
 
           <p className="text-sm text-stone-500 leading-relaxed mt-6 max-w-3xl">
-            Translations are published under CC BY-SA. Membership doesn&apos;t buy exclusivity —
-            it buys an explicit grant for commercial use, a working channel into translation
+            Translations are published under CC BY-SA. Membership doesn&apos;t buy exclusivity.
+            It buys an explicit grant for commercial use, a working channel into translation
             priorities, and permanent recognition for the company that helped pay to bring the
             corpus into the open.
           </p>
@@ -324,7 +324,7 @@ export default async function SponsorsPage() {
             The Stewards Circle.
           </h2>
           <p className="text-lg text-stone-600 leading-relaxed mb-4 max-w-3xl">
-            A voluntary annual membership for stewarding the material itself — the way research
+            A voluntary annual membership for stewarding the material itself, the way research
             institutions fund arXiv and libraries fund HathiTrust, because the commons they
             depend on should not run on goodwill alone. No licence, no exclusivity, no
             procurement cycle: just an open commitment to keeping these sources preserved,
@@ -332,7 +332,7 @@ export default async function SponsorsPage() {
           </p>
           <p className="text-sm text-stone-500 leading-relaxed mb-10 max-w-3xl">
             Stewardship supports preservation and access. Data licensing is a separate
-            commercial agreement — membership neither includes nor discounts it.
+            commercial agreement; membership neither includes nor discounts it.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -421,7 +421,7 @@ export default async function SponsorsPage() {
             >
               Embassy of the Free Mind
             </a>{' '}
-            in Amsterdam — home of the Bibliotheca Philosophica Hermetica (UNESCO Memory of the
+            in Amsterdam, home of the Bibliotheca Philosophica Hermetica (UNESCO Memory of the
             World). Sponsorships are received through the right fiscal entity for your jurisdiction:
           </p>
 
@@ -436,7 +436,7 @@ export default async function SponsorsPage() {
                 capped at 10%; a sponsorship with real consideration behind it is a business expense
                 with neither floor nor cap, so for most companies that is now the better structure.
                 Where a charitable gift is the right call, the Netherland-America Foundation handles
-                the US side — wire, stock, DAF, and corporate matching all work.
+                the US side: wire, stock, DAF, and corporate matching all work.
               </p>
             </div>
             <div className="bg-white rounded-lg border border-stone-200 p-6">
@@ -468,7 +468,7 @@ export default async function SponsorsPage() {
             Get in touch.
           </h2>
           <p className="text-base md:text-lg text-stone-300 leading-relaxed mb-10">
-            Tell us what you&apos;d like to do — annual membership, funding a Scholar-in-Residence on
+            Tell us what you&apos;d like to do: annual membership, funding a Scholar-in-Residence on
             a collection you care about, an expedition, or something we haven&apos;t built yet.
             We&apos;ll come back inside a week with a concrete proposal.
           </p>
