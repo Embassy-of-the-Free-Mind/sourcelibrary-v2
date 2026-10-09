@@ -7041,11 +7041,8 @@
    "not_tested": [
     "Gemini 3.1 Pro (as the translator)",
     "Claude through the metered API",
-    "GPT"
-   ],
-   "pending": [
-    "Gemini 3 Flash (not offered on the CLI)",
-    "Gemini 3.5 Flash-Lite (not offered on the CLI)"
+    "GPT",
+    "Gemini 3 Flash and Gemini 3.5 Flash-Lite (not run: the Gemini command-line tool does not offer them, and paid Gemini API calls are ruled out for this work, 2026-10-08)"
    ]
   }
  ],
