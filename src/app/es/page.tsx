@@ -10,7 +10,7 @@ export const revalidate = 60;
 export const maxDuration = 60;
 
 export const metadata: Metadata = {
-  title: 'Source Library — La mayor biblioteca de fuentes antiguas traducidas con IA',
+  title: 'Source Library: La mayor biblioteca de fuentes antiguas traducidas con IA',
   description:
     'Source Library digitaliza y traduce textos antiguos para estudiosos, buscadores y sistemas de IA. Explora miles de fuentes primarias de alquimia, hermética, filosofía y ciencia.',
   alternates: {
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: [siteOgImage('es')],
-    title: 'Source Library — Fuentes antiguas traducidas con IA',
+    title: 'Source Library: Fuentes antiguas traducidas con IA',
     description:
       'La mayor biblioteca de acceso abierto de fuentes primarias traducidas. Alquimia, hermética, filosofía y ciencia, accesibles para todos.',
     siteName: 'Source Library',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@SourceLibrary_',
-    title: 'Source Library — Fuentes antiguas traducidas con IA',
+    title: 'Source Library: Fuentes antiguas traducidas con IA',
     description:
       'La mayor biblioteca de acceso abierto de fuentes primarias traducidas. Alquimia, hermética, filosofía y ciencia, accesibles para todos.',
     images: [siteOgImage('es')],

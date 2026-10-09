@@ -29,6 +29,12 @@ interface BookPagesSectionProps {
 }
 
 const PAGES_PER_LOAD = 20; // 2 rows on the 10-col grid
+// Pages asked for per API request. The server caps anonymous callers at its own
+// window (API_ANON_PAGE_WINDOW, default 100) whatever is asked; `pages_window`
+// in the response says where the slice actually ended.
+const PAGE_WINDOW = 100;
+
+type PagesWindowInfo = { offset: number; limit: number; returned: number; total: number };
 
 export default function BookPagesSection({ bookId, bookPath, bookTitle, pages: initialPages, totalPageCount, displayBrightness, overviewHref, readHref, subtitle, fallbackImages }: BookPagesSectionProps) {
   const [pages, setPages] = useState(initialPages);
@@ -54,34 +60,58 @@ export default function BookPagesSection({ bookId, bookPath, bookTitle, pages: i
     }
   }, []);
 
-  // Fetch remaining pages from API when SSR only sent a partial set
-  const fetchRemainingPages = useCallback(async () => {
+  // Anonymous callers of /api/books/[id] get the page list in capped windows
+  // (#6281), so the rest of the book arrives a window at a time, as the
+  // visitor nears the end of what is loaded — never all up front. `nextOffset`
+  // is the API offset of the next window; it starts at what SSR sent.
+  const nextOffsetRef = useRef(initialPages.length);
+  const [fetchFailed, setFetchFailed] = useState(false);
+
+  // Append one window, de-duplicated by id: SSR filters a few page types out
+  // of its first 100, so its count can sit behind the API's offset.
+  const appendWindow = useCallback((incoming: Page[] | undefined, win: PagesWindowInfo | undefined) => {
+    const got = incoming ?? [];
+    if (got.length) {
+      setPages(prev => {
+        const seen = new Set(prev.map(p => p.id));
+        const fresh = got.filter(p => !seen.has(p.id));
+        return fresh.length ? [...prev, ...fresh] : prev;
+      });
+    }
+    // No `pages_window` (older server) means the response held everything.
+    const end = win ? win.offset + win.returned : Infinity;
+    nextOffsetRef.current = win ? end : nextOffsetRef.current + got.length;
+    if (!win || got.length === 0 || end >= win.total) setAllPagesFetched(true);
+  }, []);
+
+  const fetchNextWindow = useCallback(async () => {
     if (allPagesFetched || fetchingMore) return;
     setFetchingMore(true);
     try {
-      const res = await fetch(`/api/books/${bookId}?pageOffset=${pages.length}&pageLimit=0`);
+      const res = await fetch(`/api/books/${bookId}?pageOffset=${nextOffsetRef.current}&pageLimit=${PAGE_WINDOW}`);
       if (!res.ok) throw new Error('Failed to fetch');
       const data = await res.json();
-      if (data.pages?.length) {
-        setPages(prev => [...prev, ...data.pages]);
-      }
-      setAllPagesFetched(true);
+      appendWindow(data.pages, data.pages_window);
     } catch (error) {
-      console.error('Failed to fetch remaining pages:', error);
+      console.error('Failed to fetch more pages:', error);
+      setFetchFailed(true);
     } finally {
       setFetchingMore(false);
     }
-  }, [bookId, pages.length, allPagesFetched, fetchingMore]);
+  }, [bookId, allPagesFetched, fetchingMore, appendWindow]);
+
+  // Keep loaded pages two "load more" steps ahead of what is shown. A failed
+  // fetch stops here until the visitor asks again, so it cannot spin.
+  useEffect(() => {
+    if (allPagesFetched || fetchingMore || fetchFailed) return;
+    if (pages.length < visibleCount + 2 * PAGES_PER_LOAD) fetchNextWindow();
+  }, [pages.length, visibleCount, allPagesFetched, fetchingMore, fetchFailed, fetchNextWindow]);
 
   // Load more pages manually via button click (no auto-scroll)
   const handleLoadMore = useCallback(() => {
-    const nextVisible = Math.min(visibleCount + PAGES_PER_LOAD, totalPageCount || pages.length);
-    // If we're about to show more than we have, fetch the rest first
-    if (nextVisible > pages.length && !allPagesFetched) {
-      fetchRemainingPages();
-    }
-    setVisibleCount(nextVisible);
-  }, [visibleCount, pages.length, totalPageCount, allPagesFetched, fetchRemainingPages]);
+    setFetchFailed(false);
+    setVisibleCount(v => Math.min(v + PAGES_PER_LOAD, totalPageCount || pages.length));
+  }, [pages.length, totalPageCount]);
 
   // Reorder mode state
   const [draggedPageId, setDraggedPageId] = useState<string | null>(null);
@@ -92,6 +122,7 @@ export default function BookPagesSection({ bookId, bookPath, bookTitle, pages: i
   // Update pages when initialPages changes
   useEffect(() => {
     setPages(initialPages);
+    nextOffsetRef.current = initialPages.length;
   }, [initialPages]);
 
   // Client-side refresh: fetch updated pages without triggering Suspense
@@ -99,8 +130,13 @@ export default function BookPagesSection({ bookId, bookPath, bookTitle, pages: i
     try {
       const book = await books.get(bookId);
       if ('pages' in book && book.pages) {
+        // Anonymous callers get the first window only; the effect above
+        // fetches on from there if the visitor has already shown more.
         setPages(book.pages);
-        setAllPagesFetched(true);
+        const win = book.pages_window;
+        nextOffsetRef.current = win ? win.offset + win.returned : book.pages.length;
+        setAllPagesFetched(!win || win.offset + win.returned >= win.total);
+        setFetchFailed(false);
       }
     } catch (error) {
       console.error('Failed to refresh pages:', error);
@@ -249,7 +285,7 @@ export default function BookPagesSection({ bookId, bookPath, bookTitle, pages: i
   }, [pages]);
 
   const selectAll = () => {
-    if (!allPagesFetched) fetchRemainingPages();
+    if (!allPagesFetched) fetchNextWindow();
     setSelectedPages(new Set(pages.map(p => p.id)));
   };
   const clearSelection = () => setSelectedPages(new Set());

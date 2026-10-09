@@ -279,7 +279,9 @@ export default function SplitPage({ params }: PageProps) {
     if (!bookId) return;
     setLoading(true);
     try {
-      const data = await books.get(bookId);
+      // Signed-in editors get every page in one response; the helper only
+      // pages through if the session lapsed and the API capped the list (#6281).
+      const data = await books.getWithAllPages(bookId);
       setBook(data);
       setPages((data as any).pages || []);
     } catch (error) {
@@ -470,7 +472,7 @@ export default function SplitPage({ params }: PageProps) {
         setSplitting(false);
         const confirmed = window.confirm(
           `${data.pagesWithOcr || 0} pages have OCR and ${data.pagesWithTranslation || 0} have translations. ` +
-          `Splitting will clear this data — you'll need to re-run OCR and translation on the split pages. Continue?`
+          `Splitting will clear this data, and you'll need to re-run OCR and translation on the split pages. Continue?`
         );
         if (!confirmed) return;
 
@@ -589,8 +591,8 @@ export default function SplitPage({ params }: PageProps) {
               <Info className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
               <div className="text-sm text-blue-800">
                 <p className="font-medium mb-1">How page splitting works:</p>
-                <p>Click pages to select them — split position is <strong>auto-detected</strong>. Adjust manually if needed.
-                  Each page becomes two. <strong>Originals are safe</strong> — we create cropped views with 1% overlap.</p>
+                <p>Click pages to select them. The split position is <strong>auto-detected</strong>. Adjust manually if needed.
+                  Each page becomes two. <strong>Originals are safe</strong>: we create cropped views with 1% overlap.</p>
               </div>
             </div>
           </div>
@@ -953,7 +955,7 @@ export default function SplitPage({ params }: PageProps) {
             <div className="flex items-center justify-between p-4 border-b border-stone-200">
               <div>
                 <h2 className="text-lg font-semibold text-stone-900">Split Results</h2>
-                <p className="text-sm text-stone-500">{reviewingSplits.length} pages created — reset any that don&apos;t look right</p>
+                <p className="text-sm text-stone-500">{reviewingSplits.length} pages created. Reset any that don&apos;t look right</p>
               </div>
               <button
                 onClick={() => setReviewingSplits([])}

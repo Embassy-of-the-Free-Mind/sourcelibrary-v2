@@ -164,7 +164,7 @@ function ResultCard({ result }: { result: CensusResult }) {
           <div className="text-xs text-secondary mt-0.5">
             {result.author}
             {result.year ? ` (${result.year})` : ''}
-            {result.place ? ` — ${result.place}` : ''}
+            {result.place ? ` · ${result.place}` : ''}
           </div>
         </div>
         <div className="flex items-center gap-1.5 shrink-0">
@@ -194,7 +194,7 @@ function ResultCard({ result }: { result: CensusResult }) {
               <Check className="w-3 h-3 text-emerald-500 shrink-0 mt-0.5" />
               <span>
                 <span className="font-medium">{m.english_title}</span>
-                {m.translator && <span className="text-stone-400"> — tr. {m.translator}</span>}
+                {m.translator && <span className="text-stone-400">, tr. {m.translator}</span>}
                 {m.pub_year && <span className="text-stone-400"> ({m.pub_year})</span>}
                 {m.publisher && <span className="text-stone-400"> [{m.publisher}]</span>}
                 <span className="text-stone-300 ml-1">({m.source})</span>

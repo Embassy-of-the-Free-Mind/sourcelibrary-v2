@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA thesaurus/masen6",
+  "edition": "Speculum imaginum veritatis occultae, exhibens symbola, emblemata; hieroglyphica, aenigmata, omnitam materiae, quam formae varietate; exemplis simul; ac praeceptis illustratum. Editio tertia, prioribus correctior. — Köln: Kinckius Witwe, 1681.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b6b65896dc15d4a16ecf0e",
+  "page_number": 938,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 1724494,
+    "to_char": 1726799,
+    "overlap": null,
+    "located_by": "pb-neighbour",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 0
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-3)",
+    "at": "2026-10-06T10:11:08+00:00",
+    "note": "p.866 Masen: ref matches body; CAMENA interleaves marginal notes and normalises (et for &, femina)",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "mixed",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      938,
+      939,
+      940
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.710Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "1e05713eab42ac9a68a4684b0cb590e405794be4798dea8143d75b670fe7ea16",
+  "unit": {
+    "chars": 2303
+  }
+}

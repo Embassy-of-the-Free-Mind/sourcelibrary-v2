@@ -93,13 +93,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         title: `${collection.name} - Source Library`,
         description,
         type: 'website',
-        images: [{ url: cardImage, alt: `${collection.name} — Source Library collection` }],
+        images: [{ url: cardImage, alt: `${collection.name}, a Source Library collection` }],
       },
       twitter: {
         card: 'summary_large_image',
         title: `${collection.name} - Source Library`,
         description,
-        images: [{ url: cardImage, alt: `${collection.name} — Source Library collection` }],
+        images: [{ url: cardImage, alt: `${collection.name}, a Source Library collection` }],
       },
     };
   } catch {
@@ -1465,7 +1465,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
               </span>
             </div>
             <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">
-              Works in this collection appearing in a modern, readable translation for the first time — read them in full here.
+              Works in this collection appearing in a modern, readable translation for the first time. Read them in full here.
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {firstTranslations.map((b) => {
