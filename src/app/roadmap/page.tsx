@@ -178,7 +178,7 @@ export default function RoadmapPage() {
           <p className="text-stone-700 leading-relaxed">
             Less than 3% of Renaissance Latin literature has ever been translated.
             Source Library aims to digitize, OCR, and translate the foundational texts
-            of Western thought—starting with the earliest printed editions of ancient
+            of Western thought, starting with the earliest printed editions of ancient
             philosophy, medieval science, and Renaissance wisdom. These are the works
             that shaped Copernicus, Kepler, Newton, and the Scientific Revolution.
           </p>

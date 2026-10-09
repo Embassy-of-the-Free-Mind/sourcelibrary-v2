@@ -26,6 +26,7 @@ import { fileURLToPath } from 'url';
 import { tmpdir } from 'os';
 import crypto from 'crypto';
 import { cleanOcrArtifacts } from './strip-editorial-wrappers.mjs';
+import { repairLeakedMarkup } from './leaked-markup.mjs';
 
 // ── Text processing ─────────────────────────────────────────────────
 
@@ -172,7 +173,7 @@ export function findRunningHeads(pages) {
 export function translationToTypst(text, { runningHeads = new Set(), anchor = () => '', reflow = false } = {}) {
   if (!text) return { body: '', printedPage: null };
 
-  let out = text;
+  let out = repairLeakedMarkup(text, { plain: true });
   let printedPage = null;
 
   const pageNum = out.match(/<page-num>\s*([^<]{1,12}?)\s*<\/page-num>/i);

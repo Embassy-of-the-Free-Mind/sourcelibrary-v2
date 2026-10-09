@@ -269,7 +269,7 @@ export default function ApiKeysAdminPage() {
         >
           {actionResult.type === 'success' && actionResult.message.includes('sl_data_') ? (
             <div>
-              <p className="font-medium mb-1">Key created — copy it now, it will not be shown again:</p>
+              <p className="font-medium mb-1">Key created. Copy it now; it will not be shown again:</p>
               <code className="block bg-green-100 p-2 rounded text-xs break-all select-all">
                 {actionResult.message.split(': ').slice(1).join(': ')}
               </code>
@@ -369,7 +369,7 @@ export default function ApiKeysAdminPage() {
                   <div className="flex items-center gap-2 mb-1">
                     <span className="font-medium text-stone-900">{r.name}</span>
                     {r.organization && (
-                      <span className="text-stone-500">— {r.organization}</span>
+                      <span className="text-stone-500">· {r.organization}</span>
                     )}
                     <span className={`px-2 py-0.5 text-xs rounded ${
                       r.status === 'pending' ? 'bg-yellow-100 text-yellow-700'

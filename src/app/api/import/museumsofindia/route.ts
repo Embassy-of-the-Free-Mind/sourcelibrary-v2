@@ -9,6 +9,7 @@ import { publishedToYear, resolveLanguage, resolveDate } from '@/lib/resolve-lan
 import { normalizeTitle, normalizeAuthor } from '@/lib/dedup';
 import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 import { generateUniqueBookSlug } from '@/lib/slugify';
+import { computeProcessingPriority } from '@/lib/processing-priority';
 
 export const maxDuration = 300;
 
@@ -158,6 +159,17 @@ export const POST = withCuratorAuth(async (request, session) => {
       // preview/partial scan so the "Preview" badge shows once the book is
       // promoted public. Cleared if/when a fuller scan is added.
       preview: true,
+      // Queue for the standard processing pipeline (archive → OCR → translate),
+      // exactly like every other import (import-utils.ts). Without this the
+      // orchestrator's Phase-1 auto-pickup (pipeline_auto.status == 'queued')
+      // never sees the book and it sits hidden/unprocessed until manually queued.
+      pipeline_auto: {
+        status: 'queued',
+        source: 'import',
+        queued_at: new Date(),
+        last_updated: new Date(),
+        retry_count: 0,
+      },
       source_fingerprint: `museumsofindia:${recordIdentifier}`,
       source_fingerprints: gate.fingerprints,
       normalized_title: normalizeTitle(title),
@@ -165,6 +177,13 @@ export const POST = withCuratorAuth(async (request, session) => {
       created_at: new Date(),
       updated_at: new Date()
     };
+
+    // Compute processing priority at import time (deterministic, no AI calls) —
+    // same as import-utils, so museumsofindia books sort into the backlog by the
+    // same rules (small page counts → low efficiency score → naturally back).
+    const priority = computeProcessingPriority(bookDoc as Parameters<typeof computeProcessingPriority>[0]);
+    (bookDoc as Record<string, unknown>).processing_priority = priority.score;
+    (bookDoc as Record<string, unknown>).processing_priority_breakdown = priority.breakdown;
 
     applyTextRole(bookDoc as Record<string, unknown>);
     await db.collection('books').insertOne(bookDoc);

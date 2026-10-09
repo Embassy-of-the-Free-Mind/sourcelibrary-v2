@@ -117,7 +117,7 @@ export default function VisualSearchPage() {
             </div>
             <p className="text-xs text-muted/60 mt-6 max-w-lg">
               Visual search uses CLIP embeddings to find images by visual similarity.
-              Unlike keyword search, it matches what images look like — not just their metadata.
+              Unlike keyword search, it matches what images look like, not just their metadata.
             </p>
           </div>
         )}

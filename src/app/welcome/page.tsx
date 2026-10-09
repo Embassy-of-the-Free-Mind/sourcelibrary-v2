@@ -10,7 +10,7 @@ import { toUserId } from '@/lib/user-id';
 import { welcomeSignInUrl } from '@/lib/welcome-return';
 
 export const metadata: Metadata = {
-  title: 'Welcome — Source Library',
+  title: 'Welcome | Source Library',
   robots: { index: false, follow: false },
 };
 

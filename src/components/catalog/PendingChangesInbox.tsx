@@ -29,7 +29,7 @@ interface Props {
 }
 
 function formatValue(v: unknown): string {
-  if (v === null || v === undefined || v === '') return '—';
+  if (v === null || v === undefined || v === '') return '–';
   if (typeof v === 'number') return String(v);
   return String(v);
 }
@@ -145,7 +145,7 @@ export default function PendingChangesInbox({ tenant, rows, titlesByUbn }: Props
                           {formatValue(change.to)}
                         </td>
                         <td className="py-2 text-xs text-muted break-words">
-                          {change.source || '—'}
+                          {change.source || '–'}
                           {change.evidence && (
                             <a href={change.evidence} target="_blank" rel="noopener noreferrer" className="ml-1 text-accent-rust hover:underline">
                               [link]
@@ -169,7 +169,7 @@ export default function PendingChangesInbox({ tenant, rows, titlesByUbn }: Props
                     type="text"
                     value={rejectNotes[row.id] || ''}
                     onChange={(e) => setRejectNotes((m) => ({ ...m, [row.id]: e.target.value }))}
-                    placeholder="Reject note (optional — appears on the proposer's view)"
+                    placeholder="Reject note (optional; appears on the proposer's view)"
                     className="flex-1 text-sm border border-border-light rounded-md px-3 py-1.5 bg-white text-primary focus:outline-none focus:ring-2 focus:ring-accent-rust/30"
                   />
                   <div className="flex gap-2">

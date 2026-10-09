@@ -54,7 +54,7 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
       ? `Books with titles in other scripts${pageSuffix} - Source Library`
       : `Books starting with ${l}${pageSuffix} - Source Library`,
     description: l === OTHER
-      ? 'Browse every book in Source Library whose title begins with a non-Latin script, a number, or a bracket — Chinese, Greek, Arabic, Hebrew and more.'
+      ? 'Browse every book in Source Library whose title begins with a non-Latin script, a number, or a bracket: Chinese, Greek, Arabic, Hebrew and more.'
       : `Browse every book in Source Library whose title begins with the letter ${l}.`,
     // Each page is its own canonical — pointing page 2+ at page 1 would tell
     // crawlers to drop the books only those pages link to.

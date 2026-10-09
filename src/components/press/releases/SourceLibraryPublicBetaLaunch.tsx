@@ -22,7 +22,7 @@ export default function SourceLibraryPublicBetaLaunch() {
         <a href="https://embassyofthefreemind.com/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
           Embassy of the Free Mind
         </a>{' '}
-        (EFM) announces the public beta of Source Library &mdash; an open-access digital library set to
+        (EFM) announces the public beta of Source Library, an open-access digital library set to
         become the largest available collection of translated historical primary sources ever assembled.
         Its Beta Launch takes place on 4 June 2026 at the Embassy of the Free Mind, in Amsterdam.
       </p>
@@ -45,7 +45,7 @@ export default function SourceLibraryPublicBetaLaunch() {
 
       <p className="text-secondary leading-relaxed mb-6 font-body">
         Powered by frontier AI translation, Source Library draws on digitised collections from the
-        world&rsquo;s foremost research libraries &mdash; including the{' '}
+        world&rsquo;s foremost research libraries, including the{' '}
         <a href="https://sourcelibrary.org/libraries/bavarian-state-library" className="text-accent-rust hover:underline">
           Bavarian State Library
         </a>
@@ -62,7 +62,7 @@ export default function SourceLibraryPublicBetaLaunch() {
           Bodleian Library
         </a>{' '}
         at Oxford,
-        among more &mdash; with the Bibliotheca Philosophica Hermetica being the first set to become fully
+        among more, with the Bibliotheca Philosophica Hermetica being the first set to become fully
         digitised.
       </p>
 
@@ -74,7 +74,7 @@ export default function SourceLibraryPublicBetaLaunch() {
         <li>4.2 million+ pages translated into English</li>
         <li>6,000+ first-ever English translations</li>
         <li>
-          roughly 7 billion words of original text and translation &mdash; about the size of the entire{' '}
+          roughly 7 billion words of original text and translation, about the size of the entire{' '}
           <a href="https://sourcelibrary.org/blog/how-big-is-the-library" className="text-accent-rust hover:underline">
             English Wikipedia
           </a>
@@ -90,8 +90,8 @@ export default function SourceLibraryPublicBetaLaunch() {
         <a href="https://sourcelibrary.org/author/marsilio-ficino" className="text-accent-rust hover:underline">Marsilio Ficino</a>,{' '}
         <a href="https://sourcelibrary.org/author/heinrich-cornelius-agrippa" className="text-accent-rust hover:underline">Heinrich Cornelius Agrippa</a>, and{' '}
         <a href="https://sourcelibrary.org/author/giordano-bruno" className="text-accent-rust hover:underline">Giordano Bruno</a>{' '}
-        sit alongside thousands of lesser-known texts
-        &mdash; many appearing in English for the very first time.
+        sit alongside thousands of lesser-known texts,
+        many appearing in English for the very first time.
       </p>
 
       <h2 className="text-xl font-serif text-stone-800 mt-10 mb-4">Why it matters</h2>
@@ -108,7 +108,7 @@ export default function SourceLibraryPublicBetaLaunch() {
           impact on the flourishing of European society. Yet very little of the Renaissance itself has been
           translated. Source Library changes that.&rdquo;
         </p>
-        <p className="text-sm text-muted">&mdash; Dr. Derek Lomas, Source Library Programme Director</p>
+        <p className="text-sm text-muted">Dr. Derek Lomas, Source Library Programme Director</p>
       </blockquote>
 
       <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -172,7 +172,7 @@ export default function SourceLibraryPublicBetaLaunch() {
           academic integrity, and the sustainable transmission of cultural memory &ndash; all of which the
           Bibliotheca Philosophica Hermetica sets out to do.&rdquo;
         </p>
-        <p className="text-sm text-muted">&mdash; Jozef Ritman, Museum Director at the Embassy of the Free Mind</p>
+        <p className="text-sm text-muted">Jozef Ritman, Museum Director at the Embassy of the Free Mind</p>
       </blockquote>
 
       <hr className="border-border-light my-10" />
@@ -181,7 +181,7 @@ export default function SourceLibraryPublicBetaLaunch() {
         <strong className="text-stone-800">Press and Partnerships Contact</strong>
       </p>
       <p className="text-sm text-secondary leading-relaxed font-body">
-        Maria Marqu&eacute;s &mdash; Venue &amp; Creative Partnerships &mdash;{' '}
+        Maria Marqu&eacute;s, Venue &amp; Creative Partnerships:{' '}
         <a href="mailto:mmarques@efm.amsterdam" className="text-accent-rust hover:underline">mmarques@efm.amsterdam</a>
         <br />
         Embassy of the Free Mind, Keizersgracht 123, Amsterdam

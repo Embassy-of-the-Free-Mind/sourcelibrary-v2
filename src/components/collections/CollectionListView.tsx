@@ -152,19 +152,19 @@ export default function CollectionListView({
                 </td>
                 <td className="py-3 pr-4 text-sm text-muted tabular-nums">
                   <Link href={href} className="block">
-                    {book.year || '—'}
+                    {book.year || '–'}
                   </Link>
                 </td>
                 <td className="py-3 pr-4 hidden md:table-cell">
                   <Link href={href} className="block">
                     <span className="text-xs text-muted bg-warm px-2 py-0.5 rounded">
-                      {book.language || '—'}
+                      {book.language || '–'}
                     </span>
                   </Link>
                 </td>
                 <td className="py-3 hidden lg:table-cell text-right">
                   <Link href={href} className="block text-sm text-muted tabular-nums">
-                    {book.pages_count || '—'}
+                    {book.pages_count || '–'}
                     {pct > 0 && pct < 100 && (
                       <span className="text-[10px] text-accent-gold-dark ml-1">{pct}%</span>
                     )}

@@ -1,0 +1,518 @@
+[
+  {
+    "book_id": "69e7ac2e5f1a22ab19aa4e9c",
+    "slot": 1,
+    "title": "Kanjur Khri brgyad stong pa Ka",
+    "tradition": "vajrayana",
+    "shelf_fit": "fits",
+    "shelf_note": "A Neyphug manuscript Kanjur volume of the Prajnaparamita in 18,000 lines (the colophon on p220 reads 'shes rab kyi pha rol tu phyin pa khri brgyad stong pa las, ma bcings ma grol ba'i le'u ste bcu bzhi pa'). This is a sutra rather than a tantra, but it belongs in the Tibetan canon. 'Author: Neyphug Monastery' names the manuscript's owner, not the author.",
+    "rights_flag": null,
+    "structure_note": "Each image shows two pecha leaves from one board (I5). The OCR splits them with <leaf-break/> correctly. 400 records, all with OCR, 355 translated: 45 leaves have no English. No printed page numbers are captured, because the margin folio labels are not transcribed. There are no backsteps or duplicates.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 50,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "དེ་བཞིན་གཤེགྶ",
+            "image": "དེ་བཞིན་གཤེགས་",
+            "problem": "non-standard stacked glyph at leaf end; other small slips (ཞས, ལན, མེ་ལེན)",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 180,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ཆེནཔ་པོ / ཕལཔ་པོ",
+            "image": "ཆེན་པོ / ཕལ་པོ",
+            "problem": "doubled syllables, tsheg slips",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ལྔ་དང་ ། བྱང་ཆུབ་ཀྱི་ཡན་ལག་བདུན",
+            "english": "the five <note>faculties</note>, the seven branches of enlightenment",
+            "problem": "in this list the item before the seven branches is stobs lnga (five powers), not the five faculties, so the gloss guesses wrong",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 220,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "མ་བཅིངས་མ་གྲོལ་བའོམེད་པའི་ཕྱིར",
+            "image": "…བའོ། །མེད་པའི་ཕྱིར",
+            "problem": "dropped shad between clauses, run-ons",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "དབེན་པ་ལ་སོགས་པའི་ཕྱིར",
+            "english": "because of being empty and so forth",
+            "problem": "dben pa means 'isolated/void'; 'empty' blurs it with stong pa",
+            "severity": "minor"
+          },
+          {
+            "source": "ཐེག་པ་གསུམ་པོ་དག་གིས་སེམས་ཅན་རྣམས་ཡོངས་སུ་མྱ་ངན་ལས་བཟླས་པར་",
+            "english": "Liberating sentient beings through the three vehicles",
+            "problem": "'bring to parinirvana' flattened to 'liberating'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 370,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "སེམས་པ་དང་འཆེན་པོ",
+            "image": "སེམས་དཔའ་ཆེན་པོ",
+            "problem": "misread epithet",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show",
+    "showcase_pages": [
+      50,
+      220,
+      370
+    ],
+    "reader_summary": "This is a Neyphug manuscript volume of the Perfection of Wisdom in 18,000 lines, with two leaves photographed per image. The transcription is of the right leaves and follows the manuscript closely, with only scribal-level slips. The English is a close, literal rendering that a reader can trust for content.",
+    "book_verdict": "The text is sound and the leaves are correct. The translation is faithful, with only one wrong guess in a note and some flattened terms."
+  },
+  {
+    "book_id": "69e7ab985f1a22ab19a9a963",
+    "slot": 2,
+    "title": "Neyphug Kanjur mDo sde Ka",
+    "tradition": "vajrayana",
+    "shelf_fit": "fits",
+    "shelf_note": "The Bhadrakalpika Sutra (the opening line on p21 reads ''phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo bam po gnyis pa'), from a Neyphug manuscript Kanjur. It is a Mahayana sutra in the Tibetan canon. The author field names the owning monastery.",
+    "rights_flag": null,
+    "structure_note": "There are two leaves per image (I5), split with <leaf-break/>. 510 records: 506 have OCR and 493 are translated. The margin folio labels (e.g. 'mdo ka') are not transcribed. There are no duplicates or backsteps.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 21,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "(not transcribed)",
+            "image": "left-margin volume/folio labels on both leaves",
+            "problem": "margin labels dropped",
+            "severity": "minor",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "མགོན་པོ་སངས་རྒྱས་དེས་མཐོང་ནས། །ཚེ་དཔག་མེད་པ་བྱང་ཆུབ་ཐོབ།",
+            "english": "having been seen by that Protector Buddha, he attained the enlightenment of Immeasurable Life",
+            "problem": "the agent is inverted: the prince saw the Buddha and himself became Amitayus. The translation makes him the one who was seen and turns 'Amitayus attained awakening' into 'the enlightenment of Immeasurable Life'",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 198,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "མཆོད་རྟེན་བྱེ་བ་སྟོང་ཕྲག་བདུན་ཅུ་གཅིག",
+            "english": "seventy-one billion stupas",
+            "problem": "bye ba (10^7) x 71,000 is 710 billion. The bye ba scale is handled inconsistently across this list of Buddhas",
+            "severity": "serious",
+            "class": "other:numeral-scale"
+          },
+          {
+            "source": "གསུམ་པར་བདུན་ཅུ་དྲུག",
+            "english": "In the third, seventy-six billion",
+            "problem": "on the same scale as 'nine billion' (90) and 'eight billion' (80), 76 is 7.6 billion",
+            "severity": "moderate",
+            "class": "other:numeral-scale"
+          },
+          {
+            "source": "མཆོད་རྟེན་བྱེ་བ་སྟོང་ཕྲག་བརྒྱད་ཅུ་ཐམ",
+            "english": "eighty thousand stupas",
+            "problem": "bye ba is dropped; the figure should be 800 billion",
+            "severity": "moderate",
+            "class": "other:numeral-scale"
+          },
+          {
+            "source": "མཆོད་རྟེན་བྱེ་བ་དགུ་བཅུ་རྩ་དགུ",
+            "english": "ninety-nine billion stupas",
+            "problem": "99 x 10^7 is 990 million",
+            "severity": "moderate",
+            "class": "other:numeral-scale"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 351,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "པ་པོ། །བྱེ་བ…",
+            "image": "༄༅། །པ་པོ། …",
+            "problem": "leaf-opening yig mgo omitted",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "བྱེ་བ་ཕྲག་ནི་དགུ་བཅུ་བཞི་བཞི་ཡོད",
+            "english": "There were ninety-four million in each",
+            "problem": "bye ba (koti, 10^7) is rendered as 'million', so the figure is 10x too small (should be 940 million)",
+            "severity": "serious",
+            "class": "other:numeral-scale"
+          },
+          {
+            "source": "བྱེ་བ་ཕྲག་ནི་ཉི་ཤུ་བཞི་བཞི་ཡོད",
+            "english": "twenty-four million in each",
+            "problem": "same 10x error (should be 240 million)",
+            "severity": "moderate",
+            "class": "other:numeral-scale"
+          },
+          {
+            "source": "དགྲ་བཅོམ་བྱེ་བ་བཅུ་དྲུག་བཅུ་དྲུག་ཡོད",
+            "english": "sixteen million Arhats in each",
+            "problem": "same 10x error (should be 160 million)",
+            "severity": "moderate",
+            "class": "other:numeral-scale"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 436,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "སེས་བསྐྱེད / བྱང་ཆུ་བ་ཏུ",
+            "image": "སེམས་བསྐྱེད / བྱང་ཆུབ་ཏུ",
+            "problem": "minor syllable slips in refrain",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཉན་ཐོས་བཅས་པའི་དགེ་འདུན་འཁོར་བཅས་ཁྲི་ཕྲག་ཅུ",
+            "english": "his retinue of ten thousand disciples",
+            "problem": "khri phrag bcu is 100,000, not ten thousand",
+            "severity": "moderate",
+            "class": "other:numeral-scale"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      21
+    ],
+    "reader_summary": "This is the Bhadrakalpika (Fortunate Eon) Sutra, with its long verse catalogue of the thousand Buddhas, from a Neyphug manuscript Kanjur. The transcription matches the leaves well. The English renders names and sense reliably, but large Tibetan numbers (bye ba, khri phrag) are often converted to the wrong order of magnitude, so the assembly, stupa and lifespan figures cannot be trusted.",
+    "book_verdict": "The OCR is good and the leaves are right. The translation repeatedly mis-scales the large numbers that make up much of this sutra, so a scholar should be warned before reading the Buddha-list chapters."
+  },
+  {
+    "book_id": "69e7ac095f1a22ab19aa2934",
+    "slot": 3,
+    "title": "Kanjur 'Bum Nga",
+    "tradition": "vajrayana",
+    "shelf_fit": "fits",
+    "shelf_note": "A volume of the Satasahasrika Prajnaparamita ('Bum, 100,000 lines) from the Neyphug manuscript Kanjur. It is a sutra, not a tantra, but it belongs in the Tibetan canon.",
+    "rights_flag": null,
+    "structure_note": "There are two leaves per image (I5), split with <leaf-break/>. 392 records: 376 with OCR and only 297 translated, so 16 leaves have no OCR and 95 have no English. There are no duplicates or backsteps.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 15,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "དངོས་པོ་མེད་པ་སྟོང་པ་ཉིད་ཀྱང་མ་ཆགས་པ་མེད་དོ",
+            "image": "དངོས་པོ་མེད་པ་སྟོང་པ་ཉིད་ཀྱང་ཆགས་པ་མེད་དོ",
+            "problem": "an inserted 'ma' (three times) makes the transcription read 'there is no non-attachment'. The translation silently gives the correct sense",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "ཆག་པ / ལགས་པ / ཆགས་ལ / ཆགས་པས / ཆགས་པའི་མེད",
+            "image": "ཆགས་པ་མེད་དོ (uniform in the manuscript)",
+            "problem": "the refrain is misread many different ways",
+            "severity": "moderate",
+            "class": "O9"
+          },
+          {
+            "ocr": "རང་བཞིན་སྟོན་པ་ཉིད / སུམ་སེམས",
+            "image": "རང་བཞིན་སྟོང་པ་ཉིད / སེམས",
+            "problem": "stong pa read as ston pa ('teacher') and a stray syllable added",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "འདུ་ཤེས་ཀྱང་རང་བཞིན་སྟོང་པ་ཉིད",
+            "english": "Perception is also its nature is emptiness.",
+            "problem": "garbled final sentence at the leaf end",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "the opening '<note>attachment</note>' is a gloss with nothing to gloss",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 180,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "སེམ་དཔའ",
+            "image": "སེམས་དཔའ",
+            "problem": "dropped suffix, several times",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "…གླེང་གཞི་དང་ ། འདི་ལྟར་འདས་པ་དང་ ། སྐྱེས་པའི་རབས་དང་ ། … རྟོགས་པ་བརྗོད་པ་དང",
+            "english": "introductory narratives (nidana), legends (avadana), past lives (itivrttaka), birth stories (jataka)…",
+            "problem": "the twelve branches are reordered (avadana moved from 11th to 7th) and 'twelve branches of scripture' is added; itivrttaka is called 'past lives'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 265,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ལྷ་མོ་ཡིན",
+            "image": "ལྷ་མ་ཡིན",
+            "problem": "asura read as 'goddess'; stray spaces inside syllables on leaf 2",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 355,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "ཐེག་པ་མཐའ་དག་པ་གཞན་ལ། འདུས་མ་བྱས་སྟོང་པ་ཉིད / སྟོང་པ་ཉིད་ཀྱང",
+            "image": "ཐེག་པ་ཆེན་པོ་ཡང་གཞན་ལ། མཐའ་ལས་འདས་པ / སྟོང་པ་ཉིད་ཀྱང",
+            "problem": "garbled line: 'the emptiness of the unconditioned' is repeated where the leaf has 'beyond extremes'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "འདུས་མ་བྱས་སྟོང་པ་ཉིད (OCR repetition)",
+            "english": "the emptiness of the unconditioned <note>repetition in source</note> another; thus … that which has passed beyond limits",
+            "problem": "the note blames the manuscript for an OCR error; the manuscript has no repetition",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "an invented apparatus note, 'repetition in source', describes a scribal fact that is not on the leaf",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      180,
+      265
+    ],
+    "reader_summary": "This is a volume of the Perfection of Wisdom in 100,000 lines, two manuscript leaves per image. The transcription is of the right leaves but is noisier than in sister volumes: the refrains are misread and a negation is inserted, and the English mostly corrects these silently. The English is literal and dependable for sense, but one note blames the manuscript for an OCR error, and a quarter of the leaves have no translation.",
+    "book_verdict": "The leaves are right and the translation is largely faithful. The OCR has meaning-changing slips, and one apparatus note invents a feature of the manuscript; translation coverage is incomplete."
+  },
+  {
+    "book_id": "69e7aba75f1a22ab19a9bc2a",
+    "slot": 4,
+    "title": "Neyphug Kanjur mDo sde Na",
+    "tradition": "vajrayana",
+    "shelf_fit": "fits",
+    "shelf_note": "A multi-text sutra volume from the Neyphug Kanjur: the Samdhinirmocana (p75 has its closing chapter on the stages and perfections) and the Suryagarbha sutra (p226 colophon reads 'shin tu rgyas pa chen po'i sde nyi ma'i snying po … bam po bzhi pa'), with later dharani material. These are Mahayana sutras in the Tibetan canon.",
+    "rights_flag": null,
+    "structure_note": "There are two leaves per image (I5), split with <leaf-break/>. 468 records: 450-451 with OCR (about 17 without) and 424 translated. The title names only the volume (mDo sde Na), not the several works it holds. There are no duplicates or backsteps.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 75,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "མེ་ད་པ",
+            "image": "མེད་པ",
+            "problem": "minor syllable split",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "སེམས་ཅན་གྱི་ཁམས་ན ། སྡུག་བསྔལ་རྣམ་པར་བཟློག་པའི་རྒྱུའི་ཕྱིར་རོ།",
+            "english": "This is for the sake of reversing the suffering in the realms of sentient beings.",
+            "problem": "this clause answers 'what are the qualities', but the translation does not connect it to the question",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 226,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཡེ་ཤེས་དཔལ་བརྩེགས་རྒྱལ་པོ / སྣང་བའི་སྙིང་པོ་དཔལ",
+            "english": "Jñānashritarāja / Prabhasasara",
+            "problem": "Sanskrit reconstructions of the names are approximate (should be Jñānaśrīkūṭarāja; the second is loose)",
+            "severity": "minor"
+          },
+          {
+            "source": "…ཞེས་བྱ་བའི་མདོ་བམ་པོ་བཞི་པ༑",
+            "english": "# The Noble and Great Vaipulya Sutra: The Chapter of the Heart of the Sun, Volume Four.",
+            "problem": "an end-of-fascicle marker is rendered as a heading for what follows",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "the whole dharani transliteration is wrapped in a single <term> tag",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 258,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཇི་ལྟར་ཆོས་རྗེས་སུ་ཐོས་པ་བཞིན་དུ",
+            "english": "just as they have heard it from the Lord of Dharma",
+            "problem": "'rjes su thos pa' (have heard) is read as chos rje 'Lord of Dharma', which adds a speaker",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "ལྷ་རྣམས་ཐམས་ཅད་སྔགས་བགྱིད",
+            "english": "all the gods recite mantras",
+            "problem": "likely (b)sngags 'praise'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 407,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "མཛད་དུ་་་་་་་་་་་་་གསོལ",
+            "image": "dotted filler in the manuscript line",
+            "problem": "scribal filler transcribed as tsheg runs; harmless but noisy",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "དེ་བཞིན་གཤེགས་པ་འཁོར་བ་འཇིག་གིས",
+            "english": "The Tathagata Vishvabhu entrusted",
+            "problem": "'Khor ba 'jig is Krakucchanda, not Visvabhu (thams cad skyob), so the Buddha is named wrongly",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show",
+    "showcase_pages": [
+      75,
+      226
+    ],
+    "reader_summary": "This is a Neyphug manuscript sutra volume holding the end of the Samdhinirmocana and the Suryagarbha sutra with its dharanis. The transcription is of the right leaves and is accurate. The English is careful and literal, with occasional slips in names and in the Sanskrit forms of names.",
+    "book_verdict": "The OCR and translation are sound. The few errors are in names (Krakucchanda given as Visvabhu, 'rjes su' read as 'Lord of Dharma'); none distort doctrine."
+  }
+]

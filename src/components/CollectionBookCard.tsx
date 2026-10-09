@@ -98,7 +98,18 @@ export const CARD_LABELS_ES: CollectionBookCardLabels = {
   editedBy: 'editado por',
 };
 
-const CARD_LABELS: Record<Locale, CollectionBookCardLabels> = { en: CARD_LABELS_EN, es: CARD_LABELS_ES };
+// Latin (#6254). "Conversus" is the ENGLISH translation; nothing is translated into Latin.
+export const CARD_LABELS_LA: CollectionBookCardLabels = {
+  firstTranslation: 'Prima conversio',
+  pages: 'paginae',
+  ocr: 'OCR',
+  translated: 'Conversus',
+  complete: 'Absolutus',
+  inEnglish: 'Anglice',
+  editedBy: 'edidit',
+};
+
+const CARD_LABELS: Record<Locale, CollectionBookCardLabels> = { en: CARD_LABELS_EN, es: CARD_LABELS_ES, la: CARD_LABELS_LA };
 
 interface CollectionBookCardProps {
   book: CollectionBook;

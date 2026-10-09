@@ -13,7 +13,7 @@ import { describe, it, expect, vi } from 'vitest';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — plain-JS module, no declarations
-import { buildBookCheck, recordBookCheck, readMethod, provenanceFromPage } from '../../scripts/lib/book-checks.mjs';
+import { buildBookCheck, recordBookCheck, attachPageFindings, readMethod, provenanceFromPage } from '../../scripts/lib/book-checks.mjs';
 
 const good = () => ({
   book_id: '69f325ae52a77bb28fdb58e9',
@@ -101,5 +101,35 @@ describe('provenanceFromPage', () => {
     expect(e.ocr_model).toBe('source:esukhia-derge-tengyur');
     expect(e.translation_model).toBeNull();
     expect(e.unknown_reason).toMatch(/translation\.model/);
+  });
+});
+
+// page_findings (#6199): what a reader's page-level warning is built from. A finding on a page the check did not read,
+// or an entry with nothing serious in it, would put a warning on a page nobody found wrong.
+describe('page_findings', () => {
+  const finding = { page_number: 7, errors: [{ stage: 'translation', class: 'T8', problem: 'negation dropped' }] };
+
+  it('keeps valid findings on the row, and an empty list (every page read was clean)', () => {
+    expect(buildBookCheck({ ...good(), page_findings: [finding] }).page_findings).toEqual([finding]);
+    expect(buildBookCheck({ ...good(), page_findings: [] }).page_findings).toEqual([]);
+    expect('page_findings' in buildBookCheck(good())).toBe(false);
+  });
+
+  it('refuses a finding on a page not read, an entry with nothing serious, and an unknown stage', () => {
+    expect(() => buildBookCheck({ ...good(), page_findings: [{ ...finding, page_number: 99 }] })).toThrow(/not in pages_read/);
+    expect(() => buildBookCheck({ ...good(), page_findings: [{ page_number: 7, errors: [] }] })).toThrow(/serious error or wrong_page/);
+    expect(() => buildBookCheck({ ...good(), page_findings: [{ page_number: 7, errors: [{ stage: 'image' }] }] })).toThrow(/stage/);
+    expect(buildBookCheck({ ...good(), page_findings: [{ page_number: 7, wrong_page: true, errors: [] }] }).page_findings).toHaveLength(1);
+  });
+
+  it('attachPageFindings only ever fills a row that has none', async () => {
+    const updateOne = vi.fn(async () => ({ modifiedCount: 1 }));
+    const r = await attachPageFindings({ collection: () => ({ updateOne }) }, { ...good(), page_findings: [finding] });
+    expect(r.attached).toBe(true);
+    const [filter, update] = updateOne.mock.calls[0] as unknown as [Record<string, unknown>, { $set: Record<string, unknown> }];
+    expect(filter.page_findings).toEqual({ $exists: false });
+    expect(Object.keys(update.$set).sort()).toEqual(['page_findings', 'page_findings_attached_at', 'page_findings_attached_by']);
+    await expect(attachPageFindings({ collection: () => ({ updateOne }) }, { ...good(), page_findings: [{ ...finding, page_number: 99 }] })).rejects.toThrow(/not in pages_read/);
+    expect(updateOne).toHaveBeenCalledTimes(1);
   });
 });

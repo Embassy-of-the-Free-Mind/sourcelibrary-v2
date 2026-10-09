@@ -415,7 +415,7 @@ export default function BibliographicInfo({
                               {t.pub_year && <span className="text-stone-400"> ({t.pub_year})</span>}
                               {t.publisher && <span className="text-stone-500">, {t.publisher}</span>}
                               {t.completeness && t.completeness !== 'complete' && t.completeness !== 'unknown' && (
-                                <span className="text-stone-500"> &mdash; {t.completeness === 'partial' ? 'partial translation' : 'translated excerpts'}</span>
+                                <span className="text-stone-500">, {t.completeness === 'partial' ? 'partial translation' : 'translated excerpts'}</span>
                               )}
                               {showExternalLinks && t.url && (
                                 <>{' '}<a href={t.url} target="_blank" rel="noopener noreferrer" className="text-accent-gold hover:text-accent-gold/80 underline">view</a></>

@@ -522,6 +522,7 @@ Output structure:
       childJobIds.push(child.childJobId);
 
       await db.collection('batch_jobs').insertOne({
+        submitted_by: ROUTE_CALL_SITE,
         id: child.childJobId,
         parent_job_id: parentJobId,
         job_name: child.batchJobName,
@@ -545,6 +546,7 @@ Output structure:
 
     // Create parent record last (all children already exist)
     await db.collection('batch_jobs').insertOne({
+      submitted_by: ROUTE_CALL_SITE,
       id: parentJobId,
       book_id: bookId,
       type: 'ocr',
