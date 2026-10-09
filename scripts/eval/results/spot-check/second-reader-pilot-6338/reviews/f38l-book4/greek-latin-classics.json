@@ -1,0 +1,160 @@
+[
+ {
+  "book_id": "69b52c953dd6d94230281474",
+  "slot": 8,
+  "title": "Vitruvii de architectura libri X",
+  "tradition": "greek-latin-classics",
+  "shelf_fit": "fits",
+  "shelf_note": "Vitruvius' De architectura is a foundational Roman architectural treatise; a 13th-century manuscript copy belongs properly in greek-latin-classics.",
+  "rights_flag": null,
+  "structure_note": "Total 116 pages with 114 OCR'd and translated; 84 recorded with printed numbers having 18 backsteps and 14 repeats, reflecting recto/verso manuscript foliation rather than defective scan sequence. Page 115 is an endleaf/flyleaf.",
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 24,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "munuipiũ ferenat̃",
+      "image": "municipium Ferenti",
+      "problem": "place name Ferentum corrupted due to unexpanded scribal abbreviation",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "pferunt est̃",
+      "image": "perferunt aestus",
+      "problem": "words left in heavily contracted scribal shorthand without expansion",
+      "severity": "minor",
+      "class": "O6"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "dissoluunt. Itẽ saxa maritima ab salsugine ... dignũ d̃ uer̃ h̃m̃ officiũ oĩa opa p̃ficer̃.",
+      "english": "[omitted]",
+      "problem": "the entire first half of the page (15 lines on stone types, quarries, and bronze casting moulds) is completely omitted, starting mid-clause with '...falling, which are in the first [place]'",
+      "severity": "serious",
+      "class": "T8"
+     }
+    ],
+    "other": [
+     {
+      "note": "Structural XML tags (<language>, <page-type>, <page-num>, <meta>, <vocab>) leaked into reader text",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 30,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "socerem",
+      "image": "Socratem",
+      "problem": "philosopher's name Socrates misread as socerem (father-in-law)",
+      "severity": "serious",
+      "class": "O6"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "Delphis Apollo socerem omnium sapientissimum pythie responsis est professus.",
+      "english": "Delphis, Apollo declared the father-in-law of all as the wisest by the Pythian responses.",
+      "problem": "Socrates translated as 'the father-in-law of all' following OCR corruption of Socratem",
+      "severity": "serious",
+      "class": "T11"
+     }
+    ],
+    "other": [
+     {
+      "note": "Internal pipeline XML tags (<language>, <page-type>, <warning>, <insert>, <image-desc>, <vocab>) displayed in text",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 60,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "Iosũ egbi d' hĩn eructat ab sole aĩoꝝ itener",
+      "image": "[contracted Latin on climate and mental temperament]",
+      "problem": "medieval scribal contractions transcribed as garbled gibberish",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "at̃stilon",
+      "image": "tetrastylon",
+      "problem": "architectural term tetrastylon misread as at̃stilon",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "Iosũ egbi d' hĩn eructat ab sole aĩoꝝ itener",
+      "english": "I have said that the itinerary of the minds from the sun erupts from these.",
+      "problem": "severe hallucination resulting from garbled OCR transcription of abbreviations",
+      "severity": "serious",
+      "class": "T1"
+     },
+     {
+      "source": "at̃stilon",
+      "english": "Atstilate",
+      "problem": "invented term 'Atstilate' translated from corrupted OCR of tetrastylon",
+      "severity": "moderate",
+      "class": "T8"
+     }
+    ],
+    "other": [
+     {
+      "note": "Prompt and processing tags (<language>, <page-type>, <page-num>, <vocab>) present in reader output",
+      "severity": "moderate",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 115,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "يا كببيج يا كببيج احفظ الورق ١٢٨٧",
+      "image": "[Latin manuscript endpaper/flyleaf with ink bleed-through]",
+      "problem": "faint bleed-through and stains on a Latin endpaper misidentified as Arabic script and talismanic invocation",
+      "severity": "serious",
+      "class": "O13"
+     }
+    ],
+    "tr_score": 5,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "Page language categorized as Arabic for a Latin manuscript flyleaf, accompanied by leaked internal XML tags (<language>, <page-type>, <warning>, <image-desc>, <margin>, <note>, <vocab>)",
+      "severity": "serious",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "fit_to_show": "do_not_show",
+  "showcase_pages": [],
+  "reader_summary": "A reader finds a genuine 13th-century manuscript copy of Vitruvius' De architectura from the Biblioteca Medicea Laurenziana. The automated transcription fails to expand medieval Latin scribal abbreviations and ligatures, transcribing them into corrupted character strings or dropping entire sections. Consequently, the English translation suffers from massive omissions (such as half a page missing on page 24) and grotesque distortions (rendering Socrates as 'the father-in-law of all'), making it untrustworthy for scholarly use.",
+  "book_verdict": "Authentic 13th-century Latin manuscript of Vitruvius that suffers from severe transcription failures on Gothic/Carolingian abbreviations, resulting in massive translation omissions, comical misidentifications, and leaked XML scaffolding across the pages."
+ }
+]
