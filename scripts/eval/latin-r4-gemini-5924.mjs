@@ -96,12 +96,11 @@ async function submit() {
 /** #5771: a hand-submitted Batch unknown to batch_jobs is an orphan, and the sweeper cancels it. */
 async function register(j) {
   const { withMongo } = await import('../lib/mongo.mjs');
-  await withMongo(async db => {
-    await db.collection('batch_jobs').updateOne({ gemini_job_name: j.job_name }, { $setOnInsert: {
-      id: `latin-r4-5924-${j.arm}`, job_name: j.job_name, gemini_job_name: j.job_name, status: 'external_eval', type: 'eval', model: j.model,
-      page_count: j.requests, created_at: new Date(j.submitted_at), updated_at: new Date(), issue: 5924,
-      note: 'hand-submitted eval Batch (scripts/eval/latin-r4-gemini-5924.mjs); results go to files only, never to pages' } }, { upsert: true });
-  });
+  const { registerEvalBatch } = await import('../lib/eval-batch-registry.mjs');
+  await withMongo(db => registerEvalBatch(db, {
+    jobName: j.job_name, id: `latin-r4-5924-${j.arm}`, submittedBy: 'scripts/eval/latin-r4-gemini-5924.mjs',
+    model: j.model, pageCount: j.requests, submittedAt: new Date(j.submitted_at), issue: 5924,
+    note: 'hand-submitted eval Batch; results go to files only, never to pages' }));
   console.log(`registered ${j.arm} ${j.job_name} as external_eval`);
 }
 
