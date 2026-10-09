@@ -111,7 +111,7 @@ export const POST = withCuratorAuth(async (request) => {
       }
     } catch {
       return NextResponse.json(
-        { error: 'Invalid pdf_url — must be a valid HTTP(S) URL' },
+        { error: 'Invalid pdf_url: must be a valid HTTP(S) URL' },
         { status: 400 },
       );
     }
@@ -187,7 +187,7 @@ export const POST = withCuratorAuth(async (request) => {
 
     if (pageFiles.length === 0) {
       return NextResponse.json(
-        { error: 'PDF extraction produced 0 pages — file may be corrupt or password-protected' },
+        { error: 'PDF extraction produced 0 pages. The file may be corrupt or password-protected' },
         { status: 400 },
       );
     }

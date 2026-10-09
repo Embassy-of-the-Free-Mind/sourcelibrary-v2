@@ -153,7 +153,7 @@ export default async function ParticipatePage() {
               Flagging a problem really is open to everyone, so that is what it
               now says. */}
           <p className="text-lg text-secondary leading-relaxed mb-4">
-            Open any book. Read the AI translation next to the original page image. If something looks wrong, say so &mdash; every page has a &ldquo;Notice a translation issue?&rdquo; link that takes a note straight to us. No account needed.
+            Open any book. Read the AI translation next to the original page image. If something looks wrong, say so. Every page has a &ldquo;Notice a translation issue?&rdquo; link that takes a note straight to us. No account needed.
           </p>
           <p className="text-secondary leading-relaxed mb-6">
             To correct the text yourself, write to{' '}
@@ -286,7 +286,7 @@ export default async function ParticipatePage() {
                 <div>
                   <h3 className="font-semibold text-primary mb-1">Suggest books</h3>
                   <p className="text-sm text-secondary leading-relaxed">
-                    We import from 13 digital archives &mdash; Internet Archive, Gallica, the Bodleian, the Vatican, and more.
+                    We import from 13 digital archives: Internet Archive, Gallica, the Bodleian, the Vatican, and more.
                     If you know of a text that belongs here, tell us and we&apos;ll add it.
                   </p>
                 </div>
@@ -306,7 +306,7 @@ export default async function ParticipatePage() {
                 <div>
                   <h3 className="font-semibold text-primary mb-1 group-hover:text-accent-rust transition-colors">Write about the texts</h3>
                   <p className="text-sm text-secondary leading-relaxed">
-                    Our blog features essays on the collection. A close reading, a thematic exploration, a translation commentary &mdash;
+                    Our blog features essays on the collection. A close reading, a thematic exploration, a translation commentary:
                     it doesn&apos;t need to be formal, just thoughtful.
                   </p>
                 </div>
@@ -375,8 +375,8 @@ export default async function ParticipatePage() {
               the same deploy — see the FAQ page's twin comment. */}
           <p className="text-muted text-sm leading-relaxed">
             {meteredReaderEnabled()
-              ? <>Every book is freely browsable, and a free account unlocks full reading. AI translations are first drafts &mdash; the originals are always preserved alongside them. Published editions carry DOIs via Zenodo, so your contributions become citable scholarship.</>
-              : <>No paywalls, no login walls. AI translations are first drafts &mdash; the originals are always preserved alongside them. Published editions carry DOIs via Zenodo, so your contributions become citable scholarship.</>}
+              ? <>Every book is freely browsable, and a free account unlocks full reading. AI translations are first drafts; the originals are always preserved alongside them. Published editions carry DOIs via Zenodo, so your contributions become citable scholarship.</>
+              : <>No paywalls, no login walls. AI translations are first drafts; the originals are always preserved alongside them. Published editions carry DOIs via Zenodo, so your contributions become citable scholarship.</>}
           </p>
         </div>
       </footer>

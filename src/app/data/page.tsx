@@ -11,13 +11,13 @@ export const revalidate = 600;
 export const maxDuration = 15;
 
 export const metadata: Metadata = {
-  title: 'The Collection — Source Library',
+  title: 'The Collection | Source Library',
   description:
     'Live data on the Source Library collection: books, languages, centuries, topics, and source institutions.',
   alternates: { canonical: '/data' },
   openGraph: {
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
-    title: 'The Collection — Source Library',
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
+    title: 'The Collection | Source Library',
     description:
       'Live data on the Source Library collection: books, languages, centuries, topics, and source institutions.',
   },
@@ -51,7 +51,7 @@ function formatNumber(n: number): string {
 
 /** A figure the fallback cannot supply is `null` and renders as a dash, never as 0. */
 function formatFigure(n: number | null | undefined): string {
-  return n == null ? '—' : formatNumber(n);
+  return n == null ? '–' : formatNumber(n);
 }
 
 function pct(part: number, whole: number): string {
@@ -240,7 +240,7 @@ export default async function DataPage({
         </div>
         {data.snapshotMissing && (
           <p className="text-faint text-sm mt-4">
-            The collection snapshot is missing right now, so figures marked “—” are unknown until it is rebuilt.
+            The collection snapshot is missing right now, so figures marked “–” are unknown until it is rebuilt.
           </p>
         )}
       </section>

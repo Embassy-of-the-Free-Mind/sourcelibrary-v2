@@ -223,7 +223,7 @@ export const GET = withAdminAuth(async (request) => {
       groups.push({
         tier: providers.size > 1 ? 'cross_source_edition' : 'same_source_edition',
         confidence,
-        reason: `Same edition key${trusted ? '' : ` (${quality} — weak key, verify before merging)`}` +
+        reason: `Same edition key${trusted ? '' : ` (${quality}: weak key, verify before merging)`}` +
           `${providers.size > 1 ? ` across ${providerList}` : ` within ${providerList}`}` +
           `${pcSim ? ` (${(pcSim * 100).toFixed(0)}% page similarity)` : ''}`,
         keeper: toSummary(keeper),

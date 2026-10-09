@@ -551,7 +551,7 @@ export async function assembleBookHistory(
   for (const entry of auditRecords) {
     const label = ACTION_LABELS[entry.action] || entry.action;
     const pagesStr = entry.pages_affected ? ` (${entry.pages_affected} pages)` : '';
-    const actorStr = entry.actor ? ` — ${entry.actor}` : '';
+    const actorStr = entry.actor ? ` · ${entry.actor}` : '';
     events.push({
       type: 'admin_action',
       timestamp: new Date(entry.timestamp).toISOString(),

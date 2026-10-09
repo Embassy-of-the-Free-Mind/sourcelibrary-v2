@@ -12,6 +12,8 @@ import { isBookReadable, hiddenBookMetadataCard } from '@/lib/book-access';
 import { COVER_WRITE_FIELDS } from '@/lib/cover-fields';
 import { deleteBookArchived, purgeBookUnarchived } from '@/lib/delete-book';
 import { getBookIndexFields, type BookIndexProjectionField } from '@/lib/book-index';
+import { auth } from '@/lib/auth';
+import { resolvePageWindow, countPagesForWindow, type PagesWindow } from '@/lib/page-window';
 
 export const preferredRegion = 'fra1';
 
@@ -101,21 +103,38 @@ export async function GET(
     }
 
     const bookId = (book.id || book._id?.toString()) as string;
-    const pageOffset = parseInt(searchParams.get('pageOffset') || '0');
-    const pageLimit = parseInt(searchParams.get('pageLimit') || '0'); // 0 = all (backwards-compat)
+    // Page-list windows (#6281), as in /api/books/[id]. This route is not
+    // wrapped in withApiAuth, so the caller's kind is just "signed in or not":
+    // no session = capped. API keys are not honoured here (they never were),
+    // so a keyed client gets the anonymous window.
+    const session = await auth().catch(() => null);
+    const windowed = !session?.user?.id;
+    const { offset: pageOffset, limit: pageLimit } = resolvePageWindow(searchParams, windowed);
+    const pageFilter = { book_id: bookId, tenantId };
     let cursor = db.collection('pages')
-      .find({ book_id: bookId, tenantId })
+      .find(pageFilter)
       .project(projection)
       .sort({ page_number: 1 });
     if (pageOffset > 0) cursor = cursor.skip(pageOffset);
     if (pageLimit > 0) cursor = cursor.limit(pageLimit);
     const pages = await cursor.toArray();
+    const pagesWindow: PagesWindow = {
+      offset: pageOffset,
+      limit: pageLimit,
+      returned: pages.length,
+      total: await countPagesForWindow(pageOffset, pageLimit, pages.length,
+        () => db.collection('pages').countDocuments(pageFilter)),
+    };
 
     // Keyed on wantsFull, not includeFull: the same URL answers differently for
-    // an admin, so neither answer may be stored by a shared cache.
+    // an admin, so neither answer may be stored by a shared cache. An uncapped
+    // (signed-in) answer is private; the capped one varies on Cookie — see
+    // /api/books/[id].
     const cacheControl = wantsFull
       ? 'private, no-cache'
-      : 'public, max-age=60, stale-while-revalidate=300';
+      : windowed
+        ? 'public, max-age=60, stale-while-revalidate=300'
+        : 'private, max-age=60, stale-while-revalidate=300';
 
     // Merge index data from the dedicated collection (heavy fields moved out
     // of book docs). Same per-mode field lists as /api/books/[id] (#5184).
@@ -129,8 +148,8 @@ export async function GET(
       (book as any).index = { ...(book as any).index, ...indexDoc };
     }
 
-    return NextResponse.json({ ...book, pages }, {
-      headers: { 'Cache-Control': cacheControl }
+    return NextResponse.json({ ...book, pages, pages_window: pagesWindow }, {
+      headers: { 'Cache-Control': cacheControl, Vary: 'Cookie' }
     });
   } catch (error) {
     console.error('Error fetching book:', error);
@@ -195,7 +214,7 @@ export const DELETE = withAdminAuth(async (request, session, context) => {
         message: `Archived "${book.title}" with ${pagesArchived} pages`,
         bookId,
         recoverable: true,
-        hint: 'POST /api/books/restore/{id} to recover — a restored book needs re-embedding before it surfaces in semantic search'
+        hint: 'POST /api/books/restore/{id} to recover. A restored book needs re-embedding before it surfaces in semantic search'
       });
     }
 

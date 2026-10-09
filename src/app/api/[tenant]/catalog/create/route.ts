@@ -96,7 +96,7 @@ export const POST = withAuth(
 
     const userEmail = session.user?.email;
     if (!userEmail) {
-      return NextResponse.json({ error: 'Session is missing an email — re-sign in' }, { status: 400 });
+      return NextResponse.json({ error: 'Session is missing an email. Please sign in again' }, { status: 400 });
     }
 
     const platformRole = normalizeRole((session.user as { role?: unknown }).role);
@@ -139,7 +139,7 @@ export const POST = withAuth(
     }
     if (!ubn && !String(payload.fieldChanges?.shelf_mark?.to ?? '').trim()) {
       return NextResponse.json(
-        { error: 'A record with no UBN needs a shelf mark (its manuscript number) — it is the only way to find the object.' },
+        { error: 'A record with no UBN needs a shelf mark (its manuscript number). It is the only way to find the object.' },
         { status: 400 },
       );
     }

@@ -6,7 +6,7 @@
  *
  * Usage:
  *   set -a; source .env.production.local; set +a
- *   npx tsx scripts/eval/reverify-batch.mjs [--concurrency=5] [--limit=100] [--dry-run] [--unverified] [--warehouse]
+ *   npx tsx scripts/eval/reverify-batch.mjs [--concurrency=5] [--limit=100] [--dry-run] [--unverified]
  */
 
 import { MongoClient } from 'mongodb';
@@ -22,7 +22,6 @@ const args = process.argv.slice(2);
 const CONCURRENCY = parseInt(args.find(a => a.startsWith('--concurrency='))?.split('=')[1] || '5');
 const LIMIT = parseInt(args.find(a => a.startsWith('--limit='))?.split('=')[1] || '0');
 const DRY_RUN = args.includes('--dry-run');
-const USE_WAREHOUSE = args.includes('--warehouse');
 const UNVERIFIED = args.includes('--unverified'); // Target books with OCR but no verification at all
 const MAX_TOOLS_OLD = 5; // Books verified with this many tools or fewer get re-verified
 
@@ -61,7 +60,7 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
 
-  const booksCol = USE_WAREHOUSE ? 'books_warehouse' : 'books';
+  const booksCol = 'books'; // --warehouse dropped: the warehouse was retired 2026-10 (#5470)
 
   // Target selection:
   // --unverified: books with OCR but NO verification at all (no tools_called field)
@@ -146,10 +145,6 @@ async function main() {
         const result = await verifyFirstTranslation(db, book.id, {
           dryRun: DRY_RUN,
           force: true,
-          collection: USE_WAREHOUSE ? 'books_warehouse' : 'books',
-          // Public badge stays with reconcile-first-translation-flag.ts [RETIRED #4536: the badge is card-governed now — propose a Translation Card edit instead] (#3726);
-          // warehouse rows aren't public, so the flag write is allowed there.
-          writeBadge: USE_WAREHOUSE,
         });
 
         if (!result.success) {

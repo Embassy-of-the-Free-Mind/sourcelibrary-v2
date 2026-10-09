@@ -6,7 +6,7 @@ const TROUW_URL =
   'https://www.trouw.nl/religie-filosofie/derek-lomas-ik-hoop-dat-we-met-positieve-ai-een-nieuwe-renaissance-kunnen-bewerkstelligen~b4dbb20f/';
 
 export const metadata: Metadata = {
-  title: "Trouw interview: 'A new renaissance' — Source Library",
+  title: "Trouw interview: 'A new renaissance' | Source Library",
   description:
     'An English guide to the Dutch interview with Derek Lomas in Trouw, 14 August 2026, on Positive AI, Ficino, and the Source Library.',
   // Unlisted: reachable by link, kept out of search and out of the sitemap.
@@ -23,7 +23,7 @@ export default function TrouwInterviewPage() {
         <ContentHeader
           maxWidth="narrow"
           title="&lsquo;I hope that with positive AI we can bring about a new renaissance&rsquo;"
-          subtitle="Derek Lomas interviewed in Trouw — an English guide to the Dutch original"
+          subtitle="Derek Lomas interviewed in Trouw: an English guide to the Dutch original"
         />
       }
     >
@@ -48,9 +48,9 @@ export default function TrouwInterviewPage() {
           Amsterdam, home of the Bibliotheca Philosophica Hermetica.
         </p>
         <p>
-          It moves between three subjects. The first is Positive AI itself — the question of how
+          It moves between three subjects. The first is Positive AI itself: the question of how
           psychology and design can be applied to AI systems so that they serve human well-being,
-          learning, and the sense of beauty — illustrated by Smart Paper, a handwriting-assessment
+          learning, and the sense of beauty. Lomas illustrates it with Smart Paper, a handwriting-assessment
           project used three times a year to evaluate the math and language skills of five million
           students in India.
         </p>
@@ -68,7 +68,7 @@ export default function TrouwInterviewPage() {
         <p>
           The third is harmony. Lomas discusses the{' '}
           <Link href="/author/pythagoras">Pythagorean</Link> conviction that the universe is built
-          on mathematical ratios — the same ratios that govern musical intervals — and his current
+          on mathematical ratios (the same ratios that govern musical intervals), and his current
           research into how harmony and resonance might inform the design of better AI systems. The
           article closes with a response from Wouter Hanegraaff, professor of the history of
           Hermetic philosophy at the University of Amsterdam, who shares the hope but presses the
@@ -100,13 +100,13 @@ export default function TrouwInterviewPage() {
         <h2>What the interview points to</h2>
         <ul>
           <li>
-            <Link href="/">Source Library</Link> — more than 15,000 books in over 55 languages,
+            <Link href="/">Source Library</Link>: more than 15,000 books in over 55 languages,
             six thousand of them never previously translated into English, shown with the original
             text alongside the translation.
           </li>
           <li>
-            <a href="https://embassyofthefreemind.com" rel="noopener">Embassy of the Free Mind</a> —
-            the Bibliotheca Philosophica Hermetica in Amsterdam: over 25,000 books on alchemy,
+            <a href="https://embassyofthefreemind.com" rel="noopener">Embassy of the Free Mind</a>:
+            the Bibliotheca Philosophica Hermetica in Amsterdam, with over 25,000 books on alchemy,
             Hermetica, Kabbalah, Rosicrucians, astrology, natural philosophy and the pre-modern
             roots of science, inscribed in the UNESCO Memory of the World register.
           </li>
