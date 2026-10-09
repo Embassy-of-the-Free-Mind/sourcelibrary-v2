@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA historicapolitica/Pantaleon_res_memorabiles_1",
+  "edition": "Militaris Ordinis Johannitarum, Rhodiorum, Aut Melitensium Equitum Rerum Memorabilium Terra Marique, A Sexcentis fere annis pro republica Christiana, in Asia, Africa, &amp; Europa contra Barbaros, Saracenos, Arabes &amp; Turcas fortiter gestarum, ad praesentem usque 1581 annum, Historia Nova : libri",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b65c3218b87551bfd12324",
+  "page_number": 117,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 380213,
+    "to_char": 384604,
+    "overlap": 0.486,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-2)",
+    "at": "2026-10-06T10:05:00Z",
+    "note": "p.100; ref matches 'Tantorum motuum' to 'nihil superesset.'; marginal notes are inlined; manuscript annotations at the left.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      116,
+      117,
+      118
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.501Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "8253874b8f389489389a6e032ac786dec7100e31a881eaae5f4eaca057bcf2f9",
+  "unit": {
+    "chars": 4391
+  }
+}

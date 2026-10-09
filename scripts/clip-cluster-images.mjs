@@ -26,6 +26,7 @@ const ITERATIONS = parseInt(process.argv.find(a => a.startsWith('--iterations=')
 const MIN_SIZE = parseInt(process.argv.find(a => a.startsWith('--min-size='))?.split('=')[1] || '5');
 const OUTPUT_FILE = process.argv.find(a => a.startsWith('--output='))?.split('=')[1];
 const LABEL = process.argv.includes('--label');
+import { embedAuthHeaders } from './workers/lib/embed-auth.mjs';
 const CLIP_URL = process.env.CLIP_URL || 'http://localhost:3457';
 
 // Simple k-means on float arrays
@@ -97,7 +98,7 @@ async function labelCluster(centroid) {
   try {
     const resp = await fetch(`${CLIP_URL}/embed-text`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: embedAuthHeaders(),
       body: JSON.stringify({ text: candidates[0] }), // single test
     });
     if (!resp.ok) return null;
@@ -111,7 +112,7 @@ async function labelCluster(centroid) {
     try {
       const resp = await fetch(`${CLIP_URL}/embed-text`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: embedAuthHeaders(),
         body: JSON.stringify({ text }),
       });
       const { embedding } = await resp.json();

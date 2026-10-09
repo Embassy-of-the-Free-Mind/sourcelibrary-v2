@@ -27,9 +27,9 @@ import { defaultRouteForCountry } from '@/lib/give-routes';
  */
 
 export const metadata: Metadata = {
-  title: 'Give — Source Library',
+  title: 'Give | Source Library',
   description:
-    'Fund the digitization and translation of rare historical texts. Choose an amount and give in two taps — US tax-deductible or international.',
+    'Fund the digitization and translation of rare historical texts. Choose an amount and give in two taps, US tax-deductible or international.',
   alternates: { canonical: '/give' },
 };
 
@@ -48,15 +48,15 @@ export default async function GivePage() {
             Give to Source Library
           </h1>
           <p className="text-stone-600 leading-relaxed mb-8">
-            We digitize rare historical texts, translate them — many for the first
-            time in English — and publish them free for anyone to read and quote.
+            We digitize rare historical texts, translate them (many for the first
+            time in English), and publish them free for anyone to read and quote.
             Your gift pays for scanning and translation.
           </p>
 
           <GiveForm defaultRoute={defaultRouteForCountry(country)} surface="give" />
 
           <p className="mt-6 text-sm text-stone-500 leading-relaxed">
-            Want the longer version — where the money goes, giving through a
+            Want the longer version: where the money goes, giving through a
             business, or becoming a sponsor?{' '}
             <Link
               href="/support"
@@ -67,7 +67,7 @@ export default async function GivePage() {
             .
           </p>
           <p className="mt-2 text-sm text-stone-500 leading-relaxed">
-            Not everyone gives money — some give time.{' '}
+            Not everyone gives money; some give time.{' '}
             <Link
               href="/contribute"
               className="text-accent-rust hover:text-accent-gold-dark underline underline-offset-2"

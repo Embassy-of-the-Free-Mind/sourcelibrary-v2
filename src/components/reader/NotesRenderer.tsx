@@ -15,6 +15,7 @@ import { useLocale } from '@/lib/i18n';
 import { getReaderStrings } from '@/lib/reader-strings';
 import { applyNotesOff } from '@/lib/notes-off';
 import { separateTermDefinitions } from '@/lib/term-definitions';
+import { repairLeakedMarkup } from '../../../scripts/lib/leaked-markup.mjs';
 import AiBadge from '@/components/ui/AiBadge';
 
 /**
@@ -947,7 +948,11 @@ export function prepareNotesMarkdown(
   text: string,
   { showNotes, pageType }: { showNotes: boolean; pageType?: string }
 ): { processedText: string; metadata: ExtractedMetadata; isDescriptionOnly: boolean } {
-  const { cleanText, metadata } = extractMetadata(text);
+  // Leaked markup (#5700) goes before anything pairs a tag: `</leaf-break/>` printed
+  // as literal text, an unclosed `<meta>continues from previous page:` put its label
+  // (and nothing else) in the body, `the Vedas <term>Vedas</term>` read the word twice.
+  // Shared with every plain-text surface and export — scripts/lib/leaked-markup.mjs.
+  const { cleanText, metadata } = extractMetadata(repairLeakedMarkup(text));
 
   // Read-time OCR safety net (#2764): collapse runaway dot/dash/underscore
   // lacuna walls to […] and convert leaked LaTeX (\frac, \sqrt, operators) to

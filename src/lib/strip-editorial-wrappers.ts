@@ -29,6 +29,7 @@
  * between them — route every text-cleaning path through this helper so the leak
  * can't reopen on one surface.
  */
+import { repairLeakedMarkup } from '../../scripts/lib/leaked-markup.mjs';
 
 // Translation-side page-description blocks ∪ OCR-side page-level metadata
 // envelope ∪ AI image descriptions. All *describe* the page; none are verbatim
@@ -267,8 +268,20 @@ export interface StripEditorialWrappersOptions {
  * Never tighten this back to a bare `<tag>`.
  */
 export function stripEditorialWrapperBlocks(text: string): string {
+  return stripWrapperBlocks(text, false);
+}
+
+/**
+ * `plain`: the caller serves plain text, so a run of `&nbsp;` is one space rather
+ * than a run of no-break spaces (see scripts/lib/leaked-markup.mjs).
+ */
+function stripWrapperBlocks(text: string, plain: boolean): string {
   if (!text) return text;
-  return text
+  // Leaked markup FIRST (#5700): an unclosed `<meta>continues from previous page:`
+  // must lose its opener and label before the orphan-tag rule below turns the
+  // opener into a space and leaves the label standing as page text. One
+  // implementation, shared with the reader — do not re-derive a rule here.
+  return repairLeakedMarkup(text, { plain })
     .replace(new RegExp(`<(${EDITORIAL_WRAPPERS})(?:\\s[^>]*)?>[\\s\\S]*?<\\/\\1>`, 'gi'), ' ')
     // Any orphan opening/closing wrapper tag left by malformed AI output.
     .replace(new RegExp(`<\\/?(?:${EDITORIAL_WRAPPERS})(?:\\s[^>]*)?>`, 'gi'), ' ')
@@ -298,7 +311,7 @@ export function stripEditorialWrappers(
   return cleanOcrArtifacts(
     stripMarkdownMarkers(
       flattenTables(
-        stripEditorialWrapperBlocks(text),
+        stripWrapperBlocks(text, true),
       ),
     ),
   );

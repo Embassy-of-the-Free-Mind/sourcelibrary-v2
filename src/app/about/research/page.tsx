@@ -31,7 +31,7 @@ export default function ResearchPage() {
         <p className="text-xl text-secondary leading-relaxed mb-4">
           Source Library uses Google&apos;s Gemini language models to read and translate historical texts
           from their original languages into English. The original language text is always preserved
-          alongside the translation &mdash; every page can be viewed as the original scan, the OCR
+          alongside the translation: every page can be viewed as the original scan, the OCR
           transcription, or the English translation.
         </p>
         <p className="text-xl text-secondary leading-relaxed mb-12">
@@ -150,13 +150,13 @@ export default function ResearchPage() {
         <div className="space-y-6 mb-16">
           <StageCard
             number="1"
-            title="OCR — Reading the Original"
+            title="OCR: Reading the Original"
             color="bg-green-50 text-green-700"
-            detail="Gemini vision models read directly from page images, handling blackletter (Fraktur), early modern Latin abbreviations, ligatures, and multi-column layouts. The OCR prompt (currently Standard v6) classifies each page by type — text, illustration, title page, table of contents — and flags quality issues like fading or damage inline within the transcription."
+            detail="Gemini vision models read directly from page images, handling blackletter (Fraktur), early modern Latin abbreviations, ligatures, and multi-column layouts. The OCR prompt (currently Standard v6) classifies each page by type (text, illustration, title page, table of contents) and flags quality issues like fading or damage inline within the transcription."
           />
           <StageCard
             number="2"
-            title="Translation — Page by Page with Context"
+            title="Translation: Page by Page with Context"
             color="bg-blue-50 text-blue-700"
             detail="Pages are translated sequentially, not in isolation. Each page receives the previous page's translation as context, so the AI maintains consistent terminology and handles sentences that cross page boundaries. All non-English text is translated, including embedded Latin, Greek, Hebrew, or Arabic phrases. Books originally in English before 1700 are modernized from Early Modern English."
           />
@@ -204,7 +204,7 @@ export default function ResearchPage() {
               </div>
             </div>
             <p className="text-secondary text-[15px] leading-relaxed">
-              Full-quality model for the BPH collection &mdash; complex manuscripts, rare scripts,
+              Full-quality model for the BPH collection: complex manuscripts, rare scripts,
               and typefaces that benefit from higher capability.
             </p>
           </div>
@@ -228,7 +228,7 @@ export default function ResearchPage() {
         <div className="bg-white rounded-xl border border-border-light p-5 mb-16">
           <p className="text-sm text-secondary leading-relaxed">
             Translation prompts are stored as <strong>immutable versions</strong> in the database. Every page records
-            which prompt version and model produced its text. Prompts are never edited after deployment &mdash; improvements
+            which prompt version and model produced its text. Prompts are never edited after deployment; improvements
             ship as new versions.
             See <Link href="/developers/pipeline" className="text-accent-rust hover:underline">Pipeline Architecture</Link> for
             technical details.
@@ -283,19 +283,19 @@ export default function ResearchPage() {
 
         <div className="space-y-4 mb-6">
           <ComparisonBlock
-            section="§1 — Opening"
+            section="§1: Opening"
             ai="A thought once arose in me concerning existing things, and my intellect, soaring greatly aloft, while my bodily senses were overcome by sleep—not, however, like those weighed down from satiety of food or from bodily fatigue..."
             scholarly="Once on a time, when I had begun to think about the things that are, and my thoughts had soared high aloft, while my bodily senses had been put under restraint by sleep,—yet not such sleep as that of men weighed down by fullness of food or by bodily weariness..."
             scholarLabel="Scott (1924)"
           />
           <ComparisonBlock
-            section="§4 — The Vision"
+            section="§4: The Vision"
             ai="...I saw an infinite vision, a light which had become all things, both gentle and joyful. And I was amazed at the sight."
             scholarly="...I beheld a boundless view; all was changed into light, a mild and joyous light; and I marvelled when I saw it."
             scholarLabel="Scott (1924)"
           />
           <ComparisonBlock
-            section="§6 — Theological Statement"
+            section="§6: Theological Statement"
             ai={`"That light," I said, "is Mind, the first God, who existed before the watery nature which appeared from the darkness; and the luminous Word is the Son of God."`}
             scholarly={`'That Light,' he said, 'is I, even Mind, the first God, who was before the watery substance which appeared out of the darkness; and the Word which came forth from the Light is son of God.'`}
             scholarLabel="Scott (1924)"
