@@ -953,12 +953,12 @@ export default function ScanPage() {
                     <div className="flex gap-2 justify-center">
                       {capturePreview.quality.blurScore < 0.3 && (
                         <span className="bg-status-warning/15 text-status-warning text-xs px-2 py-1 rounded-full font-medium">
-                          Blurry — consider retaking
+                          Blurry: consider retaking
                         </span>
                       )}
                       {capturePreview.quality.brightnessScore < 0.3 && (
                         <span className="bg-status-warning/15 text-status-warning text-xs px-2 py-1 rounded-full font-medium">
-                          Too dark — try better lighting
+                          Too dark: try better lighting
                         </span>
                       )}
                     </div>
@@ -1101,7 +1101,7 @@ export default function ScanPage() {
                 <h1 className="font-serif text-2xl text-primary">Book Uploaded</h1>
                 <p className="text-secondary">
                   <span className="font-medium">{metadata.title}</span>
-                  {' — '}
+                  {' · '}
                   {pages.length} {pages.length === 1 ? 'page' : 'pages'}
                 </p>
                 <p className="text-muted text-sm">

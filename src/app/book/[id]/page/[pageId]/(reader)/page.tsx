@@ -19,6 +19,7 @@ import { localizedTitle } from '@/lib/localized';
 import { aldineVariables } from '@/lib/fonts/aldine';
 import { isAldineFount } from '@/lib/fonts/aldine-fount';
 import { READER_PAGE_PROJECTION } from '@/lib/reader-page-projection';
+import { getQualityWarnings } from '@/lib/book-warnings';
 
 // Schema.org structured data for a translated page, so it surfaces as a
 // citable scholarly work in web search (#2822). Only emitted for indexable
@@ -155,6 +156,10 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
     notFound();
   }
 
+  // Warnings from stored quality checks (#6199): one indexed read of book_checks, for the whole book, so a client
+  // page turn needs no second request. Never throws; most books have no rows. Partner rooms keep the old reader.
+  const qualityWarnings = ctx?.isEmbedded ? undefined : await getQualityWarnings(db, [scopedBookId]);
+
   // Serialize MongoDB objects (ObjectId, Date) to plain JS for client components
   const serializedPage = JSON.parse(JSON.stringify(currentPage)) as Page;
   const serializedNavPages = JSON.parse(JSON.stringify(navPages)) as Page[];
@@ -223,6 +228,7 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
             initialBook={book}
             initialPage={markedPage}
             initialPageList={serializedNavPages}
+            qualityWarnings={qualityWarnings}
           />
         )}
       </div>

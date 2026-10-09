@@ -43,7 +43,7 @@ Two short paragraphs, ~2–3 sentences each (one tight paragraph for minor works
 4. **One concrete anchor minimum.** A real number, method, date, or first. Vague praise alone is weak.
 5. **Stats live in the stat line, not the prose.** The page already shows author, date, volumes, plates, format. Don't restate them; the prose adds the meaning the stats can't (why the plate count matters, not just that it exists).
 6. **Verify every fact.** Dates, counts, "first to…", influence claims. The featured slot is the most-read text on the page.
-7. **No AI tropes.** No "stands as a testament," "not just X but Y," rule-of-three lists, em-dashes as default beats, empty intensifiers (truly, deeply).
+7. **No AI tropes.** No "stands as a testament," "not just X but Y," rule-of-three lists, empty intensifiers (truly, deeply). **No em dashes (—) at all** (#6215): use a comma, colon, period or parentheses.
 8. **No foil framing.** Describe the book on its own terms; don't define it against a rival, region, or tradition ("unlike European work," "before the West"). (Consistent with the collection-intro rules.)
 9. **Tense:** past for what it did ("issued from 1780"), present for what it still is ("it remains a reference").
 10. **Plain, confident, a little understated.** Scholarly, not salesy.

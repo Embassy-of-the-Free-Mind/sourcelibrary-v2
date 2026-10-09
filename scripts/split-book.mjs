@@ -21,6 +21,7 @@ import { MongoClient, ObjectId } from 'mongodb';
 import sharp from 'sharp';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { extractPageType } from './lib/ocr-result-parse.mjs';
+import { NOT_HELD } from './lib/pipeline-hold.mjs';
 
 // --- Config ---
 // 3% overlap on each crop (#1491 lesson #6: 1% clipped tight gutters). `--overlap=<fraction>` overrides it for a book
@@ -443,7 +444,11 @@ try {
     ars.sort((a, b) => a - b);
     const ar = ars[Math.floor(ars.length / 2)];
     const arList = ars.map(a => a.toFixed(2)).join(', ');
-    if (ar < MIN_SPREAD_AR) {
+    if (ar < MIN_SPREAD_AR && REVIEWED_POSITIONS) {
+      // #6114: a near-square open book (woodblock spreads measure 1.05–1.10) fails the gate, but a reviewer has
+      // placed a fold or a null on every page by eye — that review outranks a five-image aspect sample.
+      console.log(`  AR gate: median ${ar.toFixed(2)} < ${MIN_SPREAD_AR} over ${ars.length} samples [${arList}] — below the gate, but reviewed positions (${APPROVED_BY}) decide per page. Proceeding.`);
+    } else if (ar < MIN_SPREAD_AR) {
       console.log(`  AR gate: median ${ar.toFixed(2)} < ${MIN_SPREAD_AR} over ${ars.length} samples [${arList}] — portrait pages, not spreads. Skipping.`);
       if (!DRY_RUN) {
         await db.collection('books').updateOne({ id: book.id }, {
@@ -1048,7 +1053,8 @@ if (GUTTER_ONLY) {
   // #2454: pages were created without OCR — requeue the book so the normal
   // single-page batch OCR pipeline picks it up (needs_splitting is now false,
   // so no spread prompt and no Phase 1.5 skip).
-  await db.collection('books').updateOne({ id: book.id }, {
+  // A held book (#4790) stays held: its holder runs the OCR and releases it (#6114).
+  await db.collection('books').updateOne({ id: book.id, ...NOT_HELD }, {
     $set: { 'pipeline_auto.status': 'archive_complete', 'pipeline_auto.last_updated': new Date() },
     // A book released from the review gate (#4792) must not still read as parked.
     $unset: { 'pipeline_auto.split_review_needed': '', 'pipeline_auto.error': '' },

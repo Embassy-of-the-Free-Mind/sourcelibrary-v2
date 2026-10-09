@@ -5,7 +5,7 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import gilgameshData from '../../../../scripts/output/gilgamesh-tablets.json';
 
 export const metadata: Metadata = {
-  title: 'The Epic of Gilgamesh — Tablet Reader — Source Library',
+  title: 'The Epic of Gilgamesh: Tablet Reader | Source Library',
   description:
     'Read the Epic of Gilgamesh from the original cuneiform tablets. Photos, transliteration, and translation of the 12 tablets from the Library of Ashurbanipal.',
   alternates: { canonical: '/read/gilgamesh' },
@@ -139,7 +139,7 @@ function TabletSection({ tablet }: { tablet: TabletEntry }) {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={mainWitness.photoUrl}
-                  alt={`Cuneiform tablet ${mainWitness.museumNo} — ${tablet.title}`}
+                  alt={`Cuneiform tablet ${mainWitness.museumNo}, ${tablet.title}`}
                   className="w-full rounded-lg shadow-md border border-stone-200"
                   loading="lazy"
                 />
@@ -150,7 +150,7 @@ function TabletSection({ tablet }: { tablet: TabletEntry }) {
               </div>
             )}
             <div className="text-xs text-stone-400 space-y-0.5">
-              <p><strong>{mainWitness.museumNo}</strong> &mdash; {mainWitness.description}</p>
+              <p><strong>{mainWitness.museumNo}</strong>: {mainWitness.description}</p>
               <p>
                 <a href={mainWitness.cdliUrl} className="text-secondary hover:underline" target="_blank" rel="noopener">CDLI</a>
                 {' | '}
@@ -168,7 +168,7 @@ function TabletSection({ tablet }: { tablet: TabletEntry }) {
                       <a href={w.cdliUrl} className="text-secondary hover:underline" target="_blank" rel="noopener">
                         {w.museumNo}
                       </a>
-                      {' '}&mdash; {w.note}
+                      {': '}{w.note}
                     </li>
                   ))}
                 </ul>

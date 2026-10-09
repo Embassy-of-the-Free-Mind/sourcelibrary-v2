@@ -1,0 +1,230 @@
+[
+ {
+  "id": "QQ5ZU",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "A careful rendering of a Vinaya commentary on theft of spread-out, growing and worn property; the root-text quotation, the variant reading and the grammatical analogy are all handled correctly."
+ },
+ {
+  "id": "QTW95",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "ཚུལ་དེ་སྟོང་པ་ཉིད་ཀྱི་ཐེག་པ་གང་ཡིན་པ་",
+    "english": "this stainless system belongs to the vehicle of impermanence",
+    "why": "སྟོང་པ་ཉིད་ཀྱི་ཐེག་པ is the vehicle of emptiness (śūnyatā), not of impermanence.",
+    "fix": {
+     "find": "this stainless system belongs to the vehicle of impermanence",
+     "replace": "this stainless system belongs to the vehicle of emptiness"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ཆོས་ཀྱི་དེ་ཁོ་ན་ཉིད་ཇི་ལྟ་བ་བཞིན་དུ་གནས་པ་དེ་བཞིན་དུ་སྟོན་པར་བྱེད་པའི་ཞེས་བྱ་བའི་ངེས་པའི་ཚིག་གི་ཚུལ་གྱིས",
+    "english": "By the method of definitive expression, the Buddhas clarify the unerring reality of phenomena just as it abides.",
+    "why": "ངེས་པའི་ཚིག is nirukti, an etymology: the passage glosses Tathāgata as 'one who teaches the reality of phenomena just as (tathā) it abides', and the English loses that etymology."
+   }
+  ],
+  "note": "Generally accurate on the two-truths argument, but it renders the vehicle of emptiness as 'impermanence' and flattens the etymology of Tathāgata."
+ },
+ {
+  "id": "QETUK",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "གནོད་སྦྱིན་བདག་རྣམས་ཀུན་ནས་ཡོངས་སུ་བསྐོར་ནས་གནས།",
+    "english": "there were those with golden lotuses in their hands who showed him respect. Surrounded on all sides by the masters of the (Yakshas) nature spirits or guardians of wealth, invisible gods also dwelled in the sky.",
+    "why": "The yakṣa lords themselves, holding golden lotuses, stand around the infant out of respect; they do not surround the invisible gods.",
+    "fix": {
+     "find": "there were those with golden lotuses in their hands who showed him respect. Surrounded on all sides by the masters of the (Yakshas) nature spirits or guardians of wealth, invisible gods also dwelled in the sky.",
+     "replace": "the lords of the (Yakshas) nature spirits or guardians of wealth, holding golden lotuses in their hands, stood surrounding him on all sides out of respect. Invisible gods also, in the sky,"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ཞི་བའི་འོད་ཟེར་འདུས་མ་བྱས་པའི་མེ་འབར་རོ",
+    "english": "a peaceful radiance burned like an unconditioned fire",
+    "why": "The portent is that a fire with gentle rays blazed of itself, without being kindled; 'unconditioned' imports the Abhidharma sense of asaṃskṛta."
+   }
+  ],
+  "note": "A fluent rendering of the nativity portents; the yakṣas' role in the opening verse is misconstrued."
+ },
+ {
+  "id": "QBVB2",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "Faithful rendering of the alms-bowl and teaching-posture śaikṣa rules and their origin stories."
+ },
+ {
+  "id": "QOA53",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "རྣམ་པར་འགྲེལ་པར་བཤད་པ་ནི",
+    "english": "The explanation in the commentary (viniścaya) the Ascertainment is the authoritative...",
+    "why": "རྣམ་འགྲེལ is the (Pramāṇa)vārttika, not the Viniścaya.",
+    "fix": {
+     "find": "The explanation in the commentary (viniścaya) the Ascertainment is the authoritative...",
+     "replace": "The explanation in the Vārttika (Pramāṇavārttika) is: the authoritative..."
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "བརྟགས་པའི་འབྲས་བུ་དང་རང་བཞིན་ལ་བརྟེན་ནས་ཁས་བླངས་པའི་དབྱེ་བ་རྣམ་པ་གཉིས",
+    "english": "2. Two divisions based on consequence and essence within what is accepted",
+    "why": "The two divisions of the 'accepted' (scriptural) case rest on imputed effect- and nature-reasons; འབྲས་བུ is effect, not consequence, and 'imputed' is dropped.",
+    "fix": {
+     "find": "2. Two divisions based on consequence and essence within what is accepted",
+     "replace": "2. Two divisions within what is accepted, based on imputed effect and nature [reasons]"
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "གང་དག་བསལ་བ་ཕྱོགས་མ་ཡིན་ནོ་ཞེས་བྱ་བ་ནི་ཅི་ཚིག་ཙམ་ཡིན་ནམ། འོན་ཏེ་རིགས་པས་ཐོབ་པ་ཡིན་ཞེས་ཉེ་བར་བཀོད་ནས། གཞུང་རྟོགས་པར་བྱེད་པ་དེ་དག་གི་ལྟར་ན།",
+    "english": "Some say that the refuted is not a thesis. Is this merely a statement, or is it obtained through reasoning? Having set this forth, according to those who explain the text in that way,",
+    "why": "'Those who' are the interpreters who pose the question whether 'the refuted is not a thesis' is mere words or reached by reasoning; the English instead makes 'some' assert the thesis."
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "ཡང་དག་པའི་ཤེས་པར་མི་རུང་བའི་ཕྱིར་ཕྱོགས་པ་མ་ཡིན་ནོ་ཞེས་བྱ་བ་འདི་ཙམ་ཞིག་བརྗོད་པར་བྱ་བར་འགྱུར་བས",
+    "english": "contradictions are not suitable for valid cognition in a single instance. Thus, one would only say it is not a thesis.",
+    "why": "It is one quoted reason: on their reading, all one would need to say is 'it is not a thesis because contradictories cannot both be validly cognized of one subject'."
+   }
+  ],
+  "note": "The dialectic on the pseudo-thesis is followed only roughly: the Vārttika is misidentified, the twofold division of 'accepted' is mistranslated, and the opening argument is mis-segmented."
+ },
+ {
+  "id": "QL2EZ",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "འོད་སྲུངས་མི་གཉིས་པ་ཆེས་གཏུམ་པ།",
+    "english": "suppose there were two men who were extremely fierce, very harsh, possessed of violent actions, very powerful, and possessed of great physical strength. Kashyapa, if those men were to beat",
+    "why": "མི་གཉིས་པ is 'a second man' (after the first example), and the following མི་དེས is singular: one man, not two.",
+    "fix": {
+     "find": "suppose there were two men who were extremely fierce, very harsh, possessed of violent actions, very powerful, and possessed of great physical strength. Kashyapa, if those men were to beat",
+     "replace": "suppose a second man were to appear who was extremely fierce, very harsh, possessed of violent actions, very powerful, and possessed of great physical strength. Kashyapa, if that man were to beat"
+    }
+   }
+  ],
+  "note": "Faithful rendering of the Kāśyapaparivarta passage on false claims of attainment, apart from turning 'a second man' into 'two men'."
+ },
+ {
+  "id": "Q984V",
+  "score": 3,
+  "verdict": "specialist",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "རང་ཉིད་ཀྱི་འདོད་པ་བསྡུས་པ་བསྟན་བཅོས་རྣམས་སུ་བཟློག་པའི་དོན་ཡིན་གྱི་ཡན་ལག་གི་ནི་མ་ཡིན་ནོ",
+    "english": "the intended meaning summarized by oneself in the treatises is the reversed meaning, not the secondary parts",
+    "why": "In this gloss on svayam iṣṭa, བསྡུས་པ is the inclusion of the word 'own intended' and བཟློག་པ is exclusion: its purpose is to exclude what is in the treatises; it does not mean 'summarized' or 'reversed'."
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "མདོ་ལས་ནི་དོན་གཞན་དུ་འགྱུར་རོ",
+    "english": "the meaning would be different from the (Sutra) Foundational scripture",
+    "why": "In a Pramāṇa sub-commentary, མདོ is the root text (the Pramāṇasamuccaya), not a Buddhist sūtra."
+   }
+  ],
+  "note": "Too literal to follow the sub-commentary on svayam iṣṭa and the thesis; key Pramāṇa terms (exclusion, inclusion, root text) are mistranslated, and the reader cannot reconstruct the argument."
+ },
+ {
+  "id": "Q65TV",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "བུད་མེད་རྒྱལ་ལ་བློ་གྲོས་གང་",
+    "english": "how could there be a mind for conquering women?",
+    "why": "As the parallel Sanskrit strījitānāṃ matiḥ kutaḥ shows, the line asks what wisdom those conquered by women can have; it is not about conquering women (the same error is in the first paragraph).",
+    "fix": {
+     "find": "how could there be a mind for conquering women?",
+     "replace": "what wisdom can those conquered by women have?"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "སྡིག་པ་དེ། །སྐྱེ་བ་སྔ་མ་རྣམས་སྤྱད་ནས།",
+    "english": "having committed that sin\nin previous births,",
+    "why": "སྤྱད་ནས (Skt. bhuktvā) means having experienced or suffered the fruit of that sin through previous births; it does not mean having committed it."
+   }
+  ],
+  "note": "The Tibetan verses of the fratricide and Arthadatta stories are mostly sound, but the misogynist maxim is inverted, and the opening paragraph is a garbled rendering of the transliterated Sanskrit."
+ },
+ {
+  "id": "Q60T3",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "structure",
+    "confidence": "high",
+    "tibetan": "དེ་ཡང་མི་རུང་སྟེ་ཞེས་བྱ་བ་ལ་སོགས་པ་སྨོས་ཏེ",
+    "english": "the text states **furthermore**, and so on",
+    "why": "The cited lemma is 'That too is untenable' (དེ་ཡང་མི་རུང་སྟེ), the reply to the objection, not 'furthermore'.",
+    "fix": {
+     "find": "the text states **furthermore**, and so on",
+     "replace": "the text states **that too is untenable**, and so on"
+    }
+   }
+  ],
+  "note": "A clear lemma-by-lemma rendering of the commentary on simultaneous arising and ceasing, with one misidentified lemma."
+ },
+ {
+  "id": "QS9L3",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "དག་ཀྱང་འགྱེད་པར་འགྱུར།",
+    "english": "even executioners will be sent away",
+    "why": "The verse says that hostile people will attack or contend with those who abide in the Dharma; nobody is 'sent away'."
+   },
+   {
+    "type": "addition",
+    "confidence": "medium",
+    "tibetan": "མི་བརྟན་པར་ནི་མངོན་པ་ཡི། །དགེ་བསྙེན་",
+    "english": "unstable lay practitioners who claim to higher realizations",
+    "why": "The Tibetan says lay followers who are manifestly unsteady; 'claim to higher realizations' is not in the text."
+   }
+  ],
+  "note": "A sound rendering of the prophecy verses and the Lotus Sūtra conduct verses, with two loosely rendered lines."
+ }
+]

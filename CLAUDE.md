@@ -165,6 +165,7 @@ they open with a "Read this when" line so you can bail in two seconds.
 - **Telling readers how good a text is** (draft labels, quality pages, collection blurbs, partner reports) → `../quality-statements.md` (**direct, not harsh, not sugarcoated: measured value and measured errors, with n and date**)
 - Normalising, folding, comparing or validating TEXT (names, quotes, dedup keys, detectors) → `non-latin-text-operations.md`
 - Naming a page defect, or designing an OCR/translation detector, prompt or judge → `../page-error-taxonomy.md` (44 classes, by eye)
+- **Found invented or wrong-leaf text with the image open** → `containment-on-finding.md` (**hold, withhold those pages, label `contained`: same run, no ask**)
 
 **PRs, git & the shared checkout**
 - Judging a PR's checks (red Vercel, missing/stale CI, backlog sweeps, batch merges) → `pr-checks.md`
@@ -201,6 +202,7 @@ Detect the work domain from the user's prompt and load the right context automat
 - **Quality auditing:** `/qa-audit`
 - **Anything reading `page_revisions` as a double-OCR corpus** (agreement, calibration, repeat-instability, disagreement typologies): read **`.claude/docs/data-provenance.md`** FIRST — it carries the row schema, the per-source counts, and critically the `source` label that says which mechanism wrote each row. Most of the collection is not what the name suggests: the largest source by far is bulk *text relocation*, not double OCR, and it reads as catastrophic disagreement in any metric that doesn't exclude it. The measurement stack built on top is `.claude/docs/ocr-quality-measurement-loop.md`. **`page_revisions` is a mixed record of pipeline output AND bulk maintenance — always segment by `source` before quoting a number over it.**
 - **Batch processing:** `/batch-translate`
+- **Dispatching a headless job to a box (`claude-job.sh`), or writing its brief:** read `scripts/workers/JOB-HOSTS.md` — ask `scripts/workers/job-where.sh` which box is emptiest, and give the brief `Lands: #NNNN` and `PR: yes|no` header lines.
 - **Music notation / `music_transcriptions` / any OMR model:** read `.claude/docs/music-notation.md` — **never batch a vision model over score pages** (measured: it reads the printed answer key, not the staff); score against `scripts/music/ground-truth/` first.
 - **Handoffs:** `.claude/handoffs/` (read by date/topic). **This repo is PUBLIC (AGPL).** New handoffs and all operational/business material (fundraising, contacts, outreach, budgets, donors, sponsors) go in the **private** repo `Embassy-of-the-Free-Mind/sourcelibrary-ops` (clone at `~/sourcelibrary-ops`), which is gitignored here — never commit them to this repo. Only genuinely public-worthy *technical* postmortems (no PII/secrets/business strategy) belong in `.claude/handoffs/` here, and only by deliberate `git add -f`.
 - **Reference docs:** `.claude/docs/` (read on demand, never all at once)
@@ -213,8 +215,8 @@ Detect the work domain from the user's prompt and load the right context automat
 If installed, use it at PR-open time → `.claude/docs/code-review-graph.md`. **Never treat its `dead_code` output as a deletion list** (2,509 "dead" functions, live `GET` handlers among them).
 
 ## System Map
-- **Interactive diagram:** https://sourcelibrary.org/platform/admin/system-map — click any node for details, key files, collections, gotchas (requires platform login)
-- **Markdown reference:** `.claude/docs/system-map.md` — full text version with file layout, collection inventory, dead code list
+- **Interactive diagram:** https://sourcelibrary.org/platform/admin/system-map (platform login)
+- **Markdown reference:** `.claude/docs/system-map.md`
 
 ## Knowledge Maintenance
 - **After fixing a non-trivial bug**, proactively update the relevant memory file following the `/lesson` workflow. Don't wait to be asked.

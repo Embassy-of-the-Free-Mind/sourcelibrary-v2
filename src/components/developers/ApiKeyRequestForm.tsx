@@ -70,7 +70,7 @@ export default function ApiKeyRequestForm() {
       const keysData = await keysRes.json();
       setExistingKeys((keysData.keys || []).filter((k: UserKey) => k.status === 'active'));
     } catch {
-      setError('Network error — please try again');
+      setError('Network error. Please try again.');
     } finally {
       setGenerating(false);
     }
@@ -106,7 +106,7 @@ export default function ApiKeyRequestForm() {
       setFormMessage(data.message);
     } catch {
       setFormStatus('error');
-      setFormMessage('Network error — please try again');
+      setFormMessage('Network error. Please try again.');
     }
   }
 
@@ -123,7 +123,7 @@ export default function ApiKeyRequestForm() {
         {newKey && (
           <div className="bg-green-50 border border-green-200 rounded-xl p-5">
             <h3 className="text-base font-semibold text-green-800 mb-2">Your API key</h3>
-            <p className="text-sm text-green-700 mb-3">Copy this now — it won&apos;t be shown again.</p>
+            <p className="text-sm text-green-700 mb-3">Copy this now. It won&apos;t be shown again.</p>
             <div className="flex items-center gap-2">
               <code className="flex-1 px-3 py-2 bg-white border border-green-300 rounded-lg text-sm font-mono text-stone-800 break-all">
                 {newKey}

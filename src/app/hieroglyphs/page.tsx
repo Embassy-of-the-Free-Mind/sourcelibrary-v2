@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 const evalData: any[] = [];
 
 export const metadata: Metadata = {
-  title: 'Hieroglyph OCR Eval — Source Library',
+  title: 'Hieroglyph OCR Eval | Source Library',
   description:
     'Side-by-side evaluation of Gemini AI hieroglyphic OCR against Budge\'s Egyptian Reading Book (1896).',
 };
@@ -100,7 +100,7 @@ export default function HieroglyphEvalPage() {
           </p>
           <p className="text-sm" style={{ color: 'var(--text-faint)' }}>
             Left: original scan. Middle: direct OCR (whole-line). Right: describe-each
-            (model describes each glyph visually before identifying it — chain-of-thought for vision).
+            (model describes each glyph visually before identifying it: chain-of-thought for vision).
           </p>
         </div>
       </header>
@@ -185,7 +185,7 @@ export default function HieroglyphEvalPage() {
                       className="text-center mt-2 text-[10px] font-mono italic"
                       style={{ color: 'var(--text-faint)' }}
                     >
-                      Original scan — Internet Archive
+                      Original scan · Internet Archive
                     </p>
                   </div>
                 </div>

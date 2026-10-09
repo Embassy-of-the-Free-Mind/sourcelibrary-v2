@@ -20,11 +20,16 @@ import path from 'node:path';
 import { MongoClient } from 'mongodb';
 import { sectionOf, verseShare, isColophon, openingAt, rng as mkRng } from '../tengyur-characterize/common.mjs';
 
-const out = 'scripts/eval/results/tengyur-levers-6121';
-const work = '/root/tlev';
+// --round 3 (#6182): a FRESH reviewer sample of 100 (seed 6182), excluding every page of rounds 1–2's
+// sample, their planted controls and the reference-aligned sides, written to the #6182 directories.
+const R3 = process.argv.includes('--round') && process.argv[process.argv.indexOf('--round') + 1] === '3';
+const out = R3 ? 'scripts/eval/results/pareto-6182/tib-rev' : 'scripts/eval/results/tengyur-levers-6121';
+const work = R3 ? '/root/pareto-6182/rev' : '/root/tlev';
+const EXCLUDE = new Set(R3 ? ['/root/tlev/sample-pages.jsonl', '/root/tlev/ref-pages.jsonl', '/root/tlev/controls.jsonl', '/root/tlev2/controls-1.jsonl']
+  .flatMap((f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l).page_id) : [])) : []);
 fs.mkdirSync(out, { recursive: true }); fs.mkdirSync(work, { recursive: true });
-const PLAN = [['Pramāṇa', 30], ['Madhyamaka', 10], ['Vinaya', 10], ['Jātaka', 10]];
-const SEED = 6121;
+const PLAN = R3 ? [['Pramāṇa', 40], ['Madhyamaka', 30], ['Vinaya', 15], ['Jātaka', 15]] : [['Pramāṇa', 30], ['Madhyamaka', 10], ['Vinaya', 10], ['Jātaka', 10]];
+const SEED = R3 ? 6182 : 6121;
 
 const HAS_EN = { 'translation.data': { $type: 'string', $nin: [''] } };
 const c = new MongoClient(process.env.MONGODB_URI);
@@ -91,7 +96,7 @@ for (const [section, n] of PLAN) {
     const nb = await pages.find({ book_id: v.book_id, page_number: { $in: [pg.page_number - 2, pg.page_number - 1, pg.page_number + 1] } }, { projection: { page_number: 1, 'ocr.data': 1 } }).toArray();
     const at = (d) => nb.find((x) => x.page_number === pg.page_number + d)?.ocr?.data || '';
     const bo = pg.ocr?.data || '', p1 = at(-1), p2 = at(-2);
-    const why = /\{D\d+[a-zA-Z]?\}/.test(bo) ? 'opens a text' : /\{D\d+[a-zA-Z]?\}/.test(p1) ? 'previous side opens a text'
+    const why = EXCLUDE.has(pg.id) ? 'used in rounds 1–2' : /\{D\d+[a-zA-Z]?\}/.test(bo) ? 'opens a text' : /\{D\d+[a-zA-Z]?\}/.test(p1) ? 'previous side opens a text'
       : isColophon(bo) ? 'colophon' : (!p1.trim() || !p2.trim()) ? 'no two previous sides' : null;
     if (why) { rejected.push({ section, g, page_id: pg.id, vol: v.vol, page_number: pg.page_number, why }); continue; }
     const op = openingAt(await marks(v.book_id), pg.page_number);
