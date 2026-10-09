@@ -6,7 +6,7 @@ import { pages as pagesApi, readingHistory } from '@/lib/api-client';
 import { useStableSession } from '@/hooks/useStableSession';
 import { useEmbedHref } from '@/lib/EmbedContext';
 import { getPageDisplayUrl } from '@/lib/utils';
-import { localeFromPathname } from '@/lib/locale-path';
+import { localeFromPathname, readsOriginal } from '@/lib/locale-path';
 
 // Shared state model for the v2 reader design previews (2a "Quiet Desk" and
 // 2c "Study Desk"). Owns: current page + cache + prefetch, page navigation
@@ -309,13 +309,14 @@ export function useReaderV2(
   useEffect(() => {
     // <lg — the same line where the stacked mobile layout begins.
     const isPhone = window.matchMedia('(max-width: 1023px)').matches;
-    // The Latin site keeps its own pane choice (#6254). There the Latin text is
+    // Each original-text site (`/la`, `/nl`, `/zh`) keeps its own pane choice (#6254, #6382). There the Latin text is
     // the reading text and the English pane starts off, so a choice made on
     // `/la` must not follow the reader to the English site, nor the reverse.
     // Keyed on the URL locale, like everything else about reading language
     // (.claude/docs/i18n.md rule 6): this is one stored choice PER site, not a
     // preference that crosses between them.
-    const localeKeyBase = localeFromPathname(window.location.pathname) === 'la' ? `${viewsKeyBase}-la` : viewsKeyBase;
+    const siteLocale = localeFromPathname(window.location.pathname);
+    const localeKeyBase = readsOriginal(siteLocale) ? `${viewsKeyBase}-${siteLocale}` : viewsKeyBase;
     const viewsKey = isPhone ? `${localeKeyBase}-m` : localeKeyBase;
     viewsKeyRef.current = viewsKey;
     let hasChosen = false;

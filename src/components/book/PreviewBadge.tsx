@@ -17,6 +17,8 @@ const COPY: Record<Locale, { label: string; tooltip: string }> = {
   en: { label: 'Preview', tooltip: 'This record shows only a few pages of a larger work.' },
   es: { label: 'Vista previa', tooltip: 'Este registro muestra solo algunas páginas de una obra más extensa.' },
   la: { label: 'Specimen', tooltip: 'Hic paucae tantum paginae operis maioris ostenduntur.' },
+  nl: { label: 'Voorproef', tooltip: 'Dit record toont maar een paar pagina’s van een groter werk.' },
+  zh: { label: '节选', tooltip: '此条目仅收录一部较大著作中的若干页。' },
 };
 
 export default function PreviewBadge({ lang = 'en', className = '', title }: {
