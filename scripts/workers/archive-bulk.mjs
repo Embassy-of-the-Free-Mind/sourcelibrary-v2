@@ -130,7 +130,7 @@ function cleanupStaleTmpDirs() {
 // After repeated failures, mark a book as blocked so it stops being selected.
 // Resets to 0 on the next successful archive run.
 async function recordBulkFailure(db, book, errorMsg) {
-  const booksCol = book._booksCol || 'books';
+  const booksCol = 'books';
   const prevFailures = book.archive_metadata?.bulk_failures || 0;
   const failures = prevFailures + 1;
   const update = {
@@ -149,7 +149,7 @@ async function recordBulkFailure(db, book, errorMsg) {
 
 async function clearBulkFailures(db, book) {
   if (!book.archive_metadata?.bulk_failures) return;
-  const booksCol = book._booksCol || 'books';
+  const booksCol = 'books';
   await db.collection(booksCol).updateOne(
     { id: book.id },
     { $unset: { 'archive_metadata.bulk_failures': '', 'archive_metadata.bulk_last_failed_at': '', 'archive_metadata.bulk_last_error': '' } }
@@ -301,7 +301,7 @@ async function processBook(book, db) {
     // nothing. The tell is a log of `Books: 0 processed, 0 failed, 30 skipped` with no [SKIP]
     // lines. Mark it the same way the no-download branch below does, so the queue drains.
     console.log(`  [SKIP] ${book.title?.slice(0, 50)} — no IA identifier, marking bulk_unsuitable`);
-    await db.collection(book._booksCol || 'books').updateOne(
+    await db.collection('books').updateOne(
       { id: book.id },
       { $set: {
         'archive_metadata.bulk_unsuitable': true,
@@ -314,8 +314,8 @@ async function processBook(book, db) {
     return;
   }
 
-  const pagesCol = book._pagesCol || 'pages';
-  const booksCol = book._booksCol || 'books';
+  const pagesCol = 'pages';
+  const booksCol = 'books';
 
   const pages = await db.collection(pagesCol)
     .find({ book_id: book.id, $or: [{ archived_photo: { $exists: false } }, { archived_photo: null }, { archived_photo: '' }] },
@@ -719,48 +719,10 @@ async function main() {
     ])
     .toArray();
 
-  // Also include warehouse IA books — prioritize likely first translations.
-  // When targeting a single book by --book-id, only the live books collection
-  // is consulted (the live id is the canonical surface).
-  const warehouseIaBooks = TARGET_BOOK_ID ? [] : await db.collection('books_warehouse')
-    .aggregate([
-      { $match: {
-        pages_count: { $gt: 0 },
-        $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] },
-        'archive_metadata.blocked': { $ne: true },
-        'archive_metadata.bulk_unsuitable': { $ne: true },
-        $or: [
-          { ia_identifier: { $exists: true, $ne: null, $ne: '' } },
-          { 'image_source.provider': 'internet_archive' },
-        ],
-        ...(SCOPE_IDS ? { id: { $in: SCOPE_IDS } } : {}),
-      }},
-      { $addFields: {
-        _priority: {
-          $switch: {
-            branches: [
-              { case: { $eq: ['$is_first_translation', true] }, then: 0 },
-              { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS] }, then: 2 },
-            ],
-            default: 1,
-          },
-        },
-      }},
-      { $sort: { _priority: 1, _id: -1 } },
-      { $project: { id: 1, title: 1, ia_identifier: 1, image_source: 1, pages_count: 1, language: 1, archive_metadata: 1 } },
-      { $limit: BOOK_LIMIT },
-    ])
-    .toArray()
-    .catch(() => []);
-
-  // Tag warehouse books with their collection names
-  warehouseIaBooks.forEach(b => { b._pagesCol = 'pages_warehouse'; b._booksCol = 'books_warehouse'; });
-  iaBooks.push(...warehouseIaBooks);
-
-  console.log(`[archive-bulk] Found ${iaBooks.length - warehouseIaBooks.length} live + ${warehouseIaBooks.length} warehouse IA books to archive`);
+  console.log(`[archive-bulk] Found ${iaBooks.length} IA books to archive`);
 
   if (DRY_RUN) {
-    iaBooks.forEach((b, i) => console.log(`  ${i + 1}. ${b._booksCol === 'books_warehouse' ? '[WH] ' : ''}${b.title?.slice(0, 60)} (${b.pages_count || '?'} pages, ${b.language || '?'})`));
+    iaBooks.forEach((b, i) => console.log(`  ${i + 1}. ${b.title?.slice(0, 60)} (${b.pages_count || '?'} pages, ${b.language || '?'})`));
     await client.close();
     return;
   }

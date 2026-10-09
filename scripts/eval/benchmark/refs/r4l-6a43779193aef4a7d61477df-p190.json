@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/melis1",
+  "edition": "Schediasmata poetica — Paris: Sittart, 1586.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "6a43779193aef4a7d61477df",
+  "page_number": 190,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 184935,
+    "to_char": 185589,
+    "overlap": 0.457,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-1)",
+    "at": "2026-10-06T10:04:50+00:00",
+    "note": "p.176 verse; ref matches first to last line (pad 'quod haec In epistula' / catchword 'Prope finit annos'). Google bitonal scan.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "italic",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      189,
+      190,
+      191
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.484Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "49ed176e0b7c532fbcb605dbbab80c93a318cf5c22163ba02abd4bb51c4f475b",
+  "unit": {
+    "chars": 654
+  }
+}

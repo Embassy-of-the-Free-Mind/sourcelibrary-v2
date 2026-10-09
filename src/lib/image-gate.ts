@@ -284,21 +284,21 @@ export async function checkImageAccess(request: NextRequest): Promise<ImageAcces
 export function imageBudgetExceededBody(decision: ImageAccessDecision) {
   if (decision.reason === 'clean_requires_capability') {
     return {
-      error: 'Unmarked (clean=1) image serving requires a full-tier API key, or a key with the clean-images grant. Send your key as "Authorization: Bearer sl_data_…". Tiers: https://sourcelibrary.org/dataset — or drop clean=1 for the standard (marked) image.',
+      error: 'Unmarked (clean=1) image serving requires a full-tier API key, or a key with the clean-images grant. Send your key as "Authorization: Bearer sl_data_…". Tiers: https://sourcelibrary.org/dataset. Or drop clean=1 for the standard (marked) image.',
       next_steps: { tiers: 'https://sourcelibrary.org/dataset', get_api_key: 'https://sourcelibrary.org/developers' },
     };
   }
   if (decision.reason === 'key_rate_limit') {
     return {
-      error: 'Your API key\'s requests-per-minute limit was reached. Slow your request rate — the daily budget is unaffected. Higher rates come with paid tiers: https://sourcelibrary.org/licensing.',
+      error: 'Your API key\'s requests-per-minute limit was reached. Slow your request rate; the daily budget is unaffected. Higher rates come with paid tiers: https://sourcelibrary.org/licensing.',
       next_steps: { upgrade: 'https://sourcelibrary.org/licensing' },
       retry_after_seconds: 60,
     };
   }
   const next =
     decision.identity.kind === 'apikey'
-      ? `Your free Explorer key is capped at ${decision.limit} images/day. Paid tiers are uncapped — see https://sourcelibrary.org/licensing.`
-      : 'Bulk image access requires an API key — free at https://sourcelibrary.org/developers; paid tiers (uncapped) at https://sourcelibrary.org/licensing.';
+      ? `Your free Explorer key is capped at ${decision.limit} images/day. Paid tiers are uncapped: see https://sourcelibrary.org/licensing.`
+      : 'Bulk image access requires an API key, free at https://sourcelibrary.org/developers; paid tiers (uncapped) at https://sourcelibrary.org/licensing.';
   return {
     error: `Daily image budget reached (${decision.used}/${decision.limit} in the last 24h). ${next}`,
     used: decision.used,

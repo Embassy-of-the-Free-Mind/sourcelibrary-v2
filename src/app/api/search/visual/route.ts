@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
-import { CLIP_URL } from '@/lib/clip';
+import { CLIP_URL, clipHeaders } from '@/lib/clip';
 import { resolveSearchScope, matchClip, isScoped } from '@/lib/tenant-search-scope';
 
 export const maxDuration = 15;
@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
     // Encode text query via CLIP text encoder on Hetzner
     const clipResp = await fetch(`${CLIP_URL}/embed-text`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: clipHeaders(),
       body: JSON.stringify({ text: query }),
       signal: AbortSignal.timeout(5000),
     });

@@ -5,6 +5,11 @@
  * Fetches all author page URLs to trigger ISR regeneration.
  * Run after sync-worker to ensure cached pages reflect latest page counts.
  *
+ * NOT SCHEDULED since #4753. Vercel's ISR cache is per deployment and production
+ * deployed ~19×/day (week to 2026-10-06), so a nightly warm of all ~15.7K pages
+ * was mostly thrown away within hours. Kept for a one-off run after a bulk
+ * author change.
+ *
  * Usage:
  *   set -a; source .env.production.local; set +a; node scripts/workers/warm-author-pages.mjs
  */

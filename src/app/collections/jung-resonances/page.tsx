@@ -12,7 +12,7 @@ import alignmentData from '@/data/jung-bph-alignment-2026-05-22.json';
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-    title: "Jung Resonances — BPH",
+    title: "Jung Resonances | BPH",
     description:
         "Books from C.G. Jung's personal library at Küsnacht that are also held in the Bibliotheca Philosophica Hermetica. 151 bibliographic resonances between two of the most significant private libraries of Western esoteric thought.",
     robots: { index: true, follow: true },
@@ -146,7 +146,7 @@ export default async function JungResonancesPage() {
                         Stiftung der Werke von C.G. Jung in Küsnacht (digitised at
                         e-rara.ch), {DATA.matched_count} are also held in the Bibliotheca
                         Philosophica Hermetica. This page surfaces those bibliographic
-                        resonances — works Jung read in his own copy that the BPH also
+                        resonances: works Jung read in his own copy that the BPH also
                         preserves, often in a different edition. Both libraries can be
                         opened side by side.
                     </p>
@@ -222,7 +222,7 @@ export default async function JungResonancesPage() {
                             shared significant words in title and author surname, plus
                             year proximity (≤10 years). The highest-scoring BPH candidate
                             per Jung title is shown above. {ustcCount} of the {matched.length} matches
-                            carry a USTC SN on the BPH side — those are identity-grade
+                            carry a USTC SN on the BPH side; those are identity-grade
                             (USTC covers pre-1651 imprints, so coverage is concentrated
                             in the earlier years).
                         </p>
@@ -312,7 +312,7 @@ function ResonanceCard({ match }: { match: FlatMatch }) {
                         >
                             <BookMarked className="w-4 h-4 mt-0.5 shrink-0 text-muted group-hover/jung:text-accent-rust" />
                             <span>
-                                Jung also owned this — see his copy at Küsnacht
+                                Jung also owned this. See his copy at Küsnacht
                                 {yearsDiffer && (
                                     <span className="text-muted ml-1">
                                         (Jung&apos;s copy: {jung.year})
