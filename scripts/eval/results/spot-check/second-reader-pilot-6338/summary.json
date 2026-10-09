@@ -1,0 +1,80 @@
+{
+ "pro": {
+  "page_calls": 16,
+  "book_calls": 4,
+  "attempts": 31,
+  "nudged": 10,
+  "empty": 0,
+  "blocked": 0,
+  "fenced": 0,
+  "schema_fail": 0,
+  "pages_reviewed": 16,
+  "secs_page_median": 93.15,
+  "secs_page_max": 217.4,
+  "secs_book_median": 24.85,
+  "secs_book_max": 33.2,
+  "secs_total": 1689.8,
+  "problems": [],
+  "book4": {
+   "uid": "69b52c953dd6d94230281474",
+   "secs": 86.4,
+   "attempts": 1,
+   "nudged": false,
+   "fenced": false,
+   "schema_errors": [],
+   "chars": 3290
+  }
+ },
+ "f38h": {
+  "page_calls": 16,
+  "book_calls": 4,
+  "attempts": 29,
+  "nudged": 9,
+  "empty": 0,
+  "blocked": 0,
+  "fenced": 0,
+  "schema_fail": 0,
+  "pages_reviewed": 16,
+  "secs_page_median": 66.7,
+  "secs_page_max": 108.6,
+  "secs_book_median": 19.95,
+  "secs_book_max": 45.1,
+  "secs_total": 1244.4,
+  "problems": [],
+  "book4": {
+   "uid": "69b52c953dd6d94230281474",
+   "secs": 81.1,
+   "attempts": 1,
+   "nudged": false,
+   "fenced": false,
+   "schema_errors": [],
+   "chars": 11514
+  }
+ },
+ "f38l": {
+  "page_calls": 16,
+  "book_calls": 4,
+  "attempts": 25,
+  "nudged": 5,
+  "empty": 0,
+  "blocked": 0,
+  "fenced": 0,
+  "schema_fail": 0,
+  "pages_reviewed": 16,
+  "secs_page_median": 10.75,
+  "secs_page_max": 25.8,
+  "secs_book_median": 6.65,
+  "secs_book_max": 9.0,
+  "secs_total": 216.3,
+  "problems": [],
+  "book4": {
+   "uid": "69b52c953dd6d94230281474",
+   "secs": 23.5,
+   "attempts": 2,
+   "nudged": true,
+   "fenced": false,
+   "schema_errors": [],
+   "chars": 6654
+  }
+ }
+}

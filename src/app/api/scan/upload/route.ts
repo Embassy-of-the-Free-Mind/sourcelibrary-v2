@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic';
 
+import { withAuth } from '@/lib/auth-helpers';
 import { NextRequest, NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
 import { getDb } from '@/lib/mongodb';
@@ -20,7 +21,7 @@ const MAX_FILES_PER_REQUEST = 10;
  * Unauthenticated — access controlled by checking the book was created
  * via Mobile Scan and is still in draft status.
  */
-export async function POST(request: NextRequest) {
+async function handlePOST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const bookId = formData.get('bookId') as string;
@@ -124,3 +125,7 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+// Admin only (#6032), matching the /scan pages (scan/layout.tsx requireAdmin): this
+// route writes books/R2 or reaches a paid model, and was open to anonymous callers.
+export const POST = withAuth(async (request) => handlePOST(request), { minRole: 'admin' });

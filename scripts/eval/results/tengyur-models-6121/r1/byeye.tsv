@@ -1,0 +1,21 @@
+n	arm	section	type	verdict	reason
+1	S	Jātaka	agent	confirmed	མི་ཕན་འདོད་པའི་མི་རྣམས་ནི། །ནམ་ཞིག་སྐྱེས་ན་དགའ་འགྱུར: the ill-wishers rejoice when anger arises (in the speaker); the English makes the anger arise in them
+2	S	Pramāṇa	agent	confirmed	བཏང་སྙོམས་སུ་མཛད་པ་ཅན (honorific) qualifies the Buddhas, who regard the reality-object with equanimity; the English gives the equanimity to reality
+3	S	Madhyamaka	agent	debatable	the side opens mid-sentence (…བསྐྱེད་པར་ཤེས་པར་བྱའོ, "should be known to produce"); the English "how these are produced" turns the causative round, but it is a boundary fragment
+4	S	Pramāṇa	agent	confirmed	བློ་དོན་ཡུལ་ཅན་འདོད: words are held to HAVE mental objects as their domain (ཡུལ་ཅན); the English makes them the objects of the mind
+5	S	Pramāṇa	agent	debatable	དུ་བ་ལ་སོགས་པ་རྣམས་ཀྱི་མེ "fire, [the cause] of smoke"; "the relationship of smoke to fire" is vague rather than inverted
+6	G38	Pramāṇa	agent	confirmed	the quoted verse says that what comes into sight is utterly hollow (… གསོག་པ་ངོ་བོ་ཉིད་མེད་པ་ཡིན); the English invents "makes the Primary Matrix … hollow"
+7	G38	Pramāṇa	agent	debatable	who produces the discordant vāsanā (…སྐྱེད་པ་ལས་དངོས་པོ་མེད་པའི་བློས་རྒྱུན་གཅོད) is not marked in the Tibetan; the doctrine favours the reviewer
+8	G38	Pramāṇa	reversal	debatable	…གཏན་ཚིགས་ཉིད་དུ་བྲལ་བར་འགྱུར་བ་ནི་མ་ཡིན literally supports the English ("do not cease to be reasons"); the argument (they are pseudo-reasons) supports the reviewer
+9	G38	Jātaka	agent	confirmed	སྐྱེ་རྒུ་སྐྱེ་རྒུའི་མགོན་ཅན: the subjects, whose protector he was, are agents with the prince; the English drops them and reads "approached the lord of beings"
+10	G38	Jātaka	reversal	debatable	the e-text (…ཁྲོ་བ་མ་མཆིས་ན། །སྤོང་བར་གྱུར་པས་…གཏམ་ངན་འབྱུང) reads as the English does; the contrast with the next stanza supports the reviewer
+11	G35	Vinaya	agent	confirmed	གནས་ཀྱི་བྱ་བ: the duties of the master who grants dependence (གནས་ཀྱིས་ཀྱང་ཞུ་བར་མི་བྱར་ཟད་ཀྱི); the English gives them to the resident pupil
+12	G35	Pramāṇa	reversal	confirmed	ཇི་ལྟར་ཡང་ = "in some way" (kathaṃcit); "in no way existent … not observed in any way" reverses the quantifier, and the next verse likewise
+13	G35	Jātaka	agent	debatable	སྲིད་མེད་བདག་ལ་དྲན་བྱེད can be read appositively ("me, free from existence"); the frame (he later attains arhatship) favours "remember me for freedom from existence"
+14	G35	Jātaka	reversal	confirmed	སྐྱོན་ནི་ཆེན་པོ་ཁ་ཅིག་ལ: holding that birth prevents insignificance is called a great fault; the English asserts it as true
+15	G35	Pramāṇa	agent	confirmed	འདིའི་ལྷན་ཅིག་བྱེད་པ་དང་ལྷན་ཅིག་པའི་རང་གི་ངོ་བོ: the thing's own nature, together with its cooperating factors; the English gives the nature to the conditions
+16	O	Pramāṇa	agent	confirmed	ཞེན་པ་མངའ་བའི་རྒྱུ: honorific མངའ་བ makes the (apparent) clinging the Buddha's; the English makes it "those who cling"
+17	O	Pramāṇa	reversal	confirmed	the e-text breaks the line inside མ་|བསྐལ་བ ("non-remoteness"); the English drops the negation: "Remoteness"
+18	O	Vinaya	agent	confirmed	བ་ལང་སྐྱོང་གི་མ་ཞི་བ: the cowherd's woman Śivā, whose hand throws the curd pot; the English has "the cowherd" and the god "Śiva" (it flags the reading as uncertain)
+19	O	Pramāṇa	agent	confirmed	འཇིག་པར་བྱེད་པ་མི་གནས་པ་ནི་རང་ཉིད་གནས་པའི་ཕྱིར: while the destroyer is absent the thing remains of itself; the English makes the destroyer the one that remains
+20	O	Jātaka	agent	debatable	འཛིན་ཀྱང་དེ་ཡི་ཡོན་ཏན་ཡིན: "its quality" is ambiguous (the sapphire's borrowed colour, or the bead's own); "of the sapphire alone" adds "alone"

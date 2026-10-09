@@ -1,0 +1,367 @@
+{
+ "frozen": "2026-10-07",
+ "issue": 5729,
+ "method": "Pages drawn at random (seed 5729) from the pool, one per book; non-substantive pages skipped; the page's OCR read in full and an English query written for what a reader would ask that page to answer. Relevant set = that one page.",
+ "queries": [
+  {
+   "qid": "q01",
+   "lang": "Latin",
+   "query": "Augustine on whether the Lord's Supper may be received after a meal rather than fasting",
+   "book_id": "6a4a64c93f0b4659d1bc4ca7",
+   "page_number": 14,
+   "title": "Disputatio Theologica De Tempore, Quo Christus Sacramentum Coenae instituit, Quam Praeside Gerardo Woltero Molano S. Th.",
+   "page_note": "Augustine quoted: communion after eating; the Supper on Maundy Thursday"
+  },
+  {
+   "qid": "q02",
+   "lang": "Latin",
+   "query": "letter-writing manual chapters on letters of consolation, congratulation and jokes",
+   "book_id": "6a4a4165b7b0f763851380e9",
+   "page_number": 15,
+   "title": "Pamphili Persici De Secretario Liber: Tradens artes & facultates, quibus Secretarius erudiri, Et modum, Secundum quem vi",
+   "page_note": "table of chapters on kinds of letters (De Secretario)"
+  },
+  {
+   "qid": "q03",
+   "lang": "Latin",
+   "query": "why a letter of the alphabet is called littera, from erasing on wax tablets",
+   "book_id": "6a4e0c86755fb8b765ca824d",
+   "page_number": 9,
+   "title": "De orthographiae et prosodiae praecipuis duabus partibus grammatices puerilis disputatio. Per leonardum culman collectae",
+   "page_note": "grammar catechism: litera a litura, wax tablets, 23 Latin letters"
+  },
+  {
+   "qid": "q04",
+   "lang": "Latin",
+   "query": "Plato's Timaeus on vision: inner fire streams out of the eyes and meets daylight",
+   "book_id": "69b51ebe768235dc65998217",
+   "page_number": 55,
+   "title": "Chalcidii V. C. Timaeus de Platonis translatus : Item eiusdem in eundem Commentarius",
+   "page_note": "Chalcidius' Timaeus, theory of sight"
+  },
+  {
+   "qid": "q05",
+   "lang": "Latin",
+   "query": "medieval church calendar for July with saints' days and the golden number",
+   "book_id": "6a42e2627ec1a96fc1a05dc9",
+   "page_number": 15,
+   "title": "Compotus manualis",
+   "page_note": "Compotus manualis, July calendar"
+  },
+  {
+   "qid": "q06",
+   "lang": "Latin",
+   "query": "did the ancient Greeks know of America? Aelian's tale of a continent beyond the ocean",
+   "book_id": "6a43b3433c91e2a63d4dbd05",
+   "page_number": 21,
+   "title": "Disputatio Historica, de America, an veteribus fuerit cognita, & quaenam gentis illius origo?, Auctore M. Jo. Daniele Vi",
+   "page_note": "Disputatio de America; Aelian, Silenus to Midas"
+  },
+  {
+   "qid": "q07",
+   "lang": "Latin",
+   "query": "schoolmasters must be learned and pious, and magistrates and parents should support them",
+   "book_id": "6a42a2d4dec0f9e2ecca49b3",
+   "page_number": 9,
+   "title": "De literarum ludis recte aperiendis. Liber",
+   "page_note": "De literarum ludis: duties of teachers, magistrates, parents"
+  },
+  {
+   "qid": "q08",
+   "lang": "Latin",
+   "query": "cooling wine and water with saltpetre",
+   "book_id": "6a424e9680ec989e1e67db36",
+   "page_number": 11,
+   "title": "Methodus refrigerandi ex vocato salenitro vinum, aquamque ac potus quoduis aliud genus, cui accedunt varia naturalium re",
+   "page_note": "Methodus refrigerandi ex salenitro: use of saltpetre to chill water"
+  },
+  {
+   "qid": "q09",
+   "lang": "Latin",
+   "query": "do animals have reason? bees guarding their king and spiders weaving webs",
+   "book_id": "6a4272c428e9db2e39c14a83",
+   "page_number": 10,
+   "title": "Dissertatio De Carentia Sensus & Cognitionis In Brutis",
+   "page_note": "De carentia sensus in brutis: bees, spiders"
+  },
+  {
+   "qid": "q10",
+   "lang": "Latin",
+   "query": "Botero on the Christian preacher: preaching was Christ's chief office",
+   "book_id": "6a4e4e77ee64b8b14b2b363d",
+   "page_number": 23,
+   "title": "De praedicatore verbi Dei, libri quinque. Iussu illustrissimi, ac reverendissimi, domini Caroli cardinalis Borromaei, co",
+   "page_note": "De praedicatore verbi Dei, book 1 opening"
+  },
+  {
+   "qid": "q11",
+   "lang": "German",
+   "query": "forensic medicine: Caesarean section, hermaphrodites and signs of infanticide",
+   "book_id": "6a4920eacc006f976d7f4f56",
+   "page_number": 12,
+   "title": "Prodromus Tractatus Medico-Iuridici, Das ist, Kurtzer Entwurff, wie Unterschiedliche Besichtigungen ins gemein, der tödt",
+   "page_note": "table of chapters, Prodromus tractatus medico-iuridici"
+  },
+  {
+   "qid": "q12",
+   "lang": "German",
+   "query": "magnetic somnambulism compared with temple incubation of Asclepius",
+   "book_id": "69b51edccf111105c42a51a0",
+   "page_number": 66,
+   "title": "Medicinisches Journal. 5. 1788/89 = St. 17 - 20",
+   "page_note": "Medicinisches Journal 1789, journal review"
+  },
+  {
+   "qid": "q13",
+   "lang": "German",
+   "query": "course of the Rhine from the Alps through Lake Constance to Basel",
+   "book_id": "6a42729362d175ca9e4e318c",
+   "page_number": 7,
+   "title": "Herrn Noe Meurers dero Rechten Doctoris. Wasser-Recht: Fürnemlich des Weitberühmbten und Goltreichen Rheinstorms, wie de",
+   "page_note": "Meurer, Wasser-Recht: description of the Rhine"
+  },
+  {
+   "qid": "q14",
+   "lang": "German",
+   "query": "Emperor John Komnenos refused to have his wounded hand amputated and died",
+   "book_id": "6a49237f1bbf4176e1e86801",
+   "page_number": 11,
+   "title": "Schuldiges Ehren-Lob und Würde Der Edlen Medicin Und Artzney- Auch der löblichen Apothecker-Kunst, Kürtzlich beschrieben",
+   "page_note": "Ehren-Lob der Medicin: suicides by refusing physicians"
+  },
+  {
+   "qid": "q15",
+   "lang": "German",
+   "query": "books about the Asiatic Brethren and the rituals of the Illuminati",
+   "book_id": "69b51e76ff09e4fe943af48a",
+   "page_number": 56,
+   "title": "Fortegnelse over den de forenede Loger i Kiöbenhavn Zorobabel til Nordstjernen og Friedrich zur gekrönten Hofnung tilhör",
+   "page_note": "lodge library catalogue: Asiatic Brethren, Illuminati"
+  },
+  {
+   "qid": "q16",
+   "lang": "German",
+   "query": "which foods and fish to avoid during the plague",
+   "book_id": "6a491c5ea9e39181572e423b",
+   "page_number": 23,
+   "title": "Regiment und kurtzer bericht was man sich in sterbens laeufften zur praeservation und curation der pestilentz kranckheyt",
+   "page_note": "plague regimen: diet"
+  },
+  {
+   "qid": "q17",
+   "lang": "German",
+   "query": "plague preservative of walnuts, figs and rue eaten fasting in the morning",
+   "book_id": "6a492a701bbf4176e1e8a780",
+   "page_number": 24,
+   "title": "Kurtzer unnd nutzbarlicher bericht in jetziger schwebender vorgifftigen lufft sampt unerhorten hitzigen fiebern mit etli",
+   "page_note": "plague tract: preservatives, Pliny's walnut-fig-rue"
+  },
+  {
+   "qid": "q18",
+   "lang": "German",
+   "query": "uroscopy criticised: diseases cannot be diagnosed from urine",
+   "book_id": "6a4265e1dfbbb4d07aa6c20e",
+   "page_number": 14,
+   "title": "Der Englische Wahrsager aus dem Urin, Oder Gewisse Wahrsagungen aus dem Wasser-Glase: Darinnen nun allererst die alten b",
+   "page_note": "Der Englische Wahrsager aus dem Urin; Dr Hart's Anatomy of Urines"
+  },
+  {
+   "qid": "q19",
+   "lang": "German",
+   "query": "Paracelsus on three kinds of dog bite: rabid, angry and common",
+   "book_id": "6a425da0dfbbb4d07aa62310",
+   "page_number": 14,
+   "title": "Kurtzer Bericht, Von denen wüetenden Hunds-Bissen: Was dieselbe eigentlich für eine Beschaffenheit haben, was für Schade",
+   "page_note": "Bericht von wüetenden Hunds-Bissen, ch. II"
+  },
+  {
+   "qid": "q20",
+   "lang": "German",
+   "query": "clothes of plague victims: wash and air them rather than burn them",
+   "book_id": "6a4256b4dfbbb4d07aa547b9",
+   "page_number": 21,
+   "title": "Consilium Antipestiferum ... Das ist, Ein getrewer Rath in gefehrlichen und gifftigen Sterbensleufften, oder Pestilentzs",
+   "page_note": "Consilium antipestiferum: infected clothing"
+  },
+  {
+   "qid": "q21",
+   "lang": "French",
+   "query": "ignorance is the source of corruption among Christians",
+   "book_id": "69ef35466c5c0455cc3f63e6",
+   "page_number": 19,
+   "title": "Traite des sources de la corruption",
+   "page_note": "Traité des sources de la corruption"
+  },
+  {
+   "qid": "q22",
+   "lang": "French",
+   "query": "natural law: some reason too abstractly, others reduce everything to the will of God",
+   "book_id": "6a4ad95ed6371d99e7668aad",
+   "page_number": 357,
+   "title": "Principes du droit naturel et politique",
+   "page_note": "Burlamaqui, Principes du droit naturel"
+  },
+  {
+   "qid": "q23",
+   "lang": "French",
+   "query": "an easy new method for beginners to learn chess, explained by a key diagram",
+   "book_id": "69b874e513506fe62959b7a7",
+   "page_number": 17,
+   "title": "Essai sur le jeu des echecs",
+   "page_note": "Essai sur le jeu des échecs, preface"
+  },
+  {
+   "qid": "q24",
+   "lang": "French",
+   "query": "Zosimos of Panopolis on the divine water; the serpent, one is all",
+   "book_id": "69aea4867ce4835d66c24700",
+   "page_number": 33,
+   "title": "Catalogue des manuscrits alchimiques grecs",
+   "page_note": "Catalogue des manuscrits alchimiques grecs, f.80"
+  },
+  {
+   "qid": "q25",
+   "lang": "French",
+   "query": "Gold Coast Africans anoint their bodies with palm oil and how they greet friends",
+   "book_id": "6a4ed784df0b2269c3dbd308",
+   "page_number": 17,
+   "title": "Description et recit historial du riche royaume d'or de Gunea",
+   "page_note": "Description du royaume d'or de Gunea"
+  },
+  {
+   "qid": "q26",
+   "lang": "French",
+   "query": "Vattel's youth: reading Leibniz and going to Berlin to seek a post under Frederick II",
+   "book_id": "6a4ad84ad6371d99e7667bc1",
+   "page_number": 23,
+   "title": "Le Droit des gens, ou Principes de la loi naturelle (facsimile reproduction of the 1758 edition), Vol. 1",
+   "page_note": "Le Droit des gens, 1916 introduction"
+  },
+  {
+   "qid": "q27",
+   "lang": "French",
+   "query": "Bonnefons and Gilles Durant studying law at Bourges, friendship with Cujas's son",
+   "book_id": "6a42a85b831988adcb776058",
+   "page_number": 15,
+   "title": "Pancharis",
+   "page_note": "Pancharis, introduction"
+  },
+  {
+   "qid": "q28",
+   "lang": "French",
+   "query": "Pascal's arithmetical triangle: find the number of a cell without the triangle",
+   "book_id": "69b8f3c2967dc3b635a37bf2",
+   "page_number": 21,
+   "title": "Traité du triangle arithmétique",
+   "page_note": "Traité du triangle arithmétique, final problem"
+  },
+  {
+   "qid": "q29",
+   "lang": "French",
+   "query": "declaration of war: when it is required and why defensive war needs none",
+   "book_id": "6a4ad852d6371d99e7667e64",
+   "page_number": 16,
+   "title": "Le Droit des gens, ou Principes de la loi naturelle (facsimile reproduction of the 1758 edition), Vol. 2",
+   "page_note": "Vattel, Droit des gens, table of book III ch. IV"
+  },
+  {
+   "qid": "q30",
+   "lang": "French",
+   "query": "rules of piquet: counting tierces, quartes and sequences",
+   "book_id": "69b874c413506fe62959b0c0",
+   "page_number": 22,
+   "title": "La maison académique contenant les jeux du picquet, du hoc, du trictrac",
+   "page_note": "La maison académique, piquet"
+  },
+  {
+   "qid": "q31",
+   "lang": "Chinese",
+   "query": "heart palpitations caused by blood deficiency or phlegm, according to Zhu Danxi",
+   "book_id": "6a3cb9e63dce6cfad7497c3b",
+   "page_number": 85,
+   "title": "赤水元珠·卷六 (vol 6)",
+   "page_note": "赤水元珠: 怔忡 血虚 痰"
+  },
+  {
+   "qid": "q32",
+   "lang": "Chinese",
+   "query": "strong drugs for patients who tolerate poison, mild drugs for weak patients",
+   "book_id": "6a3cba163dce6cfad74995cb",
+   "page_number": 122,
+   "title": "類經·卷二十四~卷二十五 (vol 13)",
+   "page_note": "類經: 能毒者以厚藥"
+  },
+  {
+   "qid": "q33",
+   "lang": "Chinese",
+   "query": "why old people cannot sleep at night while the young cannot wake",
+   "book_id": "6a3c7b7701fe4f593c21ed92",
+   "page_number": 40,
+   "title": "難經本義·卷下 (vol 4)",
+   "page_note": "難經 46th difficulty: 老人寤而不寐"
+  },
+  {
+   "qid": "q34",
+   "lang": "Chinese",
+   "query": "sacrifices to the five sacred mountains and the eight zha harvest sacrifices",
+   "book_id": "6a3cb64757c1f37219c4a4dc",
+   "page_number": 20,
+   "title": "周禮註疏刪翼·卷十二 (vol 11)",
+   "page_note": "周禮註疏: 五嶽, 八蜡"
+  },
+  {
+   "qid": "q35",
+   "lang": "Chinese",
+   "query": "fox lore: a thousand-year-old fox becomes a beautiful woman and communicates with heaven",
+   "book_id": "6a3c74f139b4508b04e597e1",
+   "page_number": 81,
+   "title": "花木鳥獸集類·卷下 (vol 3)",
+   "page_note": "花木鳥獸集類: 狐"
+  },
+  {
+   "qid": "q36",
+   "lang": "Chinese",
+   "query": "the eight trigrams are counted in reverse to know the future",
+   "book_id": "6a3c77ca01fe4f593c204c33",
+   "page_number": 16,
+   "title": "日講易經解義·卷十八 (vol 15)",
+   "page_note": "日講易經解義: 八卦皆逆數"
+  },
+  {
+   "qid": "q37",
+   "lang": "Chinese",
+   "query": "Zhou great archery ceremony: tiger, bear and leopard targets and music",
+   "book_id": "6a3c767d01fe4f593c1fb578",
+   "page_number": 49,
+   "title": "樂書·卷一百九十七~卷二百 (vol 29)",
+   "page_note": "樂書: 大射, 虎侯熊侯豹侯"
+  },
+  {
+   "qid": "q38",
+   "lang": "Chinese",
+   "query": "the writing brush as Mao Ying in Han Yu's biography, and inkstones",
+   "book_id": "6a3c738901fe4f593c1e9449",
+   "page_number": 133,
+   "title": "白孔六帖·卷十三~卷十四 (vol 7)",
+   "page_note": "白孔六帖: 毛頴, 管城子, 硯"
+  },
+  {
+   "qid": "q39",
+   "lang": "Chinese",
+   "query": "kinds of pears in classical literature; Dao'an dividing ten pears among monks",
+   "book_id": "6a3cbeb5ec254ff6cae0259e",
+   "page_number": 16,
+   "title": "御定韻府拾遺·卷七 (vol 44)",
+   "page_note": "韻府拾遺: 梨"
+  },
+  {
+   "qid": "q40",
+   "lang": "Chinese",
+   "query": "Jin attacked Qin at Xiao while still in mourning for Duke Wen",
+   "book_id": "6a3c72b301fe4f593c1e1df3",
+   "page_number": 172,
+   "title": "春秋經筌·卷七 (vol 16)",
+   "page_note": "春秋經筌: 殽之戰"
+  }
+ ]
+}

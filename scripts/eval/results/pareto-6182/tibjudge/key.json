@@ -1,0 +1,3391 @@
+{
+ "X001": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997d0d",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "L35",
+   "T2": "PRO",
+   "T3": "G35",
+   "T4": "L31",
+   "T5": "G36",
+   "T6": "G37",
+   "T7": "G38",
+   "T8": "O",
+   "T9": "AA",
+   "T10": "S",
+   "T11": "FP"
+  }
+ },
+ "X002": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cea",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "O",
+   "T2": "FP",
+   "T3": "G38",
+   "T4": "AA",
+   "T5": "PRO",
+   "T6": "L31",
+   "T7": "G37",
+   "T8": "L35",
+   "T9": "G35",
+   "T10": "G36",
+   "T11": "S"
+  }
+ },
+ "X003": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a99811a",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "O",
+   "T2": "G37",
+   "T3": "G35",
+   "T4": "G38",
+   "T5": "L31",
+   "T6": "S",
+   "T7": "G36",
+   "T8": "L35",
+   "T9": "PRO",
+   "T10": "AA",
+   "T11": "FP"
+  }
+ },
+ "X004": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82200",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G35",
+   "T2": "L31",
+   "T3": "S",
+   "T4": "FP",
+   "T5": "AA",
+   "T6": "G36",
+   "T7": "L35",
+   "T8": "O",
+   "T9": "G38",
+   "T10": "G37",
+   "T11": "PRO"
+  }
+ },
+ "X005": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3b",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "L31",
+   "T2": "G35",
+   "T3": "PRO",
+   "T4": "S",
+   "T5": "L35",
+   "T6": "O",
+   "T7": "FP",
+   "T8": "G38",
+   "T9": "G37",
+   "T10": "G36",
+   "T11": "AA"
+  }
+ },
+ "X006": {
+  "kind": "PLANT",
+  "page_id": "6abe83c2433559215a9980bf",
+  "labels": {
+   "T1": "FP",
+   "T2": "FP_PLANT"
+  },
+  "plant": {
+   "old": "They are also not many atoms, because the existence of atoms is illogical.",
+   "new": "They are also not many atoms, because the existence of atoms is not illogical.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "X007": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cc1",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "PRO",
+   "T2": "O",
+   "T3": "L35",
+   "T4": "AA",
+   "T5": "L31",
+   "T6": "FP",
+   "T7": "G38",
+   "T8": "G36",
+   "T9": "G37",
+   "T10": "G35",
+   "T11": "S"
+  }
+ },
+ "X008": {
+  "kind": "ARMS",
+  "page_id": "6abe9be46a920ffd924d915c",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "G35",
+   "T3": "G37",
+   "T4": "PRO",
+   "T5": "G38",
+   "T6": "L31",
+   "T7": "G36",
+   "T8": "L35",
+   "T9": "O",
+   "T10": "AA",
+   "T11": "S"
+  }
+ },
+ "X009": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4b",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "L31",
+   "T2": "G38",
+   "T3": "AA",
+   "T4": "G36",
+   "T5": "O",
+   "T6": "L35",
+   "T7": "S",
+   "T8": "G37",
+   "T9": "PRO",
+   "T10": "FP",
+   "T11": "G35"
+  }
+ },
+ "X010": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980e4",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "PRO",
+   "T2": "FP",
+   "T3": "L35",
+   "T4": "G36",
+   "T5": "G37",
+   "T6": "G35",
+   "T7": "O",
+   "T8": "L31",
+   "T9": "S",
+   "T10": "AA",
+   "T11": "G38"
+  }
+ },
+ "X011": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b39",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "G37",
+   "T2": "L35",
+   "T3": "G38",
+   "T4": "G35",
+   "T5": "AA",
+   "T6": "L31",
+   "T7": "O",
+   "T8": "S",
+   "T9": "G36",
+   "T10": "FP",
+   "T11": "PRO"
+  }
+ },
+ "X012": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997d25",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "O",
+   "T2": "PRO",
+   "T3": "G38",
+   "T4": "AA",
+   "T5": "S",
+   "T6": "G35",
+   "T7": "L31",
+   "T8": "G37",
+   "T9": "G36",
+   "T10": "L35",
+   "T11": "FP"
+  }
+ },
+ "X013": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7bb",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "AA",
+   "T2": "G35",
+   "T3": "FP",
+   "T4": "G36",
+   "T5": "PRO",
+   "T6": "L31",
+   "T7": "L35",
+   "T8": "O",
+   "T9": "S",
+   "T10": "G38",
+   "T11": "G37"
+  }
+ },
+ "X014": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980bf",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "O",
+   "T2": "FP",
+   "T3": "S",
+   "T4": "G35",
+   "T5": "G37",
+   "T6": "PRO",
+   "T7": "G38",
+   "T8": "L35",
+   "T9": "G36",
+   "T10": "L31",
+   "T11": "AA"
+  }
+ },
+ "X015": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b49",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "PRO",
+   "T2": "S",
+   "T3": "L31",
+   "T4": "G38",
+   "T5": "G36",
+   "T6": "O",
+   "T7": "G35",
+   "T8": "L35",
+   "T9": "AA",
+   "T10": "FP",
+   "T11": "G37"
+  }
+ },
+ "X016": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c821c7",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G36",
+   "T2": "AA",
+   "T3": "L35",
+   "T4": "L31",
+   "T5": "G35",
+   "T6": "O",
+   "T7": "FP",
+   "T8": "S",
+   "T9": "G37",
+   "T10": "PRO",
+   "T11": "G38"
+  }
+ },
+ "X017": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7a9",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "PRO",
+   "T2": "L35",
+   "T3": "G38",
+   "T4": "G36",
+   "T5": "G35",
+   "T6": "AA",
+   "T7": "S",
+   "T8": "G37",
+   "T9": "O",
+   "T10": "FP",
+   "T11": "L31"
+  }
+ },
+ "X018": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7c1",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "G35",
+   "T2": "G38",
+   "T3": "AA",
+   "T4": "PRO",
+   "T5": "L35",
+   "T6": "L31",
+   "T7": "O",
+   "T8": "FP",
+   "T9": "G36",
+   "T10": "S",
+   "T11": "G37"
+  }
+ },
+ "X019": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980b9",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "G38",
+   "T2": "PRO",
+   "T3": "L35",
+   "T4": "G35",
+   "T5": "O",
+   "T6": "G37",
+   "T7": "S",
+   "T8": "L31",
+   "T9": "G36",
+   "T10": "FP",
+   "T11": "AA"
+  }
+ },
+ "X020": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c822df",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G38",
+   "T2": "L35",
+   "T3": "L31",
+   "T4": "G37",
+   "T5": "S",
+   "T6": "G36",
+   "T7": "G35",
+   "T8": "AA",
+   "T9": "PRO",
+   "T10": "FP",
+   "T11": "O"
+  }
+ },
+ "X021": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997d10",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "S",
+   "T2": "L35",
+   "T3": "G37",
+   "T4": "AA",
+   "T5": "O",
+   "T6": "G38",
+   "T7": "L31",
+   "T8": "G36",
+   "T9": "PRO",
+   "T10": "FP",
+   "T11": "G35"
+  }
+ },
+ "X022": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980c8",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "FP",
+   "T2": "G35",
+   "T3": "G38",
+   "T4": "PRO",
+   "T5": "G36",
+   "T6": "L35",
+   "T7": "L31",
+   "T8": "O",
+   "T9": "AA",
+   "T10": "G37",
+   "T11": "S"
+  }
+ },
+ "X023": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b32",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "FP",
+   "T2": "G37",
+   "T3": "G36",
+   "T4": "G38",
+   "T5": "PRO",
+   "T6": "S",
+   "T7": "AA",
+   "T8": "G35",
+   "T9": "L35",
+   "T10": "O",
+   "T11": "L31"
+  }
+ },
+ "X024": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a998147",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "FP",
+   "T2": "PRO",
+   "T3": "G35",
+   "T4": "G37",
+   "T5": "O",
+   "T6": "AA",
+   "T7": "G38",
+   "T8": "L35",
+   "T9": "L31",
+   "T10": "G36",
+   "T11": "S"
+  }
+ },
+ "X025": {
+  "kind": "PLANT",
+  "page_id": "6abeafd9896ea18127c822c4",
+  "labels": {
+   "T1": "FP",
+   "T2": "FP_PLANT"
+  },
+  "plant": {
+   "old": "Then, the Blessed One addressed these statements individually, saying: \"Subhuti, as for what you said, that this vehicle will emerge having overwhelmed the world including the gods, humans, and demigods,\" and so forth, explaining them extensively.",
+   "new": "Then, the Blessed One addressed these statements individually, saying: \"Subhuti, as for what you said, that this vehicle will not emerge having overwhelmed the world including the gods, humans, and demigods,\" and so forth, explaining them extensively.",
+   "how": "\\bwill\\b → will not"
+  }
+ },
+ "X026": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c822af",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "S",
+   "T3": "L35",
+   "T4": "L31",
+   "T5": "O",
+   "T6": "PRO",
+   "T7": "AA",
+   "T8": "G36",
+   "T9": "G35",
+   "T10": "G38",
+   "T11": "G37"
+  }
+ },
+ "X027": {
+  "kind": "ARMS",
+  "page_id": "6abe914d6a920ffd924d6b35",
+  "set": "tib-ref113",
+  "text": "Eight",
+  "labels": {
+   "T1": "L31",
+   "T2": "AA",
+   "T3": "PRO",
+   "T4": "G36",
+   "T5": "G37",
+   "T6": "G38",
+   "T7": "G35",
+   "T8": "L35",
+   "T9": "FP",
+   "T10": "O",
+   "T11": "S"
+  }
+ },
+ "X028": {
+  "kind": "ARMS",
+  "page_id": "6abee362a43718d234bf2210",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G36",
+   "T2": "G37",
+   "T3": "PRO",
+   "T4": "L31",
+   "T5": "AA",
+   "T6": "G35",
+   "T7": "G38",
+   "T8": "FP",
+   "T9": "S",
+   "T10": "L35",
+   "T11": "O"
+  }
+ },
+ "X029": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3a",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "G36",
+   "T2": "G35",
+   "T3": "O",
+   "T4": "G37",
+   "T5": "S",
+   "T6": "PRO",
+   "T7": "G38",
+   "T8": "L31",
+   "T9": "FP",
+   "T10": "L35",
+   "T11": "AA"
+  }
+ },
+ "X030": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b42",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "G36",
+   "T2": "G38",
+   "T3": "FP",
+   "T4": "AA",
+   "T5": "PRO",
+   "T6": "G37",
+   "T7": "S",
+   "T8": "L31",
+   "T9": "G35",
+   "T10": "L35",
+   "T11": "O"
+  }
+ },
+ "X031": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b41",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "S",
+   "T2": "O",
+   "T3": "G35",
+   "T4": "FP",
+   "T5": "G36",
+   "T6": "PRO",
+   "T7": "L31",
+   "T8": "G38",
+   "T9": "L35",
+   "T10": "G37",
+   "T11": "AA"
+  }
+ },
+ "X032": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c823ca",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "L35",
+   "T2": "S",
+   "T3": "AA",
+   "T4": "G38",
+   "T5": "G36",
+   "T6": "O",
+   "T7": "G37",
+   "T8": "L31",
+   "T9": "G35",
+   "T10": "PRO",
+   "T11": "FP"
+  }
+ },
+ "X033": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7a8",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "AA",
+   "T2": "L31",
+   "T3": "G36",
+   "T4": "S",
+   "T5": "PRO",
+   "T6": "G38",
+   "T7": "L35",
+   "T8": "FP",
+   "T9": "G35",
+   "T10": "O",
+   "T11": "G37"
+  }
+ },
+ "X034": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a998130",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "O",
+   "T2": "G37",
+   "T3": "G35",
+   "T4": "L31",
+   "T5": "L35",
+   "T6": "FP",
+   "T7": "S",
+   "T8": "G36",
+   "T9": "G38",
+   "T10": "PRO",
+   "T11": "AA"
+  }
+ },
+ "X035": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997d0b",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G35",
+   "T2": "O",
+   "T3": "G37",
+   "T4": "AA",
+   "T5": "G38",
+   "T6": "L31",
+   "T7": "PRO",
+   "T8": "FP",
+   "T9": "S",
+   "T10": "G36",
+   "T11": "L35"
+  }
+ },
+ "X036": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980e8",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "G37",
+   "T2": "G38",
+   "T3": "G36",
+   "T4": "G35",
+   "T5": "L31",
+   "T6": "L35",
+   "T7": "PRO",
+   "T8": "O",
+   "T9": "FP",
+   "T10": "S",
+   "T11": "AA"
+  }
+ },
+ "X037": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82223",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G35",
+   "T2": "L31",
+   "T3": "G36",
+   "T4": "O",
+   "T5": "L35",
+   "T6": "G37",
+   "T7": "FP",
+   "T8": "S",
+   "T9": "PRO",
+   "T10": "G38",
+   "T11": "AA"
+  }
+ },
+ "X038": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a99814a",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "G35",
+   "T2": "G38",
+   "T3": "S",
+   "T4": "O",
+   "T5": "AA",
+   "T6": "G36",
+   "T7": "PRO",
+   "T8": "FP",
+   "T9": "G37",
+   "T10": "L35",
+   "T11": "L31"
+  }
+ },
+ "X039": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7aa",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "G38",
+   "T3": "L35",
+   "T4": "PRO",
+   "T5": "S",
+   "T6": "G37",
+   "T7": "L31",
+   "T8": "AA",
+   "T9": "G36",
+   "T10": "O",
+   "T11": "G35"
+  }
+ },
+ "X040": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980b5",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "G35",
+   "T2": "S",
+   "T3": "G38",
+   "T4": "G36",
+   "T5": "FP",
+   "T6": "L35",
+   "T7": "O",
+   "T8": "AA",
+   "T9": "L31",
+   "T10": "PRO",
+   "T11": "G37"
+  }
+ },
+ "X041": {
+  "kind": "ARMS",
+  "page_id": "6abee362a43718d234bf2259",
+  "set": "tib-ref113",
+  "text": "Verses",
+  "labels": {
+   "T1": "O",
+   "T2": "L31",
+   "T3": "PRO",
+   "T4": "G37",
+   "T5": "G38",
+   "T6": "G35",
+   "T7": "AA",
+   "T8": "S",
+   "T9": "FP",
+   "T10": "G36",
+   "T11": "L35"
+  }
+ },
+ "X042": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b40",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "O",
+   "T2": "PRO",
+   "T3": "L35",
+   "T4": "G36",
+   "T5": "AA",
+   "T6": "G35",
+   "T7": "G37",
+   "T8": "L31",
+   "T9": "S",
+   "T10": "G38",
+   "T11": "FP"
+  }
+ },
+ "X043": {
+  "kind": "PLANT",
+  "page_id": "6abee362a43718d234bf220d",
+  "labels": {
+   "T1": "FP_PLANT",
+   "T2": "FP"
+  },
+  "plant": {
+   "old": "To those offerings which are unsurpassed and vast, I show my devotion for all the Victorious Ones.",
+   "new": "To those offerings which are not unsurpassed and vast, I show my devotion for all the Victorious Ones.",
+   "how": "\\bare\\b → are not"
+  }
+ },
+ "X044": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b43",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "FP",
+   "T2": "G36",
+   "T3": "L31",
+   "T4": "AA",
+   "T5": "PRO",
+   "T6": "G37",
+   "T7": "S",
+   "T8": "O",
+   "T9": "L35",
+   "T10": "G38",
+   "T11": "G35"
+  }
+ },
+ "X045": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ba",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "G38",
+   "T2": "O",
+   "T3": "AA",
+   "T4": "G36",
+   "T5": "L35",
+   "T6": "S",
+   "T7": "PRO",
+   "T8": "L31",
+   "T9": "FP",
+   "T10": "G35",
+   "T11": "G37"
+  }
+ },
+ "X046": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a99813b",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "L31",
+   "T2": "G36",
+   "T3": "AA",
+   "T4": "PRO",
+   "T5": "G35",
+   "T6": "O",
+   "T7": "G37",
+   "T8": "S",
+   "T9": "FP",
+   "T10": "G38",
+   "T11": "L35"
+  }
+ },
+ "X047": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b9",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "L31",
+   "T2": "FP",
+   "T3": "G36",
+   "T4": "AA",
+   "T5": "G35",
+   "T6": "PRO",
+   "T7": "S",
+   "T8": "G37",
+   "T9": "L35",
+   "T10": "O",
+   "T11": "G38"
+  }
+ },
+ "X048": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82398",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "PRO",
+   "T2": "S",
+   "T3": "G38",
+   "T4": "AA",
+   "T5": "L31",
+   "T6": "O",
+   "T7": "G36",
+   "T8": "G35",
+   "T9": "L35",
+   "T10": "FP",
+   "T11": "G37"
+  }
+ },
+ "X049": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b34",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "G36",
+   "T2": "G35",
+   "T3": "FP",
+   "T4": "PRO",
+   "T5": "S",
+   "T6": "L35",
+   "T7": "AA",
+   "T8": "L31",
+   "T9": "O",
+   "T10": "G38",
+   "T11": "G37"
+  }
+ },
+ "X050": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980fe",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "L31",
+   "T2": "S",
+   "T3": "G38",
+   "T4": "G35",
+   "T5": "PRO",
+   "T6": "G37",
+   "T7": "AA",
+   "T8": "FP",
+   "T9": "G36",
+   "T10": "L35",
+   "T11": "O"
+  }
+ },
+ "X051": {
+  "kind": "DUP",
+  "page_id": "6abe9be46a920ffd924d915c",
+  "labels": {
+   "T1": "S",
+   "T2": "S_DUP",
+   "T3": "L31"
+  }
+ },
+ "X052": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8239f",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G36",
+   "T2": "G38",
+   "T3": "G35",
+   "T4": "G37",
+   "T5": "L35",
+   "T6": "L31",
+   "T7": "O",
+   "T8": "S",
+   "T9": "FP",
+   "T10": "AA",
+   "T11": "PRO"
+  }
+ },
+ "X053": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c821fc",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G36",
+   "T2": "L31",
+   "T3": "G38",
+   "T4": "L35",
+   "T5": "AA",
+   "T6": "G37",
+   "T7": "O",
+   "T8": "PRO",
+   "T9": "S",
+   "T10": "FP",
+   "T11": "G35"
+  }
+ },
+ "X054": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82216",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "O",
+   "T2": "L31",
+   "T3": "S",
+   "T4": "G37",
+   "T5": "G35",
+   "T6": "L35",
+   "T7": "PRO",
+   "T8": "G38",
+   "T9": "AA",
+   "T10": "FP",
+   "T11": "G36"
+  }
+ },
+ "X055": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b35",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "L35",
+   "T2": "G37",
+   "T3": "PRO",
+   "T4": "FP",
+   "T5": "AA",
+   "T6": "G38",
+   "T7": "G36",
+   "T8": "S",
+   "T9": "O",
+   "T10": "L31",
+   "T11": "G35"
+  }
+ },
+ "X056": {
+  "kind": "PLANT",
+  "page_id": "6abe83c2433559215a9980eb",
+  "labels": {
+   "T1": "FP",
+   "T2": "FP_PLANT"
+  },
+  "plant": {
+   "old": "The phrase \"others are not to be mentioned\" does not imply they are excluded from the Abodes and such; rather, it intends to show that the seal and that which is sealed are inseparable.",
+   "new": "The phrase \"others are to be mentioned\" does not imply they are excluded from the Abodes and such; rather, it intends to show that the seal and that which is sealed are inseparable.",
+   "how": "\\bare not\\b → are"
+  }
+ },
+ "X057": {
+  "kind": "DUP",
+  "page_id": "6abed8d1896ea18127c8f7aa",
+  "labels": {
+   "T1": "S_DUP",
+   "T2": "L31",
+   "T3": "S"
+  }
+ },
+ "X058": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980c9",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "FP",
+   "T2": "L35",
+   "T3": "G36",
+   "T4": "G38",
+   "T5": "G37",
+   "T6": "L31",
+   "T7": "S",
+   "T8": "G35",
+   "T9": "PRO",
+   "T10": "AA",
+   "T11": "O"
+  }
+ },
+ "X059": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ad",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "G36",
+   "T2": "G35",
+   "T3": "S",
+   "T4": "O",
+   "T5": "PRO",
+   "T6": "L31",
+   "T7": "FP",
+   "T8": "G38",
+   "T9": "L35",
+   "T10": "AA",
+   "T11": "G37"
+  }
+ },
+ "X060": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8239a",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "L35",
+   "T2": "AA",
+   "T3": "O",
+   "T4": "L31",
+   "T5": "PRO",
+   "T6": "G35",
+   "T7": "G37",
+   "T8": "S",
+   "T9": "G36",
+   "T10": "G38",
+   "T11": "FP"
+  }
+ },
+ "X061": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c822e7",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "AA",
+   "T2": "L31",
+   "T3": "G38",
+   "T4": "PRO",
+   "T5": "FP",
+   "T6": "G37",
+   "T7": "S",
+   "T8": "L35",
+   "T9": "O",
+   "T10": "G35",
+   "T11": "G36"
+  }
+ },
+ "X062": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8224b",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "PRO",
+   "T2": "L31",
+   "T3": "FP",
+   "T4": "G35",
+   "T5": "O",
+   "T6": "AA",
+   "T7": "G38",
+   "T8": "G36",
+   "T9": "G37",
+   "T10": "L35",
+   "T11": "S"
+  }
+ },
+ "X063": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ac",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "G36",
+   "T3": "G35",
+   "T4": "PRO",
+   "T5": "G38",
+   "T6": "S",
+   "T7": "AA",
+   "T8": "G37",
+   "T9": "L31",
+   "T10": "O",
+   "T11": "L35"
+  }
+ },
+ "X064": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c821b0",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "AA",
+   "T2": "G38",
+   "T3": "S",
+   "T4": "O",
+   "T5": "PRO",
+   "T6": "L35",
+   "T7": "G36",
+   "T8": "G37",
+   "T9": "G35",
+   "T10": "FP",
+   "T11": "L31"
+  }
+ },
+ "X065": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b46",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "G37",
+   "T2": "PRO",
+   "T3": "S",
+   "T4": "G35",
+   "T5": "G38",
+   "T6": "L31",
+   "T7": "L35",
+   "T8": "AA",
+   "T9": "G36",
+   "T10": "O",
+   "T11": "FP"
+  }
+ },
+ "X066": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7bf",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "G37",
+   "T3": "G36",
+   "T4": "L35",
+   "T5": "PRO",
+   "T6": "L31",
+   "T7": "S",
+   "T8": "G35",
+   "T9": "G38",
+   "T10": "AA",
+   "T11": "O"
+  }
+ },
+ "X067": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980c3",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "G35",
+   "T2": "O",
+   "T3": "L35",
+   "T4": "S",
+   "T5": "G37",
+   "T6": "AA",
+   "T7": "FP",
+   "T8": "PRO",
+   "T9": "L31",
+   "T10": "G38",
+   "T11": "G36"
+  }
+ },
+ "X068": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c823bd",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "O",
+   "T2": "AA",
+   "T3": "L35",
+   "T4": "G36",
+   "T5": "PRO",
+   "T6": "G35",
+   "T7": "L31",
+   "T8": "S",
+   "T9": "G37",
+   "T10": "FP",
+   "T11": "G38"
+  }
+ },
+ "X069": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b5",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "L31",
+   "T2": "G38",
+   "T3": "G36",
+   "T4": "G35",
+   "T5": "O",
+   "T6": "L35",
+   "T7": "PRO",
+   "T8": "FP",
+   "T9": "S",
+   "T10": "AA",
+   "T11": "G37"
+  }
+ },
+ "X070": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4d",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "AA",
+   "T2": "L31",
+   "T3": "O",
+   "T4": "G35",
+   "T5": "G37",
+   "T6": "S",
+   "T7": "G38",
+   "T8": "G36",
+   "T9": "FP",
+   "T10": "PRO",
+   "T11": "L35"
+  }
+ },
+ "X071": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997d22",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G35",
+   "T2": "O",
+   "T3": "AA",
+   "T4": "PRO",
+   "T5": "G36",
+   "T6": "FP",
+   "T7": "L35",
+   "T8": "S",
+   "T9": "G38",
+   "T10": "G37",
+   "T11": "L31"
+  }
+ },
+ "X072": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b3",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "PRO",
+   "T2": "G37",
+   "T3": "L35",
+   "T4": "L31",
+   "T5": "O",
+   "T6": "S",
+   "T7": "G38",
+   "T8": "FP",
+   "T9": "AA",
+   "T10": "G35",
+   "T11": "G36"
+  }
+ },
+ "X073": {
+  "kind": "PLANT",
+  "page_id": "6abe8368433559215a997d0d",
+  "labels": {
+   "T1": "FP",
+   "T2": "FP_PLANT"
+  },
+  "plant": {
+   "old": "For example, the fifteen dates of the waxing moon perform the function of illustrating the increase of the moon's light, but the sixteenth does not, as it becomes the cause of waning.",
+   "new": "For example, the fifteen dates of the waxing moon perform the function of illustrating the increase of the moon's light, but the sixteenth does, as it becomes the cause of waning.",
+   "how": "\\bdoes not\\b → does"
+  }
+ },
+ "X074": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4a",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "G36",
+   "T2": "AA",
+   "T3": "S",
+   "T4": "FP",
+   "T5": "L31",
+   "T6": "PRO",
+   "T7": "G35",
+   "T8": "O",
+   "T9": "L35",
+   "T10": "G37",
+   "T11": "G38"
+  }
+ },
+ "X075": {
+  "kind": "ARMS",
+  "page_id": "6abee362a43718d234bf2212",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "L35",
+   "T2": "FP",
+   "T3": "L31",
+   "T4": "G38",
+   "T5": "G35",
+   "T6": "AA",
+   "T7": "S",
+   "T8": "G37",
+   "T9": "O",
+   "T10": "G36",
+   "T11": "PRO"
+  }
+ },
+ "X076": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cb3",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G35",
+   "T2": "G38",
+   "T3": "PRO",
+   "T4": "O",
+   "T5": "FP",
+   "T6": "L35",
+   "T7": "S",
+   "T8": "AA",
+   "T9": "L31",
+   "T10": "G36",
+   "T11": "G37"
+  }
+ },
+ "X077": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cf0",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "AA",
+   "T2": "G35",
+   "T3": "O",
+   "T4": "PRO",
+   "T5": "G38",
+   "T6": "L35",
+   "T7": "S",
+   "T8": "L31",
+   "T9": "FP",
+   "T10": "G36",
+   "T11": "G37"
+  }
+ },
+ "X078": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8239b",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G35",
+   "T2": "O",
+   "T3": "L31",
+   "T4": "S",
+   "T5": "G38",
+   "T6": "AA",
+   "T7": "G36",
+   "T8": "PRO",
+   "T9": "L35",
+   "T10": "FP",
+   "T11": "G37"
+  }
+ },
+ "X079": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997d1b",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "AA",
+   "T2": "G35",
+   "T3": "L31",
+   "T4": "FP",
+   "T5": "O",
+   "T6": "L35",
+   "T7": "G36",
+   "T8": "PRO",
+   "T9": "G38",
+   "T10": "S",
+   "T11": "G37"
+  }
+ },
+ "X080": {
+  "kind": "ARMS",
+  "page_id": "6abee362a43718d234bf220d",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "L35",
+   "T2": "S",
+   "T3": "G35",
+   "T4": "PRO",
+   "T5": "G38",
+   "T6": "AA",
+   "T7": "G36",
+   "T8": "L31",
+   "T9": "G37",
+   "T10": "O",
+   "T11": "FP"
+  }
+ },
+ "X081": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8221e",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "O",
+   "T2": "S",
+   "T3": "FP",
+   "T4": "PRO",
+   "T5": "G35",
+   "T6": "AA",
+   "T7": "G36",
+   "T8": "L35",
+   "T9": "L31",
+   "T10": "G37",
+   "T11": "G38"
+  }
+ },
+ "X082": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8222e",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "O",
+   "T3": "S",
+   "T4": "G37",
+   "T5": "L35",
+   "T6": "G36",
+   "T7": "G38",
+   "T8": "PRO",
+   "T9": "L31",
+   "T10": "AA",
+   "T11": "G35"
+  }
+ },
+ "X083": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cfc",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "O",
+   "T2": "S",
+   "T3": "L35",
+   "T4": "FP",
+   "T5": "G38",
+   "T6": "G37",
+   "T7": "PRO",
+   "T8": "G36",
+   "T9": "G35",
+   "T10": "AA",
+   "T11": "L31"
+  }
+ },
+ "X084": {
+  "kind": "PLANT",
+  "page_id": "6abeb58b896ea18127c84ef3",
+  "labels": {
+   "T1": "FP_PLANT",
+   "T2": "FP"
+  },
+  "plant": {
+   "old": "By mentioning the number, the points are easily remembered.",
+   "new": "By mentioning the number, the points are not easily remembered.",
+   "how": "\\bare\\b → are not"
+  }
+ },
+ "X085": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7be",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "AA",
+   "T2": "G38",
+   "T3": "L35",
+   "T4": "G35",
+   "T5": "G37",
+   "T6": "G36",
+   "T7": "FP",
+   "T8": "PRO",
+   "T9": "L31",
+   "T10": "O",
+   "T11": "S"
+  }
+ },
+ "X086": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cbc",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "PRO",
+   "T2": "G35",
+   "T3": "S",
+   "T4": "AA",
+   "T5": "G36",
+   "T6": "FP",
+   "T7": "L31",
+   "T8": "L35",
+   "T9": "G37",
+   "T10": "G38",
+   "T11": "O"
+  }
+ },
+ "X087": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b44",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "L35",
+   "T2": "S",
+   "T3": "AA",
+   "T4": "G35",
+   "T5": "L31",
+   "T6": "G37",
+   "T7": "FP",
+   "T8": "G36",
+   "T9": "O",
+   "T10": "PRO",
+   "T11": "G38"
+  }
+ },
+ "X088": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b47",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "G36",
+   "T2": "AA",
+   "T3": "S",
+   "T4": "O",
+   "T5": "G35",
+   "T6": "G37",
+   "T7": "PRO",
+   "T8": "FP",
+   "T9": "G38",
+   "T10": "L35",
+   "T11": "L31"
+  }
+ },
+ "X089": {
+  "kind": "PLANT",
+  "page_id": "6abee362a43718d234bf220f",
+  "labels": {
+   "T1": "FP_PLANT",
+   "T2": "FP"
+  },
+  "plant": {
+   "old": "Just as a lotus is not soiled by water, and just as the sun and moon move unhindered through the sky, so shall I act.",
+   "new": "Just as a lotus is soiled by water, and just as the sun and moon move unhindered through the sky, so shall I act.",
+   "how": "\\bis not\\b → is"
+  }
+ },
+ "X090": {
+  "kind": "ARMS",
+  "page_id": "6abee362a43718d234bf220f",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G38",
+   "T2": "G35",
+   "T3": "L35",
+   "T4": "FP",
+   "T5": "AA",
+   "T6": "G37",
+   "T7": "L31",
+   "T8": "PRO",
+   "T9": "G36",
+   "T10": "O",
+   "T11": "S"
+  }
+ },
+ "X091": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a998127",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "FP",
+   "T2": "G35",
+   "T3": "L35",
+   "T4": "G36",
+   "T5": "S",
+   "T6": "G38",
+   "T7": "AA",
+   "T8": "PRO",
+   "T9": "G37",
+   "T10": "L31",
+   "T11": "O"
+  }
+ },
+ "X092": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980b8",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "S",
+   "T2": "G36",
+   "T3": "FP",
+   "T4": "G37",
+   "T5": "G35",
+   "T6": "O",
+   "T7": "L31",
+   "T8": "L35",
+   "T9": "PRO",
+   "T10": "AA",
+   "T11": "G38"
+  }
+ },
+ "X093": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c823b6",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "G35",
+   "T3": "G37",
+   "T4": "G36",
+   "T5": "AA",
+   "T6": "PRO",
+   "T7": "L35",
+   "T8": "O",
+   "T9": "S",
+   "T10": "L31",
+   "T11": "G38"
+  }
+ },
+ "X094": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c823cd",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "L35",
+   "T2": "FP",
+   "T3": "G35",
+   "T4": "G38",
+   "T5": "O",
+   "T6": "PRO",
+   "T7": "AA",
+   "T8": "G36",
+   "T9": "L31",
+   "T10": "G37",
+   "T11": "S"
+  }
+ },
+ "X095": {
+  "kind": "ARMS",
+  "page_id": "6abeb58b896ea18127c84ef4",
+  "set": "tib-ref113",
+  "text": "An",
+  "labels": {
+   "T1": "G37",
+   "T2": "L31",
+   "T3": "L35",
+   "T4": "G38",
+   "T5": "G35",
+   "T6": "FP",
+   "T7": "AA",
+   "T8": "S",
+   "T9": "PRO",
+   "T10": "O",
+   "T11": "G36"
+  }
+ },
+ "X096": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cfe",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "AA",
+   "T2": "G36",
+   "T3": "FP",
+   "T4": "PRO",
+   "T5": "O",
+   "T6": "G38",
+   "T7": "L31",
+   "T8": "G35",
+   "T9": "S",
+   "T10": "L35",
+   "T11": "G37"
+  }
+ },
+ "X097": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b1",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "L35",
+   "T2": "AA",
+   "T3": "G38",
+   "T4": "L31",
+   "T5": "S",
+   "T6": "G36",
+   "T7": "G37",
+   "T8": "PRO",
+   "T9": "FP",
+   "T10": "O",
+   "T11": "G35"
+  }
+ },
+ "X098": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ae",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "S",
+   "T2": "G37",
+   "T3": "G38",
+   "T4": "L31",
+   "T5": "G35",
+   "T6": "L35",
+   "T7": "O",
+   "T8": "PRO",
+   "T9": "FP",
+   "T10": "AA",
+   "T11": "G36"
+  }
+ },
+ "X099": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82351",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "L35",
+   "T2": "G37",
+   "T3": "G36",
+   "T4": "G38",
+   "T5": "AA",
+   "T6": "FP",
+   "T7": "O",
+   "T8": "G35",
+   "T9": "S",
+   "T10": "L31",
+   "T11": "PRO"
+  }
+ },
+ "X100": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4e",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "AA",
+   "T2": "PRO",
+   "T3": "L31",
+   "T4": "L35",
+   "T5": "G36",
+   "T6": "FP",
+   "T7": "G35",
+   "T8": "G38",
+   "T9": "G37",
+   "T10": "O",
+   "T11": "S"
+  }
+ },
+ "X101": {
+  "kind": "DUP",
+  "page_id": "6abeafd9896ea18127c823ca",
+  "labels": {
+   "T1": "S",
+   "T2": "S_DUP",
+   "T3": "L31"
+  }
+ },
+ "X102": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82240",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G35",
+   "T2": "G37",
+   "T3": "PRO",
+   "T4": "L35",
+   "T5": "L31",
+   "T6": "G38",
+   "T7": "G36",
+   "T8": "AA",
+   "T9": "FP",
+   "T10": "S",
+   "T11": "O"
+  }
+ },
+ "X103": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a998126",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "G38",
+   "T2": "G37",
+   "T3": "G35",
+   "T4": "L35",
+   "T5": "S",
+   "T6": "L31",
+   "T7": "O",
+   "T8": "FP",
+   "T9": "G36",
+   "T10": "PRO",
+   "T11": "AA"
+  }
+ },
+ "X104": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b2",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "L35",
+   "T2": "G35",
+   "T3": "PRO",
+   "T4": "L31",
+   "T5": "AA",
+   "T6": "G38",
+   "T7": "FP",
+   "T8": "S",
+   "T9": "G37",
+   "T10": "O",
+   "T11": "G36"
+  }
+ },
+ "X105": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82207",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G38",
+   "T2": "L31",
+   "T3": "AA",
+   "T4": "G36",
+   "T5": "O",
+   "T6": "G37",
+   "T7": "S",
+   "T8": "FP",
+   "T9": "L35",
+   "T10": "PRO",
+   "T11": "G35"
+  }
+ },
+ "X106": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82355",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "PRO",
+   "T2": "O",
+   "T3": "G37",
+   "T4": "L35",
+   "T5": "AA",
+   "T6": "G35",
+   "T7": "FP",
+   "T8": "G36",
+   "T9": "L31",
+   "T10": "S",
+   "T11": "G38"
+  }
+ },
+ "X107": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8223e",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "L31",
+   "T2": "G35",
+   "T3": "O",
+   "T4": "G37",
+   "T5": "FP",
+   "T6": "PRO",
+   "T7": "L35",
+   "T8": "AA",
+   "T9": "G38",
+   "T10": "G36",
+   "T11": "S"
+  }
+ },
+ "X108": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82283",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "AA",
+   "T2": "G38",
+   "T3": "G37",
+   "T4": "L35",
+   "T5": "S",
+   "T6": "G36",
+   "T7": "O",
+   "T8": "L31",
+   "T9": "FP",
+   "T10": "PRO",
+   "T11": "G35"
+  }
+ },
+ "X109": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b48",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "G36",
+   "T2": "FP",
+   "T3": "G35",
+   "T4": "G38",
+   "T5": "PRO",
+   "T6": "L31",
+   "T7": "O",
+   "T8": "AA",
+   "T9": "L35",
+   "T10": "G37",
+   "T11": "S"
+  }
+ },
+ "X110": {
+  "kind": "ARMS",
+  "page_id": "6abee362a43718d234bf220e",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "O",
+   "T2": "L35",
+   "T3": "G37",
+   "T4": "S",
+   "T5": "AA",
+   "T6": "G38",
+   "T7": "FP",
+   "T8": "G36",
+   "T9": "PRO",
+   "T10": "L31",
+   "T11": "G35"
+  }
+ },
+ "X111": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4c",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "AA",
+   "T2": "O",
+   "T3": "G35",
+   "T4": "PRO",
+   "T5": "G38",
+   "T6": "S",
+   "T7": "L31",
+   "T8": "FP",
+   "T9": "L35",
+   "T10": "G36",
+   "T11": "G37"
+  }
+ },
+ "X112": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c823a0",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "O",
+   "T2": "G35",
+   "T3": "PRO",
+   "T4": "L35",
+   "T5": "G37",
+   "T6": "G38",
+   "T7": "G36",
+   "T8": "L31",
+   "T9": "AA",
+   "T10": "FP",
+   "T11": "S"
+  }
+ },
+ "X113": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cfd",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "L31",
+   "T2": "AA",
+   "T3": "L35",
+   "T4": "G35",
+   "T5": "PRO",
+   "T6": "O",
+   "T7": "S",
+   "T8": "G36",
+   "T9": "FP",
+   "T10": "G38",
+   "T11": "G37"
+  }
+ },
+ "X114": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8225b",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G35",
+   "T2": "O",
+   "T3": "L31",
+   "T4": "PRO",
+   "T5": "G38",
+   "T6": "FP",
+   "T7": "G36",
+   "T8": "AA",
+   "T9": "G37",
+   "T10": "L35",
+   "T11": "S"
+  }
+ },
+ "X115": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cc6",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G37",
+   "T2": "G38",
+   "T3": "G35",
+   "T4": "G36",
+   "T5": "AA",
+   "T6": "L31",
+   "T7": "O",
+   "T8": "FP",
+   "T9": "L35",
+   "T10": "S",
+   "T11": "PRO"
+  }
+ },
+ "X116": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8226c",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "AA",
+   "T2": "L31",
+   "T3": "G38",
+   "T4": "L35",
+   "T5": "G36",
+   "T6": "G37",
+   "T7": "FP",
+   "T8": "O",
+   "T9": "G35",
+   "T10": "S",
+   "T11": "PRO"
+  }
+ },
+ "X117": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8231b",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "S",
+   "T2": "FP",
+   "T3": "G35",
+   "T4": "G36",
+   "T5": "G38",
+   "T6": "L31",
+   "T7": "O",
+   "T8": "G37",
+   "T9": "AA",
+   "T10": "PRO",
+   "T11": "L35"
+  }
+ },
+ "X118": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c822ee",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "L31",
+   "T2": "PRO",
+   "T3": "AA",
+   "T4": "G38",
+   "T5": "FP",
+   "T6": "G36",
+   "T7": "G37",
+   "T8": "O",
+   "T9": "L35",
+   "T10": "G35",
+   "T11": "S"
+  }
+ },
+ "X119": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997ce1",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G35",
+   "T2": "G37",
+   "T3": "G36",
+   "T4": "O",
+   "T5": "FP",
+   "T6": "L35",
+   "T7": "AA",
+   "T8": "S",
+   "T9": "L31",
+   "T10": "G38",
+   "T11": "PRO"
+  }
+ },
+ "X120": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8238e",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "O",
+   "T2": "S",
+   "T3": "G37",
+   "T4": "G38",
+   "T5": "FP",
+   "T6": "G36",
+   "T7": "L35",
+   "T8": "PRO",
+   "T9": "L31",
+   "T10": "G35",
+   "T11": "AA"
+  }
+ },
+ "X121": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cdc",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "S",
+   "T2": "FP",
+   "T3": "G36",
+   "T4": "G35",
+   "T5": "L31",
+   "T6": "G37",
+   "T7": "G38",
+   "T8": "AA",
+   "T9": "L35",
+   "T10": "O",
+   "T11": "PRO"
+  }
+ },
+ "X122": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a998101",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "G37",
+   "T2": "G38",
+   "T3": "FP",
+   "T4": "S",
+   "T5": "L31",
+   "T6": "G35",
+   "T7": "AA",
+   "T8": "PRO",
+   "T9": "L35",
+   "T10": "O",
+   "T11": "G36"
+  }
+ },
+ "X123": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8235c",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "S",
+   "T2": "FP",
+   "T3": "G36",
+   "T4": "G37",
+   "T5": "L31",
+   "T6": "G35",
+   "T7": "L35",
+   "T8": "PRO",
+   "T9": "AA",
+   "T10": "O",
+   "T11": "G38"
+  }
+ },
+ "X124": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980e3",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "PRO",
+   "T2": "G38",
+   "T3": "G37",
+   "T4": "S",
+   "T5": "FP",
+   "T6": "AA",
+   "T7": "L31",
+   "T8": "G36",
+   "T9": "G35",
+   "T10": "O",
+   "T11": "L35"
+  }
+ },
+ "X125": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7c2",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "G35",
+   "T2": "L35",
+   "T3": "L31",
+   "T4": "PRO",
+   "T5": "G38",
+   "T6": "O",
+   "T7": "FP",
+   "T8": "G36",
+   "T9": "G37",
+   "T10": "S",
+   "T11": "AA"
+  }
+ },
+ "X126": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82383",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "S",
+   "T2": "AA",
+   "T3": "G35",
+   "T4": "G37",
+   "T5": "G38",
+   "T6": "PRO",
+   "T7": "O",
+   "T8": "L31",
+   "T9": "FP",
+   "T10": "G36",
+   "T11": "L35"
+  }
+ },
+ "X127": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c823a4",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G37",
+   "T2": "G36",
+   "T3": "PRO",
+   "T4": "G38",
+   "T5": "O",
+   "T6": "L31",
+   "T7": "FP",
+   "T8": "L35",
+   "T9": "G35",
+   "T10": "AA",
+   "T11": "S"
+  }
+ },
+ "X128": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cbf",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "L31",
+   "T2": "G36",
+   "T3": "G35",
+   "T4": "O",
+   "T5": "L35",
+   "T6": "S",
+   "T7": "FP",
+   "T8": "PRO",
+   "T9": "G37",
+   "T10": "G38",
+   "T11": "AA"
+  }
+ },
+ "X129": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c821d8",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "S",
+   "T3": "G37",
+   "T4": "AA",
+   "T5": "G35",
+   "T6": "G36",
+   "T7": "G38",
+   "T8": "L31",
+   "T9": "L35",
+   "T10": "PRO",
+   "T11": "O"
+  }
+ },
+ "X130": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cfa",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G38",
+   "T2": "PRO",
+   "T3": "G37",
+   "T4": "FP",
+   "T5": "AA",
+   "T6": "L35",
+   "T7": "G36",
+   "T8": "O",
+   "T9": "S",
+   "T10": "G35",
+   "T11": "L31"
+  }
+ },
+ "X131": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7af",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "G36",
+   "T2": "G38",
+   "T3": "L35",
+   "T4": "PRO",
+   "T5": "G37",
+   "T6": "L31",
+   "T7": "S",
+   "T8": "O",
+   "T9": "G35",
+   "T10": "AA",
+   "T11": "FP"
+  }
+ },
+ "X132": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b31",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "S",
+   "T2": "AA",
+   "T3": "G35",
+   "T4": "G37",
+   "T5": "G36",
+   "T6": "FP",
+   "T7": "PRO",
+   "T8": "L35",
+   "T9": "O",
+   "T10": "L31",
+   "T11": "G38"
+  }
+ },
+ "X133": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7bd",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "G36",
+   "T2": "G37",
+   "T3": "PRO",
+   "T4": "AA",
+   "T5": "O",
+   "T6": "G35",
+   "T7": "G38",
+   "T8": "L31",
+   "T9": "FP",
+   "T10": "L35",
+   "T11": "S"
+  }
+ },
+ "X134": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a998125",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "FP",
+   "T2": "L31",
+   "T3": "L35",
+   "T4": "PRO",
+   "T5": "G35",
+   "T6": "S",
+   "T7": "O",
+   "T8": "AA",
+   "T9": "G38",
+   "T10": "G37",
+   "T11": "G36"
+  }
+ },
+ "X135": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82217",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G38",
+   "T2": "S",
+   "T3": "FP",
+   "T4": "G35",
+   "T5": "G36",
+   "T6": "O",
+   "T7": "L31",
+   "T8": "L35",
+   "T9": "PRO",
+   "T10": "AA",
+   "T11": "G37"
+  }
+ },
+ "X136": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997cd2",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "L31",
+   "T2": "O",
+   "T3": "G38",
+   "T4": "G37",
+   "T5": "AA",
+   "T6": "G35",
+   "T7": "G36",
+   "T8": "FP",
+   "T9": "L35",
+   "T10": "PRO",
+   "T11": "S"
+  }
+ },
+ "X137": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980ca",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "L35",
+   "T2": "O",
+   "T3": "FP",
+   "T4": "PRO",
+   "T5": "S",
+   "T6": "G36",
+   "T7": "L31",
+   "T8": "AA",
+   "T9": "G37",
+   "T10": "G35",
+   "T11": "G38"
+  }
+ },
+ "X138": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3d",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "PRO",
+   "T2": "L31",
+   "T3": "O",
+   "T4": "G36",
+   "T5": "FP",
+   "T6": "S",
+   "T7": "AA",
+   "T8": "G38",
+   "T9": "G35",
+   "T10": "L35",
+   "T11": "G37"
+  }
+ },
+ "X139": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b36",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "O",
+   "T2": "PRO",
+   "T3": "S",
+   "T4": "L35",
+   "T5": "L31",
+   "T6": "G38",
+   "T7": "G37",
+   "T8": "FP",
+   "T9": "G35",
+   "T10": "AA",
+   "T11": "G36"
+  }
+ },
+ "X140": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82330",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "O",
+   "T3": "L31",
+   "T4": "PRO",
+   "T5": "G36",
+   "T6": "G37",
+   "T7": "L35",
+   "T8": "G35",
+   "T9": "AA",
+   "T10": "G38",
+   "T11": "S"
+  }
+ },
+ "X141": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980e1",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "G38",
+   "T2": "S",
+   "T3": "G37",
+   "T4": "AA",
+   "T5": "G36",
+   "T6": "FP",
+   "T7": "G35",
+   "T8": "PRO",
+   "T9": "O",
+   "T10": "L35",
+   "T11": "L31"
+  }
+ },
+ "X142": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b6",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "L31",
+   "T2": "G37",
+   "T3": "G36",
+   "T4": "G38",
+   "T5": "AA",
+   "T6": "S",
+   "T7": "O",
+   "T8": "PRO",
+   "T9": "G35",
+   "T10": "L35",
+   "T11": "FP"
+  }
+ },
+ "X143": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82365",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "AA",
+   "T3": "G35",
+   "T4": "PRO",
+   "T5": "L31",
+   "T6": "L35",
+   "T7": "S",
+   "T8": "O",
+   "T9": "G36",
+   "T10": "G38",
+   "T11": "G37"
+  }
+ },
+ "X144": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82314",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G38",
+   "T2": "L35",
+   "T3": "G37",
+   "T4": "O",
+   "T5": "G35",
+   "T6": "FP",
+   "T7": "PRO",
+   "T8": "L31",
+   "T9": "S",
+   "T10": "AA",
+   "T11": "G36"
+  }
+ },
+ "X145": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997d02",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G38",
+   "T2": "FP",
+   "T3": "AA",
+   "T4": "G37",
+   "T5": "PRO",
+   "T6": "L31",
+   "T7": "G35",
+   "T8": "L35",
+   "T9": "O",
+   "T10": "S",
+   "T11": "G36"
+  }
+ },
+ "X146": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82268",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "L31",
+   "T2": "AA",
+   "T3": "G36",
+   "T4": "G35",
+   "T5": "G38",
+   "T6": "FP",
+   "T7": "PRO",
+   "T8": "S",
+   "T9": "O",
+   "T10": "G37",
+   "T11": "L35"
+  }
+ },
+ "X147": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a99811f",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "G38",
+   "T2": "PRO",
+   "T3": "O",
+   "T4": "L31",
+   "T5": "FP",
+   "T6": "G36",
+   "T7": "G35",
+   "T8": "L35",
+   "T9": "AA",
+   "T10": "S",
+   "T11": "G37"
+  }
+ },
+ "X148": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b8",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "FP",
+   "T2": "O",
+   "T3": "L31",
+   "T4": "G35",
+   "T5": "L35",
+   "T6": "PRO",
+   "T7": "AA",
+   "T8": "S",
+   "T9": "G37",
+   "T10": "G36",
+   "T11": "G38"
+  }
+ },
+ "X149": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3e",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "L35",
+   "T2": "G38",
+   "T3": "PRO",
+   "T4": "L31",
+   "T5": "G36",
+   "T6": "AA",
+   "T7": "G35",
+   "T8": "G37",
+   "T9": "FP",
+   "T10": "O",
+   "T11": "S"
+  }
+ },
+ "X150": {
+  "kind": "ARMS",
+  "page_id": "6abeb58b896ea18127c84ef3",
+  "set": "tib-ref113",
+  "text": "An",
+  "labels": {
+   "T1": "G37",
+   "T2": "L31",
+   "T3": "L35",
+   "T4": "G38",
+   "T5": "G35",
+   "T6": "PRO",
+   "T7": "FP",
+   "T8": "AA",
+   "T9": "O",
+   "T10": "S",
+   "T11": "G36"
+  }
+ },
+ "X151": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3c",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "S",
+   "T2": "L31",
+   "T3": "G37",
+   "T4": "L35",
+   "T5": "FP",
+   "T6": "O",
+   "T7": "PRO",
+   "T8": "G35",
+   "T9": "G38",
+   "T10": "AA",
+   "T11": "G36"
+  }
+ },
+ "X152": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3f",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "S",
+   "T3": "O",
+   "T4": "G37",
+   "T5": "G36",
+   "T6": "L31",
+   "T7": "FP",
+   "T8": "G35",
+   "T9": "PRO",
+   "T10": "AA",
+   "T11": "L35"
+  }
+ },
+ "X153": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997d21",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "L35",
+   "T2": "O",
+   "T3": "S",
+   "T4": "G37",
+   "T5": "G36",
+   "T6": "FP",
+   "T7": "G38",
+   "T8": "PRO",
+   "T9": "L31",
+   "T10": "AA",
+   "T11": "G35"
+  }
+ },
+ "X154": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7bc",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "G36",
+   "T2": "O",
+   "T3": "G35",
+   "T4": "S",
+   "T5": "PRO",
+   "T6": "G38",
+   "T7": "G37",
+   "T8": "L31",
+   "T9": "L35",
+   "T10": "FP",
+   "T11": "AA"
+  }
+ },
+ "X155": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c821ce",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G36",
+   "T2": "G38",
+   "T3": "L31",
+   "T4": "G37",
+   "T5": "FP",
+   "T6": "AA",
+   "T7": "O",
+   "T8": "L35",
+   "T9": "PRO",
+   "T10": "G35",
+   "T11": "S"
+  }
+ },
+ "X156": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c822d0",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G38",
+   "T2": "O",
+   "T3": "G35",
+   "T4": "L35",
+   "T5": "G36",
+   "T6": "AA",
+   "T7": "G37",
+   "T8": "L31",
+   "T9": "PRO",
+   "T10": "FP",
+   "T11": "S"
+  }
+ },
+ "X157": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82220",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "S",
+   "T2": "L35",
+   "T3": "L31",
+   "T4": "G35",
+   "T5": "G36",
+   "T6": "G37",
+   "T7": "AA",
+   "T8": "O",
+   "T9": "PRO",
+   "T10": "G38",
+   "T11": "FP"
+  }
+ },
+ "X158": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ab",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "L35",
+   "T2": "O",
+   "T3": "G36",
+   "T4": "AA",
+   "T5": "S",
+   "T6": "PRO",
+   "T7": "L31",
+   "T8": "G38",
+   "T9": "G37",
+   "T10": "G35",
+   "T11": "FP"
+  }
+ },
+ "X159": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c822b7",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G37",
+   "T2": "G36",
+   "T3": "G35",
+   "T4": "L31",
+   "T5": "L35",
+   "T6": "O",
+   "T7": "FP",
+   "T8": "AA",
+   "T9": "G38",
+   "T10": "PRO",
+   "T11": "S"
+  }
+ },
+ "X160": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b38",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "AA",
+   "T2": "G37",
+   "T3": "S",
+   "T4": "PRO",
+   "T5": "L31",
+   "T6": "FP",
+   "T7": "L35",
+   "T8": "G36",
+   "T9": "G35",
+   "T10": "O",
+   "T11": "G38"
+  }
+ },
+ "X161": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997ce5",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G35",
+   "T2": "AA",
+   "T3": "G37",
+   "T4": "FP",
+   "T5": "PRO",
+   "T6": "S",
+   "T7": "L35",
+   "T8": "G36",
+   "T9": "L31",
+   "T10": "O",
+   "T11": "G38"
+  }
+ },
+ "X162": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b4",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "PRO",
+   "T2": "G38",
+   "T3": "G37",
+   "T4": "L31",
+   "T5": "G35",
+   "T6": "O",
+   "T7": "S",
+   "T8": "L35",
+   "T9": "G36",
+   "T10": "FP",
+   "T11": "AA"
+  }
+ },
+ "X163": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8223a",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "S",
+   "T2": "G37",
+   "T3": "G38",
+   "T4": "AA",
+   "T5": "G36",
+   "T6": "L31",
+   "T7": "FP",
+   "T8": "G35",
+   "T9": "PRO",
+   "T10": "O",
+   "T11": "L35"
+  }
+ },
+ "X164": {
+  "kind": "ARMS",
+  "page_id": "6abee362a43718d234bf225b",
+  "set": "tib-ref113",
+  "text": "Verses",
+  "labels": {
+   "T1": "FP",
+   "T2": "AA",
+   "T3": "S",
+   "T4": "O",
+   "T5": "G38",
+   "T6": "G35",
+   "T7": "L31",
+   "T8": "G36",
+   "T9": "L35",
+   "T10": "G37",
+   "T11": "PRO"
+  }
+ },
+ "X165": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82363",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "S",
+   "T2": "FP",
+   "T3": "G36",
+   "T4": "L31",
+   "T5": "L35",
+   "T6": "AA",
+   "T7": "PRO",
+   "T8": "O",
+   "T9": "G38",
+   "T10": "G35",
+   "T11": "G37"
+  }
+ },
+ "X166": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b7",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "G38",
+   "T2": "AA",
+   "T3": "G35",
+   "T4": "G37",
+   "T5": "L31",
+   "T6": "FP",
+   "T7": "G36",
+   "T8": "PRO",
+   "T9": "O",
+   "T10": "L35",
+   "T11": "S"
+  }
+ },
+ "X167": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a998114",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "L35",
+   "T2": "L31",
+   "T3": "G36",
+   "T4": "G37",
+   "T5": "PRO",
+   "T6": "AA",
+   "T7": "S",
+   "T8": "FP",
+   "T9": "O",
+   "T10": "G35",
+   "T11": "G38"
+  }
+ },
+ "X168": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b45",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "PRO",
+   "T2": "O",
+   "T3": "G35",
+   "T4": "G37",
+   "T5": "FP",
+   "T6": "G38",
+   "T7": "L35",
+   "T8": "G36",
+   "T9": "L31",
+   "T10": "S",
+   "T11": "AA"
+  }
+ },
+ "X169": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997d23",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "AA",
+   "T3": "G36",
+   "T4": "G35",
+   "T5": "S",
+   "T6": "G37",
+   "T7": "PRO",
+   "T8": "G38",
+   "T9": "L31",
+   "T10": "L35",
+   "T11": "O"
+  }
+ },
+ "X170": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7c3",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "G37",
+   "T2": "G38",
+   "T3": "O",
+   "T4": "G35",
+   "T5": "S",
+   "T6": "L35",
+   "T7": "AA",
+   "T8": "PRO",
+   "T9": "L31",
+   "T10": "FP",
+   "T11": "G36"
+  }
+ },
+ "X171": {
+  "kind": "ARMS",
+  "page_id": "6abee362a43718d234bf2211",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "G37",
+   "T3": "O",
+   "T4": "G36",
+   "T5": "G38",
+   "T6": "G35",
+   "T7": "PRO",
+   "T8": "L31",
+   "T9": "AA",
+   "T10": "S",
+   "T11": "L35"
+  }
+ },
+ "X172": {
+  "kind": "ARMS",
+  "page_id": "6abee362a43718d234bf225a",
+  "set": "tib-ref113",
+  "text": "Verses",
+  "labels": {
+   "T1": "L31",
+   "T2": "G35",
+   "T3": "G37",
+   "T4": "O",
+   "T5": "PRO",
+   "T6": "S",
+   "T7": "L35",
+   "T8": "G38",
+   "T9": "AA",
+   "T10": "G36",
+   "T11": "FP"
+  }
+ },
+ "X173": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c822c4",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "FP",
+   "T2": "L35",
+   "T3": "O",
+   "T4": "G36",
+   "T5": "G35",
+   "T6": "AA",
+   "T7": "L31",
+   "T8": "S",
+   "T9": "G38",
+   "T10": "G37",
+   "T11": "PRO"
+  }
+ },
+ "X174": {
+  "kind": "ARMS",
+  "page_id": "6abe83c2433559215a9980eb",
+  "set": "tib-ref113",
+  "text": "A",
+  "labels": {
+   "T1": "S",
+   "T2": "AA",
+   "T3": "O",
+   "T4": "L35",
+   "T5": "G35",
+   "T6": "G37",
+   "T7": "G36",
+   "T8": "FP",
+   "T9": "L31",
+   "T10": "PRO",
+   "T11": "G38"
+  }
+ },
+ "X175": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b33",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "AA",
+   "T3": "L35",
+   "T4": "PRO",
+   "T5": "G36",
+   "T6": "S",
+   "T7": "G37",
+   "T8": "L31",
+   "T9": "O",
+   "T10": "FP",
+   "T11": "G35"
+  }
+ },
+ "X176": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c82256",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G36",
+   "T2": "G37",
+   "T3": "G35",
+   "T4": "PRO",
+   "T5": "S",
+   "T6": "G38",
+   "T7": "AA",
+   "T8": "O",
+   "T9": "L35",
+   "T10": "L31",
+   "T11": "FP"
+  }
+ },
+ "X177": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b0",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "G37",
+   "T2": "FP",
+   "T3": "G36",
+   "T4": "G35",
+   "T5": "L35",
+   "T6": "O",
+   "T7": "AA",
+   "T8": "G38",
+   "T9": "S",
+   "T10": "PRO",
+   "T11": "L31"
+  }
+ },
+ "X178": {
+  "kind": "PLANT",
+  "page_id": "6abe825259b86b7d32a65b4e",
+  "labels": {
+   "T1": "FP_PLANT",
+   "T2": "FP"
+  },
+  "plant": {
+   "old": "That ethical discipline is called a worldly perfection.",
+   "new": "That ethical discipline is not called a worldly perfection.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "X179": {
+  "kind": "ARMS",
+  "page_id": "6abeafd9896ea18127c8235d",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "O",
+   "T2": "FP",
+   "T3": "S",
+   "T4": "G36",
+   "T5": "L31",
+   "T6": "G38",
+   "T7": "L35",
+   "T8": "AA",
+   "T9": "G35",
+   "T10": "G37",
+   "T11": "PRO"
+  }
+ },
+ "X180": {
+  "kind": "ARMS",
+  "page_id": "6abe8368433559215a997ce8",
+  "set": "tib-ref113",
+  "text": "The",
+  "labels": {
+   "T1": "G36",
+   "T2": "G37",
+   "T3": "AA",
+   "T4": "PRO",
+   "T5": "O",
+   "T6": "G35",
+   "T7": "G38",
+   "T8": "L31",
+   "T9": "S",
+   "T10": "FP",
+   "T11": "L35"
+  }
+ },
+ "X181": {
+  "kind": "DUP",
+  "page_id": "6abe8368433559215a997ce8",
+  "labels": {
+   "T1": "S",
+   "T2": "S_DUP",
+   "T3": "L31"
+  }
+ },
+ "X182": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7c0",
+  "set": "tib-ref58",
+  "text": "D4231",
+  "labels": {
+   "T1": "G38",
+   "T2": "L31",
+   "T3": "FP",
+   "T4": "L35",
+   "T5": "O",
+   "T6": "G35",
+   "T7": "PRO",
+   "T8": "G37",
+   "T9": "G36",
+   "T10": "AA",
+   "T11": "S"
+  }
+ },
+ "X183": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b37",
+  "set": "tib-ref58",
+  "text": "D3862",
+  "labels": {
+   "T1": "S",
+   "T2": "PRO",
+   "T3": "O",
+   "T4": "AA",
+   "T5": "G38",
+   "T6": "L31",
+   "T7": "FP",
+   "T8": "L35",
+   "T9": "G37",
+   "T10": "G35",
+   "T11": "G36"
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "note": "#6121 round 2, arm O. Token counts measured 2026-10-07 on 3 of the 118 pages via OpenRouter (anthropic/claude-opus-5.5, max_tokens 1; output tokens = count(prompt + O's output) - count(prompt)). List price claude-opus-5-5 $4 in / $20 out per 1M (scripts/lib/model-pricing.mjs); Batch = half.",
+ "pages_measured": [
+  {"id": "sample-6abed661896ea18127c8e6ec", "prompt_chars": 9009, "out_chars": 2995, "in_tokens": 4999, "out_tokens": 933},
+  {"id": "ref-6abe825259b86b7d32a65b36", "prompt_chars": 8965, "out_chars": 2854, "in_tokens": 4789, "out_tokens": 977},
+  {"id": "sample-6abecc48896ea18127c8b5da", "prompt_chars": 9027, "out_chars": 2908, "in_tokens": 4912, "out_tokens": 867}
+ ],
+ "mean_in_tokens": 4900, "mean_out_tokens": 926, "mean_out_chars_all_118": 2898,
+ "per_1000_pages_realtime_usd": 38.1, "per_1000_pages_batch_usd": 19.1,
+ "no_thinking_assumed": true,
+ "subscription_used": {"subagent_runs": 12, "pages": 118, "subagent_tokens": 1017376, "subagent_tokens_per_page": 8622, "wall_minutes_at_6_concurrent": 7}
+}

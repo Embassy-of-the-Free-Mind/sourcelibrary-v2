@@ -1,0 +1,342 @@
+{
+ "J2-000": {
+  "kind": "ARMS",
+  "uid": "6aaafbb1_300",
+  "labels": {
+   "T1": "R",
+   "T2": "C37-K",
+   "T3": "C37-R",
+   "T4": "K"
+  }
+ },
+ "J2-001": {
+  "kind": "ARMS",
+  "uid": "69a5eaa3_611",
+  "labels": {
+   "T1": "R",
+   "T2": "C37-R",
+   "T3": "K",
+   "T4": "C37-K"
+  }
+ },
+ "J2-002": {
+  "kind": "ARMS",
+  "uid": "69a5f3e0_197",
+  "labels": {
+   "T1": "C37-K",
+   "T2": "R",
+   "T3": "C37-R",
+   "T4": "K"
+  }
+ },
+ "J2-003": {
+  "kind": "PLANT",
+  "uid": "69a5eb4d_529",
+  "labels": {
+   "T1": "C37-R_PLANT",
+   "T2": "C37-R"
+  },
+  "plant": {
+   "old": "Wizan said to her, \"Where is the youth who is with you?\" ",
+   "new": "Wizan said to her, \"Where is not the youth who is with you?\" ",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "J2-004": {
+  "kind": "ARMS",
+  "uid": "69a5eb4d_529",
+  "labels": {
+   "T1": "C37-K",
+   "T2": "C37-R",
+   "T3": "K",
+   "T4": "R"
+  }
+ },
+ "J2-005": {
+  "kind": "ARMS",
+  "uid": "69943c78_154",
+  "labels": {
+   "T1": "R",
+   "T2": "K",
+   "T3": "C37-R",
+   "T4": "C37-K"
+  }
+ },
+ "J2-006": {
+  "kind": "ARMS",
+  "uid": "6994400f_296",
+  "labels": {
+   "T1": "C37-K",
+   "T2": "K",
+   "T3": "R",
+   "T4": "C37-R"
+  }
+ },
+ "J2-007": {
+  "kind": "ARMS",
+  "uid": "6aaafba3_151",
+  "labels": {
+   "T1": "R",
+   "T2": "C37-K",
+   "T3": "C37-R",
+   "T4": "K"
+  }
+ },
+ "J2-008": {
+  "kind": "DUP",
+  "uid": "69a5eb54_268",
+  "labels": {
+   "T1": "C37-K",
+   "T2": "C37-R_DUP",
+   "T3": "C37-R"
+  }
+ },
+ "J2-009": {
+  "kind": "PLANT",
+  "uid": "69a5ea9a_391",
+  "labels": {
+   "T1": "C37-R_PLANT",
+   "T2": "C37-R"
+  },
+  "plant": {
+   "old": "At a tiny sign all these distinctions are performed, ",
+   "new": "At a tiny sign all these distinctions are not performed, ",
+   "how": "\\bare\\b → are not"
+  }
+ },
+ "J2-010": {
+  "kind": "ARMS",
+  "uid": "69a5eaa8_205",
+  "labels": {
+   "T1": "K",
+   "T2": "R",
+   "T3": "C37-K",
+   "T4": "C37-R"
+  }
+ },
+ "J2-011": {
+  "kind": "ARMS",
+  "uid": "699443fa_308",
+  "labels": {
+   "T1": "K",
+   "T2": "R",
+   "T3": "C37-K",
+   "T4": "C37-R"
+  }
+ },
+ "J2-012": {
+  "kind": "ARMS",
+  "uid": "69a5ea9a_391",
+  "labels": {
+   "T1": "K",
+   "T2": "R",
+   "T3": "C37-K",
+   "T4": "C37-R"
+  }
+ },
+ "J2-013": {
+  "kind": "ARMS",
+  "uid": "69a5eb64_461",
+  "labels": {
+   "T1": "C37-R",
+   "T2": "R",
+   "T3": "K",
+   "T4": "C37-K"
+  }
+ },
+ "J2-014": {
+  "kind": "PLANT",
+  "uid": "69943c94_125",
+  "labels": {
+   "T1": "C37-R",
+   "T2": "C37-R_PLANT"
+  },
+  "plant": {
+   "old": "For that covenant given to Moses was not sealed until this other covenant arrived, which is indeed the very first one, promised from above and inscribed below.",
+   "new": "For that covenant given to Moses was not sealed until this other covenant arrived, which is not indeed the very first one, promised from above and inscribed below.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "J2-015": {
+  "kind": "ARMS",
+  "uid": "69a5e9f0_81",
+  "labels": {
+   "T1": "K",
+   "T2": "C37-K",
+   "T3": "R",
+   "T4": "C37-R"
+  }
+ },
+ "J2-016": {
+  "kind": "ARMS",
+  "uid": "69a5eb54_268",
+  "labels": {
+   "T1": "K",
+   "T2": "C37-R",
+   "T3": "R",
+   "T4": "C37-K"
+  }
+ },
+ "J2-017": {
+  "kind": "PLANT",
+  "uid": "6aaafba3_151",
+  "labels": {
+   "T1": "C37-R",
+   "T2": "C37-R_PLANT"
+  },
+  "plant": {
+   "old": "Perhaps someone will still say that I have not judged rightly, arguing that this repentance was not willing so that mercy should be shown because of it, since the king abolished the festival by compulsion when he ordered that dancers should not dance at all.",
+   "new": "Perhaps someone will not still say that I have not judged rightly, arguing that this repentance was not willing so that mercy should be shown because of it, since the king abolished the festival by compulsion when he ordered that dancers should not dance at all.",
+   "how": "\\bwill\\b → will not"
+  }
+ },
+ "J2-018": {
+  "kind": "ARMS",
+  "uid": "69943c94_125",
+  "labels": {
+   "T1": "R",
+   "T2": "C37-K",
+   "T3": "C37-R",
+   "T4": "K"
+  }
+ },
+ "J2-019": {
+  "kind": "ARMS",
+  "uid": "69943ce1_628",
+  "labels": {
+   "T1": "C37-K",
+   "T2": "K",
+   "T3": "C37-R",
+   "T4": "R"
+  }
+ },
+ "J2-020": {
+  "kind": "DUP",
+  "uid": "69920b97_271",
+  "labels": {
+   "T1": "C37-K",
+   "T2": "C37-R_DUP",
+   "T3": "C37-R"
+  }
+ },
+ "J2-021": {
+  "kind": "PLANT",
+  "uid": "6aaafbb1_300",
+  "labels": {
+   "T1": "C37-R",
+   "T2": "C37-R_PLANT"
+  },
+  "plant": {
+   "old": "Let the prophet Jeremiah also come and lament over it, since he is more skilled in weeping and laments:",
+   "new": "Let the prophet Jeremiah also come and lament over it, since he is not more skilled in weeping and laments:",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "J2-022": {
+  "kind": "ARMS",
+  "uid": "69a5f031_235",
+  "labels": {
+   "T1": "K",
+   "T2": "C37-K",
+   "T3": "C37-R",
+   "T4": "R"
+  }
+ },
+ "J2-023": {
+  "kind": "ARMS",
+  "uid": "69943c68_564",
+  "labels": {
+   "T1": "C37-R",
+   "T2": "R",
+   "T3": "K",
+   "T4": "C37-K"
+  }
+ },
+ "J2-024": {
+  "kind": "ARMS",
+  "uid": "69a5eb6b_205",
+  "labels": {
+   "T1": "C37-R",
+   "T2": "R",
+   "T3": "C37-K",
+   "T4": "K"
+  }
+ },
+ "J2-025": {
+  "kind": "ARMS",
+  "uid": "69943c4f_169",
+  "labels": {
+   "T1": "R",
+   "T2": "K",
+   "T3": "C37-K",
+   "T4": "C37-R"
+  }
+ },
+ "J2-026": {
+  "kind": "DUP",
+  "uid": "69a5eb64_461",
+  "labels": {
+   "T1": "C37-K",
+   "T2": "C37-R",
+   "T3": "C37-R_DUP"
+  }
+ },
+ "J2-027": {
+  "kind": "PLANT",
+  "uid": "69a5e9f0_81",
+  "labels": {
+   "T1": "C37-R",
+   "T2": "C37-R_PLANT"
+  },
+  "plant": {
+   "old": "The matter is obvious: since those people are remote from the mingled customs of many men in their conduct of life, how many wise men do you suppose have abolished laws from their lands when it appeared to them that they were not well established?",
+   "new": "The matter is not obvious: since those people are remote from the mingled customs of many men in their conduct of life, how many wise men do you suppose have abolished laws from their lands when it appeared to them that they were not well established?",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "J2-028": {
+  "kind": "ARMS",
+  "uid": "69920b97_271",
+  "labels": {
+   "T1": "C37-K",
+   "T2": "R",
+   "T3": "C37-R",
+   "T4": "K"
+  }
+ },
+ "J2-029": {
+  "kind": "PLANT",
+  "uid": "69943c78_154",
+  "labels": {
+   "T1": "C37-R_PLANT",
+   "T2": "C37-R"
+  },
+  "plant": {
+   "old": "That is: the mere sight of people and the empty sound of their speech.",
+   "new": "That is not: the mere sight of people and the empty sound of their speech.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "J2-030": {
+  "kind": "PLANT",
+  "uid": "69943c4f_169",
+  "labels": {
+   "T1": "C37-R",
+   "T2": "C37-R_PLANT"
+  },
+  "plant": {
+   "old": " so also are the wings of the Spirit over my heart.",
+   "new": " so also are not the wings of the Spirit over my heart.",
+   "how": "\\bare\\b → are not"
+  }
+ },
+ "J2-031": {
+  "kind": "DUP",
+  "uid": "69a5eaa8_205",
+  "labels": {
+   "T1": "C37-K",
+   "T2": "C37-R_DUP",
+   "T3": "C37-R"
+  }
+ }
+}

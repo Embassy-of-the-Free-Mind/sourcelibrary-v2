@@ -1,0 +1,464 @@
+{
+ "issue": 6304,
+ "generated_by": "scripts/eval/audit-pareto-samples.mjs",
+ "rule": "see section 7a of the script",
+ "drops": [
+  {
+   "family": "translation",
+   "chart": "latin",
+   "page": "69b21d1a429e087c6f866ee7_452",
+   "why": [
+    "by eye (D05): body, reference narrower"
+   ]
+  },
+  {
+   "family": "translation",
+   "chart": "greek",
+   "page": "6955747af63a757109173a5d_381",
+   "why": [
+    "by eye (D13): apparatus-heavy, reference narrower"
+   ]
+  },
+  {
+   "family": "translation",
+   "chart": "greek",
+   "page": "699388f374305116d72d08a6_120",
+   "why": [
+    "ref-fit:wrong"
+   ]
+  },
+  {
+   "family": "translation",
+   "chart": "greek",
+   "page": "69bfccd88ab50eb88e8c69fd_521",
+   "why": [
+    "ref-fit:offset"
+   ]
+  },
+  {
+   "family": "translation",
+   "chart": "greek",
+   "page": "699383a750654cbbe2917f1b_116",
+   "why": [
+    "ref-fit:wrong"
+   ]
+  },
+  {
+   "family": "translation",
+   "chart": "greek",
+   "page": "6952e4cc77f38f6761bc8c0b_121",
+   "why": [
+    "script:Latin"
+   ]
+  },
+  {
+   "family": "translation",
+   "chart": "greek",
+   "page": "699383a150654cbbe29179f7_189",
+   "why": [
+    "ref-fit:cant_tell"
+   ]
+  },
+  {
+   "family": "translation",
+   "chart": "greek",
+   "page": "699376d2b0a84a5763961a97_367",
+   "why": [
+    "by eye (D12): body, reference narrower"
+   ]
+  },
+  {
+   "family": "translation",
+   "chart": "hebrew",
+   "page": "69920bb1e0a548a13d884da7_342",
+   "why": [
+    "by eye (D18): apparatus-heavy, reference same-span"
+   ]
+  },
+  {
+   "family": "translation",
+   "chart": "arabic",
+   "page": "69d5ac5f4dc55b8478ddd6b6_299",
+   "why": [
+    "by eye (D20): mixed, reference narrower"
+   ]
+  },
+  {
+   "family": "translation",
+   "chart": "arabic",
+   "page": "69e53454d48480a386965c84_230",
+   "why": [
+    "ref-fit:offset"
+   ]
+  },
+  {
+   "family": "translation",
+   "chart": "arabic",
+   "page": "69e9612a390d3ed634590dd2_365",
+   "why": [
+    "script:Latin"
+   ]
+  },
+  {
+   "family": "translation",
+   "chart": "persian",
+   "page": "69935b208e28d8f4c5d3c445_228",
+   "why": [
+    "ref-fit:offset"
+   ]
+  },
+  {
+   "family": "translation",
+   "chart": "sanskrit",
+   "page": "6a0e54e98831ddc9459ad225_87",
+   "why": [
+    "ref-fit:offset"
+   ]
+  },
+  {
+   "family": "translation",
+   "chart": "sanskrit",
+   "page": "6a3067d0c4fd77fb5b9f8378_57",
+   "why": [
+    "language:French"
+   ]
+  },
+  {
+   "family": "translation",
+   "chart": "pali",
+   "page": "69b99e856ed9e0490990a0b5_301",
+   "why": [
+    "by eye (D28): body, reference wider"
+   ]
+  },
+  {
+   "family": "translation",
+   "chart": "chinese",
+   "page": "69935b692c63944063133f67_112",
+   "why": [
+    "ref-fit:offset"
+   ]
+  },
+  {
+   "family": "translation",
+   "chart": "chinese",
+   "page": "6a3c6191879008ba7e15f0b2_70",
+   "why": [
+    "ref-fit:offset"
+   ]
+  },
+  {
+   "family": "translation",
+   "chart": "chinese",
+   "page": "6a3c61b1879008ba7e15fba1_68",
+   "why": [
+    "by eye (D24): mixed, reference offset"
+   ]
+  },
+  {
+   "family": "translation",
+   "chart": "chinese",
+   "page": "69e7268ca409200ea79ef73b_111",
+   "why": [
+    "ref-fit:offset"
+   ]
+  },
+  {
+   "family": "translation",
+   "chart": "sanskrit",
+   "page": "69de101d5cedf736edb85346_27",
+   "why": [
+    "ref-fit:offset"
+   ]
+  },
+  {
+   "family": "ocr",
+   "chart": "latin",
+   "page": "latin-period-5126|ed-69b303fb983e01f74b98704a-p1127",
+   "why": [
+    "by eye (D39): body, reference wrong"
+   ]
+  },
+  {
+   "family": "ocr",
+   "chart": "latin",
+   "page": "latin-period-5126|ed-69b51e69768235dc65992e2f-p15",
+   "why": [
+    "by eye (D38): preface/dedication, reference other-edition"
+   ]
+  },
+  {
+   "family": "ocr",
+   "chart": "latin",
+   "page": "latin-period-5126|ed-69c7a6b092b884e4f8173c12-p232",
+   "why": [
+    "by eye (D35): body, reference same-edition-normalised"
+   ]
+  },
+  {
+   "family": "ocr",
+   "chart": "latin",
+   "page": "ref-ws|ws-la-disputatio-medica-inauguralis-de-merocele-vel-he-p21",
+   "why": [
+    "language:English"
+   ]
+  },
+  {
+   "family": "ocr",
+   "chart": "greek",
+   "page": "greek-ext|greek-ext-ddae34-p38",
+   "why": [
+    "best-engine-cer:0.372"
+   ]
+  },
+  {
+   "family": "ocr",
+   "chart": "greek",
+   "page": "greek-ext|greek-ext-e47977-p130",
+   "why": [
+    "best-engine-cer:0.352"
+   ]
+  },
+  {
+   "family": "ocr",
+   "chart": "greek",
+   "page": "greek-ext|greek-ext-eab76d-p434",
+   "why": [
+    "by eye (D45): apparatus-heavy, reference partial-passage"
+   ]
+  },
+  {
+   "family": "ocr",
+   "chart": "greek",
+   "page": "greek-ext|greek-ext-eba9ff-p123",
+   "why": [
+    "by eye (D47): mixed, reference wrong"
+   ]
+  },
+  {
+   "family": "ocr",
+   "chart": "greek",
+   "page": "greek|greek-f8ec82-p43",
+   "why": [
+    "best-engine-cer:0.364"
+   ]
+  },
+  {
+   "family": "ocr",
+   "chart": "greek",
+   "page": "ref-ws|ws-el-hermannusenerepicurea1887-djvu-p5",
+   "why": [
+    "script:Latin"
+   ]
+  },
+  {
+   "family": "ocr",
+   "chart": "chinese-manuscript",
+   "page": "chinese-cohort-5547|chinese-cohort-5547-166afc-p33",
+   "why": [
+    "by eye (D55): mixed, reference partial-passage"
+   ]
+  },
+  {
+   "family": "ocr",
+   "chart": "chinese-manuscript",
+   "page": "chinese-cohort-5547|chinese-cohort-5547-1de82d-p98",
+   "why": [
+    "by eye (D53): body, reference partial-passage"
+   ]
+  },
+  {
+   "family": "ocr",
+   "chart": "chinese-manuscript",
+   "page": "chinese-cohort-5547|chinese-cohort-5547-c49c21-p34",
+   "why": [
+    "by eye (D52): body, reference partial-passage"
+   ]
+  },
+  {
+   "family": "ocr",
+   "chart": "chinese-manuscript",
+   "page": "chinese-cohort-5547|chinese-cohort-5547-def58c-p73",
+   "why": [
+    "by eye (D56): body, reference partial-passage"
+   ]
+  },
+  {
+   "family": "ocr",
+   "chart": "chinese-manuscript",
+   "page": "chinese-ext|chinese-ext-8e4639-p82",
+   "why": [
+    "by eye (D54): body, reference partial-passage"
+   ]
+  },
+  {
+   "family": "ocr",
+   "chart": "chinese-print",
+   "page": "chinese-ext|chinese-ext-8e07e9-p26",
+   "why": [
+    "best-engine-cer:0.364"
+   ]
+  },
+  {
+   "family": "ocr",
+   "chart": "chinese-print",
+   "page": "chinese-ext|chinese-ext-db2395-p52",
+   "why": [
+    "best-engine-cer:0.366"
+   ]
+  },
+  {
+   "family": "ocr",
+   "chart": "chinese-print",
+   "page": "chinese-ext|chinese-ext-db8875-p45",
+   "why": [
+    "best-engine-cer:0.414"
+   ]
+  },
+  {
+   "family": "ocr",
+   "chart": "chinese-print",
+   "page": "chinese-ext|chinese-ext-dbda81-p11",
+   "why": [
+    "best-engine-cer:0.381"
+   ]
+  },
+  {
+   "family": "ocr",
+   "chart": "chinese-print",
+   "page": "chinese|chinese-15291d-p29",
+   "why": [
+    "best-engine-cer:0.446"
+   ]
+  },
+  {
+   "family": "ocr",
+   "chart": "chinese-print",
+   "page": "chinese|chinese-153836-p35",
+   "why": [
+    "best-engine-cer:0.372"
+   ]
+  },
+  {
+   "family": "ocr",
+   "chart": "chinese-print",
+   "page": "chinese|chinese-15f73d-p10",
+   "why": [
+    "best-engine-cer:0.352"
+   ]
+  }
+ ],
+ "notes": {
+  "translation": {
+   "latin|most-pages": [
+    "Sample check, 8 Oct 2026 (#6304): 1 of 71 pages left out because the published translation does not cover the page, or the page is mostly in another language",
+    "70 pages come from 56 works, so the intervals are too narrow",
+    "30 of 70 pages are texts whose published translation is widely reproduced, so a model may recall it"
+   ],
+   "greek|most-pages": [
+    "Sample check, 8 Oct 2026 (#6304): 7 of 75 pages left out because the published translation does not cover the page, or the page is mostly in another language",
+    "On 17 of 68 pages the published translation covers less of the page than the engines translate (the judges' reading)",
+    "19 of 68 pages carry Latin beside the Greek (a quarter or more of the letters)",
+    "26 of 68 pages are texts whose published translation is widely reproduced, so a model may recall it"
+   ],
+   "hebrew|most-pages": [
+    "Sample check, 8 Oct 2026 (#6304): 1 of 15 pages left out because the published translation does not cover the page, or the page is mostly in another language",
+    "On 3 of 14 pages the published translation covers less of the page than the engines translate (the judges' reading)",
+    "6 of 14 pages are texts whose published translation is widely reproduced, so a model may recall it"
+   ],
+   "arabic|most-pages": [
+    "Sample check, 8 Oct 2026 (#6304): 3 of 20 pages left out because the published translation does not cover the page, or the page is mostly in another language",
+    "6 of 17 pages are texts whose published translation is widely reproduced, so a model may recall it"
+   ],
+   "persian|most-pages": [
+    "Sample check, 8 Oct 2026 (#6304): 1 of 12 pages left out because the published translation does not cover the page, or the page is mostly in another language",
+    "On 2 of 11 pages the published translation covers less of the page than the engines translate (the judges' reading)"
+   ],
+   "sanskrit|most-pages": [
+    "Sample check, 8 Oct 2026 (#6304): 2 of 28 pages left out because the published translation does not cover the page, or the page is mostly in another language",
+    "On 9 of 26 pages the published translation covers less of the page than the engines translate (the judges' reading)",
+    "13 of 26 pages are texts whose published translation is widely reproduced, so a model may recall it"
+   ],
+   "pali|most-pages": [
+    "Sample check, 8 Oct 2026 (#6304): 1 of 16 pages left out because the published translation does not cover the page, or the page is mostly in another language",
+    "15 of 15 pages are texts whose published translation is widely reproduced, so a model may recall it"
+   ],
+   "chinese|most-pages": [
+    "Sample check, 8 Oct 2026 (#6304): 4 of 24 pages left out because the published translation does not cover the page, or the page is mostly in another language",
+    "On 5 of 20 pages the published translation covers less of the page than the engines translate (the judges' reading)",
+    "15 of 20 pages are texts whose published translation is widely reproduced, so a model may recall it",
+    "16 of 20 pages hold fewer than 300 characters of source text"
+   ],
+   "tibetan|most-pages": [
+    "109 of 113 pages are texts whose published translation is 84000's, which is openly online, so a model may recall it"
+   ],
+   "latin|gemini-models-6182": [
+    "Sample check, 8 Oct 2026 (#6304): 1 of 70 pages left out because the published translation does not cover the page, or the page is mostly in another language",
+    "69 pages come from 55 works, so the intervals are too narrow",
+    "30 of 69 pages are texts whose published translation is widely reproduced, so a model may recall it; on those pages the engines keep the same order (rank correlation 0.905 with the other pages)"
+   ],
+   "greek|gemini-models-6182": [
+    "Sample check, 8 Oct 2026 (#6304): 7 of 69 pages left out because the published translation does not cover the page, or the page is mostly in another language",
+    "On 17 of 62 pages the published translation covers less of the page than the engines translate (the judges' reading)",
+    "17 of 62 pages carry Latin beside the Greek (a quarter or more of the letters)",
+    "25 of 62 pages are texts whose published translation is widely reproduced, so a model may recall it; on those pages the engines keep the same order (rank correlation 0.833 with the other pages)"
+   ],
+   "hebrew|gemini-models-6182": [
+    "Sample check, 8 Oct 2026 (#6304): 1 of 28 pages left out because the published translation does not cover the page, or the page is mostly in another language",
+    "On 7 of 27 pages the published translation covers less of the page than the engines translate (the judges' reading)",
+    "18 of 27 pages are texts whose published translation is widely reproduced, so a model may recall it; on those pages the engines keep the same order (rank correlation 0.976 with the other pages)"
+   ],
+   "arabic|gemini-models-6182": [
+    "Sample check, 8 Oct 2026 (#6304): 2 of 24 pages left out because the published translation does not cover the page, or the page is mostly in another language",
+    "11 of 22 pages are texts whose published translation is widely reproduced, so a model may recall it; on those pages the engines keep the same order (rank correlation 0.976 with the other pages)"
+   ],
+   "persian|gemini-models-6182": [
+    "Sample check, 8 Oct 2026 (#6304): 1 of 23 pages left out because the published translation does not cover the page, or the page is mostly in another language",
+    "On 4 of 22 pages the published translation covers less of the page than the engines translate (the judges' reading)",
+    "8 of 22 pages are texts whose published translation is widely reproduced, so a model may recall it; on those pages the engines keep the same order (rank correlation 0.976 with the other pages)"
+   ],
+   "sanskrit|gemini-models-6182": [
+    "Sample check, 8 Oct 2026 (#6304): 3 of 30 pages left out because the published translation does not cover the page, or the page is mostly in another language",
+    "On 9 of 27 pages the published translation covers less of the page than the engines translate (the judges' reading)",
+    "13 of 27 pages are texts whose published translation is widely reproduced, so a model may recall it; on those pages the engines keep the same order (rank correlation 0.905 with the other pages)"
+   ],
+   "pali|gemini-models-6182": [
+    "Sample check, 8 Oct 2026 (#6304): 1 of 29 pages left out because the published translation does not cover the page, or the page is mostly in another language",
+    "24 of 28 pages are texts whose published translation is widely reproduced, so a model may recall it; on those pages the engines keep the same order (rank correlation 0.905 with the other pages)"
+   ],
+   "chinese|gemini-models-6182": [
+    "Sample check, 8 Oct 2026 (#6304): 4 of 25 pages left out because the published translation does not cover the page, or the page is mostly in another language",
+    "21 pages come from 18 works, so the intervals are too narrow",
+    "On 5 of 21 pages the published translation covers less of the page than the engines translate (the judges' reading)",
+    "16 of 21 pages are texts whose published translation is widely reproduced, so a model may recall it; on those pages the engines keep the same order (rank correlation 0.905 with the other pages)",
+    "17 of 21 pages hold fewer than 300 characters of source text"
+   ]
+  },
+  "ocr": {
+   "latin|most-pages": [
+    "Sample check, 8 Oct 2026 (#6304): 4 of 147 pages left out because the reference does not transcribe this page, or no engine came within 35% of it",
+    "On 40 of 143 pages the reference expands abbreviations or modernises u and v where the print does not, which counts against an engine that copies the print",
+    "44 of 143 pages are Wikisource's own scans, not this library's"
+   ],
+   "latin-script-other|most-pages": [
+    "23 of 23 pages are Wikisource's own scans, not this library's"
+   ],
+   "greek|most-pages": [
+    "Sample check, 8 Oct 2026 (#6304): 6 of 127 pages left out because the reference does not transcribe this page, or no engine came within 35% of it",
+    "On 109 of 121 pages the reference is a modern edition or e-text of the work, not a transcription of this print, so the score is agreement with that text"
+   ],
+   "chinese-manuscript|most-pages": [
+    "Sample check, 8 Oct 2026 (#6304): 5 of 503 pages left out because the reference does not transcribe this page, or no engine came within 35% of it",
+    "On 145 of 498 pages the reference runs more than 15% longer than the page's stored transcription, mostly text of the neighbouring leaf that no engine can match"
+   ],
+   "chinese-print|most-pages": [
+    "Sample check, 8 Oct 2026 (#6304): 7 of 19 pages left out because the reference does not transcribe this page, or no engine came within 35% of it",
+    "On 12 of 12 pages the reference is a modern edition or e-text of the work, not a transcription of this print, so the score is agreement with that text",
+    "On 2 of 12 pages the reference runs more than 15% longer than the page's stored transcription, mostly text of the neighbouring leaf that no engine can match"
+   ],
+   "armenian|most-pages": [
+    "On 2 of 5 pages the reference is a modern edition or e-text of the work, not a transcription of this print, so the score is agreement with that text"
+   ]
+  }
+ }
+}

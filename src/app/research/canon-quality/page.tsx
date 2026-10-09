@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import type { CSSProperties, ReactNode } from 'react';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import PageEditMode from '@/components/PageEditMode';
 import { ENGLISH, HATCH, Figure, Step, Swatch, ImprovementChart } from '../canon-gap/diagrams';
 import { IMPROVEMENTS } from '../canon-gap/improvements';
 
@@ -134,7 +135,7 @@ const CANONS: Canon[] = [
         </>
       ),
       shown: (
-        <>All 213 volumes are held from public view. Every page is labelled an unreviewed machine draft.</>
+        <>All 213 volumes have been public since 7 October 2026. Every page is labelled an AI translation not yet reviewed by a scholar.</>
       ),
       notMeasured: (
         <>
@@ -835,6 +836,7 @@ export default function CanonQualityPage() {
           </p>
         </Section>
       </div>
+      <PageEditMode />
     </ContentPageLayout>
   );
 }

@@ -1,8 +1,10 @@
 name: Park stale issues
 
-# Weekly: close idle, unassigned `enhancement` issues with a `parked` label
-# (scripts/maintenance/park-stale-issues.mjs). Reopenable; nothing is deleted.
-# Bugs, user-feedback, epics, security and anything assigned are never touched.
+# Weekly: close idle, unassigned issues that are ideas rather than defects, with
+# a `parked` label (scripts/maintenance/park-stale-issues.mjs). Idle is measured
+# from the last comment or titled PR, never `updatedAt` (#6285). At most 40 a
+# run. Reopenable; nothing is deleted. Bugs, data-quality, user-feedback, epics,
+# security, blocked and anything assigned are never touched.
 
 on:
   schedule:
@@ -17,6 +19,7 @@ on:
 permissions:
   contents: read
   issues: write
+  pull-requests: read
 
 jobs:
   park:

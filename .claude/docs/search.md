@@ -38,6 +38,17 @@ Vector search always returns *something* — nonsense queries still get nearest 
 | `GET /api/search/visual` | CLIP text→image search | Hetzner CLIP → Supabase |
 | `GET /api/search/ai-expand` | AI narration + term expansion (streaming) | Gemini LLM |
 
+## `/api/search` page lane: roll-up by book (#5905)
+
+The page lane reads its 25 best-scoring pages, and for a name those sit in a handful of books ("Drebbel": 732 pages in 232 books, the top 25 pages in 3). So the lane also counts matching pages per book and adds up to 30 books it did not reach, one passage each (`src/lib/search/page-rollup.ts`).
+
+- **Counting** is one `$searchMeta` facet on `book_id`: index only, no page documents (median 141 ms, max 443 ms over the eval's 30 queries). A page counts only if it prints **every** query word; the lane itself matches any word.
+- **One passage per added book** is one `$search … $limit 1` per book, ten at a time. A single query cannot do it: its top pages return to the same few books.
+- **Ranking:** between two passages, or two books only the semantic lane proposed, the book printing the query on more pages comes first (coarse tiers: 1 / 2–3 / 4–7 / 8–15 pages …). Title/author matches are not reordered, and a book still precedes a passage. Under RRF the keyword page lane votes in page-count order.
+- **Not applied** to `pages_only` (the MCP passage contract), `book_id`, or `lang=<iso>` searches. A query with no countable word, or more than eight, adds nothing.
+- **Failure:** the roll-up has its own 4 s budget; past it the lane keeps its 25 pages and the response reports `degraded_lanes: ['page_rollup']`. `search_queries.degraded_lanes` records every degraded lane per request.
+- **Measure a change** with `scripts/eval/search-recall/` (30 fixed queries, recall@10/@20 against expected books by page count). Its expected set ranks by the same count the roll-up uses, so also read result lists by eye.
+
 ## Quoted Phrase Search (2026-05-02)
 
 When a query is wrapped in double quotes (e.g. `"venus humanitas"`):
@@ -87,6 +98,30 @@ single, umlauted forms that `entities` confirms, and Latin case forms (-us/-ius,
 - Aliases in `entities` include epithets and other people (Mercury → Hermes). Only alias tokens
   that are a near spelling of the typed token are used — `isSpellingOf`. Do not widen it to
   "all aliases".
+
+## "Which Bacon?" — people who share a surname (#5950)
+
+A one-word query that names a person (`expandNameQuery`, the #5893 lookup) is checked for other
+bearers of the name: `findNameChoices()` in `src/lib/search/name-chooser.ts`. `/api/search/unified`
+returns the result as `people: { surname, choices[] } | null`, and the All tab shows it above the
+results: name, life dates, one line, "named in N books", link to `/author/<slug>` (or
+`/encyclopedia/<name>` when the person wrote nothing we hold).
+
+- **The bare-surname record is never read.** `entities` has a catch-all record per surname
+  ("Bacon", 211 books); 47% of the mentions on such a record that carries a Wikidata id belong to
+  someone else (experiment 2026-10-06, #5950). A person is offered only from records that name
+  them in full (`bearsSurname`: last word, before a comma, or before a particle), grouped by
+  Wikidata id, and the count is those records' distinct books.
+- **Shown only for two or more people**, each with 5+ books and 5% of the largest. Two guards for
+  wrong ids: a person born after most of the books that name them is dropped (`namedBeforeBorn`),
+  and two ids with the same birth and death year and nested names are one person.
+- **Cost:** nothing for a query of two or more words or a quoted phrase (returns before any
+  lookup). For one word: the cached #5893 lookup; only if that names a person, one `$search` on
+  `entities_search` (1.5 s cap) and one `authors` find, cached 10 minutes. It runs beside the
+  lanes with a 2 s limit and any failure means no chooser.
+- **Not shown** on tenant subdomains, in embeds, on `/es/search`, on the Books/Index/Images tabs,
+  or for names under four letters ("Dee": too short to compare, as everywhere in name matching).
+- It writes nothing. Wrong dates on a card mean a wrong Wikidata id on the `entities` record.
 
 ## Atlas Search Indexes
 

@@ -36,6 +36,22 @@ const FIXTURES = [
   { title: 'حي بن يقظان / Philosophus Autodidactus', author: 'Ibn Tufayl', year: 1671 },
   { title: "L'Alchimie et les alchimistes", author: 'Figuier, Louis', year: 1854 },
   { title: 'Böhmes Werke, Band 2', author: 'Jakob Böhme', year: 1730 },
+  // role designations after the name (#4444) — the surname is the name, not the role
+  { title: 'Theatrum chemicum', author: 'Lazarus Zetzner (ed.)', year: 1659 },
+  { title: 'Il Decamerone', author: 'Giovanni Boccaccio (German trans.)', year: 1535 },
+  { title: 'Ginza', author: 'Mark Lidzbarski (ed./trans.)', year: 1925 },
+  { title: 'Sammlung der Gesetze', author: 'Kanton Bern [Hrsg.]', year: 1780 },
+  { title: 'Vita Antonii', author: 'Athanasius; Evagrius Scholasticus [Übers.]', year: 1478 },
+  { title: 'Consolatio', author: 'Boethius (Pseudo-)' },
+  { title: 'Ante-Nicene Fathers', author: 'Various (Roberts & Donaldson, eds.)', year: 1885 },
+  { title: 'Erya zhu', author: 'Guo Pu (郭璞) commentary' },
+  { title: 'Historiae', author: 'Thucydides (ed. Henri II Estienne)', year: 1564 },
+  { title: 'Fragmenta', author: '(ed.)' },
+  // BCE and unusable years — the twin dropped a negative year until #4444
+  { title: 'Olympian and Pythian Odes', author: 'Pindar', year: -470, published: 'Unknown' },
+  { title: 'Tablet of the Flood', author: 'Unknown', year: -1800, published: 'Old Babylonian (c. 2100–1600 BCE)' },
+  { title: 'Elements', author: 'Euclid', year: 0, published: 'Venice, 1482' },
+  { title: 'Elements', author: 'Euclid', year: Number.NaN, published: 'Venice, 1482' },
   // stubs and hostile input
   { title: 'MS', author: 'Anon' },
   { title: 'untitled', author: '' },

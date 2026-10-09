@@ -3,6 +3,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { artistAuthorRegex } from '@/lib/artist-match';
 import { isOwnInfraUrl } from '@/lib/public-image-fields';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
+import { resolveSearchScope } from '@/lib/tenant-search-scope';
 import { semanticArtworkSearch } from '@/lib/semantic-search';
 import { resolveTitle } from '@/lib/title-provenance';
 
@@ -42,6 +43,12 @@ export async function GET(request: NextRequest) {
     let tenantId = tenantCtx.id;
     if (!tenantId && tenantCtx.slug) {
       tenantId = await resolveTenantId(tenantCtx.slug);
+    }
+    // A tenant signal that resolves to no tenant gets nothing — it used to
+    // leave `tenantScope` empty and serve every artwork (#4330).
+    const scope = await resolveSearchScope(request);
+    if (scope.kind === 'closed') {
+      return NextResponse.json({ total: 0, showing: 0, items: [], artist: null }, { headers: { 'Cache-Control': 'private, no-store' } });
     }
 
     const q = searchParams.get('q');
@@ -88,7 +95,10 @@ export async function GET(request: NextRequest) {
     // ── Path B: semantic + post-filter (when q present) ───────────────
     if (q) {
       const semanticLimit = Math.min(limit + offset + 30, 120);
+      // Rank inside the tenant's book set (#4330); the Mongo `tenantScope`
+      // below stays as the second check.
       const semanticResults = await semanticArtworkSearch(q, semanticLimit, {
+        scope,
         period: period ?? undefined,
         culture: culture ?? undefined,
         genre: genre ?? undefined,

@@ -59,7 +59,7 @@ function stubClient(opts: { listed?: GeminiJob[]; known?: Record<string, GeminiJ
 type Row = Record<string, unknown> & { _id: string; status: string };
 
 /** A minimal in-memory `batch_jobs` + `pages` stand-in with the verbs the reconciler uses. */
-function stubDb(rows: Row[]) {
+function stubDb(rows: Row[], chainedRuns: Array<{ round?: { job?: { name: string } }; rounds?: Array<{ job: string }> }> = []) {
   const updates: Array<{ filter: unknown; set: Record<string, unknown> }> = [];
   const matches = (row: Row, filter: Record<string, unknown>): boolean => {
     for (const [k, v] of Object.entries(filter)) {
@@ -73,6 +73,13 @@ function stubDb(rows: Row[]) {
   };
   const collection = (name: string) => ({
     find: (filter: Record<string, unknown>) => {
+      if (name === 'translate_batch_runs') {
+        // The reconciler asks by `round.job.name` / `rounds.job` $in the orphan candidates.
+        const names = new Set(((filter.$or as Record<string, { $in: string[] }>[]) ?? []).flatMap(f => Object.values(f)[0].$in));
+        const hitRuns = chainedRuns.filter(r => (r.round?.job?.name && names.has(r.round.job.name)) || (r.rounds ?? []).some(x => names.has(x.job)));
+        const c = { project: () => c, toArray: async () => hitRuns.map(r => ({ ...r })) };
+        return c;
+      }
       const hits = name === 'batch_jobs' ? rows.filter(r => matches(r, filter)) : [];
       const cursor = { project: () => cursor, toArray: async () => hits.map(r => ({ ...r })) };
       return cursor;
@@ -227,6 +234,20 @@ describe('an unmeasurable probe is not a verdict', () => {
 });
 
 describe('orphan cancellation', () => {
+  it('does NOT cancel a chained-translation round recorded only in translate_batch_runs (#6122)', async () => {
+    const inflight = 'batches/chained-inflight';
+    const earlier = 'batches/chained-earlier-round';
+    const k0 = stubClient({ listed: [
+      { name: inflight, state: 'JOB_STATE_RUNNING' },
+      { name: earlier, state: 'JOB_STATE_PENDING' },
+      { name: 'batches/stranger', state: 'JOB_STATE_RUNNING' },
+    ] });
+    const { db } = stubDb([], [{ round: { job: { name: inflight } } }, { rounds: [{ job: earlier }] }]);
+    const r = await reconcileBatchState(db, { clients: [k0.client], now: () => NOW, log: () => {} });
+    expect(k0.cancels).toEqual(['batches/stranger']);
+    expect(r.orphansCancelled).toBe(1);
+  });
+
   it('cancels a Gemini-active job the DB has never heard of', async () => {
     const k0 = stubClient({ listed: [{ name: 'batches/stranger', state: 'JOB_STATE_RUNNING' }] });
     const { db } = stubDb([]);

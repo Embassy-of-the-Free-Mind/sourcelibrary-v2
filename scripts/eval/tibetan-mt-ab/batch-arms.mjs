@@ -123,10 +123,9 @@ for (const { model, label } of ARMS) {
         console.log(`${label}: submitted ${created.name} with key ${keyIndex}`);
         if (REGISTER) {
           const { withMongo } = await import('../../lib/mongo.mjs');
-          await withMongo((d) => d.collection('batch_jobs').updateOne({ gemini_job_name: created.name }, { $setOnInsert: {
-            id: `${METER || 'tibetan-mt-ab'}-${label}`, job_name: created.name, gemini_job_name: created.name, status: 'external_eval', type: 'eval', model,
-            page_count: units.length, created_at: new Date(job.submitted_at), updated_at: new Date(), issue: Number(REGISTER),
-            note: 'hand-submitted eval Batch (scripts/eval/tibetan-mt-ab/batch-arms.mjs); results go to files only, never to pages' } }, { upsert: true }));
+          const { registerEvalBatch } = await import('../../lib/eval-batch-registry.mjs');
+          await withMongo((d) => registerEvalBatch(d, { jobName: created.name, id: `${METER || 'tibetan-mt-ab'}-${label}`, model,
+            pageCount: units.length, submittedAt: job.submitted_at, issue: REGISTER, submittedBy: 'scripts/eval/tibetan-mt-ab/batch-arms.mjs' }));
           console.log(`${label}: registered ${created.name} as external_eval`);
         }
         break;
@@ -175,4 +174,9 @@ for (const { model, label } of ARMS) {
     fs.writeFileSync(path.join(dir, `${u.id}.json`), JSON.stringify({ id: u.id, arm: label, model, text, finishReason: resp.candidates?.[0]?.finishReason, inputTokens: um.promptTokenCount, outputTokens: um.candidatesTokenCount, thinkingTokens: um.thoughtsTokenCount || 0, ms, cost_usd, cost_basis: 'usageMetadata × batch rate', prompt_ref: u.promptRef, src_chars: u.src_chars, job: job.name }, null, 1));
   }
   console.log(`${label}: ${n}/${units.length} written, $${spent.toFixed(4)} at the Batch rate (${(spent / Math.max(1, n)).toFixed(5)}/page)`);
+  // The responses are on disk: end the `external_eval` registration (#5897). A no-op for a job that was never registered.
+  const { withMongo } = await import('../../lib/mongo.mjs');
+  const { closeEvalBatch } = await import('../../lib/eval-batch-registry.mjs');
+  const closed = await withMongo((d) => closeEvalBatch(d, job.name, { evidence: `${n}/${units.length} responses written to ${path.relative(process.cwd(), dir)}` }));
+  if (closed) console.log(`${label}: batch_jobs row closed as collected`);
 }

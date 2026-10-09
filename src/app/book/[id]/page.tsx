@@ -11,6 +11,8 @@ import { tenantCatalogReferencesBook } from '@/lib/tenant-catalog-books';
 import { resolveImprintPlace } from '@/lib/imprint';
 import { displayPublished, citationYear } from '@/lib/publication-date';
 import { isHiddenBook, findVisibleDuplicateKeeper } from '@/lib/book-access';
+import { getQualityWarnings, qualityDate } from '@/lib/book-warnings';
+import { READER_UI_STRINGS } from '@/lib/reader-strings';
 import { artworkRedirectSlug } from '@/lib/artwork-slug';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail, browseBooks, getLanguageCounts, type CatalogBook } from '@/lib/books-catalog';
@@ -58,6 +60,7 @@ import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter'
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { authorUrl } from '@/lib/slugify';
 import FirstTranslationEvidence from '@/components/book/FirstTranslationEvidence';
+import PreviewBadge from '@/components/book/PreviewBadge';
 import TranslationCardPanel, { TranslationHistoryUnresearched } from '@/components/book/TranslationCardPanel';
 import { cardLabel, loadCard, type TranslationCard } from '@/lib/first-translation/card';
 import {
@@ -1053,6 +1056,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   // proven layout below to preserve the Tenant Subdomain Lockdown invariants.
   // ============================================================================
   if (!isEmbedded) {
+    // What a stored quality check found in this book (#6199). One indexed read; never throws.
+    const bookWarning = (await getQualityWarnings(await getReadDb(), [book.id])).book;
+    const qualityStrings = READER_UI_STRINGS[lang].info;
     const heroByline = getEffectiveByline(book);
     const bookSlug = book.slug || book.id;
     // What this URL's language SHOWS. Title: the gloss for `lang`, falling back
@@ -1820,6 +1826,29 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 </div>
               )}
 
+              {/* Quality warning (#6199): what a stored check found, with its n and
+                  date, linked to the record. Shown instead of hiding the book. */}
+              {bookWarning && (
+                <p role="note" data-quality-warning="book" className="mt-3 max-w-xl text-[12px] md:text-[13.5px] leading-snug" style={{ color: '#e0b46a' }}>
+                  {qualityStrings.qualityBook({
+                    ai: bookWarning.reader !== 'human', image: bookWarning.imageOpened, read: bookWarning.pagesRead,
+                    serious: bookWarning.pagesSerious, date: qualityDate(bookWarning.date, lang),
+                  })}{' '}
+                  <Link href={`/book/${book.slug || book.id}/checks#${bookWarning.anchor}`} className="underline underline-offset-2">{qualityStrings.qualitySeeReview}</Link>
+                </p>
+              )}
+
+              {/* Preview badge — a partial scan of a larger work (e.g. only a
+                  few page images of a longer manuscript). A calm note, not an
+                  alert: the book is genuine and public, just incomplete. */}
+              {book.preview && (
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-3 text-[10.5px] md:text-[13.5px] font-medium">
+                  <span className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1" style={{ color: '#f7f2ea', background: 'rgba(245,240,232,0.10)', border: '1px solid rgba(245,240,232,0.22)' }}>
+                    <PreviewBadge lang={lang} />
+                  </span>
+                </div>
+              )}
+
               {/* Actions — desktop only (mobile shows them pinned to the hero
                   foot via the `actions` prop). */}
               <div className="hidden md:flex flex-wrap items-center gap-2.5 mt-6">
@@ -2057,6 +2086,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               <h1 className="text-2xl sm:text-3xl font-serif font-bold break-words">{book.display_title || book.title}</h1>
               {book.display_title && book.title !== book.display_title && (
                 <p className="text-stone-400 mt-1 italic text-sm sm:text-base">{book.title}</p>
+              )}
+              {/* Preview badge — a partial scan of a larger work. */}
+              {book.preview && (
+                <div className="mt-3">
+                  <PreviewBadge
+                    lang={lang}
+                    className="px-3 py-1 bg-white/10 text-stone-200 rounded-full text-xs"
+                  />
+                </div>
               )}
               {/* Impressum: "Place: Publisher, Year" — same library-card
                   format as BphCatalogBrowser.formatImpressum so the book page

@@ -11,7 +11,7 @@ const STATIC_PAGES = [
   '/',
   '/about',
   '/about/faq',
-  '/about/processing',
+  '/how-it-works',
   '/about/progress',
   '/about/research',
   '/about/sources',
