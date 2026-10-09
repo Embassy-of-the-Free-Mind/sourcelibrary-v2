@@ -306,7 +306,7 @@ function PlotBody({ panel, m, W, H, f }: { panel: Panel; m: Measure; W: number; 
             )}
             {ring && <circle cx={cx} cy={cy} r={ring} fill="none" stroke="#a8a29e" strokeWidth={1} strokeDasharray="2 2" />}
             <circle cx={cx} cy={cy} r={r} fill={compute ? '#fff' : p.production ? PRODUCTION : INK} stroke={p.production ? PRODUCTION : INK} strokeWidth={compute ? 1.2 : 1.5} />
-            <text x={cx} y={cy} dy="0.35em" textAnchor="middle" fontSize={f * 0.72} fontWeight={600} fill={compute ? INK : '#fff'}>{i + 1}</text>
+            <text x={cx} y={cy} dy="0.35em" textAnchor="middle" fontSize={f * 0.78} fontWeight={600} fill={compute ? INK : '#fff'}>{i + 1}</text>
             {/* a hit target bigger than the mark */}
             <circle cx={cx} cy={cy} r={r * 1.6} fill="transparent" />
           </g>
@@ -389,8 +389,9 @@ function PanelView({ chart, panel, m, present }: { chart: Chart; panel: Panel; m
   const refs = panel.references;
   const ciDigits = m.key === 'ocr' ? 0 : 2;
   // The figure scales to its column, so text and marks grow with it. Presenting, the column is
-  // ≈ 680 px at 1280: a 560-unit viewBox keeps 11 units ≈ 13 px there. On a phone that box would
-  // shrink text to ≈ 7 px, so below md the presenting view falls back to the 300-unit grid geometry.
+  // ≈ 680 px at 1280: a 480-unit viewBox keeps 11 units ≈ 15 px there (340 gave ≈ 22 px; 560, ≈ 13 px,
+  // left the dot numbers unreadable). On a phone that box would shrink text to ≈ 8 px, so below md the
+  // presenting view falls back to the 300-unit grid geometry.
   const label = `${m.title(chart)}: ${m.scoreWord} against cost per 1,000 pages for ${panel.placed.length} engines. ${sample(panel)}.${m.badge ? ` ${m.badge}.` : ''}${caution(panel) ? ` ${caution(panel)}.` : ''}`;
   const svg = ([W, H, f]: number[], className: string) => (
     <svg viewBox={`0 0 ${W} ${H}`} className={`w-full h-auto ${className}`} role="img" aria-label={label}>
@@ -398,7 +399,7 @@ function PanelView({ chart, panel, m, present }: { chart: Chart; panel: Panel; m
     </svg>
   );
   const plot = present
-    ? <>{svg([300, 250, 11], 'md:hidden')}{svg([560, 360, 11], 'hidden md:block')}</>
+    ? <>{svg([300, 250, 11], 'md:hidden')}{svg([480, 310, 11], 'hidden md:block')}</>
     : svg([300, 250, 11], '');
   const table = (
     <div className="overflow-x-auto"><table className="w-full tabular-nums text-sm">
