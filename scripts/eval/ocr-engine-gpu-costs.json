@@ -8,8 +8,7 @@
     "paddleocr-vl-1.6": [
       {
         "charts": [
-          "chinese-manuscript",
-          "chinese-print"
+          "chinese-manuscript"
         ],
         "basis": "billed",
         "eur_per_page": 0.00089,
@@ -17,6 +16,18 @@
         "quote": "€0.00089/page billed",
         "source": "scripts/eval/experiments/2026-10-01-chinese-ocr-cohort-5547.md",
         "measured_on": "2026-10-01"
+      },
+      {
+        "charts": [
+          "chinese-print"
+        ],
+        "basis": "billed",
+        "eur": 4.09,
+        "pages": 2048,
+        "hardware": "1 × Scaleway L4 (pl-waw-2), €0.7875/h, two runners on NDL two-page spreads (≤ 2,400 px)",
+        "quote": "€4.09 billed for 2,048 pages",
+        "source": "scripts/eval/experiments/2026-10-07-chinese-print-against-cbeta-6101.md",
+        "measured_on": "2026-10-07"
       },
       {
         "charts": [
