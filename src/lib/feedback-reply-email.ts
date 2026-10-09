@@ -45,7 +45,7 @@ function buildHtml({ name, originalMessage, replyBody, link }: FeedbackReplyPara
   </div>
   <p style="font-size: 15px; line-height: 1.7; margin: 0 0 16px;">${greeting}</p>
   <p style="font-size: 15px; line-height: 1.7; margin: 0 0 16px;">
-    A little while ago you sent us a note about Source Library. We wanted to let you know we read it &mdash; and acted on it.
+    A little while ago you sent us a note about Source Library. We wanted to let you know we read it and acted on it.
   </p>
   <div style="background: #f5f0e8; border-left: 3px solid #d8cfc0; border-radius: 6px; padding: 14px 18px; margin: 0 0 20px;">
     <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: #8a8480; margin-bottom: 6px;">You wrote</div>
@@ -72,7 +72,7 @@ function buildText({ name, originalMessage, replyBody, link }: FeedbackReplyPara
   const lines = [
     greeting,
     '',
-    'A little while ago you sent us a note about Source Library. We wanted to let you know we read it — and acted on it.',
+    'A little while ago you sent us a note about Source Library. We wanted to let you know we read it and acted on it.',
     '',
     'You wrote:',
     `  "${originalMessage.trim()}"`,

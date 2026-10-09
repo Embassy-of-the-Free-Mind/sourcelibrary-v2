@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A68344",
+  "edition": "Kykneion asma. Cygnea cantio. / Autore Ioanne Lelando antiquario. — STC 15444.5; ESTC S104109 (1545)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A68344",
+  "origin": "library",
+  "book_id": "6a463e29b000203b37d3e7b5",
+  "page_number": 136,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 165553,
+    "to_char": 167228,
+    "overlap": 0.473,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-0)",
+    "at": "2026-10-06T10:04:59Z",
+    "note": "Leland-style topographic commentary (Reading, London bridge); ref matches 'muni appellatione' to 'sciolotum'.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      136,
+      137,
+      138
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.393Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "86e1714977c2e5ed738b029559ff727eeb164628ff525341004b32a1df8f1376",
+  "unit": {
+    "chars": 1675
+  }
+}

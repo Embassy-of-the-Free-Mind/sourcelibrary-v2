@@ -19,8 +19,8 @@ const SITE = 'https://sourcelibrary.org';
 
 /** Alt text for the share card, in the card's own language. */
 const OG_ALT: Record<Locale, string> = {
-  en: 'Source Library — Digitizing and translating ancient texts',
-  es: 'Source Library — Digitalización y traducción de textos antiguos',
+  en: 'Source Library: Digitizing and translating ancient texts',
+  es: 'Source Library: Digitalización y traducción de textos antiguos',
   la: 'Source Library: textus antiqui photographice descripti et conversi',
 };
 

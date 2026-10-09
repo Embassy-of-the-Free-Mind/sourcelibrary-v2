@@ -1,0 +1,32 @@
+{
+  "summary": {
+    "book_id": "6a51d78d612243b274118e89",
+    "title": "In Henricum Fridericum primogenitum Iacobi ter maximi Regis Magnæ Britanniæ, Galliæ, & Hiberniæ: serenissimum vero Walliae principem, morbo de hac vita decedentem Novemb. 1612 lachrymæ Alexr. Julii Scoti, suo & conterraneorum suorum nomine, namq́[ue] ab vno disce omnes.",
+    "published": "1612",
+    "source": "EEBO-TCP A04717",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 1,
+    "referenced": 1,
+    "skips": {},
+    "median_char_acc": 0.9675,
+    "median_char_acc_windowed": 0.9675,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": true,
+    "private_dir": "/root/sourcelibrary-ops/evals/refs-private"
+  },
+  "rows": [
+    {
+      "slug": "ed-6a51d78d612243b274118e89-p9",
+      "page": 9,
+      "overlap": 0.955,
+      "probe_words": 204,
+      "ref_chars": 2005,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.048,
+      "char_acc": 0.9675,
+      "char_acc_windowed": 0.9675
+    }
+  ]
+}
