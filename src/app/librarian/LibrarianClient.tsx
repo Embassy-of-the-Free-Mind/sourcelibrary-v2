@@ -207,7 +207,7 @@ function SearchSteps({ steps, t }: { steps: SearchStep[]; t: LibrarianStrings })
             {t.tools[step.name] || step.name}
             {step.query && <span className="text-[#b0a89c]"> &ldquo;{step.query.slice(0, 50)}{step.query.length > 50 ? '...' : ''}&rdquo;</span>}
             {step.status === 'done' && step.summary && (
-              <span className="text-[#6b6560]"> &mdash; {step.summary}</span>
+              <span className="text-[#6b6560]">: {step.summary}</span>
             )}
           </span>
         </div>
@@ -282,7 +282,7 @@ function NotebookPanel({
                 rel="noopener noreferrer"
                 className="mt-1.5 inline-block text-[11px] font-sans text-[#9e4a3a] hover:underline"
               >
-                {f.bookTitle} &mdash; {f.bookAuthor}, p.{f.pageNumber}
+                {f.bookTitle}, {f.bookAuthor}, p.{f.pageNumber}
               </a>
             </div>
           );
@@ -725,7 +725,7 @@ export default function LibrarianClient({ featuredPassage, lang = 'en' }: Librar
                     ...m,
                     error: true,
                     retryQuestion: trimmed,
-                    content: event.message || 'I’m sorry — something went wrong on my end. Try again?',
+                    content: event.message || 'I’m sorry, something went wrong on my end. Try again?',
                   }));
                   break;
               }
@@ -742,8 +742,8 @@ export default function LibrarianClient({ featuredPassage, lang = 'en' }: Librar
           // if nothing ever arrived, we never reached the library at all.
           const gotPartway = !!(m.content || m.thinking || m.steps.length > 0);
           const apology = gotPartway
-            ? 'I’m sorry — I got distracted (my connection was interrupted mid-search). Try again?'
-            : 'I’m sorry — I can’t reach the library right now. Try again in a moment?';
+            ? 'I’m sorry, I got distracted (my connection was interrupted mid-search). Try again?'
+            : 'I’m sorry, I can’t reach the library right now. Try again in a moment?';
           return {
             ...m,
             error: true,
@@ -860,7 +860,7 @@ export default function LibrarianClient({ featuredPassage, lang = 'en' }: Librar
       const lines = assistant.sources.map(s => {
         const path = tenantBookUrl({ slug: s.bookSlug, id: s.bookId }, tenant)
           + (s.pageNumber ? `/page-number/${s.pageNumber}` : '');
-        return `- ${s.bookAuthor ? `${s.bookAuthor}, ` : ''}${s.bookTitle}${s.pageNumber ? `, p. ${s.pageNumber}` : ''} — ${origin}${path}`;
+        return `- ${s.bookAuthor ? `${s.bookAuthor}, ` : ''}${s.bookTitle}${s.pageNumber ? `, p. ${s.pageNumber}` : ''}: ${origin}${path}`;
       });
       text += `\n\nSources:\n${lines.join('\n')}`;
     }

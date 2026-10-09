@@ -22,6 +22,14 @@
  *                         meantime has its marker cleared instead of being re-billed.
  *                         This is THE consumer of the marker; without --dry-run it is a
  *                         paid run behind the daily spend dial (spend-guard).
+ *   --pages-file=F        With --book-id only: a JSON list of page ids (the shapes
+ *                         bulk-reocr-local.mjs takes). Only those pages are considered, and one
+ *                         is translated when it has no translation or its translation is older
+ *                         than its transcription (the #4927 timestamp rule), whether or not the
+ *                         daily sweep has stamped the marker yet. Each page is seeded with the
+ *                         stored translation of the page before it, not with the previous page
+ *                         of the list. For a re-OCR job that retranslates only the pages whose
+ *                         text changed (#5813).
  *   --offset=N            Skip first N eligible books (for splitting across machines)
  *
  * Control options:
@@ -48,6 +56,7 @@ import { translationStaleness, STALE_FIELD } from '../lib/stale-translation.mjs'
 import { codeVersion, host } from '../lib/write-provenance.mjs';
 import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
+import { readPageIdsFile } from '../lib/ocr-targeting.mjs';
 
 // --- Config ---
 // Model + prompt come from translate-core (issue #3725). This script used to
@@ -78,6 +87,12 @@ const PIPELINE_STATUS = getArg('status');
 const PROVIDER = getArg('provider');
 const AUTHOR = getArg('author');
 const STALE_MODE = hasFlag('stale');
+const PAGES_FILE = getArg('pages-file');
+if (PAGES_FILE && !SINGLE_BOOK) {
+  console.error('--pages-file needs --book-id: a page list is an operator run on one named book');
+  process.exit(1);
+}
+const PAGE_IDS = PAGES_FILE ? readPageIdsFile(PAGES_FILE) : null;
 
 // --- API key rotation ---
 function getAllApiKeys() {
@@ -186,9 +201,21 @@ async function processBook(book, pages, prompts, db, globalStats) {
     }
   }
 
+  let lastPageNumber = pages.length > 0 ? pages[0].page_number - 1 : null;
   for (const page of pages) {
     // Check global limit
     if (globalStats.completed + globalStats.failed >= MAX_PAGES) break;
+
+    // A page list is not consecutive: the page handled just before this one may be many leaves
+    // back. Seed from the page that actually precedes it in the book, or from nothing.
+    if (PAGE_IDS && page.page_number - 1 !== lastPageNumber) {
+      const prevPage = await db.collection('pages').findOne(
+        { book_id: book.id, page_number: page.page_number - 1, 'translation.data': { $exists: true, $ne: '' } },
+        { projection: { _id: 0, 'translation.data': 1 } },
+      );
+      previousTranslation = prevPage?.translation?.data || null;
+    }
+    lastPageNumber = page.page_number;
 
     // Skip pages without meaningful OCR
     if (!page.ocr?.data || page.ocr.data.length < 10) {
@@ -386,6 +413,7 @@ async function main() {
   if (PIPELINE_STATUS) console.log(`  status=${PIPELINE_STATUS}`);
   if (PROVIDER) console.log(`  provider=${PROVIDER}`);
   if (STALE_MODE) console.log(`  mode=stale (draining translation_stale, #4927)`);
+  if (PAGE_IDS) console.log(`  page list ${PAGES_FILE} (${PAGE_IDS.length} ids): untranslated or stale pages of it only`);
   if (DRY_RUN) console.log(`  DRY RUN`);
   console.log('');
 
@@ -440,7 +468,8 @@ async function main() {
 
       const pages = await db.collection('pages')
         .find(
-          STALE_MODE ? { book_id: book.id, [`${STALE_FIELD}.reason`]: { $exists: true } } : { book_id: book.id },
+          PAGE_IDS ? { book_id: book.id, id: { $in: PAGE_IDS } }
+            : STALE_MODE ? { book_id: book.id, [`${STALE_FIELD}.reason`]: { $exists: true } } : { book_id: book.id },
           {
             projection: {
               id: 1, _id: 0, book_id: 1, page_number: 1,
@@ -459,6 +488,8 @@ async function main() {
       const eligible = pages.filter(p => {
         const hasOcr = p.ocr?.data && p.ocr.data.length > 0;
         if (!hasOcr) return false;
+        // A listed page: untranslated, or translated from a transcription it no longer holds.
+        if (PAGE_IDS) return !p.translation?.data || translationStaleness(p).stale;
         if (STALE_MODE) {
           // Re-verify by the rule before paying: the marker is a materialised
           // verdict, and a page retranslated by a writer that forgot to clear

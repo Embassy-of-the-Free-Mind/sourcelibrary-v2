@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 import { getReadDb } from '@/lib/mongodb';
-import { posts as blogPostList } from '@/app/blog/page';
+import { posts as blogPostList } from '@/app/blog/posts';
 import { canonWorkForWorkId } from '@/lib/canon-works';
 
 // Next.js sitemap with generateSitemaps() for multi-file output.

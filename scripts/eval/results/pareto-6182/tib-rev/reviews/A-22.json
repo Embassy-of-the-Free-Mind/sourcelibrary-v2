@@ -1,0 +1,58 @@
+[
+{"id": "QSL8W", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "high", "tibetan": "མྱ་ངམ་ཤིང་དང་ཆུ་མེད་པའི་ཕྱོགས", "english": "a place of wood and no water", "why": "The desert is defined as a region lacking both trees and water.", "fix": {"find": "a place of wood and no water", "replace": "a place without trees or water"}},
+  {"type": "addition", "confidence": "medium", "tibetan": "ཇི་ལྟར་མཐོང་བའི་རང་བཞིན་དེ་ལྟར་མ་མཐོང་བའི་ཕྱིར་རོ", "english": "If they saw the nature as it truly was, there would be no error.", "why": "The Tibetan only says the unaffected onlookers beside the magicians do not see the nature the way the deluded see it; the conditional sentence is not in the text."}
+ ],
+ "note": "Sound rendering of the PV commentary on the illusion analogy and the pramāṇa-phala triad; one factual slip on the desert gloss and an added sentence."},
+{"id": "QAGZP", "score": 3, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "high", "tibetan": "ལས་འདས་པ་ནི་དངོས་པོ་མེད་པ་ཡིན་ནོ", "english": "Nirvana is not a (non-entity)", "why": "The side opens by completing the opponent's claim 'then nirvana is a non-entity', which the verse then refutes.", "fix": {"find": "Nirvana is not a (non-entity) original", "replace": "[Objection:] Then Nirvana is a (non-entity) original"}},
+  {"type": "addition", "confidence": "high", "tibetan": "འོ་ན་མྱ་ངན་ལས་འདས་པ་ནི་དངོས་པོ་", "english": "one line of text not fully transcribed", "why": "The side simply ends mid-sentence ('then nirvana is an entity [and a non-entity]'); the transcription remark is not in the Tibetan.", "fix": {"find": "an entity one line of text not fully transcribed", "replace": "an entity and..."}}
+ ],
+ "note": "Faithful MMK 25 commentary otherwise, but the opening reverses the opponent's thesis and an editorial artifact is appended."},
+{"id": "QO61N", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "medium", "tibetan": "གཏན་ཚིགས་དང་འགལ་བ་དེ་ནི་ཡོད་པ་དང་མེད་པ་ངེས་པ་ན་རྒོལ་བའི་སྒྲུབ་པ་དང་། ཕྱིར་རྒོལ་བ་དང་སུན་འབྱིན་པར་འགྱུར་བ་ཡིན་ནོ", "english": "when the presence and absence of that contradictory reason are ascertainable, it serves as the proponent's proof, or becomes a refutation by the respondent", "why": "The Tibetan pairs two items: the (valid) reason and the contradictory reason, which when ascertained become respectively the proponent's proof and the respondent's refutation; the English makes the contradictory reason alone a proof."}
+ ],
+ "note": "Careful handling of the inverted-certainty argument and the hetu terminology; one mis-segmented pair near the end."},
+{"id": "QCRUT", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "དེ་རྣམས་རྟོགས་པས་འདྲེས་པར་བྱེད", "english": "through the realization of those things, they are made to appear mixed", "why": "The quoted verse says conceptual thought (rtog pa, vikalpa) mixes the unmixed natures, not 'realization'; it is also a verse quotation rendered as prose."},
+  {"type": "structure", "confidence": "medium", "tibetan": "ཤེས་པའི་རང་གི་ངོ་བོ་རྗོད་པར་བྱེད་པ་ནི་མ་ཡིན་པར་བསྟན་པ་ནི", "english": "To show that it is not the nature of consciousness that is being expressed", "why": "The Tibetan says only expressing the nature of pramāṇatva would contradict reasoning, not expressing the nature of cognition; the English inverts the point and contradicts the preceding claim that 'own nature' refers to cognition."}
+ ],
+ "note": "Follows the commentary on conventional validity in outline, but the argument structure is muddled in places and a key quoted verse is misread."},
+{"id": "QPH05", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "high", "tibetan": "ལྷའི་ཐུགས་ནི་བདག་ཅག་ལྟ་བུའི་སྐྱེ་བོས་བཅོམ་པ་མ་ལགས", "english": "the minds of the gods are not conquered by beings such as us", "why": "lha (deva) here is the ministers' address to the king: 'Your Majesty's mind is not to be swayed by people like us'.", "fix": {"find": "the minds of the gods are not conquered by beings such as us", "replace": "Your Majesty's mind is not to be overruled by people such as us"}},
+  {"type": "agent", "confidence": "medium", "tibetan": "བདག་གི་ཤ་སྦྱིན་སྩོལ་བ་ཐོང", "english": "Stop requesting the gift of my flesh", "why": "sbyin stsol ba is the king's granting of his own flesh; the ministers urge him to give up giving it, not to stop requesting it."}
+ ],
+ "note": "Readable gloss of the Śibi jātaka commentary, but the royal address is turned into 'the gods' and the ministers' plea is skewed."},
+{"id": "QD0SQ", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "Accurate rendering of the arhat epithets, the three vidyās, abhijñās and four pratisaṃvids."},
+{"id": "QQFML", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "high", "tibetan": "རང་དང་གཞན་གྱི་དབྱེ་བ་མེད་པར་བསྟན་པ", "english": "To show that there is not no distinction", "why": "The Tibetan shows that there is no distinction between self and other in inferring the object-cognizing mind.", "fix": {"find": "To show that there is not no distinction", "replace": "To show that there is no distinction"}},
+  {"type": "agent", "confidence": "medium", "tibetan": "རྗེས་སུ་དཔག་པ་ཉིད་མ་ཡིན་ནོ་ཞེས་ཟེར་བ་ནི་འོན་ཏེ་བློ་ནི་དོན་གྱིས་གོ་བས་ཞེས་བྱ་བའོ", "english": "which is what is meant by saying \"but the mind is understood through the object.\"", "why": "zer ba marks an opponent's suggestion (that memory is inferential), to which the root-text lemma 'or rather the mind is understood by implication' replies; the English fuses objection and reply into one assertion."},
+  {"type": "reversal", "confidence": "medium", "tibetan": "རྣལ་འབྱོར་པའི་ཡང་མ་ཡིན་པ་མ་ཡིན་ནམ", "english": "is an inference regarding the minds and sense faculties of others", "why": "The objection asks whether, for yogis too as for us, graspability (direct production and appearance) is absent just as others' minds are only inferred; the English loses the negation and makes graspability itself an inference."}
+ ],
+ "note": "A dense subcommentary rendered with the dialectical frame (opponent's claim vs lemma) repeatedly blurred, and one double negative inverting a point."},
+{"id": "QZS8P", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "ཡང་ཡང་ཕྲག་པ་མགོ་བོ་རྐེད་པས་མིན", "english": "Not repeatedly with the shoulder, the head, or the waist.", "why": "The commentary reads yang yang as 'even light (loads)' (khur yang du zin kyang), so the verse means even light loads are not carried on shoulder, head or hip, not 'repeatedly'."}
+ ],
+ "note": "Good rendering of the Vinaya verses on shaving, the barber's sequence and deportment; verse and commentary are kept apart correctly."},
+{"id": "QWJPI", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "medium", "tibetan": "སུ་ཡོད་པ་མ་ཡིན་པར་ཚད་མ་ཡོངས་སུ་བཟུང་སྟེ་བརྩད་ཅིང་འགྱེད་པ་བྱས་པའི་ཚེ", "english": "one takes emptiness as the valid means of cognition (pramāṇa) authoritative source of knowledge", "why": "The Tibetan says one argues through emptiness, having adopted valid means of cognition to establish that the āyatanas are ultimately unarisen and not substantially existent; emptiness is not itself called the pramāṇa."}
+ ],
+ "note": "Sound rendering of Avalokitavrata on sādhyasama replies and the MMK 1.1 verse; one clause misattached in the explanation of 'disputing through emptiness'."},
+{"id": "QQDG1", "score": 3, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "ཚ་ཆུས་རི་རྒྱལ་ལྟ་བུར་བརྟན་པ་དག་གོ", "english": "those who are as stable as the Mountains of King in the salt water ocean", "why": "The gloss says those firm like the two just named, the ocean and Meru, king of mountains.", "fix": {"find": "those who are as stable as the Mountains of King in the salt water ocean", "replace": "those who are as firm as the ocean and the king of mountains"}},
+  {"type": "term", "confidence": "medium", "tibetan": "ཏན་ལ་ལྟོས་པས་ཁེངས་པའོ", "english": "Arrogance is based on comparison.", "why": "Completing the previous side, pride (rgyags pa) is being puffed up with regard to one's own good qualities, not 'based on comparison'."},
+  {"type": "term", "confidence": "medium", "tibetan": "གསུང་ཚིག་བསྟན་པ་དང་། དམ་པ་དགེ་བ་དག་གིས", "english": "(by showing the spoken words) and (by the supreme virtues)", "why": "The lemma (glossed next as brtan pa 'unwavering', dam pa, dge ba) means 'with words that are firm, excellent and virtuous', not 'showing' and 'supreme virtues'."}
+ ],
+ "note": "Generally accurate word-by-word gloss of the smile passage, but a few lemmas are misconstrued, including the ocean/Meru simile."}
+]

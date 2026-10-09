@@ -1,0 +1,62 @@
+[
+{"id": "Q6OD0", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "དག་མི་སྐྱེ་བ་མ་གཏོགས་པ་གཞན་དོར་བར་བྱའོ", "english": "Except to ensure that these do not produce impurities", "why": "Completing the previous side's 'srog chags' clause, it says: except for those in which insects do not breed, the rest are to be discarded; 'impurities' misreads the insects."},
+  {"type": "term", "confidence": "medium", "tibetan": "དེ་དག་རང་ལ་གནས་འཆར་བཅུག་ནས", "english": "made them take up residence with him", "why": "gnas 'cha' ba is the Vinaya term for taking dependence (niśraya): Udāyin had them take niśraya under himself, not merely lodge with him."}
+ ],
+ "note": "A sound rendering of the end of the bedding rule and the opening of the expulsion narrative; the opening clause and the niśraya term are misread."},
+{"id": "QFWTZ", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "སྤང་ལེབ་དག་གིས་གཡོགས་#པར་བྱེད་ན", "english": "If they cover it with boards", "why": "spang leb are sods/turf blocks, distinct from the wooden planks (shing leb) of the next clause."}
+ ],
+ "note": "A careful rendering of the commentary on the building rule; the 'byed pa po nyid' (constituent factor) is rendered literally as 'agent' but consistently."},
+{"id": "Q9PS9", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "high", "tibetan": "བ་ནི་དགེ་འདུན་གྱི་གོས་མི་བགོ་བའོ", "english": "The (sangha) monastic community does not divide the robes.", "why": "Completing the previous rule (during washing, dyeing, bowl-work, wood-splitting), it says one should not wear the Sangha's robe; the Sangha is not the agent and bgo ba here means 'wear'.", "fix": {"find": "The (sangha) monastic community does not divide the robes.", "replace": "On those occasions one does not wear the robe belonging to the (sangha) monastic community."}},
+  {"type": "reversal", "confidence": "high", "tibetan": "བུ་དེ་#ཕའི་ཁྱིམ་གྱི་བདག་པོ་ལས་ཕྱིར་མི་ལྡོག་པའི་ཕྱིར", "english": "the son will not return to being the master of the father's house", "why": "The reason given is that the banished son does not cease to be an owner of his father's house, which is why one may accept from him.", "fix": {"find": "the son will not return to being the master of the father's house", "replace": "the son does not cease to be an owner of the father's house"}},
+  {"type": "agent", "confidence": "medium", "tibetan": "ཟེའི་བུ་མོས་ཞུས་པ་ལས", "english": "From the questions asked by the daughter of a brahmin monk", "why": "The questioner is the brahmin's daughter (a nun), not the daughter of a monk."}
+ ],
+ "note": "Hard, compressed commentary rendered mostly literally, but the opening rule and the reasoning on the banished son are inverted."},
+{"id": "QB1CI", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "medium", "tibetan": "བ་ལང་སྐྱོང་གི་མ་ཞི་བ་ཉིད་ཀྱིས", "english": "It will be known by the unrest between you and the cowherd", "why": "'ma zhi ba' is the cowherd's mother Zhi ba (Śāntā), the woman whose thrown curd-pot the gloss goes on to mention, not 'unrest'."},
+  {"type": "gloss", "confidence": "medium", "tibetan": "སྤྱི་བླུགས་ཀྱི་མིང་ཅན་གྱི་མཚོ་ལས", "english": "[note: This likely refers to Lake Manasarovar or a similar sacred body of water mentioned in Vinaya commentaries.]", "why": "The text names a lake called Kamaṇḍalu (spyi blugs); the identification with Manasarovar is unsupported speculation."},
+  {"type": "term", "confidence": "medium", "tibetan": "ཚང་ཞེས་བྱ་བ་ནི་", "english": "\"Complete\" means...", "why": "tshang here is 'nest', glossed on the next side as a dwelling place, not 'complete'."}
+ ],
+ "note": "A lexical gloss-commentary handled serviceably in the stock lemmas but with misread names and a speculative note."},
+{"id": "QQWKG", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "དེ་ཁོ་ན་ཞེས་བྱ་བའི་བློ་ལ་སྣང་བ་འཛིན་པ་ན", "english": "when grasping what appears to the mind as reality", "why": "'de kho na zhes bya ba' quotes the root's word 'only that': grasping only what appears to the cognition; it is not 'reality' (tattva)."},
+  {"type": "agent", "confidence": "medium", "tibetan": "གཞན་གྱིས་བསམ་པ་མ་རིག་ནས", "english": "Not understanding the intention of others, [note: the opponent] stated", "why": "Another party, not understanding the (author's) intention, said 'the externals' etc.; the intention is not that of 'others'."}
+ ],
+ "note": "Apoha argument on conceptual cognition and svalakṣaṇa rendered accurately in its main lines."},
+{"id": "QA2CG", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "high", "tibetan": "དགེ་འདུན་ལས་མྱུར་དུ་གནོད་#པ་དང་མྱུར་དུ་འབྲལ་བར་བསྟང་ཞིང་གྲོགས་བྱ་བའོ", "english": "the Sangha monastic community must quickly offer assistance and guidance regarding punishments and the like, so that the individual may quickly \"take up\" the remedy and \"separate\" from the fault", "why": "It is the pupil who must exert himself and help his preceptor or niśraya teacher quickly receive the penalty from the Sangha and quickly be released from it; the Sangha is the source, not the helper.", "fix": {"find": "the Sangha monastic community must quickly offer assistance and guidance regarding punishments and the like, so that the individual may quickly \"take up\" the remedy and \"separate\" from the fault", "replace": "the pupil must exert himself and help him quickly receive from the Sangha the penalty and the like, and quickly be released from it"}},
+  {"type": "reversal", "confidence": "medium", "tibetan": "གནས་ཀྱིས་ཀྱང་ཞུ་བར་མི་བྱར་ཟད་ཀྱི", "english": "This means that the resident monk should not merely ask questions", "why": "The niśraya teacher only differs in not having to ask (permission); otherwise he does these same duties (bowl, robes) for the pupil."},
+  {"type": "term", "confidence": "medium", "tibetan": "ལྷག་མ་བཅབས་པའི་ཉེས་པ", "english": "a fault of concealing a remaining offense (shispa) an offense requiring purification", "why": "lhag ma is the saṃghāvaśeṣa class of offence; '(shispa)' is a garbled equivalent and 'requiring purification' misdescribes it."}
+ ],
+ "note": "The niśraya duties and the five qualities are rendered well, but the opening penalty passage reverses who helps whom."},
+{"id": "QZI7E", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "A faithful rendering of the argument on momentary entities producing effects alone, including the variant-reading remark."},
+{"id": "QYD4I", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "མདོའི་དོན་བསྟན་པའི་ཕྱིར", "english": "the meaning of the (Sutra) scriptural discourse", "why": "mdo here is the root text of the treatise (the kārikā) that the author explains in his own commentary, not a scriptural sūtra.", "fix": {"find": "the meaning of the (Sutra) scriptural discourse", "replace": "the meaning of the root text (sūtra)"}},
+  {"type": "reversal", "confidence": "medium", "tibetan": "དེ་ལྟ་མ་ཡིན་ཏེ།", "english": "This is not the case; if it possessed parts", "why": "'de lta ma yin te' means 'otherwise', i.e. if it were not partless, it would not be a substance; the English reads as a denial of the preceding claim."}
+ ],
+ "note": "Sound rendering of the Ālambanaparīkṣā commentary on atoms and conventional existence."},
+{"id": "QKBR8", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "medium", "tibetan": "ལག་པས་སྐེ་རགས་ལྷོད་པར་བྱེད་པ་ཀུན་ནས་འགེགས་པ་ནི", "english": "restraining my hands from loosening her sash", "why": "In the lover's fantasy it is she who resists the hand that loosens her sash, not the speaker restraining himself."},
+  {"type": "term", "confidence": "medium", "tibetan": "སྒྲ་སྒྲོགས་པའི་དབང་པོ་མི་དགེ་བའི་ལས་བྱེད་པ་རྣམས་ཀྱིས", "english": "experiencing the agony wrought by unvirtuous deeds committed through the noisy senses", "why": "These are the roaring hell-wardens (lords who carry out the punishment of evil deeds) inflicting torment, not 'senses'."}
+ ],
+ "note": "A readable rendering of the ornate verses on lust; minor misreadings in the love-fantasy and hell description."},
+{"id": "QYPUX", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "སྐྱེས་བཞིན་དུ་འགྱུར་ཏེ", "english": "they become like a living presence", "why": "skyes here is 'gift': his words, meeting noble people, become like a gift.", "fix": {"find": "they become like a living presence", "replace": "they become like a gift"}},
+  {"type": "term", "confidence": "medium", "tibetan": "མི་བཤེས་པ་ནི་མ་འདྲིས་", "english": "The **unfriendly**", "why": "mi bshes pa is glossed as the unacquainted, strangers not seen before, not the hostile."},
+  {"type": "structure", "confidence": "medium", "tibetan": "གཏན་ཚིགས་དོན་རྣམས་རབ་ཏུ་གསལ་བར་སྟོན།", "english": "**He clearly demonstrates the meaning of the logical arguments**", "why": "As the next side's gloss shows, the verse means he shows the meanings by means of very clear reasons, not the meaning of the arguments."}
+ ],
+ "note": "The compound analyses are followed faithfully; a few lexical slips."}
+]

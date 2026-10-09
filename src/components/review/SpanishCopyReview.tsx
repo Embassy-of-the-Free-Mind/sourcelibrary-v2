@@ -64,8 +64,8 @@ export default function SpanishCopyReview() {
       </div>
 
       <p className="text-xs text-stone-500">
-        If it is wrong or awkward, please use the note box below to say what it should be
-        &mdash; that is far more useful to us than the rating on its own.
+        If it is wrong or awkward, please use the note box below to say what it should be.
+        That is far more useful to us than the rating on its own.
       </p>
     </div>
   ) : null;
@@ -85,7 +85,7 @@ export default function SpanishCopyReview() {
       submitting={q.submitting}
       canSubmit={q.canSubmit}
       authStatus={q.authStatus}
-      notePlaceholder="e.g. 'sugerir' is odd here — a reader would say 'proponer'"
+      notePlaceholder="e.g. 'sugerir' is odd here; a reader would say 'proponer'"
       note={q.note}
       onNoteChange={q.setNote}
       onNoteSubmit={q.submitNote}

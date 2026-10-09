@@ -20,7 +20,8 @@
 import 'dotenv/config';
 import { readFileSync, writeFileSync } from 'fs';
 import { getDb } from '../../src/lib/mongodb';
-import { normalizeTitle, normalizeAuthor, checkDuplicate } from '../../src/lib/dedup';
+import { normalizeAuthor, checkDuplicate } from '../../src/lib/dedup';
+import { normalizeEditionTitle } from '../../src/lib/edition-key';
 
 // ---- args ----
 const arg = (n: string, d?: string) =>
@@ -45,7 +46,7 @@ function parseCsv(text: string): Record<string,string>[] {
 }
 
 const STOP = new Set('the a an of and or de la le und in on to for with its et des du von van dem der das ein no d l vol volume i ii iii iv v part nouvelle edition'.split(' '));
-const toks = (s: string) => normalizeTitle(s).split(' ').filter(w => w.length > 2 && !STOP.has(w));
+const toks = (s: string) => normalizeEditionTitle(s).split(' ').filter(w => w.length > 2 && !STOP.has(w));
 const surname = (a: string) => { // "Last, First" -> last ; "First Last" -> last word
   const n = normalizeAuthor(a || ''); if (!n) return '';
   const raw = (a || '').includes(',') ? a.split(',')[0] : n;
@@ -57,7 +58,7 @@ const yearOf = (s?: string) => { const m = (s || '').match(/\b(1[4-9]\d\d|20[0-2
   const rows = parseCsv(readFileSync(CSV, 'utf8'));
   // dedupe catalogue rows by normalized title
   const uniq = new Map<string, Record<string,string>>();
-  for (const r of rows) { const k = normalizeTitle(r[TITLE_COL] || ''); if (k && !uniq.has(k)) uniq.set(k, r); }
+  for (const r of rows) { const k = normalizeEditionTitle(r[TITLE_COL] || ''); if (k && !uniq.has(k)) uniq.set(k, r); }
   const cat = [...uniq.values()];
 
   const db = await getDb();

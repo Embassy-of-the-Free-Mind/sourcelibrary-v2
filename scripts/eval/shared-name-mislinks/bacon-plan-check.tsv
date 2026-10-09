@@ -1,0 +1,21 @@
+n	tier	plan	by_eye	agrees	book	basis
+1	printed	francis	Francis Bacon	yes	Rozanov, Priroda i istoriia (1900) p106	"Bacon conceived the Novum Organon"
+2	printed	francis	Francis Bacon	yes	Heumann, Apparatus iurisprudentiae (1752) p49	"FRANCIS BACON OF VERULAM"
+3	printed	roger	Roger Bacon	yes	Kircher, Mundus subterraneus (1678) p704	margin "Rogerius", "like Roger Bacon"
+4	printed	roger	Roger Bacon	yes	Gaffarel, Curiositez inouyes (1631) p-103	the mirrors of "Roger Bacon"
+5	printed	roger	Roger Bacon	yes	Colonne, Secrets les plus cachés (1762) p-114	"Listen to Roger Bacon"
+6	same-book	francis	Francis Bacon	yes	Maine de Biran, Oeuvres (1841) p32	"physics reformed on the plan of Bacon"
+7	same-book	francis	Francis Bacon	yes	Kleuker, Magikon (1784) p278	"does more than Bacon, than Boerhaave"
+8	same-book	francis	Francis Bacon	yes	Croce, Estetica (1908) p268	Bacon on philosophical grammar
+9	same-book	francis	Francis Bacon	yes	Herzen, Sochineniia 4 (1905) p217	"Descartes and Bacon"
+10	same-book	roger	Roger Bacon	yes	Salmon, Medicina practica (1692) p-348	running head "BACON" over an alchemical treatise
+11	note	roger	Roger Bacon	yes	Hollandus, Sammlung (1746) p33	a treatise on oil of antimony "under the name of Bacon"
+12	note	francis	Francis Bacon	yes	Bayley, New light on the Renaissance (1909) p190	"Bacon says" of the theatre
+13	note	francis	Francis Bacon	yes	The Theosophist p234	"Baconian Induction"
+14	note	francis	Francis Bacon	yes	Dilthey, Einleitung (1883) p51	"Natura non nisi parendo vincitur"; the name is only in the note
+15	note	francis	Francis Bacon	yes	Willis, De anima brutorum (1672) p82	"Natural History, Century 7"; the name is only in the note
+16	date	roger	a serjeant-at-law named Bacon	NO	Year book, eyre of Northamptonshire (1329) p28	"Bacon:" pleading against Scrope
+17	date	roger	a serjeant-at-law named Bacon	NO	Year book reports 1332-1337 p296	"Bacon:" pleading
+18	date	roger	Roger Bacon	yes	Pistorius, Artis cabalisticae (1587) p964	"neither Robert, nor Bacon, nor Abanus, nor Picatrix"
+19	date	roger	Roger Bacon	yes	Ps.-Albertus, De lapidibus (1525) p286	alchemical verse, "Bacon was the name of the master"
+20	date	roger	Roger Bacon	yes	Paracelsus, Philosophiae et medicinae (1567) p369	an alchemical dictum quoted from Bacon

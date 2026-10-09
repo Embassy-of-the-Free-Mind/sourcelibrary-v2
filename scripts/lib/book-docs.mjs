@@ -118,6 +118,13 @@ export const BOOK_FIELDS = Object.freeze([
   // Derived from page images and the OCR's own tags by scripts/eval/book-class-5768.mjs,
   // never imported; read by OCR routing (#5737) and the translate-side OCR trust gate
   // (#5700). Registered in books-known-fields.json for the $set lint.
+  // NOT here either: `tradition` — string[], 0–2 of the 31 map labels in
+  // src/lib/taxonomy/traditions.json (#4773): the tradition the WORK belongs to (a German
+  // Bhagavad Gita is "Indian"). Derived from the book's metadata by
+  // scripts/maintenance/tradition-4773.mjs (flash-lite, Batch), never imported; `[]`
+  // means read and none discernible, absent means never read. Read by the search
+  // diversity re-rank (src/lib/search/diversity.ts). One sweep_log row per write.
+  // Registered in books-known-fields.json for the $set lint.
   // pages carrying a Spanish edition (translations.es / legacy translation_es);
   // synced by scripts/maintenance/sync-pages-translated-es.mjs, read by /es
   'pages_translated_es',
@@ -155,6 +162,8 @@ export const PAGE_FIELDS = Object.freeze([
   'photo', 'photo_original', 'display_photo', 'archived_photo',
   'thumbnail', 'image_thumb', 'thumbnail_blob',
   'image_width', 'image_height', 'width', 'height',
+  // #5876: where the page sits inside the scan (fractions of the display image).
+  'page_frame',
   // text
   'ocr', 'summary', 'translation', 'transliteration',
   // #4927: the materialised verdict that `translation` was made from a
@@ -168,6 +177,12 @@ export const PAGE_FIELDS = Object.freeze([
   // rate, method, source?, run_len, fit_share, fitter, run, at }. Absent where the book's
   // own sequence does not vouch for it. Cited as "p. 217 [scan 219]".
   'printed_page',
+  // #6173: a model-written abstract of the ideas on the page — an INDEX KEY for the
+  // concept lane (Supabase `page_concepts`), never shown or quoted as the page.
+  // { data, none, content_hash, source, run, prompt_version, model, updated_at,
+  //   engine (gemini-engine/1, input.source_text_hash = the page text it was made from) }.
+  // Written by scripts/batch/concept-abstracts.mjs.
+  'concept_abstract',
   // pipeline
   'status', 'archive_metadata',
   // host record: the source's own catalogue entry for THIS page, verbatim, as

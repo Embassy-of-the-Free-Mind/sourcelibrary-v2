@@ -1,0 +1,113 @@
+[
+{"id": "QTY3M", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "Faithful rendering of the Sadāprarudita passage quoted in the Śikṣāsamuccaya; one elision marker (from 'entered his house' up to 'seven years') is smoothed into continuous narrative, but nothing of substance is changed."},
+{"id": "QDSSY", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "ཁྱེད་ཅག་རྟགས་ཀྱི་མཐུན་པའི་ཕྱོགས་དང་མི་མཐུན་པའི་ཕྱོགས་དག་ལ་ཡོད་པ་དང་མེད་པའི་ཁྱད་པར་བསྟན་བཅོས་བྱེད་པས",
+   "english": "you, the authors of the treatises, explain",
+   "why": "The bstan bcos byed pa is the (single) author of the treatise, Dignāga/Dharmakīrti, who states the distinction; 'you' is the interlocutor, not the treatise-authors."},
+  {"type": "reversal", "confidence": "medium",
+   "tibetan": "འབད་པ་མེད་པར་དེ་ལྡོག་པར་ངེས་པས་ལྡོག་པར་འགྱུར་བ་མེད་པའི་ཕྱིར་རོ",
+   "english": "because that reversal is not established through effort",
+   "why": "The Tibetan says the reason's exclusion is not ascertained without effort (i.e. not automatically from mere non-observation), not that it is not established through effort."},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "དེའི་ཕྱིར་འབྲེལ་པ་སྒྲུབ་པར་བྱེད་པའི་ཚད་མ་ཡོད་པ་ཉིད་ཇི་སྐད་བཤད་པའི་མཐུན་པའི་ཕྱོགས་དང་མི་",
+   "english": "that establishes the connection is indeed the previously explained similar class and...",
+   "why": "The sentence says that only when there is a pramāṇa establishing the relation is presence/absence in sapakṣa and vipakṣa (as described) established; it does not equate the pramāṇa with the similar class."}
+ ],
+ "note": "Gets the general drift of the niścita discussion, but the argument structure of the anvaya/vyatireka passage is blurred in several places."},
+{"id": "QDPUZ", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "medium",
+   "tibetan": "འདོད་པའི་འདོད་པ་ནོར་ངོར་མིན",
+   "english": "the craving of one who craves turns toward nothing but wealth",
+   "why": "The Tibetan (like the Sanskrit na ... dhane 'nurodhaḥ) is a negation: the desirous one has no regard for wealth; 'nothing but wealth' inverts it (same in the Sanskrit rendering 'yields to nothing but wealth')."}
+ ],
+ "note": "Good bilingual verse translation of the Sanskrit and Tibetan; one line of the mango-tree verse is turned into its opposite."},
+{"id": "QJVDN", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "དངོས་པོ་དང་འབྲེལ་པ་ཉམས་ཕྱིར་ཏེ",
+   "english": "Because it impairs the relationship with actual entities.",
+   "why": "'brel pa nyams means the relation to real entities is lacking/deficient, not that the word actively impairs it."}
+ ],
+ "note": "Sound rendering of the apoha discussion and the 'knowable' objection; lemma glosses are handled correctly."},
+{"id": "QD9LU", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "medium",
+   "tibetan": "དེ་ལྟ་མ་ཡིན་ཏེ།",
+   "english": "But this is not the case; if it were possessing parts",
+   "why": "de lta ma yin te here means 'otherwise', introducing the reason the aggregate must be partless; 'this is not the case' reads as denying that it would be partless."}
+ ],
+ "note": "Accurate on the atoms/pārimāṇḍalya and Vaiśeṣika conventional-existence argument, with one connective misread."},
+{"id": "Q1OFV", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "རྒོད་པའི་ཟླ་ཉི",
+   "english": "the wild (raga) attachment/passion",
+   "why": "rgod pa is laughter/wantonness (hāsa/auddhatya), not rāga; the inserted gloss is wrong and the image is garbled."},
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "བདག་ཉིད་སྐྱོད་ཅིང་འགྲོ་བ་འམ",
+   "english": "I should move and go myself",
+   "why": "In the lover's musing the subject is the woman (will she come to me herself at night while people sleep?), not the speaker going himself."},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "བདེ་བ་ཉུང་བའི་ཕྱིར",
+   "english": "because there is little happiness",
+   "why": "phyir here means 'for the sake of a little pleasure' (they are embraced by fires for a trifling pleasure), not a causal 'because there is little happiness'."}
+ ],
+ "note": "Difficult kāvya on lust; the overall sense comes through but several images and agents are misconstrued."},
+{"id": "QZROH", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "addition", "confidence": "medium",
+   "tibetan": "དཔེར་ན་དུ་བ་ལ་སོགས་པ་རྣམས་ཀྱི་མེ་ལ་སོགས་པ་དེ་དག་ཉིད་བཞིན་ནོ",
+   "english": ", but rather produces it",
+   "why": "The Tibetan only gives fire in relation to smoke as an example of a non-diminishing cause; 'but rather produces it' is the translator's addition."}
+ ],
+ "note": "Reliable rendering of the two kinds of destruction and the account of contradiction as diminishing causation."},
+{"id": "QBEPI", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "འདུན་གྱི་ལྷག་མ་དང་པོའི་རྣམ་པར་འབྱེད་པའོ",
+   "english": "(Sanghadisesa) Formal Meeting of the Sangha",
+   "why": "This is the Mūlasarvāstivāda saṅghāvaśeṣa ('remainder of the community'); the Pali form and Pali-based rendering are wrong for this tradition.",
+   "fix": {"find": "(Sanghadisesa) Formal Meeting of the Sangha", "replace": "saṅghāvaśeṣa (Remainder of the Saṅgha)"}},
+  {"type": "term", "confidence": "high",
+   "tibetan": "ཉེས་བྱས",
+   "english": "wrongdoing (dus-kyas)",
+   "why": "nyes byas is duṣkṛta; 'dus-kyas' is neither the Tibetan nor the Sanskrit term.",
+   "fix": {"find": "(dus-kyas)", "replace": "(duṣkṛta)"}},
+  {"type": "addition", "confidence": "medium",
+   "tibetan": "རྗེས་སུ་ཆགས་པར་བྱ་བའི་གཟུགས་མཐོང་བ",
+   "english": "looking at the form of a woman or other such objects",
+   "why": "The Tibetan says seeing attractive (passion-arousing) forms; 'of a woman' is added."}
+ ],
+ "note": "The argument on emission and the stages of the offense is followed, but key Vinaya terms are garbled or given in Pali form."},
+{"id": "Q7PQG", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "high",
+   "tibetan": "ཉེ་བ་#འཁོར་སྦྱིན་པར་བྱའོ",
+   "english": "(Upali) The Buddha's disciple foremost in knowledge of Vinaya or monastic discipline replied, \"It should be given.\"",
+   "why": "Upāli asks the question ('Venerable...'); the Buddha replies, addressing him in the vocative: 'Upāli, it should be given.'",
+   "fix": {"find": "(Upali) The Buddha's disciple foremost in knowledge of Vinaya or monastic discipline replied, \"It should be given.\"", "replace": "The Buddha replied: \"Upāli, it should be given.\""}},
+  {"type": "reversal", "confidence": "high",
+   "tibetan": "བུ་དེ་#ཕའི་ཁྱིམ་གྱི་བདག་པོ་ལས་ཕྱིར་མི་ལྡོག་པའི་ཕྱིར་སྙམ་དུ་དགོངས་པའོ",
+   "english": "The intention is that such a son will not return to being the master of the father's house.",
+   "why": "The reasoning is that the expelled son does not cease to be an owner of the father's household, which is why one may accept from him.",
+   "fix": {"find": "The intention is that such a son will not return to being the master of the father's house.", "replace": "The thought is that such a son does not cease to be an owner of the father's household."}},
+  {"type": "gloss", "confidence": "medium",
+   "tibetan": "དུར་ཁྲོད་ནས་ཕྱིར་ཟློག་#པ་ལ་ཡང་ངོ",
+   "english": "[note: referring to property associated with the deceased or the transition of inheritance]",
+   "why": "The continuation (dur khrod pas ... gtsug lag khang du 'jug pa) shows this concerns a person returning from / dwelling in the charnel ground, not inheritance property."}
+ ],
+ "note": "Vinaya procedure is roughly followed, but the speaker of the canonical answer is wrong and the expelled-son rule is inverted."},
+{"id": "QMA6J", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "གསོལ་བ་དང་བཞིའི་ལས",
+   "english": "In a ritual of motion with four actions",
+   "why": "jñapticaturtha karman is the act with the motion as fourth (motion plus three proclamations), which is why the third proclamation is final; 'with four actions' (and 'with a second action' for jñaptidvitīya) misstates it."}
+ ],
+ "note": "Clear and accurate on the 'mostly done counts as done' principle and the sīmā case; karman-type names are imprecise."}
+]

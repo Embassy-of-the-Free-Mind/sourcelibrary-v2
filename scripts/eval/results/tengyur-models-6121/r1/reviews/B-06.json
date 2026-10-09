@@ -1,0 +1,262 @@
+[
+ {
+  "id": "QKIO5",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "omission",
+    "confidence": "medium",
+    "tibetan": "བྱ་བ་དང་བྱ་བ་མ་ཡིན་པའི་ངོ་བོ་ཉིད་ཡིན་པ་ལས་ཀྱང་ཡིན་ལ།",
+    "english": "Since it is the essence of what is to be done and what is not to be done, and because it is also the path to higher realms and lower realms, it is called the pathway of karma.",
+    "why": "The Tibetan gives a two-part etymology: being of the nature of action and non-action it is 'karma' (las), and being the path to good and bad destinies it is a 'path' (lam); the English drops 'it is karma' and so loses the derivation of las kyi lam."
+   }
+  ],
+  "note": "A faithful rendering of the instruction on stabilising faith; only the karmapatha etymology is blurred."
+ },
+ {
+  "id": "Q7QLY",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "omission",
+    "confidence": "high",
+    "tibetan": "ཁྱེའུ་ཁ་འཐོན་པར་རུང་བར་མ་བྱས་པ",
+    "english": "seeds of an abode of living beings have not been made permissible",
+    "why": "The Tibetan lists a third object of the offence, sprouts that have come up (khye'u kha 'thon pa), which the English omits.",
+    "fix": {
+     "find": "seeds of an abode of living beings have not been made permissible",
+     "replace": "seeds of an abode of living beings, or sprouts that have come up, have not been made permissible"
+    }
+   }
+  ],
+  "note": "Sound rendering of the bhūtagrāma pāyantika gloss; one object of the offence dropped."
+ },
+ {
+  "id": "QRRLF",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "Faithful rendering of the Sadāprarudita episode as cited, with correct names and abbreviation markers."
+ },
+ {
+  "id": "QICRD",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "gloss",
+    "confidence": "high",
+    "tibetan": "བརྒྱ་བྱིན་གྱི་སྤྱི་བོ་མེ་མ་ཡིན་པའི་རང་བཞིན་ཉིད་ཡིན་པ",
+    "english": "[note: referring to a traditional example of something that is not fire, such as a cold or divine object]",
+    "why": "'Indra's head' (śakramūrdhan) is Dharmakīrti's standard example of an anthill, from which smoke-like vapour issues; the note misidentifies it.",
+    "fix": {
+     "find": "[note: referring to a traditional example of something that is not fire, such as a cold or divine object]",
+     "replace": "[note: śakramūrdhan, 'Indra's head', i.e. an anthill, from which a smoke-like vapour issues; Dharmakīrti's stock example]"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ཕན་གདགས་བྱ་འདོགས་བྱེད་ཉིད་ལས་མི་འདའོ",
+    "english": "does not transcend being a benefactor [note: a cause] and performing the act of benefiting [note: producing an effect]",
+    "why": "phan gdags bya / 'dogs byed is the relation of what is assisted (upakārya) and what assists (upakāraka), not 'benefactor' and 'act of benefiting'; the notes mislabel the pair."
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "མེ་དང་དུ་བའི་ཁྱད་པར་དེ་ལྟར་ཁས་བླངས་ཀྱི། མེ་ཙམ་ནི་མ་ཡིན་པའི་ཕྱིར",
+    "english": "for we accept such a distinction between fire and smoke, but not for fire in general",
+    "why": "The Tibetan says that a particular (specific) fire and smoke are accepted as cause and effect, not fire as such; it is not a 'distinction between fire and smoke'."
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "གལ་ཏེ་མི་འདྲ་བ་ལས་མི་འབྱུང་བའི་ཕྱིར་དང་།",
+    "english": "Smoke does not arise from what is not fire because effects do not arise from what is dissimilar",
+    "why": "The whole chain of reasons is inside the opponent's 'if you say' (gal te ... brjod na), but the English states it as the author's own assertion and puts 'if' only on the last clause."
+   }
+  ],
+  "note": "Follows the argument in outline but the cause-and-effect terminology and the śakramūrdhan note need correcting."
+ },
+ {
+  "id": "QWQSH",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "དེ་ནི་གཙོ་བོ་ཡང་ཤིན་ཏུ་གསོག་པ་ངོ་བོ་ཉིད་མེད་པ་ཡིན་ནོ",
+    "english": "makes the Primary Matrix (pradhāna) primordial matter entirely hollow and devoid of intrinsic nature",
+    "why": "In the quoted verse it is what comes into the range of sight that is utterly hollow and without essence; the Tibetan does not say it 'makes' the pradhāna hollow."
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "འབྲས་བུ་གང་ཞིག་ནུས་པའི་རང་བཞིན་གྱིས་གཙོ་བོ་ལ་བརྟགས་པ་སྟེ",
+    "english": "The Primary Matrix is inferred through its potentiality",
+    "why": "The subject is the effect, which is posited in the pradhāna as potentiality; the English makes the pradhāna the thing inferred."
+   }
+  ],
+  "note": "The Sāṃkhya refutation is handled soundly overall; two clauses at the start of the argument have their subject shifted."
+ },
+ {
+  "id": "QIBLP",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ཤིང་དག་ལ་ཤུན་པ་ཐམས་ཅད་བཤུས་པས་འཆི་བར་སངས་རྒྱས་པ་ལ་མ་གྲུབ་བོ",
+    "english": "the Buddhist does not accept that the death of trees caused by stripping all their bark is a valid proof",
+    "why": "The point is that the reason itself (that trees die when stripped) is unestablished (asiddha) for the Buddhist, not that it fails as a 'valid proof'."
+   }
+  ],
+  "note": "An accurate rendering of the hetvābhāsa section with correct logical terminology."
+ },
+ {
+  "id": "Q573X",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "ཇི་ལྟར་ཡང་ནི་མེད་བདག་ཉིད། །ཇི་ལྟར་ཡང་ནི་མ་དམིགས་ཕྱིར།",
+    "english": "are in every way non-existent in nature because they are not perceived in any way",
+    "why": "ji ltar yang (kathaṃcit) is the Jaina 'in some respect' qualifier; the English inverts it to 'in every way', turning the anekānta examples into absolute claims.",
+    "fix": {
+     "find": "are in every way non-existent in nature because they are not perceived in any way",
+     "replace": "are in some respect non-existent in nature because in some respect they are not perceived"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "ཇི་ལྟར་ཡང་ནི་ཡོད་བདག་ཉིད།",
+    "english": "are in every way existent in nature because they are perceived in whatever way",
+    "why": "Again kathaṃcit, 'in some respect', not 'in every way'.",
+    "fix": {
+     "find": "are in every way existent in nature because they are perceived in whatever way",
+     "replace": "are in some respect existent in nature because in some respect they are perceived"
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "མེད་ན་མི་འབྱུང་འབྲེལ་བའི་ཕྱིར། །ནམ་ཡང་ཚུལ་གསུམ་ལ་ཡོད་མིན།",
+    "english": "it is never the case that the three modes",
+    "why": "The verse says the relation of invariable concomitance never lies in the three modes; it does not say the three modes do not exist independently."
+   },
+   {
+    "type": "reversal",
+    "confidence": "medium",
+    "tibetan": "ངེས་པའི་ཕྱིར་ནི་འཇུག་པ་མིན།",
+    "english": "it does not function because of certainty",
+    "why": "It means the three-mode reason does not operate to produce certainty; 'because of certainty' inverts the sense."
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "དངོས་པོའམ་དངོས་མེད་ཡོད་བདག་ཉིད། །ཇི་ལྟར་ཡང་ནི་དམིགས་ཕྱིར་རོ།",
+    "english": "Whether a thing is an entity or a non-entity, it is perceived as having its own identity in whatever way it may be.",
+    "why": "This is an example inference ('entity and non-entity are existent in nature, because they are in some respect perceived'), not a general statement about perception."
+   }
+  ],
+  "note": "The verses on Pātrasvāmin's single-characteristic reason are followed in outline, but the kathaṃcit examples and several logical points are rendered wrongly, and all the verse is set as prose."
+ },
+ {
+  "id": "Q24VU",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "Faithful rendering, including the Akṣayamati citation and the closing verse."
+ },
+ {
+  "id": "Q5TBH",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "མཁན་པོ་འམ་གནས་ལ་ལྷག་མ་བཅབས་པའི་ཉེས་པ་ཡོད་ན།",
+    "english": "If there is a fault of concealing an infraction from the preceptor or the teacher of the monastic residence, the monastic community should quickly administer punishment, take charge, and assist the student in separating from that negative influence.",
+    "why": "If the preceptor or instructor has the offence of a concealed saṃghāvaśeṣa, the pupil is to attend to him and help him to be quickly freed from the probation and other acts the Saṃgha imposes; the Saṃgha is not the agent and the student is not the one helped.",
+    "fix": {
+     "find": "If there is a fault of concealing an infraction from the preceptor or the teacher of the monastic residence, the monastic community should quickly administer punishment, take charge, and assist the student in separating from that negative influence.",
+     "replace": "If the preceptor or the instructor has the offence of a concealed saṃghāvaśeṣa, the pupil should attend to him and help him to be quickly released from the probation and other acts imposed by the Saṃgha."
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "གནས་ཀྱིས་ཀྱང་ཞུ་བར་མི་བྱར་ཟད་ཀྱི། ལྷུང་བཟེད་དང་ཆོས་གོས་ཀྱི་ལས་ལ་སོགས་པ་གོང་དུ་སྨོས་པ་བཞིན་དུ་བསྟང་ཞིང་གྲོགས་བྱ་བའོ",
+    "english": "which means that the resident pupil should not only ask questions, but should also take charge and assist in duties",
+    "why": "These are the instructor's (gnas) duties to the pupil: apart from not having to ask permission, the instructor too must look after him and help with bowl and robes; the English makes the pupil the agent and turns 'except for asking' into 'not only ask'.",
+    "fix": {
+     "find": "which means that the resident pupil should not only ask questions, but should also take charge and assist in duties",
+     "replace": "which means that the instructor, too, is exempt only from asking permission, but should look after the pupil and assist him in duties"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "དང་དབྱུང་བར་འདོད་ན། མནོད་པ་དང་འབྲལ་བར་རོ",
+    "english": "If one wishes to be released from dependence, the text states, \"it means to be separated from taking dependence.\"",
+    "why": "In context this continues the list of Saṃgha acts against the teacher (dbyung ba = expulsion, utkṣepaṇa), not a pupil leaving niśraya."
+   }
+  ],
+  "note": "The pentad section is good, but the opening passages on mutual duties between teacher and pupil put the wrong person as agent."
+ },
+ {
+  "id": "QI7MS",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "ལྡན་པ་ཅན་ལ་སོགས་པ་ལས",
+    "english": "(shaktimat) the entity characterized by the quality",
+    "why": "ldan pa can is saṃyogin, 'the conjoined', not śaktimat.",
+    "fix": {
+     "find": "(shaktimat) the entity characterized by the quality",
+     "replace": "(saṃyogin) the conjoined entity"
+    }
+   },
+   {
+    "type": "addition",
+    "confidence": "high",
+    "tibetan": "གཉི་ག་ལ་ནི་མི་",
+    "english": "it would not reside in both one line of text partially obscured or broken at the margin.",
+    "why": "The words 'one line of text partially obscured or broken at the margin' are not in the Tibetan; they are a stray editorial remark.",
+    "fix": {
+     "find": "in both one line of text partially obscured or broken at the margin.",
+     "replace": "in both..."
+    }
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "གལ་ཏེ་དེའི་བདག་ཉིད་དང་། དེ་ལས་བྱུང་བའི་ངེས་པ་དེའི་རྗེས་སུ་འཇུག་པ་ཡིན་པ",
+    "english": "Because if that identity [note: original: \"bdag nyid\", referring to essential identity or svabhava] and the certainty of arising from that are what follow",
+    "why": "The point is that if the being-a-means-of-understanding follows the ascertainment of identity and causality, then that ascertainment is its ground; the English makes identity and certainty the thing that follows."
+   }
+  ],
+  "note": "Follows the argument on conjunction-based reasons, but it has a wrong Sanskrit equivalent, a stray editorial addition and one garbled conditional."
+ }
+]

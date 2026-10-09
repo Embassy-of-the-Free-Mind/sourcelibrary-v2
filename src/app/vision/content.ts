@@ -16,8 +16,11 @@
 // untranslated pool = books with pages_count > 0 under 90% translated).
 // Rechecked 2026-10-01: 92,198 books with pages (any visibility, incl. 1,517
 // Kloss takedowns and duplicates); 16,599 live books at the readable bar
-// (homepage_stats.translatedToEnglish) — so the letter says 88,000 / 16,000 /
-// 72,000, which add up and match the budget's 72,000-book pool. When #5289
+// (homepage_stats.translatedToEnglish) — so the letter said 88,000 / 16,000 /
+// 72,000. Rechecked 2026-10-06: 96,230 books with pages, minus 1,603 duplicate_of
+// and 1,517 Kloss takedowns = 93,110 held; 19,865 readable in English (live
+// homepage) — so the letter says 93,000 / nearly 20,000 / 73,000. The budget's
+// $360K line is unchanged (16M pages still to read; 16.4M measured). When #5289
 // lands these should read the translation-state views instead of literals.
 // Spelling: American (Derek, 2026-10-01).
 // Unit-cost provenance: the machine cost of a single pass is MEASURED on
@@ -114,7 +117,7 @@ export const visionContent: VisionContent = {
     'How can you trust it? Every translation is shown next to the scanned page it came from, so you can check any line against the original before you quote it. All of it is free under a Creative Commons share-alike license, and it is open by API and MCP, which means the AI assistant you use can look up the actual page instead of guessing at it.',
   ],
   bodyBeforeImage1: [
-    'Today, Source Library holds about **88,000 books** in over fifty languages. More than **16,000** of them can already be read in translation, nearly five million pages, most of them in English for the first time. The other **72,000** are scanned and cataloged but not yet readable. To get a sense of the scale, the library already holds more words than English Wikipedia.',
+    'Today, Source Library holds about **93,000 books** in over fifty languages. Nearly **20,000** of them can already be read in translation, nearly five million pages, most of them in English for the first time. The other **73,000** are scanned and cataloged but not yet readable. To get a sense of the scale, the library already holds more words than English Wikipedia.',
     'Source Library is based at the [Embassy of the Free Mind](https://embassyofthefreemind.com) in Amsterdam, home of the Bibliotheca Philosophica Hermetica, a UNESCO “Memory of the World” rare-book library. It has a [Guinness record](https://www.guinnessworldrecords.com/world-records/777560-largest-library-dedicated-to-magic-and-mysticism) for the largest library devoted to magic and mysticism. Here is a picture of the bust of Marsilio Ficino that watches over the Source Library translation work.',
   ],
   image1: {
@@ -150,17 +153,17 @@ export const visionContent: VisionContent = {
         title: 'Read everything we hold',
         cost: '$762,000',
         body: [
-          'We hold **another 72,000 books, sixteen million pages, that nobody can read yet.** They are already scanned and cataloged. Today the pipeline runs on a budget of $5 a day. At full speed, about two million pages a month, which is the most we have ever run, the AI costs **$8,000 to $12,000 a month** on top of about $3,000 a month for hosting, and everything we hold is read in about nine months: the OCR, the translation, the illustrations, and the scripts that need special handling, such as Tibetan and Syriac.',
+          'We hold **another 73,000 books, sixteen million pages, that nobody can read yet.** They are already scanned and cataloged. Today the pipeline runs on a budget of $5 a day. At full speed, about two million pages a month, which is the most we have ever run, the AI costs **$8,000 to $12,000 a month** on top of about $3,000 a month for hosting, and everything we hold is read in about nine months: the OCR, the translation, the illustrations, and the scripts that need special handling, such as Tibetan and Syriac. Quality comes first: each kind of page gets the engine that reads it best in our measurements, and the hardest pages are read twice. [The reading plan](/research/reading-plan) shows what that costs and what we are still testing.',
           'The rest of the first year builds the organization that makes those translations trustworthy: the foundation and its legal footing, a director, a part-time engineer to run the pipeline, and the hosting that keeps every page online.',
         ],
-        promise: 'By next summer, every one of the 88,000 books we hold has a first translation, and there is an organization responsible for it.',
+        promise: 'By next summer, every one of the 93,000 books we hold has a first translation, and there is an organization responsible for it.',
       },
       {
         years: 'Years 2–3',
         title: 'Read the world’s scanned record, and make it trustworthy',
         cost: 'about $540,000 a year',
         body: [
-          'Far more has been scanned than we hold. HathiTrust, the Internet Archive, Gallica, the Munich Digitization Center and the Tibetan and Chinese digital libraries hold millions of volumes that nobody can read. We bring them in shelf by shelf, starting with Renaissance Latin, Chinese, Sanskrit and Arabic. At today’s rates each additional 100,000 books costs about $100,000 to read, and the shelf and language gifts below scale that directly.',
+          'Far more has been scanned than we hold. HathiTrust, the Internet Archive, Gallica, the Munich Digitization Center and the Tibetan and Chinese digital libraries hold millions of volumes that nobody can read. We bring them in shelf by shelf, starting with Renaissance Latin, Chinese, Sanskrit and Arabic. At today’s rates each additional 100,000 books costs $60,000 to $175,000 to read, depending on how carefully each page is checked, and the shelf and language gifts below scale that directly.',
           'It is important for scholars to check the translations against the originals, language by language. That starts with Renaissance Latin, and the core works become scholarly editions with DOIs, so they can be cited.',
           'At the Embassy of the Free Mind, there are about three thousand books printed before 1920 that have no digital copy anywhere, and some two thousand of them exist in no other collection. Scanning them at the Embassy, at its own pace and rates, is another $550,000, and we translate them as they come off the scanner.',
           'The stewardship community begins here: reviewers, annotators and translators who take responsibility for a language, a tradition or a shelf, and whose corrections flow back into the texts.',
@@ -204,7 +207,7 @@ export const visionContent: VisionContent = {
     heading: 'The five-year budget: $2.9 million',
     intro: 'The plan above, line by line. Each line comes from a unit cost we have measured in practice. The first year needs **$762,000**, and each year after that about **$540,000**.',
     items: [
-      { work: 'Translate the 72,000 books (16 million pages) we already hold, then re-read them as the engines improve', resource: '$360K' },
+      { work: 'Translate the 73,000 books (16 million pages) we already hold, then re-read them as the engines improve', resource: '$360K' },
       { work: 'Scholars reviewing the translations against the originals, language by language', resource: '$150K' },
       { work: 'Scanning the Embassy’s last 3,000 books: 2,400 at about €70, and 600 fragile volumes on the KNAW slow scanner at about €400', resource: '$550K' },
       { work: 'A director, a part-time engineer to run the pipeline, and a community manager, for five years', resource: '$800K' },
@@ -213,7 +216,7 @@ export const visionContent: VisionContent = {
       { work: 'Legal foundations (entity, trademark, rights policy), administration and contingency', resource: '$240K' },
       { work: 'Running the organization: fundraising help, tools, insurance, payment processing, and a three-month reserve', resource: '$400K' },
     ],
-    footnote: 'Translation is budgeted at 2.3 cents a page. Our measured cost in September 2026 was about a third of a cent a page for a single pass on the cheapest engine; the budget rate covers repeat passes with better models, the harder scripts, illustration extraction and failed runs. Scanning is costed at the Embassy’s own throughput (200 pages an hour on the standard scanners, 25 an hour on the KNAW scanner for fragile volumes) at working-student rates, and is funded through the Embassy. Hosting is our measured run rate plus storage growth toward a million books, about $250 a month for every 18 million pages added. The team lines are part-time contractor rates in the Netherlands. Administration covers bookkeeping, audit and compliance. A full line-by-line budget, by year, is available on request.',
+    footnote: 'Translation is budgeted at 2.3 cents a page. Our measured cost in October 2026 is about a quarter of a cent a page for a single pass on the cheapest engine, and about seven-tenths of a cent for the most careful pass, in which every page is read twice and disagreements are re-read by a stronger model ([the reading plan](/research/reading-plan)); the budget rate covers repeat passes with better models, the harder scripts, illustration extraction and failed runs. Scanning is costed at the Embassy’s own throughput (200 pages an hour on the standard scanners, 25 an hour on the KNAW scanner for fragile volumes) at working-student rates, and is funded through the Embassy. Hosting is our measured run rate plus storage growth toward a million books, about $250 a month for every 18 million pages added. The team lines are part-time contractor rates in the Netherlands. Administration covers bookkeeping, audit and compliance. A full line-by-line budget, by year, is available on request.',
   },
   ways: {
     heading: 'Ways to take part',

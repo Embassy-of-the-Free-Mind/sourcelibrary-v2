@@ -202,7 +202,7 @@ We've digitized and translated over 1,200 works in the Western esoteric traditio
 - [Relevant text 1 to their research]
 - [Relevant text 2 to their research]
 
-Our translations are generated using multimodal AI (Gemini) with human review. The original texts are public domain and our translations are CC BY-SA 4.0 — free for research use with attribution.
+Our translations are generated using multimodal AI (Gemini) with human review. The original texts are public domain and our translations are CC BY-SA 4.0, free for research use with attribution.
 
 I'd be happy to:
 - Prioritize specific texts relevant to your research

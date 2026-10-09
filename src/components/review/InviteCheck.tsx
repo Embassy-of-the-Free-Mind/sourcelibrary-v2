@@ -48,14 +48,14 @@ export default function InviteCheck({
   if (state === 'done') {
     return (
       <div className="max-w-xl mx-auto px-6 py-16">
-        <h1 className="text-2xl font-serif text-stone-900 mb-3">Thank you — that is recorded.</h1>
+        <h1 className="text-2xl font-serif text-stone-900 mb-3">Thank you. That is recorded.</h1>
         <p className="text-stone-700 leading-relaxed">
           You have just done something almost nobody has done: read one of our machine
           translations against the original. Every claim we make about the quality of this
           library rests on a few dozen judgments like yours.
         </p>
         <p className="text-stone-700 leading-relaxed mt-3">
-          If you would like another page, or would rather stop, just reply to the email — a
+          If you would like another page, or would rather stop, just reply to the email. A
           person reads those.
         </p>
       </div>
@@ -65,7 +65,7 @@ export default function InviteCheck({
   return (
     <div className="max-w-xl mx-auto px-6 py-12">
       <p className="text-xs uppercase tracking-wider text-stone-500 mb-2">
-        Translation check{language ? ` — ${language}` : ''}
+        Translation check{language ? `: ${language}` : ''}
       </p>
       <h1 className="text-2xl font-serif text-stone-900 leading-snug mb-4">
         Does our English say what the {language || 'original'} says?
@@ -82,8 +82,8 @@ export default function InviteCheck({
       </a>
 
       <ol className="text-sm text-stone-600 space-y-1.5 list-decimal pl-5 mt-6">
-        <li>Look at the scan — does our transcription match what is on the page?</li>
-        <li>Then the English — does it say what the original says?</li>
+        <li>Look at the scan. Does our transcription match what is on the page?</li>
+        <li>Then the English. Does it say what the original says?</li>
         <li>If the transcription is wrong, the English cannot be judged; say so instead.</li>
       </ol>
 
@@ -107,7 +107,7 @@ export default function InviteCheck({
         Anything you noticed? <span className="font-normal text-stone-500">Optional.</span>
       </label>
       <p className="text-xs text-stone-500 mt-0.5 mb-2">
-        A quoted line and what it should have said is the most useful thing you can give us — it
+        A quoted line and what it should have said is the most useful thing you can give us: it
         is something we can actually fix.
       </p>
       <textarea
@@ -116,7 +116,7 @@ export default function InviteCheck({
         onChange={e => setNote(e.target.value)}
         rows={4}
         className="w-full px-3 py-2 border border-stone-300 rounded-md text-sm text-stone-900 bg-white resize-y focus:outline-none focus:ring-2 focus:ring-accent-rust/30 focus:border-accent-rust"
-        placeholder="e.g. line 4 renders 'nisi' as 'if' — it should be 'unless', which reverses the sense"
+        placeholder="e.g. line 4 renders 'nisi' as 'if'; it should be 'unless', which reverses the sense"
       />
 
       <button

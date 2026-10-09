@@ -52,6 +52,13 @@ describe('judgeDrift', () => {
     expect(r.lines[0]).toMatch(/^UNVERIFIED /);
   });
 
+  it('a worker running another checkout (a nested worktree) is UNVERIFIED, never STALE (#6360)', () => {
+    const r = judgeDrift({ main: MAIN, checkout: CHECKOUT_CURRENT, now, workers: [worker({ worktree: '.claude/worktrees/job-scan-cut-5189', branch: 'job-scan-cut-5189', behind: null })] });
+    expect(r.exit).toBe(0);
+    expect(r.stale).toEqual([]);
+    expect(r.lines[0]).toMatch(/^UNVERIFIED .*runs another checkout \(\.claude\/worktrees\/job-scan-cut-5189, branch job-scan-cut-5189\)/);
+  });
+
   it('a checkout behind main is one CHECKOUT_BEHIND line; workers that loaded it fold into it', () => {
     const head = 'cccccccccccccccccccccccccccccccccccccccc';
     const behind = [fix(3, 9)];

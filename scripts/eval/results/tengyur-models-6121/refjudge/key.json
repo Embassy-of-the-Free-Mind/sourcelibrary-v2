@@ -1,0 +1,808 @@
+{
+ "R001": {
+  "kind": "PLANT",
+  "page_id": "6abed8d1896ea18127c8f7a9",
+  "labels": {
+   "T1": "A",
+   "T2": "A_PLANT"
+  },
+  "plant": {
+   "old": "One does not see the purpose of incorrectly teaching the subject matter and so forth, nor is there any engagement with such things.",
+   "new": "One does see the purpose of incorrectly teaching the subject matter and so forth, nor is there any engagement with such things.",
+   "how": "\\bdoes not\\b → does"
+  }
+ },
+ "R002": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ab",
+  "toh": "D4231",
+  "labels": {
+   "T1": "G35",
+   "T2": "S",
+   "T3": "A",
+   "T4": "O",
+   "T5": "G38"
+  }
+ },
+ "R003": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b42",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "G35",
+   "T3": "O",
+   "T4": "S",
+   "T5": "A"
+  }
+ },
+ "R004": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7a9",
+  "toh": "D4231",
+  "labels": {
+   "T1": "S",
+   "T2": "G35",
+   "T3": "O",
+   "T4": "G38",
+   "T5": "A"
+  }
+ },
+ "R005": {
+  "kind": "PLANT",
+  "page_id": "6abe825259b86b7d32a65b3c",
+  "labels": {
+   "T1": "A_PLANT",
+   "T2": "A"
+  },
+  "plant": {
+   "old": "This is because they are born into the family of the Tathagata, the King of Dharma, through the power of the mind of awakening and compassion.",
+   "new": "This is not because they are born into the family of the Tathagata, the King of Dharma, through the power of the mind of awakening and compassion.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "R006": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4a",
+  "toh": "D3862",
+  "labels": {
+   "T1": "O",
+   "T2": "A",
+   "T3": "S",
+   "T4": "G35",
+   "T5": "G38"
+  }
+ },
+ "R007": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b45",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "O",
+   "T3": "S",
+   "T4": "A",
+   "T5": "G35"
+  }
+ },
+ "R008": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3b",
+  "toh": "D3862",
+  "labels": {
+   "T1": "O",
+   "T2": "A",
+   "T3": "G35",
+   "T4": "G38",
+   "T5": "S"
+  }
+ },
+ "R009": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3d",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "S",
+   "T3": "G35",
+   "T4": "O",
+   "T5": "A"
+  }
+ },
+ "R010": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7a8",
+  "toh": "D4231",
+  "labels": {
+   "T1": "G38",
+   "T2": "S",
+   "T3": "A",
+   "T4": "O",
+   "T5": "G35"
+  }
+ },
+ "R011": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b43",
+  "toh": "D3862",
+  "labels": {
+   "T1": "O",
+   "T2": "S",
+   "T3": "G35",
+   "T4": "G38",
+   "T5": "A"
+  }
+ },
+ "R012": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b49",
+  "toh": "D3862",
+  "labels": {
+   "T1": "O",
+   "T2": "G38",
+   "T3": "S",
+   "T4": "G35",
+   "T5": "A"
+  }
+ },
+ "R013": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ac",
+  "toh": "D4231",
+  "labels": {
+   "T1": "G35",
+   "T2": "O",
+   "T3": "S",
+   "T4": "A",
+   "T5": "G38"
+  }
+ },
+ "R014": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b1",
+  "toh": "D4231",
+  "labels": {
+   "T1": "O",
+   "T2": "A",
+   "T3": "S",
+   "T4": "G35",
+   "T5": "G38"
+  }
+ },
+ "R015": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ae",
+  "toh": "D4231",
+  "labels": {
+   "T1": "A",
+   "T2": "G35",
+   "T3": "S",
+   "T4": "G38",
+   "T5": "O"
+  }
+ },
+ "R016": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b0",
+  "toh": "D4231",
+  "labels": {
+   "T1": "O",
+   "T2": "S",
+   "T3": "G35",
+   "T4": "G38",
+   "T5": "A"
+  }
+ },
+ "R017": {
+  "kind": "DUP",
+  "page_id": "6abe825259b86b7d32a65b4b",
+  "labels": {
+   "T1": "S",
+   "T2": "S_DUP"
+  }
+ },
+ "R018": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7af",
+  "toh": "D4231",
+  "labels": {
+   "T1": "S",
+   "T2": "G38",
+   "T3": "O",
+   "T4": "A",
+   "T5": "G35"
+  }
+ },
+ "R019": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ad",
+  "toh": "D4231",
+  "labels": {
+   "T1": "S",
+   "T2": "G38",
+   "T3": "O",
+   "T4": "A",
+   "T5": "G35"
+  }
+ },
+ "R020": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b9",
+  "toh": "D4231",
+  "labels": {
+   "T1": "A",
+   "T2": "S",
+   "T3": "O",
+   "T4": "G35",
+   "T5": "G38"
+  }
+ },
+ "R021": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7c3",
+  "toh": "D4231",
+  "labels": {
+   "T1": "O",
+   "T2": "S",
+   "T3": "G35",
+   "T4": "A",
+   "T5": "G38"
+  }
+ },
+ "R022": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7aa",
+  "toh": "D4231",
+  "labels": {
+   "T1": "G35",
+   "T2": "O",
+   "T3": "S",
+   "T4": "G38",
+   "T5": "A"
+  }
+ },
+ "R023": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4c",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "S",
+   "T3": "O",
+   "T4": "G35",
+   "T5": "A"
+  }
+ },
+ "R024": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7c1",
+  "toh": "D4231",
+  "labels": {
+   "T1": "A",
+   "T2": "G38",
+   "T3": "G35",
+   "T4": "S",
+   "T5": "O"
+  }
+ },
+ "R025": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b8",
+  "toh": "D4231",
+  "labels": {
+   "T1": "O",
+   "T2": "S",
+   "T3": "A",
+   "T4": "G38",
+   "T5": "G35"
+  }
+ },
+ "R026": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7bc",
+  "toh": "D4231",
+  "labels": {
+   "T1": "S",
+   "T2": "G35",
+   "T3": "O",
+   "T4": "G38",
+   "T5": "A"
+  }
+ },
+ "R027": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7be",
+  "toh": "D4231",
+  "labels": {
+   "T1": "S",
+   "T2": "A",
+   "T3": "G38",
+   "T4": "O",
+   "T5": "G35"
+  }
+ },
+ "R028": {
+  "kind": "PLANT",
+  "page_id": "6abe825259b86b7d32a65b4c",
+  "labels": {
+   "T1": "A_PLANT",
+   "T2": "A"
+  },
+  "plant": {
+   "old": "Sexual misconduct leads one to the hells, and so on, up to having unstable servants and a spouse who is shared with rivals.",
+   "new": "Sexual misconduct leads one to the hells, and so on, up to having unstable servants and a spouse who is not shared with rivals.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "R029": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b35",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "G35",
+   "T3": "A",
+   "T4": "S",
+   "T5": "O"
+  }
+ },
+ "R030": {
+  "kind": "DUP",
+  "page_id": "6abed8d1896ea18127c8f7af",
+  "labels": {
+   "T1": "S",
+   "T2": "S_DUP"
+  }
+ },
+ "R031": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3f",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G35",
+   "T2": "S",
+   "T3": "O",
+   "T4": "A",
+   "T5": "G38"
+  }
+ },
+ "R032": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b47",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "S",
+   "T3": "G35",
+   "T4": "A",
+   "T5": "O"
+  }
+ },
+ "R033": {
+  "kind": "PLANT",
+  "page_id": "6abe825259b86b7d32a65b3a",
+  "labels": {
+   "T1": "A",
+   "T2": "A_PLANT"
+  },
+  "plant": {
+   "old": "Furthermore, awakening has no characteristics, as it is devoid of the nature of characteristics.",
+   "new": "Furthermore, awakening has no characteristics, as it is not devoid of the nature of characteristics.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "R034": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4b",
+  "toh": "D3862",
+  "labels": {
+   "T1": "S",
+   "T2": "A",
+   "T3": "G35",
+   "T4": "G38",
+   "T5": "O"
+  }
+ },
+ "R035": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b6",
+  "toh": "D4231",
+  "labels": {
+   "T1": "S",
+   "T2": "O",
+   "T3": "G38",
+   "T4": "A",
+   "T5": "G35"
+  }
+ },
+ "R036": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7c0",
+  "toh": "D4231",
+  "labels": {
+   "T1": "O",
+   "T2": "G38",
+   "T3": "S",
+   "T4": "G35",
+   "T5": "A"
+  }
+ },
+ "R037": {
+  "kind": "PLANT",
+  "page_id": "6abed8d1896ea18127c8f7b6",
+  "labels": {
+   "T1": "A",
+   "T2": "A_PLANT"
+  },
+  "plant": {
+   "old": "Therefore, like other forms of direct perception, this is the direct perception of yoga.",
+   "new": "Therefore, like other forms of direct perception, this is not the direct perception of yoga.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "R038": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b36",
+  "toh": "D3862",
+  "labels": {
+   "T1": "A",
+   "T2": "G38",
+   "T3": "G35",
+   "T4": "S",
+   "T5": "O"
+  }
+ },
+ "R039": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b2",
+  "toh": "D4231",
+  "labels": {
+   "T1": "O",
+   "T2": "G35",
+   "T3": "G38",
+   "T4": "A",
+   "T5": "S"
+  }
+ },
+ "R040": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b5",
+  "toh": "D4231",
+  "labels": {
+   "T1": "O",
+   "T2": "S",
+   "T3": "G38",
+   "T4": "A",
+   "T5": "G35"
+  }
+ },
+ "R041": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b39",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "S",
+   "T3": "A",
+   "T4": "O",
+   "T5": "G35"
+  }
+ },
+ "R042": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b46",
+  "toh": "D3862",
+  "labels": {
+   "T1": "O",
+   "T2": "A",
+   "T3": "G35",
+   "T4": "S",
+   "T5": "G38"
+  }
+ },
+ "R043": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b31",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G35",
+   "T2": "S",
+   "T3": "A",
+   "T4": "G38",
+   "T5": "O"
+  }
+ },
+ "R044": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b32",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "S",
+   "T3": "G35",
+   "T4": "A",
+   "T5": "O"
+  }
+ },
+ "R045": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b40",
+  "toh": "D3862",
+  "labels": {
+   "T1": "A",
+   "T2": "G38",
+   "T3": "O",
+   "T4": "G35",
+   "T5": "S"
+  }
+ },
+ "R046": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b38",
+  "toh": "D3862",
+  "labels": {
+   "T1": "A",
+   "T2": "G35",
+   "T3": "O",
+   "T4": "S",
+   "T5": "G38"
+  }
+ },
+ "R047": {
+  "kind": "DUP",
+  "page_id": "6abed8d1896ea18127c8f7c1",
+  "labels": {
+   "T1": "S_DUP",
+   "T2": "S"
+  }
+ },
+ "R048": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7bb",
+  "toh": "D4231",
+  "labels": {
+   "T1": "G35",
+   "T2": "A",
+   "T3": "S",
+   "T4": "G38",
+   "T5": "O"
+  }
+ },
+ "R049": {
+  "kind": "DUP",
+  "page_id": "6abe825259b86b7d32a65b33",
+  "labels": {
+   "T1": "S",
+   "T2": "S_DUP"
+  }
+ },
+ "R050": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b41",
+  "toh": "D3862",
+  "labels": {
+   "T1": "O",
+   "T2": "G35",
+   "T3": "G38",
+   "T4": "A",
+   "T5": "S"
+  }
+ },
+ "R051": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4d",
+  "toh": "D3862",
+  "labels": {
+   "T1": "A",
+   "T2": "O",
+   "T3": "G38",
+   "T4": "G35",
+   "T5": "S"
+  }
+ },
+ "R052": {
+  "kind": "PLANT",
+  "page_id": "6abed8d1896ea18127c8f7b3",
+  "labels": {
+   "T1": "A",
+   "T2": "A_PLANT"
+  },
+  "plant": {
+   "old": "Regarding those which end in agitation and so forth, they are referred to in that way.",
+   "new": "Regarding those which end in agitation and so forth, they are not referred to in that way.",
+   "how": "\\bare\\b → are not"
+  }
+ },
+ "R053": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b48",
+  "toh": "D3862",
+  "labels": {
+   "T1": "S",
+   "T2": "G35",
+   "T3": "G38",
+   "T4": "O",
+   "T5": "A"
+  }
+ },
+ "R054": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b7",
+  "toh": "D4231",
+  "labels": {
+   "T1": "S",
+   "T2": "G38",
+   "T3": "G35",
+   "T4": "A",
+   "T5": "O"
+  }
+ },
+ "R055": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b44",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "G35",
+   "T3": "S",
+   "T4": "O",
+   "T5": "A"
+  }
+ },
+ "R056": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b37",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "S",
+   "T3": "A",
+   "T4": "O",
+   "T5": "G35"
+  }
+ },
+ "R057": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b3",
+  "toh": "D4231",
+  "labels": {
+   "T1": "A",
+   "T2": "G38",
+   "T3": "S",
+   "T4": "G35",
+   "T5": "O"
+  }
+ },
+ "R058": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3a",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "S",
+   "T3": "O",
+   "T4": "G35",
+   "T5": "A"
+  }
+ },
+ "R059": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7bd",
+  "toh": "D4231",
+  "labels": {
+   "T1": "O",
+   "T2": "G35",
+   "T3": "S",
+   "T4": "G38",
+   "T5": "A"
+  }
+ },
+ "R060": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b34",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "O",
+   "T3": "S",
+   "T4": "G35",
+   "T5": "A"
+  }
+ },
+ "R061": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7c2",
+  "toh": "D4231",
+  "labels": {
+   "T1": "G35",
+   "T2": "O",
+   "T3": "S",
+   "T4": "A",
+   "T5": "G38"
+  }
+ },
+ "R062": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3e",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G35",
+   "T2": "G38",
+   "T3": "O",
+   "T4": "S",
+   "T5": "A"
+  }
+ },
+ "R063": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4e",
+  "toh": "D3862",
+  "labels": {
+   "T1": "S",
+   "T2": "G38",
+   "T3": "G35",
+   "T4": "A",
+   "T5": "O"
+  }
+ },
+ "R064": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b4",
+  "toh": "D4231",
+  "labels": {
+   "T1": "G35",
+   "T2": "S",
+   "T3": "G38",
+   "T4": "A",
+   "T5": "O"
+  }
+ },
+ "R065": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b33",
+  "toh": "D3862",
+  "labels": {
+   "T1": "A",
+   "T2": "S",
+   "T3": "G38",
+   "T4": "G35",
+   "T5": "O"
+  }
+ },
+ "R066": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7bf",
+  "toh": "D4231",
+  "labels": {
+   "T1": "A",
+   "T2": "G38",
+   "T3": "O",
+   "T4": "G35",
+   "T5": "S"
+  }
+ },
+ "R067": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3c",
+  "toh": "D3862",
+  "labels": {
+   "T1": "G38",
+   "T2": "A",
+   "T3": "O",
+   "T4": "G35",
+   "T5": "S"
+  }
+ },
+ "R068": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ba",
+  "toh": "D4231",
+  "labels": {
+   "T1": "G35",
+   "T2": "O",
+   "T3": "G38",
+   "T4": "S",
+   "T5": "A"
+  }
+ }
+}

@@ -55,7 +55,9 @@ export const CSP_IMG_HOSTS = [
   'https://images.uba.uva.nl',
   'https://imagenes.patrimonionacional.es',
   'https://images.eap.bl.uk',
-  'https://*.basemaps.cartocdn.com',
+  // /explore/map basemap tiles. CARTO's keyless basemaps started returning an
+  // "API KEY REQUIRED" image for every tile (reader report, 2026-10-04).
+  'https://server.arcgisonline.com',
   // Library IIIF hosts that hold live cover URLs for visible books but were
   // missing from the CSP (measured 2026-08-04: ~570 blank cards between them).
   'https://mps.lib.harvard.edu',

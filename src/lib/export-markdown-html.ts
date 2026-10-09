@@ -28,9 +28,6 @@ export function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): s
   // Remove any standalone URLs
   html = html.replace(/https?:\/\/[^\s\)]+/g, '');
 
-  // The model's definitions inside <term> chips are notes, in both modes (#5895).
-  html = separateTermDefinitions(html);
-
   // Notes off (scholarly EPUB): the AI's commentary goes, the transcription stays.
   // This used to delete <margin>/<gloss> CONTENT along with the note, and to leave
   // <term> chips dangling with no definition once their <note> was gone — the two
@@ -40,6 +37,11 @@ export function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): s
   if (opts?.stripNotes) {
     html = applyNotesOff(html);
     html = html.replace(/\[\[notes?:\s*.*?\]\]/gi, '');
+  } else {
+    // The model's definitions inside <term> chips are notes (#5895). Notes on only:
+    // applyNotesOff splits the chips itself, and relabelling a headword's <gloss>
+    // as a <note> would get the whole line deleted with notes off (#5942).
+    html = separateTermDefinitions(html);
   }
 
   // Convert XML annotation tags to styled aside/span blocks BEFORE escaping HTML
