@@ -230,6 +230,12 @@
 45 6 * * * cd /root/sourcelibrary && [ -f scripts/audit/pipeline-next-step-audit.mjs ] && flock -n /tmp/sl-pipeline-next-audit.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/pipeline-next-step-audit.mjs --apply" >> /var/log/sourcelibrary/pipeline-next-audit.log 2>&1
 # mark-stale-translations.mjs --apply (#4927): installed 2026-09-30 (was absent 2026-09-19..30 despite the template)
 45 4 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-clip-index.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/clip-index-integrity.mjs" >> /var/log/sourcelibrary/clip-index-integrity.log 2>&1
+# page-vector-truth weekly (#6175): is each stored page vector the Gemini embedding of its page's text? 200 seeded
+# live translated books x 3 rows: model-free checks (e5 signature, shape, wrong book, removed translation still served,
+# AI summary in the snippet, duplicates) + one realtime embed per row (~$0.06/run) + a --plant positive control
+# (exit 2 unless every planted defect is caught). Exit 1 files/updates "Page vector truth: " (label search);
+# a clean run closes it. Exit 2 never files. Guarded by [ -f ] until the script is on main.
+15 5 * * 0 cd /root/sourcelibrary && [ -f scripts/audit/page-vector-truth.mjs ] && flock -n /tmp/sl-page-vector-truth.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/page-vector-truth.mjs --books 200 --seed \$(date +\%G\%V) --plant --dup-probe 50 --file-issue --json /var/log/sourcelibrary/page-vector-truth-last.json" >> /var/log/sourcelibrary/page-vector-truth.log 2>&1
 # installed 2026-09-30 per DECIDED (#4927 marker; read by the paid translate lanes)
 30 7 * * * cd /root/sourcelibrary && [ -f scripts/maintenance/mark-stale-translations.mjs ] && flock -n /tmp/sl-mark-stale-tr.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/mark-stale-translations.mjs --apply --since-hours=26" >> /var/log/sourcelibrary/mark-stale-translations.log 2>&1
 # Monthly translation corpus audit, stage 1 = the draw (#5301, runbook scripts/eval/translation-corpus-audit/MONTHLY.md).
