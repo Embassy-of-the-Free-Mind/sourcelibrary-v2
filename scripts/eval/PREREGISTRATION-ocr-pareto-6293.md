@@ -130,3 +130,40 @@ Committed before any CLI read of these pages exists. Everything above holds exce
 **Cost on the x axis.** $0 is billed. The CLI reports no tokens, so the point is placed at gemini-3.8-flash's API list price by the formula above with `r_in = 1` (the same request as lite's, prompt and image) and `r_out` = the arm's output characters over lite's stored output characters on the same pages; thinking is priced at 0, as the preregistered API arm would have run it. The chart's cost entry says "API price for comparison; $0 billed on the subscription".
 
 **Scoring.** Unchanged: `benchmark-score.mjs` over the bench → `results/ocr-pareto-6293/scored`, `score-syriac-retest.py` → `results/ocr-pareto-6293/syriac-gt-score.json`, and `build-ocr-pareto.mjs` takes only `gemini-3.8-flash+antigravity-cli` from them. The paired comparisons with lite and 3 Flash are reported as preregistered.
+
+## Amendment 2 (2026-10-09, job `cli-queue-b-6293`): 3.7 and 3.6 Flash through the CLI on a capped set of 555 pages
+
+Committed 2026-10-09 ~02:40Z, before any score of these arms is computed or read. The reads ran as a plain script
+(`read-tiers.sh`, started 2026-10-08 22:45Z; no scorer in the loop). Everything in Amendment 1 holds except what
+this section changes.
+
+**Arms.** `gemini-3.7-flash-low` (engine id `gemini-3.7-flash+antigravity-cli`, label "Gemini 3.7 Flash, CLI") and
+`gemini-3.6-flash-low` (`gemini-3.6-flash+antigravity-cli`, "Gemini 3.6 Flash, CLI"), through `agy -p`, read in that
+order. Same request per stratum as Amendment 1, byte for byte. Protocol from the first call: `--mode plan
+--print-timeout 120s --output-format json`, never auto-approve; at most 2 attempts per page, the second continuing a
+tool-denied conversation once with the "no commands" nudge (rows marked `nudged`); 2 image calls in parallel. 3.5
+Flash-Lite is **not run: not offered on the CLI** (`agy models`, 2026-10-08 and 2026-10-09). 3 Flash is not offered
+on the CLI either.
+
+**Pages: 555, not 908 (the deviation).** Every chart's most-pages panel is whole except **Chinese manuscript: 150 of
+its 503 pages**, `random.Random(62931).sample(sorted(pages), 150)` (`capped-set.json`, Derek 2026-10-08: cap the big
+panel). On that chart the two arms cannot join the 489-page most-pages panel (wave-2 rule: a new arm feeds a panel
+only where it read the whole set). Instead:
+- **a separate panel, "Chinese manuscript, 150-page subsample"**, holds every engine that read all 150 pages (stored
+  engines, 3.8 Flash CLI, 3.7, 3.6), each scored **on the same 150 pages** minus any page a plotted engine refused
+  (#5581). Its n is stated on the panel and on every point. 150-against-503 comparisons are never made.
+- The paired comparisons with lite and 3 Flash on that chart are on those shared pages only.
+
+**3.8 Flash's 41 pre-fix reads are re-read under the plan-mode protocol** (`ref-ws` 18, `chinese-ext` 11,
+`chinese` 7, `ref-pinned` 5; read with tools allowed before the #6345 fix). The plan-mode re-read replaces them on
+the charts, so every CLI point on every panel comes from one protocol. The pre-fix reads stay in the raw file and
+their CER is reported beside the re-read; a page the re-read leaves empty after 2 attempts is a blank read (CER 1.0
+in the reference tiers, as Amendment 1's rule), never the old read.
+
+**The nudge, before any point is charted.** Per arm and per panel: the nudged share, and median CER on nudged
+against plain rows, each beside lite's median on the same rows. This is descriptive: a point is charted either way,
+and the experiment file says where nudged rows score differently relative to lite.
+
+**Scoring.** Amendment 1's instruments and its one added rule (an unalignable reference-tier page from a CLI arm is a
+failed read at CER 1.0). Cost axis: `cli-cost.mjs` with the arm's model price from `model-pricing.mjs` (3.7 and 3.6
+Flash are priced as 3.8, $0.75 / $3.75 per 1M), r_out per chart on the capped pages. $0 billed.
