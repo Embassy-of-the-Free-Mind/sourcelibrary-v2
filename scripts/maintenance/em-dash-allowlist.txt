@@ -45,7 +45,7 @@ src/app/api/admin/api-keys/route.ts 1  # rewritten in a #6215 copy PR; --tighten
 src/app/api/admin/canon/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/api/admin/duplicates/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/api/admin/edition-keepers/batch/route.ts 3  # rewritten in a #6215 copy PR; --tighten after it merges
-src/app/api/admin/emergency-stop/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/admin/emergency-stop/route.ts 3  # added on main after the 2026-10-07 baseline; rewrite, then --tighten (#6215)
 src/app/api/admin/kdp/bundle/[id]/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/api/admin/metrics-snapshot/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/api/admin/seed-collections/route.ts 2  # rewritten in a #6215 copy PR; --tighten after it merges
@@ -503,3 +503,6 @@ src/components/ui/SaveToListButton.tsx 1  # rewritten in a #6215 copy PR; --tigh
 src/components/ui/ShareButton.tsx 7  # rewritten in a #6215 copy PR; --tighten after it merges
 src/components/welcome/WelcomeForm.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
 src/components/work/LocusJumpBox.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/blog/one-sentence-of-hermes/page.tsx 2  # added on main after the 2026-10-07 baseline; rewrite, then --tighten (#6215)
+src/app/book/[id]/checks/page.tsx 1  # added on main after the 2026-10-07 baseline; rewrite, then --tighten (#6215)
+src/app/platform/(protected)/admin/decisions/DecisionsClient.tsx 1  # added on main after the 2026-10-07 baseline; rewrite, then --tighten (#6215)
