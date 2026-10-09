@@ -3,7 +3,7 @@ import Link from 'next/link';
 import DeepZoomViewer, { type DeepZoomItem } from '../DeepZoomViewer';
 
 export const metadata: Metadata = {
-  title: 'Bosch & Bruegel in deep zoom — prototype · Source Library',
+  title: 'Bosch & Bruegel in deep zoom (prototype) | Source Library',
   description:
     'A prototype of a collection page rendered as a deep-zoom gallery, with high-resolution Bosch and Bruegel masterpieces.',
   robots: { index: false, follow: false },
@@ -30,7 +30,7 @@ const ITEMS: DeepZoomItem[] = [
     tileBase: 'https://images.sourcelibrary.org/deepzoom/bruegel-babel',
     source: `${COMMONS}Pieter_Bruegel_the_Elder_-_The_Tower_of_Babel_(Vienna)_-_Google_Art_Project_-_edited.jpg`,
     blurb:
-      'Zoom into the spiralling tower to find the thousands of labourers, cranes, and scaffolds — and the king inspecting the works at lower left. Each window and arch is individually drawn.',
+      'Zoom into the spiralling tower to find the thousands of labourers, cranes, and scaffolds, and the king inspecting the works at lower left. Each window and arch is individually drawn.',
   },
   {
     id: 'bosch-garden',
@@ -44,7 +44,7 @@ const ITEMS: DeepZoomItem[] = [
     tileBase: 'https://images.sourcelibrary.org/deepzoom/bosch-garden',
     source: `${COMMONS}The_Garden_of_Earthly_Delights_by_Bosch_High_Resolution.jpg`,
     blurb:
-      'The whole triptych at once — then zoom into the central panel’s crowds, or the burning hell on the right with its tree-man and music-torture. Detail invisible at any printed scale.',
+      'The whole triptych at once, then zoom into the central panel’s crowds, or the burning hell on the right with its tree-man and music-torture. Detail invisible at any printed scale.',
   },
   {
     id: 'bruegel-hunters',
@@ -58,7 +58,7 @@ const ITEMS: DeepZoomItem[] = [
     tileBase: 'https://images.sourcelibrary.org/deepzoom/bruegel-hunters',
     source: `${COMMONS}Pieter_Bruegel_the_Elder_-_Hunters_in_the_Snow_(Winter)_-_Google_Art_Project.jpg`,
     blurb:
-      'Follow the hunters and their dogs down the ridge, then zoom across the valley to the skaters on the frozen ponds and the bird trap — a whole winter world in one frame.',
+      'Follow the hunters and their dogs down the ridge, then zoom across the valley to the skaters on the frozen ponds and the bird trap: a whole winter world in one frame.',
   },
   {
     id: 'bruegel-proverbs',
@@ -98,11 +98,11 @@ export default function DeepZoomCollectionPage() {
           Prototype · collection
         </p>
         <h1 className="mt-1 text-3xl font-semibold text-stone-900">
-          Bosch &amp; Bruegel — the close look
+          Bosch &amp; Bruegel: the close look
         </h1>
         <p className="mt-3 max-w-2xl leading-relaxed text-stone-600">
           A collection page rendered as a deep-zoom gallery. Bosch and Bruegel
-          painted worlds you have to lean into — thousands of tiny figures, each
+          painted worlds you have to lean into: thousands of tiny figures, each
           one a scene. Page through the works like the gallery, then zoom all
           the way into the original to find them. Masters here are
           high-resolution scans (Google Art Project / Prado), streamed in tiles

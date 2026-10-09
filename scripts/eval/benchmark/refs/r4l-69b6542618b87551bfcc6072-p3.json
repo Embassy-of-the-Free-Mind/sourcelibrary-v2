@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA historicapolitica/curione1",
+  "edition": "Sarracenicae historiae libri tres, ab autore innumeris locis emendati atque expoliti : in quibus Sarracenorum, Turcarum, aliarumque gentium origines et res per annos septingentos gestae, continentur. His accessere Volfgangi Drechsleri earundem rerum Chronicon, sive breviarium [et. al.]. Cum rerum et",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b6542618b87551bfcc6072",
+  "page_number": 3,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 39327,
+    "to_char": 41090,
+    "overlap": 0.558,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-2)",
+    "at": "2026-10-06T10:05:00Z",
+    "note": "Prooemium opening with an historiated S; ref matches 'Saepe et multum' to 'quae diu'; ref also starts with the 2-line imprint 'Ex officina Oporiniana, 1568' from the title page (padding).",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      2,
+      3,
+      4
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.504Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "d5a928964e1293a36484e07619a5cdaf43d4d6af764f7787083e61364b816340",
+  "unit": {
+    "chars": 1763
+  }
+}

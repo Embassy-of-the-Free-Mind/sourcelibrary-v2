@@ -9,9 +9,9 @@ export const revalidate = 3600;
 export const maxDuration = 60;
 
 export const metadata: Metadata = {
-  title: "The Bhutanese Buddhist Library — Source Library",
+  title: "The Bhutanese Buddhist Library | Source Library",
   description:
-    "Bhutan's endangered Buddhist manuscripts — rescued from its monasteries, written in classical Tibetan — translated faithfully into English for the first time. Dedicated to His Majesty the King of Bhutan.",
+    "Bhutan's endangered Buddhist manuscripts, rescued from its monasteries and written in classical Tibetan, translated faithfully into English for the first time. Dedicated to His Majesty the King of Bhutan.",
   alternates: { canonical: '/bhutan-library' },
   openGraph: {
     title: 'The Bhutanese Buddhist Library',
@@ -37,7 +37,7 @@ const HERO_IMAGE = 'https://images.sourcelibrary.org/pages/69e787904a6785cfd60cc
 const GALLERY: { url: string; caption: string }[] = [
   {
     url: 'https://images.sourcelibrary.org/pages/69dfee83ce6bb8619e07f177/0249.jpg',
-    caption: 'Zhi khro dgongs pa rang grol — the Bardo Thödol cycle',
+    caption: 'Zhi khro dgongs pa rang grol: the Bardo Thödol cycle',
   },
   {
     url: 'https://images.sourcelibrary.org/pages/69dfee85ce6bb8619e07f5d8/0001.jpg',
@@ -45,7 +45,7 @@ const GALLERY: { url: string; caption: string }[] = [
   },
   {
     url: 'https://images.sourcelibrary.org/pages/69e77a6c0fc6fc955e35fc9b/0081.jpg',
-    caption: "Bla ma dgongs 'dus — a lineage supplication",
+    caption: "Bla ma dgongs 'dus: a lineage supplication",
   },
   {
     url: 'https://images.sourcelibrary.org/pages/69e78ae14a6785cfd60d4d44/0013.jpg',
@@ -124,8 +124,8 @@ export default async function BhutanLibraryPage() {
               <br className="hidden md:block" /> Buddhist Library
             </h1>
             <p className="text-lg md:text-xl text-white/85 leading-relaxed max-w-3xl mb-8">
-              {formatStat(stats.books)} sacred manuscripts — nearly{' '}
-              {formatStat(stats.pagesOcr)} pages — rescued from the monasteries of Bhutan and written
+              {formatStat(stats.books)} sacred manuscripts (nearly{' '}
+              {formatStat(stats.pagesOcr)} pages), rescued from the monasteries of Bhutan and written
               in classical Tibetan, most never read in English. We are translating them for the first
               time with a high-quality model,{' '}
               <em className="text-white not-italic font-display">proven faithful</em> to the
@@ -180,7 +180,7 @@ export default async function BhutanLibraryPage() {
           <div className="prose-content text-stone-700 leading-relaxed space-y-4 text-[1.05rem]">
             <p>
               Most of these books are not famous printed editions. They are{' '}
-              <strong>hand-copied pecha</strong> — loose-leaf folios from the temple and monastery
+              <strong>hand-copied pecha</strong>: loose-leaf folios from the temple and monastery
               collections of Bhutan: Drametse, Ogyen Choling, Gangtey, Thadrak, Tshamdrak and
               Nyephug. Written by hand in classical Tibetan and digitized through endangered-archives
               efforts, ninety-six percent of the collection is handwritten, and many of these
@@ -188,7 +188,7 @@ export default async function BhutanLibraryPage() {
             </p>
             <p>
               We have already digitized and made machine-readable every one of these manuscripts.
-              The next step — the one that opens them to the world — is translating them faithfully
+              The next step, the one that opens them to the world, is translating them faithfully
               into English, most for the very first time. For sacred texts that means getting it
               right: a garbled line in a Dzogchen pith-instruction or a Madhyamaka commentary is not
               a typo, it is a distortion of the teaching.
@@ -227,21 +227,21 @@ export default async function BhutanLibraryPage() {
           </h2>
           <div className="prose-content text-stone-700 leading-relaxed space-y-4 text-[1.05rem]">
             <p>
-              We didn&apos;t guess at this — we tested it. Independent AI reviewers checked
+              We didn&apos;t guess at this. We tested it. Independent AI reviewers checked
               transcriptions against the original page images across the collection, and we compared
               models head to head.
             </p>
             <p>
-              We took famous texts that already have published scholarly translations — Tsongkhapa&apos;s{' '}
+              We took famous texts that already have published scholarly translations (Tsongkhapa&apos;s{' '}
               <em>Essence of True Eloquence</em>, a Heart Sūtra commentary, Candrakīrti&apos;s{' '}
-              <em>Entering the Middle Way</em> — and ran a blind comparison. Two independent expert
+              <em>Entering the Middle Way</em>) and ran a blind comparison. Two independent expert
               reviewers judged the <strong>high-quality model</strong> translations to be on par with the
-              published editions. The cheap model they judged unusable — it fabricated citations and
+              published editions. The cheap model they judged unusable: it fabricated citations and
               dropped whole passages while still reading smoothly, the most dangerous kind of error in a
               sacred text.
             </p>
             <p>
-              The method is proven. What&apos;s left is to translate the rest — most for the first
+              The method is proven. What&apos;s left is to translate the rest, most for the first
               time.
             </p>
           </div>
@@ -256,8 +256,8 @@ export default async function BhutanLibraryPage() {
           </h2>
           <p className="text-white/80 leading-relaxed text-[1.05rem] max-w-2xl mx-auto">
             This work is offered in honor of His Majesty Jigme Khesar Namgyel Wangchuck, Druk Gyalpo,
-            and the people of Bhutan. We aim to return these teachings — faithfully, freely, and
-            openly — to the monasteries and temples that preserved them, and to scholars and
+            and the people of Bhutan. We aim to return these teachings faithfully, freely, and
+            openly to the monasteries and temples that preserved them, and to scholars and
             practitioners everywhere who cherish Bhutan&apos;s living Buddhist heritage.
           </p>
         </div>
@@ -272,7 +272,7 @@ export default async function BhutanLibraryPage() {
             </h2>
             <p className="text-stone-600 leading-relaxed text-[1.05rem]">
               A high-quality AI model costs many times more per page than a basic one. Translating all{' '}
-              {formatStat(stats.pagesOcr)} pages this way — plus Tibetan-literate review — comes to
+              {formatStat(stats.pagesOcr)} pages this way, plus Tibetan-literate review, comes to
               about <strong>$10,000</strong> for the whole library.
             </p>
           </div>
@@ -355,10 +355,10 @@ export default async function BhutanLibraryPage() {
                 </OutboundLink>
                 <div className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 sm:col-span-2">
                   <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">
-                    Sponsor the campaign — wire, stock, or donor-advised fund
+                    Sponsor the campaign: wire, stock, or donor-advised fund
                   </span>
                   <OutboundLink
-                    href={`mailto:${CONTACT_EMAIL}?subject=Bhutan%20Library%20Restoration%20%E2%80%94%20Donation%20Inquiry`}
+                    href={`mailto:${CONTACT_EMAIL}?subject=Bhutan%20Library%20Restoration%3A%20Donation%20Inquiry`}
                     surface="bhutan_library"
                     channel="email"
                     className="text-base font-semibold text-accent-rust hover:text-accent-gold-dark underline break-all select-all"
@@ -434,11 +434,11 @@ export default async function BhutanLibraryPage() {
                 rel="noopener noreferrer"
                 className="font-semibold text-stone-900 hover:text-accent-rust underline underline-offset-2"
               >
-                British Library — Endangered Archives Programme
+                British Library · Endangered Archives Programme
               </a>
               <p className="text-stone-500 leading-relaxed mt-1">
                 The Bhutanese temple and monastery collections of Drametse &amp; Ogyen Choling
-                (EAP105), Thadrak, Tshamdrak &amp; Nyephug (EAP310), and Gangtey (EAP039) — the bulk
+                (EAP105), Thadrak, Tshamdrak &amp; Nyephug (EAP310), and Gangtey (EAP039): the bulk
                 of this library.
               </p>
             </div>
@@ -472,7 +472,7 @@ export default async function BhutanLibraryPage() {
       {/* Footer */}
       <footer className="bg-white border-t border-stone-200 py-10">
         <div className="px-6 md:px-12 max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-3 text-stone-500 text-sm">
-          <span>&copy; {new Date().getFullYear()} Source Library — Embassy of the Free Mind</span>
+          <span>&copy; {new Date().getFullYear()} Source Library · Embassy of the Free Mind</span>
           <div className="flex flex-wrap items-center gap-4">
             <Link href="/" className="hover:text-stone-900 transition-colors">
               Home

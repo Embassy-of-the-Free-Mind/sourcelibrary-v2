@@ -20,7 +20,7 @@ export function checkVictory(
       return {
         type: 'bodies',
         player,
-        description: `${player === 'even' ? 'Even (White)' : 'Odd (Black)'} wins by Bodies — captured ${captured.length} pieces`,
+        description: `${player === 'even' ? 'Even (White)' : 'Odd (Black)'} wins by Bodies: captured ${captured.length} pieces`,
       };
     }
 
@@ -30,7 +30,7 @@ export function checkVictory(
       return {
         type: 'goods',
         player,
-        description: `${player === 'even' ? 'Even (White)' : 'Odd (Black)'} wins by Goods — captured value ${totalValue}`,
+        description: `${player === 'even' ? 'Even (White)' : 'Odd (Black)'} wins by Goods: captured value ${totalValue}`,
       };
     }
 
@@ -39,7 +39,7 @@ export function checkVictory(
       return {
         type: 'quarrel',
         player,
-        description: `${player === 'even' ? 'Even (White)' : 'Odd (Black)'} wins by Quarrel — ${captured.length} pieces worth ${totalValue}`,
+        description: `${player === 'even' ? 'Even (White)' : 'Odd (Black)'} wins by Quarrel: ${captured.length} pieces worth ${totalValue}`,
       };
     }
 
@@ -89,7 +89,7 @@ function checkPhilosophicalVictory(
             type: 'arithmetic',
             player,
             pieces: trio.map(p => p.position),
-            description: `${player === 'even' ? 'Even (White)' : 'Odd (Black)'} achieves Arithmetic Victory — ${values.join(', ')} in progression`,
+            description: `${player === 'even' ? 'Even (White)' : 'Odd (Black)'} achieves Arithmetic Victory: ${values.join(', ')} in progression`,
           };
         }
 
@@ -98,7 +98,7 @@ function checkPhilosophicalVictory(
             type: 'geometric',
             player,
             pieces: trio.map(p => p.position),
-            description: `${player === 'even' ? 'Even (White)' : 'Odd (Black)'} achieves Geometric Victory — ${values.join(', ')} in progression`,
+            description: `${player === 'even' ? 'Even (White)' : 'Odd (Black)'} achieves Geometric Victory: ${values.join(', ')} in progression`,
           };
         }
 
@@ -107,7 +107,7 @@ function checkPhilosophicalVictory(
             type: 'harmonic',
             player,
             pieces: trio.map(p => p.position),
-            description: `${player === 'even' ? 'Even (White)' : 'Odd (Black)'} achieves Harmonic Victory — ${values.join(', ')} in progression`,
+            description: `${player === 'even' ? 'Even (White)' : 'Odd (Black)'} achieves Harmonic Victory: ${values.join(', ')} in progression`,
           };
         }
       }

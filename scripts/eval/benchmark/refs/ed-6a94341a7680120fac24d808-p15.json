@@ -1,0 +1,36 @@
+{
+  "source": "EEBO-TCP A21194",
+  "edition": "EEBO-TCP A21194 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "github.com/textcreationpartnership (CC0), 2026-10-04, job ocr-bakeoff-5660c",
+  "origin": "library",
+  "book_id": "6a94341a7680120fac24d808",
+  "page_number": 15,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 13652,
+    "to_char": 14993,
+    "overlap": 0.776,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-04",
+    "note": "Starts Necplura sinit; ends Georgius Eglisemmius Medicus (+3)",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T00:53:08.891Z",
+  "text_location": "repo",
+  "text_sha256": "f4cc543466034ed6c7a81c3839da8511232522789b57ff727f2836062808e392",
+  "unit": {
+    "chars": 1341
+  }
+}

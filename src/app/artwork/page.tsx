@@ -6,8 +6,8 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
 
 export const metadata: Metadata = {
-  title: 'Visual Art — Source Library',
-  description: 'Over 23,000 works of art cross-referenced with the texts that inspired them — from Egyptian papyri and Tibetan thangka to Renaissance prints and Edo-period woodcuts.',
+  title: 'Visual Art | Source Library',
+  description: 'Over 23,000 works of art cross-referenced with the texts that inspired them, from Egyptian papyri and Tibetan thangka to Renaissance prints and Edo-period woodcuts.',
 };
 
 export const revalidate = false;
@@ -75,7 +75,7 @@ export default async function ArtworkLandingPage() {
             Visual Art
           </h1>
           <p className="text-lg sm:text-xl text-stone-400 mt-6 max-w-2xl leading-relaxed font-serif">
-            Paintings, prints, sculptures, and manuscripts from antiquity to the nineteenth century — cross-referenced with the texts that inspired them.
+            Paintings, prints, sculptures, and manuscripts from antiquity to the nineteenth century, cross-referenced with the texts that inspired them.
           </p>
           <div className="flex flex-wrap items-center gap-6 mt-10 text-sm text-stone-500">
             <span className="font-medium text-stone-400">{totalCount.toLocaleString('en-US')} works</span>

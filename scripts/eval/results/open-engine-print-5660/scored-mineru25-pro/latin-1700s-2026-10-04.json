@@ -1,0 +1,2129 @@
+{
+  "summary": {
+    "stratum": "latin-1700s",
+    "issue": 4800,
+    "date": "2026-10-04",
+    "refusal_source": "finishReason (meter) / inferred",
+    "cer_refusals": "ref.median_cer / mean_cer count a refusal as CER 1.0 (the pre-#5581 headline); *_answered exclude refused pages",
+    "n_pages": 20,
+    "n_with_ref": 0,
+    "ref_mismatch": [],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3-flash-preview": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 1,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 19,
+          "median_cer": 0.023,
+          "catastrophic": 2,
+          "median_gap": 0,
+          "median_bow": 0.892,
+          "refused": 0,
+          "n_answered": 19,
+          "median_cer_answered": 0.023,
+          "mean_cer": 0.097,
+          "mean_cer_answered": 0.097
+        },
+        "invention": {
+          "median": 0.117,
+          "mean": 0.159,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "latin-1700s-504b6f-p128",
+            "title": "Propria sanctorum officia imperialium monasteriorum S. Gregorii Mag. in Petri-domo et SS. Cyrilli et Georgii martyrum ad",
+            "year": 1718,
+            "cer": 0.752,
+            "gap": 0.314,
+            "invention": 0.329,
+            "has_ref": false,
+            "unsupported": [
+              "subjicerentur",
+              "christi",
+              "suorum",
+              "stragem",
+              "posset",
+              "constantiam",
+              "postea",
+              "evilasium"
+            ]
+          },
+          {
+            "slug": "latin-1700s-682475-p3",
+            "title": "Theologiae naturalis pars prima : sistens brevem delineationem argumentorum pro existentia Dei militantium, nec non obie",
+            "year": 1735,
+            "cer": 0.678,
+            "gap": 0.018,
+            "invention": 0.727,
+            "has_ref": false,
+            "unsupported": [
+              "theologiæ",
+              "pars",
+              "prima",
+              "sistens",
+              "brevem",
+              "objectionum",
+              "alibi",
+              "temperantur"
+            ]
+          },
+          {
+            "slug": "latin-1700s-25e233-p21",
+            "title": "Dissertatio inauguralis medica sistens morbos circa Tobinium familiares cum casibus nonnullis et observationibus rariori",
+            "year": 1751,
+            "cer": 0.07,
+            "gap": 0,
+            "invention": 0.301,
+            "has_ref": false,
+            "unsupported": [
+              "sanguinis",
+              "copiosiorem",
+              "appulsum",
+              "assertum",
+              "experientiss",
+              "nostra",
+              "haereditaria",
+              "dispositio"
+            ]
+          },
+          {
+            "slug": "latin-1700s-64dc5f-p136",
+            "title": "Georgii Ludovici Boehmeri Potent. M. Britanniae Regi Et Principi Electori Brunsv. Luner. A Consiliis Iustitiae Intimis E",
+            "year": 1789,
+            "cer": 0.058,
+            "gap": 0,
+            "invention": 0.225,
+            "has_ref": false,
+            "unsupported": [
+              "constituitur",
+              "successionis",
+              "vasallus",
+              "possessor",
+              "coinuestiti",
+              "holsatiae",
+              "inuestiuit",
+              "sambte"
+            ]
+          },
+          {
+            "slug": "latin-1700s-2763b9-p13",
+            "title": "Missae propriae sanctorum metropolitanae ecclesiae et archi-dioecesis salisburgensis jussu et auctoritate celsissimi et ",
+            "year": 1759,
+            "cer": 0.048,
+            "gap": 0,
+            "invention": 0.282,
+            "has_ref": false,
+            "unsupported": [
+              "consolationis",
+              "consolatur",
+              "nostra",
+              "possimus",
+              "ipsi",
+              "consolari",
+              "pressura",
+              "sunt"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 1,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.032,
+          "mean": 0.078,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "worst": [
+          {
+            "slug": "latin-1700s-682475-p3",
+            "title": "Theologiae naturalis pars prima : sistens brevem delineationem argumentorum pro existentia Dei militantium, nec non obie",
+            "year": 1735,
+            "invention": 0.647,
+            "has_ref": false,
+            "unsupported": [
+              "theologiae",
+              "systema",
+              "brevium",
+              "oppositionum",
+              "aevi",
+              "impugnari",
+              "solent",
+              "adjuvante"
+            ]
+          },
+          {
+            "slug": "latin-1700s-504b6f-p128",
+            "title": "Propria sanctorum officia imperialium monasteriorum S. Gregorii Mag. in Petri-domo et SS. Cyrilli et Georgii martyrum ad",
+            "year": 1718,
+            "invention": 0.205,
+            "has_ref": false,
+            "unsupported": [
+              "fefta",
+              "augufti",
+              "fubi",
+              "cerentur",
+              "revirtute",
+              "ligionem",
+              "ftra",
+              "vergem"
+            ]
+          },
+          {
+            "slug": "latin-1700s-7acf8d-p16",
+            "title": "Ioh. Gottlob Boehmii De Origine Vera Rutae Saxonicae Liber Singularis",
+            "year": 1756,
+            "invention": 0.136,
+            "has_ref": false,
+            "unsupported": [
+              "archiepifcopo",
+              "fcarleti",
+              "gloffar",
+              "infigne",
+              "feftiui",
+              "quibufdam",
+              "infternebatur",
+              "ftragulo"
+            ]
+          },
+          {
+            "slug": "latin-1700s-64dc5f-p136",
+            "title": "Georgii Ludovici Boehmeri Potent. M. Britanniae Regi Et Principi Electori Brunsv. Luner. A Consiliis Iustitiae Intimis E",
+            "year": 1789,
+            "invention": 0.124,
+            "has_ref": false,
+            "unsupported": [
+              "fimul",
+              "conftituitur",
+              "fucceffionis",
+              "caufa",
+              "gefamte",
+              "fambre",
+              "obferuat",
+              "poffeffore"
+            ]
+          },
+          {
+            "slug": "latin-1700s-2763b9-p13",
+            "title": "Missae propriae sanctorum metropolitanae ecclesiae et archi-dioecesis salisburgensis jussu et auctoritate celsissimi et ",
+            "year": 1759,
+            "invention": 0.083,
+            "has_ref": false,
+            "unsupported": [
+              "noftra",
+              "fcientes",
+              "noftro",
+              "conftituifti",
+              "fancti",
+              "difcipulis",
+              "difcipulo",
+              "poffunt"
+            ]
+          }
+        ]
+      },
+      "mineru25-pro": {
+        "pages_run": 20,
+        "empty": 2,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 19,
+          "median_cer": 0.021,
+          "catastrophic": 3,
+          "median_gap": 0,
+          "median_bow": 0.896,
+          "refused": 0,
+          "n_answered": 19,
+          "median_cer_answered": 0.021,
+          "mean_cer": 0.164,
+          "mean_cer_answered": 0.164
+        },
+        "invention": {
+          "median": 0.081,
+          "mean": 0.148,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "latin-1700s-276705-p95",
+            "title": "Iac. Theod. Klein ... Stemmata Avivm Qvadraginta Tabvlis Aeneis ornata : Accedunt Nomenclatores, Polono-Latinvs et Latin",
+            "year": 1759,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "latin-1700s-682475-p3",
+            "title": "Theologiae naturalis pars prima : sistens brevem delineationem argumentorum pro existentia Dei militantium, nec non obie",
+            "year": 1735,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "latin-1700s-d3a64d-p196",
+            "title": "Opera mechanica, geometrica, astronomica et miscellanea",
+            "year": 1751,
+            "invention": 1,
+            "has_ref": false,
+            "unsupported": [
+              "christiani",
+              "hugenii",
+              "centro",
+              "oscilla",
+              "animadvertendum",
+              "duas",
+              "effe",
+              "veras"
+            ]
+          },
+          {
+            "slug": "latin-1700s-504b6f-p128",
+            "title": "Propria sanctorum officia imperialium monasteriorum S. Gregorii Mag. in Petri-domo et SS. Cyrilli et Georgii martyrum ad",
+            "year": 1718,
+            "cer": 0.741,
+            "gap": 0.342,
+            "invention": 0.179,
+            "has_ref": false,
+            "unsupported": [
+              "fubjicerentur",
+              "ftragem",
+              "poftea",
+              "coepit",
+              "infenfiffimum",
+              "vinêtû",
+              "tenebricofum",
+              "foetidum"
+            ]
+          },
+          {
+            "slug": "latin-1700s-9906ad-p94",
+            "title": "Exercitatio philologica, exhibens synopticam descriptionem veteris Hierosolymae",
+            "year": 1718,
+            "cer": 0.069,
+            "gap": 0.018,
+            "invention": 0.158,
+            "has_ref": false,
+            "unsupported": [
+              "delcriptos",
+              "thalmu",
+              "diftarum",
+              "xx11",
+              "area",
+              "superimpofta",
+              "confabat",
+              "ante"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "pages": [
+    {
+      "slug": "latin-1700s-25e233-p21",
+      "substratum": "latin-1700-1799",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Dissertatio inauguralis medica sistens morbos circa Tobinium familiares cum casibus nonnullis et observationibus rariori",
+      "year": 1751,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1665,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.07,
+          "acc": 0.93,
+          "seq": 0.726,
+          "bow": 0.726,
+          "gap": 0,
+          "len_ratio": 1.011,
+          "invention": 0.301,
+          "invention_indep": 0.301,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "sanguinis",
+            "copiosiorem",
+            "appulsum",
+            "assertum",
+            "experientiss",
+            "nostra",
+            "haereditaria",
+            "dispositio"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.726,
+            "mineru25-pro": 0.741
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1647,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.072,
+          "invention_indep": 0.072,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "podagræ",
+            "obfervator",
+            "demonftrari",
+            "materiæ",
+            "interftitia",
+            "præfentia",
+            "fæpiùs",
+            "prætereà"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.726,
+            "mineru25-pro": 0.933
+          }
+        },
+        "mineru25-pro": {
+          "n_content": 1647,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.012,
+          "acc": 0.988,
+          "seq": 0.933,
+          "bow": 0.933,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.061,
+          "invention_indep": 0.061,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "affic",
+            "ebatur",
+            "interfitia",
+            "praefentia",
+            "fæpius",
+            "præterè",
+            "atrocifimos",
+            "frequentifimos"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.741,
+            "gemini-3.1-flash-lite": 0.933
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-1700s-2725db-p9",
+      "substratum": "latin-1700-1799",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "De mercatura Romanorum magnaria Gallis commerce en gros, dissertatio inauguralis iuridica",
+      "year": 1757,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1240,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.023,
+          "acc": 0.977,
+          "seq": 0.892,
+          "bow": 0.892,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.114,
+          "invention_indep": 0.114,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "fabulosis",
+            "suum",
+            "sortitam",
+            "esse",
+            "asserere",
+            "infensi",
+            "sequentia",
+            "sponte"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.892,
+            "mineru25-pro": 0.826
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1240,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.892,
+            "mineru25-pro": 0.901
+          }
+        },
+        "mineru25-pro": {
+          "n_content": 1238,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.021,
+          "acc": 0.979,
+          "seq": 0.901,
+          "bow": 0.901,
+          "gap": 0,
+          "len_ratio": 0.998,
+          "invention": 0.112,
+          "invention_indep": 0.112,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "mercature",
+            "ftultitiam",
+            "omiffam",
+            "quæftus",
+            "infitutam",
+            "diftrahantur",
+            "infituatur",
+            "diftrahendæ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.826,
+            "gemini-3.1-flash-lite": 0.901
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-1700s-2763b9-p13",
+      "substratum": "latin-1700-1799",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Missae propriae sanctorum metropolitanae ecclesiae et archi-dioecesis salisburgensis jussu et auctoritate celsissimi et ",
+      "year": 1759,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 2044,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.048,
+          "acc": 0.952,
+          "seq": 0.749,
+          "bow": 0.749,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.282,
+          "invention_indep": 0.282,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "consolationis",
+            "consolatur",
+            "nostra",
+            "possimus",
+            "ipsi",
+            "consolari",
+            "pressura",
+            "sunt"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.749,
+            "mineru25-pro": 0.705
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 2044,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.083,
+          "invention_indep": 0.083,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "noftra",
+            "fcientes",
+            "noftro",
+            "conftituifti",
+            "fancti",
+            "difcipulis",
+            "difcipulo",
+            "poffunt"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.749,
+            "mineru25-pro": 0.88
+          }
+        },
+        "mineru25-pro": {
+          "n_content": 2039,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.019,
+          "acc": 0.981,
+          "seq": 0.88,
+          "bow": 0.88,
+          "gap": 0,
+          "len_ratio": 0.998,
+          "invention": 0.104,
+          "invention_indep": 0.104,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "misse",
+            "proprie",
+            "noîtra",
+            "paffiones",
+            "paffionum",
+            "ficientes",
+            "noîtro",
+            "confituiti"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.705,
+            "gemini-3.1-flash-lite": 0.88
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-1700s-276705-p95",
+      "substratum": "latin-1700-1799",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Iac. Theod. Klein ... Stemmata Avivm Qvadraginta Tabvlis Aeneis ornata : Accedunt Nomenclatores, Polono-Latinvs et Latin",
+      "year": 1759,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 46,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0,
+          "acc": 1,
+          "seq": 1,
+          "bow": 1,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 1,
+            "mineru25-pro": 0
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 46,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 1,
+            "mineru25-pro": 0
+          }
+        },
+        "mineru25-pro": {
+          "n_content": 0,
+          "empty": true,
+          "refused": false,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-1700s-504b6f-p128",
+      "substratum": "latin-1700-1799",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Propria sanctorum officia imperialium monasteriorum S. Gregorii Mag. in Petri-domo et SS. Cyrilli et Georgii martyrum ad",
+      "year": 1718,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1274,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.752,
+          "acc": 0.248,
+          "seq": 0.343,
+          "bow": 0.657,
+          "gap": 0.314,
+          "len_ratio": 1.002,
+          "invention": 0.329,
+          "invention_indep": 0.329,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "subjicerentur",
+            "christi",
+            "suorum",
+            "stragem",
+            "posset",
+            "constantiam",
+            "postea",
+            "evilasium"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.657,
+            "mineru25-pro": 0.658
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1272,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.205,
+          "invention_indep": 0.205,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "fefta",
+            "augufti",
+            "fubi",
+            "cerentur",
+            "revirtute",
+            "ligionem",
+            "ftra",
+            "vergem"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.657,
+            "mineru25-pro": 0.747
+          }
+        },
+        "mineru25-pro": {
+          "n_content": 1278,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.741,
+          "acc": 0.259,
+          "seq": 0.405,
+          "bow": 0.747,
+          "gap": 0.342,
+          "len_ratio": 1.005,
+          "invention": 0.179,
+          "invention_indep": 0.179,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "fubjicerentur",
+            "ftragem",
+            "poftea",
+            "coepit",
+            "infenfiffimum",
+            "vinêtû",
+            "tenebricofum",
+            "foetidum"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.658,
+            "gemini-3.1-flash-lite": 0.747
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-1700s-64dc5f-p136",
+      "substratum": "latin-1700-1799",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Georgii Ludovici Boehmeri Potent. M. Britanniae Regi Et Principi Electori Brunsv. Luner. A Consiliis Iustitiae Intimis E",
+      "year": 1789,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 920,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.058,
+          "acc": 0.942,
+          "seq": 0.787,
+          "bow": 0.787,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.225,
+          "invention_indep": 0.225,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "constituitur",
+            "successionis",
+            "vasallus",
+            "possessor",
+            "coinuestiti",
+            "holsatiae",
+            "inuestiuit",
+            "sambte"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.787,
+            "mineru25-pro": 0.824
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 920,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.124,
+          "invention_indep": 0.124,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "fimul",
+            "conftituitur",
+            "fucceffionis",
+            "caufa",
+            "gefamte",
+            "fambre",
+            "obferuat",
+            "poffeffore"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.787,
+            "mineru25-pro": 0.896
+          }
+        },
+        "mineru25-pro": {
+          "n_content": 918,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.02,
+          "acc": 0.98,
+          "seq": 0.896,
+          "bow": 0.896,
+          "gap": 0,
+          "len_ratio": 0.998,
+          "invention": 0.067,
+          "invention_indep": 0.067,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "conflituitur",
+            "succeffionis",
+            "fambte",
+            "poffefore",
+            "recipientur",
+            "extin"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.824,
+            "gemini-3.1-flash-lite": 0.896
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-1700s-67e0f5-p14",
+      "substratum": "latin-1700-1799",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Dissertatio Medica Inauguralis De Origine, Nutritione Incremento et Decremento hominis",
+      "year": 1733,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1433,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.038,
+          "acc": 0.962,
+          "seq": 0.741,
+          "bow": 0.741,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.282,
+          "invention_indep": 0.282,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "clausum",
+            "potest",
+            "insequitur",
+            "sicque",
+            "usque",
+            "arteriola",
+            "transit",
+            "rursum"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.741,
+            "mineru25-pro": 0.715
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1433,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.034,
+          "invention_indep": 0.034,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "inftitution",
+            "noftra",
+            "duriffima",
+            "demonftravimus",
+            "tamen",
+            "deftrueretur"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.741,
+            "mineru25-pro": 0.935
+          }
+        },
+        "mineru25-pro": {
+          "n_content": 1432,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.01,
+          "acc": 0.99,
+          "seq": 0.935,
+          "bow": 0.935,
+          "gap": 0,
+          "len_ratio": 0.999,
+          "invention": 0.064,
+          "invention_indep": 0.064,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "børh",
+            "infitution",
+            "noîtra",
+            "parvitarem",
+            "durifima",
+            "demontravimus",
+            "particulae",
+            "nyæthemero"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.715,
+            "gemini-3.1-flash-lite": 0.935
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-1700s-682475-p3",
+      "substratum": "latin-1700-1799",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Theologiae naturalis pars prima : sistens brevem delineationem argumentorum pro existentia Dei militantium, nec non obie",
+      "year": 1735,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 391,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.678,
+          "acc": 0.322,
+          "seq": 0.291,
+          "bow": 0.309,
+          "gap": 0.018,
+          "len_ratio": 1.367,
+          "invention": 0.727,
+          "invention_indep": 0.727,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "theologiæ",
+            "pars",
+            "prima",
+            "sistens",
+            "brevem",
+            "objectionum",
+            "alibi",
+            "temperantur"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.309,
+            "mineru25-pro": 0
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 286,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.647,
+          "invention_indep": 0.647,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "theologiae",
+            "systema",
+            "brevium",
+            "oppositionum",
+            "aevi",
+            "impugnari",
+            "solent",
+            "adjuvante"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.309,
+            "mineru25-pro": 0
+          }
+        },
+        "mineru25-pro": {
+          "n_content": 0,
+          "empty": true,
+          "refused": false,
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-1700s-7acf8d-p16",
+      "substratum": "latin-1700-1799",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Ioh. Gottlob Boehmii De Origine Vera Rutae Saxonicae Liber Singularis",
+      "year": 1756,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1202,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.045,
+          "acc": 0.955,
+          "seq": 0.788,
+          "bow": 0.788,
+          "gap": 0,
+          "len_ratio": 1.002,
+          "invention": 0.182,
+          "invention_indep": 0.182,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "sollemnibus",
+            "archiepiscopo",
+            "coloniensi",
+            "ipsum",
+            "glossar",
+            "pressius",
+            "festiui",
+            "insternebatur"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.788,
+            "mineru25-pro": 0.768
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1200,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.136,
+          "invention_indep": 0.136,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "archiepifcopo",
+            "fcarleti",
+            "gloffar",
+            "infigne",
+            "feftiui",
+            "quibufdam",
+            "infternebatur",
+            "ftragulo"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.788,
+            "mineru25-pro": 0.803
+          }
+        },
+        "mineru25-pro": {
+          "n_content": 1195,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.028,
+          "acc": 0.972,
+          "seq": 0.798,
+          "bow": 0.803,
+          "gap": 0.004,
+          "len_ratio": 0.996,
+          "invention": 0.094,
+          "invention_indep": 0.094,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "archi",
+            "deteetus",
+            "glof",
+            "denvs",
+            "stiui",
+            "fernebatur",
+            "fragulo",
+            "fidere"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.768,
+            "gemini-3.1-flash-lite": 0.803
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-1700s-8bacca-p40",
+      "substratum": "latin-1700-1799",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "De plantis in cultorum memoriam nominatis",
+      "year": 1770,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1154,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.026,
+          "acc": 0.974,
+          "seq": 0.888,
+          "bow": 0.888,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.136,
+          "invention_indep": 0.136,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "lawsonia",
+            "leuisana",
+            "leysera",
+            "adans",
+            "umbellifera",
+            "castrensis",
+            "aboens",
+            "astracan"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.888,
+            "mineru25-pro": 0.858
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1154,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.034,
+          "invention_indep": 0.034,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "linne",
+            "syftema",
+            "conftituerat",
+            "illuftris",
+            "notiffima"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.888,
+            "mineru25-pro": 0.941
+          }
+        },
+        "mineru25-pro": {
+          "n_content": 1180,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.032,
+          "acc": 0.968,
+          "seq": 0.941,
+          "bow": 0.941,
+          "gap": 0,
+          "len_ratio": 1.023,
+          "invention": 0.066,
+          "invention_indep": 0.066,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "quick",
+            "brown",
+            "jumps",
+            "over",
+            "lazy",
+            "toris",
+            "linne'",
+            "confituerat"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.858,
+            "gemini-3.1-flash-lite": 0.941
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-1700s-9906ad-p94",
+      "substratum": "latin-1700-1799",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Exercitatio philologica, exhibens synopticam descriptionem veteris Hierosolymae",
+      "year": 1718,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1533,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.011,
+          "acc": 0.989,
+          "seq": 0.95,
+          "bow": 0.956,
+          "gap": 0.006,
+          "len_ratio": 1.003,
+          "invention": 0.034,
+          "invention_indep": 0.034,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "הבית",
+            "purisfimo",
+            "admisfionis",
+            "fuavisfima",
+            "facratisfima",
+            "habbechirah"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.956,
+            "mineru25-pro": 0.814
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1529,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.023,
+          "invention_indep": 0.023,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "aktius",
+            "puriffimo",
+            "admiffionis",
+            "reth"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.956,
+            "mineru25-pro": 0.818
+          }
+        },
+        "mineru25-pro": {
+          "n_content": 1494,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.069,
+          "acc": 0.931,
+          "seq": 0.8,
+          "bow": 0.818,
+          "gap": 0.018,
+          "len_ratio": 0.977,
+          "invention": 0.158,
+          "invention_indep": 0.158,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "delcriptos",
+            "thalmu",
+            "diftarum",
+            "xx11",
+            "area",
+            "superimpofta",
+            "confabat",
+            "ante"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.814,
+            "gemini-3.1-flash-lite": 0.818
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-1700s-d3a64d-p196",
+      "substratum": "latin-1700-1799",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Opera mechanica, geometrica, astronomica et miscellanea",
+      "year": 1751,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 0,
+          "empty": true,
+          "refused": true,
+          "refusal_source": "finishReason",
+          "finish_reason": "RECITATION",
+          "loop": false,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0,
+            "mineru25-pro": 0
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 0,
+          "empty": true,
+          "refused": true,
+          "refusal_source": "finishReason",
+          "finish_reason": "RECITATION",
+          "loop": false,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0,
+            "mineru25-pro": 0
+          }
+        },
+        "mineru25-pro": {
+          "n_content": 1383,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 1,
+          "invention_indep": 1,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "christiani",
+            "hugenii",
+            "centro",
+            "oscilla",
+            "animadvertendum",
+            "duas",
+            "effe",
+            "veras"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-1700s-d495a1-p2",
+      "substratum": "latin-1700-1799",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Dissertatio metaphysica contra naturalistas tertia",
+      "year": 1763,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 340,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0,
+          "acc": 1,
+          "seq": 1,
+          "bow": 1,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 1,
+            "mineru25-pro": 1
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 340,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 1,
+            "mineru25-pro": 1
+          }
+        },
+        "mineru25-pro": {
+          "n_content": 340,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0,
+          "acc": 1,
+          "seq": 1,
+          "bow": 1,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 1,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-1700s-d56ede-p87",
+      "substratum": "latin-1700-1799",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Henrici Ioa. Nepom. Crantz ... Classis Vmbelliferarvm : Emendata Cvm Generali Seminvm Tabvla Et Figvris Aeneis In Necess",
+      "year": 1767,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 832,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0,
+          "acc": 1,
+          "seq": 1,
+          "bow": 1,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 1,
+            "mineru25-pro": 0.968
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 832,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 1,
+            "mineru25-pro": 0.968
+          }
+        },
+        "mineru25-pro": {
+          "n_content": 834,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.005,
+          "acc": 0.995,
+          "seq": 0.968,
+          "bow": 0.968,
+          "gap": 0,
+          "len_ratio": 1.002,
+          "invention": 0.061,
+          "invention_indep": 0.061,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "feminine",
+            "prae",
+            "ditam",
+            "vulgatifima",
+            "perfoliatal"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.968,
+            "gemini-3.1-flash-lite": 0.968
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-1700s-d7110f-p181",
+      "substratum": "latin-1700-1799",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Triduum Sacrum Sive Exercitia Triduana : Quæ Venerabile Capitulum Rurale Biberacense ... Instituit",
+      "year": 1775,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1070,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.007,
+          "acc": 0.993,
+          "seq": 0.966,
+          "bow": 0.966,
+          "gap": 0,
+          "len_ratio": 1.002,
+          "invention": 0.032,
+          "invention_indep": 0.032,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "quales",
+            "cælo",
+            "prosumus",
+            "satis"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.966,
+            "mineru25-pro": 0.778
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1068,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.024,
+          "invention_indep": 0.024,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "cœlo",
+            "fœtore",
+            "prorsus"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.966,
+            "mineru25-pro": 0.785
+          }
+        },
+        "mineru25-pro": {
+          "n_content": 1070,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.065,
+          "acc": 0.935,
+          "seq": 0.78,
+          "bow": 0.785,
+          "gap": 0.005,
+          "len_ratio": 1.002,
+          "invention": 0.238,
+          "invention_indep": 0.238,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "mine",
+            "funt",
+            "effe",
+            "minifras",
+            "didu",
+            "noßtu",
+            "fine",
+            "caelo"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.778,
+            "gemini-3.1-flash-lite": 0.785
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-1700s-d74755-p9",
+      "substratum": "latin-1700-1799",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Theses philosophicae",
+      "year": 1776,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1184,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.045,
+          "acc": 0.955,
+          "seq": 0.772,
+          "bow": 0.772,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.224,
+          "invention_indep": 0.224,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "depulsa",
+            "nostra",
+            "suum",
+            "justamque",
+            "potest",
+            "necesse",
+            "universi",
+            "essentia"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.772,
+            "mineru25-pro": 0.782
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1184,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.032,
+          "invention_indep": 0.032,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "fufficientem",
+            "phyficarum",
+            "fpecie",
+            "inftrumenta"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.772,
+            "mineru25-pro": 0.936
+          }
+        },
+        "mineru25-pro": {
+          "n_content": 1182,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.012,
+          "acc": 0.988,
+          "seq": 0.936,
+          "bow": 0.936,
+          "gap": 0,
+          "len_ratio": 0.998,
+          "invention": 0.039,
+          "invention_indep": 0.039,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "notra",
+            "phylicarum",
+            "potelt",
+            "quibuseunque",
+            "divinae"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.782,
+            "gemini-3.1-flash-lite": 0.936
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-1700s-d8776f-p248",
+      "substratum": "latin-1700-1799",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Platonis Philosophi Quae Exstant :Graece Ad Editionem Henrici Stephani Accurate Expressa. 4, [Gorgias, Io, Philebus, Men",
+      "year": 1783,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1541,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.019,
+          "acc": 0.981,
+          "seq": 0.9,
+          "bow": 0.9,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.117,
+          "invention_indep": 0.117,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ὁπόση",
+            "ἑκάστῳ",
+            "ταῦa",
+            "συνεστήσατο",
+            "suscipientem",
+            "posthac",
+            "diversa",
+            "sunt"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.9,
+            "mineru25-pro": 0.843
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1541,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.041,
+          "invention_indep": 0.041,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ὁπόσῃ",
+            "ἑκάσων",
+            "συνεφήσατο",
+            "μάλιστά",
+            "commifce",
+            "pofthac",
+            "infeftaque"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.9,
+            "mineru25-pro": 0.879
+          }
+        },
+        "mineru25-pro": {
+          "n_content": 1539,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.021,
+          "acc": 0.979,
+          "seq": 0.876,
+          "bow": 0.879,
+          "gap": 0.003,
+          "len_ratio": 0.999,
+          "invention": 0.105,
+          "invention_indep": 0.105,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "οὔτω",
+            "ταυτὸν",
+            "δράση",
+            "κατα",
+            "φανὴς",
+            "κὰκείνη",
+            "ὅπόση",
+            "τὰναντία"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.843,
+            "gemini-3.1-flash-lite": 0.879
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-1700s-d95633-p203",
+      "substratum": "latin-1700-1799",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Theologiae Moralis Super Decalogum Tomus ..., 1. Ad Praecepta Primae Tabulae, Continens III. Partes, Seu Tractatus, I. D",
+      "year": 1711,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 4564,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.015,
+          "acc": 0.985,
+          "seq": 0.955,
+          "bow": 0.957,
+          "gap": 0.002,
+          "len_ratio": 1.001,
+          "invention": 0.036,
+          "invention_indep": 0.036,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "seorsim",
+            "pernitiosiores",
+            "satis",
+            "solum",
+            "determinarunt",
+            "ideoque",
+            "defendentes",
+            "expressè"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.957,
+            "mineru25-pro": 0.772
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 4559,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.029,
+          "invention_indep": 0.029,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "quià",
+            "hæresum",
+            "seorfim",
+            "etiamsi",
+            "dentes",
+            "sicidani",
+            "münstero",
+            "disferte"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.957,
+            "mineru25-pro": 0.783
+          }
+        },
+        "mineru25-pro": {
+          "n_content": 4559,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.043,
+          "acc": 0.957,
+          "seq": 0.783,
+          "bow": 0.783,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.27,
+          "invention_indep": 0.27,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "bæreticorum",
+            "ecclefia",
+            "faltem",
+            "animirùm",
+            "cenfeatur",
+            "five",
+            "fimul",
+            "folum"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.772,
+            "gemini-3.1-flash-lite": 0.783
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-1700s-d980bf-p19",
+      "substratum": "latin-1700-1799",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Animadversiones Aeneidis Virgilianae prioribus VI. libris adspersae",
+      "year": 1792,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1425,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0,
+          "acc": 1,
+          "seq": 0.991,
+          "bow": 0.991,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.991,
+            "mineru25-pro": 0.976
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1425,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.991,
+            "mineru25-pro": 0.985
+          }
+        },
+        "mineru25-pro": {
+          "n_content": 1422,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.004,
+          "acc": 0.996,
+          "seq": 0.985,
+          "bow": 0.985,
+          "gap": 0,
+          "len_ratio": 0.998,
+          "invention": 0.012,
+          "invention_indep": 0.012,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "consili",
+            "praecclare"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.976,
+            "gemini-3.1-flash-lite": 0.985
+          }
+        }
+      }
+    },
+    {
+      "slug": "latin-1700s-d9abd0-p7",
+      "substratum": "latin-1700-1799",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "[De locis quibusdam e primo Ciceronis de legibus libro disputatur]",
+      "year": 1796,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 2364,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0,
+          "acc": 1,
+          "seq": 0.998,
+          "bow": 0.998,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.998,
+            "mineru25-pro": 0.97
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 2364,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.004,
+          "invention_indep": 0.004,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "queris"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.998,
+            "mineru25-pro": 0.967
+          }
+        },
+        "mineru25-pro": {
+          "n_content": 2368,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.006,
+          "acc": 0.994,
+          "seq": 0.967,
+          "bow": 0.967,
+          "gap": 0,
+          "len_ratio": 1.002,
+          "invention": 0.034,
+          "invention_indep": 0.034,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "formulae",
+            "sententiae",
+            "mirror",
+            "neatur",
+            "vocunt",
+            "quomo",
+            "controversiae",
+            "prestare"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.97,
+            "gemini-3.1-flash-lite": 0.967
+          }
+        }
+      }
+    }
+  ]
+}

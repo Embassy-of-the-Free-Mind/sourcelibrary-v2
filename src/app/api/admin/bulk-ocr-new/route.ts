@@ -217,6 +217,7 @@ export async function GET(request: NextRequest) {
           );
 
           await db.collection('batch_jobs').insertOne({
+            submitted_by: 'src/app/api/admin/bulk-ocr-new/route.ts',
             id: childJobId,
             parent_job_id: parentJobId,
             job_name: batchJob.name,
@@ -267,6 +268,7 @@ export async function GET(request: NextRequest) {
 
       // Create parent batch_job with actual child IDs
       await db.collection('batch_jobs').insertOne({
+        submitted_by: 'src/app/api/admin/bulk-ocr-new/route.ts',
         id: parentJobId,
         type: 'ocr',
         book_id: book.id,
