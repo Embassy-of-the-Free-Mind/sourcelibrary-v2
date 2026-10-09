@@ -44,7 +44,8 @@ const PG_BATCH = 50;   // Rows per INSERT
 async function main() {
   // Check CLIP server health
   try {
-    const health = await fetch(`${CLIP_URL}/health`).then(r => r.json());
+    // /clip/health is NOT an open path on a keyed server (only bare /health is), so send the key (#6206).
+    const health = await fetch(`${CLIP_URL}/health`, { headers: embedAuthHeaders() }).then(r => r.json());
     // Stamp every row with the space it was embedded in: v2 and v4 runtimes
     // give different vectors for the same image (#5099). A server predating the
     // runtime switch reports no embedding_model and is v2.
