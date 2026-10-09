@@ -1,0 +1,46 @@
+{
+  "source": "EEBO-TCP A51379",
+  "edition": "Plantarum historiæ universalis Oxoniensis. Pars secunda seu herbarum distributio nova, per tabulas c — M2771 (1680)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/textcreationpartnership/A51379",
+  "same_edition": {
+    "evidence": "catalogue-number",
+    "text_match_pages": "7/9",
+    "pb_aligned_pages": "7/7"
+  },
+  "origin": "library",
+  "book_id": "6958e912d3a8928334814c19",
+  "page_number": 8,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 4410,
+    "to_char": 9384,
+    "overlap": 1,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'sive descriptiones proponerentur'; ends 'vel depresso ovi angulo'; header PRAEFATIO, two paragraphs, large blank left margin in scan; ref has 'succisis superfluis) singularium stirpium historiae' padding before and 'acuto paululum' after.",
+    "leaf_language": "lat",
+    "page_type": "front-matter",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:36.946Z",
+  "text_location": "repo",
+  "text_sha256": "f57cfd798c2c3644de25254de573ac8acf8f8022a5e7c00fa25b25667d2aa214",
+  "unit": {
+    "chars": 4974
+  },
+  "stratum": "latin-period-5126"
+}

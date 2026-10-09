@@ -1,0 +1,6811 @@
+{
+ "items": {
+  "L001": {
+   "kind": "ARMS",
+   "page_id": "69b2222608069e96e8432997_00377",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "PRO",
+    "T3": "L31",
+    "T4": "L35",
+    "T5": "FP",
+    "T6": "G35",
+    "T7": "G37",
+    "T8": "G36",
+    "T9": "AA"
+   }
+  },
+  "L002": {
+   "kind": "ARMS",
+   "page_id": "69b2f3b821208ea9dc278c50_00277",
+   "lang": "Hebrew",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "O",
+    "T2": "FP",
+    "T3": "G37",
+    "T4": "PRO",
+    "T5": "AA",
+    "T6": "G35",
+    "T7": "L35",
+    "T8": "L31",
+    "T9": "G38",
+    "T10": "G36"
+   }
+  },
+  "L003": {
+   "kind": "ARMS",
+   "page_id": "c87fadfa-1543-44b9-a138-573c144246e6_00328",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "L31",
+    "T2": "G38",
+    "T3": "G37",
+    "T4": "G36",
+    "T5": "AA",
+    "T6": "L35",
+    "T7": "FP",
+    "T8": "PRO",
+    "T9": "G35"
+   }
+  },
+  "L004": {
+   "kind": "ARMS",
+   "page_id": "69908ac1c0656c0b3bcc0813_00050",
+   "lang": "Arabic",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "G37",
+    "T3": "L35",
+    "T4": "G35",
+    "T5": "G38",
+    "T6": "PRO",
+    "T7": "AA",
+    "T8": "FP",
+    "T9": "G36"
+   }
+  },
+  "L005": {
+   "kind": "ARMS",
+   "page_id": "69a6827ed5bf106c72bb8d6f_00286",
+   "lang": "French",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G38",
+    "T3": "G35",
+    "T4": "G36",
+    "T5": "G37",
+    "T6": "FP",
+    "T7": "AA",
+    "T8": "L31",
+    "T9": "L35"
+   }
+  },
+  "L006": {
+   "kind": "ARMS",
+   "page_id": "69e41a008a8dae1074c52565_00515",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "AA",
+    "T2": "PRO",
+    "T3": "G38",
+    "T4": "L35",
+    "T5": "FP",
+    "T6": "L31",
+    "T7": "G35",
+    "T8": "G37",
+    "T9": "G36"
+   }
+  },
+  "L007": {
+   "kind": "ARMS",
+   "page_id": "69c1bc788522835be84637be_00003",
+   "lang": "Hebrew",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G35",
+    "T3": "AA",
+    "T4": "L35",
+    "T5": "G37",
+    "T6": "G38",
+    "T7": "FP",
+    "T8": "G36",
+    "T9": "L31"
+   }
+  },
+  "L008": {
+   "kind": "ARMS",
+   "page_id": "6993897cce1538706594711f_00614",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "L31",
+    "T3": "G35",
+    "T4": "AA",
+    "T5": "G36",
+    "T6": "FP",
+    "T7": "PRO",
+    "T8": "G37",
+    "T9": "L35"
+   }
+  },
+  "L009": {
+   "kind": "ARMS",
+   "page_id": "6a308280558372a29b371088_00158",
+   "lang": "Pali",
+   "track": "T5-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G35",
+    "T3": "L31",
+    "T4": "L35",
+    "T5": "G38",
+    "T6": "G36",
+    "T7": "AA",
+    "T8": "FP",
+    "T9": "G37"
+   }
+  },
+  "L010": {
+   "kind": "ARMS",
+   "page_id": "69e7268ca409200ea79ef73b_00111",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "AA",
+    "T3": "G35",
+    "T4": "O",
+    "T5": "FP",
+    "T6": "G36",
+    "T7": "G37",
+    "T8": "PRO",
+    "T9": "G38",
+    "T10": "L35"
+   }
+  },
+  "L011": {
+   "kind": "ARMS",
+   "page_id": "69b21cc8429e087c6f8659be_00184",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G35",
+    "T2": "L35",
+    "T3": "PRO",
+    "T4": "G37",
+    "T5": "G38",
+    "T6": "G36",
+    "T7": "AA",
+    "T8": "O",
+    "T9": "L31",
+    "T10": "FP"
+   }
+  },
+  "L012": {
+   "kind": "ARMS",
+   "page_id": "69529499b184004c526a1dc9_00175",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G35",
+    "T2": "AA",
+    "T3": "L31",
+    "T4": "G38",
+    "T5": "G37",
+    "T6": "FP",
+    "T7": "G36",
+    "T8": "PRO",
+    "T9": "L35"
+   }
+  },
+  "L013": {
+   "kind": "ARMS",
+   "page_id": "69904fcd7d19f3f2aac1da09_00076",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "L35",
+    "T2": "G35",
+    "T3": "PRO",
+    "T4": "AA",
+    "T5": "G37",
+    "T6": "G36",
+    "T7": "G38",
+    "T8": "FP",
+    "T9": "L31"
+   }
+  },
+  "L014": {
+   "kind": "ARMS",
+   "page_id": "69bd014bf403a9ca2380f091_00054",
+   "lang": "Pali",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "O",
+    "T2": "L35",
+    "T3": "G37",
+    "T4": "L31",
+    "T5": "AA",
+    "T6": "FP",
+    "T7": "PRO",
+    "T8": "G38",
+    "T9": "G35",
+    "T10": "G36"
+   }
+  },
+  "L015": {
+   "kind": "ARMS",
+   "page_id": "69affc54b3b18e354e59b7d8_00198",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "L35",
+    "T3": "G38",
+    "T4": "G35",
+    "T5": "AA",
+    "T6": "FP",
+    "T7": "G36",
+    "T8": "L31",
+    "T9": "PRO"
+   }
+  },
+  "L016": {
+   "kind": "ARMS",
+   "page_id": "69e72c8ca409200ea79f4dd6_00556",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "FP",
+    "T3": "L35",
+    "T4": "G35",
+    "T5": "G36",
+    "T6": "G37",
+    "T7": "L31",
+    "T8": "G38",
+    "T9": "AA"
+   }
+  },
+  "L017": {
+   "kind": "ARMS",
+   "page_id": "6a09ff4ffa20006dbaba901a_00263",
+   "lang": "Pali",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "L35",
+    "T2": "G37",
+    "T3": "PRO",
+    "T4": "FP",
+    "T5": "G38",
+    "T6": "G35",
+    "T7": "AA",
+    "T8": "G36",
+    "T9": "L31"
+   }
+  },
+  "L018": {
+   "kind": "ARMS",
+   "page_id": "69b99e551f30176bf4d37774_00306",
+   "lang": "Pali",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "AA",
+    "T2": "G37",
+    "T3": "FP",
+    "T4": "G36",
+    "T5": "PRO",
+    "T6": "G38",
+    "T7": "G35",
+    "T8": "L31",
+    "T9": "L35"
+   }
+  },
+  "L019": {
+   "kind": "ARMS",
+   "page_id": "6a3c5f3b879008ba7e1537d3_00017",
+   "lang": "Chinese",
+   "track": "T5-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "L35",
+    "T3": "G35",
+    "T4": "AA",
+    "T5": "L31",
+    "T6": "PRO",
+    "T7": "FP",
+    "T8": "G38",
+    "T9": "G36"
+   }
+  },
+  "L020": {
+   "kind": "ARMS",
+   "page_id": "6976f5fb7b4366f057e0e974_00631",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "FP",
+    "T3": "L31",
+    "T4": "G38",
+    "T5": "G36",
+    "T6": "PRO",
+    "T7": "AA",
+    "T8": "L35",
+    "T9": "G35"
+   }
+  },
+  "L021": {
+   "kind": "DUP",
+   "page_id": "69aebfa4c337b1e6a4d582f3_00161",
+   "labels": {
+    "T1": "P_DUP",
+    "T2": "P",
+    "T3": "G38"
+   }
+  },
+  "L022": {
+   "kind": "ARMS",
+   "page_id": "697e23cca90e1780032ca2f2_00176",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "FP",
+   "labels": {
+    "T1": "FP",
+    "T2": "AA",
+    "T3": "G36",
+    "T4": "G37",
+    "T5": "PRO",
+    "T6": "L31",
+    "T7": "G35",
+    "T8": "L35",
+    "T9": "G38"
+   }
+  },
+  "L023": {
+   "kind": "ARMS",
+   "page_id": "6a06cdd7c749b698e5b2c9a4_00104",
+   "lang": "Arabic",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "L35",
+    "T3": "O",
+    "T4": "G36",
+    "T5": "FP",
+    "T6": "G38",
+    "T7": "AA",
+    "T8": "L31",
+    "T9": "G35",
+    "T10": "G37"
+   }
+  },
+  "L024": {
+   "kind": "ARMS",
+   "page_id": "6953e50577f38f6761bef758_00274",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "L35",
+    "T2": "G35",
+    "T3": "PRO",
+    "T4": "G37",
+    "T5": "L31",
+    "T6": "G38",
+    "T7": "FP",
+    "T8": "AA",
+    "T9": "G36"
+   }
+  },
+  "L025": {
+   "kind": "ARMS",
+   "page_id": "698255eeaf854f912ffb30e6_00404",
+   "lang": "French",
+   "track": "T3",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "AA",
+    "T3": "G37",
+    "T4": "L31",
+    "T5": "FP",
+    "T6": "G35",
+    "T7": "G38",
+    "T8": "G36",
+    "T9": "L35"
+   }
+  },
+  "L026": {
+   "kind": "ARMS",
+   "page_id": "6a3c61ec40c88a541d8f0f4a_00018",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "PRO",
+    "T3": "L35",
+    "T4": "G36",
+    "T5": "AA",
+    "T6": "G38",
+    "T7": "L31",
+    "T8": "FP",
+    "T9": "G37"
+   }
+  },
+  "L027": {
+   "kind": "ARMS",
+   "page_id": "694f3d6cbe37f451a5324e10_00084",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "O",
+    "T2": "G35",
+    "T3": "PRO",
+    "T4": "G37",
+    "T5": "G36",
+    "T6": "L31",
+    "T7": "AA",
+    "T8": "G38",
+    "T9": "L35",
+    "T10": "FP"
+   }
+  },
+  "L028": {
+   "kind": "ARMS",
+   "page_id": "69af0cfc067c0c26ee26cd3c_00151",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "AA",
+    "T2": "G37",
+    "T3": "L35",
+    "T4": "FP",
+    "T5": "G35",
+    "T6": "PRO",
+    "T7": "G38",
+    "T8": "L31",
+    "T9": "G36"
+   }
+  },
+  "L029": {
+   "kind": "ARMS",
+   "page_id": "69b18a55c4be2cdd0edc727d_00552",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "PRO",
+    "T2": "FP",
+    "T3": "AA",
+    "T4": "G37",
+    "T5": "G38",
+    "T6": "L31",
+    "T7": "G35",
+    "T8": "G36",
+    "T9": "L35"
+   }
+  },
+  "L030": {
+   "kind": "PLANT",
+   "page_id": "6991e1b0339ebc850994ab9e_00551",
+   "labels": {
+    "T1": "P",
+    "T2": "P_PLANT"
+   },
+   "plant": {
+    "old": "For instance, it is said in Esther 1:3: *Ahasuerus made a great feast...",
+    "new": "For instance, it is not said in Esther 1:3: *Ahasuerus made a great feast...",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "L031": {
+   "kind": "ARMS",
+   "page_id": "6993882474305116d72cf673_00163",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "O",
+    "T2": "L35",
+    "T3": "G36",
+    "T4": "G35",
+    "T5": "G37",
+    "T6": "PRO",
+    "T7": "L31",
+    "T8": "AA",
+    "T9": "FP",
+    "T10": "G38"
+   }
+  },
+  "L032": {
+   "kind": "ARMS",
+   "page_id": "69e7518610ee9075bcdcde12_00071",
+   "lang": "Hebrew",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "G35",
+    "T3": "L31",
+    "T4": "AA",
+    "T5": "FP",
+    "T6": "L35",
+    "T7": "O",
+    "T8": "PRO",
+    "T9": "G36",
+    "T10": "G37"
+   }
+  },
+  "L033": {
+   "kind": "ARMS",
+   "page_id": "69920bff01d3dcea63458842_00389",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "G38",
+    "T3": "AA",
+    "T4": "L35",
+    "T5": "FP",
+    "T6": "G36",
+    "T7": "PRO",
+    "T8": "L31",
+    "T9": "G35"
+   }
+  },
+  "L034": {
+   "kind": "ARMS",
+   "page_id": "695d0e044afae5c3b3aead52_00353",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "AA",
+    "T2": "FP",
+    "T3": "O",
+    "T4": "PRO",
+    "T5": "G35",
+    "T6": "G36",
+    "T7": "G38",
+    "T8": "G37",
+    "T9": "L31",
+    "T10": "L35"
+   }
+  },
+  "L035": {
+   "kind": "ARMS",
+   "page_id": "6952e4cc77f38f6761bc8c0b_00121",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "AA",
+    "T3": "FP",
+    "T4": "L31",
+    "T5": "G37",
+    "T6": "L35",
+    "T7": "G38",
+    "T8": "G35",
+    "T9": "PRO"
+   }
+  },
+  "L036": {
+   "kind": "ARMS",
+   "page_id": "6a08550315c643eb1af5470c_00099",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "G36",
+    "T3": "FP",
+    "T4": "PRO",
+    "T5": "G38",
+    "T6": "AA",
+    "T7": "G37",
+    "T8": "L35",
+    "T9": "L31"
+   }
+  },
+  "L037": {
+   "kind": "ARMS",
+   "page_id": "69526191ab34727b1f046982_00108",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "L35",
+    "T2": "AA",
+    "T3": "G35",
+    "T4": "L31",
+    "T5": "G37",
+    "T6": "FP",
+    "T7": "PRO",
+    "T8": "G36",
+    "T9": "G38"
+   }
+  },
+  "L038": {
+   "kind": "ARMS",
+   "page_id": "69b99e496ed9e04909909f8f_00220",
+   "lang": "Pali",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "FP",
+    "T3": "L35",
+    "T4": "AA",
+    "T5": "G38",
+    "T6": "G36",
+    "T7": "G35",
+    "T8": "L31",
+    "T9": "G37"
+   }
+  },
+  "L039": {
+   "kind": "ARMS",
+   "page_id": "69de101d5cedf736edb85346_00027",
+   "lang": "Sanskrit",
+   "track": "T5-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "AA",
+    "T3": "PRO",
+    "T4": "FP",
+    "T5": "G38",
+    "T6": "L35",
+    "T7": "G36",
+    "T8": "G35",
+    "T9": "L31"
+   }
+  },
+  "L040": {
+   "kind": "ARMS",
+   "page_id": "69c1bbc68522835be8460774_00281",
+   "lang": "Hebrew",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G35",
+    "T3": "G36",
+    "T4": "O",
+    "T5": "G37",
+    "T6": "FP",
+    "T7": "L35",
+    "T8": "L31",
+    "T9": "AA",
+    "T10": "G38"
+   }
+  },
+  "L041": {
+   "kind": "ARMS",
+   "page_id": "6a08f8b89c1b82475e157ff4_00016",
+   "lang": "Arabic",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "G38",
+    "T3": "G35",
+    "T4": "FP",
+    "T5": "AA",
+    "T6": "L31",
+    "T7": "PRO",
+    "T8": "G37",
+    "T9": "L35"
+   }
+  },
+  "L042": {
+   "kind": "ARMS",
+   "page_id": "69b2ff19a1a4246ddb45ae6a_00196",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G36",
+    "T2": "AA",
+    "T3": "G38",
+    "T4": "L31",
+    "T5": "L35",
+    "T6": "PRO",
+    "T7": "FP",
+    "T8": "G35",
+    "T9": "G37"
+   }
+  },
+  "L043": {
+   "kind": "PLANT",
+   "page_id": "6953ea3e1479a63c1108641e_00241",
+   "labels": {
+    "T1": "P_PLANT",
+    "T2": "P"
+   },
+   "plant": {
+    "old": "This medicine is useful for an army, for being sweet, it brings satiety and removes thirst.",
+    "new": "This medicine is not useful for an army, for being sweet, it brings satiety and removes thirst.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "L044": {
+   "kind": "ARMS",
+   "page_id": "69942c54b2f6748db4abd74f_00047",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "O",
+    "T2": "G35",
+    "T3": "G37",
+    "T4": "FP",
+    "T5": "L31",
+    "T6": "G38",
+    "T7": "AA",
+    "T8": "G36",
+    "T9": "PRO",
+    "T10": "L35"
+   }
+  },
+  "L045": {
+   "kind": "ARMS",
+   "page_id": "6a2032e518654bf8e1903b96_00025",
+   "lang": "Arabic",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "G36",
+    "T3": "L35",
+    "T4": "FP",
+    "T5": "AA",
+    "T6": "L31",
+    "T7": "PRO",
+    "T8": "G38",
+    "T9": "G35"
+   }
+  },
+  "L046": {
+   "kind": "ARMS",
+   "page_id": "6a3c61b1879008ba7e15fba1_00068",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "FP",
+    "T3": "AA",
+    "T4": "PRO",
+    "T5": "L31",
+    "T6": "G35",
+    "T7": "G38",
+    "T8": "L35",
+    "T9": "G37"
+   }
+  },
+  "L047": {
+   "kind": "ARMS",
+   "page_id": "6954347b1479a63c11089b35_00091",
+   "lang": "German",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "L31",
+    "T2": "G38",
+    "T3": "G35",
+    "T4": "AA",
+    "T5": "L35",
+    "T6": "FP",
+    "T7": "PRO",
+    "T8": "G37",
+    "T9": "G36"
+   }
+  },
+  "L048": {
+   "kind": "ARMS",
+   "page_id": "69de99071b234a773e439b52_00236",
+   "lang": "Pali",
+   "track": "T5-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "G37",
+    "T3": "FP",
+    "T4": "AA",
+    "T5": "L31",
+    "T6": "G36",
+    "T7": "L35",
+    "T8": "G35",
+    "T9": "PRO"
+   }
+  },
+  "L049": {
+   "kind": "ARMS",
+   "page_id": "69c1bdc98522835be846bb3a_00032",
+   "lang": "Pali",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "AA",
+    "T3": "L35",
+    "T4": "G37",
+    "T5": "G36",
+    "T6": "PRO",
+    "T7": "L31",
+    "T8": "G38"
+   }
+  },
+  "L050": {
+   "kind": "ARMS",
+   "page_id": "69e13c79998131d6a99c0917_00310",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "FP",
+    "T3": "G38",
+    "T4": "G36",
+    "T5": "AA",
+    "T6": "L35",
+    "T7": "L31",
+    "T8": "PRO",
+    "T9": "G37"
+   }
+  },
+  "L051": {
+   "kind": "ARMS",
+   "page_id": "69b2fedda1a4246ddb45a8df_00318",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "PRO",
+    "T3": "G38",
+    "T4": "L31",
+    "T5": "G37",
+    "T6": "G35",
+    "T7": "FP",
+    "T8": "AA",
+    "T9": "L35"
+   }
+  },
+  "L052": {
+   "kind": "ARMS",
+   "page_id": "69e8b26b2ff2a8dc09e77afc_00118",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "FP",
+    "T3": "L35",
+    "T4": "G38",
+    "T5": "G35",
+    "T6": "G37",
+    "T7": "AA",
+    "T8": "L31",
+    "T9": "G36"
+   }
+  },
+  "L053": {
+   "kind": "ARMS",
+   "page_id": "6a3067d0c4fd77fb5b9f8378_00057",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "AA",
+    "T3": "G35",
+    "T4": "FP",
+    "T5": "PRO",
+    "T6": "G36",
+    "T7": "L35",
+    "T8": "L31",
+    "T9": "G37"
+   }
+  },
+  "L054": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00367",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "AA",
+    "T3": "FP",
+    "T4": "G38",
+    "T5": "G36",
+    "T6": "L35",
+    "T7": "PRO",
+    "T8": "L31",
+    "T9": "G35"
+   }
+  },
+  "L055": {
+   "kind": "ARMS",
+   "page_id": "69b4cd44d5b6c3815e1a52de_00215",
+   "lang": "Hebrew",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "AA",
+    "T3": "L31",
+    "T4": "PRO",
+    "T5": "O",
+    "T6": "L35",
+    "T7": "FP",
+    "T8": "G36",
+    "T9": "G37",
+    "T10": "G35"
+   }
+  },
+  "L056": {
+   "kind": "ARMS",
+   "page_id": "69529509b184004c526a2793_00237",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "L31",
+    "T2": "G38",
+    "T3": "G35",
+    "T4": "PRO",
+    "T5": "FP",
+    "T6": "L35",
+    "T7": "G36",
+    "T8": "G37",
+    "T9": "AA"
+   }
+  },
+  "L057": {
+   "kind": "ARMS",
+   "page_id": "6993838250654cbbe2916e4c_00385",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "PRO",
+    "T3": "G38",
+    "T4": "L35",
+    "T5": "G37",
+    "T6": "AA",
+    "T7": "G35",
+    "T8": "FP",
+    "T9": "L31"
+   }
+  },
+  "L058": {
+   "kind": "ARMS",
+   "page_id": "69e72c70a409200ea79f48f9_00078",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "G36",
+    "T3": "FP",
+    "T4": "G38",
+    "T5": "AA",
+    "T6": "L31",
+    "T7": "PRO",
+    "T8": "G37",
+    "T9": "L35"
+   }
+  },
+  "L059": {
+   "kind": "ARMS",
+   "page_id": "69b99d043a4a443c39c00775_00147",
+   "lang": "Pali",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "L35",
+    "T2": "G37",
+    "T3": "G36",
+    "T4": "L31",
+    "T5": "FP",
+    "T6": "G38",
+    "T7": "AA",
+    "T8": "G35",
+    "T9": "PRO",
+    "T10": "O"
+   }
+  },
+  "L060": {
+   "kind": "ARMS",
+   "page_id": "6952855fab34727b1f04b383_00434",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "L35",
+    "T2": "O",
+    "T3": "PRO",
+    "T4": "L31",
+    "T5": "G35",
+    "T6": "G37",
+    "T7": "FP",
+    "T8": "AA",
+    "T9": "G38",
+    "T10": "G36"
+   }
+  },
+  "L061": {
+   "kind": "ARMS",
+   "page_id": "69e41a108a8dae1074c52a29_00493",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "FP",
+    "T3": "AA",
+    "T4": "L35",
+    "T5": "G38",
+    "T6": "G36",
+    "T7": "G37",
+    "T8": "L31",
+    "T9": "G35"
+   }
+  },
+  "L062": {
+   "kind": "ARMS",
+   "page_id": "69a5d924a63a00aaae8aae3b_00105",
+   "lang": "Dutch",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "G36",
+    "T2": "FP",
+    "T3": "O",
+    "T4": "G35",
+    "T5": "PRO",
+    "T6": "G37",
+    "T7": "AA",
+    "T8": "G38",
+    "T9": "L35",
+    "T10": "L31"
+   }
+  },
+  "L063": {
+   "kind": "ARMS",
+   "page_id": "6a312d8867a0ec73f1bc373f_00050",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "AA",
+    "T3": "L35",
+    "T4": "L31",
+    "T5": "G35",
+    "T6": "O",
+    "T7": "FP",
+    "T8": "G38",
+    "T9": "G36",
+    "T10": "G37"
+   }
+  },
+  "L064": {
+   "kind": "DUP",
+   "page_id": "69b4d643853c26e0d15603c8_00136",
+   "labels": {
+    "T1": "G38",
+    "T2": "P",
+    "T3": "P_DUP"
+   }
+  },
+  "L065": {
+   "kind": "ARMS",
+   "page_id": "6a09ff48fa20006dbaba8ee1_00114",
+   "lang": "Pali",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "L35",
+    "T2": "FP",
+    "T3": "G37",
+    "T4": "G36",
+    "T5": "O",
+    "T6": "PRO",
+    "T7": "G35",
+    "T8": "L31",
+    "T9": "AA",
+    "T10": "G38"
+   }
+  },
+  "L066": {
+   "kind": "ARMS",
+   "page_id": "69b99e856ed9e0490990a0b5_00301",
+   "lang": "Pali",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "AA",
+    "T2": "FP",
+    "T3": "PRO",
+    "T4": "G36",
+    "T5": "G35",
+    "T6": "L35",
+    "T7": "G38",
+    "T8": "G37",
+    "T9": "L31"
+   }
+  },
+  "L067": {
+   "kind": "ARMS",
+   "page_id": "69935b198e28d8f4c5d3c249_00406",
+   "lang": "Persian",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "FP",
+    "T3": "G38",
+    "T4": "AA",
+    "T5": "L35",
+    "T6": "G35",
+    "T7": "PRO",
+    "T8": "L31",
+    "T9": "G37"
+   }
+  },
+  "L068": {
+   "kind": "ARMS",
+   "page_id": "69b99eae6ed9e0490990a486_00510",
+   "lang": "Pali",
+   "track": "T5-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "G35",
+    "T3": "G38",
+    "T4": "FP",
+    "T5": "G36",
+    "T6": "L35",
+    "T7": "G37",
+    "T8": "AA",
+    "T9": "PRO"
+   }
+  },
+  "L069": {
+   "kind": "ARMS",
+   "page_id": "69b43d2706b196d69f66f14f_00015",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "AA",
+    "T2": "FP",
+    "T3": "PRO",
+    "T4": "G35",
+    "T5": "G36",
+    "T6": "L31",
+    "T7": "G38",
+    "T8": "L35",
+    "T9": "G37"
+   }
+  },
+  "L070": {
+   "kind": "ARMS",
+   "page_id": "69b99d0e6ed9e04909908946_00387",
+   "lang": "Pali",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "FP",
+    "T2": "PRO",
+    "T3": "AA",
+    "T4": "O",
+    "T5": "G36",
+    "T6": "G38",
+    "T7": "G35",
+    "T8": "G37",
+    "T9": "L35",
+    "T10": "L31"
+   }
+  },
+  "L071": {
+   "kind": "ARMS",
+   "page_id": "69b185e9c4be2cdd0edc464c_00489",
+   "lang": "Dutch",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "G36",
+    "T2": "G35",
+    "T3": "L31",
+    "T4": "FP",
+    "T5": "G38",
+    "T6": "G37",
+    "T7": "PRO",
+    "T8": "L35",
+    "T9": "AA"
+   }
+  },
+  "L072": {
+   "kind": "ARMS",
+   "page_id": "69905e262fd6a039938a154f_00067",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "L35",
+    "T2": "L31",
+    "T3": "G37",
+    "T4": "FP",
+    "T5": "PRO",
+    "T6": "G35",
+    "T7": "O",
+    "T8": "G36",
+    "T9": "AA",
+    "T10": "G38"
+   }
+  },
+  "L073": {
+   "kind": "PLANT",
+   "page_id": "6a09ff5dfa20006dbaba9200_00274",
+   "labels": {
+    "T1": "P_PLANT",
+    "T2": "P"
+   },
+   "plant": {
+    "old": "Having known the unrighteous and the righteous, and having known the harmful and the beneficial, one should practice according to what is righteous and beneficial.",
+    "new": "Having known the unrighteous and the righteous, and having known the harmful and the beneficial, one should practice according to what is not righteous and beneficial.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "L074": {
+   "kind": "ARMS",
+   "page_id": "6992cf0970ab3737555456ae_00100",
+   "lang": "Persian",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "G37",
+    "T3": "G36",
+    "T4": "FP",
+    "T5": "G38",
+    "T6": "L35",
+    "T7": "AA",
+    "T8": "O",
+    "T9": "PRO",
+    "T10": "G35"
+   }
+  },
+  "L075": {
+   "kind": "ARMS",
+   "page_id": "699382dd84cf5845c644b377_00673",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "AA",
+    "T3": "G38",
+    "T4": "G35",
+    "T5": "L35",
+    "T6": "L31",
+    "T7": "PRO",
+    "T8": "G37",
+    "T9": "FP"
+   }
+  },
+  "L076": {
+   "kind": "ARMS",
+   "page_id": "69e8b27f2ff2a8dc09e77ed7_00048",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G37",
+    "T3": "G35",
+    "T4": "L35",
+    "T5": "FP",
+    "T6": "L31",
+    "T7": "G38",
+    "T8": "AA",
+    "T9": "G36"
+   }
+  },
+  "L077": {
+   "kind": "ARMS",
+   "page_id": "697b0799a12a626fbfe93ae4_00827",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "O",
+    "T2": "AA",
+    "T3": "G35",
+    "T4": "G36",
+    "T5": "G37",
+    "T6": "L35",
+    "T7": "FP",
+    "T8": "PRO",
+    "T9": "L31",
+    "T10": "G38"
+   }
+  },
+  "L078": {
+   "kind": "ARMS",
+   "page_id": "69f33c97876dd827cbc5a94f_00258",
+   "lang": "Persian",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "L35",
+    "T3": "L31",
+    "T4": "G35",
+    "T5": "O",
+    "T6": "PRO",
+    "T7": "AA",
+    "T8": "G36",
+    "T9": "FP",
+    "T10": "G38"
+   }
+  },
+  "L079": {
+   "kind": "ARMS",
+   "page_id": "69938d895d28b693146d0231_00106",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "AA",
+    "T2": "G38",
+    "T3": "FP",
+    "T4": "L31",
+    "T5": "G36",
+    "T6": "PRO",
+    "T7": "G37",
+    "T8": "G35",
+    "T9": "L35"
+   }
+  },
+  "L080": {
+   "kind": "ARMS",
+   "page_id": "6991eac02f801130a473e424_00074",
+   "lang": "Italian",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "FP",
+    "T2": "G37",
+    "T3": "L31",
+    "T4": "AA",
+    "T5": "PRO",
+    "T6": "G36",
+    "T7": "G38",
+    "T8": "L35",
+    "T9": "G35"
+   }
+  },
+  "L081": {
+   "kind": "ARMS",
+   "page_id": "69b3014b78de5de2306d4a6c_00195",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "L35",
+    "T3": "G35",
+    "T4": "G37",
+    "T5": "AA",
+    "T6": "G38",
+    "T7": "G36",
+    "T8": "PRO",
+    "T9": "O",
+    "T10": "FP"
+   }
+  },
+  "L082": {
+   "kind": "ARMS",
+   "page_id": "69ea0f5413a685002bb8dc8a_00107",
+   "lang": "Spanish",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "G36",
+    "T2": "G35",
+    "T3": "L35",
+    "T4": "FP",
+    "T5": "G37",
+    "T6": "L31",
+    "T7": "G38",
+    "T8": "PRO",
+    "T9": "AA"
+   }
+  },
+  "L083": {
+   "kind": "ARMS",
+   "page_id": "6a06b0aff12363da8cfdc945_00193",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "G38",
+    "T3": "PRO",
+    "T4": "L31",
+    "T5": "FP",
+    "T6": "AA",
+    "T7": "G35",
+    "T8": "L35",
+    "T9": "G36"
+   }
+  },
+  "L084": {
+   "kind": "ARMS",
+   "page_id": "15c5d8e4-cea3-4b5b-9859-f3528660ecc8_00347",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G38",
+    "T2": "L31",
+    "T3": "G35",
+    "T4": "G36",
+    "T5": "AA",
+    "T6": "O",
+    "T7": "PRO",
+    "T8": "L35",
+    "T9": "FP",
+    "T10": "G37"
+   }
+  },
+  "L085": {
+   "kind": "ARMS",
+   "page_id": "69ade7946a6b945bbdfa2d0a_00091",
+   "lang": "German",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "G37",
+    "T2": "G36",
+    "T3": "G35",
+    "T4": "L35",
+    "T5": "L31",
+    "T6": "G38",
+    "T7": "FP",
+    "T8": "O",
+    "T9": "PRO",
+    "T10": "AA"
+   }
+  },
+  "L086": {
+   "kind": "ARMS",
+   "page_id": "699209b5bed8f4b5ff5b25ac_00590",
+   "lang": "Arabic",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "L35",
+    "T2": "AA",
+    "T3": "G37",
+    "T4": "L31",
+    "T5": "G36",
+    "T6": "PRO",
+    "T7": "FP",
+    "T8": "G35",
+    "T9": "G38"
+   }
+  },
+  "L087": {
+   "kind": "DUP",
+   "page_id": "69b99e551f30176bf4d37774_00306",
+   "labels": {
+    "T1": "P_DUP",
+    "T2": "G38",
+    "T3": "P"
+   }
+  },
+  "L088": {
+   "kind": "ARMS",
+   "page_id": "69b21d1a429e087c6f866ee7_00452",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G37",
+    "T2": "PRO",
+    "T3": "G38",
+    "T4": "AA",
+    "T5": "L31",
+    "T6": "G35",
+    "T7": "G36",
+    "T8": "FP",
+    "T9": "L35"
+   }
+  },
+  "L089": {
+   "kind": "ARMS",
+   "page_id": "69b2f32121208ea9dc2779bb_00214",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G36",
+    "T3": "G38",
+    "T4": "G35",
+    "T5": "G37",
+    "T6": "L31",
+    "T7": "FP",
+    "T8": "AA",
+    "T9": "L35"
+   }
+  },
+  "L090": {
+   "kind": "ARMS",
+   "page_id": "69520185ab34727b1f0416bc_00029",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G37",
+    "T2": "G38",
+    "T3": "PRO",
+    "T4": "G36",
+    "T5": "L35",
+    "T6": "FP",
+    "T7": "O",
+    "T8": "G35",
+    "T9": "AA",
+    "T10": "L31"
+   }
+  },
+  "L091": {
+   "kind": "ARMS",
+   "page_id": "6a09fcc5edaf0f8bef57ba2f_00022",
+   "lang": "Persian",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G35",
+    "T3": "G37",
+    "T4": "L35",
+    "T5": "AA",
+    "T6": "G36",
+    "T7": "FP",
+    "T8": "G38",
+    "T9": "L31"
+   }
+  },
+  "L092": {
+   "kind": "ARMS",
+   "page_id": "69937716b0a84a5763962d53_00314",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "AA",
+    "T3": "G37",
+    "T4": "PRO",
+    "T5": "G38",
+    "T6": "G36",
+    "T7": "L35",
+    "T8": "G35",
+    "T9": "FP"
+   }
+  },
+  "L093": {
+   "kind": "ARMS",
+   "page_id": "69938d775d28b693146cfc2c_00283",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "L31",
+    "T3": "L35",
+    "T4": "FP",
+    "T5": "G36",
+    "T6": "AA",
+    "T7": "G38",
+    "T8": "PRO",
+    "T9": "G35"
+   }
+  },
+  "L094": {
+   "kind": "ARMS",
+   "page_id": "69e74eeb5cf1eaf3ad80ddc1_00237",
+   "lang": "Persian",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "G36",
+    "T3": "G37",
+    "T4": "AA",
+    "T5": "FP",
+    "T6": "L31",
+    "T7": "G38",
+    "T8": "L35",
+    "T9": "PRO"
+   }
+  },
+  "L095": {
+   "kind": "ARMS",
+   "page_id": "69b2ff0ea1a4246ddb45adbb_00062",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G37",
+    "T2": "G36",
+    "T3": "L31",
+    "T4": "FP",
+    "T5": "G38",
+    "T6": "PRO",
+    "T7": "L35",
+    "T8": "AA",
+    "T9": "G35"
+   }
+  },
+  "L096": {
+   "kind": "ARMS",
+   "page_id": "69a5d8d3a63a00aaae8aab0d_00322",
+   "lang": "Dutch",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "L31",
+    "T2": "L35",
+    "T3": "G37",
+    "T4": "G36",
+    "T5": "AA",
+    "T6": "O",
+    "T7": "FP",
+    "T8": "G35",
+    "T9": "PRO",
+    "T10": "G38"
+   }
+  },
+  "L097": {
+   "kind": "ARMS",
+   "page_id": "69c1bbd28522835be8460a78_00032",
+   "lang": "Hebrew",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "L35",
+    "T3": "FP",
+    "T4": "G38",
+    "T5": "G36",
+    "T6": "AA",
+    "T7": "G37",
+    "T8": "L31",
+    "T9": "PRO"
+   }
+  },
+  "L098": {
+   "kind": "ARMS",
+   "page_id": "69b4d643853c26e0d15603c8_00136",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "FP",
+    "T2": "L35",
+    "T3": "AA",
+    "T4": "G38",
+    "T5": "G35",
+    "T6": "PRO",
+    "T7": "G36",
+    "T8": "L31",
+    "T9": "G37"
+   }
+  },
+  "L099": {
+   "kind": "ARMS",
+   "page_id": "699064b2ef12272ffdc93da9_00206",
+   "lang": "German",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "O",
+    "T2": "PRO",
+    "T3": "G37",
+    "T4": "AA",
+    "T5": "L35",
+    "T6": "FP",
+    "T7": "G36",
+    "T8": "G35",
+    "T9": "G38",
+    "T10": "L31"
+   }
+  },
+  "L100": {
+   "kind": "ARMS",
+   "page_id": "69924720d263adc1aa7b0b2c_00082",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "FP",
+    "T2": "L31",
+    "T3": "AA",
+    "T4": "G38",
+    "T5": "G36",
+    "T6": "L35",
+    "T7": "PRO",
+    "T8": "G35",
+    "T9": "G37"
+   }
+  },
+  "L101": {
+   "kind": "ARMS",
+   "page_id": "69b51dc947b06ecd581849ee_00128",
+   "lang": "German",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G35",
+    "T3": "G37",
+    "T4": "FP",
+    "T5": "L35",
+    "T6": "G36",
+    "T7": "G38",
+    "T8": "AA",
+    "T9": "L31"
+   }
+  },
+  "L102": {
+   "kind": "ARMS",
+   "page_id": "69b99e681f30176bf4d3798a_00155",
+   "lang": "Pali",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "L35",
+    "T2": "G35",
+    "T3": "L31",
+    "T4": "G38",
+    "T5": "G36",
+    "T6": "AA",
+    "T7": "FP",
+    "T8": "G37",
+    "T9": "PRO"
+   }
+  },
+  "L103": {
+   "kind": "ARMS",
+   "page_id": "69557433f63a75710917330c_00146",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "AA",
+    "T3": "FP",
+    "T4": "L31",
+    "T5": "L35",
+    "T6": "G36",
+    "T7": "PRO",
+    "T8": "G35",
+    "T9": "G37"
+   }
+  },
+  "L104": {
+   "kind": "ARMS",
+   "page_id": "69790e9eeb0dcfd399123423_00297",
+   "lang": "Dutch",
+   "track": "T3",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "G38",
+    "T3": "L35",
+    "T4": "AA",
+    "T5": "L31",
+    "T6": "PRO",
+    "T7": "FP",
+    "T8": "G37",
+    "T9": "G36"
+   }
+  },
+  "L105": {
+   "kind": "ARMS",
+   "page_id": "69938d94d5a98fd66f42d7c7_00139",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "PRO",
+    "T3": "FP",
+    "T4": "L35",
+    "T5": "G38",
+    "T6": "L31",
+    "T7": "G35",
+    "T8": "AA",
+    "T9": "G36"
+   }
+  },
+  "L106": {
+   "kind": "ARMS",
+   "page_id": "69d665abdaca889caf927527_00106",
+   "lang": "Arabic",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "PRO",
+    "T3": "L35",
+    "T4": "G36",
+    "T5": "AA",
+    "T6": "L31",
+    "T7": "G35",
+    "T8": "FP",
+    "T9": "G37"
+   }
+  },
+  "L107": {
+   "kind": "ARMS",
+   "page_id": "694bf8d2343422769f237558_00277",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "L31",
+    "T2": "O",
+    "T3": "G35",
+    "T4": "G36",
+    "T5": "FP",
+    "T6": "PRO",
+    "T7": "G38",
+    "T8": "G37",
+    "T9": "AA",
+    "T10": "L35"
+   }
+  },
+  "L108": {
+   "kind": "ARMS",
+   "page_id": "69c1ba9b8522835be8459ac5_00042",
+   "lang": "Hebrew",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "L35",
+    "T2": "G36",
+    "T3": "PRO",
+    "T4": "G38",
+    "T5": "G37",
+    "T6": "FP",
+    "T7": "G35",
+    "T8": "AA",
+    "T9": "L31"
+   }
+  },
+  "L109": {
+   "kind": "ARMS",
+   "page_id": "6a21994b4b61907ea5ffb7e5_00027",
+   "lang": "Persian",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "L31",
+    "T3": "G38",
+    "T4": "O",
+    "T5": "G35",
+    "T6": "G37",
+    "T7": "AA",
+    "T8": "PRO",
+    "T9": "FP",
+    "T10": "L35"
+   }
+  },
+  "L110": {
+   "kind": "PLANT",
+   "page_id": "69b99e856ed9e0490990a0b5_00301",
+   "labels": {
+    "T1": "P_PLANT",
+    "T2": "P"
+   },
+   "plant": {
+    "old": "If someone else has wealth or property, whether in the village or the forest, he does not take by way of theft what has not been given to him.",
+    "new": "If someone else has wealth or property, whether in the village or the forest, he does take by way of theft what has not been given to him.",
+    "how": "\\bdoes not\\b → does"
+   }
+  },
+  "L111": {
+   "kind": "ARMS",
+   "page_id": "69b99f1a1b6f70482c00d1fa_00189",
+   "lang": "Pali",
+   "track": "T5-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "AA",
+    "T2": "L31",
+    "T3": "G36",
+    "T4": "FP",
+    "T5": "G37",
+    "T6": "G38",
+    "T7": "L35",
+    "T8": "G35",
+    "T9": "PRO"
+   }
+  },
+  "L112": {
+   "kind": "ARMS",
+   "page_id": "69e72698a409200ea79ef8c3_00129",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "PRO",
+    "T3": "AA",
+    "T4": "L31",
+    "T5": "O",
+    "T6": "L35",
+    "T7": "G35",
+    "T8": "G36",
+    "T9": "FP",
+    "T10": "G38"
+   }
+  },
+  "L113": {
+   "kind": "ARMS",
+   "page_id": "69e74ef95cf1eaf3ad80e04c_00131",
+   "lang": "Persian",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "O",
+    "T3": "G35",
+    "T4": "PRO",
+    "T5": "G36",
+    "T6": "G37",
+    "T7": "L35",
+    "T8": "FP",
+    "T9": "AA",
+    "T10": "G38"
+   }
+  },
+  "L114": {
+   "kind": "ARMS",
+   "page_id": "69d5ad004dc55b8478dde8b5_01455",
+   "lang": "Hebrew",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "FP",
+    "T2": "G35",
+    "T3": "L35",
+    "T4": "AA",
+    "T5": "PRO",
+    "T6": "L31",
+    "T7": "G36",
+    "T8": "G38",
+    "T9": "G37"
+   }
+  },
+  "L115": {
+   "kind": "ARMS",
+   "page_id": "690986dccf28baa1b4cae0e3_00081",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "AA",
+    "T3": "G37",
+    "T4": "PRO",
+    "T5": "L35",
+    "T6": "L31",
+    "T7": "G36",
+    "T8": "FP",
+    "T9": "G38"
+   }
+  },
+  "L116": {
+   "kind": "ARMS",
+   "page_id": "1a8485e5-5331-41df-bfc1-6efd65238f55_00581",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G38",
+    "T2": "L35",
+    "T3": "G36",
+    "T4": "PRO",
+    "T5": "AA",
+    "T6": "G35",
+    "T7": "L31",
+    "T8": "G37",
+    "T9": "FP"
+   }
+  },
+  "L117": {
+   "kind": "ARMS",
+   "page_id": "69c83edd6c6f3cc53c8502c3_00204",
+   "lang": "German",
+   "track": "T3",
+   "prod": "FP",
+   "labels": {
+    "T1": "L35",
+    "T2": "PRO",
+    "T3": "G37",
+    "T4": "G35",
+    "T5": "G38",
+    "T6": "AA",
+    "T7": "L31",
+    "T8": "G36",
+    "T9": "FP"
+   }
+  },
+  "L118": {
+   "kind": "ARMS",
+   "page_id": "6a30904dd8c6b8a005c7bea9_00324",
+   "lang": "Pali",
+   "track": "T5-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "G36",
+    "T3": "L35",
+    "T4": "FP",
+    "T5": "G37",
+    "T6": "L31",
+    "T7": "PRO",
+    "T8": "G35",
+    "T9": "AA"
+   }
+  },
+  "L119": {
+   "kind": "ARMS",
+   "page_id": "69b21dca94025df5d2909ff2_00123",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G37",
+    "T3": "L35",
+    "T4": "AA",
+    "T5": "L31",
+    "T6": "G35",
+    "T7": "FP",
+    "T8": "G38",
+    "T9": "G36",
+    "T10": "O"
+   }
+  },
+  "L120": {
+   "kind": "ARMS",
+   "page_id": "69b30404983e01f74b987740_00366",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G38",
+    "T2": "G37",
+    "T3": "L35",
+    "T4": "FP",
+    "T5": "L31",
+    "T6": "G36",
+    "T7": "G35",
+    "T8": "AA",
+    "T9": "PRO"
+   }
+  },
+  "L121": {
+   "kind": "ARMS",
+   "page_id": "6991bd4370254d38471e38f8_00044",
+   "lang": "French",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "G36",
+    "T2": "FP",
+    "T3": "PRO",
+    "T4": "G38",
+    "T5": "G35",
+    "T6": "O",
+    "T7": "L31",
+    "T8": "G37",
+    "T9": "AA",
+    "T10": "L35"
+   }
+  },
+  "L122": {
+   "kind": "PLANT",
+   "page_id": "6a0e54e98831ddc9459ad225_00087",
+   "labels": {
+    "T1": "P",
+    "T2": "P_PLANT"
+   },
+   "plant": {
+    "old": "According to the rule that every statement carries certainty, the results mentioned are indeed true.",
+    "new": "According to the rule that every statement carries certainty, the results mentioned are not indeed true.",
+    "how": "\\bare\\b → are not"
+   }
+  },
+  "L123": {
+   "kind": "ARMS",
+   "page_id": "6988a5a067c850b3e65d943e_00339",
+   "lang": "French",
+   "track": "T3",
+   "prod": "FP",
+   "labels": {
+    "T1": "FP",
+    "T2": "O",
+    "T3": "G36",
+    "T4": "G37",
+    "T5": "L31",
+    "T6": "G38",
+    "T7": "L35",
+    "T8": "G35",
+    "T9": "PRO",
+    "T10": "AA"
+   }
+  },
+  "L124": {
+   "kind": "ARMS",
+   "page_id": "8a9eea4b-6be1-4424-9a38-b7a0deb58f95_00256",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G37",
+    "T2": "G38",
+    "T3": "L35",
+    "T4": "PRO",
+    "T5": "FP",
+    "T6": "G35",
+    "T7": "L31",
+    "T8": "AA",
+    "T9": "G36"
+   }
+  },
+  "L125": {
+   "kind": "ARMS",
+   "page_id": "69afd0df775a23a98ee93a30_00420",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G37",
+    "T2": "L35",
+    "T3": "L31",
+    "T4": "O",
+    "T5": "G36",
+    "T6": "G38",
+    "T7": "FP",
+    "T8": "G35",
+    "T9": "AA",
+    "T10": "PRO"
+   }
+  },
+  "L126": {
+   "kind": "ARMS",
+   "page_id": "69b99f111b6f70482c00d17c_00094",
+   "lang": "Pali",
+   "track": "T5-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "AA",
+    "T3": "FP",
+    "T4": "G36",
+    "T5": "L31",
+    "T6": "L35",
+    "T7": "PRO",
+    "T8": "G35",
+    "T9": "G38"
+   }
+  },
+  "L127": {
+   "kind": "ARMS",
+   "page_id": "69c85cf76c6f3cc53c854dca_00117",
+   "lang": "French",
+   "track": "T3",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "L31",
+    "T3": "G36",
+    "T4": "L35",
+    "T5": "AA",
+    "T6": "G38",
+    "T7": "G35",
+    "T8": "O",
+    "T9": "G37",
+    "T10": "FP"
+   }
+  },
+  "L128": {
+   "kind": "ARMS",
+   "page_id": "69c7ac9e92b884e4f8173e9c_00046",
+   "lang": "French",
+   "track": "T3",
+   "prod": "FP",
+   "labels": {
+    "T1": "L35",
+    "T2": "AA",
+    "T3": "G38",
+    "T4": "PRO",
+    "T5": "G37",
+    "T6": "L31",
+    "T7": "G35",
+    "T8": "G36",
+    "T9": "FP"
+   }
+  },
+  "L129": {
+   "kind": "ARMS",
+   "page_id": "69bd9d416120d54bd037457f_00263",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "PRO",
+    "T2": "AA",
+    "T3": "L35",
+    "T4": "L31",
+    "T5": "G38",
+    "T6": "G37",
+    "T7": "FP",
+    "T8": "G36",
+    "T9": "G35"
+   }
+  },
+  "L130": {
+   "kind": "ARMS",
+   "page_id": "69d5ac26d0bd3547a5655542_00560",
+   "lang": "Persian",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "L31",
+    "T3": "G38",
+    "T4": "G36",
+    "T5": "L35",
+    "T6": "PRO",
+    "T7": "FP",
+    "T8": "G37",
+    "T9": "AA"
+   }
+  },
+  "L131": {
+   "kind": "ARMS",
+   "page_id": "6a3c5f05879008ba7e15291d_00045",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "L31",
+    "T3": "PRO",
+    "T4": "AA",
+    "T5": "L35",
+    "T6": "G36",
+    "T7": "G37",
+    "T8": "G38",
+    "T9": "FP"
+   }
+  },
+  "L132": {
+   "kind": "ARMS",
+   "page_id": "698255f1861f3361ae3249e0_00198",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "FP",
+   "labels": {
+    "T1": "L35",
+    "T2": "G35",
+    "T3": "PRO",
+    "T4": "G37",
+    "T5": "G38",
+    "T6": "G36",
+    "T7": "AA",
+    "T8": "FP",
+    "T9": "L31"
+   }
+  },
+  "L133": {
+   "kind": "ARMS",
+   "page_id": "69b6848470c69d645a737f80_00588",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "L35",
+    "T3": "PRO",
+    "T4": "FP",
+    "T5": "G36",
+    "T6": "AA",
+    "T7": "L31",
+    "T8": "G35",
+    "T9": "G38"
+   }
+  },
+  "L134": {
+   "kind": "ARMS",
+   "page_id": "695203a5ab34727b1f041c53_00250",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G35",
+    "T2": "L31",
+    "T3": "FP",
+    "T4": "PRO",
+    "T5": "L35",
+    "T6": "G37",
+    "T7": "G36",
+    "T8": "G38",
+    "T9": "AA"
+   }
+  },
+  "L135": {
+   "kind": "ARMS",
+   "page_id": "69e7490585f786e884a4d1aa_00097",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "AA",
+    "T2": "G36",
+    "T3": "G35",
+    "T4": "G37",
+    "T5": "L35",
+    "T6": "L31",
+    "T7": "G38",
+    "T8": "PRO",
+    "T9": "O",
+    "T10": "FP"
+   }
+  },
+  "L136": {
+   "kind": "ARMS",
+   "page_id": "6909f75fcf28baa1b4cb0f71_00197",
+   "lang": "French",
+   "track": "T3",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "G38",
+    "T3": "AA",
+    "T4": "PRO",
+    "T5": "G37",
+    "T6": "L35",
+    "T7": "L31",
+    "T8": "G36",
+    "T9": "FP",
+    "T10": "O"
+   }
+  },
+  "L137": {
+   "kind": "ARMS",
+   "page_id": "69e8b2642ff2a8dc09e778a1_00439",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "O",
+    "T3": "G35",
+    "T4": "L35",
+    "T5": "G37",
+    "T6": "G38",
+    "T7": "AA",
+    "T8": "PRO",
+    "T9": "FP",
+    "T10": "L31"
+   }
+  },
+  "L138": {
+   "kind": "ARMS",
+   "page_id": "69e7494885f786e884a4e57a_00024",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "PRO",
+    "T3": "AA",
+    "T4": "G35",
+    "T5": "G36",
+    "T6": "L35",
+    "T7": "G37",
+    "T8": "FP",
+    "T9": "L31"
+   }
+  },
+  "L139": {
+   "kind": "ARMS",
+   "page_id": "69e7933580b52390feb18277_00263",
+   "lang": "Arabic",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "L35",
+    "T3": "G38",
+    "T4": "G36",
+    "T5": "FP",
+    "T6": "L31",
+    "T7": "PRO",
+    "T8": "G37",
+    "T9": "AA"
+   }
+  },
+  "L140": {
+   "kind": "ARMS",
+   "page_id": "69c1bac18522835be845a172_00225",
+   "lang": "Hebrew",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "G36",
+    "T3": "G38",
+    "T4": "PRO",
+    "T5": "L31",
+    "T6": "AA",
+    "T7": "G37",
+    "T8": "FP",
+    "T9": "L35"
+   }
+  },
+  "L141": {
+   "kind": "ARMS",
+   "page_id": "6955747af63a757109173a5d_00381",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "FP",
+    "T3": "L35",
+    "T4": "PRO",
+    "T5": "L31",
+    "T6": "AA",
+    "T7": "G36",
+    "T8": "G35",
+    "T9": "G38"
+   }
+  },
+  "L142": {
+   "kind": "ARMS",
+   "page_id": "6953af0577f38f6761bd92a5_00210",
+   "lang": "Aramaic",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "AA",
+    "T2": "G36",
+    "T3": "FP",
+    "T4": "L31",
+    "T5": "G38",
+    "T6": "G35",
+    "T7": "L35",
+    "T8": "PRO",
+    "T9": "G37"
+   }
+  },
+  "L143": {
+   "kind": "ARMS",
+   "page_id": "69e72c75a409200ea79f4976_00100",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "L31",
+    "T3": "G36",
+    "T4": "AA",
+    "T5": "FP",
+    "T6": "L35",
+    "T7": "PRO",
+    "T8": "G38",
+    "T9": "G37"
+   }
+  },
+  "L144": {
+   "kind": "ARMS",
+   "page_id": "69d91e423a50087f7bd9afc5_00214",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "FP",
+    "T3": "L35",
+    "T4": "PRO",
+    "T5": "G37",
+    "T6": "G38",
+    "T7": "AA",
+    "T8": "L31",
+    "T9": "G36"
+   }
+  },
+  "L145": {
+   "kind": "ARMS",
+   "page_id": "69935b692c63944063133f67_00112",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "FP",
+    "T3": "G38",
+    "T4": "AA",
+    "T5": "G36",
+    "T6": "L31",
+    "T7": "L35",
+    "T8": "PRO",
+    "T9": "G37"
+   }
+  },
+  "L146": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00160",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "L35",
+    "T2": "G37",
+    "T3": "AA",
+    "T4": "G35",
+    "T5": "G36",
+    "T6": "L31",
+    "T7": "FP",
+    "T8": "PRO",
+    "T9": "G38"
+   }
+  },
+  "L147": {
+   "kind": "ARMS",
+   "page_id": "69b30114e5d6d64d8e19a3b5_00340",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G38",
+    "T3": "L31",
+    "T4": "AA",
+    "T5": "G36",
+    "T6": "G37",
+    "T7": "FP",
+    "T8": "G35",
+    "T9": "L35"
+   }
+  },
+  "L148": {
+   "kind": "ARMS",
+   "page_id": "6a09ff5dfa20006dbaba9200_00274",
+   "lang": "Pali",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "AA",
+    "T2": "G38",
+    "T3": "G36",
+    "T4": "G35",
+    "T5": "G37",
+    "T6": "PRO",
+    "T7": "L31",
+    "T8": "L35",
+    "T9": "FP"
+   }
+  },
+  "L149": {
+   "kind": "ARMS",
+   "page_id": "69e7934280b52390feb18445_00049",
+   "lang": "Arabic",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "G36",
+    "T3": "FP",
+    "T4": "AA",
+    "T5": "L31",
+    "T6": "L35",
+    "T7": "G38",
+    "T8": "PRO",
+    "T9": "G37"
+   }
+  },
+  "L150": {
+   "kind": "ARMS",
+   "page_id": "69e72c60a409200ea79f46f6_00141",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "FP",
+    "T3": "G35",
+    "T4": "AA",
+    "T5": "L31",
+    "T6": "L35",
+    "T7": "G38",
+    "T8": "G37",
+    "T9": "PRO"
+   }
+  },
+  "L151": {
+   "kind": "ARMS",
+   "page_id": "69b21d9894025df5d2908acf_00250",
+   "lang": "Dutch",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "L31",
+    "T2": "G38",
+    "T3": "FP",
+    "T4": "G35",
+    "T5": "G37",
+    "T6": "AA",
+    "T7": "PRO",
+    "T8": "G36",
+    "T9": "L35"
+   }
+  },
+  "L152": {
+   "kind": "ARMS",
+   "page_id": "69b99ec16ed9e0490990a6f2_00195",
+   "lang": "Pali",
+   "track": "T5-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G36",
+    "T3": "FP",
+    "T4": "L31",
+    "T5": "G37",
+    "T6": "G38",
+    "T7": "L35",
+    "T8": "AA",
+    "T9": "G35"
+   }
+  },
+  "L153": {
+   "kind": "ARMS",
+   "page_id": "6952d05477f38f6761bc511e_00428",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G36",
+    "T2": "AA",
+    "T3": "L31",
+    "T4": "L35",
+    "T5": "FP",
+    "T6": "G38",
+    "T7": "O",
+    "T8": "PRO",
+    "T9": "G35",
+    "T10": "G37"
+   }
+  },
+  "L154": {
+   "kind": "ARMS",
+   "page_id": "699437c36879ff0184cb7381_00164",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "AA",
+    "T2": "FP",
+    "T3": "L31",
+    "T4": "G36",
+    "T5": "G37",
+    "T6": "PRO",
+    "T7": "L35",
+    "T8": "G38",
+    "T9": "G35"
+   }
+  },
+  "L155": {
+   "kind": "ARMS",
+   "page_id": "69906a861cf6ed5fbc8f5d21_00078",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "L35",
+    "T3": "PRO",
+    "T4": "G36",
+    "T5": "FP",
+    "T6": "G35",
+    "T7": "AA",
+    "T8": "G37",
+    "T9": "G38"
+   }
+  },
+  "L156": {
+   "kind": "ARMS",
+   "page_id": "6a08a3a28fae3d3f19b789cd_00022",
+   "lang": "Persian",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "G38",
+    "T3": "G35",
+    "T4": "G37",
+    "T5": "FP",
+    "T6": "L35",
+    "T7": "PRO",
+    "T8": "AA",
+    "T9": "L31"
+   }
+  },
+  "L157": {
+   "kind": "ARMS",
+   "page_id": "69938dfed5a98fd66f42fd32_00217",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "FP",
+    "T3": "L31",
+    "T4": "G38",
+    "T5": "G35",
+    "T6": "G37",
+    "T7": "AA",
+    "T8": "PRO",
+    "T9": "L35"
+   }
+  },
+  "L158": {
+   "kind": "ARMS",
+   "page_id": "69938df1d5a98fd66f42f9be_00068",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "FP",
+    "T3": "G38",
+    "T4": "L31",
+    "T5": "PRO",
+    "T6": "G36",
+    "T7": "AA",
+    "T8": "G35",
+    "T9": "L35"
+   }
+  },
+  "L159": {
+   "kind": "ARMS",
+   "page_id": "69e72c6ba409200ea79f484e_00102",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "L31",
+    "T3": "FP",
+    "T4": "AA",
+    "T5": "O",
+    "T6": "G35",
+    "T7": "G37",
+    "T8": "L35",
+    "T9": "G36",
+    "T10": "G38"
+   }
+  },
+  "L160": {
+   "kind": "ARMS",
+   "page_id": "69bd9d6a6120d54bd0376a04_00060",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "FP",
+    "T2": "L31",
+    "T3": "G35",
+    "T4": "AA",
+    "T5": "PRO",
+    "T6": "G36",
+    "T7": "L35",
+    "T8": "G38",
+    "T9": "G37"
+   }
+  },
+  "L161": {
+   "kind": "ARMS",
+   "page_id": "69e9617a2beefe2f6f72ba14_00253",
+   "lang": "Hebrew",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "PRO",
+    "T3": "G35",
+    "T4": "AA",
+    "T5": "G38",
+    "T6": "L35",
+    "T7": "FP",
+    "T8": "L31",
+    "T9": "G37"
+   }
+  },
+  "L162": {
+   "kind": "ARMS",
+   "page_id": "69ea3e91300d991d0f1d37ee_00092",
+   "lang": "Arabic",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "G35",
+    "T3": "FP",
+    "T4": "L35",
+    "T5": "G37",
+    "T6": "G36",
+    "T7": "G38",
+    "T8": "PRO",
+    "T9": "AA"
+   }
+  },
+  "L163": {
+   "kind": "ARMS",
+   "page_id": "69e7933d80b52390feb1841a_00027",
+   "lang": "Arabic",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "G35",
+    "T3": "L35",
+    "T4": "FP",
+    "T5": "G38",
+    "T6": "AA",
+    "T7": "G37",
+    "T8": "PRO",
+    "T9": "L31"
+   }
+  },
+  "L164": {
+   "kind": "ARMS",
+   "page_id": "69b1df05ca46fa60ea1eee46_00252",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "AA",
+    "T2": "G35",
+    "T3": "G36",
+    "T4": "PRO",
+    "T5": "G38",
+    "T6": "L35",
+    "T7": "L31",
+    "T8": "FP",
+    "T9": "G37"
+   }
+  },
+  "L165": {
+   "kind": "ARMS",
+   "page_id": "69a97a56f3f3d2fb7de27928_00144",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "L35",
+    "T3": "G35",
+    "T4": "L31",
+    "T5": "G38",
+    "T6": "PRO",
+    "T7": "G37",
+    "T8": "AA",
+    "T9": "FP"
+   }
+  },
+  "L166": {
+   "kind": "ARMS",
+   "page_id": "69b99f256ed9e0490990aa8a_00185",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "G37",
+    "T3": "L31",
+    "T4": "PRO",
+    "T5": "AA",
+    "T6": "FP",
+    "T7": "G35",
+    "T8": "G38",
+    "T9": "L35"
+   }
+  },
+  "L167": {
+   "kind": "ARMS",
+   "page_id": "697711607e1d5a07ae945879_00073",
+   "lang": "Hebrew",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G37",
+    "T3": "G35",
+    "T4": "G38",
+    "T5": "L31",
+    "T6": "FP",
+    "T7": "AA",
+    "T8": "G36",
+    "T9": "L35"
+   }
+  },
+  "L168": {
+   "kind": "ARMS",
+   "page_id": "695aa97dbe4023bd34bd6715_00348",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "PRO",
+    "T3": "G38",
+    "T4": "G37",
+    "T5": "L31",
+    "T6": "FP",
+    "T7": "AA",
+    "T8": "G36",
+    "T9": "L35"
+   }
+  },
+  "L169": {
+   "kind": "ARMS",
+   "page_id": "6a100a5cf71729295096f838_00302",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G35",
+    "T3": "G36",
+    "T4": "AA",
+    "T5": "G38",
+    "T6": "L31",
+    "T7": "FP",
+    "T8": "G37",
+    "T9": "L35"
+   }
+  },
+  "L170": {
+   "kind": "ARMS",
+   "page_id": "6a08c5ffe4e4b7b8793e97a9_00024",
+   "lang": "Persian",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "G36",
+    "T3": "G37",
+    "T4": "L35",
+    "T5": "G35",
+    "T6": "AA",
+    "T7": "PRO",
+    "T8": "FP",
+    "T9": "G38"
+   }
+  },
+  "L171": {
+   "kind": "ARMS",
+   "page_id": "6991e171b53cae6bb6024476_00216",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "AA",
+    "T2": "G38",
+    "T3": "PRO",
+    "T4": "G37",
+    "T5": "L31",
+    "T6": "G36",
+    "T7": "L35",
+    "T8": "FP",
+    "T9": "G35"
+   }
+  },
+  "L172": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00076",
+   "lang": "Persian",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "AA",
+    "T3": "L31",
+    "T4": "G37",
+    "T5": "L35",
+    "T6": "G36",
+    "T7": "G38",
+    "T8": "FP",
+    "T9": "G35"
+   }
+  },
+  "L173": {
+   "kind": "ARMS",
+   "page_id": "69b99e9576b9bab2de21a0bc_00280",
+   "lang": "Pali",
+   "track": "T5-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "G35",
+    "T3": "PRO",
+    "T4": "G37",
+    "T5": "L35",
+    "T6": "G36",
+    "T7": "L31",
+    "T8": "FP",
+    "T9": "AA"
+   }
+  },
+  "L174": {
+   "kind": "ARMS",
+   "page_id": "69c1bc6b8522835be8463238_00270",
+   "lang": "Hebrew",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "L35",
+    "T3": "L31",
+    "T4": "FP",
+    "T5": "G35",
+    "T6": "AA",
+    "T7": "PRO",
+    "T8": "G38",
+    "T9": "G36"
+   }
+  },
+  "L175": {
+   "kind": "ARMS",
+   "page_id": "69a5e5e985fa13e734e41cba_00196",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "O",
+    "T3": "L35",
+    "T4": "G35",
+    "T5": "G36",
+    "T6": "PRO",
+    "T7": "AA",
+    "T8": "FP",
+    "T9": "L31",
+    "T10": "G38"
+   }
+  },
+  "L176": {
+   "kind": "ARMS",
+   "page_id": "69935b208e28d8f4c5d3c445_00228",
+   "lang": "Persian",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G36",
+    "T3": "G38",
+    "T4": "G37",
+    "T5": "FP",
+    "T6": "AA",
+    "T7": "G35",
+    "T8": "L31",
+    "T9": "L35"
+   }
+  },
+  "L177": {
+   "kind": "ARMS",
+   "page_id": "6949af986ef4a68b726b7fa9_00358",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G36",
+    "T2": "FP",
+    "T3": "L35",
+    "T4": "L31",
+    "T5": "G35",
+    "T6": "AA",
+    "T7": "G38",
+    "T8": "G37",
+    "T9": "PRO"
+   }
+  },
+  "L178": {
+   "kind": "ARMS",
+   "page_id": "69d5ac07d0bd3547a5654dcc_00313",
+   "lang": "Arabic",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "AA",
+    "T2": "FP",
+    "T3": "G35",
+    "T4": "L35",
+    "T5": "L31",
+    "T6": "PRO",
+    "T7": "G36",
+    "T8": "G38",
+    "T9": "G37",
+    "T10": "O"
+   }
+  },
+  "L179": {
+   "kind": "ARMS",
+   "page_id": "69b21dfa94025df5d290ae35_00066",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "G37",
+    "T3": "G38",
+    "T4": "AA",
+    "T5": "L35",
+    "T6": "L31",
+    "T7": "G35",
+    "T8": "FP",
+    "T9": "PRO"
+   }
+  },
+  "L180": {
+   "kind": "ARMS",
+   "page_id": "6952603cab34727b1f04647b_00194",
+   "lang": "German",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "FP",
+    "T2": "O",
+    "T3": "L35",
+    "T4": "G36",
+    "T5": "G35",
+    "T6": "PRO",
+    "T7": "G38",
+    "T8": "G37",
+    "T9": "L31",
+    "T10": "AA"
+   }
+  },
+  "L181": {
+   "kind": "ARMS",
+   "page_id": "69b525ba6be60460830310a9_00065",
+   "lang": "Dutch",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "PRO",
+    "T2": "L35",
+    "T3": "G37",
+    "T4": "FP",
+    "T5": "L31",
+    "T6": "AA",
+    "T7": "G38",
+    "T8": "G36",
+    "T9": "G35"
+   }
+  },
+  "L182": {
+   "kind": "ARMS",
+   "page_id": "69906485ef12272ffdc93acc_00116",
+   "lang": "French",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "G38",
+    "T2": "L35",
+    "T3": "PRO",
+    "T4": "G36",
+    "T5": "G35",
+    "T6": "G37",
+    "T7": "AA",
+    "T8": "FP",
+    "T9": "L31"
+   }
+  },
+  "L183": {
+   "kind": "ARMS",
+   "page_id": "69e3ff61b142e5dd9d6b0095_00128",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "L31",
+    "T3": "G37",
+    "T4": "G35",
+    "T5": "G36",
+    "T6": "FP",
+    "T7": "G38",
+    "T8": "L35",
+    "T9": "AA"
+   }
+  },
+  "L184": {
+   "kind": "ARMS",
+   "page_id": "69b18a89c4be2cdd0edc810d_00135",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "L35",
+    "T2": "G36",
+    "T3": "PRO",
+    "T4": "G37",
+    "T5": "FP",
+    "T6": "G35",
+    "T7": "G38",
+    "T8": "AA",
+    "T9": "L31"
+   }
+  },
+  "L185": {
+   "kind": "ARMS",
+   "page_id": "699383a750654cbbe2917f1b_00116",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "L35",
+    "T3": "PRO",
+    "T4": "AA",
+    "T5": "G35",
+    "T6": "G37",
+    "T7": "L31",
+    "T8": "FP",
+    "T9": "O",
+    "T10": "G36"
+   }
+  },
+  "L186": {
+   "kind": "ARMS",
+   "page_id": "69f33d92876dd827cbc5c190_00121",
+   "lang": "Persian",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G35",
+    "T3": "G38",
+    "T4": "L31",
+    "T5": "G36",
+    "T6": "G37",
+    "T7": "AA",
+    "T8": "L35",
+    "T9": "FP"
+   }
+  },
+  "L187": {
+   "kind": "ARMS",
+   "page_id": "69c1ba738522835be8458e8d_00072",
+   "lang": "Hebrew",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "AA",
+    "T3": "G37",
+    "T4": "PRO",
+    "T5": "L35",
+    "T6": "L31",
+    "T7": "FP",
+    "T8": "G36",
+    "T9": "G35"
+   }
+  },
+  "L188": {
+   "kind": "ARMS",
+   "page_id": "699249c5a2d53df4853bfdaf_00012",
+   "lang": "Persian",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "L35",
+    "T2": "G38",
+    "T3": "G35",
+    "T4": "PRO",
+    "T5": "AA",
+    "T6": "L31",
+    "T7": "G36",
+    "T8": "G37",
+    "T9": "FP"
+   }
+  },
+  "L189": {
+   "kind": "ARMS",
+   "page_id": "695910f2ecb01322b3068302_00444",
+   "lang": "Spanish",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "L35",
+    "T2": "G38",
+    "T3": "FP",
+    "T4": "G37",
+    "T5": "G36",
+    "T6": "PRO",
+    "T7": "L31",
+    "T8": "AA",
+    "T9": "G35"
+   }
+  },
+  "L190": {
+   "kind": "ARMS",
+   "page_id": "69ade7165426286aa40cf430_00374",
+   "lang": "German",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "AA",
+    "T2": "G36",
+    "T3": "L31",
+    "T4": "FP",
+    "T5": "G35",
+    "T6": "G38",
+    "T7": "PRO",
+    "T8": "L35",
+    "T9": "G37"
+   }
+  },
+  "L191": {
+   "kind": "ARMS",
+   "page_id": "6a09fcbaedaf0f8bef57b987_00024",
+   "lang": "Persian",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "L35",
+    "T2": "PRO",
+    "T3": "G37",
+    "T4": "G38",
+    "T5": "L31",
+    "T6": "G36",
+    "T7": "G35",
+    "T8": "FP",
+    "T9": "AA"
+   }
+  },
+  "L192": {
+   "kind": "ARMS",
+   "page_id": "696925034fa3b04c6de86f6b_00397",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "G35",
+    "T3": "PRO",
+    "T4": "FP",
+    "T5": "L35",
+    "T6": "G37",
+    "T7": "G38",
+    "T8": "AA",
+    "T9": "L31"
+   }
+  },
+  "L193": {
+   "kind": "ARMS",
+   "page_id": "f20894c1-495f-4afe-815b-e8bf3c8938a5_00129",
+   "lang": "Italian",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "G35",
+    "T2": "FP",
+    "T3": "AA",
+    "T4": "G37",
+    "T5": "G38",
+    "T6": "L31",
+    "T7": "G36",
+    "T8": "PRO",
+    "T9": "L35"
+   }
+  },
+  "L194": {
+   "kind": "ARMS",
+   "page_id": "699376f4b0a84a576396231b_00615",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "L31",
+    "T3": "G37",
+    "T4": "FP",
+    "T5": "G35",
+    "T6": "PRO",
+    "T7": "AA",
+    "T8": "L35",
+    "T9": "G36"
+   }
+  },
+  "L195": {
+   "kind": "ARMS",
+   "page_id": "6a3c6192879008ba7e15f12e_00065",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "AA",
+    "T2": "L31",
+    "T3": "G36",
+    "T4": "PRO",
+    "T5": "L35",
+    "T6": "G37",
+    "T7": "G35",
+    "T8": "FP",
+    "T9": "G38"
+   }
+  },
+  "L196": {
+   "kind": "ARMS",
+   "page_id": "699383a150654cbbe29179f7_00189",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "PRO",
+    "T3": "G38",
+    "T4": "G37",
+    "T5": "G36",
+    "T6": "L35",
+    "T7": "AA",
+    "T8": "G35",
+    "T9": "FP"
+   }
+  },
+  "L197": {
+   "kind": "ARMS",
+   "page_id": "69938e35d5a98fd66f430c9c_00153",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "AA",
+    "T3": "G35",
+    "T4": "PRO",
+    "T5": "L35",
+    "T6": "FP",
+    "T7": "L31",
+    "T8": "G38",
+    "T9": "G37"
+   }
+  },
+  "L198": {
+   "kind": "ARMS",
+   "page_id": "69942ffcbb14908bbd9a1123_00426",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "G37",
+    "T3": "FP",
+    "T4": "G36",
+    "T5": "L31",
+    "T6": "L35",
+    "T7": "AA",
+    "T8": "G38",
+    "T9": "PRO"
+   }
+  },
+  "L199": {
+   "kind": "ARMS",
+   "page_id": "699ef9fd15618a982bb1ebd9_00790",
+   "lang": "Hebrew",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "PRO",
+    "T3": "G37",
+    "T4": "G36",
+    "T5": "L31",
+    "T6": "FP",
+    "T7": "AA",
+    "T8": "G38",
+    "T9": "L35"
+   }
+  },
+  "L200": {
+   "kind": "ARMS",
+   "page_id": "6953e58d77f38f6761bf0cfc_00123",
+   "lang": "French",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "G37",
+    "T2": "PRO",
+    "T3": "G35",
+    "T4": "G36",
+    "T5": "FP",
+    "T6": "L35",
+    "T7": "L31",
+    "T8": "G38",
+    "T9": "AA"
+   }
+  },
+  "L201": {
+   "kind": "ARMS",
+   "page_id": "69942bfeb2f6748db4abc97f_00100",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "AA",
+    "T3": "G37",
+    "T4": "G36",
+    "T5": "L35",
+    "T6": "G38",
+    "T7": "FP",
+    "T8": "G35",
+    "T9": "PRO"
+   }
+  },
+  "L202": {
+   "kind": "ARMS",
+   "page_id": "69c1bc708522835be84634e8_00067",
+   "lang": "Hebrew",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "FP",
+    "T3": "G35",
+    "T4": "L35",
+    "T5": "L31",
+    "T6": "G36",
+    "T7": "G37",
+    "T8": "AA",
+    "T9": "PRO"
+   }
+  },
+  "L203": {
+   "kind": "ARMS",
+   "page_id": "69ea0f5913a685002bb8deaf_00030",
+   "lang": "Spanish",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "AA",
+    "T2": "L31",
+    "T3": "G35",
+    "T4": "G37",
+    "T5": "FP",
+    "T6": "G38",
+    "T7": "L35",
+    "T8": "PRO",
+    "T9": "G36"
+   }
+  },
+  "L204": {
+   "kind": "ARMS",
+   "page_id": "69938e765d28b693146d0f99_00064",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "L31",
+    "T3": "G35",
+    "T4": "L35",
+    "T5": "AA",
+    "T6": "G37",
+    "T7": "G36",
+    "T8": "PRO",
+    "T9": "FP"
+   }
+  },
+  "L205": {
+   "kind": "ARMS",
+   "page_id": "69af12fc199e32dea75f8f3a_00847",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "G38",
+    "T3": "L31",
+    "T4": "G36",
+    "T5": "G35",
+    "T6": "PRO",
+    "T7": "AA",
+    "T8": "L35",
+    "T9": "FP"
+   }
+  },
+  "L206": {
+   "kind": "ARMS",
+   "page_id": "69b99e8b6ed9e0490990a274_00179",
+   "lang": "Pali",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "G37",
+    "T3": "AA",
+    "T4": "G36",
+    "T5": "L31",
+    "T6": "PRO",
+    "T7": "G38",
+    "T8": "L35",
+    "T9": "FP"
+   }
+  },
+  "L207": {
+   "kind": "ARMS",
+   "page_id": "6991e1b0339ebc850994ab9e_00551",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "L35",
+    "T2": "L31",
+    "T3": "PRO",
+    "T4": "G36",
+    "T5": "G37",
+    "T6": "G35",
+    "T7": "G38",
+    "T8": "AA",
+    "T9": "FP"
+   }
+  },
+  "L208": {
+   "kind": "ARMS",
+   "page_id": "690989d5cf28baa1b4cae1c9_00159",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "FP",
+   "labels": {
+    "T1": "AA",
+    "T2": "L35",
+    "T3": "G38",
+    "T4": "G37",
+    "T5": "G35",
+    "T6": "O",
+    "T7": "G36",
+    "T8": "PRO",
+    "T9": "FP",
+    "T10": "L31"
+   }
+  },
+  "L209": {
+   "kind": "ARMS",
+   "page_id": "6953e46f77f38f6761bee559_00040",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "L31",
+    "T2": "FP",
+    "T3": "G37",
+    "T4": "G36",
+    "T5": "PRO",
+    "T6": "G38",
+    "T7": "L35",
+    "T8": "G35",
+    "T9": "O",
+    "T10": "AA"
+   }
+  },
+  "L210": {
+   "kind": "ARMS",
+   "page_id": "6956eaf4f23ebf30578dba35_00088",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G35",
+    "T3": "G37",
+    "T4": "G38",
+    "T5": "L31",
+    "T6": "G36",
+    "T7": "AA",
+    "T8": "FP",
+    "T9": "L35"
+   }
+  },
+  "L211": {
+   "kind": "ARMS",
+   "page_id": "69b51dcc47b06ecd58184b91_00073",
+   "lang": "German",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "AA",
+    "T2": "G37",
+    "T3": "L35",
+    "T4": "G38",
+    "T5": "G35",
+    "T6": "FP",
+    "T7": "G36",
+    "T8": "L31",
+    "T9": "PRO"
+   }
+  },
+  "L212": {
+   "kind": "ARMS",
+   "page_id": "6952daa277f38f6761bc6551_00202",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "AA",
+    "T2": "L31",
+    "T3": "PRO",
+    "T4": "G36",
+    "T5": "G35",
+    "T6": "L35",
+    "T7": "FP",
+    "T8": "G37",
+    "T9": "G38"
+   }
+  },
+  "L213": {
+   "kind": "ARMS",
+   "page_id": "699258c28812793469fdd6be_00160",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "FP",
+    "T3": "L31",
+    "T4": "G37",
+    "T5": "AA",
+    "T6": "G38",
+    "T7": "G35",
+    "T8": "PRO",
+    "T9": "L35"
+   }
+  },
+  "L214": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00037",
+   "lang": "Hebrew",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "G38",
+    "T3": "L35",
+    "T4": "O",
+    "T5": "FP",
+    "T6": "PRO",
+    "T7": "G37",
+    "T8": "G36",
+    "T9": "G35",
+    "T10": "AA"
+   }
+  },
+  "L215": {
+   "kind": "ARMS",
+   "page_id": "69e53454d48480a386965c84_00230",
+   "lang": "Arabic",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "L31",
+    "T3": "G38",
+    "T4": "G35",
+    "T5": "L35",
+    "T6": "G36",
+    "T7": "FP",
+    "T8": "AA",
+    "T9": "PRO"
+   }
+  },
+  "L216": {
+   "kind": "ARMS",
+   "page_id": "69b99ec86ed9e0490990a85d_00035",
+   "lang": "Pali",
+   "track": "T5-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G36",
+    "T3": "L35",
+    "T4": "FP",
+    "T5": "L31",
+    "T6": "AA",
+    "T7": "G38",
+    "T8": "G37",
+    "T9": "G35"
+   }
+  },
+  "L217": {
+   "kind": "ARMS",
+   "page_id": "6a3c5f3b879008ba7e153836_00013",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "L31",
+    "T3": "FP",
+    "T4": "AA",
+    "T5": "G36",
+    "T6": "PRO",
+    "T7": "G38",
+    "T8": "G37",
+    "T9": "L35"
+   }
+  },
+  "L218": {
+   "kind": "ARMS",
+   "page_id": "697b07990411081cde5f4e66_00153",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G36",
+    "T3": "G38",
+    "T4": "G35",
+    "T5": "L31",
+    "T6": "FP",
+    "T7": "G37",
+    "T8": "L35",
+    "T9": "AA"
+   }
+  },
+  "L219": {
+   "kind": "ARMS",
+   "page_id": "69b3027416f06ae4cdc55939_00088",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G38",
+    "T2": "G36",
+    "T3": "AA",
+    "T4": "O",
+    "T5": "PRO",
+    "T6": "L31",
+    "T7": "FP",
+    "T8": "G35",
+    "T9": "G37",
+    "T10": "L35"
+   }
+  },
+  "L220": {
+   "kind": "ARMS",
+   "page_id": "6a31c8b74400787ae5a9d7a7_00042",
+   "lang": "Pali",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "AA",
+    "T3": "G38",
+    "T4": "FP",
+    "T5": "L35",
+    "T6": "G37",
+    "T7": "L31",
+    "T8": "G35",
+    "T9": "PRO"
+   }
+  },
+  "L221": {
+   "kind": "ARMS",
+   "page_id": "69e748b385f786e884a4cbdb_00137",
+   "lang": "Persian",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "L31",
+    "T3": "AA",
+    "T4": "PRO",
+    "T5": "G37",
+    "T6": "L35",
+    "T7": "FP",
+    "T8": "G38",
+    "T9": "G36"
+   }
+  },
+  "L222": {
+   "kind": "ARMS",
+   "page_id": "6a0e54e98831ddc9459ad225_00087",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "PRO",
+    "T3": "L31",
+    "T4": "G35",
+    "T5": "L35",
+    "T6": "G38",
+    "T7": "FP",
+    "T8": "G37",
+    "T9": "AA",
+    "T10": "O"
+   }
+  },
+  "L223": {
+   "kind": "ARMS",
+   "page_id": "69e792f880b52390feb17389_00344",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "PRO",
+    "T3": "AA",
+    "T4": "G38",
+    "T5": "FP",
+    "T6": "G35",
+    "T7": "L31",
+    "T8": "O",
+    "T9": "G37",
+    "T10": "L35"
+   }
+  },
+  "L224": {
+   "kind": "ARMS",
+   "page_id": "69dbcc3e0f8c5edf20f484a0_00330",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G35",
+    "T2": "G38",
+    "T3": "L31",
+    "T4": "G37",
+    "T5": "L35",
+    "T6": "FP",
+    "T7": "G36",
+    "T8": "PRO",
+    "T9": "AA"
+   }
+  },
+  "L225": {
+   "kind": "ARMS",
+   "page_id": "6953e59377f38f6761bf0e81_00213",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "L35",
+    "T2": "G36",
+    "T3": "FP",
+    "T4": "L31",
+    "T5": "O",
+    "T6": "PRO",
+    "T7": "AA",
+    "T8": "G38",
+    "T9": "G37",
+    "T10": "G35"
+   }
+  },
+  "L226": {
+   "kind": "ARMS",
+   "page_id": "699438446879ff0184cb8593_00431",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "FP",
+    "T3": "G37",
+    "T4": "G38",
+    "T5": "L35",
+    "T6": "G35",
+    "T7": "G36",
+    "T8": "AA",
+    "T9": "L31"
+   }
+  },
+  "L227": {
+   "kind": "ARMS",
+   "page_id": "699243fabc722ec0ee80b251_00066",
+   "lang": "Hebrew",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "FP",
+    "T2": "PRO",
+    "T3": "G35",
+    "T4": "G37",
+    "T5": "L35",
+    "T6": "G38",
+    "T7": "AA",
+    "T8": "G36",
+    "T9": "L31"
+   }
+  },
+  "L228": {
+   "kind": "ARMS",
+   "page_id": "69c1bb1c8522835be845cf19_00160",
+   "lang": "Hebrew",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G37",
+    "T3": "L35",
+    "T4": "G35",
+    "T5": "FP",
+    "T6": "AA",
+    "T7": "L31",
+    "T8": "G36",
+    "T9": "G38"
+   }
+  },
+  "L229": {
+   "kind": "ARMS",
+   "page_id": "69e72c65a409200ea79f47bd_00106",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "L35",
+    "T2": "FP",
+    "T3": "PRO",
+    "T4": "AA",
+    "T5": "G35",
+    "T6": "G37",
+    "T7": "G38",
+    "T8": "L31",
+    "T9": "G36"
+   }
+  },
+  "L230": {
+   "kind": "ARMS",
+   "page_id": "695594f97bd6d2cd1d61e685_00331",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G37",
+    "T2": "G35",
+    "T3": "G36",
+    "T4": "FP",
+    "T5": "PRO",
+    "T6": "L31",
+    "T7": "AA",
+    "T8": "G38",
+    "T9": "L35"
+   }
+  },
+  "L231": {
+   "kind": "ARMS",
+   "page_id": "6a06657a64d4bf2ce5510151_00636",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G35",
+    "T3": "G37",
+    "T4": "FP",
+    "T5": "L31",
+    "T6": "G36",
+    "T7": "O",
+    "T8": "AA",
+    "T9": "G38",
+    "T10": "L35"
+   }
+  },
+  "L232": {
+   "kind": "ARMS",
+   "page_id": "69920bb1e0a548a13d884da7_00342",
+   "lang": "Hebrew",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "G36",
+    "T3": "FP",
+    "T4": "AA",
+    "T5": "L35",
+    "T6": "L31",
+    "T7": "G35",
+    "T8": "G38",
+    "T9": "PRO"
+   }
+  },
+  "L233": {
+   "kind": "ARMS",
+   "page_id": "6953ea3e1479a63c1108641e_00241",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G35",
+    "T2": "AA",
+    "T3": "PRO",
+    "T4": "FP",
+    "T5": "L35",
+    "T6": "G37",
+    "T7": "L31",
+    "T8": "G36",
+    "T9": "G38"
+   }
+  },
+  "L234": {
+   "kind": "ARMS",
+   "page_id": "697b079711cc8928b55ea3a8_00659",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "FP",
+    "T2": "G38",
+    "T3": "PRO",
+    "T4": "L35",
+    "T5": "G37",
+    "T6": "G36",
+    "T7": "AA",
+    "T8": "G35",
+    "T9": "L31"
+   }
+  },
+  "L235": {
+   "kind": "ARMS",
+   "page_id": "69c1b7a6fe4b8f25b9200a17_00046",
+   "lang": "Arabic",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "FP",
+    "T3": "G35",
+    "T4": "G37",
+    "T5": "L35",
+    "T6": "AA",
+    "T7": "G36",
+    "T8": "G38",
+    "T9": "PRO"
+   }
+  },
+  "L236": {
+   "kind": "ARMS",
+   "page_id": "6a09ff3dfa20006dbaba8b4d_00427",
+   "lang": "Pali",
+   "track": "T5-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "G38",
+    "T3": "FP",
+    "T4": "G37",
+    "T5": "PRO",
+    "T6": "AA",
+    "T7": "L31",
+    "T8": "G35",
+    "T9": "L35"
+   }
+  },
+  "L237": {
+   "kind": "ARMS",
+   "page_id": "69d5ac5f4dc55b8478ddd6b6_00299",
+   "lang": "Arabic",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G37",
+    "T3": "L31",
+    "T4": "O",
+    "T5": "AA",
+    "T6": "G36",
+    "T7": "G35",
+    "T8": "L35",
+    "T9": "FP",
+    "T10": "G38"
+   }
+  },
+  "L238": {
+   "kind": "ARMS",
+   "page_id": "69e7299ba409200ea79f0b56_00211",
+   "lang": "Persian",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "G36",
+    "T3": "O",
+    "T4": "L35",
+    "T5": "PRO",
+    "T6": "G38",
+    "T7": "AA",
+    "T8": "G37",
+    "T9": "FP",
+    "T10": "L31"
+   }
+  },
+  "L239": {
+   "kind": "ARMS",
+   "page_id": "6952e4b477f38f6761bc7d4c_00296",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "L35",
+    "T2": "G35",
+    "T3": "G36",
+    "T4": "AA",
+    "T5": "PRO",
+    "T6": "G37",
+    "T7": "FP",
+    "T8": "L31",
+    "T9": "G38"
+   }
+  },
+  "L240": {
+   "kind": "ARMS",
+   "page_id": "69593274b91a6184ea943873_00315",
+   "lang": "French",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "L35",
+    "T2": "AA",
+    "T3": "G36",
+    "T4": "L31",
+    "T5": "G38",
+    "T6": "G37",
+    "T7": "PRO",
+    "T8": "FP",
+    "T9": "G35"
+   }
+  },
+  "L241": {
+   "kind": "ARMS",
+   "page_id": "69b2ffad5545150b61b4901a_00389",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G35",
+    "T3": "G37",
+    "T4": "G38",
+    "T5": "L35",
+    "T6": "L31",
+    "T7": "G36",
+    "T8": "AA",
+    "T9": "FP"
+   }
+  },
+  "L242": {
+   "kind": "ARMS",
+   "page_id": "6a20331318654bf8e1904192_00049",
+   "lang": "Arabic",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "FP",
+    "T2": "L35",
+    "T3": "G36",
+    "T4": "AA",
+    "T5": "PRO",
+    "T6": "G38",
+    "T7": "G37",
+    "T8": "L31",
+    "T9": "G35"
+   }
+  },
+  "L243": {
+   "kind": "ARMS",
+   "page_id": "69ea3e3a300d991d0f1d29be_00426",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "PRO",
+    "T3": "G35",
+    "T4": "L35",
+    "T5": "G38",
+    "T6": "L31",
+    "T7": "AA",
+    "T8": "G37",
+    "T9": "FP"
+   }
+  },
+  "L244": {
+   "kind": "ARMS",
+   "page_id": "69ac7ee520878c5c9ba51e75_00098",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "PRO",
+    "T2": "AA",
+    "T3": "FP",
+    "T4": "L35",
+    "T5": "L31",
+    "T6": "G36",
+    "T7": "G35",
+    "T8": "G38",
+    "T9": "G37"
+   }
+  },
+  "L245": {
+   "kind": "ARMS",
+   "page_id": "69c7e216295ea01b70c8d7d2_00039",
+   "lang": "Hebrew",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "G36",
+    "T3": "PRO",
+    "T4": "G37",
+    "T5": "L31",
+    "T6": "L35",
+    "T7": "AA",
+    "T8": "G38",
+    "T9": "FP"
+   }
+  },
+  "L246": {
+   "kind": "ARMS",
+   "page_id": "69aebfa1c337b1e6a4d58005_00358",
+   "lang": "Italian",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "G37",
+    "T2": "AA",
+    "T3": "G36",
+    "T4": "G38",
+    "T5": "PRO",
+    "T6": "FP",
+    "T7": "G35",
+    "T8": "L31",
+    "T9": "L35"
+   }
+  },
+  "L247": {
+   "kind": "ARMS",
+   "page_id": "69e7518010ee9075bcdcdaf0_00223",
+   "lang": "Spanish",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "G38",
+    "T2": "AA",
+    "T3": "G37",
+    "T4": "O",
+    "T5": "FP",
+    "T6": "L35",
+    "T7": "PRO",
+    "T8": "L31",
+    "T9": "G35",
+    "T10": "G36"
+   }
+  },
+  "L248": {
+   "kind": "ARMS",
+   "page_id": "6a26bc86d6b178e5aad842b9_00022",
+   "lang": "German",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "FP",
+    "T2": "L31",
+    "T3": "AA",
+    "T4": "G35",
+    "T5": "G37",
+    "T6": "G36",
+    "T7": "G38",
+    "T8": "L35",
+    "T9": "PRO"
+   }
+  },
+  "L249": {
+   "kind": "ARMS",
+   "page_id": "69c1bb998522835be8460578_00001",
+   "lang": "Hebrew",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "PRO",
+    "T3": "L35",
+    "T4": "FP",
+    "T5": "G37",
+    "T6": "G35",
+    "T7": "G38",
+    "T8": "AA",
+    "T9": "G36"
+   }
+  },
+  "L250": {
+   "kind": "ARMS",
+   "page_id": "69920bcde0a548a13d885a90_00940",
+   "lang": "Arabic",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "FP",
+    "T3": "G37",
+    "T4": "G38",
+    "T5": "PRO",
+    "T6": "L35",
+    "T7": "AA",
+    "T8": "L31",
+    "T9": "G35"
+   }
+  },
+  "L251": {
+   "kind": "ARMS",
+   "page_id": "69ade6cc2fcf4ffa86cec233_00093",
+   "lang": "German",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "G35",
+    "T2": "AA",
+    "T3": "L31",
+    "T4": "G38",
+    "T5": "G36",
+    "T6": "L35",
+    "T7": "O",
+    "T8": "G37",
+    "T9": "PRO",
+    "T10": "FP"
+   }
+  },
+  "L252": {
+   "kind": "ARMS",
+   "page_id": "69e8b28a2ff2a8dc09e77ff4_00036",
+   "lang": "Sanskrit",
+   "track": "T5-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "G37",
+    "T3": "L35",
+    "T4": "G36",
+    "T5": "L31",
+    "T6": "G38",
+    "T7": "PRO",
+    "T8": "AA",
+    "T9": "FP"
+   }
+  },
+  "L253": {
+   "kind": "ARMS",
+   "page_id": "697947a145e954e8a877872d_00218",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "L35",
+    "T3": "G36",
+    "T4": "G37",
+    "T5": "L31",
+    "T6": "AA",
+    "T7": "PRO",
+    "T8": "FP",
+    "T9": "G35"
+   }
+  },
+  "L254": {
+   "kind": "ARMS",
+   "page_id": "69e72c7da409200ea79f4a01_00053",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "G35",
+    "T3": "PRO",
+    "T4": "L35",
+    "T5": "G37",
+    "T6": "FP",
+    "T7": "G36",
+    "T8": "AA",
+    "T9": "G38"
+   }
+  },
+  "L255": {
+   "kind": "ARMS",
+   "page_id": "698fb77b6b95eeda7d2d1eaf_00187",
+   "lang": "German",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "L35",
+    "T2": "G37",
+    "T3": "G36",
+    "T4": "L31",
+    "T5": "G38",
+    "T6": "AA",
+    "T7": "G35",
+    "T8": "FP",
+    "T9": "PRO"
+   }
+  },
+  "L256": {
+   "kind": "ARMS",
+   "page_id": "69c86fc56c6f3cc53c85715c_00045",
+   "lang": "German",
+   "track": "T3",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "FP",
+    "T3": "G37",
+    "T4": "L35",
+    "T5": "AA",
+    "T6": "PRO",
+    "T7": "G35",
+    "T8": "G38",
+    "T9": "G36"
+   }
+  },
+  "L257": {
+   "kind": "ARMS",
+   "page_id": "69593291b91a6184ea943bbe_00122",
+   "lang": "French",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "G36",
+    "T2": "G37",
+    "T3": "FP",
+    "T4": "G35",
+    "T5": "L35",
+    "T6": "AA",
+    "T7": "L31",
+    "T8": "PRO",
+    "T9": "G38"
+   }
+  },
+  "L258": {
+   "kind": "ARMS",
+   "page_id": "69942e75d607f8e57e4b93b8_00150",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "G38",
+    "T3": "PRO",
+    "T4": "L35",
+    "T5": "G36",
+    "T6": "AA",
+    "T7": "G37",
+    "T8": "G35",
+    "T9": "FP"
+   }
+  },
+  "L259": {
+   "kind": "ARMS",
+   "page_id": "6a20331018654bf8e19040d0_00057",
+   "lang": "Arabic",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "FP",
+    "T2": "AA",
+    "T3": "G36",
+    "T4": "PRO",
+    "T5": "G35",
+    "T6": "G37",
+    "T7": "G38",
+    "T8": "L31",
+    "T9": "L35"
+   }
+  },
+  "L260": {
+   "kind": "ARMS",
+   "page_id": "6a08a956f74f12876d6e13d3_00194",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "O",
+    "T2": "PRO",
+    "T3": "AA",
+    "T4": "G38",
+    "T5": "G37",
+    "T6": "G36",
+    "T7": "G35",
+    "T8": "L35",
+    "T9": "FP",
+    "T10": "L31"
+   }
+  },
+  "L261": {
+   "kind": "ARMS",
+   "page_id": "69b2f43cf9f1ad2b3b151d0e_00193",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "L35",
+    "T3": "G35",
+    "T4": "G36",
+    "T5": "FP",
+    "T6": "PRO",
+    "T7": "L31",
+    "T8": "AA",
+    "T9": "G38"
+   }
+  },
+  "L262": {
+   "kind": "ARMS",
+   "page_id": "69c79fed92b884e4f817374f_00107",
+   "lang": "Hebrew",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "PRO",
+    "T3": "L35",
+    "T4": "G38",
+    "T5": "G36",
+    "T6": "O",
+    "T7": "L31",
+    "T8": "G37",
+    "T9": "AA",
+    "T10": "FP"
+   }
+  },
+  "L263": {
+   "kind": "ARMS",
+   "page_id": "699062f5ef12272ffdc8e9d5_00505",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G37",
+    "T2": "L35",
+    "T3": "G36",
+    "T4": "FP",
+    "T5": "G38",
+    "T6": "L31",
+    "T7": "PRO",
+    "T8": "AA",
+    "T9": "G35"
+   }
+  },
+  "L264": {
+   "kind": "ARMS",
+   "page_id": "69e729a1a409200ea79f0ca5_00257",
+   "lang": "Persian",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "L31",
+    "T3": "PRO",
+    "T4": "FP",
+    "T5": "AA",
+    "T6": "G37",
+    "T7": "L35",
+    "T8": "G38",
+    "T9": "G35"
+   }
+  },
+  "L265": {
+   "kind": "ARMS",
+   "page_id": "699389f10f04c37dcfa627f0_00160",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "AA",
+    "T2": "L35",
+    "T3": "L31",
+    "T4": "FP",
+    "T5": "G36",
+    "T6": "G35",
+    "T7": "G37",
+    "T8": "G38",
+    "T9": "PRO"
+   }
+  },
+  "L266": {
+   "kind": "ARMS",
+   "page_id": "69920bd5e0a548a13d886144_00793",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "AA",
+    "T2": "L35",
+    "T3": "FP",
+    "T4": "G38",
+    "T5": "G37",
+    "T6": "L31",
+    "T7": "G36",
+    "T8": "PRO",
+    "T9": "G35"
+   }
+  },
+  "L267": {
+   "kind": "ARMS",
+   "page_id": "69920befebe5b0fa6be5d569_00199",
+   "lang": "Hebrew",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "G35",
+    "T3": "L31",
+    "T4": "PRO",
+    "T5": "G36",
+    "T6": "FP",
+    "T7": "AA",
+    "T8": "G37",
+    "T9": "L35"
+   }
+  },
+  "L268": {
+   "kind": "ARMS",
+   "page_id": "6a7de037fd8615d37af98df8_00106",
+   "lang": "Aramaic",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "L35",
+    "T3": "FP",
+    "T4": "L31",
+    "T5": "G35",
+    "T6": "PRO",
+    "T7": "AA",
+    "T8": "G38",
+    "T9": "G36"
+   }
+  },
+  "L269": {
+   "kind": "PLANT",
+   "page_id": "6949af986ef4a68b726b7fa9_00358",
+   "labels": {
+    "T1": "P",
+    "T2": "P_PLANT"
+   },
+   "plant": {
+    "old": "Its erection regarding inclination must be positioned in such a way that, just as a Pythagorean right-angled triangle is described, so it may have its corresponding proportion: that is, let the length be divided into five parts, and let the head of the screw be raised by three of these parts; thus the space from the perpendicular line to the lowest nostrils of the device will be four parts.",
+    "new": "Its erection regarding inclination must be positioned in such a way that, just as a Pythagorean right-angled triangle is not described, so it may have its corresponding proportion: that is, let the length be divided into five parts, and let the head of the screw be raised by three of these parts; thus the space from the perpendicular line to the lowest nostrils of the device will be four parts.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "L270": {
+   "kind": "ARMS",
+   "page_id": "69935b4d8e28d8f4c5d3cfaa_00177",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "G37",
+    "T3": "AA",
+    "T4": "G35",
+    "T5": "G38",
+    "T6": "PRO",
+    "T7": "L31",
+    "T8": "L35",
+    "T9": "FP"
+   }
+  },
+  "L271": {
+   "kind": "ARMS",
+   "page_id": "69de10185cedf736edb851e4_00244",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "AA",
+    "T3": "G35",
+    "T4": "FP",
+    "T5": "G37",
+    "T6": "G36",
+    "T7": "PRO",
+    "T8": "L31",
+    "T9": "L35"
+   }
+  },
+  "L272": {
+   "kind": "ARMS",
+   "page_id": "69e8b2962ff2a8dc09e780a7_00722",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "FP",
+    "T3": "L35",
+    "T4": "PRO",
+    "T5": "G35",
+    "T6": "AA",
+    "T7": "G38",
+    "T8": "L31",
+    "T9": "G36"
+   }
+  },
+  "L273": {
+   "kind": "PLANT",
+   "page_id": "6a3c5f05879008ba7e15291d_00045",
+   "labels": {
+    "T1": "P_PLANT",
+    "T2": "P"
+   },
+   "plant": {
+    "old": "Afflictions of views and cultivation are prevented from manifesting; thus, it is called moving away.",
+    "new": "Afflictions of views and cultivation are prevented from manifesting; thus, it is not called moving away.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "L274": {
+   "kind": "ARMS",
+   "page_id": "6a3c6191879008ba7e15f0b2_00070",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G38",
+    "T3": "G36",
+    "T4": "FP",
+    "T5": "G35",
+    "T6": "L31",
+    "T7": "L35",
+    "T8": "AA",
+    "T9": "G37"
+   }
+  },
+  "L275": {
+   "kind": "ARMS",
+   "page_id": "69aea708971abe996d21b4aa_00471",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "FP",
+    "T2": "O",
+    "T3": "G35",
+    "T4": "G38",
+    "T5": "AA",
+    "T6": "G37",
+    "T7": "L35",
+    "T8": "L31",
+    "T9": "PRO",
+    "T10": "G36"
+   }
+  },
+  "L276": {
+   "kind": "ARMS",
+   "page_id": "69e8b18b2ff2a8dc09e76378_00076",
+   "lang": "French",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "L31",
+    "T2": "G36",
+    "T3": "L35",
+    "T4": "G37",
+    "T5": "AA",
+    "T6": "G38",
+    "T7": "FP",
+    "T8": "G35",
+    "T9": "PRO"
+   }
+  },
+  "L277": {
+   "kind": "ARMS",
+   "page_id": "69c814536c6f3cc53c848191_00054",
+   "lang": "German",
+   "track": "T3",
+   "prod": "FP",
+   "labels": {
+    "T1": "AA",
+    "T2": "G38",
+    "T3": "G35",
+    "T4": "G37",
+    "T5": "L31",
+    "T6": "L35",
+    "T7": "FP",
+    "T8": "PRO",
+    "T9": "G36"
+   }
+  },
+  "L278": {
+   "kind": "ARMS",
+   "page_id": "699068a7249ce014347d715a_00159",
+   "lang": "French",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "G35",
+    "T2": "AA",
+    "T3": "FP",
+    "T4": "G37",
+    "T5": "PRO",
+    "T6": "G36",
+    "T7": "O",
+    "T8": "L35",
+    "T9": "L31",
+    "T10": "G38"
+   }
+  },
+  "L279": {
+   "kind": "ARMS",
+   "page_id": "699246bebc722ec0ee81286a_00231",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "L35",
+    "T3": "FP",
+    "T4": "G35",
+    "T5": "G36",
+    "T6": "AA",
+    "T7": "L31",
+    "T8": "G38",
+    "T9": "PRO"
+   }
+  },
+  "L280": {
+   "kind": "ARMS",
+   "page_id": "6a2198371994d1df1e5e0235_00118",
+   "lang": "Arabic",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "PRO",
+    "T3": "G36",
+    "T4": "L35",
+    "T5": "G38",
+    "T6": "AA",
+    "T7": "L31",
+    "T8": "O",
+    "T9": "G37",
+    "T10": "FP"
+   }
+  },
+  "L281": {
+   "kind": "ARMS",
+   "page_id": "69e8b0fd839ca3f47ec56c17_00048",
+   "lang": "Arabic",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "O",
+    "T3": "G38",
+    "T4": "FP",
+    "T5": "G35",
+    "T6": "L35",
+    "T7": "PRO",
+    "T8": "G36",
+    "T9": "G37",
+    "T10": "AA"
+   }
+  },
+  "L282": {
+   "kind": "ARMS",
+   "page_id": "694f3d6ebe37f451a5324e95_00107",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G37",
+    "T3": "L35",
+    "T4": "AA",
+    "T5": "G38",
+    "T6": "FP",
+    "T7": "L31",
+    "T8": "G36",
+    "T9": "G35",
+    "T10": "O"
+   }
+  },
+  "L283": {
+   "kind": "ARMS",
+   "page_id": "69b2f3bfa9a500a45e5e857c_00165",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "O",
+    "T2": "FP",
+    "T3": "AA",
+    "T4": "PRO",
+    "T5": "G37",
+    "T6": "G35",
+    "T7": "G38",
+    "T8": "L31",
+    "T9": "L35",
+    "T10": "G36"
+   }
+  },
+  "L284": {
+   "kind": "ARMS",
+   "page_id": "699ef9f2c2bcb75dbdbaad92_00102",
+   "lang": "Hebrew",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "AA",
+    "T2": "G37",
+    "T3": "G38",
+    "T4": "G35",
+    "T5": "FP",
+    "T6": "L35",
+    "T7": "L31",
+    "T8": "PRO",
+    "T9": "G36"
+   }
+  },
+  "L285": {
+   "kind": "ARMS",
+   "page_id": "69a6849d7ab725b59be41319_00173",
+   "lang": "Italian",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "O",
+    "T2": "G38",
+    "T3": "L35",
+    "T4": "G37",
+    "T5": "AA",
+    "T6": "G35",
+    "T7": "FP",
+    "T8": "G36",
+    "T9": "PRO",
+    "T10": "L31"
+   }
+  },
+  "L286": {
+   "kind": "ARMS",
+   "page_id": "69ef286585daccce30f2cc10_00302",
+   "lang": "Spanish",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "FP",
+    "T2": "L31",
+    "T3": "G38",
+    "T4": "L35",
+    "T5": "G37",
+    "T6": "AA",
+    "T7": "G36",
+    "T8": "PRO",
+    "T9": "G35"
+   }
+  },
+  "L287": {
+   "kind": "DUP",
+   "page_id": "69e7268ca409200ea79ef73b_00111",
+   "labels": {
+    "T1": "G38",
+    "T2": "P",
+    "T3": "P_DUP"
+   }
+  },
+  "L288": {
+   "kind": "ARMS",
+   "page_id": "69b4cce5d5b6c3815e1a2931_00094",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "L35",
+    "T2": "AA",
+    "T3": "L31",
+    "T4": "G38",
+    "T5": "G36",
+    "T6": "PRO",
+    "T7": "G37",
+    "T8": "FP",
+    "T9": "G35"
+   }
+  },
+  "L289": {
+   "kind": "ARMS",
+   "page_id": "69bd9c796120d54bd036f318_00389",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "L35",
+    "T2": "PRO",
+    "T3": "AA",
+    "T4": "L31",
+    "T5": "G38",
+    "T6": "G37",
+    "T7": "G36",
+    "T8": "G35",
+    "T9": "FP"
+   }
+  },
+  "L290": {
+   "kind": "ARMS",
+   "page_id": "69b2ff9f5545150b61b48a36_00075",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "AA",
+    "T2": "PRO",
+    "T3": "G37",
+    "T4": "G38",
+    "T5": "FP",
+    "T6": "G35",
+    "T7": "L31",
+    "T8": "L35",
+    "T9": "G36"
+   }
+  },
+  "L291": {
+   "kind": "ARMS",
+   "page_id": "69b1de4ea205bd982d8285bd_00396",
+   "lang": "Dutch",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "G38",
+    "T2": "AA",
+    "T3": "G36",
+    "T4": "L35",
+    "T5": "G35",
+    "T6": "FP",
+    "T7": "L31",
+    "T8": "G37",
+    "T9": "PRO"
+   }
+  },
+  "L292": {
+   "kind": "ARMS",
+   "page_id": "69de98b71b234a773e43917f_00095",
+   "lang": "Italian",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "PRO",
+    "T2": "AA",
+    "T3": "G36",
+    "T4": "G38",
+    "T5": "L35",
+    "T6": "FP",
+    "T7": "L31",
+    "T8": "G37",
+    "T9": "O",
+    "T10": "G35"
+   }
+  },
+  "L293": {
+   "kind": "ARMS",
+   "page_id": "69e72674a409200ea79ef3ae_00219",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "G36",
+    "T3": "FP",
+    "T4": "L35",
+    "T5": "AA",
+    "T6": "G37",
+    "T7": "O",
+    "T8": "G38",
+    "T9": "G35",
+    "T10": "PRO"
+   }
+  },
+  "L294": {
+   "kind": "ARMS",
+   "page_id": "69bd00f7f403a9ca2380efbf_00080",
+   "lang": "Pali",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "AA",
+    "T3": "O",
+    "T4": "G35",
+    "T5": "PRO",
+    "T6": "G37",
+    "T7": "G38",
+    "T8": "G36",
+    "T9": "FP",
+    "T10": "L35"
+   }
+  },
+  "L295": {
+   "kind": "ARMS",
+   "page_id": "699388f374305116d72d08a6_00120",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "G35",
+    "T3": "FP",
+    "T4": "PRO",
+    "T5": "G38",
+    "T6": "L35",
+    "T7": "AA",
+    "T8": "L31",
+    "T9": "G36"
+   }
+  },
+  "L296": {
+   "kind": "ARMS",
+   "page_id": "69b63e602a1dde00d5a9d059_00042",
+   "lang": "Persian",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "PRO",
+    "T3": "G38",
+    "T4": "G35",
+    "T5": "L31",
+    "T6": "L35",
+    "T7": "AA",
+    "T8": "G36",
+    "T9": "FP"
+   }
+  },
+  "L297": {
+   "kind": "ARMS",
+   "page_id": "69aebfa4c337b1e6a4d582f3_00161",
+   "lang": "Italian",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "G35",
+    "T2": "G38",
+    "T3": "G37",
+    "T4": "L35",
+    "T5": "G36",
+    "T6": "AA",
+    "T7": "PRO",
+    "T8": "FP",
+    "T9": "L31"
+   }
+  },
+  "L298": {
+   "kind": "ARMS",
+   "page_id": "69e748da49abba5e98281b25_00103",
+   "lang": "Persian",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "G35",
+    "T3": "L35",
+    "T4": "L31",
+    "T5": "FP",
+    "T6": "G37",
+    "T7": "PRO",
+    "T8": "G38",
+    "T9": "AA"
+   }
+  },
+  "L299": {
+   "kind": "ARMS",
+   "page_id": "6da19aeb-aec0-411c-b890-73035c92273d_00038",
+   "lang": "German",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "L31",
+    "T2": "G35",
+    "T3": "AA",
+    "T4": "L35",
+    "T5": "G38",
+    "T6": "PRO",
+    "T7": "FP",
+    "T8": "G37",
+    "T9": "G36"
+   }
+  },
+  "L300": {
+   "kind": "ARMS",
+   "page_id": "69afe1b02aed98f61157f6f6_00130",
+   "lang": "German",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "G35",
+    "T2": "AA",
+    "T3": "G36",
+    "T4": "FP",
+    "T5": "G37",
+    "T6": "G38",
+    "T7": "L31",
+    "T8": "PRO",
+    "T9": "L35"
+   }
+  },
+  "L301": {
+   "kind": "ARMS",
+   "page_id": "6a09fef929abf62080bbd82a_00206",
+   "lang": "Pali",
+   "track": "T5-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "FP",
+    "T2": "G37",
+    "T3": "L31",
+    "T4": "L35",
+    "T5": "G35",
+    "T6": "G38",
+    "T7": "G36",
+    "T8": "PRO",
+    "T9": "AA"
+   }
+  },
+  "L302": {
+   "kind": "ARMS",
+   "page_id": "6955770557e3b773024f2d40_00168",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "FP",
+    "T2": "G35",
+    "T3": "L31",
+    "T4": "G37",
+    "T5": "PRO",
+    "T6": "L35",
+    "T7": "AA",
+    "T8": "G36",
+    "T9": "G38"
+   }
+  },
+  "L303": {
+   "kind": "ARMS",
+   "page_id": "69942a43045dfc482ad76202_00142",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "L31",
+    "T3": "AA",
+    "T4": "G35",
+    "T5": "L35",
+    "T6": "PRO",
+    "T7": "G38",
+    "T8": "FP",
+    "T9": "G37"
+   }
+  },
+  "L304": {
+   "kind": "ARMS",
+   "page_id": "69e7491a85f786e884a4d6f9_00789",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "AA",
+    "T3": "L35",
+    "T4": "L31",
+    "T5": "G35",
+    "T6": "FP",
+    "T7": "PRO",
+    "T8": "G37",
+    "T9": "G36"
+   }
+  },
+  "L305": {
+   "kind": "ARMS",
+   "page_id": "69de989b1b234a773e438e19_00234",
+   "lang": "Italian",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G38",
+    "T3": "FP",
+    "T4": "G36",
+    "T5": "AA",
+    "T6": "G37",
+    "T7": "O",
+    "T8": "L35",
+    "T9": "G35",
+    "T10": "L31"
+   }
+  },
+  "L306": {
+   "kind": "ARMS",
+   "page_id": "69a5b8f3486a857b0587c7b8_00329",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G38",
+    "T2": "AA",
+    "T3": "G37",
+    "T4": "G35",
+    "T5": "PRO",
+    "T6": "L35",
+    "T7": "L31",
+    "T8": "FP",
+    "T9": "G36"
+   }
+  },
+  "L307": {
+   "kind": "ARMS",
+   "page_id": "6990633def12272ffdc907b0_00211",
+   "lang": "Aramaic",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "G35",
+    "T3": "G36",
+    "T4": "AA",
+    "T5": "G37",
+    "T6": "L35",
+    "T7": "PRO",
+    "T8": "FP",
+    "T9": "L31"
+   }
+  },
+  "L308": {
+   "kind": "ARMS",
+   "page_id": "69d13d751c2a66dc094b168d_00129",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "L35",
+    "T2": "L31",
+    "T3": "AA",
+    "T4": "G36",
+    "T5": "G35",
+    "T6": "FP",
+    "T7": "G37",
+    "T8": "PRO",
+    "T9": "G38"
+   }
+  },
+  "L309": {
+   "kind": "ARMS",
+   "page_id": "69e80670fdad300064d9ef9d_00599",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "L35",
+    "T3": "G37",
+    "T4": "L31",
+    "T5": "PRO",
+    "T6": "AA",
+    "T7": "FP",
+    "T8": "G35",
+    "T9": "G36"
+   }
+  },
+  "L310": {
+   "kind": "ARMS",
+   "page_id": "6a3c61db40c88a541d8f091d_00083",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "O",
+    "T3": "G37",
+    "T4": "AA",
+    "T5": "FP",
+    "T6": "PRO",
+    "T7": "G36",
+    "T8": "L35",
+    "T9": "G38",
+    "T10": "L31"
+   }
+  },
+  "L311": {
+   "kind": "ARMS",
+   "page_id": "69e7491f85f786e884a4dc2f_00182",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G37",
+    "T2": "AA",
+    "T3": "L35",
+    "T4": "PRO",
+    "T5": "FP",
+    "T6": "G35",
+    "T7": "L31",
+    "T8": "G36",
+    "T9": "G38",
+    "T10": "O"
+   }
+  },
+  "L312": {
+   "kind": "ARMS",
+   "page_id": "69e7490d85f786e884a4d40e_00180",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "L31",
+    "T3": "G37",
+    "T4": "L35",
+    "T5": "G36",
+    "T6": "FP",
+    "T7": "G35",
+    "T8": "PRO",
+    "T9": "AA"
+   }
+  },
+  "L313": {
+   "kind": "ARMS",
+   "page_id": "69942e97d607f8e57e4b98ab_00030",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "FP",
+    "T2": "G35",
+    "T3": "G38",
+    "T4": "PRO",
+    "T5": "L35",
+    "T6": "AA",
+    "T7": "G37",
+    "T8": "L31",
+    "T9": "G36"
+   }
+  },
+  "L314": {
+   "kind": "ARMS",
+   "page_id": "69dbc9491040d1d5e20a1afd_00087",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G38",
+    "T2": "PRO",
+    "T3": "AA",
+    "T4": "G37",
+    "T5": "L31",
+    "T6": "FP",
+    "T7": "O",
+    "T8": "L35",
+    "T9": "G36",
+    "T10": "G35"
+   }
+  },
+  "L315": {
+   "kind": "ARMS",
+   "page_id": "69c1bae08522835be845b1f6_00067",
+   "lang": "Hebrew",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "L31",
+    "T3": "G35",
+    "T4": "L35",
+    "T5": "G37",
+    "T6": "FP",
+    "T7": "G38",
+    "T8": "AA",
+    "T9": "PRO"
+   }
+  },
+  "L316": {
+   "kind": "ARMS",
+   "page_id": "69a956dc65ddd05bbcd3d160_00285",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "AA",
+    "T2": "FP",
+    "T3": "L35",
+    "T4": "G35",
+    "T5": "G37",
+    "T6": "G36",
+    "T7": "PRO",
+    "T8": "L31",
+    "T9": "G38"
+   }
+  },
+  "L317": {
+   "kind": "ARMS",
+   "page_id": "69bfccd88ab50eb88e8c69fd_00521",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "G37",
+    "T3": "L35",
+    "T4": "PRO",
+    "T5": "G36",
+    "T6": "L31",
+    "T7": "AA",
+    "T8": "G38",
+    "T9": "FP"
+   }
+  },
+  "L318": {
+   "kind": "ARMS",
+   "page_id": "69dbc89d1040d1d5e209ab64_00305",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G35",
+    "T2": "G37",
+    "T3": "PRO",
+    "T4": "G36",
+    "T5": "FP",
+    "T6": "G38",
+    "T7": "AA",
+    "T8": "L31",
+    "T9": "L35"
+   }
+  },
+  "L319": {
+   "kind": "ARMS",
+   "page_id": "69938e26d5a98fd66f4307b0_00136",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "L35",
+    "T3": "G35",
+    "T4": "FP",
+    "T5": "L31",
+    "T6": "G38",
+    "T7": "G36",
+    "T8": "AA",
+    "T9": "G37"
+   }
+  },
+  "L320": {
+   "kind": "ARMS",
+   "page_id": "69528702ab34727b1f04cf65_00153",
+   "lang": "German",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "L35",
+    "T2": "G36",
+    "T3": "PRO",
+    "T4": "G38",
+    "T5": "L31",
+    "T6": "FP",
+    "T7": "G37",
+    "T8": "G35",
+    "T9": "AA"
+   }
+  },
+  "L321": {
+   "kind": "ARMS",
+   "page_id": "69b6e791f8a84d859cde1de2_00473",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "L31",
+    "T2": "G36",
+    "T3": "PRO",
+    "T4": "FP",
+    "T5": "G37",
+    "T6": "G35",
+    "T7": "AA",
+    "T8": "L35",
+    "T9": "G38"
+   }
+  },
+  "L322": {
+   "kind": "PLANT",
+   "page_id": "695262d8ab34727b1f046ade_00167",
+   "labels": {
+    "T1": "P_PLANT",
+    "T2": "P"
+   },
+   "plant": {
+    "old": "After this, it should be dissolved into a most ruby-red water, to which there is no equal.",
+    "new": "After this, it should be dissolved into a most ruby-red water, to which there is not no equal.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "L323": {
+   "kind": "ARMS",
+   "page_id": "69ef3d8c72c1376fdf2b04e9_00105",
+   "lang": "German",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "G38",
+    "T2": "L35",
+    "T3": "FP",
+    "T4": "L31",
+    "T5": "G35",
+    "T6": "PRO",
+    "T7": "AA",
+    "T8": "O",
+    "T9": "G36",
+    "T10": "G37"
+   }
+  },
+  "L324": {
+   "kind": "ARMS",
+   "page_id": "6a3c5f3c879008ba7e153862_00029",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "FP",
+    "T2": "G35",
+    "T3": "L31",
+    "T4": "G37",
+    "T5": "G38",
+    "T6": "AA",
+    "T7": "G36",
+    "T8": "L35",
+    "T9": "PRO"
+   }
+  },
+  "L325": {
+   "kind": "ARMS",
+   "page_id": "69b525b56be6046083030af0_00213",
+   "lang": "Hebrew",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "G38",
+    "T3": "G35",
+    "T4": "G37",
+    "T5": "FP",
+    "T6": "AA",
+    "T7": "PRO"
+   }
+  },
+  "L326": {
+   "kind": "ARMS",
+   "page_id": "69bc7a3f8888fef520b73c1e_00217",
+   "lang": "Pali",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G38",
+    "T3": "O",
+    "T4": "L35",
+    "T5": "G37",
+    "T6": "G35",
+    "T7": "AA",
+    "T8": "L31",
+    "T9": "G36",
+    "T10": "FP"
+   }
+  },
+  "L327": {
+   "kind": "ARMS",
+   "page_id": "6a3c61b5879008ba7e15fd28_00117",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "L35",
+    "T3": "O",
+    "T4": "PRO",
+    "T5": "G37",
+    "T6": "L31",
+    "T7": "G36",
+    "T8": "FP",
+    "T9": "G38",
+    "T10": "AA"
+   }
+  },
+  "L328": {
+   "kind": "ARMS",
+   "page_id": "69905d2a2fd6a0399389f0c0_00180",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "L31",
+    "T2": "L35",
+    "T3": "G37",
+    "T4": "O",
+    "T5": "FP",
+    "T6": "G38",
+    "T7": "G35",
+    "T8": "AA",
+    "T9": "PRO",
+    "T10": "G36"
+   }
+  },
+  "L329": {
+   "kind": "ARMS",
+   "page_id": "6a3c61b3879008ba7e15fc71_00112",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "G36",
+    "T3": "L31",
+    "T4": "G37",
+    "T5": "L35",
+    "T6": "G35",
+    "T7": "PRO",
+    "T8": "FP",
+    "T9": "AA"
+   }
+  },
+  "L330": {
+   "kind": "ARMS",
+   "page_id": "69942b13d607f8e57e4b6bc4_00227",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "G37",
+    "T3": "PRO",
+    "T4": "G35",
+    "T5": "FP",
+    "T6": "L35",
+    "T7": "AA",
+    "T8": "L31",
+    "T9": "G38"
+   }
+  },
+  "L331": {
+   "kind": "ARMS",
+   "page_id": "695262d8ab34727b1f046ade_00167",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "O",
+    "T2": "G35",
+    "T3": "G38",
+    "T4": "FP",
+    "T5": "G36",
+    "T6": "G37",
+    "T7": "PRO",
+    "T8": "L35",
+    "T9": "AA",
+    "T10": "L31"
+   }
+  },
+  "L332": {
+   "kind": "ARMS",
+   "page_id": "6953dd4277f38f6761be739a_00057",
+   "lang": "Arabic",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "G37",
+    "T3": "G36",
+    "T4": "G35",
+    "T5": "FP",
+    "T6": "G38",
+    "T7": "L35",
+    "T8": "AA",
+    "T9": "PRO"
+   }
+  },
+  "L333": {
+   "kind": "ARMS",
+   "page_id": "69e80662fdad300064d9ed7c_00171",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "FP",
+    "T2": "PRO",
+    "T3": "G36",
+    "T4": "AA",
+    "T5": "L31",
+    "T6": "G37",
+    "T7": "L35",
+    "T8": "G38",
+    "T9": "G35"
+   }
+  },
+  "L334": {
+   "kind": "ARMS",
+   "page_id": "69b1da4879939cb4065ddf2e_00044",
+   "lang": "Italian",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "AA",
+    "T2": "PRO",
+    "T3": "L35",
+    "T4": "O",
+    "T5": "G37",
+    "T6": "G36",
+    "T7": "G38",
+    "T8": "FP",
+    "T9": "L31",
+    "T10": "G35"
+   }
+  },
+  "L335": {
+   "kind": "ARMS",
+   "page_id": "69c1bbee8522835be8460bc5_00015",
+   "lang": "Hebrew",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "AA",
+    "T2": "PRO",
+    "T3": "G38",
+    "T4": "G36",
+    "T5": "L31",
+    "T6": "G35",
+    "T7": "L35",
+    "T8": "G37",
+    "T9": "FP"
+   }
+  },
+  "L336": {
+   "kind": "ARMS",
+   "page_id": "698255f1dec6220cc3bf1b25_00154",
+   "lang": "German",
+   "track": "T3",
+   "prod": "FP",
+   "labels": {
+    "T1": "FP",
+    "T2": "G38",
+    "T3": "G36",
+    "T4": "G35",
+    "T5": "G37",
+    "T6": "L31",
+    "T7": "AA",
+    "T8": "O",
+    "T9": "PRO",
+    "T10": "L35"
+   }
+  },
+  "L337": {
+   "kind": "ARMS",
+   "page_id": "69d5ac5f4dc55b8478ddd6b5_00335",
+   "lang": "Aramaic",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "O",
+    "T3": "G37",
+    "T4": "L31",
+    "T5": "L35",
+    "T6": "PRO",
+    "T7": "G35",
+    "T8": "G36",
+    "T9": "AA",
+    "T10": "FP"
+   }
+  },
+  "L338": {
+   "kind": "ARMS",
+   "page_id": "69afd049ae982b9d51d6dd32_00292",
+   "lang": "Persian",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "L35",
+    "T3": "G35",
+    "T4": "G36",
+    "T5": "G38",
+    "T6": "FP",
+    "T7": "L31",
+    "T8": "AA",
+    "T9": "G37"
+   }
+  },
+  "L339": {
+   "kind": "ARMS",
+   "page_id": "69f3285baeeee0fa38c6445e_00006",
+   "lang": "Persian",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "L35",
+    "T3": "PRO",
+    "T4": "L31",
+    "T5": "FP",
+    "T6": "G38",
+    "T7": "G35",
+    "T8": "G37",
+    "T9": "AA"
+   }
+  },
+  "L340": {
+   "kind": "ARMS",
+   "page_id": "69c1bb558522835be845f021_00073",
+   "lang": "Hebrew",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "FP",
+    "T3": "G35",
+    "T4": "L35",
+    "T5": "L31",
+    "T6": "AA",
+    "T7": "G36",
+    "T8": "G38",
+    "T9": "G37"
+   }
+  },
+  "L341": {
+   "kind": "ARMS",
+   "page_id": "69907971b621b177c1af74df_00309",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "PRO",
+    "T3": "FP",
+    "T4": "G37",
+    "T5": "AA",
+    "T6": "L35",
+    "T7": "G35",
+    "T8": "L31",
+    "T9": "G38"
+   }
+  },
+  "L342": {
+   "kind": "ARMS",
+   "page_id": "69944b932aa4c20217a33f12_00232",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "L35",
+    "T3": "PRO",
+    "T4": "G38",
+    "T5": "G36",
+    "T6": "G37",
+    "T7": "L31",
+    "T8": "FP",
+    "T9": "AA"
+   }
+  },
+  "L343": {
+   "kind": "ARMS",
+   "page_id": "69520588ab34727b1f042d0c_00165",
+   "lang": "Italian",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "G36",
+    "T2": "L31",
+    "T3": "AA",
+    "T4": "G37",
+    "T5": "G35",
+    "T6": "G38",
+    "T7": "PRO",
+    "T8": "FP",
+    "T9": "L35"
+   }
+  },
+  "L344": {
+   "kind": "ARMS",
+   "page_id": "6a2198155ce215cb9ac70f53_00209",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G36",
+    "T2": "G38",
+    "T3": "G37",
+    "T4": "G35",
+    "T5": "FP",
+    "T6": "L31",
+    "T7": "PRO",
+    "T8": "AA",
+    "T9": "L35"
+   }
+  },
+  "L345": {
+   "kind": "ARMS",
+   "page_id": "6a09ff43fa20006dbaba8d78_00193",
+   "lang": "Pali",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "FP",
+    "T3": "G36",
+    "T4": "G38",
+    "T5": "PRO",
+    "T6": "G37",
+    "T7": "L31",
+    "T8": "AA",
+    "T9": "L35"
+   }
+  },
+  "L346": {
+   "kind": "ARMS",
+   "page_id": "69b302c23613a84e68067a81_00098",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G37",
+    "T3": "L31",
+    "T4": "G38",
+    "T5": "FP",
+    "T6": "AA",
+    "T7": "G35",
+    "T8": "L35",
+    "T9": "G36"
+   }
+  },
+  "L347": {
+   "kind": "ARMS",
+   "page_id": "69b51e6947b06ecd5818faf1_00131",
+   "lang": "German",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "G37",
+    "T2": "G36",
+    "T3": "G38",
+    "T4": "L31",
+    "T5": "PRO",
+    "T6": "FP",
+    "T7": "L35",
+    "T8": "AA",
+    "T9": "G35"
+   }
+  },
+  "L348": {
+   "kind": "ARMS",
+   "page_id": "69afd4147e835c55c61b4e3d_00089",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "PRO",
+    "T2": "L35",
+    "T3": "G36",
+    "T4": "G37",
+    "T5": "AA",
+    "T6": "FP",
+    "T7": "G38",
+    "T8": "L31",
+    "T9": "G35"
+   }
+  },
+  "L349": {
+   "kind": "ARMS",
+   "page_id": "69b99ef86ed9e0490990a8ac_00079",
+   "lang": "Pali",
+   "track": "T5-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "L35",
+    "T2": "G37",
+    "T3": "AA",
+    "T4": "G38",
+    "T5": "PRO",
+    "T6": "FP",
+    "T7": "G35",
+    "T8": "L31",
+    "T9": "G36"
+   }
+  },
+  "L350": {
+   "kind": "ARMS",
+   "page_id": "69c1bad18522835be845aabc_00251",
+   "lang": "Hebrew",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "L35",
+    "T3": "PRO",
+    "T4": "G35",
+    "T5": "FP",
+    "T6": "G37",
+    "T7": "L31",
+    "T8": "AA",
+    "T9": "G38"
+   }
+  },
+  "L351": {
+   "kind": "ARMS",
+   "page_id": "6990630be7b7642c081de08b_00353",
+   "lang": "Aramaic",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "G37",
+    "T3": "PRO",
+    "T4": "G38",
+    "T5": "G36",
+    "T6": "G35",
+    "T7": "FP",
+    "T8": "AA",
+    "T9": "L35"
+   }
+  },
+  "L352": {
+   "kind": "ARMS",
+   "page_id": "69ea0f6013a685002bb8ded8_00260",
+   "lang": "Spanish",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "G37",
+    "T2": "G38",
+    "T3": "PRO",
+    "T4": "O",
+    "T5": "G36",
+    "T6": "AA",
+    "T7": "L35",
+    "T8": "G35",
+    "T9": "FP",
+    "T10": "L31"
+   }
+  },
+  "L353": {
+   "kind": "ARMS",
+   "page_id": "6a06d39b9a48d5139996355a_00151",
+   "lang": "Italian",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "G35",
+    "T2": "G37",
+    "T3": "L35",
+    "T4": "L31",
+    "T5": "FP",
+    "T6": "G38",
+    "T7": "PRO",
+    "T8": "G36",
+    "T9": "AA"
+   }
+  },
+  "L354": {
+   "kind": "ARMS",
+   "page_id": "69b6fb4a3c7947b468d7aa52_00309",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "AA",
+    "T2": "L35",
+    "T3": "FP",
+    "T4": "G36",
+    "T5": "G35",
+    "T6": "L31",
+    "T7": "G38",
+    "T8": "PRO",
+    "T9": "G37"
+   }
+  },
+  "L355": {
+   "kind": "ARMS",
+   "page_id": "69e9614d2beefe2f6f72addf_00295",
+   "lang": "Arabic",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "FP",
+    "T3": "G36",
+    "T4": "G38",
+    "T5": "G37",
+    "T6": "O",
+    "T7": "AA",
+    "T8": "PRO",
+    "T9": "G35",
+    "T10": "L35"
+   }
+  },
+  "L356": {
+   "kind": "ARMS",
+   "page_id": "69523495ab34727b1f044a45_00063",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "G36",
+    "T2": "G35",
+    "T3": "G38",
+    "T4": "G37",
+    "T5": "AA",
+    "T6": "L31",
+    "T7": "L35",
+    "T8": "FP",
+    "T9": "PRO"
+   }
+  },
+  "L357": {
+   "kind": "ARMS",
+   "page_id": "699047e512d83c216b7e8c3f_00086",
+   "lang": "French",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "FP",
+    "T2": "L31",
+    "T3": "G38",
+    "T4": "G37",
+    "T5": "G36",
+    "T6": "L35",
+    "T7": "AA",
+    "T8": "G35",
+    "T9": "PRO"
+   }
+  },
+  "L358": {
+   "kind": "ARMS",
+   "page_id": "69e8b2ac2ff2a8dc09e7883c_00025",
+   "lang": "Arabic",
+   "track": "T4",
+   "prod": "FP",
+   "labels": {
+    "T1": "FP",
+    "T2": "PRO",
+    "T3": "G37",
+    "T4": "G38",
+    "T5": "AA",
+    "T6": "L31",
+    "T7": "L35",
+    "T8": "G35",
+    "T9": "G36"
+   }
+  },
+  "L359": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00022",
+   "lang": "Chinese",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "G38",
+    "T3": "L31",
+    "T4": "G37",
+    "T5": "L35",
+    "T6": "AA",
+    "T7": "G36",
+    "T8": "PRO",
+    "T9": "FP"
+   }
+  },
+  "L360": {
+   "kind": "ARMS",
+   "page_id": "69d5abbf4dc55b8478ddcfa6_00105",
+   "lang": "Arabic",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "G37",
+    "T3": "L31",
+    "T4": "L35",
+    "T5": "AA",
+    "T6": "PRO",
+    "T7": "G38",
+    "T8": "G36",
+    "T9": "FP"
+   }
+  },
+  "L361": {
+   "kind": "ARMS",
+   "page_id": "6a2032d218654bf8e1903805_00019",
+   "lang": "Arabic",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "PRO",
+    "T3": "G38",
+    "T4": "FP",
+    "T5": "G37",
+    "T6": "G35",
+    "T7": "L31",
+    "T8": "AA",
+    "T9": "L35"
+   }
+  },
+  "L362": {
+   "kind": "ARMS",
+   "page_id": "6a22d6e168f6a1498e2ffe6a_00160",
+   "lang": "German",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "G36",
+    "T2": "G38",
+    "T3": "G37",
+    "T4": "AA",
+    "T5": "PRO",
+    "T6": "L31",
+    "T7": "FP",
+    "T8": "L35",
+    "T9": "G35"
+   }
+  },
+  "L363": {
+   "kind": "ARMS",
+   "page_id": "69905e372fd6a039938a1793_00028",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "L35",
+    "T2": "G35",
+    "T3": "AA",
+    "T4": "PRO",
+    "T5": "FP",
+    "T6": "L31",
+    "T7": "G37",
+    "T8": "G38",
+    "T9": "G36"
+   }
+  },
+  "L364": {
+   "kind": "ARMS",
+   "page_id": "69aff9af3346b1fdd94b33c9_00265",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "L35",
+    "T2": "O",
+    "T3": "PRO",
+    "T4": "G36",
+    "T5": "G37",
+    "T6": "G35",
+    "T7": "L31",
+    "T8": "FP",
+    "T9": "AA",
+    "T10": "G38"
+   }
+  },
+  "L365": {
+   "kind": "ARMS",
+   "page_id": "69b21c6c429e087c6f8646f6_00223",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "PRO",
+    "T2": "G38",
+    "T3": "FP",
+    "T4": "G36",
+    "T5": "L31",
+    "T6": "L35",
+    "T7": "G37",
+    "T8": "G35",
+    "T9": "AA"
+   }
+  },
+  "L366": {
+   "kind": "ARMS",
+   "page_id": "69b99eea76b9bab2de21a3d4_00076",
+   "lang": "Pali",
+   "track": "T5-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "G38",
+    "T3": "G36",
+    "T4": "PRO",
+    "T5": "FP",
+    "T6": "G37",
+    "T7": "G35",
+    "T8": "AA",
+    "T9": "L35"
+   }
+  },
+  "L367": {
+   "kind": "ARMS",
+   "page_id": "69e792379adaf7b110e3a437_00146",
+   "lang": "German",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "AA",
+    "T2": "FP",
+    "T3": "O",
+    "T4": "G37",
+    "T5": "G35",
+    "T6": "L35",
+    "T7": "G38",
+    "T8": "PRO",
+    "T9": "L31",
+    "T10": "G36"
+   }
+  },
+  "L368": {
+   "kind": "ARMS",
+   "page_id": "6a26c3beaad44c98627cb64a_00013",
+   "lang": "German",
+   "track": "T3",
+   "prod": "L31",
+   "labels": {
+    "T1": "G38",
+    "T2": "FP",
+    "T3": "G36",
+    "T4": "G37",
+    "T5": "AA",
+    "T6": "L31",
+    "T7": "PRO",
+    "T8": "G35",
+    "T9": "L35"
+   }
+  },
+  "L369": {
+   "kind": "ARMS",
+   "page_id": "69b99f0b6ed9e0490990a92b_00094",
+   "lang": "Pali",
+   "track": "T5-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G38",
+    "T2": "PRO",
+    "T3": "G36",
+    "T4": "L35",
+    "T5": "FP",
+    "T6": "G37",
+    "T7": "L31",
+    "T8": "AA",
+    "T9": "G35"
+   }
+  },
+  "L370": {
+   "kind": "ARMS",
+   "page_id": "69ef251c85daccce30f2b1f2_00309",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "O",
+    "T2": "G38",
+    "T3": "G37",
+    "T4": "FP",
+    "T5": "AA",
+    "T6": "G36",
+    "T7": "G35",
+    "T8": "L35",
+    "T9": "PRO",
+    "T10": "L31"
+   }
+  },
+  "L371": {
+   "kind": "ARMS",
+   "page_id": "69e9c962625ec74a14473399_00093",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "PRO",
+    "T2": "FP",
+    "T3": "L35",
+    "T4": "G35",
+    "T5": "G36",
+    "T6": "L31",
+    "T7": "G37",
+    "T8": "AA",
+    "T9": "G38"
+   }
+  },
+  "L372": {
+   "kind": "ARMS",
+   "page_id": "69e7538b095c302d3fddb092_00355",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "G36",
+    "T2": "L31",
+    "T3": "PRO",
+    "T4": "FP",
+    "T5": "G37",
+    "T6": "G35",
+    "T7": "L35",
+    "T8": "AA",
+    "T9": "G38"
+   }
+  },
+  "L373": {
+   "kind": "ARMS",
+   "page_id": "69e7267ca409200ea79ef51d_00353",
+   "lang": "Sanskrit",
+   "track": "T5",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "G38",
+    "T3": "G37",
+    "T4": "G36",
+    "T5": "L31",
+    "T6": "PRO",
+    "T7": "AA",
+    "T8": "FP",
+    "T9": "L35"
+   }
+  },
+  "L374": {
+   "kind": "ARMS",
+   "page_id": "69d5ac2ed0bd3547a5655830_00063",
+   "lang": "Persian",
+   "track": "T4-topup",
+   "prod": "FP",
+   "labels": {
+    "T1": "G35",
+    "T2": "L35",
+    "T3": "G37",
+    "T4": "L31",
+    "T5": "AA",
+    "T6": "FP",
+    "T7": "G38",
+    "T8": "G36",
+    "T9": "PRO"
+   }
+  },
+  "L375": {
+   "kind": "ARMS",
+   "page_id": "69942a7f045dfc482ad772e7_00291",
+   "lang": "Greek",
+   "track": "T2",
+   "prod": "FP",
+   "labels": {
+    "T1": "L31",
+    "T2": "G36",
+    "T3": "G37",
+    "T4": "AA",
+    "T5": "L35",
+    "T6": "FP",
+    "T7": "PRO",
+    "T8": "G35",
+    "T9": "G38"
+   }
+  },
+  "L376": {
+   "kind": "ARMS",
+   "page_id": "6952872cab34727b1f04d284_00499",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "L31",
+   "labels": {
+    "T1": "FP",
+    "T2": "AA",
+    "T3": "PRO",
+    "T4": "G35",
+    "T5": "L31",
+    "T6": "L35",
+    "T7": "G37"
+   }
+  },
+  "L377": {
+   "kind": "ARMS",
+   "page_id": "698255ef792a04eb812c4860_00190",
+   "lang": "Latin",
+   "track": "T1",
+   "prod": "FP",
+   "labels": {
+    "T1": "L35",
+    "T2": "PRO",
+    "T3": "AA",
+    "T4": "G36",
+    "T5": "G35",
+    "T6": "G38",
+    "T7": "L31",
+    "T8": "G37",
+    "T9": "FP"
+   }
+  }
+ },
+ "refused_after_retry": {
+  "G36": [
+   "6952872cab34727b1f04d284_00499",
+   "69b525b56be6046083030af0_00213"
+  ],
+  "G38": [
+   "6952872cab34727b1f04d284_00499"
+  ],
+  "FP": [
+   "69c1bdc98522835be846bb3a_00032"
+  ],
+  "L35": [
+   "69b525b56be6046083030af0_00213"
+  ]
+ }
+}

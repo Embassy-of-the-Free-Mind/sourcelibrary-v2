@@ -1,0 +1,34 @@
+{
+ "id": "69b2ff0ea1a4246ddb45adbb_00062",
+ "image_legible": true,
+ "ocr_word_errors": 0,
+ "ocr_words_approx": 215,
+ "ocr_errors": [],
+ "page_cause": "translation",
+ "causes": [
+  {
+   "finding": "Reversal: 'not rashly revoke laws that have fallen into disuse' for 'haud temere reuocet' (revive)",
+   "cause": "translation",
+   "image": "leges abrogatas consuetudine haud temere reuocet",
+   "ocr": "leges abrogatas con suetudine haud temere reuocet",
+   "english": "He should not rashly revoke laws that have fallen into disuse"
+  },
+  {
+   "finding": "'never to have more than a thousand pounds of gold' drops 'uno tempore'",
+   "cause": "translation",
+   "image": "nunq̃ se uno tempore supra mille auri pondo",
+   "ocr": "nunq̄ se uno tempore supra mille auri pondo",
+   "english": "never to have more than a thousand pounds of gold"
+  },
+  {
+   "finding": "marginal note 'Mira lex Macarensium' absent from the English",
+   "cause": "translation",
+   "image": "Mira lex Macarẽsiũ (margin)",
+   "ocr": "<margin>Mira lex Macarēsiū</margin>",
+   "english": "(omitted)"
+  }
+ ],
+ "share_of_served_error_from_ocr": "none",
+ "fixed_transcription_written": false,
+ "note": "Clean 1518 Froben roman; OCR matches the image word for word (abbreviations kept as printed but unambiguous: q̄=quam, ū=um). 'reuocet' is plainly printed; the English false friend 'revoke' is the translator's."
+}

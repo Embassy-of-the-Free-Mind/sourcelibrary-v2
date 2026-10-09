@@ -27,25 +27,28 @@ export const LANE_STEPS = ['archive', 'ocr', 'translate', 'enrich', 'images', 'a
 /**
  * Pause keys that actually stop something, and the source test that proves it. `paused` is the global
  * switch (processing_control.paused; the scheduler also refuses to launch anything while it is set, and
- * selective-unpause scopes it). `paused_phases` holds NAMES for the two workers that read names and phase
- * NUMBERS for the orchestrator — they are different keys, and the docs had them mixed (#5484).
+ * selective-unpause scopes it). The step keys are the vocabulary of scripts/lib/pause.mjs (#5492): one
+ * word per step, which every lane of that step asks through `isPaused(control, '<key>')`, a named brake
+ * that does (verified by scripts/audit/spend-perimeter.mjs), or — in the orchestrator — `shouldRun(N)`
+ * for a phase that pause.mjs PHASE_PAUSE_KEY maps to the key. Legacy `paused_phases` entries
+ * ('translation', 'enrichment', 1.5, 2, 4, 6, 7, 8) are aliases of these keys in pause.mjs, so an old
+ * entry still stops what it stopped. Pure data here: the admin page imports this file.
  */
 export const PAUSE_KEYS = {
   paused: { test: /shouldBypassPause\(|control\?*\.paused\b/, doc: 'processing_control.paused (global)' },
-  'paused_phases:translation': { test: /paused_phases\?*\.includes\('translation'\)/, doc: "paused_phases: ['translation'] — translate-worker" },
-  'paused_phases:enrichment': { test: /paused_phases\?*\.includes\('enrichment'\)/, doc: "paused_phases: ['enrichment'] — enrich-worker" },
-  'paused_phases:1.5': { test: /shouldRun\(1\.5\)/, doc: 'paused_phases: [1.5] — orchestrator preview OCR' },
-  'paused_phases:2': { test: /shouldRun\(2\)/, doc: 'paused_phases: [2] — orchestrator OCR submit' },
-  'paused_phases:4': { test: /shouldRun\(4\)/, doc: 'paused_phases: [4] — orchestrator translation dispatch + gap-fill' },
-  'paused_phases:8': { test: /shouldRun\(8\)/, doc: 'paused_phases: [8] — orchestrator image extraction (also stops 8.5)' },
+  archive: { test: /isPaused\([^)]*'archive'\)|shouldRun\(1\)/, doc: "paused_phases: ['archive'] — archivers + orchestrator Phase 1" },
+  ocr: { test: /isPaused\([^)]*'ocr'\)|shouldRun\((?:1\.25|1\.45|1\.5|1\.6|2|3\.7)\)/, doc: "paused_phases: ['ocr'] — every OCR submit (orchestrator 1.25/1.45/1.5/1.6/2/3.7)" },
+  translate: { test: /isPaused\([^)]*'translate'\)|translateSubmitBrake\(|translatePausedMidRun\(|shouldRun\(4\)/, doc: "paused_phases: ['translate'] — realtime worker, chained + seam batch lanes, orchestrator Phase 4" },
+  enrich: { test: /isPaused\([^)]*'enrich'\)|enrichPauseMode\(|shouldRun\((?:6|7)\)/, doc: "paused_phases: ['enrich'] — enrich-worker (realtime skips; --batch collects, submits nothing), orchestrator 6/7" },
+  images: { test: /isPaused\([^)]*'images'\)|shouldRun\(8\)/, doc: "paused_phases: ['images'] — image-extract-worker + orchestrator Phase 8 dispatch" },
 };
 
 /**
- * Pause NAMES the docs (pipeline-phases.md, pipeline.md, memory/pipeline-ops.md) tell an operator to set
- * and that no live lane reads — only the archived Vercel routes did. Setting one pauses nothing. The
- * registry test fails if a lane ever claims one; to pause OCR use paused_phases: [1.5, 2], images [8].
+ * Pause NAMES the docs once told an operator to set and that no live lane reads — only the archived
+ * Vercel routes did. Setting one pauses nothing (pause.mjs reports it as an unknown entry). The registry
+ * test fails if a lane ever claims one. ('ocr' and 'images' were on this list until #5492 made them keys.)
  */
-export const DEAD_PAUSE_NAMES = ['ocr', 'images', 'chapters', 'classification', 'transliteration'];
+export const DEAD_PAUSE_NAMES = ['chapters', 'classification', 'transliteration'];
 
 /** A hold check the test can see in source: the marker filter, or a read of the marker. */
 export const HOLD_MARKER_TEST = /NOT_HELD|isHeld\(|holdViolation\(|pipeline_auto\.hold/;
@@ -77,11 +80,11 @@ export const LANES = [
   // ── archive ────────────────────────────────────────────────────────────────────────────────────
   { name: 'archive-bulk', serves: 'archive', files: ['scripts/workers/archive-bulk.mjs'],
     selects: 'IA books, not bulk_unsuitable, first translations first', trigger: 'scheduler, 10 min',
-    budget: 'unmetered', respectsHold: false, pause: 'paused',
+    budget: 'unmetered', respectsHold: false, pause: 'archive',
     reason: 'Fetches page images to R2 and spends no model money. A hold keeps a book out of the paid lanes; a held book still needs its images preserved (preservation-policy.md). Adding NOT_HELD would change selection — not done in #5480.' },
   { name: 'archive-ocr', serves: 'archive', files: ['scripts/workers/archive-ocr.mjs'],
     selects: 'priority / IIIF / warehouse books', trigger: 'scheduler, 10 min',
-    budget: 'unmetered', respectsHold: false, pause: 'paused',
+    budget: 'unmetered', respectsHold: false, pause: 'archive',
     reason: 'Same as archive-bulk: image fetching only, no model spend; a held book still needs its images.' },
   { name: 'archive-hosts', serves: 'archive',
     files: ['scripts/workers/archive-iiif-local.mjs', 'scripts/workers/archive-erara.mjs', 'scripts/workers/archive-harvard.mjs', 'scripts/workers/archive-gallica.mjs'],
@@ -101,10 +104,10 @@ export const LANES = [
   // ── ocr ────────────────────────────────────────────────────────────────────────────────────────
   { name: 'orchestrator-preview-ocr', serves: 'ocr', files: [ORCH],
     selects: 'first 25 pages of newly archived books', trigger: 'scheduler, 5 min (Phase 1.5)',
-    budget: 'dial', respectsHold: 'marker', pause: 'paused_phases:1.5' },
+    budget: 'dial', respectsHold: 'marker', pause: 'ocr' },
   { name: 'orchestrator-ocr', serves: 'ocr', files: [ORCH, 'scripts/workers/batch-collector.mjs'],
     selects: '`archive_complete`, priority then `_priority`', trigger: 'scheduler, 5 min (Phase 2) / collector 10 min',
-    budget: 'dial', respectsHold: 'marker', pause: 'paused_phases:2' },
+    budget: 'dial', respectsHold: 'marker', pause: 'ocr' },
   { name: 'manual-ocr', serves: 'ocr',
     files: ['scripts/batch/bulk-reocr-local.mjs', 'scripts/batch/realtime-ocr.mjs', 'scripts/maintenance/reocr-launch-books.mjs', 'scripts/batch/bulk-reocr-opened-books.mjs'],
     selects: 'named book lists', trigger: 'manual',
@@ -123,15 +126,15 @@ export const LANES = [
   // ── translate ──────────────────────────────────────────────────────────────────────────────────
   { name: 'translate-worker', serves: 'translate', files: ['scripts/workers/translate-worker.mjs'],
     selects: '`processing_priority` ≥ 90 (realtime)', trigger: 'scheduler, 2 min',
-    budget: 'dial (scoped)', respectsHold: 'marker', pause: 'paused_phases:translation' },
+    budget: 'dial (scoped)', respectsHold: 'marker', pause: 'translate' },
   { name: 'translate-chained', serves: 'translate',
     files: ['scripts/workers/translate-batch-worker.mjs', 'scripts/lib/translate-batch-chained.mjs'],
     selects: 'priority < 90, visible, not English (auto-enrolled or approved runs)', trigger: 'cron, 5 min ticker + hourly enrol',
-    budget: 'envelope', respectsHold: 'marker', pause: null,
-    reason: 'No pause check: an approved chained run keeps its rounds going through a pause. To stop it, park the run (phase `parked`) or close the envelope.', gap: true },
+    budget: 'envelope', respectsHold: 'marker', pause: 'translate',
+    reason: 'Every submit (each round, queued runs included) asks translateSubmitBrake; a paused run waits READY and resumes on the next tick. Submitted rounds keep being collected under a pause — they are paid (#5492).' },
   { name: 'orchestrator-translate', serves: 'translate', files: [ORCH],
     selects: 'Phase 4 fresh dispatch (`ocr_complete`) and gap-fill (`partialBooks`, finished books under 90% of ocr − blank)', trigger: 'scheduler, 5 min (Phase 4)',
-    budget: 'dial', respectsHold: 'marker', pause: 'paused_phases:4' },
+    budget: 'dial', respectsHold: 'marker', pause: 'translate' },
   { name: 'manual-translate', serves: 'translate',
     files: ['scripts/batch/realtime-translate.mjs', 'scripts/batch/retranslate-stale.mjs', 'scripts/lib/translate-batch-seam.mjs'],
     selects: 'named books', trigger: 'manual',
@@ -145,21 +148,25 @@ export const LANES = [
   // ── enrich ─────────────────────────────────────────────────────────────────────────────────────
   { name: 'enrich-worker', serves: 'enrich', files: ['scripts/workers/enrich-worker.mjs'],
     selects: '`translate_complete` → summary, chapters, quality, collections', trigger: 'scheduler, 5 min',
-    budget: 'dial (scoped)', respectsHold: 'marker', pause: 'paused_phases:enrichment' },
+    budget: 'dial (scoped)', respectsHold: 'marker', pause: 'enrich' },
+  { name: 'enrich-worker-batch', serves: 'enrich', files: ['scripts/workers/enrich-worker.mjs', 'scripts/workers/lib/enrich-batch-lane.mjs'],
+    selects: 'live translated books past the realtime statuses with no summary / index / chapters (#2141), reads then translated pages', trigger: 'cron, 15 min collect + 6 h admit',
+    budget: 'dial (scoped)', respectsHold: 'marker', pause: 'enrich' },
 
   // ── images ─────────────────────────────────────────────────────────────────────────────────────
   { name: 'orchestrator-images', serves: 'images', files: [ORCH],
     selects: '`chapters_complete` (Batch API, Phase 8)', trigger: 'scheduler, 5 min',
-    budget: 'dial (scoped)', respectsHold: 'marker', pause: 'paused_phases:8' },
+    budget: 'dial (scoped)', respectsHold: 'marker', pause: 'images' },
   { name: 'image-extract-worker', serves: 'images', files: ['scripts/workers/image-extract-worker.mjs'],
     selects: '`chapters_complete`, plus a catch-up over `complete` / statusless books; `--books-file` lists', trigger: 'scheduler',
-    budget: 'dial (scoped)', respectsHold: 'status', pause: 'paused',
+    budget: 'dial (scoped)', respectsHold: 'status', pause: 'images',
     reason: 'Selects by status, so held books (status `held`) are never picked — except through `--books-file`, which runs whatever list it is given. That path has no NOT_HELD filter.', gap: true },
 
   // ── any (collectors, bookkeeping, admin clicks) ────────────────────────────────────────────────
   { name: 'batch-collector', serves: 'any', files: ['scripts/workers/batch-collector.mjs'],
     selects: 'open batch jobs (OCR, translation, images)', trigger: 'scheduler, 10 min',
-    budget: 'committed', respectsHold: 'marker', pause: 'paused' },
+    budget: 'committed', respectsHold: 'marker', pause: null,
+    reason: 'Collects output already paid for and submits nothing, so no pause stops it (#5496 review N1): Gemini expires a batch at 48 h and Phase 8.5 would re-dispatch the book (#4839). Pauses stop submission, upstream.' },
   { name: 'collect-batch-results', serves: 'any', files: ['scripts/batch/collect-batch-results.mjs'],
     selects: 'open Gemini batch jobs', trigger: 'cron, 30 min',
     budget: 'committed', respectsHold: false, pause: null,
@@ -178,6 +185,7 @@ export const LANES = [
  * metadata, display fields, counters or markers, and never advance a book's next step. Each says why.
  */
 export const EXEMPT = [
+  { file: 'scripts/maintenance/backfill-printed-page-4291.mjs', reason: 'metadata: pages.printed_page fitted per book, no step work (#4291); daily cron --ocr-since=26h' },
   { file: 'scripts/workers/sync-worker.mjs', reason: 'the stamp writer: counters, translation_state and pipeline_next (#5477); does no step work' },
   { file: 'scripts/workers/scheduler.mjs', reason: 'launcher; its stalled-image-job drain clears job bookkeeping, not steps' },
   { file: 'scripts/analysis/assign-work-slugs.mjs', reason: 'metadata: books.work_slug' },
@@ -196,7 +204,10 @@ export const EXEMPT = [
   { file: 'scripts/workers/backfill-hires-gallery.mjs', reason: 'display: gallery hi-res fields' },
   { file: 'scripts/workers/generate-thumbnails.mjs', reason: 'display: page thumbnails' },
   { file: 'scripts/audit/pipeline-hold-drift.mjs', reason: 'read-only audit; imports hold/chained constants whose modules also export writers' },
+  { file: 'scripts/workers/sync-books-catalog.mjs', reason: 'mirror: reads books, writes only the Supabase books_catalog mirror (#5288); imports catalogTranslationColumns() from page-counts.mjs, whose module also exports writers' },
+  { file: 'scripts/maintenance/daily-digest.mjs', reason: 'read-only digest (#5441): reads usage stores, runs and logs, sends one message; imports RUNS_COLLECTION from translate-batch-seam.mjs, whose module also exports writers' },
   { file: 'scripts/audit/pipeline-next-step-audit.mjs', reason: 'read-only audit of books.pipeline_next (#5478); writes only its ops_reports row; imports nextStep() from pipeline-next-step.mjs, whose module also exports writers' },
+  { file: 'scripts/audit/routing-drift.mjs', reason: 'read-only audit of DECISIONS.md against the routers (#5871); opens no database; imports the translation router from translate-core.mjs, whose module also exports writers' },
   { file: 'scripts/maintenance/prewarm-browse.mjs', reason: 'read-only; imports read helpers from page-counts.mjs' },
   { file: 'scripts/workers/enrichment-snapshot.mjs', reason: 'read-only snapshot; imports read helpers from page-counts.mjs' },
   { file: 'scripts/workers/stage-coverage-snapshot.mjs', reason: 'read-only snapshot; imports read helpers from page-counts.mjs' },

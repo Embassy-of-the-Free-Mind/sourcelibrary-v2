@@ -1,0 +1,10 @@
+{
+ "seed": 5982,
+ "n": 450,
+ "live_books_with_translation": 22928,
+ "tibetan_books_excluded": 1329,
+ "pool": 21599,
+ "books_tried": 450,
+ "books_without_a_page_holding_both_texts": 0,
+ "drawn_at": "2026-10-06T13:39:57.480Z"
+}

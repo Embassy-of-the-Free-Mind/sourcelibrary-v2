@@ -41,6 +41,10 @@ jobs:
           node-version: '22'
       - name: Lint for new books field writes
         run: node scripts/audit/new-field-writes.mjs --baseline scripts/lib/books-field-write-baseline.json
+      # Same ratchet for INSERTS: a new file that inserts into books /
+      # books_warehouse without the acquisition gate fails here (#6019).
+      - name: Lint for new raw book inserts
+        run: node scripts/audit/raw-book-inserts.mjs
 
   field-sprawl:
     # The census reads production, so it stays on the schedule rather than

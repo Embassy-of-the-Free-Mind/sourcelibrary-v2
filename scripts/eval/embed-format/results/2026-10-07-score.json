@@ -1,0 +1,3668 @@
+{
+ "k": 10,
+ "sets": {
+  "A": {
+   "pool": 10185,
+   "views": {
+    "full": {
+     "candidates": 10185,
+     "queries": 40,
+     "arms": {
+      "1f current, re-embedded today (plain/plain)": {
+       "n": 40,
+       "hits": 37,
+       "recall": 0.925,
+       "ci": [
+        0.8013576634835684,
+        0.9741639744267374
+       ],
+       "mrr": 0.7014999516066588,
+       "top1": 23,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 9
+        },
+        "French": {
+         "n": 10,
+         "hits": 9
+        },
+        "Chinese": {
+         "n": 10,
+         "hits": 9
+        }
+       }
+      },
+      "2f query prefix, fresh plain docs": {
+       "n": 40,
+       "hits": 39,
+       "recall": 0.975,
+       "ci": [
+        0.8711863091181636,
+        0.9955731685462955
+       ],
+       "mrr": 0.8445833333333332,
+       "top1": 31,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 10
+        },
+        "French": {
+         "n": 10,
+         "hits": 10
+        },
+        "Chinese": {
+         "n": 10,
+         "hits": 9
+        }
+       },
+       "vsBase": {
+        "delta": 0.04999999999999993,
+        "gained": 2,
+        "lost": 0,
+        "rankBetter": 13,
+        "rankWorse": 3,
+        "signP": 0.021270751953125003
+       }
+      },
+      "2x question-answering prefix, fresh plain docs (exploratory)": {
+       "n": 40,
+       "hits": 39,
+       "recall": 0.975,
+       "ci": [
+        0.8711863091181636,
+        0.9955731685462955
+       ],
+       "mrr": 0.8086111111111111,
+       "top1": 28,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 10
+        },
+        "French": {
+         "n": 10,
+         "hits": 10
+        },
+        "Chinese": {
+         "n": 10,
+         "hits": 9
+        }
+       },
+       "vsBase": {
+        "delta": 0.04999999999999993,
+        "gained": 2,
+        "lost": 0,
+        "rankBetter": 13,
+        "rankWorse": 6,
+        "signP": 0.16706848144531256
+       }
+      },
+      "2d document prefix only (exploratory)": {
+       "n": 40,
+       "hits": 39,
+       "recall": 0.975,
+       "ci": [
+        0.8711863091181636,
+        0.9955731685462955
+       ],
+       "mrr": 0.8739393939393938,
+       "top1": 32,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 9
+        },
+        "French": {
+         "n": 10,
+         "hits": 10
+        },
+        "Chinese": {
+         "n": 10,
+         "hits": 10
+        }
+       },
+       "vsBase": {
+        "delta": 0.04999999999999993,
+        "gained": 2,
+        "lost": 0,
+        "rankBetter": 15,
+        "rankWorse": 1,
+        "signP": 0.0005187988281250003
+       }
+      },
+      "3 preview query prefix + prefixed docs": {
+       "n": 40,
+       "hits": 40,
+       "recall": 1,
+       "ci": [
+        0.9123783975415363,
+        1
+       ],
+       "mrr": 0.91875,
+       "top1": 35,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 10
+        },
+        "French": {
+         "n": 10,
+         "hits": 10
+        },
+        "Chinese": {
+         "n": 10,
+         "hits": 10
+        }
+       },
+       "vsBase": {
+        "delta": 0.07499999999999996,
+        "gained": 3,
+        "lost": 0,
+        "rankBetter": 16,
+        "rankWorse": 2,
+        "signP": 0.001312255859375
+       }
+      },
+      "4 GA, prefix both sides, 768": {
+       "n": 40,
+       "hits": 40,
+       "recall": 1,
+       "ci": [
+        0.9123783975415363,
+        1
+       ],
+       "mrr": 0.91875,
+       "top1": 35,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 10
+        },
+        "French": {
+         "n": 10,
+         "hits": 10
+        },
+        "Chinese": {
+         "n": 10,
+         "hits": 10
+        }
+       },
+       "vsBase": {
+        "delta": 0.07499999999999996,
+        "gained": 3,
+        "lost": 0,
+        "rankBetter": 16,
+        "rankWorse": 2,
+        "signP": 0.001312255859375
+       }
+      },
+      "5 GA, prefix both sides, 1536": {
+       "n": 40,
+       "hits": 40,
+       "recall": 1,
+       "ci": [
+        0.9123783975415363,
+        1
+       ],
+       "mrr": 0.9191964285714285,
+       "top1": 35,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 10
+        },
+        "French": {
+         "n": 10,
+         "hits": 10
+        },
+        "Chinese": {
+         "n": 10,
+         "hits": 10
+        }
+       },
+       "vsBase": {
+        "delta": 0.07499999999999996,
+        "gained": 3,
+        "lost": 0,
+        "rankBetter": 16,
+        "rankWorse": 1,
+        "signP": 0.0002746582031249999
+       }
+      },
+      "5 GA, prefix both sides, 3072": {
+       "n": 40,
+       "hits": 40,
+       "recall": 1,
+       "ci": [
+        0.9123783975415363,
+        1
+       ],
+       "mrr": 0.9202380952380953,
+       "top1": 35,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 10
+        },
+        "French": {
+         "n": 10,
+         "hits": 10
+        },
+        "Chinese": {
+         "n": 10,
+         "hits": 10
+        }
+       },
+       "vsBase": {
+        "delta": 0.07499999999999996,
+        "gained": 3,
+        "lost": 0,
+        "rankBetter": 17,
+        "rankWorse": 1,
+        "signP": 0.0001449584960937499
+       }
+      },
+      "5p GA, plain both sides, 1536": {
+       "n": 40,
+       "hits": 37,
+       "recall": 0.925,
+       "ci": [
+        0.8013576634835684,
+        0.9741639744267374
+       ],
+       "mrr": 0.6975517050040356,
+       "top1": 22,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 9
+        },
+        "French": {
+         "n": 10,
+         "hits": 9
+        },
+        "Chinese": {
+         "n": 10,
+         "hits": 9
+        }
+       },
+       "vsBase": {
+        "delta": 0,
+        "gained": 0,
+        "lost": 0,
+        "rankBetter": 6,
+        "rankWorse": 3,
+        "signP": 0.5078125
+       }
+      },
+      "5p GA, plain both sides, 3072": {
+       "n": 40,
+       "hits": 37,
+       "recall": 0.925,
+       "ci": [
+        0.8013576634835684,
+        0.9741639744267374
+       ],
+       "mrr": 0.7202569444444444,
+       "top1": 24,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 9
+        },
+        "French": {
+         "n": 10,
+         "hits": 9
+        },
+        "Chinese": {
+         "n": 10,
+         "hits": 9
+        }
+       },
+       "vsBase": {
+        "delta": 0,
+        "gained": 0,
+        "lost": 0,
+        "rankBetter": 8,
+        "rankWorse": 4,
+        "signP": 0.3876953125000002
+       }
+      }
+     },
+     "perQuery": {
+      "q01": {
+       "1f current, re-embedded today (plain/plain)": 3,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 2,
+       "3 preview query prefix + prefixed docs": 2,
+       "4 GA, prefix both sides, 768": 2,
+       "5 GA, prefix both sides, 1536": 2,
+       "5 GA, prefix both sides, 3072": 2,
+       "5p GA, plain both sides, 1536": 3,
+       "5p GA, plain both sides, 3072": 3
+      },
+      "q02": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q03": {
+       "1f current, re-embedded today (plain/plain)": 3,
+       "2f query prefix, fresh plain docs": 5,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 4,
+       "2d document prefix only (exploratory)": 2,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 2
+      },
+      "q04": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q05": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 2,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q06": {
+       "1f current, re-embedded today (plain/plain)": 3,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 3,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 2
+      },
+      "q07": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q08": {
+       "1f current, re-embedded today (plain/plain)": 7,
+       "2f query prefix, fresh plain docs": 8,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 8,
+       "2d document prefix only (exploratory)": 5,
+       "3 preview query prefix + prefixed docs": 8,
+       "4 GA, prefix both sides, 768": 8,
+       "5 GA, prefix both sides, 1536": 8,
+       "5 GA, prefix both sides, 3072": 6,
+       "5p GA, plain both sides, 1536": 6,
+       "5p GA, plain both sides, 3072": 6
+      },
+      "q09": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q10": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q11": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q12": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q13": {
+       "1f current, re-embedded today (plain/plain)": 2,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q14": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q15": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q16": {
+       "1f current, re-embedded today (plain/plain)": 2,
+       "2f query prefix, fresh plain docs": 3,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 3,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q17": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 2,
+       "3 preview query prefix + prefixed docs": 2,
+       "4 GA, prefix both sides, 768": 2,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 2,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q18": {
+       "1f current, re-embedded today (plain/plain)": 18,
+       "2f query prefix, fresh plain docs": 10,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 9,
+       "2d document prefix only (exploratory)": 11,
+       "3 preview query prefix + prefixed docs": 8,
+       "4 GA, prefix both sides, 768": 8,
+       "5 GA, prefix both sides, 1536": 7,
+       "5 GA, prefix both sides, 3072": 7,
+       "5p GA, plain both sides, 1536": 16,
+       "5p GA, plain both sides, 3072": 16
+      },
+      "q19": {
+       "1f current, re-embedded today (plain/plain)": 6,
+       "2f query prefix, fresh plain docs": 2,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 2,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 10,
+       "5p GA, plain both sides, 3072": 9
+      },
+      "q20": {
+       "1f current, re-embedded today (plain/plain)": 2,
+       "2f query prefix, fresh plain docs": 2,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 2,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 2
+      },
+      "q21": {
+       "1f current, re-embedded today (plain/plain)": 5,
+       "2f query prefix, fresh plain docs": 2,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 2,
+       "2d document prefix only (exploratory)": 3,
+       "3 preview query prefix + prefixed docs": 2,
+       "4 GA, prefix both sides, 768": 2,
+       "5 GA, prefix both sides, 1536": 2,
+       "5 GA, prefix both sides, 3072": 2,
+       "5p GA, plain both sides, 1536": 4,
+       "5p GA, plain both sides, 3072": 4
+      },
+      "q22": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q23": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q24": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q25": {
+       "1f current, re-embedded today (plain/plain)": 41,
+       "2f query prefix, fresh plain docs": 2,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 2,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 70,
+       "5p GA, plain both sides, 3072": 50
+      },
+      "q26": {
+       "1f current, re-embedded today (plain/plain)": 8,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 8,
+       "5p GA, plain both sides, 3072": 8
+      },
+      "q27": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q28": {
+       "1f current, re-embedded today (plain/plain)": 3,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 2,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 3,
+       "5p GA, plain both sides, 3072": 5
+      },
+      "q29": {
+       "1f current, re-embedded today (plain/plain)": 2,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 2
+      },
+      "q30": {
+       "1f current, re-embedded today (plain/plain)": 2,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 2,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 2
+      },
+      "q31": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q32": {
+       "1f current, re-embedded today (plain/plain)": 82,
+       "2f query prefix, fresh plain docs": 40,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 40,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 59,
+       "5p GA, plain both sides, 3072": 24
+      },
+      "q33": {
+       "1f current, re-embedded today (plain/plain)": 2,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 2
+      },
+      "q34": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q35": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q36": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q37": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q38": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 2,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q39": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "q40": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 2,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 2
+      }
+     }
+    },
+    "covered": {
+     "candidates": 6883,
+     "queries": 30,
+     "arms": {
+      "1 current (stored docs, plain query)": {
+       "n": 30,
+       "hits": 28,
+       "recall": 0.9333333333333333,
+       "ci": [
+        0.7867654148312584,
+        0.9815229763754831
+       ],
+       "mrr": 0.7378939498504716,
+       "top1": 19,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 9
+        },
+        "French": {
+         "n": 6,
+         "hits": 5
+        },
+        "Chinese": {
+         "n": 4,
+         "hits": 4
+        }
+       }
+      },
+      "1f current, re-embedded today (plain/plain)": {
+       "n": 30,
+       "hits": 28,
+       "recall": 0.9333333333333333,
+       "ci": [
+        0.7867654148312584,
+        0.9815229763754831
+       ],
+       "mrr": 0.7240934314105044,
+       "top1": 18,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 9
+        },
+        "French": {
+         "n": 6,
+         "hits": 5
+        },
+        "Chinese": {
+         "n": 4,
+         "hits": 4
+        }
+       },
+       "vsBase": {
+        "delta": 0,
+        "gained": 0,
+        "lost": 0,
+        "rankBetter": 2,
+        "rankWorse": 1,
+        "signP": 1
+       }
+      },
+      "2 query prefix, stored docs": {
+       "n": 30,
+       "hits": 30,
+       "recall": 1,
+       "ci": [
+        0.886486605238548,
+        1
+       ],
+       "mrr": 0.8158333333333334,
+       "top1": 22,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 10
+        },
+        "French": {
+         "n": 6,
+         "hits": 6
+        },
+        "Chinese": {
+         "n": 4,
+         "hits": 4
+        }
+       },
+       "vsBase": {
+        "delta": 0.06666666666666665,
+        "gained": 2,
+        "lost": 0,
+        "rankBetter": 6,
+        "rankWorse": 3,
+        "signP": 0.5078125
+       }
+      },
+      "2f query prefix, fresh plain docs": {
+       "n": 30,
+       "hits": 30,
+       "recall": 1,
+       "ci": [
+        0.886486605238548,
+        1
+       ],
+       "mrr": 0.8419444444444444,
+       "top1": 23,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 10
+        },
+        "French": {
+         "n": 6,
+         "hits": 6
+        },
+        "Chinese": {
+         "n": 4,
+         "hits": 4
+        }
+       },
+       "vsBase": {
+        "delta": 0.06666666666666665,
+        "gained": 2,
+        "lost": 0,
+        "rankBetter": 7,
+        "rankWorse": 3,
+        "signP": 0.3437500000000002
+       }
+      },
+      "2x question-answering prefix, fresh plain docs (exploratory)": {
+       "n": 30,
+       "hits": 30,
+       "recall": 1,
+       "ci": [
+        0.886486605238548,
+        1
+       ],
+       "mrr": 0.8106481481481481,
+       "top1": 21,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 10
+        },
+        "French": {
+         "n": 6,
+         "hits": 6
+        },
+        "Chinese": {
+         "n": 4,
+         "hits": 4
+        }
+       },
+       "vsBase": {
+        "delta": 0.06666666666666665,
+        "gained": 2,
+        "lost": 0,
+        "rankBetter": 7,
+        "rankWorse": 5,
+        "signP": 0.7744140625000006
+       }
+      },
+      "2d document prefix only (exploratory)": {
+       "n": 30,
+       "hits": 29,
+       "recall": 0.9666666666666667,
+       "ci": [
+        0.8332960885388428,
+        0.9940914096838022
+       ],
+       "mrr": 0.8541414141414142,
+       "top1": 23,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 9
+        },
+        "French": {
+         "n": 6,
+         "hits": 6
+        },
+        "Chinese": {
+         "n": 4,
+         "hits": 4
+        }
+       },
+       "vsBase": {
+        "delta": 0.033333333333333326,
+        "gained": 1,
+        "lost": 0,
+        "rankBetter": 10,
+        "rankWorse": 2,
+        "signP": 0.038574218750000014
+       }
+      },
+      "3 preview query prefix + prefixed docs": {
+       "n": 30,
+       "hits": 30,
+       "recall": 1,
+       "ci": [
+        0.886486605238548,
+        1
+       ],
+       "mrr": 0.9083333333333333,
+       "top1": 26,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 10
+        },
+        "French": {
+         "n": 6,
+         "hits": 6
+        },
+        "Chinese": {
+         "n": 4,
+         "hits": 4
+        }
+       },
+       "vsBase": {
+        "delta": 0.06666666666666665,
+        "gained": 2,
+        "lost": 0,
+        "rankBetter": 10,
+        "rankWorse": 2,
+        "signP": 0.038574218750000014
+       }
+      },
+      "4 GA, prefix both sides, 768": {
+       "n": 30,
+       "hits": 30,
+       "recall": 1,
+       "ci": [
+        0.886486605238548,
+        1
+       ],
+       "mrr": 0.9083333333333333,
+       "top1": 26,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 10
+        },
+        "French": {
+         "n": 6,
+         "hits": 6
+        },
+        "Chinese": {
+         "n": 4,
+         "hits": 4
+        }
+       },
+       "vsBase": {
+        "delta": 0.06666666666666665,
+        "gained": 2,
+        "lost": 0,
+        "rankBetter": 10,
+        "rankWorse": 2,
+        "signP": 0.038574218750000014
+       }
+      },
+      "5 GA, prefix both sides, 1536": {
+       "n": 30,
+       "hits": 30,
+       "recall": 1,
+       "ci": [
+        0.886486605238548,
+        1
+       ],
+       "mrr": 0.9089285714285714,
+       "top1": 26,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 10
+        },
+        "French": {
+         "n": 6,
+         "hits": 6
+        },
+        "Chinese": {
+         "n": 4,
+         "hits": 4
+        }
+       },
+       "vsBase": {
+        "delta": 0.06666666666666665,
+        "gained": 2,
+        "lost": 0,
+        "rankBetter": 10,
+        "rankWorse": 1,
+        "signP": 0.01171875
+       }
+      },
+      "5 GA, prefix both sides, 3072": {
+       "n": 30,
+       "hits": 30,
+       "recall": 1,
+       "ci": [
+        0.886486605238548,
+        1
+       ],
+       "mrr": 0.9103174603174603,
+       "top1": 26,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 10
+        },
+        "French": {
+         "n": 6,
+         "hits": 6
+        },
+        "Chinese": {
+         "n": 4,
+         "hits": 4
+        }
+       },
+       "vsBase": {
+        "delta": 0.06666666666666665,
+        "gained": 2,
+        "lost": 0,
+        "rankBetter": 11,
+        "rankWorse": 1,
+        "signP": 0.006347656250000002
+       }
+      },
+      "5p GA, plain both sides, 1536": {
+       "n": 30,
+       "hits": 28,
+       "recall": 0.9333333333333333,
+       "ci": [
+        0.7867654148312584,
+        0.9815229763754831
+       ],
+       "mrr": 0.7170108695652174,
+       "top1": 17,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 9
+        },
+        "French": {
+         "n": 6,
+         "hits": 5
+        },
+        "Chinese": {
+         "n": 4,
+         "hits": 4
+        }
+       },
+       "vsBase": {
+        "delta": 0,
+        "gained": 0,
+        "lost": 0,
+        "rankBetter": 5,
+        "rankWorse": 4,
+        "signP": 1
+       }
+      },
+      "5p GA, plain both sides, 3072": {
+       "n": 30,
+       "hits": 28,
+       "recall": 0.9333333333333333,
+       "ci": [
+        0.7867654148312584,
+        0.9815229763754831
+       ],
+       "mrr": 0.7464537037037037,
+       "top1": 19,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 9
+        },
+        "French": {
+         "n": 6,
+         "hits": 5
+        },
+        "Chinese": {
+         "n": 4,
+         "hits": 4
+        }
+       },
+       "vsBase": {
+        "delta": 0,
+        "gained": 0,
+        "lost": 0,
+        "rankBetter": 6,
+        "rankWorse": 5,
+        "signP": 1
+       }
+      },
+      "6 GA plain query on stored preview docs": {
+       "n": 30,
+       "hits": 28,
+       "recall": 0.9333333333333333,
+       "ci": [
+        0.7867654148312584,
+        0.9815229763754831
+       ],
+       "mrr": 0.7378939498504716,
+       "top1": 19,
+       "strata": {
+        "Latin": {
+         "n": 10,
+         "hits": 10
+        },
+        "German": {
+         "n": 10,
+         "hits": 9
+        },
+        "French": {
+         "n": 6,
+         "hits": 5
+        },
+        "Chinese": {
+         "n": 4,
+         "hits": 4
+        }
+       },
+       "vsBase": {
+        "delta": 0,
+        "gained": 0,
+        "lost": 0,
+        "rankBetter": 0,
+        "rankWorse": 0,
+        "signP": 1
+       }
+      }
+     },
+     "perQuery": {
+      "q01": {
+       "1 current (stored docs, plain query)": 3,
+       "1f current, re-embedded today (plain/plain)": 3,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 2,
+       "3 preview query prefix + prefixed docs": 2,
+       "4 GA, prefix both sides, 768": 2,
+       "5 GA, prefix both sides, 1536": 2,
+       "5 GA, prefix both sides, 3072": 2,
+       "5p GA, plain both sides, 1536": 3,
+       "5p GA, plain both sides, 3072": 3,
+       "6 GA plain query on stored preview docs": 3
+      },
+      "q02": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "q03": {
+       "1 current (stored docs, plain query)": 3,
+       "1f current, re-embedded today (plain/plain)": 3,
+       "2 query prefix, stored docs": 6,
+       "2f query prefix, fresh plain docs": 5,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 4,
+       "2d document prefix only (exploratory)": 2,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 2,
+       "6 GA plain query on stored preview docs": 3
+      },
+      "q04": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "q05": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 2,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "q06": {
+       "1 current (stored docs, plain query)": 3,
+       "1f current, re-embedded today (plain/plain)": 3,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 3,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 2,
+       "6 GA plain query on stored preview docs": 3
+      },
+      "q07": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "q08": {
+       "1 current (stored docs, plain query)": 7,
+       "1f current, re-embedded today (plain/plain)": 7,
+       "2 query prefix, stored docs": 8,
+       "2f query prefix, fresh plain docs": 8,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 8,
+       "2d document prefix only (exploratory)": 5,
+       "3 preview query prefix + prefixed docs": 8,
+       "4 GA, prefix both sides, 768": 8,
+       "5 GA, prefix both sides, 1536": 8,
+       "5 GA, prefix both sides, 3072": 6,
+       "5p GA, plain both sides, 1536": 6,
+       "5p GA, plain both sides, 3072": 6,
+       "6 GA plain query on stored preview docs": 7
+      },
+      "q09": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "q10": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "q11": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "q12": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "q13": {
+       "1 current (stored docs, plain query)": 2,
+       "1f current, re-embedded today (plain/plain)": 2,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 2
+      },
+      "q14": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "q15": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "q16": {
+       "1 current (stored docs, plain query)": 2,
+       "1f current, re-embedded today (plain/plain)": 2,
+       "2 query prefix, stored docs": 3,
+       "2f query prefix, fresh plain docs": 3,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 3,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 2
+      },
+      "q17": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 2,
+       "3 preview query prefix + prefixed docs": 2,
+       "4 GA, prefix both sides, 768": 2,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 2,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "q18": {
+       "1 current (stored docs, plain query)": 18,
+       "1f current, re-embedded today (plain/plain)": 18,
+       "2 query prefix, stored docs": 10,
+       "2f query prefix, fresh plain docs": 10,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 9,
+       "2d document prefix only (exploratory)": 11,
+       "3 preview query prefix + prefixed docs": 8,
+       "4 GA, prefix both sides, 768": 8,
+       "5 GA, prefix both sides, 1536": 7,
+       "5 GA, prefix both sides, 3072": 7,
+       "5p GA, plain both sides, 1536": 16,
+       "5p GA, plain both sides, 3072": 16,
+       "6 GA plain query on stored preview docs": 18
+      },
+      "q19": {
+       "1 current (stored docs, plain query)": 6,
+       "1f current, re-embedded today (plain/plain)": 6,
+       "2 query prefix, stored docs": 2,
+       "2f query prefix, fresh plain docs": 2,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 2,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 10,
+       "5p GA, plain both sides, 3072": 9,
+       "6 GA plain query on stored preview docs": 6
+      },
+      "q20": {
+       "1 current (stored docs, plain query)": 2,
+       "1f current, re-embedded today (plain/plain)": 2,
+       "2 query prefix, stored docs": 2,
+       "2f query prefix, fresh plain docs": 2,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 2,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 2,
+       "6 GA plain query on stored preview docs": 2
+      },
+      "q22": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "q23": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "q25": {
+       "1 current (stored docs, plain query)": 46,
+       "1f current, re-embedded today (plain/plain)": 41,
+       "2 query prefix, stored docs": 2,
+       "2f query prefix, fresh plain docs": 2,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 2,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 69,
+       "5p GA, plain both sides, 3072": 50,
+       "6 GA plain query on stored preview docs": 46
+      },
+      "q27": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "q28": {
+       "1 current (stored docs, plain query)": 4,
+       "1f current, re-embedded today (plain/plain)": 3,
+       "2 query prefix, stored docs": 4,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 2,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 3,
+       "5p GA, plain both sides, 3072": 5,
+       "6 GA plain query on stored preview docs": 4
+      },
+      "q30": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 2,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 2,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 2,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "q34": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "q36": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "q39": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "q40": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 2,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 2,
+       "6 GA plain query on stored preview docs": 1
+      }
+     }
+    }
+   }
+  },
+  "B": {
+   "pool": 8149,
+   "views": {
+    "full": {
+     "candidates": 8149,
+     "queries": 31,
+     "arms": {
+      "1f current, re-embedded today (plain/plain)": {
+       "n": 31,
+       "hits": 30,
+       "recall": 0.967741935483871,
+       "ci": [
+        0.838058946841718,
+        0.9942827785378737
+       ],
+       "mrr": 0.7079237071172555,
+       "top1": 18,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 3
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 5
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        }
+       }
+      },
+      "2f query prefix, fresh plain docs": {
+       "n": 31,
+       "hits": 26,
+       "recall": 0.8387096774193549,
+       "ci": [
+        0.6736564589149602,
+        0.9290737560150889
+       ],
+       "mrr": 0.5694739822201647,
+       "top1": 13,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 2
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 4
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 3
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        }
+       },
+       "vsBase": {
+        "delta": -0.12903225806451613,
+        "gained": 0,
+        "lost": 4,
+        "rankBetter": 6,
+        "rankWorse": 15,
+        "signP": 0.07835388183593743
+       }
+      },
+      "2x question-answering prefix, fresh plain docs (exploratory)": {
+       "n": 31,
+       "hits": 27,
+       "recall": 0.8709677419354839,
+       "ci": [
+        0.7114759359315365,
+        0.948657156610898
+       ],
+       "mrr": 0.6176294185246537,
+       "top1": 15,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 2
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 4
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 4
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        }
+       },
+       "vsBase": {
+        "delta": -0.09677419354838712,
+        "gained": 0,
+        "lost": 3,
+        "rankBetter": 6,
+        "rankWorse": 11,
+        "signP": 0.33230590820312483
+       }
+      },
+      "2d document prefix only (exploratory)": {
+       "n": 31,
+       "hits": 31,
+       "recall": 1,
+       "ci": [
+        0.889744602991977,
+        1
+       ],
+       "mrr": 0.8360215053763441,
+       "top1": 23,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 4
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 5
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        }
+       },
+       "vsBase": {
+        "delta": 0.032258064516129004,
+        "gained": 1,
+        "lost": 0,
+        "rankBetter": 11,
+        "rankWorse": 3,
+        "signP": 0.05737304687500003
+       }
+      },
+      "3 preview query prefix + prefixed docs": {
+       "n": 31,
+       "hits": 31,
+       "recall": 1,
+       "ci": [
+        0.889744602991977,
+        1
+       ],
+       "mrr": 0.8183179723502303,
+       "top1": 23,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 4
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 5
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        }
+       },
+       "vsBase": {
+        "delta": 0.032258064516129004,
+        "gained": 1,
+        "lost": 0,
+        "rankBetter": 9,
+        "rankWorse": 3,
+        "signP": 0.14599609375000006
+       }
+      },
+      "4 GA, prefix both sides, 768": {
+       "n": 31,
+       "hits": 31,
+       "recall": 1,
+       "ci": [
+        0.889744602991977,
+        1
+       ],
+       "mrr": 0.8183179723502303,
+       "top1": 23,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 4
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 5
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        }
+       },
+       "vsBase": {
+        "delta": 0.032258064516129004,
+        "gained": 1,
+        "lost": 0,
+        "rankBetter": 9,
+        "rankWorse": 3,
+        "signP": 0.14599609375000006
+       }
+      },
+      "5 GA, prefix both sides, 1536": {
+       "n": 31,
+       "hits": 31,
+       "recall": 1,
+       "ci": [
+        0.889744602991977,
+        1
+       ],
+       "mrr": 0.813479262672811,
+       "top1": 23,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 4
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 5
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        }
+       },
+       "vsBase": {
+        "delta": 0.032258064516129004,
+        "gained": 1,
+        "lost": 0,
+        "rankBetter": 10,
+        "rankWorse": 4,
+        "signP": 0.17956542968750006
+       }
+      },
+      "5 GA, prefix both sides, 3072": {
+       "n": 31,
+       "hits": 31,
+       "recall": 1,
+       "ci": [
+        0.889744602991977,
+        1
+       ],
+       "mrr": 0.8167434715821812,
+       "top1": 23,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 4
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 5
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        }
+       },
+       "vsBase": {
+        "delta": 0.032258064516129004,
+        "gained": 1,
+        "lost": 0,
+        "rankBetter": 10,
+        "rankWorse": 4,
+        "signP": 0.17956542968750006
+       }
+      },
+      "5p GA, plain both sides, 1536": {
+       "n": 31,
+       "hits": 30,
+       "recall": 0.967741935483871,
+       "ci": [
+        0.838058946841718,
+        0.9942827785378737
+       ],
+       "mrr": 0.6824186566122051,
+       "top1": 17,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 3
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 5
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        }
+       },
+       "vsBase": {
+        "delta": 0,
+        "gained": 0,
+        "lost": 0,
+        "rankBetter": 4,
+        "rankWorse": 6,
+        "signP": 0.7539062500000004
+       }
+      },
+      "5p GA, plain both sides, 3072": {
+       "n": 31,
+       "hits": 30,
+       "recall": 0.967741935483871,
+       "ci": [
+        0.838058946841718,
+        0.9942827785378737
+       ],
+       "mrr": 0.697273425499232,
+       "top1": 18,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 3
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 5
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        }
+       },
+       "vsBase": {
+        "delta": 0,
+        "gained": 0,
+        "lost": 0,
+        "rankBetter": 2,
+        "rankWorse": 4,
+        "signP": 0.6875000000000002
+       }
+      }
+     },
+     "perQuery": {
+      "agrippa-natural-magic": {
+       "1f current, re-embedded today (plain/plain)": 4,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 4,
+       "5p GA, plain both sides, 3072": 4
+      },
+      "bruno-art-of-memory": {
+       "1f current, re-embedded today (plain/plain)": 3,
+       "2f query prefix, fresh plain docs": 4,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 3,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 3,
+       "5p GA, plain both sides, 3072": 3
+      },
+      "ficino-spiritus-talismans": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 3,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 3,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "kepler-harmony-spheres": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "fludd-macrocosm-microcosm": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 6,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 5,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "paracelsus-archidoxes": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 7,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 6,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "porta-natural-magic": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 2,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 2,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "kircher-magnetism": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 2,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 2,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "vesalius-anatomy-skull": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "boehme-aurora": {
+       "1f current, re-embedded today (plain/plain)": 3,
+       "2f query prefix, fresh plain docs": 40,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 14,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 2
+      },
+      "emerald-tablet": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "rosicrucian-manifestos": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "indian-rasa-alchemy": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 4,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 2,
+       "5 GA, prefix both sides, 3072": 2,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "artemidorus-dreams": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 2,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 2,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "sympathetic-magic-renaissance": {
+       "1f current, re-embedded today (plain/plain)": 2,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 2,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 5,
+       "4 GA, prefix both sides, 768": 5,
+       "5 GA, prefix both sides, 1536": 4,
+       "5 GA, prefix both sides, 3072": 3,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 2
+      },
+      "books-on-geomancy": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "christian-cabala": {
+       "1f current, re-embedded today (plain/plain)": 5,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 2,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 5,
+       "5p GA, plain both sides, 3072": 5
+      },
+      "zohar-sefirot": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 3,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 4,
+       "2d document prefix only (exploratory)": 3,
+       "3 preview query prefix + prefixed docs": 7,
+       "4 GA, prefix both sides, 768": 7,
+       "5 GA, prefix both sides, 1536": 8,
+       "5 GA, prefix both sides, 3072": 7,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "sefer-yetzirah-creation": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "ibn-arabi-unity": {
+       "1f current, re-embedded today (plain/plain)": 2,
+       "2f query prefix, fresh plain docs": 2,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 2,
+       "2d document prefix only (exploratory)": 2,
+       "3 preview query prefix + prefixed docs": 2,
+       "4 GA, prefix both sides, 768": 2,
+       "5 GA, prefix both sides, 1536": 3,
+       "5 GA, prefix both sides, 3072": 3,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 2
+      },
+      "suhrawardi-illumination": {
+       "1f current, re-embedded today (plain/plain)": 5,
+       "2f query prefix, fresh plain docs": 184,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 109,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 2,
+       "4 GA, prefix both sides, 768": 2,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 7,
+       "5p GA, plain both sides, 3072": 8
+      },
+      "rosicrucian-fama": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "chymical-wedding": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "maier-atalanta-motto": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 5,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 5,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "coniunctio-opposites": {
+       "1f current, re-embedded today (plain/plain)": 2,
+       "2f query prefix, fresh plain docs": 13,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 8,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 2
+      },
+      "rosicrucian-reformation": {
+       "1f current, re-embedded today (plain/plain)": 2,
+       "2f query prefix, fresh plain docs": 71,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 30,
+       "2d document prefix only (exploratory)": 2,
+       "3 preview query prefix + prefixed docs": 2,
+       "4 GA, prefix both sides, 768": 2,
+       "5 GA, prefix both sides, 1536": 2,
+       "5 GA, prefix both sides, 3072": 2,
+       "5p GA, plain both sides, 1536": 4,
+       "5p GA, plain both sides, 3072": 4
+      },
+      "neoplatonic-ascent": {
+       "1f current, re-embedded today (plain/plain)": 3,
+       "2f query prefix, fresh plain docs": 2,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 6,
+       "5p GA, plain both sides, 3072": 6
+      },
+      "alchemical-emblem-books": {
+       "1f current, re-embedded today (plain/plain)": 9,
+       "2f query prefix, fresh plain docs": 4,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 6,
+       "2d document prefix only (exploratory)": 4,
+       "3 preview query prefix + prefixed docs": 5,
+       "4 GA, prefix both sides, 768": 5,
+       "5 GA, prefix both sides, 1536": 6,
+       "5 GA, prefix both sides, 3072": 7,
+       "5p GA, plain both sides, 1536": 10,
+       "5p GA, plain both sides, 3072": 10
+      },
+      "corpus-hermeticum-editions": {
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2f query prefix, fresh plain docs": 3,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1
+      },
+      "paracelsus-medicine": {
+       "1f current, re-embedded today (plain/plain)": 7,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 8,
+       "4 GA, prefix both sides, 768": 8,
+       "5 GA, prefix both sides, 1536": 5,
+       "5 GA, prefix both sides, 3072": 6,
+       "5p GA, plain both sides, 1536": 6,
+       "5p GA, plain both sides, 3072": 7
+      },
+      "ripley-green-lion": {
+       "1f current, re-embedded today (plain/plain)": 24,
+       "2f query prefix, fresh plain docs": 44,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 11,
+       "2d document prefix only (exploratory)": 4,
+       "3 preview query prefix + prefixed docs": 5,
+       "4 GA, prefix both sides, 768": 5,
+       "5 GA, prefix both sides, 1536": 7,
+       "5 GA, prefix both sides, 3072": 5,
+       "5p GA, plain both sides, 1536": 22,
+       "5p GA, plain both sides, 3072": 21
+      }
+     }
+    },
+    "covered": {
+     "candidates": 7391,
+     "queries": 31,
+     "arms": {
+      "1 current (stored docs, plain query)": {
+       "n": 31,
+       "hits": 29,
+       "recall": 0.9354838709677419,
+       "ci": [
+        0.7928136311278255,
+        0.9821252166393801
+       ],
+       "mrr": 0.702342549923195,
+       "top1": 19,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 3
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 5
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 4
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        }
+       }
+      },
+      "1f current, re-embedded today (plain/plain)": {
+       "n": 31,
+       "hits": 30,
+       "recall": 0.967741935483871,
+       "ci": [
+        0.838058946841718,
+        0.9942827785378737
+       ],
+       "mrr": 0.7067204301075268,
+       "top1": 18,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 3
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 5
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        }
+       },
+       "vsBase": {
+        "delta": 0.032258064516129115,
+        "gained": 1,
+        "lost": 0,
+        "rankBetter": 6,
+        "rankWorse": 7,
+        "signP": 1
+       }
+      },
+      "2 query prefix, stored docs": {
+       "n": 31,
+       "hits": 26,
+       "recall": 0.8387096774193549,
+       "ci": [
+        0.6736564589149602,
+        0.9290737560150889
+       ],
+       "mrr": 0.6106725146198831,
+       "top1": 15,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 2
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 4
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 4
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 4
+        }
+       },
+       "vsBase": {
+        "delta": -0.09677419354838701,
+        "gained": 0,
+        "lost": 3,
+        "rankBetter": 7,
+        "rankWorse": 12,
+        "signP": 0.35928344726562506
+       }
+      },
+      "2f query prefix, fresh plain docs": {
+       "n": 31,
+       "hits": 26,
+       "recall": 0.8387096774193549,
+       "ci": [
+        0.6736564589149602,
+        0.9290737560150889
+       ],
+       "mrr": 0.5731928856605906,
+       "top1": 13,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 2
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 4
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 3
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        }
+       },
+       "vsBase": {
+        "delta": -0.09677419354838701,
+        "gained": 0,
+        "lost": 3,
+        "rankBetter": 6,
+        "rankWorse": 14,
+        "signP": 0.11531829833984368
+       }
+      },
+      "2x question-answering prefix, fresh plain docs (exploratory)": {
+       "n": 31,
+       "hits": 28,
+       "recall": 0.9032258064516129,
+       "ci": [
+        0.7510006140569959,
+        0.9665353560978241
+       ],
+       "mrr": 0.6195411085748741,
+       "top1": 15,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 3
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 4
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 4
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        }
+       },
+       "vsBase": {
+        "delta": -0.032258064516129004,
+        "gained": 1,
+        "lost": 2,
+        "rankBetter": 7,
+        "rankWorse": 13,
+        "signP": 0.26317596435546864
+       }
+      },
+      "2d document prefix only (exploratory)": {
+       "n": 31,
+       "hits": 31,
+       "recall": 1,
+       "ci": [
+        0.889744602991977,
+        1
+       ],
+       "mrr": 0.8279569892473119,
+       "top1": 23,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 4
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 5
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        }
+       },
+       "vsBase": {
+        "delta": 0.06451612903225812,
+        "gained": 2,
+        "lost": 0,
+        "rankBetter": 11,
+        "rankWorse": 2,
+        "signP": 0.02246093750000001
+       }
+      },
+      "3 preview query prefix + prefixed docs": {
+       "n": 31,
+       "hits": 31,
+       "recall": 1,
+       "ci": [
+        0.889744602991977,
+        1
+       ],
+       "mrr": 0.8118663594470046,
+       "top1": 23,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 4
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 5
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        }
+       },
+       "vsBase": {
+        "delta": 0.06451612903225812,
+        "gained": 2,
+        "lost": 0,
+        "rankBetter": 11,
+        "rankWorse": 2,
+        "signP": 0.02246093750000001
+       }
+      },
+      "4 GA, prefix both sides, 768": {
+       "n": 31,
+       "hits": 31,
+       "recall": 1,
+       "ci": [
+        0.889744602991977,
+        1
+       ],
+       "mrr": 0.8118663594470046,
+       "top1": 23,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 4
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 5
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        }
+       },
+       "vsBase": {
+        "delta": 0.06451612903225812,
+        "gained": 2,
+        "lost": 0,
+        "rankBetter": 11,
+        "rankWorse": 2,
+        "signP": 0.02246093750000001
+       }
+      },
+      "5 GA, prefix both sides, 1536": {
+       "n": 31,
+       "hits": 31,
+       "recall": 1,
+       "ci": [
+        0.889744602991977,
+        1
+       ],
+       "mrr": 0.8118663594470046,
+       "top1": 23,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 4
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 5
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        }
+       },
+       "vsBase": {
+        "delta": 0.06451612903225812,
+        "gained": 2,
+        "lost": 0,
+        "rankBetter": 10,
+        "rankWorse": 3,
+        "signP": 0.09228515625000004
+       }
+      },
+      "5 GA, prefix both sides, 3072": {
+       "n": 31,
+       "hits": 31,
+       "recall": 1,
+       "ci": [
+        0.889744602991977,
+        1
+       ],
+       "mrr": 0.8148233486943164,
+       "top1": 23,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 4
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 5
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        }
+       },
+       "vsBase": {
+        "delta": 0.06451612903225812,
+        "gained": 2,
+        "lost": 0,
+        "rankBetter": 10,
+        "rankWorse": 4,
+        "signP": 0.17956542968750006
+       }
+      },
+      "5p GA, plain both sides, 1536": {
+       "n": 31,
+       "hits": 30,
+       "recall": 0.967741935483871,
+       "ci": [
+        0.838058946841718,
+        0.9942827785378737
+       ],
+       "mrr": 0.6815284178187404,
+       "top1": 17,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 3
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 5
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        }
+       },
+       "vsBase": {
+        "delta": 0.032258064516129115,
+        "gained": 1,
+        "lost": 0,
+        "rankBetter": 7,
+        "rankWorse": 8,
+        "signP": 1
+       }
+      },
+      "5p GA, plain both sides, 3072": {
+       "n": 31,
+       "hits": 30,
+       "recall": 0.967741935483871,
+       "ci": [
+        0.838058946841718,
+        0.9942827785378737
+       ],
+       "mrr": 0.697166302853909,
+       "top1": 18,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 3
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 5
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 5
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        }
+       },
+       "vsBase": {
+        "delta": 0.032258064516129115,
+        "gained": 1,
+        "lost": 0,
+        "rankBetter": 7,
+        "rankWorse": 8,
+        "signP": 1
+       }
+      },
+      "6 GA plain query on stored preview docs": {
+       "n": 31,
+       "hits": 29,
+       "recall": 0.9354838709677419,
+       "ci": [
+        0.7928136311278255,
+        0.9821252166393801
+       ],
+       "mrr": 0.702342549923195,
+       "top1": 19,
+       "strata": {
+        "well-known-concept": {
+         "n": 7,
+         "hits": 7
+        },
+        "niche-passage": {
+         "n": 4,
+         "hits": 3
+        },
+        "verbatim-quote": {
+         "n": 5,
+         "hits": 5
+        },
+        "cross-lingual": {
+         "n": 5,
+         "hits": 5
+        },
+        "broad-theme": {
+         "n": 5,
+         "hits": 4
+        },
+        "bibliographic": {
+         "n": 5,
+         "hits": 5
+        }
+       },
+       "vsBase": {
+        "delta": 0,
+        "gained": 0,
+        "lost": 0,
+        "rankBetter": 0,
+        "rankWorse": 0,
+        "signP": 1
+       }
+      }
+     },
+     "perQuery": {
+      "agrippa-natural-magic": {
+       "1 current (stored docs, plain query)": 3,
+       "1f current, re-embedded today (plain/plain)": 4,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 4,
+       "5p GA, plain both sides, 3072": 4,
+       "6 GA plain query on stored preview docs": 3
+      },
+      "bruno-art-of-memory": {
+       "1 current (stored docs, plain query)": 3,
+       "1f current, re-embedded today (plain/plain)": 3,
+       "2 query prefix, stored docs": 4,
+       "2f query prefix, fresh plain docs": 4,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 3,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 3,
+       "5p GA, plain both sides, 3072": 3,
+       "6 GA plain query on stored preview docs": 3
+      },
+      "ficino-spiritus-talismans": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 3,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 3,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "kepler-harmony-spheres": {
+       "1 current (stored docs, plain query)": 2,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 2
+      },
+      "fludd-macrocosm-microcosm": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 2,
+       "2f query prefix, fresh plain docs": 7,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 5,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "paracelsus-archidoxes": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 7,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 6,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "porta-natural-magic": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 2,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 2,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "kircher-magnetism": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 3,
+       "2f query prefix, fresh plain docs": 2,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 2,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "vesalius-anatomy-skull": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "boehme-aurora": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 3,
+       "2 query prefix, stored docs": 15,
+       "2f query prefix, fresh plain docs": 37,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 14,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 2,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "emerald-tablet": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "rosicrucian-manifestos": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "indian-rasa-alchemy": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 4,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 2,
+       "5 GA, prefix both sides, 3072": 2,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "artemidorus-dreams": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 2,
+       "2f query prefix, fresh plain docs": 2,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 2,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "sympathetic-magic-renaissance": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 2,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 2,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 5,
+       "4 GA, prefix both sides, 768": 5,
+       "5 GA, prefix both sides, 1536": 4,
+       "5 GA, prefix both sides, 3072": 3,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 2,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "books-on-geomancy": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 12,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "christian-cabala": {
+       "1 current (stored docs, plain query)": 5,
+       "1f current, re-embedded today (plain/plain)": 7,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 2,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 7,
+       "5p GA, plain both sides, 3072": 6,
+       "6 GA plain query on stored preview docs": 5
+      },
+      "zohar-sefirot": {
+       "1 current (stored docs, plain query)": 3,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 3,
+       "2f query prefix, fresh plain docs": 3,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 4,
+       "2d document prefix only (exploratory)": 3,
+       "3 preview query prefix + prefixed docs": 7,
+       "4 GA, prefix both sides, 768": 7,
+       "5 GA, prefix both sides, 1536": 8,
+       "5 GA, prefix both sides, 3072": 7,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 3
+      },
+      "sefer-yetzirah-creation": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 4,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "ibn-arabi-unity": {
+       "1 current (stored docs, plain query)": 8,
+       "1f current, re-embedded today (plain/plain)": 2,
+       "2 query prefix, stored docs": 3,
+       "2f query prefix, fresh plain docs": 2,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 2,
+       "2d document prefix only (exploratory)": 4,
+       "3 preview query prefix + prefixed docs": 4,
+       "4 GA, prefix both sides, 768": 4,
+       "5 GA, prefix both sides, 1536": 4,
+       "5 GA, prefix both sides, 3072": 4,
+       "5p GA, plain both sides, 1536": 2,
+       "5p GA, plain both sides, 3072": 2,
+       "6 GA plain query on stored preview docs": 8
+      },
+      "suhrawardi-illumination": {
+       "1 current (stored docs, plain query)": 5,
+       "1f current, re-embedded today (plain/plain)": 5,
+       "2 query prefix, stored docs": 95,
+       "2f query prefix, fresh plain docs": 171,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 107,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 2,
+       "4 GA, prefix both sides, 768": 2,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 7,
+       "5p GA, plain both sides, 3072": 8,
+       "6 GA plain query on stored preview docs": 5
+      },
+      "rosicrucian-fama": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "chymical-wedding": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "maier-atalanta-motto": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 2,
+       "2f query prefix, fresh plain docs": 3,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 4,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "coniunctio-opposites": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 2,
+       "2 query prefix, stored docs": 10,
+       "2f query prefix, fresh plain docs": 13,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 8,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 2,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "rosicrucian-reformation": {
+       "1 current (stored docs, plain query)": 18,
+       "1f current, re-embedded today (plain/plain)": 2,
+       "2 query prefix, stored docs": 152,
+       "2f query prefix, fresh plain docs": 69,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 30,
+       "2d document prefix only (exploratory)": 2,
+       "3 preview query prefix + prefixed docs": 2,
+       "4 GA, prefix both sides, 768": 2,
+       "5 GA, prefix both sides, 1536": 2,
+       "5 GA, prefix both sides, 3072": 2,
+       "5p GA, plain both sides, 1536": 4,
+       "5p GA, plain both sides, 3072": 4,
+       "6 GA plain query on stored preview docs": 18
+      },
+      "neoplatonic-ascent": {
+       "1 current (stored docs, plain query)": 1,
+       "1f current, re-embedded today (plain/plain)": 3,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 2,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 6,
+       "5p GA, plain both sides, 3072": 6,
+       "6 GA plain query on stored preview docs": 1
+      },
+      "alchemical-emblem-books": {
+       "1 current (stored docs, plain query)": 5,
+       "1f current, re-embedded today (plain/plain)": 8,
+       "2 query prefix, stored docs": 2,
+       "2f query prefix, fresh plain docs": 4,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 6,
+       "2d document prefix only (exploratory)": 4,
+       "3 preview query prefix + prefixed docs": 4,
+       "4 GA, prefix both sides, 768": 4,
+       "5 GA, prefix both sides, 1536": 5,
+       "5 GA, prefix both sides, 3072": 6,
+       "5p GA, plain both sides, 1536": 8,
+       "5p GA, plain both sides, 3072": 8,
+       "6 GA plain query on stored preview docs": 5
+      },
+      "corpus-hermeticum-editions": {
+       "1 current (stored docs, plain query)": 3,
+       "1f current, re-embedded today (plain/plain)": 1,
+       "2 query prefix, stored docs": 9,
+       "2f query prefix, fresh plain docs": 3,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 1,
+       "4 GA, prefix both sides, 768": 1,
+       "5 GA, prefix both sides, 1536": 1,
+       "5 GA, prefix both sides, 3072": 1,
+       "5p GA, plain both sides, 1536": 1,
+       "5p GA, plain both sides, 3072": 1,
+       "6 GA plain query on stored preview docs": 3
+      },
+      "paracelsus-medicine": {
+       "1 current (stored docs, plain query)": 9,
+       "1f current, re-embedded today (plain/plain)": 7,
+       "2 query prefix, stored docs": 1,
+       "2f query prefix, fresh plain docs": 1,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 1,
+       "2d document prefix only (exploratory)": 1,
+       "3 preview query prefix + prefixed docs": 8,
+       "4 GA, prefix both sides, 768": 8,
+       "5 GA, prefix both sides, 1536": 5,
+       "5 GA, prefix both sides, 3072": 6,
+       "5p GA, plain both sides, 1536": 6,
+       "5p GA, plain both sides, 3072": 7,
+       "6 GA plain query on stored preview docs": 9
+      },
+      "ripley-green-lion": {
+       "1 current (stored docs, plain query)": 21,
+       "1f current, re-embedded today (plain/plain)": 21,
+       "2 query prefix, stored docs": 19,
+       "2f query prefix, fresh plain docs": 39,
+       "2x question-answering prefix, fresh plain docs (exploratory)": 10,
+       "2d document prefix only (exploratory)": 4,
+       "3 preview query prefix + prefixed docs": 5,
+       "4 GA, prefix both sides, 768": 5,
+       "5 GA, prefix both sides, 1536": 7,
+       "5 GA, prefix both sides, 3072": 5,
+       "5p GA, plain both sides, 1536": 20,
+       "5p GA, plain both sides, 3072": 19,
+       "6 GA plain query on stored preview docs": 21
+      }
+     }
+    }
+   }
+  }
+ }
+}

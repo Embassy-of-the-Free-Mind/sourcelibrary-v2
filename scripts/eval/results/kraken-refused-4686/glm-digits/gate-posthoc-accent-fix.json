@@ -1,0 +1,918 @@
+{
+  "stratum": "refused-en-4686",
+  "scored": "refused-en-4686-2026-10-06.json",
+  "refs": "/root/sourcelibrary/.claude/worktrees/job-kraken-digits-4686/scripts/eval/benchmark/refs",
+  "n_pages": 20,
+  "arms": {
+    "gemini-3.1-flash-lite": {
+      "n": 20,
+      "refused": 20,
+      "loops": 0,
+      "median_cer": 1,
+      "ci95": [
+        1,
+        1
+      ],
+      "catastrophic": 20,
+      "median_gap": 0,
+      "long_s": {
+        "ref_words": 1079,
+        "as_f": 0,
+        "per_100": 0
+      },
+      "digits": {
+        "ref": 93,
+        "reproduced": 0,
+        "share": 0
+      },
+      "lines": {
+        "ref": 689,
+        "dropped": 689,
+        "share": 1,
+        "worst_page": {
+          "slug": "rf-6ac2798b02c7f994f85066f6-p29",
+          "share": 1,
+          "examples": [
+            "royalsocietyoflondon",
+            "shalllikewisethatsmallbutthoughispeakitm",
+            "chalcographythesecondpartwhereofcontaini"
+          ]
+        }
+      },
+      "pages": [
+        {
+          "slug": "rf-6ac2798b02c7f994f85066f6-p29",
+          "cer": 1,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 81,
+          "digits": "0/9",
+          "dropped": "41/41"
+        },
+        {
+          "slug": "rf-6ac2798d02c7f994f8506911-p287",
+          "cer": 1,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 87,
+          "digits": "0/12",
+          "dropped": "45/45"
+        },
+        {
+          "slug": "rf-6ac2798d02c7f994f8506911-p352",
+          "cer": 1,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 42,
+          "digits": "0/10",
+          "dropped": "30/30"
+        },
+        {
+          "slug": "rf-6ac391b421755a8abfd8e653-p172",
+          "cer": 1,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 62,
+          "digits": "0/3",
+          "dropped": "38/38"
+        },
+        {
+          "slug": "rf-6ac391b421755a8abfd8e653-p315",
+          "cer": 1,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 63,
+          "digits": "0/1",
+          "dropped": "36/36"
+        },
+        {
+          "slug": "rf-6ac391b421755a8abfd8e653-p36",
+          "cer": 1,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 58,
+          "digits": "0/3",
+          "dropped": "37/37"
+        },
+        {
+          "slug": "rf-6ac391b421755a8abfd8e653-p407",
+          "cer": 1,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 56,
+          "digits": "0/3",
+          "dropped": "39/39"
+        },
+        {
+          "slug": "rf-6ac391b421755a8abfd8e653-p532",
+          "cer": 1,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 63,
+          "digits": "0/7",
+          "dropped": "41/41"
+        },
+        {
+          "slug": "rf-6ac39a92693fbfc19e37bb27-p11",
+          "cer": 1,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 74,
+          "digits": "0/3",
+          "dropped": "38/38"
+        },
+        {
+          "slug": "rf-6ac39a92693fbfc19e37bb27-p134",
+          "cer": 1,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 25,
+          "digits": "0/1",
+          "dropped": "11/11"
+        },
+        {
+          "slug": "rf-6ac39a92693fbfc19e37bb27-p194",
+          "cer": 1,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 49,
+          "digits": "0/5",
+          "dropped": "36/36"
+        },
+        {
+          "slug": "rf-6ac39a92693fbfc19e37bb27-p211",
+          "cer": 1,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 23,
+          "digits": "0/3",
+          "dropped": "28/28"
+        },
+        {
+          "slug": "rf-6ac39abdb102376559ba75ed-p211",
+          "cer": 1,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 59,
+          "digits": "0/7",
+          "dropped": "33/33"
+        },
+        {
+          "slug": "rf-6ac39abdb102376559ba75ed-p326",
+          "cer": 1,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 51,
+          "digits": "0/4",
+          "dropped": "30/30"
+        },
+        {
+          "slug": "rf-6ac39abdb102376559ba75ed-p476",
+          "cer": 1,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 66,
+          "digits": "0/2",
+          "dropped": "38/38"
+        },
+        {
+          "slug": "rf-6ac39abdb102376559ba75ed-p70",
+          "cer": 1,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 45,
+          "digits": "0/4",
+          "dropped": "31/31"
+        },
+        {
+          "slug": "rf-6ac39ad74bd5d854980237ff-p211",
+          "cer": 1,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 46,
+          "digits": "0/1",
+          "dropped": "36/36"
+        },
+        {
+          "slug": "rf-6ac39ad74bd5d854980237ff-p265",
+          "cer": 1,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 42,
+          "digits": "0/8",
+          "dropped": "33/33"
+        },
+        {
+          "slug": "rf-6ac39ad74bd5d854980237ff-p290",
+          "cer": 1,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 38,
+          "digits": "0/6",
+          "dropped": "32/32"
+        },
+        {
+          "slug": "rf-6ac39ad74bd5d854980237ff-p50",
+          "cer": 1,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 49,
+          "digits": "0/1",
+          "dropped": "36/36"
+        }
+      ]
+    },
+    "glm-ocr": {
+      "n": 20,
+      "refused": 0,
+      "loops": 0,
+      "median_cer": 0.006,
+      "ci95": [
+        0.005,
+        0.011
+      ],
+      "catastrophic": 0,
+      "median_gap": 0,
+      "long_s": {
+        "ref_words": 1079,
+        "as_f": 16,
+        "per_100": 1.483
+      },
+      "digits": {
+        "ref": 93,
+        "reproduced": 62,
+        "share": 0.667
+      },
+      "lines": {
+        "ref": 689,
+        "dropped": 1,
+        "share": 0.001,
+        "worst_page": {
+          "slug": "rf-6ac2798d02c7f994f8506911-p352",
+          "share": 0.033,
+          "examples": [
+            "royalsocietyoflondon"
+          ]
+        }
+      },
+      "pages": [
+        {
+          "slug": "rf-6ac2798b02c7f994f85066f6-p29",
+          "cer": 0.03,
+          "gap": 0.007,
+          "longs_err": 0,
+          "longs_n": 81,
+          "digits": "6/9",
+          "dropped": "0/41"
+        },
+        {
+          "slug": "rf-6ac2798d02c7f994f8506911-p287",
+          "cer": 0.027,
+          "gap": 0,
+          "longs_err": 10,
+          "longs_n": 87,
+          "digits": "9/12",
+          "dropped": "0/45"
+        },
+        {
+          "slug": "rf-6ac2798d02c7f994f8506911-p352",
+          "cer": 0.073,
+          "gap": 0.03,
+          "longs_err": 1,
+          "longs_n": 42,
+          "digits": "6/10",
+          "dropped": "1/30"
+        },
+        {
+          "slug": "rf-6ac391b421755a8abfd8e653-p172",
+          "cer": 0.005,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 62,
+          "digits": "2/3",
+          "dropped": "0/38"
+        },
+        {
+          "slug": "rf-6ac391b421755a8abfd8e653-p315",
+          "cer": 0.007,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 63,
+          "digits": "0/1",
+          "dropped": "0/36"
+        },
+        {
+          "slug": "rf-6ac391b421755a8abfd8e653-p36",
+          "cer": 0.005,
+          "gap": 0,
+          "longs_err": 1,
+          "longs_n": 58,
+          "digits": "1/3",
+          "dropped": "0/37"
+        },
+        {
+          "slug": "rf-6ac391b421755a8abfd8e653-p407",
+          "cer": 0.004,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 56,
+          "digits": "2/3",
+          "dropped": "0/39"
+        },
+        {
+          "slug": "rf-6ac391b421755a8abfd8e653-p532",
+          "cer": 0.004,
+          "gap": 0,
+          "longs_err": 1,
+          "longs_n": 63,
+          "digits": "6/7",
+          "dropped": "0/41"
+        },
+        {
+          "slug": "rf-6ac39a92693fbfc19e37bb27-p11",
+          "cer": 0.01,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 74,
+          "digits": "2/3",
+          "dropped": "0/38"
+        },
+        {
+          "slug": "rf-6ac39a92693fbfc19e37bb27-p134",
+          "cer": 0.014,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 25,
+          "digits": "0/1",
+          "dropped": "0/11"
+        },
+        {
+          "slug": "rf-6ac39a92693fbfc19e37bb27-p194",
+          "cer": 0.004,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 49,
+          "digits": "4/5",
+          "dropped": "0/36"
+        },
+        {
+          "slug": "rf-6ac39a92693fbfc19e37bb27-p211",
+          "cer": 0.006,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 23,
+          "digits": "2/3",
+          "dropped": "0/28"
+        },
+        {
+          "slug": "rf-6ac39abdb102376559ba75ed-p211",
+          "cer": 0.025,
+          "gap": 0.003,
+          "longs_err": 2,
+          "longs_n": 59,
+          "digits": "3/7",
+          "dropped": "0/33"
+        },
+        {
+          "slug": "rf-6ac39abdb102376559ba75ed-p326",
+          "cer": 0.011,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 51,
+          "digits": "3/4",
+          "dropped": "0/30"
+        },
+        {
+          "slug": "rf-6ac39abdb102376559ba75ed-p476",
+          "cer": 0.005,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 66,
+          "digits": "1/2",
+          "dropped": "0/38"
+        },
+        {
+          "slug": "rf-6ac39abdb102376559ba75ed-p70",
+          "cer": 0.004,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 45,
+          "digits": "3/4",
+          "dropped": "0/31"
+        },
+        {
+          "slug": "rf-6ac39ad74bd5d854980237ff-p211",
+          "cer": 0.003,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 46,
+          "digits": "0/1",
+          "dropped": "0/36"
+        },
+        {
+          "slug": "rf-6ac39ad74bd5d854980237ff-p265",
+          "cer": 0.011,
+          "gap": 0,
+          "longs_err": 1,
+          "longs_n": 42,
+          "digits": "7/8",
+          "dropped": "0/33"
+        },
+        {
+          "slug": "rf-6ac39ad74bd5d854980237ff-p290",
+          "cer": 0.005,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 38,
+          "digits": "5/6",
+          "dropped": "0/32"
+        },
+        {
+          "slug": "rf-6ac39ad74bd5d854980237ff-p50",
+          "cer": 0.005,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 49,
+          "digits": "0/1",
+          "dropped": "0/36"
+        }
+      ]
+    },
+    "kraken-catmus-glm-digits": {
+      "n": 20,
+      "refused": 0,
+      "loops": 0,
+      "median_cer": 0.008,
+      "ci95": [
+        0.005,
+        0.017
+      ],
+      "catastrophic": 0,
+      "median_gap": 0,
+      "long_s": {
+        "ref_words": 1079,
+        "as_f": 19,
+        "per_100": 1.761
+      },
+      "digits": {
+        "ref": 93,
+        "reproduced": 83,
+        "share": 0.892
+      },
+      "lines": {
+        "ref": 689,
+        "dropped": 0,
+        "share": 0,
+        "worst_page": {
+          "slug": null,
+          "share": 0,
+          "examples": []
+        }
+      },
+      "pages": [
+        {
+          "slug": "rf-6ac2798b02c7f994f85066f6-p29",
+          "cer": 0.035,
+          "gap": 0.007,
+          "longs_err": 2,
+          "longs_n": 81,
+          "digits": "5/9",
+          "dropped": "0/41"
+        },
+        {
+          "slug": "rf-6ac2798d02c7f994f8506911-p287",
+          "cer": 0.03,
+          "gap": 0.004,
+          "longs_err": 2,
+          "longs_n": 87,
+          "digits": "12/12",
+          "dropped": "0/45"
+        },
+        {
+          "slug": "rf-6ac2798d02c7f994f8506911-p352",
+          "cer": 0.073,
+          "gap": 0.022,
+          "longs_err": 1,
+          "longs_n": 42,
+          "digits": "8/10",
+          "dropped": "0/30"
+        },
+        {
+          "slug": "rf-6ac391b421755a8abfd8e653-p172",
+          "cer": 0.005,
+          "gap": 0,
+          "longs_err": 3,
+          "longs_n": 62,
+          "digits": "3/3",
+          "dropped": "0/38"
+        },
+        {
+          "slug": "rf-6ac391b421755a8abfd8e653-p315",
+          "cer": 0.002,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 63,
+          "digits": "1/1",
+          "dropped": "0/36"
+        },
+        {
+          "slug": "rf-6ac391b421755a8abfd8e653-p36",
+          "cer": 0.009,
+          "gap": 0,
+          "longs_err": 2,
+          "longs_n": 58,
+          "digits": "2/3",
+          "dropped": "0/37"
+        },
+        {
+          "slug": "rf-6ac391b421755a8abfd8e653-p407",
+          "cer": 0.006,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 56,
+          "digits": "2/3",
+          "dropped": "0/39"
+        },
+        {
+          "slug": "rf-6ac391b421755a8abfd8e653-p532",
+          "cer": 0.005,
+          "gap": 0,
+          "longs_err": 2,
+          "longs_n": 63,
+          "digits": "6/7",
+          "dropped": "0/41"
+        },
+        {
+          "slug": "rf-6ac39a92693fbfc19e37bb27-p11",
+          "cer": 0.017,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 74,
+          "digits": "2/3",
+          "dropped": "0/38"
+        },
+        {
+          "slug": "rf-6ac39a92693fbfc19e37bb27-p134",
+          "cer": 0.014,
+          "gap": 0,
+          "longs_err": 1,
+          "longs_n": 25,
+          "digits": "1/1",
+          "dropped": "0/11"
+        },
+        {
+          "slug": "rf-6ac39a92693fbfc19e37bb27-p194",
+          "cer": 0.003,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 49,
+          "digits": "5/5",
+          "dropped": "0/36"
+        },
+        {
+          "slug": "rf-6ac39a92693fbfc19e37bb27-p211",
+          "cer": 0.033,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 23,
+          "digits": "3/3",
+          "dropped": "0/28"
+        },
+        {
+          "slug": "rf-6ac39abdb102376559ba75ed-p211",
+          "cer": 0.026,
+          "gap": 0.014,
+          "longs_err": 0,
+          "longs_n": 59,
+          "digits": "7/7",
+          "dropped": "0/33"
+        },
+        {
+          "slug": "rf-6ac39abdb102376559ba75ed-p326",
+          "cer": 0.017,
+          "gap": 0.009,
+          "longs_err": 2,
+          "longs_n": 51,
+          "digits": "4/4",
+          "dropped": "0/30"
+        },
+        {
+          "slug": "rf-6ac39abdb102376559ba75ed-p476",
+          "cer": 0.002,
+          "gap": 0,
+          "longs_err": 1,
+          "longs_n": 66,
+          "digits": "2/2",
+          "dropped": "0/38"
+        },
+        {
+          "slug": "rf-6ac39abdb102376559ba75ed-p70",
+          "cer": 0.01,
+          "gap": 0.003,
+          "longs_err": 1,
+          "longs_n": 45,
+          "digits": "4/4",
+          "dropped": "0/31"
+        },
+        {
+          "slug": "rf-6ac39ad74bd5d854980237ff-p211",
+          "cer": 0.004,
+          "gap": 0,
+          "longs_err": 1,
+          "longs_n": 46,
+          "digits": "1/1",
+          "dropped": "0/36"
+        },
+        {
+          "slug": "rf-6ac39ad74bd5d854980237ff-p265",
+          "cer": 0.006,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 42,
+          "digits": "8/8",
+          "dropped": "0/33"
+        },
+        {
+          "slug": "rf-6ac39ad74bd5d854980237ff-p290",
+          "cer": 0.006,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 38,
+          "digits": "6/6",
+          "dropped": "0/32"
+        },
+        {
+          "slug": "rf-6ac39ad74bd5d854980237ff-p50",
+          "cer": 0.003,
+          "gap": 0,
+          "longs_err": 1,
+          "longs_n": 49,
+          "digits": "1/1",
+          "dropped": "0/36"
+        }
+      ]
+    },
+    "kraken-catmus-gpu": {
+      "n": 20,
+      "refused": 0,
+      "loops": 0,
+      "median_cer": 0.009,
+      "ci95": [
+        0.006,
+        0.017
+      ],
+      "catastrophic": 0,
+      "median_gap": 0,
+      "long_s": {
+        "ref_words": 1079,
+        "as_f": 19,
+        "per_100": 1.761
+      },
+      "digits": {
+        "ref": 93,
+        "reproduced": 73,
+        "share": 0.785
+      },
+      "lines": {
+        "ref": 689,
+        "dropped": 0,
+        "share": 0,
+        "worst_page": {
+          "slug": null,
+          "share": 0,
+          "examples": []
+        }
+      },
+      "pages": [
+        {
+          "slug": "rf-6ac2798b02c7f994f85066f6-p29",
+          "cer": 0.037,
+          "gap": 0.007,
+          "longs_err": 2,
+          "longs_n": 81,
+          "digits": "3/9",
+          "dropped": "0/41"
+        },
+        {
+          "slug": "rf-6ac2798d02c7f994f8506911-p287",
+          "cer": 0.029,
+          "gap": 0.004,
+          "longs_err": 2,
+          "longs_n": 87,
+          "digits": "11/12",
+          "dropped": "0/45"
+        },
+        {
+          "slug": "rf-6ac2798d02c7f994f8506911-p352",
+          "cer": 0.073,
+          "gap": 0.022,
+          "longs_err": 1,
+          "longs_n": 42,
+          "digits": "7/10",
+          "dropped": "0/30"
+        },
+        {
+          "slug": "rf-6ac391b421755a8abfd8e653-p172",
+          "cer": 0.008,
+          "gap": 0,
+          "longs_err": 3,
+          "longs_n": 62,
+          "digits": "1/3",
+          "dropped": "0/38"
+        },
+        {
+          "slug": "rf-6ac391b421755a8abfd8e653-p315",
+          "cer": 0.002,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 63,
+          "digits": "1/1",
+          "dropped": "0/36"
+        },
+        {
+          "slug": "rf-6ac391b421755a8abfd8e653-p36",
+          "cer": 0.009,
+          "gap": 0,
+          "longs_err": 2,
+          "longs_n": 58,
+          "digits": "2/3",
+          "dropped": "0/37"
+        },
+        {
+          "slug": "rf-6ac391b421755a8abfd8e653-p407",
+          "cer": 0.006,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 56,
+          "digits": "2/3",
+          "dropped": "0/39"
+        },
+        {
+          "slug": "rf-6ac391b421755a8abfd8e653-p532",
+          "cer": 0.005,
+          "gap": 0,
+          "longs_err": 2,
+          "longs_n": 63,
+          "digits": "6/7",
+          "dropped": "0/41"
+        },
+        {
+          "slug": "rf-6ac39a92693fbfc19e37bb27-p11",
+          "cer": 0.017,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 74,
+          "digits": "2/3",
+          "dropped": "0/38"
+        },
+        {
+          "slug": "rf-6ac39a92693fbfc19e37bb27-p134",
+          "cer": 0.014,
+          "gap": 0,
+          "longs_err": 1,
+          "longs_n": 25,
+          "digits": "1/1",
+          "dropped": "0/11"
+        },
+        {
+          "slug": "rf-6ac39a92693fbfc19e37bb27-p194",
+          "cer": 0.003,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 49,
+          "digits": "5/5",
+          "dropped": "0/36"
+        },
+        {
+          "slug": "rf-6ac39a92693fbfc19e37bb27-p211",
+          "cer": 0.033,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 23,
+          "digits": "3/3",
+          "dropped": "0/28"
+        },
+        {
+          "slug": "rf-6ac39abdb102376559ba75ed-p211",
+          "cer": 0.027,
+          "gap": 0.014,
+          "longs_err": 0,
+          "longs_n": 59,
+          "digits": "6/7",
+          "dropped": "0/33"
+        },
+        {
+          "slug": "rf-6ac39abdb102376559ba75ed-p326",
+          "cer": 0.017,
+          "gap": 0.009,
+          "longs_err": 2,
+          "longs_n": 51,
+          "digits": "3/4",
+          "dropped": "0/30"
+        },
+        {
+          "slug": "rf-6ac39abdb102376559ba75ed-p476",
+          "cer": 0.003,
+          "gap": 0,
+          "longs_err": 1,
+          "longs_n": 66,
+          "digits": "1/2",
+          "dropped": "0/38"
+        },
+        {
+          "slug": "rf-6ac39abdb102376559ba75ed-p70",
+          "cer": 0.01,
+          "gap": 0.003,
+          "longs_err": 1,
+          "longs_n": 45,
+          "digits": "4/4",
+          "dropped": "0/31"
+        },
+        {
+          "slug": "rf-6ac39ad74bd5d854980237ff-p211",
+          "cer": 0.004,
+          "gap": 0,
+          "longs_err": 1,
+          "longs_n": 46,
+          "digits": "1/1",
+          "dropped": "0/36"
+        },
+        {
+          "slug": "rf-6ac39ad74bd5d854980237ff-p265",
+          "cer": 0.006,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 42,
+          "digits": "7/8",
+          "dropped": "0/33"
+        },
+        {
+          "slug": "rf-6ac39ad74bd5d854980237ff-p290",
+          "cer": 0.006,
+          "gap": 0,
+          "longs_err": 0,
+          "longs_n": 38,
+          "digits": "6/6",
+          "dropped": "0/32"
+        },
+        {
+          "slug": "rf-6ac39ad74bd5d854980237ff-p50",
+          "cer": 0.003,
+          "gap": 0,
+          "longs_err": 1,
+          "longs_n": 49,
+          "digits": "1/1",
+          "dropped": "0/36"
+        }
+      ]
+    }
+  },
+  "gate": {
+    "arm": "kraken-catmus-glm-digits",
+    "G1": {
+      "rule": "median CER <= 0.08 and upper 95% bound <= 0.12",
+      "value": {
+        "median": 0.008,
+        "ci95": [
+          0.005,
+          0.017
+        ]
+      },
+      "pass": true
+    },
+    "G2": {
+      "rule": "catastrophic (CER > 0.5) <= 2 of 20",
+      "value": 0,
+      "pass": true
+    },
+    "G3": {
+      "rule": "dropped lines <= 5% pooled and <= 20% on every page",
+      "value": {
+        "pooled": 0,
+        "worst": 0
+      },
+      "pass": true
+    },
+    "G4": {
+      "rule": ">= 90% of reference digit strings reproduced, pooled",
+      "value": 0.892,
+      "pass": false
+    },
+    "G5": {
+      "rule": "no CER regression vs kraken-catmus-gpu: median CER not higher, and no page more than 0.005 worse",
+      "value": {
+        "median": 0.008,
+        "base_median": 0.009,
+        "worst_page": {
+          "slug": "rf-6ac2798d02c7f994f8506911-p287",
+          "delta": 0.001
+        },
+        "better": 4,
+        "worse": 1,
+        "same": 15
+      },
+      "pass": true
+    },
+    "pass": false
+  }
+}

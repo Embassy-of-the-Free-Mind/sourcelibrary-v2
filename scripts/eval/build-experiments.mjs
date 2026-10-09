@@ -25,6 +25,11 @@
  *                             — rendered newest first
  *   _note-<slug>.md           notes about the log itself — rendered last
  *
+ * A dated entry may open with YAML front matter (status, verdict, measure … —
+ * the schema is in experiments/README.md, the reader in lib/experiment-header.mjs,
+ * the gate in experiments-lint.mjs; #5939). It is data for the index and the
+ * public pages, not prose: it is dropped here, so EXPERIMENTS.md reads as before.
+ *
  *   node scripts/eval/build-experiments.mjs           # write EXPERIMENTS.md (on main, or with --force)
  *   node scripts/eval/build-experiments.mjs --check   # exit 1 if EXPERIMENTS.md is stale or a file is malformed
  *   node scripts/eval/build-experiments.mjs --print   # the generated text on stdout, write nothing
@@ -40,6 +45,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { splitHeader } from './lib/experiment-header.mjs';
 
 const DIR = path.dirname(fileURLToPath(import.meta.url));
 const SRC = path.join(DIR, 'experiments');
@@ -76,7 +82,7 @@ export function buildExperiments(srcDir = SRC) {
 
   const sections = [];
   for (const n of [...series, ...dated, ...notes]) {
-    const text = read(n);
+    const text = stripPriorArt(splitHeader(read(n)).body);
     const first = text.split('\n')[0];
     if (!/^## /.test(first)) problems.push(`${n}: must start with a '## ' heading, starts with: ${first.slice(0, 60)}`);
     const m = n.match(DATED);
@@ -87,6 +93,20 @@ export function buildExperiments(srcDir = SRC) {
 
   const text = `${withBanner.trimEnd()}\n\n---\n\n${sections.join('\n\n')}\n`;
   return { text, problems, counts: { series: series.length, dated: dated.length, notes: notes.length } };
+}
+
+/**
+ * The prior-art hook (.claude/hooks/prior-art-guard.mjs) makes every new file
+ * here carry a `PRIOR ART: …` line, and sessions put it on line 1 — bare or in
+ * an HTML comment — above the `## YYYY-MM-DD` heading. It is provenance for the
+ * hook, not part of the entry: drop leading PRIOR ART lines (and the blank lines
+ * after them) before the heading check, and keep them out of EXPERIMENTS.md.
+ */
+export function stripPriorArt(text) {
+  const lines = text.split('\n');
+  let i = 0;
+  while (i < lines.length && (/^\s*(<!--\s*)?PRIOR ART:.*$/.test(lines[i]) || (i > 0 && lines[i].trim() === ''))) i++;
+  return i ? lines.slice(i).join('\n') : text;
 }
 
 /**
@@ -102,7 +122,7 @@ export function adoptOrphans(outPath = OUT, srcDir = SRC) {
   const known = new Set();
   for (const n of fs.readdirSync(srcDir)) {
     if (!n.endsWith('.md') || n === 'README.md') continue;
-    known.add(fs.readFileSync(path.join(srcDir, n), 'utf8').split('\n')[0].trim());
+    known.add(stripPriorArt(splitHeader(fs.readFileSync(path.join(srcDir, n), 'utf8')).body).split('\n')[0].trim());
   }
   const lines = text.split('\n');
   const starts = lines.flatMap((l, i) => (/^## /.test(l) ? [i] : []));

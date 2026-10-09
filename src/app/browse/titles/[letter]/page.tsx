@@ -14,6 +14,18 @@ import BrowsePager, { browsePageHref } from '@/components/browse/BrowsePager';
 const PER_PAGE = 1000;
 
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+// Titles that begin with no Latin letter (Chinese, Greek, Arabic, digits,
+// "[Blockbook] …") — 12,157 of 42,072 live books on 2026-10-04, which the
+// A–Z letters alone left with no crawlable index page at all.
+const OTHER = 'OTHER';
+const OTHER_LABEL = 'Other scripts & numbers';
+
+function bucketLabel(l: string): string {
+  return l === OTHER ? OTHER_LABEL : l;
+}
+function bucketPath(l: string): string {
+  return l === OTHER ? 'other' : l;
+}
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
 export const dynamicParams = true;
@@ -36,12 +48,17 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
   const { letter } = await params;
   const page = parsePage((await searchParams).page);
   const l = letter.toUpperCase();
+  const pageSuffix = page > 1 ? ` (page ${page})` : '';
   return {
-    title: `Books starting with ${l}${page > 1 ? ` (page ${page})` : ''} - Source Library`,
-    description: `Browse all translated books in Source Library whose titles begin with the letter ${l}.`,
+    title: l === OTHER
+      ? `Books with titles in other scripts${pageSuffix} - Source Library`
+      : `Books starting with ${l}${pageSuffix} - Source Library`,
+    description: l === OTHER
+      ? 'Browse every book in Source Library whose title begins with a non-Latin script, a number, or a bracket: Chinese, Greek, Arabic, Hebrew and more.'
+      : `Browse every book in Source Library whose title begins with the letter ${l}.`,
     // Each page is its own canonical — pointing page 2+ at page 1 would tell
     // crawlers to drop the books only those pages link to.
-    alternates: { canonical: browsePageHref(`/browse/titles/${l}`, page) },
+    alternates: { canonical: browsePageHref(`/browse/titles/${bucketPath(l)}`, page) },
   };
 }
 
@@ -49,7 +66,7 @@ export default async function BrowseTitlesPage({ params, searchParams }: PagePro
   const { letter } = await params;
   const page = parsePage((await searchParams).page);
   const l = letter.toUpperCase();
-  if (l.length !== 1 || !/[A-Z]/.test(l)) notFound();
+  if (l !== OTHER && (l.length !== 1 || !/[A-Z]/.test(l))) notFound();
 
   const h = await headers();
   const tenantId = h.get('x-tenant-id');
@@ -75,12 +92,14 @@ export default async function BrowseTitlesPage({ params, searchParams }: PagePro
   let total = 0;
   try {
     if (tenantId) {
-      books = await tenantBrowseTitles(tenantId, l);
+      // Partner rooms keep their own translated-only A–Z; no "other" bucket.
+      books = l === OTHER ? [] : await tenantBrowseTitles(tenantId, l);
       total = books.length;
     } else {
+      // Every live book, translated or not: this index is how search engines
+      // reach books that no collection or related-books rail links to (#2266).
       const result = await browseBooks({
-        titlePrefix: l,
-        hasTranslation: true,
+        ...(l === OTHER ? { titleNonLatin: true } : { titlePrefix: l }),
         sort: 'title',
         offset: (page - 1) * PER_PAGE,
         limit: PER_PAGE,
@@ -115,7 +134,7 @@ export default async function BrowseTitlesPage({ params, searchParams }: PagePro
       <SiteHeader variant="light" breadcrumbs={[{ label: 'Browse', href: base }]} />
       <div className="max-w-6xl mx-auto px-6 md:px-12 py-12 md:py-20">
         <h1 className="text-3xl md:text-4xl font-display mb-2" style={{ color: 'var(--text-primary)' }}>
-          Titles: {l}
+          Titles: {bucketLabel(l)}
         </h1>
         <p className="text-sm mb-8" style={{ color: 'var(--text-muted)' }}>
           {total.toLocaleString('en-US')} {total === 1 ? 'book' : 'books'}
@@ -138,16 +157,28 @@ export default async function BrowseTitlesPage({ params, searchParams }: PagePro
               {lt}
             </Link>
           ))}
+          {!tenantId && (
+            <Link
+              href={`${base}/titles/other`}
+              className={`h-8 px-2.5 flex items-center justify-center rounded text-xs font-medium transition-colors ${l === OTHER ? 'text-white' : 'hover:opacity-70'}`}
+              style={l === OTHER
+                ? { background: 'var(--text-primary)', color: '#fff' }
+                : { color: 'var(--text-muted)' }
+              }
+            >
+              {OTHER_LABEL}
+            </Link>
+          )}
         </div>
 
         {books.length > 0 ? (
           <>
             <BrowseViewToggle books={books} />
-            <BrowsePager basePath={`${base}/titles/${l}`} currentPage={page} totalPages={totalPages} />
+            <BrowsePager basePath={`${base}/titles/${bucketPath(l)}`} currentPage={page} totalPages={totalPages} />
           </>
         ) : (
           <p className="py-12 text-center" style={{ color: 'var(--text-muted)' }}>
-            No books found starting with {l}.
+            No books found {l === OTHER ? 'in this index' : `starting with ${l}`}.
           </p>
         )}
       </div>

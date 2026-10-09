@@ -17,6 +17,11 @@
  * fabricated image — a different picture is not the picture the caption
  * describes — so we drop the embed and leave the prose.
  *
+ * A "grounding edit" replaces an exact span of the streamed text — a dropped
+ * sentence, an unsupported quote's quotation marks, an attached page citation,
+ * a rewritten image caption. The checks that produce them live in
+ * src/lib/embassy/grounding.ts (#5904).
+ *
  * Client-safe: no server imports.
  */
 
@@ -148,6 +153,32 @@ function isOwnImageHost(url: string): boolean {
   } catch {
     return false;
   }
+}
+
+/**
+ * Apply the grounding pass's edits (src/lib/embassy/grounding.ts, #5904): each
+ * `find` is an exact substring of the streamed text at offset `at`, and the
+ * edits are in document order. An edit is applied at its offset (shifted by
+ * the edits before it) when the text there still matches — so a short list
+ * item that also occurs inside an earlier paragraph is never edited in the
+ * wrong place — else at the first match after the previous edit, else skipped.
+ * Apply BEFORE citation fixes and image removals: the edits were computed on
+ * the raw streamed text.
+ */
+export function applyGroundingEdits(text: string, edits: Array<{ find: string; replace: string; at?: number }>): string {
+  let out = text;
+  let cursor = 0;
+  let shift = 0;
+  for (const edit of edits ?? []) {
+    if (!edit?.find) continue;
+    const expected = typeof edit.at === 'number' ? edit.at + shift : -1;
+    const at = expected >= cursor && out.startsWith(edit.find, expected) ? expected : out.indexOf(edit.find, cursor);
+    if (at === -1) continue;
+    out = out.slice(0, at) + edit.replace + out.slice(at + edit.find.length);
+    cursor = at + edit.replace.length;
+    shift = at - (edit.at ?? at) + edit.replace.length - edit.find.length;
+  }
+  return out;
 }
 
 export function applyImageRemovals(text: string, removeUrls: string[]): string {

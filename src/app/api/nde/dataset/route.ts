@@ -52,7 +52,7 @@ export async function GET() {
     '@id': 'https://sourcelibrary.org/api/nde/dataset',
     name: {
       '@language': 'en',
-      '@value': 'Bibliotheca Philosophica Hermetica — Source Library Digital Edition',
+      '@value': 'Bibliotheca Philosophica Hermetica: Source Library Digital Edition',
     },
     alternateName: 'BPH Collection on Source Library',
     description: {

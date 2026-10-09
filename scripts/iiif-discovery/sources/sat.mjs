@@ -146,9 +146,13 @@ await withMongo(async (db) => {
       source: SOURCE,
       origin_library: institution,
       title,
-      author: entry.attribution || 'Unknown',
+      // SAT's `attribution` is the HOLDING LIBRARY and `cdate` is when the catalogue record was made, not the
+      // author or the print date: 40 BSB prints (a 975 dhāraṇī, a 673 Diamond Sutra) were imported as
+      // "Bayerische Staatsibliothek", published "2018-02-03 00:52" (#6056). Leave both unknown here; the
+      // importer reads author and date from the manifest itself.
+      author: 'Unknown',
       language: entry.lang || 'Multiple',
-      date_text: entry.cdate || null,
+      date_text: null,
       page_count: null, // Don't fetch each manifest — too slow for 8K items
       categories: ['buddhism', 'religious-texts'],
       provider_name: 'SAT Daizokyo',
@@ -158,6 +162,8 @@ await withMongo(async (db) => {
         fascicle: entry.fascicle,
         collection: entry.cname,
         index: entry.index,
+        holding_attribution: entry.attribution ?? null,
+        catalogue_record_date: entry.cdate ?? null,
       },
     });
 

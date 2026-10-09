@@ -31,7 +31,7 @@ export const STAGE_DETAILS: StageDetail[] = [
     backend: 'Hetzner server (external script) + cron check',
     notes: [
       'Generates thumbnails; split detection uses aspect ratio analysis to identify two-page spreads',
-      '24h timeout — OCR works on original IIIF URLs if archiving stalls',
+      '24h timeout: OCR works on original IIIF URLs if archiving stalls',
     ],
   },
   {
@@ -58,7 +58,7 @@ export const STAGE_DETAILS: StageDetail[] = [
     costPerPage: '~$0.005/book',
     model: 'gemini-3-flash-preview',
     notes: [
-      'Only applies changes at medium+ confidence — low-confidence results stored but don\'t overwrite',
+      'Only applies changes at medium+ confidence; low-confidence results are stored but don\'t overwrite',
       'source_work_dates tracks compositional layers (e.g. Plato\'s Timaeus: composition c. 360 BCE, Ficino translation 1484)',
       'Non-blocking: failures skip ahead so they don\'t stall translation',
     ],
@@ -83,11 +83,11 @@ export const STAGE_DETAILS: StageDetail[] = [
     name: 'Translation',
     color: 'var(--accent-rust)',
     description: 'Pages translated to English via Lambda FIFO queue. Each page receives the previous page\'s translation as context for terminology consistency and sentence continuity.',
-    backend: 'Lambda workers (SQS FIFO queue only — never Batch API)',
+    backend: 'Lambda workers (SQS FIFO queue only, never Batch API)',
     costPerPage: '~$0.002',
     model: 'gemini-3-flash-preview',
     notes: [
-      'FIFO queue ensures sequential page order per book — critical for context continuity',
+      'FIFO queue ensures sequential page order per book, which is critical for context continuity',
       'English books (pre-1700) get modernized instead of translated',
       'Nearly-done books (90%+ translated) are prioritized',
       'Backpressure: max 100 active Lambda translation jobs',
@@ -124,12 +124,12 @@ export const STAGE_DETAILS: StageDetail[] = [
     id: 'images',
     name: 'Image Extraction',
     color: 'var(--status-warning)',
-    description: 'AI vision scans pages with visual content for illustrations, emblems, diagrams, and decorative elements. Only pages with visual page types (illustration, diagram, map, frontispiece, mixed) or OCR-detected images are processed — text-only and blank pages are skipped.',
+    description: 'AI vision scans pages with visual content for illustrations, emblems, diagrams, and decorative elements. Only pages with visual page types (illustration, diagram, map, frontispiece, mixed) or OCR-detected images are processed. Text-only and blank pages are skipped.',
     backend: 'Lambda workers (SQS standard queue)',
     costPerPage: '~$0.002 per scanned page',
     model: 'gemini-3-flash-preview',
     notes: [
-      'Filters by page_type and <detected-images> OCR tags — skips ~80-90% of pages',
+      'Filters by page_type and <detected-images> OCR tags; skips ~80-90% of pages',
       'Gallery images require quality >= 0.5 and a bounding box',
       'Rich metadata per detection: subjects, figures, symbols, style, technique, museum-style label',
       'Backpressure: max 10 active image extraction jobs',

@@ -1,0 +1,222 @@
+[
+ {
+  "tag": "caag",
+  "page": 103,
+  "kraken_letters": 1198,
+  "kraken": {
+   "verdict": "verified",
+   "verdict_k6": "verified",
+   "f1": 0.494,
+   "control": 0.196,
+   "best_shift": 0,
+   "f1_k6": 0.339,
+   "control_k6": 0.052
+  },
+  "flash": {
+   "verdict": "verified",
+   "verdict_k6": "verified",
+   "f1": 0.519,
+   "control": 0.237,
+   "f1_k6": 0.402,
+   "control_k6": 0.081
+  }
+ },
+ {
+  "tag": "caag",
+  "page": 198,
+  "kraken_letters": 1179,
+  "kraken": {
+   "verdict": "verified",
+   "verdict_k6": "verified",
+   "f1": 0.526,
+   "control": 0.234,
+   "best_shift": 0,
+   "f1_k6": 0.395,
+   "control_k6": 0.073
+  },
+  "flash": {
+   "verdict": "verified",
+   "verdict_k6": "verified",
+   "f1": 0.535,
+   "control": 0.248,
+   "f1_k6": 0.416,
+   "control_k6": 0.075
+  }
+ },
+ {
+  "tag": "caag",
+  "page": 259,
+  "kraken_letters": 986,
+  "kraken": {
+   "verdict": "uninformative",
+   "verdict_k6": "uninformative",
+   "f1": 0.022,
+   "control": 0.02,
+   "best_shift": 0,
+   "f1_k6": 0.011,
+   "control_k6": 0.005
+  },
+  "flash": {
+   "verdict": "uninformative",
+   "verdict_k6": "uninformative",
+   "f1": 0.026,
+   "control": 0.024,
+   "f1_k6": 0.016,
+   "control_k6": 0.01
+  }
+ },
+ {
+  "tag": "caag",
+  "page": 311,
+  "kraken_letters": 1216,
+  "kraken": {
+   "verdict": "verified",
+   "verdict_k6": "verified",
+   "f1": 0.46,
+   "control": 0.162,
+   "best_shift": 0,
+   "f1_k6": 0.304,
+   "control_k6": 0.024
+  },
+  "flash": {
+   "verdict": "verified",
+   "verdict_k6": "verified",
+   "f1": 0.376,
+   "control": 0.201,
+   "f1_k6": 0.225,
+   "control_k6": 0.053
+  }
+ },
+ {
+  "tag": "caag",
+  "page": 335,
+  "kraken_letters": 1132,
+  "kraken": {
+   "verdict": "verified",
+   "verdict_k6": "verified",
+   "f1": 0.466,
+   "control": 0.165,
+   "best_shift": 0,
+   "f1_k6": 0.34,
+   "control_k6": 0.028
+  },
+  "flash": {
+   "verdict": "verified",
+   "verdict_k6": "verified",
+   "f1": 0.398,
+   "control": 0.199,
+   "f1_k6": 0.27,
+   "control_k6": 0.046
+  }
+ },
+ {
+  "tag": "schneider",
+  "page": 13,
+  "kraken_letters": 4465,
+  "kraken": {
+   "verdict": "verified",
+   "verdict_k6": "verified",
+   "f1": 0.691,
+   "control": 0.365,
+   "best_shift": 0,
+   "f1_k6": 0.531,
+   "control_k6": 0.083
+  },
+  "flash": {
+   "verdict": "weak",
+   "verdict_k6": "uninformative",
+   "f1": 0.332,
+   "control": 0.275,
+   "f1_k6": 0.097,
+   "control_k6": 0.049
+  }
+ },
+ {
+  "tag": "schneider",
+  "page": 52,
+  "kraken_letters": 4191,
+  "kraken": {
+   "verdict": "verified",
+   "verdict_k6": "verified",
+   "f1": 0.734,
+   "control": 0.37,
+   "best_shift": 0,
+   "f1_k6": 0.601,
+   "control_k6": 0.103
+  },
+  "flash": {
+   "verdict": "coverage",
+   "verdict_k6": "uninformative",
+   "f1": 0.289,
+   "control": 0.266,
+   "f1_k6": 0.071,
+   "control_k6": 0.053
+  }
+ },
+ {
+  "tag": "schneider",
+  "page": 66,
+  "kraken_letters": 4001,
+  "kraken": {
+   "verdict": "verified",
+   "verdict_k6": "verified",
+   "f1": 0.731,
+   "control": 0.35,
+   "best_shift": 0,
+   "f1_k6": 0.622,
+   "control_k6": 0.088
+  },
+  "flash": {
+   "verdict": "weak",
+   "verdict_k6": "weak",
+   "f1": 0.384,
+   "control": 0.331,
+   "f1_k6": 0.132,
+   "control_k6": 0.073
+  }
+ },
+ {
+  "tag": "schneider",
+  "page": 105,
+  "kraken_letters": 4001,
+  "kraken": {
+   "verdict": "verified",
+   "verdict_k6": "verified",
+   "f1": 0.675,
+   "control": 0.366,
+   "best_shift": 0,
+   "f1_k6": 0.525,
+   "control_k6": 0.096
+  },
+  "flash": {
+   "verdict": "weak",
+   "verdict_k6": "weak",
+   "f1": 0.385,
+   "control": 0.331,
+   "f1_k6": 0.138,
+   "control_k6": 0.075
+  }
+ },
+ {
+  "tag": "schneider",
+  "page": 140,
+  "kraken_letters": 3801,
+  "kraken": {
+   "verdict": "verified",
+   "verdict_k6": "verified",
+   "f1": 0.686,
+   "control": 0.359,
+   "best_shift": 0,
+   "f1_k6": 0.571,
+   "control_k6": 0.104
+  },
+  "flash": {
+   "verdict": "weak",
+   "verdict_k6": "weak",
+   "f1": 0.392,
+   "control": 0.342,
+   "f1_k6": 0.16,
+   "control_k6": 0.092
+  }
+ }
+]

@@ -108,7 +108,7 @@ export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullR
           <button
             onClick={() => setZoomOpen(true)}
             className="flex items-center gap-1.5 px-2.5 py-1.5 bg-black/60 hover:bg-black/80 text-white text-xs rounded-lg backdrop-blur-sm transition-all"
-            title="Open deep zoom — stream the full-resolution image tile by tile"
+            title="Open deep zoom: stream the full-resolution image tile by tile"
           >
             <Search className="w-3.5 h-3.5" />
             Deep zoom

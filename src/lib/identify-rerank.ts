@@ -1,5 +1,5 @@
 import { Db } from 'mongodb';
-import { supabase } from './supabase';
+import { GLOBAL_SCOPE, matchGalleryText } from './tenant-search-scope';
 import { getQueryEmbedding } from './semantic-search';
 import { getNextApiKey } from './gemini-client';
 import { logGeminiCall, outputTokensFrom } from './gemini-logger';
@@ -74,12 +74,12 @@ export async function getGalleryCandidatesByText(queryText: string, limit = 10):
   const embedding = await getQueryEmbedding(queryText);
   if (!embedding) return [];
 
-  const { data, error } = await supabase.rpc('match_gallery_text', {
-    query_embedding: JSON.stringify(embedding),
-    match_threshold: 0.2,
-    match_count: limit,
-  }).abortSignal(AbortSignal.timeout(8000));
-  if (error || !data) return [];
+  // GLOBAL_SCOPE: only /api/identify calls this, and the proxy refuses that
+  // route on partner hosts (tenant-global-paths.ts).
+  const { rows: data, error } = await matchGalleryText(embedding, {
+    scope: GLOBAL_SCOPE, threshold: 0.2, count: limit, timeoutMs: 8000,
+  });
+  if (error) return [];
 
   return (data as GalleryTextMatch[]).map(m => ({
     id: `gallery-${m.id}`,

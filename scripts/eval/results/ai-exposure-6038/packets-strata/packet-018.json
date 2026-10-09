@@ -1,0 +1,33 @@
+{
+ "packet": 18,
+ "prompt_version": "ai-exposure-6038-v1",
+ "ids": [
+  "6a949bf931b41d9c5744de1a",
+  "6a490ee2a9e39181572dcfc1",
+  "69c75d6d6a0f3d112faf8afb",
+  "decoy-35",
+  "69e7ac0e5f1a22ab19aa2dbd",
+  "69c1bc818522835be8463800",
+  "69c1bdb08522835be846b4a5",
+  "69f32887aeeee0fa38c64839",
+  "69f13430c8d07a681065352c",
+  "6a2032c918654bf8e19037c4",
+  "6a43b1413c91e2a63d4daf43",
+  "69b221c408069e96e84310d0",
+  "69f33c41876dd827cbc5a088",
+  "69c1bb6c8522835be845fafb",
+  "6a2032ff18654bf8e1903fa3",
+  "6a94d257c3eaca063026666e",
+  "69c1b9778522835be84511b1",
+  "6a46cae181ea9ca9ee5648be",
+  "69e7882d4a6785cfd60cfa2f",
+  "6a3c5f3b879008ba7e153836",
+  "6a3c679b39b4508b04e376ad",
+  "decoy-36",
+  "6956eb52f23ebf30578dbb85",
+  "6a44de68e46c70aa65d3db2d",
+  "6a94989b31b41d9c5744c823",
+  "6a42e5b906e6ead3ac539cb6"
+ ],
+ "prompt": "You are helping a library find out which of its historical books are already known to AI models. Answer each question from your own memory only. Be honest: \"no\" and \"unknown\" are good answers. Never invent a quotation.\n\nFor each numbered book below, give:\n- \"knows_of\": do you know OF this work — who wrote it and roughly what it is? \"yes\", \"no\" or \"unsure\".\n- \"self_familiar\": did you encounter the TEXT of this work in your training data, not just references to it? Distinguish knowing OF a book from having seen its text. \"yes\", \"no\" or \"unsure\".\n- \"opening\": one sentence from the opening of the work, verbatim, in its original language and script, exactly as you remember it — or the string \"unknown\" if you cannot quote it from memory. Do not translate, paraphrase or reconstruct.\n\nBooks:\n1. Title: Manuscript 8 Brahmottara Khanda ( Skanda Purana, Manuscript In Sharada) | Language: Sanskrit\n2. Title: Mellificium. Scholasticum. S. Rei. Scholasticae. Cum. Apiaria. Collationem. Quidam. Discentium. Cras. Finitis. Sacris. Antemeridianis. In. Auditorio. Superiore. Pro. Suis. Viribus. Et. Quantum. Fert. Tempus. Instituent.: | Author: Schirmer, Michael | Language: Latin\n3. Title: System der stoischen Philosophie | Author: Tiedemann, Dieterich | Year: 1776 | Language: German\n4. Title: Tractatus de harmonia mundi interiori | Author: Fridericus Ottonius Brennerus | Year: 1661 | Language: Latin\n5. Title: Kanjur 'Bum Ja | Author: Neyphug Monastery | Year: 1700 | Language: Tibetan\n6. Title: Dowry contract | Year: 1838 | Language: Hebrew and Aramaic\n7. Title: Abbidhammâvatāra | Language: Pali\n8. Title: Mevâhibü'l-hallâk fî merâtibi'l-ahlâk | Author: Mustafa Çelebi Celâlzade, -1567 | Language: Ottoman Turkish\n9. Title: Fo shuo da bao ji jing | Author: Bayerische Staatsibliothek | Year: 2018 | Language: Chinese\n10. Title: [Calendar] Or. 7132 | Author: Imām Haji Muḥammad Maḥbūb ibn ʿAbd al-Ḥamīd ibn Muḥammad Danūri ibn Muḥammad Ḥabīb | Year: 1850 | Language: Arabic\n11. Title: Foedus Dei Cum Abramo Symbolicum: Genes. XV, 9. 10. 17. 18., Praeside Dn. Valentino Velthem, SS. Theol. Doctore In Celeberrima Salana Dissertatione Inaugurali d. 6. Augusti A.O.R. MDCXCVIII. P.P. M. Joh. David Schieferde | Author: Veltheim, Valentin | Language: Latin\n12. Title: Caesar, Commentarii — De Bello Gallico and De Bello Civili (Aldine Press) | Author: Julius Caesar | Year: 1513 | Language: Latin\n13. Title: Ḥawāshin ʻalá fann al-umūr al-ʻāmmah min Sharḥ al-Mawāqif | Author: Mīr Zāhid, Muḥammad ibn Muḥammad, -1689 or 1690 | Year: 1700 | Language: Arabic\n14. Title: Liturgical poems | Year: 1750 | Language: Hebrew and Aramaic\n15. Title: [Six flags from Western Java : Copies on paper of the Arabic inscriptions on four of the flags; ...] Or. 7605 | Year: 1304 | Language: Arabic\n16. Title: MN 003356 Destroyed Sharada Manuscripts At Kurukshetra University | Language: Sanskrit\n17. Title: Khulāṣat al-Ashʻār va Zubdat al-Afkār | Author: Kāshānī, Mīr Taqī al-Dīn, active 17th centuryکاشانى، مير تقى الدين | Year: 1628 | Language: Persian\n18. Title: Tractatus de fortuitis casibus. Nunc primum in lucem editus | Author: Medici, Sebastiano | Language: Latin\n19. Title: pad gling bka' 'bum las/ mnal lam dang snang skor | Author: Drametse Monastery Collection | Year: 1700 | Language: Tibetan\n20. Title: 金剛般若波羅蜜經 (vol 1) | Author: 菩提流支 | Language: Chinese\n21. Title: 御定孝經衍義·卷四十五~卷五十 (vol 43) | Author: 葉方藹 | Language: Chinese\n22. Title: Lexicon alchemicum novum et emendatum | Author: Ioannes Iacobus Hartungus | Year: 1679 | Language: Latin\n23. Title: Recueil de traités de Kabbale (Hebrew Manuscript) | Author: Various Kabbalists | Year: 1550 | Language: Hebrew\n24. Title: Thomae Cornelii Consentini Progymnasmata physica ad illustrissimum & excellentissimum D. Dominicum Franciscum Marinum Caracciolum Abellinatum principem | Author: Cornelio, Tommaso | Language: Latin\n25. Title: KRI 252 B Vijeshwar Panchang In Sharada Missing Pages AT KRI Srinagar | Language: Sanskrit\n26. Title: Disputationum theologicarum in primam partem divi Thomae tomi duo | Author: Arriaga, Rodrigo de | Language: Latin\n\nReturn ONLY a JSON array with one object per book, in order: [{\"i\":1,\"knows_of\":\"...\",\"self_familiar\":\"...\",\"opening\":\"...\"}, ...]"
+}

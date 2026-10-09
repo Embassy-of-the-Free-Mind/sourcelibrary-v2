@@ -1,0 +1,520 @@
+[
+  {
+    "book_id": "69e78aa54a6785cfd60d497d",
+    "slot": 1,
+    "title": "u rgyan padma'i rnam thar/ rin po che 'od 'bar ba (in Tibetan Headless letter)",
+    "tradition": "bhutan-tibetan",
+    "shelf_fit": "fits",
+    "shelf_note": "A dbu med manuscript of a Padmasambhava biography (chapter 2 colophon on p.5: ཨྱོན་པདྨའི་རྣམ་ཐར་ལས་ ... ལེའུ་སྟེ་གཉིས་པའོ; a chapter on prophesied treasure-revealers on p.188) from the Ogyen Choling collection. It belongs on a Bhutanese/Tibetan Nyingma shelf.",
+    "rights_flag": null,
+    "structure_note": "Every image is a board with three loose leaves (I5). The site's pages interleave: p.5's leaf 1 ends 'འདོམ་ཅན་གྱི་མཚོ་' and continues on p.6's leaf 1 'ཁར་ཕྱིན་པར་གྱུར་'. p.6 leaf 1 continues on p.5 leaf 2, and p.5 leaf 3 continues on p.6 leaf 3. So p.6 holds the versos of p.5's rectos, and no single page reads straight through. The OCR carries <leaf-break/> markers and the translation keeps the leaves apart. Only 8 of 236 pages are translated; all 236 have OCR. 104 repeats among 107 printed numbers fit three leaves per frame with marginal numerals that repeat; I read it as the board structure, not a splice. The images are only 1536 px wide for three leaves of headless script, which is too small for word-level checking.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 5,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "འདོམ་ཅན་གྱི་མཚོ་",
+            "image": "cannot resolve at this resolution; p.6's praise names the lake འོ་མ་ཅན་གྱི་རྒྱ་མཚོ (milk lake)",
+            "problem": "lake name probably misread (milk lake → 'dom can')",
+            "severity": "minor",
+            "class": "O6"
+          },
+          {
+            "ocr": "དེ་དག་ཉོངོས་དགྲ་དཔུང་འཇོཾས་པའི་ཕྱིར་",
+            "image": "illegible at this resolution",
+            "problem": "'ཉོངོས' is a garble of ཉོན་མོངས (afflictions)",
+            "severity": "minor",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "བཟང་པོ་མཆོག་གི་བླ་མཆོད་ལ་བཤེས་སོ་",
+            "english": "...is the supreme teacher of the excellent Goodness.",
+            "problem": "Bzang po mchog is the king's name (p.6 translates it 'King Zangpo Chok'). The clause says he was made the king's chaplain (bla mchod); the English turns it into an abstraction.",
+            "severity": "moderate",
+            "class": "T6"
+          },
+          {
+            "source": "བདེ་བ་ཆེན་པོའི་ཞིང་ཁཾས་",
+            "english": "the realm of Great Bliss <note>original: \"Sukhavati\"</note>",
+            "problem": "The note says the original reads 'Sukhavati'; the OCR reads bde ba chen po, not bde ba can",
+            "severity": "minor",
+            "class": "T10"
+          },
+          {
+            "source": "དཔག་མེད་ལ་ཁྱེའུ་ལྔ་ཡིས་དྲིས་པ་ ... ཅེས་གསོལ་བས་",
+            "english": "Five youths questioned Amitabha",
+            "problem": "On p.6 the youths tell the king to ask Amitabha, and the speech here asks about 'these five youths', so the king is likely the questioner. Doubtful agent.",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      },
+      {
+        "page_number": 6,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཐུབ་པའི་དབང་པོ་དྲི་མེད་སྣ་ཞེས་",
+            "english": "the one called \"Mighty Sage of Stainless Nose\"",
+            "problem": "A proper name rendered literally. 'sna' is probably a misread (e.g. zla, moon), and the result is absurd.",
+            "severity": "minor",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      },
+      {
+        "page_number": 104,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "མཛེ་མོ་ཁྱུ་༡་མཚོ་ཡིན་བསྡད་པ་ལ་",
+            "image": "not resolvable at this resolution",
+            "problem": "Probably མཛོ་མོ་ཁྱུ་གཅིག་འཚོ (herding dzo cattle). The OCR gives 'leper women' and 'lake', and the translation follows it.",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "མུ་གེ (passim: མུ་གེ་རལ་པ, མུ་གེ་བསྟན་བསྡུས, མུ་གེ་བླ་མཆོད)",
+            "english": "\"Famine Tresses\", \"The condensed Bön of famine\", \"famine priests <note>original: \"mu ge bla mchod\"</note>\"",
+            "problem": "mu ge is a name or party in the Bön/heretic debate, probably mu stegs (tirthika). Rendered as 'famine' throughout, it gives a reader nonsense ('famine priests' summoned to the king) and hides that these are the heretic priests.",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "བུ་མོ་དེ་ལ་སྐྱེས་པའི་དབུ་༡་དང་ ཉ་མོ་ཀེ་ཤ་གཉིས་ཀྱིས་བཏུལ་ན་ཐུལ་",
+            "english": "If that daughter and the one with one head and the fish Keshi tamed them together",
+            "problem": "'the one born to that girl' (her son) becomes 'the one with one head'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "མཛེ་མོ་ཁྱུ་༡་མཚོ་ཡིན་བསྡད་པ་ལ་",
+            "english": "While she sat there among a group of lepers by a lake",
+            "problem": "Built on the garbled OCR: she was herding a herd, not sitting among lepers by a lake",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      },
+      {
+        "page_number": 188,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "གྱངོ་༡་ཡོང་ན་ཐོ་ཕྱིར་རྟེན་དངོ་མེད་པས་ན་",
+            "english": "If a single wall <note>uncertain: \"gyang\"</note> comes, because there is no actual support for the ghost",
+            "problem": "Garbled clause rendered as confident nonsense, with only a weak hedge",
+            "severity": "minor",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "These are the right leaves, transcribed as separate leaves with seam markers, but each site page is a recto/verso jumble of three leaves. The images are too small to check the headless script word by word. The English is fluent and mostly holds, but p.104 turns the 'mu ge' heretics into 'famine' throughout.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      6
+    ],
+    "reader_summary": "A headless-script manuscript of a Padmasambhava biography (Amitābha's emanations, the lotus-born youths and King Zangpo Chok, later prophecies of treasure-revealers). The transcription is of the right leaves, but each page shows three leaves, and only 8 of 236 pages have English. The English follows the narrative but misreads proper names, and on p.104 it renders a recurring name as 'famine'. Treat names and rare terms as unchecked."
+  },
+  {
+    "book_id": "69e7ac8c5f1a22ab19aa8f60",
+    "slot": 2,
+    "title": "Phurdrup Gonpa Thor bu bKa' thang sde lnga",
+    "tradition": "bhutan-tibetan",
+    "shelf_fit": "fits",
+    "shelf_note": "A dbu can manuscript of the bKa' thang sde lnga (the Five Chronicles revealed by O rgyan gling pa): the princess's hell-journey chapter (ch.11), the rivers of empowerment and the founding of Samye (ch.10), the Vimalakirti non-duality list and translation history (ch.14 of the lha 'dre/lha chos section), and prophecies. It is a core Nyingma treasure text.",
+    "rights_flag": null,
+    "structure_note": "Every image is a board with three leaves (I5), each opening with ༄༅། on the rectos; the OCR marks <leaf-break/> between them. The leaves on one page are not consecutive (p.13: leaf 1 ends on the road to Nepal, leaf 2 is the hell scene, leaf 3 closes ch.11). 232 of 257 pages are translated. The one printed number means no backstep data. Chapter numbering restarts (ch.11 on p.13, ch.10 on p.68, ch.14 on p.166), which is expected for five books bound as one.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 13,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "༔ཐཐཉཉKK༔།༔",
+            "image": "a row of gter cipher marks after the ch.11 colophon",
+            "problem": "Latin 'KK' emitted in Tibetan text for the cipher glyphs",
+            "severity": "minor",
+            "class": "O10"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "སྐྱེས་པ་བརྒྱ་ལ་སྙིང་རྗེ་མི་འདུག་པས༔",
+            "english": "Since there is no compassion for a hundred men",
+            "problem": "The source means 'you hundred men have no compassion'; the English reverses who lacks compassion",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "ཡུམ་ནི་ཤཀྱ་ཁྲི་མ་དང་༔",
+            "english": "the mother Shakyadevi",
+            "problem": "The mother's name (Shakya Trima) is replaced by Shakyadevi, the name already used for the Nepalese consort, so two people merge",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "བུ་མོ་འདི་འདྲའི་གུད་པ་བྱ་ལམ་བྱེད་ཕྱོགས་དོར༔",
+            "english": "The decline of such a girl is the way of the path; let her cast aside the directions.",
+            "problem": "Fluent nonsense for a prayer that the girl's misery be removed",
+            "severity": "minor",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "<meta>continues from previous page</meta> opens the English",
+            "severity": "minor",
+            "class": "T15"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 68,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཀུ་མ་ར་ཛ་དང་མཁར་ཆེན་མཚོ་རྒྱལ་ལ",
+            "english": "Jnanakumara, and Kharchen Tsogyal",
+            "problem": "The source has Kumaraja; the translator substitutes the expected figure",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 166,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "KKKK༔",
+            "image": "cipher marks after the ch.14 colophon",
+            "problem": "Latin letters for Tibetan cipher glyphs",
+            "severity": "minor",
+            "class": "O10"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ལམ་ཀར་བཤེགྶ་པ་བམ་པོ་བཅྭ་ལྔ་བསྒྱུར༔",
+            "english": "The *Proceeding on the Path* was translated in fifteen volumes.",
+            "problem": "This is the Laṅkāvatāra-sūtra (Lang kar gshegs pa); in a list of translated scriptures the English invents a non-existent title",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "ཆོས་ལ་སེམས་ཅན་དྲི་མ་དང་བྲལ་ལ༔",
+            "english": "if sentient beings are free from the stains of the Dharma",
+            "problem": "Inverted: the Dharma is free of the stains of beings, not beings free of the Dharma's stains",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "རང་གི་ལས་ལ་གྱུར་པས་མཁང་དུ་མེད༔ བཟོད་ཅིང་མ་མཁང་",
+            "english": "there is no reason to be clever. Be patient, do not be clever",
+            "problem": "'mkhang' (probably mkhon, resentment) rendered as 'clever'; the teaching is 'bear it without resentment'",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 195,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "མི་ཅེས་ཚེ་ཟད་མང་དུ་འབྱུང༔",
+            "image": "མི་ཤེས་ཚེ་ཟད་...",
+            "problem": "ཤེས misread as ཅེས",
+            "severity": "minor",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "བོད་ཀྱི་མཁས་བཙུན་བཟང་པ་རྣཾས་༔ བླ་མཆོད་ཚུལ་དུ་ཁྲིད་ནས་འགྲོ༔",
+            "english": "will be led away in the manner of priests and offerings",
+            "problem": "bla mchod is 'court chaplain' (taken away as chaplains), not 'priests and offerings'",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "མདུངས་དམར་རྒྱ་རལ་ཟང་པ་ལྔ་གླིང༔",
+            "english": "Red spears and Chinese swords; the five-continent copper-men",
+            "problem": "Garbled prophecy line rendered as fluent fragments with no uncertainty marker",
+            "severity": "minor",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "<meta>continues from previous page: describing future disturbances and the locations for refuge.</meta>, a translator's summary at the head of the page",
+            "severity": "minor",
+            "class": "T15"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The dbu can script is transcribed very well, and the leaves are right and marked. The English reads smoothly but carries real slips: an invented sutra title for the Laṅkāvatāra, an inverted doctrinal clause, and two people merged under one name.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      68
+    ],
+    "reader_summary": "The bKa' thang sde lnga, O rgyan gling pa's five treasure chronicles (the queens, the ministers, the gods and demons, the translators), in a clear headed-script manuscript. The transcription is of the right text and very close to the page. The English is usable for the narrative, but names, titles and doctrinal clauses need checking against the Tibetan. Each page holds three separate leaves, not a continuous passage."
+  },
+  {
+    "book_id": "69e77a930fc6fc955e360a71",
+    "slot": 3,
+    "title": "O rgyan pad ma 'byung gnas kyi skyes rabs rnam thar",
+    "tradition": "bhutan-tibetan",
+    "shelf_fit": "fits",
+    "shelf_note": "A dbu med illuminated manuscript (lotus painting on p.22) of a Padmasambhava life-story (skyes rabs rnam thar): Indrabhūti's wish-fulfilling jewel (ch.14–15), Garab Dorje and Mañjuśrīmitra, the charnel grounds, and the farewell testaments (ch.117–118). Gangtey Monastery collection; it fits.",
+    "rights_flag": null,
+    "structure_note": "Each image is a board with four leaves (I5); the OCR has four <leaf-break/> segments per page, which matches. Rubrics and colophons fall where the image shows red ink (p.22 leaf 4 'བཅོ་ལྔ་པའོ', p.161 leaves 1–2 ch.117/118). Only 45 of 166 pages are translated, and pages_ocr (54) disagrees with the 166 pages that carry OCR. The one backstep among 3 printed numbers is negligible.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 22,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "࿓࿔༔ Ｏ རིག་གཉིས་སུ་མེད་པར་བརྟག༔",
+            "image": "no letter O on the leaf",
+            "problem": "stray full-width Latin 'Ｏ' in the transcription",
+            "severity": "minor",
+            "class": "O10"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "སྐལ་ལ་སྟོན་པས་ལིང་ལིང་འགྲོ་བ་མཐོང༔",
+            "english": "Seeing the boy bobbing along as a prize",
+            "problem": "The subject is the hooked fish dangling, not the boy; it blurs the image the boy then reflects on",
+            "severity": "minor",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 40,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "དེ་ལ་ཡུཾ་གྱིས་རོ་ལངས་བདེ་བར་རྟཌ༔",
+            "english": "The mother recognized this as the sign of a \"comfortable corpse\" <note>a spiritual realization</note>",
+            "problem": "Literal rendering plus an explanatory note that asserts a meaning the source does not give",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 64,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཉ་མོ་དཀར་ཤའི་སྤྲུལ་པ་ཅིག་ཏུ་གྱུར༔",
+            "english": "He became an emanation of a white-fleshed fish.",
+            "problem": "Probably a fish named Kesha (cf. ཀེ་ཤ elsewhere in the story) read as 'white flesh'",
+            "severity": "minor",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 161,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཆོས་ལ་རྣག་པས་ནག་པོ་བདུད་ཀྱི་རིཌ༔",
+            "english": "Because they are attached to the Dharma <note>the text implies a superficial or corrupt attachment</note>, they are of the race of the black Mara.",
+            "problem": "In a list of vices the clause must be hostile to the Dharma. The English makes it 'attached' and adds a note to explain away the contradiction.",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "མྱུར་དུ་བཅོས་ན་མཚོ་ཡང་ན་རུ་འཇུག།",
+            "english": "even if you treat them quickly, it is like turning an ocean into a meadow",
+            "problem": "Garbled source rendered as a confident simile",
+            "severity": "minor",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "the English opens its last leaf with a model note: '<note>This leaf appears to record the lamentation of the Tibetan people as the Guru prepares to leave.</note>'",
+            "severity": "minor",
+            "class": "T15"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The transcription of the headless script is close to the leaves, and the English is careful and readable on all four pages. Only small slips and one explained-away inversion on p.161.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      22,
+      40,
+      64
+    ],
+    "reader_summary": "An illustrated headless-script life of Padmasambhava, from Indrabhūti's jewel and the lake-born child through Garab Dorje and the charnel grounds to his last testaments to doctors and the Tibetan people. The transcription is of the right leaves, and the English can largely be trusted for the story. Each page holds four separate leaves, and three-quarters of the book has no English yet."
+  },
+  {
+    "book_id": "69e77a5e0fc6fc955e35f863",
+    "slot": 4,
+    "title": "Pad 'byung rnam thar",
+    "tradition": "bhutan-tibetan",
+    "shelf_fit": "fits",
+    "shelf_note": "A dbu can manuscript of a Padmasambhava biography of the Zangs gling ma type: subduing the gods and demons for Samye, Vimalamitra's birth and the invitation, and the farewell testaments to geshes (ch.27), mantrins and women (ch.32). Gangtey Monastery collection; it fits.",
+    "rights_flag": null,
+    "structure_note": "Each image is a board with three leaves (I5): rectos with ༄༅༅ on p.25/51/81, versos without on p.86. <leaf-break/> markers are present. 95 of 106 pages are translated; nothing else stands out.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 25,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "པོའི་ནམ་ཟ་ཕྱག་གི་འོད་ཟེར་གྱིས་",
+            "image": "པོའི་ན་བཟའ་ཕྱག་གི་འོད་ཟེར་གྱིས་",
+            "problem": "ན་བཟའ (robe) split and misread, though the translation still gives 'robes'",
+            "severity": "minor",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "གཏོར་མ་གཟིའི་ཕོར་བུ་གང་ལ་",
+            "english": "On a bowl full of onyx-bead-like tormas",
+            "problem": "a zi-stone bowl filled with torma, not tormas like onyx beads",
+            "severity": "minor",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "each leaf's English ends in '<note>the text cuts off at the leaf end</note>', apparatus a reader sees three times on one page",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 51,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཉག་ཅིག་དག་ལ་བརྟེན་པའི་གྲུ།",
+            "english": "The boat depends upon a single point",
+            "problem": "doubtful rendering of a riddle term; small",
+            "severity": "minor",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 81,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 86,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "སྨྲ་བ་མང་ན་བུད་མེད་ལད་འགྲོ་བས་",
+            "english": "you will become a mimic among women",
+            "problem": "loose rendering of a proverb",
+            "severity": "minor",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean headed-script manuscript with an accurate transcription and a faithful, plain English. Only minor slips on four pages.",
+    "fit_to_show": "show",
+    "showcase_pages": [
+      51,
+      81,
+      86,
+      25
+    ],
+    "reader_summary": "A life of Padmasambhava in the Zangs gling ma tradition: the taming of the spirits for Samye, the invitation of Vimalamitra, and the Guru's parting advice to scholars, tantrikas and the women of Tibet. The transcription matches the leaves closely, and the English follows it faithfully. Each page holds three leaves, read leaf by leaf."
+  }
+]

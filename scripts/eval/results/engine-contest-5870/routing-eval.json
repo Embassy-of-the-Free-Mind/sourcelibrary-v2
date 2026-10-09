@@ -1,0 +1,171 @@
+{
+ "run_id": "engine-contest-5870",
+ "issue": 5870,
+ "measure": "judged against a human reference: two blind Opus judges score the Lite (prompt v13) English made from each engine's read, fidelity 1–5, source = the by-eye corrected transcription; not accuracy",
+ "models": {
+  "kraken": "kraken 7.1 (greek-cllg | openiti persian_best | openiti arabic_best)",
+  "flash": "gemini-3-flash-preview (A5 reocr)"
+ },
+ "rules": {
+  "translation-lift-v1": {
+   "registered": "2026-10-05 (#5870), before any engine was run on the sealed pages. Margin 0.25 fidelity points: the #5700 A5 A-vs-A floor (the same Flash read twice, each translated by Lite, 29 pages) had a 95 % CI of [-0.17, 0.22], so two reads of ONE engine already differ by about 0.2 on the mean.",
+   "candidate": "kraken",
+   "baseline": "flash",
+   "min_text_pages": 10,
+   "checks": [
+    {
+     "id": "a",
+     "rule": "translationLift",
+     "margin": 0.25,
+     "min_pairs": 6,
+     "seed": 5870,
+     "iters": 4000,
+     "tie": 0.25
+    },
+    {
+     "id": "b",
+     "rule": "countNoWorse",
+     "slack": 1
+    }
+   ],
+   "verdicts": {
+    "pass": "recommend the open engine",
+    "fail": "Flash re-read",
+    "inconclusive": "undecided: interval wider than the margin at this n (Flash stays)",
+    "small_n": "undecided: n too small",
+    "pending": "pending judging"
+   }
+  }
+ },
+ "groups": {
+  "greek-print-le1699": {
+   "translation-lift-v1": {
+    "rule": "translation-lift-v1",
+    "group": "greek-print-le1699",
+    "n_pages": 11,
+    "n_text": 11,
+    "checks": {
+     "a": {
+      "rule": "translationLift",
+      "pass": false,
+      "inconclusive": true,
+      "n": 11,
+      "margin": 0.25,
+      "mean_candidate": 3.5,
+      "mean_baseline": 3.273,
+      "mean_diff": 0.227,
+      "mean_diff_ci95": [
+       -0.318,
+       0.727
+      ],
+      "better": 7,
+      "same": 1,
+      "worse": 3,
+      "p_sign": 0.344,
+      "max_margin_passed": 0.318
+     },
+     "b": {
+      "rule": "countNoWorse",
+      "pass": true,
+      "candidate": 3,
+      "baseline": 5,
+      "slack": 1
+     }
+    },
+    "passed": {
+     "a": false,
+     "b": true
+    },
+    "verdict": "undecided: interval wider than the margin at this n (Flash stays)",
+    "negative_control": {
+     "planted_pages": 3,
+     "baseline_failures": 5,
+     "candidate_failures": 10,
+     "fidelity": {
+      "planted_pages": 3,
+      "mean_diff": -0.955,
+      "mean_diff_ci95": [
+       -1.727,
+       -0.273
+      ],
+      "held": true
+     },
+     "held": true,
+     "checks": {
+      "b": false,
+      "a": false
+     }
+    }
+   }
+  },
+  "arabic-script-print": {
+   "translation-lift-v1": {
+    "rule": "translation-lift-v1",
+    "group": "arabic-script-print",
+    "n_pages": 15,
+    "n_text": 15,
+    "checks": {
+     "a": {
+      "rule": "translationLift",
+      "pass": false,
+      "inconclusive": false,
+      "n": 15,
+      "margin": 0.25,
+      "mean_candidate": 2.3,
+      "mean_baseline": 3.633,
+      "mean_diff": -1.333,
+      "mean_diff_ci95": [
+       -1.8,
+       -0.833
+      ],
+      "better": 1,
+      "same": 2,
+      "worse": 12,
+      "p_sign": 0.003,
+      "max_margin_passed": 1.8
+     },
+     "b": {
+      "rule": "countNoWorse",
+      "pass": false,
+      "candidate": 7,
+      "baseline": 1,
+      "slack": 1
+     }
+    },
+    "passed": {
+     "a": false,
+     "b": false
+    },
+    "verdict": "Flash re-read",
+    "negative_control": {
+     "planted_pages": 3,
+     "baseline_failures": 1,
+     "candidate_failures": 11,
+     "fidelity": {
+      "planted_pages": 3,
+      "mean_diff": -1.567,
+      "mean_diff_ci95": [
+       -2.067,
+       -1.033
+      ],
+      "held": true
+     },
+     "held": true,
+     "checks": {
+      "b": false,
+      "a": false
+     }
+    }
+   }
+  }
+ },
+ "inputs": {
+  "results": "scripts/eval/results/engine-contest-5870/results.json",
+  "rules": [
+   "scripts/eval/routing-eval/rules/translation-lift-v1.json"
+  ],
+  "rule_unchanged_since_arms": {
+   "scripts/eval/routing-eval/rules/translation-lift-v1.json": true
+  }
+ }
+}

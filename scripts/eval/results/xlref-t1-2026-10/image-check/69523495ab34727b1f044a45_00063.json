@@ -1,0 +1,70 @@
+{
+ "id": "69523495ab34727b1f044a45_00063",
+ "image_legible": true,
+ "ocr_word_errors": 9,
+ "ocr_words_approx": 560,
+ "ocr_errors": [
+  {
+   "image": "prestigiosa arte illos transmutando (rubric)",
+   "ocr": "prestigiosula arte illos transmutando",
+   "effect_on_english": "none"
+  },
+  {
+   "image": "quasi deferens sicut medium / in medio deferente",
+   "ocr": "quasi referens sicut medium / in medio referente",
+   "effect_on_english": "none ('conveys')"
+  },
+  {
+   "image": "oportet ꝙ sit alicubi / forma illa sit in aere / cum non sit in sensu",
+   "ocr": "ꝙ fit alicubi / forma illa fit in aere / cum non fit in sensu",
+   "effect_on_english": "none ('exist')"
+  },
+  {
+   "image": "precipue qñ [quando] mouetur",
+   "ocr": "p[re]cipue qui moueť",
+   "effect_on_english": "none ('especially when they are moving')"
+  },
+  {
+   "image": "Et ꝑ hec etiam / et per hec etiam",
+   "ocr": "Et ꝑ h[oc] etiam / et per hoc etiam",
+   "effect_on_english": "none"
+  },
+  {
+   "image": "tū eti-am qz nō sp vnus ⁊ idē aer",
+   "ocr": "tū etiā am qz nō sꝑ vnus ꝭ idē aer",
+   "effect_on_english": "none"
+  },
+  {
+   "image": "aut h' fac̄ se obijciēdo",
+   "ocr": "aut h[oc] fac[it] se obiectādo",
+   "effect_on_english": "none"
+  }
+ ],
+ "page_cause": "translation",
+ "causes": [
+  {
+   "finding": "Reversal: 'men can kill other humans' — subject is the devils, 'homines' is the object",
+   "cause": "translation",
+   "image": "sicut deo permittente occidere possunt homines. ita et mēbrum illud ... auferre possunt",
+   "ocr": "sicut deo permittente occi-dere possunt homines. ita et mē-brum illud ... auferre possunt",
+   "english": "just as men can kill other humans when God permits it"
+  },
+  {
+   "finding": "'God permits the generative power of witches more than other powers' for 'vim generatiuam maleficiari'",
+   "cause": "translation",
+   "image": "deus amplius ꝑmittit vim generatiuam maleficiari ꝓpter ⁊c.",
+   "ocr": "deus am-plius ꝑmittit vim generatiuam malefi-ciari ꝓpter etc.",
+   "english": "God permits the generative power of witches more than other powers"
+  },
+  {
+   "finding": "minor: 'remove a limb or other body parts' for 'membrum illud seu alia'",
+   "cause": "translation",
+   "image": "mēbrum illud seu alia auferre possunt",
+   "ocr": "mē-brum illud seu alia auferre possunt",
+   "english": "remove a limb or other body parts"
+  }
+ ],
+ "share_of_served_error_from_ocr": "none",
+ "fixed_transcription_written": true,
+ "note": "Column 1 lines 2-4 and 9-10 of the image read exactly as the OCR ('occidere possunt homines', 'vim generatiuam maleficiari'); both judged errors are the translator's. OCR slips (prestigiosula, referens x2, fit for sit x3, qui for quando) and its many unexpanded sigla did not reach the English; fixed file expands them."
+}

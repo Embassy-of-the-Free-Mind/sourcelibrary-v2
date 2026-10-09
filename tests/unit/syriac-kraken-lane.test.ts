@@ -5,6 +5,7 @@ import path from 'node:path';
 import {
   LANE, ENGINES, routeBook, classifyScript, pagePolicy, envelope, letterCount, ocrSetFields,
   reenrolDecision, scriptTagCounts, editionYear, STALE_OCR_FIELDS, hasRealTranslation, staleMarker, findGutter,
+  preprocessMode, preprocessApplies, PREPROCESS_MODES,
 } from '../../scripts/lib/syriac-kraken-lane.mjs';
 
 const SYR = 'ܘܰܐܝܟܰܢܳܐ ܟܰܕ ܕܰܢܚܶܠ ܢܶܫܶܐ ܚܰܝ̈ܶܐ ܐܶܡܰܪܠܶܗ ܕܶܝܢ ܕܰܪ̈ܗܶܣܘܳܣ ܩܰܠܺܝܠ ܝܰܬܺܝܪ ܡܶܢܳܟܝ ܟܰܗܢܳܐ ܐܰܢ̱ܬ';
@@ -148,5 +149,32 @@ describe('syriac-kraken-lane: re-enrolment for translation', () => {
     expect(reenrolDecision({ hidden_reason: 'unprocessed', pipeline_auto: { status: 'archive_complete' } }, counts).ok).toBe(true);
     expect(reenrolDecision({ pipeline_auto: { status: 'complete' } }, { total: 10, with_ocr: 9 }).ok).toBe(false);
     expect(reenrolDecision({ pipeline_auto: { status: 'ocr_submitted' } }, counts).ok).toBe(false);
+  });
+});
+
+describe('syriac-kraken-lane: per-stratum preprocessing flag (#5277)', () => {
+  it('is OFF by default: no CLI value and no env means none', () => {
+    expect(preprocessMode(undefined, {})).toBe('none');
+    expect(preprocessMode(undefined, { SYRIAC_KRAKEN_PREPROCESS: '' })).toBe('none');
+  });
+  it('reads the env when the CLI is silent, and the CLI wins over the env', () => {
+    expect(preprocessMode(undefined, { SYRIAC_KRAKEN_PREPROCESS: 'auto' })).toBe('auto');
+    expect(preprocessMode('none', { SYRIAC_KRAKEN_PREPROCESS: 'auto' })).toBe('none');
+    expect(preprocessMode('Flatten', {})).toBe('flatten');
+  });
+  it('refuses an unknown mode instead of guessing', () => {
+    expect(() => preprocessMode('otsu', {})).toThrow(/expected one of/);
+    expect(PREPROCESS_MODES).toEqual(['none', 'auto', 'sauvola', 'flatten']);
+  });
+  it('only the manuscript route (the one the arms were measured on) ever gets an arm', () => {
+    expect(preprocessApplies('auto', 'manuscript')).toBe(true);
+    expect(preprocessApplies('auto', 'print')).toBe(false);
+    expect(preprocessApplies('none', 'manuscript')).toBe(false);
+  });
+  it('records the arm on the page, defaulting to none', () => {
+    const now = new Date('2026-09-30T00:00:00Z');
+    expect(ocrSetFields('x', 'sophro-mhiro', 'manuscript', { now })['ocr.engine'].preprocess).toEqual({ mode: 'none', arm: 'none' });
+    const pp = { mode: 'auto', arm: 'flatten', klass: 'clean', classifier: '5277-v1' };
+    expect(ocrSetFields('x', 'sophro-mhiro', 'manuscript', { now, preprocess: pp })['ocr.engine'].preprocess).toEqual(pp);
   });
 });

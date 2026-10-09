@@ -10,14 +10,14 @@ const HERO = `${IMG}/695573e7f63a757109172b1d/293.jpg`;
 export const metadata: Metadata = {
   title: 'An Atlas of Lost Instruments - Source Library',
   description:
-    'A keyed fiddle, a cat organ, a harp the wind plays, a box that composes, a quarrel over the megaphone, a violinist who heard a note nobody played, sand that draws the shape of a sound, and a keyboard with thirty-one notes to the octave. Nine things about music that were discovered, invented, or fought over in books this library holds — and the one thing our AI still cannot read.',
+    'A keyed fiddle, a cat organ, a harp the wind plays, a box that composes, a quarrel over the megaphone, a violinist who heard a note nobody played, sand that draws the shape of a sound, and a keyboard with thirty-one notes to the octave. Nine things about music that were discovered, invented, or fought over in books this library holds, and the one thing our AI still cannot read.',
   alternates: {
     canonical: '/blog/atlas-of-lost-instruments',
   },
   openGraph: {
     title: 'An Atlas of Lost Instruments',
     description:
-      'Nine discoveries, inventions and quarrels about sound, each from a book in the library — and the music on the page that no machine can yet read.',
+      'Nine discoveries, inventions and quarrels about sound, each from a book in the library, and the music on the page that no machine can yet read.',
     images: [{ url: HERO, alt: 'Plate XXII of Praetorius\'s Theatrum Instrumentorum, 1620: folk instruments including a keyed fiddle' }],
   },
   twitter: {
@@ -107,7 +107,6 @@ function Quote({ children, cite, href }: { children: ReactNode; cite: string; hr
     <blockquote className="border-l-2 border-accent-rust/40 pl-5 my-8 not-prose">
       <p className="text-secondary leading-relaxed font-body italic">{children}</p>
       <footer className="text-sm text-muted mt-2">
-        &mdash;{' '}
         <Link href={href} className={R}>
           {cite}
         </Link>

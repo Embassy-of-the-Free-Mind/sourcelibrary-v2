@@ -544,7 +544,7 @@ export default function SharedLibraryView({
                     Library Catalogue
                   </h2>
                   <p className="text-sm text-muted mt-1">
-                    Complete catalogue of the Bibliotheca Philosophica Hermetica — {catalogTotal.toLocaleString('en-US')} works in the collection.
+                    Complete catalogue of the Bibliotheca Philosophica Hermetica: {catalogTotal.toLocaleString('en-US')} works in the collection.
                     Works available on Source Library are marked with a book icon.
                   </p>
                 </div>

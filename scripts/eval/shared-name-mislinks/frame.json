@@ -1,0 +1,931 @@
+{
+  "drawn_at": "2026-10-06T10:42:41.773Z",
+  "seed": 5950,
+  "n_per_surname": 10,
+  "surnames": [
+    {
+      "surname": "Bacon",
+      "record_id": "6991f0edfb05b02a1539aeec",
+      "record_wikidata_id": "Q37388",
+      "record_description": "Refers to either Roger Bacon, the medieval scientist, or Francis Bacon, the philosopher of the scientific method; both were highly influential in early modern natural philosophy.",
+      "record_aliases": [
+        "Francis Bacon",
+        "Roger Bacon",
+        "Verulam",
+        "Doctor Mirabilis"
+      ],
+      "record_born": "1561-01-22",
+      "record_died": "1626-04-09",
+      "books_distinct": 211,
+      "books_with_verified_page": 201,
+      "frame_live_books": 188,
+      "drawn": 10,
+      "redrawn_name_not_found": 1,
+      "other_records_by_wikidata_id": [
+        {
+          "wikidata_id": "Q171677",
+          "names": [
+            "Roger Bacon"
+          ],
+          "books": 470,
+          "born": "1220-00-00",
+          "died": "1292-00-00"
+        },
+        {
+          "wikidata_id": "Q37388",
+          "names": [
+            "Lord Bacon",
+            "Francis Bacon",
+            "Lord Verulam (Francis Bacon)",
+            "Verulamius (Francis Bacon)",
+            "Verulam (Francis Bacon)",
+            "Francis Bacon (Lord Verulam)",
+            "Francis Bacon (Lord Verulam, Viscount St. Alban)"
+          ],
+          "books": 322,
+          "born": "1561-01-22",
+          "died": "1626-04-09"
+        },
+        {
+          "wikidata_id": "Q5480096",
+          "names": [
+            "Sir Francis Bacon"
+          ],
+          "books": 10,
+          "born": "1587-01-01",
+          "died": "1657-01-01"
+        },
+        {
+          "wikidata_id": "Q78437655",
+          "names": [
+            "Nicholas Bacon"
+          ],
+          "books": 2,
+          "born": null,
+          "died": null
+        },
+        {
+          "wikidata_id": "Q918565",
+          "names": [
+            "Mr. Bacon"
+          ],
+          "books": 2,
+          "born": "1740-11-24",
+          "died": "1799-08-04"
+        }
+      ]
+    },
+    {
+      "surname": "Scaliger",
+      "record_id": "6952b1a9c263a0240a48f3b0",
+      "record_wikidata_id": "Q441066",
+      "record_description": "A name referring to a family of influential Renaissance scholars, most notably Julius Caesar Scaliger and Joseph Justus Scaliger, known for their work in philology, chronology, and natural philosophy.",
+      "record_aliases": [
+        "Julius Caesar Scaliger",
+        "Joseph Justus Scaliger",
+        "Scaligerus"
+      ],
+      "record_born": "1484-04-23",
+      "record_died": "1558-10-21",
+      "books_distinct": 470,
+      "books_with_verified_page": 455,
+      "frame_live_books": 420,
+      "drawn": 10,
+      "redrawn_name_not_found": 0,
+      "other_records_by_wikidata_id": [
+        {
+          "wikidata_id": "Q441066",
+          "names": [
+            "J. C. Scaliger",
+            "Julius Caesar Scaliger",
+            "Julius Scaliger"
+          ],
+          "books": 266,
+          "born": "1484-04-23",
+          "died": "1558-10-21"
+        },
+        {
+          "wikidata_id": "Q315163",
+          "names": [
+            "Joseph Scaliger",
+            "Joseph Justus Scaliger"
+          ],
+          "books": 254,
+          "born": "1540-08-05",
+          "died": "1609-01-21"
+        },
+        {
+          "wikidata_id": "Q1396063",
+          "names": [
+            "Paul Scaliger"
+          ],
+          "books": 1,
+          "born": "1534-01-01",
+          "died": "1573-01-01"
+        }
+      ]
+    },
+    {
+      "surname": "Valentinus",
+      "record_id": "6952b1bac263a0240a48f487",
+      "record_wikidata_id": "Q309864",
+      "record_description": "The most influential Gnostic theologian of the 2nd century, whose complex cosmological and mythological systems were debated by early Church Fathers and rediscovered in esoteric circles.",
+      "record_aliases": [
+        "Valentinus the Gnostic"
+      ],
+      "record_born": null,
+      "record_died": "0160-00-00",
+      "books_distinct": 330,
+      "books_with_verified_page": 320,
+      "frame_live_books": 308,
+      "drawn": 10,
+      "redrawn_name_not_found": 0,
+      "other_records_by_wikidata_id": [
+        {
+          "wikidata_id": "Q810169",
+          "names": [
+            "Basilius Valentinus",
+            "Basilius (Basilius Valentinus)",
+            "Basilius Valentinus (Basil Valentine)",
+            "Basil (Basil Valentine)",
+            "Basilius",
+            "Basil Valentine"
+          ],
+          "books": 724,
+          "born": "1394",
+          "died": "1450"
+        },
+        {
+          "wikidata_id": "Q77397",
+          "names": [
+            "Valentin Weigel"
+          ],
+          "books": 77,
+          "born": "1533-08-17",
+          "died": "1588-06-10"
+        },
+        {
+          "wikidata_id": "Q60854",
+          "names": [
+            "Johann Valentin Andreae"
+          ],
+          "books": 57,
+          "born": "1586-08-17",
+          "died": "1654-06-27"
+        },
+        {
+          "wikidata_id": "Q192151",
+          "names": [
+            "Saint Valentine"
+          ],
+          "books": 16,
+          "born": "0175",
+          "died": "0273-02-14"
+        },
+        {
+          "wikidata_id": "Q3903896",
+          "names": [
+            "Pietro Francesco Valentini"
+          ],
+          "books": 6,
+          "born": "1570",
+          "died": "1654"
+        },
+        {
+          "wikidata_id": "Q118639",
+          "names": [
+            "Valentin Schindler"
+          ],
+          "books": 3,
+          "born": "1543-02-14",
+          "died": "1604-06-11"
+        }
+      ]
+    },
+    {
+      "surname": "Agrippa",
+      "record_id": "6991e2c0fb05b02a1539a920",
+      "record_wikidata_id": "Q76568",
+      "record_description": "Heinrich Cornelius Agrippa von Nettesheim was a 16th-century German polymath and occultist whose 'De Occulta Philosophia' synthesized Renaissance magic, Kabbalah, and Neoplatonism.",
+      "record_aliases": [
+        "Heinrich Cornelius Agrippa",
+        "Agrippa von Nettesheim",
+        "Cornelius Agrippa"
+      ],
+      "record_born": "1486-09-14",
+      "record_died": "1535-02-18",
+      "books_distinct": 553,
+      "books_with_verified_page": 532,
+      "frame_live_books": 495,
+      "drawn": 10,
+      "redrawn_name_not_found": 0,
+      "other_records_by_wikidata_id": [
+        {
+          "wikidata_id": "Q76568",
+          "names": [
+            "Cornelius Agrippa",
+            "Henry Cornelius Agrippa",
+            "Heinrich Cornelius Agrippa",
+            "Cornelius",
+            "Agrippa von Nettesheim",
+            "Henricus Cornelius Agrippa"
+          ],
+          "books": 951,
+          "born": "1486-09-14",
+          "died": "1535-02-18"
+        },
+        {
+          "wikidata_id": "Q48174",
+          "names": [
+            "Marcus Agrippa",
+            "Marcus Vipsanius Agrippa"
+          ],
+          "books": 104,
+          "born": "-0063",
+          "died": "-0012"
+        },
+        {
+          "wikidata_id": "Q888593",
+          "names": [
+            "Pseudo-Agrippa"
+          ],
+          "books": 2,
+          "born": "-0100-01-01",
+          "died": "0048-00-00"
+        }
+      ]
+    },
+    {
+      "surname": "Huygens",
+      "record_id": "69999d04fb05b02a153abe94",
+      "record_wikidata_id": null,
+      "record_description": null,
+      "record_aliases": [],
+      "record_born": null,
+      "record_died": null,
+      "books_distinct": 75,
+      "books_with_verified_page": 71,
+      "frame_live_books": 68,
+      "drawn": 10,
+      "redrawn_name_not_found": 0,
+      "other_records_by_wikidata_id": [
+        {
+          "wikidata_id": "Q39599",
+          "names": [
+            "Christiaan Huygens"
+          ],
+          "books": 120,
+          "born": "1629-04-14",
+          "died": "1695-07-08"
+        },
+        {
+          "wikidata_id": "Q560746",
+          "names": [
+            "Constantijn Huygens"
+          ],
+          "books": 45,
+          "born": "1596-09-04",
+          "died": "1687-03-28"
+        },
+        {
+          "wikidata_id": "Q98057721",
+          "names": [
+            "Constantia Huygens"
+          ],
+          "books": 2,
+          "born": "1602-08-02",
+          "died": "1667-12-01"
+        }
+      ]
+    },
+    {
+      "surname": "Bauhin",
+      "record_id": "6998b7cc8eb174f845daaaee",
+      "record_wikidata_id": null,
+      "record_description": null,
+      "record_aliases": [],
+      "record_born": null,
+      "record_died": null,
+      "books_distinct": 48,
+      "books_with_verified_page": 42,
+      "frame_live_books": 37,
+      "drawn": 10,
+      "redrawn_name_not_found": 1,
+      "other_records_by_wikidata_id": [
+        {
+          "wikidata_id": "Q123612",
+          "names": [
+            "Bauhin (Caspar Bauhin)",
+            "C. Bauhin",
+            "Gaspard Bauhin",
+            "Caspar Bauhin"
+          ],
+          "books": 79,
+          "born": "1560-01-17",
+          "died": "1624-12-05"
+        },
+        {
+          "wikidata_id": "Q123660",
+          "names": [
+            "Jean Bauhin",
+            "Johann Bauhin"
+          ],
+          "books": 28,
+          "born": "1541-12-12",
+          "died": "1612-10-26"
+        }
+      ]
+    },
+    {
+      "surname": "Bruno",
+      "record_id": "69953efdfb05b02a153a4fd3",
+      "record_wikidata_id": "Q36330",
+      "record_description": "Likely referring to Giordano Bruno, the Italian friar and philosopher known for his cosmological theories, hermetic mnemonic systems, and pantheism.",
+      "record_aliases": [
+        "Giordano Bruno",
+        "Filippo Bruno",
+        "The Nolan"
+      ],
+      "record_born": "1548",
+      "record_died": "1600-02-17",
+      "books_distinct": 80,
+      "books_with_verified_page": 75,
+      "frame_live_books": 70,
+      "drawn": 10,
+      "redrawn_name_not_found": 1,
+      "other_records_by_wikidata_id": [
+        {
+          "wikidata_id": "Q36330",
+          "names": [
+            "Giordano Bruno"
+          ],
+          "books": 140,
+          "born": "1548-01-01",
+          "died": "1600-02-17"
+        },
+        {
+          "wikidata_id": "Q312314",
+          "names": [
+            "St. Bruno",
+            "Saint Bruno"
+          ],
+          "books": 22,
+          "born": "1030-01-01",
+          "died": "1101-10-06"
+        },
+        {
+          "wikidata_id": "Q97648",
+          "names": [
+            "Bruno Wille"
+          ],
+          "books": 1,
+          "born": "1860-02-06",
+          "died": "1928-09-04"
+        }
+      ]
+    },
+    {
+      "surname": "Fabricius",
+      "record_id": "6995433dfb05b02a153a5afd",
+      "record_wikidata_id": "Q60204",
+      "record_description": "A German astronomer and correspondent of Kepler who was one of the first to use a telescope for astronomical observations.",
+      "record_aliases": [
+        "David Fabricius",
+        "Davidus Fabricius"
+      ],
+      "record_born": "1564-03-09",
+      "record_died": "1617-05-07",
+      "books_distinct": 305,
+      "books_with_verified_page": 292,
+      "frame_live_books": 278,
+      "drawn": 10,
+      "redrawn_name_not_found": 0,
+      "other_records_by_wikidata_id": [
+        {
+          "wikidata_id": "Q1368362",
+          "names": [
+            "Fabricius Capito",
+            "Capito"
+          ],
+          "books": 60,
+          "born": "1478-01-01",
+          "died": "1541-11-04"
+        },
+        {
+          "wikidata_id": "Q20002215",
+          "names": [
+            "Gaius Fabricius"
+          ],
+          "books": 31,
+          "born": null,
+          "died": null
+        },
+        {
+          "wikidata_id": "Q61894",
+          "names": [
+            "Johann Albert Fabricius"
+          ],
+          "books": 19,
+          "born": "1668-11-11",
+          "died": "1736-04-30"
+        },
+        {
+          "wikidata_id": "Q435296",
+          "names": [
+            "Fabricius ab Aquapendente"
+          ],
+          "books": 16,
+          "born": "1533-05-20",
+          "died": "1619-05-21"
+        },
+        {
+          "wikidata_id": "Q60204",
+          "names": [
+            "David Fabricius"
+          ],
+          "books": 15,
+          "born": "1564-03-09",
+          "died": "1617-05-07"
+        },
+        {
+          "wikidata_id": "Q3121930",
+          "names": [
+            "Guido Fabricius Boderianus"
+          ],
+          "books": 6,
+          "born": "1541-08-09",
+          "died": "1598-06-10"
+        }
+      ]
+    },
+    {
+      "surname": "Scotus",
+      "record_id": "69953501fb05b02a153a482b",
+      "record_wikidata_id": "Q190089",
+      "record_description": "Likely referring to John Duns Scotus, a major High Scholastic philosopher and theologian known for his defense of the Immaculate Conception and the 'univocity of being'.",
+      "record_aliases": [
+        "John Duns Scotus",
+        "Doctor Subtilis",
+        "Duns Scotus"
+      ],
+      "record_born": "1265",
+      "record_died": "1308-11-08",
+      "books_distinct": 261,
+      "books_with_verified_page": 251,
+      "frame_live_books": 237,
+      "drawn": 10,
+      "redrawn_name_not_found": 0,
+      "other_records_by_wikidata_id": [
+        {
+          "wikidata_id": "Q190089",
+          "names": [
+            "Scotus (Duns Scotus)",
+            "Duns Scotus",
+            "John Duns Scotus"
+          ],
+          "books": 266,
+          "born": "1265",
+          "died": "1308-11-08"
+        },
+        {
+          "wikidata_id": "Q559548",
+          "names": [
+            "Michael Scot"
+          ],
+          "books": 104,
+          "born": "1175-00-00",
+          "died": "1232-00-00"
+        },
+        {
+          "wikidata_id": "Q6257125",
+          "names": [
+            "Johannes Scotus",
+            "John Scotus"
+          ],
+          "books": 63,
+          "born": "1101-01-01",
+          "died": "1203-00-00"
+        },
+        {
+          "wikidata_id": "Q116731467",
+          "names": [
+            "Michael Scotus"
+          ],
+          "books": 49,
+          "born": "1214-01-01",
+          "died": "1291-01-01"
+        },
+        {
+          "wikidata_id": "Q184500",
+          "names": [
+            "Scotus Erigena",
+            "John Scotus Erigena",
+            "John Scotus Eriugena",
+            "Johannes Scotus Erigena"
+          ],
+          "books": 38,
+          "born": "0800-00-00",
+          "died": "0877-01-01"
+        },
+        {
+          "wikidata_id": "Q2138020",
+          "names": [
+            "Reginald Scot"
+          ],
+          "books": 29,
+          "born": "1538-01-01",
+          "died": "1599-10-09"
+        },
+        {
+          "wikidata_id": "Q652097",
+          "names": [
+            "Hector Boethius"
+          ],
+          "books": 24,
+          "born": "1465",
+          "died": "1536"
+        },
+        {
+          "wikidata_id": "Q1388231",
+          "names": [
+            "Marianus Scotus"
+          ],
+          "books": 12,
+          "born": "1028-00-00",
+          "died": "1082-12-22"
+        }
+      ]
+    },
+    {
+      "surname": "Agricola",
+      "record_id": "695a499bc263a0240a4902be",
+      "record_wikidata_id": "Q76579",
+      "record_description": "Georgius Agricola (Georg Bauer), a German scholar known as the father of mineralogy, whose work De Re Metallica revolutionized the study of mining and metallurgy.",
+      "record_aliases": [
+        "Georgius Agricola",
+        "Georg Bauer",
+        "Agricola the Elder"
+      ],
+      "record_born": "1494-03-24",
+      "record_died": "1555-11-21",
+      "books_distinct": 216,
+      "books_with_verified_page": 205,
+      "frame_live_books": 181,
+      "drawn": 10,
+      "redrawn_name_not_found": 3,
+      "other_records_by_wikidata_id": [
+        {
+          "wikidata_id": "Q76579",
+          "names": [
+            "Agricola (Georgius Agricola)",
+            "Georgius Agricola",
+            "Georg Agricola"
+          ],
+          "books": 224,
+          "born": "1494-03-24",
+          "died": "1555-11-21"
+        },
+        {
+          "wikidata_id": "Q365557",
+          "names": [
+            "Rodolphus Agricola",
+            "Rudolph Agricola"
+          ],
+          "books": 53,
+          "born": "1443-08-28",
+          "died": "1485-10-27"
+        },
+        {
+          "wikidata_id": "Q102703228",
+          "names": [
+            "Johann Agricola"
+          ],
+          "books": 14,
+          "born": null,
+          "died": null
+        }
+      ]
+    },
+    {
+      "surname": "Montanus",
+      "record_id": "69953307fb05b02a153a45e3",
+      "record_wikidata_id": "Q1697209",
+      "record_description": "Likely referring to Giovanni Battista Monte, a 16th-century Italian physician and humanist who was instrumental in reviving clinical medicine and Galenic teaching. His works were frequently cited in medical and alchemical compendiums of the early modern period.",
+      "record_aliases": [
+        "Johannes Baptista Montanus",
+        "Giovanni Battista Monte",
+        "Montanus of Padua"
+      ],
+      "record_born": "1498",
+      "record_died": "1551-05-06",
+      "books_distinct": 207,
+      "books_with_verified_page": 198,
+      "frame_live_books": 185,
+      "drawn": 10,
+      "redrawn_name_not_found": 0,
+      "other_records_by_wikidata_id": [
+        {
+          "wikidata_id": "Q816903",
+          "names": [
+            "Arias Montanus"
+          ],
+          "books": 50,
+          "born": "1527-01-01",
+          "died": "1598-07-06"
+        },
+        {
+          "wikidata_id": "Q134710135",
+          "names": [
+            "Benedict Arias Montanus"
+          ],
+          "books": 11,
+          "born": "1527-00-00",
+          "died": "1598-00-00"
+        },
+        {
+          "wikidata_id": "Q90845",
+          "names": [
+            "Johannes Ferrarius Montanus"
+          ],
+          "books": 1,
+          "born": "1485-00-00",
+          "died": "1558-07-30"
+        }
+      ]
+    },
+    {
+      "surname": "Gesner",
+      "record_id": "6995224efb05b02a153a3b7c",
+      "record_wikidata_id": "Q60116",
+      "record_description": "Conrad Gessner was a Swiss physician and naturalist known as the father of modern bibliography and zoology. His botanical and encyclopedic works were foundational to the development of natural history during the Renaissance.",
+      "record_aliases": [
+        "Conrad Gessner",
+        "Konrad Gessner",
+        "Conradus Gesnerus"
+      ],
+      "record_born": "1516-03-26",
+      "record_died": "1565-12-13",
+      "books_distinct": 159,
+      "books_with_verified_page": 153,
+      "frame_live_books": 134,
+      "drawn": 10,
+      "redrawn_name_not_found": 0,
+      "other_records_by_wikidata_id": [
+        {
+          "wikidata_id": "Q60116",
+          "names": [
+            "Conrad Gesner",
+            "Conrad Gessner"
+          ],
+          "books": 169,
+          "born": "1516-03-26",
+          "died": "1565-12-13"
+        },
+        {
+          "wikidata_id": "Q574402",
+          "names": [
+            "Johann Matthias Gesner"
+          ],
+          "books": 5,
+          "born": "1691-04-09",
+          "died": "1761-08-03"
+        }
+      ]
+    },
+    {
+      "surname": "Helmont",
+      "record_id": "69954671fb05b02a153a62f6",
+      "record_wikidata_id": "Q294169",
+      "record_description": "A Flemish chemist and physician who bridged the gap between alchemy and modern chemistry, known for his theories on 'gas' and the 'archeus' as a vital principle.",
+      "record_aliases": [
+        "Jan Baptist van Helmont",
+        "Jean-Baptiste van Helmont",
+        "Johannes Baptista van Helmont"
+      ],
+      "record_born": "1577-01-01",
+      "record_died": "1644-12-30",
+      "books_distinct": 147,
+      "books_with_verified_page": 145,
+      "frame_live_books": 133,
+      "drawn": 10,
+      "redrawn_name_not_found": 0,
+      "other_records_by_wikidata_id": [
+        {
+          "wikidata_id": "Q294169",
+          "names": [
+            "Van Helmont",
+            "Helmont (Jan Baptista van Helmont)",
+            "Helmontius (Jan Baptist van Helmont)",
+            "Jan Baptista van Helmont",
+            "Jan Baptist van Helmont",
+            "Jean Baptista Van Helmont",
+            "Jean Baptiste Van Helmont",
+            "Johannes Baptista van Helmont"
+          ],
+          "books": 225,
+          "born": "1577",
+          "died": "1644-12-30"
+        },
+        {
+          "wikidata_id": "Q445918",
+          "names": [
+            "Franciscus Mercurius Van Helmont",
+            "Francis Mercury van Helmont",
+            "Franciscus Mercurius van Helmont"
+          ],
+          "books": 24,
+          "born": "1614-01-01",
+          "died": "1699-01-01"
+        }
+      ]
+    },
+    {
+      "surname": "Vossius",
+      "record_id": "69952e36fb05b02a153a40fb",
+      "record_wikidata_id": null,
+      "record_description": null,
+      "record_aliases": [],
+      "record_born": null,
+      "record_died": null,
+      "books_distinct": 145,
+      "books_with_verified_page": 131,
+      "frame_live_books": 124,
+      "drawn": 10,
+      "redrawn_name_not_found": 0,
+      "other_records_by_wikidata_id": [
+        {
+          "wikidata_id": "Q3112766",
+          "names": [
+            "Isaac Vossius"
+          ],
+          "books": 92,
+          "born": "1618",
+          "died": "1689-02-21"
+        },
+        {
+          "wikidata_id": "Q785925",
+          "names": [
+            "Gerardus Vossius",
+            "Gerard Vossius",
+            "Gerhard Johannes Vossius"
+          ],
+          "books": 34,
+          "born": "1577-03-00",
+          "died": "1649-03-17"
+        }
+      ]
+    },
+    {
+      "surname": "Hartmann",
+      "record_id": "699594fdfb05b02a153aa746",
+      "record_wikidata_id": null,
+      "record_description": null,
+      "record_aliases": [],
+      "record_born": null,
+      "record_died": null,
+      "books_distinct": 101,
+      "books_with_verified_page": 97,
+      "frame_live_books": 84,
+      "drawn": 10,
+      "redrawn_name_not_found": 0,
+      "other_records_by_wikidata_id": [
+        {
+          "wikidata_id": "Q215892",
+          "names": [
+            "Franz Hartmann"
+          ],
+          "books": 22,
+          "born": "1838-11-22",
+          "died": "1912-08-07"
+        },
+        {
+          "wikidata_id": "Q88612",
+          "names": [
+            "Johann Hartmann"
+          ],
+          "books": 20,
+          "born": "1568-01-15",
+          "died": "1631-12-07"
+        },
+        {
+          "wikidata_id": "Q77057",
+          "names": [
+            "Eduard von Hartmann"
+          ],
+          "books": 19,
+          "born": "1842-02-23",
+          "died": "1906-06-05"
+        },
+        {
+          "wikidata_id": "Q58768",
+          "names": [
+            "Hartmann Schedel"
+          ],
+          "books": 16,
+          "born": "1440-02-13",
+          "died": "1514-11-28"
+        },
+        {
+          "wikidata_id": "Q15984836",
+          "names": [
+            "Johann Hartmann Beyer"
+          ],
+          "books": 9,
+          "born": "1563-00-00",
+          "died": "1625-00-00"
+        },
+        {
+          "wikidata_id": "Q1587300",
+          "names": [
+            "Hartmann Pistoris"
+          ],
+          "books": 4,
+          "born": "1543-01-22",
+          "died": "1603-03-01"
+        },
+        {
+          "wikidata_id": "Q106734245",
+          "names": [
+            "Dr. Hartmann"
+          ],
+          "books": 3,
+          "born": "1894-02-22",
+          "died": null
+        }
+      ]
+    },
+    {
+      "surname": "Philalethes",
+      "record_id": "69907bc2fb05b02a1539a2eb",
+      "record_wikidata_id": "Q3801927",
+      "record_description": "A pseudonym used by several alchemical writers, most notably Eirenaeus Philalethes, the 17th-century author of influential works on the Philosopher's Stone.",
+      "record_aliases": [
+        "Eirenaeus Philalethes",
+        "Eugenius Philalethes",
+        "Lover of Truth"
+      ],
+      "record_born": null,
+      "record_died": "1700-00-00",
+      "books_distinct": 101,
+      "books_with_verified_page": 95,
+      "frame_live_books": 88,
+      "drawn": 10,
+      "redrawn_name_not_found": 0,
+      "other_records_by_wikidata_id": [
+        {
+          "wikidata_id": "Q3397209",
+          "names": [
+            "Eugenius Philalethes",
+            "Thomas Vaughan (Eugenius Philalethes)",
+            "Eugenius Philalethes (Thomas Vaughan)",
+            "Philalethes Eugenius",
+            "Thomas Vaughan"
+          ],
+          "books": 110,
+          "born": "1621-04-17",
+          "died": "1666-02-27"
+        },
+        {
+          "wikidata_id": "Q3801927",
+          "names": [
+            "Philalethes (Eirenaeus Philalethes)",
+            "Eirenaeus Philalethes",
+            "Philaletha (Eirenaeus Philalethes)",
+            "Philaletha"
+          ],
+          "books": 101,
+          "born": null,
+          "died": "1700-00-00"
+        },
+        {
+          "wikidata_id": "Q528802",
+          "names": [
+            "Henry More"
+          ],
+          "books": 85,
+          "born": "1614-10-12",
+          "died": "1687-09-01"
+        },
+        {
+          "wikidata_id": "Q725632",
+          "names": [
+            "Irenaeus Philalethes",
+            "George Starkey"
+          ],
+          "books": 44,
+          "born": "1628-01-01",
+          "died": "1665-01-01"
+        },
+        {
+          "wikidata_id": "Q55127361",
+          "names": [
+            "Theophilus Philalethes"
+          ],
+          "books": 1,
+          "born": "1826-01-01",
+          "died": "1875-00-00"
+        }
+      ]
+    }
+  ]
+}

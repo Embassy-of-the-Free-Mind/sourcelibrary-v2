@@ -17,6 +17,8 @@ import {
   transcriptProvenance,
   transcriptProvenanceLabel,
   modelDisplayName,
+  pageTextSource,
+  isUnreviewedMachineTranslation,
 } from '@/lib/text-provenance';
 import { getReaderStrings } from '@/lib/reader-strings';
 import type { Page } from '@/lib/types';
@@ -29,6 +31,16 @@ function page(ocr: Record<string, unknown> | undefined): Pick<Page, 'ocr'> {
 }
 
 describe('transcriptProvenance', () => {
+  it('Kraken lane (#4883): names the Syriac model by route, never the bare model id', () => {
+    const ms = transcriptProvenance(page({ model: 'sophro-mhiro', data: 'x', engine: { name: 'kraken', model: 'sophro-mhiro', route: 'manuscript' } }));
+    expect(ms).toEqual({ kind: 'kraken', route: 'manuscript' });
+    expect(transcriptProvenanceLabel(ms!, en, 'full')).toContain('Sophro Mhiro');
+    const pr = transcriptProvenance(page({ model: 'omnisyr', data: 'x', engine: { name: 'kraken', model: 'omnisyr', route: 'print' } }));
+    expect(pr).toEqual({ kind: 'kraken', route: 'print' });
+    expect(transcriptProvenanceLabel(pr!, en, 'short')).toBe('omnisyr (Kraken)');
+    expect(transcriptProvenanceLabel(pr!, es, 'full')).toContain('siríaco impreso');
+  });
+
   it('returns null when nothing says how the page was read', () => {
     expect(transcriptProvenance(page(undefined))).toBeNull();
     expect(transcriptProvenance(page({ data: 'text', language: 'Latin' }))).toBeNull();
@@ -91,6 +103,7 @@ describe('transcriptProvenanceLabel — header chip and drawer never disagree', 
     ['corpus', { source: 'corpus', model: 'oraec-corpus', data: 'x', language: 'Egyptian' }],
     ['manual', { source: 'manual', model: 'gemini-2.5-flash', data: 'x', language: 'Latin' }],
     ['model', { source: 'ai', model: 'gemini-3.1-flash-lite-preview', data: 'x', language: 'Latin' }],
+    ['text_source', { source: 'sefaria', model: 'sefaria/Vilna', data: 'x', language: 'Hebrew', text_source: { name: 'Sefaria — Zohar', license: 'CC0' } }],
   ];
 
   for (const [name, ocr] of cases) {
@@ -124,5 +137,90 @@ describe('transcriptProvenanceLabel — header chip and drawer never disagree', 
   it('corpus short form', () => {
     const prov = transcriptProvenance(page({ source: 'corpus', model: 'etcsl-corpus', data: 'x', language: 'Sumerian' }))!;
     expect(transcriptProvenanceLabel(prov, en, 'short')).toBe('Corpus: ETCSL');
+  });
+});
+
+// ── Open e-text sources (#5571) ──────────────────────────────────────────────
+// The three lanes' shapes, as their writers store them: Tengyur
+// (scripts/import/derge-tengyur-import.mjs `textSourceFor`), Sefaria-fit
+// (scripts/import/sefaria-fit-5560.mjs) and CBETA (scripts/import/cbeta-chan-import.mjs,
+// which records its licence only in `text_edition`).
+
+const TENGYUR = {
+  data: 'ཀ', language: 'Tibetan', source: 'esukhia-derge-tengyur', pipeline: 'derge-tengyur-5497',
+  text_source: {
+    name: 'Esukhia digital Derge Tengyur', url: 'https://github.com/Esukhia/derge-tengyur', license: 'Public Domain',
+    license_url: 'https://github.com/Esukhia/derge-tengyur/blob/master/README.md', version: 'text/001_བསྟོད་ཚོགས།_ཀ.txt@0123456789', content_hash: 'abc',
+  },
+  text_edition: { name: 'Esukhia digital Derge Tengyur', licence: 'public domain — "mechanical reproduction of a public-domain work" (Esukhia README)', folio: '1b' },
+};
+const CBETA = {
+  data: '如是', language: 'Classical Chinese', source: 'cbeta-xml-p5', model: 'cbeta-xml-p5@0123456789', licence: 'CC BY-NC-SA 4.0 (CBETA)',
+  text_edition: { name: 'CBETA XML P5', work: 'T51n2076', repo: 'https://github.com/cbeta-org/xml-p5', commit: '0123456789abcdef', licence: 'CC BY-NC-SA 4.0 (CBETA)', licence_url: 'https://www.cbeta.org/copyright.php' },
+};
+const SEFARIA = {
+  data: 'בראשית', language: 'Hebrew', source: 'sefaria', model: 'sefaria/Vilna Edition',
+  text_source: { name: 'Sefaria — Zohar', url: 'https://www.sefaria.org/Zohar', license: 'CC-BY', license_url: 'https://creativecommons.org/licenses/by/4.0/', version: 'Vilna Edition' },
+};
+
+describe('pageTextSource — one reader for three writers', () => {
+  it('Tengyur: text_source wins over text_edition; licence reads as words', () => {
+    const src = pageTextSource(page(TENGYUR))!;
+    expect(src).toMatchObject({ shortName: 'Esukhia', name: 'Esukhia digital Derge Tengyur', license: 'public domain' });
+    expect(src.licenseUrl).toContain('README');
+  });
+
+  it('CBETA: licence and URL come from text_edition; the "(CBETA)" gloss is dropped', () => {
+    expect(pageTextSource(page(CBETA))).toEqual({
+      shortName: 'CBETA', name: 'CBETA XML P5', url: 'https://github.com/cbeta-org/xml-p5',
+      license: 'CC BY-NC-SA 4.0', licenseUrl: 'https://www.cbeta.org/copyright.php', version: 'T51n2076@0123456789',
+    });
+  });
+
+  it('Sefaria: per-version licence as stored', () => {
+    expect(pageTextSource(page(SEFARIA))).toMatchObject({ shortName: 'Sefaria', license: 'CC-BY', version: 'Vilna Edition' });
+  });
+
+  it('no licence, no label — an empty licence never becomes a claim', () => {
+    expect(pageTextSource(page({ ...SEFARIA, text_source: { ...SEFARIA.text_source, license: '  ' } }))).toBeNull();
+    expect(pageTextSource(page({ source: 'ai', model: 'gemini-3.1-flash-lite-preview', data: 'x', language: 'Latin' }))).toBeNull();
+  });
+});
+
+describe('transcriptProvenance — text_source kind', () => {
+  it('a page with ocr.text_source yields text_source, even with no ocr.model (Tengyur writes none)', () => {
+    expect(transcriptProvenance(page(TENGYUR))?.kind).toBe('text_source');
+    expect(transcriptProvenance(page(CBETA))?.kind).toBe('text_source');
+  });
+
+  it('chip and drawer both carry the licence', () => {
+    const tengyur = transcriptProvenance(page(TENGYUR))!;
+    expect(transcriptProvenanceLabel(tengyur, en, 'short')).toBe('Text: Esukhia, public domain');
+    expect(transcriptProvenanceLabel(tengyur, en, 'full')).toBe('Text: Esukhia digital Derge Tengyur (text/001_བསྟོད་ཚོགས།_ཀ.txt@0123456789), public domain');
+    expect(transcriptProvenanceLabel(tengyur, es, 'short')).toBe('Texto: Esukhia, dominio público');
+    const cbeta = transcriptProvenance(page(CBETA))!;
+    expect(transcriptProvenanceLabel(cbeta, en, 'short')).toBe('Text: CBETA, CC BY-NC-SA 4.0');
+  });
+
+  it('a page without the fields keeps its current kind', () => {
+    expect(transcriptProvenance(page({ source: 'ai', model: 'gemini-3.1-flash-lite-preview', data: 'x', language: 'Latin' }))?.kind).toBe('model');
+    expect(transcriptProvenance(page({ source: 'corpus', model: 'etcsl-corpus', data: 'x', language: 'Sumerian' }))?.kind).toBe('corpus');
+  });
+});
+
+describe('isUnreviewedMachineTranslation', () => {
+  const tr = (t: Record<string, unknown> | undefined) => ({ translation: t as Page['translation'] });
+  it('machine translation with no review recorded → draft', () => {
+    expect(isUnreviewedMachineTranslation(tr({ data: 'x', model: 'gemini-3-flash-preview', source: 'ai', language: 'English' }))).toBe(true);
+    expect(isUnreviewedMachineTranslation(tr({ data: 'x', model: 'gemini-3-flash-preview', source: 'batch_api', language: 'English' }))).toBe(true);
+    expect(isUnreviewedMachineTranslation(tr({ data: 'x', model: 'gemini-2.5-flash', language: 'English' }))).toBe(true);
+  });
+  it('hand-edited, Sefaria\'s own English, corpus, source-column, or no text → not a draft', () => {
+    expect(isUnreviewedMachineTranslation(tr({ data: 'x', model: 'gemini-3-flash-preview', source: 'ai', edited_by: 'derek', language: 'English' }))).toBe(false);
+    expect(isUnreviewedMachineTranslation(tr({ data: 'x', model: null, source: 'manual', language: 'English' }))).toBe(false);
+    expect(isUnreviewedMachineTranslation(tr({ data: 'x', model: 'etcsl-corpus', source: 'corpus', language: 'English' }))).toBe(false);
+    expect(isUnreviewedMachineTranslation(tr({ data: 'x', model: 'gemini-3-flash-preview', source: 'source-column', language: 'English' }))).toBe(false);
+    expect(isUnreviewedMachineTranslation(tr({ data: '', model: 'gemini-3-flash-preview', source: 'ai', language: 'English' }))).toBe(false);
+    expect(isUnreviewedMachineTranslation(tr(undefined))).toBe(false);
   });
 });

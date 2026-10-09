@@ -1,0 +1,894 @@
+{
+ "run_id": "hidden-flash-5795",
+ "issue": 5795,
+ "measure": "by eye (label check, blinded A/B adjudication) plus engine-to-engine agreement and a catastrophic count; not accuracy",
+ "models": {
+  "lite": "gemini-3.1-flash-lite",
+  "flash": "gemini-3-flash-preview"
+ },
+ "rules": {
+  "hidden-flash-5795-registered": {
+   "registered": "2026-10-04, before any engine call (PREREGISTRATION-hidden-flash-5795.md)",
+   "candidate": "flash",
+   "baseline": "lite",
+   "min_text_pages": 10,
+   "checks": [
+    {
+     "id": "a",
+     "rule": "labelPrecision",
+     "min": 0.9,
+     "use": "point",
+     "on_fail": "relabel (#4884)"
+    },
+    {
+     "id": "b",
+     "rule": "countNoWorse",
+     "slack": 0
+    },
+    {
+     "id": "c",
+     "rule": "adjudication",
+     "mode": "majority",
+     "invention_max": 0
+    }
+   ],
+   "verdicts": {
+    "pass": "route to flash",
+    "fail": "stay on lite",
+    "small_n": "undecided: n too small",
+    "pending": "pending adjudication"
+   }
+  },
+  "margin-v1": {
+   "registered": "2026-10-04 (#5828). The default for runs sealed after this date. For #5795 it is POST HOC: the margin was chosen after that data was seen.",
+   "candidate": "flash",
+   "baseline": "lite",
+   "min_text_pages": 10,
+   "checks": [
+    {
+     "id": "a",
+     "rule": "labelPrecision",
+     "min": 0.9,
+     "use": "point",
+     "on_fail": "relabel (#4884)"
+    },
+    {
+     "id": "b",
+     "rule": "rateNonInferior",
+     "slack": 1,
+     "margin": 0.1,
+     "seed": 5828,
+     "iters": 4000
+    },
+    {
+     "id": "c",
+     "rule": "adjudication",
+     "mode": "majority",
+     "invention_max": 0
+    }
+   ],
+   "verdicts": {
+    "pass": "route to flash",
+    "fail": "stay on lite",
+    "small_n": "undecided: n too small",
+    "pending": "pending adjudication"
+   }
+  }
+ },
+ "groups": {
+  "fas": {
+   "hidden-flash-5795-registered": {
+    "rule": "hidden-flash-5795-registered",
+    "group": "fas",
+    "n_pages": 30,
+    "n_text": 27,
+    "checks": {
+     "a": {
+      "rule": "labelPrecision",
+      "pass": true,
+      "yes": 25,
+      "n": 27,
+      "share": 0.926,
+      "wilson95": [
+       0.766,
+       0.979
+      ],
+      "min": 0.9,
+      "use": "point"
+     },
+     "b": {
+      "rule": "countNoWorse",
+      "pass": false,
+      "candidate": 1,
+      "baseline": 0,
+      "slack": 0
+     },
+     "c": {
+      "rule": "adjudication",
+      "pass": true,
+      "wins": {
+       "pass": true,
+       "wins": 9,
+       "losses": 0,
+       "untied": 9,
+       "win_share_wilson95": [
+        0.701,
+        1
+       ],
+       "p_sign": 0.004,
+       "mode": "majority"
+      },
+      "invention": {
+       "pass": true,
+       "candidate_invented": [],
+       "baseline_invented": [],
+       "max": 0
+      },
+      "both": 1,
+      "neither": 0,
+      "cannot_tell": 0
+     }
+    },
+    "passed": {
+     "a": true,
+     "b": false,
+     "c": true
+    },
+    "verdict": "stay on lite",
+    "negative_control": {
+     "planted_pages": 6,
+     "baseline_failures": 0,
+     "candidate_failures": 7,
+     "held": true,
+     "checks": {
+      "b": false
+     }
+    }
+   },
+   "margin-v1": {
+    "rule": "margin-v1",
+    "group": "fas",
+    "n_pages": 30,
+    "n_text": 27,
+    "checks": {
+     "a": {
+      "rule": "labelPrecision",
+      "pass": true,
+      "yes": 25,
+      "n": 27,
+      "share": 0.926,
+      "wilson95": [
+       0.766,
+       0.979
+      ],
+      "min": 0.9,
+      "use": "point"
+     },
+     "b": {
+      "rule": "rateNonInferior",
+      "pass": true,
+      "n": 30,
+      "candidate": 1,
+      "baseline": 0,
+      "slack": 1,
+      "margin": 0.1,
+      "candidate_wilson95": [
+       0.006,
+       0.167
+      ],
+      "baseline_wilson95": [
+       0,
+       0.114
+      ],
+      "rate_diff": 0.033,
+      "rate_diff_ci95": [
+       0,
+       0.1
+      ],
+      "discordant": {
+       "candidate_only": 1,
+       "baseline_only": 0,
+       "p_sign": 1
+      },
+      "min_margin_to_pass": 0.1
+     },
+     "c": {
+      "rule": "adjudication",
+      "pass": true,
+      "wins": {
+       "pass": true,
+       "wins": 9,
+       "losses": 0,
+       "untied": 9,
+       "win_share_wilson95": [
+        0.701,
+        1
+       ],
+       "p_sign": 0.004,
+       "mode": "majority"
+      },
+      "invention": {
+       "pass": true,
+       "candidate_invented": [],
+       "baseline_invented": [],
+       "max": 0
+      },
+      "both": 1,
+      "neither": 0,
+      "cannot_tell": 0
+     }
+    },
+    "passed": {
+     "a": true,
+     "b": true,
+     "c": true
+    },
+    "verdict": "route to flash",
+    "negative_control": {
+     "planted_pages": 6,
+     "baseline_failures": 0,
+     "candidate_failures": 7,
+     "held": true,
+     "checks": {
+      "b": false
+     }
+    }
+   }
+  },
+  "san": {
+   "hidden-flash-5795-registered": {
+    "rule": "hidden-flash-5795-registered",
+    "group": "san",
+    "n_pages": 30,
+    "n_text": 30,
+    "checks": {
+     "a": {
+      "rule": "labelPrecision",
+      "pass": false,
+      "yes": 22,
+      "n": 30,
+      "share": 0.733,
+      "wilson95": [
+       0.556,
+       0.858
+      ],
+      "min": 0.9,
+      "use": "point"
+     },
+     "b": {
+      "rule": "countNoWorse",
+      "pass": true,
+      "candidate": 3,
+      "baseline": 7,
+      "slack": 0
+     },
+     "c": {
+      "rule": "adjudication",
+      "pass": true,
+      "wins": {
+       "pass": true,
+       "wins": 5,
+       "losses": 0,
+       "untied": 5,
+       "win_share_wilson95": [
+        0.566,
+        1
+       ],
+       "p_sign": 0.063,
+       "mode": "majority"
+      },
+      "invention": {
+       "pass": true,
+       "candidate_invented": [],
+       "baseline_invented": [
+        "san-13",
+        "san-20",
+        "san-11"
+       ],
+       "max": 0
+      },
+      "both": 0,
+      "neither": 5,
+      "cannot_tell": 0
+     }
+    },
+    "passed": {
+     "a": false,
+     "b": true,
+     "c": true
+    },
+    "verdict": "relabel (#4884)",
+    "negative_control": {
+     "planted_pages": 6,
+     "baseline_failures": 7,
+     "candidate_failures": 13,
+     "held": true,
+     "checks": {
+      "b": false
+     }
+    }
+   },
+   "margin-v1": {
+    "rule": "margin-v1",
+    "group": "san",
+    "n_pages": 30,
+    "n_text": 30,
+    "checks": {
+     "a": {
+      "rule": "labelPrecision",
+      "pass": false,
+      "yes": 22,
+      "n": 30,
+      "share": 0.733,
+      "wilson95": [
+       0.556,
+       0.858
+      ],
+      "min": 0.9,
+      "use": "point"
+     },
+     "b": {
+      "rule": "rateNonInferior",
+      "pass": true,
+      "n": 30,
+      "candidate": 3,
+      "baseline": 7,
+      "slack": 1,
+      "margin": 0.1,
+      "candidate_wilson95": [
+       0.035,
+       0.256
+      ],
+      "baseline_wilson95": [
+       0.118,
+       0.409
+      ],
+      "rate_diff": -0.133,
+      "rate_diff_ci95": [
+       -0.267,
+       -0.033
+      ],
+      "discordant": {
+       "candidate_only": 0,
+       "baseline_only": 4,
+       "p_sign": 0.125
+      },
+      "min_margin_to_pass": 0
+     },
+     "c": {
+      "rule": "adjudication",
+      "pass": true,
+      "wins": {
+       "pass": true,
+       "wins": 5,
+       "losses": 0,
+       "untied": 5,
+       "win_share_wilson95": [
+        0.566,
+        1
+       ],
+       "p_sign": 0.063,
+       "mode": "majority"
+      },
+      "invention": {
+       "pass": true,
+       "candidate_invented": [],
+       "baseline_invented": [
+        "san-13",
+        "san-20",
+        "san-11"
+       ],
+       "max": 0
+      },
+      "both": 0,
+      "neither": 5,
+      "cannot_tell": 0
+     }
+    },
+    "passed": {
+     "a": false,
+     "b": true,
+     "c": true
+    },
+    "verdict": "relabel (#4884)",
+    "negative_control": {
+     "planted_pages": 6,
+     "baseline_failures": 7,
+     "candidate_failures": 13,
+     "held": true,
+     "checks": {
+      "b": false
+     }
+    }
+   }
+  },
+  "pli": {
+   "hidden-flash-5795-registered": {
+    "rule": "hidden-flash-5795-registered",
+    "group": "pli",
+    "n_pages": 26,
+    "n_text": 26,
+    "checks": {
+     "a": {
+      "rule": "labelPrecision",
+      "pass": false,
+      "yes": 18,
+      "n": 26,
+      "share": 0.692,
+      "wilson95": [
+       0.5,
+       0.835
+      ],
+      "min": 0.9,
+      "use": "point"
+     },
+     "b": {
+      "rule": "countNoWorse",
+      "pass": true,
+      "candidate": 5,
+      "baseline": 8,
+      "slack": 0
+     },
+     "c": {
+      "rule": "adjudication",
+      "pass": false,
+      "wins": {
+       "pass": false,
+       "wins": 0,
+       "losses": 1,
+       "untied": 1,
+       "win_share_wilson95": [
+        0,
+        0.793
+       ],
+       "p_sign": 1,
+       "mode": "majority"
+      },
+      "invention": {
+       "pass": false,
+       "candidate_invented": [
+        "pli-11"
+       ],
+       "baseline_invented": [
+        "pli-03"
+       ],
+       "max": 0
+      },
+      "both": 0,
+      "neither": 9,
+      "cannot_tell": 0
+     }
+    },
+    "passed": {
+     "a": false,
+     "b": true,
+     "c": false
+    },
+    "verdict": "relabel (#4884)",
+    "negative_control": {
+     "planted_pages": 6,
+     "baseline_failures": 8,
+     "candidate_failures": 16,
+     "held": true,
+     "checks": {
+      "b": false
+     }
+    }
+   },
+   "margin-v1": {
+    "rule": "margin-v1",
+    "group": "pli",
+    "n_pages": 26,
+    "n_text": 26,
+    "checks": {
+     "a": {
+      "rule": "labelPrecision",
+      "pass": false,
+      "yes": 18,
+      "n": 26,
+      "share": 0.692,
+      "wilson95": [
+       0.5,
+       0.835
+      ],
+      "min": 0.9,
+      "use": "point"
+     },
+     "b": {
+      "rule": "rateNonInferior",
+      "pass": true,
+      "n": 26,
+      "candidate": 5,
+      "baseline": 8,
+      "slack": 1,
+      "margin": 0.1,
+      "candidate_wilson95": [
+       0.085,
+       0.379
+      ],
+      "baseline_wilson95": [
+       0.165,
+       0.5
+      ],
+      "rate_diff": -0.115,
+      "rate_diff_ci95": [
+       -0.308,
+       0.077
+      ],
+      "discordant": {
+       "candidate_only": 2,
+       "baseline_only": 5,
+       "p_sign": 0.453
+      },
+      "min_margin_to_pass": 0.077
+     },
+     "c": {
+      "rule": "adjudication",
+      "pass": false,
+      "wins": {
+       "pass": false,
+       "wins": 0,
+       "losses": 1,
+       "untied": 1,
+       "win_share_wilson95": [
+        0,
+        0.793
+       ],
+       "p_sign": 1,
+       "mode": "majority"
+      },
+      "invention": {
+       "pass": false,
+       "candidate_invented": [
+        "pli-11"
+       ],
+       "baseline_invented": [
+        "pli-03"
+       ],
+       "max": 0
+      },
+      "both": 0,
+      "neither": 9,
+      "cannot_tell": 0
+     }
+    },
+    "passed": {
+     "a": false,
+     "b": true,
+     "c": false
+    },
+    "verdict": "relabel (#4884)",
+    "negative_control": {
+     "planted_pages": 6,
+     "baseline_failures": 8,
+     "candidate_failures": 16,
+     "held": true,
+     "checks": {
+      "b": false
+     }
+    }
+   }
+  },
+  "ara": {
+   "hidden-flash-5795-registered": {
+    "rule": "hidden-flash-5795-registered",
+    "group": "ara",
+    "n_pages": 30,
+    "n_text": 30,
+    "checks": {
+     "a": {
+      "rule": "labelPrecision",
+      "pass": false,
+      "yes": 23,
+      "n": 30,
+      "share": 0.767,
+      "wilson95": [
+       0.591,
+       0.882
+      ],
+      "min": 0.9,
+      "use": "point"
+     },
+     "b": {
+      "rule": "countNoWorse",
+      "pass": true,
+      "candidate": 3,
+      "baseline": 3,
+      "slack": 0
+     },
+     "c": {
+      "rule": "adjudication",
+      "pass": false,
+      "wins": {
+       "pass": true,
+       "wins": 4,
+       "losses": 0,
+       "untied": 4,
+       "win_share_wilson95": [
+        0.51,
+        1
+       ],
+       "p_sign": 0.125,
+       "mode": "majority"
+      },
+      "invention": {
+       "pass": false,
+       "candidate_invented": [
+        "ara-28"
+       ],
+       "baseline_invented": [
+        "ara-28"
+       ],
+       "max": 0
+      },
+      "both": 0,
+      "neither": 4,
+      "cannot_tell": 2
+     }
+    },
+    "passed": {
+     "a": false,
+     "b": true,
+     "c": false
+    },
+    "verdict": "relabel (#4884)",
+    "negative_control": {
+     "planted_pages": 6,
+     "baseline_failures": 3,
+     "candidate_failures": 9,
+     "held": true,
+     "checks": {
+      "b": false
+     }
+    }
+   },
+   "margin-v1": {
+    "rule": "margin-v1",
+    "group": "ara",
+    "n_pages": 30,
+    "n_text": 30,
+    "checks": {
+     "a": {
+      "rule": "labelPrecision",
+      "pass": false,
+      "yes": 23,
+      "n": 30,
+      "share": 0.767,
+      "wilson95": [
+       0.591,
+       0.882
+      ],
+      "min": 0.9,
+      "use": "point"
+     },
+     "b": {
+      "rule": "rateNonInferior",
+      "pass": true,
+      "n": 30,
+      "candidate": 3,
+      "baseline": 3,
+      "slack": 1,
+      "margin": 0.1,
+      "candidate_wilson95": [
+       0.035,
+       0.256
+      ],
+      "baseline_wilson95": [
+       0.035,
+       0.256
+      ],
+      "rate_diff": 0,
+      "rate_diff_ci95": [
+       0,
+       0
+      ],
+      "discordant": {
+       "candidate_only": 0,
+       "baseline_only": 0,
+       "p_sign": null
+      },
+      "min_margin_to_pass": 0
+     },
+     "c": {
+      "rule": "adjudication",
+      "pass": false,
+      "wins": {
+       "pass": true,
+       "wins": 4,
+       "losses": 0,
+       "untied": 4,
+       "win_share_wilson95": [
+        0.51,
+        1
+       ],
+       "p_sign": 0.125,
+       "mode": "majority"
+      },
+      "invention": {
+       "pass": false,
+       "candidate_invented": [
+        "ara-28"
+       ],
+       "baseline_invented": [
+        "ara-28"
+       ],
+       "max": 0
+      },
+      "both": 0,
+      "neither": 4,
+      "cannot_tell": 2
+     }
+    },
+    "passed": {
+     "a": false,
+     "b": true,
+     "c": false
+    },
+    "verdict": "relabel (#4884)",
+    "negative_control": {
+     "planted_pages": 6,
+     "baseline_failures": 3,
+     "candidate_failures": 9,
+     "held": true,
+     "checks": {
+      "b": false
+     }
+    }
+   }
+  },
+  "gez": {
+   "hidden-flash-5795-registered": {
+    "rule": "hidden-flash-5795-registered",
+    "group": "gez",
+    "n_pages": 1,
+    "n_text": 1,
+    "checks": {
+     "a": {
+      "rule": "labelPrecision",
+      "pass": true,
+      "yes": 1,
+      "n": 1,
+      "share": 1,
+      "wilson95": [
+       0.207,
+       1
+      ],
+      "min": 0.9,
+      "use": "point"
+     },
+     "b": {
+      "rule": "countNoWorse",
+      "pass": true,
+      "candidate": 0,
+      "baseline": 0,
+      "slack": 0
+     },
+     "c": {
+      "rule": "adjudication",
+      "pass": true,
+      "wins": {
+       "pass": true,
+       "wins": 1,
+       "losses": 0,
+       "untied": 1,
+       "win_share_wilson95": [
+        0.207,
+        1
+       ],
+       "p_sign": 1,
+       "mode": "majority"
+      },
+      "invention": {
+       "pass": true,
+       "candidate_invented": [],
+       "baseline_invented": [],
+       "max": 0
+      },
+      "both": 0,
+      "neither": 0,
+      "cannot_tell": 0
+     }
+    },
+    "passed": {
+     "a": true,
+     "b": true,
+     "c": true
+    },
+    "verdict": "undecided: n too small",
+    "negative_control": null
+   },
+   "margin-v1": {
+    "rule": "margin-v1",
+    "group": "gez",
+    "n_pages": 1,
+    "n_text": 1,
+    "checks": {
+     "a": {
+      "rule": "labelPrecision",
+      "pass": true,
+      "yes": 1,
+      "n": 1,
+      "share": 1,
+      "wilson95": [
+       0.207,
+       1
+      ],
+      "min": 0.9,
+      "use": "point"
+     },
+     "b": {
+      "rule": "rateNonInferior",
+      "pass": true,
+      "n": 1,
+      "candidate": 0,
+      "baseline": 0,
+      "slack": 1,
+      "margin": 0.1,
+      "candidate_wilson95": [
+       0,
+       0.793
+      ],
+      "baseline_wilson95": [
+       0,
+       0.793
+      ],
+      "rate_diff": 0,
+      "rate_diff_ci95": [
+       0,
+       0
+      ],
+      "discordant": {
+       "candidate_only": 0,
+       "baseline_only": 0,
+       "p_sign": null
+      },
+      "min_margin_to_pass": 0
+     },
+     "c": {
+      "rule": "adjudication",
+      "pass": true,
+      "wins": {
+       "pass": true,
+       "wins": 1,
+       "losses": 0,
+       "untied": 1,
+       "win_share_wilson95": [
+        0.207,
+        1
+       ],
+       "p_sign": 1,
+       "mode": "majority"
+      },
+      "invention": {
+       "pass": true,
+       "candidate_invented": [],
+       "baseline_invented": [],
+       "max": 0
+      },
+      "both": 0,
+      "neither": 0,
+      "cannot_tell": 0
+     }
+    },
+    "passed": {
+     "a": true,
+     "b": true,
+     "c": true
+    },
+    "verdict": "undecided: n too small",
+    "negative_control": null
+   }
+  }
+ },
+ "inputs": {
+  "results": "scripts/eval/results/hidden-flash-5795/results.json",
+  "rules": [
+   "scripts/eval/routing-eval/rules/hidden-flash-5795-registered.json",
+   "scripts/eval/routing-eval/rules/margin-v1.json"
+  ],
+  "rule_unchanged_since_arms": {
+   "scripts/eval/routing-eval/rules/hidden-flash-5795-registered.json": null,
+   "scripts/eval/routing-eval/rules/margin-v1.json": null
+  }
+ }
+}

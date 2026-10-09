@@ -15,6 +15,7 @@ import PDFDocument from 'pdfkit';
 import { markForExport } from '@/lib/provenance';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { normalizeAnnotationSpans } from '@/lib/normalize-annotation-spans';
+import { separateTermDefinitions } from '@/lib/term-definitions';
 import { registerPdfFonts, type PdfFontNames } from '@/lib/pdf-fonts';
 
 export const PDF_MARGINS = { top: 72, bottom: 72, left: 72, right: 72 };
@@ -94,6 +95,8 @@ function normalizeTagsForPdf(text: string): string {
   // parseStyledLines() below needs well-formed spans or a nested note strands
   // the outer note's tail as body text.
   out = normalizeAnnotationSpans(out);
+  // The model's definitions inside <term> chips print as notes, as in the reader (#5895).
+  out = separateTermDefinitions(out);
 
   // Safety net for any OTHER tag: strip the markup, keep the content — real
   // page text should never be silently eaten by an unhandled tag. Annotation
@@ -497,7 +500,7 @@ export function writePdfColophon(
     'License: CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)',
     'https://creativecommons.org/licenses/by-sa/4.0/',
     '',
-    'This edition carries a Trithemian imprimatur — an invisible provenance',
+    'This edition carries a Trithemian imprimatur, an invisible provenance',
     "mark in the tradition of the printer's device, asserting that this",
     'translation was produced by Source Library. It does not identify you',
     'or track your usage.',
@@ -646,7 +649,7 @@ export function generatePdfFacsimileStream<P extends PdfExportPage>(
     doc.on('pageAdded', () => { physical++; });
 
     writePdfTitlePage(doc, fonts, book, {
-      subtitle: 'Facsimile Edition — page scans facing their English translation',
+      subtitle: 'Facsimile Edition: page scans facing their English translation',
       baseUrl: opts.baseUrl,
       now,
     });
@@ -722,7 +725,7 @@ export function generatePdfFacsimileStream<P extends PdfExportPage>(
               + 'the whole book.'
             : '',
           '',
-          'If you need the complete facsimile as a single file, please get in touch — we would '
+          'If you need the complete facsimile as a single file, please get in touch. We would '
           + 'rather generate it for you offline than hand you a partial edition without saying so.',
         ].filter(Boolean).join('\n'),
         { lineGap: 3 },

@@ -218,13 +218,16 @@ async function checkTwoShot(endpoint) {
   }
 }
 
-async function sendAlert(message, title = 'Source Library DOWN') {
+// Priority tiers (#6181): a hard outage (non-2xx, timeout) buzzes the phone; a latency-only SLO
+// breach and a recovery arrive silently (low) — embed_bph flapping on 1.1 s vs a 1.0 s SLO paged
+// six times a day without being an outage.
+async function sendAlert(message, title = 'Source Library DOWN', priority = 'high') {
   try {
     await fetch(NTFY_TOPIC, {
       method: 'POST',
       headers: {
         'Title': title,
-        'Priority': 'high',
+        'Priority': priority,
         'Tags': 'warning',
       },
       body: message,
@@ -359,7 +362,7 @@ async function main() {
 
         const msg = `${f.endpoint} is down: ${f.reason || f.error} (${f.url})`;
         console.log(`[uptime] ALERTING: ${msg}`);
-        await sendAlert(msg);
+        await sendAlert(msg, isLatencyViolation ? 'Source Library slow' : 'Source Library DOWN', isLatencyViolation ? 'low' : 'high');
 
         // Mark this check as alerted
         await checksCol.updateOne(
@@ -406,7 +409,7 @@ async function main() {
           const latencyNote = r.warm_ms !== undefined ? `warm ${r.warm_ms}ms` : `${r.latency_ms}ms`;
           const msg = `${r.endpoint} recovered (${latencyNote})`;
           console.log(`[uptime] RECOVERY: ${msg}`);
-          await sendAlert(msg, 'Source Library Recovered');
+          await sendAlert(msg, 'Source Library Recovered', 'low');
           await checksCol.updateOne(
             { _id: r._id },
             { $set: { recovery_sent: true } }

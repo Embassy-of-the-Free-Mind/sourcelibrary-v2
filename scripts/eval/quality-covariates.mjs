@@ -22,6 +22,10 @@
 //       gemini-3.1-flash-lite, ~$0.0005 a page) on sampled pages whose OCR text lacks <script> or
 //       <page-type>, plus the agreement-check pages; answers are cached in
 //       scripts/eval/output/page-descriptors-5623.json and only missing pages are called. $3 ceiling.
+//   --corpus-profile [--describe]   instead: one page per visible book, corpus-wide (#5643); see
+//       "corpus page profile" below. $10 ceiling.
+//   --corpus-profile --typeface [--describe] [--skip-gentle]   the typeface extension (#5643): the descriptor on every
+//       picked page with OCR, and the descriptor's page type and flags used everywhere. $25 ceiling.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -380,6 +384,318 @@ function descriptorReport({ pages }, { cache, wanted, check, check_hand }) {
     agreement_with_inline_tags: { pages: check.length, ...Object.fromEntries(Object.entries(agree).map(([k, xs]) => [k, share(xs)])), script_confusion: confusion, flag_disagreements: direction },
     agreement_on_handwritten_or_mixed_tags: { pages: check_hand.length, script: share(handCheck.agree.script), page_type: share(handCheck.agree.page_type), has_marginalia: share(handCheck.agree.has_marginalia), script_confusion: handCheck.confusion },
   };
+}
+
+// ── corpus page profile (#5643) ───────────────────────────────────────────────
+// One page per visible book (visible, pages_count > 4): the middle page, ceil(pages_count / 2);
+// if it has no OCR, the next page after it that has, else the nearest one before it (page 1 or
+// later: a few books carry negative page numbers for relocated leaves). No seed is
+// needed: the fallback is fully determined by page order. Each value records where it came from.
+// Inline first, at $0: pages.script_type / page_type / columns (stored, #5629), else the OCR text's
+// own <script> / <page-type> / <columns> tags. The descriptor (lib/page-descriptor.mjs) runs only
+// on books with OCR whose page lacks a usable page type or script. Its `script` is NOT used on a
+// CJK or Tibetan page (by-eye check on #5623: it reads neat East Asian hands as print); those stay
+// unknown without an inline tag. Typeface and page type from it are used for every script.
+// Nothing is written to Mongo. Three files, all resumable (each is appended a row at a time):
+//   <base>.walk.jsonl         the $0 walk: one row per book, inline values only
+//   <base>.descriptors.jsonl  one descriptor answer per book that needed one
+//   <base>.jsonl + <base>.summary.json   the merged profile and its counts (Wilson 95%)
+//   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/quality-covariates.mjs \
+//     --corpus-profile [--date=YYYY-MM-DD] [--describe] [--limit=N]
+// Without --describe it walks (or resumes the walk), prints the descriptor count and estimate, and
+// writes the profile from whatever answers exist. $10 ceiling with a 2× margin on the estimate.
+//
+// --typeface (the extension approved on #5643): no OCR prompt ever wrote a typeface, so the first
+// pass knew it only on the 17% of books it described. This pass runs the same descriptor on every
+// other picked page that has OCR (same page per book; answers append to the same descriptors file,
+// tagged pass: 'typeface'). Its spend is metered from the first 200 calls of the pass and stopped if
+// the projection passes TYPEFACE_CEILING. The merge then takes typeface, page type and the three
+// flags from the descriptor wherever it answered; script keeps the inline-first rule and the
+// CJK/Tibetan exclusion; columns are unchanged. It writes <base>-typeface.jsonl / .summary.json
+// (the first pass's files are left as they are), with the profile also counted without the
+// "previous page with OCR" picks, and the descriptor's page type checked against pages.page_type.
+const PROFILE_CEILING = 10;
+const TYPEFACE = process.argv.includes('--typeface');
+const TYPEFACE_CEILING = 25;
+const TYPEFACE_METER = 200;
+// An image server that answers 429 to bursts (the BSB did, to most requests, at concurrency 8 in
+// the typeface pass) is asked last, one request at a time; everything else runs first at full speed.
+const GENTLE_HOSTS = { 'api.digitale-sammlungen.de': 1 };
+const PROFILE_CONCURRENCY = 8;
+const CJK_LANG = /chinese|japanese|korean|kanbun|tibetan/i;
+// Share of letters in Han, kana, Hangul or Tibetan blocks, over the first 4,000 characters.
+function scriptFamily(text, language) {
+  const s = String(text || '').replace(/<[^>\n]{1,80}>/g, '').slice(0, 4000);
+  let letters = 0, cjk = 0, tib = 0;
+  for (const ch of s) {
+    if (/\p{L}/u.test(ch)) letters++;
+    if (/[぀-ヿ㐀-鿿豈-﫿가-힯ᄀ-ᇿ]/.test(ch)) cjk++;
+    else if (/[ༀ-࿿]/.test(ch)) tib++;
+  }
+  if (letters >= 20 && (cjk + tib) / letters >= 0.3) return { family: tib > cjk ? 'tibetan' : 'cjk', family_src: 'ocr text characters' };
+  const l = String(language || '');
+  if (CJK_LANG.test(l)) return { family: /tibetan/i.test(l) ? 'tibetan' : 'cjk', family_src: 'books.language' };
+  return { family: 'other', family_src: letters >= 20 ? 'ocr text characters' : 'books.language' };
+}
+const readLines = async function* (f) {
+  if (!fs.existsSync(f)) return;
+  const rl = (await import('node:readline')).createInterface({ input: fs.createReadStream(f, 'utf8'), crlfDelay: Infinity });
+  for await (const line of rl) if (line.trim()) { try { yield JSON.parse(line); } catch { /* a torn last line from a kill: skipped, redone */ } }
+};
+async function mapLimit(items, n, fn) {
+  let i = 0;
+  await Promise.all(Array.from({ length: Math.min(n, items.length) }, async () => { while (i < items.length) { const j = i++; await fn(items[j], j); } }));
+}
+
+async function profileWalk(db, base) {
+  const booksFile = `${base}.books.jsonl`, walkFile = `${base}.walk.jsonl`;
+  if (!fs.existsSync(booksFile)) {
+    // The book list first, streamed to disk; the cursor is closed before any page lookup.
+    const tmp = `${booksFile}.tmp`, w = fs.createWriteStream(tmp);
+    const cur = db.collection('books').find({ visible: true, pages_count: { $gt: 4 } }, { projection: { _id: 0, id: 1, title: 1, language: 1, published: 1, year: 1, pages_count: 1, 'image_source.provider': 1 } }).sort({ id: 1 });
+    for await (const b of cur) if (!w.write(JSON.stringify({ id: b.id, title: String(b.title || '').slice(0, 80), language: b.language ?? null, published: b.published ?? null, year: b.year ?? null, pages_count: b.pages_count, provider: b.image_source?.provider ?? null }) + '\n')) await new Promise((r) => w.once('drain', r));
+    await new Promise((r) => w.end(r));
+    fs.renameSync(tmp, booksFile);
+  }
+  const done = new Set();
+  for await (const r of readLines(walkFile)) done.add(r.book_id);
+  const out = fs.createWriteStream(walkFile, { flags: 'a' });
+  const proj = { projection: { _id: 0, id: 1, page_number: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.source': 1, script_type: 1, page_type: 1, columns: 1, cropped_photo: 1, split_from_spread: 1, archived_photo: 1, enhanced_photo: 1, photo_original: 1, photo: 1 } };
+  const hasOcr = (p) => typeof p?.ocr?.data === 'string' && /\S/.test(p.ocr.data);
+  const withOcr = { 'ocr.data': { $type: 'string', $ne: '' } };
+  let chunk = [], walked = done.size;
+  const flush = async () => {
+    const rows = [];
+    await mapLimit(chunk, PROFILE_CONCURRENCY, async (b) => {
+      const mid = Math.ceil(b.pages_count / 2);
+      const pages = db.collection('pages');
+      let p = await pages.findOne({ book_id: b.id, page_number: mid }, proj), picked = 'middle';
+      if (!hasOcr(p)) {
+        const next = await pages.find({ book_id: b.id, page_number: { $gt: mid }, ...withOcr }, proj).sort({ page_number: 1 }).limit(1).next();
+        const prev = !next && (await pages.find({ book_id: b.id, page_number: { $lt: mid, $gte: 1 }, ...withOcr }, proj).sort({ page_number: -1 }).limit(1).next());
+        if (next || prev) { p = next || prev; picked = next ? 'next page with OCR' : 'previous page with OCR'; }
+        else picked = p ? 'middle (book has no OCR)' : 'no page record at the middle';
+      }
+      const text = hasOcr(p) ? p.ocr.data : '';
+      const f = inlineFacts(text);
+      const pick = (stored, storedSrc, tag, tagSrc) => (stored != null && stored !== '' ? [stored, storedSrc] : tag != null ? [tag, tagSrc] : [null, 'none']);
+      const [script, script_src] = pick(['printed', 'handwritten', 'mixed'].includes(p?.script_type) ? p.script_type : null, 'pages.script_type', f.script, 'ocr <script> tag');
+      const [page_type, page_type_src] = pick(p?.page_type, 'pages.page_type', f.page_type, 'ocr <page-type> tag');
+      const [columns, columns_src] = pick(Number.isInteger(p?.columns) ? p.columns : null, 'pages.columns', f.columns, 'ocr <columns> tag');
+      const fam = scriptFamily(text, b.language);
+      // Flags only where a Gemini read was asked for them (see inlineFacts); elsewhere unknown.
+      const gemini = /^gemini/.test(p?.ocr?.model || '') && !!f.script;
+      const image_url = p ? getPageSource(p) : null;
+      const has_ocr = !!text;
+      rows.push({
+        book_id: b.id, title: b.title, language: b.language, published: b.published, period: periodOf(b.published, typeof b.year === 'number' ? b.year : null),
+        pages_count: b.pages_count, provider: b.provider, page_id: p?.id ?? null, page_number: p?.page_number ?? null, picked, has_ocr,
+        ocr_model: p?.ocr?.model ?? null, ocr_source: p?.ocr?.source ?? null, image_url, ...fam,
+        script, script_src, page_type, page_type_src, columns, columns_src,
+        flags: gemini ? { has_illustration: f.has_illustration || ILLUS_TYPES.has(f.page_type), has_table: f.has_table || f.page_type === 'table', has_marginalia: f.has_marginalia } : null,
+        needs_descriptor: has_ocr && !!image_url && (!page_type || (!script && fam.family === 'other')),
+      });
+    });
+    out.write(rows.map((r) => JSON.stringify(r)).join('\n') + (rows.length ? '\n' : ''));
+    walked += chunk.length;
+    process.stdout.write(`\r  walked ${walked}`);
+    chunk = [];
+  };
+  for await (const b of readLines(booksFile)) {
+    if (done.has(b.id)) continue;
+    chunk.push(b);
+    if (chunk.length >= 200) await flush();
+  }
+  if (chunk.length) await flush();
+  await new Promise((r) => out.end(r));
+  console.log('');
+}
+
+async function profileDescribe(base) {
+  const walkFile = `${base}.walk.jsonl`, dFile = `${base}.descriptors.jsonl`;
+  const done = new Set();
+  let spent = 0, calls = 0;
+  // A failed call (429, image server busy) is not done: the next run retries it.
+  // The typeface pass meters itself: its own spend and calls, apart from the first pass's.
+  let passSpent = 0, passCalls = 0;
+  for await (const d of readLines(dFile)) {
+    if (d.value) done.add(d.book_id); spent += d.usd || 0; calls += d.input_tokens ? 1 : 0;
+    if (d.pass === 'typeface') { passSpent += d.usd || 0; passCalls += d.input_tokens ? 1 : 0; }
+  }
+  const todo = [];
+  let need = 0;
+  // The first pass: books whose page lacks an inline page type or script. --typeface: every picked
+  // page with OCR (books with no OCR stay counted and skipped, as the issue decided).
+  const wants = (r) => (TYPEFACE ? r.has_ocr && !!r.image_url : r.needs_descriptor);
+  for await (const r of readLines(walkFile)) if (wants(r)) { need++; if (!done.has(r.book_id)) todo.push({ book_id: r.book_id, page_id: r.page_id, page_number: r.page_number, image_url: r.image_url }); }
+  const perCall = (() => { const c = fs.existsSync(DESCRIPTOR_FILE) ? JSON.parse(fs.readFileSync(DESCRIPTOR_FILE, 'utf8')) : null; return c?.usd && c?.calls ? c.usd / c.calls : costOf(DESCRIPTOR_MODEL, 1400, 120); })();
+  const estimate = todo.length * perCall;
+  console.log(`descriptor: ${need} books need it, ${done.size} answered, ${todo.length} to call; $${perCall.toFixed(6)}/call measured on #5623 → estimate $${estimate.toFixed(2)} (2× = $${(2 * estimate).toFixed(2)}); spent so far $${spent.toFixed(3)}${TYPEFACE ? `, this pass $${passSpent.toFixed(3)} over ${passCalls} calls` : ''}`);
+  if (!process.argv.includes('--describe') || !todo.length) return { need, todo: todo.length, perCall, estimate, spent, passSpent, passCalls };
+  if (!TYPEFACE && 2 * estimate + spent > PROFILE_CEILING) throw new Error(`2× estimate $${(2 * estimate).toFixed(2)} + spent $${spent.toFixed(2)} is over the $${PROFILE_CEILING} ceiling (#5643) — stop`);
+  // --typeface: projected = spent this pass + what is left × $/call measured on this pass's calls
+  // (once there are TYPEFACE_METER of them). Checked after every batch of 200.
+  const overProjection = () => {
+    if (!TYPEFACE || passCalls < TYPEFACE_METER) return null;
+    const measured = passSpent / passCalls, projected = passSpent + (todo.length - n) * measured;
+    return projected > TYPEFACE_CEILING ? `projected $${projected.toFixed(2)} ($${measured.toFixed(6)}/call over ${passCalls} calls, ${todo.length - n} left) is over the $${TYPEFACE_CEILING} ceiling (#5643 typeface) — stop` : null;
+  };
+  const limitArg = process.argv.find((a) => a.startsWith('--limit='));
+  const hostOf = (t) => { try { return new URL(t.image_url).host; } catch { return ''; } };
+  // --skip-gentle leaves those hosts' pages for a later run (they stay unknown until then).
+  const skipGentle = process.argv.includes('--skip-gentle');
+  const run = todo.filter((t) => !(skipGentle && hostOf(t) in GENTLE_HOSTS)).slice(0, limitArg ? Number(limitArg.slice(8)) : Infinity).sort((x, y) => (hostOf(x) in GENTLE_HOSTS) - (hostOf(y) in GENTLE_HOSTS));
+  const out = fs.createWriteStream(dFile, { flags: 'a' });
+  let n = 0;
+  let metered = passCalls >= TYPEFACE_METER;
+  for (let i = 0; i < run.length; i += 200) {
+    const batch = run.slice(i, i + 200);
+    const gentle = Math.min(...batch.map((t) => GENTLE_HOSTS[hostOf(t)] ?? PROFILE_CONCURRENCY));
+    await mapLimit(batch, gentle, async (t) => {
+      let row;
+      try {
+        const d = await describePage({ imageUrl: t.image_url, endpoint: 'scripts/eval/quality-covariates.mjs#corpus-profile', bookId: t.book_id, pageId: t.page_id });
+        row = { ...t, ...d, ...(TYPEFACE && { pass: 'typeface' }) };
+        spent += d.usd; calls++;
+        if (TYPEFACE) { passSpent += d.usd; passCalls++; }
+      } catch (e) {
+        row = { ...t, value: null, errors: [String(e.message || e).slice(0, 200)], ...(TYPEFACE && { pass: 'typeface' }) };
+      }
+      out.write(JSON.stringify(row) + '\n');
+      n++;
+    });
+    process.stdout.write(`\r  described ${n}/${run.length}  $${spent.toFixed(3)}${TYPEFACE ? `  pass $${passSpent.toFixed(3)}` : ''}`);
+    if (TYPEFACE && !metered && passCalls >= TYPEFACE_METER) { metered = true; console.log(`\n  metered: $${(passSpent / passCalls).toFixed(6)}/call over ${passCalls} calls → projected $${(passSpent + (todo.length - n) * passSpent / passCalls).toFixed(2)}`); }
+    const over = overProjection();
+    if (over) { await new Promise((r) => out.end(r)); throw new Error(over); }
+    if (TYPEFACE ? passSpent > TYPEFACE_CEILING : spent > PROFILE_CEILING) { await new Promise((r) => out.end(r)); throw new Error(`descriptor spend $${(TYPEFACE ? passSpent : spent).toFixed(2)} passed the $${TYPEFACE ? TYPEFACE_CEILING : PROFILE_CEILING} ceiling — stop`); }
+  }
+  await new Promise((r) => out.end(r));
+  console.log('');
+  return { need, todo: todo.length - run.length, perCall, estimate, spent, passSpent, passCalls };
+}
+
+/** Merge walk + descriptor answers into the profile and count it by language and period. */
+async function profileWrite(base, date, describeInfo) {
+  const answers = new Map();
+  let usd = 0, calls = 0, passUsd = 0, passCalls = 0;
+  const failedIds = new Set();
+  for await (const d of readLines(`${base}.descriptors.jsonl`)) {
+    usd += d.usd || 0; calls += d.input_tokens ? 1 : 0;
+    if (d.pass === 'typeface') { passUsd += d.usd || 0; passCalls += d.input_tokens ? 1 : 0; }
+    if (d.value) { answers.set(d.book_id, { value: d.value, errors: d.errors }); failedIds.delete(d.book_id); }
+    else if (!answers.has(d.book_id)) failedIds.add(d.book_id);
+  }
+  const failed = failedIds.size;
+  // Languages with fewer than LANG_MIN books are pooled as "other".
+  const LANG_MIN = 200;
+  const langOf = (l) => String(l || 'unknown').split(/[;,]/)[0].trim() || 'unknown';
+  const langN = {};
+  for await (const r of readLines(`${base}.walk.jsonl`)) langN[langOf(r.language)] = (langN[langOf(r.language)] || 0) + 1;
+  const FLAGS = ['has_illustration', 'has_table', 'has_marginalia'];
+  const DIMS = ['script', 'typeface', 'page_type', 'columns', ...(TYPEFACE ? FLAGS : [])];
+  const PREV = 'previous page with OCR';
+  // tally: every book; tallyNoPrev (--typeface): the same without the "previous page with OCR" picks.
+  const tally = { all: {}, language: {}, period: {} }, tallyNoPrev = { all: {}, language: {}, period: {} };
+  const sources = Object.fromEntries(DIMS.map((k) => [k, {}]));
+  const picked = {}, ocr = { with_ocr: 0, without_ocr: 0 }, family = {};
+  // --typeface: the descriptor's page type against the stored pages.page_type, by script family.
+  const agree = {};
+  let n = 0;
+  const outBase = TYPEFACE ? `${base}-typeface` : base;
+  const outFile = `${outBase}.jsonl`, tmp = `${outFile}.tmp`, w = fs.createWriteStream(tmp);
+  for await (const r of readLines(`${base}.walk.jsonl`)) {
+    const a = answers.get(r.book_id)?.value;
+    const row = { ...r };
+    delete row.needs_descriptor;
+    if (!r.script && a?.script) {
+      if (r.family === 'other') Object.assign(row, { script: a.script, script_src: 'descriptor' });
+      else row.script_src = `none (descriptor said ${a.script}; not used for ${r.family}, #5623 by-eye rule)`;
+    }
+    if (TYPEFACE && r.page_type_src === 'pages.page_type' && a?.page_type) {
+      const c = (agree[r.family] ||= { n: 0, agree: 0, pairs: {} });
+      c.n++;
+      if (a.page_type === r.page_type) c.agree++;
+      else { const k = `stored ${r.page_type} / descriptor ${a.page_type}`; c.pairs[k] = (c.pairs[k] || 0) + 1; }
+    }
+    // --typeface: the descriptor's page type wins wherever it answered; otherwise inline first.
+    if (a?.page_type && (TYPEFACE || !r.page_type)) Object.assign(row, { page_type: a.page_type, page_type_src: 'descriptor' });
+    if (r.columns == null && a && Number.isInteger(a.columns)) Object.assign(row, { columns: a.columns, columns_src: 'descriptor' });
+    Object.assign(row, a?.typeface ? { typeface: a.typeface, typeface_src: 'descriptor' } : { typeface: null, typeface_src: 'none' });
+    if (a && (TYPEFACE || !row.flags)) row.flags = { has_illustration: a.has_illustration, has_table: a.has_table, has_marginalia: a.has_marginalia, src: 'descriptor' };
+    else if (row.flags) row.flags.src = 'transcription tags (Gemini read)';
+    if (TYPEFACE) for (const k of FLAGS) Object.assign(row, { [k]: row.flags?.[k] ?? null, [`${k}_src`]: row.flags?.[k] == null ? 'none' : row.flags.src });
+    if (a) row.descriptor = a;
+    if (!w.write(JSON.stringify(row) + '\n')) await new Promise((res) => w.once('drain', res));
+    // counting
+    n++;
+    picked[r.picked] = (picked[r.picked] || 0) + 1;
+    ocr[r.has_ocr ? 'with_ocr' : 'without_ocr']++;
+    family[r.family] = (family[r.family] || 0) + 1;
+    const vals = { script: row.script ?? 'unknown', typeface: row.typeface ?? 'unknown', page_type: row.page_type ?? 'unknown', columns: row.columns == null ? 'unknown' : row.columns >= 3 ? '3+' : String(row.columns) };
+    for (const k of FLAGS) vals[k] = row[k] == null ? 'unknown' : String(row[k]);
+    const lang = langN[langOf(r.language)] >= LANG_MIN ? langOf(r.language) : 'other';
+    for (const k of DIMS) {
+      const src = String(row[`${k}_src`]).replace(/ \(descriptor said.*$/, ' (CJK/Tibetan rule)');
+      sources[k][src] = (sources[k][src] || 0) + 1;
+      for (const t of TYPEFACE && r.picked !== PREV ? [tally, tallyNoPrev] : [tally]) {
+        for (const [g, key] of [['all', 'all'], ['language', lang], ['period', r.period]]) {
+          const cell = ((t[g][key] ||= {})[k] ||= { n: 0 });
+          cell.n++; cell[vals[k]] = (cell[vals[k]] || 0) + 1;
+        }
+      }
+    }
+  }
+  await new Promise((res) => w.end(res));
+  fs.renameSync(tmp, outFile);
+  const withCi = (cell) => Object.fromEntries(Object.entries(cell).filter(([v]) => v !== 'n').sort((x, y) => y[1] - x[1]).map(([v, k]) => { const [lo, hi] = wilson(k, cell.n); return [v, { k, share: r3(k / cell.n), ci: [r3(lo), r3(hi)] }]; }));
+  const shape = (byKey) => Object.fromEntries(Object.entries(byKey).sort((x, y) => y[1].script.n - x[1].script.n).map(([key, dims]) => [key, { n: dims.script.n, ...Object.fromEntries(DIMS.map((k) => [k, withCi(dims[k])])) }]));
+  const profileOf = (t) => ({ all: shape(t.all).all, by_language: shape(t.language), by_period: Object.fromEntries(PERIODS.filter((p) => t.period[p]).map((p) => [p, shape({ [p]: t.period[p] })[p]])) });
+  const summary = {
+    generated: date, issue: 5643, rows: n, file: path.relative(ROOT, outFile),
+    unit: 'one page per visible book (visible: true, pages_count > 4): the middle page, else the next page with OCR, else the nearest before it',
+    picked, ocr, script_family: family,
+    sources,
+    descriptor: { model: DESCRIPTOR_MODEL, prompt_version: DESCRIPTOR_VERSION, books_needing_it: describeInfo?.need ?? null, answered: answers.size, failed, calls, usd: Math.round(usd * 10000) / 10000, per_call_estimate: describeInfo?.perCall ?? null, billing: 'realtime list price through scripts/lib/gemini-script-client.mjs, thinking off',
+      ...(TYPEFACE && { typeface_pass: { calls: passCalls, usd: Math.round(passUsd * 10000) / 10000, usd_per_call: passCalls ? Math.round((passUsd / passCalls) * 1e7) / 1e7 : null, ceiling: TYPEFACE_CEILING } }) },
+    rules: {
+      script: 'pages.script_type, else the OCR <script> tag, else the descriptor — except on CJK or Tibetan pages (by OCR text characters, else books.language), where the descriptor\'s script is not used (#5623 by-eye check) and the value is unknown',
+      page_type: TYPEFACE ? 'the descriptor wherever it answered; else pages.page_type, else the OCR <page-type> tag' : 'pages.page_type, else the OCR <page-type> tag, else the descriptor',
+      columns: 'pages.columns, else the OCR <columns> tag, else the descriptor',
+      typeface: TYPEFACE ? 'the descriptor (no inline counterpart); unknown where it did not answer (no OCR, no image, or a failed call)' : 'the descriptor only (no inline counterpart); unknown on every page it did not run on',
+      ...(TYPEFACE && { flags: 'has_illustration / has_table / has_marginalia: the descriptor wherever it answered; else the transcription tags of a Gemini read; else unknown' }),
+      language: `books.language, first value; languages under ${LANG_MIN} books pooled as "other"`,
+      period: 'books.published pinned to one century (periodOf in this script), else books.year, else unknown',
+      intervals: 'Wilson 95% on each share within its cell',
+    },
+    ...profileOf(tally),
+    ...(TYPEFACE && {
+      without_previous_page_picks: { excluded: picked[PREV] || 0, why: `books profiled from the "${PREV}" fallback (mostly books whose OCR stops at page 25, so the page sits near the front matter)`, ...profileOf(tallyNoPrev) },
+      page_type_agreement: {
+        what: 'the descriptor\'s page type against the stored pages.page_type, on every book whose picked page carries one and the descriptor answered; by script family (OCR text characters, else books.language)',
+        by_family: Object.fromEntries(Object.entries(agree).sort((x, y) => y[1].n - x[1].n).map(([f, c]) => { const [lo, hi] = wilson(c.agree, c.n); return [f, { n: c.n, agree: c.agree, share: r3(c.agree / c.n), ci: [r3(lo), r3(hi)], top_disagreements: Object.fromEntries(Object.entries(c.pairs).sort((x, y) => y[1] - x[1]).slice(0, 10)) }]; })),
+      },
+    }),
+  };
+  fs.writeFileSync(`${outBase}.summary.json`, JSON.stringify(summary, null, 1) + '\n');
+  console.log(`profile: ${n} books → ${path.relative(ROOT, outFile)}; summary ${path.relative(ROOT, outBase)}.summary.json`);
+  console.log('picked', JSON.stringify(picked), 'ocr', JSON.stringify(ocr), 'family', JSON.stringify(family));
+  for (const k of DIMS) console.log(`${k}: ${JSON.stringify(Object.fromEntries(Object.entries(summary.all[k]).map(([v, c]) => [v, c.k])))}  sources ${JSON.stringify(sources[k])}`);
+  console.log(`descriptor: ${answers.size} answered, ${failed} failed, ${calls} calls, $${usd.toFixed(3)}${TYPEFACE ? `; typeface pass ${passCalls} calls, $${passUsd.toFixed(3)}` : ''}`);
+  if (TYPEFACE) for (const [f, c] of Object.entries(summary.page_type_agreement.by_family)) console.log(`page type agreement ${f}: ${c.agree}/${c.n} = ${c.share} [${c.ci}]`);
+}
+
+if (process.argv.includes('--corpus-profile')) {
+  const date = process.argv.find((a) => a.startsWith('--date='))?.slice(7) || new Date().toISOString().slice(0, 10);
+  const base = path.join(ROOT, `scripts/eval/output/corpus-page-profile-${date}`);
+  fs.mkdirSync(path.dirname(base), { recursive: true });
+  const mongo = new MongoClient(process.env.MONGODB_URI);
+  await mongo.connect();
+  await profileWalk(mongo.db('bookstore'), base);
+  await mongo.close(); // no Mongo connection is held across model calls
+  const info = await profileDescribe(base);
+  await profileWrite(base, date, info);
+  process.exit(0);
 }
 
 // ── 1. translation pages (pooling rule of quality-by-language.mjs) ─────────────

@@ -358,7 +358,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!work) return { title: 'Catalogue entry not found - BPH', robots: { index: false, follow: false } };
   const title = work.title || work.full_title || work.parallel_title || work.uniform_title || `BPH catalogue entry ${ubn}`;
   const author = work.author || work.variant_author || '';
-  const description = `BPH catalogue entry. ${author ? author + '. ' : ''}${work.year ? `(${work.year}). ` : ''}Shelf mark: ${work.shelf_mark || '—'}.`;
+  const description = `BPH catalogue entry. ${author ? author + '. ' : ''}${work.year ? `(${work.year}). ` : ''}Shelf mark: ${work.shelf_mark || '–'}.`;
   return { title: `${title} - BPH catalogue`, description };
 }
 
@@ -419,7 +419,7 @@ export default async function CatalogEntryPage({ params }: Props) {
 
   // Manuscripts keep their title in full_title; `title` is null on all 812.
   const displayTitle = work.title || work.full_title || work.parallel_title || work.uniform_title
-    || (work.shelf_mark ? `(untitled — ${work.shelf_mark})` : `(untitled — ${work.ubn || work.uuid})`);
+    || (work.shelf_mark ? `(untitled, ${work.shelf_mark})` : `(untitled, ${work.ubn || work.uuid})`);
   const slBookHref = slBook ? `/embed/${tenant}/book/${encodeURIComponent(slBook.slug || slBook.id)}` : null;
   const slCoverUrl = slBook ? getBookThumbnailUrl(slBook, 'display') : null;
   const externalBookHref = externalBook
@@ -787,7 +787,7 @@ export default async function CatalogEntryPage({ params }: Props) {
               <a href={signInHref} className="text-accent-rust hover:underline">
                 Sign in to edit
               </a>
-              {' — for BPH cataloguers.'}
+              {' (for BPH cataloguers).'}
             </>
           ) : null}
         </p>

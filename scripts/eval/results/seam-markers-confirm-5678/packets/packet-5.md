@@ -1,0 +1,1549 @@
+
+
+######## BREAK 1/17  id=db403645ff  language=chinese
+
+==== SOURCE, END OF PAGE N ====
+知言能知人言之是非窮盡事物之理則心如明鏡方能如聖人觀人之法以察人也
+○子曰溫故而知新可以為師矣
+溫尋繹也故者舊所聞新者今所得學能時習舊聞而每有新得則所學在我而其應不窮故可以為
+人師若夫 記問之學則無得於心 而所知有限 其應不窮相反故學記譏其不足以為
+人師正與此意互相發也 不去裏面搜尋得道理記得十件只是十件記得百件只是百件這箇便死殺了知新則就是溫故中見得
+
+==== SOURCE, START OF PAGE N+1 ====
+這道理愈精勝似舊時引而伸之觸類而長之則常
+活不死。穀中庸溫故而知新不溫故而知新乃是溫故重
+得新。求美○溫故而知新溫故而求新則亦不可
+知新者設不足以為師故是以問斷了若果無所溫故
+亦不足以為師也這語意在知新惟溫故而知新
+新不是底道理時習得熟漸漸
+發得出且如理都是自家來問就此理上以
+人與說一箇理都是看幾箇人來問就此理上推究出來
+其應無窮且如記問之學記得一事便說十事不出所…
+
+---- VERSION P: English assigned to page N (end) ----
+…<margin>Master Chen of Xin'an says: [compared] with</margin> This is the opposite of having an inexhaustible capacity to respond. The *Record of Learning* <note>original: "Xueji" (a chapter in the Classic of Rites)</note> criticizes such learning as insufficient to make one a teacher, which perfectly complements the meaning here. <margin>Zhu Xi says: Learning for the sake of repeating [is not the same as] reviewing the old and</margin> If one does not search for the principles inside oneself, then memorizing ten things results in only ten things, and memorizing a hundred results in only a hundred; this makes learning dead and stagnant. "Learning the new" means finding insights within what was already reviewed. <margin>Complete Commentaries on the Analects</margin>
+This principle becomes more refined, surpassing what it was before.
+---- VERSION P: English assigned to page N+1 (start) ----
+<margin>Complete Commentaries on the Analects</margin>
+This principle becomes more refined, surpassing what it was before. By extending and expanding upon it, and by inferring from one case to others, the knowledge remains active and not dead. In the *Doctrine of the Mean*, "reviewing the old and learning the new" does not mean reviewing the old *or* learning the new; rather, it is reviewing the old to attain the new. If one pursues the new without reviewing the old, one cannot know the new. If one is not sufficient to be a teacher, it is because one has severed the path; if one truly does not review the old, one is also insufficient to be a teacher. The meaning of this statement lies in…
+
+---- VERSION Q: English assigned to page N (end) ----
+…"fu"</margin>, then nothing is gained in the heart <margin>Master Chen of Xin’an says: "with"</margin> and what is known is limited <margin>Master Chen of Xin’an says: "with"</margin>. This is the opposite of "inexhaustible application." Therefore, the *Record of Education* <note>original: Xueji, a chapter in the Classic of Rites</note> mocks such learning as being insufficient to make one a teacher of others. This is precisely the same point expressed here. <margin>Master Zhu says: "The learning of memorization and recitation, and warming up the old..."</margin> If one does not search within to find the principles, then remembering ten items is just ten items, and remembering a hundred items is just a hundred items. This is something dead. "Knowing the new" means seeing the principles within the very act of "warming up the old."
+---- VERSION Q: English assigned to page N+1 (start) ----
+<margin>Great Collection of Commentaries on the Analects</margin>
+These principles become increasingly refined, surpassing what was known before. By extending them and applying them to similar cases, the knowledge remains constantly alive and never dies. <note>Gu</note> The *Doctrine of the Mean* mentions "warming up the old and knowing the new." This does not mean one does not warm up the old to know the new; rather, it means that by warming up the old, one gains the new again. <note>Qiu Mei</note> Regarding "warming up the old and knowing the new," if one only warms up the old without seeking the new, then one cannot "know the new" and is insufficient to be a teacher. Thus, the meaning…
+
+---- VERSION R: English assigned to page N (end) ----
+…one gains nothing within the heart <margin>Master Chen of Xin'an says: [compared] with</margin>, and what one knows is limited. <margin>Master Chen of Xin'an says: [compared] with</margin> This is the opposite of having an inexhaustible capacity to respond. The *Record of Learning* <note>original: "Xueji" (a chapter in the Classic of Rites)</note> criticizes such learning as insufficient to make one a teacher, which perfectly complements the meaning here. <margin>Zhu Xi says: Learning for the sake of repeating [is not the same as] reviewing the old and</margin> If one does not search for the principles inside oneself, then memorizing ten things results in only ten things, and memorizing a hundred results in only a hundred; this makes learning dead and stagnant. "Learning the new" means finding insights within what was already reviewed.
+---- VERSION R: English assigned to page N+1 (start) ----
+<margin>Complete Commentaries on the Analects</margin>
+This principle becomes more refined, surpassing what it was before. By extending and expanding upon it, and by inferring from one case to others, the knowledge remains active and not dead. In the *Doctrine of the Mean*, "reviewing the old and learning the new" does not mean reviewing the old *or* learning the new; rather, it is reviewing the old to attain the new. If one pursues the new without reviewing the old, one cannot know the new. If one is not sufficient to be a teacher, it is because one has severed the path; if one truly does not review the old, one is also insufficient to be a teacher. The meaning of this statement lies in…
+
+---- VERSION S: English assigned to page N (end) ----
+…"knowledge based on rote memory and questioning," one gains nothing in the heart <margin>Master Chen of Xin'an says: compared with</margin>, and what one knows is limited <margin>Master Chen of Xin'an says: compared with</margin>, which is the opposite of being inexhaustible. Thus, the <term>Xueji</term> <gloss>Record of Learning</gloss> criticizes such learning as insufficient to qualify one as a teacher, which mutually illuminates this very meaning. <margin>Master Zhu says: "Knowledge based on rote memory and questioning" is not "reviewing the old and learning the new." It is not searching for the principles within. If one remembers ten things, it is just ten things; if one remembers a hundred things, it is just a hundred things. This is dead and rigid. "Learning the new" means seeing something new within "reviewing the old."</margin>
+---- VERSION S: English assigned to page N+1 (start) ----
+<margin>Complete Commentary on the Analects</margin>
+This principle becomes more refined, surpassing what was known before. By extending and broadening it, and by applying it to various categories, one remains constantly vibrant and not stagnant. The <term>Zhongyong</term> <gloss>Doctrine of the Mean</gloss> speaks of reviewing the old to learn the new. If one does not review the old to learn the new, it is not "reviewing the old to obtain the new." 
+○ If one reviews the old but does not seek the new, then one cannot be a teacher. If one does not "learn the new," it is not enough to be a teacher. Thus, the question is decided: if one truly has nothing from the old that is reviewed, one is…
+
+---- VERSION T: English assigned to page N (end) ----
+…a teacher. As for <margin>pronounced *fu*</margin> learning that is merely for the purpose of reciting and asking, one has nothing realized in the heart, <margin>Master Chen of Xin'an says: [compared] with</margin> and what one knows is limited. <margin>Master Chen of Xin'an says: [compared] with</margin> This is the opposite of being inexhaustible in application. Thus, the *Book of Rites* <note>original: "Xueji"</note> criticizes such learning as insufficient to qualify one as a teacher. This exactly corroborates the meaning here. <margin>Master Zhu says: "Keeping warm the old" is not</margin> merely looking inside to find a principle. If you remember ten things, you only have ten; if you remember a hundred, you only have a hundred. That is dead knowledge. "Knowing the new" means that within the process of warming the old, one perceives
+---- VERSION T: English assigned to page N+1 (start) ----
+<margin>Complete Commentaries on the Analects</margin>
+this principle becoming more refined, surpassing what was known before. By extending and expanding upon it, and by touching upon categories and letting them grow, it remains constantly alive and not dead. In the *Doctrine of the Mean*, it is noted that keeping warm the old and knowing the new is not merely keeping warm the old and waiting for the new. Seeking beauty—if one keeps warm the old but only seeks the new, one still cannot "know the new." If one does not keep warm the old, one is not fit to be a teacher. This is why the question makes a definitive judgment. If one truly does not "keep warm the old," one is also not fit to be a…
+
+---- VERSION U: English assigned to page N (end) ----
+…of memory and questioning" <note>referring to rote memorization</note>, there is no realization in the heart, <margin>Master Chen of Xin'an says: compared with</margin> and what is known is limited. <margin>Master Chen of Xin'an says: compared with</margin> This is the opposite of "inexhaustible application." Therefore, the Record of Learning <note>original: "Xue Ji," a chapter in the Book of Rites</note> mocks it as being insufficient to be a teacher to others. This exactly complements the meaning here. <margin>Master Zhu says: the learning of memory and questioning</margin> If one does not search for the principles within, then remembering ten items remains just ten items, and remembering a hundred items remains just a hundred items. This is something dead and fixed. "Knowing the new" means seeing within the "reviewing of the old"
+---- VERSION U: English assigned to page N+1 (start) ----
+that these principles become increasingly refined and superior compared to before. By extending and stretching them, and by encountering a category and expanding upon it, the principles remain constantly alive and not dead. <note>Master</note> Gu says: In the Doctrine of the Mean, "reviewing the old and thereby knowing the new" does not mean reviewing the old and separately knowing the new; rather, it is in reviewing the old that one doubly gains the new. <note>Master</note> Qiu says: "Reviewing the old and thereby knowing the new" means reviewing the old to seek the new; otherwise, one cannot know the new. If one is insufficient to be a teacher, it is because the connection is broken. If…
+
+
+######## BREAK 2/17  id=48a95c33ff  language=latin
+
+==== SOURCE, END OF PAGE N ====
+…admirationem, secunda beneuolentiam, tertia reuerentiam conciliat. Miramur enim castos et sobrios, diligimus beneficos, honore praecipuo dignos ducimus religiosos.
+62. Tres sunt aliae species, quas utinam nostra, sicut anima Dei, odisset. Tria insaturabilia, concupiscentia carnis, concupiscentia oculorum, et superbia vitae, triplex cuneus aduersa facie incedens contra agmina Dei Israel, funiculus triplex, trahens in certam perniciem, qui haud dubie difficulter perrumpi possit (si tamen possit) ab iis qui confidunt in viribus suis.
+63. Sed (gratia Deo) non minus fortis hic noster retrahens ab interitu, dum temperantia, carnis concupiscentiam extinguit, concupiscentiam oculorum largitas fraenat, vitae autem superbiam humilitas prosternit.
+
+==== SOURCE, START OF PAGE N+1 ====
+64. Inter has acies homo (de quo certant) medius constitutus, ad quam declinauerit eius est certa victoria.
+65. Certaminis hic ordo est, vt omnium primo caro domanda veniat, cui qui seruit, adhuc haeret in principiis, postrema semper restat superbia, quae si millies deiiciatur, tamen vsque resurgit, & tanto aliquando fortior, quanto potentioribus uiribus prostrata fuerit.
+66. CVM AVTEM laboris & prelii sit mentio, statim etiam mercedis & stipendii memoria occurrat, hoc dicere cogimur, frustra nos Deum colere, frustra iustitiam, stulte agere qui non manducamus & bibimus cras morituri, si recte…
+
+---- VERSION P: English assigned to page N (end) ----
+…the chaste and sober, we love the beneficent, and we hold those who are religious to be worthy of special honor.
+<margin>
+Eccl. 25.
+Prov. 30.
+Eccl. 4.
+</margin>
+62. There are three other species, which I wish our soul, like the soul of God, would hate. Three insatiable things: the lust of the flesh, the lust of the eyes, and the pride of life. A triple wedge advancing with a hostile face against the ranks of the God of Israel, a triple cord drawing into certain destruction, which could undoubtedly be broken with difficulty (if indeed it can be broken at all) by those who trust in their own strength.
+63. But (thanks be to God) this one of ours, which draws us back from destruction, is no less strong, while temperance extinguishes the lust of the flesh, generosity curbs the lust of the eyes, and humility prostrates the pride of life.
+---- VERSION P: English assigned to page N+1 (start) ----
+64. Placed in the middle between these battle lines, the man (about whom they contend) belongs to the one toward whom he has inclined.
+65. This is the order of the struggle: that first of all, the flesh must be tamed; he who serves it still lingers in the beginnings. Pride always remains the last, which, if it be cast down a thousand times, nonetheless rises again, and sometimes it is all the stronger for having been prostrated by more powerful forces.
+<margin>
+Isa. 22.
+1 Cor. 15.
+</margin>
+66. BUT WHEN there is mention of labor and battle, the memory of reward and stipend immediately occurs. We are compelled to say this: that we worship God in vain, and act in vain, and act foolishly if we…
+
+---- VERSION Q: English assigned to page N (end) ----
+…For we admire the chaste and the sober, we love the beneficent, and we consider the religious worthy of special honor.
+<margin>
+Eccl. 25.
+Prov. 30.
+Eccl. 4.
+</margin>
+62. There are three other species, which I wish our soul, like the soul of God, would hate. The three insatiable things: the lust of the flesh, the lust of the eyes, and the pride of life; a triple wedge advancing with a hostile face against the armies of the God of Israel, a triple cord drawing into certain ruin, which, without a doubt, could be difficult to break (if it could be broken at all) by those who trust in their own strength.
+63. But (thanks be to God) this one of ours is no less strong in drawing us back from destruction, while temperance extinguishes the lust of the flesh, generosity curbs the lust of the eyes, and humility prostrates the pride of life.
+---- VERSION Q: English assigned to page N+1 (start) ----
+64. Man, positioned in the middle of these battle lines (concerning whom they contend), is certain of victory toward whichever side he inclines.
+65. This is the order of the struggle: that first of all the flesh must be tamed, for he who serves it still clings to the foundations; pride always remains the last, which, even if it be cast down a thousand times, still rises again, and is sometimes the stronger, the more powerful the forces by which it was prostrated.
+<margin>
+Isa. 22.
+1 Cor. 15.
+</margin>
+66. BUT WHEN there is mention of labor and battle, the memory of reward and stipend immediately occurs. We are compelled to say that we worship God in vain, that we practice justice in vain,…
+
+---- VERSION R: English assigned to page N (end) ----
+…the religious worthy of special honor.
+<margin>
+Ecclesiasticus 25.
+Proverbs 30.
+Ecclesiasticus 4.
+</margin>
+62. There are three other types which I wish our soul hated, just as the soul of God does. Three insatiable things: the lust of the flesh, the lust of the eyes, and the pride of life <note>original: "concupiscentia carnis, concupiscentia oculorum, et superbia vitae"</note>; a triple wedge marching with a hostile face against the ranks of the God of Israel; a triple cord drawing toward certain destruction, which undoubtedly could only be broken with difficulty (if at all) by those who trust in their own strength.
+63. But (thanks be to God) our force is no less strong in pulling us back from ruin, while temperance extinguishes the lust of the flesh, generosity curbs the lust of the eyes, and humility strikes down the pride of life.
+---- VERSION R: English assigned to page N+1 (start) ----
+64. Man (over whom they contend) is placed in the middle between these battle lines; to whichever side he turns, its victory is certain.
+65. This is the order of the struggle: first of all, the flesh must be subdued, and he who serves it still clings to the beginnings; pride always remains for the last, which, even if cast down a thousand times, nevertheless keeps rising again, and is sometimes stronger the more powerful the force that prostrated it.
+<margin>
+Isaiah 22.
+1 Corinthians 15.
+</margin>
+66. Since, however, there is mention of labor and battle, let the memory of reward and payment immediately occur; we are compelled to say this: we worship God in vain, we follow justice in vain,…
+
+---- VERSION S: English assigned to page N (end) ----
+…the third reverence. For we admire the chaste and sober, we love the beneficent, and we consider the religious worthy of special honor.
+<margin>
+Eccl. 25.
+Prov. 30.
+Eccl. 4.
+</margin>
+62. There are three other species, which I wish our soul hated as God does. Three insatiable things: the lust of the flesh, the lust of the eyes, and the pride of life; a triple wedge advancing with a hostile front against the armies of the God of Israel, a triple cord drawing toward certain ruin, which can undoubtedly be broken through with difficulty (if it can be broken at all) by those who trust in their own strength.
+63. But (thanks be to God) this our strength that draws us back from destruction is no less strong, while temperance extinguishes the lust of the flesh, liberality reins in the lust of the eyes, and humility prostrates the pride of life.
+---- VERSION S: English assigned to page N+1 (start) ----
+64. Man (over whom they contend) is established in the middle between these battle lines, and the victory is certain for whomever he inclines toward.
+65. This is the order of the struggle: that first of all, the flesh must come to be tamed, for he who serves it still clings to the beginnings; pride always remains the last, which, even if it is cast down a thousand times, nevertheless rises again, and sometimes all the stronger the more powerful the forces by which it was prostrated.
+<margin>
+Isa. 22.
+1 Cor. 15.
+</margin>
+66. BUT WHEN there is mention of labor and battle, the memory of reward and stipend immediately occurs. We are compelled to say this: we worship God in vain, we serve…
+
+---- VERSION T: English assigned to page N (end) ----
+…religious worthy of special honor.
+<margin>
+Ecclesiasticus 25.
+Proverbs 30.
+Ecclesiasticus 4.
+</margin>
+62. There are three other types which I wish our soul had hated just as the soul of God does. Three insatiable things: the concupiscence <gloss>lust/strong desire</gloss> of the flesh, the concupiscence of the eyes, and the pride of life; a triple wedge marching with a hostile face against the ranks of the God of Israel, a triple cord drawing toward certain destruction, which undoubtedly could be broken only with difficulty (if indeed it can be) by those who trust in their own strength.
+63. But (thanks be to God) this [strength] of ours is no less strong in drawing us back from ruin, while temperance extinguishes the concupiscence of the flesh, generosity bridles the concupiscence of the eyes, and humility casts down the pride of life.
+---- VERSION T: English assigned to page N+1 (start) ----
+64. Between these battle lines man (over whom they contend) is placed in the middle; to whichever side he turns, its victory is certain.
+65. This is the order of the struggle: that first of all the flesh must be tamed, for he who serves it still lingers in the beginnings; pride always remains for the last, which, if it should be cast down a thousand times, yet rises up again, and is sometimes stronger the more powerful the forces were by which it was prostrated.
+<margin>
+Isaiah 22.
+1 Corinthians 15.
+</margin>
+66. SINCE, HOWEVER, there is mention of labor and battle, let the memory of reward and payment also immediately occur; we are forced to say this: we worship God in vain, we follow…
+
+
+######## BREAK 3/17  id=5c119957ff  language=ms
+
+==== SOURCE, END OF PAGE N ====
+…دان ممبطلكن
+فتوي اورغ يغ برفتوى حلال منجوال ايم فد چينا دمكين بوقتي
+الحمد لله وحده والصلاة والسلام على من لا نبي بعده
+وجعله تله مليهات اكن فتوى شيخ الاسلام ومفتي الانام شيخ محمد سعيد باصيل دان بيبراف علماء الشافعية يغ برتيكين دباوه فتوى ايت بهوا تتف حرام منجوال ايم فد چينا اتس قول صحيح درفد مذهب شافعي دان بطل فركتان اورغ يغ مفتكاي حلال واله اعلم اوله كها هوف فقهول العام منتوي الحاج مرزوقي بن الحاج اسمعيل كسمبيلن تيكين هيا يغ ضعيف لاكي هينا اكران شكوى كفد الله سبحانه وتعالي يغ مفرنپاي توفيق توفيق اتس بتول فتوى كها يايث فد تاهن سري بوتيكل راتوس توجه بلس حيفك ممزكن اوله كفلام علماء دمكه كها ايت فجزاههم الله بخير جزيل وبوهم في اعلام جليل اللهم وفقنا لمتابعتهم في الدين امين رب العالمين مك سميا بركات الحمد لله والشكر لله والصلاة والسلام
+فتوى
+
+==== SOURCE, START OF PAGE N+1 ====
+500 
+عَلَى خَيْرِ خَلْقِ اللَّهِ وَعَلَى آلِهِ وَصَحْبِهِ هُدَاةِ الْأُمَّةِ وَعَلَى الْعُلَمَاءِ الْوَارِثِينَ
+وَالتَّابِعِينَ لَهُمْ إِلَى يَوْمِ الْقِيَامَةِ * وَبَعْدُ * مكة اداله قد تهون هجرة
+النبي صلى الله عليه وسلم [سريبو تيكل راتوس توجوه بلس] سهيا
+برفتوى د بليبو افديليغ منتواك اكن حرام منجوال ايم فد چينا كمدين
+درفد هيا فرقسا حالث ، مكنولق ستغه مريكث اكن فتوى هيا
+كفلا مريكث [نماهاچي مادي بن ماچن] دان دي منوت تولوه فد
+حاج ابوالحسن فلمبغ تالغ بالي دمكه مك حاج ابوالحسن فون منولوغ
+دان داقت فول تمن دمكه دوا اورغ يايت محمد منصوري مالكي دان
+عمر بالي امفنان [مك حاج ابوالحسن فون تروس برفتوى…
+
+---- VERSION P: English assigned to page N (end) ----
+…haram</note> to sell chickens to the Chinese according to the correct opinion of the Shafi'i school, and the statement of the person who gave a fatwa of permissibility is invalid. And Allah knows best. Written by the Head Penghulu of the Public, Mantewei, Al-Haj Marzuqi bin Al-Haj Ismail. Ninth: The signature of the one who is weak and humble, seeking refuge in Allah, the Glorified and Exalted, who grants success upon the correctness of the fatwa, in the year one thousand three hundred and seventeen <note>1317 AH / approx. 1899 CE</note>. Verified by the leading scholars in Makkah; may Allah reward them with a great reward and elevate them in glorious ranks. O Allah, grant us success in following them in religion, Amen, Lord of the Worlds. Thus all say: Praise be to Allah and thanks be to Allah, and peace and blessings 
+Fatwa
+---- VERSION P: English assigned to page N+1 (start) ----
+upon the best of Allah's creation, and upon his family and his companions, the guides of the community, and upon the scholars who are the heirs <note>referring to the Hadith: scholars are the heirs of the Prophets</note>, and those who follow them until the Day of Resurrection.
+To proceed: In Makkah, in the year of the Migration of the Prophet, peace and blessings be upon him, <unclear>one thousand three hundred and seventeen</unclear>, I 
+issued a fatwa in Belebu, Afdeeling <gloss>Administrative Division</gloss> Mantewei, concerning the prohibition of selling chickens to the Chinese after I had investigated their circumstances. However, some of them rejected my fatwa, specifically their…
+
+---- VERSION Q: English assigned to page N (end) ----
+…of the Shafi'i school. Such is the evidence. From the response of the Mufti, it is established that it is the Shafi'i school, and it is known therein that there is no disagreement in the school. From this, the invalidity of the fatwa of those who opposed it is known. Thus, if anyone issued a fatwa opposing that fatwa, they have retracted that fatwa and have acknowledged their error. Their signatures have been written above this, confirming the fatwa of the Mufti <unclear>so that the brothers may know</unclear> who see this response. Written by Ahmad Khatib, Imam of the Shafi'is in Makkah, the Great Imam of the Masjid al-Haram. Eighth: the signature of the Chief Judge <term>Penghulu</term> <gloss>regional religious leader</gloss> of Muntok, al-Haj Marzuqi, confirming the fatwa of the Mufti Shaykh Muhammad Sa'id Babasil and nullifying
+---- VERSION Q: English assigned to page N+1 (start) ----
+the fatwa of those who issued a fatwa declaring it lawful <term>halal</term> to sell chickens to the Chinese. Such is the evidence.
+Praise be to Allah alone, and peace and blessings be upon the one after whom there is no prophet.
+As follows: He has seen the fatwa of the Shaykh al-Islam and the Mufti of Mankind, Shaykh Muhammad Sa'id Babasil, and several Shafi'i scholars who signed beneath that fatwa, stating that it remains forbidden <term>haram</term> to sell chickens to the Chinese according to the correct opinion <term>qawl sahih</term> of the Shafi'i school, and that the words of those who decreed it lawful are void. And Allah knows best. Written by the Chief Judge <term>Penghulu</term>…
+
+---- VERSION R: English assigned to page N (end) ----
+(NO ENGLISH FOR THIS PAGE)
+---- VERSION R: English assigned to page N+1 (start) ----
+(NO ENGLISH FOR THIS PAGE)
+
+---- VERSION S: English assigned to page N (end) ----
+…to sell chickens to the Chinese according to the correct opinion in the Shafi‘i school of thought, and that the words of those who claim it is <term>halal</term> are void. And Allah knows best. The one who is the Head Penghulu of the Mentawai public, Haji Marzuki bin Haji Ismail, 1319. Signed by the weak and humble one, who complains to Allah the Glorified and Exalted, who grants success to the truthfulness of the <term>fatwa</term>. This was in the year one thousand three hundred and seventeen, which has been established by the leaders of the scholars in Makkah. May Allah reward them with a great reward and keep them in high esteem. O Allah, grant us success in following them in the religion. Amen, Lord of the worlds. Praise be to Allah and thanks be to Allah, and peace and blessings [be upon the Prophet].
+<term>Fatwa</term>
+---- VERSION S: English assigned to page N+1 (start) ----
+...upon the best of Allah’s creation, and upon his family and companions, the guides of the community, and upon the scholars who are the heirs [of the prophets], and those who follow them until the Day of Resurrection. Thereafter, in Makkah, in the year of the Prophet’s Hijra, may Allah bless him and grant him peace, 1317, I issued a <term>fatwa</term> in Belibu, Afdeling Mentawai, that it is <term>haram</term> to sell chickens to the Chinese. After I examined the matter, some of them rejected my <term>fatwa</term>. Their leader, named Haji Madi bin Machan, and his companions exerted pressure on Haji Abu al-Hasan, a Palembang man in Talu Bali, Makkah. So Haji Abu al-Hasan helped [them], and…
+
+---- VERSION T: English assigned to page N (end) ----
+…and the words of those who claimed it was permissible are invalid. And Allah knows best. The head of the Mentawai community, Haji Marzuki bin Haji Ismail, signed it. He, who is weak and lowly, seeks help from Allah the Glorified and Exalted, who grants guidance. Guidance for the correctness of the fatwa, that is in the year 1317 <note>Hijri</note>. Praised be the leaders of the scholars in Makkah, and may Allah reward them with a great reward and keep them in a noble position. O Allah, grant us success in following them in religion. Amen, Lord of the worlds. Thus, praise be to Allah and thanks be to Allah, and peace and blessings.
+Fatwa upon the best of Allah's creation, and upon his family and companions, the guides of the community, and upon the scholars who are their inheritors, and those who follow them until the Day of Resurrection.
+---- VERSION T: English assigned to page N+1 (start) ----
+upon the best of Allah's creation, and upon his family and companions, the guides of the community, and upon the scholars who are their inheritors, and those who follow them until the Day of Resurrection. And after: In Makkah, in the year of the Prophet's Hijra <note>1317</note>, I issued a fatwa in Belibuo, Affdeling Mentawai, regarding the prohibition of selling pigs to the Chinese. After I investigated the matter, some of them rejected my fatwa. Their leader, [a man named Madi bin Macan], sent a letter to Haji Abu al-Hasan of Palembang, Talu Bali Makkah. Haji Abu al-Hasan replied, and he also obtained a response from two people, namely Muhammad Mansuri Maliki and Umar Bali Ampunan. [Haji…
+
+---- VERSION U: English assigned to page N (end) ----
+…Muhammad Sa'id Babasil, and several Shafi'i scholars who signed below that fatwa, stating that it is firmly prohibited to sell pigs to the Chinese according to the correct opinion in the Shafi'i school, and the words of those who claimed it was permissible are invalid. And Allah knows best. The head of the Mentawai community, Haji Marzuki bin Haji Ismail, signed it. He, who is weak and lowly, seeks help from Allah the Glorified and Exalted, who grants guidance. Guidance for the correctness of the fatwa, that is in the year 1317 <note>Hijri</note>. Praised be the leaders of the scholars in Makkah, and may Allah reward them with a great reward and keep them in a noble position. O Allah, grant us success in following them in religion. Amen, Lord of the worlds. Thus, praise be to Allah and thanks be to Allah, and peace and blessings.
+Fatwa
+---- VERSION U: English assigned to page N+1 (start) ----
+upon the best of Allah's creation, and upon his family and companions, the guides of the community, and upon the scholars who are their inheritors, and those who follow them until the Day of Resurrection. And after: In Makkah, in the year of the Prophet's Hijra <note>1317</note>, I issued a fatwa in Belibuo, Affdeling Mentawai, regarding the prohibition of selling pigs to the Chinese. After I investigated the matter, some of them rejected my fatwa. Their leader, [a man named Madi bin Macan], sent a letter to Haji Abu al-Hasan of Palembang, Talu Bali Makkah. Haji Abu al-Hasan replied, and he also obtained a response from two people, namely Muhammad Mansuri Maliki and Umar Bali Ampunan. [Haji…
+
+
+######## BREAK 4/17  id=7bc9ac67ff  language=tibetan
+
+==== SOURCE, END OF PAGE N ====
+…།ཕོངས་པ་ཐམས་ཅད་རྣམ་པར་སྒྲོལ་མ། །
+ཕྱག་འཚལ་ཟླ་བའི་དུམ་བུས་དབུ་བརྒྱན། །བརྒྱན་པ་ཐམས་ཅད་ཤིན་ཏུ་འབར་མ། །རལ་པའི་ཁྲོད་ན་འོད་དཔག་མེད་ལས། །རྟག་པར་
+ཤིན་འོད་ནི་མཛད་མ། །ཕྱག་འཚལ་བསྐལ་པའི་མཐའ་མའི་མེ་ལྟར། །འབར་བའི་འཕྲེང་བའི་དབུས་ན་གནས་མ། །གཡས་བརྐྱང་
+༄༅། །གཡོན་བསྐུམ་ཀུན་ནས་བསྐོར་དགའ། །དགྲ་ཡི་དཔུང་ནི་རྣམ་པར་འཇོམས་མ། །ཕྱག་འཚལ་ས་གཞིའི་ངོས
+ལ་ཕྱག་གིས། །མཐིལ་གྱིས་བསྣུན་ཅིང་ཞབས་ཀྱིས་བརྡུང་མ། །ཁྲོ་གཉེར་ཅན་མཛད་ཡི་གེ་ཧཱུཾ་གིས། །རིམ་པ་བདུན་པོ་རྣམས་ནི་འགེམྶ
+མ༏ ༏ཕྱག་འཚལ་བདེ་མ་དགེ་མ་ཞི་མ། །མྱ་ངན་འདས་ཞི་སྤྱོད་ཡུལ་ཉིད་མ། །སྭཱཧཱ་ཨོཾ་དང་ཡང་དག་ལྡན་མ། །སྡིག་པ་ཆེན་པོ་འཇོམས
+པ་ཉིད་མ། །ཕྱག་འཚལ་ཀུན་ནས་བསྐོར་རབ་དགའ་བའི། །དགྲ་ཡི་ལུས་ནི་རབ་ཏུ་འགེམས་མ། །ཡི་གེ་བཅུ་པའི་ངག་ནི་བཀོད
+པའི༏ ༏རིག་པ་ཧཱུཾ་ལས་སྒྲོལ་མ་ཉིད་མ། །ཕྱག་འཚལ་ཏུ་རེའི་ཞབས་ནི་བརྡབས་པས། །ཧཱུཾ་གི་རྣམ་པའི་ས་བོན་ཉིད་མ། །རི་རབ་མན
+
+==== SOURCE, START OF PAGE N+1 ====
+དཱ་ར་དང་འབིགས་བྱེད། །འཇིག་རྟེན་གསུམ་རྣམས་གཡོ་བ་ཉིད་མ། །ཕྱག་འཚལ་ལྷ་ཡི་མཚོ་ཡི་རྣམ་པའི། །རི་དགས་རྟགས་ཅན
+ཕྱག་ན་བསྣམས་མ། །ཏཱ་རེ་གཉིས་བརྗོད་ཕཊ་ཀྱི་ཡི་གེས། །དུག་རྣམས་མ་ལུས་པ་ནི་སེལ་མ། །ཕྱག་འཚལ་ལྷ་ཡི་ཚོགས་རྣཾས
+རྒྱལ་པོ༑ ༑ལྷ་དང་མི་འམ་ཅི་ཡིས་བསྟེན་མ། །ཀུན་ནས་གོ་ཆ་དགའ་བའི་བརྗིད་ཀྱིས། །བརྩོད་དང་རྨི་ལམ་ངན་པ་སེལ་མ། །
+ཕྱག་འཚལ་ཉི་མ་ཟླ་བ་རྒྱས་པའི། །སྤྱན་གཉིས་པོ་ལ་འོད་རབ་གསལ་མ། །ཧ་ར་གཉིས་བརྗོད་ཏུཏྟ་ར་ཡིས། །ཤིན་ཏུ་དྲག་པོའི་
+རིམས་ནད་སེལ་མ། །ཕྱག་འཚལ་དེ་ཉིད་གསུམ་རྣམས་བཀོད་པས། །ཞི་བའི་མཐུ་དང་ཡང་དག་ལྡན་མ། །གདོན་དང་རོ་ལངས
+༄༅། །གནོད་སྦྱིན་ཚོགས་རྣམས། །འཇོམས་པ་ཏུ་རེ་རབ་མཆོག་ཉིད་མ། །རྩ་བའི་སྔགས་ཀྱི་བསྟོད་པ་འདི་དང་། །…
+
+---- VERSION P: English assigned to page N (end) ----
+…Homage to her who strikes the surface of the earth with her palm and beats it with her feet. With the letter <term>Hum</term> and a furrowed brow, she crushes the seven levels. Homage to her who is bliss, virtue, and peace, whose sphere of activity is the peace of <term>nirvana</term> <gloss>extinction of suffering</gloss>. She who is perfectly endowed with <term>Svaha</term> and <term>Om</term>. She who is the destroyer of great sins. Homage to her who rejoices in circling in every way, who completely destroys the bodies of the enemies. Through the mantra of ten syllables, she is the <term>Tara</term> <gloss>Liberator</gloss> born from the <term>Hum</term> of wisdom. Homage to her who stomps her feet with <term>Ture</term>, whose seed-syllable is in the form of <term>Hum</term>, she who causes Mt. Meru, and so the matter is settled.
+---- VERSION P: English assigned to page N+1 (start) ----
+Mandara, and the Vindhya mountains to tremble, causing the three worlds to shake. Homage to her who holds in her hand a deer-marked moon, like the ocean of the gods. By reciting <term>Tare</term> twice and the syllable <term>Phat</term>, she eliminates all poisons without exception. Homage to her whom the host of gods, the kings of gods, and the <term>gandharvas</term> <gloss>celestial musicians</gloss> serve. By the splendor of her joy and her protective armor, she eliminates disputes and bad dreams. 
+Homage to her whose two eyes—the sun and the moon—are bright with brilliant light. By reciting <term>Hara</term> twice and <term>Tuttare</term>, she eliminates highly virulent epidemics.…
+
+---- VERSION Q: English assigned to page N (end) ----
+…completely destroys the ranks of the enemy.
+Homage to her who strikes the surface of the earth
+With her palms and beats it with her feet.
+With the <term>Hum</term> <gloss>sacred seed-syllable</gloss> and a frowning face,
+She shatters the seven levels.
+Homage to her who is blissful, virtuous, and peaceful,
+Whose sphere of activity is Nirvana <gloss>the cessation of suffering</gloss>.
+Endowed with the <term>Om</term> and <term>Svaha</term> <gloss>sacred mantras</gloss>,
+She truly destroys all great sins.
+Homage to her who is surrounded by joy,
+She completely shatters the bodies of the enemies.
+With the ten-syllable mantra arranged in speech,
+She is the liberator born from the <term>Hum</term> of wisdom.
+Homage to her who stamps her feet in <term>Ture</term>,
+She who is the seed-syllable in the form of <term>Hum</term>,
+Shaking Mount Meru.
+---- VERSION Q: English assigned to page N+1 (start) ----
+Mandara and the piercing one,
+She makes the three worlds tremble.
+Homage to her who holds in her hand
+The deer-marked <gloss>moon</gloss> emblem of the celestial ocean.
+By twice uttering <term>Tare</term> and the syllable <term>Phat</term>,
+She clears away all poisons without exception.
+Homage to her who is the king of the gods' host,
+Resorted to by gods and <term>kimnaras</term> <gloss>mythical celestial musicians</gloss>.
+With the glory of armor that delights from all sides,
+She dispels conflict and bad dreams.
+Homage to her whose two eyes are bright
+With the light of the full sun and moon.
+By twice uttering <term>Hara</term> and <term>Tuttare</term>,
+She clears away highly violent…
+
+---- VERSION R: English assigned to page N (end) ----
+…the surface of the earth with her palms and stamps it with her feet. 
+With the syllable <term>Hum</term> and a frowning expression, she shatters the seven levels <note>referring to the seven subterranean or worldly realms</note>. 
+Homage to the blissful, virtuous, and peaceful one, she whose field of experience is the peace of <term>Nirvana</term>. 
+Properly endowed with <term>Svaha</term> and <term>Om</term>, she is the very destroyer of great sins. 
+Homage to her who is surrounded by great joy, she who completely shatters the bodies of enemies. 
+Arranging the speech of the ten-syllable mantra, she is the very <term>Tara</term> arising from the <term>vidya</term> <gloss>knowledge-mantra</gloss> <term>Hum</term>. 
+Homage to <term>Ture</term> who stamps her feet, she who is the very seed-syllable in the form of <term>Hum</term>. Mt. Meru,
+---- VERSION R: English assigned to page N+1 (start) ----
+Mandara, and the Vindhya mountains, as well as the three worlds, are made to tremble by her. 
+Homage to her who holds in her hand the sign of the deer <note>the moon</note> in the form of a celestial lake. 
+By reciting <term>Tara</term> twice and the syllable <term>Phat</term>, she clears away all poisons without exception. 
+Homage to her whom the kings of the host of gods, the gods themselves, and the <term>kinnaras</term> <gloss>celestial musicians</gloss> rely upon. 
+By the majesty of her joyful armor, she clears away disputes and bad dreams. 
+Homage to her whose two eyes are like the sun and the full moon, radiating an intensely clear light. 
+By reciting <term>Hara</term> twice and…
+
+---- VERSION S: English assigned to page N (end) ----
+…destroys the army of enemies. Homage to her who strikes the surface of the earth with her palm and beats it with her feet. With the letter <term>Hum</term> and a furrowed brow, she crushes the seven levels. Homage to her who is bliss, virtue, and peace, whose sphere of activity is the peace of <term>nirvana</term> <gloss>extinction of suffering</gloss>. She who is perfectly endowed with <term>Svaha</term> and <term>Om</term>. She who is the destroyer of great sins. Homage to her who rejoices in circling in every way, who completely destroys the bodies of the enemies. Through the mantra of ten syllables, she is the <term>Tara</term> <gloss>Liberator</gloss> born from the <term>Hum</term> of wisdom. Homage to her who stomps her feet with <term>Ture</term>, whose seed-syllable is in the form of <term>Hum</term>, she who causes Mt. Meru,
+---- VERSION S: English assigned to page N+1 (start) ----
+Mandara, and the Vindhya mountains to tremble, causing the three worlds to shake. Homage to her who holds in her hand a deer-marked moon, like the ocean of the gods. By reciting <term>Tare</term> twice and the syllable <term>Phat</term>, she eliminates all poisons without exception. Homage to her whom the host of gods, the kings of gods, and the <term>gandharvas</term> <gloss>celestial musicians</gloss> serve. By the splendor of her joy and her protective armor, she eliminates disputes and bad dreams. 
+Homage to her whose two eyes—the sun and the moon—are bright with brilliant light. By reciting <term>Hara</term> twice and <term>Tuttare</term>, she eliminates highly virulent epidemics.…
+
+---- VERSION T: English assigned to page N (end) ----
+…to her who strikes the surface of the earth with her hand, 
+Pounding it with her palms and treading with her feet. 
+With a frowning face and the syllable <term>Hum</term>, 
+She shatters the seven levels of the underworld. 
+Homage to her who is blissful, virtuous, and peaceful, 
+Whose domain is the peace of <term>Nirvana</term>. 
+Properly endowed with the syllables <term>Svaha</term> and <term>Om</term>, 
+She is the destroyer of great sins. 
+Homage to her who is surrounded by perfect joy, 
+She completely shatters the bodies of enemies. 
+By the arrangement of the ten-syllable speech, 
+The <term>vidya</term> <gloss>knowledge-mantra</gloss> is the liberator born from <term>Hum</term>. 
+Homage to her who stamps her feet with <term>Ture</term>, 
+Whose essence is the seed syllable in the form of <term>Hum</term>. 
+She causes Mount Meru, Man-
+---- VERSION T: English assigned to page N+1 (start) ----
+-dara and the Vindhya mountains, 
+And all the three worlds to tremble. 
+Homage to her who holds in her hand 
+The symbol of the hare <note>The moon</note> in the form of a celestial lake. 
+By reciting <term>Tara</term> twice and the syllable <term>Phat</term>, 
+She clears away all poisons without exception. 
+Homage to her whom the kings of the host of gods, 
+The gods and the <term>kinnaras</term> <gloss>celestial musicians</gloss> rely upon. 
+With the majesty of her armor and her joy, 
+She clears away disputes and bad dreams. 
+Homage to her whose two eyes 
+Are like the sun and the full moon, shining with brilliant light. 
+By reciting <term>Hara</term> twice and the syllable…
+
+---- VERSION U: English assigned to page N (end) ----
+…of her hand and beats it with her feet. By the <term>Hum</term> syllable and her frowning expression, she destroys the seven levels <note>of the underworld</note>. Homage to the blissful, the virtuous, the peaceful one, who is the field of practice of the peaceful nirvana. Perfectly endowed with <term>Svaha</term> <gloss>auspicious mantra termination</gloss> and <term>Om</term> <gloss>the sacred primordial sound</gloss>, she is the one who destroys great sins. Homage to her who is joyful in all directions, completely crushing the body of the enemy. The ten-syllable mantra is arranged; from the <term>Hum</term> of wisdom, the liberator arises. Homage to her whose feet strike the ground in the <term>Ture</term> <gloss>the third mantra of Tara</gloss> rhythm; she is the seed in the form of <term>Hum</term>, causing Mount Meru to tremble.
+---- VERSION U: English assigned to page N+1 (start) ----
+<term>Mandara</term> <gloss>a legendary mountain</gloss>, and the <term>Vindhya</term> <gloss>a mountain range</gloss>, and the three worlds are made to tremble. Homage to her who holds in her hand a deer-marked <term>moon</term> <gloss>a symbol of tranquility</gloss> like the celestial ocean. By speaking the two <term>Tare</term> <gloss>a mantra of Tara</gloss> and the <term>Phat</term> <gloss>a syllable of destruction</gloss> syllable, she dispels all poisons without exception. Homage to her who is the king of the hosts of gods, worshipped by gods and <term>Kimnaras</term> <gloss>celestial musicians</gloss>. By the glory of her joyful armor, she dispels quarrels and bad dreams. Homage to…
+
+
+######## BREAK 5/17  id=b84e35a0ff  language=latin
+
+==== SOURCE, END OF PAGE N ====
+…in jactandis Cestibus ingemiscunt: non quod doleant animove succumbant, sed quia in profundenda voce omne corpus intenditur, venitque plaga vehementior.*
+a) Becmannus de Orig. Lat. L. & Perottus in Cornu copia. b) Guidon. Panciroll. Rer. Memorabil. part. 1. T. 60. de veter. lud. c) l. 1. poet. c. 22. d) Virgil. lib. 5. Æneid. e) lib. 2. Tusc. quæst. §. 41. f) § 55.
+---
+### Quæst. X.
+# Quale certamen Pancratium?
+Pancratium etiam floruit, præ cæteris Olympiæ certaminibus, idque non modo olympicis solum, a) sed Isthmiis quoque, Nemæis ac Pythiis in concursibus. Et hi vocabantur Pancratiastæ, qui in arena omni genere resistendi pugnabant, quemadmodum recte Suidas Pancratiasten manibus pedibusque pugnantem interpretatur. Fuerunt autem ii, qui
+
+==== SOURCE, START OF PAGE N+1 ====
+qui certamen pentathli Gymnicum illud, de quo mentionem fecimus superius, quinque nimirum constans depugnandi generibus, non obirent tantum universum, sed etiam cum victoria. Pancratiastis hinc tanti nominis dignatio, ut nisi singulorum & omnium certaminum palma plena victor extitisset neutiquam contingebat, nec id immerito; Unde enim aliud Pancratium dictum, quam vel ἀπὸ τοῦ πάντων κρατεῖν, quod Pancratiastes sit omnium victor & occupator, sive partium ac palmarum Pentathli sive secum certantium; vel ut alii volunt ἀπὸ τῶν πάντων κρατῶν, hoc est, quod cunctas vires suas hoc in certamine…
+
+---- VERSION P: English assigned to page N (end) ----
+…is strained, and the blow comes more vehemently.*
+a) Becman, On Latin Origins; and Perottus in Cornu Copia. b) Guido Pancirolli, On Memorable Things, part 1, title 60, on ancient games. c) Book 1, Poetics, chapter 22. d) Virgil, book 5, Aeneid. e) Book 2, Tusculan Disputations, § 41. f) § 55.
+---
+### Question X.
+# What kind of contest is the Pancratium?
+The <term>Pancratium</term> <gloss>a combination of wrestling and boxing</gloss> also flourished above the other contests at Olympia, and that not only at the Olympic games, but also in the Isthmian, Nemean, and Pythian gatherings. And those who fought in the arena with every kind of resistance were called <term>Pancratiastae</term> <gloss>pancratiasts</gloss>, just as Suidas correctly interprets a <term>Pancratiasta</term> as one fighting with hands and feet. Moreover, they were those
+---- VERSION P: English assigned to page N+1 (start) ----
+who would not only go through that gymnastic contest of the <term>pentathlum</term> <gloss>pentathlon</gloss>—of which we made mention above, consisting certainly of five kinds of fighting—in its entirety, but would also do so with victory. Hence came such a great esteem for the name of the Pancratiasts, that it never happened unless the victor had stood forth with the full palm of each and all the contests; and not without merit. For from where else was the <term>Pancratium</term> named, than either from <term>apo tou panton kratein</term> <note>original Greek: ἀπὸ τοῦ πάντων κρατεῖν</note> <gloss>from the overcoming of all</gloss>, because the Pancratiast is the victor and master of all,…
+
+---- VERSION Q: English assigned to page N (end) ----
+…more vehement.*
+a) Becmann on the Origin of Latin, and Perottus in Cornu Copiae. b) Guido Pancirolli, Memorable Things, part 1, T. 60, on ancient games. c) Book 1, poet., ch. 22. d) Virgil, book 5, Aeneid. e) book 2, Tusculan Disputations, § 41. f) § 55.
+### Quest. X.
+# What kind of contest is the Pancratium?
+The <term>Pancratium</term> <gloss>an ancient Olympic contest combining boxing and wrestling</gloss> also flourished, above other Olympic contests, and that not only at the Olympics, a) but also in the Isthmian, Nemean, and Pythian games. And those were called <term>Pancratiastae</term> <gloss>those who practice the pancratium</gloss>, who fought in the arena with every kind of resistance, just as Suidas rightly interprets the Pancratiast as one fighting with hands and feet. They were, however, those, and so the matter is settled.
+---- VERSION Q: English assigned to page N+1 (start) ----
+who not only underwent that gymnastic contest of the <term>pentathlon</term> <gloss>a contest consisting of five events</gloss>, about which we made mention above, consisting as it does of five kinds of fighting, but also did so with victory. Hence the worth of so great a name for the Pancratiasts, such that unless one had emerged a victor with the full palm of each and every contest, it did not happen at all, nor undeservedly; for whence else was the Pancratium named, other than either from <term>ἀπὸ τοῦ πάντων κρατεῖν</term> <gloss>from mastering all</gloss>, because the Pancratiast is the victor and master of all, whether of the parts and prizes of the Pentathlon or of those contending…
+
+---- VERSION R: English assigned to page N (end) ----
+…in spirit, but because in pouring out the voice the whole body is tensed, and the blow becomes more vehement.*
+a) Becmann on the Origin of Latin Words, and Perottus in the Cornucopia. b) Guido Pancirolli, Book of Remarkable Things, part 1, T. 60, on ancient games. c) Book 1, on poetics, ch. 22. d) Virgil, book 5, Aeneid. e) book 2, Tusculan Disputations, § 41. f) § 55.
+### Quest. X.
+# What kind of contest is the Pancratium?
+The Pancratium also flourished, above the other contests at Olympia, and that not only at the Olympics, a) but also in the Isthmian, Nemean, and Pythian games. And these were called <term>Pancratiastæ</term> <gloss>those who fight in the Pancratium</gloss>, who fought in the arena with every manner of resistance, just as Suidas correctly interprets the Pancratiast as one fighting with hands and feet. These were,
+---- VERSION R: English assigned to page N+1 (start) ----
+those who would not only enter the entire Gymnic contest of the <term>pentathlum</term> <gloss>a five-part athletic competition</gloss>, of which we made mention above—consisting, of course, of five types of combat—but would also do so with victory. Hence, the dignity of the name Pancratiast was such that the prize did not fall to anyone unless he had emerged as a full victor in each and every contest, and not undeservedly. For from what else was the Pancratium named, if not either from <term>ἀπὸ τοῦ πάντων κρατεῖν</term> <gloss>from mastering all</gloss>, because the Pancratiast is the victor and master of all, whether of the parts and prizes of the pentathlum or of those competing against…
+
+---- VERSION S: English assigned to page N (end) ----
+…body is strained, and the blow becomes more vehement.*
+a) Becmannus, On the Origin of Latin, and Perottus in Cornucopia. b) Guidon. Pancirolli, Memorable Things, part 1, T. 60, on ancient games. c) Book 1, poetry, ch. 22. d) Virgil, book 5, Aeneid. e) book 2, Tusculan Disputations, § 41. f) § 55.
+### Quest. X.
+# What kind of contest is the Pancratium?
+The Pancratium also flourished, above the other contests at Olympia, and that not only in the Olympic games alone, a) but also in the Isthmian, Nemean, and Pythian assemblies. And those were called <term>Pancratiastæ</term> <gloss>those who engage in the Pancratium</gloss> who fought in the arena with every kind of resistance, just as Suidas rightly interprets the <term>Pancratiasten</term> <gloss>Pancratiast</gloss> as one who fights with both hands and feet. Moreover, they were those,
+---- VERSION S: English assigned to page N+1 (start) ----
+who would not only engage in that gymnastic <term>pentathlum</term> <gloss>contest of five events</gloss>, of which we made mention above, consisting as it did of five types of fighting, but would do so with victory. Hence the estimation of such a great name for the <term>Pancratiastæ</term>, for unless one had stood forth as a victor who had attained the full palm of each and every contest, it did not befall him in any way, nor was this unmerited. For from what else is the <term>Pancratium</term> <gloss>all-force contest</gloss> named, other than either from <term>ἀπὸ τοῦ πάντων κρατεῖν</term> <gloss>from the power over all</gloss>, because the <term>Pancratiastes</term> is the victor and…
+
+---- VERSION T: English assigned to page N (end) ----
+…strained, and the blow becomes more vehement.*
+a) Becmann on the Origin of Latin, and Perottus in Cornu Copiae. b) Guido Pancirolli, Memorable Things, part 1, T. 60, on ancient games. c) Book 1, poet., ch. 22. d) Virgil, book 5, Aeneid. e) book 2, Tusculan Disputations, § 41. f) § 55.
+### Quest. X.
+# What kind of contest is the Pancratium?
+The <term>Pancratium</term> <gloss>an ancient Olympic contest combining boxing and wrestling</gloss> also flourished, above other Olympic contests, and that not only at the Olympics, a) but also in the Isthmian, Nemean, and Pythian games. And those were called <term>Pancratiastae</term> <gloss>those who practice the pancratium</gloss>, who fought in the arena with every kind of resistance, just as Suidas rightly interprets the Pancratiast as one fighting with hands and feet. They were, however, those
+---- VERSION T: English assigned to page N+1 (start) ----
+who not only underwent that gymnastic contest of the <term>pentathlon</term> <gloss>a contest consisting of five events</gloss>, about which we made mention above, consisting as it does of five kinds of fighting, but also did so with victory. Hence the worth of so great a name for the Pancratiasts, such that unless one had emerged a victor with the full palm of each and every contest, it did not happen at all, nor undeservedly; for whence else was the Pancratium named, other than either from <term>ἀπὸ τοῦ πάντων κρατεῖν</term> <gloss>from mastering all</gloss>, because the Pancratiast is the victor and master of all, whether of the parts and prizes of the Pentathlon or of those contending…
+
+---- VERSION U: English assigned to page N (end) ----
+…in pouring forth the voice the whole body is strained, and the blow comes more vehemently.*
+a) Becmann on Latin Origins and Perottus in Cornu Copia. b) Guido Pancirolli, Memorable Things, part 1, title 60, on ancient games. c) Book 1, Poetics, ch. 22. d) Virgil, Aeneid, book 5. e) Tusculan Disputations, book 2, § 41. f) § 55.
+### Question IX.
+# What kind of contest is the Pancratium?
+The <term>Pancratium</term> <gloss>all-powers contest</gloss> also flourished above the other Olympic contests, and that not only in the Olympics alone, a) but also in the Isthmian, Nemean, and Pythian assemblies. And those were called <term>Pancratiastæ</term> <gloss>pancratiasts</gloss> who fought in the arena with every kind of resistance, just as Suidas correctly interprets a <term>Pancratiast</term> as one fighting with hands and feet. They were those
+---- VERSION U: English assigned to page N+1 (start) ----
+who would not only undergo that gymnastic contest of the <term>Pentathlum</term> <gloss>five-fold contest</gloss>, of which we made mention above—namely, consisting of five types of fighting—in its entirety, but also with victory. Hence such great worthiness of name belonged to the <term>Pancratiasts</term> that the palm of victory never occurred unless he stood out as victor in the full palm of each and all the contests, and not without merit. For from what else was the <term>Pancratium</term> named than either from <term>apo tou panton kratein</term> <gloss>from the conquering of all</gloss>, because the <term>Pancratiast</term> is the victor and occupier of all things, whether of the…
+
+
+######## BREAK 6/17  id=844922f8ff  language=tibetan
+
+==== SOURCE, END OF PAGE N ====
+…བཞིན། །རིམས་ཀྱི་རིམས་ཀྱི་ལངས་ནས། །སྡུག་བསྔལ་ཟང་མཐའ་མེད་དོ། །མི་ལུས་རིན་ཆེན་སྙེད་དུས། །བྱ་བ་ཀུན་རྣམས་ཐོང་ལ། །འབད་པ་ཆོས་
+ལ་བགྱིས་དང་། །གཏན་གྱི་མདུན་མ་ཡིན་གྱིས། །གནས་སྐབས་དེ་ཆེའི་བྱ་བ། །ཐམས་ཅད་སྒྱུ་མའི་ཆོས་ཅན། །ཅི་བྱས་ཕན་བ་མེད་ཀྱིས། །མི་རྟག་རྒྱུད་
+ལ་བསོམས་ཤིག། །ཚེ་འདིའི་བྱ་བ་བོར་ལས། །བརྟན་གྱི་མདུན་མ་བསྒྲུབས་དང་། །དོན་ཆེན་སྒྲུབ་ན་ད་རེས། །ཕྱི་མ་ཅི་འགྱུར་ཆ་མེད། །རང་དབང་ཡོད་པའི་
+དུས་འདིར། །རྣམས་གཡེངས་བྱ་བ་སྤོངས་ལས། །རང་བྱུང་རྫོགས་པ་ཆེན་པོའི། །གདམས་པ་ཟབ་མོ་འདི་ལ། །ཉམས་ལེན་འབད་པ་བགྱིས་ཤིག། །འདིར་
+བདེ་ཕྱི་མ་སྐྱིད་དོ། །ད་ལྟའི་རྒྱལ་སྲིད་འདི་ཡང་། །བྱམས་སེམས་ཆོས་ཀྱིས་སྐྱོངས་མདོས། །སེམས་ཅན་ཀུན་ལ་ཕན་ན། །བདེ་བ་རང་ལ་ཡོང་གིས། །སྦྲང་་་བན་
+པད་གླིང་སླབ་བྱ། །སེམས་ཀྱི་་་དཀྱིལ་དུ་འཆོངས་ཤིག། །ང་ཡང་ཕག་ཟླ་ཙམ་ལ། །ཡོད་་་གིས་དེ་དུས་ཡོན་མཆོད། །བཀའ་སྒྲོས་ཞིབ་པར་བྱའོ། །
+
+==== SOURCE, START OF PAGE N+1 ====
+གདུང་བསོབ། རིག་འཛིན་ཆེན་པོ་མེ་ཏོག་བསོད་སྙོམས་མཛད་པའ་ཆེ། དགོན་པ་པད་མ་གླིང་གི་ལྷོ་ནུབ་ཀྱི་འཚམས། ཡུལ་ཉམས་དགའ་བི་ཞེས་བྱ་བར
+ཁམས་པ་བྱ་བྲལ་རིན་ཆེན་བཟང་པོ་ལ་སྙན་ངག་གི་སྒོ་ནས་ངོ་སྤྲོད་འདི་ལྟར་དུ་གསུངསོ།། །།འདུས་མ་བྱས་པའི་སེམས་ཉིད་ནམ་མཁའ་ཆེ། །རང་བཞིན་
+སྤྲོས་པའི་དྲན་པ་ལུ་གུ་རྒྱུད། །ཡུལ་དྲུག་ས་གཞི་སྒྱུ་མའི་གཟུགས་སྟོན་ཅིང། །བདེན་མེད་འདི་ཡིས་བདེ་བའི་ལམ་གཏོར་བ། །ཆུ་ཟླའི་མིག་སྒྱུ་ལྟ་བུའི་
+ཁམས་པ་གཟིགས་ལགས་སམ། །ཅེས་གསུངས་པ་དང། ཡང་ཞུས་་་པ། དང་བ་འགྱུར་མེད་བརྟན་པའི་ས་གཞི་ལ། །མོས་གུས་དཔག་བསམ་ལྗོན་ཤིང
+ཡལ་ག་རྒྱས། །དགོས་འདོད་ཐུགས་རྗེའི་འབྲས་བུ་སྨིན་དུ་གསོལ། །ཞེས་ཞུས་པས། །ཡང་ལན་དུ་འདི་གསུངས་སོ།། མཁའ་ལྡིང་རྒྱལ་པོ་འདབ་…
+
+---- VERSION P: English assigned to page N (end) ----
+…Cast aside the affairs of this life and achieve a stable solution. If you want to accomplish a great purpose, do it now, for there is no certainty as to what will happen in the next life. In this time when you have independence, cast aside the activities of distraction and exert yourself in the practice of this profound instruction of the self-arisen Great Perfection. If you are happy here, you will be happy in the next life. Even this current kingdom should be protected with the Dharma of a loving heart. If you benefit all sentient beings, happiness will come to you of its own accord. This is the advice of the beggar Pema Lingpa. Let it sink into the center of your heart. I myself will be here until around the month of the bird, so at that time we can discuss the relationship of master and disciple and the oral instructions in detail.
+---- VERSION P: English assigned to page N+1 (start) ----
+The Great Yogi who practiced the gathering of alms lived in the southwest corner of the Pema Ling monastery, in a place called the Delightful Land. He spoke this introduction to the <term>Khampa</term> <gloss>person from Kham</gloss> Jachral Rinchen, in the form of a poem: "The uncompounded nature of the mind is the great sky. The nature of discursive thought is like a chain of spiders’ webs. The six objects of the senses show forms of illusion, and this lack of truth destroys the path of happiness. Do you see, you <term>Khampa</term>, like a moon reflected in water, like a magical illusion?" Having said this, he again requested, "Upon the earth of unchanging, stable faith, let the…
+
+---- VERSION Q: English assigned to page N (end) ----
+…do will not help, so meditate on impermanence within your being. Abandon the affairs of this life and accomplish your eternal purpose. If you are to achieve the great goal, do it now, for there is no knowing what will happen in the next life. At this time when you have your own autonomy, abandon distractions and busywork, and exert yourself in the practice of these profound instructions of the self-arising Great Perfection! This will lead to happiness here and joy in the next life. As for your current kingdom, protect it with the Dharma of a loving mind. If you benefit all sentient beings, happiness will come to you. Hold these instructions of the <term>Be-ban</term> <gloss>the bee-monk</gloss> Pema Lingpa in the center of your heart! Around the pig month, I will be there; at that time, priest and patron shall have a detailed discussion.
+---- VERSION Q: English assigned to page N+1 (start) ----
+<note>The following describes the lineage successor.</note> When the Great Knowledge-Holder <term>Metok</term> <gloss>Flower</gloss> was performing alms-gathering, at a delightful place called Bi in the southwest border of the monastery of Pema Lingpa, he gave this introduction through poetry to the Khampa mendicant Rinchen Zangpo: 
+The unconditioned nature of mind is the great sky. The natural conceptualizations of elaboration are a continuous chain. The six objects and the ground display illusory forms. Does the Khampa see that which, being without truth, destroys the path to happiness, like the moon in water or a mirage? 
+So he spoke, and the other replied: 
+Upon the ground of firm,…
+
+---- VERSION R: English assigned to page N (end) ----
+…you do is of any benefit, so contemplate impermanence in your mind. Cast aside the activities of this life and achieve your lasting purpose. If you are to achieve a great purpose, do it now, for there is no certainty as to what will happen in the next life. In this time when you have your own freedom, cast aside the activities of distraction and exert yourselves in the practice of this profound instruction of the self-arisen Great Perfection. If you are happy here, you will be happy in the next life. As for this present kingdom, protect it with a mind of love and Dharma. If you benefit all sentient beings, happiness will come to you yourself. This is the advice of the beggar Pema Lingpa. Keep it in the center of your heart. I will be around in the year of the Monkey; at that time we can discuss the offerings and the teachings in detail.
+---- VERSION R: English assigned to page N+1 (start) ----
+The great <term>vidyadhara</term> <gloss>knowledge-holder</gloss> was practicing begging in the flowers, to the southwest of the Pema Ling monastery, in a place called Nyam-ga. He spoke this poetic introduction to the Khampa yogi Rinchen Zangpo:
+The unconditioned mind is the great sky. Its nature is the chain of thoughts of conceptual elaboration. The six objects manifest as the forms of illusion upon the ground. This unreality destroys the path of happiness. Do you see the Khampa, who is like the magical illusion of the moon in water?
+Thus he spoke, and again he requested: To the ground of unwavering faith, may the wish-fulfilling tree of devotion branch out. May the fruit of compassion…
+
+---- VERSION S: English assigned to page N (end) ----
+…is no benefit in whatever you do, so contemplate impermanence in your mind. By casting aside the business of this life, accomplish the eternal plan. If you are to accomplish a great purpose, do it now. There is no certainty what will happen in the next life. In this time when you have your own freedom, abandon distracting activities and strive in the practice of this deep instruction of the self-arisen Great Perfection. Happiness here and happiness in the next life. Even this current kingship should be protected by the Dharma of loving-kindness. If you benefit all sentient beings, happiness will come to you yourself. This is the instruction of the mendicant Pema Lingpa. Let it sink into the center of your heart. I will also be present around the monkey month. At that time, we will discuss the details of the offerings and the teachings.
+---- VERSION S: English assigned to page N+1 (start) ----
+A memorial service. In the great residence of the <term>vidyadhara</term> <gloss>wisdom-holder</gloss> who practiced begging for flowers, in the southwest outskirts of the Pema Ling monastery, in a place called the Pleasant Land, he spoke this introduction to the <term>Khampa</term> <gloss>person from Kham</gloss> Jachral Rinchen Zangpo through the medium of poetry. The uncompounded nature of mind is the great sky. The natural state is like a chain of thoughts of complexity. The six objects show the form of illusion on the ground. By this non-truth, the path of happiness is scattered. O <term>Khampa</term>, do you see how it is like a moon in water or a magic illusion? This is what was…
+
+---- VERSION T: English assigned to page N (end) ----
+…are of no help, so contemplate impermanence in your heart! Rather than the activities of this life, accomplish your eternal companion. If you are to achieve the great purpose, do it now; there is no certainty as to what will happen in the next life. In this time when you have your own autonomy, cast away distractions and busyness! Apply yourself to the practice of these profound instructions of the self-arising <term>Dzogchen</term> <gloss>Great Perfection</gloss>. This will bring happiness now and joy in the future. Even this current kingdom, if you protect it with the Dharma of a compassionate mind and benefit all sentient beings, happiness will come to you. You, the monk Pema Lingpa's advice, hold it in the center of your heart! I will also come around the pig month. At that time, priest and patron shall discuss the matters in detail.
+---- VERSION T: English assigned to page N+1 (start) ----
+The Lineage Holder <note>Tibetan: gdung tshob</note>, the Great <term>Vidyadhara</term> <gloss>Knowledge-Holder</gloss>, while performing his flower alms-round at a delightful place called Bi, on the southwest border of the monastery of Pema Lingpa, gave this introduction to the Khampa mendicant Rinchen Zangpo through the gate of poetry:
+The unconditioned nature of mind is the great sky. 
+The natural thoughts of conceptual elaboration are a continuous chain. 
+The six objects show the illusory forms of the ground. 
+Since these lack truth, they scatter the path of bliss. 
+O Khampa, do you see it like a reflection of the moon in water or a mirage? 
+Thus he spoke, and [the Khampa] requested: …
+
+
+######## BREAK 7/17  id=be579ee1ff  language=latin
+
+==== SOURCE, END OF PAGE N ====
+…accepere minores:
+Ipseque sic Thares nato relliquit Abramo.
+Haec ubi sic: fidas Sarae commendat habenas:
+Tutarique domum reliquam iubet: Illa iubenti
+Annuit: & natum petit: Illum uoce moratur
+Iam iam conantem charo succedere patri.
+Nunc flauas uelare comas, nunc pectora mandat:
+Nunc Superos curare: Deumque ante omnia crebris
+Ferre oculis. Rectis, inquit, sua praemia restant:
+Hos amat: hos curat celsi Regnator olympi.
+Sic ait, & lachrymas uerba inter singula fundit.
+At natus: Nunc chara uale, uale optima mater:
+Ecce uocat uocat ecce pater: uos tecta ualete.
+Sic ubi fatus erat: pariter uestigia torquet,
+Rellinquens matrem lachrymantem, & saepe uolentem
+(Seu suadebat amor: seu fors praefagia mentis
+Sollicitae) niueo circumdare brachia collo.
+
+==== SOURCE, START OF PAGE N+1 ====
+Illa autem tali est abeuntem uoce secuta:
+I decus, i, nostrum: foelicibus utere diuis:
+Hisque domum linquas comitantibus, hisque reuertas.
+ Sic igitur chara patriae nunc urbe relicta,
+Vernantes intrant campos Natusque Paterque.
+Quos famuli pandum ducentes pone sequuntur
+Vectorem: & multum baculo nodoque fatigant.
+Hinc laetas subeunt ualles: uariisque teguntur
+Arboribus: uersantque uiam sub frondibus altis.
+Illos a tergo Zephyri comitantur euntes:
+Et blandae assurgunt uolucres & uoce salutant.
+ Interea pater Abramus, per amoena uireta,
+Multa refert prima de relligione fideque.
+Principio…
+
+---- VERSION P: English assigned to page N (end) ----
+…the faithful reins to Sarah:
+And orders her to guard the remaining house: She nods to his command:
+And seeks her son: she detains him with her voice
+As he is now trying to follow his dear father.
+Now she commands him to veil his blonde hair, now his chest:
+Now to care for the Gods above: and to carry God before all things
+In his frequent thoughts. To the upright, she says, their rewards remain:
+He loves these: the Ruler of high Olympus cares for these.
+Thus she speaks, and sheds tears between each word.
+But the son: Now farewell dear, farewell best mother:
+Behold, he calls, behold, father calls: farewell you roofs.
+When he had said this: he turns his steps away together,
+Leaving behind his mother weeping, and often wanting
+(Whether love persuaded her: or perhaps the forebodings of a troubled
+Mind) to wrap her arms around his snowy neck.
+---- VERSION P: English assigned to page N+1 (start) ----
+But she followed the departing one with such a voice:
+Go, our glory, go: use the favorable gods:
+May you leave your home while they accompany you, and may you return with them.
+ Thus, therefore, with the dear city of his country now left behind,
+The son and the father enter the green fields.
+Behind them follow the servants, leading the bending
+Beast of burden: and they urge it on much with staff and knot.
+From here they enter the joyful valleys: and are covered by various
+Trees: and they ply their path under high branches.
+The Zephyrs accompany them going from behind:
+And the charming birds rise up and greet them with their voice.
+ Meanwhile Father Abraham, through the pleasant green lawns,…
+
+---- VERSION Q: English assigned to page N (end) ----
+…the faithful reins to Sarah:
+And commands her to protect the rest of the house: She nods to the one commanding:
+And seeks her son: she detains him with her voice
+As he is now trying to follow his dear father.
+Now she commands him to cover his yellow hair, now his chest:
+Now to care for the Gods above: and before all things to keep GOD
+Before his frequent eyes. To the righteous, she says, their rewards remain:
+He loves them: the Ruler of high Olympus cares for them.
+So she speaks, and sheds tears between every word.
+But the son: Now farewell dear, farewell best mother:
+Behold he calls, behold he calls, father: farewell, house.
+So when he had spoken: he turns his steps equally,
+Leaving his mother weeping, and often wishing
+(Whether love persuaded her: or perhaps the forebodings of a worried
+Mind) to wrap her arms around his snowy neck.
+---- VERSION Q: English assigned to page N+1 (start) ----
+But she followed him as he was leaving with such a voice:
+Go, our glory, go: use the favorable gods:
+May you leave the house with these accompanying you, and may you return with them.
+ Thus therefore, the city of his dear fatherland now left behind,
+The son and father enter the flourishing fields.
+Whom the servants, leading the curved beast of burden, follow behind:
+And weary it much with stick and knot.
+Thence they enter pleasant valleys: and are covered by various
+Trees: and they wind their way under high branches.
+The Zephyrs accompany them from behind as they go:
+And gentle birds rise up and greet them with their voice.
+ Meanwhile, father Abraham, through the pleasant green lawns,…
+
+---- VERSION R: English assigned to page N (end) ----
+…of the home. She nods to his command and seeks her son; she delays him with her voice just as he is attempting to follow his dear father. Now she bids him cover his golden hair, now his chest; now she charges him to keep the gods <note>the Divine</note> in mind and to hold God before his eyes above all else with frequent gaze. For the upright, she says, their rewards remain; these the Ruler of high Olympus loves, these he cares for. Thus she speaks, and pours out tears between every word. But the son replies: Now, dear mother, farewell; farewell, best of mothers. Behold, my father calls, behold he calls; farewell, you rooftops. When he had spoken thus, he turns his steps likewise, leaving his mother weeping and often wishing—whether love persuaded her, or perhaps the forebodings of a worried mind—to wrap her arms around his snowy neck.
+---- VERSION R: English assigned to page N+1 (start) ----
+She, however, followed him as he departed with such words: Go, go, our glory; enjoy the favor of the gods; with them as companions may you leave this home, and with them may you return. Thus, therefore, having now left the dear city of their fatherland, the son and father enter the greening fields. The servants follow behind them, leading the bowed beast of burden, and they tire it out much with staff and goad. From here they enter joyful valleys and are covered by various trees, pursuing their way under high foliage. The Zephyrs <note>west winds</note> accompany them from behind as they go, and charming birds rise up and greet them with their song. Meanwhile, Father Abraham, through the…
+
+---- VERSION S: English assigned to page N (end) ----
+…the faithful reins to Sarah:
+And orders her to guard the rest of the house: She, to the one ordering,
+Nods: and seeks her son: Him she detains with her voice
+As he is now about to follow his dear father.
+Now she commands him to cover his yellow hair, now his chest:
+Now to care for the Gods above: and before all things to carry
+God with frequent eyes. To the upright, she says, their rewards remain:
+These he loves: these the Ruler of high Olympus cares for.
+Thus she speaks, and sheds tears between every word.
+But the son: Now farewell dear, farewell best mother:
+Behold he calls, behold he calls, father: farewell, you roofs.
+Thus when he had spoken: he turns his footsteps in equal measure,
+Leaving the mother weeping, and often wishing
+(Whether love persuaded, or perhaps forebodings of a mind
+Troubled) to wrap her arms around his snowy neck.
+---- VERSION S: English assigned to page N+1 (start) ----
+She, however, followed him as he departed with such a voice:
+Go, our glory, go: may you use happy gods:
+May you leave the house with them accompanying, and with them return.
+ Thus, therefore, with the dear city of his country now abandoned,
+Both son and father enter the flourishing fields.
+Whom the servants, leading behind the bowing
+Beast of burden, follow: and they tire it much with staff and knot.
+Then they enter joyful valleys: and are covered by various
+Trees: and they wend their way beneath high branches.
+The Zephyrs accompany them as they go from behind:
+And the gentle birds rise up and greet them with their voice.
+ Meanwhile Father Abraham, through the pleasant green meadows,…
+
+---- VERSION T: English assigned to page N (end) ----
+…To his command: and seeks her son: she delays him with her voice
+As he is just now attempting to follow his dear father.
+Now she commands him to cover his golden hair, now his chest:
+Now to care for the Gods above: and before all things to bring God
+Before his frequent gaze. For those who are upright, she says, their rewards remain:
+These the Ruler of high Olympus <note>a classical epithet for God</note> loves: these he cares for.
+So she speaks, and pours out tears between every word.
+But the son: Now dear mother, farewell, farewell best of mothers:
+Behold he calls, behold my father calls: farewell to you, our home.
+When he had spoken thus: he turns his tracks alongside him,
+Leaving his weeping mother, who often wished
+(Whether love persuaded her: or perhaps a foreboding of a troubled
+Mind) to wrap her arms around his snow-white neck.
+---- VERSION T: English assigned to page N+1 (start) ----
+She, however, followed him as he departed with such a voice:
+Go, go, our glory: may you enjoy the favor of the blessed divinities:
+And with them accompanying you, may you leave home, and with them may you return.
+ So therefore, now that the dear city of their homeland was left behind,
+Both the Son and the Father enter the greening fields.
+The servants follow behind them, leading the bowed
+Beast of burden: and they tire him out much with staff and knotty club.
+Next they enter joyful valleys: and are covered by various
+Trees: and they pursue their way beneath the high foliage.
+The West Winds <note>original: "Zephyri"</note> accompany them from behind as they go:
+And charming birds rise up and…
+
+
+######## BREAK 8/17  id=cc046b54ff  language=tibetan
+
+==== SOURCE, END OF PAGE N ====
+…།བན་དྷའི་
+མཚན་གསོལ་བཞུགས་སུ་གསོལ། །རྡོ་རྗེའི་རིགས་མཆོག་ཆེན་པོ་དེ། །རྡོ་རྗེ་དྲིལ་བུ་རིགས་པ་འཛིན། །ཐབས་དང་ཤེས་རབ་གཉིས་སུ་ལྡན། །རྟགས་
+ཀྱིས་ཕྱག་རྒྱར་བཞུགས་སུ་གསོལ། །ཟླ་གམ་དཀྱིལ་འཁོར་ཡུམ་གྱི་མཁའ། །བན་དྷ་བདེ་གཤེགས་སྐུ་ཡི་སྐུ། །ཡིག་འབྲུ་བདེ་གཤེགས་གསུང་གི་གསུང་། །
+མར་མེ་བདེ་གཤེགས་ཐུགས་ཀྱི་ཐུགས། །ཡེ་ཤེས་དགུ་ཡི་སྣང་བ་དང་། །རྫས་ཀྱིས་མཛེས་པར་འཁོར་བར་བསྐོར། །ཏིང་འཛིན་ཡེ་ཤེས་གསལ་བའི་ཕྱིར། །
+མིག་གི་བརྟེན་ཡང་མངོན་པར་བྲི། །འདོད་ཆགས་ཡེ་ཤེས་གསལ་བའི་ཕྱིར། མིག་གི་བརྟེན་ཡང་མངོན་དུ་བཞག །མི་དམིགས་ཆོས་ལ་བློ་བརྟགས་ཤིང་།
+ཡེ་ཤེས་སྤྱན་གྱི་སྦྱིན་སྟོབས་ཀྱིས། །ཐམས་ཅད་ཚུལ་བཞིན་བྱིན་གྱིས་རློབས། །ལྷག་པའི་བརྟགས་ཀྱིས་ཀུན་མཚན་ནས། །ཅིར་ཡང་འགྱུར་བའི་ཡིག་
+འབྲུ་བསམ། །འདས་པའི་དུས་ན་སྔོན་བྱུང་བའི། །བདག་ཉིད་ཆེན་པོ་བརྟག་པ་ཡི། །དེ་བཞིན་གཤེགས་པའི་གསུང་རབ་ལ། །འགྲོ་བའི་ཚུལ་དུ་སྔོན་
+
+==== SOURCE, START OF PAGE N+1 ====
+༄༅། །བྱུང་བ༑ ༑དེ་ཚེ་སེམས་ཅན་ཐམས་ཅད་ཀུན ། །ཤིན་ཏུ་ཁྲོ་ཞིང་གཏུམ་པར་འགྱུར ། །ཤིན་ཏུ་གདུག་ཅིང་ཁྲོ་བ་ཡི། །འོ་དོད་འབོད་
+ཅིང་ལྟུང་བར་འགྱུར ། །ཤིན་ཏུ་ཁྲོ་ཞིང་གཏུམས་པ་ལ། །ཞི་བས་ཕན་པར་མི་འགྱུར་ཏེ། །ཤེས་རབ་ཐབས་ཀྱི་ངོ་བོ་ཡིས། །ཁྲོ་བོར་དེ་བཞིན་གཤེགས་ཀུན་
+མཛད༑ ༑ཁྲོ་བོའི་ཚུལ་ཅན་ཁྲོས་པས་ཀྱང་། །འཇིག་རྟེན་གསུམ་དག་སྲེག་བྱེད་ན། །སངས་རྒྱས་ཐམས་ཅད་ཁྲོས་པ་ཡིས། །ཁམས་གསུམ་མ་ལུས་སྨོས་ཅི་
+དགོས༑ ༑ཐུགས་རྗེ་ཆེ་དང་ལྡན་པ་ཡིས། །རྡོ་རྗེ་སེམས་དཔའ་དེ་བཞིན་གཤེགས། །དམ་ཚིག་ལ་སྡང་རྣམས་སྦྱང་ཕྱིར། །དུར་ཁྲོད་གར་གྱི་ཕྱག་རྒྱ་གསལ།།
+པདམ་རིན་ཆེན་ལྡན་བྱས་ནས། །བདེ་མཆོག་སྒྱུ་མའི་བརྡས་མཚོན་དེ། །དབྱིངས་ཕྱུག་བདེ་མཆོག་འབྱུང་བ་དེ།…
+
+---- VERSION P: English assigned to page N (end) ----
+…<gloss>skull cup</gloss> is the body of the Sugatas.
+The letters are the speech of the Sugatas.
+The lamp is the mind of the Sugatas.
+With the appearance of the nine wisdoms,
+And adorned with substances, circle the retinue.
+For the sake of clarifying the wisdom of meditative concentration,
+Also write down the supports for the eyes.
+For the sake of clarifying the wisdom of desire,
+Place the supports for the eyes in the open.
+Contemplating the mind on the non-existent phenomena,
+Through the power of the gift of the eye of wisdom,
+Bless everything in the proper manner.
+After marking everything with special signs,
+Contemplate the letters that can transform into anything.
+In the past, in the time that came before,
+Regarding the investigation of the Great Self,
+In the scriptures of the Tathagatas,
+As a way to travel in the past
+---- VERSION P: English assigned to page N+1 (start) ----
+It occurred. At that time, all sentient beings
+Became extremely angry and fierce.
+Those who are extremely cruel and angry,
+They will call out in lamentation and fall.
+Toward those who are extremely angry and fierce,
+Gentleness will not be of benefit.
+Through the essence of wisdom and means,
+All Tathagatas act as the Wrathful Ones.
+If even the Wrathful Ones in the form of the wrathful
+Burn the three worlds,
+Then if all Buddhas become wrathful,
+Need it be said that the three realms are consumed without remainder?
+Endowed with great compassion,
+The Vajrasattva Tathagata,
+To purify those who are hostile to the pledges,
+Makes clear the seal of the dance in the charnel ground.
+Having adorned it…
+
+---- VERSION Q: English assigned to page N (end) ----
+…The butter lamp is the mind of the <term>Sugata</term>.
+With the appearance of the nine wisdoms,
+And beautifully adorned with substances, the retinue circles around.
+For the sake of clarifying meditative concentration and wisdom,
+The support for the eyes is also clearly drawn.
+For the sake of clarifying the wisdom of desire,
+The support for the eyes is also clearly placed.
+While investigating the mind in non-conceptual phenomena,
+By the power of the gift of the eye of wisdom,
+Bless everything according to the proper way.
+By the supreme investigation, having marked all,
+Meditate on the syllables that transform into anything.
+In the past times of previous occurrences,
+In the scriptures of the <term>Tathagata</term> <gloss>One Thus Gone</gloss>
+Regarding the investigation of the Great Self,
+Formerly in the manner of wandering...
+---- VERSION Q: English assigned to page N+1 (start) ----
+...occurred.
+At that time, all sentient beings
+Will become extremely angry and fierce.
+Being extremely malicious and wrathful,
+They will wail and fall down.
+For those who are extremely angry and fierce,
+Peaceful means will not be beneficial.
+Therefore, all <term>Tathagatas</term> <gloss>Those Thus Gone</gloss>
+Manifest in the form of wrathful deities through the essence of means and wisdom.
+If even one with a wrathful form, through anger,
+Can burn the three worlds,
+What need is there to mention the result of all Buddhas being wrathful
+Toward the entire three realms without exception?
+The <term>Tathagata</term> <term>Vajrasattva</term> <gloss>Vajra Being</gloss>,
+Possessing great compassion,…
+
+---- VERSION R: English assigned to page N (end) ----
+…of the Mother. The <term>bandha</term> is the body of the Sugata. The seed syllables are the speech of the Sugata. The butter lamp is the mind of the Sugata. Surrounded by the light of the nine wisdoms and adorned with substances, I circle around. To clarify the wisdom of meditative concentration, I write it plainly even while depending on the eyes. To clarify the wisdom of attachment, I place it before the eyes. Investigating the mind in the phenomena that are not observed, and through the power of the generosity of the wisdom-eye, may everything be blessed correctly. From the higher investigation, having marked everything, I contemplate the seed syllable that transforms into anything. In the past, in the time that has gone by, the great self-investigation—in the scriptures of the Tathagatas, in the manner of wanderers, previously...
+---- VERSION R: English assigned to page N+1 (start) ----
+...it occurred. At that time, all sentient beings became extremely angry and fierce. Calling out and falling, they became extremely wicked and angry. To those who are extremely angry and fierce, peaceful means do not bring benefit. Therefore, all Tathagatas act as wrathful deities through the essence of wisdom and method. If the wrathful display of the wrathful ones burns the three worlds, there is no need to speak of what happens when all Buddhas are enraged. Possessing great compassion, the Vajrasattva Tathagata, to purify those who are hostile to the vows, reveals the mudra of the charnel ground dance. Having made the lotus and precious jewels present, that which is indicated by the…
+
+---- VERSION S: English assigned to page N (end) ----
+…written syllables are the speech of the Sugata.
+The lamp is the heart of the Sugata’s heart.
+With the appearance of the nine wisdoms,
+And the beauty of the substances, encircle the perimeter.
+In order to illuminate the wisdom of meditative concentration,
+Also clearly draw the support of the eyes.
+In order to illuminate the wisdom of desire,
+Also place the support of the eyes in front.
+Having reflected on the phenomena that are not observed,
+And by the power of the gift of the eye of wisdom,
+Bestow blessings upon all things as they are.
+Having marked everything with the supreme signs,
+Contemplate the syllables that transform into anything.
+In the past, in the time that came before,
+The great Lord of Investigation,
+In the scriptures of the <term>Tathagata</term> <gloss>Thus-Gone One</gloss>,
+In the manner of living beings, previously...
+---- VERSION S: English assigned to page N+1 (start) ----
+...arose.
+At that time, all sentient beings
+Become extremely angry and ferocious.
+Very wicked and angry,
+They scream and fall.
+Toward those who are extremely angry and ferocious,
+Peacefulness is of no benefit.
+Through the essence of wisdom and means,
+All <term>Tathagatas</term> act as wrathful ones.
+Even when wrathful, having the appearance of the wrathful ones,
+They burn the three worlds.
+Therefore, when all the Buddhas are wrathful,
+What need is there to speak of the three realms without exception?
+Possessing great compassion,
+The <term>Vajrasattva</term> <gloss>Diamond Being</gloss> <term>Tathagata</term>,
+In order to train those who are hostile to the pledges,
+Reveals the seal of the…
+
+---- VERSION T: English assigned to page N (end) ----
+…the speech of the <term>Sugata</term>.
+The butter lamps are the mind of the <term>Sugata</term>.
+With the appearance of the nine wisdoms,
+Surround the circle beautifully with ritual substances.
+For the sake of the clarity of meditative wisdom,
+Clearly draw the support for the eyes.
+For the sake of the clarity of the wisdom of passion,
+Place the support for the eyes directly before you.
+Investigating the mind through non-referential phenomena,
+By the power of the gift of the eye of wisdom,
+Bless everything according to the proper way.
+By marking everything with the supreme signs,
+Meditate on the syllables that transform into anything.
+In the past, what occurred previously,
+In the investigative tantra of the Great Self,
+In the scriptures of the <term>Tathagata</term> <gloss>One Thus Gone</gloss>,
+Formerly, in the manner of a traveler...
+---- VERSION T: English assigned to page N+1 (start) ----
+...what occurred.
+At that time, all sentient beings
+Became extremely angry and ferocious.
+Being extremely poisonous and wrathful,
+They wailed and fell.
+For those who are extremely angry and ferocious,
+Peaceful means will not be of benefit.
+Through the essence of wisdom and means,
+All the <term>Tathagatas</term> manifested as Wrathful Ones.
+Even if a single wrathful one in their anger
+Can burn the three worlds,
+What need is there to mention the anger
+Of all the Buddhas together?
+Possessing great compassion,
+The <term>Tathagata Vajrasattva</term>,
+In order to purify those who hate the commitments,
+Manifested the <term>mudra</term> of the charnel ground dance.
+Having provided the Lotus and the…
+
+
+######## BREAK 9/17  id=91fa1607ff  language=latin
+
+==== SOURCE, END OF PAGE N ====
+…creditor cum debitore pactus est, quod stylo Jurisconsultorum diem appellari constat. *argumento lege 213. Digesto de Verborum Obligationibus paragraphus 2. 7. eodem.*
+---
+ §. 23. 
+Dependet id autem ex placito paciscentium, ut vel certus determinetur dies , ante cujus elapsum debitor libertatem solvendi non habeat, *argumento dicta paragraphus 2. 7. de Verborum Obligationibus* vel solutio in incertum tempus conferatur, *argumento lege 48. Digesto de Verborum Obligationibus lege 85. Digesto de condictionibus et demonstrationibus.*
+---
+ §. 24. 
+Cùm autem utrobique omne momentum in eo situm sit, ut dies in favorem creditoris adjiciatur, hinc in determinando eo cautè agat, necesse est.
+---
+ §. 25. 
+Etenim quod tempus certum concernit, quo-
+
+==== SOURCE, START OF PAGE N+1 ====
+tiescunque dies in Instrumento obligationis simpliciter additus est, toties praesumitur in debitoris gratiam esse adjectus, in eum scilicet finem, ut is re interim pro lubitu uti, nec ab actore per medium illud tempus, quod illi ad solvendum liberum relictum est, conveniri possit, arg. l. 117. ff. de R. J. l. 41. §. 1. l. 42. de V. O. l. 44. §. 1. ff. de O. & A. §. 2. j. de V. O. Ex quo insimul fluit, quod etiam ante diem etsi invito creditori solvere queat, l. 70. ff. de Solut. l. 50. ff. de O. & A. adhibitâ tamen cautione generali, ut sine ullo creditoris detrimento, nec inopportuno tempore…
+
+---- VERSION P: English assigned to page N (end) ----
+…experts</gloss>, is known to be called a day. *By the argument of Law 213, Digest, On Verbal Obligations, paragraph 2; [and] 7 of the same.*
+---
+->§. 23.<-
+However, this depends upon the decision of the contracting parties, so that either a certain day is determined, before the lapse of which the debtor does not have the freedom of paying, *by the argument of the cited paragraph 2; 7, On Verbal Obligations*, or the payment is deferred to an uncertain time, *by the argument of Law 48, Digest, On Verbal Obligations; Law 85, Digest, On Conditions and Demonstrations.*
+---
+->§. 24.<-
+But since in both cases the entire importance lies in the fact that the day is added for the benefit of the creditor, it is therefore necessary that he act cautiously in determining it.
+---
+->§. 25.<-
+For regarding the time that is certain, as often as
+---- VERSION P: English assigned to page N+1 (start) ----
+<note>Two handwritten diagonal ink strokes in the left margin, likely reader marks or a cancellation mark.</note> <margin>/</margin> <margin>/</margin> a day is simply added in the instrument of obligation, it is presumed as often that it was added for the benefit of the debtor, to the end, namely, that he may use the thing in the meantime as he pleases, and may not be sued by the plaintiff throughout that intermediate time which was left free for him to make payment, according to the argument of Law 117, Digest, On the Rules of Law; Law 41, paragraph 1; Law 42, On Verbal Obligations; Law 44, paragraph 1, Digest, On Obligations and Actions; paragraph 2, Institutes, On Verbal Obligations.…
+
+---- VERSION Q: English assigned to page N (end) ----
+…day or term</gloss>. <note>By the argument of Law 213, Digest, On Verbal Obligations, paragraph 2, 7, in the same.</note>
+---
+->§. 23.<-
+Moreover, this depends on the agreement of the contracting parties, so that either a certain day is determined before the passing of which the debtor does not have the freedom of paying, <note>By the argument of the cited paragraph 2, 7, On Verbal Obligations</note> or the payment is deferred to an uncertain time. <note>By the argument of Law 48, Digest, On Verbal Obligations, and Law 85, Digest, On Conditions and Demonstrations.</note>
+---
+->§. 24.<-
+Furthermore, since in both cases the entire importance is situated in this: that the day is added in favor of the creditor; hence, it is necessary that he act cautiously in determining it.
+---
+->§. 25.<-
+For as far as it concerns a certain time, whenever
+---- VERSION Q: English assigned to page N+1 (start) ----
+<margin>
+/
+/
+</margin>
+<note>Two handwritten diagonal ink strokes in the left margin, likely reader marks or a cancellation mark.</note>
+a day is simply added in the instrument of obligation, it is presumed every time to have been added for the sake of the debtor; namely, for that purpose so that he may use the thing in the meantime at his pleasure, and cannot be sued by the plaintiff during that middle period of time which is left free for him to pay. <note>By the argument of Law 117, Digest, On Rules of Law; Law 41, paragraph 1, Law 42, On Verbal Obligations; Law 44, paragraph 1, Digest, On Obligations and Actions; paragraph 2, Institute, On Verbal Obligations.</note> From which it…
+
+---- VERSION R: English assigned to page N (end) ----
+…<gloss>legal experts</gloss> is known to be called the day. *By the argument of Law 213, Digest, On Verbal Obligations, paragraph 2. 7. in the same.*
+->§. 23.<-
+This, however, depends upon the agreement of the contracting parties, so that either a certain day is determined, before the expiration of which the debtor does not have the freedom of paying, *by the argument of the cited paragraph 2. 7., On Verbal Obligations*, or the payment is deferred to an uncertain time, *by the argument of Law 48, Digest, On Verbal Obligations, and Law 85, Digest, On Conditions and Demonstrations.*
+->§. 24.<-
+But since in both cases every importance lies in the fact that the day is added for the benefit of the creditor, it is necessary that he act cautiously in determining it.
+->§. 25.<-
+For as far as it concerns a certain time, as often as
+---- VERSION R: English assigned to page N+1 (start) ----
+<header>12.</header>
+<note>Two diagonal ink strokes are marked in the left margin.</note>
+a day is simply added in the instrument of obligation, it is presumed to have been added in the debtor’s favor, namely to the end that he may use the thing in the meantime as he pleases, and may not be sued by the plaintiff during that intervening time which is left free for him to pay, <note>arg. l. 117. ff. de R. J. = argument of Law 117, Digest, On the Rule of Law; l. 41. §. 1. l. 42. de V. O. = Law 41, paragraph 1, and Law 42, On Verbal Obligations; l. 44. §. 1. ff. de O. & A. = Law 44, paragraph 1, Digest, On Obligations and Actions; §. 2. j. de V. O. = paragraph 2, Institutes, On Verbal…
+
+---- VERSION S: English assigned to page N (end) ----
+…experts</gloss>. <note>By the argument of Law 213, Digest, On Verbal Obligations, paragraph 2; and Law 7 of the same title.</note>
+---
+->§. 23.<-
+Moreover, this depends on the will of the contracting parties, so that either a fixed day is determined, before the lapse of which the debtor does not have the freedom of paying, <note>By the argument of the cited paragraph 2 and Law 7, On Verbal Obligations</note> or the payment is deferred to an uncertain time. <note>By the argument of Law 48, Digest, On Verbal Obligations; Law 85, Digest, On Conditions and Demonstrations.</note>
+---
+->§. 24.<-
+Furthermore, since in both cases the entire weight is placed on the fact that the day is added in favor of the creditor, it is necessary that he act cautiously in determining it.
+---
+->§. 25.<-
+For as far as it concerns a certain time, whenever
+---- VERSION S: English assigned to page N+1 (start) ----
+<note>Two handwritten diagonal ink strokes appear in the left margin, likely reader marks or a cancellation mark.</note> <margin>/</margin> <margin>/</margin> a day has been simply added to the instrument of obligation, it is presumed as many times to have been added for the sake of the debtor—namely, for the purpose that he may use the thing in the meantime as he pleases, and cannot be sued by the plaintiff during that middle period which is left free for him for paying. <note>By the argument of Law 117, Digest, On Rules of Law; Law 41, paragraph 1; Law 42, On Verbal Obligations; Law 44, paragraph 1, Digest, On Obligations and Actions; paragraph 2, Institute, On Verbal Obligations.</note>…
+
+---- VERSION T: English assigned to page N (end) ----
+…experts/jurists</gloss> is known to be called a day. *By the argument of Law 213, Digest, On Verbal Obligations, paragraph 2, 7, of the same.*
+->§. 23.<-
+This depends, however, upon the pleasure of the contracting parties, so that either a certain day is determined, before the lapse of which the debtor does not have the freedom of paying, *by the argument of the cited paragraph 2, 7, On Verbal Obligations*, or the payment is deferred to an uncertain time, *by the argument of Law 48, Digest, On Verbal Obligations; Law 85, Digest, On Conditional Stipulations and Demonstrations*.
+->§. 24.<-
+Since, however, in both cases the entire importance lies in the fact that the day is added for the benefit of the creditor, it is therefore necessary that he act cautiously in determining it.
+->§. 25.<-
+For regarding the certain time, whenever
+---- VERSION T: English assigned to page N+1 (start) ----
+<header>12.</header>
+<note>Two handwritten diagonal ink strokes appear in the left margin, likely reader marks or a cancellation mark.</note>
+<margin>
+/
+/
+</margin>
+a day is simply added in the instrument of obligation, it is always presumed to have been added for the benefit of the debtor, namely for the purpose that he may use the thing in the meantime as he pleases, and cannot be sued by the plaintiff throughout that time which is left free to him for payment, see argument of Law 117, Digest, On the Rule of Law; Law 41, paragraph 1; Law 42, On Verbal Obligations; Law 44, paragraph 1, Digest, On Obligations and Actions; Section 2, Institutes, On Verbal Obligations. From which it flows at…
+
+
+######## BREAK 10/17  id=390b42b6ff  language=latin
+
+==== SOURCE, END OF PAGE N ====
+…desumptis parer-*
+*gis Doctissimè proposita & serenissima domus Bauariae irradiata*
+*fulgoribus ad communem studiosae iuuentutis utilitatem, ac religiosi*
+*domini defendentis utilissimum exercitium rectissimè typis euulgabun-*
+*tur.*
+ IOANNES OSVVALDVS à ZIMMERN, Sacrae Theologiae 
+ Doctor & Professor, Iuris Utriusque Licentiatus Procancellarius 
+ Academicus, & nunc Decanus Theologicus. 
+---
+## APPROBATIO PHILOSOPHICA.
+*Hac de Vniuersalibus in genere & specie Disputatio solidam &*
+*claram eorundem doctrinam simulque cum annexis parergis uberem*
+*ulterioris disputationi materiam proponit, unde digna est, quae hunc*
+*in finem imprimatur.*
+ LEONARDVS LERCHENFELDT Societatis 
+ IESV Philosophiae moralis Professor & pro 
+ tempore Decanus.
+
+==== SOURCE, START OF PAGE N+1 ====
+# REVERENDO, RELIGIOSO ET DOCTISSIMO DOMINO VNIVERSÆ PHILOSOPHIÆ IN VNIVERSAlibus Propugnatori.
+*Formosas alij sibi Sophias,*
+*Racheles veluti comant nitentes,*
+*Frontes adificent, acuque fingant,*
+*Doctis perpoliant genasque nugis,*
+*Et pingant sterili labore sponsas.*
+*Hac ridet Sapiens meus; sororem,*
+*Facundamque rapit Liam parentem.*
+*Rachel displicet: vniuersa, dotem,*
+*Inquit, dat Lia, gignit vniuersa.*
+*Vidi Dadaleo tumere scalpro,*
+*Formas, inuidiam ciere natas.*
+*Vidi Sarmatico tacere iussos.*
+*Tauros vulnere: portuum minaces*
+*Pilas, undifluâ Triurbe structas:*
+*Fultas semideûm…
+
+---- VERSION P: English assigned to page N (end) ----
+…illuminated by the splendors of the most serene House of Bavaria, will be most rightly published in print for the common benefit of the studious youth and the most useful exercise of the religious master who defends them.
+-> JOHN OSWALD of ZIMMERN, Doctor and Professor of Sacred Theology, Licentiate of Both Laws, Academic Vice-Chancellor, and currently Theological Dean. <-
+---
+## PHILOSOPHICAL APPROBATION.
+This disputation on *Universals*, in both their general and specific aspects, proposes a solid and clear doctrine of the same, while simultaneously offering, together with the annexed <term>parerga</term> <gloss>supplementary topics</gloss>, abundant material for further disputation; wherefore it is worthy to be printed for this purpose.
+-> LEONARD LERCHENFELDT of the Society of JESUS, Professor of Moral Philosophy and current Dean. <-
+---- VERSION P: English assigned to page N+1 (start) ----
+<note>A horizontal decorative border at the top of the page is composed of repeating ornamental floral or knotwork patterns.</note>
+# TO THE REVEREND, RELIGIOUS, AND MOST LEARNED MASTER, DEFENDER OF ALL PHILOSOPHY IN ITS UNIVERSALS.
+Others adorn for themselves beautiful Sophias,
+Shining like Rachels,
+They build up brows, shape them with needles,
+Polish their cheeks with learned trifles,
+And paint their brides with sterile labor.
+My Sage laughs at this; he seizes the fertile sister,
+Leah, the mother.
+He says: Rachel displeases; Leah gives the dowry,
+She brings forth all things.
+I have seen forms swelling under a Daedalean chisel,
+Born to stir up envy.
+I have seen bulls ordered to be silent…
+
+---- VERSION Q: English assigned to page N (end) ----
+…from the whole of Philosophy, and illuminated by the splendors of the most serene House of Bavaria, shall most rightly be published by the press for the common utility of studious youth and the most useful exercise of the religious lord defending them.*
+-> JOHANN OSWALD von ZIMMERN, Doctor and <-
+-> Professor of Sacred Theology, Licentiate of Both Laws, <-
+-> Academic Vice-Chancellor, and currently Theological Dean. <-
+***
+## PHILOSOPHICAL APPROBATION
+*This Disputation concerning Universals in genus and species proposes a solid and clear doctrine of the same, and at the same time, with the annexed side-issues, provides abundant material for further disputation; wherefore it is worthy to be printed for this purpose.*
+-> LEONARD LERCHENFELDT of the Society <-
+-> of JESUS, Professor of Moral Philosophy and <-
+-> Dean for the time being. <-
+---- VERSION Q: English assigned to page N+1 (start) ----
+<note>A horizontal decorative border at the top of the page is composed of repeating ornamental floral or knotwork patterns.</note>
+# TO THE REVEREND, RELIGIOUS, AND MOST LEARNED LORD, DEFENDER OF UNIVERSAL PHILOSOPHY IN UNIVERSALS.
+*Let others build up for themselves beautiful Wisdoms,*
+*Like shining Rachels <note>referring to the biblical Rachel, representing the contemplative life</note> adorning themselves,*
+*Let them build up their brows, fashion them with a needle,*
+*Polish their cheeks with learned trifles,*
+*And paint their brides with sterile labor.*
+*At these things my Wise Man laughs; he seizes*
+*The sister, the eloquent mother Leah <note>referring to the biblical Leah,…
+
+---- VERSION R: English assigned to page N (end) ----
+…the whole of Philosophy, most learnedly proposed and illuminated by the splendors of the most serene House of Bavaria, may most rightly be published in print for the common benefit of the studious youth and the most useful exercise of the religious lord defending them.*
+-> JOHANN OSWALD von ZIMMERN, Doctor & Professor of Sacred Theology, Licentiate of Both Laws, Academic Vice-Chancellor, & currently Theological Dean. <-
+---
+## PHILOSOPHICAL APPROBATION.
+*This Disputation concerning Universals in general and in particular proposes a solid and clear doctrine of the same, and at the same time, with the annexed supplementary theses, provides abundant material for further disputation; therefore, it is worthy to be printed for this purpose.*
+-> LEONARD LERCHENFELDT of the Society of JESUS, Professor of Moral Philosophy & currently Dean. <-
+---- VERSION R: English assigned to page N+1 (start) ----
+<note>A horizontal decorative border composed of repeating ornamental floral or knotwork patterns.</note>
+# TO THE REVEREND, RELIGIOUS, AND MOST LEARNED LORD, CHAMPION OF THE WHOLE OF PHILOSOPHY IN UNIVERSALS.
+*Others bedeck themselves with beautiful Wisdoms,*
+*As if they were shining Rachels,*
+*They build up their brows, and shape them with needles,*
+*They polish their cheeks with learned trifles,*
+*And paint their brides with sterile labor.*
+*My Wise Man laughs at this; he seizes the sister,*
+*The fruitful Leah, the mother.*
+*Rachel is displeasing: he says, Leah gives the dowry,*
+*She gives all things, she begets all things.*
+*I have seen shapes swelling under the Daedalian chisel,*
+*Born…
+
+---- VERSION S: English assigned to page N (end) ----
+…and illuminated by the splendors of the most serene House of Bavaria, will be most rightly published in print for the common benefit of studious youth and the most useful exercise of the religious lord defending them.*
+-> JOHANN OSWALD VON ZIMMERN, Doctor and <-
+-> Professor of Sacred Theology, Licentiate of Both Laws <note>Civil and Canon Law</note>, Academic <-
+-> Pro-Chancellor, and currently Theological Dean. <-
+***
+## PHILOSOPHICAL APPROBATION
+*This Dispute concerning Universals in genus and species proposes a solid and clear doctrine of the same, and at the same time, with the annexed side-arguments, provides abundant material for further disputation; wherefore it is worthy to be printed for this purpose.*
+-> LEONARD LERCHENFELDT of the Society <-
+-> of JESUS, Professor of Moral Philosophy and <-
+-> Dean for the time being. <-
+---- VERSION S: English assigned to page N+1 (start) ----
+<note>A decorative horizontal border of repeating ornamental floral and knotwork patterns sits at the top of the page.</note>
+# TO THE REVEREND, RELIGIOUS, AND MOST LEARNED LORD DEFENDER OF UNIVERSAL PHILOSOPHY IN THE UNIVERSALS.
+*Let others build up for themselves beautiful Wisdoms <note>original: "Sophias"</note>,*
+*As if grooming shining Rachels <note>referring to the biblical Rachel, representing the contemplative life</note>,*
+*Let them fashion their brows and shape them with a needle,*
+*Refine their cheeks with learned trifles,*
+*And paint their brides with sterile labor.*
+*At these things my Wise Man laughs; he seizes*
+*The sister, the eloquent mother Leah <note>referring to the…
+
+---- VERSION T: English assigned to page N (end) ----
+…by the splendors of the most serene House of Bavaria, shall be most correctly published in print for the common benefit of the studious youth and the most useful exercise of the religious master defending them.*
+-> IOANNES OSVVALDVS à ZIMMERN, Doctor of Sacred Theology, <-
+-> Professor, Licentiate of Both Laws <gloss>Canon and Civil Law</gloss>, Academic <-
+-> Pro-Chancellor, and currently Theological Dean. <-
+---
+## PHILOSOPHICAL APPROBATION.
+*This Disputation on Universals in general and in particular proposes a solid and clear doctrine of the same, and at the same time, together with the annexed parerga, presents rich material for further disputation; therefore, it is worthy to be printed for this purpose.*
+-> LEONARDVS LERCHENFELDT of the Society <-
+-> of JESUS, Professor of Moral Philosophy, and <-
+-> Dean for the time being. <-
+---- VERSION T: English assigned to page N+1 (start) ----
+<note>A horizontal decorative border at the top of the page is composed of repeating ornamental floral or knotwork patterns.</note>
+# TO THE REVEREND, RELIGIOUS, AND MOST LEARNED MASTER, DEFENDER OF UNIVERSAL PHILOSOPHY IN UNIVERSALS.
+*Others bedeck themselves with beautiful wisdoms,*
+*As if they were shining Rachels,*
+*They build up their brows and fashion them with a needle,*
+*They polish their cheeks with learned trifles,*
+*And paint their brides with sterile labor.*
+*My Sage laughs at this; he takes the sister,*
+*Leah, the fruitful mother.*
+*Rachel does not please: the Universals,*
+*He says, are the dowry Leah gives; she brings forth all things.*
+*I have seen forms swelling under the…
+
+
+######## BREAK 11/17  id=e0548f40ff  language=latin
+
+==== SOURCE, END OF PAGE N ====
+…levi. L. 12. ff. deposit. Commodatum repeti per se non potest ante tempus elapsum, pro quo fuit concessum. Si res commodata pereat casu absque culpa commodatarii, Domino perit. L. fin. ff. commodat. Precarium non finitur per mortem concedentis. Fidejussio non jurata mulieris pro viro irrita est. Etiam jura oppignorari vel hypothecari possunt.
+### XVII. Injuria & Restitutio.
+Injuria est alieni juris violatio : Alia realis, quae per iniquam manūs injectionem, Alia verbalis, quae per verba, litteras, scripturam aut picturam contumeliosam committitur. L. 15. ff. de injur. & famos. libell. Alia levis, Alia atrox, quod genus ex facto, loco, persona, aliisque circumstantiis desumendum est. §. atrox. Instit. de injur. Volenti non fit, nisi ubi
+
+==== SOURCE, START OF PAGE N+1 ====
+ubi cessioni juris jus positivum aut naturale resistit : hinc Cle-
+ricum non invitum trahens ad tribunal sæculare adhuc com-
+mittit injuriam. Reparatur verò illata injuria vel satisfactio-
+ne, vel restitutione. Restitutio est actus justitiæ commutati-
+væ, non necessitate medii, sed præcepti tantùm ad salutem ne-
+cessarius : quod tam Divinum, quàm naturale est; partim af-
+firmativum, partim negativum. Obligatio restituendi ori-
+tur, vel ex acceptione injusta, vel ex ipsa re accepta: hinc dif-
+fert plurimùm à solutione Restitutio, cùm obli-
+gatio solvendi è contractibus profi-
+ ciscatur. 
+## F…
+
+---- VERSION P: English assigned to page N (end) ----
+…for which it was granted. If a borrowed item perishes by accident without the fault of the borrower, it perishes for the owner, Law final, Digest on loan for use. A precarious grant is not ended by the death of the grantor. A guarantee not under oath by a woman for her husband is void. Even rights can be pledged or mortgaged.
+### XVII. Injury and Restitution.
+Injury is the violation of another’s right. One type is real, which is committed through an unjust laying on of hands; another is verbal, which is committed through insulting words, letters, writing, or images, Law 15, Digest on injuries and libelous writings. One type is slight, another atrocious; the nature of which must be determined from the act, the place, the person, and other circumstances, § Atrocious, Institutes on injuries. Injury is not done to one who is willing, unless
+---- VERSION P: English assigned to page N+1 (start) ----
+where positive or natural law resists the cession of a right; hence, one who drags a cleric unwillingly to a secular tribunal still commits an injury. Indeed, an inflicted injury is repaired either by satisfaction or by restitution. Restitution is an act of commutative justice, necessary for salvation not by the necessity of the medium, but only by precept; this is both Divine and natural, partly affirmative, partly negative. The obligation to restore arises either from unjust acceptance or from the thing itself having been accepted; hence, restitution differs greatly from payment, since the obligation to pay proceeds from contracts.
+## T H E E N D.
+<note>A woodcut depicts a peacock with…
+
+---- VERSION Q: English assigned to page N (end) ----
+…*Final Law, Digest on loans for use.* A <term>precarium</term> <gloss>a grant of use at the will of the grantor</gloss> is not ended by the death of the one granting it. A wife’s non-sworn <term>fidejussio</term> <gloss>suretyship or guarantee</gloss> for her husband is void. Even rights can be pledged or mortgaged.
+### XVII. Injury and Restitution.
+Injury is the violation of another's right. One type is "real," which is committed by the unjust laying on of hands; another is "verbal," which is committed through words, letters, writing, or an insulting picture. *Law 15, Digest on injuries and libelous pamphlets.* One type is slight, another is atrocious; the type is to be determined from the act, the place, the person, and other circumstances. *Paragraph "atrox", Institutes on injuries.* No injury is done to one who is willing, unless
+---- VERSION Q: English assigned to page N+1 (start) ----
+where positive or natural law resists the surrender of a right. For this reason, dragging a cleric who is not willing to a secular tribunal still constitutes an injury. An inflicted injury is repaired either by satisfaction or by restitution. Restitution is an act of <term>commutative justice</term> <gloss>justice governing the relationship between private parties</gloss>; it is necessary for salvation not by a "necessity of means" <note>something naturally required to reach an end</note>, but only by a "necessity of precept" <note>required by divine or moral command</note>. This is as much Divine as it is natural law, being partly affirmative and partly negative. The obligation of making…
+
+---- VERSION R: English assigned to page N (end) ----
+…granted. If a borrowed thing perishes by accident without the fault of the borrower, it perishes for the owner. <note>Law final, Digest on loan for use.</note> A precarious grant is not ended by the death of the grantor. A non-sworn suretyship of a woman for her husband is void. Even rights can be pledged or mortgaged.
+### XVII. Injury and Restitution.
+Injury is the violation of another's right. One type is real, which is committed by an unjust laying on of hands; another is verbal, which is committed by words, letters, writing, or insulting imagery. <note>Law 15, Digest on injuries and libelous books.</note> One is light, another is atrocious; this type is to be determined from the deed, place, person, and other circumstances. <note>Paragraph, "Atrocious," Institutes on injuries.</note> To one who is willing, no injury is done, unless
+---- VERSION R: English assigned to page N+1 (start) ----
+where positive or natural law resists the cession of a right. Hence, one who drags a cleric against his will to a secular tribunal still commits an injury. Indeed, an inflicted injury is repaired either by satisfaction or by restitution. Restitution is an act of commutative justice, necessary for salvation not by the necessity of a medium, but only of a precept; this is both Divine and natural; partly affirmative, partly negative. The obligation to restore arises either from an unjust acceptance or from the thing itself received. Hence, restitution differs greatly from payment, since the obligation of paying proceeds from contracts.
+## F I N I S.
+<note>A detailed floral tailpiece ornament…
+
+---- VERSION S: English assigned to page N (end) ----
+…on loans for use*. A <term>precarium</term> <gloss>a grant of use at the will of the grantor</gloss> is not ended by the death of the person granting it. A non-sworn <term>suretyship</term> <gloss>guaranteeing a debt</gloss> of a wife for her husband is void. Even rights can be pledged or mortgaged.
+### XVII. Injury and Restitution.
+Injury is the violation of another's right: one type is real, which is committed by the unjust laying on of hands; another is verbal, which is committed through words, letters, writing, or an insulting picture, according to *Law 15, Digest on injuries and libelous pamphlets*. One is slight, another is atrocious, which type must be determined from the act, the place, the person, and other circumstances, as in the *paragraph on atrocious, Institutes on injuries*. To one who is willing, no injury is done, except
+---- VERSION S: English assigned to page N+1 (start) ----
+where positive or natural law resists the surrender of the right: hence, one who drags a cleric to a secular tribunal against his will still commits an injury. Indeed, an inflicted injury is repaired either by satisfaction or by restitution. Restitution is an act of commutative justice <note>justice governing private transactions</note>, necessary for salvation not as a matter of means, but only by precept: which is as much Divine as it is natural; partly affirmative, partly negative. The obligation of restoring arises either from an unjust taking or from the thing taken itself: hence restitution differs greatly from payment, since the obligation of paying proceeds from contracts.
+-> THE…
+
+---- VERSION T: English assigned to page N (end) ----
+…the borrower, it perishes for the owner. <term>Law last, Digest on commodatum</term>. A precarious loan is not terminated by the death of the grantor. A non-sworn suretyship of a woman on behalf of her husband is void. Even rights can be pledged or mortgaged.
+### XVII. Injury and Restitution.
+Injury <note>original: "Injuria"</note> is the violation of another's right: one type is real, which is committed through an unjust laying on of hands; another is verbal, which is committed through words, letters, writing, or contumelious pictures. <term>Law 15, Digest on injuries and libelous writings</term>. One type is light, another atrocious; this classification is to be derived from the deed, the place, the person, and other circumstances. <term>Paragraph "atrocious," Institutes on injuries</term>. No injury is done to a willing person, unless
+---- VERSION T: English assigned to page N+1 (start) ----
+where positive or natural law resists the yielding of a right: hence, one who drags a cleric unwillingly to a secular tribunal still commits an injury. Indeed, an inflicted injury is repaired either by satisfaction or by restitution. Restitution is an act of commutative justice, necessary for salvation not by the necessity of the medium, but only of the precept: which is as much Divine as it is natural; partly affirmative, partly negative. The obligation to restore arises either from unjust receipt or from the thing itself having been received: hence restitution differs greatly from payment, since the obligation to pay arises from contracts.
+## THE END.
+<note>A detailed floral tailpiece…
+
+
+######## BREAK 12/17  id=188e19dbff  language=latin
+
+==== SOURCE, END OF PAGE N ====
+…ex Key=
+sersberg plebani sancti Laurentij, Anthonij Firn pleba=
+ni sancti Thomae, Ioannis Nubling capellani capellae
+sancti Erhardi Argentinensis ecclesiarum, Lucae Hack=
+furt, Conradi Spaczinger et Alexandri olim conuentua=
+lis ordinis Ioannitarum, presbyterorum, similiter coram
+me notario et testibus subscriptis personaliter constitu=
+torum nomine, habens et tenens suis in manibus certam
+Appellationem seu prouocationis papyri cedulam, quam
+animo et intentione prouocandi et appellandi, prote=
+standi, Apostolosque petendi, ac alia, prout in eadem ce=
+dula dixit latius contineri faciendi, mihi Notario publi=
+co subscripto tradidit, et assignauit tenoris prescripti.
+Ne cui uis fiat et cetera.
+Post cuius quidem prouocationis, appellationis ac
+
+==== SOURCE, START OF PAGE N+1 ====
+Apostolorum petitionis bapyri cedulae interpositionem, dictus dominus Vvolffgangus sculteti suo ac praescriptorum dominorum appellantium principalium nomine, sibi a me Notario publico subscripto, unum uel plura, publicum seu publica fieri atque confici, petiit instrumentum et instrumenta, tot quot sibi seu alteri ipsorum fuerint necessaria. Acta sunt haec Argentinae in Curia Parochiali parochiae sancti Laurentij Argentin. sub Anno domini Indictione, die, Mense, hora et Pontificatu, quibus supra praesentibus ibidem honorabili et discreto uiris domino Vvilhelmo Beltinger diuinorum adiutore et…
+
+---- VERSION P: English assigned to page N (end) ----
+…Johann Nubling, chaplain of the chapel of Saint Erhard of the churches of Strasbourg; Lucas Hackfurt, Conrad Spatzinger, and Alexander, formerly a member of the Order of Saint John <note>the Knights Hospitaller</note>, priests, likewise personally appearing before me, the notary, and the witnesses written below. He held and kept in his hands a certain written sheet of appeal or provocation, which—with the mind and intention of provoking, appealing, protesting, and seeking <term>apostuli</term> <gloss>formal letters of appeal sent to a higher court</gloss>, and doing other things as he said were more broadly contained in the same sheet—he delivered and assigned to me, the Notary Public written below, according to the aforementioned tenor. Lest any force be done, etc. After the interposition of this sheet of provocation, appeal, and
+---- VERSION P: English assigned to page N+1 (start) ----
+petition for <term>apostuli</term>, the said Lord Wolfgang Schultheiss, in his own name and in the name of the aforementioned lords, the principal appellants, requested from me, the Notary Public written below, that one or more public instrument or instruments be made and completed, as many as should be necessary for him or for any of the others. These things were done at Strasbourg, in the parsonage of the parish of Saint Lawrence of Strasbourg, in the year of the Lord, indiction, day, month, hour, and pontificate as stated above, being present there the honorable and discreet men Lord Wilhelm Beltinger, assistant in divine services, and Melchior Schell, sacristan of the Church of Saint…
+
+---- VERSION Q: English assigned to page N (end) ----
+…priest of Saint Thomas; Johannes Nubling, chaplain of the chapel of Saint Erhard, of the churches of Strasbourg; Lucas Hackfurt, Conrad Spaczinger, and Alexander, formerly a conventual of the Order of Saint John <note>the Knights Hospitaller</note>, priests, likewise appearing in person before me, the notary, and the witnesses subscribed below. Holding and possessing in his hands a certain document of appeal or written protest, which he delivered and assigned to me, the undersigned notary public, with the spirit and intention of protesting and appealing, of requesting <term>apostoli</term> <gloss>letters dimissory/dismissal of the appeal to a higher court</gloss>, and of doing other things as he said were more fully contained in the same document. That no violence be done, etc.
+After the interposition of which protestation, appeal, and
+---- VERSION Q: English assigned to page N+1 (start) ----
+# A P P E A L
+petition for the <term>apostoli</term> <gloss>dismissal of the appeal</gloss> of the written document, the said lord Wolfgang Sculteti, in his own name and in the name of the aforementioned principal lords who are appealing, requested of me, the undersigned notary public, that one or more public instruments be made and drawn up, as many as might be necessary for him or any other of them. These things were done in Strasbourg in the parochial court of the parish of Saint Lawrence of Strasbourg, in the year of the Lord, indiction, day, month, hour, and pontificate as stated above, with the honorable and discreet men Lord Wilhelm Beltinger, assistant in divine services, and…
+
+---- VERSION R: English assigned to page N (end) ----
+…Erhard, all churches of Strasbourg, and <term>Lucas Hackfurt</term>, <term>Konrad Spaczinger</term>, and <term>Alexander</term>, formerly a member of the <term>Order of St. John</term> <gloss>Hospitallers</gloss>, all presbyters, who were likewise appearing in person before me, the notary, and the witnesses subscribed below. Having and holding in his hands a certain paper document of appeal or provocation, which with the spirit and intention of provoking and appealing, protesting, seeking <term>apostoli</term> <gloss>letters of dismissal/appeal documents</gloss>, and causing other things to be done as he said were contained more fully in the same document, he delivered and assigned to me, the notary public subscribed below, of the tenor prescribed. That no violence be done, etc.
+After the interposition of which provocation, appeal, and
+---- VERSION R: English assigned to page N+1 (start) ----
+petition for <term>apostoli</term> <gloss>letters of appeal</gloss> from the paper document, the said Lord <term>Wolfgang Sculteti</term>, in his own name and in the name of the aforementioned appealing principals, requested of me, the notary public subscribed below, that one or more public instruments be made and drawn up for him, as many as might be necessary for him or for any of them. These things were done at Strasbourg in the parochial court of the parish of St. Lawrence, Strasbourg, under the year of the Lord, indiction, day, month, hour, and pontificate as stated above, present there as witnesses to the premises, and called and requested for the same, the honorable and discreet men…
+
+---- VERSION S: English assigned to page N (end) ----
+…chaplain of the chapel of St. Erhard; and the Strasbourg ecclesiastics Lucas Hackfurt, Konrad Spaczinger, and Alexander, formerly a member of the conventual order of the <term>Ioannitae</term> <gloss>Knights of St. John/Hospitallers</gloss>, priests, likewise appearing personally before me, the notary, and the witnesses subscribed below. Having and holding in his hands a certain paper document of appeal or provocation, which—with the mind and intention of provoking, appealing, protesting, requesting the <term>apostoli</term> <gloss>letters of appeal/dismissal</gloss>, and doing other things, as he said is more broadly contained in the same document—he delivered and assigned to me, the undersigned notary public, of the tenor prescribed below. Let no violence be done to anyone, etc.
+After this interposition of provocation, appeal, and
+---- VERSION S: English assigned to page N+1 (start) ----
+# A P P E L L A T I O
+the request for the <term>apostoli</term> <gloss>letters of appeal</gloss> of the paper document, the said Lord Wolfgang Sculteti, in his own name and in the name of the aforementioned principal appellants, requested from me, the undersigned notary public, that one or more public instruments be made and drawn up, as many as might be necessary for him or for any other of them. These things were done in Strasbourg, in the parish court of the parish of St. Lawrence, Strasbourg, in the year of the Lord, indiction, day, month, hour, and pontificate as stated above, in the presence of the honorable and discreet men, Lord Wilhelm Beltinger, assistant of divine services, and…
+
+---- VERSION T: English assigned to page N (end) ----
+…Johann Nubling, chaplain of the chapel of Saint Erhard of the churches of Strasbourg; Lucas Hackfurt; Konrad Spatzinger; and Alexander, formerly a member of the Order of Saint John <note>the Knights Hospitaller</note>, priests likewise personally appearing before me, the notary, and the witnesses written below. He held and kept in his hands a certain written schedule of Appeal or challenge, which—with the soul and intention of challenging and appealing, protesting, and seeking <term>Apostoli</term> <gloss>formal letters of appeal sent from a lower to a higher judge</gloss>, and doing other things as he said were more broadly contained in the same schedule—he delivered and assigned to me, the Notary Public written below, according to the prescribed tenor. Lest any force be done, etc.
+After the interposition of this challenge, appeal, and
+---- VERSION T: English assigned to page N+1 (start) ----
+# APPEAL
+petition for <term>Apostoli</term> <gloss>letters of appeal</gloss> on the written schedule, the said Lord Wolfgang Schultheiss, in his own name and in the name of the previously mentioned lords who are the principal appellants, requested from me, the Notary Public written below, that one or more public instrument or instruments be made and completed, as many as should be necessary for him or for any of the others. These things were done at Strasbourg in the Parish House of the parish of Saint Lawrence of Strasbourg, in the Year of the Lord, Indiction, day, month, hour, and Pontificate as stated above, in the presence of the honorable and discreet men Lord Wilhelm Beltinger, an…
+
+
+######## BREAK 13/17  id=07671d4bff  language=latin
+
+==== SOURCE, END OF PAGE N ====
+…stantia non addat novam deformitatem, sed augeat tandem
+illam, quae aliunde provenerat. Sicut accipere alienum, con-
+stituit furtum: si autem addatur hoc, ut multum accipiat de
+alieno, erit peccatum gravius. Nec est, quod aliquis dicat, cir-
+cumstantiam si sit mala, per se constituere quandam speciem
+peccati. Falsum enim hoc est, vel saltem non universale, cum
+possit addere rationem malitiae in eadem specie. de quibus
+vid. Thomas. Hoc saltem addimus, cum etiam inter circum-
+stantias referri possit, quoties, seu proprie, quod negat Caje-
+tanus, seu per analogiam, illud etiam in ponderatione delicti
+non esse praetereundum. Unde Grotius: Apparet quoque major
+> *pravitas, si quis saepius deliquit: quia habitus mali acti-*
+> *bus sunt pejores.*
+
+==== SOURCE, START OF PAGE N+1 ====
+# TH. XI.
+## Octavò differt gravitas vitiorum secundum Dignitatem virtutum, quibus opponuntur.
+*Quod ex Aristotele Thomas probat: Dicit Philosophus, quod pessimum optimo contrarium est. Optimum autem in moralibus est maxima virtus: pessimum autem gravissimum peccatum.* Quandoquidem verò de mutua virtutum inter se comparatione, quaequae Principem in illis locum obtineat, nondum expedita lis est, neque de vitiis hoc respectu determinare quicquam, integrum erit. Fulgent profectò quasi stellae virtutes omnes, earumque radiis noster hic tenebrarum orbis redditur illustris. quae tamen earum magis…
+
+---- VERSION P: English assigned to page N (end) ----
+…if it is evil, constitutes a certain species of sin by itself. For this is false, or at least not universal, since it can add a reason for malice within the same species. Regarding these matters, see <term>Thomas</term>. We add at least this, since it can also be referred to among circumstances, how often—whether properly, which <term>Cajetan</term> <gloss>Thomas Cajetan, a 16th-century commentator on Aquinas</gloss> denies, or by analogy—that also in the weighing of an offense is not to be passed over. <margin>Summa Theologiae, First part of the Second part, Question 73, Article 8, reply to the second objection.</margin> Whence <term>Grotius</term> <gloss>Hugo Grotius</gloss>: <margin>In the cited place.</margin> 
+> *A greater depravity also appears if someone has sinned more often: because habits are worse through evil acts.*
+---- VERSION P: English assigned to page N+1 (start) ----
+# THESIS XI.
+## Eighthly, the gravity of vices differs according to the dignity of the virtues to which they are opposed.
+<margin>First part of the Second part, Question 73, Article 4.</margin>
+*Which Thomas proves from Aristotle: The Philosopher says that the worst is contrary to the best. But the best in moral matters is the greatest virtue: and the worst is the gravest sin.* Since, however, the dispute regarding the mutual comparison of virtues—namely which one holds the leading place among them—is not yet settled, it will not be possible to determine anything final regarding vices in this respect. Truly all the virtues shine like stars, and by their rays this world of ours is rendered…
+
+---- VERSION Q: English assigned to page N (end) ----
+…it will be a graver sin. Nor is there any reason for someone to say that a circumstance, if it is evil, constitutes a certain species of sin by itself. For this is false, or at least not universal, since it can add a reason for malice within the same species. About which see <term>Thomas</term>. We add at least this, since it can also be referred to among circumstances, how often, or properly—which <term>Cajetan</term> denies—or by analogy, that also in the weighing of an offense is not to be passed over. Whence <term>Grotius</term>:
+<margin>1. 2. qu. 73. art. 8. ad 2. <gloss>1st Part of the 2nd Part, question 73, article 8, reply to 2nd objection.</gloss></margin>
+<margin>l. c. <gloss>in the place cited</gloss></margin>
+> "A greater depravity also appears if someone has sinned more often: because habits are worse through evil acts."
+---- VERSION Q: English assigned to page N+1 (start) ----
+# TH. XI.
+## Eighth, the gravity of vices differs according to the dignity of the virtues to which they are opposed.
+<margin>3. 2. q. 73. art. 4. <gloss>3rd part of the 2nd part, question 73, article 4.</gloss></margin>
+*This, <term>Thomas</term> proves from <term>Aristotle</term>: The Philosopher says that the worst is contrary to the best. The best in moral matters, however, is the greatest virtue; the worst is the gravest sin.* Since, however, the dispute regarding the mutual comparison of virtues among themselves, and which holds the first place among them, is not yet settled, it will be impossible to determine anything regarding vices in this respect. Certainly, all virtues shine like…
+
+---- VERSION R: English assigned to page N (end) ----
+…to say that a circumstance, if it is evil, constitutes a specific kind of sin by itself. For this is false, or at least not universal, since it can add a degree of malice within the same species. On these matters, see <term>Thomas</term>. 
+<margin>1. 2. question 73. article 8. to 2.</margin>
+We add at least this, since it can also be listed among circumstances: how often <note>one sins</note>, whether properly—which <term>Cajetan</term> <gloss>Thomas Cajetan, a 16th-century Italian cardinal and theologian</gloss> denies—or by analogy, that this also must not be overlooked in the weighing of an offense. 
+<margin>Cited passage.</margin>
+Whence <term>Grotius</term> <gloss>Hugo Grotius, a Dutch jurist and philosopher</gloss> says: A greater depravity also appears if someone has sinned more often, because habits are worse than evil acts.
+---- VERSION R: English assigned to page N+1 (start) ----
+# THESIS XI.
+## Eighthly, the gravity of vices differs according to the dignity of the virtues to which they are opposed.
+<margin>1. 2. question 73. article 4.</margin>
+<term>Thomas</term> proves this from <term>Aristotle</term>: The Philosopher <note>a common title for Aristotle in medieval and early modern texts</note> says that the worst is the contrary of the best. In moral matters, the best is the greatest virtue; the worst, however, is the gravest sin. Indeed, since the dispute over the mutual comparison of virtues—specifically which one holds the leading place among them—is not yet settled, it will not be possible to determine anything definitive regarding vices in this respect. 
+To…
+
+---- VERSION S: English assigned to page N (end) ----
+…property, it will be a graver sin. Nor is there any reason for someone to say that a circumstance, if it is evil, constitutes a certain species of sin by itself. For this is false, or at least not universal, since it can add a reason for malice within the same species. About which see <term>Thomas</term>. We add at least this, since it can also be referred to among circumstances, how often, or properly—which <term>Cajetan</term> denies—or by analogy, that also in the weighing of an offense is not to be passed over. Whence <term>Grotius</term>: 
+<margin>1. 2. qu. 73. art. 8. ad 2. <gloss>First part of the second part, question 73, article 8, response to 2.</gloss></margin>
+<margin>l. c. <gloss>the same place</gloss></margin>
+> "A greater depravity also appears if someone has sinned more often: because habits are worse through evil acts."
+---- VERSION S: English assigned to page N+1 (start) ----
+# TH. XI.
+## Eighthly, the gravity of vices differs according to the dignity of the virtues to which they are opposed.
+<margin>3. 2. q. 73. art. 4. <gloss>First part of the second part, question 73, article 4.</gloss></margin>
+<note>Thomas proves this from Aristotle: The Philosopher says that the worst is contrary to the best. The best in moral matters is the greatest virtue; the worst, however, is the most grievous sin.</note> Since, however, the dispute concerning the mutual comparison of virtues among themselves, and which of them holds the place of prince, has not yet been settled, nor is it possible to determine anything concerning vices in this respect, it will remain a complete…
+
+---- VERSION T: English assigned to page N (end) ----
+…it will be a graver sin. Nor is there any reason for someone to say that a circumstance, if it is evil, constitutes a certain species of sin by itself. For this is false, or at least not universal, since it can add a reason for malice within the same species. About which see <term>Thomas</term>. We add at least this, since it can also be referred to among circumstances, how often, or properly—which <term>Cajetan</term> denies—or by analogy, that also in the weighing of an offense <margin>1. 2. q. 73. art. 8. ad 2. <gloss>First part of the second part, question 73, article 8, response to point 2</gloss></margin> is not to be passed over. Whence <term>Grotius</term>: <margin>l. c. <gloss>in the same place</gloss></margin>
+> "A greater depravity also appears if someone has sinned more often: because habits are worse through evil acts."
+---- VERSION T: English assigned to page N+1 (start) ----
+# TH. XI.
+## Eighthly, the gravity of vices differs according to the dignity of the virtues to which they are opposed.
+<margin>3. 2. q. 73. art. 4. <gloss>Third part of the second part, question 73, article 4</gloss></margin>
+*This, which <term>Thomas</term> proves from <term>Aristotle</term>: The Philosopher says that the worst is contrary to the best. But the best in moral matters is the greatest virtue; the worst is the gravest sin.* Since, however, the dispute concerning the mutual comparison of virtues among themselves, and which one obtains the leading place among them, has not yet been settled, it would be improper to determine anything about vices in this respect. Indeed, all…
+
+
+######## BREAK 14/17  id=fa9f0a69ff  language=chinese
+
+==== SOURCE, END OF PAGE N ====
+感澤受中孚之象君子體天地好生之德而議獄緩死
+中孚意也獄之將成則議之其將決則緩之然後盡於
+人心獄而曰議求其入中之出死而曰緩求其死中之
+生舜之恤刑禹之泣罪湯之祝網文王掩骼使非出於
+本心之誠具誰感之至誠之道可以蹈水火烈金石格
+天地而況於人乎況於鬼神乎王聽之三公聽之司寇
+聽之議獄也旬而職聽三旬而上之緩死
+也議獄兌象緩死異象〇以一卦六爻言之為中虛以
+
+==== SOURCE, START OF PAGE N+1 ====
+二體之二五言之為中實皆孚之象也又下說以應上
+上異以順下亦有孚義中孚者信諸心也信諸心者信
+諸理也有見於理而信之乃所以信諸心也六十四卦
+無一卦一爻不以孚為樞紐非孚則中不虛惡能實虛
+乃得實柔孚於剛也說而異所以致虛也信及豚魚虛
+相感也乘木舟虛虛相濟也其實則理也理也者天也
+心之所以為心也利貞之謂也
+震下
+艮上
+
+---- VERSION P: English assigned to page N (end) ----
+…sincerity of the original heart, who could have been moved by them? The Way of utmost sincerity can step through water and fire, crack metal and stone, and move Heaven and Earth. How much more, then, does it affect men? How much more does it affect the ghosts and spirits? The King listens to the case, the Three Dukes listen to it, and the Minister of Justice <note>original: Sikou</note> listens to it; this is the deliberation of legal cases. After ten days the officials listen again, and after thirty days they report to the superiors; this is the delaying of executions. Deliberating on cases is the image of the <term>Dui</term> <gloss>Lake/Joy</gloss> trigram; delaying executions is the image of the <term>Xun</term> <gloss>Wind/Gently penetrating</gloss> trigram. Speaking of the six lines of the single hexagram, they form an inner void;
+---- VERSION P: English assigned to page N+1 (start) ----
+speaking of the second and fifth lines of the two constituent trigrams, they form an inner solid. Both are images of <term>Fu</term> <gloss>Truth/Trust</gloss>. Furthermore, the lower trigram is joyful to respond to the upper, and the upper trigram is penetrating to comply with the lower; this also contains the meaning of trust. Inner Truth is that which is trusted in the heart. That which is trusted in the heart is that which is trusted in <term>Li</term> <gloss>Principle</gloss>. Having a vision of Principle and trusting it is the means by which one trusts the heart. Among the sixty-four hexagrams, there is not a single hexagram or a single line that does not take trust as its pivot.…
+
+---- VERSION Q: English assigned to page N (end) ----
+…did not arise from the sincerity of their original hearts, who would have been moved by them? The way of utmost sincerity can traverse water and fire, melt metal and stone, and influence Heaven and Earth; how much more so with humans, and how much more with spirits? The King listens, the Three Ministers listen, and the Minister of Justice listens—this is the deliberation of cases. To listen to reports every ten days, and to submit to the throne every thirty days—this is the delay of death sentences. <note>The text refers to the administrative protocols for reviewing capital cases as described in the Rites of Zhou.</note> The hexagram <term>Dui</term> <gloss>Joy/Marsh</gloss> represents the deliberation, while different symbols represent the delay of death. Regarding the six lines of the single hexagram, it is the center that is empty;
+---- VERSION Q: English assigned to page N+1 (start) ----
+regarding the two sections of the hexagram, it is the center that is full—both are images of sincerity. Furthermore, the lower part is pleased to respond to the upper, and the upper part is changed to follow the lower; this also contains the meaning of sincerity. Inner truth is the belief within the heart. To believe in the heart is to believe in <term>li</term> <gloss>principle/universal order</gloss>. To see <term>li</term> and believe in it is the method of believing in the heart. Among the sixty-four hexagrams, there is not one hexagram or one line that does not take sincerity as its pivot. Without sincerity, the center cannot be empty; how then could it be full? The empty is that which…
+
+---- VERSION R: English assigned to page N (end) ----
+…utmost sincerity can tread through water and fire, split metal and stone, and move Heaven and Earth. How much more so can it affect men? How much more so spirits and gods? The King hears the case, the Three Dukes hear it, and the Minister of Justice hears it: this is the "deliberating on legal cases." After ten days the officials hear it again, and after thirty days it is sent to the superiors: this is the "delaying of executions." Deliberating on cases carries the image of <term>Dui</term> <gloss>the Lake/Joy</gloss>; delaying executions carries the image of <term>Xun</term> <gloss>the Wind/Gently Penetrating</gloss>. 
+Looking at the six lines of the hexagram as a whole, it represents "inner emptiness" <note>referring to the two broken yin lines in the center of the hexagram</note>. Taking the second and fifth lines of the two trigrams,
+---- VERSION R: English assigned to page N+1 (start) ----
+it represents "inner fullness" <note>referring to the solid yang lines at the center of each trigram</note>; both are images of <term>Fu</term> <gloss>Trust/Sincerity</gloss>. Furthermore, the lower trigram is joyful to respond to the upper, and the upper is penetrating to comply with the lower; this also contains the meaning of Trust. 
+Inner Truth is to have trust in one's heart. To have trust in one's heart is to have trust in the <term>Li</term> <gloss>Principle/Reason</gloss>. Having a vision of Principle and trusting in it is the means by which one trusts one's heart. Among the sixty-four hexagrams, there is not a single hexagram or a single line that does not use Trust as its pivot.…
+
+---- VERSION S: English assigned to page N (end) ----
+…and King Wen’s act of covering exposed bones. If these had not arisen from the sincerity of their original hearts, who could have been moved? The way of utmost sincerity can tread upon fire and water, melt metal and stone, and influence Heaven and Earth; how much more so with people? How much more so with spirits? The King hears the case, the Three Councillors hear the case, and the Minister of Justice hears the case—this is the deliberation of a case. Every ten days the duties are reviewed, and after thirty days the case is submitted—this is the delaying of a death sentence. Deliberating on a case corresponds to the <term>Dui</term> <gloss>Joyous</gloss> trigram, while delaying death corresponds to the <term>Sun</term> <gloss>Gentle</gloss> trigram. Regarding the hexagram as a whole with its six lines, it is "hollow in the middle."
+---- VERSION S: English assigned to page N+1 (start) ----
+Considering the two trigrams and the second and fifth lines, it is "full in the middle," both representing images of truth. Furthermore, being joyful below to respond to what is above, and being gentle above to comply with what is below, also contain the meaning of truth. "Inner truth" means faith within the heart. To have faith within the heart is to have faith in principle. Seeing the principle and believing in it is the way to have faith in the heart. Among the sixty-four hexagrams, there is not a single hexagram or line that does not take truth as its pivot; without truth, the center cannot be empty, and how then could it be full? Being empty is what allows it to be full; this is the…
+
+---- VERSION T: English assigned to page N (end) ----
+…did not arise from the sincerity of the original heart, who would have been moved by them? The way of utmost sincerity can tread upon water and fire, melt metal and stone, and influence Heaven and Earth; how much more does it influence men? How much more does it influence spirits?
+When the King hears a case, the Three Excellencies hear it; when the Three Excellencies hear it, the Minister of Justice hears it; this is the deliberation of punishments. Every ten days the officials listen, and every thirty days they report to the ruler; this is the delay of executions. Deliberating on punishments follows the image of <term>Dui</term> <gloss>Joy</gloss>; delaying executions follows the image of <term>Gen</term> <gloss>Stillness/Stopping</gloss>. Considering the one hexagram and its six lines, it is the image of being empty in the center.
+---- VERSION T: English assigned to page N+1 (start) ----
+Considering the two trigrams <note>upper and lower</note>, and the second and fifth lines, it is the image of being solid in the center. Both are images of inner truth. Furthermore, the lower trigram <term>Dui</term> <gloss>Joy/Speech</gloss> responds to the upper trigram, and the upper trigram <term>Gen</term> <gloss>Stillness/Mountain</gloss> complies with the lower; this also contains the meaning of inner truth.
+<term>Inner Truth</term> is trust residing in the heart. Trust residing in the heart is trust residing in principle. To see principle and trust it is the way to have trust residing in the heart. Among the sixty-four hexagrams, there is not one hexagram or one line that does not…
+
+
+######## BREAK 15/17  id=876e64b1ff  language=latin
+
+==== SOURCE, END OF PAGE N ====
+…discrimen facere inter plebejos & illustres; ut hi inter cæteros præfulgeant, illi tenuiori suâ sorte contenti vivant. Sed quis hoc animis persuadeat, qui amore sui nimium excæcati hinc inde agitantur. Neque res tam clara est, ut nullam ampliùs habeat dubitationem. 
+Ipse Aristoteles de Democratia agens, fatetur, admodùm difficile esse, ita ordinare populum, ut omnes ex æquo de communione jurium participent. Quamvis enim tenuiores nihil aliud spectent hac suâ æqualitate, quàm ne opprimantur à ditioribus; tamen diversa potentiorum proposita, studia, propensiones, inclinationes, inventa, artes, regulas animadvertes.
+Utne diutius quæstioni huic immoremur, & mentem Philosophi, quæ in opere suo *Politico* non semel reperitur, paucis explicemus,
+
+==== SOURCE, START OF PAGE N+1 ====
+mus, haec addenda sunt: posse scilicet harmoniam inter pauperes atque divites obtineri, si legislator mediorum civium perpetuo majorem curam habeat, quam extremorum, tum enim tanquam in aequilibrio continebitur Respublica. Sin hoc minus ex voto procedat, res alia aggredienda via, scilicet ipsa jura probe misceantur, utraque pars rebus praesit, sibique invicem aliquantulum concedat. Accedant & caetera humanitatis officia, & benevolentiae indicia, qua in gestu, qua in alloquiis; altera alterius commoda promoveat, incommoda declinet, forte sic satis bene talis Respublica se habebit, dum nemo vel…
+
+---- VERSION P: English assigned to page N (end) ----
+…while the former live content with their humbler lot. But who could persuade this to minds that are too blinded by self-love and are agitated here and there? Nor is the matter so clear that it no longer holds any doubt.
+<margin>6. Pol. c. 3.</margin>
+Aristotle himself, while dealing with Democracy, confesses that it is very difficult to organize the people in such a way that all participate equally in the communion of rights. For although the humbler sort look at nothing else in this equality of theirs than that they not be oppressed by the richer, yet you will notice the diverse proposals, pursuits, propensities, inclinations, inventions, arts, and rules of the more powerful.
+So that we may not dwell longer on this question, and may explain in a few words the mind of the philosopher, which is found more than once in his work *Politics*
+---- VERSION P: English assigned to page N+1 (start) ----
+, these things must be added: that harmony can indeed be obtained between the poor and the rich if the legislator always has a greater care for the middle citizens than for the extremes, for then the Republic will be held as if in equilibrium. If this proceeds less according to one’s wishes, another path must be undertaken, namely that the rights themselves be properly mixed, that both parties preside over affairs, and that each concedes a little to the other. Let other duties of humanity and signs of benevolence be added, whether in gesture or in speech; let one promote the advantages of the other and decline their inconveniences, and perhaps such a Republic will fare well enough, while no…
+
+---- VERSION Q: English assigned to page N (end) ----
+…with their humbler lot. But who could persuade this to minds that are blinded by self-love and agitated on every side? Nor is the matter so clear that it no longer has any doubt.
+<margin>6. Pol. c. 3.</margin>
+Aristotle himself, in dealing with Democracy, confesses that it is very difficult to organize the people in such a way that all share equally in the communion of rights. For although the humbler sort look to nothing else in this equality of theirs than that they not be oppressed by the wealthier, nevertheless you will notice the diverse purposes, pursuits, propensities, inclinations, inventions, arts, and rules of the more powerful.
+So that we may not dwell longer on this question, and may explain in few words the mind of the philosopher, which is found more than once in his work <term>Politico</term> <gloss>Politics</gloss>,
+---- VERSION Q: English assigned to page N+1 (start) ----
+these things must be added: that harmony can certainly be obtained between the poor and the wealthy if the legislator always has greater care for the middle citizens than for the extremes, for then the Republic will be maintained as if in equilibrium. If this proceeds less according to one's wish, another path must be undertaken, namely, that the laws themselves be properly mixed, that both parties preside over affairs, and that each concedes something to the other. Let other duties of humanity also be added, and signs of benevolence, whether in gesture or in conversation; let one party promote the advantages of the other and decline its disadvantages; perhaps such a Republic will fare well…
+
+---- VERSION R: English assigned to page N (end) ----
+…lot. But who may persuade minds of this, which, too blinded by love of self, are driven hither and thither? Nor is the matter so clear that it holds no further doubt.
+<margin>Aristotle, Politics, Book 6, Chapter 3</margin>
+Aristotle himself, dealing with Democracy, confesses that it is extremely difficult to so order the people that all participate equally in the communion of rights. For although the weaker look to nothing else by this equality of theirs than that they not be oppressed by the wealthier; nevertheless, you will notice the diverse purposes, zeals, propensities, inclinations, inventions, arts, and rules of the more powerful.
+Lest we dwell longer on this question, and to explain in few words the mind of the Philosopher, which is found more than once in his <term>Politics</term> <gloss>Aristotle's work on the state</gloss>,
+---- VERSION R: English assigned to page N+1 (start) ----
+these things must be added: namely, that harmony can be obtained between the poor and the rich if the legislator always has a greater care for the middle citizens than for the extremes, for then the Republic will be contained as if in an equilibrium. But if this proceeds less according to wish, another way must be attempted: namely, that the rights themselves be properly mixed, so that both parties preside over affairs and concede a little to each other in turn. Let there be added also other offices of humanity and signs of benevolence, whether in gesture or in conversation; let one promote the advantages of the other and turn aside disadvantages; perhaps in this way such a Republic will…
+
+---- VERSION S: English assigned to page N (end) ----
+…content with their own humbler lot. But who can persuade these minds of this, which, blinded by excessive self-love, are agitated here and there? Nor is the matter so clear that it no longer has any doubt.
+<margin>6. Pol. c. 3.</margin>
+Aristotle himself, when dealing with Democracy, confesses it is extremely difficult to organize the people so that all participate equally in the communion of rights. For although the lower classes look at nothing else in this equality of theirs than that they not be oppressed by the wealthier, you will notice diverse goals, pursuits, propensities, inclinations, inventions, arts, and rules among those with power.
+So that we may not dwell longer on this question, and may explain in a few words the mind of the philosopher, which is found more than once in his <term>Politico</term> <gloss>Politics</gloss>,
+---- VERSION S: English assigned to page N+1 (start) ----
+these things must be added: that harmony between the poor and the rich can be obtained if the legislator always has greater care for the middle citizens than for the extremes, for then the Republic will be held as if in equilibrium. If this proceeds less according to one's wish, another way must be attempted, namely, that the laws themselves be properly mixed, so that each party presides over affairs, and each concedes something to the other. Let other duties of humanity and signs of benevolence be added, both in behavior and in discourse; let one promote the conveniences of the other, and decline their inconveniences; perhaps in this way such a Republic will fare well enough, while no one…
+
+---- VERSION T: English assigned to page N (end) ----
+…the former may live content with their humbler lot. But who could persuade the minds of those who, blinded too much by self-love, are driven hither and thither? Nor is the matter so clear that it holds no further doubt.
+<margin>Aristotle, Politics, Book 6, Chapter 3.</margin>
+Aristotle himself, dealing with Democracy, confesses it is extremely difficult to so order the people that all participate equally in the communion of rights. For although the weaker look to nothing else by this equality of theirs than that they not be oppressed by the wealthier, you will nevertheless notice the diverse purposes, zeals, propensities, inclinations, inventions, arts, and rules of the more powerful.
+Lest we dwell longer on this question, and to explain in a few words the mind of the Philosopher, which is found more than once in his work *The Politics*,
+---- VERSION T: English assigned to page N+1 (start) ----
+these things must be added: namely, that harmony can be obtained between the poor and the rich if the legislator always takes greater care for the middle-class citizens than for the extremes; for then the Republic will be maintained as if in an equilibrium. But if this proceeds less according to wish, another way must be attempted: namely, that the rights themselves be properly mixed, so that both parties preside over affairs and concede a little to each other in turn. Let there be added also the other duties of humanity and signs of benevolence, whether in gesture or in speech; let one promote the advantages of the other and avert disadvantages; perhaps in this way such a Republic will…
+
+
+######## BREAK 16/17  id=97e97712ff  language=arabic
+
+==== SOURCE, END OF PAGE N ====
+…المحضة فان ذلك مما لا يخف سماعه ولا تهش النفوس لقراءته، وقد يحتمل ذلك صاحب الصناعة وملتمس الثواب والحسنة فمتى وجدنا من ذلك بابا يحتمل أن يوشح بالاشعار الظريفة البليغة والاخبار الطريفة تكلفنا ذلك ورويناه أجمع لما ينتفع به القاريء، ولذلك استجزنا أن نقول في باب النار ما قلنا وانا كاتب لك بعد هذا اذ كنت قد امللتك بالتطويل وحملتك على أصعب المراكب وأوعر الطرق اذ قد ذكرنا فيه جملة صالحة من كلام المتكلمين ولا أري ان أزيد في سأمتك وأحملك استفراغ طاقتك بأن ابتدأ القول في الابل والبقر والغنم والاسد والذئاب والحمير والظباء وأشباه ذلك مما أنا كاتبه لك ولكنى بصغار الابواب وقصارها ومختصراتها وملاحها لئلا تخرج من الباب الأول الا وأنت تنشط للباب الثاني وكذلك الباب الثالث والرابع الى آخر ما انا كاتبه لك ان شاء الله، ونبدأ بما في العصفور ثم نأخذ في ذكر الفار
+
+==== SOURCE, START OF PAGE N+1 ====
+(٥١)
+والعقرب والذى بينهما من المداوة مع سائر خصالهما ثم القول في العقرب والخنفساء والصداقة بينهما مع سائر خصالهما ثم القول في السنور والقول في القنفذ ثم القول في البعوض والبراغيث ثم القول في القمل والصبيان ثم القول في الورل والضب ثم القول في اليربوع والقنفذ ثم القول في النسور والرخم ثم القول في العقاب وفي الارنب ثم القول في القردان والضفادع ثم القول في الحبارى وما أشبه ذلك، وسنذكر قبل ذكرنا لهذا الباب أبواباً من الشعر ظريفة تصلح للمذاكرة وتبعث على النشاط وتستحق معه قراءة ما طال من الكتب الطوال ولولا سوء ظني بمن يظهر التماس العلم في هذا الزمان ويظهر اصطناع الكتب في هذا الدهر لما احتجت في…
+
+---- VERSION P: English assigned to page N (end) ----
+…reason, we permitted ourselves to say what we said in the chapter on Fire. I am writing to you after this—since I have perhaps bored you with lengthiness and set you upon the most difficult mounts and rugged paths by mentioning a significant portion of the discourse of the theologians—and I do not wish to increase your weariness or force you to exhaust your energy by starting the discourse on camels, cows, sheep, lions, wolves, donkeys, gazelles, and the like, which I will write for you eventually. Rather, I shall begin with small, short, concise, and pleasant chapters, so that you do not exit one chapter except with renewed energy for the second, and likewise for the third and fourth, until the end of what I shall write for you, God willing. We shall begin with what concerns the sparrow, then we shall take up the mention of the mouse...
+---- VERSION P: English assigned to page N+1 (start) ----
+(51)
+and the scorpion, and the enmity between them along with their other traits; then the discourse on the scorpion and the beetle and the friendship between them; then the discourse on the cat; the discourse on the hedgehog; then the discourse on mosquitoes and fleas; then the discourse on lice and children; then the discourse on the monitor lizard and the mastigure; then the discourse on the jerboa and the hedgehog; then the discourse on vultures and Egyptian vultures; then the discourse on the eagle and the rabbit; then the discourse on ticks and frogs; then the discourse on the bustard and its likeness.
+Before mentioning this chapter, we shall mention chapters of witty poetry suitable…
+
+---- VERSION Q: English assigned to page N (end) ----
+…chapter on fire. I shall write to you after this—since I have perhaps bored you with lengthiness and led you upon the most difficult mounts and roughest paths by mentioning a significant portion of the discourse of the theologians <term>mutakallimun</term>—and I do not think I should increase your weariness or make you exhaust your energy by starting the discourse on camels, cows, sheep, lions, wolves, donkeys, gazelles, and the like, which I intend to write for you. Rather, I will start with the smaller, shorter, and more concise chapters, and the most pleasant of them, so that you do not leave the first chapter without being eager for the second, and likewise for the third and fourth, until the end of what I shall write for you, God willing. We shall begin with what concerns the sparrow, then we shall take up the mention of the mouse
+---- VERSION Q: English assigned to page N+1 (start) ----
+and the scorpion, and the enmity between them along with their other traits; then the discourse on the scorpion and the beetle and the friendship between them; then the discourse on the cat; the discourse on the hedgehog; then the discourse on mosquitoes and fleas; then the discourse on lice and children; then the discourse on the monitor lizard and the dabb-lizard; then the discourse on the jerboa and the hedgehog; then the discourse on vultures and Egyptian vultures; then the discourse on the eagle and the rabbit; then the discourse on ticks and frogs; then the discourse on the bustard and similar creatures.
+Before this chapter, we shall mention chapters of elegant poetry suitable for…
+
+---- VERSION R: English assigned to page N (end) ----
+…reason, we deemed it permissible to say what we said in the chapter on fire. I am writing for you after this, since I have bored you with length and burdened you with the most difficult of paths and the roughest of roads, having already mentioned a fair amount of the speech of the theologians. I do not think I should add to your weariness and exhaust your energy by beginning the discourse on camels, cows, sheep, lions, wolves, donkeys, gazelles, and similar things about which I am writing for you. Instead, I will turn to the small, brief, concise, and pleasant chapters so that you will not emerge from the first chapter without being energized for the second, and likewise for the third and fourth, until the end of what I am writing for you, God willing. We will begin with what is in the sparrow, then we will start mentioning the mouse,
+---- VERSION R: English assigned to page N+1 (start) ----
+and the scorpion, and the mediation between them along with their other traits. Then, the discourse on the scorpion and the beetle, and the friendship between them, along with their other traits. Then, the discourse on the cat, then the discourse on the hedgehog, then the discourse on mosquitoes and fleas, then the discourse on lice and children, then the discourse on the monitor lizard and the mastigure, then the discourse on the jerboa and the hedgehog, then the discourse on vultures and Egyptian vultures, then the discourse on the eagle and the hare, then the discourse on ticks and frogs, then the discourse on the houbara and the like. Before we mention this chapter, we will mention some…
+
+---- VERSION S: English assigned to page N (end) ----
+…deemed it permissible to say in the chapter on fire what we said. I am writing to you after this, since I have bored you with lengthiness and carried you upon the most difficult of mounts and the roughest of roads, as we have mentioned therein a goodly amount of the speech of the theologians. I do not see fit to add to your weariness and burden you to the exhaustion of your energy by starting the discourse on camels, cattle, sheep, lions, wolves, donkeys, gazelles, and the like, which I am writing for you. Rather, I will focus on the small, short, concise, and pleasant chapters so that you do not leave the first chapter without being energized for the second, and likewise the third and fourth, until the end of what I am writing for you, God willing. We will start with what is in the sparrow, then we will take up the mention of the mouse
+---- VERSION S: English assigned to page N+1 (start) ----
+and the scorpion, and what is between them in terms of reconciliation and their other characteristics. Then the discourse on the scorpion and the beetle, and the friendship between them with their other characteristics. Then the discourse on the cat, the discourse on the hedgehog, then the discourse on mosquitoes and fleas, then the discourse on lice and children, then the discourse on the monitor lizard and the dabb lizard, then the discourse on the jerboa and the hedgehog, then the discourse on vultures and Egyptian vultures, then the discourse on the eagle and the rabbit, then the discourse on ticks and frogs, then the discourse on the bustard and the like. Before we mention this…
+
+---- VERSION T: English assigned to page N (end) ----
+…this reason, we have permitted ourselves to say what we have said in the chapter on fire. I am writing for you after this, since I have already wearied you with length and burdened you with the most difficult tasks and roughest paths, as we have mentioned therein a goodly amount of the speech of the dialecticians. I do not wish to increase your boredom or tax your strength by starting the discourse on camels, cows, sheep, lions, wolves, donkeys, gazelles, and the like, which I intend to write for you. Rather, I will provide small, short, concise, and pleasant chapters, so that you do not finish the first chapter without being energized for the second, and likewise the third and fourth, until the end of what I am writing for you, God willing. We will begin with what pertains to the sparrow, then we will take up the mention of the mouse.
+---- VERSION T: English assigned to page N+1 (start) ----
+and the scorpion, and what is between them in terms of their remedies alongside the rest of their characteristics. Then the discourse on the scorpion and the beetle, and the friendship between them, alongside the rest of their characteristics. Then the discourse on the cat, then the discourse on the hedgehog. Then the discourse on mosquitoes and fleas, then the discourse on lice and children, then the discourse on the monitor lizard and the spiny-tailed lizard. Then the discourse on the jerboa and the hedgehog, then the discourse on vultures and griffon vultures. Then the discourse on the eagle and the rabbit, then the discourse on ticks and frogs, then the discourse on the bustard and what…
+
+
+######## BREAK 17/17  id=8a34a2eeff  language=latin
+
+==== SOURCE, END OF PAGE N ====
+…porto nunc Tibi Pierio.
+Pierio Dea de penu dat munera, poscit
+&nbsp;&nbsp;&nbsp;&nbsp;Quæ nova lux; quæ nunc munera porto Tibi.
+Nunc Dea Pierio de penu munera poscit,
+&nbsp;&nbsp;&nbsp;&nbsp;Quæ lux dat nova; quæ munera porto Tibi.
+Quæ nova lux poscit; Dea quæ dat; porto Tibi nunc
+&nbsp;&nbsp;&nbsp;&nbsp;Munera, de penu munera Pierio.
+Munera porto Tibi, Dea quæ dat; quæ nova po-
+&nbsp;&nbsp;&nbsp;&nbsp;Lux nunc de penu munera Pierio.
+Lux Tibi Pierio de penu munera poscit,
+&nbsp;&nbsp;&nbsp;&nbsp;Dat Dea quæ; nova quæ munera porto Tibi.
+Quæ Tibi nunc porto nova munera, munera poscit
+&nbsp;&nbsp;&nbsp;&nbsp;Quæ lux; de penu dat Dea Pierio.
+Munera quæ Tibi nunc porto, quæ munera poscit
+&nbsp;&nbsp;&nbsp;&nbsp;Lux nova; de penu Pierio Dea dat.
+
+==== SOURCE, START OF PAGE N+1 ====
+Dat Dea quae; poscit nova quae lux munera;penu
+Nunc de Pierio munera porto Tibi.
+Nunc Tibi quae Dea dat; de penu munera quae lux
+Pierio poscit; munera porto Tibi.
+Munera quae Dea dat; quae lux nova munera po-
+Porto de penu nunc Tibi Pierio. [scit;
+Quae poscit nova lux; quae dat Dea munera; porto
+Nunc Tibi de penu munera Pierio.
+Porto Tibi de Pierio nova munera penu,
+Quae lux nunc poscit munera; quae Dea dat.
+Munera de penu quae Pierio Tibi porto;
+Quae poscit, Dea dat munera, nunc nova lux.
+Lux nova quae poscit nunc munera; munera quae
+Porto Tibi, penu de Dea Pierio. [dat,
+Nunc nova quae…
+
+---- VERSION P: English assigned to page N (end) ----
+…demands gifts from the Pierian storehouse,
+&nbsp;&nbsp;&nbsp;&nbsp;Which the light gives; which gifts I bring to you.
+Which the new light demands; which the Goddess gives; I now bring to you
+&nbsp;&nbsp;&nbsp;&nbsp;Gifts, gifts from the Pierian storehouse.
+I bring you the gifts which the Goddess gives; which the new
+<margin>light demands</margin>
+&nbsp;&nbsp;&nbsp;&nbsp;Now from the Pierian storehouse as gifts.
+The light demands gifts for you from the Pierian storehouse,
+&nbsp;&nbsp;&nbsp;&nbsp;Which the Goddess gives; the new gifts which I bring to you.
+Which new gifts I now bring to you, the gifts which the light demands
+&nbsp;&nbsp;&nbsp;&nbsp;Which the Goddess gives from the Pierian storehouse.
+The gifts which I now bring to you, the gifts which the
+&nbsp;&nbsp;&nbsp;&nbsp;New light demands; from the Pierian storehouse the Goddess.
+---- VERSION P: English assigned to page N+1 (start) ----
+The Goddess gives which [gifts]; the new light demands which gifts; from the
+&nbsp;&nbsp;&nbsp;&nbsp;Pierian storehouse I now bring gifts to you.
+Now the gifts which the Goddess gives to you; the gifts which the light
+&nbsp;&nbsp;&nbsp;&nbsp;Demands from the Pierian storehouse; I bring gifts to you.
+The gifts which the Goddess gives; the new gifts which the light
+&nbsp;&nbsp;&nbsp;&nbsp;Demands; I bring from the storehouse to you now from the Pierian.
+Which the new light demands; the gifts which the Goddess gives; I bring
+&nbsp;&nbsp;&nbsp;&nbsp;To you now from the Pierian storehouse as gifts.
+I bring to you new gifts from the Pierian storehouse,
+&nbsp;&nbsp;&nbsp;&nbsp;Which gifts the…
+
+---- VERSION Q: English assigned to page N (end) ----
+…Goddess demands Pierian gifts from the storehouse,
+&nbsp;&nbsp;&nbsp;&nbsp;Which the new light gives; which gifts I bring to you.
+Which the new light demands; which the Goddess gives; I bring to you now
+&nbsp;&nbsp;&nbsp;&nbsp;Gifts, gifts from the Pierian storehouse.
+The gifts I bring to you, which the Goddess gives; which the new <margin>light demands</margin>
+&nbsp;&nbsp;&nbsp;&nbsp;Now from the Pierian storehouse, gifts.
+The light demands Pierian gifts from the storehouse to you,
+&nbsp;&nbsp;&nbsp;&nbsp;Which the Goddess gives; which new gifts I bring to you.
+Which new gifts I now bring to you, the gifts which
+&nbsp;&nbsp;&nbsp;&nbsp;The light demands; the Goddess gives from the Pierian storehouse.
+The gifts which I now bring to you, which gifts the
+&nbsp;&nbsp;&nbsp;&nbsp;New light demands; from the Pierian storehouse the Goddess.
+---- VERSION Q: English assigned to page N+1 (start) ----
+The Goddess gives which; the new light demands which gifts; from the storehouse
+I now bring Pierian gifts to you.
+Now which the Goddess gives to you; the gifts which the new light
+Demands from the Pierian storehouse; I bring gifts to you.
+The gifts which the Goddess gives; which new gifts the light <note>demands;</note>
+I bring from the storehouse now to you from the Pierian.
+Which the new light demands; which gifts the Goddess gives; I bring
+Now to you from the Pierian storehouse, gifts.
+I bring to you from the Pierian storehouse new gifts,
+Which gifts the light now demands; which the Goddess gives.
+The gifts from the Pierian storehouse which I bring to you;
+Which it demands, the Goddess…
+
+---- VERSION R: English assigned to page N (end) ----
+…the Pierian storehouse,
+&nbsp;&nbsp;&nbsp;&nbsp;Which the new light gives; which gifts I bring to You.
+Which the new light demands; which the Goddess gives; I bring to You now
+&nbsp;&nbsp;&nbsp;&nbsp;The gifts, the gifts from the Pierian storehouse.
+I bring the gifts to You, which the Goddess gives; which the new light now <margin>demands</margin>
+&nbsp;&nbsp;&nbsp;&nbsp;From the Pierian storehouse as gifts.
+The light demands gifts for You from the Pierian storehouse,
+&nbsp;&nbsp;&nbsp;&nbsp;Which the Goddess gives; which new gifts I bring to You.
+Which new gifts I now bring to You, which gifts the light
+&nbsp;&nbsp;&nbsp;&nbsp;Demands; the Goddess gives from the Pierian storehouse.
+Which gifts I now bring to You, which gifts the new light
+&nbsp;&nbsp;&nbsp;&nbsp;Demands; the Goddess <note>gives them</note> from the Pierian storehouse.
+---- VERSION R: English assigned to page N+1 (start) ----
+Which the Goddess gives; which gifts the new light demands; from the storehouse
+I now bring the gifts to You from the Pierian.
+Now to You which the Goddess gives; the gifts from the storehouse which the Pierian
+Light demands; I bring the gifts to You.
+The gifts which the Goddess gives; which gifts the new light demands;
+I bring from the storehouse now to You from the Pierian.
+Which the new light demands; which gifts the Goddess gives; I bring
+Now to You from the storehouse the gifts from the Pierian.
+I bring to You from the Pierian storehouse new gifts,
+Which gifts the light now demands; which the Goddess gives.
+The gifts from the storehouse which I bring to You from the Pierian;
+Which…
+
+---- VERSION S: English assigned to page N (end) ----
+…demands gifts from the Pierian storehouse,
+&nbsp;&nbsp;&nbsp;&nbsp;Which the new light gives; which gifts I bring to you.
+Which the new light demands; which the Goddess gives; I bring to you now
+&nbsp;&nbsp;&nbsp;&nbsp;The gifts, from the Pierian storehouse the gifts.
+The gifts I bring to you, which the Goddess gives; which the new
+<margin>demands</margin>
+&nbsp;&nbsp;&nbsp;&nbsp;Light now from the Pierian storehouse the gifts.
+The light demands gifts from the Pierian storehouse for you,
+&nbsp;&nbsp;&nbsp;&nbsp;Which the Goddess gives; which new gifts I bring to you.
+Which new gifts I now bring to you, which gifts the light
+&nbsp;&nbsp;&nbsp;&nbsp;Demands; from the Pierian storehouse the Goddess gives.
+The gifts which I now bring to you, which gifts the
+&nbsp;&nbsp;&nbsp;&nbsp;New light demands; from the Pierian storehouse the Goddess.
+---- VERSION S: English assigned to page N+1 (start) ----
+The Goddess gives which gifts; which new light demands gifts; from the
+&nbsp;&nbsp;&nbsp;&nbsp;Pierian storehouse I now bring gifts to you.
+Now to you which the Goddess gives; from the storehouse the gifts which the light
+&nbsp;&nbsp;&nbsp;&nbsp;Demands from the Pierian; I bring gifts to you.
+The gifts which the Goddess gives; which new gifts the light
+&nbsp;&nbsp;&nbsp;&nbsp;Demands; I bring from the storehouse now to you from the Pierian.
+Which the new light demands; which gifts the Goddess gives; I bring
+&nbsp;&nbsp;&nbsp;&nbsp;Now to you from the Pierian storehouse the gifts.
+I bring to you new gifts from the Pierian storehouse,
+&nbsp;&nbsp;&nbsp;&nbsp;Which the light now demands; which…
+
+---- VERSION T: English assigned to page N (end) ----
+…the Goddess demands gifts from the Pierian storehouse,
+&nbsp;&nbsp;&nbsp;&nbsp;Which the new light gives; which gifts I bring to You.
+Which the new light demands; which the Goddess gives; I now bring to You
+&nbsp;&nbsp;&nbsp;&nbsp;Gifts, gifts from the Pierian storehouse.
+I bring gifts to You, which the Goddess gives; which gifts the new light <margin>demands</margin>
+&nbsp;&nbsp;&nbsp;&nbsp;Now demands from the Pierian storehouse.
+The light demands gifts for You from the Pierian storehouse,
+&nbsp;&nbsp;&nbsp;&nbsp;Which the Goddess gives; which new gifts I bring to You.
+Which new gifts I now bring to You, which gifts the light
+&nbsp;&nbsp;&nbsp;&nbsp;Demands; the Goddess gives from the Pierian storehouse.
+Which gifts I now bring to You, which gifts the
+&nbsp;&nbsp;&nbsp;&nbsp;New light demands; the Goddess from the Pierian storehouse.
+---- VERSION T: English assigned to page N+1 (start) ----
+Which the Goddess gives; which gifts the new light demands;
+Now I bring gifts to You from the Pierian storehouse.
+Now what the Goddess gives to You; which gifts the light demands
+From the Pierian storehouse; I bring gifts to You.
+The gifts which the Goddess gives; which gifts the new light demands; <note>The word "demands" is completed from the previous line's hyphenated "po-"</note>
+I now bring from the Pierian storehouse to You.
+Which the new light demands; which gifts the Goddess gives;
+I now bring gifts to You from the Pierian storehouse.
+I bring to You new gifts from the Pierian storehouse,
+Which gifts the light now demands; which the Goddess gives.
+The gifts which I bring to You from…

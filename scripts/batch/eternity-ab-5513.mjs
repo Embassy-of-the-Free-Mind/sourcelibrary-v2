@@ -16,11 +16,21 @@
  *   - scripts/batch/bulk-reocr-local.mjs (Batch OCR, model = the OCR router's choice, NOT forced)
  *   - scripts/workers/translate-batch-worker.mjs --chained --enrol --pages-file (chained Batch lane)
  *
+ * The same driver runs other approved OCR→translate envelopes (#6109): `--tag T --issue N` name the
+ * sweep, the hold reason and the scope envelope; without them every value is the Eternity run's.
+ * A tag other than the default must also pass `--cap` (and `--by` to `envelope`): no other job
+ * inherits Eternity's $230.
+ *
  * Usage (on Hetzner, from a checkout that carries #5516; env via --env-file):
  *   init --perbook F --skip F   build the state from a measured per-book file
+ *   init --select tradition-shelves [--languages Latin,Greek]   build it from #6109's selection rule
+ *   shelves                     readable-in-English per tradition shelf, now vs at init (#6109)
  *   hold | envelope | dryrun | ocr [--books N] | reconcile | check | enrol | runs | release | status
  *   run --interval 180 --wave 10 [--shard k/n] [--ocr-only]   loop check → runs → enrol → ocr until done or cap
- * Every command takes --state F and --cap 230.
+ * Every command takes --state F and --cap 230 (and --tag/--issue when not the Eternity run).
+ * --approve-rate R is the per-page approval each chained run is enrolled with (default 0.003).
+ * --tr-reserve R holds back $R per page still to translate on every book whose OCR is already submitted, so a
+ * book is only sent to OCR when the cap can also pay for its English (default 0: OCR may use the whole cap).
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -33,6 +43,8 @@ import { getScopeSpendUsd, readScopeEnvelopes } from '../lib/spend-guard.mjs';
 import { RUNS_COLLECTION, MAX_PAGES_PER_RUN } from '../lib/translate-batch-seam.mjs';
 import { TERMINAL_PHASES } from '../lib/translate-batch-chained.mjs';
 import { translatablePageFilter } from '../lib/translate-core.mjs';
+import { READABLE_IN_ENGLISH_EXPR } from '../lib/page-counts.mjs';
+import { ocrTrustVerdictForBook } from '../lib/ocr-trust-gate.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const args = process.argv.slice(2);
@@ -40,24 +52,36 @@ const cmd = args[0];
 const val = (n, d = null) => { const i = args.indexOf(`--${n}`); return i >= 0 ? args[i + 1] : d; };
 const has = (n) => args.includes(`--${n}`);
 
-export const SWEEP = 'eternity-ab-2026-10';
+// --tag / --issue name the job; the defaults ARE the Eternity run (#5513), so it runs unchanged.
+const DEFAULT_TAG = 'eternity-ab-2026-10';
+const TAG = val('tag', DEFAULT_TAG);
+const ISSUE = Number(val('issue', '5513'));
+if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(TAG)) throw new Error(`--tag must be kebab-case (it is the hold reason and the envelope key), got ${TAG}`);
+if (!Number.isInteger(ISSUE) || ISSUE <= 0) throw new Error('--issue must be an issue number');
+const IS_ETERNITY = TAG === DEFAULT_TAG && ISSUE === 5513;
+const STEM = TAG.replace(/-\d{4}-\d{2}$/, '');   // eternity-ab-2026-10 → eternity-ab
+export const SWEEP = TAG;
 export const HOLD = Object.freeze({
-  reason: 'eternity-ab-2026-10',
-  issue: 5513,
-  release: 'released by scripts/batch/eternity-ab-5513.mjs when the book is enrolled in the chained translation lane, or at the end of the OCR→translate pass (#5513)',
-  source: 'eternity-ab-5513',
+  reason: TAG,
+  issue: ISSUE,
+  release: `released by scripts/batch/eternity-ab-5513.mjs${IS_ETERNITY ? '' : ` --tag ${TAG}`} when the book is enrolled in the chained translation lane, or at the end of the OCR→translate pass (#${ISSUE})`,
+  source: val('source', `${STEM}-${ISSUE}`),
 });
-const ENVELOPE_TAG = 'eternity-ab-2026-10';
+const ENVELOPE_TAG = TAG;
+const JOB_LABEL = IS_ETERNITY ? 'Eternity A+B' : TAG;
 const OCR_CALL_SITE = 'scripts/batch/bulk-reocr-local.mjs';
 const ACTIVE_JOB = ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'];
-const CAP = Number(val('cap', '230'));
+const CAP = Number(val('cap', IS_ETERNITY ? '230' : 'NaN'));
+if (!(CAP > 0)) throw new Error(`--cap is required with --tag ${TAG}: the $230 default belongs to the Eternity run only`);
+const APPROVE_RATE = Number(val('approve-rate', '0.003'));   // per-run approval, $/page; the lane refuses a run whose estimate is above it (dense folio pages estimate ~$0.004)
+const TR_RESERVE = Number(val('tr-reserve', '0'));   // $/page kept back for the English of pages already sent to OCR
 const OCR_RATE = Number(val('ocr-rate', '0.00225'));   // supabase-usage-logger's lite batch ceiling
 const TR_RATE = 0.0012;                                  // chained AUTO_APPROVAL_USD_PER_PAGE (2× measured)
-const STATE = val('state', '/root/claude-jobs/eternity-ab-work/state.json');
+const STATE = val('state', `/root/claude-jobs/${STEM}-work/state.json`);
 const LOG_DIR = path.dirname(STATE);
 const MAX_RUNS_PER_BOOK = 12;
 
-const TOP_KEYS = ['cap_hit', 'quota_backoff_until', 'quota_hits'];
+const TOP_KEYS = ['cap_hit', 'ocr_waiting', 'quota_backoff_until', 'quota_hits'];
 // ── state (merge-on-save, as in the #5309 driver: commands may run concurrently) ──
 function loadState() {
   const s = JSON.parse(fs.readFileSync(STATE, 'utf8'));
@@ -91,16 +115,107 @@ const log = (m) => console.log(`${new Date().toISOString().slice(11, 19)} ${m}`)
 // ── init / hold / envelope ─────────────────────────────────────────────────
 async function init(db) {
   if (fs.existsSync(STATE) && !has('force')) throw new Error(`${STATE} exists — refusing to re-init`);
-  const per = JSON.parse(fs.readFileSync(val('perbook'), 'utf8'));
-  const skip = new Map(JSON.parse(fs.readFileSync(val('skip'), 'utf8')).map((x) => [x.id, x.why]));
-  const s = { created_at: new Date().toISOString(), cap: CAP, skipped: [], books: [] };
+  const select = val('select');
+  if (select && !SELECTIONS[select]) throw new Error(`--select: unknown selection ${select} (have: ${Object.keys(SELECTIONS).join(', ')})`);
+  const s = { created_at: new Date().toISOString(), tag: TAG, issue: ISSUE, cap: CAP, skipped: [], books: [] };
+  const per = select ? await SELECTIONS[select](db, s) : JSON.parse(fs.readFileSync(val('perbook'), 'utf8'));
+  const skip = new Map(val('skip') ? JSON.parse(fs.readFileSync(val('skip'), 'utf8')).map((x) => [x.id, x.why]) : []);
+  fs.mkdirSync(LOG_DIR, { recursive: true });
   for (const x of per) {
     if (skip.has(x.id)) { s.skipped.push({ id: x.id, title: x.title, language: x.language, pages: x.target_ids.length, why: skip.get(x.id) }); continue; }
     s.books.push({ id: x.id, title: x.title, language: x.language, visible: x.visible === true, n: x.target_ids.length,
-      page_ids: x.target_ids, prior_status: x.status, phase: x.target_ids.length ? 'pending' : 'ocr_done', retries: 0, runs: [] });
+      page_ids: x.target_ids, prior_status: x.status, phase: x.target_ids.length ? 'pending' : 'ocr_done', retries: 0, runs: [],
+      ...(x.measured ? { measured: x.measured } : {}) });
   }
   saveState(s);
   log(`init: ${s.books.length} books, ${s.books.reduce((n, b) => n + b.n, 0)} pages to OCR; ${s.skipped.length} skipped`);
+  if (select) for (const [l, r] of Object.entries(byLanguage(s.books))) log(`  ${l}: ${r.books} books, ${r.pages} pages, ${r.no_ocr} without OCR, ${r.ocr_no_english} with OCR but no English`);
+}
+
+const byLanguage = (books) => books.reduce((m, b) => {
+  const r = (m[b.language] = m[b.language] || { books: 0, pages: 0, no_ocr: 0, ocr_no_english: 0 });
+  r.books++; r.pages += b.measured?.pages || 0; r.no_ocr += b.n; r.ocr_no_english += b.measured?.ocr_no_english || 0;
+  return m;
+}, {});
+
+// ── selections (init --select NAME) ────────────────────────────────────────
+/**
+ * #6109's shelves: the collection slugs of the TRADITIONS map in src/lib/search/tradition-search.ts
+ * (PR #6086), copied here because that module is TypeScript on an unmerged branch. Change one,
+ * change both. The map's `alchemical` (alchemy, spiritual-alchemy) and `rosicrucian`
+ * (rosicrucian-alchemy) entries are NOT in the selection: #6109's measured and approved 185 books
+ * is the map without them (188 on 2026-10-06; with them the same rule returns 444 books and ~176K
+ * pages, three times the approved $120). A book on one of those shelves AND one below is selected.
+ */
+export const TRADITION_SHELVES = Object.freeze({
+  sufi: ['sufism', 'sufism-islamic-mysticism', 'sufi-eastern-mysticism'],
+  islamic: ['islamic-philosophy', 'islam', 'quran-islamic-theology', 'judeo-islamic-philosophy'],
+  kabbalistic: ['kabbalah', 'jewish-kabbalistic-mysticism'],
+  chan: ['zen-chan'],
+  buddhist: ['buddhism', 'chinese-buddhist-texts', 'indian-buddhist-jain', 'tibetan-canon', 'zen-chan'],
+  daoist: ['daoist-classics', 'daoist-alchemy', 'chinese-daoist-magic', 'daoism'],
+  vedantic: ['vedanta-darshana', 'hinduism', 'yoga-tantra-mysticism'],
+  hermetic: ['corpus-hermeticum', 'hermetica', 'hermetic-revival'],
+  neoplatonic: ['neoplatonism', 'florentine-neoplatonism'],
+  'christian-mystical': ['christian-mysticism-sub', 'german-speculative-mysticism', 'rhineland-mystics', 'beguine-mystics'],
+  gnostic: ['gnostic-texts'],
+});
+/** Also the order books are worked in: when the cap binds, the languages at the end are what is left. */
+export const TRADITION_LANGUAGES = Object.freeze(['Latin', 'Greek', 'German', 'French', 'Italian']);
+
+const liveOnShelves = (slugs) => ({ visible: true, pages_count: { $gt: 0 }, collections: { $in: slugs } });
+
+/** Books on each tradition's shelves and how many are readable in English (the named view, not a re-typed rule). */
+async function shelfReadable(db) {
+  const out = {};
+  for (const [k, slugs] of Object.entries(TRADITION_SHELVES)) {
+    const [r] = await db.collection('books').aggregate([{ $match: liveOnShelves(slugs) },
+      { $group: { _id: null, books: { $sum: 1 }, readable: { $sum: { $cond: [READABLE_IN_ENGLISH_EXPR, 1, 0] } } } }]).toArray();
+    out[k] = { books: r?.books || 0, readable: r?.readable || 0 };
+  }
+  return out;
+}
+
+/**
+ * #6109's rule, exactly: visible, pages_count > 0, on a tradition shelf, no pipeline hold, NOT
+ * readable in English, language one of five. Per book: the pages (page_number > 0) with no OCR text
+ * are the OCR targets. Books the OCR trust gate refuses are listed under `skipped`. Read-only. Ordered by language, then least work first, so a cap that binds
+ * has finished the most books it could.
+ */
+async function selectTraditionShelves(db, s) {
+  const languages = val('languages') ? val('languages').split(',').map((x) => x.trim()) : [...TRADITION_LANGUAGES];
+  const bad = languages.filter((l) => !TRADITION_LANGUAGES.includes(l));
+  if (bad.length) throw new Error(`--languages: ${bad.join(', ')} not in #6109's selection (${TRADITION_LANGUAGES.join(', ')})`);
+  const slugs = [...new Set(Object.values(TRADITION_SHELVES).flat())];
+  const books = await db.collection('books').find({ ...liveOnShelves(slugs), 'pipeline_auto.hold': { $exists: false },
+    $expr: { $not: [READABLE_IN_ENGLISH_EXPR] }, language: { $in: languages } },
+  { projection: { _id: 0, id: 1, title: 1, language: 1, year: 1, published: 1, visible: 1, collections: 1, 'pipeline_auto.status': 1 } }).toArray();
+  const per = [];
+  for (const b of books) {
+    // A book the translation lane will refuse (#5700: Greek manuscripts and early print, Latin incunabula)
+    // is not sent to OCR either: the job is English, and that stratum's lite/flash read is the one measured bad.
+    const trust = await ocrTrustVerdictForBook(db, b);
+    if (!trust.ok) { s.skipped.push({ id: b.id, title: b.title, language: b.language, why: trust.reason }); continue; }
+    const pages = await db.collection('pages').find({ book_id: b.id, page_number: { $gt: 0 } },
+      { projection: { _id: 0, id: 1, page_number: 1, hasOcr: { $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] }, hasEn: { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] } } }).sort({ page_number: 1 }).toArray();
+    per.push({ id: b.id, title: b.title, language: b.language, visible: b.visible, status: b.pipeline_auto?.status ?? null,
+      target_ids: pages.filter((p) => !p.hasOcr).map((p) => p.id),
+      measured: { pages: pages.length, ocr_no_english: pages.filter((p) => p.hasOcr && !p.hasEn).length,
+        traditions: Object.keys(TRADITION_SHELVES).filter((k) => TRADITION_SHELVES[k].some((c) => (b.collections || []).includes(c))) } });
+  }
+  const work = (x) => x.target_ids.length * 2 + x.measured.ocr_no_english;
+  per.sort((a, b) => languages.indexOf(a.language) - languages.indexOf(b.language) || work(a) - work(b) || a.id.localeCompare(b.id));
+  s.selection = { name: 'tradition-shelves', languages, collections: slugs, readable_before: await shelfReadable(db) };
+  return per;
+}
+const SELECTIONS = { 'tradition-shelves': selectTraditionShelves };
+
+async function shelves(db) {
+  const s = loadState();
+  const now = await shelfReadable(db);
+  const before = s.selection?.readable_before || {};
+  const mine = (k) => s.books.filter((b) => b.measured?.traditions?.includes(k)).length;
+  console.log(JSON.stringify(Object.fromEntries(Object.keys(now).map((k) => [k, { books: now[k].books, selected: mine(k), readable_before: before[k]?.readable ?? null, readable_now: now[k].readable }])), null, 1));
 }
 
 async function hold(db) {
@@ -123,9 +238,11 @@ async function envelope(db) {
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
   if (readScopeEnvelopes(control).some((e) => e.tag === ENVELOPE_TAG)) { log(`envelope ${ENVELOPE_TAG} already open`); return; }
   const ids = s.books.filter((b) => !b.foreign_hold).map((b) => b.id).join(',');
+  const by = val('by', IS_ETERNITY ? 'derek 2026-10-01 "do it" (#5513 Eternity tranches A+B OCR→translate, hard cap $230); chained lane only, OCR is hand-run Batch metered against this envelope by the driver' : null);
+  if (!by) throw new Error(`envelope: --by "who approved, when, in what words" is required with --tag ${TAG}`);
   const out = execFileSync(process.execPath, ['scripts/maintenance/set-scope.mjs', '--tag', ENVELOPE_TAG, '--books', ids, '--budget', String(CAP),
     '--lanes', 'translate-batch-chained',
-    '--by', 'derek 2026-10-01 "do it" (#5513 Eternity tranches A+B OCR→translate, hard cap $230); chained lane only, OCR is hand-run Batch metered against this envelope by the driver'],
+    '--by', by],
   { cwd: ROOT, env: process.env, encoding: 'utf8' });
   console.log(out.trim().split('\n').slice(-3).join('\n'));
 }
@@ -147,10 +264,27 @@ async function openTranslationUsd(db, s) {
   return rows.reduce((n, r) => n + Math.max(0, (r.estimate || 0) - (r.spent_est_usd || 0)), 0);
 }
 
+/**
+ * Pages still owed an English translation on books already committed to OCR (an upper bound: blanks and
+ * plates never translate), less what finished runs wrote and what an open run already carries in its estimate.
+ */
+const TR_OWING = ['ocr_submitted', 'ocr_done', 'tr_next', 'tr_enrolled'];
+function translationOwedPages(s) {
+  return s.books.filter((b) => TR_OWING.includes(b.phase)).reduce((n, b) =>
+    n + Math.max(0, b.n + (b.measured?.ocr_no_english || 0) - (b.tr_written || 0) - (b.phase === 'tr_enrolled' ? b.tr_run_pages || 0 : 0)), 0);
+}
+
 // ── OCR ────────────────────────────────────────────────────────────────────
-/** The book's pages still without text, minus any page a live OCR job (any submitter) carries. */
-async function ocrTargets(db, b) {
-  const still = await db.collection('pages').find({ id: { $in: b.page_ids }, $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] }, { projection: { _id: 0, id: 1 } }).toArray();
+/**
+ * The book's pages still without text, minus any page a live OCR job (any submitter) carries.
+ * `submit`: the pages worth SENDING. A page the collector has given up on (`ocr.fail_blocked`, three
+ * failures) is never sent; and the one retry is for requests Batch dropped without an answer, so it
+ * skips a page with a recorded failure (`truncated:MAX_TOKENS`, a repetition loop): the same model
+ * fails the same way and bills the full output again (#6109: 13 of a manuscript's 15 residual pages).
+ */
+async function ocrTargets(db, b, { submit = false } = {}) {
+  const sendable = !submit ? {} : b.retries >= 1 ? { 'ocr.fail_count': { $not: { $gt: 0 } } } : { 'ocr.fail_blocked': { $ne: true } };
+  const still = await db.collection('pages').find({ id: { $in: b.page_ids }, ...sendable, $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] }, { projection: { _id: 0, id: 1 } }).toArray();
   const live = await db.collection('batch_jobs').find({ book_id: b.id, type: 'ocr', status: { $in: ACTIVE_JOB } }, { projection: { _id: 0, page_ids: 1 } }).toArray();
   const inFlight = new Set(live.flatMap((j) => j.page_ids || []));
   return still.map((p) => p.id).filter((id) => !inFlight.has(id));
@@ -161,10 +295,22 @@ async function dryrun(db) {
   const ids = s.books.filter((b) => b.phase === 'pending').flatMap((b) => b.page_ids);
   const file = path.join(LOG_DIR, 'dryrun-pages.json');
   fs.writeFileSync(file, JSON.stringify(ids));
-  const res = spawnSync(process.execPath, ['scripts/batch/bulk-reocr-local.mjs', `--page-ids-file=${file}`, '--dry-run', `--reason=${SWEEP}: dry-run (#5513)`],
+  const res = spawnSync(process.execPath, ['scripts/batch/bulk-reocr-local.mjs', `--page-ids-file=${file}`, '--dry-run', `--reason=${SWEEP}: dry-run (#${ISSUE})`],
     { cwd: ROOT, env: process.env, encoding: 'utf8', maxBuffer: 256 << 20 });
   fs.writeFileSync(path.join(LOG_DIR, 'dryrun-ocr.log'), (res.stdout || '') + (res.stderr || ''));
   console.log((res.stdout || '').split('\n').filter((l) => /^(=== Summary|Books|Pages|Estimated|  \d+ |  Prompt)/.test(l)).join('\n'));
+  // Translation: what is translatable today, plus the pages about to get text (an upper bound: blanks and plates drop out).
+  const per = {};
+  for (const b of s.books.filter((x) => !['skipped'].includes(x.phase))) {
+    const r = (per[b.language] = per[b.language] || { books: 0, ocr_pages: 0, translatable_now: 0 });
+    r.books++; r.ocr_pages += b.phase === 'pending' ? b.n : 0; r.translatable_now += (await translateTargets(db, b.id)).length;
+  }
+  let tot = 0;
+  for (const [l, r] of Object.entries(per)) {
+    const n = r.translatable_now + r.ocr_pages; tot += n;
+    console.log(`${l}: ${r.books} books, ${r.ocr_pages} pages to OCR (≤ $${(r.ocr_pages * OCR_RATE).toFixed(2)} at the $${OCR_RATE} ceiling), ${r.translatable_now} translatable now, ≤ ${n} to translate (≤ $${(n * TR_RATE).toFixed(2)} at the lane's $${TR_RATE} approval rate, ~$${(n * TR_RATE / 2).toFixed(2)} measured)`);
+  }
+  console.log(`Translation, all languages: ≤ ${tot} pages, ≤ $${(tot * TR_RATE).toFixed(2)} (~$${(tot * TR_RATE / 2).toFixed(2)} measured). Cap $${CAP}${TR_RESERVE ? `, $${TR_RESERVE}/page kept back for translation` : ''}.`);
 }
 
 async function ocr(db) {
@@ -185,18 +331,22 @@ async function ocr(db) {
   const logFile = path.join(LOG_DIR, `ocr-${stamp}.log`);
   let quota = false, submittedBooks = 0;
   for (const b of picks) {
-    const ids = await ocrTargets(db, b);
+    const ids = await ocrTargets(db, b, { submit: true });
     const sp = await spend(db, s);
     const openTr = await openTranslationUsd(db, s);
     const add = ids.length * OCR_RATE;
     if (sp.usd + openTr + add > CAP) { log(`ocr: CAP — spent $${sp.usd.toFixed(2)} + open translation $${openTr.toFixed(2)} + $${add.toFixed(2)} > $${CAP}`); s.cap_hit = new Date().toISOString(); break; }
+    // Not sticky, unlike cap_hit: the reserve shrinks as books finish and as submit-time prices settle, so the next tick asks again.
+    const reserve = TR_RESERVE * (translationOwedPages(s) + ids.length + (b.measured?.ocr_no_english || 0));
+    if (TR_RESERVE && sp.usd + openTr + add + reserve > CAP) { s.ocr_waiting = new Date().toISOString(); log(`ocr: waiting — spent $${sp.usd.toFixed(2)} + open translation $${openTr.toFixed(2)} + $${add.toFixed(2)} + translation reserve $${reserve.toFixed(2)} > $${CAP}; ${b.id} (${b.language}) not submitted`); break; }
+    s.ocr_waiting = null;
     if (!ids.length) { b.phase = 'ocr_submitted'; b.ocr_submitted_at = b.ocr_submitted_at || new Date().toISOString(); saveState(s); continue; }
     const t0 = new Date();
     for (let i = 0; i < ids.length; i += SLICE) {
       const file = path.join(LOG_DIR, `pages-${stamp}-${b.id}-${i}.json`);
       fs.writeFileSync(file, JSON.stringify(ids.slice(i, i + SLICE)));
       const res = spawnSync(process.execPath, ['scripts/batch/bulk-reocr-local.mjs', `--page-ids-file=${file}`,
-        `--reason=${SWEEP}: first OCR of pages with no text, Eternity tranche ${b.visible ? 'A' : 'B'} (#5513)`],
+        `--reason=${SWEEP}: first OCR of pages with no text${IS_ETERNITY ? `, Eternity tranche ${b.visible ? 'A' : 'B'}` : ''} (#${ISSUE})`],
       { cwd: ROOT, env: process.env, encoding: 'utf8', maxBuffer: 64 << 20 });
       const out = (res.stdout || '') + (res.stderr || '');
       fs.appendFileSync(logFile, `=== ${b.id} slice ${i}\n${out}`);
@@ -218,7 +368,7 @@ async function ocr(db) {
     b.ocr_models = [...new Set([...(b.ocr_models || []), ...ok.map((j) => j.model)])];
     b.ocr_submitted = (b.ocr_submitted || 0) + ok.reduce((n, j) => n + (j.page_ids?.length || 0), 0);
     b.ocr_submitted_at = b.ocr_submitted_at || t0.toISOString();
-    const left = (await ocrTargets(db, b)).length;
+    const left = (await ocrTargets(db, b, { submit: true })).length;
     if (left === 0) { b.phase = 'ocr_submitted'; submittedBooks++; }
     else if (!quota) { b.submit_attempts = (b.submit_attempts || 0) + 1; if (b.submit_attempts >= 3 && ok.length === 0) b.phase = 'ocr_submit_failed'; }
     await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'ocr-submitted', detail: { pages: ok.reduce((n, j) => n + (j.page_ids?.length || 0), 0), jobs: ok.length, left, models: b.ocr_models } });
@@ -234,7 +384,7 @@ async function ocr(db) {
 async function reconcile(db, s = loadState()) {
   let fixed = 0;
   for (const b of s.books.filter((x) => x.phase === 'pending' && (x.ocr_submitted || x.submit_attempts))) {
-    if ((await ocrTargets(db, b)).length) continue;
+    if ((await ocrTargets(db, b, { submit: true })).length) continue;
     const jobs = await db.collection('batch_jobs').find({ book_id: b.id, type: 'ocr', submitted_by: OCR_CALL_SITE, created_at: { $gte: new Date(s.created_at) }, child_job_ids: { $exists: false }, status: { $ne: 'submit_failed' } }, { projection: { id: 1 } }).toArray();
     b.ocr_jobs = [...new Set([...(b.ocr_jobs || []), ...jobs.map((j) => j.id)])];
     b.phase = 'ocr_submitted'; b.ocr_submitted_at = b.ocr_submitted_at || new Date().toISOString(); fixed++;
@@ -333,13 +483,13 @@ async function enrol(db) {
     const book = await db.collection('books').findOne({ id: b.id }, { projection: { pipeline_auto: 1 } });
     if (isHeld(book)) {
       if (book.pipeline_auto.hold.reason !== HOLD.reason) { log(`  ${b.id}: held by ${book.pipeline_auto.hold.reason} — skipped`); b.phase = 'skipped'; b.foreign_hold = book.pipeline_auto.hold.reason; saveState(s); continue; }
-      const rel = await releaseBook(db, b.id, { note: 'released for chained batch enrol (#5513)', source: HOLD.source });
+      const rel = await releaseBook(db, b.id, { note: `released for chained batch enrol (#${ISSUE})`, source: HOLD.source });
       if (rel.outcome !== 'released') { log(`  ${b.id}: release ${rel.outcome}`); continue; }
       b.held_by_us = false; b.released_for_translation_at = new Date().toISOString(); b.released_to = rel.to;
     }
     const pf = path.join(LOG_DIR, `tr-pages-${b.id}.json`);
     fs.writeFileSync(pf, JSON.stringify({ [b.id]: ids }));
-    const approved = Math.max(0.05, +(n * 0.003).toFixed(2));
+    const approved = Math.max(0.05, +(n * APPROVE_RATE).toFixed(2));
     let out = '';
     try {
       out = execFileSync(process.execPath, ['scripts/workers/translate-batch-worker.mjs', '--chained', '--enrol', `--pages-file=${pf}`, `--approved-usd=${approved}`],
@@ -349,7 +499,7 @@ async function enrol(db) {
     // An open run on the book (an enrol whose bookkeeping a restart lost) is adopted, not refused.
     const m = out.match(/run (\S+) est \$([\d.]+)/) || ((x) => x && ['', x[1], String(n * 0.0006)])(out.match(/open-run (\S+)/));
     if (m) {
-      b.run_id = m[1]; b.runs = [...(b.runs || []), m[1]]; b.tr_est = Number(m[2]); b.phase = 'tr_enrolled'; open++; enrolled++;
+      b.run_id = m[1]; b.runs = [...(b.runs || []), m[1]]; b.tr_est = Number(m[2]); b.tr_run_pages = n; b.phase = 'tr_enrolled'; open++; enrolled++;
       await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'chained-enrolled', detail: { run: b.run_id, estimate: b.tr_est, approved, pages: n, queue: ids.length } });
     } else {
       const reason = (out.match(/REFUSED[^\n]*|exceeds[^\n]*|Error[^\n]*/) || [out.trim().split('\n').pop()])[0];
@@ -392,7 +542,7 @@ async function release(db) {
     const book = await db.collection('books').findOne({ id: b.id }, { projection: { pipeline_auto: 1 } });
     if (!isHeld(book) || book.pipeline_auto.hold.reason !== HOLD.reason) continue;
     if (!has('all') && !['tr_done', 'tr_refused', 'tr_parked', 'tr_failed', 'ocr_submit_failed'].includes(b.phase)) continue;
-    const r = await releaseBook(db, b.id, { note: 'Eternity A+B OCR→translate pass finished (#5513)', source: HOLD.source });
+    const r = await releaseBook(db, b.id, { note: `${JOB_LABEL} OCR→translate pass finished (#${ISSUE})`, source: HOLD.source });
     if (r.outcome === 'released') { n++; b.held_by_us = false; b.released_at = new Date().toISOString(); b.released_to = r.to; await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'released', detail: { to: r.to } }); }
   }
   saveState(s);
@@ -417,7 +567,7 @@ async function status(db) {
   const held = await db.collection('books').countDocuments({ id: { $in: ids }, 'pipeline_auto.hold.reason': HOLD.reason });
   console.log(JSON.stringify({ phases: byPhase, written_by_language: per, held_now: held,
     envelope: { spent_usd: +(sp.usd || 0).toFixed(2), rows: sp.rows, open_translation_est: +openTr.toFixed(2), cap: CAP, err: sp.err },
-    cap_hit: s.cap_hit || null, quota_backoff_until: s.quota_backoff_until || null, updated_at: s.updated_at }, null, 1));
+    cap_hit: s.cap_hit || null, ocr_waiting: s.ocr_waiting || null, translation_owed_pages: translationOwedPages(s), quota_backoff_until: s.quota_backoff_until || null, updated_at: s.updated_at }, null, 1));
 }
 
 async function run(db) {
@@ -441,11 +591,12 @@ async function run(db) {
     log(`run: ${live.length} books still moving; ${JSON.stringify(Object.fromEntries(Object.entries(st.books.reduce((m, b) => { m[b.phase] = (m[b.phase] || 0) + 1; return m; }, {}))))}`);
     if (!live.length) { await release(db); log('run: every book finished — released'); return; }
     if (st.cap_hit && !st.books.some((b) => ['tr_enrolled', 'ocr_submitted'].includes(b.phase))) { log('run: CAP HIT and nothing in flight — stopping'); return; }
+    if (st.ocr_waiting && live.every((b) => b.phase === 'pending')) { await release(db); log(`run: every submitted book finished and the cap cannot pay for the next one — stopping (${live.length} books never sent to OCR; \`release --all\` frees them)`); return; }
     await new Promise((r) => setTimeout(r, interval));
   }
 }
 
-const COMMANDS = { init, hold, envelope, dryrun, files, ocr, reconcile, check, enrol, runs, release, status, run };
+const COMMANDS = { init, hold, envelope, dryrun, files, ocr, reconcile, check, enrol, runs, release, status, shelves, run };
 if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
   if (!COMMANDS[cmd]) { console.error(`usage: ${Object.keys(COMMANDS).join('|')} (see header)`); process.exit(2); }
   await withMongo(async (db) => { await COMMANDS[cmd](db); }, { noTimeout: true });

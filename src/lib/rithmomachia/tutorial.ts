@@ -32,7 +32,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
   {
     section: 'intro',
     title: 'Welcome to Rithmomachia',
-    text: 'Rithmomachia ("The Battle of Numbers") is a mathematical board game played across Europe from the 10th to the 17th century. Source Library holds five complete treatises on this game — in Latin, French, English, Italian, and German — spanning 1496 to 1616. These rules are synthesized from all five sources.',
+    text: 'Rithmomachia ("The Battle of Numbers") is a mathematical board game played across Europe from the 10th to the 17th century. Source Library holds five complete treatises on this game (in Latin, French, English, Italian, and German), spanning 1496 to 1616. These rules are synthesized from all five sources.',
     sources: [
       { source: 'jordanus', detail: 'Earliest printed treatise (Latin, 1496)' },
       { source: 'boissiere', detail: 'French treatise (1554)' },
@@ -50,7 +50,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
   {
     section: 'intro',
     title: 'The Board',
-    text: 'The board is 8 columns wide and 16 rows tall — like two chessboards joined end to end. Even (White) starts at the bottom, Odd (Black) at the top. All five sources agree on this layout. Barozzi (1572) and Boissière (1554) include woodcut diagrams; Selenus (1616) has a magnificent copperplate engraving.',
+    text: 'The board is 8 columns wide and 16 rows tall, like two chessboards joined end to end. Even (White) starts at the bottom, Odd (Black) at the top. All five sources agree on this layout. Barozzi (1572) and Boissière (1554) include woodcut diagrams; Selenus (1616) has a magnificent copperplate engraving.',
     sources: [
       { source: 'barozzi', page: 26, detail: 'Woodcut diagram of board' },
       { source: 'boissiere', page: 37, detail: 'Board diagram' },
@@ -67,7 +67,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
   {
     section: 'intro',
     title: 'Piece Values',
-    text: 'Every piece has a number derived from Pythagorean mathematics. Circles hold simple digits and their squares. Triangles hold sums of circle pairs. Squares hold sums of triangle pairs. The pyramid combines all layers. All five sources agree on every value — remarkable stability across 120 years and 5 languages.',
+    text: 'Every piece has a number derived from Pythagorean mathematics. Circles hold simple digits and their squares. Triangles hold sums of circle pairs. Squares hold sums of triangle pairs. The pyramid combines all layers. All five sources agree on every value: remarkable stability across 120 years and 5 languages.',
     sources: [
       { source: 'boissiere', page: 14, detail: 'Number table for values' },
       { source: 'lever', page: 9, detail: 'Value derivation in English' },
@@ -96,7 +96,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
   {
     section: 'movement',
     title: 'Triangle Movement',
-    text: 'Triangles leap exactly 2 spaces orthogonally (up, down, left, or right). They jump over any pieces in the way — nothing blocks a triangle\'s leap. The sources say "unto the third place" (inclusive counting: 1=start, 2=intermediate, 3=destination).',
+    text: 'Triangles leap exactly 2 spaces orthogonally (up, down, left, or right). They jump over any pieces in the way; nothing blocks a triangle\'s leap. The sources say "unto the third place" (inclusive counting: 1=start, 2=intermediate, 3=destination).',
     sources: [
       { source: 'jordanus', page: 146, detail: '"Unto the third place"' },
       { source: 'lever', page: 12, detail: 'Triangle movement' },
@@ -116,7 +116,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
   {
     section: 'movement',
     title: 'The Pyramid',
-    text: 'Each side has one pyramid (White: 91, Black: 190). The pyramid is built from stacked layers — Selenus describes it as a "Tower" with removable screw-fastened levels. It can move as any shape: 1 diagonal, 2 orthogonal, or 3 orthogonal.',
+    text: 'Each side has one pyramid (White: 91, Black: 190). The pyramid is built from stacked layers. Selenus describes it as a "Tower" with removable screw-fastened levels. It can move as any shape: 1 diagonal, 2 orthogonal, or 3 orthogonal.',
     sources: [
       { source: 'lever', page: 10, detail: 'Pyramid as stacked layers' },
       { source: 'barozzi', page: 18, detail: 'Pyramid construction' },
@@ -134,7 +134,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
   {
     section: 'capture',
     title: 'How Captures Work',
-    text: 'After you move a piece, you may capture an enemy piece if the right arithmetic condition is met. Captures are optional — you can always skip. Captured pieces change color and join your collection. All five sources describe the same six capture methods.',
+    text: 'After you move a piece, you may capture an enemy piece if the right arithmetic condition is met. Captures are optional; you can always skip. Captured pieces change color and join your collection. All five sources describe the same six capture methods.',
     sources: [
       { source: 'lever', page: 14, detail: 'Capture rules in English' },
       { source: 'barozzi', page: 34, detail: 'Capture rules' },
@@ -174,7 +174,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
   {
     section: 'capture',
     title: 'Siege',
-    text: 'If an enemy piece is completely surrounded — all four orthogonal neighbors are your pieces or the board edge — it is captured by siege. The enemy has no escape route.',
+    text: 'If an enemy piece is completely surrounded (all four orthogonal neighbors are your pieces or the board edge), it is captured by siege. The enemy has no escape route.',
     sources: [
       { source: 'lever', page: 17, detail: 'Siege capture' },
       { source: 'barozzi', page: 38, detail: 'Siege capture' },

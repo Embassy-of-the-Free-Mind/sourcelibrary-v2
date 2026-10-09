@@ -4,6 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import ExploreTabBar from '@/components/explore/ExploreTabBar';
 import BookMapLoader from '@/components/explore/BookMapLoader';
 import type { BookLocation, LocationType } from '@/components/explore/BookMap';
+import { mapPlaceKey, modernCountry } from '@/lib/map-place';
 
 /**
  * The shape stored in system_config.map_data (and the live-fallback build):
@@ -17,38 +18,52 @@ interface RawLocation {
   lat: number;
   lng: number;
   type: LocationType;
-  books: Array<{ id: string; title: string; display_title?: string; author: string; year: number | null; slug: string }>;
+  // id + year only since 2026-10-06; older snapshots also carry title/author/slug,
+  // which nothing here reads (the city list looks them up by id).
+  books: Array<{ id: string; year: number | null }>;
 }
 interface RawMapData {
   locations: RawLocation[];
   stats: { total_books: number; total_locations: number; by_type: Record<string, number> };
 }
 
+// Keep in step with scripts/maintenance/build-map-cache.mjs. Was 200, which
+// capped Venice, Basel, Leipzig, Paris… and undercounted every pin over it.
+const MAX_BOOKS_PER_GROUP = 2000;
+
 // Role bitmask — mirrors TYPE_BIT in BookMap.tsx (kept local so this server
 // component doesn't import from the 'use client' module).
 const TYPE_BIT: Record<string, number> = { publication: 1, author_birth: 2, author_death: 4, origin: 8 };
 
 /**
- * Collapse the per-(city,type) cache groups into one lightweight record per city.
- * Books are deduped by id across roles (OR-ing their role bits) and stripped to
- * {y: year, m: role-mask} — no titles/authors/slugs/ids ship to the client; those
- * load lazily per city from /api/explore/map/city.
+ * Collapse the per-(city,type) cache groups into one lightweight record per
+ * PLACE (a ~10 km grid cell, see src/lib/map-place.ts). Books are deduped by id
+ * across roles (OR-ing their role bits) and stripped to counted (year,
+ * role-mask) triples; titles, authors and slugs load lazily per place from
+ * /api/explore/map/city. The pin takes the name, country and coordinates of
+ * the city label that carries the most books in the cell.
  */
 function slimLocations(locations: RawLocation[]): BookLocation[] {
-  const byCity = new Map<string, {
-    city: string; country: string | null; lat: number; lng: number;
+  const byPlace = new Map<string, {
     books: Map<string, { y: number | null; m: number }>;
+    labels: Map<string, { city: string; country: string | null; lat: number; lng: number; n: number }>;
   }>();
 
   for (const loc of locations) {
-    const key = `${loc.city}|${loc.country || ''}`;
-    let entry = byCity.get(key);
+    const key = mapPlaceKey(loc.lat, loc.lng);
+    let entry = byPlace.get(key);
     if (!entry) {
-      entry = { city: loc.city, country: loc.country, lat: loc.lat, lng: loc.lng, books: new Map() };
-      byCity.set(key, entry);
+      entry = { books: new Map(), labels: new Map() };
+      byPlace.set(key, entry);
     }
-    // Prefer the publication group's coords for the pin (matches prior behavior).
-    if (loc.type === 'publication') { entry.lat = loc.lat; entry.lng = loc.lng; }
+    const labelKey = `${loc.city}|${loc.country || ''}`;
+    const label = entry.labels.get(labelKey)
+      || { city: loc.city, country: loc.country, lat: loc.lat, lng: loc.lng, n: 0 };
+    label.n += (loc.books || []).length;
+    // Prefer the publication group's coords for the label (matches prior behavior).
+    if (loc.type === 'publication') { label.lat = loc.lat; label.lng = loc.lng; }
+    entry.labels.set(labelKey, label);
+
     const bit = TYPE_BIT[loc.type] || 0;
     for (const b of loc.books || []) {
       const ex = entry.books.get(b.id);
@@ -57,9 +72,21 @@ function slimLocations(locations: RawLocation[]): BookLocation[] {
     }
   }
 
+  // Count identical (year, roles) pairs per place — see BookLocation.b.
   const out: BookLocation[] = [];
-  for (const e of byCity.values()) {
-    out.push({ city: e.city, country: e.country, lat: e.lat, lng: e.lng, books: [...e.books.values()] });
+  for (const [key, e] of byPlace) {
+    const top = [...e.labels.values()].sort((a, b) => b.n - a.n)[0];
+    const counts = new Map<string, number>();
+    for (const bk of e.books.values()) {
+      const k = `${bk.y ?? 0}|${bk.m}`;
+      counts.set(k, (counts.get(k) || 0) + 1);
+    }
+    const b: number[] = [];
+    for (const [k, c] of counts) {
+      const [y, m] = k.split('|');
+      b.push(Number(y), Number(m), c);
+    }
+    out.push({ key, city: top.city, country: modernCountry(top.country), lat: top.lat, lng: top.lng, b });
   }
   return out;
 }
@@ -72,11 +99,11 @@ export const revalidate = 86400;
 export const maxDuration = 60;
 
 export const metadata: Metadata = {
-  title: 'Map — Explore — Source Library',
+  title: 'Map · Explore | Source Library',
   description:
     'Interactive map of 10,000+ books plotted by publication city, author birthplace, and the heartland of each text’s tradition.',
   openGraph: {
-    title: 'Map — Explore — Source Library',
+    title: 'Map · Explore | Source Library',
     description:
       'Geographic distribution of historical texts across 500+ cities worldwide.',
     url: 'https://sourcelibrary.org/explore/map',
@@ -87,13 +114,13 @@ export const metadata: Metadata = {
         url: 'https://sourcelibrary.org/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Source Library map — historical texts plotted by publication city and author birthplace',
+        alt: 'Source Library map: historical texts plotted by publication city and author birthplace',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Map — Explore — Source Library',
+    title: 'Map · Explore | Source Library',
     description:
       'Geographic distribution of historical texts across 500+ cities worldwide.',
     images: ['https://sourcelibrary.org/og-image.jpg'],
@@ -118,7 +145,7 @@ async function fetchMapData(): Promise<RawMapData> {
     .find(
       { visible: true, 'locations.0': { $exists: true } },
       {
-        projection: { id: 1, title: 1, display_title: 1, author: 1, year: 1, slug: 1, locations: 1 },
+        projection: { id: 1, year: 1, locations: 1 },
         maxTimeMS: 45000,
       },
     )
@@ -146,14 +173,10 @@ async function fetchMapData(): Promise<RawMapData> {
       }
 
       const group = groups.get(key)!;
-      if (group.books.length < 200) {
+      if (group.books.length < MAX_BOOKS_PER_GROUP) {
         group.books.push({
           id: book.id as string,
-          title: (book.title as string) || 'Untitled',
-          display_title: (book.display_title as string) || undefined,
-          author: (book.author as string) || 'Unknown',
           year: (book.year as number) || null,
-          slug: (book.slug as string) || '',
         });
       }
 
@@ -172,13 +195,15 @@ export default async function MapPage() {
   try {
     const data = await fetchMapData();
     const locations = slimLocations(data.locations);
-    const locationCount = data.stats.total_locations;
+    // The same number the map's own panel counts (one per pin), so the header
+    // and the panel agree — they used to say 3,668 and 2,950.
+    const locationCount = locations.length;
     return (
       <ContentPageLayout
         header={
           <ContentHeader maxWidth="wide"
             title="Map"
-            subtitle={`${locationCount.toLocaleString('en-US')} locations worldwide — publication cities, author birthplaces, and the heartlands of the traditions we hold`}
+            subtitle={`${locationCount.toLocaleString('en-US')} places worldwide: publication cities, author birthplaces, and the heartlands of the traditions we hold`}
           >
             <div className="mt-5">
               <ExploreTabBar />

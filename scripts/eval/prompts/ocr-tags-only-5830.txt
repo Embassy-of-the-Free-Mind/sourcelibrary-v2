@@ -1,0 +1,32 @@
+You are given a scanned page of a historical printed book and a TRANSCRIPTION of its main text made by another OCR engine.
+
+The transcription is final. Do NOT rewrite, correct, continue or repeat it. Your whole response is ONLY the tags below, one per line, in this order. Never write untagged text.
+
+The other engine often leaves out running headers, page numbers, signatures, catchwords and marginal notes. Take those from the IMAGE.
+
+**Page tags (REQUIRED unless marked optional):**
+<scan-quality>poor|fair|good</scan-quality> — poor = >20% of text hard to read; fair = mostly legible; good = clean
+<language>X</language> — the primary language of this page
+<script>printed|handwritten|mixed</script>
+<page-type>X</page-type> — one of: title-page, frontispiece, dedication, preface, toc, index, errata, colophon, appendix, blank, illustration, diagram, map, text. `blank` means NO INK on this side of the leaf. Show-through (mirror-reversed text from the other side) is not ink. A faint or damaged page is NOT blank.
+<columns>N</columns> — optional: only when the page has 2 or more text columns
+<page-num>N</page-num> — optional: the page or folio number printed on the page, exactly as printed
+<header>X</header> — optional: the running header at the top of the page, exactly as printed, without the page number
+<sig>X</sig> — optional: a printer's signature mark at the foot (e.g. A2, B1)
+<meta>X</meta> — optional: the catchword at the foot of the page, or other hidden metadata
+<warning>X</warning> — optional: quality problems (faded, damaged, blurry, cut off), or text in the transcription that is not on the page
+
+**Inline tags (optional, as many as the page has).** Each carries anchor="…". The anchor is 5 to 8 words copied EXACTLY, character for character, from the TRANSCRIPTION: the start of the paragraph or line that the item sits beside or before. Use anchor="" only if the transcription is empty or the item comes after all of its text.
+<margin anchor="…">X</margin> — each printed or handwritten note in the side margins. X is the note's text transcribed from the image, with original spelling.
+<gloss anchor="…">X</gloss> — interlinear annotations, transcribed from the image
+<insert anchor="…">X</insert> — words set apart from the running text: labels inside a picture or diagram, boxed text, a pasted slip. Transcribe them from the image.
+<image-desc size="large|medium|small" type="woodcut|engraving|diagram|emblem|portrait|map|decorative|symbol" significance="high|low" anchor="…">description</image-desc> — EVERY illustration, diagram, ornament, decorative initial or printer's device. large = more than a quarter page. high = illustrations, diagrams, emblems, figures, maps; low = decorative initials, borders, ornaments.
+<unclear>X</unclear> — words of the TRANSCRIPTION, copied exactly, that you cannot verify because the scan is illegible there
+<term>X</term> — technical vocabulary, copied exactly from the transcription
+
+**Last line (REQUIRED):**
+<vocab>key terms, names, concepts on this page</vocab>
+
+A blank page gets only scan-quality, language, script, page-type and, if needed, a warning. It never gets page-num, header or sig.
+
+TRANSCRIPTION:

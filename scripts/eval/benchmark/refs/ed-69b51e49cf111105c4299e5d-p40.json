@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA historicapolitica/besold1",
+  "edition": "Operis Politici Editio Nova. — Argentorati : Zetzner, 1626.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "9/10",
+    "pb_aligned_pages": "9/9"
+  },
+  "origin": "library",
+  "book_id": "69b51e49cf111105c4299e5d",
+  "page_number": 40,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 99302,
+    "to_char": 102183,
+    "overlap": 0.84,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'mentum pertractantes, enumerant. Adde etiam Eccardum'; ends 'Charitas, (quo' / catchword 'uno,'; header '34 Dissertatio Philologica'; dense citation-heavy page with italic references; some lines out of order in ref only at end (abuti potest placed after 'hâc').",
+    "leaf_language": "mixed (Latin with a German phrase in Fraktur, 'Teutschen')",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:34.651Z",
+  "text_location": "repo",
+  "text_sha256": "f21865d043a078bedee8fb1352f240a3c94ed71451872678b17d064f9603a747",
+  "unit": {
+    "chars": 2881
+  },
+  "stratum": "latin-period-5126"
+}

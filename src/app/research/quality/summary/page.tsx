@@ -12,7 +12,7 @@ import { KEY_FINDINGS } from '../findings';
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: 'Page Quality — Summary — Source Library Research',
+  title: 'Page Quality: Summary | Source Library Research',
   description: 'How good are Source Library’s transcriptions and translations, language by language, how was it measured, and do date, text density or scan size explain the differences? A two-page summary of the working paper.',
   alternates: { canonical: '/research/quality/summary' },
 };
@@ -31,7 +31,7 @@ const DESCRIPTOR_DATA = `${GH}scripts/eval/output/page-descriptors-5623.json`;
 const MS_RULE = `${GH}scripts/lib/syriac-kraken-lane.mjs`;
 
 const pct = (x: number) => `${Math.round(x * 100)}%`;
-const cer = (x: number | null) => (x == null ? '—' : x < 0.01 ? `${(x * 100).toFixed(1)}%` : `${Math.round(x * 1000) / 10}%`);
+const cer = (x: number | null) => (x == null ? '–' : x < 0.01 ? `${(x * 100).toFixed(1)}%` : `${Math.round(x * 1000) / 10}%`);
 
 // ── the covariate file, typed ───────────────────────────────────────────────
 type Ci = number[] | null;
@@ -237,7 +237,7 @@ function OddsRow({ t }: { t: Term }) {
   return (
     <tr className="border-b border-light align-middle">
       <td className="py-0.5 pr-2 text-secondary">{t.term.replace(/ \(vs .*\)$/, '')}</td>
-      <td className="py-0.5 pr-2 text-right text-muted">{t.n_at_level ?? '—'}</td>
+      <td className="py-0.5 pr-2 text-right text-muted">{t.n_at_level ?? '–'}</td>
       <td className="py-0.5 pr-2 text-right text-primary whitespace-nowrap">{t.odds_ratio.toFixed(2)} <span className="text-muted">({t.ci[0].toFixed(2)}–{t.ci[1].toFixed(2)})</span></td>
       <td className="py-0.5 w-[8rem]">
         <svg viewBox={`0 0 ${W} 8`} className="w-full h-auto" role="img" aria-label={`odds ratio ${t.odds_ratio}, 95% CI ${t.ci[0]}–${t.ci[1]}`}>
@@ -537,6 +537,7 @@ export default function QualitySummaryPage() {
 
         <div className="border-t border-light pt-3 text-xs text-muted flex flex-wrap gap-x-5 gap-y-1">
           <span>Full working paper, methods and sources: <Link href={PAPER} className="text-accent-rust hover:underline">sourcelibrary.org/research/quality</Link></span>
+          <span>Known defects and work in progress: <Link href="/research/quality/open" className="text-accent-rust hover:underline">sourcelibrary.org/research/quality/open</Link></span>
           <span>Data: src/data/quality-by-language.json, src/data/quality-covariates.json ({cov.generated})</span>
           <span>Code: scripts/eval in the public repository (AGPL)</span>
           <span>team@sourcelibrary.org</span>

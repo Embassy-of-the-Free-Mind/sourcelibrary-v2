@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import SiteHeader from '@/components/layout/SiteHeader';
 import OutboundLink from '@/components/analytics/OutboundLink';
-import type { Locale } from '@/lib/i18n';
+import { withEnglishFallback, type Locale } from '@/lib/locale-path';
 
 /**
  * Giving through your company — the acquisition surface for Dutch BV owners and
@@ -95,22 +95,24 @@ interface BusinessStrings {
   whereCta: string;
 }
 
-const STRINGS: Record<Locale, BusinessStrings> = {
+// No `/la` twin for this surface (#6254): Latin reads the English copy, which is
+// never rendered under a Latin URL. See `withEnglishFallback`.
+const STRINGS: Record<Locale, BusinessStrings> = withEnglishFallback({
   en: {
     eyebrow: 'For business owners',
     heroTitle: 'Giving through your company.',
     heroLead:
-      'Most business owners assume a donation has to come out of their own pocket — salary or a dividend first, gift second. In the Netherlands that instinct is expensive. Giving directly from the company is usually the cheapest route by a wide margin, and almost nobody is told so.',
+      'Most business owners assume a donation has to come out of their own pocket: salary or a dividend first, gift second. In the Netherlands that instinct is expensive. Giving directly from the company is usually the cheapest route by a wide margin, and almost nobody is told so.',
 
     shortLabel: 'The short version',
     shortTitle: 'Give from wherever the money already sits.',
     shortBody:
-      'Taking money out of a BV costs a toll — 24.5% to 31% in box 2 on a dividend, or up to 49.5% in box 1 on salary. The personal gift deduction then refunds you at a rate capped at 37.56%. You pay the toll to move money you were always going to give away, and the deduction never catches up. A gift straight from the company skips the toll entirely.',
+      'Taking money out of a BV costs a toll: 24.5% to 31% in box 2 on a dividend, or up to 49.5% in box 1 on salary. The personal gift deduction then refunds you at a rate capped at 37.56%. You pay the toll to move money you were always going to give away, and the deduction never catches up. A gift straight from the company skips the toll entirely.',
 
     nlLabel: 'Netherlands',
     nlTitle: 'If you have a BV.',
     nlLeadPre:
-      'Source Library is a project of the Embassy of the Free Mind in Amsterdam, whose foundation — Stichting Het Wereldhart — is a registered ',
+      'Source Library is a project of the Embassy of the Free Mind in Amsterdam, whose foundation, Stichting Het Wereldhart, is a registered',
     nlLeadStrong: 'cultural ANBI',
     nlLeadPost: '. For a Dutch company that is the most favourable class of recipient there is.',
     bullet1Pre: 'Your BV deducts gifts against profit, up to 50% of profit with a ceiling of ',
@@ -118,7 +120,7 @@ const STRINGS: Record<Locale, BusinessStrings> = {
     bullet1Post: '.',
     bullet2Pre: 'Because we are a cultural ANBI, the first €5,000 you give counts as ',
     bullet2Strong: '€7,500',
-    bullet2Post: ' for the deduction — a multiplier worth up to €2,500 of extra relief.',
+    bullet2Post: ' for the deduction: a multiplier worth up to €2,500 of extra relief.',
     bullet3: 'No VAT applies to a genuine gift, so nothing is lost in the transfer.',
 
     thGift: 'Your gift',
@@ -139,7 +141,7 @@ const STRINGS: Record<Locale, BusinessStrings> = {
       'If you would like your company named, sponsorship is fully deductible as a business cost with ',
     sponsorStrong: 'no ceiling at all',
     sponsorMid:
-      ' — which matters once you are near the gift limit. It comes with recognition on the library, a private tour of the Bibliotheca for your team, and early access to what we publish. See ',
+      ', which matters once you are near the gift limit. It comes with recognition on the library, a private tour of the Bibliotheca for your team, and early access to what we publish. See ',
     sponsorLink: 'corporate partnership',
 
     usLabel: 'United States',
@@ -150,7 +152,7 @@ const STRINGS: Record<Locale, BusinessStrings> = {
       ', a New York 501(c)(3) that holds a designated Source Library fund. A gift made directly to the Dutch foundation is not deductible in the US, so the NAF route is the one that works.',
     usNoteLabel: 'One change worth knowing about',
     usNote:
-      'From the 2026 tax year, a C corporation deducts charitable gifts only above a floor of 1% of taxable income, up to the existing 10% ceiling. Below that floor the deduction is nothing, and it generally does not carry forward. Individuals face a comparable 0.5% floor. A payment with genuine consideration behind it — sponsorship, naming, access, contracted work — is a business expense instead, with no floor and no cap. For many US companies that is now the better structure, and it is worth raising with your CPA before deciding.',
+      'From the 2026 tax year, a C corporation deducts charitable gifts only above a floor of 1% of taxable income, up to the existing 10% ceiling. Below that floor the deduction is nothing, and it generally does not carry forward. Individuals face a comparable 0.5% floor. A payment with genuine consideration behind it (sponsorship, naming, access, contracted work) is a business expense instead, with no floor and no cap. For many US companies that is now the better structure, and it is worth raising with your CPA before deciding.',
 
     howTitle: 'How to give.',
     cardEuLabel: 'Netherlands & EU',
@@ -188,7 +190,7 @@ const STRINGS: Record<Locale, BusinessStrings> = {
     nlLabel: 'Países Bajos',
     nlTitle: 'Si tienes una BV.',
     nlLeadPre:
-      'Source Library es un proyecto de la Embassy of the Free Mind de Ámsterdam, cuya fundación — Stichting Het Wereldhart — está registrada como ',
+      'Source Library es un proyecto de la Embassy of the Free Mind de Ámsterdam, cuya fundación, Stichting Het Wereldhart, está registrada como ',
     nlLeadStrong: 'ANBI cultural',
     nlLeadPost:
       '. Para una empresa neerlandesa es la categoría de destinatario más favorable que existe.',
@@ -230,7 +232,7 @@ const STRINGS: Record<Locale, BusinessStrings> = {
       ', una entidad 501(c)(3) de Nueva York que mantiene un fondo designado para Source Library. Un donativo hecho directamente a la fundación neerlandesa no es deducible en EE. UU., así que la vía de la NAF es la que funciona.',
     usNoteLabel: 'Un cambio que conviene conocer',
     usNote:
-      'Desde el ejercicio fiscal 2026, una C corporation solo deduce los donativos que superen un mínimo del 1% de la base imponible, hasta el techo del 10% ya existente. Por debajo de ese mínimo la deducción es cero y, por lo general, no se traslada a ejercicios siguientes. Las personas físicas tienen un mínimo equivalente del 0,5%. Un pago con contraprestación real detrás — patrocinio, denominación, acceso, trabajo contratado — es en cambio un gasto de la actividad, sin mínimo y sin techo. Para muchas empresas estadounidenses esa es hoy la mejor estructura, y conviene planteárselo a tu asesor fiscal antes de decidir.',
+      'Desde el ejercicio fiscal 2026, una C corporation solo deduce los donativos que superen un mínimo del 1% de la base imponible, hasta el techo del 10% ya existente. Por debajo de ese mínimo la deducción es cero y, por lo general, no se traslada a ejercicios siguientes. Las personas físicas tienen un mínimo equivalente del 0,5%. Un pago con contraprestación real detrás (patrocinio, denominación, acceso, trabajo contratado) es en cambio un gasto de la actividad, sin mínimo y sin techo. Para muchas empresas estadounidenses esa es hoy la mejor estructura, y conviene planteárselo a tu asesor fiscal antes de decidir.',
 
     howTitle: 'Cómo donar.',
     cardEuLabel: 'Países Bajos y UE',
@@ -253,7 +255,7 @@ const STRINGS: Record<Locale, BusinessStrings> = {
       'A digitalizar manuscritos frágiles y libros impresos raros, a la traducción asistida por IA con revisión académica, y a una plataforma de lectura gratuita donde el original y la traducción aparecen uno junto al otro. Todo lo que producimos se publica abiertamente bajo CC BY-SA y es gratis de leer.',
     whereCta: 'Ver todas las formas de donar',
   },
-};
+});
 
 export default function BusinessGivingView({ locale = 'en' }: { locale?: Locale }) {
   const s = STRINGS[locale];

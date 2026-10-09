@@ -5,7 +5,7 @@ import { getLibraryStats, roundedCountLabel } from '@/lib/library-stats';
 import { meteredReaderEnabled } from '@/lib/free-preview';
 
 export const metadata: Metadata = {
-  title: 'FAQ — Source Library',
+  title: 'FAQ | Source Library',
   description: 'Common questions about AI translation quality, OCR accuracy, scholarly standards, and how Source Library handles primary source texts.',
   alternates: { canonical: '/about/faq' },
 };
@@ -25,12 +25,12 @@ function getFaqs(bookCount: string): FAQItem[] {
           Our translations are AI-generated and clearly marked as such. They are
           <strong> working translations</strong>, not peer-reviewed scholarly editions.
           They exist to make texts accessible that would otherwise remain locked behind
-          Latin, Greek, Arabic, or German &mdash; languages most readers cannot access.
+          Latin, Greek, Arabic, or German, languages most readers cannot access.
         </p>
         <p>
           Every translation is displayed alongside the original language text and the
           scanned page image. Readers can verify any passage against the source. We do
-          not present AI translations as authoritative &mdash; we present them as a bridge
+          not present AI translations as authoritative; we present them as a bridge
           to the original.
         </p>
         <p>
@@ -45,15 +45,15 @@ function getFaqs(bookCount: string): FAQItem[] {
     answer: (
       <>
         <p>
-          Most AI translation projects start from existing digital text &mdash; often
+          Most AI translation projects start from existing digital text, often
           low-quality OCR scraped from Internet Archive or similar sources. The text
           is already corrupted before translation begins. Garbage in, garbage out.
         </p>
         <p>
           We start from <strong>high-resolution page images</strong> sourced directly
           from institutional IIIF servers (Bodleian, Gallica, Vatican, BSB Munich, etc.).
-          Our OCR uses Gemini vision models that read historical typefaces &mdash;
-          blackletter, early Roman type, polytonic Greek &mdash; directly from the image.
+          Our OCR uses Gemini vision models that read historical typefaces
+          (blackletter, early Roman type, polytonic Greek) directly from the image.
           The translation model then works from this fresh transcription with full page
           context, not from noisy pre-existing OCR.
         </p>
@@ -116,7 +116,7 @@ function getFaqs(bookCount: string): FAQItem[] {
           or Arabic costs $0.20&ndash;$0.30 per word. An average book in the collection runs
           50,000&ndash;80,000 words. Even for the {bookCount} books currently visible, that&apos;s
           roughly <strong>$100&ndash;$200 million</strong> and over <strong>1,000 translator-years</strong> of
-          full-time work &mdash; assuming you could find enough specialists in medieval Latin
+          full-time work, assuming you could find enough specialists in medieval Latin
           paleography, polytonic Greek, classical Arabic, and early modern German to even
           attempt it. The global pool of such translators numbers in the hundreds.
         </p>
@@ -124,8 +124,8 @@ function getFaqs(bookCount: string): FAQItem[] {
           Many of these texts have <em>never</em> been translated into any modern language.
           A working AI translation that gets the reader 80% of the way is better than
           no translation at all. And for scholars who do read the original languages,
-          the transcription itself &mdash; searchable, citable, linked to the page
-          image &mdash; is the real value.
+          the transcription itself (searchable, citable, linked to the page
+          image) is the real value.
         </p>
         <p>
           We actively support human translation efforts. When a scholar produces a critical
@@ -153,7 +153,7 @@ function getFaqs(bookCount: string): FAQItem[] {
           <li>Embassy of the Free Mind / Bibliotheca Philosophica Hermetica</li>
           <li>Cambridge University Library</li>
           <li>Library of Congress</li>
-          <li>And others &mdash; 24 import pipelines in total</li>
+          <li>And others: 24 import pipelines in total</li>
         </ul>
         <p>
           Each book&apos;s source is recorded with full provenance: the institution,
@@ -173,7 +173,7 @@ function getFaqs(bookCount: string): FAQItem[] {
           CSEL, Loeb pre-1929) are also in the public domain.
         </p>
         <p>
-          Page images are used under the terms of each source institution &mdash; typically
+          Page images are used under the terms of each source institution, typically
           Creative Commons licenses (CC BY, CC BY-NC) or public domain dedications. We
           record the license for every book and respect institutional terms of use.
         </p>
@@ -190,7 +190,7 @@ function getFaqs(bookCount: string): FAQItem[] {
       <>
         <p>
           Source Library&apos;s curatorial vision grows from the Bibliotheca Philosophica
-          Hermetica at the Embassy of the Free Mind in Amsterdam &mdash; one of the
+          Hermetica at the Embassy of the Free Mind in Amsterdam, one of the
           world&apos;s great collections of Western esoteric literature, recognized by
           UNESCO&apos;s Memory of the World Register. Our core subject areas reflect that
           heritage: Hermetic philosophy, alchemy, Neoplatonism, Kabbalah, Rosicrucianism,
@@ -212,7 +212,7 @@ function getFaqs(bookCount: string): FAQItem[] {
         </p>
         <p>
           Processing priority follows the same curatorial logic. Texts closest to the
-          EFM&apos;s core &mdash; Hermetica, alchemical treatises, Neoplatonist works &mdash;
+          EFM&apos;s core (Hermetica, alchemical treatises, Neoplatonist works)
           are translated first. From there, the circle expands. We are not neutral
           aggregators; we have a point of view about what matters and what connects to what.
           That said, everything in the collection is freely available regardless of
@@ -254,8 +254,8 @@ function getFaqs(bookCount: string): FAQItem[] {
         {meteredReaderEnabled() ? (
           <p>
             Source Library is a non-profit project in partnership with the Embassy of the
-            Free Mind in Amsterdam. Every book is freely browsable &mdash; scans, metadata,
-            and a generous free sample of every text &mdash; and a free account unlocks
+            Free Mind in Amsterdam. Every book is freely browsable (scans, metadata,
+            and a generous free sample of every text), and a free account unlocks
             full reading access.
           </p>
         ) : (
@@ -267,7 +267,7 @@ function getFaqs(bookCount: string): FAQItem[] {
         )}
         <p>
           The project is funded by institutional support and individual contributions.
-          Processing thousands of books with AI is expensive &mdash; if you find value
+          Processing thousands of books with AI is expensive. If you find value
           in this work, <Link href="/support" className="underline">support is welcome</Link>.
         </p>
       </>
@@ -316,10 +316,10 @@ export default async function FAQPage() {
             About Source Library
           </Link>
           <Link
-            href="/about/processing"
+            href="/how-it-works"
             className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
           >
-            How Processing Works
+            How it works
           </Link>
         </div>
       </div>

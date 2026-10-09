@@ -4,13 +4,15 @@ import { getBatchJobStatus, getBatchJobResults } from '@/lib/gemini-batch';
 import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
 import { loopVerdict } from '@/lib/ocr-loop-guard';
-import { isTruncatedCandidate } from '@/lib/truncated-response';
+import { isTruncatedCandidate, candidateText } from '@/lib/truncated-response';
 import { outputTokensFrom } from '@/lib/gemini-logger';
 import { engineFromBatchJob, notRecorded, ocrProvenance, translationProvenance } from '@/lib/write-provenance';
 
 /** Provenance identity of this route (#4613). */
 const ROUTE_CALL_SITE = 'src/app/api/batch-save/route.ts';
-import { CLEAR_STALE_UNSET, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON } from '@/lib/translate-write';
+import { CLEAR_STALE_UNSET, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate } from '@/lib/translate-write';
+import { guardTranslationText } from '@/lib/translation-write-guard';
+import { endBatchJob } from '../../../../scripts/lib/end-batch-job.mjs';
 
 export const maxDuration = 300;
 
@@ -75,16 +77,18 @@ export const POST = withAuth(async (request, session) => {
         if (geminiStatus.state !== 'JOB_STATE_SUCCEEDED') {
           console.log(`[batch-jobs/save-results] Job ${job.id} not succeeded: ${geminiStatus.state}`);
           // Update status in case it changed
-          await db.collection('batch_jobs').updateOne(
-            { id: job.id },
-            {
-              $set: {
-                status: geminiStatus.state === 'JOB_STATE_FAILED' ? 'failed' : 'processing',
-                gemini_state: geminiStatus.state,
-                updated_at: new Date(),
-              },
-            }
-          );
+          if (geminiStatus.state === 'JOB_STATE_FAILED') {
+            // Ended on Gemini's own word, through the one guarded terminator (#6276).
+            await endBatchJob(db, job, {
+              status: 'failed', reason: 'Gemini state: JOB_STATE_FAILED', by: 'api/batch-save',
+              gemini: { verdict: 'exists', state: geminiStatus.state },
+            });
+          } else {
+            await db.collection('batch_jobs').updateOne(
+              { id: job.id },
+              { $set: { status: 'processing', gemini_state: geminiStatus.state, updated_at: new Date() } }
+            );
+          }
           continue;
         }
 
@@ -106,7 +110,7 @@ export const POST = withAuth(async (request, session) => {
           }
 
           const candidate = result.response?.candidates?.[0];
-          const text = candidate?.content?.parts?.[0]?.text;
+          let text = candidateText(candidate);
           if (!text) {
             failed++;
             continue;
@@ -161,6 +165,14 @@ export const POST = withAuth(async (request, session) => {
               failed++;
               continue;
             }
+            // A script in the English that is in neither the source nor the book's language (#5734).
+            const stray = await strayScriptGate(db, { id: pageId!, book_id: job.book_id }, text, { language: job.language, jobId: job.id, model: job.model });
+            if (stray.refused) {
+              console.warn(`[batch-save] STRAY SCRIPT: refusing page ${pageId}`);
+              failed++;
+              continue;
+            }
+            text = guardTranslationText(stray.text); // #5902: term definitions → <note>
             await createRevision(pageId!, 'translation', job.id);
             await db.collection('pages').updateOne(
               { id: pageId },

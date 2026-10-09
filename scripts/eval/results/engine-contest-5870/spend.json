@@ -1,0 +1,28 @@
+{
+ "envelope": "engine-contest-5870",
+ "pseudo_book_id": "engine-contest-5870",
+ "model": "gemini-3.1-flash-lite",
+ "mode": "batch",
+ "jobs": [
+  {
+   "job_name": "batches/blj0koqg4cu7n7krzj1kvt7fwb9tjgkmew80",
+   "requests": 21,
+   "answered": 21,
+   "in_tokens": 59815,
+   "out_tokens": 14612,
+   "cost_usd": 0.018436,
+   "state": "BATCH_STATE_SUCCEEDED"
+  },
+  {
+   "job_name": "batches/65epsgw3lzd57g42dyah63fbtszumz2ndwa2",
+   "requests": 5,
+   "answered": 5,
+   "in_tokens": 19652,
+   "out_tokens": 5053,
+   "cost_usd": 0.006246,
+   "state": "BATCH_STATE_SUCCEEDED"
+  }
+ ],
+ "total_usd": 0.024682,
+ "kraken_cpu_seconds": 5055.6
+}

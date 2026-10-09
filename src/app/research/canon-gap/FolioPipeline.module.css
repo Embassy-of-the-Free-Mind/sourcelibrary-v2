@@ -1,0 +1,171 @@
+/*
+ * "One page through the pipeline" (#5846). Every element's resting style is its FINAL state,
+ * so the still version (reduced motion, "show all stages", no JS) needs no extra rules: the
+ * animations below only run on the active panel while playing, and only when motion is allowed.
+ */
+
+/* Playing: only the active panel is laid out, so the figure is as tall as the stage on screen. */
+.root[data-mode='play'] .panel[data-on='false'] {
+  display: none;
+}
+.root[data-mode='all'] .panel + .panel {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e7e5e4;
+}
+.root[data-mode='play'] .stillOnly {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root .panel[data-on='false'] {
+    display: block !important;
+  }
+  .root .panel + .panel {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e7e5e4;
+  }
+  .controls {
+    display: none !important;
+  }
+  .root .stillOnly {
+    display: block;
+  }
+}
+
+.tibetan {
+  font-family: 'Noto Serif Tibetan', 'Kailasa', 'Microsoft Himalaya', 'Jomolhari', serif;
+  line-height: 1.9;
+}
+
+/* Bands over the woodblock image: one per carved line. */
+.band {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: rgba(180, 83, 9, 0.16);
+  border-top: 1px solid rgba(180, 83, 9, 0.5);
+  border-bottom: 1px solid rgba(180, 83, 9, 0.5);
+}
+.band[data-focus='false'] {
+  background: rgba(180, 83, 9, 0.06);
+  border-color: rgba(180, 83, 9, 0.2);
+}
+.sweep {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  left: 100%;
+  background: #b45309;
+  box-shadow: 0 0 12px 4px rgba(180, 83, 9, 0.35);
+  opacity: 0;
+}
+
+.del {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #c2610c;
+  color: #a8a29e;
+}
+.ins {
+  color: #0f766e;
+  background: rgba(11, 148, 136, 0.1);
+  border-radius: 2px;
+}
+
+/* Empty chair: the dashed outline is the resting state. */
+.chair {
+  stroke-dasharray: 6 5;
+}
+
+.progress {
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+.shrinker {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  border-radius: 2px;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .root[data-mode='play'] .panel[data-on='true'] {
+    animation: fade 0.45s ease both;
+  }
+  .root[data-mode='play'] .panel[data-on='true'] .fade {
+    animation: fade 0.6s ease both;
+    animation-delay: var(--d, 0s);
+  }
+  .root[data-mode='play'] .panel[data-on='true'] .rise {
+    animation: rise 0.7s ease both;
+    animation-delay: var(--d, 0s);
+  }
+  .root[data-mode='play'] .panel[data-on='true'] .sweep {
+    animation: sweep 5.5s linear 0.4s both;
+  }
+  .root[data-mode='play'] .panel[data-on='true'] .del {
+    animation: strike 0.8s ease both;
+    animation-delay: var(--d, 0s);
+  }
+  .root[data-mode='play'] .panel[data-on='true'] .ins {
+    animation: fade 0.8s ease both;
+    animation-delay: var(--d, 0s);
+  }
+  .root[data-mode='play'] .panel[data-on='true'] .gate {
+    animation: gate 0.8s ease both;
+    animation-delay: var(--d, 0s);
+  }
+  .root[data-mode='play'] .panel[data-on='true'] .chair {
+    animation: dash 6s linear infinite;
+  }
+  .root[data-mode='play'] .panel[data-on='true'] .shrinker {
+    animation: shrink 3.2s cubic-bezier(0.6, 0, 0.3, 1) 0.3s both;
+  }
+  .root[data-mode='play'][data-playing='true'] .progress {
+    animation: progress var(--dur, 10s) linear both;
+  }
+  .root[data-paused='true'] *,
+  .root[data-paused='true'] .progress {
+    animation-play-state: paused !important;
+  }
+}
+
+@keyframes fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes sweep {
+  0% { left: 0; opacity: 1; }
+  92% { left: 100%; opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+@keyframes strike {
+  from { text-decoration-color: transparent; color: inherit; }
+  to { text-decoration-color: #c2610c; color: #a8a29e; }
+}
+@keyframes gate {
+  from { opacity: 0.25; filter: grayscale(1); }
+  to { opacity: 1; filter: none; }
+}
+@keyframes dash {
+  to { stroke-dashoffset: -110; }
+}
+@keyframes shrink {
+  0% { transform: scale(var(--from, 18)); opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: scale(1); opacity: 0; }
+}
+@keyframes progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}

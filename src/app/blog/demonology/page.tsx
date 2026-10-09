@@ -26,7 +26,7 @@ export default function DemonologyPage() {
       header={
         <ContentHeader
           title="What Are Demons? Five Answers from the Primary Sources"
-          subtitle="The word &ldquo;demon&rdquo; names two almost opposite things — and the history of how it acquired its current meaning is one of the stranger reversals in intellectual history"
+          subtitle="The word &ldquo;demon&rdquo; names two almost opposite things, and the history of how it acquired its current meaning is one of the stranger reversals in intellectual history"
           image="https://images.sourcelibrary.org/archived/6953b56577f38f6761bd979d/62.jpg"
           imageAlt="Illustration of a jinn from the Book of Wonders, 14th century"
         >
@@ -57,18 +57,18 @@ export default function DemonologyPage() {
         <p className="text-xl text-secondary leading-relaxed mb-8 font-body">
           Ask what a demon is and you will get five very different answers depending on which century,
           which tradition, and which text you pick up. The Greek <em>daimōn</em> is a beneficent
-          intermediary between gods and mortals — a cosmic middleman who keeps the universe talking to
+          intermediary between gods and mortals, a cosmic middleman who keeps the universe talking to
           itself. The Hermetic <em>daemon</em> is your personal guardian, assigned at birth, present
           at death. The Islamic <em>jinn</em> are an entire parallel civilization, made from smokeless
           fire, with their own prophets and their own final judgment. The Christian <em>daemon</em> is
           a fallen angel, malevolent by nature, deployed by Satan to corrupt human souls. And in
-          ceremonial magic — in the grimoires — demons are powerful intelligences that can be bound,
+          ceremonial magic (in the grimoires) demons are powerful intelligences that can be bound,
           commanded, and put to work.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
           These are not five versions of the same idea. They are five genuinely different ontologies.
-          Source Library holds the primary texts behind each of them — not commentaries, not
+          Source Library holds the primary texts behind each of them: not commentaries, not
           encyclopedias, but the actual manuscripts and printed books that shaped what educated people
           in each tradition believed about the invisible world.
         </p>
@@ -98,15 +98,15 @@ export default function DemonologyPage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The Greek word <em>daimōn</em> (δαίμων) originally carried no negative charge whatsoever.
-            In Hesiod, the souls of the men of the Golden Age become <em>daimones</em> after death —
+            In Hesiod, the souls of the men of the Golden Age become <em>daimones</em> after death:
             benevolent guardians who wander the earth protecting mortals. In Plato&rsquo;s{' '}
             <em>Symposium</em>, Diotima explains to Socrates that Eros himself is a great{' '}
             <em>daimōn</em>, and that &ldquo;the whole of the daimonic is between god and
-            mortal&rdquo; — a mediating power that ferries prayers upward and divine gifts downward.
+            mortal&rdquo;, a mediating power that ferries prayers upward and divine gifts downward.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Socrates famously claimed to have a personal <em>daimonion</em> — a divine sign that spoke
+            Socrates famously claimed to have a personal <em>daimonion</em>, a divine sign that spoke
             to him, never commanding but always warning. This is the voice that prevented him from
             pursuing certain courses of action, and which Plato treats with complete seriousness. When
             Socrates&rsquo; accusers charged him with introducing new divinities, the <em>daimonion</em>{' '}
@@ -116,7 +116,7 @@ export default function DemonologyPage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The philosophical framework that would influence all subsequent Western demonology came
             from the Neoplatonists. Plotinus, Porphyry, and Iamblichus built elaborate cosmologies in
-            which <em>daimones</em> filled the great chain of being between the gods and humanity —
+            which <em>daimones</em> filled the great chain of being between the gods and humanity:
             necessary intermediaries in a universe so hierarchically ordered that divine and mortal
             could not communicate directly.
           </p>
@@ -129,7 +129,7 @@ export default function DemonologyPage() {
               subservient to one God, and others to another.&rdquo;
             </p>
             <p className="text-sm text-muted">
-              Iamblichus, <em>De Mysteriis</em> — on the function of daimones in the divine hierarchy
+              Iamblichus, <em>De Mysteriis</em>, on the function of daimones in the divine hierarchy
             </p>
           </div>
 
@@ -147,9 +147,9 @@ export default function DemonologyPage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The <em>Corpus Hermeticum</em> — a collection of philosophical and religious texts written
+            The <em>Corpus Hermeticum</em> (a collection of philosophical and religious texts written
             in Greek in Egypt during the 2nd–3rd centuries CE, attributed to the legendary sage Hermes
-            Trismegistus — takes the Greek daimonic framework and makes it intensely personal.
+            Trismegistus) takes the Greek daimonic framework and makes it intensely personal.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -172,8 +172,8 @@ export default function DemonologyPage() {
                 className="text-accent-rust hover:underline"
               >
                 Pimander (Corpus Hermeticum), 1493
-              </Link>{' '}
-              — the Mind as guardian presence
+              </Link>
+              , the Mind as guardian presence
             </p>
           </div>
 
@@ -197,16 +197,16 @@ export default function DemonologyPage() {
                 className="text-accent-rust hover:underline"
               >
                 Hermetica (Scott translation), Vol. I
-              </Link>{' '}
-              — from the <em>Asclepius</em>
+              </Link>
+              , from the <em>Asclepius</em>
             </p>
           </div>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            This is the daemon at its most benign — your personal cosmic escort, present at birth and
+            This is the daemon at its most benign: your personal cosmic escort, present at birth and
             death, guiding your soul through the vicissitudes of incarnated existence. The{' '}
             <em>daimon</em> as spiritual advisor would survive the transition to Christianity in
-            disguised form, but by the 15th century it had been largely demonized — assimilated into
+            disguised form, but by the 15th century it had been largely demonized, assimilated into
             the Christian framework as a tempter rather than a guide.
           </p>
 
@@ -214,9 +214,9 @@ export default function DemonologyPage() {
             The Hermetic texts themselves were largely unknown in the Latin West until 1462, when
             Cosimo de&rsquo; Medici commissioned Marsilio Ficino to translate the <em>Corpus
             Hermeticum</em> from a Greek manuscript just brought to Florence from Macedonia. Ficino
-            interrupted his translation of Plato to work on the Hermetica first — on Cosimo&rsquo;s
+            interrupted his translation of Plato to work on the Hermetica first, on Cosimo&rsquo;s
             orders, because Cosimo was dying and wanted to read the work before he died. Source
-            Library holds both Ficino&rsquo;s 1481 Venice edition and the 1493 printing &mdash;
+            Library holds both Ficino&rsquo;s 1481 Venice edition and the 1493 printing,
             among the most influential books in Renaissance intellectual history.
           </p>
         </section>
@@ -229,8 +229,8 @@ export default function DemonologyPage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The Islamic cosmology of spirits is more elaborate than any Western parallel and
-            considerably more democratic. The <em>jinn</em> — created from smokeless fire, as humans
-            were created from clay and angels from light — constitute an entire civilization parallel
+            considerably more democratic. The <em>jinn</em> (created from smokeless fire, as humans
+            were created from clay and angels from light) constitute an entire civilization parallel
             to the human one. They have their own prophets (the Quran was sent to both jinn and
             humans), their own communities of believers and unbelievers, and their own final judgment.
           </p>
@@ -239,7 +239,7 @@ export default function DemonologyPage() {
             The most visually spectacular source in Source Library for Islamic spirit taxonomy is the{' '}
             <em>Kitab al-Bulhan</em>, an Arabic manuscript held at the Bodleian Library in Oxford,
             dated to the 14th century but drawing on much older sources. It is an encyclopedic work
-            covering astrology, divination, and the nature of the supernatural — illustrated with
+            covering astrology, divination, and the nature of the supernatural, illustrated with
             remarkable paintings of planets, signs of the zodiac, and the spirits associated with them.
           </p>
 
@@ -256,8 +256,8 @@ export default function DemonologyPage() {
                 className="text-accent-rust hover:underline"
               >
                 Kitab al-Bulhan
-              </Link>{' '}
-              — Arabic spirit taxonomy, Bodleian MS Arab d. 84
+              </Link>
+              , Arabic spirit taxonomy, Bodleian MS Arab d. 84
             </p>
           </div>
 
@@ -279,7 +279,7 @@ export default function DemonologyPage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The distinction between <em>jinn</em> and <em>shayatin</em> (satans/demons) is important
             in Islamic thought. <em>Shayatin</em> are jinn who have chosen to rebel against God and
-            follow Iblis (Satan). But ordinary jinn are morally neutral — capable of good or evil,
+            follow Iblis (Satan). But ordinary jinn are morally neutral, capable of good or evil,
             belief or unbelief, just like humans. This is fundamentally different from the Christian
             model in which demons are irrevocably fallen, incapable of redemption or genuine virtue.
           </p>
@@ -287,7 +287,7 @@ export default function DemonologyPage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The Islamic magical tradition built extensively on this taxonomy. The great tradition of
             Arabic <em>sihr</em> (magic) and <em>ilm al-hiyal</em> (the science of devices) involved
-            elaborate systems for communicating with and commanding jinn — a tradition that fed
+            elaborate systems for communicating with and commanding jinn, a tradition that fed
             directly into the grimoire literature that would flourish in Latin Europe through the
             medieval and Renaissance periods.
           </p>
@@ -309,7 +309,7 @@ export default function DemonologyPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The medieval theological synthesis — Aquinas, Bonaventure, Albertus Magnus — developed an
+            The medieval theological synthesis (Aquinas, Bonaventure, Albertus Magnus) developed an
             elaborate demonology from these foundations. Demons were spiritual beings with intellect
             and will; they had real powers over matter and could perform genuine marvels; but their
             will was permanently bent toward evil, and any apparent good they did was instrumental,
@@ -320,7 +320,7 @@ export default function DemonologyPage() {
             The most notorious text in this tradition is the <em>Malleus Maleficarum</em>
             (&ldquo;The Hammer of Witches&rdquo;), written by the Dominican inquisitors Heinrich
             Kramer and Jacob Sprenger in 1486, with a (probably forged) papal endorsement from
-            Innocent VIII. It is not a work of theology but of prosecution — a manual for identifying,
+            Innocent VIII. It is not a work of theology but of prosecution: a manual for identifying,
             interrogating, and executing witches. But its demonology is consistent with the mainstream
             theological tradition: demons are real, powerful, and specifically interested in corrupting
             human sexuality.
@@ -346,7 +346,7 @@ export default function DemonologyPage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The <em>Malleus</em> went through at least 14 editions before 1520 and became the
             standard reference work for witch trials across Catholic and, later, Protestant Europe.
-            The Source Library copy is the 1486 first edition — the year of initial publication, one
+            The Source Library copy is the 1486 first edition, the year of initial publication, one
             of the rarest and most consequential books in the history of persecution.
           </p>
 
@@ -354,7 +354,7 @@ export default function DemonologyPage() {
             A century later, the Protestant Reformation did not soften the demonology. If anything,
             it intensified it. King James VI of Scotland (later James I of England) wrote his{' '}
             <em>Daemonologie</em> in 1597, partly as a response to skeptical humanists like Reginald
-            Scot who doubted that witches had any real power at all. James was a convinced believer —
+            Scot who doubted that witches had any real power at all. James was a convinced believer:
             he personally supervised the torture of accused witches in the North Berwick trials, and
             he would later sponsor the translation of the Bible that bears his name.
           </p>
@@ -374,7 +374,7 @@ export default function DemonologyPage() {
               >
                 Daemonologie
               </Link>
-              , King James VI of Scotland, 1597 — Preface
+              , King James VI of Scotland, 1597, Preface
             </p>
           </div>
 
@@ -388,12 +388,12 @@ export default function DemonologyPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            What makes these texts genuinely strange to read today is not their cruelty — we expect
-            that — but their intellectual seriousness. Both Kramer and James are arguing from
+            What makes these texts genuinely strange to read today is not their cruelty (we expect
+            that) but their intellectual seriousness. Both Kramer and James are arguing from
             premises that their educated contemporaries shared. The question was not whether demons
             existed but what they could do and whether humans could make binding agreements with them.
             The demonological literature of the 15th–17th centuries is not superstition dressed up as
-            theology. It <em>is</em> theology — systematic, argued, institutionally supported.
+            theology. It <em>is</em> theology: systematic, argued, institutionally supported.
           </p>
         </section>
 
@@ -411,7 +411,7 @@ export default function DemonologyPage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The <em>Lemegeton</em>, or <em>Lesser Key of Solomon</em>, is the most famous of the
-            Solomonic grimoires — collections of magical procedures attributed (falsely but
+            Solomonic grimoires, collections of magical procedures attributed (falsely but
             conventionally) to the biblical king whose power over demons was legendary. The first book
             of the <em>Lemegeton</em> is the <em>Goetia</em>, which names and describes 72 demons
             with their ranks, powers, seals, and the methods for evoking and binding them.
@@ -421,7 +421,7 @@ export default function DemonologyPage() {
             The <em>Goetia</em>&rsquo;s procedure begins with a ritual of self-purification and
             authorization. The magician enters a circle, invokes the authority of God and the angels,
             and then calls the demon into a triangle outside the circle. The crucial element is that
-            the magician does not worship the demon — the magician commands it, in God&rsquo;s name.
+            the magician does not worship the demon; the magician commands it, in God&rsquo;s name.
             This distinction allowed grimoire practitioners to argue (with varying plausibility) that
             their practice was consistent with Christian piety.
           </p>
@@ -442,8 +442,8 @@ export default function DemonologyPage() {
                 className="text-accent-rust hover:underline"
               >
                 The Lesser Key of Solomon (Goetia)
-              </Link>{' '}
-              — the Bornless Ritual
+              </Link>
+              , the Bornless Ritual
             </p>
           </div>
 
@@ -464,7 +464,7 @@ export default function DemonologyPage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The language here is liturgical, not adversarial. The magician is praying to God while
-            commanding a demon — a theological contortion that church authorities found unpersuasive.
+            commanding a demon, a theological contortion that church authorities found unpersuasive.
             Grimoire magic was consistently condemned by the Church. The Fourth Book of Occult
             Philosophy, attributed (probably falsely) to Heinrich Cornelius Agrippa, acknowledges
             this tension and attempts to resolve it by restricting spirit contact to angels and to
@@ -507,7 +507,7 @@ export default function DemonologyPage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The trajectory from Greek <em>daimōn</em> to Christian <em>daemon</em> is not a story of
             growing sophistication. It is a story of increasing hostility to the category itself. The
-            Greek daimōn was ontologically neutral or positive — a go-between, a helper, sometimes a
+            Greek daimōn was ontologically neutral or positive: a go-between, a helper, sometimes a
             guide. The Hermetic daemon was your guardian. The Christian demon is your enemy.
           </p>
 
@@ -515,7 +515,7 @@ export default function DemonologyPage() {
             What drove the transformation was not better evidence but institutional politics. Early
             Christian missionaries needed to discredit the religious practices of the cultures they
             were converting. The most efficient way to do this was to assimilate the indigenous spirits
-            into a category of cosmic evil — not to deny their existence (which would have been
+            into a category of cosmic evil: not to deny their existence (which would have been
             harder to argue), but to assert that they were malevolent, that working with them was
             damnation, and that the Church had replaced them with a better offer.
           </p>
@@ -533,7 +533,7 @@ export default function DemonologyPage() {
             extraordinary diversity of answers that human cultures have given to the same question: are
             there invisible intelligences, and if so, what are they for? The Greek philosopher, the
             Hermetic initiate, the Islamic scholar, the Christian inquisitor, and the Renaissance
-            magician all say yes — and then completely disagree about everything else.
+            magician all say yes, and then completely disagree about everything else.
           </p>
         </section>
 
@@ -545,12 +545,12 @@ export default function DemonologyPage() {
               {
                 href: '/book/6952062aab34727b1f0432aa',
                 title: 'Pimander (Corpus Hermeticum)',
-                detail: 'Marsilio Ficino translation, 1493 — editio princeps',
+                detail: 'Marsilio Ficino translation, 1493: editio princeps',
               },
               {
                 href: '/book/6953a93977f38f6761bd58f4',
                 title: 'Hermetica (Scott translation)',
-                detail: 'Walter Scott, Vol. I — includes Asclepius',
+                detail: 'Walter Scott, Vol. I, includes Asclepius',
               },
               {
                 href: '/book/69523495ab34727b1f044a45',
@@ -565,17 +565,17 @@ export default function DemonologyPage() {
               {
                 href: '/book/695285d5ab34727b1f04c36f',
                 title: 'Lesser Key of Solomon (Goetia)',
-                detail: 'The 72 demons — seals, ranks, and procedures',
+                detail: 'The 72 demons: seals, ranks, and procedures',
               },
               {
                 href: '/book/694fe602f844de8615417e27',
                 title: 'Fourth Book of Occult Philosophy',
-                detail: 'Attributed to Agrippa — spirit contact theory',
+                detail: 'Attributed to Agrippa: spirit contact theory',
               },
               {
                 href: '/book/6953b56577f38f6761bd979d',
                 title: 'Kitab al-Bulhan',
-                detail: 'Bodleian MS Arab d. 84 — illustrated jinn taxonomy',
+                detail: 'Bodleian MS Arab d. 84: illustrated jinn taxonomy',
               },
             ].map((source) => (
               <Link

@@ -28,7 +28,6 @@
 
 import { withMongo } from '../lib/mongo.mjs';
 import { ObjectId } from 'mongodb';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import * as fs from 'fs';
 
 const arg = (name, def) => {
@@ -51,6 +50,9 @@ const NO_CONTEXT = process.argv.includes('--no-context');
 // short) calls them healthy. A leaked previous page makes a translation too LONG, which isBad cannot see.
 // Only honoured with an explicit --book/--pages or --from list — never a blanket sweep.
 const FORCE = process.argv.includes('--force');
+// #5700: a book whose OCR was measured untrusted is not re-translated — the same transcription
+// gives the same wrong English. The override is for a pilot on pages that were re-read.
+const ALLOW_UNTRUSTED_OCR = process.argv.includes('--allow-untrusted-ocr');
 
 // ── model routing from translate-core (the one door, issue #3725) ──
 // The verbatim copy this replaces had drifted: it was missing nine languages
@@ -67,6 +69,7 @@ import {
   assessTranslationHealth,
   bodyLen,
 } from '../lib/translate-core.mjs';
+import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
 
 function getModelForBook(book) {
   // Re-translation override: collapses happened on lite, so a fix run forces the
@@ -76,14 +79,18 @@ function getModelForBook(book) {
   return getTranslateModelForBook(book);
 }
 
-const API_KEYS = [
-  process.env.GEMINI_API_KEY,
-  process.env.GEMINI_API_KEY_2,
-  process.env.GEMINI_API_KEY_3,
-  process.env.GEMINI_API_KEY_TIER3,
-].filter(Boolean);
-let keyIdx = 0;
-const aiClient = () => new GoogleGenerativeAI(API_KEYS[keyIdx++ % API_KEYS.length]);
+// The one metered door for a hand-run script (#6228). Until 2026-10-08 this file
+// built its own SDK client: ~450 Flash calls in one day wrote no gemini_usage row
+// and sent no thinkingConfig, so neither the dial nor the ledger could see them.
+// callGemini writes the row, rotates keys, and turns thinking off unless asked.
+import { callGemini } from '../lib/gemini-script-client.mjs';
+import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
+
+const CALL_SITE = 'scripts/maintenance/retranslate-pages.mjs';
+// Same request shape as the realtime translation lane (scripts/batch/realtime-translate.mjs),
+// so a repaired page is produced under the settings the rest of the book was.
+const TEMPERATURE = 0.2;
+const MAX_OUTPUT_TOKENS = 16384;
 
 import { sanitizeTranslationTags, isDegenerateSource } from '../lib/translate-core.mjs';
 import { codeVersion, host } from '../lib/write-provenance.mjs';
@@ -113,17 +120,30 @@ async function translateOnce(page, book, prevTranslation) {
     previousTranslation: prevTranslation,
   });
   const modelId = getModelForBook(book);
-  const model = aiClient().getGenerativeModel({ model: modelId, safetySettings: SAFETY_SETTINGS });
-  const result = await model.generateContent(prompt);
-  // What produced this text (#4613). This script sends NO generationConfig, so the record
-  // will say temperature/thinking came from the model's defaults — that is the point.
+  const result = await callGemini({
+    model: modelId,
+    prompt,
+    endpoint: CALL_SITE,
+    type: 'translate',
+    bookId: book.id,
+    pageIds: [page.id],
+    promptVersion: promptRef?.version != null ? String(promptRef.version) : undefined,
+    temperature: TEMPERATURE,
+    maxOutputTokens: MAX_OUTPUT_TOKENS,
+    safetySettings: SAFETY_SETTINGS,
+  });
+  // The SDK's response.text() threw on a blocked or empty candidate; keep that, so
+  // the retry loop sees a failure instead of scoring an empty string.
+  if (!result.text) throw new Error(`empty response (finishReason ${result.finishReason})`);
+  // What produced this text (#4613): the config actually sent, not an assumption.
   const call = {
-    call_site: 'scripts/maintenance/retranslate-pages.mjs', api: 'realtime', model: modelId, promptText: prompt,
-    generationConfig: {}, response: { modelVersion: result.response?.modelVersion },
+    call_site: CALL_SITE, api: 'realtime', model: modelId, promptText: prompt,
+    generationConfig: result.generationConfig,
+    response: { modelVersion: result.raw?.modelVersion },
     run: { job_id: RUN_ID, code_version: CODE_VERSION, host: HOST },
     context: { previous_translation: !!prevTranslation },
   };
-  return { text: sanitizeTranslationTags(result.response.text()), promptRef, call };
+  return { text: sanitizeTranslationTags(result.text), promptRef, call };
 }
 const RUN_ID = `retranslate-pages/${new Date().toISOString().slice(0, 19)}/${process.pid}`;
 const CODE_VERSION = await codeVersion();
@@ -148,6 +168,17 @@ await withMongo(async (db) => {
   console.log(`retranslate-pages — ${EXECUTE ? 'EXECUTE (writing)' : 'DRY RUN (no Gemini, no writes)'}`);
   console.log(`  targets: ${targets.length}\n`);
 
+  // The dial (#6228). A --from list can name thousands of pages across many books,
+  // so it asks the daily budget like any other lane and stops when the dial is
+  // closed or the meter is unreadable. An explicit --book --pages run is the
+  // operator's own decision and passes, the same rule realtime-translate uses.
+  // Asked once, before the first call: a run that starts under the ceiling finishes.
+  if (EXECUTE && !(await budgetAllowsDispatch(db, 'retranslate-pages', { bypass: !!(BOOK && PAGES) }))) {
+    console.error('retranslate-pages: the spend dial does not allow dispatch; nothing sent. Check `node scripts/maintenance/set-dial.mjs --show`.');
+    process.exitCode = 2;
+    return;
+  }
+
   const bookCache = new Map();
   const getBook = async (book_id) => {
     if (bookCache.has(book_id)) return bookCache.get(book_id);
@@ -156,13 +187,24 @@ await withMongo(async (db) => {
     bookCache.set(book_id, book);
     return book;
   };
+  const trustCache = new Map();
+  const trustOf = async (book) => {
+    if (!trustCache.has(book.id)) trustCache.set(book.id, await ocrTrustGate(db, book, { lane: 'retranslate-pages', allow: ALLOW_UNTRUSTED_OCR, record: EXECUTE }));
+    return trustCache.get(book.id);
+  };
 
   let fixed = 0, stillBad = 0, skipped = 0, alreadyGood = 0, protectedCount = 0, done = 0;
   const touchedBooks = new Set();
+  const refusedBooks = new Set();
 
   async function processTarget(t) {
     const book = await getBook(t.book_id);
     if (!book) { skipped++; return; }
+    const trust = await trustOf(book);
+    if (!trust.ok) {
+      if (!refusedBooks.has(book.id)) { refusedBooks.add(book.id); console.log(`  REFUSED ${book.id}: ${trust.reason} (--allow-untrusted-ocr to override)`); }
+      skipped++; return;
+    }
     const page = await db.collection('pages').findOne({ book_id: t.book_id, page_number: t.page_number });
     if (!page?.ocr?.data) { skipped++; return; }
     // A looping source cannot be repaired by re-translating it (#4765/#4850) —

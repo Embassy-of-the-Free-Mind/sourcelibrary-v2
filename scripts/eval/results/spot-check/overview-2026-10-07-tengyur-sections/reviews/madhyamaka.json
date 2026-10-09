@@ -1,0 +1,420 @@
+[
+  {
+    "book_id": "6abeb246896ea18127c82d97",
+    "slot": 5,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཝ (Derge Tengyur, vol. 99)",
+    "tradition": "madhyamaka",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge Tengyur dbu ma vol. ཝ. All four pages are a sub-commentary on Bhāviveka's logical reading of Madhyamaka: syllogism analysis of non-arising, the four conditions, and the goer and going. This is consistent with Avalokitavrata's Prajñāpradīpa-ṭīkā, which opens this run of volumes.",
+    "rights_flag": null,
+    "structure_note": "The images are pecha folios from the 1982–85 Delhi facsimile of the Derge blocks. Each carries a reprint page number in the left margin that runs consistently one ahead of page_number (132 on p.131, 225 on p.224, 327 on p.326, 528 on p.527). There are no duplicates or backsteps. 572 of 573 pages have text and translation; the one gap is probably a cover or blank.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 131,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཆོས་ཅན",
+            "english": "the subject of the inference <note>original: \"dharmin\"</note>",
+            "problem": "the note labels the Sanskrit equivalent as the 'original', but the original here is Tibetan",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 224,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 326,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "དེ་དག་དང་ལྷན་ཅིག་ཏུ་ཡང་དངོས་པོ་རྣམས་གཞན་ལས་སྐྱེ་བར་རིགས་སམ་མི་རིགས་པར་འགྲོ་བར་བྱ་སྟེ",
+            "english": "One must investigate whether it is logical or illogical for things to arise from other factors in conjunction with those very conditions.",
+            "problem": "'together with them' means investigating jointly with the opponents; the translation reads it as arising in conjunction with conditions",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "དོན་དམ་པར་དེ་དག་གཞན་ཉིད་ཡིན་པ་ཁོ་ནར་མི་རིགས་སོ",
+            "english": "strictly \"other\" than the result",
+            "problem": "'than the result' is added by the translator",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 527,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The text is the right Derge e-text aligned to the right folio on every page, and the English is a careful, literal rendering of dense Buddhist logic. I found nothing a specialist would flag on sight.",
+    "fit_to_show": "show",
+    "showcase_pages": [
+      224,
+      527,
+      131
+    ],
+    "reader_summary": "This is a Derge Tengyur volume of Madhyamaka sub-commentary, close formal analysis of Bhāviveka-style syllogisms. The Tibetan is the Esukhia digital Derge text and matches each folio. The English follows the argument closely and can be used, with the normal caution owed to any machine translation of technical pramāṇa vocabulary."
+  },
+  {
+    "book_id": "6abeb325896ea18127c83819",
+    "slot": 6,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ར (Derge Tengyur, vol. 104)",
+    "tradition": "madhyamaka",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge dbu ma vol. ར. The pages comment on the Madhyamakāvatāra: the first bhūmi and the three fetters, the similes of illusion, the refutation of aggregates-as-self (MA 6.127), and the tenth bhūmi and Buddha qualities. This is consistent with Jayānanda's Madhyamakāvatāra-ṭīkā.",
+    "rights_flag": null,
+    "structure_note": "This is the Delhi facsimile of the Derge blocks. The margin reprint numbers run page_number+1 (132, 235, 486, 645). There are no duplicates or backsteps, and 728 of 729 pages have text and translation.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 131,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 234,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "{བརྫུན་,རྫུན་}པའི་རང་བཞིན",
+            "english": "false <note>the text notes a variant spelling: brdzun/rdzun</note>",
+            "problem": "the note says the text records a variant, but the variant is the e-text's editorial markup; the woodblock prints one spelling",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "e-text variant markup '{བརྫུན་,རྫུན་}' appears in the reader's Tibetan, not on the folio",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 485,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "རྣམ་པར་ཤེས་པ་རྫས་སུ་སྨྲ་བ་རྣམས་ཀྱི་ལྟར་ན་ཡང་ངོ་",
+            "english": "those who assert that consciousness is a substance <note>referring to the Cittamatra or Mind-Only school</note>",
+            "problem": "invented doxographic identification; in this passage (MA 6.127 context) the view that the mind is the self belongs to realist Buddhist schools, not Cittamātra",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "བདག་དེ་དག་ཀྱང་མང་པོར་འགྱུར",
+            "english": "<note>original: \"bdag de dag kྱang mang por 'gyur\"</note>",
+            "problem": "the Wylie in the notes is mixed with Tibetan script",
+            "severity": "minor"
+          },
+          {
+            "source": "ཕུང་པོ་",
+            "english": "This text regarding the aggregates <unclear>ends abruptly at the page break</unclear>",
+            "problem": "the translator's remark is wrapped in an <unclear> tag as if it were text",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 644,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "",
+            "english": "<meta>continues from previous page</meta>and so forth is spoken.",
+            "problem": "no space after the meta and an awkward opening",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Every folio has the right text and the English is faithful. The defects are an e-text variant brace showing in the Tibetan and one invented doxographic note (Cittamātra) that a specialist would catch.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      131,
+      644,
+      234
+    ],
+    "reader_summary": "This is a Derge Tengyur commentary on Candrakīrti's Madhyamakāvatāra, covering the bhūmis, the illusion similes and the refutation of the self. The Tibetan is the Esukhia digital Derge text and matches each folio. The English is reliable for the argument, but some translator notes add school attributions that are not in the text and should not be trusted."
+  },
+  {
+    "book_id": "6abeb158896ea18127c82682",
+    "slot": 7,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཙ (Derge Tengyur, vol. 96)",
+    "tradition": "madhyamaka",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge dbu ma vol. ཙ, Nāgārjuna's corpus. p.52 is the end of one treatise and the opening of the Vigrahavyāvartanī, p.185 and p.399 comment on Mūlamadhyamakakārikā chs. 25 and 8, and p.485 discusses direct seeing of emptiness and quotes Rāhulabhadra. This is core Madhyamaka.",
+    "rights_flag": null,
+    "structure_note": "This is the Delhi facsimile of the Derge blocks. Margin reprint numbers run page_number+1 (53, 186, 400, 486). There are no duplicates or backsteps, and 565 of 567 pages have text and translation. The transcription layer keeps the e-text's editorial markup ('#' marks, '{D3828}' Tohoku number, '{a,b}' variants) on every sampled page.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 52,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "...བྱས་པ་ཞེས་བྱ་བ། སློབ་དཔོན་འཕགས་པ་ཀླུ་སྒྲུབ་ཀྱིས་མཛད་པ་རྫོགས་སོ།། །།ལོ་ཙྪ་བ་གཞོན་ནུ་མཆོག་དང་། སྙན་དར་མ་གྲགས་དང་ཁུའི་འགྱུར་དག་ལས",
+            "english": "The composition titled Refutation of Objections (Vigrahavyāvartanī) by the master Arya Nagarjuna is complete.",
+            "problem": "the colophon closes the PRECEDING treatise (its title is on the previous page); the translator names it the Vigrahavyāvartanī, the work that begins in the same line, so the reader is told the Vigrahavyāvartanī ends where it starts",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "རང་བཞིན་ངེས་འབྱིན་མིན་ལ་སོགས",
+            "english": "Rather than lacking such a nature.",
+            "problem": "the line extends the argument to the non-liberating dharmas and the rest; the translation turns it into a contrast that is not in the verse",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "སྐྱེ་བོ་ཆོས་ཀྱི་གནས་སྐབས་མཁས",
+            "english": "Worldly people skilled in the states of phenomena",
+            "problem": "'worldly' added",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "invented heading '### The Verses of the Refutation of Objections' promoted from the title line",
+            "severity": "minor",
+            "class": "T16"
+          },
+          {
+            "note": "e-text markup in the Tibetan: '{D3828}#', 'ལོ་ཙྪ་#བ', 'བི་གྲ་#ཧ' and 10 '#' marks on the page; none is on the folio",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 185,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "བཞིན་པས།",
+            "english": "Darkness.",
+            "problem": "the page opens mid-simile ('…like'); the translation supplies 'Darkness.' from outside the page as a stand-alone sentence",
+            "severity": "moderate",
+            "class": "T6"
+          }
+        ],
+        "other": [
+          {
+            "note": "'#' e-text marks in the Tibetan (e.g. 'དེ་ནི་#མི་འཐད་དེ', 'མྱ་ངན་#འདས་པ')",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 399,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "བྱེད་པ་པོ་ཡིན་པར་གྱུར་པ་ལ་བྱ་བ་མེད་པ་དང་། ལས་ལ་བྱེད་པ་པོ་མེད་པ་དང་། ལས་ཡིན་པར་གྱུར་པ་ལ་བྱ་བ་མེད་པ་དང་། བྱེད་པ་པོ་ལས་མེད་པ་དང་",
+            "english": "if the agent already exists, the action becomes redundant. If the action exists, the agent becomes unnecessary. If the action is non-existent, it lacks an agent.",
+            "problem": "the list of four consequences (an existent agent has no activity, the action lacks an agent, an existent action has no activity, the agent lacks an action) is reshuffled and partly misassigned",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "9 '#' e-text marks in the Tibetan",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 485,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "དེ་ལ་གཅིག་གིས་དོན་དེ་ཇི་ལྟར་བདེན་པ་དེ་ལྟར་སྨྲས་སུ་ཟིན་ཀྱང་དོན་དེ་མངོན་སུམ་དུ་ཡང་མ་གྱུར་པའི་ཕྱིར་{བརྫུན་,རྫུན་}#དུ་ཡང་འགྱུར",
+            "english": "even if the first person speaks the truth as it is, if they had not seen it directly, their testimony could still become a falsehood",
+            "problem": "the witness who has NOT seen is called 'the first person', after the translation itself named the first as the eyewitness; the parable reads as self-contradictory",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "ཤེས་རབ་ཀྱི་ཕ་རོལ་ཏུ་ཕྱིན་པ་ལ་བསྟོད་པ",
+            "english": "<gloss>original: shes rab kྱི་ phar rol tu phyin pa la bstod pa</gloss>",
+            "problem": "the gloss mixes Wylie and Tibetan script and misspells pha rol",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "e-text markup '{བརྫུན་,རྫུན་}#' and 8 more '#' marks in the Tibetan",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Every folio has the right text and core Nāgārjuna material, but the Tibetan pane is sprinkled with e-text '#' and brace markup. On p.52 the English misnames the treatise whose colophon it translates, telling the reader the Vigrahavyāvartanī is complete at the point where it begins.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [],
+    "reader_summary": "This is Nāgārjuna's corpus in the Derge Tengyur: the opening of the Vigrahavyāvartanī and commentary on the Mūlamadhyamakakārikā. The Tibetan is the right Esukhia Derge text on every folio, though it shows editorial '#' and variant marks that are not in the print. The English follows the argument but has misattributions and reshuffled lists at points of detail, so check it against the Tibetan before quoting."
+  },
+  {
+    "book_id": "6abeb404896ea18127c84235",
+    "slot": 8,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཧ (Derge Tengyur, vol. 108)",
+    "tradition": "madhyamaka",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge dbu ma vol. ཧ, the last volume of the section. The sampled content is a commentary on verses about saṃsāra and liberation, Abhidharma-style cosmology (dhyāna palaces, formless realms), dependent-origination lists of contact and feeling, and the 32 marks of a Buddha. It sits in dbu ma by the Derge catalogue's convention, though the sampled pages are not Madhyamaka argument as such.",
+    "rights_flag": null,
+    "structure_note": "This is the Delhi facsimile of the Derge blocks. Margin reprint numbers run page_number+1 (127, 228, 330, 606). There are no duplicates or backsteps, and 632 of 633 pages have text and translation.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 126,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "root-verse lemmas wrapped in '->…<-' arrows in the reader text (4 instances)",
+            "severity": "moderate",
+            "class": "D1"
+          },
+          {
+            "note": "e-text variant markup '{སྩོགས་,སོགས་}' in the Tibetan",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 227,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "བསམ་གཏན་དང་པོ་ལ་སོགས་པ་གཞལ་ཡས་ཁང་གསུམ་གྱི་ཚད་ནི་སྟོང་ཆུང་ངུ་ལ་སོགས་པའི་ཚད་དོ",
+            "english": "is equal to the measurement of a small thousandfold universe",
+            "problem": "drops 'and so forth' (ལ་སོགས་པ); the three palaces correspond to the small, middling and great thousand-worlds, but the English gives one size for all three",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 329,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "e-text variant markup '{བླ་དགས་,བླ་དྭགས་}' twice in the Tibetan",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 605,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "མདོམས་ཀྱི་སྦ་བ་ནི་སྦུབས་སུ་ཞུགས་ཤིང་ནུབ་པ་དེ་དེ་བཞིན་ནོ",
+            "english": "just like that <note>referring to a stallion or elephant</note>",
+            "problem": "the note supplies a comparison the sentence does not make here (it is traditional elsewhere)",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "e-text variant markup '{རི་དགས་,རི་དྭགས་}' in the Tibetan",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Every folio has the right text and the English is faithful apart from one collapsed cosmological measure. Readers do see '->…<-' arrows on the verse lemmas and e-text variant braces in the Tibetan.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      329,
+      605
+    ],
+    "reader_summary": "This is a miscellany volume at the end of the Derge dbu ma section, with commentary on saṃsāra and liberation, cosmology, dependent-origination lists and the marks of a Buddha. The Tibetan is the right Esukhia Derge text, with a few editorial variant braces. The English is sound and literal, apart from occasional markup arrows and a few translator notes."
+  }
+]

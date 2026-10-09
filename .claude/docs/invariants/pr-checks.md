@@ -6,6 +6,18 @@
 
 ---
 
+## Since 2026-10-06 a PR's Vercel preview is skipped unless you asked for one
+
+`scripts/vercel-ignore-build.mjs` skips a git-triggered preview unless the commit message contains
+`[preview]` or the branch starts with `preview/` (#5980). A skipped preview still waits in the
+one-slot queue until it reaches a builder, so its Vercel check can sit PENDING for a while and then
+read as skipped. That is not a build result. **The build check is now `next-build`**
+(`next-build.yml`: compile-only, free on Actions, skipped in seconds when the PR touches no build
+input, #5990). A FAILED or running `next-build` holds `auto-merge.mjs`; an absent one does not. It
+does not prerender, so a page that fails only when rendered against real data still surfaces at the
+production build, which leaves the previous deploy live. The rest of this section applies to the
+previews you do ask for.
+
 ## The Vercel check can be red while the build succeeded
 
 The Vercel check often shows "fail" on the first build, then an automatic retry flips it to pass (the

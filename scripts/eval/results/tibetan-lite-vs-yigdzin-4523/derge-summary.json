@@ -1,0 +1,23 @@
+{
+ "book": "6a3702206b486c89426f8d62",
+ "pairs": 23,
+ "lite": {
+  "median_identity": 0.1493,
+  "shuffle_floor_median": 0.125
+ },
+ "yig": {
+  "median_identity": 0.9619,
+  "shuffle_floor_median": 0.2494
+ },
+ "paired_diff_yig_minus_lite": {
+  "median": 0.8104,
+  "yig_wins": 23,
+  "lite_wins": 0,
+  "ties": 0
+ },
+ "instrument_valid": true,
+ "sensitivity_lite_tibetan_only": {
+  "median_identity": 0.1498,
+  "note": "lite text with every non-Tibetan character removed (same normalisation as the agreement measure); not pre-registered, reported as a check"
+ }
+}

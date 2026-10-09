@@ -15,6 +15,8 @@ import {
   catchwordBoundary, parseCatchword, pageNumberBreaks, parsePageNum, duplicateScan,
   truncationRatio, echoedSource, sourceLanguageCount, tokenMatches, readingLength, ocrReasoningLeak,
   parseVocab, vocabAbsent, repeatedBlocks, LOOP_MAX_TTR, LOOP_MIN_COPIES, REPEAT_MIN_CHARS,
+  metaPayload, continuityMeta,
+  translationReasoningLeak, translationPipelineTalk, TRANSLATION_LEAK_PREFILTER,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/page-integrity.mjs';
@@ -30,6 +32,7 @@ const CW = fx('catchwords.json').cases as any[];
 const PN = fx('page-numbers.json').cases as any[];
 const DUP = fx('duplicate-scans.json').cases as any[];
 const TR = fx('translations.json');
+const MP = fx('meta-payload.json').cases as any[];
 
 describe('catchword continuity', () => {
   it('reads the catchword out of <meta>, and refuses a CJK fore-edge title', () => {
@@ -248,5 +251,103 @@ describe('O4 · a block repeated inside one page (#5135)', () => {
   });
   it('is unjudgeable under two shingles of text', () => {
     expect(repeatedBlocks('only a few words here')).toEqual({ judged: false, why: 'short' });
+  });
+});
+
+describe('text hidden in the continuity <meta>', () => {
+  it('has hidden, whole-page and copied cases', () => {
+    expect(MP.filter((c) => c.expect.shape === 'hidden-text').length).toBeGreaterThanOrEqual(3);
+    expect(MP.some((c) => c.expect.wholePage)).toBe(true);
+    expect(MP.some((c) => c.expect.shape === 'copied')).toBe(true);
+  });
+  for (const c of MP) {
+    it(`${c.expect.shape}${c.expect.wholePage ? ' (whole page)' : ''} — ${c.name}`, () => {
+      const r = metaPayload({ tr: c.tr, prevTr: c.prevTr });
+      expect(r.judged).toBe(true);
+      expect(r.shape).toBe(c.expect.shape);
+      expect(r.wholePage).toBe(c.expect.wholePage);
+    });
+  }
+  it('reads the bare marker and a sentence ABOUT the previous page as nothing hidden', () => {
+    expect(continuityMeta('<meta>continues from previous page</meta> x')?.form).toBe('bare');
+    expect(continuityMeta("<meta>continues from previous page's discussion of Saul.</meta> y")?.form).toBe('descriptive');
+    expect(continuityMeta('<meta>This page follows the title page.</meta> z')).toBeNull();
+  });
+  it('does not judge a payload with no previous translation to compare', () => {
+    const r = metaPayload({ tr: '<meta>continues from previous page: and so the work of the furnace went on through the night</meta> Then', prevTr: null });
+    expect(r).toMatchObject({ judged: false, why: 'no-previous-translation' });
+  });
+});
+
+// Fixtures are phrases from real pages in the 2026-10-06 corpus walk (#6056): the positives are the model's
+// scratchpad stored as the English; the negatives are book text the first, wider net caught.
+describe('translationReasoningLeak', () => {
+  const POSITIVE = [
+    '    *   *Wait, the prompt says:* "Style: warm museum label - explain rather than assume knowledge."\n    *   I will add a note',
+    'The user provided a Latin text and asked for an English translation, preserving the formatting',
+    '*   *Self-Correction during drafting:* The first sentence in the OCR is a fragment',
+    '* The prompt mentions red staining on the left edge. I\'ll include that in the `<meta>` tag.',
+    '*(Self-Correction during drafting)*: The input says "D. JOH. TAULERI".',
+    '*Formatting check:*\n- Header: # THE FIRST ALCIBIADES.',
+    '*   **Target Language:** Accessible English',
+    'shall be changed to <term>ais</term>. <note>Wait, the text says "changed to bhir"</note> Example:',
+    'I should translate it but keep it in the `<margin>` tag as requested.',
+    '*Wait, the Greek in line 12:* nothing healthy',
+    'Please note: The provided text is in Latin, not Greek. I will translate the Latin text into English, preserving the formatting and paragraph breaks as requested.',
+  ];
+  const NEGATIVE = [
+    'by which they lie in* > *wait to deceive: and delighting to be deceived',
+    'you still would not have fulfilled my instructions for a Hearer.',
+    'He says: Wait, I will tell you what praying is, and that one may not pray without faith.',
+    'through the prompt instruction of theologians. But to him who has bestowed his labor',
+    'For the present, I will translate his words thus: *Aristotle and his followers',
+    'A Revised Translation, with an Introduction, by C. BIGG, D.D.',
+    'in my opinion, this is the final decision: that the world stands in a place',
+    'require no self-correction</note>. There are three types of these.',
+    '<note>Pavāraṇā (self-correction) is the ceremony held at the end of the rainy season retreat</note>',
+    '*   **Refinement/Struggle (Mocui):** A complex term suggesting that success is achieved only after effort.',
+    '**We shall check:** <note>original: "ἐρύξομεν"</note> We shall hold back or hinder.',
+    'such details will be settled in a friendly spirit once you provide the further information you promised.',
+    '**SALV.** *Wait, I pray you, Signor Sagredo, for just now a way occurs to me',
+    '**Wait:** that Virgil should wait for him because inferior reason',
+    'then I will treat the **Archeal ideas** <note>The *Archeus* is the internal "master workman"</note>',
+    'I will transcribe the words of Aristotle himself from the book I mentioned: <term>The study of truth',
+    '<note>The OCR reads "māhī prāpta", but the commentary glosses it as "do not delay".</note>',
+  ];
+  it('flags the scratchpad phrases', () => {
+    for (const t of POSITIVE) expect(translationReasoningLeak(t), t).toMatchObject({ kind: 'reasoning', readerVisible: true });
+  });
+  it('leaves book text alone', () => {
+    for (const t of NEGATIVE) expect(translationReasoningLeak(t), t).toBeNull();
+  });
+  it('the wide net the walk sends to the server catches everything the rule does', () => {
+    for (const t of POSITIVE) expect(TRANSLATION_LEAK_PREFILTER.test(t), t).toBe(true);
+    expect(TRANSLATION_LEAK_PREFILTER.test('thought\n<meta>This page continues</meta>')).toBe(true);
+  });
+  it('says whether a reader sees it: a phrase only inside <meta> sits in the metadata panel', () => {
+    expect(translationReasoningLeak('<meta>The user wants "warm museum label" style.</meta>\nIn the beginning')).toMatchObject({ kind: 'reasoning', readerVisible: false });
+  });
+  it('a chat reply to the requester is its own kind', () => {
+    for (const t of [
+      'Please provide the OCR transcription text you would like me to translate. The input you provided consists only of dots',
+      '5. **Include the required metadata, summary, and keywords.**\n\n**Please paste the text below to begin.**',
+    ]) {
+      expect(translationReasoningLeak(t), t).toMatchObject({ kind: 'assistant-reply', readerVisible: true });
+      expect(TRANSLATION_LEAK_PREFILTER.test(t), t).toBe(true);
+    }
+  });
+  it('the model naming its input is the mildest kind, and usually sits in <meta>', () => {
+    expect(translationReasoningLeak('<meta>Page 405 is missing from the provided transcription.</meta>\ndominion. But the daemon')).toMatchObject({ kind: 'input-talk', readerVisible: false });
+    expect(translationReasoningLeak('The provided text contains no content to modernize, as it consists only of a blank page.')).toMatchObject({ kind: 'input-talk', readerVisible: true });
+  });
+  it('the bare thinking-channel label at the head of a page is its own kind', () => {
+    expect(translationReasoningLeak('thought\n<meta>This page continues the legal analysis</meta>')).toMatchObject({ kind: 'thought-token' });
+    expect(translationReasoningLeak('164  ST. AMBROSE.\nthought\nthat he was restored to us')).toBeNull();
+  });
+  it('a note that cites "the OCR" is pipeline talk, not reasoning', () => {
+    expect(translationPipelineTalk('<note>The OCR reads "left" again</note>')).toBe(true);
+    expect(translationPipelineTalk('<note>The smaller characters in the <gloss> tags are pronunciation guides</note>')).toBe(true);
+    expect(translationReasoningLeak('<note>The smaller characters in the <gloss> tags are pronunciation guides</note>')).toBeNull();
+    expect(translationPipelineTalk('<meta>the watermark mentioned in the OCR has been omitted</meta> In the beginning')).toBe(false);
   });
 });

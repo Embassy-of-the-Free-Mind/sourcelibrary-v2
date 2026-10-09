@@ -1,0 +1,702 @@
+{
+ "frame": {
+  "envelope": "tibetan-retranslation-4523",
+  "translation.updated_at_gte": "2026-10-01",
+  "pages": 96926,
+  "notes": 160631,
+  "books_in_envelope": 1439,
+  "pages_with_candidate_notes": 1101,
+  "books_with_candidate_notes": 533,
+  "run_at": "2026-10-02T22:3xZ"
+ },
+ "extractor": {
+  "name": "note-claims-extract",
+  "version": 3,
+  "cue_filter": "5624-v1"
+ },
+ "matcher": {
+  "name": "note-claims-match",
+  "version": 1
+ },
+ "table": {
+  "file": "tib-skt-table.jsonl",
+  "rows": 52990,
+  "hash": "248249d0b9502268"
+ },
+ "table_sources": {
+  "84000-tei": "25.7K pairs from 396 Kangyur TEI glossaries, CC BY-NC-ND 3.0",
+  "84000-steinert": "18.4K, same licence",
+  "mahavyutpatti-dila": "9.4K, DILA digital edition, licence not stated",
+  "rangjung-yeshe-3": "552 (Skt.-marked or bare-name entries), © E. P. Kunsang, no open licence; confirm-only",
+  "kept": "/root/factcheck-lane/refs/tib-skt-table.jsonl on Hetzner; not in git"
+ },
+ "rows_by_tag": {
+  "note:identification": 478,
+  "summary:page-name": 7405,
+  "keywords:page-name": 16457,
+  "note:description": 253,
+  "heading:page-name": 3905,
+  "note:place": 12,
+  "note:other": 159,
+  "note:date": 45,
+  "note:attribution": 55,
+  "note:sanskrit-equivalent": 275,
+  "heading:page-number": 92
+ },
+ "notes": {
+  "all": {
+   "match": 130,
+   "conflict": 9,
+   "no-entry": 1138
+  },
+  "translated_before_5624_cutoff": {
+   "match": 52,
+   "conflict": 3,
+   "no-entry": 278
+  },
+  "translated_after_5624_cutoff": {
+   "match": 78,
+   "conflict": 6,
+   "no-entry": 860
+  },
+  "no_entry_reasons": {
+   "kind-identification-not-in-v1-tables": 471,
+   "kind-description-not-in-v1-tables": 253,
+   "kind-other-not-in-v1-tables": 158,
+   "no-anchor-on-page": 110,
+   "kind-attribution-not-in-v1-tables": 55,
+   "kind-date-not-in-v1-tables": 45,
+   "ambiguous-name": 23,
+   "kind-place-not-in-v1-tables": 12,
+   "tibetan-not-in-table": 7,
+   "implicit-agrees": 2,
+   "match-only-source-disagrees": 1,
+   "name-table-vs-term-claim": 1
+  }
+ },
+ "apparatus": {
+  "match": 19906,
+  "conflict": 36,
+  "no-entry": 7917
+ },
+ "note_conflicts": [
+  {
+   "book_id": "6a14e18c311a9edd462221b2",
+   "page": 194,
+   "url": "https://sourcelibrary.org/book/6a14e18c311a9edd462221b2?page=194",
+   "source_tag": "note",
+   "claim_kind": "other",
+   "text": "Tibetan: brtan pas byin; likely a translation of the Sanskrit name Sthira-datta",
+   "reason": "table-disagrees",
+   "evidence": [
+    {
+     "src": "84000-tei",
+     "wylie": "brtan pas byin",
+     "skt": "dṛdhadatta",
+     "ref": "toh127#UT22084-055-001-4908"
+    },
+    {
+     "src": "84000-steinert",
+     "wylie": "brtan pas byin",
+     "skt": "dṛdhadatta",
+     "ref": "46-84000Skt"
+    }
+   ],
+   "author_read": "partly-wrong (likely): 84000 attests Dṛḍhadatta; \"Sthiradatta\" is a plausible back-formation (brtan pa = sthira or dṛḍha) but not the attested name"
+  },
+  {
+   "book_id": "69e77a3c0fc6fc955e35eab7",
+   "page": 117,
+   "url": "https://sourcelibrary.org/book/69e77a3c0fc6fc955e35eab7?page=117",
+   "source_tag": "note",
+   "claim_kind": "sanskrit-equivalent",
+   "text": "Tibetan: byang chub tu sems bskyed; Sanskrit: bodhicitta",
+   "reason": "table-disagrees",
+   "evidence": [
+    {
+     "src": "84000-tei",
+     "wylie": "byang chub tu sems bskyed",
+     "skt": "bodhaye cittam utpād",
+     "ref": "toh10#UT22084-029-001-9827"
+    }
+   ],
+   "author_read": "debatable: byang chub tu sems bskyed is the act of generating the mind for awakening (cittotpāda), not bodhicitta itself; loose rather than false"
+  },
+  {
+   "book_id": "69e788694a6785cfd60d0ee1",
+   "page": 37,
+   "url": "https://sourcelibrary.org/book/69e788694a6785cfd60d0ee1?page=37",
+   "source_tag": "note",
+   "claim_kind": "sanskrit-equivalent",
+   "text": "Tibetan: \"rdzogs pa chen po\"; Sanskrit: Dzogchen",
+   "reason": "table-disagrees",
+   "evidence": [
+    {
+     "src": "84000-tei",
+     "wylie": "rdzogs pa chen po",
+     "skt": "mahāsandhi",
+     "ref": "toh142#UT22084-057-001-114"
+    },
+    {
+     "src": "84000-steinert",
+     "wylie": "rdzogs pa chen po",
+     "skt": "mahāsandhi",
+     "ref": "46-84000Skt"
+    }
+   ],
+   "author_read": "wrong: \"Dzogchen\" is the Tibetan name, not Sanskrit; the Sanskrit is mahāsandhi (or atiyoga)"
+  },
+  {
+   "book_id": "69e7890b4a6785cfd60d2688",
+   "page": 240,
+   "url": "https://sourcelibrary.org/book/69e7890b4a6785cfd60d2688?page=240",
+   "source_tag": "note",
+   "claim_kind": "sanskrit-equivalent",
+   "text": "Sanskrit: Dashabhumika Sutra; Tibetan: Phal po che",
+   "reason": "table-disagrees",
+   "evidence": [
+    {
+     "src": "84000-tei",
+     "wylie": "phal po che",
+     "skt": "avataṃsaka",
+     "ref": "toh176#UT22084-060-005-850"
+    },
+    {
+     "src": "84000-steinert",
+     "wylie": "phal po che",
+     "skt": "avataṃsaka",
+     "ref": "46-84000Skt"
+    }
+   ],
+   "author_read": "partly-wrong: phal po che is the Avataṃsaka; the Daśabhūmika is one of its chapters"
+  },
+  {
+   "book_id": "69e7ac0f5f1a22ab19aa2f50",
+   "page": 382,
+   "url": "https://sourcelibrary.org/book/69e7ac0f5f1a22ab19aa2f50?page=382",
+   "source_tag": "note",
+   "claim_kind": "sanskrit-equivalent",
+   "text": "Tibetan: shed bdag; Sanskrit: atman or purusha",
+   "reason": "table-disagrees",
+   "evidence": [
+    {
+     "src": "84000-tei",
+     "wylie": "shed bdag",
+     "skt": "mānava",
+     "ref": "toh8#UT22084-014-001-5252"
+    },
+    {
+     "src": "84000-steinert",
+     "wylie": "shed bdag",
+     "skt": "mānava",
+     "ref": "46-84000Skt"
+    }
+   ],
+   "author_read": "wrong: shed bdag = mānava (one of the non-Buddhist names for a self); ātman is bdag, puruṣa is skyes bu"
+  },
+  {
+   "book_id": "69e7ac115f1a22ab19aa30d2",
+   "page": 212,
+   "url": "https://sourcelibrary.org/book/69e7ac115f1a22ab19aa30d2?page=212",
+   "source_tag": "note",
+   "claim_kind": "sanskrit-equivalent",
+   "text": "term: soul (Tibetan: shed-bdag, equivalent to Sanskrit: puruṣa or ātman)",
+   "reason": "table-disagrees",
+   "evidence": [
+    {
+     "src": "84000-tei",
+     "wylie": "shed bdag",
+     "skt": "mānava",
+     "ref": "toh8#UT22084-014-001-5252"
+    },
+    {
+     "src": "84000-steinert",
+     "wylie": "shed bdag",
+     "skt": "mānava",
+     "ref": "46-84000Skt"
+    }
+   ],
+   "author_read": "wrong: same as above"
+  },
+  {
+   "book_id": "69e7ac145f1a22ab19aa33d0",
+   "page": 148,
+   "url": "https://sourcelibrary.org/book/69e7ac145f1a22ab19aa33d0?page=148",
+   "source_tag": "note",
+   "claim_kind": "sanskrit-equivalent",
+   "text": "Tibetan: rang bzhin stong pa nyid; Sanskrit: svabhāva-śūnyatā",
+   "reason": "table-disagrees",
+   "evidence": [
+    {
+     "src": "84000-tei",
+     "wylie": "rang bzhin stong pa nyid",
+     "skt": "prakṛtiśūnyatā",
+     "ref": "toh8#UT22084-014-001-4918"
+    },
+    {
+     "src": "84000-steinert",
+     "wylie": "rang bzhin stong pa nyid",
+     "skt": "prakṛtiśūnyatā",
+     "ref": "46-84000Skt"
+    },
+    {
+     "src": "mahavyutpatti-dila",
+     "wylie": "rang bzhin stong pa nyid",
+     "skt": "prakṛtiśūnyatā",
+     "ref": "mvy-line-951"
+    }
+   ],
+   "author_read": "wrong (#5624 N053 judged it correct): rang bzhin stong pa nyid = prakṛtiśūnyatā in 84000 Toh 8/11 and the Mahāvyutpatti; the same verifier's N050 evidence says so"
+  },
+  {
+   "book_id": "69e7ac3a5f1a22ab19aa5bbf",
+   "page": 3,
+   "url": "https://sourcelibrary.org/book/69e7ac3a5f1a22ab19aa5bbf?page=3",
+   "source_tag": "note",
+   "claim_kind": "sanskrit-equivalent",
+   "text": "Tibetan: Rab kyi rtsal gyis rnam par gnon pa; Sanskrit: Vikrāntagāmin",
+   "reason": "table-disagrees",
+   "evidence": [
+    {
+     "src": "84000-tei",
+     "wylie": "rab kyi rtsal gyis rnam par gnon pa",
+     "skt": "suvikrāntavikrāmin",
+     "ref": "toh10#UT22084-029-001-11308"
+    },
+    {
+     "src": "84000-tei",
+     "wylie": "rab kyi rtsal gyis rnam par gnon pa",
+     "skt": "suvikrāntavikrāmiṇ",
+     "ref": "toh113#UT22084-051-001-3592"
+    },
+    {
+     "src": "84000-steinert",
+     "wylie": "rab kyi rtsal gyis rnam par gnon pa",
+     "skt": "suvikrāntavikrāmin",
+     "ref": "46-84000Skt"
+    }
+   ],
+   "author_read": "wrong (#5624 N019 left it unverifiable): rab kyi rtsal gyis rnam par gnon pa = Suvikrāntavikrāmin (84000 Toh 10, 113; Mahāvyutpatti)"
+  },
+  {
+   "book_id": "69e7ac955f1a22ab19aa9713",
+   "page": 24,
+   "url": "https://sourcelibrary.org/book/69e7ac955f1a22ab19aa9713?page=24",
+   "source_tag": "note",
+   "claim_kind": "sanskrit-equivalent",
+   "text": "Tibetan: Shin tu dga'; Sanskrit: Sudamsana",
+   "reason": "table-disagrees",
+   "evidence": [
+    {
+     "src": "84000-tei",
+     "wylie": "shin tu dga'",
+     "skt": "supriya",
+     "ref": "toh346#UT22084-075-004-309"
+    },
+    {
+     "src": "84000-steinert",
+     "wylie": "shin tu dga'",
+     "skt": "supriya",
+     "ref": "46-84000Skt"
+    }
+   ],
+   "author_read": "likely wrong (#5624 N233 unverifiable): 84000 gives shin tu dga' = Supriya; Sudarśana is legs mthong"
+  }
+ ],
+ "apparatus_conflicts": [
+  {
+   "book_id": "69e761d8cc48e59ad74f1dda",
+   "page": 1,
+   "url": "https://sourcelibrary.org/book/69e761d8cc48e59ad74f1dda?page=1",
+   "source_tag": "summary",
+   "claim_kind": "page-name",
+   "text": "Shivaratri",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e761d8cc48e59ad74f1dda",
+   "page": 1,
+   "url": "https://sourcelibrary.org/book/69e761d8cc48e59ad74f1dda?page=1",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Newari script",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e761d8cc48e59ad74f1dda",
+   "page": 1,
+   "url": "https://sourcelibrary.org/book/69e761d8cc48e59ad74f1dda?page=1",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Shiva Ratri",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e782f2d93c1f60075057e6",
+   "page": 91,
+   "url": "https://sourcelibrary.org/book/69e782f2d93c1f60075057e6?page=91",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Rtsis",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e782f2d93c1f60075057e6",
+   "page": 91,
+   "url": "https://sourcelibrary.org/book/69e782f2d93c1f60075057e6?page=91",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Numerals",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e782f2d93c1f60075057e6",
+   "page": 91,
+   "url": "https://sourcelibrary.org/book/69e782f2d93c1f60075057e6?page=91",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Astronomy",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e782f2d93c1f60075057e6",
+   "page": 93,
+   "url": "https://sourcelibrary.org/book/69e782f2d93c1f60075057e6?page=93",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Register",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e782f2d93c1f60075057e6",
+   "page": 95,
+   "url": "https://sourcelibrary.org/book/69e782f2d93c1f60075057e6?page=95",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Chronology",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e782f2d93c1f60075057e6",
+   "page": 95,
+   "url": "https://sourcelibrary.org/book/69e782f2d93c1f60075057e6?page=95",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Genealogy",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e782f2d93c1f60075057e6",
+   "page": 95,
+   "url": "https://sourcelibrary.org/book/69e782f2d93c1f60075057e6?page=95",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "History",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e788824a6785cfd60d11b4",
+   "page": 10,
+   "url": "https://sourcelibrary.org/book/69e788824a6785cfd60d11b4?page=10",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Latin fragment",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e788d54a6785cfd60d1fb1",
+   "page": 7,
+   "url": "https://sourcelibrary.org/book/69e788d54a6785cfd60d1fb1?page=7",
+   "source_tag": "summary",
+   "claim_kind": "page-name",
+   "text": "Lantsha",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e788d54a6785cfd60d1fb1",
+   "page": 7,
+   "url": "https://sourcelibrary.org/book/69e788d54a6785cfd60d1fb1?page=7",
+   "source_tag": "summary",
+   "claim_kind": "page-name",
+   "text": "Mani Mantra",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e788d54a6785cfd60d1fb1",
+   "page": 7,
+   "url": "https://sourcelibrary.org/book/69e788d54a6785cfd60d1fb1?page=7",
+   "source_tag": "summary",
+   "claim_kind": "page-name",
+   "text": "Avalokiteshvara",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e788d54a6785cfd60d1fb1",
+   "page": 7,
+   "url": "https://sourcelibrary.org/book/69e788d54a6785cfd60d1fb1?page=7",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Lantsha script",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e788d54a6785cfd60d1fb1",
+   "page": 7,
+   "url": "https://sourcelibrary.org/book/69e788d54a6785cfd60d1fb1?page=7",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Mani mantra",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e788d54a6785cfd60d1fb1",
+   "page": 7,
+   "url": "https://sourcelibrary.org/book/69e788d54a6785cfd60d1fb1?page=7",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Avalokiteshvara",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e7899c4a6785cfd60d2c9a",
+   "page": 6,
+   "url": "https://sourcelibrary.org/book/69e7899c4a6785cfd60d2c9a?page=6",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Latin manuscript",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e78a694a6785cfd60d33fc",
+   "page": 6,
+   "url": "https://sourcelibrary.org/book/69e78a694a6785cfd60d33fc?page=6",
+   "source_tag": "summary",
+   "claim_kind": "page-name",
+   "text": "Hebrew",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e78af24a6785cfd60d4e55",
+   "page": 12,
+   "url": "https://sourcelibrary.org/book/69e78af24a6785cfd60d4e55?page=12",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Southeast Asian script",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e7965c80b52390feb195cf",
+   "page": 5,
+   "url": "https://sourcelibrary.org/book/69e7965c80b52390feb195cf?page=5",
+   "source_tag": "summary",
+   "claim_kind": "page-name",
+   "text": "Javanese",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e7965c80b52390feb195cf",
+   "page": 5,
+   "url": "https://sourcelibrary.org/book/69e7965c80b52390feb195cf?page=5",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Javanese script",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e7965c80b52390feb195cf",
+   "page": 5,
+   "url": "https://sourcelibrary.org/book/69e7965c80b52390feb195cf?page=5",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Carakan",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e7966280b52390feb195ff",
+   "page": 23,
+   "url": "https://sourcelibrary.org/book/69e7966280b52390feb195ff?page=23",
+   "source_tag": "summary",
+   "claim_kind": "page-name",
+   "text": "Changlo-chen",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e7966280b52390feb195ff",
+   "page": 23,
+   "url": "https://sourcelibrary.org/book/69e7966280b52390feb195ff?page=23",
+   "source_tag": "summary",
+   "claim_kind": "page-name",
+   "text": "Dharmakirti",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e7966280b52390feb195ff",
+   "page": 23,
+   "url": "https://sourcelibrary.org/book/69e7966280b52390feb195ff?page=23",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Sukhavati",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e7966280b52390feb195ff",
+   "page": 23,
+   "url": "https://sourcelibrary.org/book/69e7966280b52390feb195ff?page=23",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Dharmakirti",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e7966280b52390feb195ff",
+   "page": 23,
+   "url": "https://sourcelibrary.org/book/69e7966280b52390feb195ff?page=23",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Changlo-chen",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e7966280b52390feb195ff",
+   "page": 23,
+   "url": "https://sourcelibrary.org/book/69e7966280b52390feb195ff?page=23",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Trolung",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e7967c80b52390feb196e6",
+   "page": 6,
+   "url": "https://sourcelibrary.org/book/69e7967c80b52390feb196e6?page=6",
+   "source_tag": "summary",
+   "claim_kind": "page-name",
+   "text": "Siddhanta",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e7967c80b52390feb196e6",
+   "page": 6,
+   "url": "https://sourcelibrary.org/book/69e7967c80b52390feb196e6?page=6",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Siddhanta",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e7967c80b52390feb196e6",
+   "page": 6,
+   "url": "https://sourcelibrary.org/book/69e7967c80b52390feb196e6?page=6",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Hindu astronomy",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e7967c80b52390feb196e6",
+   "page": 6,
+   "url": "https://sourcelibrary.org/book/69e7967c80b52390feb196e6?page=6",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Panchanga",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e7967c80b52390feb196e6",
+   "page": 10,
+   "url": "https://sourcelibrary.org/book/69e7967c80b52390feb196e6?page=10",
+   "source_tag": "summary",
+   "claim_kind": "page-name",
+   "text": "Indic",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e7967c80b52390feb196e6",
+   "page": 10,
+   "url": "https://sourcelibrary.org/book/69e7967c80b52390feb196e6?page=10",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Jyotisha",
+   "reason": "name-not-on-page",
+   "evidence": []
+  },
+  {
+   "book_id": "69e7967c80b52390feb196e6",
+   "page": 10,
+   "url": "https://sourcelibrary.org/book/69e7967c80b52390feb196e6?page=10",
+   "source_tag": "keywords",
+   "claim_kind": "page-name",
+   "text": "Panchangam",
+   "reason": "name-not-on-page",
+   "evidence": []
+  }
+ ],
+ "stage3_estimate": {
+  "model": "gemini-3-flash-preview, grounded (tools: googleSearch), thinkingBudget 512 (measurement-instruments.md: flash-lite does not ground; -1 suppresses grounding)",
+  "unit_prices": {
+   "search_query_usd": 0.014,
+   "source": "scripts/lib/model-pricing.mjs GROUNDED_SEARCH_USD_PER_QUERY (billing export 2026-09-26)",
+   "tokens_per_M_usd": {
+    "input": 0.5,
+    "output": 3.0,
+    "batch_multiplier": 0.5
+   }
+  },
+  "claims_at_no_entry_excl_description": 885,
+  "seeded_false_claims": 45,
+  "checks": 930,
+  "claims_per_request": 20,
+  "requests": 45,
+  "tokens_per_request": {
+   "input": 14000,
+   "output": 3000
+  },
+  "token_usd": {
+   "realtime": 0.72,
+   "batch": 0.36
+  },
+  "search_usd": {
+   "1_query_per_check": 13.02,
+   "1.5_queries_per_check": 19.53,
+   "4_queries_per_check": 52.08
+  },
+  "per_1000_new_pages_usd": {
+   "central": 0.2,
+   "high": 0.54
+  }
+ }
+}

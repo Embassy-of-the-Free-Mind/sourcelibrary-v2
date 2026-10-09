@@ -1,0 +1,259 @@
+#!/usr/bin/env node
+// PRIOR ART: benchmark-seal.mjs (exports a SEALED stratum's images — used as is for eebo-tcp-5488; it
+// cannot export english-ia-5124, whose registry is the #5216 `rows` shape), benchmark-score.mjs and
+// benchmark-cost-lane.mjs (score and decide — used as is, with a --cells option added), the #5600
+// fleet's paddle-zh-runpod.sh / paddle-zh-box.sh `arm` (the GPU run — used as is). None assembles one
+// bench root across ten existing strata from four registries and fixes the per-cell page membership
+// that PREREGISTRATION-open-engine-print-5660.md defines; this is that glue, nothing else.
+/**
+ * open-engine-print-5660.mjs — glue for the #5660 step-2 eval (open engine vs flash-lite on print).
+ *
+ *   node scripts/eval/open-engine-print-5660.mjs assemble --root=/root/ocr-bench-5660 --lane=/root/paddle-latin-5660
+ *       hard-links the existing strata's images (/root/ocr-bench/images), copies their lite / lite-b /
+ *       flash-preview outputs, exports english-ia-5124's referenced pages, writes the cell map
+ *       (results/open-engine-print-5660/cells.json) and the Paddle manifest (<lane>/bench/acc.tsv).
+ *       eebo-tcp-5488's images come from `benchmark-seal.mjs --stratum=eebo-tcp-5488 --out=<root>` first.
+ *   node scripts/eval/open-engine-print-5660.mjs paddle-in --root=… --lane=… --arm=<arm> [--engine=paddleocr-vl-1.6]
+ *       copies the pulled arm's page outputs into <root>/<stratum>/out/<engine>/<slug>.txt.
+ *   node scripts/eval/open-engine-print-5660.mjs report --engines=<e,…> [--scored=scored] [--summary=summary.json] --lane=…
+ *       the prereg's table per cell from the scored dir and the cost-lane file(s).
+ *   node scripts/eval/open-engine-print-5660.mjs report --engines=<e> --scored=scored-<arm> --summary=summary-<arm>.json --cells=cells-r3.json \
+ *       --cost-lane=cost-lane-<arm>.json --arm-run=<lane>/bench/arms/<arm>/arm-run.json      (round 3, prereg Amendment 2)
+ *   node scripts/eval/open-engine-print-5660.mjs tally --root=…
+ *       the descriptive long-s / abbreviation / ligature tally of the prereg, per engine, on early print.
+ */
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const argOf = (n, d) => { const a = process.argv.find(x => x.startsWith(`--${n}=`)); return a ? a.slice(n.length + 3) : d; };
+const CMD = process.argv[2];
+const ROOT = argOf('root', '/root/ocr-bench-5660');
+const LANE = argOf('lane', '/root/paddle-latin-5660');
+const SRC = argOf('src', '/root/ocr-bench/images');
+const RES = path.join(__dirname, 'results', 'open-engine-print-5660');
+const REFS = path.join(__dirname, 'benchmark', 'refs');
+const ARMS = ['gemini-3.1-flash-lite', 'gemini-3.1-flash-lite-b', 'gemini-3-flash-preview'];
+const COPIED = ['greek', 'greek-ext', 'greek-ext2', 'ref-ws', 'latin-pre1700', 'latin-1700s', 'german-fraktur', 'longs-en-fr'];
+const AGREEMENT = ['latin-pre1700', 'latin-1700s', 'german-fraktur', 'longs-en-fr'];
+const readJson = f => JSON.parse(fs.readFileSync(f, 'utf8'));
+const latest = st => { const d = path.join(__dirname, 'results', 'benchmark'); const f = fs.readdirSync(d).filter(x => x.startsWith(`${st}-`) && x.slice(st.length + 1).match(/^\d{4}-\d{2}-\d{2}\.json$/)).sort().pop(); return readJson(path.join(d, f)); };
+
+function link(src, dst) { if (!fs.existsSync(dst)) { try { fs.linkSync(src, dst); } catch { fs.copyFileSync(src, dst); } } }
+
+async function exportEnglish() {
+  const reg = readJson(path.join(__dirname, 'benchmark', 'english-ia-5124.json'));
+  const dir = path.join(ROOT, 'english-ia-5124'); fs.mkdirSync(path.join(dir, 'out'), { recursive: true });
+  const sharp = (await import('sharp')).default;
+  const manifest = [];
+  for (const r of reg.rows.filter(r => r.reference && !r.excluded)) {
+    const dest = path.join(dir, `${r.slug}.jpg`);
+    if (fs.existsSync(dest)) { manifest.push({ slug: r.slug, cached: true }); continue; }
+    try {
+      const res = await fetch(r.image_url, { signal: AbortSignal.timeout(60000) });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      let buf = Buffer.from(await res.arrayBuffer());
+      const meta = await sharp(buf).metadata();   // same rule as benchmark-seal.mjs: width ≤ 2400, JPEG q92
+      if (meta.width > 2400) buf = await sharp(buf).resize({ width: 2400 }).jpeg({ quality: 92 }).toBuffer();
+      else if (meta.format !== 'jpeg') buf = await sharp(buf).jpeg({ quality: 92 }).toBuffer();
+      fs.writeFileSync(dest, buf); manifest.push({ slug: r.slug, width: Math.min(2400, meta.width), bytes: buf.length });
+    } catch (e) { manifest.push({ slug: r.slug, error: e.message.slice(0, 100) }); console.log(`  ! ${r.slug}: ${e.message.slice(0, 100)}`); }
+  }
+  fs.writeFileSync(path.join(dir, 'manifest.json'), JSON.stringify({ stratum: 'english-ia-5124', exported_at: new Date().toISOString(), pages: manifest }, null, 2));
+  console.log(`english-ia-5124: ${manifest.filter(m => !m.error).length} images`);
+}
+
+/** The prereg's cell membership, page by page. */
+function cells() {
+  const out = [];
+  const refRec = s => { const f = path.join(REFS, `${s}.json`); return fs.existsSync(f) ? readJson(f) : null; };
+  // EEBO-TCP (#5488): sealed, leaf-checked, library books
+  for (const p of readJson(path.join(__dirname, 'benchmark', 'eebo-tcp-5488.json')).pages.filter(p => !p.spare || p.promoted)) {
+    const cell = p.language === 'Latin' && p.year >= 1500 && p.year < 1700 ? 'latin-1500-1699' : p.language === 'English' && p.year >= 1600 && p.year < 1700 ? 'english-1600-1699' : null;
+    out.push({ slug: p.slug, stratum: 'eebo-tcp-5488', cell, origin: 'library', book_id: p.book_id, year: p.year, language: p.language, ...(cell ? {} : { excluded: 'EEBO English 1500s — reported apart' }) });
+  }
+  // #5216 English references
+  for (const r of readJson(path.join(__dirname, 'benchmark', 'english-ia-5124.json')).rows.filter(r => r.reference && !r.excluded)) {
+    const rec = refRec(r.slug); const y = r.catalogue?.published;
+    const bad = rec?.reference_error ? `reference_error: ${String(rec.reference_error).slice(0, 80)}` : (rec?.leaf_check?.status && rec.leaf_check.status !== 'ok') ? `leaf_check ${rec.leaf_check.status}` : null;
+    const cell = bad ? null : y >= 1600 && y < 1700 ? 'english-1600-1699' : y >= 1700 ? 'english-1700+' : null;
+    out.push({ slug: r.slug, stratum: 'english-ia-5124', cell, origin: 'library', book_id: r.book_id, year: y, language: 'English', ...(cell ? {} : { excluded: bad || `catalogue year ${y}` }) });
+  }
+  // Wikisource scans (external)
+  for (const p of latest('ref-ws').pages) {
+    const y = p.year; let cell = null;
+    if (p.language === 'Latin') cell = y >= 1500 && y < 1700 ? 'latin-1500-1699' : y >= 1700 ? 'latin-1700+' : null;
+    else if (p.language === 'German') cell = 'german';
+    if (p.language === 'Greek') continue;   // Greek is decided on the library Greek strata
+    out.push({ slug: p.slug, stratum: 'ref-ws', cell, origin: 'external', book_id: null, work: p.slug.replace(/-p\d+$/, ''), year: y, language: p.language, ...(cell ? {} : { excluded: `year ${y}` }) });
+  }
+  // Greek print (library): by-eye typeset-print, greek_share ≥ 0.5, referenced
+  for (const st of ['greek', 'greek-ext', 'greek-ext2']) for (const p of latest(st).pages.filter(p => p.has_ref)) {
+    const ok = p.script_class === 'typeset-print' && (typeof p.greek_share !== 'number' || p.greek_share >= 0.5);
+    out.push({ slug: p.slug, stratum: st, cell: ok ? 'greek-print' : null, origin: 'library', year: p.year, language: 'Greek', ...(ok ? {} : { excluded: `script_class ${p.script_class}, greek_share ${p.greek_share}` }) });
+  }
+  // one page per book across strata: a second page of a book already in the cell is excluded
+  const seen = new Set();
+  for (const r of out) { if (!r.cell || !r.book_id) continue; const k = `${r.cell}|${r.book_id}`; if (seen.has(k)) { r.excluded = 'second page of a book in this cell'; r.cell = null; } else seen.add(k); }
+  return out;
+}
+
+async function assemble() {
+  fs.mkdirSync(ROOT, { recursive: true });
+  for (const st of COPIED) {
+    const s = path.join(SRC, st), d = path.join(ROOT, st);
+    fs.mkdirSync(path.join(d, 'out'), { recursive: true });
+    for (const f of fs.readdirSync(s).filter(f => f.endsWith('.jpg'))) link(path.join(s, f), path.join(d, f));
+    fs.copyFileSync(path.join(s, 'manifest.json'), path.join(d, 'manifest.json'));
+    for (const e of ARMS) if (fs.existsSync(path.join(s, 'out', e))) fs.cpSync(path.join(s, 'out', e), path.join(d, 'out', e), { recursive: true });
+    if (st.startsWith('greek')) {   // the by-eye classes the Greek cell membership is read from
+      fs.mkdirSync(path.join(d, 'out', 'script-class'), { recursive: true });
+      const sc = path.join(__dirname, 'benchmark', 'script-class');
+      for (const f of fs.readdirSync(sc).filter(f => f.startsWith(`${st}-`) && f.endsWith('.json') && !(st === 'greek-ext' && f.startsWith('greek-ext2-')))) fs.copyFileSync(path.join(sc, f), path.join(d, 'out', 'script-class', f));
+    }
+  }
+  if (!fs.existsSync(path.join(ROOT, 'eebo-tcp-5488', 'manifest.json'))) throw new Error('export eebo-tcp-5488 first: benchmark-seal.mjs --stratum=eebo-tcp-5488 --out=' + ROOT);
+  fs.mkdirSync(path.join(ROOT, 'eebo-tcp-5488', 'out'), { recursive: true });
+  await exportEnglish();
+  const c = cells();
+  fs.mkdirSync(RES, { recursive: true });
+  const n = {}; for (const r of c) if (r.cell) { n[r.cell] ||= { pages: 0, library: 0, external: 0 }; n[r.cell].pages++; n[r.cell][r.origin]++; }
+  fs.writeFileSync(path.join(RES, 'cells.json'), JSON.stringify({ prereg: 'PREREGISTRATION-open-engine-print-5660.md', written_at: new Date().toISOString(), counts: n, agreement_strata: AGREEMENT, pages: c }, null, 1) + '\n');
+  console.log(n);
+  // the Paddle manifest: every image in every stratum (cells + agreement strata), one row each
+  const img = path.join(LANE, 'bench', 'img', '_bench'); fs.mkdirSync(img, { recursive: true });
+  const rows = [], where = {};
+  for (const st of fs.readdirSync(ROOT).filter(d => fs.existsSync(path.join(ROOT, d, 'manifest.json')))) {
+    for (const f of fs.readdirSync(path.join(ROOT, st)).filter(f => f.endsWith('.jpg')).sort()) {
+      const slug = f.slice(0, -4);
+      if (where[slug]) throw new Error(`slug ${slug} in ${where[slug]} and ${st}`);
+      where[slug] = st; link(path.join(ROOT, st, f), path.join(img, f)); rows.push(`_bench\t${slug}\timg/_bench/${f}`);
+    }
+  }
+  fs.writeFileSync(path.join(LANE, 'bench', 'acc.tsv'), rows.join('\n') + '\n');
+  fs.writeFileSync(path.join(LANE, 'bench', 'tput.tsv'), rows.slice(0, 16).join('\n') + '\n');   // warm-up (discarded)
+  fs.writeFileSync(path.join(LANE, 'bench', 'where.json'), JSON.stringify(where));
+  console.log(`manifest: ${rows.length} pages → ${path.join(LANE, 'bench', 'acc.tsv')}`);
+}
+
+// Conventions (eval-design §6), open-engine arms only: Paddle/olmOCR emit layout markup that is not text —
+// HTML tables and <sup>, markdown headings/emphasis, LaTeX math delimiters and commands, and Greek written as
+// LaTeX (`$\omega\tau\eta$`). Rule v1: drop tags, `$`, `^ _ { }`, markdown `#`/`*`; LaTeX Greek letter commands
+// → the Unicode letter; any other `\command` dropped. The raw output stays in the lane's arms dir.
+const GREEK_CMD = { alpha: 'α', beta: 'β', gamma: 'γ', delta: 'δ', epsilon: 'ε', varepsilon: 'ε', zeta: 'ζ', eta: 'η', theta: 'θ', vartheta: 'θ', iota: 'ι', kappa: 'κ', lambda: 'λ', mu: 'μ', nu: 'ν', xi: 'ξ', pi: 'π', rho: 'ρ', sigma: 'σ', varsigma: 'ς', tau: 'τ', upsilon: 'υ', phi: 'φ', varphi: 'φ', chi: 'χ', psi: 'ψ', omega: 'ω', Gamma: 'Γ', Delta: 'Δ', Theta: 'Θ', Lambda: 'Λ', Xi: 'Ξ', Pi: 'Π', Sigma: 'Σ', Upsilon: 'Υ', Phi: 'Φ', Psi: 'Ψ', Omega: 'Ω' };
+export const CONVENTION_RULE = 'open-engine-markup@1';
+function normaliseConventions(t) {
+  return t.replace(/<[^>\n]{1,200}>/g, ' ')
+    .replace(/\\([A-Za-z]+)/g, (m, c) => GREEK_CMD[c] ?? ' ')
+    .replace(/[$^_{}]/g, '')
+    .replace(/^#{1,6}\s+/gm, '').replace(/\*\*|__/g, '');
+}
+
+function paddleIn() {
+  const arm = argOf('arm'), engine = argOf('engine', 'paddleocr-vl-1.6');
+  const where = readJson(path.join(LANE, 'bench', 'where.json'));
+  const src = path.join(LANE, 'bench', 'arms', arm, 'out', '_bench');
+  let n = 0, err = 0, touched = 0;
+  for (const [slug, st] of Object.entries(where)) {
+    const d = path.join(ROOT, st, 'out', engine); fs.mkdirSync(d, { recursive: true });
+    if (fs.existsSync(path.join(src, `${slug}.txt`))) {
+      const raw = fs.readFileSync(path.join(src, `${slug}.txt`), 'utf8'); const t = normaliseConventions(raw);
+      if (t !== raw) touched++;
+      fs.writeFileSync(path.join(d, `${slug}.txt`), t); n++;
+    } else if (fs.existsSync(path.join(src, `${slug}.err`))) { fs.writeFileSync(path.join(d, `${slug}.txt`), ''); err++; }   // a failed read is an empty output, never a missing one
+  }
+  console.log(`${engine}: ${n} outputs (${touched} changed by ${CONVENTION_RULE}), ${err} errors written as empty`);
+}
+
+/** Descriptive weak-spot tally (#4877) per engine on the early-print strata. */
+function tally() {
+  const STRATA = ['eebo-tcp-5488', 'eebo-tcp-latin-5660', 'ref-ws', 'latin-pre1700', 'longs-en-fr', 'german-fraktur'];
+  const ws = new Map(latest('ref-ws').pages.map(p => [p.slug, p]));
+  const words = t => (t.normalize('NFC').toLowerCase().match(/[\p{L}ſ]+/gu) || []);
+  const res = {};
+  for (const st of STRATA) {
+    const dir = path.join(ROOT, st, 'out'); if (!fs.existsSync(dir)) continue;
+    const engines = fs.readdirSync(dir).filter(e => e !== 'script-class' && fs.statSync(path.join(dir, e)).isDirectory());   // every engine in this arm's bench root
+    for (const e of engines) {
+      const R = (res[e] ||= {});
+      const T = (R[st] ||= { pages: 0, long_s_glyph: 0, f_for_s: 0, abbrev_marks: 0, ligature_glyphs: 0, ref_long_s_glyph: 0, ref_abbrev_marks: 0 });
+      for (const f of fs.readdirSync(path.join(dir, e)).filter(f => f.endsWith('.txt'))) {
+        const slug = f.slice(0, -4);
+        if (!fs.existsSync(path.join(ROOT, st, `${slug}.jpg`))) continue;   // sealed pages only (old out dirs hold retired/derived files)
+        if (st === 'ref-ws' && !(ws.get(slug)?.year < 1700)) continue;   // early print only
+        const t = fs.readFileSync(path.join(dir, e, f), 'utf8'); T.pages++;
+        T.long_s_glyph += (t.match(/ſ/g) || []).length;
+        T.abbrev_marks += (t.normalize('NFC').match(/[āēīōūǣ̄ꝑꝓꝗꝙꝯꝫ̃ẽõũ]|q;/gu) || []).length;
+        T.ligature_glyphs += (t.match(/[æœßﬀﬁﬂﬃﬄﬅﬆ]/g) || []).length;
+        const rf = path.join(REFS, `${slug}.txt`);
+        if (fs.existsSync(rf)) {
+          const ref = fs.readFileSync(rf, 'utf8'); const refSet = new Set(words(ref).map(w => w.replace(/ſ/g, 's')));
+          T.ref_long_s_glyph += (ref.match(/ſ/g) || []).length; T.ref_abbrev_marks += (ref.normalize('NFC').match(/[āēīōūǣ̄ꝑꝓꝗꝙꝯꝫ̃ẽõũ]|q;/gu) || []).length;
+          // f-for-s: an output word that is NOT in the reference but becomes a reference word when its f's are read as s
+          for (const w of words(t)) if (w.includes('f') && !refSet.has(w.replace(/ſ/g, 's')) && refSet.has(w.replace(/f/g, 's'))) T.f_for_s++;
+        }
+      }
+    }
+  }
+  fs.mkdirSync(RES, { recursive: true });
+  fs.writeFileSync(path.join(RES, argOf('weak', 'weak-spots.json')), JSON.stringify({ note: 'descriptive only (prereg); f_for_s counted only where a reference exists; ref_* are the reference text\'s own counts (EEBO-TCP keeps ſ; Wikisource often normalises it)', engines: res }, null, 1) + '\n');
+  console.log(JSON.stringify(res, null, 1));
+}
+
+/** The one table of the prereg: per cell the cost-lane verdict, plus a refusals-excluded view, agreement strata, cost. */
+function report() {
+  const LITE = 'gemini-3.1-flash-lite', FLASH = 'gemini-3-flash-preview';
+  const engines = argOf('engines', 'paddleocr-vl-1.6').split(',');
+  const scored = path.join(RES, argOf('scored', 'scored'));   // olmOCR arm: --scored=scored-olmocr (its own bench root, Amendment 1)
+  const has = st => fs.readdirSync(scored).some(x => x.startsWith(`${st}-`) && /^\d{4}-\d{2}-\d{2}\.json$/.test(x.slice(st.length + 1)));
+  const S = st => { const f = fs.readdirSync(scored).filter(x => x.startsWith(`${st}-`) && x.slice(st.length + 1).match(/^\d{4}-\d{2}-\d{2}\.json$/)).sort().pop(); return readJson(path.join(scored, f)); };
+  const med = xs => { const s = xs.filter(x => typeof x === 'number').sort((a, b) => a - b); if (!s.length) return null; const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
+  const r3 = x => (x == null ? null : Math.round(x * 1000) / 1000);
+  const cellMap = new Map(readJson(path.join(RES, argOf('cells', 'cells.json'))).pages.filter(r => r.cell).map(r => [r.slug, r]));
+  const rows = {};
+  for (const st of ['eebo-tcp-5488', 'eebo-tcp-latin-5660', 'english-ia-5124', 'ref-ws', 'greek', 'greek-ext', 'greek-ext2'].filter(has)) for (const p of S(st).pages) { const c = cellMap.get(p.slug); if (c) (rows[c.cell] ||= []).push(p); }
+  const out = { engines: {}, agreement: {}, cost: {} };
+  for (const e of engines) {
+    const clFile = path.join(RES, argOf('cost-lane', `cost-lane-${e.startsWith('olm') ? 'olmocr' : 'paddle'}.json`));   // round 3: --cost-lane=cost-lane-<arm>.json
+    const cl = fs.existsSync(clFile) ? readJson(clFile).classes : {};
+    out.engines[e] = {};
+    for (const [cell, ps] of Object.entries(rows)) {
+      const both = ps.filter(p => typeof p.engines?.[e]?.cer === 'number' && typeof p.engines?.[LITE]?.cer === 'number');
+      const answered = both.filter(p => !p.engines[LITE].refused && !p.engines[e].refused);
+      const v = cl[cell] || {};
+      out.engines[e][cell] = {
+        n_pages: both.length, n_library: both.filter(p => cellMap.get(p.slug).origin === 'library').length,
+        lite_cer: r3(med(both.map(p => p.engines[LITE].cer))), engine_cer: r3(med(both.map(p => p.engines[e].cer))),
+        delta: v.delta?.median ?? null, delta_ci95: v.delta?.ci95 ?? null, wlt: v.delta ? `${v.delta.wins}/${v.delta.losses}/${v.delta.ties}` : null,
+        catastrophic: { engine: both.filter(p => p.engines[e].cer > 0.5).length, lite: both.filter(p => p.engines[LITE].cer > 0.5).length },
+        lite_refused: both.filter(p => p.engines[LITE].refused).length,
+        answered_only: { n: answered.length, lite_cer: r3(med(answered.map(p => p.engines[LITE].cer))), engine_cer: r3(med(answered.map(p => p.engines[e].cer))), delta: r3(med(answered.map(p => p.engines[e].cer - p.engines[LITE].cer))), catastrophic_engine: answered.filter(p => p.engines[e].cer > 0.5).length, catastrophic_lite: answered.filter(p => p.engines[LITE].cer > 0.5).length },
+        invention: v.invention_median ?? null, checks: v.checks ?? null, verdict: v.verdict ?? null,
+      };
+    }
+    // agreement strata: `cer` there is 1 − agreement with lite (no reference); flash-preview vs lite is the yardstick
+    for (const st of AGREEMENT) {
+      const ps = S(st).pages;
+      const ag = (x) => r3(med(ps.map(p => p.engines?.[x]?.cer).filter(c => typeof c === 'number').map(c => 1 - c)));
+      (out.agreement[st] ||= { n: ps.length, [`${FLASH}_vs_lite`]: ag(FLASH) })[`${e}_vs_lite`] = ag(e);
+    }
+  }
+  // throughput + cost: the arm's wall after model load ÷ pages (8 clients on one GPU), GEX45 at $249/mo
+  const armRuns = argOf('arm-run') ? [[engines[0], argOf('arm-run')]] : [['paddleocr-vl-1.6', path.join(LANE, 'bench', 'arms', 'latin-layout', 'arm-run.json')], ['olmocr-2-7b-fp8', path.join(LANE, 'bench', 'arms', 'olmocr', 'arm-run.json')]];
+  for (const [e, f] of armRuns) {
+    if (!fs.existsSync(f)) continue; const a = readJson(f); const secs = a.wall_secs_after_load ?? a.wall_secs;
+    const spp = secs / a.pages; out.cost[e] = { pages: a.pages, errors: a.errors ?? null, wall_secs: secs, s_per_page: r3(spp), usd_per_page_gex45: +(spp * 249 / (30.42 * 86400)).toExponential(2) };
+  }
+  let usd = 0, n = 0;
+  for (const st of ['eebo-tcp-5488', 'english-ia-5124']) { const m = path.join(ROOT, st, 'out', LITE, '_meter.jsonl'); if (fs.existsSync(m)) for (const l of fs.readFileSync(m, 'utf8').split('\n').filter(Boolean)) { const r = JSON.parse(l); if (typeof r.costUsd === 'number') { usd += r.costUsd; n++; } } }
+  if (n) out.cost[LITE] = { pages: n, usd_per_page_realtime: +(usd / n).toExponential(2), usd_per_page_batch: +(usd / n / 2).toExponential(2), note: 'generic transcription prompt, thinking 0; production prompt output is longer' };
+  fs.writeFileSync(path.join(RES, argOf('summary', 'summary.json')), JSON.stringify(out, null, 1) + '\n');
+  console.log(JSON.stringify(out, null, 1));
+}
+
+if (CMD === 'assemble') await assemble();
+else if (CMD === 'report') report();
+else if (CMD === 'paddle-in') paddleIn();
+else if (CMD === 'tally') tally();
+else { console.error('usage: assemble | paddle-in --arm=<arm> | tally'); process.exit(1); }

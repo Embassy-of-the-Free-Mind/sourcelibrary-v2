@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA thesaurus/p2",
+  "edition": "Opera Didactica Omnia: Variis hucusque occasioniubs scripta, diversisque locis edita, nunc autem non tantum in unum, ut  — Amsterdam: Laurentius de Geer, Christophorus Cunradus, Gabriel � Roy, 1657.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "10/59",
+    "pb_aligned_pages": "7/10"
+  },
+  "origin": "library",
+  "book_id": "69c821446c6f3cc53c84aa06",
+  "page_number": 433,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 687060,
+    "to_char": 692164,
+    "overlap": 0.747,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Two facing pages 271-272 (sliver of 270 at left margin) with marginal notes; starts 'acumine, & inventionum felicitate' ends 'cum aliqua authoritate, Argi-' (m3 catchword); ref pads 'innocenti ac pietate, spectatus' and 'Argiqve, qvod ajunt'. Ref scatters marginal notes and number marks (1. 2. 3.) inline mid-text in odd places. Greek word in header; text 'qv' spelling kept in ref.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:18:15.189Z",
+  "text_location": "repo",
+  "text_sha256": "1c4d0f1217dbb9ac1bd2c02a86f5893d3d77a08e548bb13193737a8a555c9c7a",
+  "unit": {
+    "chars": 5104
+  },
+  "stratum": "latin-period-5126"
+}

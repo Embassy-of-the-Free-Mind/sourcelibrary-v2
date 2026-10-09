@@ -11,7 +11,7 @@ export default function AiBadge({ title, className }: { title?: string; classNam
   return (
     <span
       className={`inline-flex items-center px-1 py-px text-[9px] font-medium rounded bg-amber-100 text-amber-700 align-middle ${className || ''}`}
-      title={title || 'AI-generated — may require verification'}
+      title={title || 'AI-generated; may require verification'}
     >
       AI
     </span>

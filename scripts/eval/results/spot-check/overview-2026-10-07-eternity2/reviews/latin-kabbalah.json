@@ -1,0 +1,566 @@
+[
+  {
+    "book_id": "6952b01e77f38f6761bc1e33",
+    "slot": 13,
+    "title": "Opuscula cum Vita",
+    "tradition": "latin-kabbalah",
+    "shelf_fit": "fits",
+    "shelf_note": "Pico's 1498 collected works (Vita by Gianfrancesco, Apologia, Oration, etc.); the Apologia and Oration defend magic and Kabbalah, so it belongs on a Latin-Kabbalah shelf.",
+    "rights_flag": null,
+    "structure_note": "Counts are clean (303 records, all OCR'd and translated, no duplicates). But the page text is not: of four sampled pages, one OCR field holds model reasoning instead of a transcription (p.106), one holds a string of combining macrons (p.237), and one stops after 11 lines (p.165). The translations of those pages were not made from the page.",
+    "on_sight_defect": true,
+    "fit_to_show": "do_not_show",
+    "showcase_pages": [
+      18
+    ],
+    "reader_summary": "This is Pico della Mirandola's 1498 Opera (Opuscula) with Gianfrancesco Pico's Life. The Life page is well transcribed and faithfully translated, but in the Apologia and the Oration the transcription is broken or missing, and the English shown there is either a free summary or a passage from elsewhere in the Oration. A reader cannot trust that the English on any page matches the page.",
+    "pages": [
+      {
+        "page_number": 18,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "A [leaf symbol]",
+            "image": "A v",
+            "problem": "signature read as a symbol",
+            "severity": "minor"
+          },
+          {
+            "ocr": "Stilo qdē ualde pꝛbādo",
+            "image": "ꝓbādo",
+            "problem": "pro-abbreviation mis-glyphed",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "[Marginal note: Muſica exculta]",
+            "english": "<margin>Music cultivated</margin> placed beside the two prayers",
+            "problem": "side-note placed a sentence early",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 106,
+        "right_page": "unsure",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "cati`. No, it's `peccati`. Line 40: `peccato`. ... Okay, I will follow the visual evidence. ... Final transcription plan: - Use `ꝓ` for pro-abbreviation.",
+            "image": "a full page of the Apologia (elemosynis redime... Respōsio ... Recapitulatio ...)",
+            "problem": "OCR field contains the model's reasoning and plan, not a transcription; no line of the page is transcribed",
+            "severity": "serious",
+            "class": "O15"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "(no transcription; page argues that one who persists in mortal sin for a finite time is punished only for finite time, in three senses)",
+            "english": "\"While the act itself is transitory, the turning away from the Divine remains... the infinity of the punishment corresponds to the infinity of the duration of the sin\"",
+            "problem": "English is an invented summary of a plausible argument; it does not translate this page (whose own Primo/Secundo/Tertio say something else) and the notes 'original: \"peccato\"' are fabricated apparatus",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "a reader sees a fluent English page with no source text beside it; the source pane shows the model's working notes",
+            "severity": "serious",
+            "class": "O15"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 165,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "...sic. n. arguebāt istæ c",
+            "image": "page continues for ~35 more lines, incl. heading 'QVAESTIO DVODECIMA AN DEVS INTELLIGAT' and the Dionysius discussion",
+            "problem": "transcription stops after line 11; about three-quarters of the page, including a section heading, is missing",
+            "severity": "serious",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "<meta> (continuity)",
+            "english": "\"he defends his eleventh proposition... Having just finished his defense of the tenth proposition regarding the Eucharist\"",
+            "problem": "continuity claims about preceding questions are not on the page and may be wrong",
+            "severity": "moderate",
+            "class": "T15"
+          },
+          {
+            "source": "istæ c",
+            "english": "these c...",
+            "problem": "English stops where the truncated OCR stops; the rest of the page is untranslated",
+            "severity": "serious",
+            "class": "T1"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 237,
+        "right_page": "unsure",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "(several hundred combining macrons, nothing else)",
+            "image": "Oration passage on magic: 'Proposuimus & magica theoremata, in quibus duplicem esse magiam significauimus...', Zoroaster, Xamolsis, Plato's Alcibiades/Charmides",
+            "problem": "OCR is a degenerate loop of combining marks; no text",
+            "severity": "serious",
+            "class": "O4"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "(page: the two kinds of magic, goetia vs. mageia, Zoroaster son of Oromasius, Charondas, Damigeron, Apollonius, Hostanes, Dardanus, Alkindi, Roger Bacon, William of Paris, Plotinus)",
+            "english": "\"And it was not enough for me... to have added much regarding the Ancient Theology of the Egyptians... I have then proposed seventy-two new physical and metaphysical propositions... the ancient and secret mysteries of the Hebrew Kabbalah\"",
+            "problem": "English is a different passage of the Oration, recalled from elsewhere, not this page; the page's subject (natural magic vs. demonic magic) is absent",
+            "severity": "serious",
+            "class": "other:canonical-text-substitution-in-translation (cf. O3)"
+          }
+        ],
+        "other": [
+          {
+            "note": "invented apparatus: notes 'original: \"Prisca Aegyptiorum theologia\"', 'original: \"primus ego ex Latinis\"' quote Latin that is not on this page",
+            "severity": "serious",
+            "class": "T10"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Right book on the right shelf, but three of four sampled pages carry broken OCR (reasoning text, macron loop, truncation) and two carry English that is not a translation of the page. Needs re-OCR and re-translation before a scholar sees it."
+  },
+  {
+    "book_id": "69b51e37cf111105c429875b",
+    "slot": 14,
+    "title": "Doctissimi Viri Ioannis Pici Mirandulae, Concordiae comitis: Exactissima expositio in orationem dominicam",
+    "tradition": "latin-kabbalah",
+    "shelf_fit": "doubtful",
+    "shelf_note": "Pico's exposition of the Lord's Prayer (1537 print) is devotional; nothing kabbalistic on the sampled pages. It is on the shelf by author only.",
+    "rights_flag": null,
+    "structure_note": "34 leaves, all OCR'd and translated, no duplicates. Page 29 was OCR'd by a different engine (flash-lite, pipeline_preview) with a bracketed-expansion convention unlike the other pages.",
+    "on_sight_defect": false,
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      6,
+      14,
+      25
+    ],
+    "reader_summary": "A short devotional commentary by Pico on the Lord's Prayer, in a small 1537 octavo. The transcription is of the right text and the English is a close, reliable translation on three of four pages; the fourth (p.29) has misexpanded abbreviations and an English last sentence that runs past the page. It is a Pico text, not a kabbalistic one.",
+    "pages": [
+      {
+        "page_number": 6,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "<margin>Luc. 10.</margin>",
+            "image": "'Luc.10.' appears only as mirrored bleed-through from the verso (also '1.Co.8', 'Nu.22', 'Mat.7')",
+            "problem": "bleed-through side-note recorded as this page's margin",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 14,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "scan note 'Minor ink bleed-through from the preceding page is visible on the left margin.' rendered as a <note> in the English pane",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 25,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "Esurientes",
+            "image": "Exurientes",
+            "problem": "spelling normalised",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "videbimus illud virginis impletũ. Esurientes impleuit bonis",
+            "english": "we shall see that which was fulfilled for the virgin: He has filled the hungry",
+            "problem": "should be 'that saying of the Virgin fulfilled' (the Magnificat); the Virgin is the speaker, not the beneficiary",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 29,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "cu[m] eo[rum] ferui formam",
+            "image": "cū eo serui formā",
+            "problem": "'eo' wrongly expanded to 'eorum'; long s read as f",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Q[uia] m[un]dat refici",
+            "image": "Qm̄ āt refici (Quoniam autem)",
+            "problem": "abbreviation misexpanded into a new verb 'mundat'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "o[r] hodie / Io[r] iseq[ue]nti",
+            "image": "dr̄ hodie (dicitur) / Iō (ideo)",
+            "problem": "abbreviations misexpanded",
+            "severity": "moderate"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "More ei⁹ q sit ifirm⁹: q vbi sana (page ends)",
+            "english": "Like the custom of one who is ill: who, when he has been healed, asks the doctor to give him some medicine or a way of life, so that he may preserve his health.",
+            "problem": "English completes the sentence with content from the next page (or invents it)",
+            "severity": "moderate",
+            "class": "T5"
+          },
+          {
+            "source": "orās desideret",
+            "english": "the soul desires",
+            "problem": "'orans' (the one praying) rendered as 'the soul'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Clean small book with good transcriptions and translations on most pages; one lite-OCR page has misexpanded abbreviations and a run-on English ending. Sound, but it is Pico's devotional writing, not Kabbalah."
+  },
+  {
+    "book_id": "69751588a88d83c830d99e18",
+    "slot": 15,
+    "title": "Artis cabalisticae. Tomus I",
+    "tradition": "latin-kabbalah",
+    "shelf_fit": "fits",
+    "shelf_note": "Pistorius's 1587 anthology of Christian Kabbalah (Ricius, Leone Ebreo, Reuchlin): the core of the shelf.",
+    "rights_flag": null,
+    "structure_note": "1,136 page records against pages_count 1,120 and pages_translated 1,114 (field drift of 16). Printed numbers run 113, 381, 676, 962 at records 183, 492, 813, 1116, a slowly growing offset consistent with one continuous pagination plus unnumbered leaves. 72 backsteps / 116 repeats on 1,072 printed numbers is more than misread numerals alone would give; worth a structure check, but the sampled leaves are all right and in order.",
+    "on_sight_defect": false,
+    "fit_to_show": "show",
+    "showcase_pages": [
+      183,
+      492,
+      813,
+      1116
+    ],
+    "reader_summary": "Volume I of Pistorius's Artis cabalisticae (Basel 1587), the standard Renaissance collection of Christian-Kabbalah texts: on these pages Ricius's De coelesti agricultura IV, Leone Ebreo's Dialogue II, and Reuchlin's De arte cabalistica and De verbo mirifico. The transcriptions are of the right leaves and nearly complete, and the English is close and careful. Watch for an occasional dropped sentence and headings the translator supplied.",
+    "pages": [
+      {
+        "page_number": 183,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "<meta> continuity",
+            "english": "The previous page concluded the correspondence of Emperor Constantine regarding the Arian controversy.",
+            "problem": "continuity claim not on the page and unlikely for this volume",
+            "severity": "minor",
+            "class": "T15"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 492,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ad eam celeriter ferri, nec unquam quiescere conspiciuntur.",
+            "image": "ad eam celeriter ferri, nec unquam quiescere, nisi postquam terrenum nacta fuerint elementum, uidebis: non secus ac filij matres summo studio quærunt, & sæpè inclamant, nec unquam nisi eis inuentis quiescere conspiciuntur.",
+            "problem": "eye-skip drops about two lines, including the simile of children seeking their mothers; English follows the gap",
+            "severity": "moderate",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 813,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "mediæ obseruantur",
+            "image": "mediæ obuersantur",
+            "problem": "verb misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "dy-crasia",
+            "image": "dyſ-crasia",
+            "problem": "letter dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "(running head only: IOANNIS REICHLINI)",
+            "english": "### ON THE CABALISTIC ART, BOOK II.",
+            "problem": "heading supplied by the translator, not on the page",
+            "severity": "moderate",
+            "class": "T16"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 1116,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "in subte lunaria",
+            "image": "in subterlunaria",
+            "problem": "letters dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "difficile nobis, ex ineffabili uocem flecti, qua obedienter utamur",
+            "english": "it is difficult for us to be moved by a voice from the ineffable",
+            "problem": "sense is that it is hard to derive (bend) a pronounceable word from the ineffable name for our use; the English makes it about being moved",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The strongest book in the packet: right leaves, near-complete transcriptions, faithful English on the core Christian-Kabbalah texts. Minor slips only; the page-count drift deserves a structure audit."
+  },
+  {
+    "book_id": "69b6316a1c1c21a3738071fa",
+    "slot": 16,
+    "title": "[Vocabularius breviloquus]",
+    "tradition": "latin-kabbalah",
+    "shelf_fit": "wrong",
+    "shelf_note": "A 1478 Latin school dictionary (Vocabularius breviloquus, attributed to Reuchlin). It is a lexicon of ordinary Latin, not a work of Kabbalah; it is on the shelf by Reuchlin's name only.",
+    "rights_flag": null,
+    "structure_note": "Text and image are one leaf apart on all four sampled pages: each image shows the leaf after the one transcribed (p.103 image Carduus-Caro, text Carabrio-Cardularij; p.323 image Nitrum-Nomen, text Nicola-Nitrum; p.381 image Precentor-Prefatus, text Pragmatica-Prebenda; p.583 image Mechor-Mereo, text Madidus-Maturo). This looks like a book-wide offset. 13 pages are untranslated.",
+    "on_sight_defect": true,
+    "fit_to_show": "do_not_show",
+    "showcase_pages": [],
+    "reader_summary": "This is the incunable Latin dictionary Vocabularius breviloquus, not a kabbalistic work. On every sampled page the transcription is of the previous leaf, so the image and text never match, and the transcription itself garbles headwords (Carto for Carbo, Nilns, Numbus). The English inherits those errors and adds glosses that are not in the source.",
+    "pages": [
+      {
+        "page_number": 103,
+        "right_page": "no",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "Carabrio ... Carabus ... Character ... Cardo ... Cardularij indices",
+            "image": "Carduus ... Carectum ... Carex ... Cariathbarbe ... Carybdis ... Carina ... Charitas ... Carmen ... Caro (sig. c3)",
+            "problem": "text is the preceding leaf",
+            "severity": "serious",
+            "class": "I1"
+          },
+          {
+            "ocr": "Carto.onis",
+            "image": "(on the transcribed leaf) Carbo, onis",
+            "problem": "headword misread b to t throughout the entry, carried into the English",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Carto.onis",
+            "english": "Carto, -onis <gloss>Charcoal</gloss>",
+            "problem": "nonexistent headword presented as Latin",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [
+          {
+            "note": "image and text are different leaves",
+            "severity": "serious",
+            "class": "I1"
+          },
+          {
+            "note": "broken markup in English: '<term>Carbūculus, -i</gloss>', '<term>Cardomomum, -i</gloss>'",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 323,
+        "right_page": "no",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "Nicola ... Nyctages ... Nidus ... Niger ... Nympha ... Nitrum",
+            "image": "sabulo ... Niuosus, Nix, Nixus ... 'N ante O' ... Nobilis ... Noe ... Nomen (sig. q3)",
+            "problem": "text is the preceding leaf",
+            "severity": "serious",
+            "class": "I1"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "i. vicz q fūt popularia z vīlia",
+            "english": "victors who are popular and vile",
+            "problem": "garbled source rendered as a confident (and odd) statement",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "Dñ grealis",
+            "english": "<term>Dñ</term> <gloss>Dominus/Master</gloss> <term>Grealis</term>",
+            "problem": "'Unde' abbreviation glossed as 'Lord' and a misread fragment made a headword",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "image and text are different leaves",
+            "severity": "serious",
+            "class": "I1"
+          },
+          {
+            "note": "broken markup: '<note>Nixus</term>'",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 381,
+        "right_page": "no",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "Pragmatica ... Prandium ... Prasouū ... Pratum ... Prauicors ... Preambulus ... Prebenda",
+            "image": "Precentor ... Preceps ... Preceptum ... Preciosus ... Preco ... Precordium ... Preda ... Predestinatio ... Prefatio ... Prefatus (sig. s4)",
+            "problem": "text is the preceding leaf",
+            "severity": "serious",
+            "class": "I1"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Prasouū.rij.neu.ge. cōm' ul' loc' vbi pĩa pransus",
+            "english": "a common or place where leeks are eaten",
+            "problem": "misread headword (likely pransorium, a dining place) explained with invented 'leeks'",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "image and text are different leaves",
+            "severity": "serious",
+            "class": "I1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 583,
+        "right_page": "no",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "Ih madidus ... Madefacio ... Magistro ... Mando ... Maturo",
+            "image": "maturitate ... 'M ante E' ... Mechor ... Medeor ... Meditor ... Memini ... Memoro ... Mendico ... Mereo (leaf 45)",
+            "problem": "text is the preceding leaf",
+            "severity": "serious",
+            "class": "I1"
+          },
+          {
+            "ocr": "<note>Di Cato.</note> Di Cato.",
+            "image": "(each citation once)",
+            "problem": "every citation duplicated inside a <note> wrapper",
+            "severity": "moderate",
+            "class": "O15"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Dñ (Unde)",
+            "english": "Lord: ... Lord Joel 3:",
+            "problem": "'Unde' abbreviation translated as 'Lord' throughout",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "image and text are different leaves",
+            "severity": "serious",
+            "class": "I1"
+          },
+          {
+            "note": "duplicated <note> wrappers leak into the English pane ('<note>Lord:</note> Lord:')",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Wrong shelf (a Latin dictionary), and the text is one leaf off its image on every sampled page, with weak OCR of the dense abbreviated gothic. Not presentable."
+  }
+]

@@ -1,0 +1,144 @@
+{
+ "n": 71,
+ "arms": {
+  "lite": {
+   "fidelity_mean": 4.155,
+   "fidelity_ci": [
+    3.937,
+    4.359
+   ],
+   "fidelity_median": 4.0,
+   "invention_fabricated_or_added": 0.268,
+   "reversal": 0.056,
+   "omission": 0.246,
+   "share_ge4": 0.831
+  },
+  "base": {
+   "fidelity_mean": 2.746,
+   "fidelity_ci": [
+    2.585,
+    2.915
+   ],
+   "fidelity_median": 3.0,
+   "invention_fabricated_or_added": 0.099,
+   "reversal": 0.493,
+   "omission": 0.62,
+   "share_ge4": 0.085
+  },
+  "student": {
+   "fidelity_mean": 3.324,
+   "fidelity_ci": [
+    3.169,
+    3.479
+   ],
+   "fidelity_median": 3.0,
+   "invention_fabricated_or_added": 0.07,
+   "reversal": 0.268,
+   "omission": 0.366,
+   "share_ge4": 0.352
+  }
+ },
+ "paired": {
+  "student-lite": {
+   "fidelity_delta": -0.831,
+   "ci": [
+    -1.063,
+    -0.592
+   ],
+   "W_L_T_by_mean_fidelity": [
+    8,
+    54,
+    9
+   ],
+   "invention_delta": -0.197,
+   "invention_ci": [
+    -0.303,
+    -0.085
+   ]
+  },
+  "base-lite": {
+   "fidelity_delta": -1.408,
+   "ci": [
+    -1.648,
+    -1.148
+   ],
+   "W_L_T_by_mean_fidelity": [
+    5,
+    65,
+    1
+   ],
+   "invention_delta": -0.169,
+   "invention_ci": [
+    -0.268,
+    -0.063
+   ]
+  },
+  "student-base": {
+   "fidelity_delta": 0.577,
+   "ci": [
+    0.408,
+    0.725
+   ],
+   "W_L_T_by_mean_fidelity": [
+    48,
+    3,
+    20
+   ],
+   "invention_delta": -0.028,
+   "invention_ci": [
+    -0.099,
+    0.042
+   ]
+  }
+ },
+ "strata": {
+  "canonical": {
+   "n": 22,
+   "lite": 4.05,
+   "base": 2.64,
+   "student": 3.27,
+   "student-lite": -0.77
+  },
+  "non-canonical": {
+   "n": 49,
+   "lite": 4.2,
+   "base": 2.8,
+   "student": 3.35,
+   "student-lite": -0.86
+  },
+  "period:1450-1499": {
+   "n": 10,
+   "lite": 3.5,
+   "base": 2.25,
+   "student": 2.95,
+   "student-lite": -0.55
+  },
+  "period:1500s": {
+   "n": 23,
+   "lite": 4.17,
+   "base": 2.63,
+   "student": 3.24,
+   "student-lite": -0.93
+  },
+  "period:1600s": {
+   "n": 31,
+   "lite": 4.32,
+   "base": 2.94,
+   "student": 3.4,
+   "student-lite": -0.92
+  },
+  "period:1700s": {
+   "n": 7,
+   "lite": 4.29,
+   "base": 3.0,
+   "student": 3.79,
+   "student-lite": -0.5
+  }
+ },
+ "gate": {
+  "fidelity_ci_lower": -1.063,
+  "fidelity_ok": false,
+  "invention_ok": true,
+  "verdict": "FAIL"
+ }
+}

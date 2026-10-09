@@ -1,0 +1,6222 @@
+{
+ "date": "2026-10-09",
+ "judges_scored": [
+  "J1",
+  "J2"
+ ],
+ "gate": {
+  "J1": {
+   "plants": 8,
+   "plant_caught": 8,
+   "plant_caught_strict": 8,
+   "dups": 4,
+   "dup_tie": 4,
+   "pass": true
+  },
+  "J2": {
+   "plants": 8,
+   "plant_caught": 8,
+   "plant_caught_strict": 8,
+   "dups": 4,
+   "dup_tie": 4,
+   "pass": true
+  }
+ },
+ "null_fidelity_scores_dropped": 0,
+ "anchor": {
+  "Chinese": {
+   "stored": 4.313,
+   "rejudged": 4.193,
+   "diff": -0.12,
+   "within_0.10": false
+  },
+  "Sanskrit": {
+   "stored": 4.391,
+   "rejudged": 4.391,
+   "diff": 0.0,
+   "within_0.10": true
+  },
+  "Pali": {
+   "stored": 4.675,
+   "rejudged": 4.55,
+   "diff": -0.125,
+   "within_0.10": false
+  }
+ },
+ "comparable": false,
+ "groups": {
+  "pooled": {
+   "pages": 138,
+   "works": 111,
+   "arms": {
+    "C38": {
+     "pages": 138,
+     "works": 111,
+     "fidelity": 4.33,
+     "fidelity_ci_by_text": [
+      4.236,
+      4.415
+     ],
+     "share_ge4": 0.949,
+     "rev_pages_per100": 4.3,
+     "om_pages_per100": 8.7,
+     "inven_pages_per100": 65.2,
+     "fill_pages_per100": 5.8,
+     "revom_pages_per100": 12.3
+    },
+    "SAd": {
+     "pages": 138,
+     "works": 111,
+     "fidelity": 4.333,
+     "fidelity_ci_by_text": [
+      4.198,
+      4.457
+     ],
+     "share_ge4": 0.877,
+     "rev_pages_per100": 8.0,
+     "om_pages_per100": 5.1,
+     "inven_pages_per100": 53.6,
+     "fill_pages_per100": 1.4,
+     "revom_pages_per100": 12.3
+    },
+    "SA": {
+     "pages": 138,
+     "works": 111,
+     "fidelity": 4.413,
+     "fidelity_ci_by_text": [
+      4.282,
+      4.536
+     ],
+     "share_ge4": 0.891,
+     "rev_pages_per100": 6.5,
+     "om_pages_per100": 5.8,
+     "inven_pages_per100": 55.1,
+     "fill_pages_per100": 0.7,
+     "revom_pages_per100": 10.9
+    },
+    "GQ": {
+     "pages": 138,
+     "works": 111,
+     "fidelity": 4.428,
+     "fidelity_ci_by_text": [
+      4.342,
+      4.512
+     ],
+     "share_ge4": 0.964,
+     "rev_pages_per100": 2.9,
+     "om_pages_per100": 5.8,
+     "inven_pages_per100": 68.8,
+     "fill_pages_per100": 3.6,
+     "revom_pages_per100": 8.7
+    }
+   },
+   "deltas": {
+    "SA-C38": {
+     "pages": 138,
+     "mean": 0.083,
+     "ci_by_text": [
+      -0.039,
+      0.203
+     ],
+     "pages_higher": 50,
+     "pages_lower": 37,
+     "revom_sign": {
+      "a_only": 12,
+      "b_only": 14,
+      "p_two_sided": 0.845,
+      "p_rise_one_sided": 0.7214
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 7,
+      "p_two_sided": 0.0156,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-C38": {
+     "pages": 138,
+     "mean": 0.098,
+     "ci_by_text": [
+      0.046,
+      0.16
+     ],
+     "pages_higher": 18,
+     "pages_lower": 3,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 5,
+      "p_two_sided": 0.0625,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 3,
+      "p_two_sided": 0.25,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SAd-C38": {
+     "pages": 138,
+     "mean": 0.004,
+     "ci_by_text": [
+      -0.117,
+      0.13
+     ],
+     "pages_higher": 44,
+     "pages_lower": 41,
+     "revom_sign": {
+      "a_only": 13,
+      "b_only": 13,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 0.5775
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 6,
+      "p_two_sided": 0.0312,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SA-SAd": {
+     "pages": 138,
+     "mean": 0.08,
+     "ci_by_text": [
+      0.025,
+      0.145
+     ],
+     "pages_higher": 11,
+     "pages_lower": 1,
+     "revom_sign": {
+      "a_only": 1,
+      "b_only": 3,
+      "p_two_sided": 0.625,
+      "p_rise_one_sided": 0.9375
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-SA": {
+     "pages": 138,
+     "mean": 0.014,
+     "ci_by_text": [
+      -0.098,
+      0.144
+     ],
+     "pages_higher": 39,
+     "pages_lower": 40,
+     "revom_sign": {
+      "a_only": 10,
+      "b_only": 13,
+      "p_two_sided": 0.6776,
+      "p_rise_one_sided": 0.7976
+     },
+     "fill_sign": {
+      "a_only": 4,
+      "b_only": 0,
+      "p_two_sided": 0.125,
+      "p_rise_one_sided": 0.0625
+     }
+    }
+   },
+   "verdict": {
+    "SA": {
+     "fidelity_rule": false,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": false,
+     "descriptive_only": false
+    },
+    "GQ": {
+     "fidelity_rule": false,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": false,
+     "descriptive_only": false
+    }
+   }
+  },
+  "Chinese": {
+   "pages": 75,
+   "works": 75,
+   "arms": {
+    "C38": {
+     "pages": 75,
+     "works": 75,
+     "fidelity": 4.193,
+     "fidelity_ci_by_text": [
+      4.087,
+      4.307
+     ],
+     "share_ge4": 0.933,
+     "rev_pages_per100": 6.7,
+     "om_pages_per100": 8.0,
+     "inven_pages_per100": 69.3,
+     "fill_pages_per100": 4.0,
+     "revom_pages_per100": 13.3
+    },
+    "SAd": {
+     "pages": 75,
+     "works": 75,
+     "fidelity": 4.36,
+     "fidelity_ci_by_text": [
+      4.2,
+      4.52
+     ],
+     "share_ge4": 0.92,
+     "rev_pages_per100": 6.7,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 48.0,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 6.7
+    },
+    "SA": {
+     "pages": 75,
+     "works": 75,
+     "fidelity": 4.427,
+     "fidelity_ci_by_text": [
+      4.26,
+      4.587
+     ],
+     "share_ge4": 0.92,
+     "rev_pages_per100": 6.7,
+     "om_pages_per100": 1.3,
+     "inven_pages_per100": 49.3,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 6.7
+    },
+    "GQ": {
+     "pages": 75,
+     "works": 75,
+     "fidelity": 4.327,
+     "fidelity_ci_by_text": [
+      4.213,
+      4.433
+     ],
+     "share_ge4": 0.96,
+     "rev_pages_per100": 4.0,
+     "om_pages_per100": 4.0,
+     "inven_pages_per100": 69.3,
+     "fill_pages_per100": 2.7,
+     "revom_pages_per100": 8.0
+    }
+   },
+   "deltas": {
+    "SA-C38": {
+     "pages": 75,
+     "mean": 0.233,
+     "ci_by_text": [
+      0.053,
+      0.407
+     ],
+     "pages_higher": 34,
+     "pages_lower": 17,
+     "revom_sign": {
+      "a_only": 5,
+      "b_only": 10,
+      "p_two_sided": 0.3018,
+      "p_rise_one_sided": 0.9408
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 3,
+      "p_two_sided": 0.25,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-C38": {
+     "pages": 75,
+     "mean": 0.133,
+     "ci_by_text": [
+      0.06,
+      0.22
+     ],
+     "pages_higher": 11,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 4,
+      "p_two_sided": 0.125,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SAd-C38": {
+     "pages": 75,
+     "mean": 0.167,
+     "ci_by_text": [
+      0.0,
+      0.333
+     ],
+     "pages_higher": 29,
+     "pages_lower": 17,
+     "revom_sign": {
+      "a_only": 4,
+      "b_only": 9,
+      "p_two_sided": 0.2668,
+      "p_rise_one_sided": 0.9539
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 3,
+      "p_two_sided": 0.25,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SA-SAd": {
+     "pages": 75,
+     "mean": 0.067,
+     "ci_by_text": [
+      0.0,
+      0.153
+     ],
+     "pages_higher": 6,
+     "pages_lower": 1,
+     "revom_sign": {
+      "a_only": 1,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 0.75
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-SA": {
+     "pages": 75,
+     "mean": -0.1,
+     "ci_by_text": [
+      -0.273,
+      0.073
+     ],
+     "pages_higher": 17,
+     "pages_lower": 26,
+     "revom_sign": {
+      "a_only": 6,
+      "b_only": 5,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 0.5
+     },
+     "fill_sign": {
+      "a_only": 2,
+      "b_only": 0,
+      "p_two_sided": 0.5,
+      "p_rise_one_sided": 0.25
+     }
+    }
+   },
+   "verdict": {
+    "SA": {
+     "fidelity_rule": true,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": true,
+     "descriptive_only": false
+    },
+    "GQ": {
+     "fidelity_rule": false,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": false,
+     "descriptive_only": false
+    }
+   }
+  },
+  "Sanskrit": {
+   "pages": 23,
+   "works": 23,
+   "arms": {
+    "C38": {
+     "pages": 23,
+     "works": 23,
+     "fidelity": 4.391,
+     "fidelity_ci_by_text": [
+      4.196,
+      4.609
+     ],
+     "share_ge4": 0.957,
+     "rev_pages_per100": 0.0,
+     "om_pages_per100": 13.0,
+     "inven_pages_per100": 78.3,
+     "fill_pages_per100": 17.4,
+     "revom_pages_per100": 13.0
+    },
+    "SAd": {
+     "pages": 23,
+     "works": 23,
+     "fidelity": 3.935,
+     "fidelity_ci_by_text": [
+      3.63,
+      4.261
+     ],
+     "share_ge4": 0.609,
+     "rev_pages_per100": 21.7,
+     "om_pages_per100": 13.0,
+     "inven_pages_per100": 73.9,
+     "fill_pages_per100": 4.3,
+     "revom_pages_per100": 30.4
+    },
+    "SA": {
+     "pages": 23,
+     "works": 23,
+     "fidelity": 4.065,
+     "fidelity_ci_by_text": [
+      3.761,
+      4.37
+     ],
+     "share_ge4": 0.696,
+     "rev_pages_per100": 13.0,
+     "om_pages_per100": 13.0,
+     "inven_pages_per100": 69.6,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 21.7
+    },
+    "GQ": {
+     "pages": 23,
+     "works": 23,
+     "fidelity": 4.543,
+     "fidelity_ci_by_text": [
+      4.326,
+      4.739
+     ],
+     "share_ge4": 0.957,
+     "rev_pages_per100": 0.0,
+     "om_pages_per100": 8.7,
+     "inven_pages_per100": 82.6,
+     "fill_pages_per100": 8.7,
+     "revom_pages_per100": 8.7
+    }
+   },
+   "deltas": {
+    "SA-C38": {
+     "pages": 23,
+     "mean": -0.326,
+     "ci_by_text": [
+      -0.609,
+      -0.043
+     ],
+     "pages_higher": 4,
+     "pages_lower": 12,
+     "revom_sign": {
+      "a_only": 2,
+      "b_only": 0,
+      "p_two_sided": 0.5,
+      "p_rise_one_sided": 0.25
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 4,
+      "p_two_sided": 0.125,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-C38": {
+     "pages": 23,
+     "mean": 0.152,
+     "ci_by_text": [
+      0.022,
+      0.304
+     ],
+     "pages_higher": 4,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 2,
+      "p_two_sided": 0.5,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SAd-C38": {
+     "pages": 23,
+     "mean": -0.457,
+     "ci_by_text": [
+      -0.761,
+      -0.13
+     ],
+     "pages_higher": 3,
+     "pages_lower": 13,
+     "revom_sign": {
+      "a_only": 4,
+      "b_only": 0,
+      "p_two_sided": 0.125,
+      "p_rise_one_sided": 0.0625
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 3,
+      "p_two_sided": 0.25,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SA-SAd": {
+     "pages": 23,
+     "mean": 0.13,
+     "ci_by_text": [
+      0.0,
+      0.326
+     ],
+     "pages_higher": 2,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 2,
+      "p_two_sided": 0.5,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-SA": {
+     "pages": 23,
+     "mean": 0.478,
+     "ci_by_text": [
+      0.152,
+      0.804
+     ],
+     "pages_higher": 14,
+     "pages_lower": 4,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 3,
+      "p_two_sided": 0.25,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 2,
+      "b_only": 0,
+      "p_two_sided": 0.5,
+      "p_rise_one_sided": 0.25
+     }
+    }
+   },
+   "verdict": {
+    "SA": {
+     "fidelity_rule": false,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": false,
+     "descriptive_only": false
+    },
+    "GQ": {
+     "fidelity_rule": true,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": true,
+     "descriptive_only": false
+    }
+   }
+  },
+  "Pali": {
+   "pages": 40,
+   "works": 13,
+   "arms": {
+    "C38": {
+     "pages": 40,
+     "works": 13,
+     "fidelity": 4.55,
+     "fidelity_ci_by_text": [
+      4.39,
+      4.732
+     ],
+     "share_ge4": 0.975,
+     "rev_pages_per100": 2.5,
+     "om_pages_per100": 7.5,
+     "inven_pages_per100": 50.0,
+     "fill_pages_per100": 2.5,
+     "revom_pages_per100": 10.0
+    },
+    "SAd": {
+     "pages": 40,
+     "works": 13,
+     "fidelity": 4.513,
+     "fidelity_ci_by_text": [
+      4.265,
+      4.73
+     ],
+     "share_ge4": 0.95,
+     "rev_pages_per100": 2.5,
+     "om_pages_per100": 10.0,
+     "inven_pages_per100": 52.5,
+     "fill_pages_per100": 2.5,
+     "revom_pages_per100": 12.5
+    },
+    "SA": {
+     "pages": 40,
+     "works": 13,
+     "fidelity": 4.588,
+     "fidelity_ci_by_text": [
+      4.343,
+      4.808
+     ],
+     "share_ge4": 0.95,
+     "rev_pages_per100": 2.5,
+     "om_pages_per100": 10.0,
+     "inven_pages_per100": 57.5,
+     "fill_pages_per100": 2.5,
+     "revom_pages_per100": 12.5
+    },
+    "GQ": {
+     "pages": 40,
+     "works": 13,
+     "fidelity": 4.55,
+     "fidelity_ci_by_text": [
+      4.386,
+      4.735
+     ],
+     "share_ge4": 0.975,
+     "rev_pages_per100": 2.5,
+     "om_pages_per100": 7.5,
+     "inven_pages_per100": 60.0,
+     "fill_pages_per100": 2.5,
+     "revom_pages_per100": 10.0
+    }
+   },
+   "deltas": {
+    "SA-C38": {
+     "pages": 40,
+     "mean": 0.037,
+     "ci_by_text": [
+      -0.216,
+      0.23
+     ],
+     "pages_higher": 12,
+     "pages_lower": 8,
+     "revom_sign": {
+      "a_only": 5,
+      "b_only": 4,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 0.5
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-C38": {
+     "pages": 40,
+     "mean": 0.0,
+     "ci_by_text": [
+      -0.086,
+      0.078
+     ],
+     "pages_higher": 3,
+     "pages_lower": 3,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SAd-C38": {
+     "pages": 40,
+     "mean": -0.037,
+     "ci_by_text": [
+      -0.303,
+      0.17
+     ],
+     "pages_higher": 12,
+     "pages_lower": 11,
+     "revom_sign": {
+      "a_only": 5,
+      "b_only": 4,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 0.5
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SA-SAd": {
+     "pages": 40,
+     "mean": 0.075,
+     "ci_by_text": [
+      0.0,
+      0.207
+     ],
+     "pages_higher": 3,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-SA": {
+     "pages": 40,
+     "mean": -0.037,
+     "ci_by_text": [
+      -0.205,
+      0.176
+     ],
+     "pages_higher": 8,
+     "pages_lower": 10,
+     "revom_sign": {
+      "a_only": 4,
+      "b_only": 5,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 0.7461
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    }
+   },
+   "verdict": {
+    "SA": {
+     "fidelity_rule": false,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": false,
+     "descriptive_only": false
+    },
+    "GQ": {
+     "fidelity_rule": false,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": false,
+     "descriptive_only": false
+    }
+   }
+  },
+  "Chinese not famous": {
+   "pages": 40,
+   "works": 40,
+   "arms": {
+    "C38": {
+     "pages": 40,
+     "works": 40,
+     "fidelity": 4.112,
+     "fidelity_ci_by_text": [
+      3.962,
+      4.263
+     ],
+     "share_ge4": 0.9,
+     "rev_pages_per100": 10.0,
+     "om_pages_per100": 5.0,
+     "inven_pages_per100": 67.5,
+     "fill_pages_per100": 7.5,
+     "revom_pages_per100": 12.5
+    },
+    "SAd": {
+     "pages": 40,
+     "works": 40,
+     "fidelity": 4.213,
+     "fidelity_ci_by_text": [
+      3.962,
+      4.425
+     ],
+     "share_ge4": 0.875,
+     "rev_pages_per100": 7.5,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 40.0,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 7.5
+    },
+    "SA": {
+     "pages": 40,
+     "works": 40,
+     "fidelity": 4.25,
+     "fidelity_ci_by_text": [
+      3.987,
+      4.475
+     ],
+     "share_ge4": 0.85,
+     "rev_pages_per100": 10.0,
+     "om_pages_per100": 2.5,
+     "inven_pages_per100": 42.5,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 10.0
+    },
+    "GQ": {
+     "pages": 40,
+     "works": 40,
+     "fidelity": 4.263,
+     "fidelity_ci_by_text": [
+      4.112,
+      4.412
+     ],
+     "share_ge4": 0.925,
+     "rev_pages_per100": 7.5,
+     "om_pages_per100": 2.5,
+     "inven_pages_per100": 65.0,
+     "fill_pages_per100": 5.0,
+     "revom_pages_per100": 10.0
+    }
+   },
+   "deltas": {
+    "SA-C38": {
+     "pages": 40,
+     "mean": 0.138,
+     "ci_by_text": [
+      -0.15,
+      0.388
+     ],
+     "pages_higher": 17,
+     "pages_lower": 12,
+     "revom_sign": {
+      "a_only": 4,
+      "b_only": 5,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 0.7461
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 3,
+      "p_two_sided": 0.25,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-C38": {
+     "pages": 40,
+     "mean": 0.15,
+     "ci_by_text": [
+      0.062,
+      0.263
+     ],
+     "pages_higher": 8,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SAd-C38": {
+     "pages": 40,
+     "mean": 0.1,
+     "ci_by_text": [
+      -0.163,
+      0.325
+     ],
+     "pages_higher": 14,
+     "pages_lower": 12,
+     "revom_sign": {
+      "a_only": 3,
+      "b_only": 5,
+      "p_two_sided": 0.7266,
+      "p_rise_one_sided": 0.8555
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 3,
+      "p_two_sided": 0.25,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SA-SAd": {
+     "pages": 40,
+     "mean": 0.037,
+     "ci_by_text": [
+      -0.05,
+      0.138
+     ],
+     "pages_higher": 3,
+     "pages_lower": 1,
+     "revom_sign": {
+      "a_only": 1,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 0.5
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-SA": {
+     "pages": 40,
+     "mean": 0.013,
+     "ci_by_text": [
+      -0.237,
+      0.312
+     ],
+     "pages_higher": 12,
+     "pages_lower": 12,
+     "revom_sign": {
+      "a_only": 4,
+      "b_only": 4,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 0.6367
+     },
+     "fill_sign": {
+      "a_only": 2,
+      "b_only": 0,
+      "p_two_sided": 0.5,
+      "p_rise_one_sided": 0.25
+     }
+    }
+   },
+   "verdict": {
+    "SA": {
+     "fidelity_rule": false,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": false,
+     "descriptive_only": false
+    },
+    "GQ": {
+     "fidelity_rule": true,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": true,
+     "descriptive_only": false
+    }
+   }
+  },
+  "Chinese famous": {
+   "pages": 35,
+   "works": 35,
+   "arms": {
+    "C38": {
+     "pages": 35,
+     "works": 35,
+     "fidelity": 4.286,
+     "fidelity_ci_by_text": [
+      4.129,
+      4.443
+     ],
+     "share_ge4": 0.971,
+     "rev_pages_per100": 2.9,
+     "om_pages_per100": 11.4,
+     "inven_pages_per100": 71.4,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 14.3
+    },
+    "SAd": {
+     "pages": 35,
+     "works": 35,
+     "fidelity": 4.529,
+     "fidelity_ci_by_text": [
+      4.357,
+      4.7
+     ],
+     "share_ge4": 0.971,
+     "rev_pages_per100": 5.7,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 57.1,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 5.7
+    },
+    "SA": {
+     "pages": 35,
+     "works": 35,
+     "fidelity": 4.629,
+     "fidelity_ci_by_text": [
+      4.486,
+      4.771
+     ],
+     "share_ge4": 1.0,
+     "rev_pages_per100": 2.9,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 57.1,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 2.9
+    },
+    "GQ": {
+     "pages": 35,
+     "works": 35,
+     "fidelity": 4.4,
+     "fidelity_ci_by_text": [
+      4.243,
+      4.543
+     ],
+     "share_ge4": 1.0,
+     "rev_pages_per100": 0.0,
+     "om_pages_per100": 5.7,
+     "inven_pages_per100": 74.3,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 5.7
+    }
+   },
+   "deltas": {
+    "SA-C38": {
+     "pages": 35,
+     "mean": 0.343,
+     "ci_by_text": [
+      0.129,
+      0.557
+     ],
+     "pages_higher": 17,
+     "pages_lower": 5,
+     "revom_sign": {
+      "a_only": 1,
+      "b_only": 5,
+      "p_two_sided": 0.2188,
+      "p_rise_one_sided": 0.9844
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-C38": {
+     "pages": 35,
+     "mean": 0.114,
+     "ci_by_text": [
+      0.0,
+      0.257
+     ],
+     "pages_higher": 3,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 3,
+      "p_two_sided": 0.25,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SAd-C38": {
+     "pages": 35,
+     "mean": 0.243,
+     "ci_by_text": [
+      0.043,
+      0.443
+     ],
+     "pages_higher": 15,
+     "pages_lower": 5,
+     "revom_sign": {
+      "a_only": 1,
+      "b_only": 4,
+      "p_two_sided": 0.375,
+      "p_rise_one_sided": 0.9688
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SA-SAd": {
+     "pages": 35,
+     "mean": 0.1,
+     "ci_by_text": [
+      0.0,
+      0.243
+     ],
+     "pages_higher": 3,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-SA": {
+     "pages": 35,
+     "mean": -0.229,
+     "ci_by_text": [
+      -0.414,
+      -0.057
+     ],
+     "pages_higher": 5,
+     "pages_lower": 14,
+     "revom_sign": {
+      "a_only": 2,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 0.5
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    }
+   },
+   "verdict": {
+    "SA": {
+     "fidelity_rule": true,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": true,
+     "descriptive_only": false
+    },
+    "GQ": {
+     "fidelity_rule": false,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": false,
+     "descriptive_only": false
+    }
+   }
+  },
+  "Chinese cbeta-chan": {
+   "pages": 9,
+   "works": 9,
+   "arms": {
+    "C38": {
+     "pages": 9,
+     "works": 9,
+     "fidelity": 4.278,
+     "fidelity_ci_by_text": [
+      4.056,
+      4.556
+     ],
+     "share_ge4": 1.0,
+     "rev_pages_per100": 0.0,
+     "om_pages_per100": 11.1,
+     "inven_pages_per100": 77.8,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 11.1
+    },
+    "SAd": {
+     "pages": 9,
+     "works": 9,
+     "fidelity": 4.722,
+     "fidelity_ci_by_text": [
+      4.444,
+      5.0
+     ],
+     "share_ge4": 1.0,
+     "rev_pages_per100": 0.0,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 88.9,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 0.0
+    },
+    "SA": {
+     "pages": 9,
+     "works": 9,
+     "fidelity": 4.722,
+     "fidelity_ci_by_text": [
+      4.444,
+      5.0
+     ],
+     "share_ge4": 1.0,
+     "rev_pages_per100": 0.0,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 88.9,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 0.0
+    },
+    "GQ": {
+     "pages": 9,
+     "works": 9,
+     "fidelity": 4.5,
+     "fidelity_ci_by_text": [
+      4.222,
+      4.833
+     ],
+     "share_ge4": 1.0,
+     "rev_pages_per100": 0.0,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 77.8,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 0.0
+    }
+   },
+   "deltas": {
+    "SA-C38": {
+     "pages": 9,
+     "mean": 0.444,
+     "ci_by_text": [
+      0.111,
+      0.778
+     ],
+     "pages_higher": 5,
+     "pages_lower": 1,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-C38": {
+     "pages": 9,
+     "mean": 0.222,
+     "ci_by_text": [
+      0.0,
+      0.556
+     ],
+     "pages_higher": 2,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SAd-C38": {
+     "pages": 9,
+     "mean": 0.444,
+     "ci_by_text": [
+      0.111,
+      0.778
+     ],
+     "pages_higher": 5,
+     "pages_lower": 1,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SA-SAd": {
+     "pages": 9,
+     "mean": 0.0,
+     "ci_by_text": [
+      0.0,
+      0.0
+     ],
+     "pages_higher": 0,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-SA": {
+     "pages": 9,
+     "mean": -0.222,
+     "ci_by_text": [
+      -0.556,
+      0.056
+     ],
+     "pages_higher": 1,
+     "pages_lower": 3,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    }
+   },
+   "verdict": {
+    "SA": {
+     "fidelity_rule": true,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": true,
+     "descriptive_only": true
+    },
+    "GQ": {
+     "fidelity_rule": false,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": false,
+     "descriptive_only": true
+    }
+   }
+  },
+  "Chinese cbeta-sastra": {
+   "pages": 13,
+   "works": 13,
+   "arms": {
+    "C38": {
+     "pages": 13,
+     "works": 13,
+     "fidelity": 3.885,
+     "fidelity_ci_by_text": [
+      3.615,
+      4.154
+     ],
+     "share_ge4": 0.769,
+     "rev_pages_per100": 23.1,
+     "om_pages_per100": 7.7,
+     "inven_pages_per100": 69.2,
+     "fill_pages_per100": 7.7,
+     "revom_pages_per100": 23.1
+    },
+    "SAd": {
+     "pages": 13,
+     "works": 13,
+     "fidelity": 4.038,
+     "fidelity_ci_by_text": [
+      3.462,
+      4.462
+     ],
+     "share_ge4": 0.923,
+     "rev_pages_per100": 0.0,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 61.5,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 0.0
+    },
+    "SA": {
+     "pages": 13,
+     "works": 13,
+     "fidelity": 4.115,
+     "fidelity_ci_by_text": [
+      3.5,
+      4.577
+     ],
+     "share_ge4": 0.923,
+     "rev_pages_per100": 0.0,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 61.5,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 0.0
+    },
+    "GQ": {
+     "pages": 13,
+     "works": 13,
+     "fidelity": 4.0,
+     "fidelity_ci_by_text": [
+      3.769,
+      4.231
+     ],
+     "share_ge4": 0.846,
+     "rev_pages_per100": 15.4,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 61.5,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 15.4
+    }
+   },
+   "deltas": {
+    "SA-C38": {
+     "pages": 13,
+     "mean": 0.231,
+     "ci_by_text": [
+      -0.462,
+      0.769
+     ],
+     "pages_higher": 7,
+     "pages_lower": 2,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 3,
+      "p_two_sided": 0.25,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-C38": {
+     "pages": 13,
+     "mean": 0.115,
+     "ci_by_text": [
+      0.0,
+      0.308
+     ],
+     "pages_higher": 2,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SAd-C38": {
+     "pages": 13,
+     "mean": 0.154,
+     "ci_by_text": [
+      -0.5,
+      0.692
+     ],
+     "pages_higher": 6,
+     "pages_lower": 2,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 3,
+      "p_two_sided": 0.25,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SA-SAd": {
+     "pages": 13,
+     "mean": 0.077,
+     "ci_by_text": [
+      0.0,
+      0.231
+     ],
+     "pages_higher": 1,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-SA": {
+     "pages": 13,
+     "mean": -0.115,
+     "ci_by_text": [
+      -0.692,
+      0.615
+     ],
+     "pages_higher": 2,
+     "pages_lower": 6,
+     "revom_sign": {
+      "a_only": 2,
+      "b_only": 0,
+      "p_two_sided": 0.5,
+      "p_rise_one_sided": 0.25
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    }
+   },
+   "verdict": {
+    "SA": {
+     "fidelity_rule": false,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": false,
+     "descriptive_only": false
+    },
+    "GQ": {
+     "fidelity_rule": false,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": false,
+     "descriptive_only": false
+    }
+   }
+  },
+  "Chinese cbeta-sutra": {
+   "pages": 11,
+   "works": 11,
+   "arms": {
+    "C38": {
+     "pages": 11,
+     "works": 11,
+     "fidelity": 4.409,
+     "fidelity_ci_by_text": [
+      4.182,
+      4.636
+     ],
+     "share_ge4": 1.0,
+     "rev_pages_per100": 0.0,
+     "om_pages_per100": 18.2,
+     "inven_pages_per100": 72.7,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 18.2
+    },
+    "SAd": {
+     "pages": 11,
+     "works": 11,
+     "fidelity": 4.455,
+     "fidelity_ci_by_text": [
+      4.182,
+      4.727
+     ],
+     "share_ge4": 1.0,
+     "rev_pages_per100": 0.0,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 27.3,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 0.0
+    },
+    "SA": {
+     "pages": 11,
+     "works": 11,
+     "fidelity": 4.455,
+     "fidelity_ci_by_text": [
+      4.0,
+      4.818
+     ],
+     "share_ge4": 0.909,
+     "rev_pages_per100": 9.1,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 27.3,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 9.1
+    },
+    "GQ": {
+     "pages": 11,
+     "works": 11,
+     "fidelity": 4.5,
+     "fidelity_ci_by_text": [
+      4.227,
+      4.727
+     ],
+     "share_ge4": 1.0,
+     "rev_pages_per100": 0.0,
+     "om_pages_per100": 18.2,
+     "inven_pages_per100": 72.7,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 18.2
+    }
+   },
+   "deltas": {
+    "SA-C38": {
+     "pages": 11,
+     "mean": 0.045,
+     "ci_by_text": [
+      -0.455,
+      0.545
+     ],
+     "pages_higher": 4,
+     "pages_lower": 4,
+     "revom_sign": {
+      "a_only": 1,
+      "b_only": 2,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 0.875
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-C38": {
+     "pages": 11,
+     "mean": 0.091,
+     "ci_by_text": [
+      0.0,
+      0.273
+     ],
+     "pages_higher": 1,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SAd-C38": {
+     "pages": 11,
+     "mean": 0.045,
+     "ci_by_text": [
+      -0.318,
+      0.409
+     ],
+     "pages_higher": 3,
+     "pages_lower": 4,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 2,
+      "p_two_sided": 0.5,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SA-SAd": {
+     "pages": 11,
+     "mean": 0.0,
+     "ci_by_text": [
+      -0.273,
+      0.273
+     ],
+     "pages_higher": 1,
+     "pages_lower": 1,
+     "revom_sign": {
+      "a_only": 1,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 0.5
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-SA": {
+     "pages": 11,
+     "mean": 0.045,
+     "ci_by_text": [
+      -0.409,
+      0.545
+     ],
+     "pages_higher": 4,
+     "pages_lower": 3,
+     "revom_sign": {
+      "a_only": 2,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 0.5
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    }
+   },
+   "verdict": {
+    "SA": {
+     "fidelity_rule": false,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": false,
+     "descriptive_only": false
+    },
+    "GQ": {
+     "fidelity_rule": false,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": false,
+     "descriptive_only": false
+    }
+   }
+  },
+  "Chinese kr1-classics": {
+   "pages": 10,
+   "works": 10,
+   "arms": {
+    "C38": {
+     "pages": 10,
+     "works": 10,
+     "fidelity": 4.15,
+     "fidelity_ci_by_text": [
+      3.8,
+      4.5
+     ],
+     "share_ge4": 0.9,
+     "rev_pages_per100": 10.0,
+     "om_pages_per100": 10.0,
+     "inven_pages_per100": 90.0,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 20.0
+    },
+    "SAd": {
+     "pages": 10,
+     "works": 10,
+     "fidelity": 4.4,
+     "fidelity_ci_by_text": [
+      4.1,
+      4.75
+     ],
+     "share_ge4": 0.9,
+     "rev_pages_per100": 10.0,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 60.0,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 10.0
+    },
+    "SA": {
+     "pages": 10,
+     "works": 10,
+     "fidelity": 4.4,
+     "fidelity_ci_by_text": [
+      4.1,
+      4.75
+     ],
+     "share_ge4": 0.9,
+     "rev_pages_per100": 10.0,
+     "om_pages_per100": 10.0,
+     "inven_pages_per100": 60.0,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 10.0
+    },
+    "GQ": {
+     "pages": 10,
+     "works": 10,
+     "fidelity": 4.15,
+     "fidelity_ci_by_text": [
+      3.8,
+      4.5
+     ],
+     "share_ge4": 0.9,
+     "rev_pages_per100": 10.0,
+     "om_pages_per100": 10.0,
+     "inven_pages_per100": 90.0,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 20.0
+    }
+   },
+   "deltas": {
+    "SA-C38": {
+     "pages": 10,
+     "mean": 0.25,
+     "ci_by_text": [
+      -0.1,
+      0.6
+     ],
+     "pages_higher": 4,
+     "pages_lower": 2,
+     "revom_sign": {
+      "a_only": 1,
+      "b_only": 2,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 0.875
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-C38": {
+     "pages": 10,
+     "mean": 0.0,
+     "ci_by_text": [
+      0.0,
+      0.0
+     ],
+     "pages_higher": 0,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SAd-C38": {
+     "pages": 10,
+     "mean": 0.25,
+     "ci_by_text": [
+      -0.1,
+      0.6
+     ],
+     "pages_higher": 4,
+     "pages_lower": 2,
+     "revom_sign": {
+      "a_only": 1,
+      "b_only": 2,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 0.875
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SA-SAd": {
+     "pages": 10,
+     "mean": 0.0,
+     "ci_by_text": [
+      0.0,
+      0.0
+     ],
+     "pages_higher": 0,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-SA": {
+     "pages": 10,
+     "mean": -0.25,
+     "ci_by_text": [
+      -0.6,
+      0.1
+     ],
+     "pages_higher": 2,
+     "pages_lower": 4,
+     "revom_sign": {
+      "a_only": 2,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 0.5
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    }
+   },
+   "verdict": {
+    "SA": {
+     "fidelity_rule": false,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": false,
+     "descriptive_only": false
+    },
+    "GQ": {
+     "fidelity_rule": false,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": false,
+     "descriptive_only": false
+    }
+   }
+  },
+  "Chinese kr2-histories": {
+   "pages": 11,
+   "works": 11,
+   "arms": {
+    "C38": {
+     "pages": 11,
+     "works": 11,
+     "fidelity": 4.364,
+     "fidelity_ci_by_text": [
+      4.136,
+      4.591
+     ],
+     "share_ge4": 1.0,
+     "rev_pages_per100": 0.0,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 54.5,
+     "fill_pages_per100": 18.2,
+     "revom_pages_per100": 0.0
+    },
+    "SAd": {
+     "pages": 11,
+     "works": 11,
+     "fidelity": 4.5,
+     "fidelity_ci_by_text": [
+      4.182,
+      4.773
+     ],
+     "share_ge4": 1.0,
+     "rev_pages_per100": 0.0,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 45.5,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 0.0
+    },
+    "SA": {
+     "pages": 11,
+     "works": 11,
+     "fidelity": 4.545,
+     "fidelity_ci_by_text": [
+      4.273,
+      4.818
+     ],
+     "share_ge4": 1.0,
+     "rev_pages_per100": 0.0,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 54.5,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 0.0
+    },
+    "GQ": {
+     "pages": 11,
+     "works": 11,
+     "fidelity": 4.409,
+     "fidelity_ci_by_text": [
+      4.182,
+      4.591
+     ],
+     "share_ge4": 1.0,
+     "rev_pages_per100": 0.0,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 54.5,
+     "fill_pages_per100": 18.2,
+     "revom_pages_per100": 0.0
+    }
+   },
+   "deltas": {
+    "SA-C38": {
+     "pages": 11,
+     "mean": 0.182,
+     "ci_by_text": [
+      -0.136,
+      0.545
+     ],
+     "pages_higher": 4,
+     "pages_lower": 3,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 2,
+      "p_two_sided": 0.5,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-C38": {
+     "pages": 11,
+     "mean": 0.045,
+     "ci_by_text": [
+      0.0,
+      0.136
+     ],
+     "pages_higher": 1,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SAd-C38": {
+     "pages": 11,
+     "mean": 0.136,
+     "ci_by_text": [
+      -0.182,
+      0.5
+     ],
+     "pages_higher": 3,
+     "pages_lower": 3,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 2,
+      "p_two_sided": 0.5,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SA-SAd": {
+     "pages": 11,
+     "mean": 0.045,
+     "ci_by_text": [
+      0.0,
+      0.136
+     ],
+     "pages_higher": 1,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-SA": {
+     "pages": 11,
+     "mean": -0.136,
+     "ci_by_text": [
+      -0.5,
+      0.182
+     ],
+     "pages_higher": 3,
+     "pages_lower": 3,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 2,
+      "b_only": 0,
+      "p_two_sided": 0.5,
+      "p_rise_one_sided": 0.25
+     }
+    }
+   },
+   "verdict": {
+    "SA": {
+     "fidelity_rule": false,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": false,
+     "descriptive_only": false
+    },
+    "GQ": {
+     "fidelity_rule": false,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": false,
+     "descriptive_only": false
+    }
+   }
+  },
+  "Chinese kr3-masters": {
+   "pages": 10,
+   "works": 10,
+   "arms": {
+    "C38": {
+     "pages": 10,
+     "works": 10,
+     "fidelity": 3.95,
+     "fidelity_ci_by_text": [
+      3.7,
+      4.15
+     ],
+     "share_ge4": 0.9,
+     "rev_pages_per100": 10.0,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 70.0,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 10.0
+    },
+    "SAd": {
+     "pages": 10,
+     "works": 10,
+     "fidelity": 4.05,
+     "fidelity_ci_by_text": [
+      3.5,
+      4.55
+     ],
+     "share_ge4": 0.6,
+     "rev_pages_per100": 30.0,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 20.0,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 30.0
+    },
+    "SA": {
+     "pages": 10,
+     "works": 10,
+     "fidelity": 4.35,
+     "fidelity_ci_by_text": [
+      3.8,
+      4.85
+     ],
+     "share_ge4": 0.7,
+     "rev_pages_per100": 20.0,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 20.0,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 20.0
+    },
+    "GQ": {
+     "pages": 10,
+     "works": 10,
+     "fidelity": 4.45,
+     "fidelity_ci_by_text": [
+      4.2,
+      4.7
+     ],
+     "share_ge4": 1.0,
+     "rev_pages_per100": 0.0,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 70.0,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 0.0
+    }
+   },
+   "deltas": {
+    "SA-C38": {
+     "pages": 10,
+     "mean": 0.4,
+     "ci_by_text": [
+      -0.2,
+      1.0
+     ],
+     "pages_higher": 6,
+     "pages_lower": 3,
+     "revom_sign": {
+      "a_only": 2,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 0.5
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-C38": {
+     "pages": 10,
+     "mean": 0.5,
+     "ci_by_text": [
+      0.15,
+      0.95
+     ],
+     "pages_higher": 5,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SAd-C38": {
+     "pages": 10,
+     "mean": 0.1,
+     "ci_by_text": [
+      -0.35,
+      0.5
+     ],
+     "pages_higher": 4,
+     "pages_lower": 3,
+     "revom_sign": {
+      "a_only": 2,
+      "b_only": 0,
+      "p_two_sided": 0.5,
+      "p_rise_one_sided": 0.25
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SA-SAd": {
+     "pages": 10,
+     "mean": 0.3,
+     "ci_by_text": [
+      0.0,
+      0.8
+     ],
+     "pages_higher": 2,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-SA": {
+     "pages": 10,
+     "mean": 0.1,
+     "ci_by_text": [
+      -0.3,
+      0.55
+     ],
+     "pages_higher": 3,
+     "pages_lower": 3,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 2,
+      "p_two_sided": 0.5,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    }
+   },
+   "verdict": {
+    "SA": {
+     "fidelity_rule": false,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": false,
+     "descriptive_only": false
+    },
+    "GQ": {
+     "fidelity_rule": true,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": true,
+     "descriptive_only": false
+    }
+   }
+  },
+  "Chinese kr4-collections": {
+   "pages": 9,
+   "works": 9,
+   "arms": {
+    "C38": {
+     "pages": 9,
+     "works": 9,
+     "fidelity": 4.389,
+     "fidelity_ci_by_text": [
+      4.111,
+      4.667
+     ],
+     "share_ge4": 1.0,
+     "rev_pages_per100": 0.0,
+     "om_pages_per100": 11.1,
+     "inven_pages_per100": 55.6,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 11.1
+    },
+    "SAd": {
+     "pages": 9,
+     "works": 9,
+     "fidelity": 4.444,
+     "fidelity_ci_by_text": [
+      4.167,
+      4.722
+     ],
+     "share_ge4": 1.0,
+     "rev_pages_per100": 0.0,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 33.3,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 0.0
+    },
+    "SA": {
+     "pages": 9,
+     "works": 9,
+     "fidelity": 4.5,
+     "fidelity_ci_by_text": [
+      4.222,
+      4.778
+     ],
+     "share_ge4": 1.0,
+     "rev_pages_per100": 0.0,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 33.3,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 0.0
+    },
+    "GQ": {
+     "pages": 9,
+     "works": 9,
+     "fidelity": 4.389,
+     "fidelity_ci_by_text": [
+      4.111,
+      4.667
+     ],
+     "share_ge4": 1.0,
+     "rev_pages_per100": 0.0,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 66.7,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 0.0
+    }
+   },
+   "deltas": {
+    "SA-C38": {
+     "pages": 9,
+     "mean": 0.111,
+     "ci_by_text": [
+      -0.167,
+      0.444
+     ],
+     "pages_higher": 3,
+     "pages_lower": 2,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-C38": {
+     "pages": 9,
+     "mean": 0.0,
+     "ci_by_text": [
+      0.0,
+      0.0
+     ],
+     "pages_higher": 0,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SAd-C38": {
+     "pages": 9,
+     "mean": 0.056,
+     "ci_by_text": [
+      -0.333,
+      0.389
+     ],
+     "pages_higher": 3,
+     "pages_lower": 2,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SA-SAd": {
+     "pages": 9,
+     "mean": 0.056,
+     "ci_by_text": [
+      0.0,
+      0.167
+     ],
+     "pages_higher": 1,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-SA": {
+     "pages": 9,
+     "mean": -0.111,
+     "ci_by_text": [
+      -0.444,
+      0.167
+     ],
+     "pages_higher": 2,
+     "pages_lower": 3,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    }
+   },
+   "verdict": {
+    "SA": {
+     "fidelity_rule": false,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": false,
+     "descriptive_only": true
+    },
+    "GQ": {
+     "fidelity_rule": false,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": false,
+     "descriptive_only": true
+    }
+   }
+  },
+  "Chinese kr5-daoist": {
+   "pages": 2,
+   "works": 2,
+   "arms": {
+    "C38": {
+     "pages": 2,
+     "works": 2,
+     "fidelity": 4.25,
+     "fidelity_ci_by_text": [
+      4.0,
+      4.5
+     ],
+     "share_ge4": 1.0,
+     "rev_pages_per100": 0.0,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 50.0,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 0.0
+    },
+    "SAd": {
+     "pages": 2,
+     "works": 2,
+     "fidelity": 4.5,
+     "fidelity_ci_by_text": [
+      4.0,
+      5.0
+     ],
+     "share_ge4": 1.0,
+     "rev_pages_per100": 50.0,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 50.0,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 50.0
+    },
+    "SA": {
+     "pages": 2,
+     "works": 2,
+     "fidelity": 4.5,
+     "fidelity_ci_by_text": [
+      4.0,
+      5.0
+     ],
+     "share_ge4": 1.0,
+     "rev_pages_per100": 50.0,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 50.0,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 50.0
+    },
+    "GQ": {
+     "pages": 2,
+     "works": 2,
+     "fidelity": 4.25,
+     "fidelity_ci_by_text": [
+      4.0,
+      4.5
+     ],
+     "share_ge4": 1.0,
+     "rev_pages_per100": 0.0,
+     "om_pages_per100": 0.0,
+     "inven_pages_per100": 50.0,
+     "fill_pages_per100": 0.0,
+     "revom_pages_per100": 0.0
+    }
+   },
+   "deltas": {
+    "SA-C38": {
+     "pages": 2,
+     "mean": 0.25,
+     "ci_by_text": [
+      0.0,
+      0.5
+     ],
+     "pages_higher": 1,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 1,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 0.5
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-C38": {
+     "pages": 2,
+     "mean": 0.0,
+     "ci_by_text": [
+      0.0,
+      0.0
+     ],
+     "pages_higher": 0,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SAd-C38": {
+     "pages": 2,
+     "mean": 0.25,
+     "ci_by_text": [
+      0.0,
+      0.5
+     ],
+     "pages_higher": 1,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 1,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 0.5
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "SA-SAd": {
+     "pages": 2,
+     "mean": 0.0,
+     "ci_by_text": [
+      0.0,
+      0.0
+     ],
+     "pages_higher": 0,
+     "pages_lower": 0,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    },
+    "GQ-SA": {
+     "pages": 2,
+     "mean": -0.25,
+     "ci_by_text": [
+      -0.5,
+      0.0
+     ],
+     "pages_higher": 0,
+     "pages_lower": 1,
+     "revom_sign": {
+      "a_only": 0,
+      "b_only": 1,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     },
+     "fill_sign": {
+      "a_only": 0,
+      "b_only": 0,
+      "p_two_sided": 1.0,
+      "p_rise_one_sided": 1.0
+     }
+    }
+   },
+   "verdict": {
+    "SA": {
+     "fidelity_rule": false,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": false,
+     "descriptive_only": true
+    },
+    "GQ": {
+     "fidelity_rule": false,
+     "revom_rule": false,
+     "fill_not_up": true,
+     "earns_its_cost": false,
+     "descriptive_only": true
+    }
+   }
+  }
+ },
+ "agreement": {
+  "pairs": 552,
+  "fid_exact": 0.821,
+  "fid_within_1": 1.0
+ },
+ "check_precision": {
+  "SA": {
+   "by_type": {
+    "addition": {
+     "findings": 15,
+     "confirmed": 12,
+     "precision": 0.8
+    },
+    "mistranslation": {
+     "findings": 12,
+     "confirmed": 11,
+     "precision": 0.917
+    },
+    "omission": {
+     "findings": 2,
+     "confirmed": 1,
+     "precision": 0.5
+    },
+    "reversal": {
+     "findings": 3,
+     "confirmed": 2,
+     "precision": 0.667
+    }
+   },
+   "all": {
+    "findings": 32,
+    "confirmed": 26,
+    "precision": 0.812
+   },
+   "units_with_findings": 25,
+   "units": 138,
+   "flags": {
+    "check_unparsable": 0,
+    "revise_short": 0
+   }
+  },
+  "GQ": {
+   "by_type": {
+    "addition": {
+     "findings": 25,
+     "confirmed": 20,
+     "precision": 0.8
+    },
+    "mistranslation": {
+     "findings": 69,
+     "confirmed": 35,
+     "precision": 0.507
+    },
+    "omission": {
+     "findings": 6,
+     "confirmed": 1,
+     "precision": 0.167
+    },
+    "reversal": {
+     "findings": 6,
+     "confirmed": 4,
+     "precision": 0.667
+    }
+   },
+   "all": {
+    "findings": 106,
+    "confirmed": 60,
+    "precision": 0.566
+   },
+   "units_with_findings": 42,
+   "units": 138,
+   "flags": {
+    "check_unparsable": 0,
+    "revise_short": 0
+   }
+  }
+ },
+ "capacity": {
+  "usd_per_point": 24.8,
+  "note": "points: claude-limits calibration on a mostly-Opus mix; the Sonnet meter rate is unmeasured. GQ's Gemini draft uses the Google subscription, 0 Claude points.",
+  "arms": {
+   "SA": {
+    "pages": 138,
+    "calls_per_page": 2.181,
+    "input": 4.4,
+    "output_incl_thinking": 4639.0,
+    "thinking": 2155.5,
+    "cache_read": 32.5,
+    "cache_write": 9402.0,
+    "usd_list_per_1000_pages": 84.01,
+    "points_per_1000_pages": 3.388,
+    "pages_per_point": 295,
+    "steps": {
+     "draft": {
+      "calls_per_page": 1.0,
+      "usd_list_per_1000_pages": 47.97,
+      "output_per_page": 3040.1,
+      "median_secs": 19.2
+     },
+     "check": {
+      "calls_per_page": 1.0,
+      "usd_list_per_1000_pages": 29.58,
+      "output_per_page": 1242.4,
+      "median_secs": 8.5
+     },
+     "revise": {
+      "calls_per_page": 0.181,
+      "usd_list_per_1000_pages": 6.47,
+      "output_per_page": 356.5,
+      "median_secs": 8.2
+     }
+    },
+    "median_secs_per_page_serial": 29.4
+   },
+   "GQ": {
+    "pages": 138,
+    "calls_per_page": 1.304,
+    "input": 2.6,
+    "output_incl_thinking": 2053.8,
+    "thinking": 1226.8,
+    "cache_read": 0.0,
+    "cache_write": 5639.9,
+    "usd_list_per_1000_pages": 43.1,
+    "points_per_1000_pages": 1.738,
+    "pages_per_point": 575,
+    "steps": {
+     "check": {
+      "calls_per_page": 1.0,
+      "usd_list_per_1000_pages": 30.46,
+      "output_per_page": 1340.4,
+      "median_secs": 9.4
+     },
+     "revise": {
+      "calls_per_page": 0.304,
+      "usd_list_per_1000_pages": 12.65,
+      "output_per_page": 713.5,
+      "median_secs": 10.7
+     }
+    },
+    "median_secs_per_page_serial": 10.7
+   }
+  }
+ },
+ "rows": [
+  {
+   "uid": "zh-T0026-p0422a19",
+   "lang": "Chinese",
+   "stratum": "cbeta-sutra",
+   "work": "T0026",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 1,
+    "GQ": 1,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-an4-33-pts-p044",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "6a09ff48fa20006dbaba8ee1",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T2063-p0934c03",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "work": "T2063",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "sa-mattavilasa-p17",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "work": "6a91e0c2051d1f3e8eaa1266",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 3.0,
+    "SAd": 3.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 1,
+    "SAd": 1
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T2008-p0352c13",
+   "lang": "Chinese",
+   "stratum": "cbeta-chan",
+   "work": "T2008",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR5i0013-whole",
+   "lang": "Chinese",
+   "stratum": "kr5-daoist",
+   "work": "KR5i0013",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 1,
+    "SAd": 1
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR3b0004-tuguo",
+   "lang": "Chinese",
+   "stratum": "kr3-masters",
+   "work": "KR3b0004",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR2a0001-j003-yin-01",
+   "lang": "Chinese",
+   "stratum": "kr2-histories",
+   "work": "KR2a0001",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR4h0034-jiaozhongqing",
+   "lang": "Chinese",
+   "stratum": "kr4-collections",
+   "work": "KR4h0034",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 1,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-an6-55-pts-p393",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "6a09ff4ffa20006dbaba901a",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR1f0001-whole",
+   "lang": "Chinese",
+   "stratum": "kr1-classics",
+   "work": "KR1f0001",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T2087-p0873b02",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "work": "T2087",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T0203-p0449a27",
+   "lang": "Chinese",
+   "stratum": "cbeta-sutra",
+   "work": "T0203",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T2085-p0865c24",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "work": "T2085",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-mn91-pts-p159",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69b99e496ed9e04909909f8f",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR1b0001-055",
+   "lang": "Chinese",
+   "stratum": "kr1-classics",
+   "work": "KR1b0001",
+   "fid": {
+    "C38": 3.0,
+    "GQ": 3.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 1,
+    "GQ": 1,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR4a0001-lisao-s1-6",
+   "lang": "Chinese",
+   "stratum": "kr4-collections",
+   "work": "KR4a0001",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 4.5,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-sn56-11-pts-p442",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69b99e551f30176bf4d37774",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "sa-aitareya-upanisad-p3",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "work": "69935b4a8e28d8f4c5d3cf8c",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-sn46-56-pts-p148",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69b99e551f30176bf4d37774",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR1c0001-030",
+   "lang": "Chinese",
+   "stratum": "kr1-classics",
+   "work": "KR1c0001",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "sa-siksasamuccaya-p118",
+   "lang": "Sanskrit",
+   "stratum": "sa-shastra-buddhist",
+   "work": "6a30881fbd425508b0edad49",
+   "fid": {
+    "C38": 3.5,
+    "GQ": 3.5,
+    "SA": 3.0,
+    "SAd": 3.0
+   },
+   "revom": {
+    "C38": 1,
+    "GQ": 1,
+    "SA": 1,
+    "SAd": 1
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR2a0018-j054-kandali-langgasu",
+   "lang": "Chinese",
+   "stratum": "kr2-histories",
+   "work": "KR2a0018",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-an8-22-pts-p226",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69b99d0e6ed9e04909908946",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 1,
+    "SAd": 1
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-an10-91-pts-p199",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69b99e681f30176bf4d3798a",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "sa-mahanirvana-p446",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "work": "69d7e0c5e9e5e67989c36f72",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.5,
+    "SAd": 3.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 1
+   },
+   "fill": {
+    "C38": 1,
+    "GQ": 1,
+    "SA": 0,
+    "SAd": 1
+   }
+  },
+  {
+   "uid": "zh-KR1d0026-010",
+   "lang": "Chinese",
+   "stratum": "kr1-classics",
+   "work": "KR1d0026",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 3.5,
+    "SAd": 3.5
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 1,
+    "SAd": 1
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "sa-rajatarangini-p16",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "work": "6a91e105051d1f3e8eaa2441",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 5.0,
+    "SA": 3.5,
+    "SAd": 3.5
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "sa-nagananda-p9",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "work": "69e75aa5095c302d3fddef6e",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 1,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-sn6-10-pts-p172",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69b99d043a4a443c39c00775",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 4.5,
+    "SAd": 4.5
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 1,
+    "SAd": 1
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-snp1-7-pts-p045",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69bc7fe6173577a33741d428",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "sa-mudraraksasa-p115",
+   "lang": "Sanskrit",
+   "stratum": "sa-more",
+   "work": "69e75a99095c302d3fddee8c",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 5.0,
+    "SA": 3.0,
+    "SAd": 3.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-X1315-p0003c05",
+   "lang": "Chinese",
+   "stratum": "cbeta-chan",
+   "work": "X1315",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR1d0052-043-dx10",
+   "lang": "Chinese",
+   "stratum": "kr1-classics",
+   "work": "KR1d0052:43 大學",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T2012A-p0379c18",
+   "lang": "Chinese",
+   "stratum": "cbeta-chan",
+   "work": "T2012A",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.5,
+    "SAd": 4.5
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T0262-p0051c09",
+   "lang": "Chinese",
+   "stratum": "cbeta-sutra",
+   "work": "T0262",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR5f0013-ch1-5",
+   "lang": "Chinese",
+   "stratum": "kr5-daoist",
+   "work": "KR5f0013",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR2a0007-j096a-qiemo-pishan",
+   "lang": "Chinese",
+   "stratum": "kr2-histories",
+   "work": "KR2a0007",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "sa-isa-sankarabhasya-p18",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "work": "6a30829c558372a29b3715de",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 4.5,
+    "SAd": 4.5
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-sn11-4-pts-p241",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69b99d043a4a443c39c00775",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 4.5,
+    "SAd": 4.5
+   },
+   "revom": {
+    "C38": 1,
+    "GQ": 1,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-mn97-pts-p211",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69b99e496ed9e04909909f8f",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T0159-p0297a07",
+   "lang": "Chinese",
+   "stratum": "cbeta-sutra",
+   "work": "T0159",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 3.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 1,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR4c0069-changhenge",
+   "lang": "Chinese",
+   "stratum": "kr4-collections",
+   "work": "KR4c0069",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.5,
+    "SAd": 4.5
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR2a0009-j118-anxi-daqin",
+   "lang": "Chinese",
+   "stratum": "kr2-histories",
+   "work": "KR2a0009",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T2046-p0183a26",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "work": "T2046",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.5,
+    "SA": 1.0,
+    "SAd": 1.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T2031-p0015a07",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "work": "T2031",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 5.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR3j0080-ch04",
+   "lang": "Chinese",
+   "stratum": "kr3-masters",
+   "work": "KR3j0080",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 3.5,
+    "SAd": 3.5
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "sa-garuda-purana-p144",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "work": "6992d66546b85e738a0c3d03",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 5.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 1,
+    "GQ": 0,
+    "SA": 1,
+    "SAd": 1
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-dn6-bj-p176",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69bd00f7f403a9ca2380efbf",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR1d0052-032-zy21-27",
+   "lang": "Chinese",
+   "stratum": "kr1-classics",
+   "work": "KR1d0052:32 中庸",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 1,
+    "GQ": 1,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR3j0002-ch04",
+   "lang": "Chinese",
+   "stratum": "kr3-masters",
+   "work": "KR3j0002",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 3.0,
+    "SAd": 3.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 1,
+    "SAd": 1
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T0685-p0779a28",
+   "lang": "Chinese",
+   "stratum": "cbeta-sutra",
+   "work": "T0685",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 1,
+    "GQ": 1,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-sn10-3-pts-p227",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69b99d043a4a443c39c00775",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T0001-p0018a23",
+   "lang": "Chinese",
+   "stratum": "cbeta-sutra",
+   "work": "T0001",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T1985-p0496b14",
+   "lang": "Chinese",
+   "stratum": "cbeta-chan",
+   "work": "T1985",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR3c0004-p03",
+   "lang": "Chinese",
+   "stratum": "kr3-masters",
+   "work": "KR3c0004",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-dn3-bj-p089",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69bd00f7f403a9ca2380efbf",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 1,
+    "SAd": 1
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR1d0052-011-s1",
+   "lang": "Chinese",
+   "stratum": "kr1-classics",
+   "work": "KR1d0052",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-an4-38-pts-p052",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "6a09ff48fa20006dbaba8ee1",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-mn95-pts-p186",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69b99e496ed9e04909909f8f",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "sa-nalopakhyana-p22",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "work": "6a91c43043010201a1471569",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR2b0001-j001-part1-huangdi-ku",
+   "lang": "Chinese",
+   "stratum": "kr2-histories",
+   "work": "KR2b0001",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR4d0069-mingchan-qiusheng",
+   "lang": "Chinese",
+   "stratum": "kr4-collections",
+   "work": "KR4d0069",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR3j0010-j01a",
+   "lang": "Chinese",
+   "stratum": "kr3-masters",
+   "work": "KR3j0010",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "sa-prabodhacandrodaya-p21",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "work": "6a91e1c5516e6f5504305ccd",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.5,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 1,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-pvr-p014",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69bd01cdf403a9ca2380f152",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 1,
+    "SAd": 1
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR3a0002-ch07a",
+   "lang": "Chinese",
+   "stratum": "kr3-masters",
+   "work": "KR3a0002",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.5,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-snp2-4-pts-p070",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69bc7fe6173577a33741d428",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T1886-p0708a25",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "work": "T1886",
+   "fid": {
+    "C38": 3.5,
+    "GQ": 3.5,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 1,
+    "GQ": 1,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR3b0003-ch06",
+   "lang": "Chinese",
+   "stratum": "kr3-masters",
+   "work": "KR3b0003",
+   "fid": {
+    "C38": 3.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 3.0
+   },
+   "revom": {
+    "C38": 1,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 1
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR4c0018-beizheng",
+   "lang": "Chinese",
+   "stratum": "kr4-collections",
+   "work": "KR4c0018",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T1642-p0169b08",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "work": "T1642",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T2076-p0458b21",
+   "lang": "Chinese",
+   "stratum": "cbeta-chan",
+   "work": "T2076",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "sa-nyayasutra-p17",
+   "lang": "Sanskrit",
+   "stratum": "sa-shastra-buddhist",
+   "work": "6a309057d8c6b8a005c7c3a0",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR4c0046-jishierlang-p1",
+   "lang": "Chinese",
+   "stratum": "kr4-collections",
+   "work": "KR4c0046",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 4.5,
+    "SAd": 4.5
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR2k0139-j001-zhenla",
+   "lang": "Chinese",
+   "stratum": "kr2-histories",
+   "work": "KR2k0139",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR5c0045-ch01-12",
+   "lang": "Chinese",
+   "stratum": "kr3-masters",
+   "work": "KR5c0045",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-snp4-7-pts-p178",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69bc7fe6173577a33741d428",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.5,
+    "SA": 4.5,
+    "SAd": 4.5
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-an10-119-pts-p254",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69b99e681f30176bf4d3798a",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-sn7-1-th-p239",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69b99f1a1b6f70482c00d1fa",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "sa-raghuvamsa-p25",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "work": "6a91e1bd516e6f55043059df",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T1866-p0481b05",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "work": "T1866",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "sa-kadambari-p15",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "work": "6a91e1b4516e6f55043056b5",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "sa-agnipurana-p22",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "work": "6a91e152051d1f3e8eaa3e2e",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "sa-dasakumaracarita-p240",
+   "lang": "Sanskrit",
+   "stratum": "sa-more",
+   "work": "69e7928c80b52390feb16343",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 3.0,
+    "SAd": 3.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 1,
+    "SAd": 1
+   },
+   "fill": {
+    "C38": 1,
+    "GQ": 1,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR4c0012-jingluanli-l1-154",
+   "lang": "Chinese",
+   "stratum": "kr4-collections",
+   "work": "KR4c0012",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-dn4-bj-p125",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69bd00f7f403a9ca2380efbf",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "sa-brhatsamhita-p161",
+   "lang": "Sanskrit",
+   "stratum": "sa-shastra-buddhist",
+   "work": "699069472f82e0fda480618d",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-sn51-20-pts-p299",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69b99e551f30176bf4d37774",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T0480-p0616a29",
+   "lang": "Chinese",
+   "stratum": "cbeta-sutra",
+   "work": "T0480",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T2125-p0207a17",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "work": "T2125",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR4d0076-chibi-1-2",
+   "lang": "Chinese",
+   "stratum": "kr4-collections",
+   "work": "KR4d0076",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-dn5-bj-p138",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69bd00f7f403a9ca2380efbf",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 1,
+    "GQ": 1,
+    "SA": 1,
+    "SAd": 1
+   }
+  },
+  {
+   "uid": "pi-sn47-6-pts-p168",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69b99e551f30176bf4d37774",
+   "fid": {
+    "C38": 3.0,
+    "GQ": 3.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 1,
+    "GQ": 1,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-mn80-pts-p055",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69b99e496ed9e04909909f8f",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 1,
+    "GQ": 1,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-dn8-bj-p196",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69bd00f7f403a9ca2380efbf",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR1h0001-012-06-08",
+   "lang": "Chinese",
+   "stratum": "kr1-classics",
+   "work": "KR1h0001",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.5,
+    "SAd": 4.5
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T0235-p0749a21",
+   "lang": "Chinese",
+   "stratum": "cbeta-sutra",
+   "work": "T0235",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 5.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-sn46-52-pts-p132",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69b99e551f30176bf4d37774",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR2k0136-j001-ch02-04",
+   "lang": "Chinese",
+   "stratum": "kr2-histories",
+   "work": "KR2k0136",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 1,
+    "GQ": 1,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR2k0151-j001-p15a",
+   "lang": "Chinese",
+   "stratum": "kr2-histories",
+   "work": "KR2k0151",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-an7-63-pts-p104",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69b99d0e6ed9e04909908946",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 3.0,
+    "SAd": 3.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 1,
+    "SAd": 1
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T0475-p0539a08",
+   "lang": "Chinese",
+   "stratum": "cbeta-sutra",
+   "work": "T0475",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "sa-brhadaranyakabhasya-p25",
+   "lang": "Sanskrit",
+   "stratum": "sa-shastra-buddhist",
+   "work": "6a06bbfdd4d0d7b9fa7bd6c4",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR2k0137-j001-bamiyan",
+   "lang": "Chinese",
+   "stratum": "kr2-histories",
+   "work": "KR2k0137",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 4.5,
+    "SAd": 4.5
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "sa-vajasaneyi-p21",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "work": "6a91e0c6051d1f3e8eaa12a2",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 3.5,
+    "SAd": 3.5
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T1586-p0060a20",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "work": "T1586",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR1a0001-h17-24",
+   "lang": "Chinese",
+   "stratum": "kr1-classics",
+   "work": "KR1a0001",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-mil-p027",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "6a31c88a4400787ae5a9d5e4",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "sa-mrcchakatika-p57",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "work": "69e753cf095c302d3fddc2e2",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 3.0,
+    "SAd": 3.0
+   },
+   "revom": {
+    "C38": 1,
+    "GQ": 1,
+    "SA": 1,
+    "SAd": 1
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-sn1-35-pts-p044",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69b99d043a4a443c39c00775",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-mn79-pts-p052",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69b99e496ed9e04909909f8f",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-kp9-ms-p154",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69c1bdac8522835be846b291",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 4.5,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR3a0108-j42a",
+   "lang": "Chinese",
+   "stratum": "kr3-masters",
+   "work": "KR3a0108",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.5,
+    "SA": 3.0,
+    "SAd": 3.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 1,
+    "SAd": 1
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T0848-p0042a15",
+   "lang": "Chinese",
+   "stratum": "cbeta-sutra",
+   "work": "T0848",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T2014-p0395c09",
+   "lang": "Chinese",
+   "stratum": "cbeta-chan",
+   "work": "T2014",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T1858-p0151a09",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "work": "T1858",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.5,
+    "SAd": 4.5
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-dn1-bj-p019",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69bd00f7f403a9ca2380efbf",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-an5-139-pts-p176",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "6a09ff4ffa20006dbaba901a",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-sn7-11-th-p254",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69b99f1a1b6f70482c00d1fa",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 4.5,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR2k0090-j005-songyun-zuomo-zhujubo",
+   "lang": "Chinese",
+   "stratum": "kr2-histories",
+   "work": "KR2k0090",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T2102-p0027b13",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "work": "T2102",
+   "fid": {
+    "C38": 3.0,
+    "GQ": 3.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 1,
+    "GQ": 1,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "sa-avadanakalpalata-p331",
+   "lang": "Sanskrit",
+   "stratum": "sa-shastra-buddhist",
+   "work": "69bc7feb9615ef57a9cec2bc",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 4.5,
+    "SAd": 3.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 1
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-an5-196-pts-p259",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "6a09ff4ffa20006dbaba901a",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "sa-svapnavasavadatta-p22",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "work": "69dea2034d19ec2e9ba75a76",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T0211-p0580c19",
+   "lang": "Chinese",
+   "stratum": "cbeta-sutra",
+   "work": "T0211",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-dn9-bj-p208",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69bd00f7f403a9ca2380efbf",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.5,
+    "SAd": 4.5
+   },
+   "revom": {
+    "C38": 1,
+    "GQ": 1,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR2g0057-j001-p01a",
+   "lang": "Chinese",
+   "stratum": "kr2-histories",
+   "work": "KR2g0057",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.5,
+    "SA": 4.5,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 1,
+    "GQ": 1,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T2003-p0154c02",
+   "lang": "Chinese",
+   "stratum": "cbeta-chan",
+   "work": "T2003",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 1,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "sa-aitareya-aranyaka-p61",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "work": "69dea5f24d19ec2e9ba77d50",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T1934-p0793b25",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "work": "T1934",
+   "fid": {
+    "C38": 3.0,
+    "GQ": 4.0,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 1,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 1,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T2025-p1144b06",
+   "lang": "Chinese",
+   "stratum": "cbeta-chan",
+   "work": "T2025",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 4.0,
+    "SAd": 4.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-an6-42-pts-p048",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "6a09ff4ffa20006dbaba901a",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR5c0051-ch15",
+   "lang": "Chinese",
+   "stratum": "kr3-masters",
+   "work": "KR5c0051",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.5,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "pi-sn3-1-pts-p089",
+   "lang": "Pali",
+   "stratum": "pali",
+   "work": "69b99d043a4a443c39c00775",
+   "fid": {
+    "C38": 4.5,
+    "GQ": 4.0,
+    "SA": 3.5,
+    "SAd": 3.5
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR1h0004-018",
+   "lang": "Chinese",
+   "stratum": "kr1-classics",
+   "work": "KR1h0004",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 4.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-KR4h0001-gaotangfu-part1",
+   "lang": "Chinese",
+   "stratum": "kr4-collections",
+   "work": "KR4h0001",
+   "fid": {
+    "C38": 5.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  },
+  {
+   "uid": "zh-T2005-p0296b19",
+   "lang": "Chinese",
+   "stratum": "cbeta-chan",
+   "work": "T2005",
+   "fid": {
+    "C38": 4.0,
+    "GQ": 5.0,
+    "SA": 5.0,
+    "SAd": 5.0
+   },
+   "revom": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   },
+   "fill": {
+    "C38": 0,
+    "GQ": 0,
+    "SA": 0,
+    "SAd": 0
+   }
+  }
+ ]
+}

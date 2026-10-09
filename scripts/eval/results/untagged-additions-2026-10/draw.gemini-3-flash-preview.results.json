@@ -1,0 +1,695 @@
+{
+ "detector_model": "gemini-3-flash-preview",
+ "drawn": 450,
+ "answered": 450,
+ "no_running_text": 8,
+ "uncheckable": 0,
+ "sentences": 9117,
+ "flagged_sentences": 92,
+ "pages_flagged": {
+  "k": 40,
+  "n": 450,
+  "pct": 8.9,
+  "ci": [
+   6.6,
+   11.9
+  ]
+ },
+ "pages_continuation": {
+  "k": 46,
+  "n": 450,
+  "pct": 10.2,
+  "ci": [
+   7.8,
+   13.4
+  ]
+ },
+ "by_kind": {
+  "definition": {
+   "sentences": 28,
+   "pages": 13
+  },
+  "transcriber_block": {
+   "sentences": 6,
+   "pages": 3
+  },
+  "explanation": {
+   "sentences": 29,
+   "pages": 15
+  },
+  "summary": {
+   "sentences": 3,
+   "pages": 3
+  },
+  "unsupported": {
+   "sentences": 19,
+   "pages": 12
+  },
+  "image_description": {
+   "sentences": 6,
+   "pages": 3
+  },
+  "page_note": {
+   "sentences": 1,
+   "pages": 1
+  }
+ },
+ "by_model": {
+  "etcsl-corpus": {
+   "k": 1,
+   "n": 5,
+   "pct": 20,
+   "ci": [
+    3.6,
+    62.4
+   ]
+  },
+  "gemini-3-flash-preview": {
+   "k": 22,
+   "n": 147,
+   "pct": 15,
+   "ci": [
+    10.1,
+    21.6
+   ]
+  },
+  "gemini-3.1-flash-lite": {
+   "k": 4,
+   "n": 144,
+   "pct": 2.8,
+   "ci": [
+    1.1,
+    6.9
+   ]
+  },
+  "gemini-3.1-flash-lite-preview": {
+   "k": 12,
+   "n": 153,
+   "pct": 7.8,
+   "ci": [
+    4.5,
+    13.2
+   ]
+  },
+  "none": {
+   "k": 1,
+   "n": 1,
+   "pct": 100,
+   "ci": [
+    20.7,
+    100
+   ]
+  }
+ },
+ "by_prompt_version": {
+  "1": {
+   "k": 5,
+   "n": 27,
+   "pct": 18.5,
+   "ci": [
+    8.2,
+    36.7
+   ]
+  },
+  "2": {
+   "k": 16,
+   "n": 55,
+   "pct": 29.1,
+   "ci": [
+    18.8,
+    42.1
+   ]
+  },
+  "6": {
+   "k": 2,
+   "n": 8,
+   "pct": 25,
+   "ci": [
+    7.1,
+    59.1
+   ]
+  },
+  "10": {
+   "k": 6,
+   "n": 126,
+   "pct": 4.8,
+   "ci": [
+    2.2,
+    10
+   ]
+  },
+  "11": {
+   "k": 2,
+   "n": 86,
+   "pct": 2.3,
+   "ci": [
+    0.6,
+    8.1
+   ]
+  },
+  "12": {
+   "k": 0,
+   "n": 5,
+   "pct": 0,
+   "ci": [
+    0,
+    43.4
+   ]
+  },
+  "13": {
+   "k": 6,
+   "n": 124,
+   "pct": 4.8,
+   "ci": [
+    2.2,
+    10.2
+   ]
+  },
+  "5.1.2026-03b": {
+   "k": 0,
+   "n": 1,
+   "pct": 0,
+   "ci": [
+    0,
+    79.3
+   ]
+  },
+  "5.2026-02": {
+   "k": 1,
+   "n": 10,
+   "pct": 10,
+   "ci": [
+    1.8,
+    40.4
+   ]
+  },
+  "none": {
+   "k": 2,
+   "n": 8,
+   "pct": 25,
+   "ci": [
+    7.1,
+    59.1
+   ]
+  }
+ },
+ "by_model_and_version": {
+  "etcsl-corpus · vnone": {
+   "k": 1,
+   "n": 5,
+   "pct": 20,
+   "ci": [
+    3.6,
+    62.4
+   ]
+  },
+  "gemini-3-flash-preview · v1": {
+   "k": 1,
+   "n": 5,
+   "pct": 20,
+   "ci": [
+    3.6,
+    62.4
+   ]
+  },
+  "gemini-3-flash-preview · v10": {
+   "k": 0,
+   "n": 22,
+   "pct": 0,
+   "ci": [
+    0,
+    14.9
+   ]
+  },
+  "gemini-3-flash-preview · v11": {
+   "k": 0,
+   "n": 21,
+   "pct": 0,
+   "ci": [
+    0,
+    15.5
+   ]
+  },
+  "gemini-3-flash-preview · v12": {
+   "k": 0,
+   "n": 4,
+   "pct": 0,
+   "ci": [
+    0,
+    49
+   ]
+  },
+  "gemini-3-flash-preview · v13": {
+   "k": 5,
+   "n": 30,
+   "pct": 16.7,
+   "ci": [
+    7.3,
+    33.6
+   ]
+  },
+  "gemini-3-flash-preview · v2": {
+   "k": 15,
+   "n": 53,
+   "pct": 28.3,
+   "ci": [
+    18,
+    41.6
+   ]
+  },
+  "gemini-3-flash-preview · v5.1.2026-03b": {
+   "k": 0,
+   "n": 1,
+   "pct": 0,
+   "ci": [
+    0,
+    79.3
+   ]
+  },
+  "gemini-3-flash-preview · v5.2026-02": {
+   "k": 1,
+   "n": 10,
+   "pct": 10,
+   "ci": [
+    1.8,
+    40.4
+   ]
+  },
+  "gemini-3-flash-preview · vnone": {
+   "k": 0,
+   "n": 1,
+   "pct": 0,
+   "ci": [
+    0,
+    79.3
+   ]
+  },
+  "gemini-3.1-flash-lite · v1": {
+   "k": 1,
+   "n": 6,
+   "pct": 16.7,
+   "ci": [
+    3,
+    56.4
+   ]
+  },
+  "gemini-3.1-flash-lite · v11": {
+   "k": 1,
+   "n": 41,
+   "pct": 2.4,
+   "ci": [
+    0.4,
+    12.6
+   ]
+  },
+  "gemini-3.1-flash-lite · v12": {
+   "k": 0,
+   "n": 1,
+   "pct": 0,
+   "ci": [
+    0,
+    79.3
+   ]
+  },
+  "gemini-3.1-flash-lite · v13": {
+   "k": 1,
+   "n": 94,
+   "pct": 1.1,
+   "ci": [
+    0.2,
+    5.8
+   ]
+  },
+  "gemini-3.1-flash-lite · v2": {
+   "k": 1,
+   "n": 2,
+   "pct": 50,
+   "ci": [
+    9.5,
+    90.5
+   ]
+  },
+  "gemini-3.1-flash-lite-preview · v1": {
+   "k": 3,
+   "n": 16,
+   "pct": 18.8,
+   "ci": [
+    6.6,
+    43
+   ]
+  },
+  "gemini-3.1-flash-lite-preview · v10": {
+   "k": 6,
+   "n": 104,
+   "pct": 5.8,
+   "ci": [
+    2.7,
+    12
+   ]
+  },
+  "gemini-3.1-flash-lite-preview · v11": {
+   "k": 1,
+   "n": 24,
+   "pct": 4.2,
+   "ci": [
+    0.7,
+    20.2
+   ]
+  },
+  "gemini-3.1-flash-lite-preview · v6": {
+   "k": 2,
+   "n": 8,
+   "pct": 25,
+   "ci": [
+    7.1,
+    59.1
+   ]
+  },
+  "gemini-3.1-flash-lite-preview · vnone": {
+   "k": 0,
+   "n": 1,
+   "pct": 0,
+   "ci": [
+    0,
+    79.3
+   ]
+  },
+  "none · vnone": {
+   "k": 1,
+   "n": 1,
+   "pct": 100,
+   "ci": [
+    20.7,
+    100
+   ]
+  }
+ },
+ "by_language": {
+  "Arabic": {
+   "k": 1,
+   "n": 8,
+   "pct": 12.5,
+   "ci": [
+    2.2,
+    47.1
+   ]
+  },
+  "Armenian": {
+   "k": 2,
+   "n": 2,
+   "pct": 100,
+   "ci": [
+    34.2,
+    100
+   ]
+  },
+  "Chinese": {
+   "k": 8,
+   "n": 43,
+   "pct": 18.6,
+   "ci": [
+    9.7,
+    32.6
+   ]
+  },
+  "Classical Chinese": {
+   "k": 0,
+   "n": 2,
+   "pct": 0,
+   "ci": [
+    0,
+    65.8
+   ]
+  },
+  "Dutch": {
+   "k": 0,
+   "n": 9,
+   "pct": 0,
+   "ci": [
+    0,
+    29.9
+   ]
+  },
+  "Egyptian hieroglyphs": {
+   "k": 0,
+   "n": 2,
+   "pct": 0,
+   "ci": [
+    0,
+    65.8
+   ]
+  },
+  "English": {
+   "k": 9,
+   "n": 58,
+   "pct": 15.5,
+   "ci": [
+    8.4,
+    26.9
+   ]
+  },
+  "French": {
+   "k": 0,
+   "n": 20,
+   "pct": 0,
+   "ci": [
+    0,
+    16.1
+   ]
+  },
+  "Ge'ez": {
+   "k": 0,
+   "n": 1,
+   "pct": 0,
+   "ci": [
+    0,
+    79.3
+   ]
+  },
+  "German": {
+   "k": 2,
+   "n": 39,
+   "pct": 5.1,
+   "ci": [
+    1.4,
+    16.9
+   ]
+  },
+  "Greek": {
+   "k": 1,
+   "n": 22,
+   "pct": 4.5,
+   "ci": [
+    0.8,
+    21.8
+   ]
+  },
+  "Hebrew": {
+   "k": 1,
+   "n": 4,
+   "pct": 25,
+   "ci": [
+    4.6,
+    69.9
+   ]
+  },
+  "Italian": {
+   "k": 0,
+   "n": 11,
+   "pct": 0,
+   "ci": [
+    0,
+    25.9
+   ]
+  },
+  "Japanese": {
+   "k": 1,
+   "n": 3,
+   "pct": 33.3,
+   "ci": [
+    6.1,
+    79.2
+   ]
+  },
+  "Javanese": {
+   "k": 0,
+   "n": 1,
+   "pct": 0,
+   "ci": [
+    0,
+    79.3
+   ]
+  },
+  "Korean": {
+   "k": 0,
+   "n": 4,
+   "pct": 0,
+   "ci": [
+    0,
+    49
+   ]
+  },
+  "Latin": {
+   "k": 9,
+   "n": 191,
+   "pct": 4.7,
+   "ci": [
+    2.5,
+    8.7
+   ]
+  },
+  "Latin-English": {
+   "k": 0,
+   "n": 2,
+   "pct": 0,
+   "ci": [
+    0,
+    65.8
+   ]
+  },
+  "Latin-German": {
+   "k": 1,
+   "n": 1,
+   "pct": 100,
+   "ci": [
+    20.7,
+    100
+   ]
+  },
+  "Nahuatl-Spanish": {
+   "k": 0,
+   "n": 1,
+   "pct": 0,
+   "ci": [
+    0,
+    79.3
+   ]
+  },
+  "Ottoman Turkish": {
+   "k": 0,
+   "n": 1,
+   "pct": 0,
+   "ci": [
+    0,
+    79.3
+   ]
+  },
+  "Persian": {
+   "k": 0,
+   "n": 3,
+   "pct": 0,
+   "ci": [
+    0,
+    56.2
+   ]
+  },
+  "Portuguese": {
+   "k": 0,
+   "n": 1,
+   "pct": 0,
+   "ci": [
+    0,
+    79.3
+   ]
+  },
+  "Provençal": {
+   "k": 0,
+   "n": 1,
+   "pct": 0,
+   "ci": [
+    0,
+    79.3
+   ]
+  },
+  "Russian": {
+   "k": 0,
+   "n": 2,
+   "pct": 0,
+   "ci": [
+    0,
+    65.8
+   ]
+  },
+  "Sanskrit": {
+   "k": 3,
+   "n": 6,
+   "pct": 50,
+   "ci": [
+    18.8,
+    81.2
+   ]
+  },
+  "Spanish": {
+   "k": 0,
+   "n": 3,
+   "pct": 0,
+   "ci": [
+    0,
+    56.2
+   ]
+  },
+  "Sumerian": {
+   "k": 1,
+   "n": 5,
+   "pct": 20,
+   "ci": [
+    3.6,
+    62.4
+   ]
+  },
+  "Syriac": {
+   "k": 0,
+   "n": 1,
+   "pct": 0,
+   "ci": [
+    0,
+    79.3
+   ]
+  },
+  "Tamil": {
+   "k": 1,
+   "n": 1,
+   "pct": 100,
+   "ci": [
+    20.7,
+    100
+   ]
+  },
+  "e": {
+   "k": 0,
+   "n": 1,
+   "pct": 0,
+   "ci": [
+    0,
+    79.3
+   ]
+  },
+  "und": {
+   "k": 0,
+   "n": 1,
+   "pct": 0,
+   "ci": [
+    0,
+    79.3
+   ]
+  }
+ },
+ "both_detectors": {
+  "k": 31,
+  "n": 449,
+  "pct": 6.9,
+  "ci": [
+   4.9,
+   9.6
+  ]
+ },
+ "other_detector": {
+  "k": 79,
+  "n": 449,
+  "pct": 17.6,
+  "ci": [
+   14.4,
+   21.4
+  ]
+ }
+}

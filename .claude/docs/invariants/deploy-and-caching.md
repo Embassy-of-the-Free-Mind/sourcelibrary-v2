@@ -84,7 +84,15 @@ feature is off.
 `purge_everything` (`post-deploy-warm.yml`, `scripts/deploy-prod.sh`) and the blanket
 `revalidatePath(..., 'layout')` calls both existed for one stated reason: stale HTML pointing at
 deleted chunks. **With the skew window correctly sized, that reason is gone.** Treat either as
-something to justify, not something to preserve by default.
+something to justify, not something to preserve by default. The blanket revalidation went in
+#3648; the per-merge purge went in #4753 (it ran ~19×/day, so Cloudflare's copy lived ~75 min).
+`deploy-prod.sh` still purges — it is the manual recovery path.
+
+**Vercel's ISR cache is per deployment.** A new production deployment starts empty: on
+2026-10-06 the oldest `age:` on any ISR `HIT` was the time since the last deploy. So every
+production deploy is an ISR flush whatever the code says, and Cloudflare is the only cache that
+can carry readers across one. That is why the merge path must not purge it, and why deploy
+*frequency* is itself a cost line (#4753).
 
 What the blanket invalidation cost, measured over the Jul 2026 cycle (#3645):
 
@@ -112,8 +120,8 @@ every visible book. There were 106 merges to `main` in 30 days, each one a deplo
   promoted but before purge + warm. Run `npx vercel inspect sourcelibrary.org` before re-running;
   `target production / status Ready` means it shipped — then run the purge above plus
   `curl -s -X POST https://sourcelibrary.org/api/deploy-warm -H "Authorization: Bearer $CRON_SECRET"`.
-- **Merging a PR to `main` deploys production** and `post-deploy-warm.yml` handles purge + warm
-  automatically. Do not reflexively run `npm run deploy:prod` after a merge. When a merge's behaviour
+- **Merging a PR to `main` deploys production** and `post-deploy-warm.yml` handles the warm
+  automatically (no purge since #4753 — a change that must show at once needs a targeted purge). Do not reflexively run `npm run deploy:prod` after a merge. When a merge's behaviour
   is missing from prod, check the workflow run: if it failed with "not purging" while the Production
   build is `● Ready`, run the manual purge + warm above. Verify the purge STEP via
   `actions/runs/<id>/jobs`, not just the run conclusion — a workflow can go green while skipping it
@@ -136,6 +144,17 @@ every visible book. There were 106 merges to `main` in 30 days, each one a deplo
   when the later ones are scripts-only, a redeploy when one of them changed `src/`.
 - **A Production build showing Canceled after ~12s** is usually the *ignored build step* skipping a
   no-op (docs/scripts-only) merge — that owes no purge at all; check who canceled before diagnosing.
+  The step is `scripts/vercel-ignore-build.mjs`: it builds when `src/`, config, deps, OR any `scripts/`
+  file that `src/` imports (data JSON, shared `.mjs`) changed. Before it, a scripts-only data refresh
+  (#5889) was skipped and /research/canon-gap served stale figures for 17h.
+- **The project builds ONE deployment at a time, production first — and an ignored build still
+  queues.** The ignore step runs only when a deployment reaches the slot, so a skipped preview still
+  waits behind production first (p90 27 min, 2026-10-06; 54 previews queued, held hand merges up an
+  hour). Branch gating therefore lives in `vercel.json` `git.deploymentEnabled`
+  (`"**": false, "main": true, "preview/**": true`; any matching `true` wins), so other branches create
+  no deployment at all. To get a preview, push to `preview/<name>` once. Do NOT fix the queue by
+  re-enabling concurrent builds: on Oct 1, the last day they were on, builds cost $20.48, against
+  $0.06–0.48/day since (#5976, #5990).
 - **Pipeline/worker scripts (`scripts/**`) need no Vercel deploy** — the Hetzner box auto-pulls
   `main` hourly at :17 (its crontab: `17 * * * * … auto-pull.sh`), so a scripts-only merge missing
   from behaviour is usually waiting for that pull, not a failed deploy.

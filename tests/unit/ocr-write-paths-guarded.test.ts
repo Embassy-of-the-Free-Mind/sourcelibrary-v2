@@ -32,6 +32,8 @@ const WRITE_LINE = /(?:'ocr\.data':\s*(?!null\b|undefined\b|''|\{|regexFilter)[A
 const ALLOWED: Record<string, string> = {
   'scripts/import/sefaria-fit-5560.mjs': 'a published Sefaria e-text (not a model reading), cannot loop; written only where a Kraken read of the image verifies it (#5560)',
   'scripts/lib/ocr-loop-guard.mjs': 'the guard itself',
+  'scripts/batch/greek-reocr-5813/restore-truncated.mjs': "puts back the page's own previous transcription from its page_revisions snapshot after a cut-off write (#5813); no model is read",
+  'scripts/batch/greek-reocr-5813/restore-pages.mjs': "puts back the page's own previous transcription from its page_revisions snapshot (#5813); no model is read",
   'scripts/lib/blank-page-guard.mjs': 'the sibling guard; writes only page_revisions',
   'scripts/lib/syriac-kraken-lane.mjs': 'builds the $set for scripts/workers/syriac-kraken-lane.mjs, which runs loopVerdict on the text before calling it (#4883)',
   'scripts/lib/paddle-zh-lane.mjs': 'builds the $set for scripts/workers/paddle-zh-lane.mjs, which runs loopVerdict on the text before calling it (#5600)',
@@ -42,6 +44,7 @@ const ALLOWED: Record<string, string> = {
   'scripts/import/oraec-paginate-translate.mjs': 'repaginates text already imported from ORAEC',
   'scripts/import/fetch-wikisource-javanese.mjs': 'Wikisource text, not a model read',
   'scripts/import/import-thirukkural.ts': 'seeds an empty ocr object at import',
+  'scripts/maintenance/backfill-woodblock-provenance-4523.mjs': "matches 'ocr.data' only in the update FILTER (a race guard on the unchanged text); its $set stamps source/engine/content_hash and never writes text (#4523)",
   'scripts/maintenance/dehyphenate-ia-ocr.mjs': 'rewrites stored text, joining hyphenated line breaks',
   'scripts/maintenance/repair-ia-ocr-leaf-offset.mjs': 'moves stored text between pages (#3368); introduces no new text',
   'scripts/maintenance/fix-h13-stragglers.mjs': 'moves stored text; introduces no new text',
