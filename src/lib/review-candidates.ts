@@ -219,6 +219,6 @@ export async function nextCandidate(queue: string, volunteerId: string): Promise
   return {
     item: null,
     poolEmpty: false,
-    message: "You've rated everything in this sample — refresh for more.",
+    message: "You've rated everything in this sample. Refresh for more.",
   };
 }

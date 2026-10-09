@@ -1,0 +1,342 @@
+{
+ "J1-000": {
+  "kind": "PLANT",
+  "uid": "69943c94_125",
+  "labels": {
+   "T1": "R",
+   "T2": "R_PLANT"
+  },
+  "plant": {
+   "old": "The covenant given to Moses was not completed until this final covenant came, which is the first one that was promised from above and written down from below.",
+   "new": "The covenant given to Moses was not completed until this final covenant came, which is not the first one that was promised from above and written down from below.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "J1-001": {
+  "kind": "ARMS",
+  "uid": "69943c78_154",
+  "labels": {
+   "T1": "K",
+   "T2": "R",
+   "T3": "R2",
+   "T4": "K2"
+  }
+ },
+ "J1-002": {
+  "kind": "ARMS",
+  "uid": "69a5f031_235",
+  "labels": {
+   "T1": "K",
+   "T2": "K2",
+   "T3": "R",
+   "T4": "R2"
+  }
+ },
+ "J1-003": {
+  "kind": "DUP",
+  "uid": "69a5eb6b_205",
+  "labels": {
+   "T1": "R",
+   "T2": "K",
+   "T3": "R_DUP"
+  }
+ },
+ "J1-004": {
+  "kind": "PLANT",
+  "uid": "69a5ea9a_391",
+  "labels": {
+   "T1": "R",
+   "T2": "R_PLANT"
+  },
+  "plant": {
+   "old": "that they are being led and that they are being left,",
+   "new": "that they are not being led and that they are being left,",
+   "how": "\\bare\\b → are not"
+  }
+ },
+ "J1-005": {
+  "kind": "PLANT",
+  "uid": "69920b97_271",
+  "labels": {
+   "T1": "R_PLANT",
+   "T2": "R"
+  },
+  "plant": {
+   "old": "If we are afflicted, it is for your consolation and for your salvation; and if we are comforted, it is because you",
+   "new": "If we are afflicted, it is not for your consolation and for your salvation; and if we are comforted, it is because you",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "J1-006": {
+  "kind": "ARMS",
+  "uid": "69943c4f_169",
+  "labels": {
+   "T1": "R2",
+   "T2": "K2",
+   "T3": "K",
+   "T4": "R"
+  }
+ },
+ "J1-007": {
+  "kind": "ARMS",
+  "uid": "6994400f_296",
+  "labels": {
+   "T1": "K",
+   "T2": "K2",
+   "T3": "R",
+   "T4": "R2"
+  }
+ },
+ "J1-008": {
+  "kind": "ARMS",
+  "uid": "69a5eb54_268",
+  "labels": {
+   "T1": "R",
+   "T2": "K",
+   "T3": "R2",
+   "T4": "K2"
+  }
+ },
+ "J1-009": {
+  "kind": "ARMS",
+  "uid": "69a5eaa3_611",
+  "labels": {
+   "T1": "R2",
+   "T2": "R",
+   "T3": "K",
+   "T4": "K2"
+  }
+ },
+ "J1-010": {
+  "kind": "ARMS",
+  "uid": "69a5ea9a_391",
+  "labels": {
+   "T1": "K",
+   "T2": "R2",
+   "T3": "R",
+   "T4": "K2"
+  }
+ },
+ "J1-011": {
+  "kind": "DUP",
+  "uid": "69a5f031_235",
+  "labels": {
+   "T1": "K",
+   "T2": "R",
+   "T3": "R_DUP"
+  }
+ },
+ "J1-012": {
+  "kind": "ARMS",
+  "uid": "69943c94_125",
+  "labels": {
+   "T1": "R",
+   "T2": "R2",
+   "T3": "K2",
+   "T4": "K"
+  }
+ },
+ "J1-013": {
+  "kind": "PLANT",
+  "uid": "6994400f_296",
+  "labels": {
+   "T1": "R_PLANT",
+   "T2": "R"
+  },
+  "plant": {
+   "old": "The laws of men prevail in their judgments, and they are governed by their customs.",
+   "new": "The laws of men prevail in their judgments, and they are not governed by their customs.",
+   "how": "\\bare\\b → are not"
+  }
+ },
+ "J1-014": {
+  "kind": "ARMS",
+  "uid": "69a5e9f0_81",
+  "labels": {
+   "T1": "R",
+   "T2": "K2",
+   "T3": "K",
+   "T4": "R2"
+  }
+ },
+ "J1-015": {
+  "kind": "PLANT",
+  "uid": "6aaafbb1_300",
+  "labels": {
+   "T1": "R",
+   "T2": "R_PLANT"
+  },
+  "plant": {
+   "old": "But because it is still only the beginning of the destruction and has not reached its end, he speaks of the commencement of the evil itself.",
+   "new": "But because it is not still only the beginning of the destruction and has not reached its end, he speaks of the commencement of the evil itself.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "J1-016": {
+  "kind": "ARMS",
+  "uid": "6aaafbb1_300",
+  "labels": {
+   "T1": "K",
+   "T2": "R",
+   "T3": "R2",
+   "T4": "K2"
+  }
+ },
+ "J1-017": {
+  "kind": "ARMS",
+  "uid": "69943ce1_628",
+  "labels": {
+   "T1": "K2",
+   "T2": "K",
+   "T3": "R",
+   "T4": "R2"
+  }
+ },
+ "J1-018": {
+  "kind": "ARMS",
+  "uid": "69a5eb4d_529",
+  "labels": {
+   "T1": "K2",
+   "T2": "R2",
+   "T3": "R",
+   "T4": "K"
+  }
+ },
+ "J1-019": {
+  "kind": "PLANT",
+  "uid": "69a5eaa3_611",
+  "labels": {
+   "T1": "R_PLANT",
+   "T2": "R"
+  },
+  "plant": {
+   "old": "Thus, every day, there are angels beside every person,",
+   "new": "Thus, every day, there are not angels beside every person,",
+   "how": "\\bare\\b → are not"
+  }
+ },
+ "J1-020": {
+  "kind": "ARMS",
+  "uid": "69a5eaa8_205",
+  "labels": {
+   "T1": "R",
+   "T2": "K",
+   "T3": "R2",
+   "T4": "K2"
+  }
+ },
+ "J1-021": {
+  "kind": "ARMS",
+  "uid": "69920b97_271",
+  "labels": {
+   "T1": "R2",
+   "T2": "K2",
+   "T3": "R",
+   "T4": "K"
+  }
+ },
+ "J1-022": {
+  "kind": "ARMS",
+  "uid": "699443fa_308",
+  "labels": {
+   "T1": "K2",
+   "T2": "K",
+   "T3": "R2",
+   "T4": "R"
+  }
+ },
+ "J1-023": {
+  "kind": "ARMS",
+  "uid": "69943c68_564",
+  "labels": {
+   "T1": "R",
+   "T2": "K",
+   "T3": "K2",
+   "T4": "R2"
+  }
+ },
+ "J1-024": {
+  "kind": "PLANT",
+  "uid": "69a5f3e0_197",
+  "labels": {
+   "T1": "R_PLANT",
+   "T2": "R"
+  },
+  "plant": {
+   "old": "Daniel said to Nebuchadnezzar, \"You are the head of gold.\" And why was it called the head of gold, if not because the word of Jeremiah was fulfilled concerning him?",
+   "new": "Daniel said to Nebuchadnezzar, \"You are not the head of gold.\" And why was it called the head of gold, if not because the word of Jeremiah was fulfilled concerning him?",
+   "how": "\\bare\\b → are not"
+  }
+ },
+ "J1-025": {
+  "kind": "ARMS",
+  "uid": "69a5f3e0_197",
+  "labels": {
+   "T1": "K",
+   "T2": "R",
+   "T3": "K2",
+   "T4": "R2"
+  }
+ },
+ "J1-026": {
+  "kind": "ARMS",
+  "uid": "6aaafba3_151",
+  "labels": {
+   "T1": "R2",
+   "T2": "K",
+   "T3": "K2",
+   "T4": "R"
+  }
+ },
+ "J1-027": {
+  "kind": "ARMS",
+  "uid": "69a5eb6b_205",
+  "labels": {
+   "T1": "R",
+   "T2": "R2",
+   "T3": "K2",
+   "T4": "K"
+  }
+ },
+ "J1-028": {
+  "kind": "ARMS",
+  "uid": "69a5eb64_461",
+  "labels": {
+   "T1": "K",
+   "T2": "R2",
+   "T3": "R",
+   "T4": "K2"
+  }
+ },
+ "J1-029": {
+  "kind": "PLANT",
+  "uid": "69943c68_564",
+  "labels": {
+   "T1": "R",
+   "T2": "R_PLANT"
+  },
+  "plant": {
+   "old": "For there is a marriage of the body, and there is a marriage of the soul.",
+   "new": "For there is not a marriage of the body, and there is a marriage of the soul.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "J1-030": {
+  "kind": "DUP",
+  "uid": "69943ce1_628",
+  "labels": {
+   "T1": "R",
+   "T2": "R_DUP",
+   "T3": "K"
+  }
+ },
+ "J1-031": {
+  "kind": "DUP",
+  "uid": "69a5eb54_268",
+  "labels": {
+   "T1": "R",
+   "T2": "K",
+   "T3": "R_DUP"
+  }
+ }
+}

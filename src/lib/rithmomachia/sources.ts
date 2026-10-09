@@ -75,7 +75,7 @@ export interface ConceptSources {
 export const CONCEPT_SOURCES: Record<string, ConceptSources> = {
   board: {
     concept: 'The Board',
-    description: '8 columns wide by 16 rows tall — "two chessboards joined end to end"',
+    description: '8 columns wide by 16 rows tall: "two chessboards joined end to end"',
     refs: [
       { source: 'jordanus', page: 143, detail: 'Board dimensions described' },
       { source: 'boissiere', page: 37, detail: 'Woodcut diagram of board' },
@@ -183,7 +183,7 @@ export const CONCEPT_SOURCES: Record<string, ConceptSources> = {
   },
   siegeCapture: {
     concept: 'Siege',
-    description: 'Enemy surrounded on all four orthogonal sides — no escape',
+    description: 'Enemy surrounded on all four orthogonal sides, no escape',
     refs: [
       { source: 'lever', page: 17, detail: 'Siege capture' },
       { source: 'barozzi', page: 38, detail: 'Siege capture' },

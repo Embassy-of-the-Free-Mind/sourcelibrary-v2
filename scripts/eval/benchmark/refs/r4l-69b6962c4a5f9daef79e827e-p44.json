@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A07600",
+  "edition": "Insectorum sive minimorum animalium theatrum olim ab Edoardo Wottono, Conrado Gesnero, Thomaque Pennio inchoatum ; tandem Tho. Movfeti Londinâtis operâ sumptibusq́[ue] maximis concinnatum, auctum, per — STC 17993B; ESTC S5109 (1634)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A07600",
+  "origin": "library",
+  "book_id": "69b6962c4a5f9daef79e827e",
+  "page_number": 44,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 95139,
+    "to_char": 99184,
+    "overlap": 0.462,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (c-0)",
+    "at": "2026-10-06T10:13:06.818764+00:00",
+    "note": "p.17; ref matches 'vitae conservationem' to 'illico emendant'; curved lines in scan, Greek word omitted in ref.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      42,
+      43,
+      44
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.767Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "9b393a9f4eca8ee01c33838dd5400cbee87e793413c2222557ad5cc6344891b9",
+  "unit": {
+    "chars": 4045
+  }
+}

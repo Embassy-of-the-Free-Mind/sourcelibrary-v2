@@ -12,7 +12,7 @@ import { IMPROVEMENTS } from '../canon-gap/improvements';
 export const revalidate = false;
 
 export const metadata: Metadata = {
-  title: 'How We Check Each Canon — Source Library Research',
+  title: 'How We Check Each Canon | Source Library Research',
   description:
     'For each canon in the Eternity reading programme: what checks our transcription, what checks our English, the measured figures with their sources, what is not yet measured, and what we would ask of a scholar.',
   alternates: { canonical: '/research/canon-quality' },

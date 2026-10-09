@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA cera/baier1",
+  "edition": "Ioannis Iacobi Baieri Epistolae Ad Viros Eruditos Eorundemque Responsiones : Historiam Literariam Et Physicam Specialem Explanantes / curante Filio Ferdinando Iacobo Baiero. — Fankfurt/Leipzig: Sumptibus Editoris, 1760.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b6f32ab1a3146c05278d5a",
+  "page_number": 154,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 259546,
+    "to_char": 261454,
+    "overlap": 0.433,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-0)",
+    "at": "2026-10-06T10:11:09Z",
+    "note": "ref matches start to end",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1700s",
+    "pages": [
+      154,
+      155,
+      156
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.594Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "ed0f6b0103fd37b9c5e848fc4f62e0499194bb3d9b1533d3a230bfa612e99c04",
+  "unit": {
+    "chars": 1908
+  }
+}

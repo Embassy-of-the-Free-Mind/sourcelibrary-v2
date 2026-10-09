@@ -44,7 +44,7 @@ const SHOWCASE_BOOKS = [
     author: 'Pico della Mirandola',
     year: '1557',
     description:
-      'Most readers know only his Oration on the Dignity of Man. This 800-page volume includes the 900 Theses, the Heptaplus, and his polemic against astrology — from an edition in the BPH’s own collection.',
+      'Most readers know only his Oration on the Dignity of Man. This 800-page volume includes the 900 Theses, the Heptaplus, and his polemic against astrology, from an edition in the BPH’s own collection.',
     slug: 'complete-works-1557-basel-edition-pico-della-mirandola',
     bph: true,
   },
@@ -94,7 +94,7 @@ export default function EmbassyAnnouncesSourceLibrary() {
       {/* Body */}
       <section className="mb-16">
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          <strong className="text-stone-800">AMSTERDAM</strong> &mdash; The Embassy of the Free Mind today announces the
+          <strong className="text-stone-800">AMSTERDAM:</strong> The Embassy of the Free Mind today announces the
           public beta of Source Library, the largest freely available collection of translated
           historical primary sources ever assembled.
         </p>
@@ -114,7 +114,7 @@ export default function EmbassyAnnouncesSourceLibrary() {
           </a>{' '}
           (BPH), the Amsterdam-based collection founded by Joost R. Ritman and recognised by UNESCO as
           a Memory of the World. The BPH holds nearly 28,000 works spanning alchemy, Hermetica, Kabbalah,
-          Rosicrucianism, natural philosophy, and the pre-modern roots of modern science &mdash; including
+          Rosicrucianism, natural philosophy, and the pre-modern roots of modern science, including
           231 editions of Jacob Boehme, 160 of Paracelsus, over 100 each of Hermes Trismegistus and
           Giordano Bruno, and dozens of works by Marsilio Ficino, Robert Fludd, Heinrich Cornelius Agrippa,
           and John Dee. It also holds the Guinness World Record as the world&rsquo;s largest library
@@ -123,8 +123,8 @@ export default function EmbassyAnnouncesSourceLibrary() {
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
           More than 2,000 of these works have been digitised so far, with over 1,000 already translated
-          into English. Source Library extends the BPH&rsquo;s founding mission &mdash; preserving and
-          opening access to humanity&rsquo;s deepest philosophical explorations &mdash; by translating
+          into English. Source Library extends the BPH&rsquo;s founding mission (preserving and
+          opening access to humanity&rsquo;s deepest philosophical explorations) by translating
           these texts at a scale that was previously impossible.
         </p>
       </section>
@@ -141,7 +141,7 @@ export default function EmbassyAnnouncesSourceLibrary() {
           Beyond the BPH&rsquo;s own holdings, Source Library draws on digitised books from major
           research libraries worldwide, including the Bavarian State Library, the Biblioth&egrave;que
           nationale de France, the Vatican Library, the Bodleian Library at Oxford, the Wellcome
-          Collection, the Library of Congress, Cambridge University Library, and many others &mdash;
+          Collection, the Library of Congress, Cambridge University Library, and many others,
           accessed through IIIF and the Internet Archive.
         </p>
 
@@ -246,13 +246,13 @@ export default function EmbassyAnnouncesSourceLibrary() {
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
           The project began in 2022, when Lomas encountered Marsilio Ficino&rsquo;s <em>Liber de
-          Voluptate</em> in the BPH&rsquo;s collection &mdash; a philosophical dialogue on pleasure
+          Voluptate</em> in the BPH&rsquo;s collection: a philosophical dialogue on pleasure
           and virtue, written in 1457 and never translated into English. He commissioned a{' '}
           <a href="https://sourcelibrary.org/blog/origin-story" className="text-accent-rust hover:underline">
             professional translation from Oxford
           </a>
-          , published it alongside scans of the original Latin, and that side-by-side format &mdash;
-          translation and source together &mdash; became the template for everything that followed.
+          , published it alongside scans of the original Latin, and that side-by-side format
+          (translation and source together) became the template for everything that followed.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -266,7 +266,7 @@ export default function EmbassyAnnouncesSourceLibrary() {
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
           The Embassy views AI translation as a complement to, not a replacement for, expert human
-          scholarship. These are working translations &mdash; the first time a modern reader can sit
+          scholarship. These are working translations: the first time a modern reader can sit
           down and read many of these texts from beginning to end. The Loeb Classical Library has been
           publishing for over a century and has produced 540 volumes. At that rate, translating the
           Renaissance would take millennia. AI changes the timeline from centuries to years.
@@ -283,7 +283,7 @@ export default function EmbassyAnnouncesSourceLibrary() {
             accessible, and what Source Library represents for the collection&rsquo;s next chapter.]&rdquo;
           </p>
           <p className="text-sm text-muted">
-            &mdash; [Name, Title], Embassy of the Free Mind
+            [Name, Title], Embassy of the Free Mind
           </p>
         </div>
 
@@ -293,7 +293,7 @@ export default function EmbassyAnnouncesSourceLibrary() {
             and the invitation to scholars and the public.]&rdquo;
           </p>
           <p className="text-sm text-muted">
-            &mdash; Derek Lomas, Program Director, Source Library
+            Derek Lomas, Program Director, Source Library
           </p>
         </div>
       </section>
@@ -303,7 +303,7 @@ export default function EmbassyAnnouncesSourceLibrary() {
       {/* About the public beta */}
       <section className="mb-16">
         <h2 className="font-serif text-2xl md:text-3xl text-primary mb-6">
-          A public beta &mdash; and an invitation
+          A public beta and an invitation
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -313,7 +313,7 @@ export default function EmbassyAnnouncesSourceLibrary() {
           </a>{' '}
           records over 690,000 distinct non-English works printed between 1450 and 1700. We estimate
           that fewer than 5% have ever been translated into English. Source Library is the beginning
-          of an effort to close that gap &mdash; not in centuries, but in years.
+          of an effort to close that gap, not in centuries but in years.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -352,7 +352,7 @@ export default function EmbassyAnnouncesSourceLibrary() {
             <p className="text-sm text-secondary leading-relaxed font-body">
               The Embassy of the Free Mind is a museum, library, and cultural centre in Amsterdam,
               housed in the historic Huis met de Hoofden on the Keizersgracht. It is home to the
-              Bibliotheca Philosophica Hermetica (BPH), founded by Joost R. Ritman &mdash; a collection
+              Bibliotheca Philosophica Hermetica (BPH), founded by Joost R. Ritman: a collection
               of approximately 25,000 printed volumes and nearly 3,000 manuscripts on Hermetica, alchemy,
               mysticism, Rosicrucianism, Kabbalah, and gnosis. The BPH has been recognised by UNESCO as
               a &ldquo;Memory of the World&rdquo; (2022) and by Guinness World Records as the

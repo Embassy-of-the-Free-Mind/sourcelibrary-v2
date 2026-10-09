@@ -29,7 +29,7 @@ export default function CollectionSchema({
     '@type': 'CollectionPage',
     '@id': pageUrl,
     url: pageUrl,
-    name: `${name} — Source Library`,
+    name: `${name} | Source Library`,
     ...(description && { description: description.slice(0, 300) }),
     numberOfItems: bookCount,
     isPartOf: {

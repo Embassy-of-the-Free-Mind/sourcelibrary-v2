@@ -23,8 +23,8 @@ type AnnotationKind = 'ocr' | 'translation';
 export function aiGenerator(kind: AnnotationKind, model?: string) {
   const what =
     kind === 'ocr'
-      ? 'AI OCR transcription — machine-generated, not human-verified'
-      : 'AI translation — machine-generated, not human-verified';
+      ? 'AI OCR transcription: machine-generated, not human-verified'
+      : 'AI translation: machine-generated, not human-verified';
   const label = model ? `${what} (${model})` : what;
 
   return {

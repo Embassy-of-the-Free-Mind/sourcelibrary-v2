@@ -36,7 +36,7 @@ export default function LibrarySchema({
     '@type': 'CollectionPage',
     '@id': pageUrl,
     url: pageUrl,
-    name: `${name} — Source Library`,
+    name: `${name} | Source Library`,
     description,
     isPartOf: {
       '@type': 'WebSite',

@@ -6,12 +6,15 @@
  *
  * backfill-book-checks — one `book_checks` row per book per existing check, each pointing at its evidence file (#6174).
  * Every row goes through recordBookCheck() (scripts/lib/book-checks.mjs). Reads Mongo for book identity and page
- * provenance; writes only `book_checks`, and only with --apply.
+ * provenance; writes only `book_checks`, and only with --apply or --attach-page-findings.
  *
  *   node --env-file=.env.production.local scripts/maintenance/backfill-book-checks.mjs                # dry run: counts
  *   node --env-file=.env.production.local scripts/maintenance/backfill-book-checks.mjs --apply
  *     [--reruns-ref origin/qa/script-run-reviewers-6174]   read reruns-6174/S1, S2 from a ref while #6190 is unmerged
  *     [--ops-dir /root/ops-eternity-refresh]              a checkout of the private ops repo, for the #5914 month-0 draw
+ *     [--attach-page-findings]   fill page_findings (#6199) on EXISTING rows that predate the field, from the same
+ *                                evidence file. Write-once (a row that has them is left alone); inserts no row, so it
+ *                                runs with or without --apply
  *
  * Sources (method):
  *   overview-2026-10-07*\/reviews/*.json                     shelf-overview, the reviewer's fit_to_show
@@ -32,12 +35,13 @@ import { MongoClient, ObjectId } from 'mongodb';
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
-import { buildBookCheck, recordBookCheck, ensureBookCheckIndexes, provenanceFromPage, readMethod } from '../lib/book-checks.mjs';
-import { seriousPage, seriousClasses, FIT, derivedFortnightly, pageRecords, packetProvenance } from '../eval/spot-check/check-rows.mjs';
+import { buildBookCheck, recordBookCheck, attachPageFindings, ensureBookCheckIndexes, provenanceFromPage, readMethod } from '../lib/book-checks.mjs';
+import { seriousPage, seriousClasses, pageFindings, FIT, derivedFortnightly, pageRecords, packetProvenance } from '../eval/spot-check/check-rows.mjs';
 
 const args = process.argv.slice(2);
 const opt = (k, d) => { const i = args.indexOf(`--${k}`); return i >= 0 ? args[i + 1] : d; };
 const APPLY = args.includes('--apply');
+const ATTACH = args.includes('--attach-page-findings');
 const RERUNS_REF = opt('reruns-ref');
 const OPS = opt('ops-dir', '/root/ops-eternity-refresh');
 const ROOT = 'scripts/eval/results/spot-check';
@@ -84,7 +88,7 @@ for (const dir of readdirSync(ROOT).filter((d) => d.startsWith('overview-2026-10
           method_id: 'shelf-overview', run_id: run.run_id,
           frame: { stratum: pk?.stratum ?? null, seed: log.seed, draw: dir, checked_at_source: 'commit' },
           pages_read: b.pages.map((p) => p.page_number), reader: OPUS, verdict, verdict_source: 'reader',
-          classes: seriousClasses(b.pages), note: b.reader_summary ?? b.book_verdict, evidence_path: file,
+          classes: seriousClasses(b.pages), note: b.reader_summary ?? b.book_verdict, page_findings: pageFindings(b.pages), evidence_path: file,
           packetPages: pk?.pages, serious: b.pages.some(seriousPage) });
       }
     }
@@ -123,7 +127,7 @@ for (const dir of readdirSync(ROOT).filter((d) => d.startsWith('overview-2026-10
     cands.push({ source: 'sprint-r1', book_id: b.book_id, checked_at: at, method_id: 'fortnightly-spot-check', run_id: 'sprint-2026-10-07-r1',
       frame: { draw: 'sprint-2026-10-07-r1', checked_at_source: 'commit' },
       pages_read: b.pages.map((p) => p.page_number), reader: OPUS, verdict: derivedFortnightly(b), verdict_source: 'derived:fortnightly-v1',
-      classes: seriousClasses(b.pages), note: b.book_verdict, evidence_path: file, packetPages: sample.get(b.book_id)?.pages,
+      classes: seriousClasses(b.pages), note: b.book_verdict, page_findings: pageFindings(b.pages), evidence_path: file, packetPages: sample.get(b.book_id)?.pages,
       serious: b.pages.some(seriousPage) });
   }
 }
@@ -140,7 +144,7 @@ for (const dir of readdirSync(ROOT).filter((d) => d.startsWith('overview-2026-10
       cands.push({ source: 'month-0', book_id: b.book_id, checked_at: at, method_id: 'fortnightly-spot-check', run_id: 'fortnightly-2026-10-06-month0',
         frame: { draw: 'canon-shelves month 0', seed: 1791290001, checked_at_source: 'commit' },
         pages_read: pages.map((p) => p.page_number), reader: OPUS, verdict: derivedFortnightly({ ...b, pages }), verdict_source: 'derived:fortnightly-v1',
-        classes: seriousClasses(pages), evidence_path: `ops:${rel}/${f}`, serious: pages.some(seriousPage) });
+        classes: seriousClasses(pages), page_findings: pageFindings(pages, { withProblem: false }), evidence_path: `ops:${rel}/${f}`, serious: pages.some(seriousPage) });
     }
   }
 }
@@ -169,6 +173,7 @@ for (const h of hidden) {
   cands.push({ source: 'hide', book_id: h.id, checked_at: h.hidden_at ?? g.checked_at, method_id: 'hide-broken-text', run_id: h.hidden_reason,
     frame: { source_run_id: g.run_id, source_method_id: g.method_id, hidden_reason: h.hidden_reason, checked_at_source: h.hidden_at ? 'hidden_at' : 'source check' },
     pages_read: g.pages_read, reader: g.reader, verdict: 'fix', verdict_source: `hide:${h.hidden_reason}`, classes: g.classes,
+    ...(g.page_findings ? { page_findings: g.page_findings } : {}),
     evidence_path: g.evidence_path, packetPages: g.packetPages });
 }
 
@@ -199,6 +204,10 @@ for (const { source, row } of rows) {
 }
 console.log('source            rows  books  show caveat  fix  pages  prov:no-ocr-model  prov:changed-since');
 for (const [s, t] of Object.entries(tally)) console.log(`${s.padEnd(16)} ${String(t.rows).padStart(5)} ${String(t.books.size).padStart(6)} ${String(t.show).padStart(5)} ${String(t.caveat).padStart(6)} ${String(t.fix).padStart(4)} ${String(t.pages).padStart(6)} ${String(t.prov_unknown).padStart(18)} ${String(t.prov_changed).padStart(19)}`);
+{
+  const withF = rows.filter((r) => r.row.page_findings);
+  console.log(`page_findings: ${withF.length} rows carry them (${withF.filter((r) => r.row.page_findings.length).length} with at least one serious page, ${withF.reduce((n, r) => n + r.row.page_findings.length, 0)} serious pages); ${rows.length - withF.length} rows have no per-page record`);
+}
 console.log(`total ${rows.length} rows over ${new Set(rows.map((r) => r.row.book_id)).size} books; skipped ${skipped.length}`);
 for (const s of skipped) console.log(`  skip ${s}`);
 
@@ -211,5 +220,10 @@ if (APPLY) {
     r.inserted ? ins++ : dup++;
   }
   console.log(`book_checks: ${ins} inserted, ${dup} already present`);
-} else console.log('[DRY RUN] pass --apply to write');
+} else console.log('[DRY RUN] pass --apply to write rows');
+if (ATTACH) {
+  let attached = 0;
+  for (const { row } of rows) if (row.page_findings) attached += (await attachPageFindings(db, row)).attached ? 1 : 0;
+  console.log(`page_findings: attached to ${attached} existing rows that had none`);
+}
 await client.close();

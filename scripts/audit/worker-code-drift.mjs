@@ -26,20 +26,24 @@
  *     → CHECKOUT_BEHIND (auto-pull is failing; workers that loaded the checkout HEAD are folded
  *     into this one line rather than listed one by one);
  *   - a row whose code_version git cannot resolve (`not_recorded`, a laptop branch) → UNVERIFIED,
- *     printed, but it never reads as fresh and never reads as stale.
+ *     printed, but it never reads as fresh and never reads as stale;
+ *   - a worker whose script lives in ANOTHER checkout (a worktree under .claude/worktrees/, which
+ *     sits inside the repo path) → UNVERIFIED. It runs a branch, not main, so main's reflog says
+ *     nothing about it and a restart would load the same branch. On 2026-10-08/09 the PR #6047
+ *     `mirror-changelog` loop paged "older than main" every six hours for this reason (#6360).
  *
  * EXIT: 0 fresh · 3 stale (one line per stale worker) · 2 UNKNOWN (no Mongo / no origin/main —
  * "could not check" is not "clear").
  *
- * This never restarts anything. Restarting a worker mid-run is a decision (open batch runs,
- * held locks); the audit's job is to make it visible within the hour.
+ * This never restarts anything. scripts/maintenance/stale-worker-restart.mjs acts on its result:
+ * it restarts a stale systemd worker that holds no lock and owns no open batch run, and pages only
+ * the ones it could not restart (#6360).
  *
  * USAGE
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/audit/worker-code-drift.mjs
  *     [--repo /root/sourcelibrary] [--fetch] [--grace-min 30] [--json] [--alert] [--all-hosts]
- *   Hourly: scripts/workers/auto-pull.sh runs it with --alert right after it pulls (ntfy, the
- *   channel the uptime monitor uses, deduplicated). Daily: pipeline-health-alert.mjs includes it
- *   in its email.
+ *   Hourly: scripts/workers/auto-pull.sh runs stale-worker-restart.mjs (which calls
+ *   checkWorkerDrift) right after it pulls. Daily: pipeline-health-alert.mjs includes it in its email.
  */
 
 import { execFile } from 'child_process';
@@ -101,6 +105,11 @@ export function judgeDrift({ main, checkout, workers, now, graceMs = DEFAULT_GRA
 
   for (const w of workers) {
     const label = `${w.worker}${w.argv ? ` [${w.argv}]` : ''} pid=${w.pid} host=${w.host}${w.inferred ? ' (no heartbeat; version inferred from HEAD reflog)' : ''}`;
+    if (w.worktree) {
+      unverified.push(w);
+      lines.push(`UNVERIFIED ${label} runs another checkout (${w.worktree}${w.branch ? `, branch ${w.branch}` : ''}) — not main's code; a restart would load the same branch`);
+      continue;
+    }
     if (!Array.isArray(w.behind)) {
       unverified.push(w);
       lines.push(`UNVERIFIED ${label} code_version=${w.code_version ?? 'missing'} — not resolvable against origin/main`);
@@ -227,9 +236,23 @@ export async function checkWorkerDrift(db, { repo = process.cwd(), graceMs = DEF
   const live = rows.filter((r) => r.host !== me || pidAlive(r.pid));
   live.push(...await unregisteredWorkers(repo, new Set(rows.filter((r) => r.host === me).map((r) => r.pid)), now));
 
+  // A script under .claude/worktrees/<x>/ is inside `repo` by path but belongs to another checkout.
+  const tops = new Map();
+  for (const w of live) {
+    if (!w.script || relative(repo, w.script).startsWith('..')) continue;
+    const dir = dirname(w.script);
+    if (!tops.has(dir)) tops.set(dir, await git(dir, ['rev-parse', '--show-toplevel']).catch(() => null));
+    const top = tops.get(dir);
+    if (top && top !== repo) {
+      w.worktree = relative(repo, top) || top;
+      w.branch = await git(top, ['branch', '--show-current']).catch(() => '') || null;
+    }
+  }
+
   const closures = new Map();
   const cache = new Map();
   for (const w of live) {
+    if (w.worktree) { w.behind = null; continue; }
     const script = w.script && !relative(repo, w.script).startsWith('..') ? w.script : null;
     if (!closures.has(script)) closures.set(script, (script && importClosure(repo, script)) || CODE_PATHS);
     const paths = [...closures.get(script), 'package.json', 'package-lock.json'];

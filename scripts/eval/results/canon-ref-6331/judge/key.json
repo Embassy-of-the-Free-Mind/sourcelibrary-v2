@@ -1,0 +1,1985 @@
+{
+ "items": {
+  "S001": {
+   "kind": "ARMS",
+   "uid": "zh-T2005-p0296b19",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-chan",
+   "famous": true,
+   "work": "T2005",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S002": {
+   "kind": "ARMS",
+   "uid": "zh-KR4h0034-jiaozhongqing",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr4-collections",
+   "famous": true,
+   "work": "KR4h0034",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S003": {
+   "kind": "ARMS",
+   "uid": "sa-vajasaneyi-p21",
+   "set": "sa-ext",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "famous": true,
+   "work": "6a91e0c6051d1f3e8eaa12a2",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S004": {
+   "kind": "ARMS",
+   "uid": "pi-an10-119-pts-p254",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69b99e681f30176bf4d3798a",
+   "labels": {
+    "T1": "FP",
+    "T2": "CS",
+    "T3": "C38"
+   }
+  },
+  "S005": {
+   "kind": "ARMS",
+   "uid": "zh-KR1d0052-032-zy21-27",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr1-classics",
+   "famous": true,
+   "work": "KR1d0052:32 中庸",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S006": {
+   "kind": "ARMS",
+   "uid": "pi-mn97-pts-p211",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69b99e496ed9e04909909f8f",
+   "labels": {
+    "T1": "C38",
+    "T2": "FP",
+    "T3": "CS"
+   }
+  },
+  "S007": {
+   "kind": "ARMS",
+   "uid": "sa-dasakumaracarita-p240",
+   "set": "sa-ext",
+   "lang": "Sanskrit",
+   "stratum": "sa-more",
+   "famous": false,
+   "work": "69e7928c80b52390feb16343",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS",
+    "T3": "FP"
+   }
+  },
+  "S008": {
+   "kind": "PLANT",
+   "uid": "pi-mn91-pts-p159",
+   "labels": {
+    "T1": "P",
+    "T2": "P_PLANT"
+   },
+   "plant": {
+    "old": "who has abandoned birth and death, and is perfected in the holy life,",
+    "new": "who has abandoned birth and death, and is not perfected in the holy life,",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "S009": {
+   "kind": "ARMS",
+   "uid": "zh-KR3b0004-tuguo",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr3-masters",
+   "famous": false,
+   "work": "KR3b0004",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S010": {
+   "kind": "DUP",
+   "uid": "sa-mrcchakatika-p57",
+   "labels": {
+    "T1": "P_DUP",
+    "T2": "P",
+    "T3": "C38"
+   }
+  },
+  "S011": {
+   "kind": "ARMS",
+   "uid": "zh-KR5f0013-ch1-5",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr5-daoist",
+   "famous": false,
+   "work": "KR5f0013",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S012": {
+   "kind": "ARMS",
+   "uid": "zh-KR4c0012-jingluanli-l1-154",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr4-collections",
+   "famous": false,
+   "work": "KR4c0012",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S013": {
+   "kind": "ARMS",
+   "uid": "zh-KR4d0069-mingchan-qiusheng",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr4-collections",
+   "famous": true,
+   "work": "KR4d0069",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S014": {
+   "kind": "ARMS",
+   "uid": "sa-rajatarangini-p16",
+   "set": "sa-ext",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "famous": false,
+   "work": "6a91e105051d1f3e8eaa2441",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S015": {
+   "kind": "ARMS",
+   "uid": "sa-nyayasutra-p17",
+   "set": "sa-ext",
+   "lang": "Sanskrit",
+   "stratum": "sa-shastra-buddhist",
+   "famous": false,
+   "work": "6a309057d8c6b8a005c7c3a0",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S016": {
+   "kind": "ARMS",
+   "uid": "zh-KR3a0108-j42a",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr3-masters",
+   "famous": false,
+   "work": "KR3a0108",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S017": {
+   "kind": "ARMS",
+   "uid": "zh-T2076-p0458b21",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-chan",
+   "famous": true,
+   "work": "T2076",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S018": {
+   "kind": "ARMS",
+   "uid": "pi-an6-42-pts-p048",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": true,
+   "work": "6a09ff4ffa20006dbaba901a",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS",
+    "T3": "FP"
+   }
+  },
+  "S019": {
+   "kind": "ARMS",
+   "uid": "pi-mn79-pts-p052",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69b99e496ed9e04909909f8f",
+   "labels": {
+    "T1": "CS",
+    "T2": "FP",
+    "T3": "C38"
+   }
+  },
+  "S020": {
+   "kind": "ARMS",
+   "uid": "sa-raghuvamsa-p25",
+   "set": "sa-ext",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "famous": false,
+   "work": "6a91e1bd516e6f55043059df",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S021": {
+   "kind": "ARMS",
+   "uid": "zh-T0001-p0018a23",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sutra",
+   "famous": false,
+   "work": "T0001",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S022": {
+   "kind": "ARMS",
+   "uid": "zh-T1586-p0060a20",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "famous": false,
+   "work": "T1586",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S023": {
+   "kind": "ARMS",
+   "uid": "zh-KR2k0136-j001-ch02-04",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr2-histories",
+   "famous": false,
+   "work": "KR2k0136",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S024": {
+   "kind": "ARMS",
+   "uid": "zh-KR2a0001-j003-yin-01",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr2-histories",
+   "famous": true,
+   "work": "KR2a0001",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S025": {
+   "kind": "ARMS",
+   "uid": "zh-KR1d0026-010",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr1-classics",
+   "famous": false,
+   "work": "KR1d0026",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S026": {
+   "kind": "DUP",
+   "uid": "pi-sn51-20-pts-p299",
+   "labels": {
+    "T1": "P_DUP",
+    "T2": "P",
+    "T3": "C38"
+   }
+  },
+  "S027": {
+   "kind": "ARMS",
+   "uid": "zh-T2085-p0865c24",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "famous": true,
+   "work": "T2085",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S028": {
+   "kind": "ARMS",
+   "uid": "zh-KR2k0151-j001-p15a",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr2-histories",
+   "famous": false,
+   "work": "KR2k0151",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S029": {
+   "kind": "ARMS",
+   "uid": "zh-T2031-p0015a07",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "famous": false,
+   "work": "T2031",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S030": {
+   "kind": "DUP",
+   "uid": "sa-mattavilasa-p17",
+   "labels": {
+    "T1": "P_DUP",
+    "T2": "C38",
+    "T3": "P"
+   }
+  },
+  "S031": {
+   "kind": "ARMS",
+   "uid": "pi-mn91-pts-p159",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69b99e496ed9e04909909f8f",
+   "labels": {
+    "T1": "C38",
+    "T2": "FP",
+    "T3": "CS"
+   }
+  },
+  "S032": {
+   "kind": "ARMS",
+   "uid": "zh-T2008-p0352c13",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-chan",
+   "famous": true,
+   "work": "T2008",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S033": {
+   "kind": "ARMS",
+   "uid": "zh-T0235-p0749a21",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sutra",
+   "famous": true,
+   "work": "T0235",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S034": {
+   "kind": "ARMS",
+   "uid": "zh-T2014-p0395c09",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-chan",
+   "famous": true,
+   "work": "T2014",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S035": {
+   "kind": "ARMS",
+   "uid": "zh-KR3j0002-ch04",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr3-masters",
+   "famous": false,
+   "work": "KR3j0002",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S036": {
+   "kind": "ARMS",
+   "uid": "zh-KR2b0001-j001-part1-huangdi-ku",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr2-histories",
+   "famous": false,
+   "work": "KR2b0001",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S037": {
+   "kind": "ARMS",
+   "uid": "pi-dn3-bj-p089",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69bd00f7f403a9ca2380efbf",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38",
+    "T3": "CS"
+   }
+  },
+  "S038": {
+   "kind": "ARMS",
+   "uid": "pi-sn10-3-pts-p227",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69b99d043a4a443c39c00775",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38",
+    "T3": "CS"
+   }
+  },
+  "S039": {
+   "kind": "ARMS",
+   "uid": "zh-T1866-p0481b05",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "famous": true,
+   "work": "T1866",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S040": {
+   "kind": "ARMS",
+   "uid": "zh-KR1h0001-012-06-08",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr1-classics",
+   "famous": true,
+   "work": "KR1h0001",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S041": {
+   "kind": "ARMS",
+   "uid": "zh-KR1d0052-011-s1",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr1-classics",
+   "famous": false,
+   "work": "KR1d0052",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S042": {
+   "kind": "ARMS",
+   "uid": "pi-sn11-4-pts-p241",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69b99d043a4a443c39c00775",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38",
+    "T3": "CS"
+   }
+  },
+  "S043": {
+   "kind": "PLANT",
+   "uid": "zh-T0211-p0580c19",
+   "labels": {
+    "T1": "P",
+    "T2": "P_PLANT"
+   },
+   "plant": {
+    "old": "When the king receives the sutra, his mind will surely come to believe and understand.\" The king then copied out the sutra scroll, and wrote a separate letter that said: \"You sent me flowers of treasure.",
+    "new": "When the king receives the sutra, his mind will not surely come to believe and understand.\" The king then copied out the sutra scroll, and wrote a separate letter that said: \"You sent me flowers of treasure.",
+    "how": "\\bwill\\b → will not"
+   }
+  },
+  "S044": {
+   "kind": "ARMS",
+   "uid": "sa-mattavilasa-p17",
+   "set": "sa-ext",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "famous": false,
+   "work": "6a91e0c2051d1f3e8eaa1266",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S045": {
+   "kind": "PLANT",
+   "uid": "zh-KR3a0108-j42a",
+   "labels": {
+    "T1": "P_PLANT",
+    "T2": "P"
+   },
+   "plant": {
+    "old": "He said: Previously, in reading \"nature and mandate follow virtue,\" I took it to mean that this nature is what its virtue commands.",
+    "new": "He said: Previously, in reading \"nature and mandate follow virtue,\" I took it to mean that this nature is not what its virtue commands.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "S046": {
+   "kind": "ARMS",
+   "uid": "sa-svapnavasavadatta-p22",
+   "set": "sa-ext",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "famous": false,
+   "work": "69dea2034d19ec2e9ba75a76",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S047": {
+   "kind": "ARMS",
+   "uid": "pi-an6-55-pts-p393",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "6a09ff4ffa20006dbaba901a",
+   "labels": {
+    "T1": "FP",
+    "T2": "CS",
+    "T3": "C38"
+   }
+  },
+  "S048": {
+   "kind": "ARMS",
+   "uid": "pi-an4-38-pts-p052",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "6a09ff48fa20006dbaba8ee1",
+   "labels": {
+    "T1": "CS",
+    "T2": "FP",
+    "T3": "C38"
+   }
+  },
+  "S049": {
+   "kind": "ARMS",
+   "uid": "zh-KR3b0003-ch06",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr3-masters",
+   "famous": true,
+   "work": "KR3b0003",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S050": {
+   "kind": "ARMS",
+   "uid": "pi-an5-139-pts-p176",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "6a09ff4ffa20006dbaba901a",
+   "labels": {
+    "T1": "CS",
+    "T2": "FP",
+    "T3": "C38"
+   }
+  },
+  "S051": {
+   "kind": "ARMS",
+   "uid": "sa-aitareya-upanisad-p3",
+   "set": "sa-ext",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "famous": true,
+   "work": "69935b4a8e28d8f4c5d3cf8c",
+   "labels": {
+    "T1": "C38",
+    "T2": "FP",
+    "T3": "CS"
+   }
+  },
+  "S052": {
+   "kind": "ARMS",
+   "uid": "zh-KR2k0090-j005-songyun-zuomo-zhujubo",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr2-histories",
+   "famous": false,
+   "work": "KR2k0090",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S053": {
+   "kind": "ARMS",
+   "uid": "pi-dn8-bj-p196",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69bd00f7f403a9ca2380efbf",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38",
+    "T3": "FP"
+   }
+  },
+  "S054": {
+   "kind": "ARMS",
+   "uid": "zh-KR4c0069-changhenge",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr4-collections",
+   "famous": true,
+   "work": "KR4c0069",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S055": {
+   "kind": "ARMS",
+   "uid": "zh-T2025-p1144b06",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-chan",
+   "famous": false,
+   "work": "T2025",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S056": {
+   "kind": "ARMS",
+   "uid": "sa-garuda-purana-p144",
+   "set": "sa-ext",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "famous": false,
+   "work": "6992d66546b85e738a0c3d03",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38",
+    "T3": "CS"
+   }
+  },
+  "S057": {
+   "kind": "ARMS",
+   "uid": "zh-T2063-p0934c03",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "famous": false,
+   "work": "T2063",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S058": {
+   "kind": "ARMS",
+   "uid": "sa-siksasamuccaya-p118",
+   "set": "sa-ext",
+   "lang": "Sanskrit",
+   "stratum": "sa-shastra-buddhist",
+   "famous": false,
+   "work": "6a30881fbd425508b0edad49",
+   "labels": {
+    "T1": "C38",
+    "T2": "FP",
+    "T3": "CS"
+   }
+  },
+  "S059": {
+   "kind": "PLANT",
+   "uid": "sa-prabodhacandrodaya-p21",
+   "labels": {
+    "T1": "P",
+    "T2": "P_PLANT"
+   },
+   "plant": {
+    "old": "In \"Peace to the sin,\" \"peace\" means \"not to be heard.\" \"Ajja\" means \"noble son,\" that is, my lord: \"then why is it not opened up?\" \"Not opened up\" means \"not made known.\" \"Ajja,\" my lord: \"what is that like?\" So the commentary reads.",
+    "new": "In \"Peace to the sin,\" \"peace\" means \"not to be heard.\" \"Ajja\" means \"noble son,\" that is not, my lord: \"then why is it not opened up?\" \"Not opened up\" means \"not made known.\" \"Ajja,\" my lord: \"what is that like?\" So the commentary reads.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "S060": {
+   "kind": "ARMS",
+   "uid": "zh-KR1c0001-030",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr1-classics",
+   "famous": true,
+   "work": "KR1c0001",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S061": {
+   "kind": "ARMS",
+   "uid": "sa-avadanakalpalata-p331",
+   "set": "sa-ext",
+   "lang": "Sanskrit",
+   "stratum": "sa-shastra-buddhist",
+   "famous": false,
+   "work": "69bc7feb9615ef57a9cec2bc",
+   "labels": {
+    "T1": "CS",
+    "T2": "FP",
+    "T3": "C38"
+   }
+  },
+  "S062": {
+   "kind": "ARMS",
+   "uid": "sa-mudraraksasa-p115",
+   "set": "sa-ext",
+   "lang": "Sanskrit",
+   "stratum": "sa-more",
+   "famous": false,
+   "work": "69e75a99095c302d3fddee8c",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS",
+    "T3": "FP"
+   }
+  },
+  "S063": {
+   "kind": "ARMS",
+   "uid": "zh-T2102-p0027b13",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "famous": false,
+   "work": "T2102",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S064": {
+   "kind": "ARMS",
+   "uid": "zh-KR1f0001-whole",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr1-classics",
+   "famous": true,
+   "work": "KR1f0001",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S065": {
+   "kind": "ARMS",
+   "uid": "pi-snp2-4-pts-p070",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": true,
+   "work": "69bc7fe6173577a33741d428",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S066": {
+   "kind": "ARMS",
+   "uid": "zh-T1642-p0169b08",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "famous": true,
+   "work": "T1642",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S067": {
+   "kind": "ARMS",
+   "uid": "pi-mn80-pts-p055",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69b99e496ed9e04909909f8f",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS",
+    "T3": "FP"
+   }
+  },
+  "S068": {
+   "kind": "PLANT",
+   "uid": "pi-sn10-3-pts-p227",
+   "labels": {
+    "T1": "P",
+    "T2": "P_PLANT"
+   },
+   "plant": {
+    "old": "\"That is not an ascetic, that is a mere little ascetic.",
+    "new": "\"That is an ascetic, that is a mere little ascetic.",
+    "how": "\\bis not\\b → is"
+   }
+  },
+  "S069": {
+   "kind": "ARMS",
+   "uid": "zh-KR2k0137-j001-bamiyan",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr2-histories",
+   "famous": true,
+   "work": "KR2k0137",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S070": {
+   "kind": "ARMS",
+   "uid": "zh-KR5c0045-ch01-12",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr3-masters",
+   "famous": true,
+   "work": "KR5c0045",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S071": {
+   "kind": "ARMS",
+   "uid": "zh-KR2a0018-j054-kandali-langgasu",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr2-histories",
+   "famous": false,
+   "work": "KR2a0018",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S072": {
+   "kind": "ARMS",
+   "uid": "zh-KR2g0057-j001-p01a",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr2-histories",
+   "famous": false,
+   "work": "KR2g0057",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S073": {
+   "kind": "ARMS",
+   "uid": "zh-T1858-p0151a09",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "famous": false,
+   "work": "T1858",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S074": {
+   "kind": "ARMS",
+   "uid": "zh-T0026-p0422a19",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sutra",
+   "famous": false,
+   "work": "T0026",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S075": {
+   "kind": "ARMS",
+   "uid": "sa-brhatsamhita-p161",
+   "set": "sa-ext",
+   "lang": "Sanskrit",
+   "stratum": "sa-shastra-buddhist",
+   "famous": false,
+   "work": "699069472f82e0fda480618d",
+   "labels": {
+    "T1": "FP",
+    "T2": "CS",
+    "T3": "C38"
+   }
+  },
+  "S076": {
+   "kind": "ARMS",
+   "uid": "sa-nagananda-p9",
+   "set": "sa-ext",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "famous": false,
+   "work": "69e75aa5095c302d3fddef6e",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38",
+    "T3": "FP"
+   }
+  },
+  "S077": {
+   "kind": "ARMS",
+   "uid": "zh-T1886-p0708a25",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "famous": false,
+   "work": "T1886",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S078": {
+   "kind": "PLANT",
+   "uid": "zh-KR3j0080-ch04",
+   "labels": {
+    "T1": "P",
+    "T2": "P_PLANT"
+   },
+   "plant": {
+    "old": "From this it follows that people receive vital force and destiny from Heaven, and whether they complete it or not, it is the same thing.",
+    "new": "From this it follows that people receive vital force and destiny from Heaven, and whether they complete it or not, it is not the same thing.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "S079": {
+   "kind": "ARMS",
+   "uid": "sa-nalopakhyana-p22",
+   "set": "sa-ext",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "famous": true,
+   "work": "6a91c43043010201a1471569",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S080": {
+   "kind": "ARMS",
+   "uid": "pi-dn4-bj-p125",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69bd00f7f403a9ca2380efbf",
+   "labels": {
+    "T1": "FP",
+    "T2": "CS",
+    "T3": "C38"
+   }
+  },
+  "S081": {
+   "kind": "ARMS",
+   "uid": "zh-T0848-p0042a15",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sutra",
+   "famous": false,
+   "work": "T0848",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S082": {
+   "kind": "ARMS",
+   "uid": "pi-sn46-56-pts-p148",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69b99e551f30176bf4d37774",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38",
+    "T3": "CS"
+   }
+  },
+  "S083": {
+   "kind": "ARMS",
+   "uid": "zh-KR3c0004-p03",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr3-masters",
+   "famous": false,
+   "work": "KR3c0004",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S084": {
+   "kind": "ARMS",
+   "uid": "pi-an5-196-pts-p259",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "6a09ff4ffa20006dbaba901a",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38",
+    "T3": "CS"
+   }
+  },
+  "S085": {
+   "kind": "ARMS",
+   "uid": "pi-sn46-52-pts-p132",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69b99e551f30176bf4d37774",
+   "labels": {
+    "T1": "C38",
+    "T2": "FP",
+    "T3": "CS"
+   }
+  },
+  "S086": {
+   "kind": "ARMS",
+   "uid": "sa-mrcchakatika-p57",
+   "set": "sa-ext",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "famous": false,
+   "work": "69e753cf095c302d3fddc2e2",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38",
+    "T3": "FP"
+   }
+  },
+  "S087": {
+   "kind": "ARMS",
+   "uid": "zh-T2012A-p0379c18",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-chan",
+   "famous": true,
+   "work": "T2012A",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S088": {
+   "kind": "ARMS",
+   "uid": "sa-kadambari-p15",
+   "set": "sa-ext",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "famous": false,
+   "work": "6a91e1b4516e6f55043056b5",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S089": {
+   "kind": "ARMS",
+   "uid": "pi-kp9-ms-p154",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": true,
+   "work": "69c1bdac8522835be846b291",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S090": {
+   "kind": "ARMS",
+   "uid": "pi-sn1-35-pts-p044",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69b99d043a4a443c39c00775",
+   "labels": {
+    "T1": "C38",
+    "T2": "FP",
+    "T3": "CS"
+   }
+  },
+  "S091": {
+   "kind": "ARMS",
+   "uid": "zh-T0211-p0580c19",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sutra",
+   "famous": false,
+   "work": "T0211",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S092": {
+   "kind": "ARMS",
+   "uid": "zh-KR1d0052-043-dx10",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr1-classics",
+   "famous": true,
+   "work": "KR1d0052:43 大學",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S093": {
+   "kind": "ARMS",
+   "uid": "zh-KR5c0051-ch15",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr3-masters",
+   "famous": true,
+   "work": "KR5c0051",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S094": {
+   "kind": "ARMS",
+   "uid": "pi-snp1-7-pts-p045",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69bc7fe6173577a33741d428",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S095": {
+   "kind": "ARMS",
+   "uid": "pi-dn9-bj-p208",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69bd00f7f403a9ca2380efbf",
+   "labels": {
+    "T1": "C38",
+    "T2": "FP",
+    "T3": "CS"
+   }
+  },
+  "S096": {
+   "kind": "ARMS",
+   "uid": "pi-sn3-1-pts-p089",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69b99d043a4a443c39c00775",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38",
+    "T3": "CS"
+   }
+  },
+  "S097": {
+   "kind": "PLANT",
+   "uid": "zh-T2014-p0395c09",
+   "labels": {
+    "T1": "P",
+    "T2": "P_PLANT"
+   },
+   "plant": {
+    "old": "The original source, one's own nature, is the Buddha, naturally true.",
+    "new": "The original source, one's own nature, is not the Buddha, naturally true.",
+    "how": "\\bis\\b → is not"
+   }
+  },
+  "S098": {
+   "kind": "ARMS",
+   "uid": "pi-dn6-bj-p176",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69bd00f7f403a9ca2380efbf",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38",
+    "T3": "CS"
+   }
+  },
+  "S099": {
+   "kind": "ARMS",
+   "uid": "zh-T0475-p0539a08",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sutra",
+   "famous": true,
+   "work": "T0475",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S100": {
+   "kind": "ARMS",
+   "uid": "zh-T0262-p0051c09",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sutra",
+   "famous": true,
+   "work": "T0262",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S101": {
+   "kind": "ARMS",
+   "uid": "zh-T2003-p0154c02",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-chan",
+   "famous": true,
+   "work": "T2003",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S102": {
+   "kind": "ARMS",
+   "uid": "pi-an4-33-pts-p044",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "6a09ff48fa20006dbaba8ee1",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38",
+    "T3": "FP"
+   }
+  },
+  "S103": {
+   "kind": "ARMS",
+   "uid": "zh-KR4d0076-chibi-1-2",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr4-collections",
+   "famous": true,
+   "work": "KR4d0076",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S104": {
+   "kind": "ARMS",
+   "uid": "pi-sn7-1-th-p239",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69b99f1a1b6f70482c00d1fa",
+   "labels": {
+    "T1": "C38",
+    "T2": "FP",
+    "T3": "CS"
+   }
+  },
+  "S105": {
+   "kind": "ARMS",
+   "uid": "sa-mahanirvana-p446",
+   "set": "sa-ext",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "famous": false,
+   "work": "69d7e0c5e9e5e67989c36f72",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38",
+    "T3": "FP"
+   }
+  },
+  "S106": {
+   "kind": "ARMS",
+   "uid": "pi-sn47-6-pts-p168",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69b99e551f30176bf4d37774",
+   "labels": {
+    "T1": "FP",
+    "T2": "CS",
+    "T3": "C38"
+   }
+  },
+  "S107": {
+   "kind": "ARMS",
+   "uid": "sa-prabodhacandrodaya-p21",
+   "set": "sa-ext",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "famous": false,
+   "work": "6a91e1c5516e6f5504305ccd",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S108": {
+   "kind": "ARMS",
+   "uid": "sa-aitareya-aranyaka-p61",
+   "set": "sa-ext",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "famous": false,
+   "work": "69dea5f24d19ec2e9ba77d50",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS",
+    "T3": "FP"
+   }
+  },
+  "S109": {
+   "kind": "ARMS",
+   "uid": "pi-sn7-11-th-p254",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": true,
+   "work": "69b99f1a1b6f70482c00d1fa",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS",
+    "T3": "FP"
+   }
+  },
+  "S110": {
+   "kind": "ARMS",
+   "uid": "pi-snp4-7-pts-p178",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69bc7fe6173577a33741d428",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S111": {
+   "kind": "ARMS",
+   "uid": "zh-KR2a0007-j096a-qiemo-pishan",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr2-histories",
+   "famous": false,
+   "work": "KR2a0007",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S112": {
+   "kind": "ARMS",
+   "uid": "zh-T0685-p0779a28",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sutra",
+   "famous": true,
+   "work": "T0685",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S113": {
+   "kind": "ARMS",
+   "uid": "zh-KR4c0018-beizheng",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr4-collections",
+   "famous": false,
+   "work": "KR4c0018",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S114": {
+   "kind": "ARMS",
+   "uid": "zh-KR2k0139-j001-zhenla",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr2-histories",
+   "famous": false,
+   "work": "KR2k0139",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S115": {
+   "kind": "ARMS",
+   "uid": "zh-X1315-p0003c05",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-chan",
+   "famous": false,
+   "work": "X1315",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S116": {
+   "kind": "ARMS",
+   "uid": "sa-agnipurana-p22",
+   "set": "sa-ext",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "famous": false,
+   "work": "6a91e152051d1f3e8eaa3e2e",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S117": {
+   "kind": "ARMS",
+   "uid": "pi-dn5-bj-p138",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69bd00f7f403a9ca2380efbf",
+   "labels": {
+    "T1": "CS",
+    "T2": "FP",
+    "T3": "C38"
+   }
+  },
+  "S118": {
+   "kind": "ARMS",
+   "uid": "zh-T0203-p0449a27",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sutra",
+   "famous": false,
+   "work": "T0203",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S119": {
+   "kind": "ARMS",
+   "uid": "zh-T2125-p0207a17",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "famous": false,
+   "work": "T2125",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S120": {
+   "kind": "ARMS",
+   "uid": "pi-an7-63-pts-p104",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69b99d0e6ed9e04909908946",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38",
+    "T3": "CS"
+   }
+  },
+  "S121": {
+   "kind": "ARMS",
+   "uid": "zh-T2046-p0183a26",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "famous": false,
+   "work": "T2046",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S122": {
+   "kind": "ARMS",
+   "uid": "zh-KR1b0001-055",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr1-classics",
+   "famous": false,
+   "work": "KR1b0001",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S123": {
+   "kind": "ARMS",
+   "uid": "zh-KR5i0013-whole",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr5-daoist",
+   "famous": true,
+   "work": "KR5i0013",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S124": {
+   "kind": "PLANT",
+   "uid": "sa-brhadaranyakabhasya-p25",
+   "labels": {
+    "T1": "P",
+    "T2": "P_PLANT"
+   },
+   "plant": {
+    "old": "This whole Veda is devoted to revealing the means of obtaining desirable things and avoiding undesirable ones, which are not known through perception and inference, since all people naturally wish to obtain the one and avoid the other.",
+    "new": "This whole Veda is devoted to revealing the means of obtaining desirable things and avoiding undesirable ones, which are known through perception and inference, since all people naturally wish to obtain the one and avoid the other.",
+    "how": "\\bare not\\b → are"
+   }
+  },
+  "S125": {
+   "kind": "ARMS",
+   "uid": "zh-T0159-p0297a07",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sutra",
+   "famous": false,
+   "work": "T0159",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S126": {
+   "kind": "ARMS",
+   "uid": "zh-KR4h0001-gaotangfu-part1",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr4-collections",
+   "famous": false,
+   "work": "KR4h0001",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S127": {
+   "kind": "ARMS",
+   "uid": "sa-brhadaranyakabhasya-p25",
+   "set": "sa-ext",
+   "lang": "Sanskrit",
+   "stratum": "sa-shastra-buddhist",
+   "famous": true,
+   "work": "6a06bbfdd4d0d7b9fa7bd6c4",
+   "labels": {
+    "T1": "C38",
+    "T2": "FP",
+    "T3": "CS"
+   }
+  },
+  "S128": {
+   "kind": "ARMS",
+   "uid": "zh-T1934-p0793b25",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "famous": false,
+   "work": "T1934",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S129": {
+   "kind": "ARMS",
+   "uid": "zh-T1985-p0496b14",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-chan",
+   "famous": true,
+   "work": "T1985",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S130": {
+   "kind": "ARMS",
+   "uid": "zh-KR4a0001-lisao-s1-6",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr4-collections",
+   "famous": true,
+   "work": "KR4a0001",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S131": {
+   "kind": "ARMS",
+   "uid": "pi-an10-91-pts-p199",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69b99e681f30176bf4d3798a",
+   "labels": {
+    "T1": "FP",
+    "T2": "CS",
+    "T3": "C38"
+   }
+  },
+  "S132": {
+   "kind": "ARMS",
+   "uid": "zh-T2087-p0873b02",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sastra",
+   "famous": true,
+   "work": "T2087",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S133": {
+   "kind": "ARMS",
+   "uid": "zh-KR1h0004-018",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr1-classics",
+   "famous": true,
+   "work": "KR1h0004",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S134": {
+   "kind": "ARMS",
+   "uid": "zh-T0480-p0616a29",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "cbeta-sutra",
+   "famous": false,
+   "work": "T0480",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S135": {
+   "kind": "ARMS",
+   "uid": "zh-KR3j0010-j01a",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr3-masters",
+   "famous": false,
+   "work": "KR3j0010",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S136": {
+   "kind": "ARMS",
+   "uid": "pi-sn6-10-pts-p172",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69b99d043a4a443c39c00775",
+   "labels": {
+    "T1": "CS",
+    "T2": "FP",
+    "T3": "C38"
+   }
+  },
+  "S137": {
+   "kind": "DUP",
+   "uid": "pi-sn47-6-pts-p168",
+   "labels": {
+    "T1": "P",
+    "T2": "C38",
+    "T3": "P_DUP"
+   }
+  },
+  "S138": {
+   "kind": "ARMS",
+   "uid": "pi-mn95-pts-p186",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69b99e496ed9e04909909f8f",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS",
+    "T3": "FP"
+   }
+  },
+  "S139": {
+   "kind": "ARMS",
+   "uid": "zh-KR2a0009-j118-anxi-daqin",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr2-histories",
+   "famous": true,
+   "work": "KR2a0009",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S140": {
+   "kind": "ARMS",
+   "uid": "zh-KR1a0001-h17-24",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr1-classics",
+   "famous": true,
+   "work": "KR1a0001",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S141": {
+   "kind": "ARMS",
+   "uid": "pi-an8-22-pts-p226",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69b99d0e6ed9e04909908946",
+   "labels": {
+    "T1": "C38",
+    "T2": "FP",
+    "T3": "CS"
+   }
+  },
+  "S142": {
+   "kind": "ARMS",
+   "uid": "sa-isa-sankarabhasya-p18",
+   "set": "sa-ext",
+   "lang": "Sanskrit",
+   "stratum": "sa-veda-epic-kavya",
+   "famous": true,
+   "work": "6a30829c558372a29b3715de",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S143": {
+   "kind": "ARMS",
+   "uid": "pi-pvr-p014",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69bd01cdf403a9ca2380f152",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  },
+  "S144": {
+   "kind": "ARMS",
+   "uid": "pi-sn56-11-pts-p442",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": true,
+   "work": "69b99e551f30176bf4d37774",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38",
+    "T3": "FP"
+   }
+  },
+  "S145": {
+   "kind": "ARMS",
+   "uid": "zh-KR3a0002-ch07a",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr3-masters",
+   "famous": false,
+   "work": "KR3a0002",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S146": {
+   "kind": "ARMS",
+   "uid": "pi-sn51-20-pts-p299",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "69b99e551f30176bf4d37774",
+   "labels": {
+    "T1": "CS",
+    "T2": "FP",
+    "T3": "C38"
+   }
+  },
+  "S147": {
+   "kind": "ARMS",
+   "uid": "zh-KR3j0080-ch04",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr3-masters",
+   "famous": false,
+   "work": "KR3j0080",
+   "labels": {
+    "T1": "C38",
+    "T2": "CS"
+   }
+  },
+  "S148": {
+   "kind": "ARMS",
+   "uid": "pi-mil-p027",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": false,
+   "work": "6a31c88a4400787ae5a9d5e4",
+   "labels": {
+    "T1": "FP",
+    "T2": "C38",
+    "T3": "CS"
+   }
+  },
+  "S149": {
+   "kind": "ARMS",
+   "uid": "pi-dn1-bj-p019",
+   "set": "pi-ext",
+   "lang": "Pali",
+   "stratum": "pali",
+   "famous": true,
+   "work": "69bd00f7f403a9ca2380efbf",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38",
+    "T3": "FP"
+   }
+  },
+  "S150": {
+   "kind": "ARMS",
+   "uid": "zh-KR4c0046-jishierlang-p1",
+   "set": "zh-canon",
+   "lang": "Chinese",
+   "stratum": "kr4-collections",
+   "famous": true,
+   "work": "KR4c0046",
+   "labels": {
+    "T1": "CS",
+    "T2": "C38"
+   }
+  }
+ }
+}

@@ -247,6 +247,20 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       return NextResponse.json({ results: [], total: 0 });
     }
 
+    // EXPERIMENTAL (#6173): `lane=concept` returns only the concept lane — pages
+    // ranked by the embedding of a model-written abstract of their ideas
+    // (`page_concepts`, 1,216 books in stage 1). It exists so the lane can be
+    // judged beside the page lane; no default search reads it, and none of the
+    // filters above apply. Snippets are the page's own text, never the abstract.
+    // Hidden and deleted books are dropped inside, as for the page lane.
+    if (searchParams.get('lane') === 'concept') {
+      const maxPerBook = parseInt(searchParams.get('max_per_book') || '0') || undefined;
+      const diversity = parseDiversityParam(searchParams.get('diversity')) ?? 'off';
+      const concept = await conceptPageSearch(query, Math.min(limit, 50), { scope, maxPerBook, diversity, abstractLane: true });
+      const results = concept.rows.map((p) => ({ ...p, url: `/book/${p.slug || p.book_id}?page=${p.page_number}` }));
+      return NextResponse.json({ lane: 'concept', experimental: true, query, total: results.length, diversity: concept.diversity, traditions: concept.traditions, results }, { headers: { 'Cache-Control': 'no-store' } });
+    }
+
     // Helper: build common book-level filters (language, category, year, etc.)
     function buildBookFilters(): Record<string, unknown> {
       const filters: Record<string, unknown> = { visible: true, pages_count: { $gt: 0 } };

@@ -1,0 +1,192 @@
+[
+ {
+  "id": "QHCBC",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ཡན་ལག་གི་ནི་མ་ཡིན་ནོ",
+    "english": "not to the supplementary parts",
+    "why": "ཡན་ལག here is the member (avayava) of the proof statement: the point is that 'oneself/intended' in the definition serves to exclude, not to be part of the thesis-member; 'supplementary parts' obscures the logical term."
+   }
+  ],
+  "note": "A dense Pramāṇa subcommentary rendered broadly in sequence but often loosely; the argument can be followed only with the Tibetan at hand."
+ },
+ {
+  "id": "QVRI4",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "དེས་ན་བློ་ནི་ཚུལ་གཉིས་པ།",
+    "english": "### The Mind has Two Aspects",
+    "why": "This is a quoted root-verse line ('therefore cognition has two forms'), not a section heading; turning it into a heading detaches it from the commentary that glosses it."
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "ཕ་རོལ་རྨོངས་པས་འཇིག་རྟེན་སླུ་བར་བྱེད་པའི་ཕྱིར་རོ",
+    "english": "because others are deluded, the world is deceived",
+    "why": "The Tibetan says the deluded (those confused about the beyond/other) deceive the world, i.e. they are the agents of deception, not that the world is deceived because others are deluded."
+   }
+  ],
+  "note": "Sound on the self-awareness and two-aspect argument overall, but the verse/commentary boundary is blurred and a few clauses are loosely construed."
+ },
+ {
+  "id": "Q6TTJ",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "A faithful and well-annotated rendering of Karṇakagomin's argument against the universal as an unnecessary intermediary."
+ },
+ {
+  "id": "QLHRH",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "གསལ་#ཟིན་པའི་ཕྱིར་རོ",
+    "english": "because that external entity has already been clarified",
+    "why": "In context (cf. བཀག་ཏུ་ཟིན་ཀྱང་ just after, and the edition note) the reading is བསལ་ཟིན་ 'has already been refuted/eliminated', not 'clarified'."
+   }
+  ],
+  "note": "Accurate rendering of the rebirth argument from homogeneous seeds and its formal syllogism, with one likely misreading."
+ },
+ {
+  "id": "Q4BK7",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "reversal",
+    "confidence": "medium",
+    "tibetan": "ཕྱོགས་རྣམས་སྟེང་དུ་རབ་ཏུ་འགྲོ།",
+    "english": "The directions are thoroughly permeated from above.",
+    "why": "Completing the earthquake description from the previous side, the Tibetan says the (outer) directions rise upward, not that they are permeated from above."
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "མེ་དྷ་ཏི་ཐེ་མེ་ཥེ",
+    "english": "Come, O Sheep-Lord, look upon the bulls!",
+    "why": "The formula is the Vedic invocation naming Medhātithi (medhātither meṣa, 'ram of Medhātithi'); the English invents a gloss that treats a proper name as a description."
+   }
+  ],
+  "note": "A lively and largely accurate rendering of the drama scene with the rākṣasa's entrance; speakers and stage directions are correctly assigned."
+ },
+ {
+  "id": "QX87S",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "གཉིད་{བརྫུན་,རྫུན་}བཏབ་པས་འདི་ཡི་བཞིན་ལ་ལྟ་བས་བྲེལ",
+    "english": "she feigned sleep [note: original: (gnyid brdzun)], and I was occupied with gazing at her face",
+    "why": "The roles are likely reversed: the prince feigned sleep and she was absorbed in gazing at his face, which is why she then shows embarrassment (ངོ་ཚས) when he suddenly opens his eyes and laughs."
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "ནོར་{བཟངས་,བཟང་}བསྟེན་པ་ལ་བརྙས་པས",
+    "english": "feeling insulted because of the king's favor toward Norzang",
+    "why": "The Tibetan speaks of contempt for (Suvrata's) attendance on Norzang, not of the king's favor toward Norzang; the king is not mentioned."
+   }
+  ],
+  "note": "The courtly verse and narrative are readable, but who does what in the love scene and in the Brahmins' rivalry is partly misassigned."
+ },
+ {
+  "id": "Q838J",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "དེ་ནི་ཆུང་མ་ཡིན་ཡང་དག་གོ་སྙམ་ནས",
+    "english": "This should certainly be my wife.",
+    "why": "The king concludes that she is surely the ascetic's wife (as the next side's question confirms), not that she should become his own wife."
+   }
+  ],
+  "note": "A fluent and largely faithful jātaka rendering; one misread thought of the king."
+ },
+ {
+  "id": "QOGWW",
+  "score": 2,
+  "verdict": "specialist",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "ནན་ཏན་བྱ་རྟོགས་རྣམ་དཔྱད་བྱའོ",
+    "english": "Therefore, his wisdom should be analyzed and realized through dedicated effort.",
+    "why": "The root verse (PV II) says his knowledge regarding what is to be practised (anuṣṭheya) is what must be examined; 'dedicated effort' is the object of the knowledge, not the manner of analysis.",
+    "fix": {
+     "find": "Therefore, his wisdom should be analyzed and realized through dedicated effort.",
+     "replace": "Therefore, his knowledge of what is to be practised should be examined."
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "མི་ཤེས་པས་མགུ་བར་བསྟན་པ",
+    "english": "The teaching that satisfies the ignorant by distinguishing agents and other factors",
+    "why": "The Tibetan shows that we are content with not knowing (his knowledge) through its particular distinctions, not that a teaching satisfies ignorant people."
+   },
+   {
+    "type": "reversal",
+    "confidence": "medium",
+    "tibetan": "ཡུལ་གཞན་ཤེས་པ་སྲིད་པ་ནི་དོན་གྱི་གཙོ་བོ་ལ་མི་སླུ་བར་ཁྱད་པར་མེད་པས་སོ",
+    "english": "it is possible to know other objects; there is no difference in the non-deceptive nature regarding the essential point",
+    "why": "This clause gives the reason why knowing other objects cannot be established (unlike knowledge of karma and result, it is not marked by non-deception on the principal aim); the English presents it as an assertion that such knowledge is possible."
+   },
+   {
+    "type": "reversal",
+    "confidence": "medium",
+    "tibetan": "ཐམས་ཅད་ཤེས་པ་ཉིད་ཀྱང་རྒྱུ་མཚན་མ་ཡིན་པར",
+    "english": "To show how the omniscience that makes non-deceptive the essential point of the knowledge to be pursued is identified",
+    "why": "The Tibetan says that omniscience is NOT the criterion (only non-deception on the principal aim is); the negation is lost."
+   }
+  ],
+  "note": "The PV II argument about which knowledge of the Teacher matters is repeatedly misconstrued; the verses are recognizable but the commentary's logic is not reliable."
+ },
+ {
+  "id": "QGNER",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "A clear and faithful rendering of the argument against the body as the cause of mind, with verses and commentary correctly separated."
+ },
+ {
+  "id": "QPYF1",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "བགོ་བའི་དུས་ལས་འདས་བ་འཆང་ན",
+    "english": "if one keeps it after the time for wearing such robes has passed",
+    "why": "In this Vinaya context བགོ་བ is the distribution of robes (cīvara-bhājana); the rule concerns keeping rains-acquisitions past the robe-distribution time, not the 'time for wearing'."
+   }
+  ],
+  "note": "A competent rendering of the ātyayika-robe and forest-dweller rules; the only slip is reading 'distribute' as 'wear'."
+ }
+]

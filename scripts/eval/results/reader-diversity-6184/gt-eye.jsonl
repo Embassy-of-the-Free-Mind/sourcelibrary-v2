@@ -1,0 +1,69 @@
+{"id":"c37","print":"यदेकयोगक्षेमं","conf":"sure"}
+{"id":"c39","print":null,"conf":"drop","note":"index page; print has दिङ्नागः, token location ambiguous"}
+{"id":"c40","print":"चैत्रज्ञानं","conf":"sure"}
+{"id":"c41","print":"एकस्यैव","conf":"sure"}
+{"id":"c42","print":"तत्सर्वार्थगोचरम्","conf":"sure"}
+{"id":"c44","print":"तादृगेव","conf":"sure"}
+{"id":"c46","print":"मार्गदोषयोः","conf":"sure"}
+{"id":"c49","print":"हेतुर्नापि","conf":"sure"}
+{"id":"c50","print":"मन्तव्यमध्वभेदः","conf":"sure"}
+{"id":"c52","print":null,"conf":"drop","note":"ब/व indistinct in this fount (असत्यप्यालम्वने/म्बने)"}
+{"id":"c53","print":"तल्लौकिकाभ्यनुज्ञाते","conf":"sure"}
+{"id":"c54","print":"महदादयः","conf":"sure"}
+{"id":"c55","print":"नास्तीति","conf":"sure"}
+{"id":"c56","print":"गुणावयवभेदवान्","conf":"sure","note":"lite and Flash both insert द्य; print गुणावयव"}
+{"id":"c57","print":"माध्यमिकवादिन","conf":"sure"}
+{"id":"c58","print":null,"conf":"drop","note":"line start worn"}
+{"id":"c59","print":"सत्यप्यनुभवे","conf":"sure"}
+{"id":"c60","print":"कुमारिलस्यैव","conf":"sure"}
+{"id":"c61","print":"नोपचारस्य","conf":"sure"}
+{"id":"c62","print":"बुद्ध्या","conf":"sure"}
+{"id":"c63","print":"यद्यप्यय","conf":"sure"}
+{"id":"c64","print":"यदीष्यते","conf":"sure"}
+{"id":"c65","print":"प्रतीयते","conf":"sure"}
+{"id":"c66","print":"तस्याभावस्यासिद्धौ","conf":"sure"}
+{"id":"c67","print":"प्रतीतिप्रसङ्गात्","conf":"sure"}
+{"id":"d34","print":"नियोगाभावप्रसङ्गाच्च","conf":"sure","note":"= Flash; Pro+lite drop ā"}
+{"id":"c51","print":"कारित्रस्येव","conf":"sure","note":"print has single e-matra; lite and Flash normalise to स्यैव"}
+{"id":"d01","print":"तदयुक्तम्","conf":"sure"}
+{"id":"d03","print":"अतश्चानुपलम्भादाकरे","conf":"sure"}
+{"id":"d04","print":"प्रासादमालादिषु","conf":"sure"}
+{"id":"d05","print":"महदादिप्रत्ययप्रसूतिरनुभूयते","conf":"sure","note":"line break after प्रसूतिर-"}
+{"id":"d00","print":"तदेतदस्मरणमकारणमनुभूताभावसिद्धये","conf":"sure"}
+{"id":"d02","print":"कारणभेदप्रतिनियमोऽस्ति","conf":"sure","note":"line 4 of print; line 2 has कारणभेदाप्रतिनि-|यमान्न (extra slot x68)"}
+{"id":"d06","print":"हेतोरभिव्यनक्ति","conf":"sure"}
+{"id":"d68","print":"कारणभेदाप्रतिनियमान्न","conf":"sure","note":"print line 2, hyphen at line end; Flash drops ā (missed by the detector)"}
+{"id":"c47","print":"मिथ्यात्वहेतुरज्ञात","conf":"sure"}
+{"id":"d07","print":null,"conf":"drop","note":"pair is ill-defined: no read has किञ्च where another has किञ्चन at the same place (lite किंचन vs Flash किञ्चन is anusvāra spelling, and नान्यकिञ्चने vs नान्यत्किञ्चने is a different slip)"}
+{"id":"d08","print":"सकल्पनत्वाच्च","conf":"sure"}
+{"id":"d09","print":"प्रमाणान्तरापेक्षायामनवस्था","conf":"sure","note":"line break after प्रमाणान्तरापे-"}
+{"id":"d10","print":"प्रतिषिद्धत्वादयथाभूतसाधनम्","conf":"sure","note":"zoomed: द + full य; commentary has अयथाभूता"}
+{"id":"d11","print":"ज्ञानमप्रतिघं","conf":"sure","note":"slot = the prose occurrence after ब्रह्मणो; print has म in all four"}
+{"id":"d12","print":"निरोधसत्यस्यास्मिन्नसंस्कृते","conf":"likely","note":"worn type; a न glyph is clearly present between स्मि and संस्कृते (negation present); न्न by sandhi"}
+{"id":"d13","print":"अवस्थातुरव्यतिरेकात्","conf":"sure"}
+{"id":"d14","print":"सत्यार्थं","conf":"sure","note":"= Flash; the tie-break majority removed ā"}
+{"id":"d16","print":"कार्यत्वान्यत्वलेशे","conf":"sure","note":"index entry; = lite"}
+{"id":"d17","print":"पूर्वस्वभावात्यागेन","conf":"sure","note":"= Flash"}
+{"id":"d15","print":"नचैवमिह","conf":"sure","note":"one bar between व and म, hooked over म = the i of मि; = lite"}
+{"id":"d18","print":"ज्ञातरि","conf":"sure","note":"index entry १०९ ज्ञातरि प्र०; = lite"}
+{"id":"d19","print":"भावाभावाविपर्ययस्तत्तस्य","conf":"sure","note":"= Flash"}
+{"id":"d20","print":"शक्तिरवस्थिता","conf":"sure","note":"= lite"}
+{"id":"d21","print":"लिङ्गमिष्टं","conf":"sure","note":"= lite"}
+{"id":"d22","print":"घतोच्यते","conf":"sure","note":"print ज्ञाना(प्रति)घतोच्यते; = lite"}
+{"id":"d23","print":"सक्रियमनेकमाश्रितं","conf":"sure","note":"= lite"}
+{"id":"d25","print":"व्यापकानुपलब्धिः","conf":"sure","note":"= lite"}
+{"id":"d24","print":"नाथानां","conf":"sure","note":"= lite"}
+{"id":"d26","print":"तानुपाश्रित्य","conf":"sure","note":"index entry; = lite"}
+{"id":"d27","print":"दाहपाकनिर्भासि","conf":"sure","note":"= Flash; majority added a negation the print lacks"}
+{"id":"d28","print":"नोचेदणूत्पादकमिष्यते","conf":"sure","note":"त्प conjunct; = lite"}
+{"id":"d29","print":"नानाकारावभासा","conf":"sure","note":"= lite"}
+{"id":"d30","print":null,"conf":"drop","note":"द्ध्यु vs द्धयु ligature not resolvable at 849px"}
+{"id":"d31","print":"ब्रह्मानेकं","conf":"sure","note":"= lite"}
+{"id":"d32","print":"नाशोत्पादासमालीढं","conf":"sure","note":"= lite"}
+{"id":"d33","print":"भवन्मतेन","conf":"sure","note":"= Flash"}
+{"id":"d35","print":"सन्दिग्धासिद्धतेति","conf":"sure","note":"= lite"}
+{"id":"d36","print":"संभाव्यमानत्वात्संदिग्धासिद्धत्वमभावप्रमाणविषयीकृतत्वादित्यस्य","core":"दिग्धासिद्धत्वम","conf":"sure","note":"print spells संदिग्ध with anusvāra; scored on the ā only"}
+{"id":"c38","print":"स्यादन्योऽप्यागमोऽकृतः","conf":"sure"}
+{"id":"c43","print":"बुद्धानामुपदेशनम्","conf":"sure"}
+{"id":"c45","print":null,"conf":"drop","note":"crop missed the line; not re-cropped"}
+{"id":"c48","print":"प्रमाणमिथ्यात्वं","conf":"sure"}
