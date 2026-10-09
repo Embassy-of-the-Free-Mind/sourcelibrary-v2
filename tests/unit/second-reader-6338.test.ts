@@ -12,7 +12,7 @@ import path from 'path';
 import { spawnSync } from 'child_process';
 import {
   PLANTERS, plantErrors, splitUnits, locate, normSpan, sameIssue, clusterIssues, validateOutput, extractIssues,
-  caughtSeed, krippendorffAlpha, drawEnriched, weightedMeanCI, redactRecord, recoverArray, auditTranscript, pageScript, keyOf, signTestOneSided,
+  caughtSeed, krippendorffAlpha, drawEnriched, weightedMeanCI, redactRecord, recoverArray, auditTranscript, pageScript, keyOf, signTestOneSided, recoverJson,
 } from '../../scripts/eval/second-reader/lib.mjs';
 import { makeRng } from '../../scripts/eval/lib/paired-stats.mjs';
 
@@ -232,6 +232,57 @@ describe('packets, recovery and audit', () => {
   });
 });
 
+describe('Gemini through run-cli-arm.py (amendment 2)', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sr6338-cli-'));
+  const cli = (...a: string[]) => spawnSync(process.execPath, [CLI, ...a, '--run', dir], { encoding: 'utf8' });
+  const mk = (i: number) => ({ book_id: `cb${i}`, page_number: 7, stratum: 'unflagged', q_page: 0.1, m_pages: 10, pi_book: 0.5, weight: 1, order: i + 1, script: 'latin',
+    record: { slot: 0, stratum: 'latin', book_id: `cb${i}`, book_url: 'https://x', tradition: 'latin', book: { id: `cb${i}`, image_source: { provider: 'ia' } }, structure: {}, run: [7],
+      pages: [{ page_number: 7, image_file: `images/${i}.jpg`, image_url: 'https://img', ocr: `Textus ${i} `.repeat(30), ocr_model: 'gemini-x', translation: `${TR} Page ${i} has words of its own here.`, translation_model: 'gemini-y' }] } });
+  fs.mkdirSync(path.join(dir, 'private'), { recursive: true });
+  fs.writeFileSync(path.join(dir, 'private', 'draw.json'), JSON.stringify({ meta: { seed: 1 }, picks: [0, 1, 2, 3, 4].map(mk) }));
+
+  it('refuses packets of more than one page, and builds one redacted request per page with its image', () => {
+    expect(cli('packets', '--per-packet', '5', '--share', '0').status).toBe(0);
+    expect(cli('cli-requests', '--reader', 'gp').status).not.toBe(0);
+    fs.rmSync(path.join(dir, 'packets'), { recursive: true, force: true });
+    expect(cli('packets', '--per-packet', '1', '--share', '0').status).toBe(0);
+    expect(cli('cli-requests', '--reader', 'gp').status).toBe(0);
+    const reqs = fs.readFileSync(path.join(dir, 'readers', 'gp', 'requests.jsonl'), 'utf8').trim().split('\n').map((l) => JSON.parse(l));
+    expect(reqs).toHaveLength(5);
+    expect(reqs[0].image).toBe(path.resolve(dir, 'images/0.jpg'));
+    expect(reqs[0].prompt).toContain('Spot-check reviewer brief');
+    expect(reqs[0].prompt).toContain('printed_marker');
+    expect(reqs[0].prompt).not.toMatch(/gemini-x|gemini-y|https:\/\/img/);
+  });
+  it('assembles fenced, bare and array replies into review files; a missing or unparsable reply stays missing', () => {
+    const page = (n: number) => ({ page_number: 7, right_page: 'yes', ocr_score: 4, tr_score: 4, ocr_errors: [], tr_errors: [], other: [], confidence: 'high', printed_marker: String(n), layout: 'one column' });
+    const rows = [
+      { uid: 'p001', text: '```json\n' + JSON.stringify(page(1)) + '\n```', secs: 60, nudged: true },
+      { uid: 'p002', text: 'Here it is: ' + JSON.stringify(page(2)) },
+      { uid: 'p003', text: JSON.stringify([{ book_id: 'cb2', pages: [page(3)] }]) },
+      { uid: 'p004', text: 'I could not do this.' },
+      { uid: 'p005', text: '' },
+    ];
+    fs.writeFileSync(path.join(dir, 'readers', 'gp', 'cli-out.jsonl'), rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
+    expect(cli('cli-assemble', '--reader', 'gp').status).toBe(0);
+    const rep = JSON.parse(fs.readFileSync(path.join(dir, 'readers', 'gp', 'assemble.json'), 'utf8'));
+    expect(rep).toMatchObject({ requests: 5, written: 3, no_reply: ['p005'], unparsable: ['p004'], nudged: 1 });
+    const r1 = JSON.parse(fs.readFileSync(path.join(dir, 'readers', 'gp', 'reviews', 'p001.json'), 'utf8'));
+    expect(r1).toEqual([{ book_id: 'cb0', pages: [page(1)] }]);
+  });
+  it('a reply that shows the image was not read counts as missing, not as a clean page', () => {
+    const packet = [{ book_id: 'b', pages: [{ page_number: 1, ocr: 'x', translation: 'y' }] }];
+    const v = validateOutput([{ book_id: 'b', pages: [{ page_number: 1, right_page: 'unsure', ocr_score: null, tr_score: null }] }], packet);
+    expect(v.unread).toEqual(['b:1']);
+    expect(v.missing).toEqual(['b:1']);
+  });
+  it('recoverJson reads fenced, bare and prose-wrapped JSON', () => {
+    expect(recoverJson('```json\n{"a":1}\n```')).toEqual({ a: 1 });
+    expect(recoverJson('Answer: {"a":2} done')).toEqual({ a: 2 });
+    expect(recoverJson('nothing')).toBeNull();
+  });
+});
+
 describe('the published data file', () => {
   it('src/data/second-reader-6338.json is exactly what the committed reports produce (no hand-typed number)', () => {
     const r = spawnSync(process.execPath, [CLI, 'export', '--check'], { encoding: 'utf8' });
@@ -290,6 +341,8 @@ describe('end to end on a synthetic run', () => {
         else {
           if (hasErr(i) && finds[reader](i)) page.tr_errors.push({ english: sentence(i), severity: 'serious', class: 'T8' });
           if (reader === 'G' && i % 10 === 3) page.tr_errors.push({ english: `The end of page ${i}.`, severity: 'serious', class: 'T10' });
+          // A over-grades a real but minor slip as serious (the pilot's severity gap): inflation, not a false alarm.
+          if (reader === 'A' && i % 10 === 4) page.tr_errors.push({ english: `The end of page ${i}.`, severity: 'serious', class: 'O6' });
         }
         return { book_id: r.book_id, pages: [page] };
       });
@@ -305,7 +358,9 @@ describe('end to end on a synthetic run', () => {
     const k = ak.items.find((x: any) => x.item_id === it.item_id);
     if (k.type === 'decoy_true') return { real: 'yes', serious: true };
     if (k.type === 'decoy_false') return { real: 'no', serious: false };
-    return /furnace must never cool/.test(it.claim.quote) ? { real: 'yes', serious: true } : { real: 'no', serious: false };
+    if (/furnace must never cool/.test(it.claim.quote)) return { real: 'yes', serious: true };
+    const n = Number((it.claim.quote.match(/The end of page (\d+)\./) || [])[1]);
+    return n % 10 === 4 ? { real: 'yes', serious: false } : { real: 'no', serious: false };
   };
   const clusterItems = items.filter((it: any) => ak.items.find((x: any) => x.item_id === it.item_id).type === 'cluster');
   const dissent = new Set(clusterItems.slice(0, 2).map((it: any) => it.item_id));
@@ -343,6 +398,9 @@ describe('end to end on a synthetic run', () => {
     const expected = natural.filter((u: any) => idx(u.key) % 10 === 3).length;
     expect(rep.per_reader.G.false_alarms).toBe(expected);
     expect(rep.per_reader.A.false_alarms).toBe(0);
+    // A's real-but-minor slips graded serious are severity inflation (amendment 2), not false alarms.
+    expect(rep.per_reader.A.severity_inflation).toBe(natural.filter((u: any) => idx(u.key) % 10 === 4).length);
+    expect(rep.per_reader.G.severity_inflation).toBe(0);
   });
   it('the error-level test counts exactly the discordant misses built in, and the rule picks the reader that passes', () => {
     const i = (u: any) => idx(u.key);

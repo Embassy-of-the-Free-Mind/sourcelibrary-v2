@@ -68,27 +68,32 @@ a different defect, #5913).
   al. 2005). By analogy, a reader meeting errors on half the pages works under a different error density from
   production, where about 1 page in 6 is serious, so its miss and false-alarm rates might not carry over. 28% keeps
   the task closer to production while leaving enough planted errors to measure recall.
-- **Packets:** 5 books per call. If the #6338 pilot shows a Gemini call cannot hold 5 single-page books, 1 per call for
-  every reader (recorded in the run's README before the first read).
+- **Packets: one page per call, for every reader** (amendment 2). The rule fixed here first said 5 books per call
+  unless the pilot showed a Gemini call could not hold them; it did (a four-image call found about half the errors of
+  one call per page), so the rule's own fallback applies.
 
 ## Readers (the arms)
 
 Every reader gets the same frozen text — `spot-check/REVIEWER.md` + `second-reader/CALIBRATION-ADDENDUM.md` + the
 taxonomy — and the same pinned image files, with model names and URLs removed from the packet, in a sealed folder
 (`run-readers.sh`). Claude runs with `--restricted --tools Read Write`: it opens the files itself and cannot leave
-the folder (verified 2026-10-08). Gemini runs with `agy --mode plan`: it has no tools, every file is attached to the
-prompt with `@./`, and its JSON comes back in the reply (the repository forbids auto-approving an agent CLI,
+the folder (verified 2026-10-08). Gemini runs exactly as in the pilot (amendment 2): `scripts/eval/run-cli-arm.py`,
+`agy --mode plan` with no tools, the brief and the one-page packet inline in the prompt with the taxonomy's class
+headings, the page image attached, the CLI's nudge when the model asks for a tool (`--attempts 4`), and the JSON in
+the reply (`second-reader.mjs cli-requests` / `cli-assemble`; the repository forbids auto-approving an agent CLI,
 `tests/unit/no-cli-auto-approve.test.ts`). The inputs are the same bytes; the access differs, and the write-up says so.
 
 | name | engine | model |
 |---|---|---|
 | `opus-a` (primary) | claude | opus |
 | `opus-b` (control) | claude | opus, a second independent run |
-| `gemini-pro` | agy | gemini-3.1-pro-high |
-| `gemini-flash` | agy | gemini-3.8-flash-high |
-| `gemini-retest` | agy | gemini-3.1-pro-high re-run on the Latin script only (Gemini's own test–retest floor) |
+| `gemini-pro` | agy via run-cli-arm.py | gemini-3.1-pro-high |
+| `gemini-flash` | agy via run-cli-arm.py | gemini-3.8-flash-high |
+| `gemini-retest` | agy via run-cli-arm.py | gemini-3.1-pro-high re-run on the Latin script only (Gemini's own test–retest floor) |
 
-A call that writes nothing is retried once; a page still missing counts as **not found** for that reader.
+A call that returns nothing usable is retried (Claude once; Gemini up to the runner's 4 attempts); a page still
+missing counts as **not found** for that reader. So does a page the reader shows it did not see: `right_page: "unsure"`
+with no OCR or English score (the pilot's tell for Gemini 3.1 Pro, 3 of 16 pages).
 
 ## Measures (as implemented in `second-reader/lib.mjs`; the tests pin each)
 
@@ -101,7 +106,9 @@ A call that writes nothing is retried once; a page still missing counts as **not
   `right_page: "no"` or OCR score 1 for wrong leaf. Reported as detected (any severity) and serious.
 - **Confirmed serious issues** come from adjudication (below). **Yield** of a set of readers on a page = confirmed
   serious issues raised (at any severity) by at least one of them. Natural (unplanted) pages only.
-- **False alarms:** a reader's serious issues on natural pages adjudicated not real-and-serious, per 100 pages.
+- **False alarms** (amendment 2): a reader's serious issues on natural pages adjudicated **not real**, per 100 pages.
+  A real error the reader graded serious and the adjudication did not is **severity inflation**, reported per reader
+  beside it and outside the false-alarm cap.
 - **Agreement:** Krippendorff's α on natural pages, missing pages allowed: nominal on the serious flag, ordinal on the
   OCR and English scores; opus-a–opus-b (floor), opus-a–each Gemini, gemini-retest pair (Gemini's floor).
 
@@ -199,6 +206,16 @@ Changed with it: no block split or model choice in the decision (both models tes
 from 5 to 3 per 100 pages (reason under the rule); the second adjudicator fixed as Gemini 3.1 Pro; the retest model
 fixed as Gemini 3.1 Pro. Sample, readers, planting, matching and adjudication are unchanged.
 
+**2 (2026-10-09, after the feasibility pilot and before any page was drawn).** The pilot (16 pages of an earlier
+shelf review, three Gemini settings; `scripts/eval/experiments/2026-10-09-second-reader-pilot-gemini-cli-6338.md`)
+read nothing this study will sample and gave no rate; it measured how a Gemini read runs. Three changes follow from it:
+- **One page per call for every reader**, by the fallback this document already set (a four-image call found about
+  half the errors). The runner is the pilot's (`run-cli-arm.py`: plan mode, nudge on a denied tool, a call log).
+- **A false alarm is a claim adjudicated not real.** The pilot's Gemini readers called 15 of 16 pages serious where
+  Opus called 6. Counting a real but over-graded error as a false alarm would decide the study on severity labels,
+  not on what the reader finds; such errors are reported as severity inflation instead.
+- **A page the reader did not see counts as not found**, by the pilot's tell (`right_page: "unsure"` with no scores).
+
 ## Limits to state in any write-up
 
 No scholar is in the loop: adjudication is two more model reads plus by-eye checks by non-specialists, and on a
@@ -206,12 +223,13 @@ script the checker cannot read, by-eye means layout, numbers and alignment only.
 detection of the kinds planted, not of every error. The CLI request is not the API request (thinking level,
 temperature). The pages are frozen at draw time. "Serious" is the reviewer brief's definition, not a severity rated by
 readers (#6203 step 0). Claude opens its files with a tool across several turns; Gemini receives them attached to one call, so a difference
-between the families may partly be a difference in access. Whether `agy` plan mode accepts text files (not only
-images) as `@./` attachments is checked by the pilot: if it does not, every Gemini page comes back missing and the
-run stops before scoring.
+between the families may partly be a difference in access. Gemini also sees the taxonomy's class headings, not the
+whole file, and is nudged once when it asks for a tool (the pilot's runner).
 
 ## Budget
 
-Per script: about 2 × 100 Opus page reads at $0.15–0.20 plus adjudication, ≈ $45 API-equivalent on the subscription;
-two Gemini reads of 100 pages each through the CLI ($0, ≈ 1–2 h of quota); 2–3 h by eye in all. $0 API. No production
+Per script: 2 × 100 Opus calls of one page each (the brief and taxonomy are re-read every call, so more than the
+$0.15–0.20 a page of multi-page packets: estimate $0.25–0.35) plus adjudication, ≈ $60–80 API-equivalent on the
+subscription; two Gemini reads of 100 pages each through the CLI ($0; the pilot measured ≈ 1.4 h for Pro and 1.0 h for
+3.8 Flash high per 100 pages at two calls at a time); 2–3 h by eye in all. $0 API. No production
 write; the `book_checks` rows are written only after the verdict, for the pages read, with reader and calibration id.

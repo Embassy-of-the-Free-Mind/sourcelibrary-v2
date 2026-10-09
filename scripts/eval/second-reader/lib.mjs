@@ -232,14 +232,17 @@ export function normSpan(text, span) {
  * quote is FABRICATED: it is kept as an issue (it counts against the reader as a false alarm) but can never match.
  */
 export function validateOutput(output, packetRecords) {
-  const errors = [], pages = new Map(), fabricated = [], extra = [];
+  const errors = [], pages = new Map(), fabricated = [], extra = [], unread = [];
   const want = new Map(packetRecords.flatMap((r) => r.pages.map((p) => [keyOf(r.book_id, p.page_number), p])));
-  if (!Array.isArray(output)) return { pages, missing: [...want.keys()], extra, errors: ['output is not a JSON array'], fabricated };
+  if (!Array.isArray(output)) return { pages, missing: [...want.keys()], extra, errors: ['output is not a JSON array'], fabricated, unread };
   for (const b of output) {
     for (const p of b?.pages || []) {
       const k = keyOf(b.book_id, p.page_number);
       if (!want.has(k)) { extra.push(k); continue; }
       if (pages.has(k)) { errors.push(`${k}: entered twice (kept the first)`); continue; }
+      // A reader that did not see the image says so this way (Gemini 3.1 Pro on 3 of 16 pilot pages, #6338): the page
+      // was not read, so it counts as MISSING (not found), never as a clean read.
+      if (p.right_page === 'unsure' && (p.ocr_score == null || p.tr_score == null)) { unread.push(k); continue; }
       const src = want.get(k);
       for (const [field, list, quoteField, text] of [['ocr_errors', p.ocr_errors, 'ocr', src.ocr], ['tr_errors', p.tr_errors, 'english', src.translation]]) {
         if (list != null && !Array.isArray(list)) { errors.push(`${k}: ${field} is not an array`); continue; }
@@ -253,7 +256,18 @@ export function validateOutput(output, packetRecords) {
       pages.set(k, p);
     }
   }
-  return { pages, missing: [...want.keys()].filter((k) => !pages.has(k)), extra, errors, fabricated };
+  return { pages, missing: [...want.keys()].filter((k) => !pages.has(k)), extra, errors, fabricated, unread };
+}
+
+/** The one JSON object (or array) a plan-mode CLI reply holds: fenced or bare, with or without prose around it. */
+export function recoverJson(text) {
+  const t = String(text ?? '').trim();
+  const fenced = t.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+  for (const cand of [fenced?.[1], t, t.slice(t.indexOf('{'), t.lastIndexOf('}') + 1), t.slice(t.indexOf('['), t.lastIndexOf(']') + 1)]) {
+    if (!cand) continue;
+    try { return JSON.parse(cand); } catch { /* try the next */ }
+  }
+  return null;
 }
 
 /** Flatten a validated reader's pages into issues: { reader, key, kind: 'ocr'|'tr'|'other'|'leaf', severity, cls,

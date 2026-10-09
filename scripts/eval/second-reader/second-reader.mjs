@@ -29,7 +29,7 @@ import { fileURLToPath } from 'node:url';
 import { makeRng } from '../lib/paired-stats.mjs';
 import {
   keyOf, plantErrors, redactRecord, validateOutput, extractIssues, clusterIssues, caughtSeed, krippendorffAlpha,
-  weightedMeanCI, wilson, yieldOn, blockOf, signTestOneSided, OMISSION_RE, OMISSION_CLASSES, SEED_CLASSES, recoverArray, auditTranscript,
+  weightedMeanCI, wilson, yieldOn, blockOf, signTestOneSided, recoverJson, OMISSION_RE, OMISSION_CLASSES, SEED_CLASSES, recoverArray, auditTranscript,
 } from './lib.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -65,14 +65,14 @@ function packetTexts() {
 
 /** The reader's validated output across all its packets. */
 function loadReader(name, records) {
-  const all = { pages: new Map(), missing: [], extra: [], errors: [], fabricated: [] };
+  const all = { pages: new Map(), missing: [], extra: [], errors: [], fabricated: [], unread: [] };
   for (const [packet, recs] of records) {
     const f = J('readers', name, 'reviews', `${packet}.json`);
     let out = null;
     try { out = read(f); } catch { /* missing or unparsable: every page of the packet is missing */ }
     const v = validateOutput(out, recs);
     for (const [k, p] of v.pages) all.pages.set(k, p);
-    all.missing.push(...v.missing); all.extra.push(...v.extra); all.fabricated.push(...v.fabricated);
+    all.missing.push(...v.missing); all.extra.push(...v.extra); all.fabricated.push(...v.fabricated); all.unread.push(...(v.unread || []));
     all.errors.push(...v.errors.map((e) => `${packet}: ${e}`));
   }
   return all;
@@ -260,18 +260,21 @@ else if (cmd === 'score') {
     const e = eyeBy.get(it.item_id);
     if ((!agree || ak.by_eye_items.includes(it.item_id)) && !e) needEye.push(it.item_id);
     const final = e ? conf(e) : agree ? conf(vs[0]) : false;
+    // Whether the claimed error is there at all (amendment 2): settled by the eye, else by agreeing adjudicators; a split
+    // with no eye verdict is unsettled (null) and counts neither as a false alarm nor as a real error.
+    const realFinal = e ? e.real === 'yes' : agree ? vs[0].real === 'yes' : null;
     for (const a of adjs) {
       const v = adj[a].get(it.item_id); if (!v) continue;
       if (it.type === 'decoy_true') { adjStats[a].decoy_true[1]++; if (conf(v)) adjStats[a].decoy_true[0]++; }
       if (it.type === 'decoy_false') { adjStats[a].decoy_false[1]++; if (v.real === 'no') adjStats[a].decoy_false[0]++; }
       if (e) { adjStats[a].vs_eye[1]++; if (conf(v) === conf(e)) adjStats[a].vs_eye[0]++; }
     }
-    if (it.type === 'cluster') verdictOf.set(it.cluster, { confirmedSerious: final, by: e ? 'eye' : agree ? 'adjudicators' : 'unsettled' });
+    if (it.type === 'cluster') verdictOf.set(it.cluster, { confirmedSerious: final, real: realFinal, by: e ? 'eye' : agree ? 'adjudicators' : 'unsettled' });
   }
   // Clusters every clustered reader called serious, on natural pages, not sampled for a check: taken as confirmed.
   const judged = new Set(ak.items.filter((x) => x.type === 'cluster').map((x) => x.cluster));
   const plantedKeys = new Set(units.filter((u) => u.planted).map((u) => u.key));
-  for (const c of clusters) if (!judged.has(c.id) && !plantedKeys.has(c.key) && clusterReaders.every((r) => c.by[r] === 'serious')) verdictOf.set(c.id, { confirmedSerious: true, by: 'all_readers' });
+  for (const c of clusters) if (!judged.has(c.id) && !plantedKeys.has(c.key) && clusterReaders.every((r) => c.by[r] === 'serious')) verdictOf.set(c.id, { confirmedSerious: true, real: true, by: 'all_readers' });
 
   const byKey = new Map(); for (const c of clusters) { if (!byKey.has(c.key)) byKey.set(c.key, []); byKey.get(c.key).push(c); }
   const natural = units.filter((u) => !u.planted);
@@ -290,13 +293,18 @@ else if (cmd === 'score') {
     const omissionBackground = natural.filter((u) => issues[r].some((x) => x.key === u.key && x.kind === 'tr' && (OMISSION_CLASSES.has(x.cls) || OMISSION_RE.test(x.problem ?? '')))).length;
     const mineSerious = natural.flatMap((u) => (byKey.get(u.key) || []).filter((c) => c.by[r] === 'serious'));
     const settled = mineSerious.filter((c) => verdictOf.has(c.id));
-    const falseAlarms = settled.filter((c) => !verdictOf.get(c.id).confirmedSerious).length;
+    // Amendment 2 (the pilot: Gemini called 15 of 16 pages serious where Opus called 6): a FALSE ALARM is a serious
+    // claim adjudicated NOT REAL. A real error the reader graded serious and the adjudication did not is SEVERITY
+    // INFLATION: reported, but it does not count against the reader's false-alarm cap.
+    const isFalse = (c) => verdictOf.get(c.id)?.real === false;
+    const isInflated = (c) => verdictOf.get(c.id)?.real === true && !verdictOf.get(c.id).confirmedSerious;
+    const falseAlarms = settled.filter(isFalse).length;
     perReader[r] = {
-      returned: units.filter((u) => R_[r].pages.has(u.key)).length, missing: R_[r].missing.length, fabricated_quotes: R_[r].fabricated.length, schema_errors: R_[r].errors.length,
+      returned: units.filter((u) => R_[r].pages.has(u.key)).length, missing: R_[r].missing.length, unread: R_[r].unread.length, fabricated_quotes: R_[r].fabricated.length, schema_errors: R_[r].errors.length,
       printed_marker_filled: [...R_[r].pages.values()].filter((p) => typeof p.printed_marker === 'string' && p.printed_marker.trim()).length,
       recall, omission_background: [omissionBackground, natural.length],
-      serious_raised: mineSerious.length, serious_settled: settled.length, false_alarms: falseAlarms,
-      false_alarms_per100: weightedMeanCI(natural.map((u) => (byKey.get(u.key) || []).filter((c) => c.by[r] === 'serious' && verdictOf.has(c.id) && !verdictOf.get(c.id).confirmedSerious).length), natural.map((u) => u.weight)),
+      serious_raised: mineSerious.length, serious_settled: settled.length, false_alarms: falseAlarms, severity_inflation: settled.filter(isInflated).length,
+      false_alarms_per100: weightedMeanCI(natural.map((u) => (byKey.get(u.key) || []).filter((c) => c.by[r] === 'serious' && isFalse(c)).length), natural.map((u) => u.weight)),
       confirmed_per100: weightedMeanCI(natural.map((u) => yieldOn(byKey.get(u.key) || [], verdictOf, [r])), natural.map((u) => u.weight)),
     };
   }
@@ -381,6 +389,67 @@ else if (cmd === 'score') {
   write(J(interim ? 'report-interim.json' : 'report.json'), report);
   fs.writeFileSync(J(interim ? 'report-interim.md' : 'report.md'), markdown(report));
   console.log(markdown(report));
+}
+
+// ── cli-requests / cli-assemble: the Gemini readers, through scripts/eval/run-cli-arm.py (amendment 2) ─────────
+// The #6338 pilot (scripts/eval/experiments/2026-10-09-second-reader-pilot-gemini-cli-6338.md) ran Gemini this way:
+// plan mode, no tools, one PAGE per call (a four-image call found about half the errors), the frozen brief inline, the
+// image attached, and the CLI's own nudge when the model asks for a tool. These two commands turn the sealed packets
+// into that runner's requests and its replies back into review files, so the calibration uses the pilot's tested path.
+else if (cmd === 'cli-requests') {
+  const name = opt('reader'), role = opt('role', 'read');
+  const body = (f) => fs.readFileSync(f, 'utf8').replace(/^\s*<!--[\s\S]*?-->\s*/, '');
+  const taxo = Object.entries(taxonomyNames()).map(([k, v]) => `- ${k} · ${v}`).join('\n');
+  const rows = [];
+  if (role === 'read') {
+    const brief = `${body(path.join(REPO, 'scripts/eval/spot-check/REVIEWER.md')).trim()}\n\n${body(path.join(HERE, 'CALIBRATION-ADDENDUM.md')).trim()}`;
+    const wrapper = '## How this request is run (not part of the brief)\n\nYou cannot open files, run commands or write files here; do not try. The class codes are listed below instead of the taxonomy file. PACKET_FILE is given inline below and holds ONE book with ONE page. The page image is the file attached at the end of this message; it is the image the packet\'s `image_file` names. Do steps 3 and 4 for this page. OUTPUT_FILE is your reply: reply with ONLY one JSON object, the page entry from the schema with the addendum\'s two fields (`page_number`, `right_page`, `ocr_score`, `ocr_errors`, `tr_score`, `tr_errors`, `other`, `confidence`, `printed_marker`, `layout`), with no prose and no markdown fence.';
+    for (const f of fs.readdirSync(J('packets')).filter((x) => x.endsWith('.json')).sort()) {
+      const recs = read(J('packets', f));
+      if (recs.length !== 1 || recs[0].pages.length !== 1) throw new Error(`${f}: ${recs.length} books / ${recs[0]?.pages.length} pages — Gemini reads one page per call (pilot, #6338); cut packets with --per-packet 1`);
+      rows.push({ uid: f.replace(/\.json$/, ''), image: path.resolve(R, recs[0].pages[0].image_file), prompt: `${brief}\n\nThe error classes (the headings of page-error-taxonomy.md):\n${taxo}\n\n${wrapper}\n\nPACKET_FILE:\n${JSON.stringify(recs, null, 1)}` });
+    }
+  } else {
+    const brief = body(path.join(HERE, 'ADJUDICATOR.md')).trim();
+    const wrapper = '## How this request is run (not part of the brief)\n\nYou cannot open files, run commands or write files here; do not try. ITEMS_FILE is given inline below and holds ONE item; its image is the file attached at the end of this message. OUTPUT_FILE is your reply: reply with ONLY one JSON object (`item_id`, `real`, `serious`, `note`), with no prose and no markdown fence.';
+    for (const f of fs.readdirSync(J('adjudication', 'chunks')).filter((x) => x.endsWith('.json')).sort()) for (const it of read(J('adjudication', 'chunks', f)))
+      rows.push({ uid: it.item_id, image: path.resolve(R, it.image_file), prompt: `${brief}\n\n${wrapper}\n\nITEMS_FILE:\n${JSON.stringify([it], null, 1)}` });
+  }
+  const base = role === 'read' ? J('readers', name) : J('adjudication', name);
+  fs.mkdirSync(base, { recursive: true });
+  fs.writeFileSync(path.join(base, 'requests.jsonl'), rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
+  // The packet must carry none of the fields redaction removes (a page's own text may legitimately contain a URL).
+  const leak = rows.filter((r) => /"(ocr_model|ocr_engine|translation_model|translation_source|image_url|book_url|page_id|image_source)"\s*:/.test(r.prompt.slice(r.prompt.indexOf(role === 'read' ? 'PACKET_FILE:' : 'ITEMS_FILE:'))));
+  if (leak.length) throw new Error(`${leak.length} requests carry a model or URL field in the packet: redaction failed`);
+  console.log(`${rows.length} requests → ${path.join(base, 'requests.jsonl')}\nnext: python3 scripts/eval/run-cli-arm.py --requests ${path.join(base, 'requests.jsonl')} --out ${path.join(base, 'cli-out.jsonl')} --arm sr6338-${name} --model <model> --job second-reader-6338 --kind review --parallel 2 --attempts 4`);
+}
+
+else if (cmd === 'cli-assemble') {
+  const name = opt('reader'), role = opt('role', 'read');
+  const base = role === 'read' ? J('readers', name) : J('adjudication', name);
+  const last = new Map();
+  for (const line of fs.readFileSync(opt('from', path.join(base, 'cli-out.jsonl')), 'utf8').split('\n')) { try { const o = JSON.parse(line); if (o.uid) last.set(o.uid, o); } catch { /* not a row */ } }
+  const want = fs.readFileSync(path.join(base, 'requests.jsonl'), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l).uid);
+  const report = { reader: name, role, requests: want.length, written: 0, no_reply: [], unparsable: [], nudged: 0 };
+  fs.mkdirSync(path.join(base, 'reviews'), { recursive: true }); fs.mkdirSync(path.join(base, 'meta'), { recursive: true });
+  for (const uid of want) {
+    const row = last.get(uid);
+    if (!row || !row.text) { report.no_reply.push(uid); continue; }
+    if (row.nudged) report.nudged++;
+    let obj = recoverJson(row.text);
+    if (Array.isArray(obj)) obj = obj[0]?.pages ? obj[0].pages[0] : obj[0];
+    else if (obj?.pages) obj = obj.pages[0];
+    if (!obj || typeof obj !== 'object') { report.unparsable.push(uid); continue; }
+    if (role === 'read') {
+      const [rec] = read(J('packets', `${uid}.json`));
+      obj.page_number ??= rec.pages[0].page_number;
+      write(path.join(base, 'reviews', `${uid}.json`), [{ book_id: rec.book_id, pages: [obj] }]);
+    } else write(path.join(base, 'reviews', `${uid}.json`), [{ ...obj, item_id: uid }]);
+    write(path.join(base, 'meta', `${uid}.time.json`), { packet: uid, seconds: row.secs ?? null, attempts: row.attempts ?? null });
+    report.written++;
+  }
+  write(path.join(base, 'assemble.json'), report);
+  console.log(`${name}: ${report.written}/${report.requests} written; ${report.no_reply.length} without a reply, ${report.unparsable.length} unparsable, ${report.nudged} nudged`);
 }
 
 // ── export: the ONE file the site and the paper read (preregistration, "Reporting plan") ─────────────────────
@@ -522,11 +591,11 @@ function markdown(r) {
   }
   if (r.decision.second_opus_gain) L.push(`- What the control (a second ${r.readers[1]} read) adds to the primary: ${r.decision.second_opus_gain.est == null ? '—' : (100 * r.decision.second_opus_gain.est).toFixed(1)} per 100 pages ${ci(r.decision.second_opus_gain.ci95)}.`);
   L.push('');
-  L.push('| reader | pages returned | missing | fabricated quotes | recall, planted (detected / serious) | omission rule on natural pages | serious raised | false alarms / settled | confirmed per 100 pages | marker filled |');
-  L.push('|---|---:|---:|---:|---|---:|---:|---:|---|---:|');
+  L.push('| reader | pages returned | missing (of which unread) | fabricated quotes | recall, planted (detected / serious) | omission rule on natural pages | serious raised | false alarms (not real) / settled | severity inflation (real, not serious) | confirmed per 100 pages | marker filled |');
+  L.push('|---|---:|---:|---:|---|---:|---:|---:|---:|---|---:|');
   for (const [name, x] of Object.entries(r.per_reader)) {
     const a = x.recall.all;
-    L.push(`| ${name} | ${x.returned} | ${x.missing} | ${x.fabricated_quotes} | ${a.detected}/${a.n} (${pct(a.n ? a.detected / a.n : null)}) / ${a.serious}/${a.n} ${ci(wilson(a.serious, a.n))} | ${x.omission_background[0]}/${x.omission_background[1]} | ${x.serious_raised} | ${x.false_alarms}/${x.serious_settled} | ${x.confirmed_per100.est == null ? '—' : (100 * x.confirmed_per100.est).toFixed(1)} ${ci(x.confirmed_per100.ci95)} | ${x.printed_marker_filled} |`);
+    L.push(`| ${name} | ${x.returned} | ${x.missing} (${x.unread}) | ${x.fabricated_quotes} | ${a.detected}/${a.n} (${pct(a.n ? a.detected / a.n : null)}) / ${a.serious}/${a.n} ${ci(wilson(a.serious, a.n))} | ${x.omission_background[0]}/${x.omission_background[1]} | ${x.serious_raised} | ${x.false_alarms}/${x.serious_settled} | ${x.severity_inflation} | ${x.confirmed_per100.est == null ? '—' : (100 * x.confirmed_per100.est).toFixed(1)} ${ci(x.confirmed_per100.ci95)} | ${x.printed_marker_filled} |`);
   }
   L.push('', '**Recall by planted class (serious / n):** ' + Object.entries(r.per_reader).map(([n, x]) => `${n}: ` + SEED_CLASSES.map((c) => `${c} ${x.recall[c].serious}/${x.recall[c].n}`).join(', ')).join(' · '), '');
   L.push('| pair | what | α serious (nominal) | α OCR score (ordinal) | α English score (ordinal) |', '|---|---|---:|---:|---:|');

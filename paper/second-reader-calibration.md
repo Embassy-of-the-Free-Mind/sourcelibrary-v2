@@ -99,9 +99,11 @@ over-report them, and false-alarm rates would not transfer to a corpus where abo
 ### 3.4 Readers
 Four readers read every page against its image with the same frozen brief: Claude Opus (primary), a second
 independent Claude Opus run (**control**), Gemini 3.1 Pro and Gemini 3.8 Flash. Model names and URLs are removed from
-what readers see; each reader gets only the brief, the packet and its images. Claude reads them from a sealed folder
-with file tools confined to it (the command-line tool's restricted mode); Gemini has no tools and receives the same
-files attached to a single call. Both Gemini models are candidates; on the Latin script
+what readers see; each reader gets only the brief, a one-page packet and that page's image, one page per call. Claude
+reads them from a sealed folder with file tools confined to it (the command-line tool's restricted mode); Gemini has
+no tools and receives the brief and packet in the prompt with the image attached, through the runner a feasibility
+pilot validated (a call holding four page images found about half the errors of one call per page). A reply showing
+the reader did not see the image counts as not read. Both Gemini models are candidates; on the Latin script
 Gemini 3.1 Pro is re-run once to measure its own test–retest floor.
 
 ### 3.5 Matching and adjudication
@@ -113,7 +115,8 @@ further 20 pages no reader flagged are read by eye to measure errors all readers
 
 ### 3.6 Measures and decision rule
 Recall on planted errors per reader and class; confirmed serious issues per 100 pages (weighted, 95% bootstrap
-by book); false alarms per 100 pages; Krippendorff's α. The decision is made on errors, not pages: among confirmed
+by book); false alarms (serious claims adjudicated not real) per 100 pages, with real errors graded more severely than
+the adjudication as a separate severity-inflation rate; Krippendorff's α. The decision is made on errors, not pages: among confirmed
 serious errors the primary Opus missed, we count those the Gemini reader found and the second Opus did not (*b*)
 against the reverse (*c*), and apply a one-sided exact sign test (α = 0.025 per Gemini model, Bonferroni over two),
 pooled over the three scripts. A model is adopted if the test passes, the weighted **gain of Opus + Gemini over
@@ -133,6 +136,10 @@ did. *[cite experiment entry 2026-10-08-second-reader-harness-synthetic-check-63
 ### 3.8 Deviations from the preregistration
 Amendment 1 (2026-10-08, before any page was drawn): the decision rule above replaced a page-level rule (block 2
 only, gain ≥ 5 per 100 pages with its interval above zero) after a power simulation (`second-reader/power.mjs`).
+Amendment 2 (2026-10-09, after the feasibility pilot, before any page was drawn): one page per call for every reader
+(the preregistered fallback), the pilot's CLI runner for Gemini, false alarms counted only for claims adjudicated not
+real (the pilot's Gemini readers graded far more errors serious than Opus did), and pages the reader did not see
+counted as not read.
 *[Any later deviation, with date and reason.]*
 
 ## 4. Results

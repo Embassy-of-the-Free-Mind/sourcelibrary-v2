@@ -4,14 +4,14 @@
 # must be out of reach) and ../../batch/cli-ocr.mjs (the `agy -p … --add-dir` call for Gemini through the CLI).
 # This runs each packet in a SEALED folder holding only the brief, the addendum, the taxonomy, the packet and its
 # images, with the folder as the working directory, and keeps the transcript so `second-reader.mjs collect` can
-# audit what the reader opened (claude transcripts only). For claude the seal is enforced by the CLI (--restricted:
-# Read and Write only, confined to the folder). For agy it is stronger: --mode plan gives the model no tools at all,
-# and every input is attached with `@./file`; nothing can be opened, so there is nothing to audit.
+# audit what the reader opened. The seal is enforced by the CLI (--restricted: Read and Write only, confined to the
+# folder). Claude readers only: Gemini readers run through scripts/eval/run-cli-arm.py, the #6338 pilot's tested path
+# (plan mode, one page per call, nudge on a denied tool), via `second-reader.mjs cli-requests` / `cli-assemble`.
 #
-# Usage: scripts/eval/second-reader/run-readers.sh <run_dir> <name> <claude|agy> <model> [read|adjudicate] [parallel]
+# Usage: scripts/eval/second-reader/run-readers.sh <run_dir> <name> claude <model> [read|adjudicate] [parallel]
 #   read:       packets  = <run>/packets/*.json          → <run>/readers/<name>/reviews/<packet>.json
 #   adjudicate: chunks   = <run>/adjudication/chunks/*.json → <run>/adjudication/<name>/reviews/<chunk>.json
-#   parallel:   claude calls at once (default 4); agy always runs one at a time (one shared CLI quota).
+#   parallel:   claude calls at once (default 4).
 # A call that ends without writing its file is retried once. Then run:
 #   node scripts/eval/second-reader/second-reader.mjs collect --run <run_dir> --reader <name> [--role adjudicate]
 set -u
@@ -27,8 +27,8 @@ case "$ENGINE" in
     # MCP servers 6). `--restricted --tools Read Write --strict-mcp-config` removes them and confines Read/Write to the
     # working directory: checked 2026-10-08, a Read of a path outside the folder is refused and Bash does not exist.
     claude --help 2>&1 | grep -q -- '--restricted' || { echo "this claude CLI has no --restricted: refusing to run an unsealed reader" >&2; exit 2; };;
-  agy) VERSION="$(agy --version 2>/dev/null)"; PAR=1;;
-  *) echo "engine must be claude or agy" >&2; exit 2;;
+  agy) echo "Gemini readers run through scripts/eval/run-cli-arm.py: second-reader.mjs cli-requests, then run-cli-arm.py, then cli-assemble (RUNBOOK step 4)" >&2; exit 2;;
+  *) echo "engine must be claude" >&2; exit 2;;
 esac
 printf '{"name":"%s","engine":"%s","model":"%s","role":"%s","cli_version":"%s","started":"%s"}\n' "$NAME" "$ENGINE" "$MODEL" "$ROLE" "$VERSION" "$(date -u +%FT%TZ)" > "$OUT/meta/run.json"
 
@@ -56,31 +56,11 @@ $KEYWORD: \`packet.json\`
 OUTPUT_FILE: \`review.json\`"
 }
 
-agy_prompt() {  # $1 sealed folder → the plan-mode prompt: the same files, attached instead of opened
-  local d="$1" att="" b f n=1
-  for b in $BRIEFS; do att="$att
-$n. @./$b"; n=$((n+1)); done
-  printf '%s' "Your instructions are the full text of these attached files, in this order, followed exactly (skip the leading \`<!-- … -->\` comments):$att
-The error taxonomy: @./page-error-taxonomy.md
-$KEYWORD (JSON): @./packet.json
-The page images, each attached under the \`image_file\` name the packet gives it:"
-  for f in $(cd "$d" && ls images); do printf '\n- images/%s: @./images/%s' "$f" "$f"; done
-  printf '\n\nYou have no tools in this session: you cannot open or write files, so the images above are your only view of the pages. Do not write OUTPUT_FILE. Reply with the JSON array only, in one ```json block, and nothing else.\n'
-}
-
 one() {  # $1 packet, $2 suffix
   local p="$1" s d t0; s=$(basename "$p" .json); d=$(seal "$p"); t0=$(date +%s)
   if [ "$ENGINE" = claude ]; then
     prompt | (cd "$d" && claude -p --model "$MODEL" --restricted --tools Read Write --allowedTools Read Write --strict-mcp-config \
       --output-format stream-json --verbose) > "$OUT/meta/$s$2.jsonl" 2> "$OUT/meta/$s$2.err"
-  else
-    # Plan mode: no tools at all, so no shell and no file access (tests/unit/no-cli-auto-approve.test.ts forbids the
-    # auto-approve flag). Every input is ATTACHED with `@./file`, relative to the sealed folder, and the reader's
-    # JSON comes back in its reply, which is pulled out below. One model call per packet, not an agent session.
-    (cd "$d" && agy -p "$(agy_prompt "$d")" --model "$MODEL" --mode plan --print-timeout 900s) > "$OUT/meta/$s$2.out" 2> "$OUT/meta/$s$2.err"
-    node --input-type=module -e "import { recoverArray } from '$HERE/lib.mjs'; import fs from 'node:fs';
-      const a = recoverArray(fs.readFileSync(process.argv[1], 'utf8')); if (a) fs.writeFileSync(process.argv[2], JSON.stringify(a));" \
-      "$OUT/meta/$s$2.out" "$d/review.json"
   fi
   echo "{\"packet\":\"$s\",\"seconds\":$(( $(date +%s) - t0 ))}" > "$OUT/meta/$s$2.time.json"
   [ -s "$d/review.json" ] && cp "$d/review.json" "$OUT/reviews/$s.json"
