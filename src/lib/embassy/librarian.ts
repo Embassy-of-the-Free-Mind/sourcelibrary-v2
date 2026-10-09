@@ -510,9 +510,13 @@ async function resolveBookRef(ref: string): Promise<{ id: string; title?: string
   if (!ref) return null;
   const db = await getDb();
   const projection = { id: 1, title: 1, display_title: 1, author: 1, slug: 1 };
-  const byId = await db.collection('books').findOne({ id: ref }, { projection });
+  // Live main-site books only. A page-reading tool takes whatever reference the model was
+  // talked into passing, and a slug is guessable from a title: without this filter a hidden or
+  // partner-tenant book's pages could be read out through the chat (tenant-lockdown.md).
+  const live = { visible: true, ...tenantVisibilityFilter() };
+  const byId = await db.collection('books').findOne({ id: ref, ...live }, { projection });
   if (byId) return byId as unknown as { id: string };
-  const bySlug = await db.collection('books').findOne({ $or: [{ slug: ref }, { slug_aliases: ref }] }, { projection });
+  const bySlug = await db.collection('books').findOne({ $or: [{ slug: ref }, { slug_aliases: ref }], ...live }, { projection });
   return (bySlug as unknown as { id: string } | null) ?? null;
 }
 
