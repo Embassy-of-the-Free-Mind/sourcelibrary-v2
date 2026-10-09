@@ -1,0 +1,40 @@
+{"n":1,"text_only_book":true,"annotations":22,"misplaced":0,"note":"astrological almanac; 22 glosses each on its Latin term"}
+{"n":2,"text_only_book":false,"annotations":2,"misplaced":0,"note":"untagged model prose left in text: '**Illustration: The Tianma Plant** This botanical woodcut captures…' (the model wrote it outside any tag)"}
+{"n":3,"text_only_book":true,"annotations":13,"misplaced":1,"note":"a paragraph note about a red seal was attached to the term ending the paragraph above (fixed in the parser after this page: a chip anchors only a note on its own line); the 'Upper' definitions are the model's own odd output, placed where it wrote them"}
+{"n":4,"text_only_book":true,"annotations":3,"misplaced":0,"note":"handwritten reader's note stays as <insert>, a page mark"}
+{"n":5,"text_only_book":true,"annotations":3,"misplaced":0,"note":"the three 'original:' notes carry the book's printed footnote references (k)(l)(m): book words inside a model note, so the text lacks them"}
+{"n":6,"text_only_book":true,"annotations":2,"misplaced":0,"note":""}
+{"n":7,"text_only_book":true,"annotations":1,"misplaced":0,"note":""}
+{"n":8,"text_only_book":true,"annotations":3,"misplaced":0,"note":"map: two standalone description notes typed 'note' (v5 wrote image descriptions as notes), no phrase to attach to"}
+{"n":9,"text_only_book":true,"annotations":3,"misplaced":0,"note":"title page; the border description stands alone at the top"}
+{"n":10,"text_only_book":true,"annotations":3,"misplaced":0,"note":""}
+{"n":11,"text_only_book":true,"annotations":1,"misplaced":0,"note":"gloss on a Greek lemma"}
+{"n":12,"text_only_book":false,"annotations":3,"misplaced":0,"note":"model definition left in text: 'Indian <gloss>indigo</gloss>' three times. The gloss follows a plain word, not a <term>, so nothing marks it as the model's and it reads as a gloss printed on the page"}
+{"n":13,"text_only_book":true,"annotations":5,"misplaced":0,"note":""}
+{"n":14,"text_only_book":true,"annotations":2,"misplaced":0,"note":""}
+{"n":15,"text_only_book":true,"annotations":10,"misplaced":0,"note":"four transliteration notes sit on the line under their heading with no phrase (they belong to the heading above)"}
+{"n":16,"text_only_book":false,"annotations":3,"misplaced":0,"note":"model definition left in text: '<term>waringin</term>s <gloss>banyan trees</gloss>' (the plural s breaks the term+gloss adjacency)"}
+{"n":17,"text_only_book":true,"annotations":9,"misplaced":0,"note":"contents page"}
+{"n":18,"text_only_book":true,"annotations":10,"misplaced":0,"note":""}
+{"n":19,"text_only_book":true,"annotations":7,"misplaced":0,"note":"the edition's printed footnotes stay in text as <gloss>; this is the page where lifting a note puts a printed gloss next to a term (round-trip diff)"}
+{"n":20,"text_only_book":true,"annotations":1,"misplaced":0,"note":"portrait page: the text is empty, the description is the one annotation"}
+{"n":21,"text_only_book":true,"annotations":1,"misplaced":0,"note":"the translator's [supplied words] stay in the text in brackets"}
+{"n":22,"text_only_book":true,"annotations":2,"misplaced":0,"note":""}
+{"n":23,"text_only_book":true,"annotations":1,"misplaced":0,"note":""}
+{"n":24,"text_only_book":true,"annotations":4,"misplaced":0,"note":""}
+{"n":25,"text_only_book":true,"annotations":1,"misplaced":0,"note":"printed marginalia stay as <margin>"}
+{"n":26,"text_only_book":true,"annotations":18,"misplaced":0,"note":"all 18 at the right place; 3 anchor phrases carried a layout marker ('Yong<-', '### Qi Mou'), fixed in the parser after this page"}
+{"n":27,"text_only_book":true,"annotations":5,"misplaced":0,"note":"library label; handwritten entries stay as <insert>"}
+{"n":28,"text_only_book":true,"annotations":1,"misplaced":0,"note":"anchor phrase carried the centring marker '<-' (fixed)"}
+{"n":29,"text_only_book":true,"annotations":6,"misplaced":0,"note":""}
+{"n":30,"text_only_book":true,"annotations":8,"misplaced":0,"note":""}
+{"n":31,"text_only_book":true,"annotations":0,"misplaced":0,"note":"title page with shelfmark as <insert>"}
+{"n":32,"text_only_book":true,"annotations":0,"misplaced":0,"note":"model's continuity remark lifted as page-level meta"}
+{"n":33,"text_only_book":true,"annotations":0,"misplaced":0,"note":"an image description the model wrote inside <meta> is lifted with the meta"}
+{"n":34,"text_only_book":true,"annotations":0,"misplaced":0,"note":""}
+{"n":35,"text_only_book":true,"annotations":0,"misplaced":0,"note":""}
+{"n":36,"text_only_book":true,"annotations":0,"misplaced":0,"note":""}
+{"n":37,"text_only_book":false,"annotations":0,"misplaced":0,"note":"the whole text is the model's '[Blank page — no translatable content]': a stage direction in single brackets, which the parser leaves in text by design"}
+{"n":38,"text_only_book":true,"annotations":0,"misplaced":0,"note":"apparatus criticus stays as text"}
+{"n":39,"text_only_book":true,"annotations":0,"misplaced":0,"note":"interlinear commentary printed in the source stays as <gloss>"}
+{"n":40,"text_only_book":true,"annotations":0,"misplaced":0,"note":""}
