@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA historicapolitica/fritsch02",
+  "edition": "Advocatus Peccans, Sive Tractatus De Peccatis Advocatorum Et Procuratorum. — Breslau, 1678.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "6a9085af8696e74449c320be",
+  "page_number": 105,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 115657,
+    "to_char": 116661,
+    "overlap": 0.365,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-5)",
+    "at": "2026-10-06T10:11:24+00:00",
+    "note": "Summaria in italic (one Fraktur phrase) then body §I; ref matches whole page.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "mixed",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      103,
+      104,
+      105
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.748Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "54235acf1565cab4f8743b9d7c85e87a367a0cc3ccd0382144f5799e5156c82c",
+  "unit": {
+    "chars": 1004
+  }
+}

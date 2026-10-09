@@ -16,7 +16,7 @@ import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { anonSearchGate, ANON_SEARCHES_PER_HOUR, SIGNIN_URL } from '@/lib/anon-gate';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { resolveSearchScope, matchClip, type SearchScope } from '@/lib/tenant-search-scope';
-import { CLIP_URL } from '@/lib/clip';
+import { CLIP_URL, clipHeaders } from '@/lib/clip';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { logSearchEvent } from '@/lib/search-event-log';
 import { assessMatchQuality } from '@/lib/search/match-quality';
@@ -1101,7 +1101,7 @@ async function searchVisual(db: any, query: string, limit: number, scope: Search
     // Encode text via CLIP text encoder
     const clipResp = await fetch(`${CLIP_URL}/embed-text`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: clipHeaders(),
       body: JSON.stringify({ text: query }),
       signal: AbortSignal.timeout(4000),
     });

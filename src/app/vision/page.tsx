@@ -7,7 +7,7 @@ const OG_DESCRIPTION =
   'A letter from Source Library founder Derek Lomas on translating the world’s untranslated books, and the five-year budget to do it.';
 
 export const metadata: Metadata = {
-  title: 'Our Vision — A Letter from the Founder | Source Library',
+  title: 'Our Vision: A Letter from the Founder | Source Library',
   description: OG_DESCRIPTION,
   alternates: { canonical: '/vision' },
   openGraph: {

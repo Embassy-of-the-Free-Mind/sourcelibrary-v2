@@ -1,0 +1,4 @@
+glm-ocr 2e85a62840ccac27daa451df36c736c4636b8628
+dots-ocr c0111ce6bc07803dbc267932ffef0ae3a51dc951
+nanonets-ocr2 c3886ff00bb037ce7da24988c9eafaf1fe2bed72
+mineru25-pro bff20d4ae2bf202df9f45284b4d43681555a97ed

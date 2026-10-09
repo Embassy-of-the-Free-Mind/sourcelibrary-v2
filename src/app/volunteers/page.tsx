@@ -15,7 +15,7 @@ import SiteHeader from '@/components/layout/SiteHeader';
  * `/volunteers` stays as an evergreen direct-link for outreach emails.
  */
 export const metadata: Metadata = {
-  title: 'Welcome, volunteers — Source Library',
+  title: 'Welcome, volunteers | Source Library',
   description: 'You\'ve been invited to help curate Source Library. A few seconds per item, no signup needed.',
   // Don't index — this is a private-share entry point.
   robots: { index: false, follow: false },
@@ -40,7 +40,7 @@ const QUEUES = [
     slug: 'hallucination',
     title: 'OCR hallucination check',
     blurb:
-      "Our OCR sometimes invents illustrations on stained or blank pages. Compare the AI's description to the page — does it match?",
+      "Our OCR sometimes invents illustrations on stained or blank pages. Compare the AI's description to the page. Does it match?",
     timePerItem: '~10 seconds',
   },
 ];
@@ -55,13 +55,13 @@ export default function VolunteersWelcomePage() {
         Welcome to Source Library's curation lab.
       </h1>
       <p className="text-stone-700 mb-4 leading-relaxed text-lg">
-        Thanks for being here. Source Library reads thousands of historical books with AI — but the AI is wrong
+        Thanks for being here. Source Library reads thousands of historical books with AI, but the AI is wrong
         often enough that real human judgment makes the difference between a great library and a mediocre one,
         especially on the strange, beautiful, hand-printed pages we care most about.
       </p>
       <p className="text-stone-700 mb-4 leading-relaxed text-lg">
         You can pick a queue below and start rating right away. No signup. Every queue is keyboard-driven so
-        you can power through a session in minutes — or stop after one click. Your judgments train our filters
+        you can power through a session in minutes, or stop after one click. Your judgments train our filters
         and quality thresholds; when several people agree, the rule changes.
       </p>
       <p className="text-stone-700 mb-10 leading-relaxed text-lg">
@@ -95,7 +95,7 @@ export default function VolunteersWelcomePage() {
           only for spam detection.
         </p>
         <p>
-          <b>Feedback:</b> every queue has a note box — if you can see something the rating buttons
+          <b>Feedback:</b> every queue has a note box. If you can see something the rating buttons
           can't express, write it there and it comes straight to us. For anything longer,{' '}
           <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:underline">
             team@sourcelibrary.org

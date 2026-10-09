@@ -17,6 +17,8 @@
  *       copies the pulled arm's page outputs into <root>/<stratum>/out/<engine>/<slug>.txt.
  *   node scripts/eval/open-engine-print-5660.mjs report --engines=<e,…> [--scored=scored] [--summary=summary.json] --lane=…
  *       the prereg's table per cell from the scored dir and the cost-lane file(s).
+ *   node scripts/eval/open-engine-print-5660.mjs report --engines=<e> --scored=scored-<arm> --summary=summary-<arm>.json --cells=cells-r3.json \
+ *       --cost-lane=cost-lane-<arm>.json --arm-run=<lane>/bench/arms/<arm>/arm-run.json      (round 3, prereg Amendment 2)
  *   node scripts/eval/open-engine-print-5660.mjs tally --root=…
  *       the descriptive long-s / abbreviation / ligature tally of the prereg, per engine, on early print.
  */
@@ -166,13 +168,13 @@ function paddleIn() {
 
 /** Descriptive weak-spot tally (#4877) per engine on the early-print strata. */
 function tally() {
-  const STRATA = ['eebo-tcp-5488', 'ref-ws', 'latin-pre1700', 'longs-en-fr', 'german-fraktur'];
+  const STRATA = ['eebo-tcp-5488', 'eebo-tcp-latin-5660', 'ref-ws', 'latin-pre1700', 'longs-en-fr', 'german-fraktur'];
   const ws = new Map(latest('ref-ws').pages.map(p => [p.slug, p]));
   const words = t => (t.normalize('NFC').toLowerCase().match(/[\p{L}ſ]+/gu) || []);
   const res = {};
   for (const st of STRATA) {
     const dir = path.join(ROOT, st, 'out'); if (!fs.existsSync(dir)) continue;
-    const engines = fs.readdirSync(dir).filter(e => ARMS.includes(e) || e.startsWith('paddle') || e.startsWith('olm'));
+    const engines = fs.readdirSync(dir).filter(e => e !== 'script-class' && fs.statSync(path.join(dir, e)).isDirectory());   // every engine in this arm's bench root
     for (const e of engines) {
       const R = (res[e] ||= {});
       const T = (R[st] ||= { pages: 0, long_s_glyph: 0, f_for_s: 0, abbrev_marks: 0, ligature_glyphs: 0, ref_long_s_glyph: 0, ref_abbrev_marks: 0 });
@@ -204,15 +206,17 @@ function report() {
   const LITE = 'gemini-3.1-flash-lite', FLASH = 'gemini-3-flash-preview';
   const engines = argOf('engines', 'paddleocr-vl-1.6').split(',');
   const scored = path.join(RES, argOf('scored', 'scored'));   // olmOCR arm: --scored=scored-olmocr (its own bench root, Amendment 1)
+  const has = st => fs.readdirSync(scored).some(x => x.startsWith(`${st}-`) && /^\d{4}-\d{2}-\d{2}\.json$/.test(x.slice(st.length + 1)));
   const S = st => { const f = fs.readdirSync(scored).filter(x => x.startsWith(`${st}-`) && x.slice(st.length + 1).match(/^\d{4}-\d{2}-\d{2}\.json$/)).sort().pop(); return readJson(path.join(scored, f)); };
   const med = xs => { const s = xs.filter(x => typeof x === 'number').sort((a, b) => a - b); if (!s.length) return null; const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
   const r3 = x => (x == null ? null : Math.round(x * 1000) / 1000);
-  const cellMap = new Map(readJson(path.join(RES, 'cells.json')).pages.filter(r => r.cell).map(r => [r.slug, r]));
+  const cellMap = new Map(readJson(path.join(RES, argOf('cells', 'cells.json'))).pages.filter(r => r.cell).map(r => [r.slug, r]));
   const rows = {};
-  for (const st of ['eebo-tcp-5488', 'english-ia-5124', 'ref-ws', 'greek', 'greek-ext', 'greek-ext2']) for (const p of S(st).pages) { const c = cellMap.get(p.slug); if (c) (rows[c.cell] ||= []).push(p); }
+  for (const st of ['eebo-tcp-5488', 'eebo-tcp-latin-5660', 'english-ia-5124', 'ref-ws', 'greek', 'greek-ext', 'greek-ext2'].filter(has)) for (const p of S(st).pages) { const c = cellMap.get(p.slug); if (c) (rows[c.cell] ||= []).push(p); }
   const out = { engines: {}, agreement: {}, cost: {} };
   for (const e of engines) {
-    const cl = fs.existsSync(path.join(RES, `cost-lane-${e.startsWith('olm') ? 'olmocr' : 'paddle'}.json`)) ? readJson(path.join(RES, `cost-lane-${e.startsWith('olm') ? 'olmocr' : 'paddle'}.json`)).classes : {};
+    const clFile = path.join(RES, argOf('cost-lane', `cost-lane-${e.startsWith('olm') ? 'olmocr' : 'paddle'}.json`));   // round 3: --cost-lane=cost-lane-<arm>.json
+    const cl = fs.existsSync(clFile) ? readJson(clFile).classes : {};
     out.engines[e] = {};
     for (const [cell, ps] of Object.entries(rows)) {
       const both = ps.filter(p => typeof p.engines?.[e]?.cer === 'number' && typeof p.engines?.[LITE]?.cer === 'number');
@@ -236,7 +240,8 @@ function report() {
     }
   }
   // throughput + cost: the arm's wall after model load ÷ pages (8 clients on one GPU), GEX45 at $249/mo
-  for (const [e, f] of [['paddleocr-vl-1.6', path.join(LANE, 'bench', 'arms', 'latin-layout', 'arm-run.json')], ['olmocr-2-7b-fp8', path.join(LANE, 'bench', 'arms', 'olmocr', 'arm-run.json')]]) {
+  const armRuns = argOf('arm-run') ? [[engines[0], argOf('arm-run')]] : [['paddleocr-vl-1.6', path.join(LANE, 'bench', 'arms', 'latin-layout', 'arm-run.json')], ['olmocr-2-7b-fp8', path.join(LANE, 'bench', 'arms', 'olmocr', 'arm-run.json')]];
+  for (const [e, f] of armRuns) {
     if (!fs.existsSync(f)) continue; const a = readJson(f); const secs = a.wall_secs_after_load ?? a.wall_secs;
     const spp = secs / a.pages; out.cost[e] = { pages: a.pages, errors: a.errors ?? null, wall_secs: secs, s_per_page: r3(spp), usd_per_page_gex45: +(spp * 249 / (30.42 * 86400)).toExponential(2) };
   }
