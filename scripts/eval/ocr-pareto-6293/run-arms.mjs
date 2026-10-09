@@ -24,6 +24,7 @@ import { MongoClient } from 'mongodb';
 import { costOf, BATCH_MULTIPLIER } from '../../lib/model-pricing.mjs';
 import { logUsage, completeBatchUsage, sumBatchResponseUsage } from '../../workers/lib/supabase-usage-logger.mjs';
 import { getProductionOcrPrompt } from '../lib/production-prompt.mjs';
+import { registerEvalBatch, closeEvalBatch } from '../../lib/eval-batch-registry.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2);
@@ -101,10 +102,8 @@ async function submit(model, set) {
       saveJobs();
       await logUsage({ type: 'ocr', mode: 'batch', model, page_count: keys.length, input_tokens: 0, output_tokens: 0, cost_usd: Number(est.toFixed(6)), status: 'submitted', batch_job_id: created.name, endpoint: ENDPOINT, prompt_version: 'generic+v19.1', triggered_by: 'manual' });
       const { withMongo } = await import('../../lib/mongo.mjs');
-      await withMongo((d) => d.collection('batch_jobs').updateOne({ gemini_job_name: created.name }, { $setOnInsert: {
-        id: `ocr-pareto-6293-${model}-${set}`, job_name: created.name, gemini_job_name: created.name, status: 'external_eval', type: 'eval', model,
-        page_count: keys.length, created_at: new Date(job.submitted_at), updated_at: new Date(), issue: 6293,
-        note: 'hand-submitted eval Batch (scripts/eval/ocr-pareto-6293/run-arms.mjs); results go to files only, never to pages' } }, { upsert: true }));
+      await withMongo((d) => registerEvalBatch(d, { jobName: created.name, id: `ocr-pareto-6293-${model}-${set}`, submittedBy: 'scripts/eval/ocr-pareto-6293/run-arms.mjs',
+        model, pageCount: keys.length, submittedAt: job.submitted_at, issue: 6293 }));
       console.log(`${key}: submitted ${created.name} (key ${k}), registered external_eval`);
       break;
     } catch (e) {
@@ -154,6 +153,8 @@ async function collect(pollMin) {
       for (const [dir, rows] of meters) fs.appendFileSync(path.join(dir, '_meter.jsonl'), rows.map((x) => JSON.stringify(x)).join('\n') + '\n');
       await completeBatchUsage({ type: 'ocr', mode: 'batch', model: job.model, page_count: job.requests, input_tokens: inputTokens, output_tokens: outputTokens, cost_usd: Number(usd.toFixed(6)), status: 'success', batch_job_id: job.name, endpoint: ENDPOINT, triggered_by: 'manual' });
       fs.appendFileSync(LEDGER, JSON.stringify({ key, model: job.model, set: job.set, mode: 'batch', n: responses.length, in: inputTokens, out: outputTokens, thinking: think, usd, job: job.name, at }) + '\n');
+      const { withMongo } = await import('../../lib/mongo.mjs');
+      await withMongo((d) => closeEvalBatch(d, job.name, { evidence: `responses written to the bench; ledger row in ${LEDGER}`, usage: { input_tokens: inputTokens, output_tokens: outputTokens, cost_usd: Number(usd.toFixed(6)) } }));
       job.collected = got.state; job.usd = usd; job.written = n; job.empty = empty; job.thinking = think; job.responses = responses.length; saveJobs();
       try { await ai.files.delete({ name: job.file }); } catch { /* reaped by the sweeper */ }
       console.log(`${key}: collected ${responses.length} responses (${n} with text, ${empty} empty), thinking ${think}, $${usd.toFixed(4)} (${(usd / Math.max(1, responses.length) * 1000).toFixed(3)}/1K raw Batch)`);
