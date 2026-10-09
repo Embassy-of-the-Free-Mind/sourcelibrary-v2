@@ -159,7 +159,7 @@ export default function CenturyHeatmap({ data }: CenturyHeatmapProps) {
           className="mt-2 text-sm"
           style={{ color: 'var(--text-secondary)' }}
         >
-          {centuryLabel(hoveredCell.century)} century — {hoveredCell.count} {hoveredCell.type === 'person' ? 'people' : hoveredCell.type + 's'}
+          {centuryLabel(hoveredCell.century)} century: {hoveredCell.count} {hoveredCell.type === 'person' ? 'people' : hoveredCell.type + 's'}
         </div>
       )}
     </div>

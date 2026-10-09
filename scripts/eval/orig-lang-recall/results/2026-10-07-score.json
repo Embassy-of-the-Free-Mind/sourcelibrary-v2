@@ -1,0 +1,897 @@
+{
+ "k": 10,
+ "pool": 8576,
+ "views": {
+  "full": {
+   "candidates": 8576,
+   "arms": {
+    "gemini": {
+     "n": 29,
+     "hits": 27,
+     "recall": 0.9310344827586207,
+     "ci": [
+      0.7803541969199559,
+      0.9808787340031615
+     ],
+     "mrr": 0.66258157551261,
+     "byLang": {
+      "Latin": {
+       "n": 10,
+       "hits": 10
+      },
+      "German": {
+       "n": 10,
+       "hits": 10
+      },
+      "French": {
+       "n": 8,
+       "hits": 6
+      },
+      "Chinese": {
+       "n": 1,
+       "hits": 1
+      }
+     }
+    },
+    "gemini-full": {
+     "n": 40,
+     "hits": 37,
+     "recall": 0.925,
+     "ci": [
+      0.8013576634835684,
+      0.9741639744267374
+     ],
+     "mrr": 0.6750310337810338,
+     "byLang": {
+      "Latin": {
+       "n": 10,
+       "hits": 10
+      },
+      "German": {
+       "n": 10,
+       "hits": 10
+      },
+      "French": {
+       "n": 10,
+       "hits": 8
+      },
+      "Chinese": {
+       "n": 10,
+       "hits": 9
+      }
+     }
+    },
+    "e5-base": {
+     "n": 40,
+     "hits": 15,
+     "recall": 0.375,
+     "ci": [
+      0.24222979078963872,
+      0.5296756098249772
+     ],
+     "mrr": 0.23902647963289714,
+     "byLang": {
+      "Latin": {
+       "n": 10,
+       "hits": 2
+      },
+      "German": {
+       "n": 10,
+       "hits": 6
+      },
+      "French": {
+       "n": 10,
+       "hits": 7
+      },
+      "Chinese": {
+       "n": 10,
+       "hits": 0
+      }
+     }
+    }
+   }
+  },
+  "shared": {
+   "candidates": 5590,
+   "arms": {
+    "gemini": {
+     "n": 29,
+     "hits": 27,
+     "recall": 0.9310344827586207,
+     "ci": [
+      0.7803541969199559,
+      0.9808787340031615
+     ],
+     "mrr": 0.66258157551261,
+     "byLang": {
+      "Latin": {
+       "n": 10,
+       "hits": 10
+      },
+      "German": {
+       "n": 10,
+       "hits": 10
+      },
+      "French": {
+       "n": 8,
+       "hits": 6
+      },
+      "Chinese": {
+       "n": 1,
+       "hits": 1
+      }
+     }
+    },
+    "gemini-full": {
+     "n": 29,
+     "hits": 27,
+     "recall": 0.9310344827586207,
+     "ci": [
+      0.7803541969199559,
+      0.9808787340031615
+     ],
+     "mrr": 0.66258157551261,
+     "byLang": {
+      "Latin": {
+       "n": 10,
+       "hits": 10
+      },
+      "German": {
+       "n": 10,
+       "hits": 10
+      },
+      "French": {
+       "n": 8,
+       "hits": 6
+      },
+      "Chinese": {
+       "n": 1,
+       "hits": 1
+      }
+     }
+    },
+    "e5-base": {
+     "n": 29,
+     "hits": 13,
+     "recall": 0.4482758620689655,
+     "ci": [
+      0.28413167912771287,
+      0.6245203691615131
+     ],
+     "mrr": 0.2584137964964015,
+     "byLang": {
+      "Latin": {
+       "n": 10,
+       "hits": 2
+      },
+      "German": {
+       "n": 10,
+       "hits": 6
+      },
+      "French": {
+       "n": 8,
+       "hits": 5
+      },
+      "Chinese": {
+       "n": 1,
+       "hits": 0
+      }
+     }
+    }
+   }
+  },
+  "subpool": {
+   "candidates": 3000,
+   "arms": {
+    "gemini": {
+     "n": 29,
+     "hits": 27,
+     "recall": 0.9310344827586207,
+     "ci": [
+      0.7803541969199559,
+      0.9808787340031615
+     ],
+     "mrr": 0.7474306964164975,
+     "byLang": {
+      "Latin": {
+       "n": 10,
+       "hits": 10
+      },
+      "German": {
+       "n": 10,
+       "hits": 10
+      },
+      "French": {
+       "n": 8,
+       "hits": 6
+      },
+      "Chinese": {
+       "n": 1,
+       "hits": 1
+      }
+     }
+    },
+    "gemini-full": {
+     "n": 40,
+     "hits": 37,
+     "recall": 0.925,
+     "ci": [
+      0.8013576634835684,
+      0.9741639744267374
+     ],
+     "mrr": 0.7618872549019607,
+     "byLang": {
+      "Latin": {
+       "n": 10,
+       "hits": 10
+      },
+      "German": {
+       "n": 10,
+       "hits": 10
+      },
+      "French": {
+       "n": 10,
+       "hits": 8
+      },
+      "Chinese": {
+       "n": 10,
+       "hits": 9
+      }
+     }
+    },
+    "e5-base": {
+     "n": 40,
+     "hits": 24,
+     "recall": 0.6,
+     "ci": [
+      0.44595893542800863,
+      0.7365167440802984
+     ],
+     "mrr": 0.3287282064691952,
+     "byLang": {
+      "Latin": {
+       "n": 10,
+       "hits": 6
+      },
+      "German": {
+       "n": 10,
+       "hits": 9
+      },
+      "French": {
+       "n": 10,
+       "hits": 7
+      },
+      "Chinese": {
+       "n": 10,
+       "hits": 2
+      }
+     }
+    },
+    "bge-m3": {
+     "n": 40,
+     "hits": 33,
+     "recall": 0.825,
+     "ci": [
+      0.6805000953869541,
+      0.9125458630150444
+     ],
+     "mrr": 0.6943997700431523,
+     "byLang": {
+      "Latin": {
+       "n": 10,
+       "hits": 8
+      },
+      "German": {
+       "n": 10,
+       "hits": 10
+      },
+      "French": {
+       "n": 10,
+       "hits": 9
+      },
+      "Chinese": {
+       "n": 10,
+       "hits": 6
+      }
+     }
+    }
+   }
+  },
+  "global": {
+   "candidates": "all of page_translations",
+   "arms": {
+    "gemini (match_semantic)": {
+     "n": 40,
+     "hits": 4,
+     "recall": 0.1,
+     "ci": [
+      0.039579528407411566,
+      0.23051775355935938
+     ],
+     "mrr": 0.16931818181818176,
+     "byLang": {
+      "Latin": {
+       "n": 10,
+       "hits": 1
+      },
+      "German": {
+       "n": 10,
+       "hits": 1
+      },
+      "French": {
+       "n": 10,
+       "hits": 2
+      },
+      "Chinese": {
+       "n": 10,
+       "hits": 0
+      }
+     }
+    }
+   }
+  },
+  "ocr_only": {
+   "candidates": "every OCR-only row of page_translations",
+   "arms": {
+    "gemini (exact)": {
+     "n": 28,
+     "hits": 18,
+     "recall": 0.6428571428571429,
+     "ci": [
+      0.45830306373230584,
+      0.792941705856417
+     ],
+     "mrr": 0.31291133829126994,
+     "byLang": {
+      "Latin": {
+       "n": 10,
+       "hits": 6
+      },
+      "German": {
+       "n": 10,
+       "hits": 5
+      },
+      "French": {
+       "n": 7,
+       "hits": 6
+      },
+      "Chinese": {
+       "n": 1,
+       "hits": 1
+      }
+     }
+    }
+   }
+  }
+ },
+ "perQuery": {
+  "q01": {
+   "full:gemini": 5,
+   "full:gemini-full": 5,
+   "full:e5-base": 208,
+   "shared:gemini": 5,
+   "shared:gemini-full": 5,
+   "shared:e5-base": 174,
+   "subpool:gemini": 2,
+   "subpool:gemini-full": 2,
+   "subpool:e5-base": 84,
+   "subpool:bge-m3": 15,
+   "global:gemini": null,
+   "ocr_only:gemini": 326
+  },
+  "q02": {
+   "full:gemini": 1,
+   "full:gemini-full": 1,
+   "full:e5-base": 3,
+   "shared:gemini": 1,
+   "shared:gemini-full": 1,
+   "shared:e5-base": 3,
+   "subpool:gemini": 1,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 2,
+   "subpool:bge-m3": 1,
+   "global:gemini": null,
+   "ocr_only:gemini": 4
+  },
+  "q03": {
+   "full:gemini": 3,
+   "full:gemini-full": 3,
+   "full:e5-base": 683,
+   "shared:gemini": 3,
+   "shared:gemini-full": 3,
+   "shared:e5-base": 660,
+   "subpool:gemini": 1,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 239,
+   "subpool:bge-m3": 1,
+   "global:gemini": null,
+   "ocr_only:gemini": 173
+  },
+  "q04": {
+   "full:gemini": 1,
+   "full:gemini-full": 1,
+   "full:e5-base": 31,
+   "shared:gemini": 1,
+   "shared:gemini-full": 1,
+   "shared:e5-base": 31,
+   "subpool:gemini": 1,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 7,
+   "subpool:bge-m3": 2,
+   "global:gemini": null,
+   "ocr_only:gemini": 3
+  },
+  "q05": {
+   "full:gemini": 1,
+   "full:gemini-full": 1,
+   "full:e5-base": 14,
+   "shared:gemini": 1,
+   "shared:gemini-full": 1,
+   "shared:e5-base": 14,
+   "subpool:gemini": 1,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 6,
+   "subpool:bge-m3": 1,
+   "global:gemini": null,
+   "ocr_only:gemini": 4
+  },
+  "q06": {
+   "full:gemini": 3,
+   "full:gemini-full": 3,
+   "full:e5-base": 547,
+   "shared:gemini": 3,
+   "shared:gemini-full": 3,
+   "shared:e5-base": 543,
+   "subpool:gemini": 2,
+   "subpool:gemini-full": 2,
+   "subpool:e5-base": 178,
+   "subpool:bge-m3": 3,
+   "global:gemini": null,
+   "ocr_only:gemini": 45
+  },
+  "q07": {
+   "full:gemini": 1,
+   "full:gemini-full": 1,
+   "full:e5-base": 11,
+   "shared:gemini": 1,
+   "shared:gemini-full": 1,
+   "shared:e5-base": 11,
+   "subpool:gemini": 1,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 2,
+   "subpool:bge-m3": 1,
+   "global:gemini": 1,
+   "ocr_only:gemini": 1
+  },
+  "q08": {
+   "full:gemini": 7,
+   "full:gemini-full": 7,
+   "full:e5-base": 570,
+   "shared:gemini": 7,
+   "shared:gemini-full": 7,
+   "shared:e5-base": 548,
+   "subpool:gemini": 5,
+   "subpool:gemini-full": 5,
+   "subpool:e5-base": 193,
+   "subpool:bge-m3": 68,
+   "global:gemini": null,
+   "ocr_only:gemini": 294
+  },
+  "q09": {
+   "full:gemini": 1,
+   "full:gemini-full": 1,
+   "full:e5-base": 24,
+   "shared:gemini": 1,
+   "shared:gemini-full": 1,
+   "shared:e5-base": 16,
+   "subpool:gemini": 1,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 8,
+   "subpool:bge-m3": 5,
+   "global:gemini": null,
+   "ocr_only:gemini": 3
+  },
+  "q10": {
+   "full:gemini": 1,
+   "full:gemini-full": 1,
+   "full:e5-base": 8,
+   "shared:gemini": 1,
+   "shared:gemini-full": 1,
+   "shared:e5-base": 8,
+   "subpool:gemini": 1,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 4,
+   "subpool:bge-m3": 1,
+   "global:gemini": null,
+   "ocr_only:gemini": 2
+  },
+  "q11": {
+   "full:gemini": 1,
+   "full:gemini-full": 1,
+   "full:e5-base": 16,
+   "shared:gemini": 1,
+   "shared:gemini-full": 1,
+   "shared:e5-base": 16,
+   "subpool:gemini": 1,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 5,
+   "subpool:bge-m3": 1,
+   "global:gemini": null,
+   "ocr_only:gemini": 2
+  },
+  "q12": {
+   "full:gemini": 1,
+   "full:gemini-full": 1,
+   "full:e5-base": 6,
+   "shared:gemini": 1,
+   "shared:gemini-full": 1,
+   "shared:e5-base": 6,
+   "subpool:gemini": 1,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 2,
+   "subpool:bge-m3": 1,
+   "global:gemini": null,
+   "ocr_only:gemini": 35
+  },
+  "q13": {
+   "full:gemini": 2,
+   "full:gemini-full": 2,
+   "full:e5-base": 16,
+   "shared:gemini": 2,
+   "shared:gemini-full": 2,
+   "shared:e5-base": 16,
+   "subpool:gemini": 1,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 5,
+   "subpool:bge-m3": 1,
+   "global:gemini": null,
+   "ocr_only:gemini": 54
+  },
+  "q14": {
+   "full:gemini": 1,
+   "full:gemini-full": 1,
+   "full:e5-base": 2,
+   "shared:gemini": 1,
+   "shared:gemini-full": 1,
+   "shared:e5-base": 2,
+   "subpool:gemini": 1,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 1,
+   "subpool:bge-m3": 1,
+   "global:gemini": null,
+   "ocr_only:gemini": 3
+  },
+  "q15": {
+   "full:gemini": 1,
+   "full:gemini-full": 1,
+   "full:e5-base": 1,
+   "shared:gemini": 1,
+   "shared:gemini-full": 1,
+   "shared:e5-base": 1,
+   "subpool:gemini": 1,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 1,
+   "subpool:bge-m3": 1,
+   "global:gemini": 1,
+   "ocr_only:gemini": 1
+  },
+  "q16": {
+   "full:gemini": 2,
+   "full:gemini-full": 2,
+   "full:e5-base": 1,
+   "shared:gemini": 2,
+   "shared:gemini-full": 2,
+   "shared:e5-base": 1,
+   "subpool:gemini": 2,
+   "subpool:gemini-full": 2,
+   "subpool:e5-base": 1,
+   "subpool:bge-m3": 1,
+   "global:gemini": null,
+   "ocr_only:gemini": 20
+  },
+  "q17": {
+   "full:gemini": 1,
+   "full:gemini-full": 1,
+   "full:e5-base": 83,
+   "shared:gemini": 1,
+   "shared:gemini-full": 1,
+   "shared:e5-base": 81,
+   "subpool:gemini": 1,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 34,
+   "subpool:bge-m3": 8,
+   "global:gemini": null,
+   "ocr_only:gemini": 6
+  },
+  "q18": {
+   "full:gemini": 9,
+   "full:gemini-full": 9,
+   "full:e5-base": 12,
+   "shared:gemini": 9,
+   "shared:gemini-full": 9,
+   "shared:e5-base": 12,
+   "subpool:gemini": 6,
+   "subpool:gemini-full": 6,
+   "subpool:e5-base": 3,
+   "subpool:bge-m3": 1,
+   "global:gemini": null,
+   "ocr_only:gemini": 511
+  },
+  "q19": {
+   "full:gemini": 5,
+   "full:gemini-full": 5,
+   "full:e5-base": 4,
+   "shared:gemini": 5,
+   "shared:gemini-full": 5,
+   "shared:e5-base": 4,
+   "subpool:gemini": 2,
+   "subpool:gemini-full": 2,
+   "subpool:e5-base": 2,
+   "subpool:bge-m3": 1,
+   "global:gemini": null,
+   "ocr_only:gemini": 60
+  },
+  "q20": {
+   "full:gemini": 2,
+   "full:gemini-full": 2,
+   "full:e5-base": 7,
+   "shared:gemini": 2,
+   "shared:gemini-full": 2,
+   "shared:e5-base": 6,
+   "subpool:gemini": 2,
+   "subpool:gemini-full": 2,
+   "subpool:e5-base": 3,
+   "subpool:bge-m3": 1,
+   "global:gemini": null,
+   "ocr_only:gemini": 6
+  },
+  "q21": {
+   "full:gemini": 10,
+   "full:gemini-full": 10,
+   "full:e5-base": 10,
+   "shared:gemini": 10,
+   "shared:gemini-full": 10,
+   "shared:e5-base": 10,
+   "subpool:gemini": 3,
+   "subpool:gemini-full": 3,
+   "subpool:e5-base": 3,
+   "subpool:bge-m3": 1,
+   "global:gemini": null,
+   "ocr_only:gemini": null
+  },
+  "q22": {
+   "full:gemini": 1,
+   "full:gemini-full": 1,
+   "full:e5-base": 104,
+   "shared:gemini": 1,
+   "shared:gemini-full": 1,
+   "shared:e5-base": 85,
+   "subpool:gemini": 1,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 37,
+   "subpool:bge-m3": 1,
+   "global:gemini": null,
+   "ocr_only:gemini": 2
+  },
+  "q23": {
+   "full:gemini": 1,
+   "full:gemini-full": 1,
+   "full:e5-base": 1,
+   "shared:gemini": 1,
+   "shared:gemini-full": 1,
+   "shared:e5-base": 1,
+   "subpool:gemini": 1,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 1,
+   "subpool:bge-m3": 3,
+   "global:gemini": 2,
+   "ocr_only:gemini": 1
+  },
+  "q24": {
+   "full:gemini": 52,
+   "full:gemini-full": 52,
+   "full:e5-base": 584,
+   "shared:gemini": 52,
+   "shared:gemini-full": 52,
+   "shared:e5-base": 559,
+   "subpool:gemini": 17,
+   "subpool:gemini-full": 17,
+   "subpool:e5-base": 189,
+   "subpool:bge-m3": 14,
+   "global:gemini": null,
+   "ocr_only:gemini": 9
+  },
+  "q25": {
+   "full:gemini": 40,
+   "full:gemini-full": 40,
+   "full:e5-base": 86,
+   "shared:gemini": 40,
+   "shared:gemini-full": 40,
+   "shared:e5-base": 83,
+   "subpool:gemini": 12,
+   "subpool:gemini-full": 12,
+   "subpool:e5-base": 28,
+   "subpool:bge-m3": 2,
+   "global:gemini": null,
+   "ocr_only:gemini": 4517
+  },
+  "q26": {
+   "full:gemini": null,
+   "full:gemini-full": 7,
+   "full:e5-base": 1,
+   "subpool:gemini": null,
+   "subpool:gemini-full": 2,
+   "subpool:e5-base": 1,
+   "subpool:bge-m3": 1,
+   "global:gemini": null,
+   "ocr_only:gemini": null
+  },
+  "q27": {
+   "full:gemini": 1,
+   "full:gemini-full": 1,
+   "full:e5-base": 1,
+   "shared:gemini": 1,
+   "shared:gemini-full": 1,
+   "shared:e5-base": 1,
+   "subpool:gemini": 1,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 1,
+   "subpool:bge-m3": 1,
+   "global:gemini": null,
+   "ocr_only:gemini": 2
+  },
+  "q28": {
+   "full:gemini": 4,
+   "full:gemini-full": 4,
+   "full:e5-base": 1,
+   "shared:gemini": 4,
+   "shared:gemini-full": 4,
+   "shared:e5-base": 1,
+   "subpool:gemini": 3,
+   "subpool:gemini-full": 3,
+   "subpool:e5-base": 1,
+   "subpool:bge-m3": 1,
+   "global:gemini": null,
+   "ocr_only:gemini": 6
+  },
+  "q29": {
+   "full:gemini": null,
+   "full:gemini-full": 8,
+   "full:e5-base": 1,
+   "subpool:gemini": null,
+   "subpool:gemini-full": 4,
+   "subpool:e5-base": 1,
+   "subpool:bge-m3": 1,
+   "global:gemini": null,
+   "ocr_only:gemini": null
+  },
+  "q30": {
+   "full:gemini": 1,
+   "full:gemini-full": 1,
+   "full:e5-base": 3,
+   "shared:gemini": 1,
+   "shared:gemini-full": 1,
+   "shared:e5-base": 3,
+   "subpool:gemini": 1,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 2,
+   "subpool:bge-m3": 1,
+   "global:gemini": 1,
+   "ocr_only:gemini": 2
+  },
+  "q31": {
+   "full:gemini": null,
+   "full:gemini-full": 1,
+   "full:e5-base": 22,
+   "subpool:gemini": null,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 6,
+   "subpool:bge-m3": 1,
+   "global:gemini": null,
+   "ocr_only:gemini": null
+  },
+  "q32": {
+   "full:gemini": null,
+   "full:gemini-full": 54,
+   "full:e5-base": 218,
+   "subpool:gemini": null,
+   "subpool:gemini-full": 20,
+   "subpool:e5-base": 73,
+   "subpool:bge-m3": 17,
+   "global:gemini": null,
+   "ocr_only:gemini": null
+  },
+  "q33": {
+   "full:gemini": null,
+   "full:gemini-full": 2,
+   "full:e5-base": 20,
+   "subpool:gemini": null,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 5,
+   "subpool:bge-m3": 1,
+   "global:gemini": null,
+   "ocr_only:gemini": null
+  },
+  "q34": {
+   "full:gemini": null,
+   "full:gemini-full": 1,
+   "full:e5-base": 1392,
+   "subpool:gemini": null,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 466,
+   "subpool:bge-m3": 3,
+   "global:gemini": null,
+   "ocr_only:gemini": null
+  },
+  "q35": {
+   "full:gemini": null,
+   "full:gemini-full": 1,
+   "full:e5-base": 116,
+   "subpool:gemini": null,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 40,
+   "subpool:bge-m3": 1,
+   "global:gemini": null,
+   "ocr_only:gemini": null
+  },
+  "q36": {
+   "full:gemini": 1,
+   "full:gemini-full": 1,
+   "full:e5-base": 280,
+   "shared:gemini": 1,
+   "shared:gemini-full": 1,
+   "shared:e5-base": 213,
+   "subpool:gemini": 1,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 84,
+   "subpool:bge-m3": 1,
+   "global:gemini": null,
+   "ocr_only:gemini": 1
+  },
+  "q37": {
+   "full:gemini": null,
+   "full:gemini-full": 1,
+   "full:e5-base": 1317,
+   "subpool:gemini": null,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 472,
+   "subpool:bge-m3": 15,
+   "global:gemini": null,
+   "ocr_only:gemini": null
+  },
+  "q38": {
+   "full:gemini": null,
+   "full:gemini-full": 1,
+   "full:e5-base": 276,
+   "subpool:gemini": null,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 104,
+   "subpool:bge-m3": 7,
+   "global:gemini": null,
+   "ocr_only:gemini": null
+  },
+  "q39": {
+   "full:gemini": null,
+   "full:gemini-full": 1,
+   "full:e5-base": 488,
+   "subpool:gemini": null,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 159,
+   "subpool:bge-m3": 48,
+   "global:gemini": null,
+   "ocr_only:gemini": null
+  },
+  "q40": {
+   "full:gemini": null,
+   "full:gemini-full": 1,
+   "full:e5-base": 970,
+   "subpool:gemini": null,
+   "subpool:gemini-full": 1,
+   "subpool:e5-base": 353,
+   "subpool:bge-m3": 111,
+   "global:gemini": null,
+   "ocr_only:gemini": null
+  }
+ },
+ "globalBookHits": 6
+}

@@ -47,6 +47,11 @@ const FIXTURES = [
   { title: 'Erya zhu', author: 'Guo Pu (郭璞) commentary' },
   { title: 'Historiae', author: 'Thucydides (ed. Henri II Estienne)', year: 1564 },
   { title: 'Fragmenta', author: '(ed.)' },
+  // BCE and unusable years — the twin dropped a negative year until #4444
+  { title: 'Olympian and Pythian Odes', author: 'Pindar', year: -470, published: 'Unknown' },
+  { title: 'Tablet of the Flood', author: 'Unknown', year: -1800, published: 'Old Babylonian (c. 2100–1600 BCE)' },
+  { title: 'Elements', author: 'Euclid', year: 0, published: 'Venice, 1482' },
+  { title: 'Elements', author: 'Euclid', year: Number.NaN, published: 'Venice, 1482' },
   // stubs and hostile input
   { title: 'MS', author: 'Anon' },
   { title: 'untitled', author: '' },

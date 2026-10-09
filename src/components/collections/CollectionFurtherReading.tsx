@@ -51,7 +51,7 @@ export default function CollectionFurtherReading({ books, gaps, tenantSlug }: Pr
           Further reading
         </h2>
         <p className="text-sm text-secondary leading-relaxed max-w-3xl mb-8">
-          Works that sit beside this collection rather than inside it — held here but
+          Works that sit beside this collection rather than inside it: held here but
           not part of its claim, or not held at all. Nothing below is counted among
           the collection&rsquo;s works.
         </p>
@@ -63,7 +63,7 @@ export default function CollectionFurtherReading({ books, gaps, tenantSlug }: Pr
             </h3>
             <p className="text-xs text-muted mb-5">
               {books.length.toLocaleString('en-US')} adjacent {books.length === 1 ? 'work' : 'works'} we
-              hold. Most are scanned but not yet translated — the page images and
+              hold. Most are scanned but not yet translated; the page images and
               whatever has been transcribed are readable now.
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-5">

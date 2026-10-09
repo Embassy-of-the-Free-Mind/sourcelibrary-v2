@@ -197,7 +197,7 @@ function renderRichText(text: string, books: BookRef[]): React.ReactNode {
 
 function HookBlock({ text, attribution }: { text: string; attribution?: string }) {
   return (
-    <div className="bg-dark text-white px-6 py-8 sm:py-10 -mx-6 sm:-mx-8">
+    <div className="bg-dark text-white px-6 py-8 sm:py-10 -mx-6">
       <div className="max-w-4xl mx-auto text-center">
         <Sparkles className="w-5 h-5 text-accent-gold mx-auto mb-3 opacity-60" />
         <p className="text-lg sm:text-xl md:text-2xl font-display leading-relaxed text-white/90 italic">
@@ -205,7 +205,7 @@ function HookBlock({ text, attribution }: { text: string; attribution?: string }
         </p>
         {attribution && (
           <p className="mt-4 text-sm text-white/60 font-body">
-            — {attribution}
+            {attribution}
           </p>
         )}
       </div>
@@ -399,7 +399,7 @@ function QuotesBlock({ quotes, books, title }: {
           </p>
         )}
         <footer className={`mt-3 text-sm text-muted ${isHero ? 'pl-6' : ''}`}>
-          — <AuthorName author={q.author} />
+          <AuthorName author={q.author} />
           {q.year && <span className="text-muted/60"> ({q.year})</span>}
           {bookHref ? (
             <Link href={bookHref} className="text-accent-rust hover:underline ml-1">

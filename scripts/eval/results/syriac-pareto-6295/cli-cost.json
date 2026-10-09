@@ -1,0 +1,1266 @@
+{
+ "issue": 6295,
+ "generated_by": "scripts/eval/syriac-pareto-6295/cli-cost.mjs",
+ "model": "gemini-3.8-flash",
+ "price_per_1m": {
+  "input": 0.75,
+  "output": 3.75
+ },
+ "batch_multiplier": 0.5,
+ "basis": "API list price at the Batch rate, thinking 0; input tokens as billed to gemini-3.1-flash-lite for the identical request, output tokens from the CLI text length at lite's billed tokens per character; $0 was billed (CLI, subscription)",
+ "ocr": {
+  "arm": "C38-ocr",
+  "pages": 24,
+  "tokens_per_char_out": 0.8977,
+  "usd_per_1k_batch": 4.463,
+  "usd_per_1k_standard": 8.925,
+  "per_page": [
+   {
+    "uid": "69920b97_271",
+    "in": 4282,
+    "out_est": 2059,
+    "usd_batch": 0.005466
+   },
+   {
+    "uid": "69943f7b_732",
+    "in": 4284,
+    "out_est": 1298,
+    "usd_batch": 0.00404
+   },
+   {
+    "uid": "69943ce1_628",
+    "in": 4310,
+    "out_est": 1965,
+    "usd_batch": 0.005301
+   },
+   {
+    "uid": "69a5ea9a_391",
+    "in": 4284,
+    "out_est": 1856,
+    "usd_batch": 0.005086
+   },
+   {
+    "uid": "69a5eaa8_205",
+    "in": 4293,
+    "out_est": 1173,
+    "usd_batch": 0.003809
+   },
+   {
+    "uid": "69943c68_564",
+    "in": 4310,
+    "out_est": 1326,
+    "usd_batch": 0.004103
+   },
+   {
+    "uid": "69943c94_125",
+    "in": 4284,
+    "out_est": 3046,
+    "usd_batch": 0.007318
+   },
+   {
+    "uid": "69a5f3e0_197",
+    "in": 4284,
+    "out_est": 2523,
+    "usd_batch": 0.006337
+   },
+   {
+    "uid": "69a5f3f0_555",
+    "in": 4310,
+    "out_est": 2283,
+    "usd_batch": 0.005897
+   },
+   {
+    "uid": "69a5f02c_183",
+    "in": 4298,
+    "out_est": 2716,
+    "usd_batch": 0.006704
+   },
+   {
+    "uid": "6aaafbb1_300",
+    "in": 4310,
+    "out_est": 102,
+    "usd_batch": 0.001808
+   },
+   {
+    "uid": "69a5eb4d_529",
+    "in": 4298,
+    "out_est": 1572,
+    "usd_batch": 0.004559
+   },
+   {
+    "uid": "69a5eaa3_611",
+    "in": 4310,
+    "out_est": 1189,
+    "usd_batch": 0.003846
+   },
+   {
+    "uid": "69943f85_836",
+    "in": 4325,
+    "out_est": 1180,
+    "usd_batch": 0.003834
+   },
+   {
+    "uid": "69943c78_154",
+    "in": 4284,
+    "out_est": 102,
+    "usd_batch": 0.001798
+   },
+   {
+    "uid": "69a5f031_235",
+    "in": 4310,
+    "out_est": 2396,
+    "usd_batch": 0.006109
+   },
+   {
+    "uid": "69a5eb6b_205",
+    "in": 4310,
+    "out_est": 1846,
+    "usd_batch": 0.005078
+   },
+   {
+    "uid": "69a5eb54_268",
+    "in": 4298,
+    "out_est": 188,
+    "usd_batch": 0.001964
+   },
+   {
+    "uid": "69943c4f_169",
+    "in": 4325,
+    "out_est": 1415,
+    "usd_batch": 0.004275
+   },
+   {
+    "uid": "699443fa_308",
+    "in": 4310,
+    "out_est": 1755,
+    "usd_batch": 0.004907
+   },
+   {
+    "uid": "6994400f_296",
+    "in": 4284,
+    "out_est": 2632,
+    "usd_batch": 0.006541
+   },
+   {
+    "uid": "6aaafba3_151",
+    "in": 4310,
+    "out_est": 171,
+    "usd_batch": 0.001937
+   },
+   {
+    "uid": "69a5e9f0_81",
+    "in": 4310,
+    "out_est": 224,
+    "usd_batch": 0.002036
+   },
+   {
+    "uid": "69a5eb64_461",
+    "in": 4298,
+    "out_est": 1461,
+    "usd_batch": 0.004351
+   }
+  ]
+ },
+ "translation": {
+  "R": {
+   "arm": "T-C38-R",
+   "pages": 20,
+   "tokens_per_char_out": 0.2323,
+   "usd_per_1k_batch": 2.103,
+   "usd_per_1k_standard": 4.206,
+   "per_page": [
+    {
+     "uid": "69a5ea9a_391",
+     "in": 3922,
+     "out_est": 669,
+     "usd_batch": 0.002725
+    },
+    {
+     "uid": "69920b97_271",
+     "in": 4389,
+     "out_est": 585,
+     "usd_batch": 0.002743
+    },
+    {
+     "uid": "69a5eaa3_611",
+     "in": 2886,
+     "out_est": 397,
+     "usd_batch": 0.001827
+    },
+    {
+     "uid": "69943ce1_628",
+     "in": 4054,
+     "out_est": 702,
+     "usd_batch": 0.002837
+    },
+    {
+     "uid": "69943c78_154",
+     "in": 3120,
+     "out_est": 408,
+     "usd_batch": 0.001935
+    },
+    {
+     "uid": "69943c68_564",
+     "in": 3314,
+     "out_est": 510,
+     "usd_batch": 0.002199
+    },
+    {
+     "uid": "69a5eaa8_205",
+     "in": 2914,
+     "out_est": 539,
+     "usd_batch": 0.002103
+    },
+    {
+     "uid": "69943c94_125",
+     "in": 2477,
+     "out_est": 411,
+     "usd_batch": 0.0017
+    },
+    {
+     "uid": "69a5f3e0_197",
+     "in": 2526,
+     "out_est": 493,
+     "usd_batch": 0.001872
+    },
+    {
+     "uid": "6994400f_296",
+     "in": 2580,
+     "out_est": 467,
+     "usd_batch": 0.001843
+    },
+    {
+     "uid": "69a5f031_235",
+     "in": 2511,
+     "out_est": 473,
+     "usd_batch": 0.001829
+    },
+    {
+     "uid": "6aaafbb1_300",
+     "in": 2834,
+     "out_est": 584,
+     "usd_batch": 0.002158
+    },
+    {
+     "uid": "6aaafba3_151",
+     "in": 2734,
+     "out_est": 549,
+     "usd_batch": 0.002055
+    },
+    {
+     "uid": "69a5eb6b_205",
+     "in": 3238,
+     "out_est": 493,
+     "usd_batch": 0.002139
+    },
+    {
+     "uid": "69a5e9f0_81",
+     "in": 2793,
+     "out_est": 531,
+     "usd_batch": 0.002043
+    },
+    {
+     "uid": "69a5eb54_268",
+     "in": 2679,
+     "out_est": 557,
+     "usd_batch": 0.002049
+    },
+    {
+     "uid": "69a5eb64_461",
+     "in": 2598,
+     "out_est": 501,
+     "usd_batch": 0.001914
+    },
+    {
+     "uid": "69a5eb4d_529",
+     "in": 2587,
+     "out_est": 440,
+     "usd_batch": 0.001795
+    },
+    {
+     "uid": "69943c4f_169",
+     "in": 2969,
+     "out_est": 361,
+     "usd_batch": 0.00179
+    },
+    {
+     "uid": "699443fa_308",
+     "in": 3574,
+     "out_est": 622,
+     "usd_batch": 0.002507
+    }
+   ]
+  },
+  "K": {
+   "arm": "T-C38-K",
+   "pages": 20,
+   "tokens_per_char_out": 0.2392,
+   "usd_per_1k_batch": 2.195,
+   "usd_per_1k_standard": 4.39,
+   "per_page": [
+    {
+     "uid": "69920b97_271",
+     "in": 3595,
+     "out_est": 601,
+     "usd_batch": 0.002475
+    },
+    {
+     "uid": "69a5ea9a_391",
+     "in": 3767,
+     "out_est": 661,
+     "usd_batch": 0.002652
+    },
+    {
+     "uid": "69a5eaa3_611",
+     "in": 2906,
+     "out_est": 460,
+     "usd_batch": 0.001952
+    },
+    {
+     "uid": "69943ce1_628",
+     "in": 3699,
+     "out_est": 698,
+     "usd_batch": 0.002696
+    },
+    {
+     "uid": "69943c78_154",
+     "in": 3028,
+     "out_est": 426,
+     "usd_batch": 0.001934
+    },
+    {
+     "uid": "69943c68_564",
+     "in": 2754,
+     "out_est": 568,
+     "usd_batch": 0.002098
+    },
+    {
+     "uid": "69a5eaa8_205",
+     "in": 2721,
+     "out_est": 516,
+     "usd_batch": 0.001988
+    },
+    {
+     "uid": "69943c94_125",
+     "in": 3070,
+     "out_est": 516,
+     "usd_batch": 0.002119
+    },
+    {
+     "uid": "6994400f_296",
+     "in": 3424,
+     "out_est": 557,
+     "usd_batch": 0.002328
+    },
+    {
+     "uid": "69a5f3e0_197",
+     "in": 3279,
+     "out_est": 535,
+     "usd_batch": 0.002233
+    },
+    {
+     "uid": "69a5f031_235",
+     "in": 2771,
+     "out_est": 516,
+     "usd_batch": 0.002007
+    },
+    {
+     "uid": "6aaafbb1_300",
+     "in": 2760,
+     "out_est": 673,
+     "usd_batch": 0.002297
+    },
+    {
+     "uid": "6aaafba3_151",
+     "in": 2736,
+     "out_est": 591,
+     "usd_batch": 0.002134
+    },
+    {
+     "uid": "69a5eb6b_205",
+     "in": 3146,
+     "out_est": 564,
+     "usd_batch": 0.002237
+    },
+    {
+     "uid": "69a5e9f0_81",
+     "in": 2770,
+     "out_est": 557,
+     "usd_batch": 0.002083
+    },
+    {
+     "uid": "69a5eb4d_529",
+     "in": 3143,
+     "out_est": 487,
+     "usd_batch": 0.002092
+    },
+    {
+     "uid": "69a5eb54_268",
+     "in": 3232,
+     "out_est": 549,
+     "usd_batch": 0.002241
+    },
+    {
+     "uid": "69a5eb64_461",
+     "in": 3340,
+     "out_est": 547,
+     "usd_batch": 0.002278
+    },
+    {
+     "uid": "69943c4f_169",
+     "in": 2524,
+     "out_est": 315,
+     "usd_batch": 0.001537
+    },
+    {
+     "uid": "699443fa_308",
+     "in": 3225,
+     "out_est": 696,
+     "usd_batch": 0.002514
+    }
+   ]
+  }
+ },
+ "tiers": {
+  "C37": {
+   "model": "gemini-3.7-flash",
+   "price_per_1m": {
+    "input": 0.75,
+    "output": 3.75
+   },
+   "ocr": {
+    "arm": "C37-ocr",
+    "pages": 24,
+    "tokens_per_char_out": 0.8977,
+    "usd_per_1k_batch": 4.632,
+    "usd_per_1k_standard": 9.264,
+    "per_page": [
+     {
+      "uid": "69920b97_271",
+      "in": 4282,
+      "out_est": 2110,
+      "usd_batch": 0.005562
+     },
+     {
+      "uid": "69a5ea9a_391",
+      "in": 4284,
+      "out_est": 1830,
+      "usd_batch": 0.005038
+     },
+     {
+      "uid": "69943ce1_628",
+      "in": 4310,
+      "out_est": 1849,
+      "usd_batch": 0.005083
+     },
+     {
+      "uid": "69943f7b_732",
+      "in": 4284,
+      "out_est": 1218,
+      "usd_batch": 0.00389
+     },
+     {
+      "uid": "69a5eaa3_611",
+      "in": 4310,
+      "out_est": 1315,
+      "usd_batch": 0.004082
+     },
+     {
+      "uid": "69943f85_836",
+      "in": 4325,
+      "out_est": 1244,
+      "usd_batch": 0.003954
+     },
+     {
+      "uid": "69943c78_154",
+      "in": 4284,
+      "out_est": 1475,
+      "usd_batch": 0.004372
+     },
+     {
+      "uid": "69943c68_564",
+      "in": 4310,
+      "out_est": 268,
+      "usd_batch": 0.002119
+     },
+     {
+      "uid": "69a5eaa8_205",
+      "in": 4293,
+      "out_est": 1514,
+      "usd_batch": 0.004449
+     },
+     {
+      "uid": "69943c94_125",
+      "in": 4284,
+      "out_est": 3038,
+      "usd_batch": 0.007303
+     },
+     {
+      "uid": "69a5f3e0_197",
+      "in": 4284,
+      "out_est": 2506,
+      "usd_batch": 0.006305
+     },
+     {
+      "uid": "6994400f_296",
+      "in": 4284,
+      "out_est": 1531,
+      "usd_batch": 0.004477
+     },
+     {
+      "uid": "69a5f3f0_555",
+      "in": 4310,
+      "out_est": 2162,
+      "usd_batch": 0.00567
+     },
+     {
+      "uid": "69a5f02c_183",
+      "in": 4298,
+      "out_est": 2657,
+      "usd_batch": 0.006594
+     },
+     {
+      "uid": "69a5f031_235",
+      "in": 4310,
+      "out_est": 2805,
+      "usd_batch": 0.006876
+     },
+     {
+      "uid": "6aaafbb1_300",
+      "in": 4310,
+      "out_est": 1237,
+      "usd_batch": 0.003936
+     },
+     {
+      "uid": "6aaafba3_151",
+      "in": 4310,
+      "out_est": 159,
+      "usd_batch": 0.001914
+     },
+     {
+      "uid": "69a5eb6b_205",
+      "in": 4310,
+      "out_est": 1908,
+      "usd_batch": 0.005194
+     },
+     {
+      "uid": "69a5e9f0_81",
+      "in": 4310,
+      "out_est": 235,
+      "usd_batch": 0.002057
+     },
+     {
+      "uid": "69a5eb4d_529",
+      "in": 4298,
+      "out_est": 1847,
+      "usd_batch": 0.005075
+     },
+     {
+      "uid": "69a5eb54_268",
+      "in": 4298,
+      "out_est": 1456,
+      "usd_batch": 0.004342
+     },
+     {
+      "uid": "69a5eb64_461",
+      "in": 4298,
+      "out_est": 1584,
+      "usd_batch": 0.004582
+     },
+     {
+      "uid": "69943c4f_169",
+      "in": 4325,
+      "out_est": 853,
+      "usd_batch": 0.003221
+     },
+     {
+      "uid": "699443fa_308",
+      "in": 4310,
+      "out_est": 1846,
+      "usd_batch": 0.005078
+     }
+    ]
+   },
+   "translation": {
+    "R": {
+     "arm": "T-C37-R",
+     "pages": 20,
+     "tokens_per_char_out": 0.2323,
+     "usd_per_1k_batch": 2.114,
+     "usd_per_1k_standard": 4.227,
+     "per_page": [
+      {
+       "uid": "69943ce1_628",
+       "in": 4054,
+       "out_est": 684,
+       "usd_batch": 0.002803
+      },
+      {
+       "uid": "69920b97_271",
+       "in": 4389,
+       "out_est": 581,
+       "usd_batch": 0.002735
+      },
+      {
+       "uid": "69a5eaa3_611",
+       "in": 2886,
+       "out_est": 420,
+       "usd_batch": 0.00187
+      },
+      {
+       "uid": "69a5ea9a_391",
+       "in": 3922,
+       "out_est": 683,
+       "usd_batch": 0.002751
+      },
+      {
+       "uid": "69943c68_564",
+       "in": 3314,
+       "out_est": 534,
+       "usd_batch": 0.002244
+      },
+      {
+       "uid": "69943c94_125",
+       "in": 2477,
+       "out_est": 441,
+       "usd_batch": 0.001756
+      },
+      {
+       "uid": "69a5eaa8_205",
+       "in": 2914,
+       "out_est": 514,
+       "usd_batch": 0.002057
+      },
+      {
+       "uid": "69a5f3e0_197",
+       "in": 2526,
+       "out_est": 473,
+       "usd_batch": 0.001834
+      },
+      {
+       "uid": "69943c78_154",
+       "in": 3120,
+       "out_est": 399,
+       "usd_batch": 0.001918
+      },
+      {
+       "uid": "6994400f_296",
+       "in": 2580,
+       "out_est": 483,
+       "usd_batch": 0.001873
+      },
+      {
+       "uid": "69a5f031_235",
+       "in": 2511,
+       "out_est": 498,
+       "usd_batch": 0.001875
+      },
+      {
+       "uid": "69a5eb6b_205",
+       "in": 3238,
+       "out_est": 529,
+       "usd_batch": 0.002206
+      },
+      {
+       "uid": "6aaafba3_151",
+       "in": 2734,
+       "out_est": 543,
+       "usd_batch": 0.002043
+      },
+      {
+       "uid": "6aaafbb1_300",
+       "in": 2834,
+       "out_est": 609,
+       "usd_batch": 0.002205
+      },
+      {
+       "uid": "69a5eb4d_529",
+       "in": 2587,
+       "out_est": 481,
+       "usd_batch": 0.001872
+      },
+      {
+       "uid": "69a5e9f0_81",
+       "in": 2793,
+       "out_est": 537,
+       "usd_batch": 0.002054
+      },
+      {
+       "uid": "69a5eb54_268",
+       "in": 2679,
+       "out_est": 524,
+       "usd_batch": 0.001987
+      },
+      {
+       "uid": "69a5eb64_461",
+       "in": 2598,
+       "out_est": 482,
+       "usd_batch": 0.001878
+      },
+      {
+       "uid": "69943c4f_169",
+       "in": 2969,
+       "out_est": 383,
+       "usd_batch": 0.001832
+      },
+      {
+       "uid": "699443fa_308",
+       "in": 3574,
+       "out_est": 607,
+       "usd_batch": 0.002478
+      }
+     ]
+    },
+    "K": {
+     "arm": "T-C37-K",
+     "pages": 20,
+     "tokens_per_char_out": 0.2392,
+     "usd_per_1k_batch": 2.165,
+     "usd_per_1k_standard": 4.331,
+     "per_page": [
+      {
+       "uid": "69920b97_271",
+       "in": 3595,
+       "out_est": 628,
+       "usd_batch": 0.002526
+      },
+      {
+       "uid": "69943ce1_628",
+       "in": 3699,
+       "out_est": 703,
+       "usd_batch": 0.002705
+      },
+      {
+       "uid": "69a5ea9a_391",
+       "in": 3767,
+       "out_est": 696,
+       "usd_batch": 0.002718
+      },
+      {
+       "uid": "69a5eaa3_611",
+       "in": 2906,
+       "out_est": 462,
+       "usd_batch": 0.001956
+      },
+      {
+       "uid": "69943c68_564",
+       "in": 2754,
+       "out_est": 560,
+       "usd_batch": 0.002083
+      },
+      {
+       "uid": "69a5eaa8_205",
+       "in": 2721,
+       "out_est": 586,
+       "usd_batch": 0.002119
+      },
+      {
+       "uid": "69943c94_125",
+       "in": 3070,
+       "out_est": 398,
+       "usd_batch": 0.001898
+      },
+      {
+       "uid": "69a5f3e0_197",
+       "in": 3279,
+       "out_est": 465,
+       "usd_batch": 0.002102
+      },
+      {
+       "uid": "6994400f_296",
+       "in": 3424,
+       "out_est": 451,
+       "usd_batch": 0.00213
+      },
+      {
+       "uid": "69943c78_154",
+       "in": 3028,
+       "out_est": 424,
+       "usd_batch": 0.00193
+      },
+      {
+       "uid": "69a5f031_235",
+       "in": 2771,
+       "out_est": 658,
+       "usd_batch": 0.002273
+      },
+      {
+       "uid": "6aaafbb1_300",
+       "in": 2760,
+       "out_est": 636,
+       "usd_batch": 0.002227
+      },
+      {
+       "uid": "69a5e9f0_81",
+       "in": 2770,
+       "out_est": 528,
+       "usd_batch": 0.002029
+      },
+      {
+       "uid": "6aaafba3_151",
+       "in": 2736,
+       "out_est": 567,
+       "usd_batch": 0.002089
+      },
+      {
+       "uid": "69a5eb6b_205",
+       "in": 3146,
+       "out_est": 430,
+       "usd_batch": 0.001986
+      },
+      {
+       "uid": "69a5eb64_461",
+       "in": 3340,
+       "out_est": 562,
+       "usd_batch": 0.002306
+      },
+      {
+       "uid": "69a5eb4d_529",
+       "in": 3143,
+       "out_est": 475,
+       "usd_batch": 0.002069
+      },
+      {
+       "uid": "69943c4f_169",
+       "in": 2524,
+       "out_est": 321,
+       "usd_batch": 0.001548
+      },
+      {
+       "uid": "69a5eb54_268",
+       "in": 3232,
+       "out_est": 508,
+       "usd_batch": 0.002165
+      },
+      {
+       "uid": "699443fa_308",
+       "in": 3225,
+       "out_est": 660,
+       "usd_batch": 0.002447
+      }
+     ]
+    }
+   }
+  },
+  "C36": {
+   "model": "gemini-3.6-flash",
+   "price_per_1m": {
+    "input": 0.75,
+    "output": 3.75
+   },
+   "ocr": {
+    "arm": "C36-ocr",
+    "pages": 24,
+    "tokens_per_char_out": 0.8977,
+    "usd_per_1k_batch": 5.897,
+    "usd_per_1k_standard": 11.793,
+    "per_page": [
+     {
+      "uid": "69920b97_271",
+      "in": 4282,
+      "out_est": 2352,
+      "usd_batch": 0.006016
+     },
+     {
+      "uid": "69a5ea9a_391",
+      "in": 4284,
+      "out_est": 2392,
+      "usd_batch": 0.006091
+     },
+     {
+      "uid": "69943ce1_628",
+      "in": 4310,
+      "out_est": 1944,
+      "usd_batch": 0.005261
+     },
+     {
+      "uid": "69943f7b_732",
+      "in": 4284,
+      "out_est": 1263,
+      "usd_batch": 0.003975
+     },
+     {
+      "uid": "69a5eaa3_611",
+      "in": 4310,
+      "out_est": 6547,
+      "usd_batch": 0.013892
+     },
+     {
+      "uid": "69943f85_836",
+      "in": 4325,
+      "out_est": 2265,
+      "usd_batch": 0.005869
+     },
+     {
+      "uid": "69943c78_154",
+      "in": 4284,
+      "out_est": 1283,
+      "usd_batch": 0.004012
+     },
+     {
+      "uid": "69943c68_564",
+      "in": 4310,
+      "out_est": 601,
+      "usd_batch": 0.002743
+     },
+     {
+      "uid": "69a5eaa8_205",
+      "in": 4293,
+      "out_est": 1197,
+      "usd_batch": 0.003854
+     },
+     {
+      "uid": "69943c94_125",
+      "in": 4284,
+      "out_est": 2681,
+      "usd_batch": 0.006633
+     },
+     {
+      "uid": "69a5f3e0_197",
+      "in": 4284,
+      "out_est": 2459,
+      "usd_batch": 0.006217
+     },
+     {
+      "uid": "6994400f_296",
+      "in": 4284,
+      "out_est": 2025,
+      "usd_batch": 0.005403
+     },
+     {
+      "uid": "69a5f3f0_555",
+      "in": 4310,
+      "out_est": 5150,
+      "usd_batch": 0.011272
+     },
+     {
+      "uid": "69a5f02c_183",
+      "in": 4298,
+      "out_est": 2747,
+      "usd_batch": 0.006762
+     },
+     {
+      "uid": "69a5f031_235",
+      "in": 4310,
+      "out_est": 2388,
+      "usd_batch": 0.006094
+     },
+     {
+      "uid": "6aaafbb1_300",
+      "in": 4310,
+      "out_est": 1358,
+      "usd_batch": 0.004163
+     },
+     {
+      "uid": "6aaafba3_151",
+      "in": 4310,
+      "out_est": 3056,
+      "usd_batch": 0.007346
+     },
+     {
+      "uid": "69a5eb6b_205",
+      "in": 4310,
+      "out_est": 1812,
+      "usd_batch": 0.005014
+     },
+     {
+      "uid": "69a5e9f0_81",
+      "in": 4310,
+      "out_est": 1238,
+      "usd_batch": 0.003938
+     },
+     {
+      "uid": "69a5eb4d_529",
+      "in": 4298,
+      "out_est": 1690,
+      "usd_batch": 0.004781
+     },
+     {
+      "uid": "69a5eb54_268",
+      "in": 4298,
+      "out_est": 1617,
+      "usd_batch": 0.004644
+     },
+     {
+      "uid": "69a5eb64_461",
+      "in": 4298,
+      "out_est": 1608,
+      "usd_batch": 0.004627
+     },
+     {
+      "uid": "69943c4f_169",
+      "in": 4325,
+      "out_est": 1066,
+      "usd_batch": 0.003621
+     },
+     {
+      "uid": "699443fa_308",
+      "in": 4310,
+      "out_est": 4092,
+      "usd_batch": 0.009289
+     }
+    ]
+   },
+   "translation": {
+    "R": {
+     "arm": "T-C36-R",
+     "pages": 20,
+     "tokens_per_char_out": 0.2323,
+     "usd_per_1k_batch": 2.091,
+     "usd_per_1k_standard": 4.182,
+     "per_page": [
+      {
+       "uid": "69943ce1_628",
+       "in": 4054,
+       "out_est": 730,
+       "usd_batch": 0.002889
+      },
+      {
+       "uid": "69a5ea9a_391",
+       "in": 3922,
+       "out_est": 625,
+       "usd_batch": 0.002643
+      },
+      {
+       "uid": "69920b97_271",
+       "in": 4389,
+       "out_est": 645,
+       "usd_batch": 0.002855
+      },
+      {
+       "uid": "69943c78_154",
+       "in": 3120,
+       "out_est": 433,
+       "usd_batch": 0.001982
+      },
+      {
+       "uid": "69a5eaa3_611",
+       "in": 2886,
+       "out_est": 389,
+       "usd_batch": 0.001812
+      },
+      {
+       "uid": "69943c68_564",
+       "in": 3314,
+       "out_est": 527,
+       "usd_batch": 0.002231
+      },
+      {
+       "uid": "69943c94_125",
+       "in": 2477,
+       "out_est": 444,
+       "usd_batch": 0.001761
+      },
+      {
+       "uid": "69a5eaa8_205",
+       "in": 2914,
+       "out_est": 500,
+       "usd_batch": 0.00203
+      },
+      {
+       "uid": "69a5f031_235",
+       "in": 2511,
+       "out_est": 470,
+       "usd_batch": 0.001823
+      },
+      {
+       "uid": "6994400f_296",
+       "in": 2580,
+       "out_est": 530,
+       "usd_batch": 0.001961
+      },
+      {
+       "uid": "69a5f3e0_197",
+       "in": 2526,
+       "out_est": 443,
+       "usd_batch": 0.001778
+      },
+      {
+       "uid": "6aaafbb1_300",
+       "in": 2834,
+       "out_est": 590,
+       "usd_batch": 0.002169
+      },
+      {
+       "uid": "6aaafba3_151",
+       "in": 2734,
+       "out_est": 566,
+       "usd_batch": 0.002086
+      },
+      {
+       "uid": "69a5eb6b_205",
+       "in": 3238,
+       "out_est": 485,
+       "usd_batch": 0.002124
+      },
+      {
+       "uid": "69a5eb4d_529",
+       "in": 2587,
+       "out_est": 407,
+       "usd_batch": 0.001733
+      },
+      {
+       "uid": "69a5e9f0_81",
+       "in": 2793,
+       "out_est": 537,
+       "usd_batch": 0.002054
+      },
+      {
+       "uid": "69a5eb54_268",
+       "in": 2679,
+       "out_est": 492,
+       "usd_batch": 0.001927
+      },
+      {
+       "uid": "69a5eb64_461",
+       "in": 2598,
+       "out_est": 466,
+       "usd_batch": 0.001848
+      },
+      {
+       "uid": "69943c4f_169",
+       "in": 2969,
+       "out_est": 320,
+       "usd_batch": 0.001713
+      },
+      {
+       "uid": "699443fa_308",
+       "in": 3574,
+       "out_est": 563,
+       "usd_batch": 0.002396
+      }
+     ]
+    },
+    "K": {
+     "arm": "T-C36-K",
+     "pages": 20,
+     "tokens_per_char_out": 0.2392,
+     "usd_per_1k_batch": 2.187,
+     "usd_per_1k_standard": 4.375,
+     "per_page": [
+      {
+       "uid": "69943ce1_628",
+       "in": 3699,
+       "out_est": 701,
+       "usd_batch": 0.002701
+      },
+      {
+       "uid": "69a5ea9a_391",
+       "in": 3767,
+       "out_est": 650,
+       "usd_batch": 0.002631
+      },
+      {
+       "uid": "69920b97_271",
+       "in": 3595,
+       "out_est": 677,
+       "usd_batch": 0.002618
+      },
+      {
+       "uid": "69943c78_154",
+       "in": 3028,
+       "out_est": 426,
+       "usd_batch": 0.001934
+      },
+      {
+       "uid": "69943c68_564",
+       "in": 2754,
+       "out_est": 532,
+       "usd_batch": 0.00203
+      },
+      {
+       "uid": "69a5eaa3_611",
+       "in": 2906,
+       "out_est": 401,
+       "usd_batch": 0.001842
+      },
+      {
+       "uid": "69943c94_125",
+       "in": 3070,
+       "out_est": 441,
+       "usd_batch": 0.001978
+      },
+      {
+       "uid": "69a5eaa8_205",
+       "in": 2721,
+       "out_est": 588,
+       "usd_batch": 0.002123
+      },
+      {
+       "uid": "6994400f_296",
+       "in": 3424,
+       "out_est": 717,
+       "usd_batch": 0.002628
+      },
+      {
+       "uid": "69a5f3e0_197",
+       "in": 3279,
+       "out_est": 455,
+       "usd_batch": 0.002083
+      },
+      {
+       "uid": "69a5f031_235",
+       "in": 2771,
+       "out_est": 568,
+       "usd_batch": 0.002104
+      },
+      {
+       "uid": "6aaafbb1_300",
+       "in": 2760,
+       "out_est": 549,
+       "usd_batch": 0.002064
+      },
+      {
+       "uid": "6aaafba3_151",
+       "in": 2736,
+       "out_est": 607,
+       "usd_batch": 0.002164
+      },
+      {
+       "uid": "69a5eb6b_205",
+       "in": 3146,
+       "out_est": 536,
+       "usd_batch": 0.002185
+      },
+      {
+       "uid": "69a5e9f0_81",
+       "in": 2770,
+       "out_est": 516,
+       "usd_batch": 0.002006
+      },
+      {
+       "uid": "69a5eb4d_529",
+       "in": 3143,
+       "out_est": 388,
+       "usd_batch": 0.001906
+      },
+      {
+       "uid": "69a5eb54_268",
+       "in": 3232,
+       "out_est": 547,
+       "usd_batch": 0.002238
+      },
+      {
+       "uid": "69a5eb64_461",
+       "in": 3340,
+       "out_est": 505,
+       "usd_batch": 0.002199
+      },
+      {
+       "uid": "699443fa_308",
+       "in": 3225,
+       "out_est": 751,
+       "usd_batch": 0.002618
+      },
+      {
+       "uid": "69943c4f_169",
+       "in": 2524,
+       "out_est": 399,
+       "usd_batch": 0.001695
+      }
+     ]
+    }
+   }
+  }
+ }
+}

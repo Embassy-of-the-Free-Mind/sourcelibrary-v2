@@ -40,10 +40,10 @@ const SHELF = 'scripts/catalog-coverage/eternity-shelf-5513.json';
 
 // status: done | running | next | blocked. cost_usd: the next action's cost where it has one.
 const STATUS = {
-  'derge-tengyur': { status: 'running', owner_issue: 5497,
-    done: '213 volumes imported hidden and held; 128,369 of 128,639 pages carry the Esukhia public-domain text, aligned folio by folio to the BDRC scans. The full run drafted English for 110,952 pages (187 volumes) with gemini-3-flash-preview, one page per request, for about $195; an unreviewed machine draft, with about 2 to 5 reversed statements per 100 pages measured against 84000.',
-    next_action: 'Drafting the last 26 volumes (17,400 pages: the end of the tantra commentaries, grammar, medicine, miscellany and the catalogue; about $31, approved 4 October). The volumes are published as an unreviewed machine draft only once the reader shows the licence and the draft label (#5571).',
-    cost_usd: 31 },
+  'derge-tengyur': { status: 'running', owner_issue: 5800,
+    done: 'All 213 volumes are public as an AI translation not yet reviewed by a scholar, with the licence on every page (#5497). 128,369 of 128,639 pages carry the Esukhia public-domain text, aligned folio by folio to the BDRC scans, and 128,333 of them have draft English from gemini-3-flash-preview, one page per request, for about $233. About 2 to 5 statements per 100 pages are reversed, measured against 84000. 721 invented heading lines were removed from 569 pages, and each volume lists its texts with Tohoku numbers (3,363 texts).',
+    next_action: 'Tibetologists read 30 pages of the draft through Eternity, the first scholar review (#5800).',
+    cost_usd: 0 },
   'derge-kangyur': { status: 'running', owner_issue: 5665,
     done: '103 volumes imported from BDRC (W4CZ5369, the copy the Esukhia text transcribes), held and hidden; 62,375 pages carry the Esukhia public-domain text, aligned folio by folio, in every volume but one. The 40 texts 84000 lists as not begun have a draft English (1,835 pages, $3.39).',
     next_action: 'Fill the Prajñāpāramitā volumes still short of text (vol. 20 and parts of vols. 15, 16, 19 and 24, about 2,600 pages), which needs a new alignment rule; correct the stored 84000 field for texts that run across volumes before pricing a draft English for the rest of what 84000 has not translated. Publication waits on the reader showing the licence and draft label (#5571).',
@@ -98,6 +98,22 @@ const STATUS = {
     next_action: 'Obtain the e-text and its terms from the Haeinsa / Dongguk project.', cost_usd: null },
   kanripo: { status: 'next', owner_issue: 5568,
     next_action: 'Our Siku Quanshu scans were read with PaddleOCR-VL instead of being replaced by the Kanripo typed text (decided 2 October, #5547; 7,006 books, 1,033,868 pages written by 5 October, #5600): 36 of 40 pilot books aligned, but on 28% of pages Kanripo\'s page break is a column or more off the scan. Kanripo serves as a check on that OCR (6.6% of pages flagged for review). Using it as a second text layer for up to 7,001 books waits on its licence: the Kanripo organisation states CC BY-SA 4.0, and no text states its own (#5568).',
+    cost_usd: null },
+  // Latin and Greek (#6220). None has started; the draft cost is the gap map's.
+  'patrologia-latina': { status: 'next', owner_issue: 6220,
+    next_action: 'Not started. Corpus Corporum allows non-commercial reuse of its texts, and says they come from various sources, so each text\'s source needs checking before we publish it. Next would be matching the typed text to the Migne volumes we hold.',
+    cost_usd: null },
+  'camena-poemata': { status: 'next', owner_issue: 6012,
+    next_action: 'Not started. CAMENA\'s typed texts are CC BY-SA and sit beside its own scans of the same printed books. #6012 plans to load CAMENA as a reference text for our Neo-Latin books.',
+    cost_usd: null },
+  'perseus-latin': { status: 'next', owner_issue: 6220,
+    next_action: 'Not started. Most of it already has English in Perseus itself, and printed translations such as the Loeb volumes are not counted, so the real gap is smaller than shown.',
+    cost_usd: null },
+  'perseus-greek': { status: 'next', owner_issue: 6220,
+    next_action: 'Not started. Most of it already has English in Perseus itself, and printed translations such as the Loeb volumes are not counted, so the real gap is smaller than shown.',
+    cost_usd: null },
+  'first1k-greek': { status: 'next', owner_issue: 6220,
+    next_action: 'Not started. Its repository has English for few of its works (Church Fathers, philosophers and scientists after the classical period), and its licence is CC BY-SA. Printed translations are not counted.',
     cost_usd: null },
 };
 
@@ -182,6 +198,10 @@ const TRADITIONS = [
   { id: 'sufi', name: 'Sufi texts (Arabic and Persian)', sets: ['openiti_sufi'], rows: ['openiti-sufi'] },
   { id: 'persian-poetry', name: 'Persian poetry', sets: ['ganjoor'], rows: ['ganjoor'] },
   { id: 'mongolian', name: 'Mongolian Kanjur', sets: ['mongolian_kanjur'], rows: ['mongolian-kanjur'] },
+  // #6220. Latin is picked by collection, since all ≈52K Latin books would be most of the library;
+  // Greek is every Greek-language book. Latin books in `kabbalah` are also counted under Kabbalah.
+  { id: 'latin', name: 'Latin: Hermetica, alchemy, Kabbalah and natural philosophy', sets: ['latin'], rows: ['patrologia-latina', 'camena-poemata', 'perseus-latin'] },
+  { id: 'greek', name: 'Greek', sets: ['greek'], rows: ['perseus-greek', 'first1k-greek'] },
 ];
 // Which engine read each page and which model drafted its English, per book, from the page
 // records themselves (ocr.model / ocr.source, translation.model). Read-only; one pass over the
@@ -191,7 +211,9 @@ const tradBooks = TRADITIONS.map((t) => {
   for (const k of t.sets) for (const b of sets[k].books) byId.set(b.id, b);
   return [...byId.values()];
 });
-const allIds = [...new Set(tradBooks.flat().map((b) => b.id))];
+// Only books whose stored counters show text or English have engines to tally; skipping the rest keeps
+// the pass off the ≈5M scanned-only Latin and Greek pages (#6220).
+const allIds = [...new Set(tradBooks.flat().filter((b) => (b.pages_ocr || 0) + (b.pages_translated || 0) > 0).map((b) => b.id))];
 const engineRows = [];
 for (let i = 0; i < allIds.length; i += 25) engineRows.push(...await db.collection('pages').aggregate([
   { $match: { book_id: { $in: allIds.slice(i, i + 25) } } },
@@ -240,6 +262,9 @@ const traditions = TRADITIONS.map((t, ti) => {
   };
 });
 
+// The Latin row is a subset by collection; the page says how large the whole Latin shelf is.
+const latin_books_all = await db.collection('books').countDocuments({ language: 'Latin' });
+
 await mc.close();
 
 const missing = Object.keys(STATUS).filter((k) => !map.rows.some((r) => r.id === k));
@@ -253,10 +278,12 @@ writeFileSync(OUT, JSON.stringify({
     live_books: 'visible && pages_count > 0', pipeline_held: 'books under a pipeline hold', readable_books: 'readable_in_english (translation_state)', pages_with_text: 'sum of pages_ocr',
     eternity_shelf: 'the 278-book Eternity reading list (list file); readable = readable_in_english recomputed from pages',
     tengyur_draft: 'Derge Tengyur volumes: pages with text / with draft English counted on pages; per_volume = [vol, pages_with_text, pages_translated]; spend_usd = type translation usage rows on these books, both stores',
+    latin_books_all: 'every book with language=Latin (the Latin tradition row counts four collections only)',
     traditions: 'books held per tradition, each counted once; pages_scanned/transcribed/translated = sums of pages_count/pages_ocr/pages_translated; canon_page_equivalents = the open typed canon (gap_map_rows) in base chars ÷ our average base chars per page in that language; ocr_engines / translation_models = [model, pages] counted on pages with text / with English (ocr.model, else ocr.source; translation.model); book_pages = [id, title, public, scanned, transcribed, translated]',
   },
   corpora,
   traditions,
+  latin_books_all,
   eternity_shelf,
   tengyur_draft,
 }, null, 1) + '\n');

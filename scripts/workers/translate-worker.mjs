@@ -52,6 +52,7 @@ import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-r
 import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
 import { englishSource, sameLanguageTranslation } from '../lib/same-language.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
+import { isPaused } from '../lib/pause.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { phase4Lane, REALTIME_PRIORITY_FLOOR } from '../lib/translate-batch-chained.mjs';
@@ -72,6 +73,25 @@ startWorkerBeacon(import.meta.url);
 let SCOPE_IDS = null;          // string[] of allowlisted book ids, or null
 let SCOPE_SET = null;          // Set form for cheap membership tests
 let SCOPE_FILTER = {};         // { id: { $in: SCOPE_IDS } } for collision-free queries
+
+// A run lasts up to 45 minutes, so the pause read at start is not enough: a pause set mid-run
+// must stop the drain at the next batch, not after the deadline (#5492 — the drill measures a
+// frozen CALL COUNT within ten minutes). Re-read at most once a minute; a read error keeps the
+// last answer rather than inventing one.
+const PAUSE_RECHECK_MS = 60 * 1000;
+let _pauseCheckedAt = 0;
+let _pauseReason = null;
+async function translatePausedMidRun(db) {
+  if (Date.now() - _pauseCheckedAt < PAUSE_RECHECK_MS) return _pauseReason;
+  _pauseCheckedAt = Date.now();
+  try {
+    const c = await db.collection('system_config').findOne({ _id: 'processing_control' });
+    _pauseReason = isPaused(c, 'translate') ? 'translate step paused' : (!shouldBypassPause(c) ? 'pipeline paused' : null);
+  } catch (e) {
+    console.log(`[TRANSLATE] pause re-check failed (${e.message}) — keeping the last answer`);
+  }
+  return _pauseReason;
+}
 
 // ── Config ──
 const CONCURRENCY = 40;          // Max books translating simultaneously
@@ -825,6 +845,13 @@ async function processBook(db, book, job, globalCounter, deadline) {
       break;
     }
 
+    // A pause set since the run started stops the drain here, before the next paid batch.
+    const pausedNow = await translatePausedMidRun(db);
+    if (pausedNow) {
+      console.log(`  [${label}] ${pausedNow} mid-run, parking`);
+      break;
+    }
+
     // Check consecutive errors
     if (consecutiveErrors >= MAX_CONSECUTIVE_ERRORS) {
       console.log(`  [${label}] ${MAX_CONSECUTIVE_ERRORS} consecutive errors, stopping`);
@@ -1255,6 +1282,13 @@ async function selfDispatch(db, limit) {
   // Envelope-lane dispatch (#4540) is honored only via the module-level
   // SCOPE_FILTER set by the main-run gate — if the envelope opened but this
   // call's confinement isn't in place, refuse rather than dispatch unconfined.
+  // Self-dispatch creates paid work, so it re-reads the pause itself rather than trusting the
+  // read at run start: it is also called mid-run, up to 45 minutes later (#5492).
+  const _sdControl = await db.collection('system_config').findOne({ _id: 'processing_control' });
+  if (isPaused(_sdControl, 'translate') || !shouldBypassPause(_sdControl)) {
+    console.log('[TRANSLATE] self-dispatch: translate step or pipeline paused — dispatching nothing.');
+    return [];
+  }
   const _sdGate = await budgetAllowsDispatchScoped(db, 'translate-self-dispatch');
   if (!_sdGate.allowed) return [];
   if (_sdGate.envelopeIds && !SCOPE_IDS) {
@@ -1432,12 +1466,13 @@ async function main() {
 
   // Check pause status — no auto-resume (scheduler owns resume decisions)
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
-  const translationPhasePaused = control?.paused_phases?.includes('translation');
-  // Selective unpause: a configured scope (allow_book_ids/allow_collections)
-  // lets scoped books translate while globally paused. The translation-phase
-  // pause still hard-stops regardless of scope.
+  // The step key, through the one vocabulary (#5492): 'translate', or a legacy alias
+  // ('translation', 4, 5). Selective unpause: a configured scope (allow_book_ids/
+  // allow_collections) lets scoped books translate while globally paused. The step pause
+  // still hard-stops regardless of scope.
+  const translationPhasePaused = isPaused(control, 'translate');
   if (translationPhasePaused || !shouldBypassPause(control)) {
-    const reason = translationPhasePaused ? 'translation phase paused' : 'pipeline paused';
+    const reason = translationPhasePaused ? 'translate step paused' : 'pipeline paused';
     const pauseAgeMs = control.paused_at ? Date.now() - new Date(control.paused_at).getTime() : Infinity;
     console.log(`[TRANSLATE] ${reason} (${Math.round(pauseAgeMs / 60000)}min ago), exiting`);
     await db.collection('cron_runs').insertOne({
@@ -1674,6 +1709,8 @@ async function main() {
 
   // Fetch more books for the queue (excluding already processed)
   async function fetchMoreBooks(limit) {
+    // Backfill is the drain: a pause set mid-run stops it taking more books (#5492).
+    if (await translatePausedMidRun(db)) return [];
     const excludeIds = [...processedIds];
     const excludeSet = new Set(excludeIds);
     const fresh = await db.collection('books')

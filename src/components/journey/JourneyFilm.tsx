@@ -1,12 +1,14 @@
 'use client';
 
 /**
- * The journey film (#5861): one translated page, from the scan to a citable
- * English page, in four parts. Ported from the approved prototype
+ * The journey film (#5861, #6074): one translated page, from the scan to a
+ * citable English page and the checks that run on it once it is published,
+ * in the six steps of Figure 1 on /how-it-works. Ported from the approved prototype
  * (feat/journey-film-prototype, docs/prototypes/journey-film/) and driven by
  * `JourneyData`, so the same component renders any translated page.
  *
- * Controls: Space play/pause, ←/→ chapters, H hide the chrome, F fullscreen.
+ * Controls: Space play/pause, ←/→ chapters, H hide the chrome, F fullscreen; the
+ * speed button cycles 1×, 1.5×, 2×.
  * Keys act only while the film is on screen. Reduced motion: the film starts
  * paused and the camera does not sway. three.js is imported on mount, so it
  * is never part of another route's bundle.
@@ -28,8 +30,9 @@ const tiro = Tiro_Devanagari_Sanskrit({ weight: '400', subsets: ['devanagari', '
 
 const ICON_PLAY = <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" /></svg>;
 const ICON_PAUSE = <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 2h3v12h-3zm6 0h3v12h-3z" /></svg>;
-const SCREEN_KEYS: ScreenKey[] = ['ocr', 'english', 'trace', 'draft', 'overview', 'cite'];
+const SCREEN_KEYS: ScreenKey[] = ['ocr', 'english', 'search', 'links', 'overview', 'cite', 'trace', 'checks', 'draft'];
 
+const SPEEDS = [1, 1.5, 2];
 const fmt = (x: number) => `${Math.floor(x / 60)}:${String(Math.floor(x % 60)).padStart(2, '0')}`;
 
 export default function JourneyFilm({ data }: { data: JourneyData }) {
@@ -71,14 +74,21 @@ export default function JourneyFilm({ data }: { data: JourneyData }) {
   const [loading, setLoading] = useState(true);
   const [playing, setPlayingState] = useState(false);
   const [clean, setClean] = useState(false);
+  const [speed, setSpeedState] = useState(1);
 
   // Mutable film state, read by the frame loop.
-  const st = useRef({ T: 0, playing: false, dragging: false, last: 0, visible: true, shownCap: '', shownCard: '', shownScreen: '' as ScreenKey | '', swapTimer: 0 as ReturnType<typeof setTimeout> | 0 });
+  const st = useRef({ T: 0, speed: 1, playing: false, dragging: false, last: 0, visible: true, shownCap: '', shownCard: '', shownScreen: '' as ScreenKey | '', swapTimer: 0 as ReturnType<typeof setTimeout> | 0 });
 
   const setPlaying = (p: boolean) => {
     st.current.playing = p;
     st.current.last = performance.now();
     setPlayingState(p);
+  };
+  /** Playback speed, cycled by the speed button: 1×, 1.5×, 2×. */
+  const cycleSpeed = () => {
+    const next = SPEEDS[(SPEEDS.indexOf(st.current.speed) + 1) % SPEEDS.length];
+    st.current.speed = next;
+    setSpeedState(next);
   };
   const seek = (x: number) => { st.current.T = clamp(x, 0, tl.total - .001); };
 
@@ -118,7 +128,13 @@ export default function JourneyFilm({ data }: { data: JourneyData }) {
         col.style.transform = 'none';
         const anchor = col.querySelector<HTMLElement>('[data-hl]') || col.querySelector<HTMLElement>('[data-anchor]');
         const colH = col.parentElement?.clientHeight || H;
-        if (anchor) col.style.transform = `translateY(${-Math.max(0, anchor.offsetTop - colH * .3)}px)`;
+        if (!anchor) return;
+        // "fit": move only as far as it takes to bring the highlight into view (lists);
+        // otherwise set the highlight a third of the way down (running text).
+        const shift = col.dataset.scroll === 'fit'
+          ? anchor.offsetTop + anchor.offsetHeight - colH * .92
+          : anchor.offsetTop - colH * .3;
+        col.style.transform = `translateY(${-Math.max(0, shift)}px)`;
       });
       const base = el.getBoundingClientRect();
       let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
@@ -195,7 +211,10 @@ export default function JourneyFilm({ data }: { data: JourneyData }) {
         const tx = screenText(data, g.screen);
         setCaption(`s:${g.screen}`, `Chapter ${g.ch + 1} · ${step.short}`, tx.title, tx.body);
       } else if (!g.card && !g.end) {
-        setCaption(`c:${g.ch}`, `Chapter ${g.ch + 1} · ${step.short}`, step.title, step.body);
+        // Connect's full text is spread over the two screens that follow; over the
+        // scene, the one-line summary keeps the orbit of cards in view on a phone.
+        const body = step.key === 'connect' ? parts.find(p => p.steps.includes('connect'))?.body ?? step.body : step.body;
+        setCaption(`c:${g.ch}`, `Chapter ${g.ch + 1} · ${step.short}`, step.title, body);
       }
       if (screenRef.current) {
         screenRef.current.style.opacity = String(so);
@@ -225,7 +244,7 @@ export default function JourneyFilm({ data }: { data: JourneyData }) {
       S0.last = now;
       if (S0.visible) {
         if (S0.playing && !S0.dragging) {
-          S0.T += dt;
+          S0.T += dt * S0.speed;
           if (S0.T >= tl.total) S0.T = 0;
         }
         const m = segAt(tl, S0.T);
@@ -424,6 +443,9 @@ export default function JourneyFilm({ data }: { data: JourneyData }) {
           ))}
         </div>
         <span ref={timeRef} className={s.time}>0:00</span>
+        <button className={`${s.btn} ${s.speed}`} type="button" aria-label={`Playback speed ${speed}×`} title="Playback speed" onClick={cycleSpeed}>
+          {speed}×
+        </button>
         <button className={s.btn} type="button" aria-label={clean ? 'Show controls' : 'Hide controls'} title="Hide controls (H)" onClick={() => setClean(v => !v)}>
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3C4 3 1.5 6.2 1 8c.5 1.8 3 5 7 5s6.5-3.2 7-5c-.5-1.8-3-5-7-5zm0 8a3 3 0 110-6 3 3 0 010 6z" /></svg>
         </button>

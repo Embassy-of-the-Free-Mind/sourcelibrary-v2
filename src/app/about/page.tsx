@@ -81,7 +81,7 @@ export default async function AboutPage() {
         </p>
 
         <p className="text-secondary mb-12 leading-relaxed">
-          And this is about more than what AI was trained on. Give a capable model real access to primary sources at scale &mdash; the actual texts, every line checkable against the original scan &mdash; and it becomes a serious instrument of research and synthesis. Ask a question the whole world has asked &mdash; <em>what is mind?</em> &mdash; and it can set <a href="/q/BhIfljO2ApigrcHcTeD" className="text-accent-rust hover:underline">Plato&apos;s Greek</a> beside <a href="/q/BgRsFohtofMtBqdNmop" className="text-accent-rust hover:underline">Śaṅkara&apos;s Sanskrit</a>, a Tibetan master&apos;s <a href="/q/BijCMw143jlgk5jBxGl" className="text-accent-rust hover:underline">pointing-out instructions</a>, and <a href="/q/BilNwaKFiK2xSzX6BW5" className="text-accent-rust hover:underline">Xunzi&apos;s Chinese</a> &mdash; quoting each and linking to the page it sits on. Source Library is built for exactly that: a library both people and AI can actually read and cite, open through a public API and MCP.
+          And this is about more than what AI was trained on. Give a capable model real access to primary sources at scale &mdash; the actual texts, every line checkable against the original scan &mdash; and it becomes a serious instrument of research and synthesis. Ask a question the whole world has asked &mdash; <em>what is mind?</em> &mdash; and it can set <a href="/q/BhIfljO2ApigrcHcTeD" className="text-accent-rust hover:underline">Plato&apos;s Greek</a> beside <a href="/q/BgRsFohtofMtBqdNmop" className="text-accent-rust hover:underline">Śaṅkara&apos;s Sanskrit</a>, a Tibetan master&apos;s <a href="/q/BijCMw143jlgk5jBxGl" className="text-accent-rust hover:underline">pointing-out instructions</a>, and Xunzi&apos;s Chinese &mdash; quoting each and linking to the page it sits on. Source Library is built for exactly that: a library both people and AI can actually read and cite, open through a public API and MCP.
         </p>
 
         {/* A glimpse — show, don't tell */}
@@ -126,6 +126,10 @@ export default async function AboutPage() {
             </p>
           </div>
         </div>
+        <p className="text-lg text-secondary -mt-10 mb-16">
+          Every step, followed on one real page from the scan to the checks that run after it is published:{' '}
+          <Link href="/how-it-works" className="text-accent-rust hover:underline">How Source Library works</Link>.
+        </p>
 
         {/* Historical Context */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -322,6 +326,12 @@ export default async function AboutPage() {
 
       {/* Secondary links */}
       <div className="flex flex-wrap gap-4 pt-8 border-t border-border-light">
+        <Link
+          href="/how-it-works"
+          className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
+        >
+          How it works
+        </Link>
         <Link
           href="/census"
           className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"

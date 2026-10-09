@@ -1,0 +1,573 @@
+[
+  {
+    "book_id": "69bd0afdb01b17638a098546",
+    "slot": 1,
+    "title": "禪宗頌古聯珠通集 (Anthology of Chan Verse Commentaries on Koans, 40 juan)",
+    "tradition": "chan-zen",
+    "shelf_fit": "fits",
+    "shelf_note": "Faying's Song compilation with Puhui's Yuan continuation, a core gongan-verse anthology. Pages show the Wanli-period 支那撰述 canon blocks. Squarely Chan.",
+    "rights_flag": null,
+    "structure_note": "Each image is an open spread (the b-face of one leaf and the a-face of the next), so every record covers two half-leaves. printed_backsteps 67 and repeats 165 against only 204 pages with a printed number fit spreads that carry two folio numbers, plus juan restarts (p836 ends juan 35 and starts juan 36). This looks like how the scan is cut, not a broken order. OCR on 952 of 956 pages. The translated count disagrees (950 counted vs pages_translated field 938): a stale counter.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 76,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<header>選佛譜</header>",
+            "image": "撰述 (block-name in the right margin), 支那 (left margin)",
+            "problem": "header invented: no 選佛譜 on the leaf",
+            "severity": "moderate",
+            "class": "O11"
+          },
+          {
+            "ocr": "樓閣前日是解空無相無作之所住處",
+            "image": "樓閣前曰是解空無相無作之所住處",
+            "problem": "曰 (said) read as 日 (day)",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "前日是解空無相無作之所住處",
+            "english": "The previous day was the place where one dwells in the emptiness, the signless, and the effortless",
+            "problem": "carries the 日/曰 misread. The source has Sudhana say 'this is where those who understand emptiness, signlessness and non-action dwell'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "或菴體",
+            "english": "Huotian Ti",
+            "problem": "wrong romanisation: Huo'an Ti",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 389,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<meta>... Page number in margin: 頁二百九十五.</meta>",
+            "image": "margin reads 頌古聯珠通集卷十一 / 十六",
+            "problem": "folio number invented in the meta. The header also says 卷十, where the margin shows 卷十一",
+            "severity": "moderate",
+            "class": "O15"
+          },
+          {
+            "ocr": "南叟蕑",
+            "image": "南叟莪 (unclear small type)",
+            "problem": "attribution name glyph uncertain",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "笑中棄却竹林寺",
+            "english": "In the laughter, he abandoned the Bamboo Grove Temple",
+            "problem": "literal and obscure. Readable, but the line's sense is lost",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 543,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "<gloss>增目</gloss> placed before 單于自負…",
+            "image": "boxed 增收 stands before 德山因僧來參 and before 德山上堂",
+            "problem": "editorial marker 增收 misread as 增目 and attached to the wrong entry",
+            "severity": "moderate",
+            "class": "O12"
+          },
+          {
+            "ocr": "濟便打 [no 頌曰]",
+            "image": "濟便打　頌曰",
+            "problem": "'verse says' dropped before the verses",
+            "severity": "minor"
+          },
+          {
+            "ocr": "背如紅玉一青衣",
+            "image": "觜如紅玉一青衣",
+            "problem": "beak (觜) read as back (背)",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "未免全身",
+            "image": "未免陷全身",
+            "problem": "陷 dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "背如紅玉一青衣",
+            "english": "its back is like red jade, a green-clad servant",
+            "problem": "carries the misread: the parrot's beak is red jade",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "然雖如是德山大侶藏盡楚天月猶存漢地星",
+            "english": "the great companions of Deshan have hidden everything. The moon in the Chu sky still contains the stars of the Han land",
+            "problem": "misparsed: 大似 'Deshan greatly resembles one who hides the Chu moon, yet the Han stars remain'. The English is incoherent",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "translation opens with an invented heading '# Deshan' and a visible <meta> line ('The text discusses the encounter between the monk Luopu, his master Linji…')",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 836,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "[absent]",
+            "image": "boxed colophon: 刑部郎中金壇于玉立施貲刻此禪宗頌古聯珠通集第三十五卷 … 長洲徐普書 上元李再興刻 … 萬曆丁酉仲春徑山…禪寺識",
+            "problem": "whole printer's colophon dropped. It dates the edition (Wanli dingyou, 1597) and names donor, scribe and carver",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "師曰棲霞",
+            "image": "師曰樝度",
+            "problem": "place name normalised to the familiar Qixia. The page's own 五燈會元 note right below says 查度",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "師曰秋",
+            "image": "師曰去秋",
+            "problem": "去 'last' dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "南嶽下後第七世",
+            "english": "seventh generation after Nanyang [Huizhong]",
+            "problem": "南嶽 is Nanyue (Huairang). 'Nanyang [Huizhong]' is a wrong figure added in brackets",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "棲霞",
+            "english": "Xixia",
+            "problem": "carries the OCR substitution and romanises it wrongly (Qixia)",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      76,
+      389
+    ],
+    "reader_summary": "This is the Song–Yuan anthology of verse comments on Chan gongan, scanned at the Library of Congress from a Wanli-era printing, with two half-leaves per image. The transcription follows the right text closely line by line, but it misses editorial markers and a whole colophon, and it sometimes slips a character that changes the sense. The English reads well and follows the verse. Names and a few lines need checking against the image.",
+    "book_verdict": "A sound and important witness with mostly accurate transcription. On-sight problems are the dropped 1597 colophon, an invented header and folio number, and a few meaning-changing misreads carried into the English."
+  },
+  {
+    "book_id": "6a3c798c01fe4f593c2107fe",
+    "slot": 2,
+    "title": "石門文字禪·卷二十九~卷三十 (vol 11)",
+    "tradition": "chan-zen",
+    "shelf_fit": "fits",
+    "shelf_note": "Juemin Huihong's (德洪) collected writings, from the Siku Quanshu manuscript (欽定四庫全書 in the margins). This is Chan literary prose: letters, stupa inscriptions and sacrificial texts. The catalogue's only collection, 'universallibrary', is an IA bucket, not a curated shelf.",
+    "rights_flag": null,
+    "structure_note": "This is one fascicle (juan 29–30) of a multi-volume set. The printed folio number restarts at each juan, which explains the backsteps and repeats. 120 of 122 pages are translated. The OCR puts the juan label (卷二十九, 卷三十) into <page-num>.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 26,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "驚鈍聲遺",
+            "image": "駑鈍聲遺",
+            "problem": "駑 read as 驚",
+            "severity": "minor"
+          },
+          {
+            "ocr": "所累者文君身而猶有四壁",
+            "image": "所累者文君耳而猶有四壁",
+            "problem": "耳 read as 身",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "羨其當耳",
+            "english": "I envy that they were alone in their plight",
+            "problem": "free gloss. 'Alone' is not in the source; the next sentences only imply it",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 45,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "食堂仰山歎曰",
+            "image": "食堂日集千指非有以大過人何以臻此余曰昔臨濟北歸仰山歎曰",
+            "problem": "a full column skipped between 食堂 and 仰山",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "為山問",
+            "image": "溈山問",
+            "problem": "Guishan (溈山) read as 為",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "廩無餘粟食堂仰山歎曰",
+            "english": "The granaries had no surplus grain. In the dining hall, Yangshan sighed and said",
+            "problem": "because the column is missing, Yangshan's prophecy about Linji is set in this temple's dining hall. The point that the hall fed a hundred monks daily, and the frame 'formerly when Linji went north', are lost",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "source": "為山問有續之者乎",
+            "english": "I asked: \"Is there anyone who can continue his work?\"",
+            "problem": "Guishan's question is given to the narrator",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "林敏功子仁",
+            "english": "Lin Min-gong and Zi-ren",
+            "problem": "one person (Lin Mingong, style Ziren) made into two",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 69,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 94,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "篆文皆識聖宋國祚無疆",
+            "english": "a seal script inscription that recognized the \"National Destiny of the Sacred Song Dynasty as Boundless.\"",
+            "problem": "識 here means 'was inscribed', not 'recognized'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "translation opens with a stray <column-break/> and an invented heading '## Volume 30' taken from the margin juan label",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      69,
+      94
+    ],
+    "reader_summary": "This is part of Huihong's 'Chan of Words and Letters' in the clean Siku Quanshu manuscript copy, with letters, a stupa record of Zhenjing Kewen, and memorial texts. On a clean page the transcription is close to exact. One page skips a whole column, and the English then gives Guishan's words to the narrator. Where the column count is intact the English is accurate and readable.",
+    "book_verdict": "A clean witness with good translation on most pages. One dropped column (p45) produces a misattributed speech that a specialist would catch at once."
+  },
+  {
+    "book_id": "69e009f82dfba6e52bfaa2f4",
+    "slot": 3,
+    "title": "Jikji (직지심체요절, Anthology of Great Buddhist Priests' Zen Teachings)",
+    "tradition": "chan-zen",
+    "shelf_fit": "fits",
+    "shelf_note": "Baegun's 1377 Korean Seon anthology, the BnF copy of the surviving second volume (the margin reads 直指下). It is Chan/Seon encounter dialogue throughout.",
+    "rights_flag": null,
+    "structure_note": "86 records, including binding and edge photographs (p86 is a spine/edge view, not a text leaf). A few printed backsteps (3) fit leaf numerals with the cover and edge shots mixed in. 82 of 86 are translated. Nothing looks broken.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 20,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "便共文璅漢行脚",
+            "image": "便共文邃箇漢行脚",
+            "problem": "the name Wensui (文邃) misread and 箇 dropped, so the person is lost",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "師自點肯云",
+            "image": "師自點胷云 (points to his chest)",
+            "problem": "胸/胷 read as 肯",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "彼他帶累 / 瞳眠",
+            "image": "被他帶累 / 噇眠",
+            "problem": "lookalike misreads",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "便共文邃箇漢行脚 (OCR: 文璅漢)",
+            "english": "I have traveled on foot with you, a fellow seeker",
+            "problem": "Xuefeng complains about travelling with 'that fellow Wensui'. The English turns it into Yantou",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "師自點胷云",
+            "english": "The master himself reflected and said",
+            "problem": "the gesture (pointing to his chest) is lost because of the misread",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 28,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "處處得逢渠我今不是渠",
+            "image": "處處得逢渠渠今正是我我今不是渠",
+            "problem": "the line 渠今正是我 is dropped from Dongshan's crossing-the-stream verse",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "便燒於之禮 / 師洞山良价",
+            "image": "便燒於是禮辭師 / 洞山良价",
+            "problem": "是→之, 辭 dropped, and 師 moved to the head of the next entry",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "便燒於之禮",
+            "english": "burn them all.",
+            "problem": "drops 'then bowed and took leave of the master'",
+            "severity": "minor"
+          },
+          {
+            "source": "渠今正是我 我今不是渠 (line missing in the OCR)",
+            "english": "I am not it now, / Yet it is indeed me.",
+            "problem": "the English rebuilds the missing line from memory, in reversed order. The two panes no longer agree",
+            "severity": "moderate",
+            "class": "T14"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 55,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "覺時竟竟都無",
+            "image": "覺時竟境都無",
+            "problem": "境 read as 竟",
+            "severity": "minor"
+          },
+          {
+            "ocr": "catchword: 直拍下",
+            "image": "直指下",
+            "problem": "margin title misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "竟觀機關木人修道何時得達彼岸",
+            "english": "If you carefully examine the mechanism, it is like a wooden person. How can one ever reach the other shore in cultivating the Dao?",
+            "problem": "split wrongly: it is 'a mechanical wooden man practising the Way, when will he reach the other shore?'",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 86,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "直指心體要節",
+            "image": "handwritten title on the book edge, partly visible, ending in 下",
+            "problem": "volume mark 下 dropped. The upper characters are cut off in the photo, so the reading is partly inferred",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "直指心體要節",
+            "english": "Anthology of Great Buddhist Priests' Zen Teachings on the Direct Pointing to the Human Heart",
+            "problem": "gloss inflates a six-character spine label",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      55
+    ],
+    "reader_summary": "This is the BnF copy of the Jikji, volume two, printed with metal type in 1377: a Korean Seon selection of patriarchs' sayings. The transcription is of the right text but slips on the uneven metal type, including a dropped line in Dongshan's best-known verse and a misread personal name. The English follows the dialogues fluently, but where the OCR slipped it either carries the error or quietly restores the line from memory.",
+    "book_verdict": "A famous and correct witness on the right shelf. Line-level OCR losses on uneven metal type (p28 verse, p20 name) mean a scholar should read it with the image open."
+  },
+  {
+    "book_id": "69aebb9a6059efb05d4fdcc0",
+    "slot": 4,
+    "title": "六祖大師法寶壇經 (Platform Sutra of the Sixth Patriarch)",
+    "tradition": "chan-zen",
+    "shelf_fit": "fits",
+    "shelf_note": "The Zongbao (Yuan) recension of the Platform Sutra, a central Chan text.",
+    "rights_flag": true,
+    "structure_note": "44 pages, all with OCR and translation. The single printed number fits an unpaginated digital typescript. Nothing is broken, but the 'scan' is a modern e-text rendered as images.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 22,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "此名圓滿報身。自性起一念惡",
+            "image": "此名圓滿報身佛。自性起一念惡",
+            "problem": "佛 dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 29,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "執侍左右十五載",
+            "image": "執侍左右一十五載",
+            "problem": "一 dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 41,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "不念利益壞等事 / 正法眼藏傳何人",
+            "image": "不念利益成壞等事 / 正法眼藏傳付何人",
+            "problem": "成 and 付 dropped",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "遇滿之難。楊柳為官",
+            "english": "<note>…a historical attempt to steal the Sixth Patriarch's head by a monk hired by a rival school…</note>",
+            "problem": "invented detail. In the traditional account Zhang Jingman was hired by the Korean monk Kim Taebi, not by a rival school",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      7,
+      22,
+      29
+    ],
+    "reader_summary": "This is the standard Zongbao text of the Platform Sutra. The images are a modern typeset e-text, not a historical print, so the transcription is almost exact. The English is careful and trustworthy, apart from one invented note. A scholar will ask what edition this is and where the typescript came from, and the page does not say.",
+    "book_verdict": "Accurate transcription and good translation. But the source is a modern digital typescript with no stated origin, which makes it a rights and provenance question rather than a historical witness."
+  }
+]

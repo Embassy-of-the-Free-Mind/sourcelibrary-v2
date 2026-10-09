@@ -11,6 +11,8 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import JourneyFilm from '@/components/journey/JourneyFilm';
 import JourneyProse from '@/components/journey/JourneyProse';
 import {
+  ConnectFigure,
+  ExchangeFigure,
   LineFigure,
   PeopleFigure,
   RecordFigure,
@@ -20,10 +22,16 @@ import {
 import gapStatus from '../../../scripts/catalog-coverage/results/canon-gap-status-2026-10.json';
 
 /**
- * /how-it-works (#5861): how Source Library works, written for a library or a partner
- * project deciding whether to work with us. Four diagrams of the system, with one real
- * page's journey (the film, the curated instance of /book/<id>/journey?page=N) as the
- * worked example in the middle.
+ * /how-it-works (#5861, #6074): how Source Library works, written for a library or a
+ * partner project deciding whether to work with us. Figure 1 is the true order: the
+ * line (find, read, translate, connect, publish), then checks that loop over the
+ * published pages. One real page's journey (the film, the curated instance of
+ * /book/<id>/journey?page=N) is the worked example in the middle.
+ *
+ * The film's page was chosen because it has all three things Connect shows: a row in
+ * the meaning index, page-precise entries in the book's index, and other editions of
+ * the same work (verified on #6074). The search below is re-run at every render; if
+ * the page stops coming up, the film drops the claim.
  *
  * ISR with a real window and no fallback (rendering-and-seo.md): if the page cannot be
  * loaded the render throws, and the last good page keeps serving.
@@ -31,27 +39,39 @@ import gapStatus from '../../../scripts/catalog-coverage/results/canon-gap-statu
 export const revalidate = 86400;
 export const preferredRegion = 'fra1';
 
-const BOOK_ID = '6a308272675ed2bdbe36f649';
-const PAGE = 13;
+const BOOK_ID = '6991d89a8c1030b12444c076';
+const PAGE = 20;
+/** The printed page number of scan 20, as a reader would cite it. */
+const PAGE_LABEL = 'page 8 of the 1895 Haṭhayogapradīpikā';
+
+const RESULTS = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/scripts/eval/results';
 
 const CONFIG: JourneyInstanceConfig = {
-  label: 'Śāntideva, Bodhicaryāvatāra 1.4',
+  label: 'Svātmārāma, Haṭhayogapradīpikā 1.10',
   prologue: {
-    eyebrow: 'Śāntideva · eighth century',
-    title: 'The Way of the Bodhisattva',
-    body: 'Tradition places Śāntideva at Nalanda, and says he first recited this poem there. This film follows one page of it, from a scan of a 1901 Sanskrit edition to an English page that anyone can read and cite.',
+    eyebrow: 'Svātmārāma · fifteenth century',
+    title: 'The Light on Hatha Yoga',
+    body: 'Svātmārāma’s Haṭhayogapradīpikā is the classic manual of hatha yoga. This film follows one page of it, from the scan of an 1895 Bombay edition to an English page that anyone can read and cite.',
   },
-  findBody: 'This is the Sanskrit edition of the Bodhicaryāvatāra with Prajñākaramati’s commentary, printed in Calcutta in 1901. The scan was made by the Digital Library of India and is on the Internet Archive.',
-  readDetail: 'On page 13 it finds verse 4 of the first chapter, the commentary around it, and the editor’s footnotes in English.',
-  lineMatch: 'क्षणसंपदियं',
-  linePosition: { x: 0.205, y0: 0.192, dy: 0.0385 },
-  note: {
-    label: 'Footnote 4, read as text',
-    text: "It is as unlikely to happen as if a tortoise should put its neck into a hole opening every yuga in the world's ocean.",
-    attribution: 'Kern, quoted by the editor',
-  },
-  outroQuote: 'How will such a meeting ever occur again?',
-  outroSource: 'Śāntideva, with Prajñākaramati’s commentary, ed. Louis de La Vallée Poussin (Calcutta, 1901), page 13. Sanskrit, with an English translation by Source Library.',
+  findBody: 'This is the Haṭhayogapradīpikā with two commentaries, Brahmānanda’s in Sanskrit and Shridhara’s in Hindi, printed in Bombay in 1895. The copy is in the Wellcome Collection in London, which has put its scan online for anyone to use.',
+  readDetail: 'On this page it finds verses 8 to 10 of the first chapter, with both commentaries below them.',
+  lineMatch: 'अशेषतापतप्तानां',
+  lineCount: 2,
+  linePosition: { x: 0.135, y0: 0.172, dy: 0.03 },
+  outroQuote: 'Hatha Yoga is a sheltering monastery for those scorched by every kind of suffering.',
+  outroSource: 'Svātmārāma, Haṭhayogapradīpikā 1.10, with the commentaries of Brahmānanda and Shridhara (Bombay, 1895), page 8. Sanskrit, with an English translation by Source Library.',
+  search: { query: 'the masters of hatha yoga who conquered death' },
+  checks: [
+    {
+      text: 'In October 2026 all 200 pages of this book went through three detectors: for an empty or refused reading, for placeholder English, and for text copied from another page. None was found.',
+      href: `${RESULTS}/quality-sprint/2026-10-07-detectors/books.jsonl`,
+    },
+    {
+      text: 'Our reading of another page of the book was scored against the typed Sanskrit in GRETIL: 84% of the characters agree, where an unrelated passage scores 30%.',
+      href: `${RESULTS}/nalanda-readiness-2026-09-30/indic-sa-gretil-scores.jsonl`,
+    },
+  ],
+  revisionNote: 'A check across the whole library had found explanations written where only the Sanskrit word should stand, and moved each one into a note.',
 };
 
 const TENGYUR = gapStatus.tengyur_draft;
@@ -92,7 +112,7 @@ async function loadPageRecord(db: Db, data: JourneyData): Promise<PageRecord> {
     };
     word_alignment?: { pairs?: unknown[]; model?: string };
   };
-  const [p, revisions] = await Promise.all([
+  const [p] = await Promise.all([
     db.collection('pages').findOne<P>(
       { id: data.pageId },
       {
@@ -106,12 +126,11 @@ async function loadPageRecord(db: Db, data: JourneyData): Promise<PageRecord> {
         },
       },
     ),
-    db.collection('page_revisions').countDocuments({ page_id: data.pageId }),
   ]);
   if (!p) throw new Error(`how-it-works: page record ${data.pageId} not found`);
   const tr = p.translation;
   return {
-    pageLabel: `${data.citation.locator} of the 1901 Bodhicaryāvatāra`,
+    pageLabel: PAGE_LABEL,
     readerUrl: data.readerPath,
     image: {
       from: data.providerName ?? 'the holding library',
@@ -131,7 +150,7 @@ async function loadPageRecord(db: Db, data: JourneyData): Promise<PageRecord> {
       ? {
           model: tr.engine?.model ?? tr.model,
           modelVersion: tr.engine?.model_version,
-          prompt: tr.prompt_version ? `v${tr.prompt_version}` : undefined,
+          prompt: tr.prompt_version ? `v${tr.prompt_version.replace(/^v/i, "")}` : undefined,
           api: tr.engine?.api === 'batch' ? 'Batch API' : undefined,
           batch: tr.batch_job_id,
           hash: tr.content_hash,
@@ -141,7 +160,7 @@ async function loadPageRecord(db: Db, data: JourneyData): Promise<PageRecord> {
     alignment: p.word_alignment?.pairs?.length
       ? { pairs: p.word_alignment.pairs.length, model: p.word_alignment.model }
       : undefined,
-    revisions,
+    revisions: data.revisions.count,
   };
 }
 
@@ -179,16 +198,16 @@ export default async function HowItWorksPage() {
 
         <TextRoutesFigure
           tengyurPages={TENGYUR.pages_with_text}
-          examplePage={{ model: record.text?.model ?? data.readBy, label: 'page 13 of the 1901 Bodhicaryāvatāra in the film below' }}
+          examplePage={{ model: record.text?.model ?? data.readBy, label: `${PAGE_LABEL} in the film below` }}
         />
       </div>
 
       <div className="max-w-[var(--container-narrow)] mx-auto px-6 pt-6 pb-8">
         <h2 className={H2}>One page, followed through</h2>
         <p className={P}>
-          The film follows page 13 of a 1901 Sanskrit edition of Śāntideva’s <i>Bodhicaryāvatāra</i>, with Prajñākaramati’s
-          commentary, through the steps above. It holds verse 4 of the first chapter. The same steps are written out below
-          the film.
+          The film follows one page of an 1895 Bombay edition of Svātmārāma’s <i>Haṭhayogapradīpikā</i>, the classic manual
+          of hatha yoga, through the steps above. The page holds verses 8 to 10 of the first chapter, the end of the list of
+          the great masters of the tradition. The same steps are written out below the film.
         </p>
       </div>
       <JourneyFilm data={data} />
@@ -196,29 +215,54 @@ export default async function HowItWorksPage() {
         <Link href="/about" className={A}>About Source Library</Link>
       </JourneyProse>
 
+      <div className="max-w-[var(--container-narrow)] mx-auto px-6 pb-8">
+        <h2 className={H2}>What a library cannot do on its own</h2>
+        <p className={P}>
+          A library can put its scans online. What it cannot easily do is tie each page to everything else that has been
+          written on the same subject, in other languages and other collections. That is the Connect step, and it is where
+          a book gains most from sitting beside the others.
+        </p>
+        <ul className="space-y-4 mb-6">
+          <li className={P}>
+            <strong className="text-primary">Search by meaning.</strong> Translated pages are indexed by what they say, so a
+            question in plain English finds a page even when the page puts it in other words.{' '}
+            <Link href="/search" className={A}>Search</Link>.
+          </li>
+          <li className={P}>
+            <strong className="text-primary">An index of people, places and ideas.</strong> Each book gets an index tied to
+            the pages where a name appears, and each name opens onto every other book in the library that mentions it.{' '}
+            <Link href="/encyclopedia" className={A}>Encyclopedia</Link>.
+          </li>
+          <li className={P}>
+            <strong className="text-primary">The illustrations, gathered.</strong> Woodcuts, engravings and diagrams are
+            found on the page, described and collected, so they can be searched across books.{' '}
+            <Link href="/gallery" className={A}>Gallery</Link>.
+          </li>
+          <li className={P}>
+            <strong className="text-primary">Editions of the same work, linked.</strong> Scans of the same work from
+            different printers, years and libraries are grouped, so a reader can move from one edition to another.
+          </li>
+          <li className={P}>
+            <strong className="text-primary">Existing translations, credited.</strong> For early modern Latin works we record
+            which have already been translated into English and by whom, and link to those translations.{' '}
+            <Link href="/research/translation-registry" className={A}>Translation Registry</Link>.
+          </li>
+        </ul>
+      </div>
+
       <div className="max-w-[var(--container-standard)] mx-auto px-6 pb-8">
+        <ConnectFigure pageLabel={PAGE_LABEL} readerUrl={data.readerPath} connect={data.connect} />
         <RecordFigure r={record} />
         <PeopleFigure draftLabel={READER_UI_STRINGS.en.info.machineDraftNotice} />
       </div>
 
+      <div className="max-w-[var(--container-standard)] mx-auto px-6">
+        <h2 className={`${H2} pt-4`}>Working with us</h2>
+        <ExchangeFigure />
+      </div>
+
       <div className="max-w-[var(--container-narrow)] mx-auto px-6 pb-20">
-        <h2 className={H2}>Working with us</h2>
         <ul className="space-y-5 mb-10">
-          <li className={P}>
-            <strong className="text-primary">Your library is credited.</strong> The holding institution is named on every book
-            and its pages link back to the original scan. All contributing libraries are listed on{' '}
-            <Link href="/libraries" className={A}>Libraries</Link>.
-          </li>
-          <li className={P}>
-            <strong className="text-primary">A reading room of your own.</strong> A partner’s books can have their own site on
-            a Source Library address, as the Embassy of the Free Mind’s{' '}
-            <a href="https://bph.sourcelibrary.org" className={A}>Bibliotheca Philosophica Hermetica</a> does.
-          </li>
-          <li className={P}>
-            <strong className="text-primary">Nothing is locked in.</strong> Every book has a IIIF manifest and a full-text
-            download, every page a stable link, and finished editions can get a DOI. AI assistants can search and quote the
-            library through our <Link href="/connect" className={A}>connector</Link>.
-          </li>
           <li className={P}>
             <strong className="text-primary">What a draft costs.</strong> The English draft of the Derge Tengyur cost{' '}
             ${TENGYUR.spend_usd.toLocaleString('en-US')} for {TENGYUR.pages_translated.toLocaleString('en-US')} pages, about $

@@ -636,7 +636,7 @@ function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
           <span className="font-bold">✍</span>
           <span>
             <span className="font-medium">{metadata.scriptType === 'handwritten' ? 'Handwritten' : 'Mixed'} manuscript</span>
-            {' — transcription may contain uncertain readings'}
+            {': transcription may contain uncertain readings'}
           </span>
         </div>
       )}
@@ -646,7 +646,7 @@ function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
           <span className="font-bold flex-shrink-0">⚠</span>
           <span>
             <span className="font-medium">Rashi script</span>
-            {' — current AI models struggle with this typeface. OCR and translation quality is low. We are waiting for improved model support.'}
+            {': current AI models struggle with this typeface. OCR and translation quality is low. We are waiting for improved model support.'}
           </span>
         </div>
       )}
@@ -884,7 +884,7 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
         lacuna: ({ children }: any) => (
           <span
             className="inline-flex items-center gap-1 bg-stone-100 text-stone-500 border border-dashed border-stone-300 px-1.5 py-0.5 rounded mx-0.5 text-sm not-italic"
-            title="Not transcribed — no legible reading of this region. The page image is the source."
+            title="Not transcribed: no legible reading of this region. The page image is the source."
           >
             […] <span className="italic">{children}</span>
           </span>
@@ -899,7 +899,7 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
         // ("he [Hermes] said"), so no layer may delete them behind a styling
         // tag; hiding is preprocessBracketTags' decision, made before parsing.
         interp: ({ children }: any) => (
-          <span className={NOTE_TAG_STYLES.interp} title="Translator's addition — not in the original">
+          <span className={NOTE_TAG_STYLES.interp} title="Translator's addition, not in the original">
             {children}
           </span>
         ),
@@ -927,8 +927,8 @@ function AiDescriptionFrame({ pageTypeLabel, children }: { pageTypeLabel: string
   return (
     <div className="rounded-lg border border-accent-gold/20 bg-accent-gold/8 px-4 py-3">
       <div className="mb-2 flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wide text-accent-gold-dark">
-        <AiBadge title="AI-generated description of the page image — not text from the book" />
-        <span>{pageTypeLabel} — description</span>
+        <AiBadge title="AI-generated description of the page image, not text from the book" />
+        <span>{pageTypeLabel} · description</span>
       </div>
       {/* The body keeps the normal reading colour — a long description tinted
           gold is hard to read, and the badge + tinted frame already mark it. */}
@@ -1090,7 +1090,7 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
               <span className="font-bold flex-shrink-0">✍</span>
               <span>
                 <span className="font-medium">{metadata.scriptType === 'handwritten' ? 'Handwritten' : 'Mixed'} manuscript</span>
-                {' — transcription may contain uncertain readings'}
+                {': transcription may contain uncertain readings'}
               </span>
             </div>
           )}
@@ -1099,7 +1099,7 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
               <span className="font-bold flex-shrink-0">⚠</span>
               <span>
                 <span className="font-medium">Rashi script</span>
-                {' — current AI models struggle with this typeface. OCR and translation quality is low. We are waiting for improved model support.'}
+                {': current AI models struggle with this typeface. OCR and translation quality is low. We are waiting for improved model support.'}
               </span>
             </div>
           )}

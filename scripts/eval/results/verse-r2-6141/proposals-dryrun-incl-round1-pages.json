@@ -1,0 +1,1122 @@
+{
+ "apply": false,
+ "verses": 50,
+ "verses_pass": 46,
+ "candidates": 77,
+ "written": 0,
+ "skipped": {
+  "block_line_count": 28,
+  "run_longer_than_verse": 28,
+  "note_in_block": 3,
+  "start_end_not_aligned": 3,
+  "prose_line_in_block": 2,
+  "span_twice_on_page": 1
+ },
+ "items": [
+  {
+   "page_id": "6abea89a6a920ffd924dd019",
+   "page_url": "https://sourcelibrary.org/book/6abea8976a920ffd924dcfd7?page=64",
+   "vid": "v1287",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "Then:\nI take refuge in the Three Jewels.\nI individually confess all sins.",
+   "graded_text": "Then:\nI take refuge in the Three Jewels.\nI individually confess all sins."
+  },
+  {
+   "page_id": "6abea70c6a920ffd924dc8ca",
+   "page_url": "https://sourcelibrary.org/book/6abea70a6a920ffd924dc6e1?page=487",
+   "vid": "v1189",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abe94eb6a920ffd924d79df",
+   "page_url": "https://sourcelibrary.org/book/6abe94e86a920ffd924d7940?page=157",
+   "vid": "v1189",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abe914d6a920ffd924d69b0",
+   "page_url": "https://sourcelibrary.org/book/6abe914a6a920ffd924d6915?page=153",
+   "vid": "v1233",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "\"Om, you have accomplished all the goals of sentient beings.\nPlease bestow the appropriate accomplishments.\nEven as you depart for the Buddha-realm,\nwe pray that you will return once again.\"",
+   "graded_text": "\"Om, you have accomplished all the goals of sentient beings.\nPlease bestow the appropriate accomplishments.\nEven as you depart for the Buddha-realm,\nwe pray that you will return once again.\""
+  },
+  {
+   "page_id": "6abea3ff6a920ffd924dbc3c",
+   "page_url": "https://sourcelibrary.org/book/6abea3fd6a920ffd924dba05?page=565",
+   "vid": "v1081",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abe8cd86a920ffd924d58d7",
+   "page_url": "https://sourcelibrary.org/book/6abe8cd66a920ffd924d56d8?page=509",
+   "vid": "v1081",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abea1596a920ffd924dae26",
+   "page_url": "https://sourcelibrary.org/book/6abea14b6a920ffd924dadae?page=118",
+   "vid": "v1081",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abea6af6a920ffd924dc39e",
+   "page_url": "https://sourcelibrary.org/book/6abea6ac6a920ffd924dc1ad?page=495",
+   "vid": "v758",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "The term <term>Bhagavan</term> also refers to \"possessing\" <note>the Tibetan \"ldan\" in \"bcom ldan 'das\"</note> the six perfections:\nLordship, excellent form,\nGlory, fame, wisdom,\nAnd perfect diligence;\nPossessing these six is called \"Possessing.\"",
+   "graded_text": "The term <term>Bhagavan</term> also refers to \"possessing\" <note>the Tibetan \"ldan\" in \"bcom ldan 'das\"</note> the six perfections:\nLordship, excellent form,\nGlory, fame, wisdom,\nAnd perfect diligence;\nPossessing these six is called \"Possessing.\""
+  },
+  {
+   "page_id": "6abe981b6a920ffd924d81ed",
+   "page_url": "https://sourcelibrary.org/book/6abe98196a920ffd924d8054?page=407",
+   "vid": "v758",
+   "ref_hash": "83f36e2df9eb91ba",
+   "status": "dry_run",
+   "graded": {
+    "drafter": "weak",
+    "blind": "wrong",
+    "blind_error": "'fortunes' renders skal (line 8), not ldan 'endowed'"
+   },
+   "before": "Lordship and good form,\nGlory, fame, and primordial wisdom,\nAnd the perfection of diligence;\nThese six are called \"fortunes.\"",
+   "after": "Sovereignty and fine form,\nGlory, fame, primordial wisdom,\nAnd perfect diligence:\nThese six are what 'endowed' means.\"",
+   "before_hash": "6a3d09dda0fdfc44",
+   "after_hash": "f91f067cc095f3dc"
+  },
+  {
+   "page_id": "6abeab98896ea18127c80861",
+   "page_url": "https://sourcelibrary.org/book/6abeab96896ea18127c8080a?page=85",
+   "vid": "v758",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "Furthermore, he is the Blessed One because he possesses <term>den</term> the six qualities such as sovereignty. Regarding that, it is said:\nSovereignty and beautiful form,\nSplendor, fame, and wisdom,\nAnd perfect diligence:\nOne who possesses these six is so named.",
+   "graded_text": "Furthermore, he is the Blessed One because he possesses <term>den</term> the six qualities such as sovereignty. Regarding that, it is said:\nSovereignty and beautiful form,\nSplendor, fame, and wisdom,\nAnd perfect diligence:\nOne who possesses these six is so named."
+  },
+  {
+   "page_id": "6abea23a6a920ffd924db462",
+   "page_url": "https://sourcelibrary.org/book/6abea2356a920ffd924db35a?page=262",
+   "vid": "v758",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abe8dbe6a920ffd924d5a47",
+   "page_url": "https://sourcelibrary.org/book/6abe8dbb6a920ffd924d59c0?page=133",
+   "vid": "v977",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abe866a6a920ffd924d3f46",
+   "page_url": "https://sourcelibrary.org/book/6abe86656a920ffd924d3f40?page=4",
+   "vid": "v759",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abe9b4d6a920ffd924d8dbe",
+   "page_url": "https://sourcelibrary.org/book/6abe9b4b6a920ffd924d8d38?page=132",
+   "vid": "v759",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abea3ff6a920ffd924dbc4e",
+   "page_url": "https://sourcelibrary.org/book/6abea3fd6a920ffd924dba05?page=583",
+   "vid": "v1171",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abea3ff6a920ffd924dbc4e",
+   "page_url": "https://sourcelibrary.org/book/6abea3fd6a920ffd924dba05?page=583",
+   "vid": "v1213",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abea3ff6a920ffd924dbc4e",
+   "page_url": "https://sourcelibrary.org/book/6abea3fd6a920ffd924dba05?page=583",
+   "vid": "v1666",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abeb247896ea18127c82f5b",
+   "page_url": "https://sourcelibrary.org/book/6abeb246896ea18127c82d97?page=450",
+   "vid": "v148",
+   "status": "skipped",
+   "why": "note_in_block"
+  },
+  {
+   "page_id": "6abeb1dd896ea18127c82926",
+   "page_url": "https://sourcelibrary.org/book/6abeb1dc896ea18127c828bc?page=104",
+   "vid": "v148",
+   "status": "skipped",
+   "why": "start_end_not_aligned"
+  },
+  {
+   "page_id": "6abeb289896ea18127c83035",
+   "page_url": "https://sourcelibrary.org/book/6abeb286896ea18127c82fd7?page=92",
+   "vid": "v148",
+   "status": "skipped",
+   "why": "start_end_not_aligned"
+  },
+  {
+   "page_id": "6abea8c96a920ffd924dd3dd",
+   "page_url": "https://sourcelibrary.org/book/6abea8c76a920ffd924dd28b?page=336",
+   "vid": "v11",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abe825059b86b7d32a65804",
+   "page_url": "https://sourcelibrary.org/book/6abe824e59b86b7d32a65774?page=142",
+   "vid": "v11",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abe8dbe6a920ffd924d5b80",
+   "page_url": "https://sourcelibrary.org/book/6abe8dbb6a920ffd924d59c0?page=446",
+   "vid": "v814",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "Just as at the very moment of his birth,\nAll the <term>Tathagatas</term> <gloss>Buddhas</gloss> performed the lustration,\nLikewise, with the pure water of the gods,\nI shall now perform the lustration.",
+   "graded_text": "Just as at the very moment of his birth,\nAll the <term>Tathagatas</term> <gloss>Buddhas</gloss> performed the lustration,\nLikewise, with the pure water of the gods,\nI shall now perform the lustration."
+  },
+  {
+   "page_id": "6abe861c6a920ffd924d3d6f",
+   "page_url": "https://sourcelibrary.org/book/6abe86096a920ffd924d3c92?page=219",
+   "vid": "v814",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "Just as all the Tathagatas \nPerformed the ritual bath as soon as they were born, \nIn that same way, with the pure water of the gods, \nI shall now perform the ritual bath. ",
+   "graded_text": "Just as all the Tathagatas \nPerformed the ritual bath as soon as they were born, \nIn that same way, with the pure water of the gods, \nI shall now perform the ritual bath. "
+  },
+  {
+   "page_id": "6abe8cd86a920ffd924d58e8",
+   "page_url": "https://sourcelibrary.org/book/6abe8cd66a920ffd924d56d8?page=526",
+   "vid": "v814",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "Just as all the <term>Tathagatas</term>\nPerformed the lustral bath at the moment of birth,\nLikewise, with the pure water of the gods,\nI shall now perform the lustral bath.",
+   "graded_text": "Just as all the <term>Tathagatas</term>\nPerformed the lustral bath at the moment of birth,\nLikewise, with the pure water of the gods,\nI shall now perform the lustral bath."
+  },
+  {
+   "page_id": "6abea1ea6a920ffd924db32e",
+   "page_url": "https://sourcelibrary.org/book/6abea1d86a920ffd924db084?page=680",
+   "vid": "v814",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "Just as all the <term>Tathagatas</term> performed the ritual bath\nAt the very moment of the Buddha's birth,\nLikewise do I perform this bath\nWith the pure water of the gods.",
+   "graded_text": "Just as all the <term>Tathagatas</term> performed the ritual bath\nAt the very moment of the Buddha's birth,\nLikewise do I perform this bath\nWith the pure water of the gods."
+  },
+  {
+   "page_id": "6abe99bd6a920ffd924d87fd",
+   "page_url": "https://sourcelibrary.org/book/6abe99ba6a920ffd924d8724?page=215",
+   "vid": "v1673",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "As stated in the *Supreme Original* <note>original: \"dpal mchog dang po\", referring to the Tattvasamgraha Tantra or the Paramadya Tantra</note>:\n\"By that very means, one shall hold the Vajra,\nAnd ring the Bell of Dharma.\nHaving blessed the great Seal of the Commitment,\nOne shall recite the heart-essence mantra.\"",
+   "graded_text": "As stated in the *Supreme Original* <note>original: \"dpal mchog dang po\", referring to the Tattvasamgraha Tantra or the Paramadya Tantra</note>:\n\"By that very means, one shall hold the Vajra,\nAnd ring the Bell of Dharma.\nHaving blessed the great Seal of the Commitment,\nOne shall recite the heart-essence mantra.\""
+  },
+  {
+   "page_id": "6abea0266a920ffd924da779",
+   "page_url": "https://sourcelibrary.org/book/6abea00c6a920ffd924da68a?page=237",
+   "vid": "v1673",
+   "status": "skipped",
+   "why": "prose_line_in_block"
+  },
+  {
+   "page_id": "6abea1ea6a920ffd924db0d0",
+   "page_url": "https://sourcelibrary.org/book/6abea1d86a920ffd924db084?page=74",
+   "vid": "v1673",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "From the descent until the section ending with:\nHold the vajra with that itself,\nRing the bell of the Dharma;\nHaving blessed with the great <term>samaya</term> <gloss>sacred bond</gloss> gesture,\nRecite the <term>hridaya</term> <gloss>heart mantra</gloss>.",
+   "graded_text": "From the descent until the section ending with:\nHold the vajra with that itself,\nRing the bell of the Dharma;\nHaving blessed with the great <term>samaya</term> <gloss>sacred bond</gloss> gesture,\nRecite the <term>hridaya</term> <gloss>heart mantra</gloss>."
+  },
+  {
+   "page_id": "6abea1ea6a920ffd924db119",
+   "page_url": "https://sourcelibrary.org/book/6abea1d86a920ffd924db084?page=147",
+   "vid": "v1326",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abe9eca6a920ffd924d9d6f",
+   "page_url": "https://sourcelibrary.org/book/6abe9ec86a920ffd924d9ce2?page=139",
+   "vid": "v1326",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abe8dbe6a920ffd924d5baf",
+   "page_url": "https://sourcelibrary.org/book/6abe8dbb6a920ffd924d59c0?page=493",
+   "vid": "v1326",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abeab476a920ffd924de35e",
+   "page_url": "https://sourcelibrary.org/book/6abeab456a920ffd924de156?page=518",
+   "vid": "v1038",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abeb4ba896ea18127c84811",
+   "page_url": "https://sourcelibrary.org/book/6abeb4ad896ea18127c84725?page=234",
+   "vid": "v1038",
+   "ref_hash": "ee3dac524651b210",
+   "status": "dry_run",
+   "graded": {
+    "drafter": "wrong",
+    "blind": "wrong",
+    "blind_error": "reads 'dod as 'desired' and loses the claim that it is held to be pure"
+   },
+   "before": "Just as the element of water, gold, and space\nAre desired for their purity, it is like that.",
+   "after": "Like the element of water, gold, and space,\nIt is held to be pure, just as they are pure.",
+   "before_hash": "1bd729a3c9cbbc32",
+   "after_hash": "bbc38a2a9f7a9651"
+  },
+  {
+   "page_id": "6abea0266a920ffd924da6e3",
+   "page_url": "https://sourcelibrary.org/book/6abea00c6a920ffd924da68a?page=87",
+   "vid": "v1325",
+   "status": "skipped",
+   "why": "note_in_block"
+  },
+  {
+   "page_id": "6abea1ea6a920ffd924db0e4",
+   "page_url": "https://sourcelibrary.org/book/6abea1d86a920ffd924db084?page=94",
+   "vid": "v1325",
+   "status": "skipped",
+   "why": "note_in_block"
+  },
+  {
+   "page_id": "6abea3686a920ffd924db7f8",
+   "page_url": "https://sourcelibrary.org/book/6abea35a6a920ffd924db7de?page=24",
+   "vid": "v1325",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "Just as the King of Physicians cleared the cataracts of the world, the Victors have cleared your cataract of ignorance, my son.\n<term>Om vajra naitra apahara patalam hri</term> <gloss>Om, Vajra Eye, remove the veil, Hri!</gloss>\nThis is the empowerment for abandoning the mental afflictions.",
+   "graded_text": "Just as the King of Physicians cleared the cataracts of the world, the Victors have cleared your cataract of ignorance, my son.\n<term>Om vajra naitra apahara patalam hri</term> <gloss>Om, Vajra Eye, remove the veil, Hri!</gloss>\nThis is the empowerment for abandoning the mental afflictions."
+  },
+  {
+   "page_id": "6abe9f766a920ffd924da5e0",
+   "page_url": "https://sourcelibrary.org/book/6abe9f6f6a920ffd924da3c8?page=534",
+   "vid": "v1325",
+   "status": "skipped",
+   "why": "start_end_not_aligned"
+  },
+  {
+   "page_id": "6abea0266a920ffd924da777",
+   "page_url": "https://sourcelibrary.org/book/6abea00c6a920ffd924da68a?page=235",
+   "vid": "v1325",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "Just as the King of Physicians\nRemoved the cataracts of the world,\nSo have the Victors removed\nThe blindness of your ignorance.\n<term>Om vajra netra apahara patalam hrih</term> <gloss>Om, remove the veil from the vajra eye, Hrih!</gloss>",
+   "graded_text": "Just as the King of Physicians\nRemoved the cataracts of the world,\nSo have the Victors removed\nThe blindness of your ignorance.\n<term>Om vajra netra apahara patalam hrih</term> <gloss>Om, remove the veil from the vajra eye, Hrih!</gloss>"
+  },
+  {
+   "page_id": "6abea1ea6a920ffd924db21c",
+   "page_url": "https://sourcelibrary.org/book/6abea1d86a920ffd924db084?page=406",
+   "vid": "v1213",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abe914d6a920ffd924d6ad8",
+   "page_url": "https://sourcelibrary.org/book/6abe914a6a920ffd924d6915?page=449",
+   "vid": "v1213",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abea9356a920ffd924dd75d",
+   "page_url": "https://sourcelibrary.org/book/6abea9346a920ffd924dd5f1?page=362",
+   "vid": "v2910",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "Its object is non-existence;\nIts sovereign is held to be mindfulness;\nIts aspect is peace itself.",
+   "graded_text": "Its object is non-existence;\nIts sovereign is held to be mindfulness;\nIts aspect is peace itself."
+  },
+  {
+   "page_id": "6abeb247896ea18127c82e0f",
+   "page_url": "https://sourcelibrary.org/book/6abeb246896ea18127c82d97?page=118",
+   "vid": "v144",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abea8c96a920ffd924dd344",
+   "page_url": "https://sourcelibrary.org/book/6abea8c76a920ffd924dd28b?page=183",
+   "vid": "v144",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abea3ff6a920ffd924dba5c",
+   "page_url": "https://sourcelibrary.org/book/6abea3fd6a920ffd924dba05?page=85",
+   "vid": "v1666",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abe83c2433559215a997faf",
+   "page_url": "https://sourcelibrary.org/book/6abe83b7433559215a997efb?page=178",
+   "vid": "v611",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "It is also said in the glorious <term>Manjushri-nama-samgiti</term> <gloss>Chanting the Names of Manjushri</gloss>:\nThe single eye of wisdom, stainless;\nThe <term>Tathagata</term> who possesses the body of primordial wisdom.",
+   "graded_text": "It is also said in the glorious <term>Manjushri-nama-samgiti</term> <gloss>Chanting the Names of Manjushri</gloss>:\nThe single eye of wisdom, stainless;\nThe <term>Tathagata</term> who possesses the body of primordial wisdom."
+  },
+  {
+   "page_id": "6abed914896ea18127c8fc57",
+   "page_url": "https://sourcelibrary.org/book/6abed90a896ea18127c8f9ee?page=615",
+   "vid": "v2108",
+   "ref_hash": "624821bfdc3a0abf",
+   "status": "dry_run",
+   "graded": {
+    "drafter": "weak",
+    "blind": "wrong",
+    "blind_error": "merges the two reasons into 'not depending on any other cause', so 'causeless' (rgyu med) is lost"
+   },
+   "before": "->Because they do not depend on any other cause,<-\n->They would either exist forever or not at all.<-",
+   "after": "->Since what has no cause depends on nothing else,<-\n->It would either always exist or never exist.<-",
+   "before_hash": "8f291d676e48f2bc",
+   "after_hash": "90733e5f8751343f"
+  },
+  {
+   "page_id": "6abed661896ea18127c8e9b5",
+   "page_url": "https://sourcelibrary.org/book/6abed65f896ea18127c8e6d6?page=733",
+   "vid": "v2108",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abeb289896ea18127c830e9",
+   "page_url": "https://sourcelibrary.org/book/6abeb286896ea18127c82fd7?page=272",
+   "vid": "v161",
+   "ref_hash": "99237022a51ac027",
+   "status": "dry_run",
+   "graded": {
+    "drafter": "weak",
+    "blind": "weak",
+    "blind_error": "'Since' for gang tshe ('when') turns the condition into a cause"
+   },
+   "before": "Since a phenomenon is not established\nAs existing, non-existing, or both...",
+   "after": "When a phenomenon is not produced as existent,\nNonexistent, or both existent and nonexistent,",
+   "before_hash": "27bbf18fba74b83c",
+   "after_hash": "b2b5a4bb54541b31"
+  },
+  {
+   "page_id": "6abeb289896ea18127c830dd",
+   "page_url": "https://sourcelibrary.org/book/6abeb286896ea18127c82fd7?page=260",
+   "vid": "v161",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abeb159896ea18127c827e5",
+   "page_url": "https://sourcelibrary.org/book/6abeb158896ea18127c82682?page=353",
+   "vid": "v207",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "It is explained:\nBy seeing, then hearing and smelling,\nTasting, touching, and the mind,\nThe hearer and the heard, and so forth,\nShould be understood through this explanation.",
+   "graded_text": "It is explained:\nBy seeing, then hearing and smelling,\nTasting, touching, and the mind,\nThe hearer and the heard, and so forth,\nShould be understood through this explanation."
+  },
+  {
+   "page_id": "6abeb1dd896ea18127c82964",
+   "page_url": "https://sourcelibrary.org/book/6abeb1dc896ea18127c828bc?page=166",
+   "vid": "v207",
+   "ref_hash": "119e959aca4f4788",
+   "status": "dry_run",
+   "graded": {
+    "drafter": "weak",
+    "blind": "wrong",
+    "blind_error": "drops the instrumental of lta bas: seeing becomes one more item in the list instead of the model case 'as with seeing'"
+   },
+   "before": "Seeing, hearing, and smelling,\nTasting, touching, and the mind;\nThe hearer and the heard, and so forth,\nShould be understood as explained.",
+   "after": "As with seeing, so hearing and smelling,\nTasting, touching and the mind,\nThe hearer, the heard and so forth\nShould be understood as explained.",
+   "before_hash": "50c77fa133c78ca3",
+   "after_hash": "6d015ea1922cce5a"
+  },
+  {
+   "page_id": "6abeb289896ea18127c83020",
+   "page_url": "https://sourcelibrary.org/book/6abeb286896ea18127c82fd7?page=71",
+   "vid": "v207",
+   "ref_hash": "119e959aca4f4788",
+   "status": "dry_run",
+   "graded": {
+    "drafter": "weak",
+    "blind": "wrong",
+    "blind_error": "drops the instrumental of lta bas, so seeing is listed rather than serving as the model; 'These' is added"
+   },
+   "before": "\"Seeing, hearing, and smelling, \nTasting, touching, and the mind; \nThe hearer and the heard and so forth, \nThese should be understood as explained.\"",
+   "after": "\"As with seeing, so hearing and smelling, \nTasting, touching and the mind, \nThe hearer, the heard and so forth \nShould be understood as explained.\"",
+   "before_hash": "dd45bd9efb176977",
+   "after_hash": "e8f1d8a1b79f5adf"
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65a80",
+   "page_url": "https://sourcelibrary.org/book/6abe825059b86b7d32a6597a?page=260",
+   "vid": "v429",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "As for the effect that is born, is it something not empty or something empty that is produced? In that regard:\nAn effect that is not empty will not be born. \nThat which is not empty will not cease. \nThat which is not empty would be \nBoth unceasing and unborn. ",
+   "graded_text": "As for the effect that is born, is it something not empty or something empty that is produced? In that regard:\nAn effect that is not empty will not be born. \nThat which is not empty will not cease. \nThat which is not empty would be \nBoth unceasing and unborn. "
+  },
+  {
+   "page_id": "6abeb289896ea18127c83076",
+   "page_url": "https://sourcelibrary.org/book/6abeb286896ea18127c82fd7?page=157",
+   "vid": "v227",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "Furthermore, with the phrase \"or else, examining it otherwise,\" the text explains the meaning of these two root verses:\n\"If an entity does not exist,\nTo what would its non-existence belong?\"",
+   "graded_text": "Furthermore, with the phrase \"or else, examining it otherwise,\" the text explains the meaning of these two root verses:\n\"If an entity does not exist,\nTo what would its non-existence belong?\""
+  },
+  {
+   "page_id": "6abeb159896ea18127c826d4",
+   "page_url": "https://sourcelibrary.org/book/6abeb158896ea18127c82682?page=80",
+   "vid": "v227",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "To this, it is said:\nIf entities do not exist,\nTo whom would non-existence belong?",
+   "graded_text": "To this, it is said:\nIf entities do not exist,\nTo whom would non-existence belong?"
+  },
+  {
+   "page_id": "6abeb1dd896ea18127c8292a",
+   "page_url": "https://sourcelibrary.org/book/6abeb1dc896ea18127c828bc?page=108",
+   "vid": "v162",
+   "ref_hash": "b507a3186edf946b",
+   "status": "dry_run",
+   "graded": {
+    "drafter": "weak",
+    "blind": "weak",
+    "blind_error": "conditional 'na' (if) rendered as causal 'Since'"
+   },
+   "before": "Since a self-entity does not exist,\nAn other-entity cannot exist.",
+   "after": "If its own entity does not exist,\nThe entity of another does not exist.",
+   "before_hash": "6cc9746dea65caa0",
+   "after_hash": "72002c4507a5801a"
+  },
+  {
+   "page_id": "6abea3686a920ffd924db8dd",
+   "page_url": "https://sourcelibrary.org/book/6abea35a6a920ffd924db7de?page=253",
+   "vid": "v1399",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abeb289896ea18127c82ff9",
+   "page_url": "https://sourcelibrary.org/book/6abeb286896ea18127c82fd7?page=32",
+   "vid": "v208",
+   "ref_hash": "c89770a072d0e703",
+   "status": "dry_run",
+   "graded": {
+    "drafter": "weak",
+    "blind": "weak",
+    "blind_error": "'directed at its own nature' is a loose paraphrase of line 1"
+   },
+   "before": "->When seeing is directed at its own nature,<-\n->It does not see itself.<-\n->Since it does not see itself,<-\n->How can it see others?<-",
+   "after": "->Seeing, as to its own self,<-\n->Does not see that very self.<-\n->When it does not see itself,<-\n->How could it see others?<-",
+   "before_hash": "56185e2cc9baae03",
+   "after_hash": "edfe845c5af5ea7b"
+  },
+  {
+   "page_id": "6abeb289896ea18127c8300a",
+   "page_url": "https://sourcelibrary.org/book/6abeb286896ea18127c82fd7?page=49",
+   "vid": "v208",
+   "status": "skipped",
+   "why": "span_twice_on_page"
+  },
+  {
+   "page_id": "6abeb289896ea18127c83000",
+   "page_url": "https://sourcelibrary.org/book/6abeb286896ea18127c82fd7?page=39",
+   "vid": "v208",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "Previously, it was stated:\nSince seeing does not see\nIts own self,\nWhen it does not see itself,\nHow can it see others?",
+   "graded_text": "Previously, it was stated:\nSince seeing does not see\nIts own self,\nWhen it does not see itself,\nHow can it see others?"
+  },
+  {
+   "page_id": "6abeb289896ea18127c83009",
+   "page_url": "https://sourcelibrary.org/book/6abeb286896ea18127c82fd7?page=48",
+   "vid": "v208",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "\"Vision does not see its own self.\nWhen it does not see itself,\nHow can it see others?\"",
+   "graded_text": "\"Vision does not see its own self.\nWhen it does not see itself,\nHow can it see others?\""
+  },
+  {
+   "page_id": "6abeb289896ea18127c82ffd",
+   "page_url": "https://sourcelibrary.org/book/6abeb286896ea18127c82fd7?page=36",
+   "vid": "v208",
+   "ref_hash": "c89770a072d0e703",
+   "status": "dry_run",
+   "graded": {
+    "drafter": "wrong",
+    "blind": "wrong",
+    "blind_error": "'If seeing were its own self' misreads 'rang gi bdag nyid na' as a counterfactual identity"
+   },
+   "before": "->If seeing were its own self,<-\n->It would not see itself.<-\n->When it does not see itself,<-\n->How can it see others?<-",
+   "after": "->Seeing, as to its own self,<-\n->Does not see that very self.<-\n->When it does not see itself,<-\n->How could it see others?<-",
+   "before_hash": "93ff9b637ef37736",
+   "after_hash": "32663d89716eeef3"
+  },
+  {
+   "page_id": "6abeb442896ea18127c8460b",
+   "page_url": "https://sourcelibrary.org/book/6abeb43e896ea18127c844b1?page=344",
+   "vid": "v1974",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "As it says in the treatise <note>Abhisamayalamkara 1.18</note>:\nThe generation of the mind is the desire \nFor complete, perfect awakening for the sake of others.",
+   "graded_text": "As it says in the treatise <note>Abhisamayalamkara 1.18</note>:\nThe generation of the mind is the desire \nFor complete, perfect awakening for the sake of others."
+  },
+  {
+   "page_id": "6abe932d6a920ffd924d73bb",
+   "page_url": "https://sourcelibrary.org/book/6abe932b6a920ffd924d73b0?page=9",
+   "vid": "v1974",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abeb247896ea18127c82fbc",
+   "page_url": "https://sourcelibrary.org/book/6abeb246896ea18127c82d97?page=547",
+   "vid": "v205",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "Alternatively:\n-> The motion by which the goer is known, <-\n-> That motion is not his going. <-",
+   "graded_text": "Alternatively:\n-> The motion by which the goer is known, <-\n-> That motion is not his going. <-"
+  },
+  {
+   "page_id": "6abeb1dd896ea18127c8294f",
+   "page_url": "https://sourcelibrary.org/book/6abeb1dc896ea18127c828bc?page=145",
+   "vid": "v205",
+   "ref_hash": "e7cd01529574ae37",
+   "status": "dry_run",
+   "graded": {
+    "drafter": "wrong",
+    "blind": "wrong",
+    "blind_error": "'is not the one who goes' asserts non-identity instead of 'the goer does not go that going'"
+   },
+   "before": "The motion by which the goer is made manifest,\nThat motion is not the one who goes.",
+   "after": "The motion by which one is shown to be a goer,\nThat motion is not what the goer goes.",
+   "before_hash": "7e2a28ce49e97f97",
+   "after_hash": "9459b20b8235f70c"
+  },
+  {
+   "page_id": "6abe825259b86b7d32a659c3",
+   "page_url": "https://sourcelibrary.org/book/6abe825059b86b7d32a6597a?page=71",
+   "vid": "v205",
+   "ref_hash": "e7cd01529574ae37",
+   "status": "dry_run",
+   "graded": {
+    "drafter": "weak",
+    "blind": "weak",
+    "blind_error": "'walks' for 'gro (goes); loose term"
+   },
+   "before": "That motion by which a goer is perceived,\nThat motion is not what he walks.",
+   "after": "The motion by which one is shown to be a goer,\nThat motion is not what the goer goes.",
+   "before_hash": "e299b26cf0527b08",
+   "after_hash": "71962c5e5a5cf237"
+  },
+  {
+   "page_id": "6abeb1dd896ea18127c82950",
+   "page_url": "https://sourcelibrary.org/book/6abeb1dc896ea18127c828bc?page=146",
+   "vid": "v205",
+   "ref_hash": "e7cd01529574ae37",
+   "status": "dry_run",
+   "graded": {
+    "drafter": "wrong",
+    "blind": "wrong",
+    "blind_error": "'That motion is not the goer' asserts non-identity instead of 'he does not go that going'"
+   },
+   "before": "->Through whatever motion one is known as a goer,\nThat motion is not the goer.<-",
+   "after": "->The motion by which one is shown to be a goer,\nThat motion is not what the goer goes.<-",
+   "before_hash": "a3b3b5615caee33f",
+   "after_hash": "9e65df58d84ae53a"
+  },
+  {
+   "page_id": "6abea1ea6a920ffd924db1c6",
+   "page_url": "https://sourcelibrary.org/book/6abea1d86a920ffd924db084?page=320",
+   "vid": "v1008",
+   "status": "skipped",
+   "why": "prose_line_in_block"
+  },
+  {
+   "page_id": "6abe902b6a920ffd924d663f",
+   "page_url": "https://sourcelibrary.org/book/6abe90286a920ffd924d6333?page=778",
+   "vid": "v1008",
+   "status": "skipped",
+   "why": "run_longer_than_verse"
+  },
+  {
+   "page_id": "6abeb159896ea18127c82805",
+   "page_url": "https://sourcelibrary.org/book/6abeb158896ea18127c82682?page=385",
+   "vid": "v257",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "If you think that a thing does not cease during the moment of its abiding, this must be addressed:\nWhatever is not in the process of ceasing\nIs not logically a thing.",
+   "graded_text": "If you think that a thing does not cease during the moment of its abiding, this must be addressed:\nWhatever is not in the process of ceasing\nIs not logically a thing."
+  },
+  {
+   "page_id": "6abeb1dd896ea18127c8293f",
+   "page_url": "https://sourcelibrary.org/book/6abeb1dc896ea18127c828bc?page=129",
+   "vid": "v190",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "Suppose you wish to avoid this fault and claim that the stepping possesses going, and that the going itself is the act of going. Even then:\nIf the stepping were to possess a going,\nTwo goings would logically follow:\nThe one by which the stepping is defined,\nAnd the going that exists within it.",
+   "graded_text": "Suppose you wish to avoid this fault and claim that the stepping possesses going, and that the going itself is the act of going. Even then:\nIf the stepping were to possess a going,\nTwo goings would logically follow:\nThe one by which the stepping is defined,\nAnd the going that exists within it."
+  },
+  {
+   "page_id": "6abeb7ee896ea18127c8603c",
+   "page_url": "https://sourcelibrary.org/book/6abeb7ec896ea18127c85fd5?page=101",
+   "vid": "v3594",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "The appearance of body, enjoyments, and places\nArises from the <term>Alaya</term> <gloss>the foundation consciousness</gloss>;\nIn eight or nine forms,\nLike the waves of the ocean.",
+   "graded_text": "The appearance of body, enjoyments, and places\nArises from the <term>Alaya</term> <gloss>the foundation consciousness</gloss>;\nIn eight or nine forms,\nLike the waves of the ocean."
+  },
+  {
+   "page_id": "6abeb7ee896ea18127c86069",
+   "page_url": "https://sourcelibrary.org/book/6abeb7ec896ea18127c85fd5?page=146",
+   "vid": "v3594",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "The appearance of the body, possessions, and the environment\nArises entirely from the <term>Alaya</term> <gloss>all-base</gloss>.\nThe eight modes and nine modes <note>referring to the different classification systems of consciousness</note> are just like that,\nLike the waves upon the ocean.",
+   "graded_text": "The appearance of the body, possessions, and the environment\nArises entirely from the <term>Alaya</term> <gloss>all-base</gloss>.\nThe eight modes and nine modes <note>referring to the different classification systems of consciousness</note> are just like that,\nLike the waves upon the ocean."
+  },
+  {
+   "page_id": "6abeb7ee896ea18127c86001",
+   "page_url": "https://sourcelibrary.org/book/6abeb7ec896ea18127c85fd5?page=42",
+   "vid": "v3594",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "->The appearance of the body, enjoyments, and places,<-\n->Arise everywhere from the <term>alayavijnana</term>;<-\n->The eight and nine modes likewise,<-\n->Are like the waves of the ocean.<-",
+   "graded_text": "->The appearance of the body, enjoyments, and places,<-\n->Arise everywhere from the <term>alayavijnana</term>;<-\n->The eight and nine modes likewise,<-\n->Are like the waves of the ocean.<-"
+  },
+  {
+   "page_id": "6abeb7ee896ea18127c86061",
+   "page_url": "https://sourcelibrary.org/book/6abeb7ec896ea18127c85fd5?page=138",
+   "vid": "v3594",
+   "status": "skipped",
+   "why": "block_line_count",
+   "block": "The appearances of the body, enjoyments, and environments,\nArise everywhere from the storehouse consciousness;\nThe eight and the nine <note>referring to the eight types of consciousness or the ninefold classification</note> likewise,\nAre like the waves upon the ocean.",
+   "graded_text": "The appearances of the body, enjoyments, and environments,\nArise everywhere from the storehouse consciousness;\nThe eight and the nine <note>referring to the eight types of consciousness or the ninefold classification</note> likewise,\nAre like the waves upon the ocean."
+  }
+ ],
+ "verdicts": [
+  {
+   "vid": "v1287",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "a08580c9415b06df"
+  },
+  {
+   "vid": "v1189",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "255ef21e4fde4221"
+  },
+  {
+   "vid": "v972",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "36db4e0bfff9ca90"
+  },
+  {
+   "vid": "v1233",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "02c21bc037b5334b"
+  },
+  {
+   "vid": "v1081",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": false,
+   "confidence": "high",
+   "ref_hash": "79af269cffd8587b"
+  },
+  {
+   "vid": "v758",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "medium",
+   "ref_hash": "83f36e2df9eb91ba"
+  },
+  {
+   "vid": "v977",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "00479e34e72c9cd9"
+  },
+  {
+   "vid": "v759",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "2d5294a43bad3db1"
+  },
+  {
+   "vid": "v1171",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "e6f6134189951b18"
+  },
+  {
+   "vid": "v148",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": false,
+   "confidence": "high",
+   "ref_hash": "8587eac0ddd0685f"
+  },
+  {
+   "vid": "v11",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": false,
+   "confidence": "high",
+   "ref_hash": "ae614c00830dc5f4"
+  },
+  {
+   "vid": "v814",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "medium",
+   "ref_hash": "85f36944e9fe7ed3"
+  },
+  {
+   "vid": "v1673",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "medium",
+   "ref_hash": "2b227bf3c7a80afd"
+  },
+  {
+   "vid": "v993",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "fb68d4453bc80e09"
+  },
+  {
+   "vid": "v1326",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "d92dc050c5b4cd91"
+  },
+  {
+   "vid": "v1038",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "ee3dac524651b210"
+  },
+  {
+   "vid": "v785",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": false,
+   "confidence": "high",
+   "ref_hash": "eebb446b6595270e"
+  },
+  {
+   "vid": "v315",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "a710eb03fca75b9e"
+  },
+  {
+   "vid": "v1325",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "45e3381c7d8d3cf5"
+  },
+  {
+   "vid": "v152",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "d2fdaf5cd118e6e5"
+  },
+  {
+   "vid": "v496",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "068fa96e31d15b87"
+  },
+  {
+   "vid": "v1080",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "medium",
+   "ref_hash": "096acdea1686ef39"
+  },
+  {
+   "vid": "v3592",
+   "pass": false,
+   "draft_grade_blind": "weak",
+   "draft_is_best": false,
+   "confidence": "medium",
+   "ref_hash": "02a1267260a97978"
+  },
+  {
+   "vid": "v1213",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "medium",
+   "ref_hash": "4d45ff751660f9b2"
+  },
+  {
+   "vid": "v180",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "06fa596f4aaa6ccd"
+  },
+  {
+   "vid": "v2910",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "49b6ecd67b2be149"
+  },
+  {
+   "vid": "v144",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "medium",
+   "ref_hash": "694202e37e4739d1"
+  },
+  {
+   "vid": "v1666",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "medium",
+   "ref_hash": "28ab7577945b4b25"
+  },
+  {
+   "vid": "v982",
+   "pass": false,
+   "draft_grade_blind": "weak",
+   "draft_is_best": false,
+   "confidence": "high",
+   "ref_hash": "1875e0ee3568ffa2"
+  },
+  {
+   "vid": "v611",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "4a2f4e624aa4e314"
+  },
+  {
+   "vid": "v2108",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "624821bfdc3a0abf"
+  },
+  {
+   "vid": "v161",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "medium",
+   "ref_hash": "99237022a51ac027"
+  },
+  {
+   "vid": "v207",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "119e959aca4f4788"
+  },
+  {
+   "vid": "v381",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "10fac5722c1fc2db"
+  },
+  {
+   "vid": "v429",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "1526f791c25669cd"
+  },
+  {
+   "vid": "v227",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "c71f0ba9cc409c60"
+  },
+  {
+   "vid": "v162",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "b507a3186edf946b"
+  },
+  {
+   "vid": "v1399",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "3a3d4ab2c834829b"
+  },
+  {
+   "vid": "v208",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "c89770a072d0e703"
+  },
+  {
+   "vid": "v1898",
+   "pass": false,
+   "draft_grade_blind": "weak",
+   "draft_is_best": false,
+   "confidence": "medium",
+   "ref_hash": "b57845c69a752fda"
+  },
+  {
+   "vid": "v485",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": false,
+   "confidence": "high",
+   "ref_hash": "53baf656d3f2f6f0"
+  },
+  {
+   "vid": "v1974",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "af0e040278d15406"
+  },
+  {
+   "vid": "v205",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "e7cd01529574ae37"
+  },
+  {
+   "vid": "v1008",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "medium",
+   "ref_hash": "5d7aff7964c35c8a"
+  },
+  {
+   "vid": "v257",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "3ec3c5f9028a83e5"
+  },
+  {
+   "vid": "v190",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "high",
+   "ref_hash": "2a965e5c50a68ab4"
+  },
+  {
+   "vid": "v743",
+   "pass": false,
+   "draft_grade_blind": "weak",
+   "draft_is_best": false,
+   "confidence": "medium",
+   "ref_hash": "86db8dab104fe983"
+  },
+  {
+   "vid": "v3594",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": true,
+   "confidence": "medium",
+   "ref_hash": "baf3204babc2ad5a"
+  },
+  {
+   "vid": "v1450",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": false,
+   "confidence": "high",
+   "ref_hash": "887d7c7c62d2f152"
+  },
+  {
+   "vid": "v987",
+   "pass": true,
+   "draft_grade_blind": "ok",
+   "draft_is_best": false,
+   "confidence": "high",
+   "ref_hash": "9a1129de4fb1f8f8"
+  }
+ ]
+}
