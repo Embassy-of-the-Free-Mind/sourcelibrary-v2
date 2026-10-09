@@ -3,7 +3,13 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
-export interface Plate { src: string; href?: string; label?: string; fallback?: string; w?: number; h?: number }
+export interface Plate {
+  src: string; href?: string; label?: string;
+  /** Tried in order when `src` fails — smallest first, so a missing 600px card
+   *  steps down to the 300px thumb, not straight to the ~1.5MB original (#6092). */
+  fallback?: string | string[];
+  w?: number; h?: number;
+}
 
 /**
  * Lightweight masonry. Columns fill round-robin (item i → column i % cols) so the
@@ -45,7 +51,11 @@ export default function GalleryMasonry({ plates }: { plates: Plate[] }) {
                   style={p.w && p.h ? { aspectRatio: `${p.w} / ${p.h}` } : undefined}
                   onError={p.fallback ? (e) => {
                     const im = e.currentTarget;
-                    if (p.fallback && im.src !== p.fallback) im.src = p.fallback;
+                    // im.src is always absolute; resolve the chain the same way so
+                    // a relative entry can't loop back to itself.
+                    const chain = ([] as string[]).concat(p.fallback ?? []).map((u) => new URL(u, document.baseURI).href);
+                    const next = chain[chain.indexOf(im.src) + 1];
+                    if (next) im.src = next;
                   } : undefined}
                   className="w-full h-auto block bg-warm group-hover:scale-105 transition-transform duration-300"
                 />

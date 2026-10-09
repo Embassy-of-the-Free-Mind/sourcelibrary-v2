@@ -348,7 +348,7 @@ export default function ResearchPage() {
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Related</h2>
 
         <div className="grid md:grid-cols-2 gap-4 mb-8">
-          <RelatedCard href="/about/processing" title="How We Process Books" desc="The full 8-stage pipeline from import to publication, with live stats." />
+          <RelatedCard href="/how-it-works" title="How Source Library Works" desc="Each step from a library’s scan to a page anyone can read and cite, followed on one real page." />
           <RelatedCard href="/about/sources" title="Source Libraries" desc="The 50+ digital libraries, archives, and repositories we draw from." />
           <RelatedCard href="/blog/first-translation-methodology" title="First Translation Methodology" desc="How we verify that a translation is the first into English." />
           <RelatedCard href="/developers/pipeline" title="Pipeline Architecture" desc="Technical details: Lambda workers, SQS queues, Gemini routing." />

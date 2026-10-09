@@ -44,11 +44,18 @@ Every score row (§5) carries `measure`, one of:
 | `stability` | the **same engine's** repeat read | "repeat stability" only | anything systematic (a model that always misreads ſ as f is perfectly stable) |
 | `preference` | a **blind judge's** pairwise verdict (translation, §8) | "preferred by judge J on task T" | fidelity to source unless the judge packet is source-grounded (#5104) |
 | `judged` | a **source-grounded judge's** absolute rating of one candidate against the source text it was shown, no reference (`scripts/eval/translation-corpus-audit/JUDGE-PROMPT.md`) | "rated faithful by judge J" | anything outside the text it was shown: the page image, so a wrong leaf or an OCR misread rendered faithfully; and errors in scripts the judge itself reads poorly. Its own validity is unmeasured until a human reference exists (`translation-corpus-audit/HUMAN-CALIBRATION.md`) |
+| `judged_vs_reference` | **two blind judges'** rating of a candidate against the source text, with a **published human translation** of the same passage as a guide to meaning (`scripts/eval/translation-vs-reference/`, #5695) | "fidelity judged against a human reference (judge J)" | the page image, unless the source text was corrected by eye: scored against the OCR the same output reads 3.05, against the corrected text 2.53 (T4). The reference's own choices: where ours and the reference differ, the judge sided with ours 75 times and the reference 72 (Latin). Works nobody translated: every track expects a lower corpus mean. Its ceiling: a published translation judged against its own page scores 4.33, not 5 (#5762) |
 
 Rules:
 - A surface (dashboard cell, EXPERIMENTS entry, issue comment, paper table) prints the `measure` word next to the number. Today the page (`src/app/platform/(protected)/admin/ocr-evidence/page.tsx`) says "Median error" and "Proxy" in a footnote and never "accuracy" or "agreement"; `benchmark-dashboard-data.mjs` will emit `measure` per cell, the page renders it, and a cell without it fails the JSON build (#5119).
 - `agreement` and `stability` are **screening** signals: they can send pages to a human or to a reference queue; they cannot close a decision. The `.claude/docs/ocr-quality-measurement-loop.md` stability loop stays exactly that.
 - The word *quality* appears in prose only with a citation to an `accuracy` cell.
+- `judged_vs_reference` is not `accuracy`: the judge's own error is bounded only by its controls. Its rules:
+  - the wrong-page, planted-change and duplicate controls pass for each judge before any result is written, and the run carries an A-vs-A arm;
+  - one page per book; grades are counted in referenced books **per language** (§3.1), and languages pool only under §10.2;
+  - the headline is quoted beside `fit:usable` (a wrong reference cut is a reference failure), canonical pages are reported apart (recitation, #5523), and the reference's style and licence are recorded;
+  - it is fidelity **to the transcription** unless the judge's source text was corrected against the image, and the write-up says which;
+  - a paired difference between arms may decide a change under §10.2. An absolute number ("share ≥ 4", a mean) is read against the 4.3 ceiling and decides nothing until the judge is calibrated against readers (`translation-corpus-audit/HUMAN-CALIBRATION.md`).
 - `judged` may gate a decision where a preregistration fixes the rule in advance and the judge's controls pass (quality round 1, #5438), but the number is still reported as a judge rating, and the decision carries the judge's unmeasured error.
 
 ### 2.1 The reader's chain: which study covers which link
@@ -181,7 +188,7 @@ cost_usd, latency_ms, at, by (session), issue
 `scripts/eval/store/scores/<scorer>@<version>/<YYYY-MM>.jsonl`:
 
 ```
-slug, engine, run_id, measure (accuracy|agreement|stability|preference),
+slug, engine, run_id, measure (accuracy|agreement|stability|preference|judged|judged_vs_reference),
 against {reference_id | engine+run_id | judge_packet_id},
 metric {cer, acc_windowed, acc_upper, bow, seq, invention, gap, lines_ratio, …},
 scorer, scorer_version, fixtures_hash, normaliser_version, convention_table_version,
@@ -242,6 +249,17 @@ Checks (follow-up issues; design here):
 - **Zero-output check**: a `run_id` with no `outcome: text` rows is marked `failed` in the run index.
 - **Checkpoint rule**: any corpus walk feeding the store writes a checkpoint every 100K items and materialises its id list before slow work.
 
+### 9.1 Closure rule: a finding is not done until something lasting holds it (2026-10-06)
+
+The landing rule closes a **run**. This closes a **finding**. On 2026-10-06 a random image-and-book check (#5914) found the "Fifteen Principal Upanishads" duplicates still public twelve days after the page-integrity walk had flagged them. The flag had been recorded and nothing had acted on it (#5059). Every serious finding, from any source (a random check, an audit, a volunteer, reader feedback, a detector), is closed by all that apply:
+
+1. **A regression page.** The page goes into the regression set (#5913) with its expected behaviour: the correct sense, refuse, restate only, or transcribe-and-annotate. Every later prompt or model change must pass the set, so the finding cannot quietly return.
+2. **A board entry.** It joins or creates a row on the improvement board (`src/data/quality-methods.json` → /quality/methods) with an owner issue and a next step. The board is rewritten each review cycle (fortnightly, #5914), ranked by how often the latest window met each class.
+3. **Same-day withholding** for a book that is broken, invented or not ours to publish (`scripts/maintenance/hide-named-books.mjs`, a reason ending in the issue number). Hiding is reversible; serving it while we decide is not.
+4. **An action for every detector flag.** A detector whose flags have no action (hold, repair, reroute) is not finished. A high-precision flag class on a public book holds it from view, and a low-precision class is reviewed on a schedule. A list nobody reads is a repair flag nothing reads.
+
+A fix is **done** when the next review window's rate for that class falls, not when the PR merges. The board records "fixed — not yet re-measured" until then.
+
 ## 10. From evidence to decision
 
 1. A cell reaches the grade its decision needs (§3.3) with a paired result (§7) and its five worst pages read by eye (#4735 rule 5).
@@ -261,6 +279,80 @@ Most prompt clauses measured **no effect**: the restraint line #5349, v14 items 
 4. **Every gate or flag ships with a counter that does not depend on an unindexed `pages` field**, and its first refusals are read by eye (#5685, #5733).
 5. **Bump the version on every change to what is sent**, including request shape and page-break rules. `PAGE_BREAK_SCOPED` changed the live translation request with no bump, and pages still say v13 (#5672).
 6. After deploy, the change is judged by the reader-level score (#5274): did the error class it named fall?
+
+### 10.2 Decision cards: what is enough evidence (2026-10-05, #5873)
+
+Read the card for your decision **before** running a test. It answers "do we have enough?", and a reviewer checks the decision against it afterwards. A card says when evidence is sufficient. It does not decide: steps 2–4 above still apply.
+
+Encoded as `DECISION_CARDS` and `cardVerdict()` in `scripts/eval/lib/routing-rules.mjs`. The week's decisions replayed through them: `node scripts/eval/decision-cards-audit.mjs` (pinned by `tests/unit/decision-cards.test.ts`; write-up `scripts/eval/experiments/2026-10-05-decision-cards-audit-5873.md`).
+
+**Rules every card shares**
+
+| Rule | Value | Where the number comes from |
+|---|---|---|
+| Default | No change. "Keep what we have" stands at any grade; only a change needs the card. | Most levers measured as noise in 2026-10 (v14, v16, seam lines, v20, glossary, thinking). |
+| Unit and grades | Referenced **books per language**, one page per book: exploratory < 30, directional ≥ 30, decision ≥ 50 (§3.1). | The paired fidelity difference has SD ≈ 0.7 (T1–T5, #5695), so its 95 % half-width is ≈ 0.25 at 30 books and ≈ 0.2 at 50. |
+| Small corpus | A language with fewer than 30 eligible books is measured on all of them, labelled `census k of N`, and decides small and medium tiers only. | Pali has 26 live books (Atlas, 2026-10-05). |
+| Fixed before the run | Margin, minimum effect, pools, guards and the rule are committed before the arms run. That commit is the preregistration. A rule written after the data is post hoc and cannot make a change sufficient. | `margin-v1` was written after #5795's pages were seen (#5836). The #5695 tracks and #5700 A5 had no registered rule. |
+| A-vs-A arm | The same engine and prompt twice, in the same run. | Fidelity floors of −0.05 to +0.07 with intervals of about ±0.2 (#5695, A5). Single pages are noisier: 12 of 52 moved a point between identical runs. |
+| An effect worth acting on | All three: its 95 % interval excludes 0; the point estimate lies outside the A-vs-A interval; it reaches the minimum effect. | "Beyond the floor" as T5 read it: Flash +0.40 yes, check-and-fix +0.12 no. |
+| Minimum effect | Fidelity 0.25 points (1–5). CER 1 pp. A rate (reversals, seam defects, refusals) 8 per 100 pages. Non-inferiority on a failure rate: margin 0.10 at 30 books. | 0.25 is a **judgement call**: the smallest effect 30 books resolve, just above the floor's interval. 1 pp is #5126's registered margin. 8 per 100 is the A-vs-A swing in T4 (reversals 11 vs 19). 0.10 is `margin-v1`; at 30 books it separates one page from several, not 3 % from 10 %. |
+| Tier | **Small:** ≤ $10, reversible, nothing served changes. **Large:** > $500, or it queues paid work outside its envelope, or it cannot be undone (served text changed with no proven restore). **Medium:** the rest. Dollars are the incremental spend over the affected backlog (one year for a standing lane), downstream stages included. | **Judgement call.** $10 is a few eval runs ($1–3 each this month). $500 is the first re-OCR stratum (Greek, $476–618, A5). |
+| What a tier needs | Small: directional. Medium: directional, plus one of a registered pool at decision grade, decision grade alone, or a replication. Large: decision grade and a replication. | |
+| Pooling | Only if the pool was named before the run and the heterogeneity check passes: every language with ≥ 10 books has the pool's sign, and the pooled effect lies inside its 95 % interval. A pool lifts a **directional** language to decision grade. It never clears a language that is below directional. | T4 and T5 pass the check. T3 fails it: German +0.39, French −0.18. |
+| Replication | A second run on ≥ 30 books not in the first, under the same registered rule, that passes alone. Two runs are pooled only if the pooling was registered before the second draw. | Folio markers missed p < 0.10 twice (0.105 each time). Pooled post hoc they pass (0.027). That is not a replication. |
+| Judge | Per judge, the wrong-page, planted-change and duplicate controls pass; the judge may say tie, and ties ≥ 0.8 of duplicates; two blind judges; planted errors are drawn from real error shapes. | The harness gate (#5702). A verifier caught 98 % of planted errors and 27 % of real ones (#5647). |
+| Human calibration | Needed before a judge decides: an absolute number (a gate threshold, "share ≥ 4"), a large-tier change, or a candidate from the judge's own model family. Not needed for a paired difference at small or medium tier, where one judge scores both arms. Calibrated means readers' answers on ≥ 34 judge-sound and ≥ 35 judge-defective pages (`HUMAN-CALIBRATION.md` §7a), with both agreement figures printed beside the number. | No judge has been checked against readers yet (2026-10-05). |
+| Price | Quote the measured rate and name its source. A reservation ceiling is not a price. | The usage logger's Lite OCR figure ($0.00225 a page) is a ceiling blended with failed jobs; successful Lite Batch pages measured $0.00146 (#5875). |
+| Sign-off | The session proposes; Derek signs any spend-affecting or reader-facing change (step 3). Merging the tier:hold PR is the signature. | |
+
+**Card 1: route an engine or model for a script or stratum** (`routing`)
+
+| | |
+|---|---|
+| Measure | `accuracy` or `judged_vs_reference`. Where no reference exists: the routing-eval rule (`margin-v1`: label ≥ 0.9, failures non-inferior within 0.10, by-eye majority, no invented page, a planted inferior arm refused), at small or medium tier only, and reported as "no worse on failures and preferred by eye", never as quality. `agreement`, `stability` and `preference` screen; they do not decide. |
+| Books | Per language, or per script class where routing differs inside a language (§3.2). The tier sets the grade. |
+| Effect | A costlier engine needs the effect (shared rule). A cheaper engine needs non-inferiority inside the registered margin (CER ≤ 1 pp, catastrophic ≤ baseline + 1). |
+| Pooling, replication, judge | Shared rules. Pools are tracks or script families. |
+| After deploy | At 30 days: the reader-level score (#5274 monthly audit) per routed language on pages made after the change against pages made before; spend against the estimate; the stability loop (step 5). The session posts it on the decision's issue. Derek signs keep or revert. |
+
+**Card 2: a paid re-OCR or retranslation of served pages** (`backfill`)
+
+| | |
+|---|---|
+| Measure | `accuracy` (CER against a reference), or `judged_vs_reference` with the judge's source text corrected against the image, so the score is fidelity to the page. |
+| Sample | A random page per book of the stratum to be bought. Never pages picked for scoring low: A5's selected Lite-read pages gained +0.75, its clean ones +0.38. |
+| Books and dollars | The tier sets the grade. The envelope counts both stages: an OCR apply marks the translation stale and queues a retranslation. |
+| Effect and value | The shared effect rule, and at most $0.01 per page-point on the random sample. **Judgement call:** twice the ≈ $0.005 measured on selected pages (A5). |
+| Staged | The first tranche is ≤ $10, written to shadow, not served, and judged. It is both the random sample and the replication. |
+| Undo | A revision row per page and a restore proven on one page (A2 restored a page byte-identical). Keep the old text where the new read is empty or cut off (3.7 % of fresh reads failed). |
+| Never | Re-read a page with the engine that made its served OCR (Flash on a Flash read: +0.08, inside the floor). |
+| After deploy | The reader-level score on 30 random rewritten books per stratum against their scores before the run, and the count of pages where the old text was kept. Derek signs the envelope and the result. |
+
+**Card 3: change an OCR or translation prompt, or the request shape** (`prompt`; extends §10.1)
+
+| | |
+|---|---|
+| Measure | `accuracy` or `judged_vs_reference`. `judged` (no reference) for a named error class with its rubric and controls. |
+| Books | ≥ 50 overall, and ≥ 30 in each script group the prompt will serve (Latin script, non-Latin). Otherwise the flip is limited to the measured group. |
+| Tier | Never below medium: pages made under a prompt are not unmade. |
+| Effect | The shared rule, on the error class named beforehand (§10.1 step 1). Every registered guard holds: omission, interpretive notes, length, undrafted pages. |
+| Replication | Shared rule. |
+| Also | §10.1 steps 2–5: regression set and lint, a by-eye spot check outside the A/B pool, a counter, a version bump. |
+| After deploy | The next monthly audit (#5274): did the named class fall? A rule output of "no" needs no signature. A flip is Derek's. |
+
+**Card 4: a gate or withholding rule** (`gate`)
+
+| | Hold: keeps a stratum out of new work, removes nothing served | Flag: marks, withholds or rewrites served pages |
+|---|---|---|
+| Measure | `accuracy` or `judged_vs_reference`, with the page image opened on every low page, so the transcription is shown to be the cause | Precision of the flag against a human read or an accuracy reference, with recall reported. A judge's label is not a reference: the judge agreed with itself at P 0.51–0.58 (#5313). |
+| Enough | **Provisional:** ≥ 10 books and the upper 95 % bound of the stratum's fidelity under 4, the judge's "sound" line. **Standing:** the same at ≥ 30 books. A provisional hold names its top-up date and is released if the date passes. | Precision ≥ 0.8 with a Wilson lower bound ≥ 0.65, which takes about 40 flagged pages, one per book. 4 of 5 is not 0.8. |
+| Ships with | A release rule, a counter, and its first refusals read by eye (§10.1 step 4) | A revision row per page and a proven restore if text changes |
+| A judged threshold | Shared rule | Only after human calibration. Quality round 1's "≤ 10 % major at n ≥ 20" has an interval of 3–30 % at 2 of 20 (§2.1). |
+| After deploy | Monthly: pages held and released. Re-measure when the stratum reaches 30 books. | Precision on the first 40 live flags, by eye |
+| Signs | Derek (reader-facing) | Derek (reader-facing) |
+
+The 10-book floor, the "under 4" line and the 0.65 bound are **judgement calls**. A hold is cheap to be wrong about (pages wait), so it may start below directional; a flag changes what readers see, so it may not.
 
 ## 11. Gap table (measured 2026-09-25)
 

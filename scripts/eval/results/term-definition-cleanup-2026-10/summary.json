@@ -1,0 +1,1662 @@
+{
+ "issue": "#5901",
+ "generated_at": "2026-10-06",
+ "source_label": "cleanup-termdef-5901",
+ "script": "scripts/maintenance/translation-cleanup-a2-5700.mjs --classes d_termdef",
+ "rule": "scripts/lib/term-definitions.mjs (splitInlineTermDefinitions, outsideSpans)",
+ "scans": {
+  "v1_reader_rule_5908_plus_plural_heads": {
+   "generated_at": "2026-10-06T09:24:34.868Z",
+   "books_scanned": 22925,
+   "live_books": 22925,
+   "pages_read": 5184671,
+   "pages_with_any": 212603,
+   "books_with_any": 5634,
+   "by_class": {
+    "d_termdef": {
+     "pages": 212603,
+     "edits": 482721
+    }
+   },
+   "d_termdef_ops": {
+    "head_dropped": 181674,
+    "apparatus": 19700,
+    "split": 281347
+   },
+   "skipped": {
+    "d_termdef:in-span": 3788
+   },
+   "excluded": {
+    "human_edited": 2
+   },
+   "by_language_top15": {
+    "Latin": {
+     "pages_read": 1866992,
+     "pages_with_any": 66500
+    },
+    "German": {
+     "pages_read": 557641,
+     "pages_with_any": 39985
+    },
+    "English": {
+     "pages_read": 676074,
+     "pages_with_any": 25488
+    },
+    "French": {
+     "pages_read": 278962,
+     "pages_with_any": 18044
+    },
+    "Greek": {
+     "pages_read": 440250,
+     "pages_with_any": 16500
+    },
+    "Chinese": {
+     "pages_read": 271807,
+     "pages_with_any": 10469
+    },
+    "Dutch": {
+     "pages_read": 131555,
+     "pages_with_any": 7806
+    },
+    "Italian": {
+     "pages_read": 148304,
+     "pages_with_any": 6442
+    },
+    "Sanskrit": {
+     "pages_read": 90440,
+     "pages_with_any": 5781
+    },
+    "Hebrew": {
+     "pages_read": 57614,
+     "pages_with_any": 2939
+    },
+    "Arabic": {
+     "pages_read": 56920,
+     "pages_with_any": 2527
+    },
+    "Latin-German": {
+     "pages_read": 10343,
+     "pages_with_any": 2215
+    },
+    "Spanish": {
+     "pages_read": 23146,
+     "pages_with_any": 892
+    },
+    "Armenian": {
+     "pages_read": 27479,
+     "pages_with_any": 890
+    },
+    "Greek/Latin": {
+     "pages_read": 5246,
+     "pages_with_any": 884
+    }
+   },
+   "tibetan": {
+    "pages_read": 170796,
+    "pages_with_any": 424
+   }
+  },
+  "v2_guards_citation_mantra_title_gloss": {
+   "generated_at": "2026-10-06T09:40:14.696Z",
+   "books_scanned": 22925,
+   "live_books": 22925,
+   "pages_read": 5184671,
+   "pages_with_any": 207729,
+   "books_with_any": 4910,
+   "by_class": {
+    "d_termdef": {
+     "pages": 207729,
+     "edits": 473738
+    }
+   },
+   "d_termdef_ops": {
+    "head_dropped": 191826,
+    "apparatus": 30467,
+    "split": 251445
+   },
+   "skipped": {
+    "d_termdef:in-span": 3769
+   },
+   "excluded": {
+    "human_edited": 2
+   },
+   "by_language_top15": {
+    "Latin": {
+     "pages_read": 1866992,
+     "pages_with_any": 64567
+    },
+    "German": {
+     "pages_read": 557641,
+     "pages_with_any": 38751
+    },
+    "English": {
+     "pages_read": 676074,
+     "pages_with_any": 26338
+    },
+    "French": {
+     "pages_read": 278962,
+     "pages_with_any": 17737
+    },
+    "Greek": {
+     "pages_read": 440250,
+     "pages_with_any": 16082
+    },
+    "Chinese": {
+     "pages_read": 271807,
+     "pages_with_any": 10064
+    },
+    "Dutch": {
+     "pages_read": 131555,
+     "pages_with_any": 7520
+    },
+    "Italian": {
+     "pages_read": 148304,
+     "pages_with_any": 6168
+    },
+    "Sanskrit": {
+     "pages_read": 90440,
+     "pages_with_any": 5724
+    },
+    "Hebrew": {
+     "pages_read": 57614,
+     "pages_with_any": 2896
+    },
+    "Arabic": {
+     "pages_read": 56920,
+     "pages_with_any": 2497
+    },
+    "Latin-German": {
+     "pages_read": 10343,
+     "pages_with_any": 2180
+    },
+    "Greek/Latin": {
+     "pages_read": 5246,
+     "pages_with_any": 873
+    },
+    "Spanish": {
+     "pages_read": 23146,
+     "pages_with_any": 871
+    },
+    "Armenian": {
+     "pages_read": 27479,
+     "pages_with_any": 849
+    }
+   },
+   "tibetan": {
+    "pages_read": 170796,
+    "pages_with_any": 1
+   }
+  },
+  "v3_head_forms_and_window": {
+   "generated_at": "2026-10-06T09:52:07.128Z",
+   "books_scanned": 22925,
+   "live_books": 22925,
+   "pages_read": 5184671,
+   "pages_with_any": 207779,
+   "books_with_any": 4913,
+   "by_class": {
+    "d_termdef": {
+     "pages": 207779,
+     "edits": 473951
+    }
+   },
+   "d_termdef_ops": {
+    "split": 244474,
+    "head_dropped": 199010,
+    "apparatus": 30467
+   },
+   "skipped": {
+    "d_termdef:in-span": 3769
+   },
+   "excluded": {
+    "human_edited": 2
+   },
+   "by_language_top15": {
+    "Latin": {
+     "pages_read": 1866992,
+     "pages_with_any": 64577
+    },
+    "German": {
+     "pages_read": 557641,
+     "pages_with_any": 38753
+    },
+    "English": {
+     "pages_read": 676074,
+     "pages_with_any": 26345
+    },
+    "French": {
+     "pages_read": 278962,
+     "pages_with_any": 17738
+    },
+    "Greek": {
+     "pages_read": 440250,
+     "pages_with_any": 16085
+    },
+    "Chinese": {
+     "pages_read": 271807,
+     "pages_with_any": 10085
+    },
+    "Dutch": {
+     "pages_read": 131555,
+     "pages_with_any": 7521
+    },
+    "Italian": {
+     "pages_read": 148304,
+     "pages_with_any": 6170
+    },
+    "Sanskrit": {
+     "pages_read": 90440,
+     "pages_with_any": 5724
+    },
+    "Hebrew": {
+     "pages_read": 57614,
+     "pages_with_any": 2897
+    },
+    "Arabic": {
+     "pages_read": 56920,
+     "pages_with_any": 2497
+    },
+    "Latin-German": {
+     "pages_read": 10343,
+     "pages_with_any": 2180
+    },
+    "Greek/Latin": {
+     "pages_read": 5246,
+     "pages_with_any": 873
+    },
+    "Spanish": {
+     "pages_read": 23146,
+     "pages_with_any": 872
+    },
+    "Armenian": {
+     "pages_read": 27479,
+     "pages_with_any": 849
+    }
+   },
+   "tibetan": {
+    "pages_read": 170796,
+    "pages_with_any": 2
+   }
+  },
+  "v4_applied": {
+   "generated_at": "2026-10-06T10:03:31.304Z",
+   "books_scanned": 22925,
+   "live_books": 22925,
+   "pages_read": 5184671,
+   "pages_with_any": 207379,
+   "books_with_any": 4913,
+   "by_class": {
+    "d_termdef": {
+     "pages": 207379,
+     "edits": 473213
+    }
+   },
+   "d_termdef_ops": {
+    "head_dropped": 199010,
+    "apparatus": 30467,
+    "split": 243736
+   },
+   "skipped": {
+    "d_termdef:in-span": 3767
+   },
+   "excluded": {
+    "human_edited": 2
+   },
+   "by_language_top15": {
+    "Latin": {
+     "pages_read": 1866992,
+     "pages_with_any": 64454
+    },
+    "German": {
+     "pages_read": 557641,
+     "pages_with_any": 38612
+    },
+    "English": {
+     "pages_read": 676074,
+     "pages_with_any": 26334
+    },
+    "French": {
+     "pages_read": 278962,
+     "pages_with_any": 17722
+    },
+    "Greek": {
+     "pages_read": 440250,
+     "pages_with_any": 16051
+    },
+    "Chinese": {
+     "pages_read": 271807,
+     "pages_with_any": 10074
+    },
+    "Dutch": {
+     "pages_read": 131555,
+     "pages_with_any": 7509
+    },
+    "Italian": {
+     "pages_read": 148304,
+     "pages_with_any": 6146
+    },
+    "Sanskrit": {
+     "pages_read": 90440,
+     "pages_with_any": 5714
+    },
+    "Hebrew": {
+     "pages_read": 57614,
+     "pages_with_any": 2893
+    },
+    "Arabic": {
+     "pages_read": 56920,
+     "pages_with_any": 2497
+    },
+    "Latin-German": {
+     "pages_read": 10343,
+     "pages_with_any": 2177
+    },
+    "Greek/Latin": {
+     "pages_read": 5246,
+     "pages_with_any": 873
+    },
+    "Spanish": {
+     "pages_read": 23146,
+     "pages_with_any": 872
+    },
+    "Armenian": {
+     "pages_read": 27479,
+     "pages_with_any": 849
+    }
+   },
+   "tibetan": {
+    "pages_read": 170796,
+    "pages_with_any": 2
+   }
+  },
+  "rescan_after_apply": {
+   "generated_at": "2026-10-06T10:39:41.809Z",
+   "books_scanned": 22925,
+   "live_books": 22925,
+   "pages_read": 5184671,
+   "pages_with_any": 2,
+   "books_with_any": 2,
+   "by_class": {
+    "d_termdef": {
+     "pages": 2,
+     "edits": 2
+    }
+   },
+   "d_termdef_ops": {
+    "head_dropped": 2
+   },
+   "skipped": {
+    "d_termdef:in-span": 3767
+   },
+   "excluded": {
+    "human_edited": 2
+   },
+   "by_language_top15": {
+    "Italian": {
+     "pages_read": 148304,
+     "pages_with_any": 1
+    },
+    "Chinese": {
+     "pages_read": 271807,
+     "pages_with_any": 1
+    },
+    "German": {
+     "pages_read": 557641,
+     "pages_with_any": 0
+    },
+    "Latin": {
+     "pages_read": 1866992,
+     "pages_with_any": 0
+    },
+    "English": {
+     "pages_read": 676074,
+     "pages_with_any": 0
+    },
+    "Latin/English": {
+     "pages_read": 732,
+     "pages_with_any": 0
+    },
+    "French": {
+     "pages_read": 278962,
+     "pages_with_any": 0
+    },
+    "Latin/German/English": {
+     "pages_read": 146,
+     "pages_with_any": 0
+    },
+    "Greek": {
+     "pages_read": 440250,
+     "pages_with_any": 0
+    },
+    "Spanish": {
+     "pages_read": 23146,
+     "pages_with_any": 0
+    },
+    "Dutch": {
+     "pages_read": 131555,
+     "pages_with_any": 0
+    },
+    "Hebrew": {
+     "pages_read": 57614,
+     "pages_with_any": 0
+    },
+    "Catalan": {
+     "pages_read": 258,
+     "pages_with_any": 0
+    },
+    "Multiple (Hebrew, Greek, Latin, Syriac, Arabic, Ethiopic)": {
+     "pages_read": 687,
+     "pages_with_any": 0
+    },
+    "Ethiopic": {
+     "pages_read": 192,
+     "pages_with_any": 0
+    }
+   },
+   "tibetan": {
+    "pages_read": 170796,
+    "pages_with_any": 0
+   },
+   "note": "2 pages: the urine-wheel page that led to the correction, and the second-pass page"
+  },
+  "rescan_after_correction": {
+   "generated_at": "2026-10-06T11:38:33.509Z",
+   "books_scanned": 22925,
+   "live_books": 22925,
+   "pages_read": 5184828,
+   "pages_with_any": 1,
+   "books_with_any": 1,
+   "by_class": {
+    "d_termdef": {
+     "pages": 1,
+     "edits": 1
+    }
+   },
+   "d_termdef_ops": {
+    "head_dropped": 1
+   },
+   "skipped": {
+    "d_termdef:in-span": 3766
+   },
+   "excluded": {
+    "human_edited": 2
+   },
+   "tibetan": {
+    "pages_read": 170796,
+    "pages_with_any": 0
+   },
+   "note": "1 page: a second pass would drop one more head (context changed by the first pass); left"
+  }
+ },
+ "gate": [
+  {
+   "sample": "preview",
+   "seed": 11,
+   "pages": 12,
+   "rule": "v1 before plural/quote heads",
+   "from": "150-book test scan",
+   "verdict": "tightened: head printed twice when it differed by a plural or a quote mark (4 of 12 pages)"
+  },
+  {
+   "sample": 1,
+   "seed": 5901,
+   "rule": "v1",
+   "clean": 39,
+   "of": 40,
+   "faults": [
+    "p25 6992ce273ea667fbac8284fd?page=11: head doubled, \"five mourning grades Five Mourning Grades (Wufu)\""
+   ],
+   "verdict": "39/40, but a search of 12,000 candidate pages outside the sample found chips that are the book's text (mantras, legal citations, titles, proportions): treated as a fail",
+   "pages": [
+    {
+     "n": 1,
+     "book": "69905df32fd6a039938a03ad",
+     "page": 211,
+     "page_id": "69905df42fd6a039938a0480"
+    },
+    {
+     "n": 2,
+     "book": "6992597d3d2d40d1b058fdd2",
+     "page": 404,
+     "page_id": "6992597d3d2d40d1b058ff67"
+    },
+    {
+     "n": 3,
+     "book": "6990697398875c9438076aca",
+     "page": 437,
+     "page_id": "6990697398875c9438076c7f"
+    },
+    {
+     "n": 4,
+     "book": "6981920864032ee0e58e12fb",
+     "page": 56,
+     "page_id": "69819fdd8fa9da58f77f2384"
+    },
+    {
+     "n": 5,
+     "book": "6993569a83378b7aed7ce5b7",
+     "page": 187,
+     "page_id": "6993569a83378b7aed7ce672"
+    },
+    {
+     "n": 6,
+     "book": "6988a5a076a49ee3a652f51c",
+     "page": 1055,
+     "page_id": "699f167aab05850588aa472c"
+    },
+    {
+     "n": 7,
+     "book": "6991e19d339ebc850994a2c3",
+     "page": 35,
+     "page_id": "6991e19d339ebc850994a2e6"
+    },
+    {
+     "n": 8,
+     "book": "6953e52177f38f6761beffa2",
+     "page": 745,
+     "page_id": "6953e52277f38f6761bf028b"
+    },
+    {
+     "n": 9,
+     "book": "6977813098a09acb229a3f0d",
+     "page": 141,
+     "page_id": "6977a158b22c4157df201166"
+    },
+    {
+     "n": 10,
+     "book": "e3662257-8cfb-4a4a-a4aa-5293e0d10ea0",
+     "page": 108,
+     "page_id": "69528d45ab34727b1f04f7fe"
+    },
+    {
+     "n": 11,
+     "book": "69935b5f2afc33235052333b",
+     "page": 162,
+     "page_id": "69935b5f2afc3323505233dd"
+    },
+    {
+     "n": 12,
+     "book": "699388e61075be7d32054f2f",
+     "page": 448,
+     "page_id": "699388e61075be7d320550ef"
+    },
+    {
+     "n": 13,
+     "book": "f20894c1-495f-4afe-815b-e8bf3c8938a5",
+     "page": 134,
+     "page_id": "695004b9f426a210d1097ad4"
+    },
+    {
+     "n": 14,
+     "book": "69906151322e01b1349a4819",
+     "page": 116,
+     "page_id": "69906152322e01b1349a488d"
+    },
+    {
+     "n": 15,
+     "book": "69ac8955e5cfec73a7bd939d",
+     "page": 17,
+     "page_id": "69ac8955e5cfec73a7bd93ae"
+    },
+    {
+     "n": 16,
+     "book": "69ac8530960d5ad0b473191a",
+     "page": 32,
+     "page_id": "69ac8530960d5ad0b473193a"
+    },
+    {
+     "n": 17,
+     "book": "697c8e0f0db04f9b26df0d0b",
+     "page": 366,
+     "page_id": "697ccde1e4f41d1cd141a2d4"
+    },
+    {
+     "n": 18,
+     "book": "69b51e759a81ef7feb3d55df",
+     "page": 21,
+     "page_id": "69b51e759a81ef7feb3d55f4"
+    },
+    {
+     "n": 19,
+     "book": "912cf0da-035c-425b-8975-e5a195a47767",
+     "page": 150,
+     "page_id": "6959afa11dfc1806c080bd19"
+    },
+    {
+     "n": 20,
+     "book": "65c7583f-4866-4f74-8903-a37bd8f1de33",
+     "page": 235,
+     "page_id": "6950050ef426a210d109cd90"
+    },
+    {
+     "n": 21,
+     "book": "6990647eef12272ffdc92999",
+     "page": 290,
+     "page_id": "6990647fef12272ffdc92abb"
+    },
+    {
+     "n": 22,
+     "book": "699257db0e2e052179231cfc",
+     "page": 189,
+     "page_id": "699257db0e2e052179231db9"
+    },
+    {
+     "n": 23,
+     "book": "69804b944fc6323824f38b3f",
+     "page": 254,
+     "page_id": "6980c1778ae931ea8ca28304"
+    },
+    {
+     "n": 24,
+     "book": "697c8e147328a057349692c7",
+     "page": 66,
+     "page_id": "697c9b82e249fb5f0b7b81d3"
+    },
+    {
+     "n": 25,
+     "book": "6992ce273ea667fbac8284fd",
+     "page": 11,
+     "page_id": "6992ce273ea667fbac828508"
+    },
+    {
+     "n": 26,
+     "book": "69938e11d5a98fd66f430393",
+     "page": 38,
+     "page_id": "69938e11d5a98fd66f4303b9"
+    },
+    {
+     "n": 27,
+     "book": "69a0278cd6077fba05ddf28e",
+     "page": 81,
+     "page_id": "69a0425d6d70c198d624a29b"
+    },
+    {
+     "n": 28,
+     "book": "69ac5f088efc70d517607df8",
+     "page": 95,
+     "page_id": "69ac5f088efc70d517607e57"
+    },
+    {
+     "n": 29,
+     "book": "695593407bd6d2cd1d61bc02",
+     "page": 69,
+     "page_id": "695593407bd6d2cd1d61bc47"
+    },
+    {
+     "n": 30,
+     "book": "6992cd7943713c66ea636b07",
+     "page": 15,
+     "page_id": "6992cd7943713c66ea636b16"
+    },
+    {
+     "n": 31,
+     "book": "69804b901fb2ba7cf1d43a18",
+     "page": 1406,
+     "page_id": "698243b895fdf434363d4a93"
+    },
+    {
+     "n": 32,
+     "book": "6991bd7070254d38471e588e",
+     "page": 303,
+     "page_id": "6991bd7070254d38471e59bd"
+    },
+    {
+     "n": 33,
+     "book": "6970e3729b09d309d780a2a0",
+     "page": 179,
+     "page_id": "6974ecad7f4a710d65f0c1ee"
+    },
+    {
+     "n": 34,
+     "book": "69804b901fb2ba7cf1d43a06",
+     "page": 20,
+     "page_id": "69804fde97926e522e33902e"
+    },
+    {
+     "n": 35,
+     "book": "69a5570650b8161bf548ff8a",
+     "page": 252,
+     "page_id": "69a5570650b8161bf5490086"
+    },
+    {
+     "n": 36,
+     "book": "6991ec3e7cafcbc1b0209a73",
+     "page": 107,
+     "page_id": "6991ec3f7cafcbc1b0209ade"
+    },
+    {
+     "n": 37,
+     "book": "69905f1c40bc3a0478efa9d3",
+     "page": 452,
+     "page_id": "69905f1c40bc3a0478efab97"
+    },
+    {
+     "n": 38,
+     "book": "695929a57c072c27f686d29f",
+     "page": 15,
+     "page_id": "695929a57c072c27f686d2ae"
+    },
+    {
+     "n": 39,
+     "book": "6984e84f9404d58b48aca521",
+     "page": 121,
+     "page_id": "6985105c003dc91a7ae8cc48"
+    },
+    {
+     "n": 40,
+     "book": "6a08f5d250bd891addfb9aa9",
+     "page": 210,
+     "page_id": "6a08f5d250bd891addfb9b7b"
+    }
+   ]
+  },
+  {
+   "sample": 2,
+   "seed": 5902,
+   "rule": "v2",
+   "clean": 37,
+   "of": 40,
+   "faults": [
+    "p8 6974b63d19126e775cf6d7d1?page=605: Sanhedrin Sanhedrim",
+    "p19 6985ca74e3007574295ea81b?page=279: reception of brothers Reception",
+    "p34 6953ab7477f38f6761bd729d?page=717: calcined calcination"
+   ],
+   "verdict": "fail",
+   "pages": [
+    {
+     "n": 1,
+     "book": "69906540726f64800c10a6ff",
+     "page": 312,
+     "page_id": "69906540726f64800c10a837"
+    },
+    {
+     "n": 2,
+     "book": "6991bcf8879c23a0fef51d88",
+     "page": 73,
+     "page_id": "6991bcf9879c23a0fef51dd1"
+    },
+    {
+     "n": 3,
+     "book": "69906a571cf6ed5fbc8f5622",
+     "page": 75,
+     "page_id": "69906a571cf6ed5fbc8f566d"
+    },
+    {
+     "n": 4,
+     "book": "69a027902531a78a2bc03cc5",
+     "page": 57,
+     "page_id": "69a037e61a26bcebee230e8e"
+    },
+    {
+     "n": 5,
+     "book": "6956ead7b5d89fc3ccb478d1",
+     "page": 152,
+     "page_id": "6956ead7b5d89fc3ccb47969"
+    },
+    {
+     "n": 6,
+     "book": "6992cbd0018b80967354b30f",
+     "page": 18,
+     "page_id": "6992cbd0018b80967354b321"
+    },
+    {
+     "n": 7,
+     "book": "6992ce61673ee1e40e3204ed",
+     "page": 77,
+     "page_id": "6992ce61673ee1e40e32053a"
+    },
+    {
+     "n": 8,
+     "book": "6974b63d19126e775cf6d7d1",
+     "page": 605,
+     "page_id": "6975b4825dc3fd961d2a1180"
+    },
+    {
+     "n": 9,
+     "book": "69907c715f855ec553e753c4",
+     "page": 128,
+     "page_id": "69907c725f855ec553e7577a"
+    },
+    {
+     "n": 10,
+     "book": "6991be05df9a711e30db840c",
+     "page": 371,
+     "page_id": "6991be05df9a711e30db857f"
+    },
+    {
+     "n": 11,
+     "book": "69b1860cc4be2cdd0edc4de2",
+     "page": 283,
+     "page_id": "69b1860cc4be2cdd0edc4efd"
+    },
+    {
+     "n": 12,
+     "book": "69523495ab34727b1f044a45",
+     "page": 149,
+     "page_id": "69523496ab34727b1f044ada"
+    },
+    {
+     "n": 13,
+     "book": "698255f1ca3a4ca551f8e747",
+     "page": 138,
+     "page_id": "698273f41cefaa7fdcb1b47d"
+    },
+    {
+     "n": 14,
+     "book": "69938d775d28b693146cfc2c",
+     "page": 180,
+     "page_id": "69938d775d28b693146cfce0"
+    },
+    {
+     "n": 15,
+     "book": "699067dd249ce014347d4345",
+     "page": 343,
+     "page_id": "699067dd249ce014347d449c"
+    },
+    {
+     "n": 16,
+     "book": "69a0278b8073102dfd86044b",
+     "page": 118,
+     "page_id": "69a05ee25cfa54096b9bc323"
+    },
+    {
+     "n": 17,
+     "book": "6953ce6377f38f6761be3e63",
+     "page": 121,
+     "page_id": "6953ce6377f38f6761be3edc"
+    },
+    {
+     "n": 18,
+     "book": "6953cc6777f38f6761be1def",
+     "page": 188,
+     "page_id": "6953cc6877f38f6761be1eab"
+    },
+    {
+     "n": 19,
+     "book": "6985ca74e3007574295ea81b",
+     "page": 279,
+     "page_id": "698603f6ccca84d01c632e62"
+    },
+    {
+     "n": 20,
+     "book": "69ac8939e5cfec73a7bd9107",
+     "page": 138,
+     "page_id": "69ac8939e5cfec73a7bd9191"
+    },
+    {
+     "n": 21,
+     "book": "697a305506ef913279fbe8f3",
+     "page": 35,
+     "page_id": "697a35500bb708b006d8bced"
+    },
+    {
+     "n": 22,
+     "book": "698255ec3e158c7e3c9a4f76",
+     "page": 179,
+     "page_id": "69827b210e589a3a24ce9759"
+    },
+    {
+     "n": 23,
+     "book": "6992cf0c284cdd19fef46e75",
+     "page": 14,
+     "page_id": "6992cf0c284cdd19fef46e83"
+    },
+    {
+     "n": 24,
+     "book": "69a684dab3d8052782b3cd68",
+     "page": 157,
+     "page_id": "69a684dab3d8052782b3ce05"
+    },
+    {
+     "n": 25,
+     "book": "6979272bf35c6bbfbfd252ef",
+     "page": 54,
+     "page_id": "6979303c932e7633cda571a9"
+    },
+    {
+     "n": 26,
+     "book": "695273a7ab34727b1f04a708",
+     "page": 97,
+     "page_id": "695273a7ab34727b1f04a769"
+    },
+    {
+     "n": 27,
+     "book": "6990615bef12272ffdc8d528",
+     "page": 79,
+     "page_id": "6990615cef12272ffdc8d577"
+    },
+    {
+     "n": 28,
+     "book": "69a0278a2f6d8b761bf95215",
+     "page": 326,
+     "page_id": "69a06ed55802dbf990b151d3"
+    },
+    {
+     "n": 29,
+     "book": "697e23cc10ae21088f4e9d29",
+     "page": 50,
+     "page_id": "697e2bceae34d6f42c59431f"
+    },
+    {
+     "n": 30,
+     "book": "69b00ab2c42435fcd0cfa2a2",
+     "page": 488,
+     "page_id": "69b00ab2c42435fcd0cfa48a"
+    },
+    {
+     "n": 31,
+     "book": "6988a5a1a15916541b5aaa0a",
+     "page": 463,
+     "page_id": "6988f711022371e7354fcfa6"
+    },
+    {
+     "n": 32,
+     "book": "69751590233423aeec9e88ee",
+     "page": 369,
+     "page_id": "6976a9cce7809b6af027290a"
+    },
+    {
+     "n": 33,
+     "book": "699246adbc722ec0ee810bd9",
+     "page": 415,
+     "page_id": "699246adbc722ec0ee810d78"
+    },
+    {
+     "n": 34,
+     "book": "6953ab7477f38f6761bd729d",
+     "page": 717,
+     "page_id": "6953ab7477f38f6761bd756a"
+    },
+    {
+     "n": 35,
+     "book": "69b51dfd768235dc6598af5b",
+     "page": 25,
+     "page_id": "69b51dfd768235dc6598af74"
+    },
+    {
+     "n": 36,
+     "book": "69938a89e07f979c72ac6415",
+     "page": 353,
+     "page_id": "69938a89e07f979c72ac6576"
+    },
+    {
+     "n": 37,
+     "book": "69751590233423aeec9e88ee",
+     "page": 185,
+     "page_id": "69768f3b932137cebc4d8cf3"
+    },
+    {
+     "n": 38,
+     "book": "6953eae01479a63c11087e87",
+     "page": 497,
+     "page_id": "6953eae01479a63c11088078"
+    },
+    {
+     "n": 39,
+     "book": "69af0fc46f6d83348c7fa572",
+     "page": 192,
+     "page_id": "69af0fc46f6d83348c7fa632"
+    },
+    {
+     "n": 40,
+     "book": "69568904be7c607c5f03c34a",
+     "page": 158,
+     "page_id": "69569e3d1479a63c11092bdc"
+    }
+   ]
+  },
+  {
+   "sample": 3,
+   "seed": 5903,
+   "rule": "v3",
+   "clean": 39,
+   "of": 40,
+   "faults": [
+    "p4 699439b66879ff0184cb8dac?page=443: \"aplaneis; original\" left as the chip"
+   ],
+   "verdict": "pass; that shape then excluded (the page is no longer touched)",
+   "pages": [
+    {
+     "n": 1,
+     "book": "695286c8ab34727b1f04c98d",
+     "page": 672,
+     "page_id": "6992bc0157876282bf242b16"
+    },
+    {
+     "n": 2,
+     "book": "6958ea099659a6529d577d58",
+     "page": 93,
+     "page_id": "6958ea099659a6529d577db5"
+    },
+    {
+     "n": 3,
+     "book": "69819209c73493ba18172b35",
+     "page": 76,
+     "page_id": "6981a5b45dfda543dad5ba71"
+    },
+    {
+     "n": 4,
+     "book": "699439b66879ff0184cb8dac",
+     "page": 443,
+     "page_id": "699439b66879ff0184cb8f67"
+    },
+    {
+     "n": 5,
+     "book": "698255eea406f4e0de15476d",
+     "page": 183,
+     "page_id": "69827d00e0cb61febd7662e2"
+    },
+    {
+     "n": 6,
+     "book": "6991be07df9a711e30db88ce",
+     "page": 340,
+     "page_id": "6991be07df9a711e30db8a22"
+    },
+    {
+     "n": 7,
+     "book": "69907983b621b177c1af80ed",
+     "page": 50,
+     "page_id": "69907983b621b177c1af8120"
+    },
+    {
+     "n": 8,
+     "book": "699389570f04c37dcfa60b32",
+     "page": 216,
+     "page_id": "699389570f04c37dcfa60c0a"
+    },
+    {
+     "n": 9,
+     "book": "697b07991ec34adb26378467",
+     "page": 547,
+     "page_id": "697bb3e57a175299e2717129"
+    },
+    {
+     "n": 10,
+     "book": "69906134322e01b1349a4024",
+     "page": 144,
+     "page_id": "69906134322e01b1349a40b4"
+    },
+    {
+     "n": 11,
+     "book": "697c8e0fbaa544415f85b6bc",
+     "page": 171,
+     "page_id": "697cba81feb34644c13e4334"
+    },
+    {
+     "n": 12,
+     "book": "699209bdbed8f4b5ff5b2b00",
+     "page": 160,
+     "page_id": "699209bdbed8f4b5ff5b2b6e"
+    },
+    {
+     "n": 13,
+     "book": "6991e93135ed50020acc1458",
+     "page": 1018,
+     "page_id": "6991e93135ed50020acc1852"
+    },
+    {
+     "n": 14,
+     "book": "697932b1f35c6bbfbfd252fd",
+     "page": 87,
+     "page_id": "6979470a769b0bd712caabbc"
+    },
+    {
+     "n": 15,
+     "book": "6992ce113ea667fbac827f2f",
+     "page": 58,
+     "page_id": "6992ce123ea667fbac827f6a"
+    },
+    {
+     "n": 16,
+     "book": "6988a5a36884b21140ae93c1",
+     "page": 29,
+     "page_id": "6988aa4e95b30eec2980c9e0"
+    },
+    {
+     "n": 17,
+     "book": "6952d19c77f38f6761bc5fd2",
+     "page": 488,
+     "page_id": "6952d19d77f38f6761bc61ba"
+    },
+    {
+     "n": 18,
+     "book": "698192090262143fe66eb184",
+     "page": 616,
+     "page_id": "698201e83012d8b18010e36a"
+    },
+    {
+     "n": 19,
+     "book": "69925819ad311253224ccc12",
+     "page": 627,
+     "page_id": "69925819ad311253224cce85"
+    },
+    {
+     "n": 20,
+     "book": "69751591233423aeec9e88f2",
+     "page": 494,
+     "page_id": "6977152944e0083178fc9c6a"
+    },
+    {
+     "n": 21,
+     "book": "6952caa077f38f6761bc408b",
+     "page": 884,
+     "page_id": "6952caa077f38f6761bc43ff"
+    },
+    {
+     "n": 22,
+     "book": "69942e16d607f8e57e4b7602",
+     "page": 131,
+     "page_id": "69942e16d607f8e57e4b7685"
+    },
+    {
+     "n": 23,
+     "book": "69affd526b26a0ddc6b69c4e",
+     "page": 207,
+     "page_id": "69affd536b26a0ddc6b69d1d"
+    },
+    {
+     "n": 24,
+     "book": "697a30565f904ad9c01e0cd7",
+     "page": 291,
+     "page_id": "697af00edcd2e14333952f6d"
+    },
+    {
+     "n": 25,
+     "book": "25dfd63a-8080-4864-aa79-a0fcb1c76102",
+     "page": 476,
+     "page_id": "695004c9f426a210d1098905"
+    },
+    {
+     "n": 26,
+     "book": "69b51e39768235dc6598dede",
+     "page": 15,
+     "page_id": "69b51e39768235dc6598deed"
+    },
+    {
+     "n": 27,
+     "book": "6984e84f6aad85d382376f57",
+     "page": 194,
+     "page_id": "69850f945c91a9b320524648"
+    },
+    {
+     "n": 28,
+     "book": "69907e0cb91bcb2db3f6ddd7",
+     "page": 3,
+     "page_id": "69907e0db91bcb2db3f6ddda"
+    },
+    {
+     "n": 29,
+     "book": "6952db5477f38f6761bc7402",
+     "page": 113,
+     "page_id": "695906d44953388fe7ac70c7"
+    },
+    {
+     "n": 30,
+     "book": "69a0278bc49f0f5eda46533f",
+     "page": 235,
+     "page_id": "69a06429c18473455b748dd9"
+    },
+    {
+     "n": 31,
+     "book": "69af0fb5024c2bf295285492",
+     "page": 65,
+     "page_id": "69af0fb5024c2bf2952859a6"
+    },
+    {
+     "n": 32,
+     "book": "6952c9c477f38f6761bc2eab",
+     "page": 89,
+     "page_id": "695906c295a91542b28bf247"
+    },
+    {
+     "n": 33,
+     "book": "695593107bd6d2cd1d61bb03",
+     "page": 140,
+     "page_id": "695593107bd6d2cd1d61bb8f"
+    },
+    {
+     "n": 34,
+     "book": "69af0dab9f13b61d0a6c6105",
+     "page": 99,
+     "page_id": "69af0dab9f13b61d0a6c6168"
+    },
+    {
+     "n": 35,
+     "book": "6955808657e3b773024f5899",
+     "page": 126,
+     "page_id": "6955808657e3b773024f5917"
+    },
+    {
+     "n": 36,
+     "book": "695289a1ab34727b1f04d87d",
+     "page": 217,
+     "page_id": "695289a1ab34727b1f04d956"
+    },
+    {
+     "n": 37,
+     "book": "6953e51c77f38f6761befc93",
+     "page": 154,
+     "page_id": "6953e51c77f38f6761befd2d"
+    },
+    {
+     "n": 38,
+     "book": "6964bfcbd00c6d84781505ff",
+     "page": 110,
+     "page_id": "6964bfeb83e3fcba19108e97"
+    },
+    {
+     "n": 39,
+     "book": "697c8e0fbaa544415f85b6b4",
+     "page": 220,
+     "page_id": "697cba4f326d526f2c7797cd"
+    },
+    {
+     "n": 40,
+     "book": "6988a5a163409d3be003e1ca",
+     "page": 252,
+     "page_id": "698915507e9497599593c75b"
+    }
+   ]
+  },
+  {
+   "sample": 4,
+   "seed": 5903,
+   "rule": "v4 (applied), on the v4 candidate list: 40 other pages",
+   "clean": 40,
+   "of": 40,
+   "faults": [],
+   "verdict": "pass",
+   "pages": [
+    {
+     "n": 1,
+     "book": "6992c906453c7175dc1bcc1b",
+     "page": 122,
+     "page_id": "6992c906453c7175dc1bcc95"
+    },
+    {
+     "n": 2,
+     "book": "6958ea099659a6529d577d58",
+     "page": 252,
+     "page_id": "6958ea099659a6529d577e54"
+    },
+    {
+     "n": 3,
+     "book": "698192088a34efe8087e9ae2",
+     "page": 155,
+     "page_id": "6981ab0b62b2a0a32f0de674"
+    },
+    {
+     "n": 4,
+     "book": "69943c5513c9a0dce275758c",
+     "page": 388,
+     "page_id": "69943c5513c9a0dce2757710"
+    },
+    {
+     "n": 5,
+     "book": "698255eeaf854f912ffb30e6",
+     "page": 172,
+     "page_id": "698280caa6d6de9d199ce798"
+    },
+    {
+     "n": 6,
+     "book": "6991be112e5d8f25d7e871b9",
+     "page": 409,
+     "page_id": "6991be112e5d8f25d7e87352"
+    },
+    {
+     "n": 7,
+     "book": "699079f07012ba97b5f1d877",
+     "page": 243,
+     "page_id": "699079f07012ba97b5f1d96a"
+    },
+    {
+     "n": 8,
+     "book": "699389e50f04c37dcfa6246c",
+     "page": 405,
+     "page_id": "699389e60f04c37dcfa62601"
+    },
+    {
+     "n": 9,
+     "book": "697b079ac66889d6835b576a",
+     "page": 436,
+     "page_id": "697bc5262df4ee85ddbd2dec"
+    },
+    {
+     "n": 10,
+     "book": "69906160ef12272ffdc8d6ef",
+     "page": 11,
+     "page_id": "69906161ef12272ffdc8d6fa"
+    },
+    {
+     "n": 11,
+     "book": "697c8e0f58e66b1bd4f095d8",
+     "page": 233,
+     "page_id": "697cbdebca642e1194541ac1"
+    },
+    {
+     "n": 12,
+     "book": "69920b83e0a548a13d8835ea",
+     "page": 74,
+     "page_id": "69920b83e0a548a13d883634"
+    },
+    {
+     "n": 13,
+     "book": "6991ea632f801130a473d4ac",
+     "page": 150,
+     "page_id": "6991ea632f801130a473d542"
+    },
+    {
+     "n": 14,
+     "book": "6978ee3a3e0718a88d9fa068",
+     "page": 586,
+     "page_id": "69794aed3ef97ef8184db055"
+    },
+    {
+     "n": 15,
+     "book": "6992ce3a3ea667fbac8288d4",
+     "page": 26,
+     "page_id": "6992ce3b3ea667fbac8288ee"
+    },
+    {
+     "n": 16,
+     "book": "6988a59e193b008ee3811520",
+     "page": 35,
+     "page_id": "6988ae474d75732095a46da1"
+    },
+    {
+     "n": 17,
+     "book": "6952d19c77f38f6761bc5fd2",
+     "page": 579,
+     "page_id": "6952d19d77f38f6761bc6215"
+    },
+    {
+     "n": 18,
+     "book": "698255f29bba70f96bd29ca0",
+     "page": 7,
+     "page_id": "698257d901f7e6ed8ffdc4a6"
+    },
+    {
+     "n": 19,
+     "book": "699258978812793469fdc49f",
+     "page": 512,
+     "page_id": "699258978812793469fdc69f"
+    },
+    {
+     "n": 20,
+     "book": "697704f5a8ad77b9e64fc7c3",
+     "page": 105,
+     "page_id": "697718b3551743b9c24a1e38"
+    },
+    {
+     "n": 21,
+     "book": "6952caa077f38f6761bc408b",
+     "page": 990,
+     "page_id": "6952caa077f38f6761bc4469"
+    },
+    {
+     "n": 22,
+     "book": "69942e58d607f8e57e4b8659",
+     "page": 379,
+     "page_id": "69942e58d607f8e57e4b87d4"
+    },
+    {
+     "n": 23,
+     "book": "69b008dabfca0364b2a09314",
+     "page": 193,
+     "page_id": "69b008ddbfca0364b2a093d5"
+    },
+    {
+     "n": 24,
+     "book": "697a7087367f907242581fe3",
+     "page": 800,
+     "page_id": "697afcff2414f0ed00883925"
+    },
+    {
+     "n": 25,
+     "book": "25dfd63a-8080-4864-aa79-a0fcb1c76102",
+     "page": 587,
+     "page_id": "695004c9f426a210d1098974"
+    },
+    {
+     "n": 26,
+     "book": "69b51e779a81ef7feb3d5bfd",
+     "page": 22,
+     "page_id": "69b51e779a81ef7feb3d5c13"
+    },
+    {
+     "n": 27,
+     "book": "6984e8498a2f054f912420d9",
+     "page": 237,
+     "page_id": "698517aeba3366c3fd321aa7"
+    },
+    {
+     "n": 28,
+     "book": "69907f32afd715da775bc36e",
+     "page": 178,
+     "page_id": "69907f32afd715da775bc420"
+    },
+    {
+     "n": 29,
+     "book": "6952db5477f38f6761bc7402",
+     "page": 386,
+     "page_id": "695906d44953388fe7ac71d8"
+    },
+    {
+     "n": 30,
+     "book": "69a0278d6bc332f148ccf4a4",
+     "page": 291,
+     "page_id": "69a06fc7c64745417371d0c2"
+    },
+    {
+     "n": 31,
+     "book": "69afd2019a8092f06abf0c54",
+     "page": 171,
+     "page_id": "69afd2019a8092f06abf0cff"
+    },
+    {
+     "n": 32,
+     "book": "6952c9c477f38f6761bc2eab",
+     "page": 414,
+     "page_id": "695906c295a91542b28bf38c"
+    },
+    {
+     "n": 33,
+     "book": "695593107bd6d2cd1d61bb03",
+     "page": 216,
+     "page_id": "695593107bd6d2cd1d61bbdb"
+    },
+    {
+     "n": 34,
+     "book": "69af0de2be5fc7f3635460d5",
+     "page": 197,
+     "page_id": "69af0de2be5fc7f36354619b"
+    },
+    {
+     "n": 35,
+     "book": "6955808657e3b773024f5899",
+     "page": 204,
+     "page_id": "6955808657e3b773024f5965"
+    },
+    {
+     "n": 36,
+     "book": "695289a1ab34727b1f04d87d",
+     "page": 432,
+     "page_id": "695289a1ab34727b1f04da2d"
+    },
+    {
+     "n": 37,
+     "book": "6953e51c77f38f6761befc93",
+     "page": 418,
+     "page_id": "6953e51c77f38f6761befe35"
+    },
+    {
+     "n": 38,
+     "book": "6968d70e4fa3b04c6de86c76",
+     "page": 117,
+     "page_id": "6968d70f4fa3b04c6de86ceb"
+    },
+    {
+     "n": 39,
+     "book": "697c8e0f150e68b9f40701f6",
+     "page": 265,
+     "page_id": "697cbdd715cba1640a9c4d9f"
+    },
+    {
+     "n": 40,
+     "book": "6988a59f894ca90f56984e37",
+     "page": 605,
+     "page_id": "69892593d809d7e43d185aae"
+    }
+   ]
+  }
+ ],
+ "reader_views": "on all 160 gate pages the reader text with notes on and with notes off is identical before and after the rewrite",
+ "apply": {
+  "pilot_pages": 3000,
+  "written_first_pass": 207373,
+  "skipped_no_change": 6,
+  "raced": 0,
+  "errors": 0,
+  "human_edited_excluded": 2,
+  "correction": {
+   "pages_differing_under_final_rule": 16,
+   "restored_to_original": 10,
+   "rewritten_under_final_rule": 6,
+   "why": "one head with three different texts on a page is a run of the page's own labels (urine-wheel captions, recipe \"Take:\", Hexapla readings)"
+  },
+  "final": {
+   "pages": 207363,
+   "books": 4911,
+   "by_language": {
+    "Latin": 64448,
+    "German": 38612,
+    "English": 26331,
+    "French": 17722,
+    "Greek": 16051,
+    "Chinese": 10073,
+    "Dutch": 7509,
+    "Italian": 6145,
+    "Sanskrit": 5711,
+    "Hebrew": 2892,
+    "Arabic": 2497,
+    "Latin-German": 2177,
+    "Greek/Latin": 873,
+    "Spanish": 872,
+    "Armenian": 849,
+    "German-English": 436,
+    "Greek-Latin": 423,
+    "Russian": 366,
+    "Latin-English": 244,
+    "Greek-German": 194,
+    "Persian": 188,
+    "Irish/English": 186,
+    "Ancient Greek": 163,
+    "Syriac": 162,
+    "Coptic": 134,
+    "Italian/Latin": 127,
+    "Middle English-English": 126,
+    "Welsh/English": 123,
+    "Tamil": 122,
+    "Old Spanish": 113,
+    "Ge'ez": 106,
+    "Greek/English": 87,
+    "Chinese-English": 79,
+    "Ethiopic": 76,
+    "Latin-Dutch": 72,
+    "Latin/English": 68,
+    "Dutch-German": 67,
+    "Old English": 61,
+    "Demotic": 59,
+    "German/Latin": 55,
+    "Sanskrit-English": 55,
+    "English/Gaelic": 51,
+    "German/Arabic": 50,
+    "Arabic-English": 47,
+    "Middle French": 42,
+    "Anglo-Saxon": 42,
+    "Akkadian": 41,
+    "Aramaic": 37,
+    "Hindi": 36,
+    "Turkish": 36,
+    "Hebrew-Greek": 36,
+    "Haida": 33,
+    "French/English": 32,
+    "Arabic-Latin": 28,
+    "English, Prakrit, Sanskrit": 28,
+    "Yucatec Maya": 21,
+    "Dutch-English": 18,
+    "Latin/German/English": 15,
+    "Egyptian": 14,
+    "Punjabi": 13,
+    "Law French": 13,
+    "Italian-English": 11,
+    "Italian-German": 10,
+    "Navajo": 9,
+    "English/Sanskrit": 8,
+    "Hebrew-Latin": 8,
+    "Nahuatl": 7,
+    "English, Scottish Gaelic": 5,
+    "German-Latin": 5,
+    "Hebrew-German": 4,
+    "Egyptian hieroglyphs": 2,
+    "Korean": 2,
+    "Mixtec": 1,
+    "Japanese": 1,
+    "Hebrew and Arabic": 1,
+    "Nahuatl-Spanish": 1,
+    "Tibetan": 1
+   }
+  },
+  "chips": {
+   "split": 243655,
+   "head_dropped": 199002,
+   "apparatus": 30467,
+   "total": 473124
+  }
+ },
+ "verify": {
+  "hash_check_400": {
+   "sampled": 400,
+   "ok": 400
+  },
+  "final_rule_recheck_all": {
+   "pages": 207373,
+   "same": 207363,
+   "restored": 10,
+   "differs": 0
+  },
+  "undo_test": {
+   "page": "6955d9ce8407b7c9ae213226",
+   "restored_byte_identical": true,
+   "reapplied_same_hash": true,
+   "updated_at_moved": false
+  },
+  "mirror_sample": {
+   "sampled": 3000,
+   "equal": 2978,
+   "differs": 0,
+   "no_mirror_row": 22
+  },
+  "api_pages_checked": 5
+ },
+ "resync": {
+  "table": "pages",
+  "pushed": 207373,
+  "updated": 205717,
+  "correction_pushed": 16,
+  "snippets": "not run"
+ },
+ "downstream": {
+  "books_with_edition": 111,
+  "changed_pages_in_those": 7049,
+  "note_claims_rows_on_changed_pages": 0
+ },
+ "undo_key": "page_revisions.source = 'cleanup-termdef-5901'",
+ "run_dir": "/data/scratch/sl/claude-jobs/termdef (cloudlayer job box): candidates.jsonl, applied.jsonl, the five gate renderings",
+ "other_sessions_check": {
+  "this_box_ps": "none",
+  "issue_claims": "none",
+  "newest_3000_revision_rows": "no cleanup-* source in 90 minutes",
+  "hetzner_ps": "NOT DONE: no SSH key for Hetzner on this box"
+ }
+}

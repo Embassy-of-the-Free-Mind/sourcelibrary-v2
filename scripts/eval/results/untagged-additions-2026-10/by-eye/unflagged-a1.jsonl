@@ -1,0 +1,20 @@
+{"item":"U01","id":"6a3cc188ec254ff6cae0d21c_00146","found":[],"short_additions":[],"read_fully":true,"confidence":0.8,"note":"Table page; translation omits some columns but adds nothing."}
+{"item":"U02","id":"69b2f3e3a9a500a45e5e8f88_00015","found":[],"short_additions":[{"n":1,"words":"(to encrust)"},{"n":6,"words":"(sealed cups)"},{"n":13,"words":"(pure)"}],"read_fully":true,"confidence":0.9}
+{"item":"U03","id":"6a3c679e39b4508b04e378d0_00057","found":[],"short_additions":[],"read_fully":true,"confidence":0.8}
+{"item":"U04","id":"6a3c615d879008ba7e15db69_00118","found":[],"short_additions":[{"n":9,"words":"one word illegible"}],"read_fully":true,"confidence":0.65,"note":"Phrase-dictionary page in vertical fragments; renderings loose but each maps to source."}
+{"item":"U05","id":"69b651a418b87551bfcab4f6_00110","found":[],"short_additions":[],"read_fully":true,"confidence":0.9,"note":"Translation skips the opening half-sentence; nothing added."}
+{"item":"U06","id":"69c7e2ec295ea01b70c8d8da_00-67","found":[],"short_additions":[],"read_fully":true,"confidence":0.8,"note":"Greek text, Latin version and notes all rendered; doublets are the source's own parallel Latin."}
+{"item":"U07","id":"6a26c4b9aad44c98627d1b44_00003","found":[],"short_additions":[],"read_fully":true,"confidence":0.9}
+{"item":"U08","id":"69b21c2c429e087c6f8640e7_00013","found":[],"short_additions":[],"read_fully":true,"confidence":0.95}
+{"item":"U09","id":"69b2f3e9a9a500a45e5e8fd3_00174","found":[],"short_additions":[{"n":5,"words":"[book]"}],"read_fully":true,"confidence":0.9,"note":"Opening and closing fragments omitted; nothing added."}
+{"item":"U10","id":"69b62f6d1c1c21a3737f5c9f_00247","found":[{"n":13,"words":"long time and much labor around the church fill the deficiency","kind":"NEIGHBOUR_PAGE","note":"Source ends at 'aut deficiente'; the rest of the clause is the first line of next_page_start."},{"n":14,"words":"For thus they may also judge rightly in votes, and not be argued into the condemnation of their own soul, bringing forth judgment for God.","kind":"NEIGHBOUR_PAGE","note":"Whole sentence renders next_page_start 'Sic enim & suffragiis recte iudicent...'; not on this page."}],"short_additions":[{"n":2,"words":"[Constitutions]"},{"n":5,"words":"[Empire]"},{"n":8,"words":"[my Empire]"}],"read_fully":true,"confidence":0.9}
+{"item":"U11","id":"69c8a28f6c6f3cc53c85e463_00001","found":[],"short_additions":[],"read_fully":true,"confidence":0.95,"note":"English cover page; 'M.W.' expanded to 'Most Worthy'."}
+{"item":"U12","id":"6a08e2b150bd891addfb4ad9_00011","found":[],"short_additions":[{"n":2,"words":"Agemaki"}],"read_fully":true,"confidence":0.6,"note":"Headnotes mis-numbered and loosely rendered; supplied names only. Chapter title appears on next page, not here."}
+{"item":"U13","id":"6a26b94061b3857ed05a8b2b_00010","found":[],"short_additions":[],"read_fully":true,"confidence":0.9}
+{"item":"U14","id":"69b6bf758566c838146492ab_00059","found":[],"short_additions":[],"read_fully":true,"confidence":0.95}
+{"item":"U15","id":"6a3c5f43879008ba7e153cc1_00027","found":[],"short_additions":[],"read_fully":true,"confidence":0.85}
+{"item":"U16","id":"69e75a32095c302d3fdded0b_00075","found":[],"short_additions":[],"read_fully":true,"confidence":0.95,"note":"Opening half-sentence omitted; nothing added."}
+{"item":"U17","id":"69af0f3c71c0dcb762286c99_00061","found":[],"short_additions":[],"read_fully":true,"confidence":0.9}
+{"item":"U18","id":"6a4fb0696c11f99c0e4248f6_00013","found":[],"short_additions":[],"read_fully":true,"confidence":0.9}
+{"item":"U19","id":"69b2f38721208ea9dc278617_00149","found":[],"short_additions":[],"read_fully":true,"confidence":0.8,"note":"Doubled couplets are the source's own Latin plus Greek versions."}
+{"item":"U20","id":"69f336d3876dd827cbc50fd1_00010","found":[],"short_additions":[],"read_fully":true,"confidence":0.5,"note":"Garbled manuscript transcription (Persius, Satire 1); translation is fragments with gaps, nothing added."}

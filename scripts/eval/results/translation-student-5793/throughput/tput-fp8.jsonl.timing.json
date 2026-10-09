@@ -1,0 +1,13 @@
+{
+ "model": "Qwen/Qwen3-8B",
+ "lora": false,
+ "quant": "fp8",
+ "pages": 364,
+ "wall_s": 234.4,
+ "prompt_tokens": 323532,
+ "completion_tokens": 213631,
+ "out_tok_per_s": 911.4,
+ "pages_per_hour": 5590.5,
+ "max_model_len": 16384,
+ "gpu": "NVIDIA RTX PRO 4000 Blackwell"
+}

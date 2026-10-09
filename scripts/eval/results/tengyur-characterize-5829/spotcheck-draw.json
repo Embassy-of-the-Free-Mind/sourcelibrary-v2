@@ -1,0 +1,473 @@
+{
+ "seed": 99093,
+ "population_findings": 445,
+ "population_clean_pages": 23,
+ "findings": [
+  {
+   "fid": "B:PMOV6:1",
+   "reviewer": "B",
+   "id": "PMOV6",
+   "type": "term",
+   "confidence": "medium",
+   "tibetan": "བྱེ་བྲག་པའི་གཞུང་ལས",
+   "english": "the texts of the Vaisheshika [note: a non-Buddhist school of Indian philosophy]",
+   "why": "In this Vinaya commentary the source for the two origins of the view (reasoning and absorption) is the Abhidharma Vibhāṣā tradition, not the non-Buddhist Vaiśeṣika; the note compounds the error."
+  },
+  {
+   "fid": "A:PZUE2:0",
+   "reviewer": "A",
+   "id": "PZUE2",
+   "type": "agent",
+   "confidence": "medium",
+   "tibetan": "སློབ་མའི་གཡས་སུ་བསྐོར་ཞིང་འགྲོ་བར་བྱ་སྟེ",
+   "english": "The master should walk, circling to the right of the student.",
+   "why": "slob dpon slob ma'i gyas su bskor reads most naturally as master and disciple both moving clockwise (to the right) while striking the lines, not the master circling around the student."
+  },
+  {
+   "fid": "B:PY8X2:1",
+   "reviewer": "B",
+   "id": "PY8X2",
+   "type": "agent",
+   "confidence": "medium",
+   "tibetan": "ཟངས་ཀྱི་སྣོད་དྲིའི་ཆུས་ཕྱེད་ཡོངས་སུ་བཀང་བ་ལ་རྐྱལ་བར་བྱེད་ཅིང་",
+   "english": "allow the materials to float",
+   "why": "What floats in the half-filled copper vessel is the gold or silver pot holding the substances (previous side), not the loose materials."
+  },
+  {
+   "fid": "A:P8ZEZ:1",
+   "reviewer": "A",
+   "id": "P8ZEZ",
+   "type": "reversal",
+   "confidence": "medium",
+   "tibetan": "བདག་མེད་པ་ལོག་པ་ལ་ཡང་ངོ་། །དངོས་པོ་གྲུབ་པར་མི་འགྱུར་བ་སྟེ།",
+   "english": "even when being \"not without a self\" is reversed",
+   "why": "The Tibetan says that even when selflessness is excluded, the positive entity (the self) is not thereby established; the English makes the excluded term 'not without a self', i.e. the opposite."
+  },
+  {
+   "fid": "B:P672E:0",
+   "reviewer": "B",
+   "id": "P672E",
+   "type": "term",
+   "confidence": "medium",
+   "tibetan": "ཟན་ལ་བལྟས་#པ་ཙམ་གྱིས་གནས་པར་བྱ་སྟེ",
+   "english": "they should remain simply by looking at the food",
+   "why": "zan la bltas pa tsam gyis is idiomatic: they are to stay with only food as their due (receiving meals but no share of gains), not literally 'looking at the food'."
+  },
+  {
+   "fid": "B:P202B:1",
+   "reviewer": "B",
+   "id": "P202B",
+   "type": "gloss",
+   "confidence": "medium",
+   "tibetan": "ངིཏ་ལས་ཏ་ཨཱ་ཏཱམ",
+   "english": "(ngit) a marker indicating a specific class of verbal endings",
+   "why": "ṅit designates a root bearing the indicatory ṅ (which takes ātmanepada endings), not a marker of a class of endings."
+  },
+  {
+   "fid": "B:PFG9L:0",
+   "reviewer": "B",
+   "id": "PFG9L",
+   "type": "reversal",
+   "confidence": "high",
+   "tibetan": "ཟབ་པར་འདུ་ཤེས་ཤིང་རྣམ་པར་རྟོག་",
+   "english": "If one perceives them as profound without conceptualizing them",
+   "why": "med na negates both: if one has no perception of them as profound and does not conceptualize, one practises; the parallel passage on 'unfathomable' confirms this.",
+   "fix": {
+    "find": "If one perceives them as profound without conceptualizing them",
+    "replace": "If one has no perception of them as profound and does not conceptualize them"
+   }
+  },
+  {
+   "fid": "A:PTV2W:0",
+   "reviewer": "A",
+   "id": "PTV2W",
+   "type": "term",
+   "confidence": "high",
+   "tibetan": "མ་ཡིན་ཏེ་སྔོན་ཉིད་སྣང་བའི་ཕྱིར་རོ། །སྔོན་གྱི་རང་བཞིན་ཉིད་དུ་སྣང་བ་ན་རྣམ་པ་གཞན་དེ་ཉིད་མི་གསལ་བ་ཡིན་ནོ།",
+   "english": "because the blue color [note: original: \"sngon\", often used as a standard example for sensory perception] has already appeared. When the nature of the blue itself appears, other aspects are precisely what are not clear.",
+   "why": "སྔོན here is 'earlier/before' (it appeared previously; when it appears in its earlier nature the other aspect is unclear), not 'blue' (སྔོན་པོ).",
+   "fix": {
+    "find": "because the blue color [note: original: \"sngon\", often used as a standard example for sensory perception] has already appeared. When the nature of the blue itself appears, other aspects are precisely what are not clear.",
+    "replace": "because it already appeared earlier. When it appears in its earlier nature, the other aspect is precisely what is not clear."
+   }
+  },
+  {
+   "fid": "B:PBJQ2:0",
+   "reviewer": "B",
+   "id": "PBJQ2",
+   "type": "term",
+   "confidence": "high",
+   "tibetan": "མི་མཐུན་པའི་ཕྱོགས་འདོད་ཆགས་དང་བྲལ་བ་ལ་འཇུག་",
+   "english": "even if the counter-argument — that desire does not occur in those free from it — is not observed",
+   "why": "mi mthun pa'i phyogs is the dissimilar case (vipakṣa): even though the reason is not seen to occur in the dissimilar case, the passionless, the sign is still inconclusive.",
+   "fix": {
+    "find": "even if the counter-argument — that desire does not occur in those free from it — is not observed",
+    "replace": "even though the reason is not observed to occur in the dissimilar case (vipakṣa), namely those free from desire"
+   }
+  },
+  {
+   "fid": "A:PU5SV:1",
+   "reviewer": "A",
+   "id": "PU5SV",
+   "type": "gloss",
+   "confidence": "medium",
+   "tibetan": "སྔ་འགྱུར་ལ་སྡང་རྒྱ་དཔེ་ལ་མེད",
+   "english": "[note: the Old Translation period]",
+   "why": "snga 'gyur here means the earlier translation of this lexicon (and the Indic exemplar), not the Nyingma 'Old Translation period'."
+  },
+  {
+   "fid": "B:PS64I:0",
+   "reviewer": "B",
+   "id": "PS64I",
+   "type": "term",
+   "confidence": "medium",
+   "tibetan": "ལས་བཤད་དེ་ཞེས་བྱ་བ་ནི་འབྲས་བུ་བསྟན་པར་བྱའོ",
+   "english": "The phrase regarding the explanation of the activities means that the results will now be shown.",
+   "why": "ལས here is the ablative of the root-text lemma 'from these [mahāmudrās] it is explained', not 'activities' (karma)."
+  },
+  {
+   "fid": "A:P7PCR:0",
+   "reviewer": "A",
+   "id": "P7PCR",
+   "type": "term",
+   "confidence": "medium",
+   "tibetan": "ཕྱག་རྒྱ་སྟང་སྟབས་མ་ཡིན་ལ",
+   "english": "It is not through (mudras) symbolic hand gestures or physical postures",
+   "why": "In this polemic against consort practice (cf. ཕྱག་རྒྱ་སྦྱོར་བ on the previous side) ཕྱག་རྒྱ is the (karma)mudrā partner, not hand gestures."
+  },
+  {
+   "fid": "B:P176H:0",
+   "reviewer": "B",
+   "id": "P176H",
+   "type": "omission",
+   "confidence": "medium",
+   "tibetan": "དེ་གནས་པས་ལྡོག་པའམ། རབ་ཏུ་འབྱུང་བ་མེད་པ",
+   "english": "when the substance remains, its cessation or its new arising would be stated as being the substance",
+   "why": "The Tibetan says that since the substance persists there is no cessation or arising, so how could these be said to be it; the 'there is none' is lost."
+  },
+  {
+   "fid": "B:PYEYV:0",
+   "reviewer": "B",
+   "id": "PYEYV",
+   "type": "omission",
+   "confidence": "high",
+   "tibetan": "གསེར་གྱི་གླང་པོས་འགྲོ་བ་ལགས",
+   "english": "Through what karma, Venerable One?",
+   "why": "The king's question ends 'by what deed does he go about on a golden elephant?', which the English drops, losing the point of the story told next (the wooden elephant).",
+   "fix": {
+    "find": "Through what karma, Venerable One?",
+    "replace": "Through what karma, Venerable One, does he go about on a golden elephant?"
+   }
+  },
+  {
+   "fid": "A:PICC1:0",
+   "reviewer": "A",
+   "id": "PICC1",
+   "type": "structure",
+   "confidence": "medium",
+   "tibetan": "དེས་ན་ཞེས་བྱ་བ་ནི་གུས་པར་བྱ་བ་མ་ཡིན་པས་ནའོ།",
+   "english": "Therefore, it is said: \"Because it is not something to be treated with reverence.\"",
+   "why": "\"Therefore\" (དེས་ན) is the lemma being glossed and the clause is the commentator's gloss; the English makes the gloss into the quoted root text."
+  },
+  {
+   "fid": "A:PKZHS:0",
+   "reviewer": "A",
+   "id": "PKZHS",
+   "type": "term",
+   "confidence": "medium",
+   "tibetan": "དབུགས་དབྱུང་དྲུག་བསྡུས་",
+   "english": "the six types of relief",
+   "why": "dbugs dbyung here is ucchvāsa, 'chapter/section': the ritual condenses the six chapters (of the Māyājāla material), not 'six types of relief'."
+  },
+  {
+   "fid": "A:PH4G8:1",
+   "reviewer": "A",
+   "id": "PH4G8",
+   "type": "structure",
+   "confidence": "medium",
+   "tibetan": "ལས་ཀྱི་མེ་ལོང་ལ་སོགས་པ་ལ་ལྟ་བས་ངེས་པར་གཞན་གྱིས་མི་ཤེས་པར་",
+   "english": "unless they look into the mirror of karma and such",
+   "why": "The Śakras themselves ascertain, by looking into the mirror of karma, whether the same one or another is reborn, unknown to others; it is not an exception for the ordinary gods."
+  },
+  {
+   "fid": "B:PNT3O:0",
+   "reviewer": "B",
+   "id": "PNT3O",
+   "type": "term",
+   "confidence": "high",
+   "tibetan": "ཕྱིར་ཞེས་བྱ་བ་ནི་གཅིག་དང་གཅིག་ཏུ་",
+   "english": "The term \"furthermore\" indicates",
+   "why": "The lemma is phyir from the root text's de'i phyir, 'for the sake of that' (i.e. preparatory acts done for the robe), not 'furthermore'.",
+   "fix": {
+    "find": "The term \"furthermore\" indicates",
+    "replace": "The term \"for the sake of [it]\" indicates"
+   }
+  },
+  {
+   "fid": "A:P9I78:4",
+   "reviewer": "A",
+   "id": "P9I78",
+   "type": "structure",
+   "confidence": "medium",
+   "tibetan": "ཨུཏྤ་ལ་ཡི་འདབ་མ་སྔོན་པོ་དེ་དྲངས་ནས",
+   "english": "as if harvesting the blue petals of a lotus",
+   "why": "The blue utpala petal describes the drawn sword (dark as a blue lotus petal), not the cutting of the hair."
+  },
+  {
+   "fid": "B:P93N5:0",
+   "reviewer": "B",
+   "id": "P93N5",
+   "type": "reversal",
+   "confidence": "high",
+   "tibetan": "གཙོ་བོ་མ་ཡིན་པ་བསྟན་པ་ཡིན་ནོ།",
+   "english": "this shows his primary qualities",
+   "why": "The Tibetan says this teaches the non-principal (secondary) sense, not the primary one.",
+   "fix": {
+    "find": "this shows his primary qualities",
+    "replace": "this teaches the secondary sense [of the word]"
+   }
+  },
+  {
+   "fid": "A:PTVZA:0",
+   "reviewer": "A",
+   "id": "PTVZA",
+   "type": "agent",
+   "confidence": "medium",
+   "tibetan": "ཡིད་ནི་རྣམ་པར་གྲོལ་བ་ཡིས། །རྣམ་པར་ཐར་པར་དེས་འདོད་དོ",
+   "english": "One is desired to be liberated.",
+   "why": "The verse says that because the mind is freed, he (the teacher) holds these to be liberations (vimokṣa), not that someone is desired to be liberated."
+  },
+  {
+   "fid": "A:POGJD:1",
+   "reviewer": "A",
+   "id": "POGJD",
+   "type": "term",
+   "confidence": "medium",
+   "tibetan": "ཕྱག་གིས་ནི། །མཚན་ཉིད་ཐམས་ཅད་ཡོངས་སུ་རྫོགས",
+   "english": "Through gestures, all defining characteristics are perfectly completed.",
+   "why": "In this list of offerings ཕྱག is homage/prostration (followed by joined palms), not hand gestures in general."
+  },
+  {
+   "fid": "B:PTWAW:1",
+   "reviewer": "B",
+   "id": "PTWAW",
+   "type": "agent",
+   "confidence": "medium",
+   "tibetan": "སྔགས་པ་འདི་ལྟ་བུ་གསུངས་སོ་ཞེས་བྱ་བར་སྦྱར་རོ།",
+   "english": "It should be understood as \"The practitioner spoke in this way.\"",
+   "why": "The honorific gsungs and the following gloss of the mantra-collection (sngags bsdus pa) show the clause is about the (Blessed One) speaking such a mantra-collection, not the practitioner speaking."
+  },
+  {
+   "fid": "A:PDJD9:0",
+   "reviewer": "A",
+   "id": "PDJD9",
+   "type": "term",
+   "confidence": "medium",
+   "tibetan": "དེ་ཉིད་དུ་ན་ཞེས་སྨོས་སོ",
+   "english": "To this, he says: \"in that very context.\"",
+   "why": "The lemma de nyid du (tattvataḥ) means 'in reality', which is the point of the Buddhist reply (in reality the pervader is not apprehended), not 'in that very context'."
+  },
+  {
+   "fid": "A:PTV2W:2",
+   "reviewer": "A",
+   "id": "PTV2W",
+   "type": "agent",
+   "confidence": "medium",
+   "tibetan": "རྣམ་པར་རྟོག་པ་གཞན་ཁོ་ན་ཡིན་ཏེ། དེས་ན་བར་དུ་གཅོད་དོ་ཞེ་ན།",
+   "english": "If those who claim there is no conceptualization in perception argue that conceptualization is something else entirely and thus causes an interruption",
+   "why": "The objection is put by the opponent against the proponent of non-conceptual perception: 'for one who holds perception non-conceptual, conceptualization is something else, so it interrupts'; the proponents themselves do not argue this."
+  },
+  {
+   "fid": "A:PANA5:0",
+   "reviewer": "A",
+   "id": "PANA5",
+   "type": "reversal",
+   "confidence": "medium",
+   "tibetan": "འབྲས་བུ་ལྡོག་པ་ལས་རྒྱུ་ཉིད་དུ་མཐོང་བ་སྟེ། ངེས་པ་ནི་མ་ཡིན་ནོ།",
+   "english": "the status of something as a cause is observed through direct perception",
+   "why": "The Tibetan says that the causality of the posited quality for cloth etc., apart from their well-known causes, is NOT ascertained either by perception and non-perception or (as with the eye) from the cessation of the effect; the English presents the causality as observed and drops 'apart from the well-known causes'."
+  },
+  {
+   "fid": "A:PTVZA:1",
+   "reviewer": "A",
+   "id": "PTVZA",
+   "type": "structure",
+   "confidence": "medium",
+   "tibetan": "འཁོར་ལོ་རིན་ཆེན་མཚོ་སྐྱེས་དང་། །རལ་གྲི་ཀ་བ་བརྒྱད་ཀྱིས་བརྒྱན",
+   "english": "Are adorned with the precious wheel, the lotus,\nThe sword, and the eight pillars.",
+   "why": "Wheel, jewel, lotus and sword are the emblems marking the eight pillars (the eight liberations), so the list is mis-segmented, with the jewel merged into 'precious wheel' and the pillars made a fourth item."
+  },
+  {
+   "fid": "A:P5L4V:2",
+   "reviewer": "A",
+   "id": "P5L4V",
+   "type": "term",
+   "confidence": "medium",
+   "tibetan": "སངས་རྒྱས་སྤྱན་ནི་རྡོ་རྗེ་འཆང་ཆེན་པོ་དང་འདྲ་བར་འགྱུར་རོ",
+   "english": "the Buddha-Eye will become like that of the Great Vajra Holder",
+   "why": "sangs rgyas spyan is likely the goddess Buddhalocanā (alongside Māmakī), and the text says she/one becomes like Vajradhara, not 'like that of'."
+  },
+  {
+   "fid": "B:PBBKO:0",
+   "reviewer": "B",
+   "id": "PBBKO",
+   "type": "term",
+   "confidence": "medium",
+   "tibetan": "སེམས་དང་བ་དང་མ་དང་བའི་",
+   "english": "the clarity or lack of clarity of the mind",
+   "why": "dang ba here is faith/serene confidence (prasāda), as the resumed root line dang ba'i yid kyis dngos grub thob shows; 'clarity of mind' misses the sense."
+  },
+  {
+   "fid": "A:PLPNQ:0",
+   "reviewer": "A",
+   "id": "PLPNQ",
+   "type": "agent",
+   "confidence": "medium",
+   "tibetan": "དེ་ནམ་ཡང་ཡུལ་གྱི་དངོས་པོར་ཉེ་བར་མི་འགྲོའོ",
+   "english": "this reality never becomes an object of perception",
+   "why": "de refers to the saṃbhogakāya under discussion (seen only by those on the bhūmis), not to 'reality'."
+  }
+ ],
+ "clean": [
+  {
+   "id": "PCP6C",
+   "type": "SAMPLE",
+   "page_id": "6abeace4896ea18127c80fce",
+   "book_id": "6abeace1896ea18127c80d7a",
+   "vol": 52,
+   "section": "Tantra commentary",
+   "page_number": 594,
+   "folio": "298a",
+   "text_toh": "D2335",
+   "opens_text": false,
+   "colophon": false,
+   "verse_share": 0
+  },
+  {
+   "id": "PYMGV",
+   "type": "SAMPLE",
+   "page_id": "6abe83c2433559215a99805b",
+   "book_id": "6abe83b7433559215a997efb",
+   "vol": 4,
+   "section": "Tantra commentary",
+   "page_number": 350,
+   "folio": "176a",
+   "text_toh": "D1187",
+   "opens_text": false,
+   "colophon": false,
+   "verse_share": 0.05
+  },
+  {
+   "id": "P2ANJ",
+   "type": "SAMPLE",
+   "page_id": "6abeafa2896ea18127c82011",
+   "book_id": "6abeafa0896ea18127c81f94",
+   "vol": 92,
+   "section": "Prajñāpāramitā",
+   "page_number": 123,
+   "folio": "62b",
+   "text_toh": "D3807",
+   "opens_text": false,
+   "colophon": false,
+   "verse_share": 0
+  },
+  {
+   "id": "PQAA5",
+   "type": "SAMPLE",
+   "page_id": "6abebab4896ea18127c878e1",
+   "book_id": "6abebaa5896ea18127c876b6",
+   "vol": 133,
+   "section": "Cittamātra",
+   "page_number": 553,
+   "folio": "277b",
+   "text_toh": "D4047",
+   "opens_text": false,
+   "colophon": false,
+   "verse_share": 0
+  },
+  {
+   "id": "PDDTF",
+   "type": "SAMPLE",
+   "page_id": "6abeb120896ea18127c82525",
+   "book_id": "6abeb11e896ea18127c82406",
+   "vol": 95,
+   "section": "Prajñāpāramitā",
+   "page_number": 285,
+   "folio": "143b",
+   "text_toh": "D3815",
+   "opens_text": false,
+   "colophon": false,
+   "verse_share": 0
+  },
+  {
+   "id": "PF9P1",
+   "type": "SAMPLE",
+   "page_id": "6abeafd9896ea18127c8239f",
+   "book_id": "6abeafd3896ea18127c8218e",
+   "vol": 93,
+   "section": "Prajñāpāramitā",
+   "page_number": 527,
+   "folio": "264b",
+   "text_toh": "D3808",
+   "opens_text": false,
+   "colophon": false,
+   "verse_share": 0
+  },
+  {
+   "id": "PHRXK",
+   "type": "SAMPLE",
+   "page_id": "6abeaad46a920ffd924ddc3b",
+   "book_id": "6abeaad26a920ffd924ddbfc",
+   "vol": 84,
+   "section": "Prajñāpāramitā",
+   "page_number": 61,
+   "folio": "31b",
+   "text_toh": "D3790",
+   "opens_text": false,
+   "colophon": false,
+   "verse_share": 0
+  },
+  {
+   "id": "PEAH2",
+   "type": "SAMPLE",
+   "page_id": "6abec815896ea18127c8ad91",
+   "book_id": "6abec7fa896ea18127c8ac69",
+   "vol": 157,
+   "section": "Vinaya",
+   "page_number": 294,
+   "folio": "148a",
+   "text_toh": "D4114",
+   "opens_text": false,
+   "colophon": true,
+   "verse_share": 0
+  },
+  {
+   "id": "POEPW",
+   "type": "SAMPLE",
+   "page_id": "6abeb289896ea18127c83029",
+   "book_id": "6abeb286896ea18127c82fd7",
+   "vol": 100,
+   "section": "Madhyamaka",
+   "page_number": 80,
+   "folio": "41a",
+   "text_toh": "D3859",
+   "opens_text": false,
+   "colophon": false,
+   "verse_share": 0
+  },
+  {
+   "id": "P7CEM",
+   "type": "SAMPLE",
+   "page_id": "6abeac55896ea18127c80d53",
+   "book_id": "6abeac51896ea18127c80b90",
+   "vol": 38,
+   "section": "Tantra commentary",
+   "page_number": 449,
+   "folio": "225b",
+   "text_toh": "D1845",
+   "opens_text": false,
+   "colophon": false,
+   "verse_share": 0
+  }
+ ]
+}

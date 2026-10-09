@@ -537,6 +537,7 @@ export default function QualitySummaryPage() {
 
         <div className="border-t border-light pt-3 text-xs text-muted flex flex-wrap gap-x-5 gap-y-1">
           <span>Full working paper, methods and sources: <Link href={PAPER} className="text-accent-rust hover:underline">sourcelibrary.org/research/quality</Link></span>
+          <span>Known defects and work in progress: <Link href="/research/quality/open" className="text-accent-rust hover:underline">sourcelibrary.org/research/quality/open</Link></span>
           <span>Data: src/data/quality-by-language.json, src/data/quality-covariates.json ({cov.generated})</span>
           <span>Code: scripts/eval in the public repository (AGPL)</span>
           <span>team@sourcelibrary.org</span>

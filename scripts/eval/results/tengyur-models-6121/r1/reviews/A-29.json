@@ -1,0 +1,59 @@
+[
+{"id": "QD45B", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "རང་ཉིད་ཀྱི་སྒྲའི་དོན་ནི་བདག་ཉིད་ཅེས་བྱ་བ་ཡིན་ཏེ", "english": "\"by one's own soul\"", "why": "bdag nyid here simply glosses rang nyid as 'oneself' (svayam), not a soul.", "fix": {"find": "\"by one's own soul\"", "replace": "\"oneself\" (bdag nyid)"}},
+  {"type": "addition", "confidence": "medium", "tibetan": "ཆོས་ཅན་གྱི་རང་གི་ངོ་བོ་དང་འབྲེལ་བ་ནི་དཔེར་ན་ནམ་མཁའ་ཡོད་པར་སྨྲ་བའི་", "english": "such as a vase or sound", "why": "The Tibetan gives only the space example; 'vase or sound' is not in the text."},
+  {"type": "structure", "confidence": "medium", "tibetan": "རི་བོང་གི་རྭ་ལ་སོགས་པ་མེད་པ་ལ་མཐོང་བ་འདིས་ནི", "english": "since things like a rabbit's horns are seen to be non-existent, this line of reasoning", "why": "The Tibetan says this reason (being unproduced), being seen in non-existents such as a hare's horn, proves the subject space non-existent; the English makes the hare's horn's non-existence the premise."},
+  {"type": "reversal", "confidence": "medium", "tibetan": "རྩོད་པའི་དུས་སུ་ནི་བསྟན་བཅོས་ཁས་བླངས་པར་བྱ་བ་མ་ཡིན་པ་ཁོ་ན་ཡིན་ལ", "english": "during a debate the treatise itself is not the primary thing being accepted", "why": "The Tibetan says that at the time of debate a treatise is not to be adopted at all, and the clause glosses the lemma 'even if a treatise has been accepted'; 'not the primary thing' weakens this."}
+ ],
+ "note": "Follows the commentary on svayam in the thesis definition correctly overall, but 'soul' for bdag nyid is wrong and a few clauses are misconstrued."},
+{"id": "QFOOF", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "high", "tibetan": "མི་ཕན་འདོད་པའི་མི་རྣམས་ནི། །ནམ་ཞིག་སྐྱེས་ན་དགའ་འགྱུར་བ།", "english": "When it arises in men who wish for harm,\nThey feel a certain joy;", "why": "The anger arises in oneself and it is the ill-wishers who rejoice at it, not anger arising in the ill-wishers.", "fix": {"find": "When it arises in men who wish for harm,\nThey feel a certain joy;", "replace": "When it arises in one, those who wish one harm\nRejoice;"}},
+  {"type": "agent", "confidence": "medium", "tibetan": "གཡོ་བཞིན་དུ་ཡང་བདག་གིས་ཡང་མ་བཏང་", "english": "Even though I was shaken, I did not let go.", "why": "It is the harmer (anger) that was stirring which he did not let loose, not he who was shaken; the same shift recurs in the king's question ('even while you were shaken')."},
+  {"type": "agent", "confidence": "medium", "tibetan": "བདག་གིས་དེ་མ་ཤེས་པར་འདི་ལྟ་བུ་མི་བརྟན་པར་བྱས་སོ", "english": "I did not understand that and acted with such instability.", "why": "The king thinks that, not understanding, he took such a man to be inconstant (misjudged him), not that he himself acted unsteadily."},
+  {"type": "term", "confidence": "medium", "tibetan": "དམ་པའི་དོན་ལ་སྤྱོད་མི་འགྱུར", "english": "One will not practice the ultimate meaning.", "why": "dam pa'i don here is one's true good/welfare in a moral verse, not the philosophical 'ultimate meaning'."},
+  {"type": "gloss", "confidence": "medium", "tibetan": "ཁྲོ་བ་མ་མཆིས་ན། །སྤོང་བར་གྱུར་པས་དེ་ལ་གཏམ་ངན་འབྱུང་།", "english": "But one is said to have abandoned it [note: referring to a false accusation of losing one's temper], then bad reputation arises", "why": "The stanza says ill repute comes to one who does not abandon heart-burning anger; the note invents a false-accusation scenario."}
+ ],
+ "note": "Verses on anger are mostly readable, but several agent relations in the narrative and verses are confused."},
+{"id": "QPPSP", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "A careful rendering of a difficult dream/waking passage; the unexplained Tibetan token skyes mos left in the English should be resolved or noted."},
+{"id": "QM170", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "ཧ་ཅང་ཐལ་བར་འགྱུར་རོ", "english": "it would result in an infinite regress (prasanga) reductio ad absurdum", "why": "ha cang thal ba is atiprasaṅga, absurd overextension; the regress (thug pa med pa) is argued separately afterwards.", "fix": {"find": "it would result in an infinite regress (prasanga) reductio ad absurdum", "replace": "it would entail an absurd overextension (atiprasaṅga)"}},
+  {"type": "term", "confidence": "medium", "tibetan": "དེའི་ཕྱིར་དེ་ཉིད་ཐ་དད་པ་མེད་པ་ཡིན་ནོ", "english": "Therefore, it is intended that space itself has no distinct parts.", "why": "The point is that the nature is not different from space itself, not that space lacks parts."},
+  {"type": "gloss", "confidence": "medium", "tibetan": "དེ་གཉིས་ནི་ཡོན་ཏན་གྱི་དངོས་པོ་ཡིན་པ་ཉིད་ཀྱིས", "english": "[note: universals and numbers]", "why": "The two are said to be qualities (guṇa) residing only in substance; a universal is not a guṇa in Vaiśeṣika, so the note misidentifies them."}
+ ],
+ "note": "Argument against the Vaiśeṣika properties of space is followed, but the atiprasaṅga term and the conclusion are misrendered."},
+{"id": "QII5D", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "Faithful rendering of the sequence of faith and the teacher's instruction."},
+{"id": "QB4PG", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "ཆོས་ཕྱོགས་ཀྱི་ཕྱོགས་གཅིག་གིས་ཁྱབ་པ་ཡིན་ནོ", "english": "it is pervaded by one portion of the direction of the property of the (subject) dharmin that is to be proven", "why": "phyogs here is pakṣa (thesis), not 'direction'; the property of the subject is pervaded by a part of the pakṣa.", "fix": {"find": "it is pervaded by one portion of the direction of the property of the (subject) dharmin that is to be proven", "replace": "the property of the subject (dharmin) to be proven is pervaded by a part of the thesis (pakṣa)"}},
+  {"type": "gloss", "confidence": "medium", "tibetan": "རྗེས་སུ་འགྲོ་ལྡོག", "english": "the presence of the reason where the predicate is present, and its absence where the predicate is absent", "why": "Anvaya is the presence of the probandum wherever the reason is present, not the reason wherever the predicate is; the note states the converse."},
+  {"type": "structure", "confidence": "medium", "tibetan": "དེ་དག་ཀྱང་ཐམས་ཅད་ན་ཡོད་པའི་རང་བཞིན་པའི་ཕྱིར་དང་། དེ་ཡང་ཁྱད་", "english": "such a distinction is impossible", "why": "The Tibetan says concomitance holds in all instances and that (all-instance presence) is impossible in a particular, not that the distinction is impossible."},
+  {"type": "structure", "confidence": "medium", "tibetan": "ཁྱབ་པར་བྱེད་པ་གོ་བར་བྱ་བ་ལ་ཁྱད་པར་བྱ་བ་གོ་བར་བྱེད་པ་ཉིད་དུ་འཐད་པས་ན", "english": "In order to understand the pervader, it is appropriate to understand the qualified itself.", "why": "The Tibetan says the pervaded/qualified is fit to be the means of making known (gamaka) the pervader as what is to be made known; the gamya-gamaka relation is lost."}
+ ],
+ "note": "Logical terminology of pakṣa, anvaya and gamaka is handled unreliably, though the overall drift of the pervasion discussion survives."},
+{"id": "QKBR8", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "medium", "tibetan": "ལག་པས་སྐེ་རགས་ལྷོད་པར་བྱེད་པ་ཀུན་ནས་འགེགས་པ་ནི", "english": "restraining my hands from loosening her sash", "why": "It is the girl who, in the lover's fantasy, stops his hand as it loosens her girdle, not he who restrains his own hands."},
+  {"type": "term", "confidence": "medium", "tibetan": "ཀུན་བརྟགས་ལས་ནི་ཡན་ལག་མེ་ནི་འབྱུང་ལ", "english": "the inner fire in the limbs arises", "why": "yan lag med (Anaṅga) is the bodiless god of love; from imagining arises the fire of Anaṅga, a name rendered as a description."},
+  {"type": "addition", "confidence": "medium", "tibetan": "སྒྲ་སྒྲོགས་པའི་དབང་པོ་མི་དགེ་བའི་ལས་བྱེད་པ་རྣམས་ཀྱིས་སྡུག་བསྔལ་བའི་", "english": "experiencing the agony wrought by unvirtuous deeds committed through the noisy senses, one suffers", "why": "The clause continues onto the next side (those made pitiable by cries of pain at the hands of evil-doing beings); 'noisy senses' and the closing 'one suffers' are not in the Tibetan."},
+  {"type": "structure", "confidence": "medium", "tibetan": "དེ་ལྟར་གཞན་གྱི་བུད་མེད་ལ་ཆགས་པ། །སྐྱོན་མང་བར་ཤེས་", "english": "Knowing the many faults of desiring the women of others", "why": "The side is a series of verses (including this closing śloka) that the English runs as prose paragraphs."}
+ ],
+ "note": "Captures the gist of the kāvya on lust, but agents in the fantasy, the Anaṅga epithet and the final clause are mishandled."},
+{"id": "QIZPC", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "Faithful rendering of the grammatical commentary on the verses on skill in speech."},
+{"id": "QR9OS", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "omission", "confidence": "medium", "tibetan": "ལྷག་མ་བཅབས་པའི་ཉེས་པ", "english": "has committed an offense requiring a formal meeting of the community", "why": "The Tibetan specifies a concealed saṅghāvaśeṣa offence (bcabs pa), and the pupil helps him both receive the sanction quickly and be freed; 'concealed' is lost."}
+ ],
+ "note": "Sound rendering of the niśraya duties and the five-fold qualifications, with one Vinaya nuance lost."},
+{"id": "QH493", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "Both the Sanskrit and Tibetan verses of the bilingual side are rendered faithfully."}
+]

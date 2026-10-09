@@ -174,7 +174,7 @@ export async function budgetAllowsDispatch(db, label, { bypass = false, control:
 // ─── Scope envelopes (#4540) ────────────────────────────────────────────────
 //
 // A scope in processing_control.allow_scopes may carry its own budget:
-//   allow_scopes.<tag> = { book_ids, collections, budget_usd, created_at, created_by }
+//   allow_scopes.<tag> = { book_ids, collections, budget_usd, created_at, created_by, lanes?, meter_endpoints? }
 // A book in such a scope may dispatch while the SCOPE's envelope has room,
 // even when the global daily dial is closed. This is a second, separately
 // accounted ceiling — never an absence of one (#3826 is why the dial is
@@ -207,6 +207,17 @@ export function readScopeEnvelopes(control) {
         // Optional: gate LABEL prefixes this envelope opens for. Absent = every worker that asks
         // the scoped gate may spend it on these books (the original contract).
         lanes: Array.isArray(s.lanes) && s.lanes.length ? s.lanes.filter(Boolean).map(String) : null,
+        // Optional: usage-row `endpoint` values this envelope's meter counts. Absent = every
+        // row on its books counts (the original contract). `lanes` restricts who may SPEND
+        // an envelope; without this its meter still sums every lane's spend on the same
+        // books, so a $15 embedding envelope over books that OCR and translation are
+        // spending ~$46/day on closes in hours without embedding anything (#5729).
+        // Honoured only together with `lanes`: an unlaned envelope may be spent by any worker,
+        // and a meter that counts one endpoint would let every other worker spend it unmetered.
+        // A typo'd endpoint meters $0 forever — smoke-run and read --show before trusting one.
+        meter_endpoints: Array.isArray(s.lanes) && s.lanes.length
+          && Array.isArray(s.meter_endpoints) && s.meter_endpoints.length
+          ? s.meter_endpoints.filter(Boolean).map(String) : null,
       });
     }
   }
@@ -226,12 +237,13 @@ async function resolveEnvelopeIds(db, env) {
 }
 
 /** Spend attributed to a set of book ids in the Supabase primary store. */
-async function getSupabaseScopeSpend(ids, since) {
+async function getSupabaseScopeSpend(ids, since, endpoints = null) {
   if (!SUPABASE_SERVICE_KEY) {
     return { usd: 0, rows: 0, error: 'SUPABASE_SERVICE_ROLE_KEY missing' };
   }
   let usd = 0, rows = 0;
-  const sinceClause = since ? `&timestamp=gte.${since.toISOString()}` : '';
+  const sinceClause = (since ? `&timestamp=gte.${since.toISOString()}` : '')
+    + (endpoints ? `&endpoint=in.(${endpoints.map((e) => encodeURIComponent(`"${e}"`)).join(',')})` : '');
   try {
     for (let i = 0; i < ids.length; i += 80) { // chunk the in-list: keep URLs sane
       const inList = ids.slice(i, i + 80).map(encodeURIComponent).join(',');
@@ -278,14 +290,15 @@ export function _setSupabaseScopeSpendReaderForTests(fn) {
  * given time (or all-time when since is null — tighter, never looser).
  * meterError non-null means the envelope is UNREADABLE; callers fail closed.
  */
-export async function getScopeSpendUsd(db, { ids, since = null }) {
+export async function getScopeSpendUsd(db, { ids, since = null, endpoints = null }) {
   const mongoMatch = { book_id: { $in: ids } };
   if (since) mongoMatch._id = { $gte: ObjectId.createFromTime(Math.floor(since.getTime() / 1000)) };
+  if (endpoints) mongoMatch.endpoint = { $in: endpoints };
   const [agg] = await db.collection('gemini_usage').aggregate([
     { $match: mongoMatch },
     { $group: { _id: null, usd: { $sum: { $ifNull: ['$cost_usd', 0] } }, rows: { $sum: 1 } } },
   ]).toArray();
-  const supa = await supabaseScopeSpendReader(ids, since);
+  const supa = await supabaseScopeSpendReader(ids, since, endpoints);
   return {
     usd: (agg?.usd || 0) + supa.usd,
     rows: (agg?.rows || 0) + supa.rows,
@@ -355,7 +368,7 @@ export async function budgetAllowsDispatchScoped(db, label, { bypass = false, co
     }
     const ids = await resolveEnvelopeIds(db, env);
     if (ids.size === 0) { parts.push(`${env.tag}: empty scope`); continue; }
-    const s = await getScopeSpendUsd(db, { ids: [...ids], since: env.created_at });
+    const s = await getScopeSpendUsd(db, { ids: [...ids], since: env.created_at, endpoints: env.meter_endpoints });
     if (s.meterError) { parts.push(`${env.tag}: METER UNREADABLE (${s.meterError}) — closed`); continue; } // fail closed per envelope
     if (s.usd < env.budget_usd) {
       for (const id of ids) open.add(id);

@@ -73,7 +73,7 @@ export default function NakedPhilosophersPage() {
           <em>Gymnosophist</em> is a Greek coinage &mdash; <em>gymnós</em> (&ldquo;naked&rdquo;) plus{' '}
           <em>sophistḗs</em> (&ldquo;wise man&rdquo;) &mdash; and it was always an outsider&rsquo;s word, never a
           self-description. The Renaissance dictionaries glossed it with pedantic care: Reuchlin&rsquo;s 1478{' '}
-          <Link href="https://sourcelibrary.org/q/BhPS2Tp6l4XUxVQ1H0Y" className="text-accent-rust hover:text-accent-rust underline">
+          <Link href="https://sourcelibrary.org/q/BiPwY7Ut6bhY5HrDBRR" className="text-accent-rust hover:text-accent-rust underline">
             <em>Vocabularius</em>
           </Link>{' '}
           derives it &ldquo;from gymnos naked and sophista wise man.&rdquo; Behind the word were real ascetics

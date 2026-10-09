@@ -1,0 +1,9 @@
+{
+ "script": "syriac",
+ "name": "house-tags",
+ "reference": "ܟܬܒܐ ܕܝܠܝܕܘܬܗ ܕܝܫܘܥ ܡܫܝܚܐ ܒܪܗ ܕܕܘܝܕ ܒܪܗ ܕܐܒܪܗܡ",
+ "hypothesis": "<language>Syriac</language>\n<page-num>12</page-num>\n<header>ܟܬܒܐ ܕܝܠܝܕܘܬܗ ܕܝܫܘܥ</header>\nܡܫܝܚܐ ܒܪܗ ܕܕܘܝܕ ܒܪܗ ܕܐܒܪܗܡ",
+ "expected_cer": 0,
+ "tolerance": 0,
+ "why": "house tags are stripped; a <header> keeps its text (it is on the page)"
+}

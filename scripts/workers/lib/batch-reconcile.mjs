@@ -32,6 +32,7 @@
  */
 
 import { createHash } from 'node:crypto';
+import { endBatchJob, endNamelessBatchJobs } from '../../lib/end-batch-job.mjs';
 
 export const ACTIVE_STATES = new Set(['JOB_STATE_PENDING', 'JOB_STATE_RUNNING']);
 
@@ -212,10 +213,11 @@ export async function reconcileBatchState(db, deps) {
     const oneHourAgo = new Date(now() - 3600000);
     const staleZombies = zombies.filter(z => new Date(z.created_at) < oneHourAgo);
     if (staleZombies.length > 0 && !dryRun) {
-      await db.collection('batch_jobs').updateMany(
-        { _id: { $in: staleZombies.map(z => z._id) } },
-        { $set: { status: 'cancelled', cancelled_at: new Date(now()), cancel_reason: 'batch-health: zombie (no gemini_job_name, >1h old)' } }
-      );
+      // Nameless rows only — endNamelessBatchJobs re-checks that at write time (#6276).
+      await endNamelessBatchJobs(db, { _id: { $in: staleZombies.map(z => z._id) } }, {
+        status: 'cancelled', reason: 'batch-health: zombie (no gemini_job_name, >1h old)', by: 'batch-reconcile/zombie',
+        set: { cancelled_at: new Date(now()), cancel_reason: 'batch-health: zombie (no gemini_job_name, >1h old)' }, now: new Date(now()),
+      });
       result.dbZombies = staleZombies.length;
       result.issues.push(`Auto-cancelled ${staleZombies.length} DB zombie jobs`);
     }
@@ -232,6 +234,20 @@ export async function reconcileBatchState(db, deps) {
     for (const k of known) {
       if (k.job_name) knownNames.add(k.job_name);
       if (k.gemini_job_name) knownNames.add(k.gemini_job_name);
+    }
+    // The chained translation lane (scripts/lib/translate-batch-chained.mjs) records its
+    // Gemini jobs in translate_batch_runs, never in batch_jobs: the in-flight one at
+    // `round.job.name`, past ones at `rounds[].job`. Unlisted here, every in-flight round
+    // looked like an orphan and was cancelled (471 cancels on 2026-10-04 alone); each
+    // cancel is a strike, and three park the run for good — 300 runs, 53,614 pages
+    // parked by 2026-10-07 (#6122).
+    const chained = await db.collection('translate_batch_runs').find(
+      { $or: [{ 'round.job.name': { $in: orphanCandidates } }, { 'rounds.job': { $in: orphanCandidates } }] },
+    ).project({ 'round.job.name': 1, 'rounds.job': 1 }).toArray();
+    const candidateSet = new Set(orphanCandidates);
+    for (const r of chained) {
+      if (r.round?.job?.name) knownNames.add(r.round.job.name);
+      for (const x of r.rounds || []) if (x?.job && candidateSet.has(x.job)) knownNames.add(x.job);
     }
     result.orphansSparedKnownToDb = orphanCandidates.filter(n => knownNames.has(n)).length;
     if (result.orphansSparedKnownToDb > 0) {
@@ -287,17 +303,21 @@ export async function reconcileBatchState(db, deps) {
       }
       continue;
     }
-    confirmed.push({ job, record });
+    confirmed.push({ job, record, probe });
   }
   result.ghostsConfirmed = confirmed.length;
   result.ghostsDetected = confirmed.length;
   if (confirmed.length > 0) {
     if (!dryRun) {
-      for (const { job, record } of confirmed) {
-        await db.collection('batch_jobs').updateOne(
-          { _id: job._id, status: { $in: DB_ACTIVE_STATUSES } },
-          { $set: { status: 'failed', error: GHOST_ERROR, ghost_verdict: record, updated_at: new Date(now()) } }
-        );
+      for (const { job, record, probe } of confirmed) {
+        // The probe IS the evidence: endBatchJob re-checks that every key said 404 (#6276).
+        const ended = await endBatchJob(db, job, {
+          status: 'failed', reason: GHOST_ERROR, by: 'batch-reconcile/ghost',
+          gemini: probe, keyCount: clients.length,
+          filter: { status: { $in: DB_ACTIVE_STATUSES } },
+          set: { error: GHOST_ERROR, ghost_verdict: record }, now: new Date(now()),
+        });
+        if (ended.action !== 'written') continue;
         if (closePlaceholder) {
           try { await closePlaceholder(db, job, GHOST_ERROR); } catch (_) { /* best-effort meter close */ }
         }

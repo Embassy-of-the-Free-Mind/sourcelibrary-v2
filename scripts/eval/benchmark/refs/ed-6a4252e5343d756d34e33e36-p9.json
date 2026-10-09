@@ -1,0 +1,46 @@
+{
+  "source": "EEBO-TCP A27552",
+  "edition": "De ortu et natura sanguinis a Joanne Betto ... — B2087 (1669)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/textcreationpartnership/A27552",
+  "same_edition": {
+    "evidence": "catalogue-number",
+    "text_match_pages": "13/13",
+    "pb_aligned_pages": "13/13"
+  },
+  "origin": "library",
+  "book_id": "6a4252e5343d756d34e33e36",
+  "page_number": 9,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 7558,
+    "to_char": 8945,
+    "overlap": 0.707,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'tione vel ipsa Medicinae subvertunt fundamina'; ends 'Vltra omnem itaq; tergi-'; image is a negative-like photo with left page sliver visible, header 'Ad Lectorem' skipped; ref padded both ends.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:19.661Z",
+  "text_location": "repo",
+  "text_sha256": "4ae1437f2911a441c0de4028a390bb4554b6769ef6268b28503c184e2a1aba9f",
+  "unit": {
+    "chars": 1387
+  },
+  "stratum": "latin-period-5126"
+}

@@ -1,0 +1,105 @@
+{
+ "run_at": "2026-10-06T10:27:25.473Z",
+ "total_usd": 0.007592,
+ "results": [
+  {
+   "lang": "Latin",
+   "book_id": "6949af986ef4a68b726b7fa9",
+   "page_id": "6959c3811322e7c7003000f5",
+   "page_number": 475,
+   "model": "gemini-3.1-flash-lite",
+   "prompt": {
+    "name": "Standard Translation",
+    "version": 13
+   },
+   "cost_usd": 0.0007419999999999999,
+   "inputTokens": 1966,
+   "outputTokens": 167,
+   "finishReason": "STOP",
+   "guard": {
+    "split": 0,
+    "head_dropped": 0,
+    "apparatus": 0,
+    "in_span": 0,
+    "bracket": 0
+   },
+   "guard_changed": false,
+   "stray_refuse": false,
+   "counts": {
+    "term": 0,
+    "term_with_colon_definition": 0,
+    "term_then_bracket": 0,
+    "term_then_gloss": 0,
+    "note": 1
+   },
+   "raw": "<note>A woodcut engraving features a printer's device with a central fleur-de-lis held within a decorative vessel. Two figures, likely cherubs, flank the vessel. The entire emblem is encased in a rectangular border, with a tablet at the base inscribed with the phrase \"IN VIRTUTE VIA\" <gloss>In virtue is the way</gloss>.</note>\n\n<warning>The image is a faded, translucent imprint transferred from the opposite page, making the text and details difficult to discern clearly.</warning>\n\n<summary>This page contains a decorative printer's device or emblem featuring a fleur-de-lis and the Latin motto regarding the path of virtue.</summary>\n<keywords>printer's device, emblem, fleur-de-lis, virtue, Vitruvius</keywords>",
+   "would_store": "<note>A woodcut engraving features a printer's device with a central fleur-de-lis held within a decorative vessel. Two figures, likely cherubs, flank the vessel. The entire emblem is encased in a rectangular border, with a tablet at the base inscribed with the phrase \"IN VIRTUTE VIA\" <gloss>In virtue is the way</gloss>.</note>\n\n<warning>The image is a faded, translucent imprint transferred from the opposite page, making the text and details difficult to discern clearly.</warning>\n\n<summary>This page contains a decorative printer's device or emblem featuring a fleur-de-lis and the Latin motto regarding the path of virtue.</summary>\n<keywords>printer's device, emblem, fleur-de-lis, virtue, Vitruvius</keywords>"
+  },
+  {
+   "lang": "Chinese",
+   "book_id": "6992c88d4f3a879124230200",
+   "page_id": "6992c88d4f3a8791242302c7",
+   "page_number": 199,
+   "model": "gemini-3-flash-preview",
+   "prompt": {
+    "name": "Standard Translation",
+    "version": 13
+   },
+   "cost_usd": 0.0022364999999999998,
+   "inputTokens": 2337,
+   "outputTokens": 356,
+   "finishReason": "STOP",
+   "guard": {
+    "split": 0,
+    "head_dropped": 0,
+    "apparatus": 0,
+    "in_span": 0,
+    "bracket": 0
+   },
+   "guard_changed": false,
+   "stray_refuse": false,
+   "counts": {
+    "term": 0,
+    "term_with_colon_definition": 0,
+    "term_then_bracket": 0,
+    "term_then_gloss": 0,
+    "note": 5
+   },
+   "raw": "<meta>continues from the previous page showing the preparation of cocoons on mountain screens</meta>\n\n# Exploitation of the Works of Nature\n## Chapter 6: Clothing Materials\n\n<column-break/>\n\n<note>A large-scale woodblock engraving depicts the process of silk reeling. A male worker sits on a low stool to the left, carefully managing the silk filaments. Before him is a specialized reeling frame constructed of wood. The machine features a central axle and a large winding reel. Various mechanical components are used to guide the silk threads from a basin of hot water (implied, as the worker handles the fibers) onto the rotating frame. The scene illustrates the transition from raw cocoon to wound silk thread.</note>\n\n-> Reeling silk fibers <-\n\n<note>original: 治絲 (zhi si). This refers to the industrial process of unwinding silk filaments from cocoons and combining them into a single thread.</note>\n\n<column-break/>\n\n<note>Labels within the illustration identify specific mechanical parts: The Silk Feeding Rod <note>original: 送絲竿 (song si gan). A guide rod used to maintain tension and direction as the silk moves toward the reel.</note> and the Star-Head Component <note>original: 丁星頭 (ding xing tou). Likely referring to a specialized oscillating guide or peg used to distribute the silk evenly across the width of the reel.</note></note>\n\n<summary>This page illustrates the mechanical process of reeling silk. It shows a worker using a specialized frame to unwind cocoons and wind the resulting silk filaments onto a storage reel.</summary>\n<keywords>silk reeling, textile machinery, Ming dynasty technology, sericulture, silk production</keywords>",
+   "would_store": "<meta>continues from the previous page showing the preparation of cocoons on mountain screens</meta>\n\n# Exploitation of the Works of Nature\n## Chapter 6: Clothing Materials\n\n<column-break/>\n\n<note>A large-scale woodblock engraving depicts the process of silk reeling. A male worker sits on a low stool to the left, carefully managing the silk filaments. Before him is a specialized reeling frame constructed of wood. The machine features a central axle and a large winding reel. Various mechanical components are used to guide the silk threads from a basin of hot water (implied, as the worker handles the fibers) onto the rotating frame. The scene illustrates the transition from raw cocoon to wound silk thread.</note>\n\n-> Reeling silk fibers <-\n\n<note>original: 治絲 (zhi si). This refers to the industrial process of unwinding silk filaments from cocoons and combining them into a single thread.</note>\n\n<column-break/>\n\n<note>Labels within the illustration identify specific mechanical parts: The Silk Feeding Rod </note><note>original: 送絲竿 (song si gan). A guide rod used to maintain tension and direction as the silk moves toward the reel.</note> and the Star-Head Component <note>original: 丁星頭 (ding xing tou). Likely referring to a specialized oscillating guide or peg used to distribute the silk evenly across the width of the reel.</note>\n\n<summary>This page illustrates the mechanical process of reeling silk. It shows a worker using a specialized frame to unwind cocoons and wind the resulting silk filaments onto a storage reel.</summary>\n<keywords>silk reeling, textile machinery, Ming dynasty technology, sericulture, silk production</keywords>"
+  },
+  {
+   "lang": "Arabic",
+   "book_id": "6958ea069659a6529d577c98",
+   "page_id": "6a27114db2e7df1dc5cba3d1",
+   "page_number": 261,
+   "model": "gemini-3-flash-preview",
+   "prompt": {
+    "name": "Standard Translation",
+    "version": 13
+   },
+   "cost_usd": 0.0046135,
+   "inputTokens": 3119,
+   "outputTokens": 1018,
+   "finishReason": "STOP",
+   "guard": {
+    "split": 0,
+    "head_dropped": 0,
+    "apparatus": 0,
+    "in_span": 0,
+    "bracket": 0
+   },
+   "guard_changed": false,
+   "stray_refuse": false,
+   "counts": {
+    "term": 9,
+    "term_with_colon_definition": 0,
+    "term_then_bracket": 0,
+    "term_then_gloss": 3,
+    "note": 13
+   },
+   "raw": "<meta>continues from previous page</meta>\n...if a honey mixture <note>literally: honey water</note> is applied to foul vulvas, it heals them and banishes their ailments by the command of God, the Compassionate, the Merciful.\n\n<margin>\nFor the prince and the elderly\nFor old nerve pains\nSeeds for major flatulence\n</margin>\n\n<margin>\nOf arsenic: the round type is used; its weight is one-third the weight of the white variety and half the weight of the long arsenic. Some said on the authority of Umar ibn Sufyan: the round variety, when aged by weight, is lightened with costus.\n</margin>\n\nIts preparation: if its extraction is difficult for the oculist <note>an eye doctor or specialist in topical applications</note>, he should proceed cautiously. Al-Razi <note>the famous physician Rhazes</note> said, regarding Ishak ibn Hunayn's <note>the translator and physician</note> opinion on what is hoped for from it: it benefits the spirits, the elderly, and the wasting of the nerves. It is comprehensive for the limbs; it warms and clears the chest, and through it, the long variety penetrates deep tumors <note>or swellings</note> and the protrusion of flatulence <note>excessive gas or wind in the body</note>. If taken with sulfur and <term>zarawand</term> <gloss>birthwort</gloss>, the long variety at the weight of one <term>dirham</term> <gloss>approximately 3 grams</gloss> mixed with honey-wine <note>mead or oxymel</note>, it is taken for its ability to correct the long Egyptian variety.\n\nThe storehouse <note>the treasury of medicines</note> prevents miscarriage and treats tetanus in a marvelous and noble way. Marabyun said the long variety of it follows a specific method. Al-Razi mentioned in his book that <term>zarawand</term> is of such a nature that if the weight of a <term>dirham</term> is taken and drunk—Al-Razi states in his book that <term>zarawand</term>, when intended for use, benefits against flatulence and dissolves what is between the eggs <note>testicles</note> and the perfection of its weight from arsenic and its weight from costus.\n\nAl-Jawharji said regarding the rounded type: its weight is used, and half its weight of <term>zarawand</term>. Of the <term>murzars</term> <note>possibly a local variant name</note>: we find many colors of its brilliance, including the deaf <note>dull</note> and the red. The rounded variety is earthy, and some deaf and red types are found in the city; it is pleasing to the sight and does not leave a stain on the hand. As for the most refined water of the two types, it is poured until it takes on the color of copper or Yemeni alum, appearing broken. Al-Razi said in his book on minerals, in the reports on <term>al-bara</term> <gloss>possibly lead or a purified mineral</gloss>, it treats the knee. As for its essence, most of the marble rivers have more of the spherical nature, while <term>zarawand</term> in its potency is heavier than it upon the fire.\n\nThey said arsenic is of three kinds: the deaf <note>dull/opaque</note>, the red, and the very red. That which is deaf is the most well-known, and that which is taken is the heaviest. The best is that which tends toward a morning-like brilliance, used by those who sleep. As for the red, it is different; a single pot of it is easier to handle, and for the swellings of the temples, it is a proven remedy. The fifth kind of arsenic is the deaf variety found in the aforementioned mines. Whenever it has a red brilliance, it is the best. It is deaf and red, and its color is similar to the color of mercury, showing a morning brightness that spreads as if it were layered one upon the other, with no void in its redness. Others mentioned it regarding the peace through which Dioscorides <note>the Greek physician</note> filtered it on the heat of the degree. A yellow variety of arsenic is used for the dye-water that we found, and another similar variety...\n\n<summary>This page details the medicinal properties and classifications of arsenic and birthwort (zarawand), citing authorities like Al-Razi and Dioscorides for treating nerve pain, flatulence, and swellings.</summary>\n<keywords>arsenic, birthwort, Al-Razi, Dioscorides, minerals, flatulence, pharmacology</keywords>",
+   "would_store": "<meta>continues from previous page</meta>\n...if a honey mixture <note>literally: honey water</note> is applied to foul vulvas, it heals them and banishes their ailments by the command of God, the Compassionate, the Merciful.\n\n<margin>\nFor the prince and the elderly\nFor old nerve pains\nSeeds for major flatulence\n</margin>\n\n<margin>\nOf arsenic: the round type is used; its weight is one-third the weight of the white variety and half the weight of the long arsenic. Some said on the authority of Umar ibn Sufyan: the round variety, when aged by weight, is lightened with costus.\n</margin>\n\nIts preparation: if its extraction is difficult for the oculist <note>an eye doctor or specialist in topical applications</note>, he should proceed cautiously. Al-Razi <note>the famous physician Rhazes</note> said, regarding Ishak ibn Hunayn's <note>the translator and physician</note> opinion on what is hoped for from it: it benefits the spirits, the elderly, and the wasting of the nerves. It is comprehensive for the limbs; it warms and clears the chest, and through it, the long variety penetrates deep tumors <note>or swellings</note> and the protrusion of flatulence <note>excessive gas or wind in the body</note>. If taken with sulfur and <term>zarawand</term> <gloss>birthwort</gloss>, the long variety at the weight of one <term>dirham</term> <gloss>approximately 3 grams</gloss> mixed with honey-wine <note>mead or oxymel</note>, it is taken for its ability to correct the long Egyptian variety.\n\nThe storehouse <note>the treasury of medicines</note> prevents miscarriage and treats tetanus in a marvelous and noble way. Marabyun said the long variety of it follows a specific method. Al-Razi mentioned in his book that <term>zarawand</term> is of such a nature that if the weight of a <term>dirham</term> is taken and drunk—Al-Razi states in his book that <term>zarawand</term>, when intended for use, benefits against flatulence and dissolves what is between the eggs <note>testicles</note> and the perfection of its weight from arsenic and its weight from costus.\n\nAl-Jawharji said regarding the rounded type: its weight is used, and half its weight of <term>zarawand</term>. Of the <term>murzars</term> <note>possibly a local variant name</note>: we find many colors of its brilliance, including the deaf <note>dull</note> and the red. The rounded variety is earthy, and some deaf and red types are found in the city; it is pleasing to the sight and does not leave a stain on the hand. As for the most refined water of the two types, it is poured until it takes on the color of copper or Yemeni alum, appearing broken. Al-Razi said in his book on minerals, in the reports on <term>al-bara</term> <gloss>possibly lead or a purified mineral</gloss>, it treats the knee. As for its essence, most of the marble rivers have more of the spherical nature, while <term>zarawand</term> in its potency is heavier than it upon the fire.\n\nThey said arsenic is of three kinds: the deaf <note>dull/opaque</note>, the red, and the very red. That which is deaf is the most well-known, and that which is taken is the heaviest. The best is that which tends toward a morning-like brilliance, used by those who sleep. As for the red, it is different; a single pot of it is easier to handle, and for the swellings of the temples, it is a proven remedy. The fifth kind of arsenic is the deaf variety found in the aforementioned mines. Whenever it has a red brilliance, it is the best. It is deaf and red, and its color is similar to the color of mercury, showing a morning brightness that spreads as if it were layered one upon the other, with no void in its redness. Others mentioned it regarding the peace through which Dioscorides <note>the Greek physician</note> filtered it on the heat of the degree. A yellow variety of arsenic is used for the dye-water that we found, and another similar variety...\n\n<summary>This page details the medicinal properties and classifications of arsenic and birthwort (zarawand), citing authorities like Al-Razi and Dioscorides for treating nerve pain, flatulence, and swellings.</summary>\n<keywords>arsenic, birthwort, Al-Razi, Dioscorides, minerals, flatulence, pharmacology</keywords>"
+  }
+ ]
+}

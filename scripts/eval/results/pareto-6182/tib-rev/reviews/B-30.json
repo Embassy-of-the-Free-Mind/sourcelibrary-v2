@@ -1,0 +1,72 @@
+[
+{"id": "QQU2K", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "high",
+   "tibetan": "འབྱུང་བ་དང་འཇིག་པ་#བརྟག་པ་ཞེས་བྱ་བ་སྟེ་རབ་ཏུ་བྱེད་པ་ཉི་ཤུ་གཅིག་པའོ།",
+   "english": "### Chapter Twenty-One: Examination of Arising and Dissolution",
+   "why": "This is the closing colophon of chapter 21; the verses that follow begin chapter 22 (Examination of the Tathāgata), but the English turns the colophon into a heading over them.",
+   "fix": {"find": "### Chapter Twenty-One: Examination of Arising and Dissolution", "replace": "This concludes the twenty-first chapter, the Examination of Arising and Dissolution."}},
+  {"type": "reversal", "confidence": "high",
+   "tibetan": "ཉེ་བར་ལེན་པར་#ཅིས་མི་འགྱུར།",
+   "english": "Why would that which is unappropriated \nnot become the appropriator?",
+   "why": "MMK 22.7: what is not appropriated in no way becomes an appropriation (ཅིས་མི་འགྱུར = 'in no way is'); the rhetorical question implies the opposite.",
+   "fix": {"find": "Why would that which is unappropriated \nnot become the appropriator?", "replace": "That which has not been appropriated \nin no way becomes an appropriation."}}
+ ],
+ "note": "End of MMK 21 and opening of MMK 22, mostly faithful, but the chapter colophon is misplaced as a heading and verse 22.7 is reversed."},
+{"id": "Q4KRF", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "ཡོངས་འདུ་བཞིན་དུ་རབ་ཏུ་མཐོ",
+   "english": "like the wish-fulfilling tree among the trees of the gods",
+   "why": "ཡོངས་འདུ is the pārijāta (the coral tree of the gods), not the wish-fulfilling tree (dpag bsam shing)."}
+ ],
+ "note": "Faithful rendering of the ornate verses with the Sanskrit given in notes; only the pārijāta is mislabelled."},
+{"id": "QN8P5", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "སྔོན་དུ་སྨྲ་བར་གྱུར་པ་ནི་ཕྱག་བྱ་བར་གྱུར་པའོ",
+   "english": "Speaking first means offering prostrations.",
+   "why": "ཕྱག་བྱ་བར་གྱུར་པ means having become one to whom homage is paid (the arhat is greeted first), not the arhat offering prostrations."}
+ ],
+ "note": "Accurate gloss-by-gloss commentary on arhat epithets; one gloss's direction is likely inverted."},
+{"id": "QTFC1", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "Faithful rendering of Avalokitavrata's discussion of the 'vulnerable assertion' and the sound/pot example."},
+{"id": "Q8W3W", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "Accurate Vinaya commentary on consent and on a monk seized on the poṣadha day."},
+{"id": "Q92J0", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "Faithful rendering of the Sautrāntika position and its refutation, root verse correctly set off."},
+{"id": "QBVB2", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "Accurate rendering of the bowl and Dharma-teaching training rules with their origin stories."},
+{"id": "QER9K", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "medium",
+   "tibetan": "འདི་ནི་འདོད་པ་ཁོ་ནའོ",
+   "english": "then this is merely the realm of aspiration",
+   "why": "The author concedes this horn ('this we simply accept') before attacking the Path-of-Seeing reading; the English turns the concession into a dismissal."},
+  {"type": "gloss", "confidence": "high",
+   "tibetan": "གལ་ཏེ་སེམས་བསྐྱེད་པའོ་ཞེ་ན",
+   "english": "[note: Sanskrit: (cittapada)]",
+   "why": "The Sanskrit for སེམས་བསྐྱེད་པ is cittotpāda, not 'cittapada'.",
+   "fix": {"find": "(cittapada)", "replace": "(cittotpāda)"}},
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "ལུས་ཕུན་སུམ་ཚོགས་པ་ལ་སོགས་པ་འདོད་པ་ལ་རག་ལུས་པའི་ཕྱིར",
+   "english": "because it depends on the desire for a perfect body and so forth",
+   "why": "The desired perfect body etc. depend on the abandonment of immorality (hence it is like the vase of plenty), not the reverse."}
+ ],
+ "note": "Sound translation of the bodhicitta-simile commentary, with a mis-spelled Sanskrit gloss and two clauses whose logic is turned around."},
+{"id": "QGZRH", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "ཇི་སྐད་དུ་བཤད་པའི་ངོ་བོ་ཉིད་ཕྱིན་ཅི་ལོག་པའི་ཤེས་པ་ཡིན་པར་བལྟ་བར་བྱའོ",
+   "english": "it should be viewed as a consciousness that is a subversion of the essential nature as previously explained",
+   "why": "Ignorance is to be seen as having the nature already explained, namely an inverted (viparyasta) cognition; it is not a 'subversion of the essential nature'."}
+ ],
+ "note": "Generally accurate rendering of the Daśabhūmika quotation and the argument on ignorance and satkāyadṛṣṭi, with messy inline glosses."},
+{"id": "QFRMO", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "Faithful rendering of the argument that sense-function is known by inference and yogic perception makes the past manifest."}
+]

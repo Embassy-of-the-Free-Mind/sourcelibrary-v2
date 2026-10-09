@@ -188,7 +188,11 @@ export default function ForLibrariesPage() {
 
       {/* What you get */}
       <section className="mb-16">
-        <h2 className="text-2xl md:text-3xl text-primary mb-6">What partners get</h2>
+        <h2 className="text-2xl md:text-3xl text-primary mb-3">What partners get</h2>
+        <p className="text-secondary mb-6">
+          How a book goes from your scan to a page anyone can read and cite, step by step:{' '}
+          <Link href="/how-it-works" className="text-accent-rust hover:underline">How Source Library works</Link>.
+        </p>
         <div className="grid md:grid-cols-2 gap-6">
           <FeatureCard
             title="High-resolution page viewer"
@@ -323,7 +327,12 @@ export default function ForLibrariesPage() {
       {/* Related */}
       <section>
         <h2 className="text-xl text-primary mb-4">Related</h2>
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className="grid md:grid-cols-2 gap-4">
+          <RelatedCard
+            href="/how-it-works"
+            title="How Source Library works"
+            desc="Each step from your scan to a page anyone can read and cite, followed on one real page, and the checks that run after it is published."
+          />
           <RelatedCard
             href="/for-researchers"
             title="For Researchers"
@@ -337,7 +346,7 @@ export default function ForLibrariesPage() {
           <RelatedCard
             href="/about"
             title="About Source Library"
-            desc="Our mission, methodology, and how the translation pipeline works."
+            desc="Our mission, and the people and partners behind it."
           />
         </div>
       </section>

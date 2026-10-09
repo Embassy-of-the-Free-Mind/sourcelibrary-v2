@@ -165,7 +165,7 @@ Output as JSON:
   "people": ["Person Name 1", "Person Name 2"],
   "places": ["Place Name 1", "Place Name 2"],
   "concepts": ["Key concept 1", "Technical term 2"],
-  "summary": "2-3 sentence summary of what these pages cover and their key arguments. No em-dashes. No filler like 'delves into' or 'rich tapestry'. Short, direct sentences."
+  "summary": "2-3 sentence summary of what these pages cover and their key arguments. No em-dashes. No filler like 'delves into', 'rich tapestry', 'profound', 'pivotal', 'meticulous', 'intricate', 'vibrant', 'interplay', 'showcases', 'landscape of', 'a testament to', 'not only X but also Y'. Short, direct sentences."
 }
 
 CRITICAL for quotes:
@@ -760,7 +760,7 @@ Synthesize the above into compelling summaries that make readers WANT to explore
 **Writing style:**
 - Write like a knowledgeable human, not an AI. Be direct and concrete.
 - NEVER use em-dashes (—). Use commas, colons, semicolons, or separate sentences instead.
-- NEVER use these AI-isms: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "offers a window into", "comprehensive", "intricate", "nuanced", "multifaceted", "groundbreaking", "seminal".
+- NEVER use these AI-isms: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "offers a window into", "comprehensive", "intricate", "nuanced", "multifaceted", "groundbreaking", "seminal", "profound", "pivotal", "meticulous", "vibrant", "interplay", "showcases", "landscape of", "a testament to", "not only X but also Y", "not merely X but Y".
 - Prefer short, clear sentences over long compound ones.
 - Scholarly but accessible. Say what the text does, not how impressive it is.
 

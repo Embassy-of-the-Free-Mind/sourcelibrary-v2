@@ -1,0 +1,658 @@
+{
+ "fit-69a5e3e5006a40984221691d-suda": {
+  "book": "69a5e3e5006a40984221691d",
+  "at": "2026-10-02T11:25:58.926Z",
+  "editions": [
+   {
+    "spec": "tei:tlg9010.tlg001.1st1K-grc1",
+    "label": "Suda — Suidae lexicon (tlg9010.tlg001.1st1K-grc1)",
+    "licence": {
+     "repo": "First1KGreek",
+     "repo_url": "https://github.com/OpenGreekAndLatin/First1KGreek",
+     "licence_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+     "licence": "Available under a Creative Commons Attribution-ShareAlike 4.0 International License"
+    },
+    "segments": 66842
+   }
+  ],
+  "edition_letters": 2598857,
+  "rules": {
+   "version": 1,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.034,
+   "null_pages": 736,
+   "null_p99": 0.034,
+   "null_max": 0.066
+  },
+  "pages": 262,
+  "text_pages": 257,
+  "above_threshold": 5,
+  "located": 34,
+  "located_share_of_text": 0.132,
+  "located_strict": 3,
+  "located_strict_share": 0.012,
+  "with_start_edge": 0,
+  "with_end_edge": 3,
+  "boundaries": {
+   "n": 0,
+   "letters_per_line": 40,
+   "median_abs_gap": null,
+   "within_150": null,
+   "within_1_line": null,
+   "gaps": 0,
+   "overlaps": 0
+  },
+  "neighbour_method": {
+   "n": 0,
+   "verdicts": {},
+   "verdicts_k6": {},
+   "edge_err_median": null,
+   "edge_err_within_1_line": null
+  },
+  "drift": {
+   "k1": {
+    "n": 14,
+    "within_half_page": 0.143,
+    "median_err_pages": 0.99
+   },
+   "k5": {
+    "n": 4,
+    "within_half_page": 0,
+    "median_err_pages": 2.75
+   },
+   "k20": {
+    "n": 0,
+    "within_half_page": null,
+    "median_err_pages": null
+   }
+  },
+  "median_advance_letters": 89600,
+  "page_to_text_ratio": 0.01
+ },
+ "fit-69a5e5e985fa13e734e41cba-diehl": {
+  "book": "69a5e5e985fa13e734e41cba",
+  "at": "2026-10-02T11:25:35.670Z",
+  "editions": [
+   {
+    "spec": "held:69aff9be745631d276f4d08b",
+    "label": "Procli In Platonis Timaeum Commentaria, Vol. I (Diehl) (1903, 69aff9be745631d276f4d08b)",
+    "licence": {
+     "scan": "publicdomain",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 576
+   },
+   {
+    "spec": "held:69aff9c81ae4bb9c7a0fe8fd",
+    "label": "Procli In Platonis Timaeum Commentaria, Vol. II (Diehl) (1903, 69aff9c81ae4bb9c7a0fe8fd)",
+    "licence": {
+     "scan": "publicdomain",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 619
+   },
+   {
+    "spec": "held:69aff9d11ae4bb9c7a0feb6e",
+    "label": "Procli In Platonis Timaeum Commentaria, Vol. III (Diehl) (1903, 69aff9d11ae4bb9c7a0feb6e)",
+    "licence": {
+     "scan": "publicdomain",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 529
+   }
+  ],
+  "edition_letters": 1981898,
+  "rules": {
+   "version": 1,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.027,
+   "null_pages": 644,
+   "null_p99": 0.027,
+   "null_max": 0.075
+  },
+  "pages": 355,
+  "text_pages": 349,
+  "above_threshold": 64,
+  "located": 177,
+  "located_share_of_text": 0.507,
+  "located_strict": 54,
+  "located_strict_share": 0.155,
+  "with_start_edge": 66,
+  "with_end_edge": 81,
+  "boundaries": {
+   "n": 36,
+   "letters_per_line": 52,
+   "median_abs_gap": 4,
+   "within_150": 0.806,
+   "within_1_line": 0.778,
+   "gaps": 6,
+   "overlaps": 2
+  },
+  "neighbour_method": {
+   "n": 36,
+   "verdicts": {
+    "weak": 26,
+    "coverage": 7,
+    "edges": 2,
+    "misaligned": 1
+   },
+   "verdicts_k6": {
+    "uninformative": 12,
+    "coverage": 2,
+    "weak": 13,
+    "verified": 6,
+    "edges": 2,
+    "misaligned": 1
+   },
+   "edge_err_median": 9,
+   "edge_err_within_1_line": 0.727
+  },
+  "drift": {
+   "k1": {
+    "n": 148,
+    "within_half_page": 0.75,
+    "median_err_pages": 0.12
+   },
+   "k5": {
+    "n": 136,
+    "within_half_page": 0.456,
+    "median_err_pages": 0.66
+   },
+   "k20": {
+    "n": 119,
+    "within_half_page": 0.076,
+    "median_err_pages": 1.99
+   }
+  },
+  "median_advance_letters": 4736,
+  "page_to_text_ratio": 0.81
+ },
+ "fit-69a5e5e985fa13e734e41cba-nullcaag": {
+  "book": "69a5e5e985fa13e734e41cba",
+  "at": "2026-10-02T11:24:58.630Z",
+  "editions": [
+   {
+    "spec": "held:6994383a6879ff0184cb803a",
+    "label": "Collection des anciens alchimistes grecs, Vols. 2-3 (1887, 6994383a6879ff0184cb803a)",
+    "licence": {
+     "scan": "publicdomain",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 518
+   }
+  ],
+  "edition_letters": 457756,
+  "rules": {
+   "version": 1,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.445,
+   "null_pages": 644,
+   "null_p99": 0.445,
+   "null_max": 0.847
+  },
+  "pages": 355,
+  "text_pages": 349,
+  "above_threshold": 0,
+  "located": 38,
+  "located_share_of_text": 0.109,
+  "located_strict": 0,
+  "located_strict_share": 0,
+  "with_start_edge": 0,
+  "with_end_edge": 0,
+  "boundaries": {
+   "n": 0,
+   "letters_per_line": 54,
+   "median_abs_gap": null,
+   "within_150": null,
+   "within_1_line": null,
+   "gaps": 0,
+   "overlaps": 0
+  },
+  "neighbour_method": {
+   "n": 0,
+   "verdicts": {},
+   "verdicts_k6": {},
+   "edge_err_median": null,
+   "edge_err_within_1_line": null
+  },
+  "drift": {
+   "k1": {
+    "n": 9,
+    "within_half_page": 0.111,
+    "median_err_pages": 4.01
+   },
+   "k5": {
+    "n": 1,
+    "within_half_page": 0,
+    "median_err_pages": 0.74
+   },
+   "k20": {
+    "n": 2,
+    "within_half_page": 0,
+    "median_err_pages": 11.8
+   }
+  },
+  "median_advance_letters": 38272,
+  "page_to_text_ratio": 0.02
+ },
+ "fit-69a5e5e985fa13e734e41cba-nullsuda": {
+  "book": "69a5e5e985fa13e734e41cba",
+  "at": "2026-10-02T11:26:19.770Z",
+  "editions": [
+   {
+    "spec": "tei:tlg9010.tlg001.1st1K-grc1",
+    "label": "Suda — Suidae lexicon (tlg9010.tlg001.1st1K-grc1)",
+    "licence": {
+     "repo": "First1KGreek",
+     "repo_url": "https://github.com/OpenGreekAndLatin/First1KGreek",
+     "licence_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+     "licence": "Available under a Creative Commons Attribution-ShareAlike 4.0 International License"
+    },
+    "segments": 66842
+   }
+  ],
+  "edition_letters": 2598857,
+  "rules": {
+   "version": 1,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.039,
+   "null_pages": 644,
+   "null_p99": 0.039,
+   "null_max": 0.073
+  },
+  "pages": 355,
+  "text_pages": 349,
+  "above_threshold": 1,
+  "located": 41,
+  "located_share_of_text": 0.117,
+  "located_strict": 0,
+  "located_strict_share": 0,
+  "with_start_edge": 0,
+  "with_end_edge": 0,
+  "boundaries": {
+   "n": 0,
+   "letters_per_line": 53,
+   "median_abs_gap": null,
+   "within_150": null,
+   "within_1_line": null,
+   "gaps": 0,
+   "overlaps": 0
+  },
+  "neighbour_method": {
+   "n": 0,
+   "verdicts": {},
+   "verdicts_k6": {},
+   "edge_err_median": null,
+   "edge_err_within_1_line": null
+  },
+  "drift": {
+   "k1": {
+    "n": 15,
+    "within_half_page": 0.067,
+    "median_err_pages": 1.68
+   },
+   "k5": {
+    "n": 2,
+    "within_half_page": 0,
+    "median_err_pages": 2.72
+   },
+   "k20": {
+    "n": 6,
+    "within_half_page": 0,
+    "median_err_pages": 21.59
+   }
+  },
+  "median_advance_letters": 245952,
+  "page_to_text_ratio": 0.01
+ },
+ "fit-69a5e5e985fa13e734e41cba-schneider": {
+  "book": "69a5e5e985fa13e734e41cba",
+  "at": "2026-10-02T11:23:54.967Z",
+  "editions": [
+   {
+    "spec": "held:69942ffcbb14908bbd9a1123",
+    "label": "Proclus Commentarius in Platonis Timaeum Graece (Schneider 1847) (1847, 69942ffcbb14908bbd9a1123)",
+    "licence": {
+     "scan": "http://creativecommons.org/publicdomain/mark/1.0/",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 883
+   }
+  ],
+  "edition_letters": 1658684,
+  "rules": {
+   "version": 1,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.028,
+   "null_pages": 644,
+   "null_p99": 0.028,
+   "null_max": 0.077
+  },
+  "pages": 355,
+  "text_pages": 349,
+  "above_threshold": 76,
+  "located": 267,
+  "located_share_of_text": 0.765,
+  "located_strict": 75,
+  "located_strict_share": 0.215,
+  "with_start_edge": 94,
+  "with_end_edge": 113,
+  "boundaries": {
+   "n": 50,
+   "letters_per_line": 52,
+   "median_abs_gap": 4,
+   "within_150": 0.82,
+   "within_1_line": 0.78,
+   "gaps": 9,
+   "overlaps": 2
+  },
+  "neighbour_method": {
+   "n": 46,
+   "verdicts": {
+    "weak": 38,
+    "coverage": 6,
+    "edges": 2
+   },
+   "verdicts_k6": {
+    "uninformative": 16,
+    "weak": 22,
+    "coverage": 1,
+    "verified": 5,
+    "edges": 2
+   },
+   "edge_err_median": 6,
+   "edge_err_within_1_line": 0.714
+  },
+  "drift": {
+   "k1": {
+    "n": 237,
+    "within_half_page": 0.937,
+    "median_err_pages": 0.07
+   },
+   "k5": {
+    "n": 220,
+    "within_half_page": 0.745,
+    "median_err_pages": 0.25
+   },
+   "k20": {
+    "n": 212,
+    "within_half_page": 0.259,
+    "median_err_pages": 1.18
+   }
+  },
+  "median_advance_letters": 4608,
+  "page_to_text_ratio": 0.82
+ },
+ "fit-6a45298cc6d95bc278fbc8c3-caag": {
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "at": "2026-10-02T11:24:47.150Z",
+  "editions": [
+   {
+    "spec": "held:6994383a6879ff0184cb803a",
+    "label": "Collection des anciens alchimistes grecs, Vols. 2-3 (1887, 6994383a6879ff0184cb803a)",
+    "licence": {
+     "scan": "publicdomain",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 518
+   }
+  ],
+  "edition_letters": 457756,
+  "rules": {
+   "version": 1,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.025,
+   "null_pages": 606,
+   "null_p99": 0.025,
+   "null_max": 0.085
+  },
+  "pages": 432,
+  "text_pages": 387,
+  "above_threshold": 282,
+  "located": 180,
+  "located_share_of_text": 0.465,
+  "located_strict": 164,
+  "located_strict_share": 0.424,
+  "with_start_edge": 139,
+  "with_end_edge": 147,
+  "boundaries": {
+   "n": 118,
+   "letters_per_line": 40,
+   "median_abs_gap": 2,
+   "within_150": 0.814,
+   "within_1_line": 0.788,
+   "gaps": 25,
+   "overlaps": 0
+  },
+  "neighbour_method": {
+   "n": 104,
+   "verdicts": {
+    "verified": 83,
+    "coverage": 12,
+    "uninformative": 7,
+    "weak": 2
+   },
+   "verdicts_k6": {
+    "verified": 84,
+    "coverage": 12,
+    "uninformative": 7,
+    "weak": 1
+   },
+   "edge_err_median": 7,
+   "edge_err_within_1_line": 0.685
+  },
+  "drift": {
+   "k1": {
+    "n": 146,
+    "within_half_page": 0.863,
+    "median_err_pages": 0.16
+   },
+   "k5": {
+    "n": 111,
+    "within_half_page": 0.396,
+    "median_err_pages": 0.96
+   },
+   "k20": {
+    "n": 90,
+    "within_half_page": 0.222,
+    "median_err_pages": 65.24
+   }
+  },
+  "median_advance_letters": 1600,
+  "page_to_text_ratio": 0.75
+ },
+ "fit-6a45298cc6d95bc278fbc8c3-nullschneider": {
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "at": "2026-10-02T11:24:27.876Z",
+  "editions": [
+   {
+    "spec": "held:69942ffcbb14908bbd9a1123",
+    "label": "Proclus Commentarius in Platonis Timaeum Graece (Schneider 1847) (1847, 69942ffcbb14908bbd9a1123)",
+    "licence": {
+     "scan": "http://creativecommons.org/publicdomain/mark/1.0/",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 883
+   }
+  ],
+  "edition_letters": 1658684,
+  "rules": {
+   "version": 1,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.052,
+   "null_pages": 606,
+   "null_p99": 0.052,
+   "null_max": 0.158
+  },
+  "pages": 432,
+  "text_pages": 387,
+  "above_threshold": 0,
+  "located": 55,
+  "located_share_of_text": 0.142,
+  "located_strict": 0,
+  "located_strict_share": 0,
+  "with_start_edge": 0,
+  "with_end_edge": 0,
+  "boundaries": {
+   "n": 0,
+   "letters_per_line": 40,
+   "median_abs_gap": null,
+   "within_150": null,
+   "within_1_line": null,
+   "gaps": 0,
+   "overlaps": 0
+  },
+  "neighbour_method": {
+   "n": 0,
+   "verdicts": {},
+   "verdicts_k6": {},
+   "edge_err_median": null,
+   "edge_err_within_1_line": null
+  },
+  "drift": {
+   "k1": {
+    "n": 15,
+    "within_half_page": 0.133,
+    "median_err_pages": 0.98
+   },
+   "k5": {
+    "n": 3,
+    "within_half_page": 0,
+    "median_err_pages": 4.62
+   },
+   "k20": {
+    "n": 4,
+    "within_half_page": 0,
+    "median_err_pages": 18.49
+   }
+  },
+  "median_advance_letters": 70528,
+  "page_to_text_ratio": 0.01
+ }
+}

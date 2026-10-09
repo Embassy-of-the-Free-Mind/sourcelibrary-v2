@@ -1,0 +1,1539 @@
+{
+ "rule": "ref-topup-5873-v1",
+ "generated": "2026-10-06",
+ "measure": "judged_vs_reference",
+ "gate": {
+  "pass": true,
+  "by_judge": {
+   "j1": {
+    "wrong_page": [
+     {
+      "id": "69c1bad18522835be845aabc_00251",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     },
+     {
+      "id": "69c79f1492b884e4f817372f_00031",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     },
+     {
+      "id": "6a08a3a28fae3d3f19b789cd_00022",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     }
+    ],
+    "planted": [
+     {
+      "id": "69e748bd49abba5e982816d3_00076",
+      "op": "drop-negation",
+      "from": "shall not",
+      "to": "shall",
+      "planted_fidelity": 3,
+      "base_fidelity": 5,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     },
+     {
+      "id": "69b632b166ab51b501d93b92_00182",
+      "op": "add-negation",
+      "from": "were ",
+      "to": "were not ",
+      "planted_fidelity": 3,
+      "base_fidelity": 4,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     },
+     {
+      "id": "69b99f111b6f70482c00d17c_00094",
+      "op": "drop-negation",
+      "from": "do not",
+      "to": "do",
+      "planted_fidelity": 3,
+      "base_fidelity": 4,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     }
+    ],
+    "duplicate": [
+     {
+      "id": "69d5ac26d0bd3547a5655542_00560",
+      "arm": "served",
+      "fidelity": [
+       2,
+       2
+      ],
+      "tier": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "69d5ac2ed0bd3547a5655830_00063",
+      "arm": "flash",
+      "fidelity": [
+       4,
+       4
+      ],
+      "tier": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "69de101d5cedf736edb85346_00027",
+      "arm": "lite2",
+      "fidelity": [
+       3,
+       3
+      ],
+      "tier": [
+       1,
+       1
+      ],
+      "tie": true
+     }
+    ],
+    "missing": [],
+    "summary": {
+     "wrong_page": "3/3 scored ≤ 2",
+     "planted": "3/3 caught (3 located the planted word)",
+     "duplicate": "3/3 tied"
+    },
+    "pass": true
+   },
+   "j2": {
+    "wrong_page": [
+     {
+      "id": "69c1bad18522835be845aabc_00251",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     },
+     {
+      "id": "69c79f1492b884e4f817372f_00031",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     },
+     {
+      "id": "6a08a3a28fae3d3f19b789cd_00022",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     }
+    ],
+    "planted": [
+     {
+      "id": "69e748bd49abba5e982816d3_00076",
+      "op": "drop-negation",
+      "from": "shall not",
+      "to": "shall",
+      "planted_fidelity": 3,
+      "base_fidelity": 5,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     },
+     {
+      "id": "69b632b166ab51b501d93b92_00182",
+      "op": "add-negation",
+      "from": "were ",
+      "to": "were not ",
+      "planted_fidelity": 3,
+      "base_fidelity": 4,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     },
+     {
+      "id": "69b99f111b6f70482c00d17c_00094",
+      "op": "drop-negation",
+      "from": "do not",
+      "to": "do",
+      "planted_fidelity": 3,
+      "base_fidelity": 4,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     }
+    ],
+    "duplicate": [
+     {
+      "id": "69d5ac26d0bd3547a5655542_00560",
+      "arm": "served",
+      "fidelity": [
+       1,
+       1
+      ],
+      "tier": [
+       1,
+       1
+      ],
+      "tie": true
+     },
+     {
+      "id": "69d5ac2ed0bd3547a5655830_00063",
+      "arm": "flash",
+      "fidelity": [
+       5,
+       5
+      ],
+      "tier": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "69de101d5cedf736edb85346_00027",
+      "arm": "lite2",
+      "fidelity": [
+       3,
+       3
+      ],
+      "tier": [
+       1,
+       1
+      ],
+      "tie": true
+     }
+    ],
+    "missing": [],
+    "summary": {
+     "wrong_page": "3/3 scored ≤ 2",
+     "planted": "3/3 caught (3 located the planted word)",
+     "duplicate": "3/3 tied"
+    },
+    "pass": true
+   }
+  },
+  "problems": [],
+  "n_problems": 0,
+  "forced": false
+ },
+ "agreement": {
+  "judges": [
+   "j1",
+   "j2"
+  ],
+  "n": 254,
+  "fidelity_exact": 0.854,
+  "within_1": 1,
+  "weighted_kappa": 0.909
+ },
+ "dropped": [],
+ "pools": {
+  "HAP": {
+   "combined": {
+    "flash_minus_lite": {
+     "n": 93,
+     "delta": 0.46,
+     "ci": [
+      0.32,
+      0.6
+     ]
+    },
+    "a_vs_a": {
+     "n": 93,
+     "delta": 0.01,
+     "ci": [
+      -0.1,
+      0.11
+     ]
+    },
+    "flash_minus_lite2": {
+     "n": 93,
+     "delta": 0.46,
+     "ci": [
+      0.31,
+      0.59
+     ]
+    },
+    "served": {
+     "n": 93,
+     "mean": 3.67,
+     "ci": [
+      3.47,
+      3.86
+     ]
+    },
+    "lite": {
+     "n": 93,
+     "mean": 3.58,
+     "ci": [
+      3.39,
+      3.76
+     ]
+    },
+    "flash": {
+     "n": 94,
+     "mean": 4.05,
+     "ci": [
+      3.89,
+      4.2
+     ]
+    },
+    "reversals_per_100": {
+     "lite": 17.2,
+     "flash": 7.4
+    },
+    "omission_pct": {
+     "lite": 33.3,
+     "flash": 25.5
+    }
+   },
+   "first_run": {
+    "flash_minus_lite": {
+     "n": 52,
+     "delta": 0.53,
+     "ci": [
+      0.32,
+      0.72
+     ]
+    },
+    "a_vs_a": {
+     "n": 52,
+     "delta": -0.07,
+     "ci": [
+      -0.21,
+      0.08
+     ]
+    },
+    "flash_minus_lite2": {
+     "n": 52,
+     "delta": 0.6,
+     "ci": [
+      0.38,
+      0.79
+     ]
+    },
+    "served": {
+     "n": 52,
+     "mean": 3.44,
+     "ci": [
+      3.19,
+      3.68
+     ]
+    },
+    "lite": {
+     "n": 52,
+     "mean": 3.43,
+     "ci": [
+      3.22,
+      3.64
+     ]
+    },
+    "flash": {
+     "n": 52,
+     "mean": 3.96,
+     "ci": [
+      3.76,
+      4.16
+     ]
+    },
+    "reversals_per_100": {
+     "lite": 11.5,
+     "flash": 5.8
+    },
+    "omission_pct": {
+     "lite": 40.4,
+     "flash": 34.6
+    }
+   },
+   "topup": {
+    "flash_minus_lite": {
+     "n": 41,
+     "delta": 0.38,
+     "ci": [
+      0.18,
+      0.57
+     ]
+    },
+    "a_vs_a": {
+     "n": 41,
+     "delta": 0.1,
+     "ci": [
+      -0.06,
+      0.26
+     ]
+    },
+    "flash_minus_lite2": {
+     "n": 41,
+     "delta": 0.28,
+     "ci": [
+      0.1,
+      0.45
+     ]
+    },
+    "served": {
+     "n": 41,
+     "mean": 3.95,
+     "ci": [
+      3.65,
+      4.23
+     ]
+    },
+    "lite": {
+     "n": 41,
+     "mean": 3.76,
+     "ci": [
+      3.44,
+      4.07
+     ]
+    },
+    "flash": {
+     "n": 42,
+     "mean": 4.15,
+     "ci": [
+      3.9,
+      4.39
+     ]
+    },
+    "reversals_per_100": {
+     "lite": 24.4,
+     "flash": 9.5
+    },
+    "omission_pct": {
+     "lite": 24.4,
+     "flash": 14.3
+    }
+   },
+   "heterogeneity": {
+    "pass": true,
+    "offenders": [],
+    "voters": 3
+   },
+   "effect_test": {
+    "pass": true,
+    "excludes_zero": true,
+    "outside_floor": true,
+    "reaches_min_effect": true,
+    "min_effect": 0.25,
+    "floor_edge": 0.11
+   },
+   "topup_alone_effect_test": {
+    "pass": true,
+    "excludes_zero": true,
+    "outside_floor": true,
+    "reaches_min_effect": true,
+    "min_effect": 0.25,
+    "floor_edge": 0.26
+   },
+   "topup_is_a_replication": true
+  },
+  "SPC": {
+   "combined": {
+    "flash_minus_lite": {
+     "n": 90,
+     "delta": 0.42,
+     "ci": [
+      0.27,
+      0.58
+     ]
+    },
+    "a_vs_a": {
+     "n": 90,
+     "delta": -0.03,
+     "ci": [
+      -0.15,
+      0.11
+     ]
+    },
+    "flash_minus_lite2": {
+     "n": 90,
+     "delta": 0.45,
+     "ci": [
+      0.32,
+      0.58
+     ]
+    },
+    "served": {
+     "n": 83,
+     "mean": 3.61,
+     "ci": [
+      3.43,
+      3.79
+     ]
+    },
+    "lite": {
+     "n": 90,
+     "mean": 3.76,
+     "ci": [
+      3.59,
+      3.91
+     ]
+    },
+    "flash": {
+     "n": 90,
+     "mean": 4.18,
+     "ci": [
+      4.06,
+      4.3
+     ]
+    },
+    "reversals_per_100": {
+     "lite": 20,
+     "flash": 5.6
+    },
+    "omission_pct": {
+     "lite": 50,
+     "flash": 34.4
+    }
+   },
+   "first_run": {
+    "flash_minus_lite": {
+     "n": 68,
+     "delta": 0.4,
+     "ci": [
+      0.22,
+      0.59
+     ]
+    },
+    "a_vs_a": {
+     "n": 68,
+     "delta": -0.05,
+     "ci": [
+      -0.2,
+      0.12
+     ]
+    },
+    "flash_minus_lite2": {
+     "n": 68,
+     "delta": 0.45,
+     "ci": [
+      0.3,
+      0.6
+     ]
+    },
+    "served": {
+     "n": 64,
+     "mean": 3.63,
+     "ci": [
+      3.42,
+      3.83
+     ]
+    },
+    "lite": {
+     "n": 68,
+     "mean": 3.74,
+     "ci": [
+      3.54,
+      3.92
+     ]
+    },
+    "flash": {
+     "n": 68,
+     "mean": 4.13,
+     "ci": [
+      3.99,
+      4.28
+     ]
+    },
+    "reversals_per_100": {
+     "lite": 19.1,
+     "flash": 7.4
+    },
+    "omission_pct": {
+     "lite": 50,
+     "flash": 33.8
+    }
+   },
+   "topup": {
+    "flash_minus_lite": {
+     "n": 22,
+     "delta": 0.5,
+     "ci": [
+      0.2,
+      0.77
+     ]
+    },
+    "a_vs_a": {
+     "n": 22,
+     "delta": 0.05,
+     "ci": [
+      -0.16,
+      0.25
+     ]
+    },
+    "flash_minus_lite2": {
+     "n": 22,
+     "delta": 0.45,
+     "ci": [
+      0.2,
+      0.7
+     ]
+    },
+    "served": {
+     "n": 19,
+     "mean": 3.58,
+     "ci": [
+      3.18,
+      3.97
+     ]
+    },
+    "lite": {
+     "n": 22,
+     "mean": 3.82,
+     "ci": [
+      3.57,
+      4.07
+     ]
+    },
+    "flash": {
+     "n": 22,
+     "mean": 4.32,
+     "ci": [
+      4.14,
+      4.5
+     ]
+    },
+    "reversals_per_100": {
+     "lite": 22.7,
+     "flash": 0
+    },
+    "omission_pct": {
+     "lite": 50,
+     "flash": 36.4
+    }
+   },
+   "heterogeneity": {
+    "pass": true,
+    "offenders": [],
+    "voters": 3
+   },
+   "effect_test": {
+    "pass": true,
+    "excludes_zero": true,
+    "outside_floor": true,
+    "reaches_min_effect": true,
+    "min_effect": 0.25,
+    "floor_edge": 0.15
+   },
+   "topup_alone_effect_test": {
+    "pass": true,
+    "excludes_zero": true,
+    "outside_floor": true,
+    "reaches_min_effect": true,
+    "min_effect": 0.25,
+    "floor_edge": 0.25
+   },
+   "topup_is_a_replication": "no: 22 fresh books (< 30)"
+  }
+ },
+ "languages": {
+  "Hebrew": {
+   "pool": "HAP",
+   "tier": "medium",
+   "stake_usd": 46,
+   "n": {
+    "first_run": 15,
+    "topup": 15,
+    "combined": 30,
+    "served_combined": 31
+   },
+   "served": {
+    "n": 31,
+    "mean": 4.1,
+    "ci": [
+     3.85,
+     4.32
+    ]
+   },
+   "served_topup": {
+    "n": 16,
+    "mean": 4.38,
+    "ci": [
+     4.09,
+     4.63
+    ]
+   },
+   "flash_minus_lite": {
+    "n": 30,
+    "delta": 0.4,
+    "ci": [
+     0.18,
+     0.63
+    ]
+   },
+   "flash_minus_lite_topup_only": {
+    "n": 15,
+    "delta": 0.2,
+    "ci": [
+     -0.07,
+     0.47
+    ]
+   },
+   "flash_minus_lite_first_run": {
+    "n": 15,
+    "delta": 0.6,
+    "ci": [
+     0.27,
+     0.97
+    ]
+   },
+   "a_vs_a": {
+    "n": 30,
+    "delta": 0.02,
+    "ci": [
+     -0.12,
+     0.15
+    ]
+   },
+   "pool_floor": {
+    "n": 93,
+    "delta": 0.01,
+    "ci": [
+     -0.1,
+     0.11
+    ]
+   },
+   "own_effect_test": {
+    "pass": true,
+    "excludes_zero": true,
+    "outside_floor": true,
+    "reaches_min_effect": true,
+    "min_effect": 0.25,
+    "floor_edge": 0.11
+   },
+   "card_line": {
+    "n": 30,
+    "grade": "decision (pooled)",
+    "cleared": true,
+    "short_by": 0,
+    "why": []
+   },
+   "guard_G1_holds": true,
+   "verdict": "keeps",
+   "why": [],
+   "tier_still_owes": [],
+   "census": null,
+   "reversals_per_100": {
+    "lite": 3.3,
+    "flash": 3.2
+   },
+   "omission_pct": {
+    "lite": 33.3,
+    "flash": 12.9
+   }
+  },
+  "Aramaic": {
+   "pool": "HAP",
+   "tier": null,
+   "stake_usd": null,
+   "n": {
+    "first_run": 5,
+    "topup": 0,
+    "combined": 5,
+    "served_combined": 5
+   },
+   "served": {
+    "n": 5,
+    "mean": 3.3,
+    "ci": [
+     2.8,
+     3.8
+    ]
+   },
+   "served_topup": {
+    "n": 0,
+    "mean": null,
+    "ci": null
+   },
+   "flash_minus_lite": {
+    "n": 5,
+    "delta": 0.5,
+    "ci": [
+     0.1,
+     0.9
+    ]
+   },
+   "flash_minus_lite_topup_only": {
+    "n": 0,
+    "delta": null,
+    "ci": null
+   },
+   "flash_minus_lite_first_run": {
+    "n": 5,
+    "delta": 0.5,
+    "ci": [
+     0.1,
+     0.9
+    ]
+   },
+   "a_vs_a": {
+    "n": 5,
+    "delta": 0,
+    "ci": [
+     -0.3,
+     0.3
+    ]
+   },
+   "pool_floor": {
+    "n": 93,
+    "delta": 0.01,
+    "ci": [
+     -0.1,
+     0.11
+    ]
+   },
+   "own_effect_test": {
+    "pass": true,
+    "excludes_zero": true,
+    "outside_floor": true,
+    "reaches_min_effect": true,
+    "min_effect": 0.25,
+    "floor_edge": 0.11
+   },
+   "card_line": {
+    "n": 5,
+    "grade": "exploratory",
+    "cleared": false,
+    "short_by": 25,
+    "why": [
+     "5 referenced books (exploratory); needs directional"
+    ]
+   },
+   "guard_G1_holds": true,
+   "verdict": "reported, not decided",
+   "why": [
+    "5 books; not a top-up language"
+   ],
+   "tier_still_owes": [],
+   "census": null,
+   "reversals_per_100": {
+    "lite": 0,
+    "flash": 20
+   },
+   "omission_pct": {
+    "lite": 60,
+    "flash": 60
+   }
+  },
+  "Arabic": {
+   "pool": "HAP",
+   "tier": "medium",
+   "stake_usd": 49,
+   "n": {
+    "first_run": 20,
+    "topup": 10,
+    "combined": 30,
+    "served_combined": 30
+   },
+   "served": {
+    "n": 30,
+    "mean": 3.67,
+    "ci": [
+     3.28,
+     4.03
+    ]
+   },
+   "served_topup": {
+    "n": 10,
+    "mean": 4,
+    "ci": [
+     3.3,
+     4.6
+    ]
+   },
+   "flash_minus_lite": {
+    "n": 30,
+    "delta": 0.42,
+    "ci": [
+     0.08,
+     0.7
+    ]
+   },
+   "flash_minus_lite_topup_only": {
+    "n": 10,
+    "delta": 0.4,
+    "ci": [
+     0,
+     0.75
+    ]
+   },
+   "flash_minus_lite_first_run": {
+    "n": 20,
+    "delta": 0.43,
+    "ci": [
+     -0.05,
+     0.78
+    ]
+   },
+   "a_vs_a": {
+    "n": 30,
+    "delta": -0.03,
+    "ci": [
+     -0.23,
+     0.17
+    ]
+   },
+   "pool_floor": {
+    "n": 93,
+    "delta": 0.01,
+    "ci": [
+     -0.1,
+     0.11
+    ]
+   },
+   "own_effect_test": {
+    "pass": true,
+    "excludes_zero": true,
+    "outside_floor": true,
+    "reaches_min_effect": true,
+    "min_effect": 0.25,
+    "floor_edge": 0.11
+   },
+   "card_line": {
+    "n": 30,
+    "grade": "decision (pooled)",
+    "cleared": true,
+    "short_by": 0,
+    "why": []
+   },
+   "guard_G1_holds": true,
+   "verdict": "keeps",
+   "why": [],
+   "tier_still_owes": [],
+   "census": null,
+   "reversals_per_100": {
+    "lite": 13.3,
+    "flash": 3.3
+   },
+   "omission_pct": {
+    "lite": 23.3,
+    "flash": 30
+   }
+  },
+  "Persian": {
+   "pool": "HAP",
+   "tier": "medium",
+   "stake_usd": 70,
+   "n": {
+    "first_run": 12,
+    "topup": 16,
+    "combined": 28,
+    "served_combined": 27
+   },
+   "served": {
+    "n": 27,
+    "mean": 3.24,
+    "ci": [
+     2.87,
+     3.59
+    ]
+   },
+   "served_topup": {
+    "n": 15,
+    "mean": 3.47,
+    "ci": [
+     2.97,
+     3.93
+    ]
+   },
+   "flash_minus_lite": {
+    "n": 28,
+    "delta": 0.57,
+    "ci": [
+     0.34,
+     0.8
+    ]
+   },
+   "flash_minus_lite_topup_only": {
+    "n": 16,
+    "delta": 0.53,
+    "ci": [
+     0.19,
+     0.88
+    ]
+   },
+   "flash_minus_lite_first_run": {
+    "n": 12,
+    "delta": 0.63,
+    "ci": [
+     0.33,
+     0.92
+    ]
+   },
+   "a_vs_a": {
+    "n": 28,
+    "delta": 0.04,
+    "ci": [
+     -0.21,
+     0.29
+    ]
+   },
+   "pool_floor": {
+    "n": 93,
+    "delta": 0.01,
+    "ci": [
+     -0.1,
+     0.11
+    ]
+   },
+   "own_effect_test": {
+    "pass": true,
+    "excludes_zero": true,
+    "outside_floor": true,
+    "reaches_min_effect": true,
+    "min_effect": 0.25,
+    "floor_edge": 0.11
+   },
+   "card_line": {
+    "n": 28,
+    "grade": "exploratory",
+    "cleared": false,
+    "short_by": 2,
+    "why": [
+     "28 referenced books (exploratory); needs directional"
+    ]
+   },
+   "guard_G1_holds": true,
+   "verdict": "still insufficient",
+   "why": [
+    "n 28: short of 30 by 2"
+   ],
+   "tier_still_owes": [],
+   "census": {
+    "note": "if the cell is read as a census (every book in the library tried), treated as directional",
+    "line_cleared": true,
+    "would_be": "keeps",
+    "tier_still_owes": []
+   },
+   "reversals_per_100": {
+    "lite": 39.3,
+    "flash": 14.3
+   },
+   "omission_pct": {
+    "lite": 39.3,
+    "flash": 28.6
+   }
+  },
+  "Sanskrit": {
+   "pool": "SPC",
+   "tier": "medium",
+   "stake_usd": 228,
+   "n": {
+    "first_run": 28,
+    "topup": 2,
+    "combined": 30,
+    "served_combined": 29
+   },
+   "served": {
+    "n": 29,
+    "mean": 3.43,
+    "ci": [
+     3.12,
+     3.72
+    ]
+   },
+   "served_topup": {
+    "n": 2,
+    "mean": 2.5,
+    "ci": [
+     2,
+     3
+    ]
+   },
+   "flash_minus_lite": {
+    "n": 30,
+    "delta": 0.42,
+    "ci": [
+     0.17,
+     0.68
+    ]
+   },
+   "flash_minus_lite_topup_only": {
+    "n": 2,
+    "delta": 1,
+    "ci": [
+     1,
+     1
+    ]
+   },
+   "flash_minus_lite_first_run": {
+    "n": 28,
+    "delta": 0.38,
+    "ci": [
+     0.11,
+     0.64
+    ]
+   },
+   "a_vs_a": {
+    "n": 30,
+    "delta": -0.05,
+    "ci": [
+     -0.22,
+     0.12
+    ]
+   },
+   "pool_floor": {
+    "n": 90,
+    "delta": -0.03,
+    "ci": [
+     -0.15,
+     0.11
+    ]
+   },
+   "own_effect_test": {
+    "pass": true,
+    "excludes_zero": true,
+    "outside_floor": true,
+    "reaches_min_effect": true,
+    "min_effect": 0.25,
+    "floor_edge": 0.15
+   },
+   "card_line": {
+    "n": 30,
+    "grade": "decision (pooled)",
+    "cleared": true,
+    "short_by": 0,
+    "why": []
+   },
+   "guard_G1_holds": true,
+   "verdict": "keeps",
+   "why": [],
+   "tier_still_owes": [],
+   "census": null,
+   "reversals_per_100": {
+    "lite": 23.3,
+    "flash": 3.3
+   },
+   "omission_pct": {
+    "lite": 53.3,
+    "flash": 53.3
+   }
+  },
+  "Pali": {
+   "pool": "SPC",
+   "tier": "small",
+   "stake_usd": 7,
+   "n": {
+    "first_run": 16,
+    "topup": 14,
+    "combined": 30,
+    "served_combined": 26
+   },
+   "served": {
+    "n": 26,
+    "mean": 3.54,
+    "ci": [
+     3.21,
+     3.87
+    ]
+   },
+   "served_topup": {
+    "n": 11,
+    "mean": 3.36,
+    "ci": [
+     2.86,
+     3.82
+    ]
+   },
+   "flash_minus_lite": {
+    "n": 30,
+    "delta": 0.52,
+    "ci": [
+     0.2,
+     0.88
+    ]
+   },
+   "flash_minus_lite_topup_only": {
+    "n": 14,
+    "delta": 0.5,
+    "ci": [
+     0.14,
+     0.82
+    ]
+   },
+   "flash_minus_lite_first_run": {
+    "n": 16,
+    "delta": 0.53,
+    "ci": [
+     0.06,
+     1.16
+    ]
+   },
+   "a_vs_a": {
+    "n": 30,
+    "delta": 0.13,
+    "ci": [
+     -0.12,
+     0.48
+    ]
+   },
+   "pool_floor": {
+    "n": 90,
+    "delta": -0.03,
+    "ci": [
+     -0.15,
+     0.11
+    ]
+   },
+   "own_effect_test": {
+    "pass": true,
+    "excludes_zero": true,
+    "outside_floor": true,
+    "reaches_min_effect": true,
+    "min_effect": 0.25,
+    "floor_edge": 0.15
+   },
+   "card_line": {
+    "n": 30,
+    "grade": "decision (pooled)",
+    "cleared": true,
+    "short_by": 0,
+    "why": []
+   },
+   "guard_G1_holds": true,
+   "verdict": "keeps",
+   "why": [],
+   "tier_still_owes": [],
+   "census": null,
+   "reversals_per_100": {
+    "lite": 13.3,
+    "flash": 3.3
+   },
+   "omission_pct": {
+    "lite": 56.7,
+    "flash": 40
+   }
+  },
+  "Chinese": {
+   "pool": "SPC",
+   "tier": "large",
+   "stake_usd": 1672,
+   "n": {
+    "first_run": 24,
+    "topup": 6,
+    "combined": 30,
+    "served_combined": 28
+   },
+   "served": {
+    "n": 28,
+    "mean": 3.88,
+    "ci": [
+     3.59,
+     4.14
+    ]
+   },
+   "served_topup": {
+    "n": 6,
+    "mean": 4.33,
+    "ci": [
+     3.92,
+     4.75
+    ]
+   },
+   "flash_minus_lite": {
+    "n": 30,
+    "delta": 0.33,
+    "ci": [
+     0.15,
+     0.52
+    ]
+   },
+   "flash_minus_lite_topup_only": {
+    "n": 6,
+    "delta": 0.33,
+    "ci": [
+     -0.33,
+     0.83
+    ]
+   },
+   "flash_minus_lite_first_run": {
+    "n": 24,
+    "delta": 0.33,
+    "ci": [
+     0.17,
+     0.5
+    ]
+   },
+   "a_vs_a": {
+    "n": 30,
+    "delta": -0.17,
+    "ci": [
+     -0.35,
+     0.02
+    ]
+   },
+   "pool_floor": {
+    "n": 90,
+    "delta": -0.03,
+    "ci": [
+     -0.15,
+     0.11
+    ]
+   },
+   "own_effect_test": {
+    "pass": true,
+    "excludes_zero": true,
+    "outside_floor": true,
+    "reaches_min_effect": true,
+    "min_effect": 0.25,
+    "floor_edge": 0.15
+   },
+   "card_line": {
+    "n": 30,
+    "grade": "decision (pooled)",
+    "cleared": true,
+    "short_by": 0,
+    "why": []
+   },
+   "guard_G1_holds": true,
+   "verdict": "keeps",
+   "why": [],
+   "tier_still_owes": [
+    "judge: not calibrated against readers of the original (required: large stake, absolute threshold, or same model family as the candidate)",
+    "replication: none on ≥ 30 fresh books under the same rule"
+   ],
+   "census": null,
+   "reversals_per_100": {
+    "lite": 23.3,
+    "flash": 10
+   },
+   "omission_pct": {
+    "lite": 40,
+    "flash": 10
+   }
+  }
+ },
+ "sensitivity": {
+  "Hebrew": {
+   "without_private_references": {
+    "n": 29,
+    "delta": 0.41,
+    "ci": [
+     0.19,
+     0.66
+    ]
+   },
+   "topup_canonical": {
+    "n": 12,
+    "delta": 0.21,
+    "ci": [
+     -0.12,
+     0.5
+    ]
+   },
+   "topup_non_canonical": {
+    "n": 3,
+    "delta": 0.17,
+    "ci": [
+     0,
+     0.5
+    ]
+   }
+  },
+  "Aramaic": {
+   "without_private_references": {
+    "n": 5,
+    "delta": 0.5,
+    "ci": [
+     0.1,
+     0.9
+    ]
+   },
+   "topup_canonical": {
+    "n": 0,
+    "delta": null,
+    "ci": null
+   },
+   "topup_non_canonical": {
+    "n": 0,
+    "delta": null,
+    "ci": null
+   }
+  },
+  "Arabic": {
+   "without_private_references": {
+    "n": 27,
+    "delta": 0.37,
+    "ci": [
+     0.02,
+     0.67
+    ]
+   },
+   "topup_canonical": {
+    "n": 5,
+    "delta": 0.1,
+    "ci": [
+     -0.5,
+     0.6
+    ]
+   },
+   "topup_non_canonical": {
+    "n": 5,
+    "delta": 0.7,
+    "ci": [
+     0.3,
+     1
+    ]
+   }
+  },
+  "Persian": {
+   "without_private_references": {
+    "n": 24,
+    "delta": 0.56,
+    "ci": [
+     0.29,
+     0.83
+    ]
+   },
+   "topup_canonical": {
+    "n": 4,
+    "delta": 0.88,
+    "ci": [
+     0.25,
+     1.63
+    ]
+   },
+   "topup_non_canonical": {
+    "n": 12,
+    "delta": 0.42,
+    "ci": [
+     0.04,
+     0.75
+    ]
+   }
+  },
+  "Sanskrit": {
+   "without_private_references": {
+    "n": 30,
+    "delta": 0.42,
+    "ci": [
+     0.17,
+     0.68
+    ]
+   },
+   "topup_canonical": {
+    "n": 0,
+    "delta": null,
+    "ci": null
+   },
+   "topup_non_canonical": {
+    "n": 2,
+    "delta": 1,
+    "ci": [
+     1,
+     1
+    ]
+   }
+  },
+  "Pali": {
+   "without_private_references": {
+    "n": 30,
+    "delta": 0.52,
+    "ci": [
+     0.2,
+     0.87
+    ]
+   },
+   "topup_canonical": {
+    "n": 9,
+    "delta": 0.39,
+    "ci": [
+     -0.06,
+     0.78
+    ]
+   },
+   "topup_non_canonical": {
+    "n": 5,
+    "delta": 0.7,
+    "ci": [
+     0.2,
+     1.2
+    ]
+   }
+  },
+  "Chinese": {
+   "without_private_references": {
+    "n": 25,
+    "delta": 0.36,
+    "ci": [
+     0.2,
+     0.54
+    ]
+   },
+   "topup_canonical": {
+    "n": 1,
+    "delta": 1,
+    "ci": null
+   },
+   "topup_non_canonical": {
+    "n": 5,
+    "delta": 0.2,
+    "ci": [
+     -0.4,
+     0.8
+    ]
+   }
+  }
+ },
+ "topup_all": {
+  "flash_minus_lite": {
+   "n": 63,
+   "delta": 0.42,
+   "ci": [
+    0.26,
+    0.58
+   ]
+  },
+  "a_vs_a": {
+   "n": 63,
+   "delta": 0.08,
+   "ci": [
+    -0.04,
+    0.21
+   ]
+  },
+  "flash_minus_lite2": {
+   "n": 63,
+   "delta": 0.34,
+   "ci": [
+    0.2,
+    0.48
+   ]
+  },
+  "served": {
+   "n": 60,
+   "mean": 3.83,
+   "ci": [
+    3.58,
+    4.07
+   ]
+  },
+  "lite": {
+   "n": 63,
+   "mean": 3.78,
+   "ci": [
+    3.55,
+    4
+   ]
+  },
+  "flash": {
+   "n": 64,
+   "mean": 4.21,
+   "ci": [
+    4.03,
+    4.38
+   ]
+  },
+  "reversals_per_100": {
+   "lite": 23.8,
+   "flash": 6.3
+  },
+  "omission_pct": {
+   "lite": 33.3,
+   "flash": 21.9
+  }
+ }
+}

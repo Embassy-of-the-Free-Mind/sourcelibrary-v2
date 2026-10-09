@@ -1,0 +1,266 @@
+[
+ {
+  "id": "QC4KT",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "addition",
+    "confidence": "high",
+    "tibetan": "ཁྱབ་པར་བྱ་བ་ཉེ་བར་གནས་",
+    "english": "is close at hand sentence continues on next page",
+    "why": "The words 'sentence continues on next page' are a processing note leaked into the translation, not part of the Tibetan.",
+    "fix": {
+     "find": "is close at hand sentence continues on next page",
+     "replace": "is close at hand"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ཁྱད་པར་བྱ་བ་གོ་བར་བྱེད་པ་ཉིད་དུ་འཐད་པས་ན",
+    "english": "the qualifier functions as the means of comprehension",
+    "why": "ཁྱད་པར་བྱ་བ (likely for ཁྱབ་པར་བྱ་བ) is the qualified / pervaded item that makes the pervader known, not the qualifier (ཁྱད་པར་བྱེད་པ)."
+   }
+  ],
+  "note": "A careful rendering of a dense vyāpti discussion; apart from a leaked processing note and one bya/byed slip it follows the argument well."
+ },
+ {
+  "id": "Q0MSX",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "Faithful rendering of the general/specific and literal/figurative characteristics of the four truths; the unmarked inline glosses are a matter of style."
+ },
+ {
+  "id": "QB96K",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "reversal",
+    "confidence": "high",
+    "tibetan": "ཇི་ལྟར་ཡང་ནི་མེད་བདག་ཉིད། །ཇི་ལྟར་ཡང་ནི་མ་དམིགས་ཕྱིར།",
+    "english": "are in no way existent entities, because they are not observed in any way whatsoever",
+    "why": "ཇི་ལྟར་ཡང་ (kathaṃcit) means 'in some respect': the self, pot etc. are in some respect non-existent in nature because in some respect not observed, not 'in no way existent'.",
+    "fix": {
+     "find": "are in no way existent entities, because they are not observed in any way whatsoever",
+     "replace": "are in some respect of a non-existent nature, because in some respect they are not observed"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "ཇི་ལྟར་ཡང་ནི་ཡོད་བདག་ཉིད།",
+    "english": "are in every way of an existent nature, because they are observed in any way whatsoever",
+    "why": "Again kathaṃcit: the hare's horn etc. are in some respect existent in nature because in some respect observed, not 'in every way'.",
+    "fix": {
+     "find": "are in every way of an existent nature, because they are observed in any way whatsoever",
+     "replace": "are in some respect of an existent nature, because in some respect they are observed"
+    }
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "དངོས་པོའམ་དངོས་མེད་ཡོད་བདག་ཉིད། །ཇི་ལྟར་ཡང་ནི་དམིགས་ཕྱིར་རོ།",
+    "english": "This is because it is observed in any manner whatsoever, whether as a real entity or a non-entity.",
+    "why": "This is a sample inference (everything, entity or non-entity, is somehow existent because somehow observed) illustrating a one-characteristic reason, not a justification of the preceding sentence."
+   }
+  ],
+  "note": "The anyathānupapatti verses are mostly followed, but the Jaina-style 'in some respect' (kathaṃcit) examples are rendered as absolute claims, which inverts their point."
+ },
+ {
+  "id": "Q7KHG",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "དོན་གཅིག་ལ་འཕྲོད་པ་འདུ་བ་ཞེས་བྱ་བར་རིགས་ན",
+    "english": "\"gathering together into one object of focus.\"",
+    "why": "འདུ་བ here is samavāya (inherence) and དོན་གཅིག་ལ་འདུ་བ is ekārthasamavāya, 'inherence in a single substrate', a Vaiśeṣika technical term, not 'gathering into one object of focus'.",
+    "fix": {
+     "find": "\"gathering together into one object of focus.\"",
+     "replace": "\"inherence in a single substrate\" (ekārthasamavāya)."
+    }
+   },
+   {
+    "type": "structure",
+    "confidence": "high",
+    "tibetan": "འོན་ཏེ་ཇི་ལྟར་མེ་ལ་མེར་བཟུང་བ། ཆོས་མཐུན་པ་རྣོ་བ་ཉིད་བཟུང་བས་མེའི་བག་ཆགས་",
+    "english": "On the other hand, how is fire perceived as fire? By perceiving the common characteristic of sharpness, the mental imprint of fire is awakened.",
+    "why": "ཇི་ལྟར ... དེ་བཞིན་དུ is 'just as ... so', opening the opponent's analogy, not a question; the clause states that fire was first grasped as fire and then sharpness awakens its imprint.",
+    "fix": {
+     "find": "On the other hand, how is fire perceived as fire? By perceiving the common characteristic of sharpness, the mental imprint of fire is awakened.",
+     "replace": "Objection: just as, when fire has been apprehended as fire and the shared property of sharpness is then apprehended, the latent impression of fire is awakened,"
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "དེ་ཕྱིར་གཅིག་དོན་དུ་མ་ཅན།",
+    "english": "Therefore, a single object has many components,",
+    "why": "The verse says one [cognition] has many objects, as the following line (even while conceptualising one object, others are seen) shows."
+   }
+  ],
+  "note": "Follows the anti-Vaiśeṣika argument in outline, but mistranslates samavāya and turns the opponent's fire/brahmin-boy analogy into a question."
+ },
+ {
+  "id": "QCUVB",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ཉལ་བའི་བརྩལ་བ་ལ",
+    "english": "regarding nocturnal emissions",
+    "why": "The text speaks of exertion made while lying down / asleep, not of nocturnal emission as such."
+   }
+  ],
+  "note": "A competent rendering of difficult Vinaya commentary on the first saṃghāvaśeṣa; a few obscure phrases are interpreted rather than translated but nothing is badly wrong."
+ },
+ {
+  "id": "QW3PM",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "Faithful rendering of the Mahāyāna-authenticity argument and the patriarch lineage."
+ },
+ {
+  "id": "QB7N3",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "addition",
+    "confidence": "high",
+    "tibetan": "གཏན་",
+    "english": "\"Proof\" ends mid-word at page boundary",
+    "why": "'ends mid-word at page boundary' is a processing note, not translation.",
+    "fix": {
+     "find": "\"Proof\" ends mid-word at page boundary",
+     "replace": "\"Proof...\""
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "སྐྱེས་བཞིན་དུ་འགྱུར་ཏེ",
+    "english": "they become vitalized",
+    "why": "སྐྱེས here is 'gift, present': his words become like a gift when they meet the noble."
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ཚིག་ལ་མཁས་པར་གྱུར་པའི་དབང་དུ་བྱས་པ་སྟེ།",
+    "english": "This is written from the perspective of mastering elegant speech.",
+    "why": "The sentence begun on the previous side concerns skill in speech that establishes one's own position, not 'elegant' (well-spoken) speech, which is the next verse's topic."
+   }
+  ],
+  "note": "The compound-analysis commentary is followed closely; one leaked processing note and a couple of small misreadings."
+ },
+ {
+  "id": "Q6815",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "སྐྱེས་པར་གྱུར་ཏོ།",
+    "english": "He was born.",
+    "why": "The subject continues from the previous side: sons were born to the other thirty-four queens too, not 'he' (the prince, whose birth was already narrated).",
+    "fix": {
+     "find": "He was born.",
+     "replace": "Sons were born [to the other queens as well]."
+    }
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "ཡོན་ཏན་གཉེན་དང་བློ་གྲོས་བཟང་པོ་སྐྱེས་ཏེ་ཤིན་ཏུ་ལྕི་བ་བསྔགས་པར་བྱ་བའི་གནས། །",
+    "english": "Possessing virtuous qualities and noble intelligence, he became a highly respected and grave figure.",
+    "why": "This opens a four-line verse (through the ocean/shell simile) that is merged into the prose narrative and partly paraphrased."
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "དུམ་བུ་འཛིན་པའི་མིང་གིས་མཚན་པའི་ཡོ་བྱད",
+    "english": "the regional governor",
+    "why": "དུམ་བུ་འཛིན་པ is most likely the proper name of the antagonist (who later gathers the brahmins), rendered as a generic title."
+   }
+  ],
+  "note": "The narrative line is followed, but the opening misidentifies who was born and the inset verses are flattened into prose."
+ },
+ {
+  "id": "QK07C",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "ཇི་ལྟར་སྲིད་པ་བཟློག་པར་བྱའོ།",
+    "english": "so how could that possibility be averted?",
+    "why": "ཇི་ལྟར་སྲིད་པ is 'as applicable' (yathāsambhavam): simultaneous or later arising should be refuted as applicable by this same fault; it is an instruction, not a rhetorical question."
+   }
+  ],
+  "note": "Good rendering of the Akṣayamati quotation and the unarisen/unceasing argument."
+ },
+ {
+  "id": "QOVBU",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "འཆར་ཀས་དེ་དག་རང་ལ་གནས་འཆར་བཅུག་ནས།",
+    "english": "had them establish temporary lodgings for him",
+    "why": "གནས་འཆའ་བ is to take niśraya (formal dependence): Udāyin made the new monks take dependence on him.",
+    "fix": {
+     "find": "had them establish temporary lodgings for him",
+     "replace": "had them take dependence (niśraya) on him"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "འདག་རྫས་ཀྱི་རྒྱུ་ལྕི་བ་དག་གྱོ་མོར་གཞག་པར་བྱའོ།",
+    "english": "The clay materials used for washing should be kept in a pottery shard.",
+    "why": "ལྕི་བ is cow dung, used as cleansing/plastering material, not clay.",
+    "fix": {
+     "find": "The clay materials used for washing",
+     "replace": "The cow dung used as cleansing material"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ལྟུང་བྱེད་དེ་བཅོ་ལྔ་པ་བཤད་ཟིན་ཏོ།",
+    "english": "The fifteenth training rule concerning bedding is thus explained.",
+    "why": "ལྟུང་བྱེད is a pāyantika offence, not a generic 'training rule' (the same applies to the expulsion pāyantika that follows)."
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "དག་མི་སྐྱེ་བ་མ་གཏོགས་པ་གཞན་དོར་བར་བྱའོ།",
+    "english": "Except for those [note: grasses] that are clean and not sprouting",
+    "why": "Continuing སྲོག་ཆགས་ from the previous side, the exception is grass in which living creatures do not breed, not grass that is clean and not sprouting."
+   }
+  ],
+  "note": "The narrative of Udāyin is readable, but several Vinaya technical terms (niśraya, pāyantika, cow dung) are mistranslated."
+ }
+]

@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA poemata/corvi1",
+  "edition": "Poematum libri duo. — Leipzig: Joh. Rhamba, 1568.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "10/12",
+    "pb_aligned_pages": "10/10"
+  },
+  "origin": "library",
+  "book_id": "6a26bc6cd6b178e5aad8300b",
+  "page_number": 18,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 15306,
+    "to_char": 16720,
+    "overlap": 0.955,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'Nil gemitus, nil vota valent: abducere mandat'; ends 'Atque epulis teneram lautis defendere vitam.' then catchword 'Quod'. Page numbered 16 with running head IOSEPHIADOS; spelling is lightly normalised (th, e, ae) and a few readings regularised.",
+    "leaf_language": "lat",
+    "page_type": "verse",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:58.130Z",
+  "text_location": "repo",
+  "text_sha256": "597f034e6b3cbff0dadc7f118c3b1b5ab2e5e4f020baa84ee804917d65e2235d",
+  "unit": {
+    "chars": 1414
+  },
+  "stratum": "latin-period-5126"
+}

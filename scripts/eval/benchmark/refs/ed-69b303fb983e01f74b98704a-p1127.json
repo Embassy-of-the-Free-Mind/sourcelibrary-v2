@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA historicapolitica/matthiae1",
+  "edition": "Theatrum historicum theoretico-practicum : in quo Quatuor Monarchiae, Nempe Prima, quae est Babyloniorum et Assyriorum,  — Amstelodami : Apud Danielem Elzevirium, 1668.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "8/9",
+    "pb_aligned_pages": "8/8"
+  },
+  "origin": "library",
+  "book_id": "69b303fb983e01f74b98704a",
+  "page_number": 1127,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 4612820,
+    "to_char": 4617797,
+    "overlap": 0.711,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Two-column page 1049 (header IMPERATOR XLIV GERMANORUM): left starts 'avunculum suum', right column ends 'quod refor-'; ref reads left column then right column in correct order, padded with 'undique copiis transcendit Alpes, et Sabaudiae Ducem,' and 'reformatam potius, quam'; ref has local errors but right boundaries; signature 'Rrrrr'.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:24.435Z",
+  "text_location": "repo",
+  "text_sha256": "7d9baa32c7785edfcc09abeaf99b6de3cca033c3c479ccf86e27fb38b40658f4",
+  "unit": {
+    "chars": 4977
+  },
+  "stratum": "latin-period-5126"
+}

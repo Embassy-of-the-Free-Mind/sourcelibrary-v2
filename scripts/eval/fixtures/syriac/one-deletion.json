@@ -1,0 +1,9 @@
+{
+ "script": "syriac",
+ "name": "one-deletion",
+ "reference": "ܟܬܒܐ ܕܝܠܝܕܘܬܗ ܕܝܫܘܥ ܡܫܝܚܐ ܒܪܗ ܕܕܘܝܕ ܒܪܗ ܕܐܒܪܗܡ",
+ "hypothesis": "ܟܬܒܐ ܕܝܠܝܕܘܬܗ ܕܫܘܥ ܡܫܝܚܐ ܒܪܗ ܕܕܘܝܕ ܒܪܗ ܕܐܒܪܗܡ",
+ "expected_cer": 0.021739130434782608,
+ "tolerance": 1e-9,
+ "why": "one dropped consonant"
+}

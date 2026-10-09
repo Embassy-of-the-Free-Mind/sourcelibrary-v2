@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA cera/conring2",
+  "edition": "Epistolae: hactenus sparsim editae, nunc uno volumine comprehensae ; De varia doctrin�. — Helmstedt: Henning M�ller, 1666.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "11/14",
+    "pb_aligned_pages": "11/11"
+  },
+  "origin": "library",
+  "book_id": "6a90ce08354ec8f981e30277",
+  "page_number": 9,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 3809,
+    "to_char": 4850,
+    "overlap": 0.97,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'VOlumine hoc, Benevole Lector' (heading 'BENEVOLO LECTORI S.P.D.'); ends 'inconsulto' with catchword 'fuerunt'; preface page; ref pads 'obsequia devotissimus. H. CONRINGIUS' before and 'fuerunt editae antehac' after.",
+    "leaf_language": "lat",
+    "page_type": "front-matter",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:18:16.751Z",
+  "text_location": "repo",
+  "text_sha256": "8b185108c061e53da74a5daf8a75efdb7fef4c9d62d54f1ea94f438abe7fc09d",
+  "unit": {
+    "chars": 1041
+  },
+  "stratum": "latin-period-5126"
+}

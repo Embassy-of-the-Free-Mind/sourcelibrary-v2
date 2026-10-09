@@ -83,14 +83,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       // explicit image is required or the page ships no og:image at all.
       images: [{
         url: partner.heroImageOverride || 'https://sourcelibrary.org/og-image.jpg',
-        alt: `${partner.name} — Source Library`,
+        alt: `${partner.name} | Source Library`,
       }],
     },
     twitter: {
       card: 'summary_large_image',
       images: [{
         url: partner.heroImageOverride || 'https://sourcelibrary.org/og-image.jpg',
-        alt: `${partner.name} — Source Library`,
+        alt: `${partner.name} | Source Library`,
       }],
     },
   };

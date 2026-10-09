@@ -148,7 +148,7 @@ export default function UstcCoveragePanel({ totals, from, to, corpus, corpusLabe
       >
         <span>
           <span className="font-medium">Collection coverage</span>
-          <span className="text-[var(--text-muted)]"> — how much of European print do these curves rest on?</span>
+          <span className="text-[var(--text-muted)]">: how much of European print do these curves rest on?</span>
         </span>
         <span className="text-[var(--text-faint)] shrink-0">{open ? '▾' : '▸'}</span>
       </button>
@@ -271,13 +271,13 @@ export default function UstcCoveragePanel({ totals, from, to, corpus, corpusLabe
                   <a href="https://www.ustc.ac.uk" target="_blank" rel="noopener noreferrer" className="underline hover:text-[var(--accent-rust)]">
                     Universal Short Title Catalogue
                   </a>{' '}
-                  — European <em>printed</em> output only, including broadsheets and ephemera. The rust
+                  (European <em>printed</em> output only, including broadsheets and ephemera). The rust
                   line is this corpus&apos;s books per year (its own scale); the green strip is the share
                   of known editions positively matched to a Source Library copy, in {RATIO_BIN}-year bins.
                 </li>
                 <li>
                   The match is conservative, and most of Source Library lies outside USTC&apos;s scope
-                  entirely (manuscripts, non-European material, post-1700 print) — this measures how much
+                  entirely (manuscripts, non-European material, post-1700 print). This measures how much
                   of USTC&apos;s universe we hold, not how much of our library USTC describes.
                   Across all of print, {(100 * ustc.total_scanned / ustc.total_editions).toFixed(0)}% of
                   USTC editions have any open scan anywhere, and{' '}

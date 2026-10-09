@@ -226,5 +226,27 @@
       "mcp",
       "mcp server"
     ]
+  },
+  {
+    "href": "/review",
+    "title": "Help curate",
+    "description": "Spot AI mistakes in our image-extraction pipeline. A few seconds per page.",
+    "aliases": [
+      "check pages",
+      "review pages",
+      "proofread",
+      "proofreading"
+    ]
+  },
+  {
+    "href": "/support",
+    "title": "Support",
+    "description": "Support the digitization and translation of rare historical texts from the Bibliotheca Philosophica Hermetica.",
+    "aliases": [
+      "donate",
+      "donation",
+      "donations",
+      "support"
+    ]
   }
 ]

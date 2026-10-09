@@ -1,0 +1,41 @@
+{
+ "lite": {
+  "name": "batches/nlfb9x25drfhw8kd1xxb20c0nhbpnedu00ww",
+  "model": "gemini-3.1-flash-lite",
+  "keyIndex": 1,
+  "submitted_at": "2026-10-06T08:49:40.111Z",
+  "requests": 63,
+  "generation_config": "production (no temperature, thinkingBudget 0)",
+  "metered": "updated",
+  "usage": {
+   "inputTokens": 165422,
+   "outputTokens": 45897
+  }
+ },
+ "lite2": {
+  "name": "batches/ujeyrk3mhcfbfxznngrle9n0hlichssb4icr",
+  "model": "gemini-3.1-flash-lite",
+  "keyIndex": 1,
+  "submitted_at": "2026-10-06T08:49:52.024Z",
+  "requests": 63,
+  "generation_config": "production (no temperature, thinkingBudget 0)",
+  "metered": "updated",
+  "usage": {
+   "inputTokens": 165422,
+   "outputTokens": 43728
+  }
+ },
+ "flash": {
+  "name": "batches/pb9mhz8pvavoqxvcb6trzuupyl1b6yj8gkw9",
+  "model": "gemini-3-flash-preview",
+  "keyIndex": 1,
+  "submitted_at": "2026-10-06T08:50:00.978Z",
+  "requests": 63,
+  "generation_config": "production (no temperature, thinkingBudget 0)",
+  "metered": "updated",
+  "usage": {
+   "inputTokens": 165422,
+   "outputTokens": 47977
+  }
+ }
+}

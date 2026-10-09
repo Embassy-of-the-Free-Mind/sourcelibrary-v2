@@ -1,0 +1,21 @@
+{
+  "id": "translation-lift-v1",
+  "PRIOR ART": "margin-v1.json — the same reading order and negative control, but its measure is a catastrophic count and a by-eye A/B on the transcription. Nothing in this library scored the ENGLISH; scripts/eval/reocr-lift-5700/lift.mjs scores it against a human reference but applies no rule.",
+  "registered": "2026-10-05 (#5870), before any engine was run on the sealed pages. Margin 0.25 fidelity points: the #5700 A5 A-vs-A floor (the same Flash read twice, each translated by Lite, 29 pages) had a 95 % CI of [-0.17, 0.22], so two reads of ONE engine already differ by about 0.2 on the mean.",
+  "measure": "judged against a human reference: mean fidelity (1-5) of two blind Opus judges for the Lite (prompt v13) English made from each engine's read; the judges' source is the by-eye corrected transcription (#5695).",
+  "candidate": "kraken",
+  "baseline": "flash",
+  "min_text_pages": 10,
+  "checks": [
+    { "id": "a", "rule": "translationLift", "margin": 0.25, "min_pairs": 6, "seed": 5870, "iters": 4000, "tie": 0.25 },
+    { "id": "b", "rule": "countNoWorse", "slack": 1 }
+  ],
+  "catastrophic_definition": "a page is catastrophic for an arm when the engine returned no usable read (empty, timeout, refusal: its English is then scored 1, not dropped) or when either judge types an unreadable_fill invention in that arm's English (#5622: the only invention kind that is fabrication).",
+  "verdicts": {
+    "pass": "recommend the open engine",
+    "fail": "Flash re-read",
+    "inconclusive": "undecided: interval wider than the margin at this n (Flash stays)",
+    "small_n": "undecided: n too small",
+    "pending": "pending judging"
+  }
+}
