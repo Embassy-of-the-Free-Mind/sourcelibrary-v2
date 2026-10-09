@@ -1,0 +1,436 @@
+{
+ "issue": 6295,
+ "generated_by": "scripts/eval/syriac-pareto-6295/score-translation.py",
+ "grade": "directional (under 30 books)",
+ "model": "gemini-3.1-flash-lite (Batch, thinking budget 0, pinned v13 one-page prompt)",
+ "judges": "two blind Opus judges (claude -p --model opus, subscription), against the Digital Syriac Corpus window",
+ "n_pages": 20,
+ "n_books": 20,
+ "n_editions": 18,
+ "bootstrap": "2000 resamples of editions",
+ "missing_outputs": {
+  "J1": [],
+  "J2": []
+ },
+ "gate": {
+  "J1": {
+   "plants_caught": 8,
+   "plants": 8,
+   "dups_tied": 4,
+   "dups": 4,
+   "pass": true
+  },
+  "J2": {
+   "plants_caught": 8,
+   "plants": 8,
+   "dups_tied": 4,
+   "dups": 4,
+   "pass": true
+  }
+ },
+ "gate_pass": true,
+ "judges_within_1_point": 1.0,
+ "arms": {
+  "R": {
+   "fidelity": 4.325,
+   "fidelity_ci95": [
+    4.105,
+    4.525
+   ],
+   "share_ge4": 0.95,
+   "inversion_pages": 5,
+   "reversals_per_100": 25.0,
+   "reversals_ci95": [
+    11.2,
+    46.9
+   ],
+   "omission_pages": 4,
+   "invention_pages": 3,
+   "usd_per_1k_batch": 0.742,
+   "thinking_tokens": 0
+  },
+  "R2": {
+   "fidelity": 4.4,
+   "fidelity_ci95": [
+    4.167,
+    4.619
+   ],
+   "share_ge4": 0.9,
+   "inversion_pages": 2,
+   "reversals_per_100": 10.0,
+   "reversals_ci95": [
+    2.8,
+    30.1
+   ],
+   "omission_pages": 3,
+   "invention_pages": 4,
+   "usd_per_1k_batch": 0.742,
+   "thinking_tokens": 0
+  },
+  "K": {
+   "fidelity": 3.0,
+   "fidelity_ci95": [
+    2.675,
+    3.3
+   ],
+   "share_ge4": 0.2,
+   "inversion_pages": 12,
+   "reversals_per_100": 60.0,
+   "reversals_ci95": [
+    38.7,
+    78.1
+   ],
+   "omission_pages": 19,
+   "invention_pages": 17,
+   "usd_per_1k_batch": 0.79,
+   "thinking_tokens": 0
+  },
+  "K2": {
+   "fidelity": 2.9,
+   "fidelity_ci95": [
+    2.6,
+    3.2
+   ],
+   "share_ge4": 0.15,
+   "inversion_pages": 11,
+   "reversals_per_100": 55.0,
+   "reversals_ci95": [
+    34.2,
+    74.2
+   ],
+   "omission_pages": 19,
+   "invention_pages": 18,
+   "usd_per_1k_batch": 0.797,
+   "thinking_tokens": 0
+  }
+ },
+ "noise_floor": {
+  "r2_minus_r_mean": 0.075,
+  "ci95": [
+   -0.109,
+   0.275
+  ],
+  "f": 0.275
+ },
+ "k_minus_r": {
+  "mean": -1.325,
+  "ci95": [
+   -1.658,
+   -0.974
+  ]
+ },
+ "k2_minus_r2": {
+  "mean": -1.5,
+  "ci95": [
+   -1.842,
+   -1.167
+  ]
+ },
+ "rule": {
+  "within_noise_floor": false,
+  "test": "lower bound of K − R ≥ −f and inversion pages K ≤ R + 2",
+  "verdict": "keep the Kraken-read translations withheld"
+ },
+ "per_page": [
+  {
+   "uid": "69920b97_271",
+   "edition": "New Testament, Pinkerton-Gwilliam 1905",
+   "tier": "same-edition",
+   "R": 5,
+   "R2": 5,
+   "K": 3,
+   "K2": 3,
+   "inv": {
+    "R": false,
+    "R2": false,
+    "K": false,
+    "K2": true
+   }
+  },
+  {
+   "uid": "69943c4f_169",
+   "edition": "Odes of Solomon, Harris-Mingana 1916",
+   "tier": "other-edition",
+   "R": 4,
+   "R2": 4.5,
+   "K": 2.5,
+   "K2": 2.5,
+   "inv": {
+    "R": false,
+    "R2": false,
+    "K": true,
+    "K2": false
+   }
+  },
+  {
+   "uid": "69943c68_564",
+   "edition": "Philoxenus, Budge 1894",
+   "tier": "same-edition",
+   "R": 5,
+   "R2": 5,
+   "K": 3.5,
+   "K2": 3,
+   "inv": {
+    "R": false,
+    "R2": false,
+    "K": true,
+    "K2": true
+   }
+  },
+  {
+   "uid": "69943c78_154",
+   "edition": "Isaac of Nineveh, Bedjan 1909",
+   "tier": "same-edition",
+   "R": 4,
+   "R2": 4.5,
+   "K": 3,
+   "K2": 3,
+   "inv": {
+    "R": true,
+    "R2": false,
+    "K": true,
+    "K2": true
+   }
+  },
+  {
+   "uid": "69943c94_125",
+   "edition": "Aphrahat, Parisot PS I.1",
+   "tier": "same-edition",
+   "R": 5,
+   "R2": 5,
+   "K": 4,
+   "K2": 4,
+   "inv": {
+    "R": false,
+    "R2": false,
+    "K": true,
+    "K2": false
+   }
+  },
+  {
+   "uid": "69943ce1_628",
+   "edition": "Narsai, Mingana 1905",
+   "tier": "same-edition",
+   "R": 5,
+   "R2": 5,
+   "K": 3,
+   "K2": 3,
+   "inv": {
+    "R": false,
+    "R2": false,
+    "K": true,
+    "K2": true
+   }
+  },
+  {
+   "uid": "6994400f_296",
+   "edition": "Patrologia Syriaca I.2",
+   "tier": "same-edition",
+   "R": 4,
+   "R2": 5,
+   "K": 2,
+   "K2": 2.5,
+   "inv": {
+    "R": false,
+    "R2": false,
+    "K": true,
+    "K2": true
+   }
+  },
+  {
+   "uid": "699443fa_308",
+   "edition": "Carmina Nisibena, Bickell 1866",
+   "tier": "other-edition",
+   "R": 4,
+   "R2": 4,
+   "K": 1.5,
+   "K2": 1.5,
+   "inv": {
+    "R": true,
+    "R2": false,
+    "K": true,
+    "K2": false
+   }
+  },
+  {
+   "uid": "69a5e9f0_81",
+   "edition": "Book of the Laws of Countries, Nau 1899",
+   "tier": "other-edition",
+   "R": 4.5,
+   "R2": 4,
+   "K": 2,
+   "K2": 2,
+   "inv": {
+    "R": false,
+    "R2": false,
+    "K": true,
+    "K2": true
+   }
+  },
+  {
+   "uid": "69a5ea9a_391",
+   "edition": "Narsai, Mingana 1905",
+   "tier": "same-edition",
+   "R": 4,
+   "R2": 4,
+   "K": 3.5,
+   "K2": 3.5,
+   "inv": {
+    "R": false,
+    "R2": false,
+    "K": true,
+    "K2": true
+   }
+  },
+  {
+   "uid": "69a5eaa3_611",
+   "edition": "Jacob of Sarug, Bedjan vol. 1",
+   "tier": "same-edition",
+   "R": 4.5,
+   "R2": 4,
+   "K": 4,
+   "K2": 4,
+   "inv": {
+    "R": false,
+    "R2": false,
+    "K": false,
+    "K2": false
+   }
+  },
+  {
+   "uid": "69a5eaa8_205",
+   "edition": "Ephrem/Rabbula/Balai, Overbeck 1865",
+   "tier": "same-edition",
+   "R": 4,
+   "R2": 4,
+   "K": 3,
+   "K2": 3.5,
+   "inv": {
+    "R": false,
+    "R2": false,
+    "K": false,
+    "K2": false
+   }
+  },
+  {
+   "uid": "69a5eb4d_529",
+   "edition": "Acta Martyrum III (Acts of Thomas)",
+   "tier": "other-edition",
+   "R": 4,
+   "R2": 3.5,
+   "K": 4.5,
+   "K2": 3,
+   "inv": {
+    "R": true,
+    "R2": true,
+    "K": false,
+    "K2": true
+   }
+  },
+  {
+   "uid": "69a5eb54_268",
+   "edition": "Acta Martyrum IV (Life of Rabbula)",
+   "tier": "other-edition",
+   "R": 4,
+   "R2": 5,
+   "K": 4,
+   "K2": 4.5,
+   "inv": {
+    "R": true,
+    "R2": false,
+    "K": true,
+    "K2": false
+   }
+  },
+  {
+   "uid": "69a5eb64_461",
+   "edition": "Acta Martyrum VI (Julian Romance)",
+   "tier": "other-edition",
+   "R": 3.5,
+   "R2": 3.5,
+   "K": 3,
+   "K2": 3,
+   "inv": {
+    "R": true,
+    "R2": true,
+    "K": false,
+    "K2": false
+   }
+  },
+  {
+   "uid": "69a5eb6b_205",
+   "edition": "Acta Martyrum II, Bedjan",
+   "tier": "same-edition",
+   "R": 5,
+   "R2": 4.5,
+   "K": 3,
+   "K2": 2,
+   "inv": {
+    "R": false,
+    "R2": false,
+    "K": false,
+    "K2": true
+   }
+  },
+  {
+   "uid": "69a5f031_235",
+   "edition": "Bar Hebraeus, Chronicon Ecclesiasticum vol. 2",
+   "tier": "same-edition",
+   "R": 4,
+   "R2": 4,
+   "K": 2.5,
+   "K2": 2,
+   "inv": {
+    "R": false,
+    "R2": false,
+    "K": false,
+    "K2": true
+   }
+  },
+  {
+   "uid": "69a5f3e0_197",
+   "edition": "Aphrahat, Parisot PS I.1",
+   "tier": "same-edition",
+   "R": 5,
+   "R2": 5,
+   "K": 2,
+   "K2": 2,
+   "inv": {
+    "R": false,
+    "R2": false,
+    "K": true,
+    "K2": false
+   }
+  },
+  {
+   "uid": "6aaafba3_151",
+   "edition": "Joshua the Stylite, Wright 1882",
+   "tier": "same-edition",
+   "R": 4,
+   "R2": 4.5,
+   "K": 3,
+   "K2": 3,
+   "inv": {
+    "R": false,
+    "R2": false,
+    "K": false,
+    "K2": false
+   }
+  },
+  {
+   "uid": "6aaafbb1_300",
+   "edition": "Chronicle of Zuqnin pt 4, Chabot 1895",
+   "tier": "same-edition",
+   "R": 4,
+   "R2": 4,
+   "K": 3,
+   "K2": 3,
+   "inv": {
+    "R": false,
+    "R2": false,
+    "K": true,
+    "K2": true
+   }
+  }
+ ]
+}

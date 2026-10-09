@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA historicapolitica/matthiae1",
+  "edition": "Theatrum historicum theoretico-practicum : in quo Quatuor Monarchiae, Nempe Prima, quae est Babyloniorum et Assyriorum,  — Amstelodami : Apud Danielem Elzevirium, 1668.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "origin": "library",
+  "book_id": "69b303fb983e01f74b98704a",
+  "page_number": 716,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 2801519,
+    "to_char": 2805969,
+    "overlap": 0.53,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (c-2)",
+    "at": "2026-10-06T10:13:04+00:00",
+    "note": "p.638; ref matches from 'in balteo, non in popina' to 'latronibus Syris'.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      714,
+      715,
+      716
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.786Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "73b8797884a71a6a7c3a7a3315be8a6b468ad94b03a288cdd1470225f02c10b8",
+  "unit": {
+    "chars": 4450
+  }
+}

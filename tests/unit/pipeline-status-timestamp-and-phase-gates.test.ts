@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+// @ts-expect-error — plain .mjs, no types
+import { PHASE_PAUSE_KEY, isPaused } from '../../scripts/lib/pause.mjs';
 
 /**
  * #5472 — two pipeline wiring bugs.
@@ -11,7 +13,8 @@ import { join } from 'node:path';
  *     while still being worked.
  * (b) Orchestrator Phase 1.95 (warehouse promote) was gated by shouldRun(2) and the
  *     artwork skip by shouldRun(1): pausing OCR paused promotion, and the artwork skip
- *     had no switch of its own.
+ *     had no switch of its own. (Phase 1.95 itself was removed with the warehouse,
+ *     #5470; the artwork skip still pins the two-argument gate.)
  *
  * Both workers run main() on import, so the functions are extracted from source and
  * EXERCISED (see tests/unit/archive-status-forward-only.test.ts). If an extraction
@@ -99,11 +102,13 @@ describe('enrich-worker status writes refresh the field the stale sweeps select 
 
 describe('orchestrator phases have their own pause switches (#5472b)', () => {
   function loadShouldRun(onlyPhase: number | null, paused: number[]) {
-    const factory = new Function('ONLY_PHASE', 'PAUSED_PHASES', `
+    // shouldRun also asks the phase's step key (#5492); give it the same control doc.
+    const factory = new Function('ONLY_PHASE', 'PAUSED_PHASES', 'PHASE_PAUSE_KEY', 'isPaused', 'PAUSE_CONTROL', `
       ${extractFn(ORCH, 'function shouldRun(')}
       return shouldRun;
     `);
-    return factory(onlyPhase, new Set(paused)) as (...args: number[]) => boolean;
+    const quietIsPaused = (c: unknown, k: string) => isPaused(c, k, { log: () => {} });
+    return factory(onlyPhase, new Set(paused), PHASE_PAUSE_KEY, quietIsPaused, { paused_phases: paused }) as (...args: number[]) => boolean;
   }
 
   /** The literal shouldRun(...) arguments of the first gate after a phase header. */
@@ -115,13 +120,7 @@ describe('orchestrator phases have their own pause switches (#5472b)', () => {
     return m[1].split(',').map(s => Number(s.trim()));
   }
 
-  const promote = gateArgs('// ── Phase 1.95: Warehouse promotion');
   const artwork = gateArgs('Skip artworks that somehow entered the pipeline');
-
-  it('pausing OCR (2) does not pause warehouse promotion', () => {
-    expect(loadShouldRun(null, [2])(...promote)).toBe(true);
-    expect(loadShouldRun(null, [1.95])(...promote)).toBe(false);
-  });
 
   it('pausing archive check (1) does not pause the artwork skip, which has its own switch', () => {
     expect(loadShouldRun(null, [1])(...artwork)).toBe(true);
@@ -130,10 +129,9 @@ describe('orchestrator phases have their own pause switches (#5472b)', () => {
     expect(artwork[0]).not.toBe(0); // 0 is enrollment's switch
   });
 
-  it('they still run inside the cron jobs that carry them (--phase 2 / --phase 1)', () => {
-    expect(loadShouldRun(2, [])(...promote)).toBe(true);
+  it('it still runs inside the cron job that carries it (--phase 1), and not in another', () => {
     expect(loadShouldRun(1, [])(...artwork)).toBe(true);
-    expect(loadShouldRun(3, [])(...promote)).toBe(false);
+    expect(loadShouldRun(3, [])(...artwork)).toBe(false);
   });
 
   it('a single-id gate behaves as before', () => {

@@ -1,0 +1,14 @@
+Prob. XIV. Trajectoriam describere. Q.E.F.
+
+Schol.
+Problemata, ubi dantur Trajectoriarum vel centra vel Asymptoti, includuntur in praecedentibus. Nam datis punctis & tangentibus una cum centro, dantur alia totidem puncta aliae
+que
+tangentes a centro ex altera ejus parte aequaliter distantes. Asymptotos autem pro tangente habenda est, & ejus terminus infinite distans (si ita loqui fas sit) pro puncto contactus. Concipe tangentis cujusvis punctum contactus abire in infinitum, & tangens vertetur in Asymptoton, at
+que
+constructiones Problematis XV & Casus primi Problematis XIV vertentur in constructiones Problematum ubi Asymptoti dantur.
+Postquam Trajectoria descripta est, invenire licet axes & umbilicos ejus hac methodo. In constructione & Figura Lemmatis XXI,
+fac ut angulorum mobilium PBN, PCN crura BP, CP quorum concursu Trajectoria describebatur sint sibi invicem parallela, eum
+que
+servantia situm revolvantur circa polos suos B, C in figura illa. Interea vero describant altera angulorum illorum crura CN, BN, concursu suo K vel k, circulum IBKGC. Sit circuli hujus centrum O. Ab hoc centro ad Regulam MN, ad quam altera illa crura CN, BN interea concurrebant dum Trajectoria describebatur, demitte normalem OH circulo occurrentem in K & L. Et ubi crura
+
+illa altera

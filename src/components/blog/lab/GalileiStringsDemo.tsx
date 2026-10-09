@@ -66,7 +66,7 @@ export default function GalileiStringsDemo() {
   return (
     <LabCard
       title="Galilei’s two strings"
-      caption="Two strings tuned in unison at 220 Hz. Shorten string II with the bridge, or load its pan over the tail pulley — and hear which handle keeps the legend's promises. Built to the apparatus Galilei describes on p. 145 —"
+      caption="Two strings tuned in unison at 220 Hz. Shorten string II with the bridge, or load its pan over the tail pulley, and hear which handle keeps the legend's promises. Built to the apparatus Galilei describes on p. 145:"
       sourceHref="/book/dialogo-della-musica-antica-et-della-moderna-galilei?page=145"
       sourceLabel="Vincenzo Galilei, Dialogo (1581)"
     >
@@ -83,7 +83,7 @@ export default function GalileiStringsDemo() {
           stroke={ringI ? RUST : '#44403c'} strokeWidth={ringI ? 2.6 : 2}
           className="cursor-pointer" onClick={playI}
         >
-          <title>Pluck string I — the whole string, 220 Hz</title>
+          <title>Pluck string I: the whole string, 220 Hz</title>
         </line>
         <text x="74" y="78" fontSize="12" fill="#78716c" fontFamily="monospace">I · THE WHOLE STRING · 220 HZ</text>
         <line
@@ -106,7 +106,7 @@ export default function GalileiStringsDemo() {
       <div className="grid md:grid-cols-2 gap-x-7 gap-y-4 mt-4">
         <label className="block">
           <span className="flex items-baseline justify-between text-sm text-secondary mb-1">
-            <span>The bridge — sounding length of string II</span>
+            <span>The bridge: sounding length of string II</span>
             <span className="font-mono text-primary">{lenPct}%</span>
           </span>
           <input
@@ -118,7 +118,7 @@ export default function GalileiStringsDemo() {
         </label>
         <label className="block">
           <span className="flex items-baseline justify-between text-sm text-secondary mb-1">
-            <span>The pan — weight hung on string II</span>
+            <span>The pan: weight hung on string II</span>
             <span className="font-mono text-primary">{wgtLabel}×</span>
           </span>
           <input
@@ -136,18 +136,18 @@ export default function GalileiStringsDemo() {
         <Chip onClick={playBoth}>▶ Both together</Chip>
       </div>
 
-      <p className="text-xs text-muted mt-4 mb-1.5">His presets, in his words — deprive string II of:</p>
+      <p className="text-xs text-muted mt-4 mb-1.5">His presets, in his words. Deprive string II of:</p>
       <div className="flex flex-wrap gap-1.5">
-        <Chip onClick={() => preset(0.5, 1)}>“half” — the Diapason</Chip>
-        <Chip onClick={() => preset(2 / 3, 1)}>“a third part” — the Diapente</Chip>
-        <Chip onClick={() => preset(0.75, 1)}>“a fourth” — the Diatessaron</Chip>
-        <Chip onClick={() => preset(8 / 9, 1)}>“a ninth” — the Tone</Chip>
+        <Chip onClick={() => preset(0.5, 1)}>“half” (the Diapason)</Chip>
+        <Chip onClick={() => preset(2 / 3, 1)}>“a third part” (the Diapente)</Chip>
+        <Chip onClick={() => preset(0.75, 1)}>“a fourth” (the Diatessaron)</Chip>
+        <Chip onClick={() => preset(8 / 9, 1)}>“a ninth” (the Tone)</Chip>
       </div>
       <p className="text-xs text-muted mt-3 mb-1.5">…or leave the bridge alone and load the pan instead:</p>
       <div className="flex flex-wrap gap-1.5">
-        <Chip onClick={() => preset(1, 2)}>the legend’s octave — 2× weight</Chip>
-        <Chip onClick={() => preset(1, 4)}>the octave the bench demands — 4× weight</Chip>
-        <Chip onClick={() => preset(1, 2.25)}>9 : 4 in the pan — a pure fifth</Chip>
+        <Chip onClick={() => preset(1, 2)}>the legend’s octave, 2× weight</Chip>
+        <Chip onClick={() => preset(1, 4)}>the octave the bench demands, 4× weight</Chip>
+        <Chip onClick={() => preset(1, 2.25)}>9 : 4 in the pan, a pure fifth</Chip>
       </div>
 
       <div className="mt-4 grid grid-cols-3 gap-3">

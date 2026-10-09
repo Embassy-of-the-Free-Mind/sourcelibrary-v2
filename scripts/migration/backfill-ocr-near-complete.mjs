@@ -334,6 +334,7 @@ async function main() {
 
       // Record in batch_jobs collection
       await db.collection('batch_jobs').insertOne({
+        submitted_by: 'scripts/migration/backfill-ocr-near-complete.mjs',
         id: parentJobId,
         job_name: batchJob.name,
         type: 'ocr',

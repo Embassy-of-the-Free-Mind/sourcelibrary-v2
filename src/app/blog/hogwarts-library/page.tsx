@@ -5,11 +5,11 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 export const metadata: Metadata = {
   title: 'The Real Hogwarts Library - Source Library',
   description:
-    'Nicolas Flamel was a real 14th-century Parisian scribe. Cornelius Agrippa, Paracelsus, Helena Blavatsky — all real, all on Chocolate Frog Cards, all in here. A reader\'s tour of the historical books behind the Hogwarts curriculum.',
+    'Nicolas Flamel was a real 14th-century Parisian scribe. Cornelius Agrippa, Paracelsus, Helena Blavatsky: all real, all on Chocolate Frog Cards, all in here. A reader\'s tour of the historical books behind the Hogwarts curriculum.',
   openGraph: {
     title: 'The Real Hogwarts Library',
     description:
-      'Nicolas Flamel was real. So was Cornelius Agrippa. So was Paracelsus. The books behind the wizarding world — bestiaries, alchemy, grimoires, Kabbalah — read in modern English.',
+      'Nicolas Flamel was real. So was Cornelius Agrippa. So was Paracelsus. The books behind the wizarding world (bestiaries, alchemy, grimoires, Kabbalah) read in modern English.',
     images: [{ url: 'https://upload.wikimedia.org/wikipedia/commons/9/9c/Joseph_Wright_of_Derby_The_Alchemist.jpg', width: 1200, height: 630 }],
   },
   twitter: {
@@ -27,7 +27,7 @@ export default function HogwartsLibraryPage() {
       header={
         <ContentHeader
           title="The Real Hogwarts Library"
-          subtitle="J.K. Rowling has said she &ldquo;learned a ridiculous amount about alchemy&rdquo; inventing the wizarding world. The books on Dumbledore&rsquo;s shelves are real &mdash; and most of them are here."
+          subtitle="J.K. Rowling has said she &ldquo;learned a ridiculous amount about alchemy&rdquo; inventing the wizarding world. The books on Dumbledore&rsquo;s shelves are real, and most of them are here."
           image="https://upload.wikimedia.org/wikipedia/commons/9/9c/Joseph_Wright_of_Derby_The_Alchemist.jpg"
           imageAlt="Joseph Wright of Derby, The Alchymist, in Search of the Philosopher's Stone, Discovers Phosphorus, 1771. Derby Museum and Art Gallery."
         >
@@ -50,7 +50,7 @@ export default function HogwartsLibraryPage() {
 
       <article className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8 font-body">
-          Nicolas Flamel was a real 14th-century Parisian scribe. So was Cornelius Agrippa &mdash; the
+          Nicolas Flamel was a real 14th-century Parisian scribe. So was Cornelius Agrippa, the
           wizard on Chocolate Frog Card #1 of Harry&rsquo;s collection. So was Paracelsus, Ptolemy, and a
           turn-of-the-century Russian theosophist named Helena Blavatsky, whom Rowling glances at in the
           name <em>Cassandra Vablatsky</em>, author of <em>Unfogging the Future</em>.
@@ -82,22 +82,22 @@ export default function HogwartsLibraryPage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Rowling salts the Wizarding World with real historical figures. Most of them turn up first as{' '}
-            <strong>Chocolate Frog Cards</strong> &mdash; the collectible cards inside the
+            <strong>Chocolate Frog Cards</strong>, the collectible cards inside the
             sweet-shop frogs that Ron empties his pockets of in the Hogwarts Express. Harry&rsquo;s
             very first card is{' '}
             <Link href="/book/three-books-of-occult-philosophy-1533-latin-agrippa" className="text-accent-rust hover:underline">
               <strong>Albus Dumbledore</strong>
             </Link>
             . His second is{' '}
-            <strong>Cornelius Agrippa</strong> &mdash; described in the card as a &ldquo;celebrated wizard
+            <strong>Cornelius Agrippa</strong>, described in the card as a &ldquo;celebrated wizard
             imprisoned by Muggles for his writing, because they thought his books were evil.&rdquo;
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Heinrich Cornelius Agrippa was a real Renaissance polymath who really did get into
             trouble for his writing. His <em>Three Books of Occult Philosophy</em> (1533) is the great
-            synthesis of natural magic, celestial magic, and ceremonial magic in the European tradition
-            &mdash; the textbook every later magus quotes. You can read the original Latin and an English
+            synthesis of natural magic, celestial magic, and ceremonial magic in the European tradition,
+            the textbook every later magus quotes. You can read the original Latin and an English
             translation here:{' '}
             <Link
               href="/book/three-books-of-occult-philosophy-1533-latin-agrippa"
@@ -115,10 +115,10 @@ export default function HogwartsLibraryPage() {
               className="text-accent-rust hover:underline"
             >
               <strong>Paracelsus</strong>
-            </Link>{' '}
-            &mdash; physician, magician, and the wizard credited in the books with discovering
+            </Link>
+            , physician, magician, and the wizard credited in the books with discovering
             Parseltongue. (The historical Paracelsus, real name Theophrastus von Hohenheim, taught that
-            knowledge of nature comes from observation rather than authority &mdash; less Slytherin than
+            knowledge of nature comes from observation rather than authority: less Slytherin than
             you&rsquo;d think.) <strong>Ptolemy</strong> appears on a Chocolate Frog Card too, and his
             actual{' '}
             <Link href="/book/almagest-ptolemy" className="text-accent-rust hover:underline">
@@ -128,12 +128,12 @@ export default function HogwartsLibraryPage() {
             <Link href="/book/tetrabiblos-ptolemy" className="text-accent-rust hover:underline">
               <em>Tetrabiblos</em>
             </Link>{' '}
-            sit in the collection &mdash; one for Astronomy class, one for Divination.
+            sit in the collection, one for Astronomy class, one for Divination.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The deepest cut is{' '}
-            <strong>Cassandra Vablatsky</strong> &mdash; the textbook author for Trelawney&rsquo;s
+            <strong>Cassandra Vablatsky</strong>, the textbook author for Trelawney&rsquo;s
             Divination class, whose name is a soft anagram of <strong>Helena Blavatsky</strong>, the
             Ukrainian-born co-founder of the Theosophical Society and the most influential occultist of
             the 19th century. Her actual books are here:{' '}
@@ -172,9 +172,9 @@ export default function HogwartsLibraryPage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Flamel lived in Paris from roughly 1330 to 1418. He was a successful manuscript copyist who
             ran two shops against the wall of Saint-Jacques-de-la-Boucherie. There is no contemporary
-            evidence that he practised alchemy. The legend &mdash; that he translated a mysterious Hebrew
+            evidence that he practised alchemy. The legend (that he translated a mysterious Hebrew
             book of figures, deciphered its secrets after a pilgrimage to Spain, and created the
-            Philosopher&rsquo;s Stone in 1382 &mdash; first appears in print two centuries after his
+            Philosopher&rsquo;s Stone in 1382) first appears in print two centuries after his
             death.
           </p>
 
@@ -186,8 +186,8 @@ export default function HogwartsLibraryPage() {
               className="text-accent-rust hover:underline"
             >
               <em>Le Livre des Figures Hi&eacute;roglyphiques de Nicolas Flamel</em>
-            </Link>{' '}
-            &mdash; the 1750 edition of a text first printed in 1612, attributed to Flamel himself,
+            </Link>
+            , the 1750 edition of a text first printed in 1612, attributed to Flamel himself,
             describing the symbols he supposedly read on the walls of the Cimeti&egrave;re des Innocents.
           </p>
 
@@ -212,7 +212,7 @@ export default function HogwartsLibraryPage() {
             <Link href="/book/mutus-liber-the-silent-book-saulat" className="text-accent-rust hover:underline">
               <em>Mutus Liber</em>
             </Link>{' '}
-            (1677) and you find fifteen engravings with no text at all &mdash; the Stone communicated
+            (1677) and you find fifteen engravings with no text at all, the Stone communicated
             entirely in pictures. Open Michael Maier&rsquo;s{' '}
             <Link
               href="/book/atalanta-fugiens-hoc-est-emblemata-nova-de-secretis-naturae-maier"
@@ -220,7 +220,7 @@ export default function HogwartsLibraryPage() {
             >
               <em>Atalanta Fugiens</em>
             </Link>{' '}
-            (1617) and you get emblems, epigrams, and fugues for three voices &mdash; alchemy as
+            (1617) and you get emblems, epigrams, and fugues for three voices: alchemy as
             multimedia art.
           </p>
 
@@ -251,7 +251,7 @@ export default function HogwartsLibraryPage() {
               />
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
-              The opening of the Ripley Scroll, c. 1450 &mdash; Hermes Trismegistus holding an alchemical flask and a toad. Six metres of illustrated alchemy, kept rolled.{' '}
+              The opening of the Ripley Scroll, c. 1450: Hermes Trismegistus holding an alchemical flask and a toad. Six metres of illustrated alchemy, kept rolled.{' '}
               <Link href="/book/699065973dc2ed39a49f1e71" className="text-accent-rust hover:text-accent-rust not-italic">
                 View in Source Library &rarr;
               </Link>
@@ -273,7 +273,7 @@ export default function HogwartsLibraryPage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Professor Sprout&rsquo;s greenhouse is essentially the woodcuts of a 16th-century herbal. The
-            mandrake screams when pulled from the ground in <em>Chamber of Secrets</em> &mdash; a detail
+            mandrake screams when pulled from the ground in <em>Chamber of Secrets</em>, a detail
             Pliny records in his{' '}
             <Link href="/book/historia-naturalis-elder" className="text-accent-rust hover:underline">
               <em>Natural History</em>
@@ -287,7 +287,7 @@ export default function HogwartsLibraryPage() {
             <Link href="/book/hortus-sanitatis-meydenbach" className="text-accent-rust hover:underline">
               <em>Hortus Sanitatis</em>
             </Link>{' '}
-            (&ldquo;Garden of Health&rdquo;), Mainz, 1491 &mdash; a proto-encyclopaedia that catalogues
+            (&ldquo;Garden of Health&rdquo;), Mainz, 1491, a proto-encyclopaedia that catalogues
             every plant, animal, bird, fish, and stone known to its compiler, with woodcuts that read
             like the inventory of <em>Fantastic Beasts and Where to Find Them</em>. The first English
             herbal a working witch or wizard would reach for is{' '}
@@ -301,7 +301,7 @@ export default function HogwartsLibraryPage() {
             <Link href="/book/the-english-physitian-enlarged-culpeper" className="text-accent-rust hover:underline">
               <em>English Physitian</em>
             </Link>{' '}
-            (1653) added astrological correspondences to every plant &mdash; the working manual of the
+            (1653) added astrological correspondences to every plant: the working manual of the
             cunning folk.
           </p>
 
@@ -320,7 +320,7 @@ export default function HogwartsLibraryPage() {
             >
               Pseudo-Apuleius <em>Herbarium</em>
             </Link>{' '}
-            (c. 1000 CE) contains the original mandrake plates &mdash; the source from which all later
+            (c. 1000 CE) contains the original mandrake plates, the source from which all later
             screaming-mandrake imagery descends.
           </p>
 
@@ -334,7 +334,7 @@ export default function HogwartsLibraryPage() {
               />
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
-              The apothecary&rsquo;s shop, from the <em>Hortus Sanitatis</em> (1491) &mdash; the universal Garden of Health. Hand-coloured woodcut.{' '}
+              The apothecary&rsquo;s shop, from the <em>Hortus Sanitatis</em> (1491), the universal Garden of Health. Hand-coloured woodcut.{' '}
               <Link href="/book/6957ef6bcbe1dcad7b76beff" className="text-accent-rust hover:text-accent-rust not-italic">
                 View in Source Library &rarr;
               </Link>
@@ -360,8 +360,8 @@ export default function HogwartsLibraryPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            What about specific Harry Potter monsters? The <strong>basilisk</strong> &mdash; the great
-            serpent of the Chamber of Secrets &mdash; has its full natural history in Ulisse
+            What about specific Harry Potter monsters? The <strong>basilisk</strong>, the great
+            serpent of the Chamber of Secrets, has its full natural history in Ulisse
             Aldrovandi&rsquo;s{' '}
             <Link
               href="/book/serpentum-et-draconum-historiae-libri-duo-aldrovandi"
@@ -379,7 +379,7 @@ export default function HogwartsLibraryPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The <strong>phoenix</strong> &mdash; Dumbledore&rsquo;s Fawkes &mdash; has a foundational
+            The <strong>phoenix</strong> (Dumbledore&rsquo;s Fawkes) has a foundational
             late-antique poem,{' '}
             <Link
               href="/book/opera-divinarum-institutionum-libri-vii-de-ira-dei-de-lactantius"
@@ -408,7 +408,7 @@ export default function HogwartsLibraryPage() {
             </Link>{' '}
             (1555), Chapter XLV: &ldquo;Concerning the ferocity of men converted into wolves.&rdquo; And{' '}
             <strong>dragons</strong> permeate the alchemical literature as the ouroboros, the
-            self-devouring serpent of cyclical transformation &mdash; visible in Michael Maier&rsquo;s{' '}
+            self-devouring serpent of cyclical transformation, visible in Michael Maier&rsquo;s{' '}
             <Link
               href="/book/secretioris-naturae-secretorum-scrutinium-chymicum-maier"
               className="text-accent-rust hover:underline"
@@ -426,7 +426,7 @@ export default function HogwartsLibraryPage() {
             >
               Conrad Gessner&rsquo;s <em>Historia Animalium</em>
             </Link>{' '}
-            (1551) cover to cover &mdash; the founding text of modern zoology, in which unicorns and
+            (1551) cover to cover: the founding text of modern zoology, in which unicorns and
             manticores sit alongside cats and goats with the same matter-of-fact tone.
           </p>
 
@@ -440,7 +440,7 @@ export default function HogwartsLibraryPage() {
               />
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
-              A seven-headed hydra, from Ulisse Aldrovandi&rsquo;s <em>Serpentum et Draconum Historiae</em> (1640). Aldrovandi catalogued these alongside actual snakes &mdash; the line between zoology and fantastic beasts was thinner than ours.{' '}
+              A seven-headed hydra, from Ulisse Aldrovandi&rsquo;s <em>Serpentum et Draconum Historiae</em> (1640). Aldrovandi catalogued these alongside actual snakes; the line between zoology and fantastic beasts was thinner than ours.{' '}
               <Link href="/book/6958e968813ea03889c32a24" className="text-accent-rust hover:text-accent-rust not-italic">
                 View in Source Library &rarr;
               </Link>
@@ -460,7 +460,7 @@ export default function HogwartsLibraryPage() {
             <Link href="/book/the-hammer-of-witches-sprenger" className="text-accent-rust hover:underline">
               <em>Malleus Maleficarum</em>
             </Link>{' '}
-            (1486) is the most notorious witch-hunters&rsquo; handbook in European history &mdash; the
+            (1486) is the most notorious witch-hunters&rsquo; handbook in European history, the
             manual that prosecutors used for two centuries to send tens of thousands of people, mostly
             women, to the stake. Its symmetrical counterpart is Johann Weyer&rsquo;s{' '}
             <Link
@@ -487,7 +487,7 @@ export default function HogwartsLibraryPage() {
             >
               <em>Compendium Maleficarum</em>
             </Link>{' '}
-            (1608) is the visual companion &mdash; the illustrated demonology, woodcut after woodcut of
+            (1608) is the visual companion: the illustrated demonology, woodcut after woodcut of
             sabbaths, pacts, and possessions.
           </p>
 
@@ -506,7 +506,7 @@ export default function HogwartsLibraryPage() {
               className="w-full max-w-2xl mx-auto rounded-lg shadow-md"
             />
             <figcaption className="text-center text-sm text-muted mt-3 italic">
-              Francisco de Goya, <em>Witches&rsquo; Sabbath (El Aquelarre)</em>, 1798. Museo L&aacute;zaro Galdiano, Madrid. Goya paints the witch-trial imagination at its most baroque &mdash; a horned satyr-goat presides over a coven offering infants, two centuries after the <em>Malleus</em>.
+              Francisco de Goya, <em>Witches&rsquo; Sabbath (El Aquelarre)</em>, 1798. Museo L&aacute;zaro Galdiano, Madrid. Goya paints the witch-trial imagination at its most baroque: a horned satyr-goat presides over a coven offering infants, two centuries after the <em>Malleus</em>.
             </figcaption>
           </figure>
         </section>
@@ -526,7 +526,7 @@ export default function HogwartsLibraryPage() {
             </Link>{' '}
             (Clavicula Salomonis), attributed pseudonymously to King Solomon, transmitted through
             17th-century manuscripts. It contains exhaustive instructions for drawing magic circles,
-            inscribing pentacles, consecrating ritual implements &mdash; including the magic wand.
+            inscribing pentacles, consecrating ritual implements, including the magic wand.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -553,15 +553,15 @@ export default function HogwartsLibraryPage() {
             <Link href="/book/picatrix-ghayat-al-hakim-attrib" className="text-accent-rust hover:underline">
               <em>Picatrix</em>
             </Link>{' '}
-            (Ghāyat al-Ḥakīm) &mdash; the medieval handbook of talismanic and astral magic that fed
+            (Ghāyat al-Ḥakīm), the medieval handbook of talismanic and astral magic that fed
             into the Latin Renaissance. The Greek tradition behind all of them is preserved in the{' '}
             <Link
               href="/book/papyri-graecae-magicae-preisendanz-ed"
               className="text-accent-rust hover:underline"
             >
               Greek Magical Papyri
-            </Link>{' '}
-            &mdash; literal late-antique spell books recovered from the sands of Egypt, complete with
+            </Link>
+            , literal late-antique spell books recovered from the sands of Egypt, complete with
             love charms, curse tablets, and instructions for summoning a personal daemon.
           </p>
         </section>
@@ -575,11 +575,11 @@ export default function HogwartsLibraryPage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Trelawney&rsquo;s Divination class teaches palmistry, tea-leaves, dream interpretation,
-            astrology, and crystal-gazing &mdash; an essentially Renaissance curriculum. For dreams,{' '}
+            astrology, and crystal-gazing: an essentially Renaissance curriculum. For dreams,{' '}
             <Link href="/book/oneirocritica-daldianus" className="text-accent-rust hover:underline">
               Artemidorus&rsquo;s <em>Oneirocritica</em>
             </Link>{' '}
-            (2nd century CE) was the standard ancient manual &mdash; quoted by Freud as a precursor. For
+            (2nd century CE) was the standard ancient manual, quoted by Freud as a precursor. For
             astrology, the working professional&rsquo;s reference was{' '}
             <Link href="/book/christian-astrology-lilly" className="text-accent-rust hover:underline">
               William Lilly&rsquo;s <em>Christian Astrology</em>
@@ -595,7 +595,7 @@ export default function HogwartsLibraryPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            And for the crystal ball &mdash; the Mirror of Erised&rsquo;s small cousin &mdash; we have
+            And for the crystal ball (the Mirror of Erised&rsquo;s small cousin) we have
             something extraordinary:{' '}
             <Link
               href="/book/a-true-faithful-relation-of-dr-john-dee-and-some-spirits-casaubon"
@@ -619,7 +619,7 @@ export default function HogwartsLibraryPage() {
               />
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
-              The Holy Table from John Dee&rsquo;s Enochian system &mdash; the actual apparatus on which Dee and Edward Kelley conversed with what they took to be angels. Reproduced in Meric Casaubon&rsquo;s 1659 edition.{' '}
+              The Holy Table from John Dee&rsquo;s Enochian system: the actual apparatus on which Dee and Edward Kelley conversed with what they took to be angels. Reproduced in Meric Casaubon&rsquo;s 1659 edition.{' '}
               <Link href="/book/69593025a41e40e9146a4acd" className="text-accent-rust hover:text-accent-rust not-italic">
                 View in Source Library &rarr;
               </Link>
@@ -627,7 +627,7 @@ export default function HogwartsLibraryPage() {
           </figure>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            For Astronomy &mdash; Professor Sinistra&rsquo;s class &mdash; the standard texts are still
+            For Astronomy (Professor Sinistra&rsquo;s class) the standard texts are still
             in print: Ptolemy&rsquo;s{' '}
             <Link href="/book/almagest-ptolemy" className="text-accent-rust hover:underline">
               <em>Almagest</em>
@@ -662,7 +662,7 @@ export default function HogwartsLibraryPage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Hermione&rsquo;s favourite electives &mdash; Ancient Runes and Arithmancy &mdash; correspond
+            Hermione&rsquo;s favourite electives, Ancient Runes and Arithmancy, correspond
             to a real and deep Renaissance tradition: the marriage of Hebrew letter-mysticism with
             Pythagorean number theory, generally called <strong>Christian Kabbalah</strong>. The bridge
             text is{' '}
@@ -703,7 +703,7 @@ export default function HogwartsLibraryPage() {
             >
               <em>Oedipus Aegyptiacus</em>
             </Link>{' '}
-            (1653) tries to unify all of it &mdash; hieroglyphs, Kabbalah, music, magnetism &mdash; into
+            (1653) tries to unify all of it (hieroglyphs, Kabbalah, music, magnetism) into
             a single map of reality. It is the wildest 17th-century book ever written, and exactly the
             sort of thing you can imagine on the Restricted Section shelf.
           </p>
@@ -717,8 +717,8 @@ export default function HogwartsLibraryPage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Dumbledore&rsquo;s Pensieve &mdash; the stone basin into which memories can be drawn,
-            preserved, and revisited &mdash; is the wizarding-world cousin of a Renaissance art that was
+            Dumbledore&rsquo;s Pensieve, the stone basin into which memories can be drawn,
+            preserved, and revisited, is the wizarding-world cousin of a Renaissance art that was
             taken with deadly seriousness: the <strong>art of memory</strong>. Robert Fludd&rsquo;s{' '}
             <Link
               href="/book/utriusque-cosmi-historia-1617-fludd"
@@ -738,7 +738,7 @@ export default function HogwartsLibraryPage() {
             >
               <em>L&rsquo;Idea del Theatro</em>
             </Link>{' '}
-            (1555) describes a wooden Theatre he built for the King of France &mdash; a memory cabinet
+            (1555) describes a wooden Theatre he built for the King of France, a memory cabinet
             with images arranged on seven gradines, representing the entire knowable cosmos. The system
             descends from Cicero&rsquo;s{' '}
             <Link href="/book/de-oratore-cicero-1" className="text-accent-rust hover:underline">
@@ -748,7 +748,7 @@ export default function HogwartsLibraryPage() {
             <Link href="/book/rhetorica-ad-c-herennium-cicero" className="text-accent-rust hover:underline">
               <em>Rhetorica ad Herennium</em>
             </Link>{' '}
-            (c. 80 BCE), which preserve the method of loci &mdash; the technique of remembering by
+            (c. 80 BCE), which preserve the method of loci: the technique of remembering by
             placing ideas at fixed points in an imagined building. Giordano Bruno&rsquo;s{' '}
             <Link
               href="/book/giordano-bruno-de-umbris-idearum-1582-first-edition-bruno"
@@ -761,7 +761,7 @@ export default function HogwartsLibraryPage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The Pensieve, in other words, is what a 17th-century reader would have called <em>ars
-            memoriae</em> &mdash; the art of memory &mdash; with the magic dialled up but the
+            memoriae</em> (the art of memory) with the magic dialled up but the
             architecture intact.
           </p>
 
@@ -791,9 +791,9 @@ export default function HogwartsLibraryPage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Beedle the Bard&rsquo;s most famous tale &mdash; the three brothers who meet Death on a
-            bridge and receive the Elder Wand, the Resurrection Stone, and the Cloak of Invisibility
-            &mdash; has an exact medieval ancestor. Chaucer&rsquo;s{' '}
+            Beedle the Bard&rsquo;s most famous tale (the three brothers who meet Death on a
+            bridge and receive the Elder Wand, the Resurrection Stone, and the Cloak of Invisibility)
+            has an exact medieval ancestor. Chaucer&rsquo;s{' '}
             <Link
               href="/book/canterbury-tales-ellesmere-ms-chaucer"
               className="text-accent-rust hover:underline"
@@ -810,7 +810,7 @@ export default function HogwartsLibraryPage() {
             <Link href="/book/urb-gr-31-plato" className="text-accent-rust hover:underline">
               Plato&rsquo;s <em>Republic</em>
             </Link>{' '}
-            (Book II), where Glaucon tells the story of Gyges &mdash; the shepherd who found a ring of
+            (Book II), where Glaucon tells the story of Gyges, the shepherd who found a ring of
             invisibility on a corpse in a cave, used it to seduce the queen and kill the king, and so
             opens Plato&rsquo;s great question: would <em>you</em> behave well if you could not be seen?
             The Hallows are, in their deepest reading, this same question.
@@ -825,8 +825,8 @@ export default function HogwartsLibraryPage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            A few last connections. The <strong>Patronus charm</strong> &mdash; the protective spirit
-            summoned to drive off Dementors &mdash; descends from the late-Platonic tradition of the
+            A few last connections. The <strong>Patronus charm</strong>, the protective spirit
+            summoned to drive off Dementors, descends from the late-Platonic tradition of the
             personal <em>daimon</em>. Iamblichus, in his{' '}
             <Link
               href="/book/iamblichus-de-mysteriis-1497-aldine-ficino"
@@ -844,8 +844,8 @@ export default function HogwartsLibraryPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            <strong>Polyjuice Potion</strong> &mdash; the brew that turns the drinker into another
-            person &mdash; has a direct literary ancestor: Apuleius&rsquo;s{' '}
+            <strong>Polyjuice Potion</strong>, the brew that turns the drinker into another
+            person, has a direct literary ancestor: Apuleius&rsquo;s{' '}
             <Link
               href="/book/apuleius-metamorphoses-the-golden-ass-with-asclepius-apuleius"
               className="text-accent-rust hover:underline"
@@ -854,13 +854,13 @@ export default function HogwartsLibraryPage() {
             </Link>{' '}
             (2nd century CE), in which the protagonist watches a witch transform herself with an
             ointment and then, taking the wrong jar, accidentally becomes a donkey. The novel ends with
-            his initiation into the mysteries of Isis &mdash; transformation, in Apuleius, is always
+            his initiation into the mysteries of Isis; transformation, in Apuleius, is always
             about something deeper than appearance.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            And <strong>horcruxes</strong> &mdash; soul-anchors that allow a wizard to fragment and hide
-            parts of their own being &mdash; resonate with the Kabbalistic doctrine of the three souls:{' '}
+            And <strong>horcruxes</strong> (soul-anchors that allow a wizard to fragment and hide
+            parts of their own being) resonate with the Kabbalistic doctrine of the three souls:{' '}
             <em>nefesh</em> (the animal soul), <em>ruach</em> (the spirit), and <em>neshamah</em> (the
             higher soul). The{' '}
             <Link
@@ -871,7 +871,7 @@ export default function HogwartsLibraryPage() {
             </Link>{' '}
             (Israel ben Moses, 1635, held by the Bibliotheca Philosophica Hermetica) is one of the
             classic treatments. Voldemort&rsquo;s sin, on this reading, is to do violently and for
-            selfish reasons what the contemplative tradition does carefully and for sacred ones &mdash;
+            selfish reasons what the contemplative tradition does carefully and for sacred ones:
             distinguish the levels of the soul.
           </p>
         </section>
@@ -890,8 +890,8 @@ export default function HogwartsLibraryPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            What Source Library adds &mdash; and what no Harry Potter / alchemy article on the internet
-            has ever offered &mdash; is the actual texts in modern English, end to end, alongside the
+            What Source Library adds (and what no Harry Potter / alchemy article on the internet
+            has ever offered) is the actual texts in modern English, end to end, alongside the
             originals, free, with every page searchable. The British Library can show you a manuscript
             page; we let you read the book.
           </p>
@@ -911,18 +911,18 @@ export default function HogwartsLibraryPage() {
           <h3 className="font-serif text-2xl text-primary mb-6">Twelve highlights from the collection</h3>
           <div className="grid md:grid-cols-2 gap-4">
             {[
-              { href: '/book/flamel-book-of-hieroglyphic-figures-abraham-le-juif-flamel', title: 'Nicolas Flamel, Hieroglyphic Figures', detail: '1750 (text from 1612) — the legend in his own attributed voice' },
-              { href: '/book/mutus-liber-the-silent-book-saulat', title: 'Mutus Liber', detail: '1677 — fifteen wordless engravings of the Philosopher\'s Stone' },
-              { href: '/book/aureum-vellus-oder-guldin-schatz-und-kunstkammer-1-1-solis', title: 'Splendor Solis', detail: '1598 — 22 illuminated miniatures of the Great Work' },
-              { href: '/book/atalanta-fugiens-hoc-est-emblemata-nova-de-secretis-naturae-maier', title: 'Michael Maier, Atalanta Fugiens', detail: '1617 — alchemy as emblems, epigrams, and three-voice fugues' },
-              { href: '/book/699065973dc2ed39a49f1e71', title: 'The Ripley Scroll', detail: 'c. 1450 — a 6-metre illustrated alchemical manuscript' },
-              { href: '/book/hortus-sanitatis-meydenbach', title: 'Hortus Sanitatis', detail: '1491 — the proto-bestiary and herbal in one volume' },
-              { href: '/book/harley-ms-4751-anonymous', title: 'British Library Harley MS 4751', detail: '13th c. — illuminated bestiary with basilisks, phoenixes, unicorns' },
-              { href: '/book/the-key-of-solomon-pseudo-solomon', title: 'The Key of Solomon', detail: '17th c. — the working grimoire that consecrates the wand' },
-              { href: '/book/three-books-of-occult-philosophy-1533-latin-agrippa', title: 'Cornelius Agrippa, De Occulta Philosophia', detail: '1533 — Chocolate Frog Card #2, real text' },
-              { href: '/book/the-hammer-of-witches-sprenger', title: 'Malleus Maleficarum', detail: '1486 — the witch-hunters\' handbook' },
-              { href: '/book/christian-astrology-lilly', title: 'William Lilly, Christian Astrology', detail: '1647 — the great English horary textbook' },
-              { href: '/book/utriusque-cosmi-historia-1617-fludd', title: 'Robert Fludd, Utriusque Cosmi Historia', detail: '1617 — the Pensieve\'s ancestor: the art of memory' },
+              { href: '/book/flamel-book-of-hieroglyphic-figures-abraham-le-juif-flamel', title: 'Nicolas Flamel, Hieroglyphic Figures', detail: '1750 (text from 1612): the legend in his own attributed voice' },
+              { href: '/book/mutus-liber-the-silent-book-saulat', title: 'Mutus Liber', detail: '1677: fifteen wordless engravings of the Philosopher\'s Stone' },
+              { href: '/book/aureum-vellus-oder-guldin-schatz-und-kunstkammer-1-1-solis', title: 'Splendor Solis', detail: '1598: 22 illuminated miniatures of the Great Work' },
+              { href: '/book/atalanta-fugiens-hoc-est-emblemata-nova-de-secretis-naturae-maier', title: 'Michael Maier, Atalanta Fugiens', detail: '1617: alchemy as emblems, epigrams, and three-voice fugues' },
+              { href: '/book/699065973dc2ed39a49f1e71', title: 'The Ripley Scroll', detail: 'c. 1450: a 6-metre illustrated alchemical manuscript' },
+              { href: '/book/hortus-sanitatis-meydenbach', title: 'Hortus Sanitatis', detail: '1491: the proto-bestiary and herbal in one volume' },
+              { href: '/book/harley-ms-4751-anonymous', title: 'British Library Harley MS 4751', detail: '13th c.: illuminated bestiary with basilisks, phoenixes, unicorns' },
+              { href: '/book/the-key-of-solomon-pseudo-solomon', title: 'The Key of Solomon', detail: '17th c.: the working grimoire that consecrates the wand' },
+              { href: '/book/three-books-of-occult-philosophy-1533-latin-agrippa', title: 'Cornelius Agrippa, De Occulta Philosophia', detail: '1533: Chocolate Frog Card #2, real text' },
+              { href: '/book/the-hammer-of-witches-sprenger', title: 'Malleus Maleficarum', detail: '1486: the witch-hunters\' handbook' },
+              { href: '/book/christian-astrology-lilly', title: 'William Lilly, Christian Astrology', detail: '1647: the great English horary textbook' },
+              { href: '/book/utriusque-cosmi-historia-1617-fludd', title: 'Robert Fludd, Utriusque Cosmi Historia', detail: '1617, the Pensieve\'s ancestor: the art of memory' },
             ].map((source) => (
               <Link
                 key={source.href}

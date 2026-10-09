@@ -6,7 +6,7 @@ measure: detector
 reader: detector
 image_opened: false
 verdict_scale: [fix]
-issue: [6056, 5918, 6174]
+issue: [6056, 5918, 6117, 6174]
 status: active
 ---
 <!-- PRIOR ART: scripts/audit/translation-reasoning-leak.mjs is the detector and `translationReasoningLeak()` in

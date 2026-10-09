@@ -41,7 +41,7 @@ export interface SearchPassage {
   page_number: number;
   text: string;
   score: number;
-  source: string; // 'kw' | 'eo' | 'kwv' | 'btp' | 'gp' | 'rrf(...)' — for diagnostics + UI
+  source: string; // 'kw' | 'eo' | 'kwv' | 'btp' | 'gp' | 'gc' | 'rrf(...)' — for diagnostics + UI
   /**
    * Edition metadata, so a consumer can tell a 1591 original from a 1928
    * compendium quoting it. Without these the Librarian cited Manly P. Hall
@@ -352,6 +352,34 @@ async function globalPageSource(query: string, opts: HybridSearchOptions): Promi
       source: p.text_lane === 'original' ? 'gpo' : 'gp',
       ...(p.text_lane === 'original' ? { untranslated: true } : {}),
     }));
+  } catch {
+    return [];
+  }
+}
+
+// ── Source 3b: the concept-abstract lane (EXPERIMENTAL, #6173) ────────
+
+/**
+ * `off` unless LIBRARIAN_CONCEPT_LANE=on. The lane ranks pages by a
+ * model-written abstract of their ideas (`page_concepts`); stage 1 holds 1,216
+ * books, so with the flag on the Librarian leans toward those books on concept
+ * questions. It is for judged runs, and a person switches it on.
+ */
+export function librarianConceptLaneEnabled(): boolean {
+  return (process.env.LIBRARIAN_CONCEPT_LANE || '').trim().toLowerCase() === 'on';
+}
+
+async function conceptAbstractSource(query: string, opts: HybridSearchOptions): Promise<RawHit[]> {
+  if (!librarianConceptLaneEnabled()) return [];
+  try {
+    const { rows } = await conceptPageSearch(query, 20, {
+      scope: await scopeFor(opts),
+      maxPerBook: 2,
+      diversity: opts.diversity ?? 'off',
+      abstractLane: true,
+    });
+    // `text` is the page's own text; the abstract never leaves the index.
+    return rows.map(p => ({ book_id: p.book_id, page_number: p.page_number, text: p.snippet, score: p.score, source: 'gc' }));
   } catch {
     return [];
   }
@@ -760,12 +788,13 @@ export async function hybridSearch(
 
   // Fan out to the global page sources + book-level Atlas + (optionally) the
   // collection-scoped sources, all in parallel.
-  const [kw, eo, kwv, btp, gp, books, scoped] = await Promise.all([
+  const [kw, eo, kwv, btp, gp, gc, books, scoped] = await Promise.all([
     keywordSource(query, opts),
     englishOriginalSource(query),
     nameVariantSource(query),
     bookThenPageSource(query, opts),
     globalPageSource(query, opts),
+    conceptAbstractSource(query, opts),
     findBooks(query, opts, bookLimit),
     scopedIds.length > 0
       ? collectionScopedSources(query, scopedIds)
@@ -779,9 +808,9 @@ export async function hybridSearch(
   // global lists too, compounding the lean.
   // The name-variant list votes just under 1 (see NAME_VARIANT_WEIGHT).
   let merged = rrfMerge(
-    [kw, eo, kwv, btp, gp, scoped.scopedKeyword, scoped.scopedSemantic],
+    [kw, eo, kwv, btp, gp, gc, scoped.scopedKeyword, scoped.scopedSemantic],
     60,
-    [1, 1, NAME_VARIANT_WEIGHT, 1, 1, collectionWeight, collectionWeight],
+    [1, 1, NAME_VARIANT_WEIGHT, 1, 1, 1, collectionWeight, collectionWeight],
   );
 
   // Real page text for the head of the list BEFORE the rerank reads it — an

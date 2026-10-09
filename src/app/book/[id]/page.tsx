@@ -11,6 +11,8 @@ import { tenantCatalogReferencesBook } from '@/lib/tenant-catalog-books';
 import { resolveImprintPlace } from '@/lib/imprint';
 import { displayPublished, citationYear } from '@/lib/publication-date';
 import { isHiddenBook, findVisibleDuplicateKeeper } from '@/lib/book-access';
+import { getQualityWarnings, qualityDate } from '@/lib/book-warnings';
+import { READER_UI_STRINGS } from '@/lib/reader-strings';
 import { artworkRedirectSlug } from '@/lib/artwork-slug';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail, browseBooks, getLanguageCounts, type CatalogBook } from '@/lib/books-catalog';
@@ -1054,6 +1056,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   // proven layout below to preserve the Tenant Subdomain Lockdown invariants.
   // ============================================================================
   if (!isEmbedded) {
+    // What a stored quality check found in this book (#6199). One indexed read; never throws.
+    const bookWarning = (await getQualityWarnings(await getReadDb(), [book.id])).book;
+    const qualityStrings = READER_UI_STRINGS[lang].info;
     const heroByline = getEffectiveByline(book);
     const bookSlug = book.slug || book.id;
     // What this URL's language SHOWS. Title: the gloss for `lang`, falling back
@@ -1379,7 +1384,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
         const ev = row.pick!;
         const bits = [ev.translator ? `trans. ${ev.translator}` : null, ev.publisher || null].filter(Boolean).join(', ');
         const summary = ev.english_title
-          ? `${ev.english_title}${bits ? ` — ${bits}` : ''}`
+          ? `${ev.english_title}${bits ? ` (${bits})` : ''}`
           : (bits || t.tlEarlierTranslationExists);
         detail = (
           <>
@@ -1819,6 +1824,18 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                     </span>
                   )}
                 </div>
+              )}
+
+              {/* Quality warning (#6199): what a stored check found, with its n and
+                  date, linked to the record. Shown instead of hiding the book. */}
+              {bookWarning && (
+                <p role="note" data-quality-warning="book" className="mt-3 max-w-xl text-[12px] md:text-[13.5px] leading-snug" style={{ color: '#e0b46a' }}>
+                  {qualityStrings.qualityBook({
+                    ai: bookWarning.reader !== 'human', image: bookWarning.imageOpened, read: bookWarning.pagesRead,
+                    serious: bookWarning.pagesSerious, date: qualityDate(bookWarning.date, lang),
+                  })}{' '}
+                  <Link href={`/book/${book.slug || book.id}/checks#${bookWarning.anchor}`} className="underline underline-offset-2">{qualityStrings.qualitySeeReview}</Link>
+                </p>
               )}
 
               {/* Preview badge — a partial scan of a larger work (e.g. only a

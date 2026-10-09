@@ -133,7 +133,7 @@ export function CanonBars({ rows, n }: { rows: CanonBar[]; n: number }) {
       caption={
         <>
           Bars are to scale across canons. Left: characters of typed source text, split by the share a catalogue
-          reports as published in English (84000, SuttaCentral, Sefaria). Right: the cost of a first AI draft of what
+          reports as published in English (84000, SuttaCentral, Sefaria, Perseus, First1KGreek). Right: the cost of a first AI draft of what
           has no English, at the rate we measure on our own translation runs. Hatched cost bars price the whole corpus
           because nobody publishes its English coverage, so they are upper bounds. Hover a bar for exact figures.
         </>
@@ -297,7 +297,7 @@ export function TraditionProgress({ rows, n }: { rows: TraditionProgressRow[]; n
           const total = squares(t.pages_scanned);
           const tr = Math.min(squares(t.pages_translated), total);
           const tx = Math.min(Math.max(squares(t.pages_transcribed) - tr, 0), total - tr);
-          const pct = (v: number) => (t.pages_scanned ? `${Math.round((v / t.pages_scanned) * 100)}%` : '—');
+          const pct = (v: number) => (t.pages_scanned ? `${Math.round((v / t.pages_scanned) * 100)}%` : '–');
           return (
             <div key={t.id} className="py-5 md:grid md:grid-cols-[13rem_minmax(0,1fr)] md:gap-6">
               <div className="font-body text-sm mb-3 md:mb-0">
@@ -594,9 +594,9 @@ export function QualityLoop({ n, adopted, tested, issueUrl, resultsHref }: { n: 
         <>
           The same four steps run for each language and script, and again after every change. A change becomes the
           default only when it beats the old method on the same pages;{' '}
-          <a href={resultsHref} className="text-amber-800 underline underline-offset-2">each result is charted here</a>. AI judges find
-          errors quickly and cheaply, but they are not scholars: a scholar&rsquo;s reading is the test the machine
-          checks are calibrated against, and the first one, on the Tengyur draft, is planned.{' '}
+          <a href={resultsHref} className="text-amber-800 underline underline-offset-2">each result is charted here</a>. The
+          judges are AI models. Their scores will be compared with a scholar&rsquo;s reading of the same pages; the
+          first scholar review, on the Tengyur draft, is planned.{' '}
           <a href={`${issueUrl}5800`} className="text-amber-800 underline underline-offset-2">#5800</a>
         </>
       }

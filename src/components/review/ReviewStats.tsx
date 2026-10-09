@@ -18,7 +18,7 @@ export default function ReviewStats() {
       <b>{stats.total.toLocaleString()}</b> ratings collected so far
       {stats.mine != null && stats.mine > 0 && (
         <span className="ml-2 text-stone-600">
-          — <b>{stats.mine.toLocaleString()}</b> from this browser
+          · <b>{stats.mine.toLocaleString()}</b> from this browser
         </span>
       )}
     </div>

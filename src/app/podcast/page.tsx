@@ -5,8 +5,8 @@ import Link from 'next/link';
 export const revalidate = 3600; // 1h ISR
 
 export const metadata = {
-  title: 'Source Library Deep Dive — Podcast',
-  description: 'AI-generated scholarly podcasts exploring rare books from the 15th-18th centuries. Alchemy, Hermetica, Kabbalah, and the Western esoteric tradition — grounded in primary sources.',
+  title: 'Source Library Deep Dive: Podcast',
+  description: 'AI-generated scholarly podcasts exploring rare books from the 15th-18th centuries. Alchemy, Hermetica, Kabbalah, and the Western esoteric tradition, grounded in primary sources.',
 };
 
 interface PodcastEpisode {

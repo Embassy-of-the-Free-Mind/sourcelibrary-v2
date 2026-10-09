@@ -12,6 +12,7 @@ import { engineFromBatchJob, notRecorded, ocrProvenance, translationProvenance }
 const ROUTE_CALL_SITE = 'src/app/api/batch-save/route.ts';
 import { CLEAR_STALE_UNSET, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate } from '@/lib/translate-write';
 import { guardTranslationText } from '@/lib/translation-write-guard';
+import { endBatchJob } from '../../../../scripts/lib/end-batch-job.mjs';
 
 export const maxDuration = 300;
 
@@ -76,16 +77,18 @@ export const POST = withAuth(async (request, session) => {
         if (geminiStatus.state !== 'JOB_STATE_SUCCEEDED') {
           console.log(`[batch-jobs/save-results] Job ${job.id} not succeeded: ${geminiStatus.state}`);
           // Update status in case it changed
-          await db.collection('batch_jobs').updateOne(
-            { id: job.id },
-            {
-              $set: {
-                status: geminiStatus.state === 'JOB_STATE_FAILED' ? 'failed' : 'processing',
-                gemini_state: geminiStatus.state,
-                updated_at: new Date(),
-              },
-            }
-          );
+          if (geminiStatus.state === 'JOB_STATE_FAILED') {
+            // Ended on Gemini's own word, through the one guarded terminator (#6276).
+            await endBatchJob(db, job, {
+              status: 'failed', reason: 'Gemini state: JOB_STATE_FAILED', by: 'api/batch-save',
+              gemini: { verdict: 'exists', state: geminiStatus.state },
+            });
+          } else {
+            await db.collection('batch_jobs').updateOne(
+              { id: job.id },
+              { $set: { status: 'processing', gemini_state: geminiStatus.state, updated_at: new Date() } }
+            );
+          }
           continue;
         }
 

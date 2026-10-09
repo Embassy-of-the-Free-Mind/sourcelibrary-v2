@@ -26,6 +26,8 @@
  *   --clear            $unset the three fields instead of computing them
  *   --restore=PATH     replay a backup file written by a previous --apply
  *   --limit=N          only process the first N books (smoke test)
+ *   --book-id=ID       only this book: restamp one record after a catalogue correction
+ *                      (the cluster report then covers that one book, not the corpus)
  *   --collection=NAME  `books` (default) or `books_warehouse`. The import gate
  *                      reads keys from both, so a builder change re-stamps both.
  *   --out=PATH         where to write the cluster report (default scripts/output/)
@@ -45,6 +47,7 @@ const CLEAR = has('--clear');
 const RESTORE = val('--restore');
 const LIMIT = val('--limit') ? parseInt(val('--limit')!, 10) : 0;
 const JSON_OUT = has('--json');
+const BOOK_ID = val('--book-id');
 const COLLECTION = val('--collection') || 'books';
 if (!['books', 'books_warehouse'].includes(COLLECTION)) {
   console.error(`--collection must be books or books_warehouse, got "${COLLECTION}"`);
@@ -81,7 +84,12 @@ async function main() {
 
   // Artworks have their own sha1/CLIP identity lane — they are not editions.
   const scope: Document = { content_type: { $ne: 'artwork' } };
+  if (BOOK_ID) scope.id = BOOK_ID;
 
+  if (CLEAR && BOOK_ID) {
+    console.error('--clear ignores --book-id and would clear every book; run them separately');
+    process.exit(1);
+  }
   if (CLEAR) {
     if (!APPLY) {
       const n = await books.countDocuments({ edition_key: { $exists: true } });
