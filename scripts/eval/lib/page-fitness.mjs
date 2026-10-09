@@ -5,12 +5,14 @@
  * page-fitness.mjs — text heuristics for "is this page body text in the chart's language?" (#6304 checks 1–2)
  * and the famous-title screen (check 6). Pure functions, no I/O.
  */
+import { stripMarkupTags } from '../../lib/strip-markup-tags.mjs';
+
 const r3 = x => (x == null || Number.isNaN(x) ? null : Math.round(x * 1000) / 1000);
 
 export const SCRIPTS = { Latin: /\p{Script=Latin}/u, Greek: /\p{Script=Greek}/u, Hebrew: /\p{Script=Hebrew}/u, Arabic: /\p{Script=Arabic}/u, Han: /\p{Script=Han}/u,
   Tibetan: /\p{Script=Tibetan}/u, Devanagari: /\p{Script=Devanagari}/u, Syriac: /\p{Script=Syriac}/u, Armenian: /\p{Script=Armenian}/u,
   Sinhala: /\p{Script=Sinhala}/u, Myanmar: /\p{Script=Myanmar}/u, Thai: /\p{Script=Thai}/u, Khmer: /\p{Script=Khmer}/u, Bengali: /\p{Script=Bengali}/u, Kana: /[\p{Script=Hiragana}\p{Script=Katakana}]/u };
-export const stripTags = s => String(s || '').replace(/<(meta|note|image-desc|figure|warning|scan-quality|language|page-type|columns|detected-images|vocab|summary|keywords)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ').replace(/<[^>]+>/g, ' ');
+export const stripTags = s => stripMarkupTags(String(s || '').replace(/<(meta|note|image-desc|figure|warning|scan-quality|language|page-type|columns|detected-images|vocab|summary|keywords)\b[^>]*>[\s\S]*?<\/\1>/gi, ' '), ' ');
 export function scriptShares(text) {
   const c = {}; let n = 0;
   for (const ch of stripTags(text)) { if (!/\p{L}/u.test(ch)) continue; n++; for (const [k, re] of Object.entries(SCRIPTS)) if (re.test(ch)) { c[k] = (c[k] || 0) + 1; break; } }
