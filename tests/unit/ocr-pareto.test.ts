@@ -24,10 +24,13 @@ const charts = (pareto as unknown as { charts: { id: string; panels: Panel[] }[]
 const panels = charts.flatMap(c => c.panels.map(p => [c.id, p] as const));
 
 describe('ocr-pareto.json', () => {
+  // Each takes 4–10 s locally and several times that on a busy CI runner, so they get their own generous timeouts.
   it('is current with its inputs', () => {
     expect(execFileSync('node', ['scripts/eval/build-ocr-pareto.mjs', '--check'], { encoding: 'utf8' })).toContain('current');
+  }, 120_000);
+  it('reads a CLI re-score that is current and passes its positive control', () => {
     expect(execFileSync('node', ['scripts/eval/ocr-pareto-6293/rescore-plan-note.mjs', '--check'], { encoding: 'utf8' })).toContain('current');
-  });
+  }, 120_000);
 
   it('has charts, each panel on at least 5 shared pages, the first one primary', () => {
     expect(charts.length).toBeGreaterThanOrEqual(3);
