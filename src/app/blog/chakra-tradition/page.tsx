@@ -97,11 +97,11 @@ export default function ChakraTraditionPage() {
         </p>
 
         <h3 className="text-xl text-stone-800 mb-3 mt-10">
-          <Link href="/book/sri-svacchanda-tantra-i-ed" className="hover:text-accent-gold-dark transition-colors">The Svacchanda Tantra</Link>
+          The Svacchanda Tantra
         </h3>
 
         <p className="text-secondary leading-relaxed mb-8">
-          One of the oldest surviving Bhairava Tantras (perhaps 7th&ndash;8th century), the <Link href="/book/sri-svacchanda-tantra-i-ed" className="text-accent-rust hover:text-accent-rust underline"><em>Svacchanda Tantra</em></Link> presents an early and detailed map of the subtle body that differs in important ways from later standardizations. Source Library holds the <Link href="/book/sri-svacchanda-tantra-i-ed" className="text-accent-rust hover:text-accent-rust underline">first volume of the Sanskrit edition</Link> with commentary (440 pages), fully translated.
+          One of the oldest surviving Bhairava Tantras (perhaps 7th&ndash;8th century), the <em>Svacchanda Tantra</em> presents an early and detailed map of the subtle body that differs in important ways from later standardizations. Source Library holds the first volume of the Sanskrit edition with commentary (440 pages), fully translated.
         </p>
 
         <h3 className="text-xl text-stone-800 mb-3 mt-10">
@@ -172,7 +172,7 @@ export default function ChakraTraditionPage() {
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
             <span>
-              <Link href="/book/6991d89d8c1030b12444c140" className="text-accent-rust hover:text-accent-rust underline"><strong>Chakra and Nadi in the Shaiva Tradition</strong></Link>: An illustrated manuscript from the Wellcome Collection showing the subtle body maps as living visual art, not just textual description.
+              <strong>Chakra and Nadi in the Shaiva Tradition</strong>: An illustrated manuscript from the Wellcome Collection showing the subtle body maps as living visual art, not just textual description.
             </span>
           </li>
           <li className="flex items-start gap-3">
@@ -225,7 +225,7 @@ export default function ChakraTraditionPage() {
                 <td className="py-3">Translated</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4"><Link href="/book/sri-svacchanda-tantra-i-ed" className="text-accent-rust hover:text-accent-rust underline">Svacchanda Tantra (Vol. I)</Link></td>
+                <td className="py-3 pr-4">Svacchanda Tantra (Vol. I)</td>
                 <td className="py-3 pr-4">440</td>
                 <td className="py-3 pr-4">Internet Archive</td>
                 <td className="py-3">Translated</td>
@@ -285,7 +285,7 @@ export default function ChakraTraditionPage() {
                 <td className="py-3">Digitized</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4"><Link href="/book/6991d89d8c1030b12444c140" className="text-accent-rust hover:text-accent-rust underline">Chakra and Nadi in the Shaiva Tradition</Link></td>
+                <td className="py-3 pr-4">Chakra and Nadi in the Shaiva Tradition</td>
                 <td className="py-3 pr-4">10</td>
                 <td className="py-3 pr-4">Wellcome Collection</td>
                 <td className="py-3">Digitized</td>

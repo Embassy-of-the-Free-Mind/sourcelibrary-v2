@@ -346,7 +346,7 @@ export default function AstrologicalDiagramsPage() {
           </div>
           <figcaption className="text-xs text-muted mt-2 text-center">
             <em>De revolutionibus</em>, Book I, page 34. The heliocentric diagram: the Sun at the centre, surrounded by Mercury, Venus, Earth with the Moon, Mars, Jupiter, Saturn, and the sphere of fixed stars.{' '}
-            <Link href="/book/694b3b5b58a47807cc735dce" className="text-accent-rust hover:text-accent-rust">
+            <Link href="/book/de-revolutionibus-1543-first-edition-copernicus" className="text-accent-rust hover:text-accent-rust">
               View in collection →
             </Link>
           </figcaption>
@@ -358,7 +358,7 @@ export default function AstrologicalDiagramsPage() {
 
         <p className="text-secondary leading-relaxed mb-8">
           For astrology, the Copernican shift posed a deep challenge. The entire edifice of astrological theory rested on Earth&rsquo;s central position as the receiver of planetary influences. If Earth moved around the Sun, what became of the ascendant, the houses, the angles? Astrological practitioners of the 16th and 17th centuries largely ignored the problem and continued their calculations unchanged (the geocentric tables still worked), but the conceptual foundation had been quietly pulled away. The{' '}
-          <Link href="/book/694b3b5b58a47807cc735dce" className="text-accent-rust hover:text-accent-rust underline">full text is in Source Library</Link>
+          <Link href="/book/de-revolutionibus-1543-first-edition-copernicus" className="text-accent-rust hover:text-accent-rust underline">full text is in Source Library</Link>
           , with 411 pages and all the original woodcut diagrams, translated into English.
         </p>
 
@@ -530,7 +530,7 @@ export default function AstrologicalDiagramsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           While Western astrology developed from Babylonian, Greek, and Arabic sources, the Indian tradition (<em>jyotiṣa</em>) grew independently and reached comparable sophistication. Source Library holds over 50 Sanskrit astrological texts, including the foundational classics. Varahamihira&rsquo;s{' '}
-          <Link href="/book/69905f4440bc3a0478efb9b2" className="text-accent-rust hover:text-accent-rust underline">
+          <Link href="/book/brihat-jataka-vivritti-bhattotpala-comm" className="text-accent-rust hover:text-accent-rust underline">
             <em>Brihat Jataka</em>
           </Link>
           {' '}(c. 550&nbsp;CE), the &ldquo;Large Nativity,&rdquo; is the definitive Sanskrit text on natal horoscopy: 25 chapters covering every aspect of birth chart interpretation, with its celebrated commentary by Bhattotpala (966&nbsp;CE).
@@ -576,9 +576,9 @@ export default function AstrologicalDiagramsPage() {
               { href: '/book/69906313e7b7642c081de828', text: 'Ptolemy / Hali, Quadripartitum et Centiloquium (1484, Latin)' },
               { href: '/book/69905e3c2fd6a039938a1980', text: 'Abu Ma\'shar, Introductorium in Astronomiam (1489, Arabic/Latin)' },
               { href: '/book/695361cd9c494f9f9f042f19', text: 'Maslama al-Majriti, Ghayat al-Hakim / Picatrix (960 CE, Arabic)' },
-              { href: '/book/69905f4440bc3a0478efb9b2', text: 'Varahamihira / Bhattotpala, Brihat Jataka (966 CE, Sanskrit)' },
+              { href: '/book/brihat-jataka-vivritti-bhattotpala-comm', text: 'Varahamihira / Bhattotpala, Brihat Jataka (966 CE, Sanskrit)' },
               { href: '/book/69906e6d8a353648e1ecfd91', text: 'John Dunstable, Judicial Astrology and Astronomy (c. 1440, Latin)' },
-              { href: '/book/694b3b5b58a47807cc735dce', text: 'Nicolaus Copernicus, De revolutionibus orbium coelestium (1543, Latin)' },
+              { href: '/book/de-revolutionibus-1543-first-edition-copernicus', text: 'Nicolaus Copernicus, De revolutionibus orbium coelestium (1543, Latin)' },
               { href: '/book/6956eae3b5d89fc3ccb47a2a', text: 'Paracelsus, Astronomia Magna (1571, German)' },
               { href: '/book/6952d12e77f38f6761bc5bec', text: 'Johannes Kepler, Harmonices Mundi (1619, Latin)' },
               { href: '/book/697a3055a3866af9498458ac', text: 'Jacques Gaffarel, Curiositez inouyes (1650, French)' },
