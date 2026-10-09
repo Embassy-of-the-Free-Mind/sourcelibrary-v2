@@ -153,7 +153,7 @@ export const posts: BlogPost[] = [
     slug: 'how-we-measure-ocr-quality',
     title: 'How We Measure OCR Quality',
     subtitle:
-      'One page per book, sealed before anyone looks, scored against a published edition, graded by how many referenced books the cell holds. The design behind every engine decision — and the day the "Chinese woodblock" cell turned out to be brush manuscript.',
+      'One page per book, sealed before anyone looks, scored against a published edition, graded by how many referenced books the cell holds. The design behind every engine decision, and the day the "Chinese woodblock" cell turned out to be brush manuscript.',
     date: '20 September 2026',
     readTime: '12 min read',
     kind: 'reading',
@@ -186,7 +186,7 @@ export const posts: BlogPost[] = [
     slug: 'atlas-of-lost-instruments',
     title: 'An Atlas of Lost Instruments',
     subtitle:
-      'A keyed fiddle, a cat organ, a harp the wind plays, a box that composes, a quarrel over the megaphone, a note nobody played, sand that draws the shape of a sound, and a keyboard with thirty-one notes to the octave. Nine things about sound that were discovered, invented, or fought over in books this library holds — and the 13,647 pages of music on them that no machine can yet read.',
+      'A keyed fiddle, a cat organ, a harp the wind plays, a box that composes, a quarrel over the megaphone, a note nobody played, sand that draws the shape of a sound, and a keyboard with thirty-one notes to the octave. Nine things about sound that were discovered, invented, or fought over in books this library holds, and the 13,647 pages of music on them that no machine can yet read.',
     date: '11 September 2026',
     readTime: '12 min read',
     kind: 'tours',
@@ -197,7 +197,7 @@ export const posts: BlogPost[] = [
     slug: 'technique-is-local',
     title: 'Technique Is Local, Crisis Is Universal',
     subtitle:
-      'Reading a thousand years of meditation manuals as research artifacts: the Visuddhimagga prescribes practices by temperament, Iamblichus states a dose-response curve for ritual prayer, and every imaging tradition wrote the same safety warnings. Seven testable hypotheses from the contemplative archive — and one measurement suggesting the cross-cultural core of deep practice is not bliss, but crisis.',
+      'Reading a thousand years of meditation manuals as research artifacts: the Visuddhimagga prescribes practices by temperament, Iamblichus states a dose-response curve for ritual prayer, and every imaging tradition wrote the same safety warnings. Seven testable hypotheses from the contemplative archive, and one measurement suggesting the cross-cultural core of deep practice is not bliss, but crisis.',
     date: '27 August 2026',
     readTime: '11 min read',
     kind: 'stories',
@@ -209,7 +209,7 @@ export const posts: BlogPost[] = [
     slug: 'two-copies-two-languages',
     title: 'Two Copies, Two Languages',
     subtitle:
-      'We hold the same 1495 Aldine grammar twice. One copy is catalogued Greek, the other Latin, and both are right. Measuring 21,481 books to settle it produced two headline findings that turned out to be the measuring instrument — and one cheap check that caught them both.',
+      'We hold the same 1495 Aldine grammar twice. One copy is catalogued Greek, the other Latin, and both are right. Measuring 21,481 books to settle it produced two headline findings that turned out to be the measuring instrument, and one cheap check that caught them both.',
     date: '21 August 2026',
     readTime: '8 min read',
     kind: 'reading',
@@ -221,7 +221,7 @@ export const posts: BlogPost[] = [
     slug: 'suda-benchmark',
     title: 'Graded by the Suda',
     subtitle:
-      'One book in our library came with its own answer key: the Suda On Line, 31,000 entries translated by two hundred volunteer scholars over sixteen years. We aligned our AI translation with theirs, let each grade the other with the Greek as arbiter, and learned that a cheap AI judge fails silently — its incapacity arrives dressed as approval. Total API cost: $1.15.',
+      'One book in our library came with its own answer key: the Suda On Line, 31,000 entries translated by two hundred volunteer scholars over sixteen years. We aligned our AI translation with theirs, let each grade the other with the Greek as arbiter, and learned that a cheap AI judge fails silently: its incapacity arrives dressed as approval. Total API cost: $1.15.',
     date: '11 August 2026',
     readTime: '9 min read',
     kind: 'reading',
@@ -233,7 +233,7 @@ export const posts: BlogPost[] = [
     slug: 'greek-lemma-table',
     title: 'Every Shape of Every Word',
     subtitle:
-      'We mapped 570,000 Greek word forms to their dictionary entries — the invisible table that turns a 400-year-old page into something you can read, checked against 132,000 words hand-verified by scholars.',
+      'We mapped 570,000 Greek word forms to their dictionary entries: the invisible table that turns a 400-year-old page into something you can read, checked against 132,000 words hand-verified by scholars.',
     date: '10 August 2026',
     readTime: '5 min read',
     kind: 'reading',
@@ -244,7 +244,7 @@ export const posts: BlogPost[] = [
     slug: 'nobody-knows-what-has-been-scanned',
     title: 'Nobody Knows What Has Been Scanned',
     subtitle:
-      'No institution on earth can answer whether a book has already been digitized. We had to harvest 3.5 million records to answer it for one library — and found 3,655 books nobody has scanned. The case for a global registry.',
+      'No institution on earth can answer whether a book has already been digitized. We had to harvest 3.5 million records to answer it for one library, and found 3,655 books nobody has scanned. The case for a global registry.',
     date: '9 August 2026',
     readTime: '6 min read',
     kind: 'counting',
@@ -255,7 +255,7 @@ export const posts: BlogPost[] = [
     slug: 'reciting-not-reading',
     title: 'Reciting, Not Reading',
     subtitle:
-      'We covered four lines of Genesis with an opaque grey box. Our OCR transcribed them anyway — correctly, seamlessly, and without a word of warning. Then four different prompts failed to stop it, and the one thing that worked was not something we said.',
+      'We covered four lines of Genesis with an opaque grey box. Our OCR transcribed them anyway: correctly, seamlessly, and without a word of warning. Then four different prompts failed to stop it, and the one thing that worked was not something we said.',
     date: '30 July 2026',
     readTime: '8 min read',
     kind: 'reading',
@@ -267,19 +267,19 @@ export const posts: BlogPost[] = [
     slug: 'nine-models-forty-pages',
     title: 'Nine Models, Forty Pages',
     subtitle:
-      "We benchmarked every OCR-capable model we could reach — Google's newest releases, three open-weight challengers, one self-hosted on a rented GPU — against the same forty historical pages, with a memorization control and paired statistics. The newest budget model lost to its own predecessor, and an open-weight model reached parity on the pages it can read.",
+      "We benchmarked every OCR-capable model we could reach (Google's newest releases, three open-weight challengers, one self-hosted on a rented GPU) against the same forty historical pages, with a memorization control and paired statistics. The newest budget model lost to its own predecessor, and an open-weight model reached parity on the pages it can read.",
     date: '23 July 2026',
     readTime: '9 min read',
     kind: 'reading',
     image: 'https://images.sourcelibrary.org/archived/69a5e9bb787d6e9b8d42e183/120.jpg',
     imageAlt:
-      "Page 109 of Eznik of Kołb's Ełc ałandoc' in the 1826 Venice printing — the Armenian page most models could not read.",
+      "Page 109 of Eznik of Kołb's Ełc ałandoc' in the 1826 Venice printing, the Armenian page most models could not read.",
   },
   {
     slug: 'playable-page',
     title: 'The Playable Page',
     subtitle:
-      'Old treatises are full of instruments diagrammed and silenced — monochord divisions, tetrachord arcs, string tables worked out to the integer. Three of them, replicated and strung: Galilei\'s two-string bench with its weight pan, the Lyre of Mercury\'s disputed numbers read as three different laws, and the full two-octave system of ancient music from a Boethius manuscript, playable in all three genera.',
+      'Old treatises are full of instruments diagrammed and silenced: monochord divisions, tetrachord arcs, string tables worked out to the integer.Three of them, replicated and strung: Galilei\'s two-string bench with its weight pan, the Lyre of Mercury\'s disputed numbers read as three different laws, and the full two-octave system of ancient music from a Boethius manuscript, playable in all three genera.',
     date: '19 July 2026',
     readTime: '3 instruments',
     kind: 'interactive',
@@ -291,54 +291,54 @@ export const posts: BlogPost[] = [
     slug: 'ngram-viewer',
     title: 'Chart a Word, Then Read the Page',
     subtitle:
-      'A Google-Books-style ngram viewer over five centuries of alchemy, Hermetica, and early science — with the two things word-frequency charts have never done: one curve that follows a concept across Latin, German, and French sources at once, and a click-through from any peak to the actual readable pages. Plus an honest guide to what these curves can and cannot prove.',
+      'A Google-Books-style ngram viewer over five centuries of alchemy, Hermetica, and early science, with the two things word-frequency charts have never done: one curve that follows a concept across Latin, German, and French sources at once, and a click-through from any peak to the actual readable pages. Plus an honest guide to what these curves can and cannot prove.',
     date: '19 July 2026',
     readTime: '7 min read',
     kind: 'interactive',
     image: 'https://images.sourcelibrary.org/artwork/art-khunrath-the-four-the-three-the-two-and-the-one.jpg',
-    imageAlt: "Concentric rings of Latin, Greek, and Hebrew words — Heinrich Khunrath's 'The Four, the Three, the Two, and the One,' 1595.",
+    imageAlt: "Concentric rings of Latin, Greek, and Hebrew words: Heinrich Khunrath's 'The Four, the Three, the Two, and the One,' 1595.",
   },
   {
     slug: 'sound-laboratory',
     title: 'The Sound Laboratory',
     subtitle:
-      'Ten interactive stations that put twenty-five centuries of claims about harmony to the test with your own ears — the smith\'s hammers weighed, the comma that won\'t close, Bharata\'s two vīṇās, Kepler\'s planets auditioned against modern orbits, Kircher\'s sympathetic strings, and Euler\'s formula for sweetness, graded by you. Headphones recommended.',
+      'Ten interactive stations that put twenty-five centuries of claims about harmony to the test with your own ears: the smith\'s hammers weighed, the comma that won\'t close, Bharata\'s two vīṇās, Kepler\'s planets auditioned against modern orbits, Kircher\'s sympathetic strings, and Euler\'s formula for sweetness, graded by you. Headphones recommended.',
     date: '16 July 2026',
     readTime: '10 experiments',
     kind: 'interactive',
     image: 'https://images.sourcelibrary.org/artwork/art-sadeler-fabel-van-de-smid-en-de-hond.jpg',
-    imageAlt: "A smith at his anvil, hammer raised — Aegidius Sadeler's engraving, 1608.",
+    imageAlt: "A smith at his anvil, hammer raised: Aegidius Sadeler's engraving, 1608.",
   },
   {
     slug: 'nature-of-harmony',
     title: 'The Nature of Harmony',
     subtitle:
-      'For twenty-five centuries and across five civilizations, people said the world is built like music — and split at once into those who heard a deep order and those who demanded to measure it. A history of that quarrel, from a plucked string in antiquity to the whole-number ratios inside the atom, told through the books one library holds.',
+      'For twenty-five centuries and across five civilizations, people said the world is built like music, and split at once into those who heard a deep order and those who demanded to measure it. A history of that quarrel, from a plucked string in antiquity to the whole-number ratios inside the atom, told through the books one library holds.',
     date: '15 July 2026',
     readTime: '18 min read',
     kind: 'stories',
     image: 'https://images.sourcelibrary.org/artwork/art-anima-mundi-the-world-soul.jpg',
     imageAlt:
-      "Fludd's 1617 engraving Integrae Naturae Speculum, Artisque Imago — Nature chained to the divine name above and to the ape of Art below.",
+      "Fludd's 1617 engraving Integrae Naturae Speculum, Artisque Imago: Nature chained to the divine name above and to the ape of Art below.",
   },
   {
     slug: 'show-me-the-number',
     title: 'Show Me the Number',
     subtitle:
-      'We keep saying AI should be in "harmony" with us — aligned, attuned, in tune. Is that a claim you can measure, or a picture we find comforting? Kepler forged the test four hundred years ago. A sequel on synchrony, the Platonic Representation Hypothesis, and where a real law of human–AI harmony could live.',
+      'We keep saying AI should be in "harmony" with us: aligned, attuned, in tune. Is that a claim you can measure, or a picture we find comforting? Kepler forged the test four hundred years ago. A sequel on synchrony, the Platonic Representation Hypothesis, and where a real law of human–AI harmony could live.',
     date: '15 July 2026',
     readTime: '12 min read',
     kind: 'stories',
     image: 'https://images.sourcelibrary.org/archived/6952d12e77f38f6761bc5bec/74.jpg',
     imageAlt:
-      "The five Platonic solids — Kepler's figurae mundanae — from Harmonices Mundi, 1619.",
+      "The five Platonic solids (Kepler's figurae mundanae) from Harmonices Mundi, 1619.",
     imagePosition: 'center 90%',
   },
   {
     slug: 'fish-voiced-priest',
     title: 'The Fish-Voiced Priest',
     subtitle:
-      'An AI read a thousand-year-old Greek hand in the Codex Marcianus and invented a character who is not on the page — it turned "I am Ion, the priest of the inner sanctuaries" into "the fish-voiced one," then footnoted its own mistake. Why, for a hard script, the printed critical edition has to carry the text while the manuscript carries the facsimile.',
+      'An AI read a thousand-year-old Greek hand in the Codex Marcianus and invented a character who is not on the page: it turned "I am Ion, the priest of the inner sanctuaries" into "the fish-voiced one," then footnoted its own mistake. Why, for a hard script, the printed critical edition has to carry the text while the manuscript carries the facsimile.',
     date: '2 July 2026',
     readTime: '11 min read',
     kind: 'reading',
@@ -360,7 +360,7 @@ export const posts: BlogPost[] = [
     slug: 'naked-philosophers',
     title: 'The Naked Philosophers',
     subtitle:
-      'In 327 BCE Alexander\'s fleet-captain was sent to sit before fifteen naked, motionless sages who would not come when the king summoned them. Nineteen centuries later a Rosicrucian alchemist enrolled those same "gymnosophists" as ancestors of his Brotherhood. How a single image — eyewitness ethnography, moral exemplar, Hermetic ancestor — travelled three thousand miles and nineteen centuries, told through eight books in the library.',
+      'In 327 BCE Alexander\'s fleet-captain was sent to sit before fifteen naked, motionless sages who would not come when the king summoned them. Nineteen centuries later a Rosicrucian alchemist enrolled those same "gymnosophists" as ancestors of his Brotherhood. How a single image (eyewitness ethnography, moral exemplar, Hermetic ancestor) travelled three thousand miles and nineteen centuries, told through eight books in the library.',
     date: '21 June 2026',
     readTime: '8 min read',
     kind: 'stories',
@@ -383,7 +383,7 @@ export const posts: BlogPost[] = [
     slug: 'counting-first-translations',
     title: 'How Many First Translations, Really?',
     subtitle:
-      'We badge ~5,700 books as first-ever English translations. Are they? We sent an AI research agent to independently fact-check a random sample of both the badged books and the never-assessed ones — and found the bigger error was the firsts we missed, not the ones we over-claimed. On precision, recall, Wilson intervals, and why fame (not language) predicts a false claim.',
+      'We badge ~5,700 books as first-ever English translations. Are they? We sent an AI research agent to independently fact-check a random sample of both the badged books and the never-assessed ones, and found the bigger error was the firsts we missed, not the ones we over-claimed. On precision, recall, Wilson intervals, and why fame (not language) predicts a false claim.',
     date: '19 June 2026',
     readTime: '11 min read',
     kind: 'counting',
@@ -394,7 +394,7 @@ export const posts: BlogPost[] = [
     slug: 'cannabis-bangue',
     title: 'Theire Soe Admirable Herbe: How the West Forgot, and Remembered, Cannabis',
     subtitle:
-      'In 1689 a sea-captain set a sample of "bangue" on Robert Hooke\'s coffeehouse table, and the Royal Society met cannabis. But the plant had two lives, and the West had been forgetting one of them for two thousand years. A tour through sixty books in twelve languages — from the Shennong Bencao Jing to Baudelaire.',
+      'In 1689 a sea-captain set a sample of "bangue" on Robert Hooke\'s coffeehouse table, and the Royal Society met cannabis. But the plant had two lives, and the West had been forgetting one of them for two thousand years. A tour through sixty books in twelve languages, from the Shennong Bencao Jing to Baudelaire.',
     date: '19 June 2026',
     readTime: '9 min read',
     kind: 'stories',
@@ -405,7 +405,7 @@ export const posts: BlogPost[] = [
     slug: 'translation-collapse',
     title: 'Quality Control on Four Million Machine-Translated Pages',
     subtitle:
-      'A reader found a 1589 page that the AI returned as a single word instead of a translation. Pulling the thread surfaced 25,000 more — and the two times our own measurement was wrong before the model was. On detecting "translation collapse," why long pages and looping OCR drive it, and what it takes to check a generative system at scale.',
+      'A reader found a 1589 page that the AI returned as a single word instead of a translation. Pulling the thread surfaced 25,000 more, and the two times our own measurement was wrong before the model was. On detecting "translation collapse," why long pages and looping OCR drive it, and what it takes to check a generative system at scale.',
     date: '17 June 2026',
     readTime: '7 min read',
     kind: 'reading',
@@ -416,7 +416,7 @@ export const posts: BlogPost[] = [
     slug: 'iiif',
     title: 'How IIIF Helped Us Translate the Renaissance',
     subtitle:
-      'One image standard turned thirteen institutional archives into a single input layer for an AI pipeline — and let us hand the results back to the whole IIIF world. With diagrams of the import pipeline, the real challenges (rate limits, the datacenter problem), the workflow when there is no manifest, why provenance matters, and appreciations. Notes for a lightning talk at IIIF 2026 in Leiden.',
+      'One image standard turned thirteen institutional archives into a single input layer for an AI pipeline, and let us hand the results back to the whole IIIF world. With diagrams of the import pipeline, the real challenges (rate limits, the datacenter problem), the workflow when there is no manifest, why provenance matters, and appreciations. Notes for a lightning talk at IIIF 2026 in Leiden.',
     date: '2 June 2026',
     readTime: '14 min read',
     kind: 'library',
@@ -427,7 +427,7 @@ export const posts: BlogPost[] = [
     slug: 'how-big-is-the-library',
     title: 'How Big Is the Library?',
     subtitle:
-      'We counted every word — original OCR, AI translation, and enrichment. Roughly five to seven billion words, about the size of English Wikipedia. With the methodology, and the recitation-loop bug that nearly tripled the count.',
+      'We counted every word: original OCR, AI translation, and enrichment. Roughly five to seven billion words, about the size of English Wikipedia. With the methodology, and the recitation-loop bug that nearly tripled the count.',
     date: '1 June 2026',
     readTime: '6 min read',
     kind: 'counting',
@@ -448,7 +448,7 @@ export const posts: BlogPost[] = [
     slug: 'man-his-own-maker',
     title: 'Man, His Own Maker',
     subtitle:
-      "Leo XIV's encyclical on AI is, strangely, the grandchild of the first printed book the Church ever banned — Pico's Oration on the Dignity of Man. Reading them across five centuries shows what AI really forces us to decide about the soul.",
+      "Leo XIV's encyclical on AI is, strangely, the grandchild of the first printed book the Church ever banned, Pico's Oration on the Dignity of Man. Reading them across five centuries shows what AI really forces us to decide about the soul.",
     date: '30 May 2026',
     readTime: '15 min read',
     kind: 'stories',
@@ -470,7 +470,7 @@ export const posts: BlogPost[] = [
     slug: 'did-an-ai-write-the-encyclical',
     title: "Did an AI Write the Pope's AI Encyclical?",
     subtitle:
-      'Magnifica Humanitas was flagged 46% AI-written, with 127 em-dashes vs zero in a comparison encyclical. We re-ran the test against eight human encyclicals — Benedict XVI used dashes 2.5× more. The smoking gun is a baseline-selection artifact.',
+      'Magnifica Humanitas was flagged 46% AI-written, with 127 em-dashes vs zero in a comparison encyclical. We re-ran the test against eight human encyclicals. Benedict XVI used dashes 2.5× more. The smoking gun is a baseline-selection artifact.',
     date: '30 May 2026',
     readTime: '11 min read',
     kind: 'stories',
@@ -480,7 +480,7 @@ export const posts: BlogPost[] = [
   {
     slug: 'carbon-ledger',
     title: 'The Carbon Ledger of a Digital Library',
-    subtitle: "Source Library has OCR'd 4.1M pages and translated almost all of them using AI. We logged every API call. ~1.8 tonnes CO₂e — about seven round-trip flights AMS↔London. Six independent estimation methods, full data + sources.",
+    subtitle: "Source Library has OCR'd 4.1M pages and translated almost all of them using AI. We logged every API call. ~1.8 tonnes CO₂e, about seven round-trip flights AMS↔London. Six independent estimation methods, full data + sources.",
     date: '26 May 2026',
     readTime: '10 min read',
     kind: 'library',
@@ -501,7 +501,7 @@ export const posts: BlogPost[] = [
   {
     slug: 'hogwarts-library',
     title: 'The Real Hogwarts Library',
-    subtitle: 'Nicolas Flamel was real. So was Cornelius Agrippa. So was Paracelsus. The books behind the wizarding world — alchemy, bestiaries, grimoires, Kabbalah — read in modern English.',
+    subtitle: 'Nicolas Flamel was real. So was Cornelius Agrippa. So was Paracelsus. The books behind the wizarding world (alchemy, bestiaries, grimoires, Kabbalah) read in modern English.',
     date: '17 May 2026',
     readTime: '16 min read',
     kind: 'tours',
@@ -520,7 +520,7 @@ export const posts: BlogPost[] = [
   {
     slug: 'the-deletion',
     title: 'The Deletion',
-    subtitle: 'How a Claude Code session in one of my ten open terminals hard-deleted 4,758 books from our rare-books library — with the actual prompts, the actual postmortem, and what it means for running AI agents against production data.',
+    subtitle: 'How a Claude Code session in one of my ten open terminals hard-deleted 4,758 books from our rare-books library, with the actual prompts, the actual postmortem, and what it means for running AI agents against production data.',
     date: '15 May 2026',
     readTime: '13 min read',
     kind: 'library',
@@ -530,7 +530,7 @@ export const posts: BlogPost[] = [
   {
     slug: 'confident-hallucinator',
     title: 'The Confident Hallucinator',
-    subtitle: 'What we learned evaluating AI OCR across five scripts. A model can be perfectly consistent and completely wrong — 100% consistency, 0% accuracy.',
+    subtitle: 'What we learned evaluating AI OCR across five scripts. A model can be perfectly consistent and completely wrong: 100% consistency, 0% accuracy.',
     date: '23 April 2026',
     readTime: '10 min read',
     kind: 'reading',
@@ -550,7 +550,7 @@ export const posts: BlogPost[] = [
   {
     slug: 'incunabula-knowledge-graph',
     title: 'Mapping the Incunabula',
-    subtitle: 'An interactive knowledge graph connecting nearly 1,000 pre-1501 printed books by author, printer, place, and subject — revealing the networks behind the printing revolution.',
+    subtitle: 'An interactive knowledge graph connecting nearly 1,000 pre-1501 printed books by author, printer, place, and subject, revealing the networks behind the printing revolution.',
     date: '22 April 2026',
     readTime: '8 min read',
     kind: 'interactive',
@@ -590,7 +590,7 @@ export const posts: BlogPost[] = [
   {
     slug: 'singularity-1486',
     title: 'The Singularity Was Published in 1486',
-    subtitle: 'Transhumanism, panpsychism, and the planetary mind — in the original Latin and German. The source code for ideas we think are modern.',
+    subtitle: 'Transhumanism, panpsychism, and the planetary mind, in the original Latin and German. The source code for ideas we think are modern.',
     date: '15 April 2026',
     readTime: '12 min read',
     kind: 'stories',
@@ -621,7 +621,7 @@ export const posts: BlogPost[] = [
   {
     slug: 'rashi-ocr',
     title: 'The Rashi Problem: When AI OCR Hallucinates in Hebrew',
-    subtitle: 'Gemini reads Arabic, Sanskrit, and Chinese fine. On Rashi script it hallucinates — and our quality metrics gave it a passing grade.',
+    subtitle: 'Gemini reads Arabic, Sanskrit, and Chinese fine. On Rashi script it hallucinates, and our quality metrics gave it a passing grade.',
     date: '24 March 2026',
     readTime: '10 min read',
     kind: 'reading',
