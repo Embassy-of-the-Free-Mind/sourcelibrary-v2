@@ -202,7 +202,7 @@ function TagList({ tags, color = 'stone' }: { tags: string[]; color?: 'stone' | 
  *   twenty lines of English funerary formulae).
  */
 const UNVERIFIED_TRANSCRIPTION_SCRIPTS: Array<{ match: RegExp; label: string }> = [
-  { match: /tibetan/i, label: 'Tibetan — especially handwritten manuscripts —' },
+  { match: /tibetan/i, label: 'Tibetan (especially handwritten manuscripts)' },
   { match: /hieroglyph/i, label: 'Egyptian hieroglyphs' },
 ];
 

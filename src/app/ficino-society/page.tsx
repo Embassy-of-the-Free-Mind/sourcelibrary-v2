@@ -197,7 +197,7 @@ function FicinoSocietyContent() {
           <div className="space-y-6 text-[17px] leading-[1.85] text-[#333] font-body">
             <p>
               Source Library is digitizing and translating thousands of rare
-              texts in alchemy, Kabbalah, astrology, and natural philosophy &mdash;
+              texts in alchemy, Kabbalah, astrology, and natural philosophy,
               many for the first time in any modern language. Everything is
               free to read.
             </p>
@@ -250,7 +250,7 @@ function FicinoSocietyContent() {
               </button>
             ) : subscribed ? (
               <p className="text-white/60 text-[15px] font-body">
-                You&apos;re in. Welcome to the circle — check your inbox.
+                You&apos;re in. Welcome to the circle. Check your inbox.
               </p>
             ) : (
               <>
@@ -276,7 +276,7 @@ function FicinoSocietyContent() {
                   <p className="mt-3 text-[#d98a7a] text-sm font-body">{subscribeError}</p>
                 )}
                 <p className="mt-4 text-white/25 text-xs font-body">
-                  Just your email — no account needed.{' '}
+                  Just your email, no account needed.{' '}
                   <Link
                     href={`/auth/signin?callbackUrl=${encodeURIComponent('/ficino-society')}`}
                     className="underline hover:text-white/50 transition-colors"
@@ -321,7 +321,7 @@ function FicinoSocietyContent() {
             </OutboundLink>
           )}
           <p className="mt-6 text-[12px] text-[#8a8480] font-body">
-            Any amount welcome &mdash;{' '}
+            Any amount welcome:{' '}
             <a href="mailto:team@sourcelibrary.org" className="underline">team@sourcelibrary.org</a>
           </p>
         </div>

@@ -93,7 +93,7 @@ export default function CollectionReadingList({ rows, tenantSlug }: Props) {
 
                 {row.state === 'preparing' && (
                   <p className="text-sm text-muted mt-2">
-                    Acquired &mdash; being prepared.
+                    Acquired, being prepared.
                   </p>
                 )}
 

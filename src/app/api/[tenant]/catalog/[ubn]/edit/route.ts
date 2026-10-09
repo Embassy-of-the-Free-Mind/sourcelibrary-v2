@@ -91,7 +91,7 @@ export const POST = withAuth(
 
     const userEmail = session.user?.email;
     if (!userEmail) {
-      return NextResponse.json({ error: 'Session is missing an email — re-sign in' }, { status: 400 });
+      return NextResponse.json({ error: 'Session is missing an email. Please sign in again' }, { status: 400 });
     }
     const userId = (session.user as { id?: string }).id ?? null;
 
@@ -168,7 +168,7 @@ export const POST = withAuth(
     // Contributor path: queue a pending row. bph_works is untouched.
     if (!supabaseAdmin) {
       return NextResponse.json(
-        { error: 'supabaseAdmin not configured — SUPABASE_SERVICE_ROLE_KEY missing' },
+        { error: 'supabaseAdmin not configured: SUPABASE_SERVICE_ROLE_KEY missing' },
         { status: 500 },
       );
     }

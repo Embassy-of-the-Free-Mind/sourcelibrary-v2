@@ -1,0 +1,264 @@
+{
+ "seed": 4523,
+ "positive_control_page": "69e7ab345f1a22ab19a94976_00273",
+ "same_arm_pages": {
+  "69e7aacb5f1a22ab19a8d7d8_00115": "pilot",
+  "69e7aaf75f1a22ab19a907e7_00008": "pilot",
+  "69e7ab985f1a22ab19a9a963_00095": "pilot",
+  "69e7abdd5f1a22ab19a9fade_00259": "current"
+ },
+ "pages": {
+  "69e7aacb5f1a22ab19a8d7d8_00115": {
+   "T1": "current",
+   "T2": "pilot#dup",
+   "T3": "pilot"
+  },
+  "69e7aacb5f1a22ab19a8d7d8_00116": {
+   "T1": "current",
+   "T2": "pilot"
+  },
+  "69e7aacb5f1a22ab19a8d7d8_00113": {
+   "T1": "pilot",
+   "T2": "current"
+  },
+  "69e7aae45f1a22ab19a8f1d1_00382": {
+   "T1": "current",
+   "T2": "pilot"
+  },
+  "69e7aae45f1a22ab19a8f1d1_00391": {
+   "T1": "pilot",
+   "T2": "current"
+  },
+  "69e7aae45f1a22ab19a8f1d1_00383": {
+   "T1": "pilot",
+   "T2": "current"
+  },
+  "69e7aaf75f1a22ab19a907e7_00010": {
+   "T1": "pilot",
+   "T2": "current"
+  },
+  "69e7aaf75f1a22ab19a907e7_00006": {
+   "T1": "pilot",
+   "T2": "current"
+  },
+  "69e7aaf75f1a22ab19a907e7_00008": {
+   "T1": "pilot",
+   "T2": "pilot#dup",
+   "T3": "current"
+  },
+  "69e7ab345f1a22ab19a94976_00277": {
+   "T1": "current",
+   "T2": "pilot"
+  },
+  "69e7ab345f1a22ab19a94976_00271": {
+   "T1": "current",
+   "T2": "pilot"
+  },
+  "69e7ab345f1a22ab19a94976_00273": {
+   "T1": "current",
+   "T2": "reference",
+   "T3": "pilot"
+  },
+  "69e7ab485f1a22ab19a95e06_00206": {
+   "T1": "pilot",
+   "T2": "current"
+  },
+  "69e7ab485f1a22ab19a95e06_00202": {
+   "T1": "pilot",
+   "T2": "current"
+  },
+  "69e7ab485f1a22ab19a95e06_00201": {
+   "T1": "pilot",
+   "T2": "current"
+  },
+  "69e7ab555f1a22ab19a96c7a_00145": {
+   "T1": "current",
+   "T2": "pilot"
+  },
+  "69e7ab555f1a22ab19a96c7a_00149": {
+   "T1": "pilot",
+   "T2": "current"
+  },
+  "69e7ab555f1a22ab19a96c7a_00151": {
+   "T1": "current",
+   "T2": "pilot"
+  },
+  "69e7ab5f5f1a22ab19a978df_00253": {
+   "T1": "pilot",
+   "T2": "current"
+  },
+  "69e7ab5f5f1a22ab19a978df_00256": {
+   "T1": "current",
+   "T2": "pilot"
+  },
+  "69e7ab5f5f1a22ab19a978df_00251": {
+   "T1": "pilot",
+   "T2": "current"
+  },
+  "69e7ab985f1a22ab19a9a963_00099": {
+   "T1": "pilot",
+   "T2": "current"
+  },
+  "69e7ab985f1a22ab19a9a963_00090": {
+   "T1": "pilot",
+   "T2": "current"
+  },
+  "69e7ab985f1a22ab19a9a963_00095": {
+   "T1": "current",
+   "T2": "pilot",
+   "T3": "pilot#dup"
+  },
+  "69e7abdd5f1a22ab19a9fade_00255": {
+   "T1": "current",
+   "T2": "pilot"
+  },
+  "69e7abdd5f1a22ab19a9fade_00260": {
+   "T1": "current",
+   "T2": "pilot"
+  },
+  "69e7abdd5f1a22ab19a9fade_00259": {
+   "T1": "pilot",
+   "T2": "current",
+   "T3": "current#dup"
+  },
+  "6a14e171311a9edd46221377_00585": {
+   "T1": "pilot",
+   "T2": "current"
+  },
+  "6a14e171311a9edd46221377_00579": {
+   "T1": "pilot",
+   "T2": "current"
+  },
+  "6a14e171311a9edd46221377_00587": {
+   "T1": "current",
+   "T2": "pilot"
+  }
+ },
+ "text_hash": {
+  "69e7aacb5f1a22ab19a8d7d8_00115": {
+   "T1": "dc2b516dcef6cfab",
+   "T2": "e59907e5bcee6c0d",
+   "T3": "e59907e5bcee6c0d"
+  },
+  "69e7aacb5f1a22ab19a8d7d8_00116": {
+   "T1": "4abec0f2e9ba13c8",
+   "T2": "9118fac564b70bf9"
+  },
+  "69e7aacb5f1a22ab19a8d7d8_00113": {
+   "T1": "e609b4116c2d3f2c",
+   "T2": "58af64b0864c7244"
+  },
+  "69e7aae45f1a22ab19a8f1d1_00382": {
+   "T1": "aaca78d6f3711790",
+   "T2": "d7afeba8b56cc666"
+  },
+  "69e7aae45f1a22ab19a8f1d1_00391": {
+   "T1": "71814fa9a7c84d34",
+   "T2": "6a807f077fbae8df"
+  },
+  "69e7aae45f1a22ab19a8f1d1_00383": {
+   "T1": "abf07c1acc225f54",
+   "T2": "bc7b73f8e7866a19"
+  },
+  "69e7aaf75f1a22ab19a907e7_00010": {
+   "T1": "2b0d4ef917af780d",
+   "T2": "ca64890fad1de1e0"
+  },
+  "69e7aaf75f1a22ab19a907e7_00006": {
+   "T1": "4888b9baeaa72168",
+   "T2": "8a2077b0d7031376"
+  },
+  "69e7aaf75f1a22ab19a907e7_00008": {
+   "T1": "e259235ce7c37bb1",
+   "T2": "e259235ce7c37bb1",
+   "T3": "a892de74da449718"
+  },
+  "69e7ab345f1a22ab19a94976_00277": {
+   "T1": "e0bba34530e30ae1",
+   "T2": "023983bc87b5baa1"
+  },
+  "69e7ab345f1a22ab19a94976_00271": {
+   "T1": "64f4df212ed688ff",
+   "T2": "4fdc86325d1765a3"
+  },
+  "69e7ab345f1a22ab19a94976_00273": {
+   "T1": "662850aa5df928de",
+   "T2": "322071ed7e377b97",
+   "T3": "c9c24130843a6b69"
+  },
+  "69e7ab485f1a22ab19a95e06_00206": {
+   "T1": "8cef8359475891d7",
+   "T2": "5e42eeac05619190"
+  },
+  "69e7ab485f1a22ab19a95e06_00202": {
+   "T1": "a5bc931ef66cfae1",
+   "T2": "6580f369b9986a59"
+  },
+  "69e7ab485f1a22ab19a95e06_00201": {
+   "T1": "60dcf75418bd4c9b",
+   "T2": "194a0c89765f193a"
+  },
+  "69e7ab555f1a22ab19a96c7a_00145": {
+   "T1": "361ae75e7f9efd50",
+   "T2": "dc0b236872bbe2cc"
+  },
+  "69e7ab555f1a22ab19a96c7a_00149": {
+   "T1": "dce071122e2aa163",
+   "T2": "ed55e06a57d2a9b2"
+  },
+  "69e7ab555f1a22ab19a96c7a_00151": {
+   "T1": "9fe7c5075023139b",
+   "T2": "a68ca311d8bf2bec"
+  },
+  "69e7ab5f5f1a22ab19a978df_00253": {
+   "T1": "a45120795b353806",
+   "T2": "aaca78d6f3711790"
+  },
+  "69e7ab5f5f1a22ab19a978df_00256": {
+   "T1": "aaca78d6f3711790",
+   "T2": "3c2f77f0b6a2f356"
+  },
+  "69e7ab5f5f1a22ab19a978df_00251": {
+   "T1": "cbac136704aade9c",
+   "T2": "aaca78d6f3711790"
+  },
+  "69e7ab985f1a22ab19a9a963_00099": {
+   "T1": "147972bf42f50c82",
+   "T2": "b0ca152b0da7aaf0"
+  },
+  "69e7ab985f1a22ab19a9a963_00090": {
+   "T1": "26cdfa516af83db4",
+   "T2": "607c92eb09ed4a21"
+  },
+  "69e7ab985f1a22ab19a9a963_00095": {
+   "T1": "fc50c12d05649153",
+   "T2": "b7f2b23226f7bd74",
+   "T3": "b7f2b23226f7bd74"
+  },
+  "69e7abdd5f1a22ab19a9fade_00255": {
+   "T1": "de68bd6b58384680",
+   "T2": "b267f1444d10bc0c"
+  },
+  "69e7abdd5f1a22ab19a9fade_00260": {
+   "T1": "a878494592d3243a",
+   "T2": "0d5929d9538cf9eb"
+  },
+  "69e7abdd5f1a22ab19a9fade_00259": {
+   "T1": "8aa02d7d0593bc37",
+   "T2": "10a4e60f6a6ef6e4",
+   "T3": "10a4e60f6a6ef6e4"
+  },
+  "6a14e171311a9edd46221377_00585": {
+   "T1": "174cad7f6bd0625c",
+   "T2": "aaca78d6f3711790"
+  },
+  "6a14e171311a9edd46221377_00579": {
+   "T1": "d4daef45ecc98dc2",
+   "T2": "aaca78d6f3711790"
+  },
+  "6a14e171311a9edd46221377_00587": {
+   "T1": "e9b3c8f926bc569a",
+   "T2": "df2a4c7a2ceb6928"
+  }
+ }
+}

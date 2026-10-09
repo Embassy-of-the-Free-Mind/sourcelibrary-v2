@@ -21,7 +21,7 @@ import { bookUrl, tenantBookUrl } from '@/lib/slugify';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import { ART_EXCLUDED_RESOURCE_TYPES, bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
-import { getBookThumbnailUrl } from '@/lib/utils';
+import { getBookThumbnailUrl, toDisplayVariantUrl } from '@/lib/utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { isTranslationReadable } from '@/lib/first-translation/derive';
 import { ftRenderProps, type FtRenderSource } from '@/lib/first-translation/render';
@@ -93,13 +93,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         title: `${collection.name} - Source Library`,
         description,
         type: 'website',
-        images: [{ url: cardImage, alt: `${collection.name} — Source Library collection` }],
+        images: [{ url: cardImage, alt: `${collection.name}, a Source Library collection` }],
       },
       twitter: {
         card: 'summary_large_image',
         title: `${collection.name} - Source Library`,
         description,
-        images: [{ url: cardImage, alt: `${collection.name} — Source Library collection` }],
+        images: [{ url: cardImage, alt: `${collection.name}, a Source Library collection` }],
       },
     };
   } catch {
@@ -1144,7 +1144,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
 
   // Fallback hero: use collection.hero_image or first featured_image when no gallery images
   const fallbackHeroUrl = !heroImages.length
-    ? (collection.hero_image as string | undefined)
+    ? (toDisplayVariantUrl(collection.hero_image as string | undefined) ?? undefined)
     || (() => {
       const fi = (collection.featured_images as { extracted_url?: string; image_url?: string; thumbnail_url?: string }[] | undefined);
       const first = fi?.find(img => img.thumbnail_url || img.extracted_url || img.image_url);
@@ -1353,7 +1353,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
                   >
                     {heroUrl ? (
                       <Image
-                        src={heroUrl}
+                        src={toDisplayVariantUrl(heroUrl) ?? heroUrl}
                         alt={`Illustration from ${child.name}`}
                         fill
                         sizes="(max-width: 640px) 50vw, 25vw"
@@ -1460,7 +1460,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
               </span>
             </div>
             <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">
-              Works in this collection appearing in a modern, readable translation for the first time — read them in full here.
+              Works in this collection appearing in a modern, readable translation for the first time. Read them in full here.
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {firstTranslations.map((b) => {

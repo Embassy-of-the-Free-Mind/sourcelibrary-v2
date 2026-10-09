@@ -23,7 +23,8 @@ setup() {
   command -v uv >/dev/null || { curl -LsSf https://astral.sh/uv/install.sh | sh >> "$W/setup.log" 2>&1; }
   export PATH="$HOME/.local/bin:$PATH"
   [ -x "$PY" ] || uv venv -p 3.12 "$W/venv" >> "$W/setup.log" 2>&1
-  VIRTUAL_ENV="$W/venv" uv pip install -U vllm --torch-backend auto >> "$W/setup.log" 2>&1
+  # pinned to the version wave 1 measured (gpu-box.json); VLLM_VERSION overrides (#6011 wave 2)
+  VIRTUAL_ENV="$W/venv" uv pip install "vllm==${VLLM_VERSION:-0.31.0}" --torch-backend auto >> "$W/setup.log" 2>&1
   VIRTUAL_ENV="$W/venv" uv pip install hf_transfer requests markdownify beautifulsoup4 pydantic-settings python-dotenv filetype >> "$W/setup.log" 2>&1
   VIRTUAL_ENV="$W/venv" uv pip install --no-deps chandra-ocr==0.2.0 >> "$W/setup.log" 2>&1
   log "setup ok: $($PY -c 'import vllm,torch;print("vllm",vllm.__version__,"torch",torch.__version__)' 2>&1 | tail -1) $(nvidia-smi --query-gpu=name,driver_version,memory.total --format=csv,noheader)"
@@ -34,14 +35,16 @@ setup() {
 }
 
 serve() {   # $1 engine
-  local args
+  local args envs=()
   case $1 in
     deepseek-ocr-plain) args=(deepseek-ai/DeepSeek-OCR --no-enable-prefix-caching --mm-processor-cache-gb 0) ;;
-    deepseek-ocr) args=(deepseek-ai/DeepSeek-OCR --logits_processors vllm.model_executor.models.deepseek_ocr:NGramPerReqLogitsProcessor --no-enable-prefix-caching --mm-processor-cache-gb 0) ;;
+    # vLLM 0.31's V2 model runner rejects DeepSeek's n-gram processor and the plain serve hits a Triton bug;
+    # wave 1 read DeepSeek on the V1 runner by hand (gpu-box.json notes). Encoded here for wave 2.
+    deepseek-ocr) envs=(VLLM_USE_V2_MODEL_RUNNER=0 TRITON_ALLOW_NON_CONSTEXPR_GLOBALS=1); args=(deepseek-ai/DeepSeek-OCR --logits_processors vllm.model_executor.models.deepseek_ocr:NGramPerReqLogitsProcessor --no-enable-prefix-caching --mm-processor-cache-gb 0) ;;
     qwen3-vl-8b)  args=(Qwen/Qwen3-VL-8B-Instruct --max-model-len 16384 --limit-mm-per-prompt '{"image":1}') ;;
     chandra-ocr-2) args=(datalab-to/chandra-ocr-2 --max-model-len 18000 --dtype bfloat16 --mm-processor-kwargs '{"min_pixels": 3136, "max_pixels": 6291456}') ;;
   esac
-  nohup "$W/venv/bin/vllm" serve "${args[@]}" --served-model-name m --gpu-memory-utilization 0.88 --port 8000 > "$W/serve-$1.log" 2>&1 &
+  nohup env "${envs[@]}" "$W/venv/bin/vllm" serve "${args[@]}" --served-model-name m --gpu-memory-utilization 0.88 --port 8000 > "$W/serve-$1.log" 2>&1 &
   echo $! > "$W/serve.pid"
   for i in $(seq 1 180); do
     curl -fs http://127.0.0.1:8000/v1/models >/dev/null 2>&1 && { log "$1 serving after $((i*5)) s"; return 0; }
@@ -55,7 +58,7 @@ serve() {   # $1 engine
 stop_serve() { local p; p=$(cat "$W/serve.pid" 2>/dev/null) && kill "$p" 2>/dev/null; sleep 10; kill -9 "$p" 2>/dev/null; sleep 5; true; }
 
 run() {
-  for e in deepseek-ocr qwen3-vl-8b chandra-ocr-2; do
+  for e in ${ENGINES:-deepseek-ocr qwen3-vl-8b chandra-ocr-2}; do
     local t0 up=0; t0=$(date +%s)
     if serve "$e"; then up=1
     elif [ "$e" = deepseek-ocr ]; then
@@ -92,6 +95,7 @@ PY
 
 case ${1:-} in
   setup) setup ;; run) run ;; collect) collect ;;
+  run1) ENGINES="$2" run; collect ;;   # one engine again on a box already set up (#6011 wave 2: DeepSeek after a failed start)
   all) setup; run; collect; touch "$W/DONE"; log DONE ;;
   *) echo "usage: $0 setup|run|collect|all"; exit 1 ;;
 esac

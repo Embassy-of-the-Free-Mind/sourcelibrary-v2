@@ -162,6 +162,16 @@ wrong, a human should look" but "nothing is wrong yet, and running the lane woul
 so". `scripts/audit/pipeline-hold-drift.mjs` finds a marker without the status (a writer
 this rule does not know about) and a hold whose release condition has been met.
 
+**The status is not the test; the marker is (#6122).** `archive-erara.mjs` selected e-rara
+books at any status and wrote `archive_complete` with a raw `$set`, lifting **329** holds
+(2026-10-03 → 10-07, no `audit_log` row); Phase 2 then OCR'd 30 of them. A direct status
+writer must filter on `NOT_HELD` *and* on the statuses it may advance from. The drift audit had
+logged the clobbering daily for four days to a file nobody read — it now runs with `--alert`
+(one issue, ntfy on new books, closes itself when clean). **Tell:** a CLOBBERED cluster that
+shares one provider and one `last_updated` hour is one writer; group by those two before
+reading code. The structural fix — paid steps run only on APPROVED books, so a lost hold cannot
+become spend — is tracked separately; a hold is a blocklist, and a blocklist leaks.
+
 ## A completion predicate must count what the writer actually writes (#4839)
 
 *Added 2026-09-15.*

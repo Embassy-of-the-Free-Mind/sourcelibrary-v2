@@ -67,11 +67,13 @@ vi.mock('@/lib/books-catalog', () => ({ searchBookIds: async () => state.bookLan
 vi.mock('@/lib/semantic-search', () => ({
   semanticBookSearch: async () => [],
   semanticPageSearchGlobal: async () => [],
+  semanticPageSearchUntranslated: async () => ({ rows: [], state: 'off' }),
   lexicalPageSearchLang: async () => [],
 }));
 vi.mock('@/lib/search/work-fanout', () => ({ fetchWorkFanouts: async () => new Map() }));
 vi.mock('@/lib/search-log', () => ({ logSearchQuery: (x: any) => { state.logged.push(x); } }));
 vi.mock('@/lib/search-event-log', () => ({ logSearchEvent: () => {} }));
+vi.mock('@/lib/search/canon-texts', () => ({ searchCanonTexts: async () => [] }));
 
 async function search(params: string) {
   const { GET } = await import('@/app/api/search/route');

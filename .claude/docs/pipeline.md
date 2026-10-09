@@ -127,19 +127,14 @@ Most submission limits are now **adaptive** — managed by `src/lib/adaptive-lim
 ### Pause Controls
 
 **Emergency stop:** `system_config` collection, `_id: 'processing_control'`.
-- `paused: true` — halts ALL pipeline work
-- `paused_phases: string[]` — selective pauses per phase
+- `paused: true` — halts pipeline work, EXCEPT for books inside a selective-unpause scope
+- `paused_phases: string[]` — per-step pauses; absolute, a scope does not bypass them
 
-| Phase flag | What it blocks |
-|-----------|----------------|
-| `'ocr'` | OCR submission (Phase 2) AND OCR completion detection (Phase 3) |
-| `'translation'` | Translation submission (Phase 4) AND translation completion (Phase 5) |
-| `'images'` | Image extraction submission AND finalization (books can't reach `complete`) |
-| `'enrichment'` | Summary + index generation (enrich-books cron Phase 1) |
-| `'chapters'` | Chapter extraction (enrich-books cron Phase 2) |
-| `'transliteration'` | Transliteration/romanization of non-Latin scripts (enrich-books cron Phase 3) |
-
-**Both submission AND completion are guarded.** This prevents in-flight work from cascading through paused phases — a hard-learned lesson from the Mar 2 bypass incident.
+The keys are `archive`, `ocr`, `translate`, `enrich`, `images`, `embeddings`
+(`scripts/lib/pause.mjs`; the table of which lane reads which is in `pipeline-phases.md`).
+The table that used to be here named `'chapters'` and `'transliteration'`, read by the
+archived Vercel crons only — no live lane reads them, and the emergency-stop route now
+rejects them (#5492).
 
 ```bash
 # Pause OCR and images
@@ -262,7 +257,7 @@ Romanizes OCR text for non-Latin scripts (Greek, Hebrew, Arabic, etc.). **Not ti
 - **Limits:** 10 books/run, 200 pages/run total
 - **Storage:** `page.transliteration.data` (romanized text), `.model`, `.updated_at`, `.source_ocr_hash` (cache invalidation), `.script` (source script name)
 - **Logging:** Each call logged to `gemini_usage` with `type: 'transliterate'`
-- **Pause:** `paused_phases: ['transliteration']`
+- **Pause:** `paused_phases: ['ocr']` — transliteration is orchestrator Phase 3.7, governed by the `ocr` key. The old word for it, transliteration, was read only by the archived Vercel cron and pauses nothing (#5492)
 - **Manual trigger:** `POST /api/pages/{pageId}/transliterate`
 - **Batch script:** `scripts/batch/batch-transliterate.mjs` (uses cheaper `gemini-3.1-flash-lite-preview`)
 

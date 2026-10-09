@@ -155,7 +155,7 @@ function prRef(n: number, gh: GithubDoc | null, issue?: GhIssue): PrRef {
 /** Why a job is on the dead list, in words Derek can act on. */
 export function deadReason(j: BoxJob): string {
   if (j.state === 'gave-up') return `gave up after ${j.max_resumes ?? j.resumes ?? '?'} resumes, no done file`;
-  if (j.state === 'blocked') return 'wrote a BLOCKED / outbox note — needs an answer';
+  if (j.state === 'blocked') return 'wrote a BLOCKED / outbox note; needs an answer';
   if (j.exit_code == null) return 'killed before it wrote a word (empty log), no done file';
   if (j.exit_code === 0) return 'exited without its done file';
   return `exited ${j.exit_code} without its done file`;
@@ -176,7 +176,7 @@ export function infraItem(f: InfraFlag, b: BoxDoc, gh: GithubDoc | null): DeadIt
     f.age_days != null ? `${f.age_days} d old` : null,
     f.cpu_24h != null ? `CPU ${f.cpu_24h.toFixed(1)} % / 24 h` : null,
   ].filter(Boolean).join(' · ');
-  return { kind: 'infra', name: f.name, box: b.box, state: 'billing', why: `${facts} — ${f.reason}`, at: iso(b.generated_at), issue: issueRef(f.issue ?? undefined, gh), eur_month: f.eur_month };
+  return { kind: 'infra', name: f.name, box: b.box, state: 'billing', why: `${facts}: ${f.reason}`, at: iso(b.generated_at), issue: issueRef(f.issue ?? undefined, gh), eur_month: f.eur_month };
 }
 
 /** Grace after the done file for the report comment, which some jobs post just after touching it. */
@@ -244,7 +244,7 @@ export function buildBoard(docs: WorkBoardDoc[], now: Date = new Date()): Board 
   for (const b of boxes) for (const c of b.chains ?? []) {
     const blocker = c.waits_for.find(w => !w.done && ['dead', 'gave-up'].includes(byName.get(`${b.box}:${w.job}`)?.state ?? ''));
     if (blocker) {
-      dead.push({ kind: 'chain', name: c.name, box: b.box, state: 'stuck', why: `waits for ${blocker.job}, which ${byName.get(`${b.box}:${blocker.job}`)?.state === 'gave-up' ? 'gave up' : 'died'} — will never fire`, at: iso(c.last_activity), issue: null });
+      dead.push({ kind: 'chain', name: c.name, box: b.box, state: 'stuck', why: `waits for ${blocker.job}, which ${byName.get(`${b.box}:${blocker.job}`)?.state === 'gave-up' ? 'gave up' : 'died'}, so it will never fire`, at: iso(c.last_activity), issue: null });
     } else if (/gave up/i.test(c.last_line)) {
       dead.push({ kind: 'chain', name: c.name, box: b.box, state: 'gave-up', why: c.last_line, at: iso(c.last_activity), issue: null });
     }
@@ -265,7 +265,7 @@ export function buildBoard(docs: WorkBoardDoc[], now: Date = new Date()): Board 
   for (const b of boxes) for (const c of b.chains ?? []) {
     if (dead.some(d => d.kind === 'chain' && d.box === b.box && d.name === c.name)) continue;
     const next = c.waits_for.find(w => !w.done);
-    const what = next ? `waits for ${next.job} → then starts ${c.starts[c.waits_for.indexOf(next)] ?? c.starts[c.starts.length - 1] ?? '—'}` : c.about;
+    const what = next ? `waits for ${next.job} → then starts ${c.starts[c.waits_for.indexOf(next)] ?? c.starts[c.starts.length - 1] ?? '–'}` : c.about;
     running.push({ kind: 'chain', name: c.name, box: b.box, started: iso(c.started), last_activity: iso(c.last_activity), what, issue: null });
   }
 
@@ -288,7 +288,7 @@ export function buildBoard(docs: WorkBoardDoc[], now: Date = new Date()): Board 
 
 /** "4 min", "3 h", "2 d" — relative, so the page never prints a timezone. */
 export function ago(at: string | null, now: Date = new Date()): string {
-  if (!at) return '—';
+  if (!at) return '–';
   const m = Math.max(0, Math.round((now.getTime() - ms(at)) / 60_000));
   if (m < 60) return `${m} min`;
   const h = m / 60;

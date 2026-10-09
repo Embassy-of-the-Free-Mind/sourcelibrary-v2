@@ -313,12 +313,12 @@ function BatchLane<M, S>(props: BatchLaneProps<M, S>) {
           <p className="text-sm text-stone-700 mb-1">{props.renderSummary(data)}</p>
           {data.capped && (
             <p className="text-xs text-amber-700 mb-2">
-              Only the first {data.manifest.length} of {data.total} are listed — run the batch again afterwards for the rest.
+              Only the first {data.manifest.length} of {data.total} are listed. Run the batch again afterwards for the rest.
             </p>
           )}
           {props.renderNotices?.(data)}
           <p className="text-xs text-stone-500 mb-3">
-            This is every row the run would touch. Read it before continuing — nothing has been written yet.
+            This is every row the run would touch. Read it before continuing. Nothing has been written yet.
           </p>
           <div className="max-h-96 overflow-y-auto border border-stone-200 rounded">
             <table className="w-full text-xs">
@@ -334,7 +334,7 @@ function BatchLane<M, S>(props: BatchLaneProps<M, S>) {
           </div>
           <button onClick={startSpotCheck} disabled={data.manifest.length === 0}
             className="mt-3 text-sm px-4 py-2 rounded bg-stone-800 text-white hover:bg-stone-900 disabled:opacity-40">
-            I&apos;ve read the list — spot-check {data.spotCheckSize} of them →
+            I&apos;ve read the list. Spot-check {data.spotCheckSize} of them →
           </button>
         </div>
       )}
@@ -346,7 +346,7 @@ function BatchLane<M, S>(props: BatchLaneProps<M, S>) {
             {flagged > 0 && <span className="text-rose-700"> · {flagged} flagged</span>}.
           </p>
           <p className="text-xs text-stone-500 mb-3">
-            Flagged rows are left pending for manual review — they are excluded from the run, never auto-rejected.
+            Flagged rows are left pending for manual review. They are excluded from the run, never auto-rejected.
           </p>
           {!spotItems && <p className="text-sm text-stone-500">Loading the sample…</p>}
           <div className="space-y-3">
@@ -363,7 +363,7 @@ function BatchLane<M, S>(props: BatchLaneProps<M, S>) {
                     </button>
                     <button onClick={() => setJudged((j) => ({ ...j, [k]: 'flag' }))}
                       className={`text-xs px-3 py-1.5 rounded border ${v === 'flag' ? 'bg-rose-600 text-white border-rose-600' : 'border-stone-200 text-stone-600 hover:border-rose-400'}`}>
-                      Flag — don&apos;t include
+                      Flag: don&apos;t include
                     </button>
                   </div>
                 </div>
@@ -375,7 +375,7 @@ function BatchLane<M, S>(props: BatchLaneProps<M, S>) {
             <button onClick={() => setStep('manifest')} className="text-sm px-3 py-2 rounded border border-stone-200 text-stone-600">← Back to the list</button>
             {screenUnreliable ? (
               <p className="text-sm text-rose-700">
-                {flagged} of {sampled.length} sampled rows were wrong. That is a bad screen, not bad rows — review this
+                {flagged} of {sampled.length} sampled rows were wrong. That is a bad screen, not bad rows. Review this
                 slice one at a time instead of batching it.
               </p>
             ) : (
@@ -404,18 +404,18 @@ function BatchLane<M, S>(props: BatchLaneProps<M, S>) {
           {running && (
             <button onClick={() => { abortRef.current = true; }}
               className="mt-3 text-sm px-4 py-2 rounded border border-rose-300 text-rose-700 hover:bg-rose-50">
-              Abort — stop after this chunk
+              Abort: stop after this chunk
             </button>
           )}
           {step === 'done' && (
             <div className="mt-3 text-sm text-stone-600 space-y-1">
-              <p>{abortRef.current ? 'Aborted.' : 'Finished.'} Rows already written stay written — each one is its own merge with its own provenance doc.</p>
+              <p>{abortRef.current ? 'Aborted.' : 'Finished.'} Rows already written stay written; each one is its own merge with its own provenance doc.</p>
               {finalizing && <p className="text-stone-500">Revalidating the touched pages…</p>}
-              {finalized && <p className="text-stone-500">Revalidated {finalized.revalidated} paths{finalized.purged ? ' and purged Cloudflare' : ' (Cloudflare purge failed — see server logs)'}.</p>}
+              {finalized && <p className="text-stone-500">Revalidated {finalized.revalidated} paths{finalized.purged ? ' and purged Cloudflare' : ' (Cloudflare purge failed; see server logs)'}.</p>}
               <p className="text-xs text-stone-500">
                 Supabase <code className="text-[11px]">books_catalog</code> is not written here: every row above bumped{' '}
                 <code className="text-[11px]">updated_at</code>, which the incremental{' '}
-                <code className="text-[11px]">sync-books-catalog.mjs</code> (:45 of every odd hour) keys on — public
+                <code className="text-[11px]">sync-books-catalog.mjs</code> (:45 of every odd hour) keys on, so public
                 listings catch up within two hours.
               </p>
               {errors.length > 0 && (
@@ -557,7 +557,7 @@ function WorkMergesTab({ bph }: { bph: boolean }) {
           title={batch === 'approve' ? `Approve every LLM-‘same’ merge` : `Reject every LLM-‘different’ pair`}
           whatHappens={batch === 'approve'
             ? 'Each pair merges immediately: loser books rewritten to the winner, work_id_aliases stamped for the redirect, provenance + revert payload in work_id_merges.'
-            : 'Status only — marks each pair rejected. No book is touched.'}
+            : 'Status only: marks each pair rejected. No book is touched.'}
           manifestUrl={`/api/admin/work-merges/batch?verdict=${verdict}${bph ? '&bph=1' : ''}`}
           postUrl="/api/admin/work-merges/batch"
           bodyBase={{ action: batch, verdict }}
@@ -574,13 +574,13 @@ function WorkMergesTab({ bph }: { bph: boolean }) {
           }
           renderManifestRow={(m) => (
             <>
-              <td className="px-2 py-1.5 text-stone-700 whitespace-nowrap">{m.author || '—'}</td>
+              <td className="px-2 py-1.5 text-stone-700 whitespace-nowrap">{m.author || '–'}</td>
               <td className="px-2 py-1.5 text-stone-600">
                 <div className="line-clamp-1">{m.titleA}</div>
                 <div className="line-clamp-1 text-stone-400">{m.titleB}</div>
               </td>
               <td className="px-2 py-1.5 font-mono text-[10px] text-stone-500 break-all max-w-[16rem]">
-                {batch === 'approve' ? m.winner : '—'}
+                {batch === 'approve' ? m.winner : '–'}
               </td>
               <td className="px-2 py-1.5 text-stone-600 whitespace-nowrap">
                 {m.willBeStale ? <span className="text-amber-700">already resolved</span> : (batch === 'approve' ? m.booksToMove : '0')}
@@ -598,7 +598,7 @@ function WorkMergesTab({ bph }: { bph: boolean }) {
             return dd.staleCount > 0 ? (
               <p className="text-xs text-amber-700 mb-2">
                 <strong>{dd.staleCount} of {dd.manifest.length}</strong> have no books left on one side, so they will be
-                marked <code className="text-[11px]">stale</code> rather than merged — approving them writes nothing to
+                marked <code className="text-[11px]">stale</code> rather than merged; approving them writes nothing to
                 any book. Measured 2026-08-28, none of those retired ids appear in{' '}
                 <code className="text-[11px]">work_id_aliases</code>, so they were not merged away: the local
                 <code className="text-[11px]"> local:n:author:title</code> mint moved under them when a title or author
@@ -640,7 +640,7 @@ function WorkMergesTab({ bph }: { bph: boolean }) {
                 </span>
               )}
               {item.status !== 'pending' && item.reviewed_by && (
-                <span className="text-xs text-stone-400 ml-auto">{item.status} by {item.reviewed_by}{item.winner ? ` → kept ${item.winner}` : ''}{item.note ? ` — ${item.note}` : ''}</span>
+                <span className="text-xs text-stone-400 ml-auto">{item.status} by {item.reviewed_by}{item.winner ? ` → kept ${item.winner}` : ''}{item.note ? ` · ${item.note}` : ''}</span>
               )}
             </header>
 
@@ -763,7 +763,7 @@ function EditionKeepersTab({ bph }: { bph: boolean }) {
   useEffect(() => { load(); }, [load]);
 
   async function act(item: KeeperItem, action: 'keep' | 'dismiss', keeperId?: string) {
-    if (action === 'keep' && item.ftFlag && !confirm('This cluster carries a First Translation badge — hiding a badged copy changes what FT counting sees. Proceed?')) return;
+    if (action === 'keep' && item.ftFlag && !confirm('This cluster carries a First Translation badge. Hiding a badged copy changes what FT counting sees. Proceed?')) return;
     setBusy(item.editionKey);
     try {
       const res = await fetch('/api/admin/edition-keepers', {
@@ -808,7 +808,7 @@ function EditionKeepersTab({ bph }: { bph: boolean }) {
       {status === 'pending' && !batchOpen && (buckets.MECHANICAL_KEEP || 0) > 1 && (
         <div className="mb-4 flex flex-wrap items-center gap-3 rounded-lg border border-stone-200 bg-stone-50/60 px-4 py-3">
           <span className="text-sm text-stone-700">
-            {buckets.MECHANICAL_KEEP} pending <strong>MECHANICAL_KEEP</strong> clusters — one member dominates on every axis.
+            {buckets.MECHANICAL_KEEP} pending <strong>MECHANICAL_KEEP</strong> clusters: one member dominates on every axis.
           </span>
           <button onClick={() => setBatchOpen(true)} className="text-sm px-3 py-1.5 rounded bg-stone-800 text-white hover:bg-stone-900">
             Batch-keep the mechanical ones →
@@ -844,7 +844,7 @@ function EditionKeepersTab({ bph }: { bph: boolean }) {
                 {m.willHide} of {m.nMembers - 1}
                 <div className="text-[10px] text-stone-400 line-clamp-1">{m.others.map((o) => o.title || o.id).join(' · ')}</div>
               </td>
-              <td className="px-2 py-1.5 text-stone-600 whitespace-nowrap">{m.pageRatio !== null ? `${Math.round(m.pageRatio * 100)}%` : '—'}</td>
+              <td className="px-2 py-1.5 text-stone-600 whitespace-nowrap">{m.pageRatio !== null ? `${Math.round(m.pageRatio * 100)}%` : '–'}</td>
             </>
           )}
           renderSummary={(d) => {
@@ -858,15 +858,15 @@ function EditionKeepersTab({ bph }: { bph: boolean }) {
                 {dd.manifest.length > 0 && dd.booksHidden === 0 && (
                   <p className="text-xs text-amber-700 mb-2">
                     <strong>No book will actually be hidden.</strong> Every non-keeper in these clusters is already
-                    hidden with <code className="text-[11px]">hidden_reason: &lsquo;same_edition_duplicate&rsquo;</code> —
-                    the script lane (<code className="text-[11px]">apply-keeper-choice-triage.mjs</code>) applied them
+                    hidden with <code className="text-[11px]">hidden_reason: &lsquo;same_edition_duplicate&rsquo;</code>.
+                    The script lane (<code className="text-[11px]">apply-keeper-choice-triage.mjs</code>) applied them
                     and never marked the queue rows. Running this reconciles the queue and records who signed off; it
                     changes nothing a reader sees.
                   </p>
                 )}
                 {dd.ftExcluded > 0 && (
                   <p className="text-xs text-purple-800 mb-2">
-                    {dd.ftExcluded} MECHANICAL_KEEP clusters carry a First Translation badge and are excluded — hiding a
+                    {dd.ftExcluded} MECHANICAL_KEEP clusters carry a First Translation badge and are excluded, because hiding a
                     badged copy changes what FT counting sees. Review those one at a time.
                   </p>
                 )}
@@ -927,10 +927,10 @@ function EditionKeepersTab({ bph }: { bph: boolean }) {
             {item.status === 'pending' ? (
               <button disabled={busy === item.editionKey} onClick={() => act(item, 'dismiss')}
                 className="text-xs px-3 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded transition-colors disabled:opacity-50">
-                Not the same edition — leave all visible
+                Not the same edition: leave all visible
               </button>
             ) : (
-              <div className="text-xs text-stone-500">{item.status}{item.keeper ? ` — keeper ${item.keeper}` : ''}</div>
+              <div className="text-xs text-stone-500">{item.status}{item.keeper ? ` · keeper ${item.keeper}` : ''}</div>
             )}
           </article>
         ))}
@@ -962,7 +962,7 @@ export default function IdentityReviewPage() {
         The human remainder of the identity stack. <strong>Work merges</strong>: are these two work
         ids the same intellectual work? Approving merges immediately (aliases + redirect + provenance,
         revert path in <code className="text-xs">work_id_merges</code>). <strong>Edition keepers</strong>:
-        same printing scanned twice — which copy do readers see? Keeping hides the others as
+        same printing scanned twice: which copy do readers see? Keeping hides the others as
         duplicates. Screen the merge queue first with{' '}
         <code className="text-xs">scripts/analysis/stamp-work-merge-queue-llm.mjs</code>, then use
         the <strong>batch lanes</strong> to clear the screened slices in one sitting and review the{' '}

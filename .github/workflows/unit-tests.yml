@@ -51,3 +51,10 @@ jobs:
       # and new direct `@vercel/blob` imports that bypass storagePut().
       - name: No new Vercel Blob dependencies
         run: node scripts/audit/no-vercel-blob.mjs
+
+      # The generated routing table (.claude/docs/ocr-engine-routing.md) against the live
+      # routing constants (#5871). Class (c) of scripts/audit/routing-drift.mjs only: the
+      # other classes compare the code with the decisions ledger and are filed as issues by
+      # the daily cron, never failed on a PR. Exit 2 (could not run) fails the step too.
+      - name: Generated routing table is current
+        run: node scripts/audit/routing-drift.mjs --ci

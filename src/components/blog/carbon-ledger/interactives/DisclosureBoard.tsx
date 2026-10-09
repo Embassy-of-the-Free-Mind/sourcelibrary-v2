@@ -34,7 +34,7 @@ export function DisclosureBoard() {
   return (
     <figure className="my-8 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-950 p-6">
       <figcaption className="mb-1 text-xs font-mono uppercase tracking-wide text-stone-500 dark:text-stone-400">
-        Interactive — Provider disclosure scoreboard
+        Interactive: Provider disclosure scoreboard
       </figcaption>
       <div className="mb-4 text-stone-700 dark:text-stone-300 text-sm">
         What major AI providers have publicly disclosed about the environmental impact
@@ -90,7 +90,7 @@ export function DisclosureBoard() {
                         {isHovered && cell && (
                           <div className="absolute z-10 left-1/2 -translate-x-1/2 mt-2 w-64 rounded-md border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 p-3 shadow-lg text-left">
                             <div className="text-xs font-semibold mb-1">
-                              {p.name} — {c.label}
+                              {p.name}: {c.label}
                             </div>
                             <div className="text-xs text-stone-700 dark:text-stone-300 leading-snug mb-1">
                               {cell.note}

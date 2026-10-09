@@ -209,7 +209,7 @@ export default function EditionReviewPage({ params }: PageProps) {
               <div className="h-6 w-px bg-stone-200" />
               <div>
                 <h1 className="text-lg font-semibold text-stone-900">Edition Review</h1>
-                <p className="text-sm text-stone-500">v{edition.version} — {edition.version_label || 'Draft'}</p>
+                <p className="text-sm text-stone-500">v{edition.version} · {edition.version_label || 'Draft'}</p>
               </div>
             </div>
 

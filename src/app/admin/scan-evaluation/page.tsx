@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { getReadDb } from '@/lib/mongodb';
 
 export const metadata: Metadata = {
-  title: 'Scan Quality — Cases Wanting Review',
+  title: 'Scan Quality: Cases Wanting Review',
   description: 'Pages where the scan_quality system wants a human eye.',
 };
 
@@ -79,7 +79,7 @@ const SECTION_SPECS: SectionSpec[] = [
   {
     key: 'normalizer',
     title: 'Normalizer auto-corrected',
-    blurb: 'The v4 worker flagged Gemini’s response as internally contradictory and fixed scan_class to match the concerns/completeness fields. These are exactly where Gemini self-reported contradictory evidence — worth confirming the auto-fix landed on the right class.',
+    blurb: 'The v4 worker flagged Gemini’s response as internally contradictory and fixed scan_class to match the concerns/completeness fields. These are exactly where Gemini self-reported contradictory evidence. Worth confirming the auto-fix landed on the right class.',
     reason: 'Normalizer overrode Gemini’s scan_class.',
     filter: { 'scan_quality.version': 2, 'scan_quality.class_corrected': { $exists: true } },
   },
@@ -98,7 +98,7 @@ const SECTION_SPECS: SectionSpec[] = [
   {
     key: 'microfilm-color',
     title: 'Microfilm class on a page with color information',
-    blurb: 'Gemini called this bitonal_microfilm or microfiche, but the pixel-stats see meaningful color spread (chroma > 8) — incompatible with a true bitonal scan. Likely the model overreached on microfilm signals. These are the Pausanias-p623 family: a color photograph of yellowed line art misread as microfilm.',
+    blurb: 'Gemini called this bitonal_microfilm or microfiche, but the pixel-stats see meaningful color spread (chroma > 8), which is incompatible with a true bitonal scan. Likely the model overreached on microfilm signals. These are the Pausanias-p623 family: a color photograph of yellowed line art misread as microfilm.',
     reason: 'scan_class says microfilm but pixel chroma_spread > 8.',
     filter: {
       'scan_quality.version': 2,
@@ -109,21 +109,21 @@ const SECTION_SPECS: SectionSpec[] = [
   {
     key: 'borderline',
     title: 'Borderline scores (40–65)',
-    blurb: 'The mid-band where Gemini’s judgments are most unstable across same-source pages. Worth eyeballing a few — if you mostly agree, the system is calibrated; if you disagree, the rubric needs tuning.',
-    reason: 'Score in 40–65 range — stability test.',
+    blurb: 'The mid-band where Gemini’s judgments are most unstable across same-source pages. Worth eyeballing a few: if you mostly agree, the system is calibrated; if you disagree, the rubric needs tuning.',
+    reason: 'Score in 40–65 range (stability test).',
     filter: { 'scan_quality.version': 2, 'scan_quality.scan_score': { $gte: 40, $lte: 65 } },
   },
   {
     key: 'missing',
     title: 'scan_quality missing despite characteristics present',
-    blurb: 'Pages where the deterministic image_characteristics landed but Gemini didn’t emit a scan_quality block. responseSchema is supposed to make this impossible — each occurrence is evidence the SDK isn’t strictly enforcing required fields.',
+    blurb: 'Pages where the deterministic image_characteristics landed but Gemini didn’t emit a scan_quality block. responseSchema is supposed to make this impossible, so each occurrence is evidence the SDK isn’t strictly enforcing required fields.',
     reason: 'image_characteristics present but scan_quality missing.',
     filter: { 'image_characteristics.version': 2, 'scan_quality.version': { $ne: 2 } },
   },
   {
     key: 'near-blank',
     title: 'High score despite near-blank pixel-stats',
-    blurb: 'Score ≥ 80 but the page’s pixel histogram says almost nothing is there (entropy < 1.5, bimodality ≥ 0.9). These are pages like a near-empty endpaper with a small library stamp — likely over-scored. An L1-backstop rule (tracked in #16) would downgrade these to blank or low scores.',
+    blurb: 'Score ≥ 80 but the page’s pixel histogram says almost nothing is there (entropy < 1.5, bimodality ≥ 0.9). These are pages like a near-empty endpaper with a small library stamp, likely over-scored. An L1-backstop rule (tracked in #16) would downgrade these to blank or low scores.',
     reason: 'High score on a page whose characteristics scream near-blank.',
     filter: {
       'scan_quality.version': 2,
@@ -288,7 +288,7 @@ function pageImageUrl(p: PageDoc): string {
 }
 
 function shortClass(c?: string) {
-  if (!c) return '—';
+  if (!c) return '–';
   return c.replace(/_/g, ' ');
 }
 
@@ -362,7 +362,7 @@ function PageCard({ row }: { row: PageDoc & { book?: BookMini; reason: string } 
         )}
 
         <div className="text-xs text-stone-500 font-mono pt-1 border-t border-stone-100">
-          {chars?.megapixels ?? '—'}MP · chroma {chars?.chroma_spread ?? '—'} · entr {chars?.histogram_entropy ?? '—'} · bimo {chars?.bimodality ?? '—'} · sharp {chars?.sharpness_var ?? '—'}
+          {chars?.megapixels ?? '–'}MP · chroma {chars?.chroma_spread ?? '–'} · entr {chars?.histogram_entropy ?? '–'} · bimo {chars?.bimodality ?? '–'} · sharp {chars?.sharpness_var ?? '–'}
           {activeFlags.length > 0 && <span className="block">flags: {activeFlags.join(', ')}</span>}
         </div>
 
@@ -391,11 +391,11 @@ export default async function ScanEvaluationPage() {
           <span>/</span>
           <span>scan-evaluation</span>
         </div>
-        <h1 className="text-3xl font-semibold text-stone-900 mb-2">Scan Quality — Cases Wanting a Human Eye</h1>
+        <h1 className="text-3xl font-semibold text-stone-900 mb-2">Scan Quality: Cases Wanting a Human Eye</h1>
         <p className="text-stone-600 max-w-3xl">
           The automated scan_quality system (per-page Gemini + pixel-stat hybrid, prompt v4)
           ships per-page judgments and book-level rollups. This page surfaces the cases
-          where I want validation — internal contradictions, definition tensions, borderline
+          where I want validation: internal contradictions, definition tensions, borderline
           scores, missing fields, and known edge-case patterns. Click any image to open the
           full-resolution scan in a new tab.
         </p>
@@ -440,7 +440,7 @@ export default async function ScanEvaluationPage() {
         Cases are pulled from the production <code>pages</code> collection where{' '}
         <code>scan_quality.version = 2</code> (or characteristics are present and{' '}
         <code>scan_quality</code> is missing). Limited to 8 per section to keep the page
-        scannable — if a section has many more, it means the underlying class needs
+        scannable. If a section has many more, it means the underlying class needs
         prompt-level attention, not page-level fixes.
       </footer>
     </main>

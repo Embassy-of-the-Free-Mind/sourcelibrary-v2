@@ -18,5 +18,8 @@
       "globs": ["scripts/migrations/**"],
       "diffPatterns": ["\\.deleteMany\\(", "\\.deleteOne\\(", "dropCollection\\(", "\\.drop\\(\\)", "DROP TABLE", "TRUNCATE ", "deleteBookArchived\\(", "\\$unset", "\\.rename\\("] }
   ],
+  "_diffIgnoreDoc": "diffPatterns fire only on added lines that can execute. Lines in these files are prose, fixtures or results, never run against data; comment-only lines are skipped too. The path globs above are NOT affected: a file under scripts/migrations/ still holds whatever it contains.",
+  "diffIgnoreGlobs": ["**/*.md", "**/*.txt", "tests/**", "scripts/eval/results/**", "scripts/eval/experiments/**", ".claude/docs/**", "docs/**"],
+  "diffIgnoreCommentLines": true,
   "dependabotMajorHolds": true
 }

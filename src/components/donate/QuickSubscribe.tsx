@@ -37,7 +37,7 @@ export default function QuickSubscribe({ source = 'support' }: { source?: string
   if (done) {
     return (
       <p className="text-stone-600 text-sm">
-        Thank you — you&apos;re on the list. We&apos;ll share new translations as they land.
+        Thank you, you&apos;re on the list. We&apos;ll share new translations as they land.
       </p>
     );
   }

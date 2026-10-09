@@ -482,8 +482,8 @@ export default function AutoScanFlow({ edgeDetector }: AutoScanFlowProps) {
                   <div>
                     <h1 className="font-serif text-3xl text-primary mb-3">Auto Scanner</h1>
                     <p className="text-secondary text-base leading-relaxed">
-                      Live camera with automatic page detection. Just point and hold steady
-                      &mdash; the camera fires when it sees a clear page.
+                      Live camera with automatic page detection. Just point and hold steady.
+                      The camera fires when it sees a clear page.
                     </p>
                   </div>
                   <div className="bg-warm rounded-xl p-5 text-left space-y-4">
@@ -651,7 +651,7 @@ export default function AutoScanFlow({ edgeDetector }: AutoScanFlowProps) {
             onClick={handleSkipAnalysis}
             className="text-muted text-sm hover:text-secondary underline"
           >
-            Skip — enter details manually
+            Skip and enter details manually
           </button>
         </div>
       </div>

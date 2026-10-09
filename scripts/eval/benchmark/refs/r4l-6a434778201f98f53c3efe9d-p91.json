@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A53895",
+  "edition": "V. cl. Johannis Pearsonii, S. T. P. Cestriensis nuper Episcopi, Opera posthuma chronologica, &c. viz., De serie et successione primorum Romæ episcoporum dissertationes duæ : quibus præfiguntur Annales — Wing P1003; ESTC R5231 (1688)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A53895",
+  "origin": "library",
+  "book_id": "6a434778201f98f53c3efe9d",
+  "page_number": 91,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 128572,
+    "to_char": 129856,
+    "overlap": 0.38,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-1)",
+    "at": "2026-10-06T10:11:14+00:00",
+    "note": "p.57; ref starts ~1 line early; Greek passages omitted (gaps) in EEBO ref",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      91,
+      92,
+      93
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.628Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "3c31c7dd00bc2323ff9ca803f25eb76777b5db4743ba63aca898ea35c76e318d",
+  "unit": {
+    "chars": 1284
+  }
+}

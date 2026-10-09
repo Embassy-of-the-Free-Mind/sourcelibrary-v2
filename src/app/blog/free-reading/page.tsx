@@ -252,7 +252,7 @@ export default function FreeReadingPage() {
             <strong>That last paragraph is wrong, and it took two days and a hand check to find out.</strong>{' '}
             The Archive&apos;s text file and its page images skip the same leaves, so the two sequences
             never disagree and the correct offset is always zero. What our search had actually found was
-            that the pages we were comparing against — our own earlier transcriptions — had been made
+            that the pages we were comparing against (our own earlier transcriptions) had been made
             from scans that were one leaf out, a fault in our image importer dating from last year. The
             offset search was not correcting the Archive. It was quietly matching the Archive&apos;s
             correct text to our incorrect scans, and every book it &ldquo;rescued&rdquo; was a book it

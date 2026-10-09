@@ -172,7 +172,7 @@ export default function OCRExperimentsDashboard() {
           <h2 className="text-xl text-primary mb-4">How It Works</h2>
           <div className="space-y-3 text-base text-secondary leading-relaxed">
             <p>
-              <strong>1. Create (CLI):</strong> Tell Claude Code what to compare &mdash; it creates the experiment via API.
+              <strong>1. Create (CLI):</strong> Tell Claude Code what to compare, and it creates the experiment via API.
             </p>
             <p>
               <strong>2. Run (CLI):</strong> Claude Code runs each condition, OCR-ing the same pages with different prompts.

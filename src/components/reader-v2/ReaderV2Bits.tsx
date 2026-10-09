@@ -11,8 +11,12 @@ import { usablePageFrame, frameForImage, framedImageBox, type PageFrame } from '
 import type { Book, Page } from '@/lib/types';
 import type { CdliWitness } from '@/lib/types/book';
 import { transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTranslation, type CorpusInfo } from '@/lib/text-provenance';
+import { tengyurNoteSentences, TENGYUR_METHOD_HREF } from '@/lib/tengyur-quality';
 import type { ReaderSettings } from './useReaderV2';
+import { qualityDate, type QualityWarnings } from '@/lib/book-warnings';
+import { issueUrl } from '@/lib/check-methods';
 import { PaneEmptyState, GatedPane } from './PaneEmptyState';
+import { displayTranscription } from '@/lib/esukhia-apparatus';
 
 // Shared presentational pieces for the v2 reader design previews. All values
 // map to existing Source Library tokens (globals.css) — no new primitives.
@@ -153,13 +157,69 @@ export function TextSourceLine({ page }: { page: Pick<Page, 'ocr'> }) {
  * First line of the translation pane when the English is a machine translation
  * nobody has reviewed (#5571). Toned like the Archive-OCR caution; absent on
  * corpus, Sefaria and hand-edited translations.
+ *
+ * In a Derge Tengyur volume it also says how good that section measured and what
+ * goes wrong there, with a link to the method (#6120). The numbers come from
+ * src/data/tengyur-section-quality.json, generated from the #5829 review.
  */
-export function MachineDraftLine({ page }: { page: Pick<Page, 'translation'> }) {
-  const t = getReaderStrings(useLocale()).info;
+export function MachineDraftLine({ page, book }: { page: Pick<Page, 'translation'>; book?: Pick<Book, 'title'> }) {
+  const locale = useLocale();
+  const strings = getReaderStrings(locale);
+  const t = strings.info;
   if (!isUnreviewedMachineTranslation(page)) return null;
+  const note = tengyurNoteSentences(book, strings.tengyurNote, locale);
   return (
     <p data-machine-draft="" className="font-sans text-[11.5px] leading-snug mb-3" style={{ color: 'var(--accent-gold-dark)' }}>
       {t.machineDraftNotice}
+      {note && (
+        <span data-tengyur-note="" className="block mt-1" style={{ color: 'var(--text-secondary)' }}>
+          {note.join(' ')}{' '}
+          <a href={TENGYUR_METHOD_HREF} className="underline underline-offset-2 whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>
+            {strings.tengyurNote.methodLink}
+          </a>
+        </span>
+      )}
+    </p>
+  );
+}
+
+/**
+ * One line under MachineDraftLine when a stored check says something a reader of this page should know (#6199):
+ * what was found, by whom, when, and a link that lands on the record itself. A finding on this page wins; otherwise
+ * the book's line. Nothing here withholds text: the warning sits above the page it describes.
+ */
+export function QualityWarningLine({ warnings, pageNumber, bookPath }: {
+  warnings: QualityWarnings | undefined;
+  pageNumber: number | null | undefined;
+  bookPath: string;
+}) {
+  const locale = useLocale();
+  const t = getReaderStrings(locale).info;
+  if (!warnings) return null;
+  const page = pageNumber != null ? warnings.pages[pageNumber] : undefined;
+  const book = warnings.book;
+  if (!page && !book) return null;
+  const checks = `/book/${bookPath}/checks`;
+  let text: string, href: string, link: string;
+  if (page?.level === 'review') {
+    const clauses = page.kinds.map((k) => t.qualityKinds[k]);
+    text = t.qualityPageReview({
+      ai: page.reader !== 'human', image: page.imageOpened, date: qualityDate(page.date, locale),
+      findings: t.qualityFindings(clauses.slice(0, 2), clauses.length > 2),
+    });
+    href = `${checks}#${page.anchor}`; link = t.qualitySeeReview;
+  } else if (page) {
+    text = t.qualityPageDetector(qualityDate(page.date, locale));
+    href = page.issue ? issueUrl(page.issue) : `${checks}#${page.anchor}`; link = t.qualityDetectorLink;
+  } else {
+    text = t.qualityBook({ ai: book!.reader !== 'human', image: book!.imageOpened, read: book!.pagesRead, serious: book!.pagesSerious, date: qualityDate(book!.date, locale) });
+    href = `${checks}#${book!.anchor}`; link = t.qualitySeeReview;
+  }
+  const external = href.startsWith('http');
+  return (
+    <p role="note" data-quality-warning={page ? page.level : 'book'} className="font-sans text-[11.5px] leading-snug mb-3" style={{ color: 'var(--accent-gold-dark)' }}>
+      {text}{' '}
+      <a href={href} className="underline underline-offset-2" {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}>{link}</a>
     </p>
   );
 }
@@ -271,7 +331,8 @@ export function ReaderProse({
    */
   suppressBlockquote?: boolean;
 }) {
-  const raw = kind === 'ocr' ? (page.ocr?.data || '') : (page.translation?.data || '');
+  // Esukhia pages (#5497) carry their e-text apparatus verbatim; the pane shows the block reading.
+  const raw = kind === 'ocr' ? displayTranscription(page.ocr) : (page.translation?.data || '');
   const text = suppressBlockquote ? raw.replace(/^[ \t]*>[ \t]?/gm, '') : raw;
   const lang = kind === 'ocr' ? book.language : 'English';
 

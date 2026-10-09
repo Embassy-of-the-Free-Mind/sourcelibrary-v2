@@ -1,0 +1,36 @@
+{
+  "source": "EEBO-TCP A27552",
+  "edition": "EEBO-TCP A27552 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "github.com/textcreationpartnership (CC0), 2026-10-04, job ocr-bakeoff-5660c",
+  "origin": "library",
+  "book_id": "6a4252e5343d756d34e33e36",
+  "page_number": 10,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 9993,
+    "to_char": 11366,
+    "overlap": 1,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-04",
+    "note": "Starts tergiversandi possibilitatem (few extra); ends convincitur",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T00:52:51.172Z",
+  "text_location": "repo",
+  "text_sha256": "772d694f00ee02ff0f6f24c3c8c65f58ce81da486e9d4ecc4278164eb99ce0e5",
+  "unit": {
+    "chars": 1373
+  }
+}

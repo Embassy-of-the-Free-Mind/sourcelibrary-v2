@@ -12,12 +12,12 @@ export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: 'Libraries | Source Library',
-  description: 'Browse books by digital source and contributing institution — Bibliotheca Philosophica Hermetica, Internet Archive, Gallica, Bodleian Library, and more.',
+  description: 'Browse books by digital source and contributing institution: Bibliotheca Philosophica Hermetica, Internet Archive, Gallica, Bodleian Library, and more.',
   alternates: { canonical: '/libraries' },
   openGraph: {
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: digitizing and translating ancient texts' }],
     title: 'Libraries | Source Library',
-    description: 'Browse books by digital source and contributing institution — Bibliotheca Philosophica Hermetica, Internet Archive, Gallica, Bodleian Library, and more.',
+    description: 'Browse books by digital source and contributing institution: Bibliotheca Philosophica Hermetica, Internet Archive, Gallica, Bodleian Library, and more.',
     type: 'website',
   },
 };
@@ -220,10 +220,15 @@ function PartnerCard({ partner, heroImage, count, languages, size = 'normal' }: 
 }
 
 export default async function LibrariesPage() {
+  // No catch-and-fallback here: a failed fetch that rendered empty arrays was
+  // cached for the whole revalidate window, so the page showed no cards and no
+  // counts for up to a day. Throwing lets ISR keep serving the last good render
+  // (see .claude/docs/invariants/rendering-and-seo.md, "a frozen page").
   const [stats, contributingLibraries] = await Promise.all([
-    fetchProviderStats().catch((err) => { console.error('Libraries provider fetch failed:', err); return [] as ProviderStats[]; }),
-    fetchContributingLibraries().catch((err) => { console.error('Libraries contributing fetch failed:', err); return [] as ContributingLibrary[]; }),
+    fetchProviderStats(),
+    fetchContributingLibraries(),
   ]);
+  if (stats.length === 0) throw new Error('Libraries: provider stats came back empty');
 
   // Group provider stats by PARTNER, not by provider key: some institutions
   // imported books under two keys over time (ndl + ndl_japan, mdz + bsb) and
@@ -298,8 +303,8 @@ export default async function LibrariesPage() {
         <section className="mb-16">
           <h2 className="text-2xl font-display text-primary mb-2">Libraries &amp; Archives</h2>
           <p className="text-sm text-muted mb-6 max-w-3xl">
-            The institutions whose collections we read from — each holds the books it digitized.
-            Every card links to their holdings on Source Library.
+            The institutions whose collections we read from. Each one holds the books it digitized.
+            Every card links to its holdings on Source Library.
           </p>
 
           <div className="grid gap-4 sm:gap-5 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
@@ -320,8 +325,8 @@ export default async function LibrariesPage() {
           <section className="mb-16">
             <h2 className="text-2xl font-display text-primary mb-2">Digital Archives &amp; Platforms</h2>
             <p className="text-sm text-muted mb-6 max-w-3xl">
-              Portals and aggregators through which we source scans. The books themselves live in
-              the contributing institutions credited beneath — and on each book&apos;s own page.
+              Portals and aggregators through which we source scans. The books themselves are held by
+              the contributing institutions listed below, and each book&apos;s page names its holder.
             </p>
 
             <div className="grid gap-4 sm:gap-5 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">

@@ -6,14 +6,15 @@
  * bundle-outputs.mjs — pack (or --unpack) one arm's outputs and meter for the #6011 wave-1 store.
  *   node scripts/eval/engine-wave1-6011/bundle-outputs.mjs --engine=<name> [--bench=/root/engine-wave1-6011/bench]
  *   node scripts/eval/engine-wave1-6011/bundle-outputs.mjs --engine=<name> --unpack
+ *   --res=<dir>  another wave's store (wave 2: scripts/eval/results/engine-wave2-6011)
  */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const RES = path.join(__dirname, '..', 'results', 'engine-wave1-6011');
 const argOf = (n, d) => { const a = process.argv.find(x => x.startsWith(`--${n}=`)); return a ? a.slice(n.length + 3) : d; };
+const RES = path.resolve(argOf('res', path.join(__dirname, '..', 'results', 'engine-wave1-6011')));
 const ENGINE = argOf('engine');
 const BENCH = argOf('bench', '/root/engine-wave1-6011/bench');
 if (!ENGINE) { console.error('--engine required'); process.exit(1); }

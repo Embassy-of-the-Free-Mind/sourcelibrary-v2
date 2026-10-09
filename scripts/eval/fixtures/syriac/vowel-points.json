@@ -1,0 +1,9 @@
+{
+ "script": "syriac",
+ "name": "vowel-points",
+ "reference": "ܟܬܒܐ ܕܝܠܝܕܘܬܗ ܕܝܫܘܥ ܡܫܝܚܐ ܒܪܗ ܕܕܘܝܕ ܒܪܗ ܕܐܒܪܗܡ",
+ "hypothesis": "ܟܬ݂ܳܒ݂ܳܐ ܕܺܝܠܺܝܕ݂ܽܘܬ݂ܶܗ ܕܝܶܫܽܘܥ ܡܫܺܝܚܳܐ ܒ݁ܪܶܗ ܕܕ݂ܰܘܺܝܕ݂ ܒ݁ܪܶܗ ܕܐܰܒ݂ܪܳܗܳܡ",
+ "expected_cer": 0,
+ "tolerance": 0,
+ "why": "a fully pointed print against an unpointed e-text: points (U+0730–U+074A, rukkakha/qushshaya) are not letters"
+}
