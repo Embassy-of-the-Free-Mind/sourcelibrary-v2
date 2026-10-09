@@ -432,7 +432,7 @@ export function WikipediaPlaybook({ posts }: { posts: TalkPagePost[] }) {
         <p className="text-xl text-secondary leading-relaxed">
           Source Library has thousands of translated historical texts: Copernicus, Galileo, Euclid, the Corpus
           Hermeticum, and more. Wikipedia readers should be able to find them. Claim an item, post it on the
-          Talk page, and track your contribution — so volunteers don&rsquo;t duplicate work and we can see the
+          Talk page, and track your contribution, so volunteers don&rsquo;t duplicate work and we can see the
           impact.
         </p>
       </div>
@@ -444,7 +444,7 @@ export function WikipediaPlaybook({ posts }: { posts: TalkPagePost[] }) {
         <h2 className="text-xl text-primary mb-4">Before you start</h2>
         <ol className="text-secondary space-y-3 list-decimal list-inside">
           <li>
-            <strong>Create a Wikimedia account</strong> (if you don&rsquo;t have one) &mdash;{' '}
+            <strong>Create a Wikimedia account</strong> (if you don&rsquo;t have one):{' '}
             <a
               href="https://en.wikipedia.org/wiki/Special:CreateAccount"
               target="_blank"
@@ -490,7 +490,7 @@ export function WikipediaPlaybook({ posts }: { posts: TalkPagePost[] }) {
 
       <section>
         <div className="mb-4">
-          <h2 className="text-2xl text-primary font-display">Tier 1 &mdash; Highest-Traffic Articles</h2>
+          <h2 className="text-2xl text-primary font-display">Tier 1: Highest-Traffic Articles</h2>
           <p className="text-muted text-sm mt-1">Start here. These Wikipedia articles get the most readers.</p>
         </div>
         <div className="space-y-3">{tier1.map((p, i) => renderCard(p, i))}</div>
@@ -498,7 +498,7 @@ export function WikipediaPlaybook({ posts }: { posts: TalkPagePost[] }) {
 
       <section>
         <div className="mb-4">
-          <h2 className="text-2xl text-primary font-display">Tier 2 &mdash; Strong Candidates</h2>
+          <h2 className="text-2xl text-primary font-display">Tier 2: Strong Candidates</h2>
           <p className="text-muted text-sm mt-1">Post these after Tier 1, once you see some responses.</p>
         </div>
         <div className="space-y-3">{tier2.map((p, i) => renderCard(p, tier1.length + i))}</div>
@@ -506,7 +506,7 @@ export function WikipediaPlaybook({ posts }: { posts: TalkPagePost[] }) {
 
       <section>
         <div className="mb-4">
-          <h2 className="text-2xl text-primary font-display">Tier 3 &mdash; Major Author Articles</h2>
+          <h2 className="text-2xl text-primary font-display">Tier 3: Major Author Articles</h2>
           <p className="text-muted text-sm mt-1">
             These link to the author&rsquo;s Wikipedia article rather than a specific work article.
           </p>
@@ -532,7 +532,7 @@ export function WikipediaPlaybook({ posts }: { posts: TalkPagePost[] }) {
             <strong>Don&rsquo;t game it.</strong> Source Library is genuinely useful. Let the quality speak.
           </li>
           <li>
-            <strong>Mark Merged honestly.</strong> Only when an editor actually updates the article — not when
+            <strong>Mark Merged honestly.</strong> Only when an editor actually updates the article, not when
             you post on Talk. The merged counter helps us prove impact to funders.
           </li>
         </ul>

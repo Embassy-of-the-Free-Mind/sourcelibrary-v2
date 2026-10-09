@@ -55,7 +55,7 @@ export async function generateMetadata({ params, lang = 'en' }: LayoutProps & { 
   // The excerpt is the page's own text in the reader's language; the sentence
   // around it follows the locale. An untranslated book keeps its English frame.
   const description = excerpt
-    ? `${rs.metaPageOf(pageNum, bookTitle)} — ${book.author}. ${excerpt}`
+    ? `${rs.metaPageOf(pageNum, bookTitle)}, ${book.author}. ${excerpt}`
     : `Page ${pageNum} of "${bookTitle}" by ${book.author}${book.published ? ` (${book.published})` : ''}. Digitized from the original ${book.language || 'manuscript'}.`;
 
   // Always use slug for canonical URL, even if accessed via hex ObjectId

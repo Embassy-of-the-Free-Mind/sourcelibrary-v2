@@ -1,0 +1,5690 @@
+{
+ "6a430dd522c0c8edb0f92411": {
+  "century": "1500s",
+  "order": 1,
+  "status": "skip",
+  "reason": "no page of the run located in any candidate edition",
+  "edition": "tcp-A03486",
+  "pages": [
+   {
+    "page": 32,
+    "slug": "r4l-6a430dd522c0c8edb0f92411-p32",
+    "image": "https://images.sourcelibrary.org/archived/6a430dd522c0c8edb0f92411/32.jpg",
+    "tess_letters": 263,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 33,
+    "slug": "r4l-6a430dd522c0c8edb0f92411-p33",
+    "image": "https://images.sourcelibrary.org/archived/6a430dd522c0c8edb0f92411/33.jpg",
+    "tess_letters": 472,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 34,
+    "slug": "r4l-6a430dd522c0c8edb0f92411-p34",
+    "image": "https://images.sourcelibrary.org/archived/6a430dd522c0c8edb0f92411/34.jpg",
+    "tess_letters": 0,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   }
+  ]
+ },
+ "69b6419e1c1c21a3738868c2": {
+  "century": "1500s",
+  "order": 0,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-poemata_gwalt2",
+  "pages": [
+   {
+    "page": 70,
+    "slug": "r4l-69b6419e1c1c21a3738868c2-p70",
+    "image": "https://images.sourcelibrary.org/archived/69b6419e1c1c21a3738868c2/70.jpg",
+    "tess_letters": 792,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.45,
+    "pb_aligned": true,
+    "from_char": 65891,
+    "to_char": 66940,
+    "ref_chars": 1049
+   },
+   {
+    "page": 71,
+    "slug": "r4l-69b6419e1c1c21a3738868c2-p71",
+    "image": "https://images.sourcelibrary.org/archived/69b6419e1c1c21a3738868c2/71.jpg",
+    "tess_letters": 878,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.371,
+    "pb_aligned": true,
+    "from_char": 66900,
+    "to_char": 68025,
+    "ref_chars": 1125
+   },
+   {
+    "page": 72,
+    "slug": "r4l-69b6419e1c1c21a3738868c2-p72",
+    "image": "https://images.sourcelibrary.org/archived/69b6419e1c1c21a3738868c2/72.jpg",
+    "tess_letters": 828,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.476,
+    "pb_aligned": true,
+    "from_char": 67981,
+    "to_char": 69059,
+    "ref_chars": 1078
+   }
+  ]
+ },
+ "69b637a51c1c21a373833106": {
+  "century": "1500s",
+  "order": 2,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A00325",
+  "pages": [
+   {
+    "page": 61,
+    "slug": "r4l-69b637a51c1c21a373833106-p61",
+    "image": "https://images.sourcelibrary.org/archived/69b637a51c1c21a373833106/61.jpg",
+    "tess_letters": 713,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.451,
+    "pb_aligned": true,
+    "from_char": 45182,
+    "to_char": 46015,
+    "ref_chars": 833
+   },
+   {
+    "page": 62,
+    "slug": "r4l-69b637a51c1c21a373833106-p62",
+    "image": "https://images.sourcelibrary.org/archived/69b637a51c1c21a373833106/62.jpg",
+    "tess_letters": 759,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.375,
+    "pb_aligned": true,
+    "from_char": 46002,
+    "to_char": 47068,
+    "ref_chars": 1066
+   },
+   {
+    "page": 63,
+    "slug": "r4l-69b637a51c1c21a373833106-p63",
+    "image": "https://images.sourcelibrary.org/archived/69b637a51c1c21a373833106/63.jpg",
+    "tess_letters": 771,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.377,
+    "pb_aligned": true,
+    "from_char": 46995,
+    "to_char": 48018,
+    "ref_chars": 1023
+   }
+  ]
+ },
+ "6a4fa9cdb5772a3dacaac6a6": {
+  "century": "1500s",
+  "order": 3,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A17090",
+  "pages": [
+   {
+    "page": 22,
+    "slug": "r4l-6a4fa9cdb5772a3dacaac6a6-p22",
+    "image": "https://images.sourcelibrary.org/archived/6a4fa9cdb5772a3dacaac6a6/22.jpg",
+    "tess_letters": 573,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.373,
+    "pb_aligned": true,
+    "from_char": 15175,
+    "to_char": 15929,
+    "ref_chars": 754
+   },
+   {
+    "page": 23,
+    "slug": "r4l-6a4fa9cdb5772a3dacaac6a6-p23",
+    "image": "https://images.sourcelibrary.org/archived/6a4fa9cdb5772a3dacaac6a6/23.jpg",
+    "tess_letters": 816,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.522,
+    "pb_aligned": true,
+    "from_char": 15881,
+    "to_char": 16931,
+    "ref_chars": 1050
+   },
+   {
+    "page": 24,
+    "slug": "r4l-6a4fa9cdb5772a3dacaac6a6-p24",
+    "image": "https://images.sourcelibrary.org/archived/6a4fa9cdb5772a3dacaac6a6/24.jpg",
+    "tess_letters": 833,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.381,
+    "pb_aligned": true,
+    "from_char": 16879,
+    "to_char": 17975,
+    "ref_chars": 1096
+   }
+  ]
+ },
+ "69b65b2a18b87551bfd0979c": {
+  "century": "1500s",
+  "order": 5,
+  "status": "skip",
+  "reason": "no page of the run located in any candidate edition",
+  "edition": "camena-thesaurus_Beze_icones",
+  "pages": [
+   {
+    "page": 326,
+    "slug": "r4l-69b65b2a18b87551bfd0979c-p326",
+    "image": "https://images.sourcelibrary.org/archived/69b65b2a18b87551bfd0979c/326.jpg",
+    "tess_letters": 10,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 327,
+    "slug": "r4l-69b65b2a18b87551bfd0979c-p327",
+    "image": "https://images.sourcelibrary.org/archived/69b65b2a18b87551bfd0979c/327.jpg",
+    "tess_letters": 0,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 328,
+    "slug": "r4l-69b65b2a18b87551bfd0979c-p328",
+    "image": "https://images.sourcelibrary.org/archived/69b65b2a18b87551bfd0979c/328.jpg",
+    "tess_letters": 0,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   }
+  ]
+ },
+ "6a505e9078825bd7fddd2c18": {
+  "century": "1500s",
+  "order": 7,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-poemata_naogeorg7",
+  "pages": [
+   {
+    "page": 243,
+    "slug": "r4l-6a505e9078825bd7fddd2c18-p243",
+    "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11103608_00243/full/full/0/default.jpg",
+    "tess_letters": 1114,
+    "aligned": true,
+    "how": "pb-neighbour",
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": 285619,
+    "to_char": 286956,
+    "ref_chars": 1335
+   },
+   {
+    "page": 244,
+    "slug": "r4l-6a505e9078825bd7fddd2c18-p244",
+    "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11103608_00244/full/full/0/default.jpg",
+    "tess_letters": 1131,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.368,
+    "pb_aligned": true,
+    "from_char": 286944,
+    "to_char": 288358,
+    "ref_chars": 1414
+   },
+   {
+    "page": 245,
+    "slug": "r4l-6a505e9078825bd7fddd2c18-p245",
+    "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11103608_00245/full/full/0/default.jpg",
+    "tess_letters": 1190,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.468,
+    "pb_aligned": true,
+    "from_char": 288394,
+    "to_char": 289747,
+    "ref_chars": 1353
+   }
+  ]
+ },
+ "6a429b2139deb1e8af694e06": {
+  "century": "1500s",
+  "order": 6,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-historicapolitica_Pantaleon_res_memorabiles_2",
+  "pages": [
+   {
+    "page": 316,
+    "slug": "r4l-6a429b2139deb1e8af694e06-p316",
+    "image": "https://images.sourcelibrary.org/archived/6a429b2139deb1e8af694e06/316.jpg",
+    "tess_letters": 2074,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.485,
+    "pb_aligned": false,
+    "from_char": 441005,
+    "to_char": 443654,
+    "ref_chars": 2649
+   },
+   {
+    "page": 317,
+    "slug": "r4l-6a429b2139deb1e8af694e06-p317",
+    "image": "https://images.sourcelibrary.org/archived/6a429b2139deb1e8af694e06/317.jpg",
+    "tess_letters": 1319,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.475,
+    "pb_aligned": false,
+    "from_char": 445142,
+    "to_char": 446990,
+    "ref_chars": 1848
+   },
+   {
+    "page": 318,
+    "slug": "r4l-6a429b2139deb1e8af694e06-p318",
+    "image": "https://images.sourcelibrary.org/archived/6a429b2139deb1e8af694e06/318.jpg",
+    "tess_letters": 3326,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.524,
+    "pb_aligned": true,
+    "from_char": 448230,
+    "to_char": 452347,
+    "ref_chars": 4117
+   }
+  ]
+ },
+ "69b65bf018b87551bfd0f968": {
+  "century": "1500s",
+  "order": 4,
+  "status": "skip",
+  "reason": "no page of the run located in any candidate edition",
+  "edition": "camena-historicapolitica_Pantaleon_res_memorabiles_2",
+  "pages": [
+   {
+    "page": 95,
+    "slug": "r4l-69b65bf018b87551bfd0f968-p95",
+    "image": "https://images.sourcelibrary.org/archived/69b65bf018b87551bfd0f968/95.jpg",
+    "tess_letters": 3465,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 96,
+    "slug": "r4l-69b65bf018b87551bfd0f968-p96",
+    "image": "https://images.sourcelibrary.org/archived/69b65bf018b87551bfd0f968/96.jpg",
+    "tess_letters": 2985,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 97,
+    "slug": "r4l-69b65bf018b87551bfd0f968-p97",
+    "image": "https://images.sourcelibrary.org/archived/69b65bf018b87551bfd0f968/97.jpg",
+    "tess_letters": 3206,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   }
+  ]
+ },
+ "69f33939876dd827cbc54881": {
+  "century": "1500s",
+  "order": 9,
+  "status": "skip",
+  "reason": "no page of the run located in any candidate edition",
+  "edition": "tcp-A05777",
+  "pages": [
+   {
+    "page": 141,
+    "slug": "r4l-69f33939876dd827cbc54881-p141",
+    "image": "https://images.sourcelibrary.org/archived/69f33939876dd827cbc54881/141.jpg",
+    "tess_letters": 219,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 142,
+    "slug": "r4l-69f33939876dd827cbc54881-p142",
+    "image": "https://images.sourcelibrary.org/archived/69f33939876dd827cbc54881/142.jpg",
+    "tess_letters": 205,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 143,
+    "slug": "r4l-69f33939876dd827cbc54881-p143",
+    "image": "https://images.sourcelibrary.org/archived/69f33939876dd827cbc54881/143.jpg",
+    "tess_letters": 284,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   }
+  ]
+ },
+ "69b65f54b3f4fc0441528075": {
+  "century": "1500s",
+  "order": 10,
+  "status": "skip",
+  "reason": "no page of the run located in any candidate edition",
+  "edition": "tcp-A18322",
+  "pages": [
+   {
+    "page": 87,
+    "slug": "r4l-69b65f54b3f4fc0441528075-p87",
+    "image": "https://images.sourcelibrary.org/archived/69b65f54b3f4fc0441528075/87.jpg",
+    "tess_letters": 154,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 88,
+    "slug": "r4l-69b65f54b3f4fc0441528075-p88",
+    "image": "https://images.sourcelibrary.org/archived/69b65f54b3f4fc0441528075/88.jpg",
+    "tess_letters": 0,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 89,
+    "slug": "r4l-69b65f54b3f4fc0441528075-p89",
+    "image": "https://images.sourcelibrary.org/archived/69b65f54b3f4fc0441528075/89.jpg",
+    "tess_letters": 1020,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   }
+  ]
+ },
+ "6a503c772f6539fb38937d92": {
+  "century": "1500s",
+  "order": 11,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A09349",
+  "pages": [
+   {
+    "page": 48,
+    "slug": "r4l-6a503c772f6539fb38937d92-p48",
+    "image": "https://images.sourcelibrary.org/archived/6a503c772f6539fb38937d92/48.jpg",
+    "tess_letters": 610,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.364,
+    "pb_aligned": true,
+    "from_char": 36776,
+    "to_char": 37643,
+    "ref_chars": 867
+   },
+   {
+    "page": 49,
+    "slug": "r4l-6a503c772f6539fb38937d92-p49",
+    "image": "https://images.sourcelibrary.org/archived/6a503c772f6539fb38937d92/49.jpg",
+    "tess_letters": 538,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.425,
+    "pb_aligned": true,
+    "from_char": 37644,
+    "to_char": 38422,
+    "ref_chars": 778
+   },
+   {
+    "page": 50,
+    "slug": "r4l-6a503c772f6539fb38937d92-p50",
+    "image": "https://images.sourcelibrary.org/archived/6a503c772f6539fb38937d92/50.jpg",
+    "tess_letters": 396,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.467,
+    "pb_aligned": true,
+    "from_char": 38382,
+    "to_char": 38807,
+    "ref_chars": 425
+   }
+  ]
+ },
+ "6a90658feb8fb726ee3b3f2a": {
+  "century": "1500s",
+  "order": 8,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-poemata_frisc2",
+  "pages": [
+   {
+    "page": 206,
+    "slug": "r4l-6a90658feb8fb726ee3b3f2a-p206",
+    "image": "https://images.sourcelibrary.org/pages/6a90658feb8fb726ee3b3f2a/0206.jpg",
+    "tess_letters": 1202,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.492,
+    "pb_aligned": true,
+    "from_char": 267496,
+    "to_char": 269035,
+    "ref_chars": 1539
+   },
+   {
+    "page": 207,
+    "slug": "r4l-6a90658feb8fb726ee3b3f2a-p207",
+    "image": "https://images.sourcelibrary.org/pages/6a90658feb8fb726ee3b3f2a/0207.jpg",
+    "tess_letters": 1169,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.386,
+    "pb_aligned": true,
+    "from_char": 268974,
+    "to_char": 270500,
+    "ref_chars": 1526
+   },
+   {
+    "page": 208,
+    "slug": "r4l-6a90658feb8fb726ee3b3f2a-p208",
+    "image": "https://images.sourcelibrary.org/pages/6a90658feb8fb726ee3b3f2a/0208.jpg",
+    "tess_letters": 1191,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.467,
+    "pb_aligned": true,
+    "from_char": 270434,
+    "to_char": 271987,
+    "ref_chars": 1553
+   }
+  ]
+ },
+ "69b63e841c1c21a3738655d6": {
+  "century": "1500s",
+  "order": 15,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-poemata_gwalt1",
+  "pages": [
+   {
+    "page": 138,
+    "slug": "r4l-69b63e841c1c21a3738655d6-p138",
+    "image": "https://images.sourcelibrary.org/archived/69b63e841c1c21a3738655d6/138.jpg",
+    "tess_letters": 730,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.369,
+    "pb_aligned": true,
+    "from_char": 148164,
+    "to_char": 149085,
+    "ref_chars": 921
+   },
+   {
+    "page": 139,
+    "slug": "r4l-69b63e841c1c21a3738655d6-p139",
+    "image": "https://images.sourcelibrary.org/archived/69b63e841c1c21a3738655d6/139.jpg",
+    "tess_letters": 892,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.447,
+    "pb_aligned": true,
+    "from_char": 149072,
+    "to_char": 150168,
+    "ref_chars": 1096
+   },
+   {
+    "page": 140,
+    "slug": "r4l-69b63e841c1c21a3738655d6-p140",
+    "image": "https://images.sourcelibrary.org/archived/69b63e841c1c21a3738655d6/140.jpg",
+    "tess_letters": 868,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.429,
+    "pb_aligned": true,
+    "from_char": 150131,
+    "to_char": 151239,
+    "ref_chars": 1108
+   }
+  ]
+ },
+ "69b637ba1c1c21a373833324": {
+  "century": "1500s",
+  "order": 14,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A00325",
+  "pages": [
+   {
+    "page": 32,
+    "slug": "r4l-69b637ba1c1c21a373833324-p32",
+    "image": "https://images.sourcelibrary.org/archived/69b637ba1c1c21a373833324/32.jpg",
+    "tess_letters": 751,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.432,
+    "pb_aligned": true,
+    "from_char": 20093,
+    "to_char": 21026,
+    "ref_chars": 933
+   },
+   {
+    "page": 33,
+    "slug": "r4l-69b637ba1c1c21a373833324-p33",
+    "image": "https://images.sourcelibrary.org/archived/69b637ba1c1c21a373833324/33.jpg",
+    "tess_letters": 727,
+    "aligned": true,
+    "how": "pb-neighbour",
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": 21016,
+    "to_char": 21941,
+    "ref_chars": 923
+   },
+   {
+    "page": 34,
+    "slug": "r4l-69b637ba1c1c21a373833324-p34",
+    "image": "https://images.sourcelibrary.org/archived/69b637ba1c1c21a373833324/34.jpg",
+    "tess_letters": 682,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   }
+  ]
+ },
+ "69aec17fb87be1eef391f8e9": {
+  "century": "1500s",
+  "order": 12,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A01683",
+  "pages": [
+   {
+    "page": 10,
+    "slug": "r4l-69aec17fb87be1eef391f8e9-p10",
+    "image": "https://images.sourcelibrary.org/archived/69aec17fb87be1eef391f8e9/10.jpg",
+    "tess_letters": 551,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.368,
+    "pb_aligned": false,
+    "from_char": 353,
+    "to_char": 715,
+    "ref_chars": 362
+   },
+   {
+    "page": 11,
+    "slug": "r4l-69aec17fb87be1eef391f8e9-p11",
+    "image": "https://images.sourcelibrary.org/archived/69aec17fb87be1eef391f8e9/11.jpg",
+    "tess_letters": 34,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 12,
+    "slug": "r4l-69aec17fb87be1eef391f8e9-p12",
+    "image": "https://images.sourcelibrary.org/archived/69aec17fb87be1eef391f8e9/12.jpg",
+    "tess_letters": 732,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.423,
+    "pb_aligned": true,
+    "from_char": 1076,
+    "to_char": 1984,
+    "ref_chars": 908
+   }
+  ]
+ },
+ "69b64a0b18b87551bfc6261e": {
+  "century": "1500s",
+  "order": 13,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-poemata_celtis2",
+  "pages": [
+   {
+    "page": 27,
+    "slug": "r4l-69b64a0b18b87551bfc6261e-p27",
+    "image": "https://images.sourcelibrary.org/archived/69b64a0b18b87551bfc6261e/27.jpg",
+    "tess_letters": 773,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.424,
+    "pb_aligned": false,
+    "from_char": 27362,
+    "to_char": 28006,
+    "ref_chars": 644
+   },
+   {
+    "page": 28,
+    "slug": "r4l-69b64a0b18b87551bfc6261e-p28",
+    "image": "https://images.sourcelibrary.org/archived/69b64a0b18b87551bfc6261e/28.jpg",
+    "tess_letters": 767,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.456,
+    "pb_aligned": true,
+    "from_char": 27928,
+    "to_char": 29025,
+    "ref_chars": 1097
+   },
+   {
+    "page": 29,
+    "slug": "r4l-69b64a0b18b87551bfc6261e-p29",
+    "image": "https://images.sourcelibrary.org/archived/69b64a0b18b87551bfc6261e/29.jpg",
+    "tess_letters": 0,
+    "aligned": true,
+    "how": "pb-neighbour",
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": 29010,
+    "to_char": 29085,
+    "ref_chars": 73
+   }
+  ]
+ },
+ "6a906bf4336010794b0d2ab0": {
+  "century": "1500s",
+  "order": 16,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-poemata_naogeorg6",
+  "pages": [
+   {
+    "page": 56,
+    "slug": "r4l-6a906bf4336010794b0d2ab0-p56",
+    "image": "https://images.sourcelibrary.org/pages/6a906bf4336010794b0d2ab0/0056.jpg",
+    "tess_letters": 956,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.444,
+    "pb_aligned": true,
+    "from_char": 59361,
+    "to_char": 60518,
+    "ref_chars": 1157
+   },
+   {
+    "page": 57,
+    "slug": "r4l-6a906bf4336010794b0d2ab0-p57",
+    "image": "https://images.sourcelibrary.org/pages/6a906bf4336010794b0d2ab0/0057.jpg",
+    "tess_letters": 968,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.507,
+    "pb_aligned": true,
+    "from_char": 60421,
+    "to_char": 61695,
+    "ref_chars": 1274
+   },
+   {
+    "page": 58,
+    "slug": "r4l-6a906bf4336010794b0d2ab0-p58",
+    "image": "https://images.sourcelibrary.org/pages/6a906bf4336010794b0d2ab0/0058.jpg",
+    "tess_letters": 944,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.391,
+    "pb_aligned": false,
+    "from_char": 61673,
+    "to_char": 62457,
+    "ref_chars": 784
+   }
+  ]
+ },
+ "6a42ca0be76baa13aa84c734": {
+  "century": "1500s",
+  "order": 18,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-thesaurus_Beze_icones",
+  "pages": [
+   {
+    "page": 106,
+    "slug": "r4l-6a42ca0be76baa13aa84c734-p106",
+    "image": "https://images.sourcelibrary.org/archived/6a42ca0be76baa13aa84c734/106.jpg",
+    "tess_letters": 1142,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.435,
+    "pb_aligned": true,
+    "from_char": 53896,
+    "to_char": 55326,
+    "ref_chars": 1430
+   },
+   {
+    "page": 107,
+    "slug": "r4l-6a42ca0be76baa13aa84c734-p107",
+    "image": "https://images.sourcelibrary.org/archived/6a42ca0be76baa13aa84c734/107.jpg",
+    "tess_letters": 815,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.463,
+    "pb_aligned": true,
+    "from_char": 55307,
+    "to_char": 56341,
+    "ref_chars": 1034
+   },
+   {
+    "page": 108,
+    "slug": "r4l-6a42ca0be76baa13aa84c734-p108",
+    "image": "https://images.sourcelibrary.org/archived/6a42ca0be76baa13aa84c734/108.jpg",
+    "tess_letters": 257,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.455,
+    "pb_aligned": true,
+    "from_char": 56336,
+    "to_char": 56628,
+    "ref_chars": 292
+   }
+  ]
+ },
+ "6a463e29b000203b37d3e7b5": {
+  "century": "1500s",
+  "order": 17,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A68344",
+  "pages": [
+   {
+    "page": 136,
+    "slug": "r4l-6a463e29b000203b37d3e7b5-p136",
+    "image": "https://images.sourcelibrary.org/archived/6a463e29b000203b37d3e7b5/136.jpg",
+    "tess_letters": 1327,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.473,
+    "pb_aligned": true,
+    "from_char": 165553,
+    "to_char": 167228,
+    "ref_chars": 1675
+   },
+   {
+    "page": 137,
+    "slug": "r4l-6a463e29b000203b37d3e7b5-p137",
+    "image": "https://images.sourcelibrary.org/archived/6a463e29b000203b37d3e7b5/137.jpg",
+    "tess_letters": 1247,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.533,
+    "pb_aligned": true,
+    "from_char": 167201,
+    "to_char": 168844,
+    "ref_chars": 1643
+   },
+   {
+    "page": 138,
+    "slug": "r4l-6a463e29b000203b37d3e7b5-p138",
+    "image": "https://images.sourcelibrary.org/archived/6a463e29b000203b37d3e7b5/138.jpg",
+    "tess_letters": 1322,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.481,
+    "pb_aligned": true,
+    "from_char": 168786,
+    "to_char": 170377,
+    "ref_chars": 1591
+   }
+  ]
+ },
+ "69b65c3218b87551bfd12324": {
+  "century": "1500s",
+  "order": 19,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-historicapolitica_Pantaleon_res_memorabiles_1",
+  "pages": [
+   {
+    "page": 116,
+    "slug": "r4l-69b65c3218b87551bfd12324-p116",
+    "image": "https://images.sourcelibrary.org/archived/69b65c3218b87551bfd12324/116.jpg",
+    "tess_letters": 3460,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.397,
+    "pb_aligned": true,
+    "from_char": 375989,
+    "to_char": 380268,
+    "ref_chars": 4279
+   },
+   {
+    "page": 117,
+    "slug": "r4l-69b65c3218b87551bfd12324-p117",
+    "image": "https://images.sourcelibrary.org/archived/69b65c3218b87551bfd12324/117.jpg",
+    "tess_letters": 3507,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.486,
+    "pb_aligned": true,
+    "from_char": 380213,
+    "to_char": 384604,
+    "ref_chars": 4391
+   },
+   {
+    "page": 118,
+    "slug": "r4l-69b65c3218b87551bfd12324-p118",
+    "image": "https://images.sourcelibrary.org/archived/69b65c3218b87551bfd12324/118.jpg",
+    "tess_letters": 3492,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.377,
+    "pb_aligned": true,
+    "from_char": 384539,
+    "to_char": 388859,
+    "ref_chars": 4320
+   }
+  ]
+ },
+ "69b64d3d18b87551bfc7bb8d": {
+  "century": "1500s",
+  "order": 22,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-poemata_drama",
+  "pages": [
+   {
+    "page": 857,
+    "slug": "r4l-69b64d3d18b87551bfc7bb8d-p857",
+    "image": "https://www.e-rara.ch/i3f/v21/21598713/full/1000,/0/default.jpg",
+    "tess_letters": 831,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.373,
+    "pb_aligned": true,
+    "from_char": 895483,
+    "to_char": 896464,
+    "ref_chars": 981
+   },
+   {
+    "page": 858,
+    "slug": "r4l-69b64d3d18b87551bfc7bb8d-p858",
+    "image": "https://www.e-rara.ch/i3f/v21/21598714/full/1000,/0/default.jpg",
+    "tess_letters": 937,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.423,
+    "pb_aligned": true,
+    "from_char": 896582,
+    "to_char": 897785,
+    "ref_chars": 1203
+   },
+   {
+    "page": 859,
+    "slug": "r4l-69b64d3d18b87551bfc7bb8d-p859",
+    "image": "https://www.e-rara.ch/i3f/v21/21598715/full/1000,/0/default.jpg",
+    "tess_letters": 878,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.58,
+    "pb_aligned": true,
+    "from_char": 897723,
+    "to_char": 898847,
+    "ref_chars": 1124
+   }
+  ]
+ },
+ "6a434784201f98f53c3eff29": {
+  "century": "1500s",
+  "order": 21,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-poemata_camer1",
+  "pages": [
+   {
+    "page": 4,
+    "slug": "r4l-6a434784201f98f53c3eff29-p4",
+    "image": "https://images.sourcelibrary.org/archived/6a434784201f98f53c3eff29/4.jpg",
+    "tess_letters": 44,
+    "aligned": true,
+    "how": "pb-neighbour",
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": 1,
+    "to_char": 204,
+    "ref_chars": 201
+   },
+   {
+    "page": 5,
+    "slug": "r4l-6a434784201f98f53c3eff29-p5",
+    "image": "https://images.sourcelibrary.org/archived/6a434784201f98f53c3eff29/5.jpg",
+    "tess_letters": 676,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.444,
+    "pb_aligned": true,
+    "from_char": 163,
+    "to_char": 1058,
+    "ref_chars": 895
+   },
+   {
+    "page": 6,
+    "slug": "r4l-6a434784201f98f53c3eff29-p6",
+    "image": "https://images.sourcelibrary.org/archived/6a434784201f98f53c3eff29/6.jpg",
+    "tess_letters": 1073,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.374,
+    "pb_aligned": true,
+    "from_char": 1002,
+    "to_char": 2323,
+    "ref_chars": 1321
+   }
+  ]
+ },
+ "69b65bc918b87551bfd0f087": {
+  "century": "1500s",
+  "order": 20,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-thesaurus_Beze_icones",
+  "pages": [
+   {
+    "page": 131,
+    "slug": "r4l-69b65bc918b87551bfd0f087-p131",
+    "image": "https://images.sourcelibrary.org/archived/69b65bc918b87551bfd0f087/131.jpg",
+    "tess_letters": 0,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 132,
+    "slug": "r4l-69b65bc918b87551bfd0f087-p132",
+    "image": "https://images.sourcelibrary.org/archived/69b65bc918b87551bfd0f087/132.jpg",
+    "tess_letters": 1007,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.512,
+    "pb_aligned": true,
+    "from_char": 60789,
+    "to_char": 61937,
+    "ref_chars": 1148
+   },
+   {
+    "page": 133,
+    "slug": "r4l-69b65bc918b87551bfd0f087-p133",
+    "image": "https://images.sourcelibrary.org/archived/69b65bc918b87551bfd0f087/133.jpg",
+    "tess_letters": 196,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.5,
+    "pb_aligned": true,
+    "from_char": 62099,
+    "to_char": 62396,
+    "ref_chars": 297
+   }
+  ]
+ },
+ "69b6542618b87551bfcc6072": {
+  "century": "1500s",
+  "order": 23,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-historicapolitica_curione1",
+  "pages": [
+   {
+    "page": 2,
+    "slug": "r4l-69b6542618b87551bfcc6072-p2",
+    "image": "https://images.sourcelibrary.org/archived/69b6542618b87551bfcc6072/2.jpg",
+    "tess_letters": 342,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 3,
+    "slug": "r4l-69b6542618b87551bfcc6072-p3",
+    "image": "https://images.sourcelibrary.org/archived/69b6542618b87551bfcc6072/3.jpg",
+    "tess_letters": 1423,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.558,
+    "pb_aligned": false,
+    "from_char": 39327,
+    "to_char": 41090,
+    "ref_chars": 1763
+   },
+   {
+    "page": 4,
+    "slug": "r4l-69b6542618b87551bfcc6072-p4",
+    "image": "https://images.sourcelibrary.org/archived/69b6542618b87551bfcc6072/4.jpg",
+    "tess_letters": 1685,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.524,
+    "pb_aligned": false,
+    "from_char": 41051,
+    "to_char": 43101,
+    "ref_chars": 2050
+   }
+  ]
+ },
+ "6a90e2d81a02a5cb2d7325f2": {
+  "century": "1500s",
+  "order": 26,
+  "status": "skip",
+  "reason": "no page of the run located in any candidate edition",
+  "edition": "camena-poemata_locher2",
+  "pages": [
+   {
+    "page": 31,
+    "slug": "r4l-6a90e2d81a02a5cb2d7325f2-p31",
+    "image": "https://images.sourcelibrary.org/archived/6a90e2d81a02a5cb2d7325f2/31.jpg",
+    "tess_letters": 0,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 32,
+    "slug": "r4l-6a90e2d81a02a5cb2d7325f2-p32",
+    "image": "https://images.sourcelibrary.org/archived/6a90e2d81a02a5cb2d7325f2/32.jpg",
+    "tess_letters": 3,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 33,
+    "slug": "r4l-6a90e2d81a02a5cb2d7325f2-p33",
+    "image": "https://images.sourcelibrary.org/archived/6a90e2d81a02a5cb2d7325f2/33.jpg",
+    "tess_letters": 0,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   }
+  ]
+ },
+ "6a9099bbb7feee6e9c42915e": {
+  "century": "1500s",
+  "order": 25,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-poemata_naogeorg3",
+  "pages": [
+   {
+    "page": 16,
+    "slug": "r4l-6a9099bbb7feee6e9c42915e-p16",
+    "image": "https://images.sourcelibrary.org/pages/6a9099bbb7feee6e9c42915e/0016.jpg",
+    "tess_letters": 1126,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.54,
+    "pb_aligned": true,
+    "from_char": 18519,
+    "to_char": 19967,
+    "ref_chars": 1448
+   },
+   {
+    "page": 17,
+    "slug": "r4l-6a9099bbb7feee6e9c42915e-p17",
+    "image": "https://images.sourcelibrary.org/pages/6a9099bbb7feee6e9c42915e/0017.jpg",
+    "tess_letters": 1137,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.433,
+    "pb_aligned": true,
+    "from_char": 19906,
+    "to_char": 21343,
+    "ref_chars": 1437
+   },
+   {
+    "page": 18,
+    "slug": "r4l-6a9099bbb7feee6e9c42915e-p18",
+    "image": "https://images.sourcelibrary.org/pages/6a9099bbb7feee6e9c42915e/0018.jpg",
+    "tess_letters": 278,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.476,
+    "pb_aligned": true,
+    "from_char": 21314,
+    "to_char": 21720,
+    "ref_chars": 406
+   }
+  ]
+ },
+ "6a94184aa4ed5935447a82d2": {
+  "century": "1500s",
+  "order": 24,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-poemata_drama",
+  "pages": [
+   {
+    "page": 168,
+    "slug": "r4l-6a94184aa4ed5935447a82d2-p168",
+    "image": "https://images.sourcelibrary.org/pages/6a94184aa4ed5935447a82d2/0168.jpg",
+    "tess_letters": 922,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.397,
+    "pb_aligned": true,
+    "from_char": 143020,
+    "to_char": 144257,
+    "ref_chars": 1237
+   },
+   {
+    "page": 169,
+    "slug": "r4l-6a94184aa4ed5935447a82d2-p169",
+    "image": "https://images.sourcelibrary.org/pages/6a94184aa4ed5935447a82d2/0169.jpg",
+    "tess_letters": 889,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.361,
+    "pb_aligned": true,
+    "from_char": 144167,
+    "to_char": 145359,
+    "ref_chars": 1192
+   },
+   {
+    "page": 170,
+    "slug": "r4l-6a94184aa4ed5935447a82d2-p170",
+    "image": "https://images.sourcelibrary.org/pages/6a94184aa4ed5935447a82d2/0170.jpg",
+    "tess_letters": 883,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.394,
+    "pb_aligned": true,
+    "from_char": 145312,
+    "to_char": 146481,
+    "ref_chars": 1169
+   }
+  ]
+ },
+ "6958de4ecf7070242ed412dc": {
+  "century": "1500s",
+  "order": 27,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-thesaurus_Pena_adversaria_2",
+  "pages": [
+   {
+    "page": 304,
+    "slug": "r4l-6958de4ecf7070242ed412dc-p304",
+    "image": "https://images.sourcelibrary.org/archived/6958de4ecf7070242ed412dc/304.jpg",
+    "tess_letters": 3042,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.517,
+    "pb_aligned": true,
+    "from_char": 294486,
+    "to_char": 298314,
+    "ref_chars": 3828
+   },
+   {
+    "page": 305,
+    "slug": "r4l-6958de4ecf7070242ed412dc-p305",
+    "image": "https://images.sourcelibrary.org/archived/6958de4ecf7070242ed412dc/305.jpg",
+    "tess_letters": 2088,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.506,
+    "pb_aligned": true,
+    "from_char": 298228,
+    "to_char": 300896,
+    "ref_chars": 2668
+   },
+   {
+    "page": 306,
+    "slug": "r4l-6958de4ecf7070242ed412dc-p306",
+    "image": "https://images.sourcelibrary.org/archived/6958de4ecf7070242ed412dc/306.jpg",
+    "tess_letters": 3133,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.421,
+    "pb_aligned": true,
+    "from_char": 300811,
+    "to_char": 305153,
+    "ref_chars": 4342
+   }
+  ]
+ },
+ "69b64da218b87551bfc7fe19": {
+  "century": "1500s",
+  "order": 28,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-poemata_naogeorg4",
+  "pages": [
+   {
+    "page": 165,
+    "slug": "r4l-69b64da218b87551bfc7fe19-p165",
+    "image": "https://images.sourcelibrary.org/archived/69b64da218b87551bfc7fe19/165.jpg",
+    "tess_letters": 862,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.391,
+    "pb_aligned": true,
+    "from_char": 157166,
+    "to_char": 158205,
+    "ref_chars": 1039
+   },
+   {
+    "page": 166,
+    "slug": "r4l-69b64da218b87551bfc7fe19-p166",
+    "image": "https://images.sourcelibrary.org/archived/69b64da218b87551bfc7fe19/166.jpg",
+    "tess_letters": 829,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.433,
+    "pb_aligned": true,
+    "from_char": 158224,
+    "to_char": 159301,
+    "ref_chars": 1077
+   },
+   {
+    "page": 167,
+    "slug": "r4l-69b64da218b87551bfc7fe19-p167",
+    "image": "https://images.sourcelibrary.org/archived/69b64da218b87551bfc7fe19/167.jpg",
+    "tess_letters": 626,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.408,
+    "pb_aligned": true,
+    "from_char": 159261,
+    "to_char": 160013,
+    "ref_chars": 752
+   }
+  ]
+ },
+ "69b637a31c1c21a3738330ae": {
+  "century": "1500s",
+  "order": 31,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A00325",
+  "pages": [
+   {
+    "page": 36,
+    "slug": "r4l-69b637a31c1c21a3738330ae-p36",
+    "image": "https://images.sourcelibrary.org/archived/69b637a31c1c21a3738330ae/36.jpg",
+    "tess_letters": 727,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.468,
+    "pb_aligned": false,
+    "from_char": 28551,
+    "to_char": 29488,
+    "ref_chars": 937
+   },
+   {
+    "page": 37,
+    "slug": "r4l-69b637a31c1c21a3738330ae-p37",
+    "image": "https://images.sourcelibrary.org/archived/69b637a31c1c21a3738330ae/37.jpg",
+    "tess_letters": 680,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.386,
+    "pb_aligned": false,
+    "from_char": 29449,
+    "to_char": 30311,
+    "ref_chars": 862
+   },
+   {
+    "page": 38,
+    "slug": "r4l-69b637a31c1c21a3738330ae-p38",
+    "image": "https://images.sourcelibrary.org/archived/69b637a31c1c21a3738330ae/38.jpg",
+    "tess_letters": 739,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   }
+  ]
+ },
+ "69b660aeb3f4fc0441533e16": {
+  "century": "1500s",
+  "order": 30,
+  "status": "aligned",
+  "reason": null,
+  "edition": "ws-Sphaera_Ioannis_de_Sacrobosco_emendata_Elia_Vineti_Santonis_scholia_in_eandem_Sphaeram_ab_ipso_authore_restituta_Adiunximus_huic_libro_compendium_in_Sphaeram_IA_bub_gb_hZh9BYVGr7wC_3_pdf",
+  "pages": [
+   {
+    "page": 66,
+    "slug": "r4l-69b660aeb3f4fc0441533e16-p66",
+    "image": "https://images.sourcelibrary.org/archived/69b660aeb3f4fc0441533e16/66.jpg",
+    "tess_letters": 979,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.366,
+    "pb_aligned": true,
+    "from_char": 66209,
+    "to_char": 67473,
+    "ref_chars": 1264
+   },
+   {
+    "page": 67,
+    "slug": "r4l-69b660aeb3f4fc0441533e16-p67",
+    "image": "https://images.sourcelibrary.org/archived/69b660aeb3f4fc0441533e16/67.jpg",
+    "tess_letters": 954,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.368,
+    "pb_aligned": true,
+    "from_char": 67406,
+    "to_char": 68686,
+    "ref_chars": 1280
+   },
+   {
+    "page": 68,
+    "slug": "r4l-69b660aeb3f4fc0441533e16-p68",
+    "image": "https://images.sourcelibrary.org/archived/69b660aeb3f4fc0441533e16/68.jpg",
+    "tess_letters": 1123,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.542,
+    "pb_aligned": true,
+    "from_char": 68544,
+    "to_char": 70034,
+    "ref_chars": 1490
+   }
+  ]
+ },
+ "6a26beae0e247ebad6de8612": {
+  "century": "1500s",
+  "order": 29,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-cera_scholz1",
+  "pages": [
+   {
+    "page": 208,
+    "slug": "r4l-6a26beae0e247ebad6de8612-p208",
+    "image": "https://images.sourcelibrary.org/pages/6a26beae0e247ebad6de8612/0208-full.jpg",
+    "tess_letters": 3859,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.432,
+    "pb_aligned": true,
+    "from_char": 925480,
+    "to_char": 930462,
+    "ref_chars": 4982
+   },
+   {
+    "page": 209,
+    "slug": "r4l-6a26beae0e247ebad6de8612-p209",
+    "image": "https://images.sourcelibrary.org/pages/6a26beae0e247ebad6de8612/0209-full.jpg",
+    "tess_letters": 3637,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.432,
+    "pb_aligned": false,
+    "from_char": 931728,
+    "to_char": 934920,
+    "ref_chars": 3192
+   },
+   {
+    "page": 210,
+    "slug": "r4l-6a26beae0e247ebad6de8612-p210",
+    "image": "https://images.sourcelibrary.org/pages/6a26beae0e247ebad6de8612/0210-full.jpg",
+    "tess_letters": 3873,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.405,
+    "pb_aligned": true,
+    "from_char": 934853,
+    "to_char": 939654,
+    "ref_chars": 4801
+   }
+  ]
+ },
+ "69b2f46f5ef23d31023f6f1c": {
+  "century": "1500s",
+  "order": 33,
+  "status": "skip",
+  "reason": "no page of the run located in any candidate edition",
+  "edition": "camena-historicapolitica_estienne1",
+  "pages": [
+   {
+    "page": 6,
+    "slug": "r4l-69b2f46f5ef23d31023f6f1c-p6",
+    "image": "https://images.sourcelibrary.org/archived/69b2f46f5ef23d31023f6f1c/6.jpg",
+    "tess_letters": 0,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 7,
+    "slug": "r4l-69b2f46f5ef23d31023f6f1c-p7",
+    "image": "https://images.sourcelibrary.org/archived/69b2f46f5ef23d31023f6f1c/7.jpg",
+    "tess_letters": 36,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 8,
+    "slug": "r4l-69b2f46f5ef23d31023f6f1c-p8",
+    "image": "https://images.sourcelibrary.org/archived/69b2f46f5ef23d31023f6f1c/8.jpg",
+    "tess_letters": 0,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   }
+  ]
+ },
+ "69b6446b18b87551bfc38978": {
+  "century": "1500s",
+  "order": 32,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-poemata_naogeorg7",
+  "pages": [
+   {
+    "page": 123,
+    "slug": "r4l-69b6446b18b87551bfc38978-p123",
+    "image": "https://images.sourcelibrary.org/archived/69b6446b18b87551bfc38978/123.jpg",
+    "tess_letters": 988,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.528,
+    "pb_aligned": true,
+    "from_char": 132908,
+    "to_char": 134191,
+    "ref_chars": 1283
+   },
+   {
+    "page": 124,
+    "slug": "r4l-69b6446b18b87551bfc38978-p124",
+    "image": "https://images.sourcelibrary.org/archived/69b6446b18b87551bfc38978/124.jpg",
+    "tess_letters": 970,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.511,
+    "pb_aligned": true,
+    "from_char": 134140,
+    "to_char": 135362,
+    "ref_chars": 1222
+   },
+   {
+    "page": 125,
+    "slug": "r4l-69b6446b18b87551bfc38978-p125",
+    "image": "https://images.sourcelibrary.org/archived/69b6446b18b87551bfc38978/125.jpg",
+    "tess_letters": 978,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.505,
+    "pb_aligned": true,
+    "from_char": 135323,
+    "to_char": 136607,
+    "ref_chars": 1284
+   }
+  ]
+ },
+ "69b6564d18b87551bfcde9eb": {
+  "century": "1500s",
+  "order": 35,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-poemata_locher2",
+  "pages": [
+   {
+    "page": 68,
+    "slug": "r4l-69b6564d18b87551bfcde9eb-p68",
+    "image": "https://images.sourcelibrary.org/archived/69b6564d18b87551bfcde9eb/68.jpg",
+    "tess_letters": 738,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.567,
+    "pb_aligned": true,
+    "from_char": 53465,
+    "to_char": 54339,
+    "ref_chars": 874
+   },
+   {
+    "page": 69,
+    "slug": "r4l-69b6564d18b87551bfcde9eb-p69",
+    "image": "https://images.sourcelibrary.org/archived/69b6564d18b87551bfcde9eb/69.jpg",
+    "tess_letters": 1021,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.418,
+    "pb_aligned": true,
+    "from_char": 54133,
+    "to_char": 55325,
+    "ref_chars": 1192
+   },
+   {
+    "page": 70,
+    "slug": "r4l-69b6564d18b87551bfcde9eb-p70",
+    "image": "https://images.sourcelibrary.org/archived/69b6564d18b87551bfcde9eb/70.jpg",
+    "tess_letters": 740,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.455,
+    "pb_aligned": true,
+    "from_char": 55408,
+    "to_char": 56311,
+    "ref_chars": 903
+   }
+  ]
+ },
+ "69b658d818b87551bfcf6b7c": {
+  "century": "1500s",
+  "order": 34,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-cera_gesner1",
+  "pages": [
+   {
+    "page": 277,
+    "slug": "r4l-69b658d818b87551bfcf6b7c-p277",
+    "image": "https://images.sourcelibrary.org/archived/69b658d818b87551bfcf6b7c/277.jpg",
+    "tess_letters": 1844,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.401,
+    "pb_aligned": true,
+    "from_char": 576825,
+    "to_char": 579200,
+    "ref_chars": 2375
+   },
+   {
+    "page": 278,
+    "slug": "r4l-69b658d818b87551bfcf6b7c-p278",
+    "image": "https://images.sourcelibrary.org/archived/69b658d818b87551bfcf6b7c/278.jpg",
+    "tess_letters": 1870,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.363,
+    "pb_aligned": true,
+    "from_char": 579114,
+    "to_char": 581538,
+    "ref_chars": 2424
+   },
+   {
+    "page": 279,
+    "slug": "r4l-69b658d818b87551bfcf6b7c-p279",
+    "image": "https://images.sourcelibrary.org/archived/69b658d818b87551bfcf6b7c/279.jpg",
+    "tess_letters": 1736,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.462,
+    "pb_aligned": true,
+    "from_char": 581483,
+    "to_char": 583768,
+    "ref_chars": 2285
+   }
+  ]
+ },
+ "69b64c0318b87551bfc70acd": {
+  "century": "1500s",
+  "order": 38,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-poemata_Atrocianus_elegia",
+  "pages": [
+   {
+    "page": 38,
+    "slug": "r4l-69b64c0318b87551bfc70acd-p38",
+    "image": "https://images.sourcelibrary.org/archived/69b64c0318b87551bfc70acd/38.jpg",
+    "tess_letters": 757,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.452,
+    "pb_aligned": true,
+    "from_char": 36646,
+    "to_char": 37646,
+    "ref_chars": 1000
+   },
+   {
+    "page": 39,
+    "slug": "r4l-69b64c0318b87551bfc70acd-p39",
+    "image": "https://images.sourcelibrary.org/archived/69b64c0318b87551bfc70acd/39.jpg",
+    "tess_letters": 858,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.449,
+    "pb_aligned": true,
+    "from_char": 37624,
+    "to_char": 38734,
+    "ref_chars": 1110
+   },
+   {
+    "page": 40,
+    "slug": "r4l-69b64c0318b87551bfc70acd-p40",
+    "image": "https://images.sourcelibrary.org/archived/69b64c0318b87551bfc70acd/40.jpg",
+    "tess_letters": 708,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.466,
+    "pb_aligned": true,
+    "from_char": 38682,
+    "to_char": 39614,
+    "ref_chars": 932
+   }
+  ]
+ },
+ "6a43779193aef4a7d61477df": {
+  "century": "1500s",
+  "order": 36,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-poemata_melis1",
+  "pages": [
+   {
+    "page": 189,
+    "slug": "r4l-6a43779193aef4a7d61477df-p189",
+    "image": "https://images.sourcelibrary.org/archived/6a43779193aef4a7d61477df/189.jpg",
+    "tess_letters": 555,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.46,
+    "pb_aligned": true,
+    "from_char": 184228,
+    "to_char": 184838,
+    "ref_chars": 610
+   },
+   {
+    "page": 190,
+    "slug": "r4l-6a43779193aef4a7d61477df-p190",
+    "image": "https://images.sourcelibrary.org/archived/6a43779193aef4a7d61477df/190.jpg",
+    "tess_letters": 485,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.457,
+    "pb_aligned": true,
+    "from_char": 184935,
+    "to_char": 185589,
+    "ref_chars": 654
+   },
+   {
+    "page": 191,
+    "slug": "r4l-6a43779193aef4a7d61477df-p191",
+    "image": "https://images.sourcelibrary.org/archived/6a43779193aef4a7d61477df/191.jpg",
+    "tess_letters": 480,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.411,
+    "pb_aligned": true,
+    "from_char": 185542,
+    "to_char": 186170,
+    "ref_chars": 628
+   }
+  ]
+ },
+ "6a90b21b549dee7bdfbf20dc": {
+  "century": "1500s",
+  "order": 39,
+  "status": "skip",
+  "reason": "no page of the run located in any candidate edition",
+  "edition": "tcp-A68029",
+  "pages": [
+   {
+    "page": 15,
+    "slug": "r4l-6a90b21b549dee7bdfbf20dc-p15",
+    "image": "https://images.sourcelibrary.org/archived/6a90b21b549dee7bdfbf20dc/15.jpg",
+    "tess_letters": 579,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 16,
+    "slug": "r4l-6a90b21b549dee7bdfbf20dc-p16",
+    "image": "https://images.sourcelibrary.org/archived/6a90b21b549dee7bdfbf20dc/16.jpg",
+    "tess_letters": 248,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 17,
+    "slug": "r4l-6a90b21b549dee7bdfbf20dc-p17",
+    "image": "https://images.sourcelibrary.org/archived/6a90b21b549dee7bdfbf20dc/17.jpg",
+    "tess_letters": 0,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   }
+  ]
+ },
+ "69b64f1818b87551bfc907fb": {
+  "century": "1500s",
+  "order": 37,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-thesaurus_witzel1",
+  "pages": [
+   {
+    "page": 104,
+    "slug": "r4l-69b64f1818b87551bfc907fb-p104",
+    "image": "https://images.sourcelibrary.org/archived/69b64f1818b87551bfc907fb/104.jpg",
+    "tess_letters": 1507,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.576,
+    "pb_aligned": true,
+    "from_char": 149166,
+    "to_char": 151062,
+    "ref_chars": 1896
+   },
+   {
+    "page": 105,
+    "slug": "r4l-69b64f1818b87551bfc907fb-p105",
+    "image": "https://images.sourcelibrary.org/archived/69b64f1818b87551bfc907fb/105.jpg",
+    "tess_letters": 1449,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.548,
+    "pb_aligned": true,
+    "from_char": 151017,
+    "to_char": 152793,
+    "ref_chars": 1776
+   },
+   {
+    "page": 106,
+    "slug": "r4l-69b64f1818b87551bfc907fb-p106",
+    "image": "https://images.sourcelibrary.org/archived/69b64f1818b87551bfc907fb/106.jpg",
+    "tess_letters": 1462,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.5,
+    "pb_aligned": true,
+    "from_char": 152775,
+    "to_char": 154590,
+    "ref_chars": 1815
+   }
+  ]
+ },
+ "6a42aecb5207af7c42f5333c": {
+  "century": "1600s",
+  "order": 2,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A43130",
+  "pages": [
+   {
+    "page": 20,
+    "slug": "r4l-6a42aecb5207af7c42f5333c-p20",
+    "image": "https://images.sourcelibrary.org/archived/6a42aecb5207af7c42f5333c/20.jpg",
+    "tess_letters": 663,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.556,
+    "pb_aligned": true,
+    "from_char": 17692,
+    "to_char": 18557,
+    "ref_chars": 865
+   },
+   {
+    "page": 21,
+    "slug": "r4l-6a42aecb5207af7c42f5333c-p21",
+    "image": "https://images.sourcelibrary.org/archived/6a42aecb5207af7c42f5333c/21.jpg",
+    "tess_letters": 652,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.482,
+    "pb_aligned": true,
+    "from_char": 18485,
+    "to_char": 19322,
+    "ref_chars": 837
+   },
+   {
+    "page": 22,
+    "slug": "r4l-6a42aecb5207af7c42f5333c-p22",
+    "image": "https://images.sourcelibrary.org/archived/6a42aecb5207af7c42f5333c/22.jpg",
+    "tess_letters": 880,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.373,
+    "pb_aligned": true,
+    "from_char": 19288,
+    "to_char": 20388,
+    "ref_chars": 1100
+   }
+  ]
+ },
+ "69b67851b3f4fc04415cb751": {
+  "century": "1600s",
+  "order": 0,
+  "status": "skip",
+  "reason": "no page of the run located in any candidate edition",
+  "edition": "camena-thesaurus_tixier1",
+  "pages": [
+   {
+    "page": 92,
+    "slug": "r4l-69b67851b3f4fc04415cb751-p92",
+    "image": "https://www.e-rara.ch/i3f/v21/14356374/full/1000,/0/default.jpg",
+    "tess_letters": 1375,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 93,
+    "slug": "r4l-69b67851b3f4fc04415cb751-p93",
+    "image": "https://www.e-rara.ch/i3f/v21/14356375/full/1000,/0/default.jpg",
+    "tess_letters": 1388,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 94,
+    "slug": "r4l-69b67851b3f4fc04415cb751-p94",
+    "image": "https://www.e-rara.ch/i3f/v21/14356376/full/1000,/0/default.jpg",
+    "tess_letters": 1509,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   }
+  ]
+ },
+ "6a42ec4006e6ead3ac544b8f": {
+  "century": "1600s",
+  "order": 1,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A36017",
+  "pages": [
+   {
+    "page": 51,
+    "slug": "r4l-6a42ec4006e6ead3ac544b8f-p51",
+    "image": "https://images.sourcelibrary.org/archived/6a42ec4006e6ead3ac544b8f/51.jpg",
+    "tess_letters": 643,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.516,
+    "pb_aligned": true,
+    "from_char": 57011,
+    "to_char": 57892,
+    "ref_chars": 881
+   },
+   {
+    "page": 52,
+    "slug": "r4l-6a42ec4006e6ead3ac544b8f-p52",
+    "image": "https://images.sourcelibrary.org/archived/6a42ec4006e6ead3ac544b8f/52.jpg",
+    "tess_letters": 1038,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.441,
+    "pb_aligned": true,
+    "from_char": 57806,
+    "to_char": 59130,
+    "ref_chars": 1324
+   },
+   {
+    "page": 53,
+    "slug": "r4l-6a42ec4006e6ead3ac544b8f-p53",
+    "image": "https://images.sourcelibrary.org/archived/6a42ec4006e6ead3ac544b8f/53.jpg",
+    "tess_letters": 925,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.431,
+    "pb_aligned": true,
+    "from_char": 59061,
+    "to_char": 60243,
+    "ref_chars": 1182
+   }
+  ]
+ },
+ "6a50496478825bd7fdd8515a": {
+  "century": "1600s",
+  "order": 3,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-historicapolitica_welser1",
+  "pages": [
+   {
+    "page": 487,
+    "slug": "r4l-6a50496478825bd7fdd8515a-p487",
+    "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11196447_00487/full/full/0/default.jpg",
+    "tess_letters": 1734,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.451,
+    "pb_aligned": true,
+    "from_char": 1550823,
+    "to_char": 1553039,
+    "ref_chars": 2216
+   },
+   {
+    "page": 488,
+    "slug": "r4l-6a50496478825bd7fdd8515a-p488",
+    "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11196447_00488/full/full/0/default.jpg",
+    "tess_letters": 1571,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.553,
+    "pb_aligned": true,
+    "from_char": 1552999,
+    "to_char": 1555090,
+    "ref_chars": 2091
+   },
+   {
+    "page": 489,
+    "slug": "r4l-6a50496478825bd7fdd8515a-p489",
+    "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11196447_00489/full/full/0/default.jpg",
+    "tess_letters": 2180,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.448,
+    "pb_aligned": true,
+    "from_char": 1555035,
+    "to_char": 1557891,
+    "ref_chars": 2856
+   }
+  ]
+ },
+ "6a43001a4e06bc233ecf5ef6": {
+  "century": "1600s",
+  "order": 4,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A67819",
+  "pages": [
+   {
+    "page": 11,
+    "slug": "r4l-6a43001a4e06bc233ecf5ef6-p11",
+    "image": "https://images.sourcelibrary.org/archived/6a43001a4e06bc233ecf5ef6/11.jpg",
+    "tess_letters": 359,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.448,
+    "pb_aligned": true,
+    "from_char": 2195,
+    "to_char": 2703,
+    "ref_chars": 508
+   },
+   {
+    "page": 12,
+    "slug": "r4l-6a43001a4e06bc233ecf5ef6-p12",
+    "image": "https://images.sourcelibrary.org/archived/6a43001a4e06bc233ecf5ef6/12.jpg",
+    "tess_letters": 264,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.421,
+    "pb_aligned": true,
+    "from_char": 2656,
+    "to_char": 2898,
+    "ref_chars": 242
+   },
+   {
+    "page": 13,
+    "slug": "r4l-6a43001a4e06bc233ecf5ef6-p13",
+    "image": "https://images.sourcelibrary.org/archived/6a43001a4e06bc233ecf5ef6/13.jpg",
+    "tess_letters": 374,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.56,
+    "pb_aligned": true,
+    "from_char": 2857,
+    "to_char": 3355,
+    "ref_chars": 498
+   }
+  ]
+ },
+ "697a6e5cb981745f5fac1d7e": {
+  "century": "1600s",
+  "order": 6,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-historicapolitica_besold4",
+  "pages": [
+   {
+    "page": 89,
+    "slug": "r4l-697a6e5cb981745f5fac1d7e-p89",
+    "image": "https://images.sourcelibrary.org/cropped/697a6e5cb981745f5fac1d7e/697a88b938053b87ecb7f209.jpg",
+    "tess_letters": 2061,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.475,
+    "pb_aligned": true,
+    "from_char": 210080,
+    "to_char": 212818,
+    "ref_chars": 2738
+   },
+   {
+    "page": 90,
+    "slug": "r4l-697a6e5cb981745f5fac1d7e-p90",
+    "image": "https://images.sourcelibrary.org/cropped/697a6e5cb981745f5fac1d7e/697a899b40df744ed851aa03.jpg",
+    "tess_letters": 1739,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.406,
+    "pb_aligned": true,
+    "from_char": 212826,
+    "to_char": 215202,
+    "ref_chars": 2376
+   },
+   {
+    "page": 91,
+    "slug": "r4l-697a6e5cb981745f5fac1d7e-p91",
+    "image": "https://images.sourcelibrary.org/cropped/697a6e5cb981745f5fac1d7e/697a899b40df744ed851aa04.jpg",
+    "tess_letters": 2044,
+    "aligned": true,
+    "how": "pb-neighbour",
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": 215193,
+    "to_char": 217854,
+    "ref_chars": 2659
+   }
+  ]
+ },
+ "6a50ed6dc39423579e0cd6c6": {
+  "century": "1600s",
+  "order": 7,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-cera_p2",
+  "pages": [
+   {
+    "page": 134,
+    "slug": "r4l-6a50ed6dc39423579e0cd6c6-p134",
+    "image": "https://images.sourcelibrary.org/archived/6a50ed6dc39423579e0cd6c6/134.jpg",
+    "tess_letters": 1094,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.524,
+    "pb_aligned": true,
+    "from_char": 104352,
+    "to_char": 105609,
+    "ref_chars": 1257
+   },
+   {
+    "page": 135,
+    "slug": "r4l-6a50ed6dc39423579e0cd6c6-p135",
+    "image": "https://images.sourcelibrary.org/archived/6a50ed6dc39423579e0cd6c6/135.jpg",
+    "tess_letters": 1170,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.489,
+    "pb_aligned": true,
+    "from_char": 105551,
+    "to_char": 107315,
+    "ref_chars": 1764
+   },
+   {
+    "page": 136,
+    "slug": "r4l-6a50ed6dc39423579e0cd6c6-p136",
+    "image": "https://images.sourcelibrary.org/archived/6a50ed6dc39423579e0cd6c6/136.jpg",
+    "tess_letters": 1180,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.506,
+    "pb_aligned": true,
+    "from_char": 107412,
+    "to_char": 108771,
+    "ref_chars": 1359
+   }
+  ]
+ },
+ "6a0b351d688e6a8e15f6759f": {
+  "century": "1600s",
+  "order": 5,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-historicapolitica_welser1",
+  "pages": [
+   {
+    "page": 880,
+    "slug": "r4l-6a0b351d688e6a8e15f6759f-p880",
+    "image": "https://images.sourcelibrary.org/archived/6a0b351d688e6a8e15f6759f/880.jpg",
+    "tess_letters": 2142,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.455,
+    "pb_aligned": true,
+    "from_char": 815072,
+    "to_char": 817783,
+    "ref_chars": 2711
+   },
+   {
+    "page": 881,
+    "slug": "r4l-6a0b351d688e6a8e15f6759f-p881",
+    "image": "https://images.sourcelibrary.org/archived/6a0b351d688e6a8e15f6759f/881.jpg",
+    "tess_letters": 1610,
+    "aligned": true,
+    "how": "pb-neighbour",
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": 817808,
+    "to_char": 818463,
+    "ref_chars": 653
+   },
+   {
+    "page": 882,
+    "slug": "r4l-6a0b351d688e6a8e15f6759f-p882",
+    "image": "https://images.sourcelibrary.org/archived/6a0b351d688e6a8e15f6759f/882.jpg",
+    "tess_letters": 0,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   }
+  ]
+ },
+ "6a4263b1744db9e3105b1125": {
+  "century": "1600s",
+  "order": 10,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A32705",
+  "pages": [
+   {
+    "page": 212,
+    "slug": "r4l-6a4263b1744db9e3105b1125-p212",
+    "image": "https://images.sourcelibrary.org/archived/6a4263b1744db9e3105b1125/212.jpg",
+    "tess_letters": 615,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.519,
+    "pb_aligned": true,
+    "from_char": 231444,
+    "to_char": 232242,
+    "ref_chars": 798
+   },
+   {
+    "page": 213,
+    "slug": "r4l-6a4263b1744db9e3105b1125-p213",
+    "image": "https://images.sourcelibrary.org/archived/6a4263b1744db9e3105b1125/213.jpg",
+    "tess_letters": 923,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.425,
+    "pb_aligned": true,
+    "from_char": 232198,
+    "to_char": 233452,
+    "ref_chars": 1254
+   },
+   {
+    "page": 214,
+    "slug": "r4l-6a4263b1744db9e3105b1125-p214",
+    "image": "https://images.sourcelibrary.org/archived/6a4263b1744db9e3105b1125/214.jpg",
+    "tess_letters": 1016,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.421,
+    "pb_aligned": true,
+    "from_char": 233372,
+    "to_char": 234668,
+    "ref_chars": 1296
+   }
+  ]
+ },
+ "6a4b6fb28fe09ab0ff23ad56": {
+  "century": "1600s",
+  "order": 9,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A61502",
+  "pages": [
+   {
+    "page": 5,
+    "slug": "r4l-6a4b6fb28fe09ab0ff23ad56-p5",
+    "image": "https://images.sourcelibrary.org/pages/6a4b6fb28fe09ab0ff23ad56/0005.jpg",
+    "tess_letters": 1150,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.51,
+    "pb_aligned": true,
+    "from_char": 1650,
+    "to_char": 3126,
+    "ref_chars": 1476
+   },
+   {
+    "page": 6,
+    "slug": "r4l-6a4b6fb28fe09ab0ff23ad56-p6",
+    "image": "https://images.sourcelibrary.org/pages/6a4b6fb28fe09ab0ff23ad56/0006.jpg",
+    "tess_letters": 618,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.417,
+    "pb_aligned": true,
+    "from_char": 3157,
+    "to_char": 3970,
+    "ref_chars": 813
+   },
+   {
+    "page": 7,
+    "slug": "r4l-6a4b6fb28fe09ab0ff23ad56-p7",
+    "image": "https://images.sourcelibrary.org/pages/6a4b6fb28fe09ab0ff23ad56/0007.jpg",
+    "tess_letters": 965,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.526,
+    "pb_aligned": true,
+    "from_char": 4133,
+    "to_char": 5451,
+    "ref_chars": 1318
+   }
+  ]
+ },
+ "6a491369ac0c339f55337854": {
+  "century": "1600s",
+  "order": 8,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A21113",
+  "pages": [
+   {
+    "page": 3,
+    "slug": "r4l-6a491369ac0c339f55337854-p3",
+    "image": "https://images.sourcelibrary.org/pages/6a491369ac0c339f55337854/0003.jpg",
+    "tess_letters": 1261,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.415,
+    "pb_aligned": true,
+    "from_char": 302,
+    "to_char": 1839,
+    "ref_chars": 1537
+   },
+   {
+    "page": 4,
+    "slug": "r4l-6a491369ac0c339f55337854-p4",
+    "image": "https://images.sourcelibrary.org/pages/6a491369ac0c339f55337854/0004.jpg",
+    "tess_letters": 159,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.364,
+    "pb_aligned": true,
+    "from_char": 1884,
+    "to_char": 2123,
+    "ref_chars": 239
+   },
+   {
+    "page": 5,
+    "slug": "r4l-6a491369ac0c339f55337854-p5",
+    "image": "https://images.sourcelibrary.org/pages/6a491369ac0c339f55337854/0005.jpg",
+    "tess_letters": 958,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.618,
+    "pb_aligned": true,
+    "from_char": 2081,
+    "to_char": 3221,
+    "ref_chars": 1140
+   }
+  ]
+ },
+ "69c8a3f26c6f3cc53c85e777": {
+  "century": "1600s",
+  "order": 11,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-historicapolitica_besold6",
+  "pages": [
+   {
+    "page": 185,
+    "slug": "r4l-69c8a3f26c6f3cc53c85e777-p185",
+    "image": "https://images.sourcelibrary.org/pages/69c8a3f26c6f3cc53c85e777/sp69f5040c0e9e17a6e5f50a6b.jpg",
+    "tess_letters": 2191,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.445,
+    "pb_aligned": true,
+    "from_char": 473493,
+    "to_char": 476259,
+    "ref_chars": 2766
+   },
+   {
+    "page": 186,
+    "slug": "r4l-69c8a3f26c6f3cc53c85e777-p186",
+    "image": "https://images.sourcelibrary.org/pages/69c8a3f26c6f3cc53c85e777/sp69f5040f0e9e17a6e5f50a6c.jpg",
+    "tess_letters": 2080,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.53,
+    "pb_aligned": true,
+    "from_char": 476206,
+    "to_char": 478686,
+    "ref_chars": 2480
+   },
+   {
+    "page": 187,
+    "slug": "r4l-69c8a3f26c6f3cc53c85e777-p187",
+    "image": "https://images.sourcelibrary.org/pages/69c8a3f26c6f3cc53c85e777/sp69f5040f0e9e17a6e5f50a6d.jpg",
+    "tess_letters": 2163,
+    "aligned": true,
+    "how": "pb-neighbour",
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": 478727,
+    "to_char": 481426,
+    "ref_chars": 2697
+   }
+  ]
+ },
+ "6a90a3b93a69baad5d30cf72": {
+  "century": "1600s",
+  "order": 15,
+  "status": "skip",
+  "reason": "no page of the run located in any candidate edition",
+  "edition": "camena-poemata_del1",
+  "pages": [
+   {
+    "page": 109,
+    "slug": "r4l-6a90a3b93a69baad5d30cf72-p109",
+    "image": "https://images.sourcelibrary.org/archived/6a90a3b93a69baad5d30cf72/109.jpg",
+    "tess_letters": 1188,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 110,
+    "slug": "r4l-6a90a3b93a69baad5d30cf72-p110",
+    "image": "https://images.sourcelibrary.org/archived/6a90a3b93a69baad5d30cf72/110.jpg",
+    "tess_letters": 1066,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 111,
+    "slug": "r4l-6a90a3b93a69baad5d30cf72-p111",
+    "image": "https://images.sourcelibrary.org/archived/6a90a3b93a69baad5d30cf72/111.jpg",
+    "tess_letters": 1154,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   }
+  ]
+ },
+ "6a42777528e9db2e39c1ece8": {
+  "century": "1600s",
+  "order": 13,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A50530",
+  "pages": [
+   {
+    "page": 26,
+    "slug": "r4l-6a42777528e9db2e39c1ece8-p26",
+    "image": "https://images.sourcelibrary.org/archived/6a42777528e9db2e39c1ece8/26.jpg",
+    "tess_letters": 1206,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.538,
+    "pb_aligned": true,
+    "from_char": 15570,
+    "to_char": 17108,
+    "ref_chars": 1538
+   },
+   {
+    "page": 27,
+    "slug": "r4l-6a42777528e9db2e39c1ece8-p27",
+    "image": "https://images.sourcelibrary.org/archived/6a42777528e9db2e39c1ece8/27.jpg",
+    "tess_letters": 1176,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.431,
+    "pb_aligned": true,
+    "from_char": 17085,
+    "to_char": 18561,
+    "ref_chars": 1476
+   },
+   {
+    "page": 28,
+    "slug": "r4l-6a42777528e9db2e39c1ece8-p28",
+    "image": "https://images.sourcelibrary.org/archived/6a42777528e9db2e39c1ece8/28.jpg",
+    "tess_letters": 1184,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.506,
+    "pb_aligned": true,
+    "from_char": 18499,
+    "to_char": 19983,
+    "ref_chars": 1484
+   }
+  ]
+ },
+ "69b6b9618566c8381462b415": {
+  "century": "1600s",
+  "order": 12,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A52251",
+  "pages": [
+   {
+    "page": 107,
+    "slug": "r4l-69b6b9618566c8381462b415-p107",
+    "image": "https://images.sourcelibrary.org/archived/69b6b9618566c8381462b415/107.jpg",
+    "tess_letters": 1008,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.524,
+    "pb_aligned": true,
+    "from_char": 143235,
+    "to_char": 144515,
+    "ref_chars": 1280
+   },
+   {
+    "page": 108,
+    "slug": "r4l-69b6b9618566c8381462b415-p108",
+    "image": "https://images.sourcelibrary.org/archived/69b6b9618566c8381462b415/108.jpg",
+    "tess_letters": 1254,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.598,
+    "pb_aligned": true,
+    "from_char": 144480,
+    "to_char": 146090,
+    "ref_chars": 1610
+   },
+   {
+    "page": 109,
+    "slug": "r4l-69b6b9618566c8381462b415-p109",
+    "image": "https://images.sourcelibrary.org/archived/69b6b9618566c8381462b415/109.jpg",
+    "tess_letters": 672,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.591,
+    "pb_aligned": true,
+    "from_char": 146064,
+    "to_char": 146946,
+    "ref_chars": 882
+   }
+  ]
+ },
+ "6a4adfef9a3f4fa983d99fb9": {
+  "century": "1600s",
+  "order": 14,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A52456",
+  "pages": [
+   {
+    "page": 29,
+    "slug": "r4l-6a4adfef9a3f4fa983d99fb9-p29",
+    "image": "https://images.sourcelibrary.org/pages/6a4adfef9a3f4fa983d99fb9/0029.jpg",
+    "tess_letters": 1207,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.48,
+    "pb_aligned": true,
+    "from_char": 19750,
+    "to_char": 21398,
+    "ref_chars": 1648
+   },
+   {
+    "page": 30,
+    "slug": "r4l-6a4adfef9a3f4fa983d99fb9-p30",
+    "image": "https://images.sourcelibrary.org/pages/6a4adfef9a3f4fa983d99fb9/0030.jpg",
+    "tess_letters": 1787,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.387,
+    "pb_aligned": true,
+    "from_char": 21383,
+    "to_char": 23631,
+    "ref_chars": 2248
+   },
+   {
+    "page": 31,
+    "slug": "r4l-6a4adfef9a3f4fa983d99fb9-p31",
+    "image": "https://images.sourcelibrary.org/pages/6a4adfef9a3f4fa983d99fb9/0031.jpg",
+    "tess_letters": 1680,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.407,
+    "pb_aligned": true,
+    "from_char": 23576,
+    "to_char": 25838,
+    "ref_chars": 2262
+   }
+  ]
+ },
+ "69b6766cb3f4fc04415c2bba": {
+  "century": "1600s",
+  "order": 19,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-cera_lange1",
+  "pages": [
+   {
+    "page": 971,
+    "slug": "r4l-69b6766cb3f4fc04415c2bba-p971",
+    "image": "https://www.e-rara.ch/i3f/v21/9237652/full/1000,/0/default.jpg",
+    "tess_letters": 1320,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.358,
+    "pb_aligned": true,
+    "from_char": 1396616,
+    "to_char": 1398266,
+    "ref_chars": 1650
+   },
+   {
+    "page": 972,
+    "slug": "r4l-69b6766cb3f4fc04415c2bba-p972",
+    "image": "https://www.e-rara.ch/i3f/v21/9237653/full/1000,/0/default.jpg",
+    "tess_letters": 1261,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.575,
+    "pb_aligned": true,
+    "from_char": 1398194,
+    "to_char": 1399724,
+    "ref_chars": 1530
+   },
+   {
+    "page": 973,
+    "slug": "r4l-69b6766cb3f4fc04415c2bba-p973",
+    "image": "https://www.e-rara.ch/i3f/v21/9237654/full/1000,/0/default.jpg",
+    "tess_letters": 1319,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.459,
+    "pb_aligned": true,
+    "from_char": 1399669,
+    "to_char": 1401261,
+    "ref_chars": 1592
+   }
+  ]
+ },
+ "6a94390b45a4780cb83dba46": {
+  "century": "1600s",
+  "order": 16,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A69934",
+  "pages": [
+   {
+    "page": 2,
+    "slug": "r4l-6a94390b45a4780cb83dba46-p2",
+    "image": "https://images.sourcelibrary.org/archived/6a94390b45a4780cb83dba46/2.jpg",
+    "tess_letters": 988,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.516,
+    "pb_aligned": true,
+    "from_char": 397,
+    "to_char": 1712,
+    "ref_chars": 1315
+   },
+   {
+    "page": 3,
+    "slug": "r4l-6a94390b45a4780cb83dba46-p3",
+    "image": "https://images.sourcelibrary.org/archived/6a94390b45a4780cb83dba46/3.jpg",
+    "tess_letters": 339,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 4,
+    "slug": "r4l-6a94390b45a4780cb83dba46-p4",
+    "image": "https://images.sourcelibrary.org/archived/6a94390b45a4780cb83dba46/4.jpg",
+    "tess_letters": 378,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   }
+  ]
+ },
+ "69b6ba018566c8381462e8fa": {
+  "century": "1600s",
+  "order": 17,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A52251",
+  "pages": [
+   {
+    "page": 476,
+    "slug": "r4l-69b6ba018566c8381462e8fa-p476",
+    "image": "https://images.sourcelibrary.org/archived/69b6ba018566c8381462e8fa/476.jpg",
+    "tess_letters": 1657,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.461,
+    "pb_aligned": true,
+    "from_char": 720395,
+    "to_char": 722484,
+    "ref_chars": 2089
+   },
+   {
+    "page": 477,
+    "slug": "r4l-69b6ba018566c8381462e8fa-p477",
+    "image": "https://images.sourcelibrary.org/archived/69b6ba018566c8381462e8fa/477.jpg",
+    "tess_letters": 1644,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.486,
+    "pb_aligned": true,
+    "from_char": 722457,
+    "to_char": 724534,
+    "ref_chars": 2077
+   },
+   {
+    "page": 478,
+    "slug": "r4l-69b6ba018566c8381462e8fa-p478",
+    "image": "https://images.sourcelibrary.org/archived/69b6ba018566c8381462e8fa/478.jpg",
+    "tess_letters": 1674,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.384,
+    "pb_aligned": true,
+    "from_char": 724489,
+    "to_char": 726605,
+    "ref_chars": 2116
+   }
+  ]
+ },
+ "6a496e86ff00b397e11984f3": {
+  "century": "1600s",
+  "order": 18,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A05225",
+  "pages": [
+   {
+    "page": 61,
+    "slug": "r4l-6a496e86ff00b397e11984f3-p61",
+    "image": "https://images.sourcelibrary.org/pages/6a496e86ff00b397e11984f3/0061.jpg",
+    "tess_letters": 1028,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.481,
+    "pb_aligned": true,
+    "from_char": 65012,
+    "to_char": 66342,
+    "ref_chars": 1330
+   },
+   {
+    "page": 62,
+    "slug": "r4l-6a496e86ff00b397e11984f3-p62",
+    "image": "https://images.sourcelibrary.org/archived/6a496e86ff00b397e11984f3/62.jpg",
+    "tess_letters": 979,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.503,
+    "pb_aligned": true,
+    "from_char": 66296,
+    "to_char": 67566,
+    "ref_chars": 1270
+   },
+   {
+    "page": 63,
+    "slug": "r4l-6a496e86ff00b397e11984f3-p63",
+    "image": "https://images.sourcelibrary.org/pages/6a496e86ff00b397e11984f3/0063.jpg",
+    "tess_letters": 1052,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.396,
+    "pb_aligned": true,
+    "from_char": 67499,
+    "to_char": 68888,
+    "ref_chars": 1389
+   }
+  ]
+ },
+ "6a432b29e797132cc665b266": {
+  "century": "1600s",
+  "order": 20,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A01809",
+  "pages": [
+   {
+    "page": 2,
+    "slug": "r4l-6a432b29e797132cc665b266-p2",
+    "image": "https://images.sourcelibrary.org/archived/6a432b29e797132cc665b266/2.jpg",
+    "tess_letters": 0,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 3,
+    "slug": "r4l-6a432b29e797132cc665b266-p3",
+    "image": "https://images.sourcelibrary.org/archived/6a432b29e797132cc665b266/3.jpg",
+    "tess_letters": 697,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.5,
+    "pb_aligned": true,
+    "from_char": 11,
+    "to_char": 646,
+    "ref_chars": 635
+   },
+   {
+    "page": 4,
+    "slug": "r4l-6a432b29e797132cc665b266-p4",
+    "image": "https://images.sourcelibrary.org/archived/6a432b29e797132cc665b266/4.jpg",
+    "tess_letters": 719,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.424,
+    "pb_aligned": true,
+    "from_char": 620,
+    "to_char": 1605,
+    "ref_chars": 985
+   }
+  ]
+ },
+ "6a42ce3be76baa13aa851af5": {
+  "century": "1600s",
+  "order": 23,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A14631",
+  "pages": [
+   {
+    "page": 10,
+    "slug": "r4l-6a42ce3be76baa13aa851af5-p10",
+    "image": "https://images.sourcelibrary.org/archived/6a42ce3be76baa13aa851af5/10.jpg",
+    "tess_letters": 646,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 11,
+    "slug": "r4l-6a42ce3be76baa13aa851af5-p11",
+    "image": "https://images.sourcelibrary.org/archived/6a42ce3be76baa13aa851af5/11.jpg",
+    "tess_letters": 581,
+    "aligned": true,
+    "how": "pb-neighbour",
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": 4573,
+    "to_char": 5294,
+    "ref_chars": 719
+   },
+   {
+    "page": 12,
+    "slug": "r4l-6a42ce3be76baa13aa851af5-p12",
+    "image": "https://images.sourcelibrary.org/archived/6a42ce3be76baa13aa851af5/12.jpg",
+    "tess_letters": 694,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.482,
+    "pb_aligned": true,
+    "from_char": 5246,
+    "to_char": 6107,
+    "ref_chars": 861
+   }
+  ]
+ },
+ "6970e3599b09d309d780a252": {
+  "century": "1600s",
+  "order": 21,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-historicapolitica_besold7",
+  "pages": [
+   {
+    "page": 225,
+    "slug": "r4l-6970e3599b09d309d780a252-p225",
+    "image": "https://images.sourcelibrary.org/cropped/6970e3599b09d309d780a252/69738b042e123634b98d797e.jpg",
+    "tess_letters": 1608,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.437,
+    "pb_aligned": true,
+    "from_char": 502100,
+    "to_char": 504202,
+    "ref_chars": 2102
+   },
+   {
+    "page": 226,
+    "slug": "r4l-6970e3599b09d309d780a252-p226",
+    "image": "https://images.sourcelibrary.org/cropped/6970e3599b09d309d780a252/69738b042e123634b98d797f.jpg",
+    "tess_letters": 1873,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.425,
+    "pb_aligned": true,
+    "from_char": 504162,
+    "to_char": 506820,
+    "ref_chars": 2658
+   },
+   {
+    "page": 227,
+    "slug": "r4l-6970e3599b09d309d780a252-p227",
+    "image": "https://images.sourcelibrary.org/cropped/6970e3599b09d309d780a252/69738b362e123634b98d7983.jpg",
+    "tess_letters": 1726,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.423,
+    "pb_aligned": true,
+    "from_char": 506783,
+    "to_char": 509228,
+    "ref_chars": 2445
+   }
+  ]
+ },
+ "6a90b8fdfea824c8068281d6": {
+  "century": "1600s",
+  "order": 22,
+  "status": "aligned",
+  "reason": null,
+  "edition": "ws-PRAETORIUS_Michael_Syntagma_musicum_1_djvu",
+  "pages": [
+   {
+    "page": 327,
+    "slug": "r4l-6a90b8fdfea824c8068281d6-p327",
+    "image": "https://images.sourcelibrary.org/pages/6a90b8fdfea824c8068281d6/0327.jpg",
+    "tess_letters": 1596,
+    "aligned": true,
+    "how": "pb-neighbour",
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": 601872,
+    "to_char": 604050,
+    "ref_chars": 2177
+   },
+   {
+    "page": 328,
+    "slug": "r4l-6a90b8fdfea824c8068281d6-p328",
+    "image": "https://images.sourcelibrary.org/pages/6a90b8fdfea824c8068281d6/0328.jpg",
+    "tess_letters": 1506,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.395,
+    "pb_aligned": true,
+    "from_char": 604027,
+    "to_char": 605924,
+    "ref_chars": 1897
+   },
+   {
+    "page": 329,
+    "slug": "r4l-6a90b8fdfea824c8068281d6-p329",
+    "image": "https://images.sourcelibrary.org/pages/6a90b8fdfea824c8068281d6/0329.jpg",
+    "tess_letters": 1573,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.424,
+    "pb_aligned": true,
+    "from_char": 605902,
+    "to_char": 607917,
+    "ref_chars": 2015
+   }
+  ]
+ },
+ "69b6996b080b19f98fcfa9e7": {
+  "century": "1600s",
+  "order": 27,
+  "status": "skip",
+  "reason": "no page of the run located in any candidate edition",
+  "edition": "camena-poemata_bider5",
+  "pages": [
+   {
+    "page": 153,
+    "slug": "r4l-69b6996b080b19f98fcfa9e7-p153",
+    "image": "https://images.sourcelibrary.org/archived/69b6996b080b19f98fcfa9e7/153.jpg",
+    "tess_letters": 0,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 154,
+    "slug": "r4l-69b6996b080b19f98fcfa9e7-p154",
+    "image": "https://images.sourcelibrary.org/archived/69b6996b080b19f98fcfa9e7/154.jpg",
+    "tess_letters": 0,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 155,
+    "slug": "r4l-69b6996b080b19f98fcfa9e7-p155",
+    "image": "https://images.sourcelibrary.org/archived/69b6996b080b19f98fcfa9e7/155.jpg",
+    "tess_letters": 0,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   }
+  ]
+ },
+ "6a4270ed62d175ca9e4e1aa5": {
+  "century": "1600s",
+  "order": 24,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A42103",
+  "pages": [
+   {
+    "page": 8,
+    "slug": "r4l-6a4270ed62d175ca9e4e1aa5-p8",
+    "image": "https://images.sourcelibrary.org/archived/6a4270ed62d175ca9e4e1aa5/8.jpg",
+    "tess_letters": 985,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.407,
+    "pb_aligned": true,
+    "from_char": 6278,
+    "to_char": 7562,
+    "ref_chars": 1284
+   },
+   {
+    "page": 9,
+    "slug": "r4l-6a4270ed62d175ca9e4e1aa5-p9",
+    "image": "https://images.sourcelibrary.org/archived/6a4270ed62d175ca9e4e1aa5/9.jpg",
+    "tess_letters": 883,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.455,
+    "pb_aligned": true,
+    "from_char": 7517,
+    "to_char": 8698,
+    "ref_chars": 1181
+   },
+   {
+    "page": 10,
+    "slug": "r4l-6a4270ed62d175ca9e4e1aa5-p10",
+    "image": "https://images.sourcelibrary.org/archived/6a4270ed62d175ca9e4e1aa5/10.jpg",
+    "tess_letters": 581,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.5,
+    "pb_aligned": false,
+    "from_char": 9089,
+    "to_char": 9934,
+    "ref_chars": 845
+   }
+  ]
+ },
+ "6a506fd980b7658fae261d6e": {
+  "century": "1600s",
+  "order": 25,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A14289",
+  "pages": [
+   {
+    "page": 70,
+    "slug": "r4l-6a506fd980b7658fae261d6e-p70",
+    "image": "https://images.sourcelibrary.org/archived/6a506fd980b7658fae261d6e/70.jpg",
+    "tess_letters": 933,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.368,
+    "pb_aligned": true,
+    "from_char": 75009,
+    "to_char": 76144,
+    "ref_chars": 1135
+   },
+   {
+    "page": 71,
+    "slug": "r4l-6a506fd980b7658fae261d6e-p71",
+    "image": "https://images.sourcelibrary.org/archived/6a506fd980b7658fae261d6e/71.jpg",
+    "tess_letters": 998,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.392,
+    "pb_aligned": true,
+    "from_char": 76138,
+    "to_char": 77420,
+    "ref_chars": 1282
+   },
+   {
+    "page": 72,
+    "slug": "r4l-6a506fd980b7658fae261d6e-p72",
+    "image": "https://images.sourcelibrary.org/archived/6a506fd980b7658fae261d6e/72.jpg",
+    "tess_letters": 983,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.411,
+    "pb_aligned": true,
+    "from_char": 77375,
+    "to_char": 78663,
+    "ref_chars": 1288
+   }
+  ]
+ },
+ "6a42acc65207af7c42f4db34": {
+  "century": "1600s",
+  "order": 26,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A07382",
+  "pages": [
+   {
+    "page": 7,
+    "slug": "r4l-6a42acc65207af7c42f4db34-p7",
+    "image": "https://images.sourcelibrary.org/archived/6a42acc65207af7c42f4db34/7.jpg",
+    "tess_letters": 1252,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.356,
+    "pb_aligned": true,
+    "from_char": 6286,
+    "to_char": 8038,
+    "ref_chars": 1752
+   },
+   {
+    "page": 8,
+    "slug": "r4l-6a42acc65207af7c42f4db34-p8",
+    "image": "https://images.sourcelibrary.org/archived/6a42acc65207af7c42f4db34/8.jpg",
+    "tess_letters": 1348,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.453,
+    "pb_aligned": true,
+    "from_char": 8102,
+    "to_char": 9861,
+    "ref_chars": 1759
+   },
+   {
+    "page": 9,
+    "slug": "r4l-6a42acc65207af7c42f4db34-p9",
+    "image": "https://images.sourcelibrary.org/archived/6a42acc65207af7c42f4db34/9.jpg",
+    "tess_letters": 1129,
+    "aligned": true,
+    "how": "pb-neighbour",
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": 10038,
+    "to_char": 11504,
+    "ref_chars": 1464
+   }
+  ]
+ },
+ "6a42ebca06e6ead3ac543887": {
+  "century": "1600s",
+  "order": 28,
+  "status": "skip",
+  "reason": "no page of the run located in any candidate edition",
+  "edition": "camena-historicapolitica_neugebauer1",
+  "pages": [
+   {
+    "page": 932,
+    "slug": "r4l-6a42ebca06e6ead3ac543887-p932",
+    "image": "https://images.sourcelibrary.org/archived/6a42ebca06e6ead3ac543887/932.jpg",
+    "tess_letters": 2001,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 933,
+    "slug": "r4l-6a42ebca06e6ead3ac543887-p933",
+    "image": "https://images.sourcelibrary.org/archived/6a42ebca06e6ead3ac543887/933.jpg",
+    "tess_letters": 17,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 934,
+    "slug": "r4l-6a42ebca06e6ead3ac543887-p934",
+    "image": "https://images.sourcelibrary.org/archived/6a42ebca06e6ead3ac543887/934.jpg",
+    "tess_letters": 17,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   }
+  ]
+ },
+ "6953e4fa77f38f6761bef1dc": {
+  "century": "1600s",
+  "order": 31,
+  "status": "aligned",
+  "reason": null,
+  "edition": "ws-Principia_newton_la_djvu",
+  "pages": [
+   {
+    "page": 493,
+    "slug": "r4l-6953e4fa77f38f6761bef1dc-p493",
+    "image": "https://images.sourcelibrary.org/archived/6953e4fa77f38f6761bef1dc/493.jpg",
+    "tess_letters": 1134,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 494,
+    "slug": "r4l-6953e4fa77f38f6761bef1dc-p494",
+    "image": "https://images.sourcelibrary.org/archived/6953e4fa77f38f6761bef1dc/494.jpg",
+    "tess_letters": 719,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.468,
+    "pb_aligned": false,
+    "from_char": 768773,
+    "to_char": 770064,
+    "ref_chars": 1291
+   },
+   {
+    "page": 495,
+    "slug": "r4l-6953e4fa77f38f6761bef1dc-p495",
+    "image": "https://images.sourcelibrary.org/archived/6953e4fa77f38f6761bef1dc/495.jpg",
+    "tess_letters": 1439,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.462,
+    "pb_aligned": false,
+    "from_char": 770037,
+    "to_char": 772075,
+    "ref_chars": 2038
+   }
+  ]
+ },
+ "6a434778201f98f53c3efe9d": {
+  "century": "1600s",
+  "order": 29,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A53895",
+  "pages": [
+   {
+    "page": 91,
+    "slug": "r4l-6a434778201f98f53c3efe9d-p91",
+    "image": "https://images.sourcelibrary.org/archived/6a434778201f98f53c3efe9d/91.jpg",
+    "tess_letters": 1327,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.38,
+    "pb_aligned": true,
+    "from_char": 128572,
+    "to_char": 129856,
+    "ref_chars": 1284
+   },
+   {
+    "page": 92,
+    "slug": "r4l-6a434778201f98f53c3efe9d-p92",
+    "image": "https://images.sourcelibrary.org/archived/6a434778201f98f53c3efe9d/92.jpg",
+    "tess_letters": 1412,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.394,
+    "pb_aligned": true,
+    "from_char": 129776,
+    "to_char": 131392,
+    "ref_chars": 1616
+   },
+   {
+    "page": 93,
+    "slug": "r4l-6a434778201f98f53c3efe9d-p93",
+    "image": "https://images.sourcelibrary.org/archived/6a434778201f98f53c3efe9d/93.jpg",
+    "tess_letters": 1387,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.609,
+    "pb_aligned": true,
+    "from_char": 131316,
+    "to_char": 132799,
+    "ref_chars": 1483
+   }
+  ]
+ },
+ "6a42f62b3ad4d80da1237aed": {
+  "century": "1600s",
+  "order": 30,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A16626",
+  "pages": [
+   {
+    "page": 456,
+    "slug": "r4l-6a42f62b3ad4d80da1237aed-p456",
+    "image": "https://images.sourcelibrary.org/archived/6a42f62b3ad4d80da1237aed/456.jpg",
+    "tess_letters": 3092,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.395,
+    "pb_aligned": true,
+    "from_char": 2190399,
+    "to_char": 2194504,
+    "ref_chars": 4105
+   },
+   {
+    "page": 457,
+    "slug": "r4l-6a42f62b3ad4d80da1237aed-p457",
+    "image": "https://images.sourcelibrary.org/archived/6a42f62b3ad4d80da1237aed/457.jpg",
+    "tess_letters": 4204,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.414,
+    "pb_aligned": true,
+    "from_char": 2194434,
+    "to_char": 2199836,
+    "ref_chars": 5402
+   },
+   {
+    "page": 458,
+    "slug": "r4l-6a42f62b3ad4d80da1237aed-p458",
+    "image": "https://images.sourcelibrary.org/archived/6a42f62b3ad4d80da1237aed/458.jpg",
+    "tess_letters": 4142,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.382,
+    "pb_aligned": true,
+    "from_char": 2199784,
+    "to_char": 2205014,
+    "ref_chars": 5230
+   }
+  ]
+ },
+ "6a430a2a22c0c8edb0f8c8d4": {
+  "century": "1600s",
+  "order": 35,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A42256",
+  "pages": [
+   {
+    "page": 27,
+    "slug": "r4l-6a430a2a22c0c8edb0f8c8d4-p27",
+    "image": "https://images.sourcelibrary.org/archived/6a430a2a22c0c8edb0f8c8d4/27.jpg",
+    "tess_letters": 385,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.551,
+    "pb_aligned": true,
+    "from_char": 32697,
+    "to_char": 33222,
+    "ref_chars": 525
+   },
+   {
+    "page": 28,
+    "slug": "r4l-6a430a2a22c0c8edb0f8c8d4-p28",
+    "image": "https://images.sourcelibrary.org/archived/6a430a2a22c0c8edb0f8c8d4/28.jpg",
+    "tess_letters": 1092,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.591,
+    "pb_aligned": true,
+    "from_char": 33176,
+    "to_char": 34572,
+    "ref_chars": 1396
+   },
+   {
+    "page": 29,
+    "slug": "r4l-6a430a2a22c0c8edb0f8c8d4-p29",
+    "image": "https://images.sourcelibrary.org/archived/6a430a2a22c0c8edb0f8c8d4/29.jpg",
+    "tess_letters": 309,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.574,
+    "pb_aligned": true,
+    "from_char": 34535,
+    "to_char": 34989,
+    "ref_chars": 454
+   }
+  ]
+ },
+ "6a9085af8696e74449c320be": {
+  "century": "1600s",
+  "order": 33,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-historicapolitica_fritsch02",
+  "pages": [
+   {
+    "page": 103,
+    "slug": "r4l-6a9085af8696e74449c320be-p103",
+    "image": "https://images.sourcelibrary.org/pages/6a9085af8696e74449c320be/0103.jpg",
+    "tess_letters": 1089,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 104,
+    "slug": "r4l-6a9085af8696e74449c320be-p104",
+    "image": "https://images.sourcelibrary.org/pages/6a9085af8696e74449c320be/0104.jpg",
+    "tess_letters": 924,
+    "aligned": true,
+    "how": "pb-neighbour",
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": 114534,
+    "to_char": 115685,
+    "ref_chars": 1149
+   },
+   {
+    "page": 105,
+    "slug": "r4l-6a9085af8696e74449c320be-p105",
+    "image": "https://images.sourcelibrary.org/pages/6a9085af8696e74449c320be/0105.jpg",
+    "tess_letters": 770,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.365,
+    "pb_aligned": true,
+    "from_char": 115657,
+    "to_char": 116661,
+    "ref_chars": 1004
+   }
+  ]
+ },
+ "697a8014e680cef7cedae395": {
+  "century": "1600s",
+  "order": 32,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-historicapolitica_besold2",
+  "pages": [
+   {
+    "page": 252,
+    "slug": "r4l-697a8014e680cef7cedae395-p252",
+    "image": "https://images.sourcelibrary.org/cropped/697a8014e680cef7cedae395/697ac072235a91dc7840bdae.jpg",
+    "tess_letters": 2096,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.382,
+    "pb_aligned": true,
+    "from_char": 606770,
+    "to_char": 609561,
+    "ref_chars": 2791
+   },
+   {
+    "page": 253,
+    "slug": "r4l-697a8014e680cef7cedae395-p253",
+    "image": "https://images.sourcelibrary.org/cropped/697a8014e680cef7cedae395/697ac072235a91dc7840bdaf.jpg",
+    "tess_letters": 2233,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.375,
+    "pb_aligned": true,
+    "from_char": 609508,
+    "to_char": 612436,
+    "ref_chars": 2928
+   },
+   {
+    "page": 254,
+    "slug": "r4l-697a8014e680cef7cedae395-p254",
+    "image": "https://images.sourcelibrary.org/cropped/697a8014e680cef7cedae395/697ac0c7a70735acce648b29.jpg",
+    "tess_letters": 2128,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.408,
+    "pb_aligned": true,
+    "from_char": 612417,
+    "to_char": 615189,
+    "ref_chars": 2772
+   }
+  ]
+ },
+ "6a4f06e6b18250223e2f4a35": {
+  "century": "1600s",
+  "order": 34,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A54827",
+  "pages": [
+   {
+    "page": 3,
+    "slug": "r4l-6a4f06e6b18250223e2f4a35-p3",
+    "image": "https://images.sourcelibrary.org/archived/6a4f06e6b18250223e2f4a35/3.jpg",
+    "tess_letters": 799,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.413,
+    "pb_aligned": true,
+    "from_char": 3,
+    "to_char": 1103,
+    "ref_chars": 1100
+   },
+   {
+    "page": 4,
+    "slug": "r4l-6a4f06e6b18250223e2f4a35-p4",
+    "image": "https://images.sourcelibrary.org/archived/6a4f06e6b18250223e2f4a35/4.jpg",
+    "tess_letters": 1023,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.44,
+    "pb_aligned": true,
+    "from_char": 1064,
+    "to_char": 2370,
+    "ref_chars": 1306
+   },
+   {
+    "page": 5,
+    "slug": "r4l-6a4f06e6b18250223e2f4a35-p5",
+    "image": "https://images.sourcelibrary.org/archived/6a4f06e6b18250223e2f4a35/5.jpg",
+    "tess_letters": 942,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.404,
+    "pb_aligned": true,
+    "from_char": 2356,
+    "to_char": 3631,
+    "ref_chars": 1275
+   }
+  ]
+ },
+ "6a906153ce57ddf536207e42": {
+  "century": "1600s",
+  "order": 38,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-poemata_avan1",
+  "pages": [
+   {
+    "page": 372,
+    "slug": "r4l-6a906153ce57ddf536207e42-p372",
+    "image": "https://images.sourcelibrary.org/archived/6a906153ce57ddf536207e42/372.jpg",
+    "tess_letters": 667,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.486,
+    "pb_aligned": true,
+    "from_char": 305350,
+    "to_char": 306201,
+    "ref_chars": 851
+   },
+   {
+    "page": 373,
+    "slug": "r4l-6a906153ce57ddf536207e42-p373",
+    "image": "https://images.sourcelibrary.org/archived/6a906153ce57ddf536207e42/373.jpg",
+    "tess_letters": 675,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.505,
+    "pb_aligned": true,
+    "from_char": 306144,
+    "to_char": 307017,
+    "ref_chars": 873
+   },
+   {
+    "page": 374,
+    "slug": "r4l-6a906153ce57ddf536207e42-p374",
+    "image": "https://images.sourcelibrary.org/archived/6a906153ce57ddf536207e42/374.jpg",
+    "tess_letters": 826,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.507,
+    "pb_aligned": true,
+    "from_char": 306955,
+    "to_char": 307993,
+    "ref_chars": 1038
+   }
+  ]
+ },
+ "6a425310343d756d34e34ea7": {
+  "century": "1600s",
+  "order": 37,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A06769",
+  "pages": [
+   {
+    "page": 34,
+    "slug": "r4l-6a425310343d756d34e34ea7-p34",
+    "image": "https://images.sourcelibrary.org/archived/6a425310343d756d34e34ea7/34.jpg",
+    "tess_letters": 1075,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.532,
+    "pb_aligned": true,
+    "from_char": 38149,
+    "to_char": 39491,
+    "ref_chars": 1342
+   },
+   {
+    "page": 35,
+    "slug": "r4l-6a425310343d756d34e34ea7-p35",
+    "image": "https://images.sourcelibrary.org/archived/6a425310343d756d34e34ea7/35.jpg",
+    "tess_letters": 1083,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.55,
+    "pb_aligned": true,
+    "from_char": 39416,
+    "to_char": 40750,
+    "ref_chars": 1334
+   },
+   {
+    "page": 36,
+    "slug": "r4l-6a425310343d756d34e34ea7-p36",
+    "image": "https://images.sourcelibrary.org/archived/6a425310343d756d34e34ea7/36.jpg",
+    "tess_letters": 801,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.559,
+    "pb_aligned": true,
+    "from_char": 40701,
+    "to_char": 41660,
+    "ref_chars": 959
+   }
+  ]
+ },
+ "69c7a6b092b884e4f8173c12": {
+  "century": "1600s",
+  "order": 36,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-historicapolitica_besold14",
+  "pages": [
+   {
+    "page": -66,
+    "slug": "r4l-69c7a6b092b884e4f8173c12-p-66",
+    "image": "https://images.sourcelibrary.org/pages/69c7a6b092b884e4f8173c12/0066-full.jpg",
+    "tess_letters": 1287,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.557,
+    "pb_aligned": false,
+    "from_char": 86507,
+    "to_char": 88148,
+    "ref_chars": 1641
+   },
+   {
+    "page": -65,
+    "slug": "r4l-69c7a6b092b884e4f8173c12-p-65",
+    "image": "https://images.sourcelibrary.org/pages/69c7a6b092b884e4f8173c12/0065-full.jpg",
+    "tess_letters": 1287,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.39,
+    "pb_aligned": false,
+    "from_char": 84913,
+    "to_char": 86543,
+    "ref_chars": 1630
+   },
+   {
+    "page": -64,
+    "slug": "r4l-69c7a6b092b884e4f8173c12-p-64",
+    "image": "https://images.sourcelibrary.org/pages/69c7a6b092b884e4f8173c12/0064-full.jpg",
+    "tess_letters": 1174,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.469,
+    "pb_aligned": false,
+    "from_char": 83487,
+    "to_char": 84941,
+    "ref_chars": 1454
+   }
+  ]
+ },
+ "6a42bbf75207af7c42f6f607": {
+  "century": "1600s",
+  "order": 39,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A67147",
+  "pages": [
+   {
+    "page": 723,
+    "slug": "r4l-6a42bbf75207af7c42f6f607-p723",
+    "image": "https://images.sourcelibrary.org/archived/6a42bbf75207af7c42f6f607/723.jpg",
+    "tess_letters": 1557,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.353,
+    "pb_aligned": true,
+    "from_char": 1301434,
+    "to_char": 1303446,
+    "ref_chars": 2012
+   },
+   {
+    "page": 724,
+    "slug": "r4l-6a42bbf75207af7c42f6f607-p724",
+    "image": "https://images.sourcelibrary.org/archived/6a42bbf75207af7c42f6f607/724.jpg",
+    "tess_letters": 1543,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.527,
+    "pb_aligned": true,
+    "from_char": 1303370,
+    "to_char": 1305375,
+    "ref_chars": 2005
+   },
+   {
+    "page": 725,
+    "slug": "r4l-6a42bbf75207af7c42f6f607-p725",
+    "image": "https://images.sourcelibrary.org/archived/6a42bbf75207af7c42f6f607/725.jpg",
+    "tess_letters": 1527,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.368,
+    "pb_aligned": true,
+    "from_char": 1305307,
+    "to_char": 1307263,
+    "ref_chars": 1956
+   }
+  ]
+ },
+ "6a42bb105207af7c42f6d163": {
+  "century": "1600s",
+  "order": 40,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A52079",
+  "pages": [
+   {
+    "page": 35,
+    "slug": "r4l-6a42bb105207af7c42f6d163-p35",
+    "image": "https://images.sourcelibrary.org/archived/6a42bb105207af7c42f6d163/35.jpg",
+    "tess_letters": 558,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.5,
+    "pb_aligned": true,
+    "from_char": 24591,
+    "to_char": 25391,
+    "ref_chars": 800
+   },
+   {
+    "page": 36,
+    "slug": "r4l-6a42bb105207af7c42f6d163-p36",
+    "image": "https://images.sourcelibrary.org/archived/6a42bb105207af7c42f6d163/36.jpg",
+    "tess_letters": 452,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.375,
+    "pb_aligned": true,
+    "from_char": 25356,
+    "to_char": 25956,
+    "ref_chars": 600
+   },
+   {
+    "page": 37,
+    "slug": "r4l-6a42bb105207af7c42f6d163-p37",
+    "image": "https://images.sourcelibrary.org/archived/6a42bb105207af7c42f6d163/37.jpg",
+    "tess_letters": 666,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.537,
+    "pb_aligned": true,
+    "from_char": 26016,
+    "to_char": 26901,
+    "ref_chars": 885
+   }
+  ]
+ },
+ "69b69ef5080b19f98fd0f8ca": {
+  "century": "1600s",
+  "order": 42,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-thesaurus_Jonston_historia_naturalis_3",
+  "pages": [
+   {
+    "page": 115,
+    "slug": "r4l-69b69ef5080b19f98fd0f8ca-p115",
+    "image": "https://images.sourcelibrary.org/archived/69b69ef5080b19f98fd0f8ca/115.jpg",
+    "tess_letters": 3117,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.519,
+    "pb_aligned": true,
+    "from_char": 216165,
+    "to_char": 220151,
+    "ref_chars": 3986
+   },
+   {
+    "page": 116,
+    "slug": "r4l-69b69ef5080b19f98fd0f8ca-p116",
+    "image": "https://images.sourcelibrary.org/archived/69b69ef5080b19f98fd0f8ca/116.jpg",
+    "tess_letters": 66,
+    "aligned": true,
+    "how": "pb-neighbour",
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": 220136,
+    "to_char": 220256,
+    "ref_chars": 118
+   },
+   {
+    "page": 117,
+    "slug": "r4l-69b69ef5080b19f98fd0f8ca-p117",
+    "image": "https://images.sourcelibrary.org/archived/69b69ef5080b19f98fd0f8ca/117.jpg",
+    "tess_letters": 0,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   }
+  ]
+ },
+ "69b6a4f3080b19f98fd2132c": {
+  "century": "1600s",
+  "order": 41,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-poemata_barza1",
+  "pages": [
+   {
+    "page": 46,
+    "slug": "r4l-69b6a4f3080b19f98fd2132c-p46",
+    "image": "https://images.sourcelibrary.org/archived/69b6a4f3080b19f98fd2132c/46.jpg",
+    "tess_letters": 1339,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.469,
+    "pb_aligned": true,
+    "from_char": 50938,
+    "to_char": 52651,
+    "ref_chars": 1713
+   },
+   {
+    "page": 47,
+    "slug": "r4l-69b6a4f3080b19f98fd2132c-p47",
+    "image": "https://images.sourcelibrary.org/archived/69b6a4f3080b19f98fd2132c/47.jpg",
+    "tess_letters": 1311,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.46,
+    "pb_aligned": true,
+    "from_char": 52589,
+    "to_char": 54275,
+    "ref_chars": 1686
+   },
+   {
+    "page": 48,
+    "slug": "r4l-69b6a4f3080b19f98fd2132c-p48",
+    "image": "https://images.sourcelibrary.org/archived/69b6a4f3080b19f98fd2132c/48.jpg",
+    "tess_letters": 1288,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.467,
+    "pb_aligned": true,
+    "from_char": 54331,
+    "to_char": 55761,
+    "ref_chars": 1430
+   }
+  ]
+ },
+ "69b69cfa080b19f98fd09f62": {
+  "century": "1600s",
+  "order": 43,
+  "status": "skip",
+  "reason": "no page of the run located in any candidate edition",
+  "edition": "ws-Historia_Naturalis_Brasiliae_1648_pdf",
+  "pages": [
+   {
+    "page": 57,
+    "slug": "r4l-69b69cfa080b19f98fd09f62-p57",
+    "image": "https://images.sourcelibrary.org/archived/69b69cfa080b19f98fd09f62/57.jpg",
+    "tess_letters": 3460,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 58,
+    "slug": "r4l-69b69cfa080b19f98fd09f62-p58",
+    "image": "https://images.sourcelibrary.org/archived/69b69cfa080b19f98fd09f62/58.jpg",
+    "tess_letters": 4333,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 59,
+    "slug": "r4l-69b69cfa080b19f98fd09f62-p59",
+    "image": "https://images.sourcelibrary.org/archived/69b69cfa080b19f98fd09f62/59.jpg",
+    "tess_letters": 3187,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   }
+  ]
+ },
+ "6a425af0744db9e3105a14b7": {
+  "century": "1600s",
+  "order": 46,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A34333",
+  "pages": [
+   {
+    "page": 118,
+    "slug": "r4l-6a425af0744db9e3105a14b7-p118",
+    "image": "https://images.sourcelibrary.org/archived/6a425af0744db9e3105a14b7/118.jpg",
+    "tess_letters": 276,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.565,
+    "pb_aligned": true,
+    "from_char": 80085,
+    "to_char": 80463,
+    "ref_chars": 378
+   },
+   {
+    "page": 119,
+    "slug": "r4l-6a425af0744db9e3105a14b7-p119",
+    "image": "https://images.sourcelibrary.org/archived/6a425af0744db9e3105a14b7/119.jpg",
+    "tess_letters": 546,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.537,
+    "pb_aligned": true,
+    "from_char": 80405,
+    "to_char": 81102,
+    "ref_chars": 697
+   },
+   {
+    "page": 120,
+    "slug": "r4l-6a425af0744db9e3105a14b7-p120",
+    "image": "https://images.sourcelibrary.org/archived/6a425af0744db9e3105a14b7/120.jpg",
+    "tess_letters": 722,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.534,
+    "pb_aligned": true,
+    "from_char": 81017,
+    "to_char": 81942,
+    "ref_chars": 925
+   }
+  ]
+ },
+ "69b694f8080b19f98fcee93f": {
+  "century": "1600s",
+  "order": 45,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-historicapolitica_besold16",
+  "pages": [
+   {
+    "page": 35,
+    "slug": "r4l-69b694f8080b19f98fcee93f-p35",
+    "image": "https://images.sourcelibrary.org/archived/69b694f8080b19f98fcee93f/35.jpg",
+    "tess_letters": 1586,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.476,
+    "pb_aligned": true,
+    "from_char": 60672,
+    "to_char": 62691,
+    "ref_chars": 2019
+   },
+   {
+    "page": 36,
+    "slug": "r4l-69b694f8080b19f98fcee93f-p36",
+    "image": "https://images.sourcelibrary.org/archived/69b694f8080b19f98fcee93f/36.jpg",
+    "tess_letters": 1283,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.458,
+    "pb_aligned": true,
+    "from_char": 62704,
+    "to_char": 64213,
+    "ref_chars": 1509
+   },
+   {
+    "page": 37,
+    "slug": "r4l-69b694f8080b19f98fcee93f-p37",
+    "image": "https://images.sourcelibrary.org/archived/69b694f8080b19f98fcee93f/37.jpg",
+    "tess_letters": 1629,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.352,
+    "pb_aligned": true,
+    "from_char": 64185,
+    "to_char": 66253,
+    "ref_chars": 2068
+   }
+  ]
+ },
+ "69b6b65896dc15d4a16ecf0e": {
+  "century": "1600s",
+  "order": 44,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-thesaurus_masen6",
+  "pages": [
+   {
+    "page": 938,
+    "slug": "r4l-69b6b65896dc15d4a16ecf0e-p938",
+    "image": "https://www.e-rara.ch/i3f/v21/13485267/full/1000,/0/default.jpg",
+    "tess_letters": 1870,
+    "aligned": true,
+    "how": "pb-neighbour",
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": 1724494,
+    "to_char": 1726799,
+    "ref_chars": 2303
+   },
+   {
+    "page": 939,
+    "slug": "r4l-69b6b65896dc15d4a16ecf0e-p939",
+    "image": "https://www.e-rara.ch/i3f/v21/13485268/full/1000,/0/default.jpg",
+    "tess_letters": 1784,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.382,
+    "pb_aligned": true,
+    "from_char": 1726772,
+    "to_char": 1728923,
+    "ref_chars": 2151
+   },
+   {
+    "page": 940,
+    "slug": "r4l-69b6b65896dc15d4a16ecf0e-p940",
+    "image": "https://www.e-rara.ch/i3f/v21/13485269/full/1000,/0/default.jpg",
+    "tess_letters": 1988,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.463,
+    "pb_aligned": true,
+    "from_char": 1729043,
+    "to_char": 1731451,
+    "ref_chars": 2408
+   }
+  ]
+ },
+ "6a90a3c03a69baad5d30d34e": {
+  "century": "1600s",
+  "order": 47,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-historicapolitica_bornitz4",
+  "pages": [
+   {
+    "page": 89,
+    "slug": "r4l-6a90a3c03a69baad5d30d34e-p89",
+    "image": "https://images.sourcelibrary.org/archived/6a90a3c03a69baad5d30d34e/89.jpg",
+    "tess_letters": 2192,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 90,
+    "slug": "r4l-6a90a3c03a69baad5d30d34e-p90",
+    "image": "https://images.sourcelibrary.org/archived/6a90a3c03a69baad5d30d34e/90.jpg",
+    "tess_letters": 2745,
+    "aligned": true,
+    "how": "pb-neighbour",
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": 135423,
+    "to_char": 139119,
+    "ref_chars": 3694
+   },
+   {
+    "page": 91,
+    "slug": "r4l-6a90a3c03a69baad5d30d34e-p91",
+    "image": "https://images.sourcelibrary.org/archived/6a90a3c03a69baad5d30d34e/91.jpg",
+    "tess_letters": 1462,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.4,
+    "pb_aligned": true,
+    "from_char": 139074,
+    "to_char": 141066,
+    "ref_chars": 1992
+   }
+  ]
+ },
+ "69b689fb2368e1fad3217ffa": {
+  "century": "1600s",
+  "order": 51,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-poemata_bider1",
+  "pages": [
+   {
+    "page": 148,
+    "slug": "r4l-69b689fb2368e1fad3217ffa-p148",
+    "image": "https://images.sourcelibrary.org/archived/69b689fb2368e1fad3217ffa/148.jpg",
+    "tess_letters": 812,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.371,
+    "pb_aligned": true,
+    "from_char": 137712,
+    "to_char": 138718,
+    "ref_chars": 1006
+   },
+   {
+    "page": 149,
+    "slug": "r4l-69b689fb2368e1fad3217ffa-p149",
+    "image": "https://images.sourcelibrary.org/archived/69b689fb2368e1fad3217ffa/149.jpg",
+    "tess_letters": 713,
+    "aligned": true,
+    "how": "pb-neighbour",
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": 138966,
+    "to_char": 140131,
+    "ref_chars": 1163
+   },
+   {
+    "page": 150,
+    "slug": "r4l-69b689fb2368e1fad3217ffa-p150",
+    "image": "https://images.sourcelibrary.org/archived/69b689fb2368e1fad3217ffa/150.jpg",
+    "tess_letters": 814,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.42,
+    "pb_aligned": false,
+    "from_char": 139600,
+    "to_char": 140585,
+    "ref_chars": 985
+   }
+  ]
+ },
+ "6a42d56d1894955eb725e97f": {
+  "century": "1600s",
+  "order": 50,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A20623",
+  "pages": [
+   {
+    "page": 47,
+    "slug": "r4l-6a42d56d1894955eb725e97f-p47",
+    "image": "https://images.sourcelibrary.org/archived/6a42d56d1894955eb725e97f/47.jpg",
+    "tess_letters": 720,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.383,
+    "pb_aligned": false,
+    "from_char": 14892,
+    "to_char": 15781,
+    "ref_chars": 889
+   },
+   {
+    "page": 48,
+    "slug": "r4l-6a42d56d1894955eb725e97f-p48",
+    "image": "https://images.sourcelibrary.org/archived/6a42d56d1894955eb725e97f/48.jpg",
+    "tess_letters": 741,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 49,
+    "slug": "r4l-6a42d56d1894955eb725e97f-p49",
+    "image": "https://images.sourcelibrary.org/archived/6a42d56d1894955eb725e97f/49.jpg",
+    "tess_letters": 708,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.367,
+    "pb_aligned": false,
+    "from_char": 16709,
+    "to_char": 17520,
+    "ref_chars": 811
+   }
+  ]
+ },
+ "6a4f92c0d7f4f9119ff22b41": {
+  "century": "1600s",
+  "order": 48,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-poemata_bider1",
+  "pages": [
+   {
+    "page": 143,
+    "slug": "r4l-6a4f92c0d7f4f9119ff22b41-p143",
+    "image": "https://images.sourcelibrary.org/archived/6a4f92c0d7f4f9119ff22b41/143.jpg",
+    "tess_letters": 832,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.377,
+    "pb_aligned": false,
+    "from_char": 138736,
+    "to_char": 139766,
+    "ref_chars": 1030
+   },
+   {
+    "page": 144,
+    "slug": "r4l-6a4f92c0d7f4f9119ff22b41-p144",
+    "image": "https://images.sourcelibrary.org/archived/6a4f92c0d7f4f9119ff22b41/144.jpg",
+    "tess_letters": 887,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.458,
+    "pb_aligned": false,
+    "from_char": 139715,
+    "to_char": 140753,
+    "ref_chars": 1038
+   },
+   {
+    "page": 145,
+    "slug": "r4l-6a4f92c0d7f4f9119ff22b41-p145",
+    "image": "https://images.sourcelibrary.org/archived/6a4f92c0d7f4f9119ff22b41/145.jpg",
+    "tess_letters": 836,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.534,
+    "pb_aligned": false,
+    "from_char": 140730,
+    "to_char": 141804,
+    "ref_chars": 1074
+   }
+  ]
+ },
+ "69b21d9694025df5d2908a62": {
+  "century": "1600s",
+  "order": 49,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-thesaurus_declarationes1",
+  "pages": [
+   {
+    "page": 73,
+    "slug": "r4l-69b21d9694025df5d2908a62-p73",
+    "image": "https://images.sourcelibrary.org/archived/69b21d9694025df5d2908a62/73.jpg",
+    "tess_letters": 1557,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.374,
+    "pb_aligned": true,
+    "from_char": 163707,
+    "to_char": 165667,
+    "ref_chars": 1960
+   },
+   {
+    "page": 74,
+    "slug": "r4l-69b21d9694025df5d2908a62-p74",
+    "image": "https://images.sourcelibrary.org/archived/69b21d9694025df5d2908a62/74.jpg",
+    "tess_letters": 1250,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.398,
+    "pb_aligned": true,
+    "from_char": 165554,
+    "to_char": 167180,
+    "ref_chars": 1626
+   },
+   {
+    "page": 75,
+    "slug": "r4l-69b21d9694025df5d2908a62-p75",
+    "image": "https://images.sourcelibrary.org/archived/69b21d9694025df5d2908a62/75.jpg",
+    "tess_letters": 1718,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.459,
+    "pb_aligned": true,
+    "from_char": 167181,
+    "to_char": 169307,
+    "ref_chars": 2126
+   }
+  ]
+ },
+ "69aebe807dd4a7474d1f2d42": {
+  "century": "1600s",
+  "order": 54,
+  "status": "skip",
+  "reason": "no page of the run located in any candidate edition",
+  "edition": "tcp-A55042",
+  "pages": [
+   {
+    "page": 33,
+    "slug": "r4l-69aebe807dd4a7474d1f2d42-p33",
+    "image": "https://images.sourcelibrary.org/archived/69aebe807dd4a7474d1f2d42/33.jpg",
+    "tess_letters": 0,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 34,
+    "slug": "r4l-69aebe807dd4a7474d1f2d42-p34",
+    "image": "https://images.sourcelibrary.org/archived/69aebe807dd4a7474d1f2d42/34.jpg",
+    "tess_letters": 44,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 35,
+    "slug": "r4l-69aebe807dd4a7474d1f2d42-p35",
+    "image": "https://images.sourcelibrary.org/archived/69aebe807dd4a7474d1f2d42/35.jpg",
+    "tess_letters": 0,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   }
+  ]
+ },
+ "6a48e2591e36bf8015227d14": {
+  "century": "1600s",
+  "order": 55,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A58151",
+  "pages": [
+   {
+    "page": 2,
+    "slug": "r4l-6a48e2591e36bf8015227d14-p2",
+    "image": "https://images.sourcelibrary.org/archived/6a48e2591e36bf8015227d14/2.jpg",
+    "tess_letters": 64,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 3,
+    "slug": "r4l-6a48e2591e36bf8015227d14-p3",
+    "image": "https://images.sourcelibrary.org/archived/6a48e2591e36bf8015227d14/3.jpg",
+    "tess_letters": 679,
+    "aligned": true,
+    "how": "pb-neighbour",
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": 226,
+    "to_char": 1217,
+    "ref_chars": 989
+   },
+   {
+    "page": 4,
+    "slug": "r4l-6a48e2591e36bf8015227d14-p4",
+    "image": "https://images.sourcelibrary.org/archived/6a48e2591e36bf8015227d14/4.jpg",
+    "tess_letters": 436,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.467,
+    "pb_aligned": true,
+    "from_char": 1202,
+    "to_char": 1936,
+    "ref_chars": 734
+   }
+  ]
+ },
+ "6a48d782df05f7ea342b7309": {
+  "century": "1600s",
+  "order": 52,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-poemata_bald10",
+  "pages": [
+   {
+    "page": 161,
+    "slug": "r4l-6a48d782df05f7ea342b7309-p161",
+    "image": "https://images.sourcelibrary.org/archived/6a48d782df05f7ea342b7309/161.jpg",
+    "tess_letters": 893,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.623,
+    "pb_aligned": true,
+    "from_char": 175952,
+    "to_char": 177075,
+    "ref_chars": 1123
+   },
+   {
+    "page": 162,
+    "slug": "r4l-6a48d782df05f7ea342b7309-p162",
+    "image": "https://images.sourcelibrary.org/archived/6a48d782df05f7ea342b7309/162.jpg",
+    "tess_letters": 886,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.506,
+    "pb_aligned": true,
+    "from_char": 177014,
+    "to_char": 178125,
+    "ref_chars": 1111
+   },
+   {
+    "page": 163,
+    "slug": "r4l-6a48d782df05f7ea342b7309-p163",
+    "image": "https://images.sourcelibrary.org/archived/6a48d782df05f7ea342b7309/163.jpg",
+    "tess_letters": 196,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.5,
+    "pb_aligned": true,
+    "from_char": 178076,
+    "to_char": 178319,
+    "ref_chars": 243
+   }
+  ]
+ },
+ "6a5043b28b9a6870c42fcef8": {
+  "century": "1600s",
+  "order": 53,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A04023",
+  "pages": [
+   {
+    "page": 60,
+    "slug": "r4l-6a5043b28b9a6870c42fcef8-p60",
+    "image": "https://images.sourcelibrary.org/archived/6a5043b28b9a6870c42fcef8/60.jpg",
+    "tess_letters": 947,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.432,
+    "pb_aligned": true,
+    "from_char": 49630,
+    "to_char": 50767,
+    "ref_chars": 1137
+   },
+   {
+    "page": 61,
+    "slug": "r4l-6a5043b28b9a6870c42fcef8-p61",
+    "image": "https://images.sourcelibrary.org/archived/6a5043b28b9a6870c42fcef8/61.jpg",
+    "tess_letters": 948,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.43,
+    "pb_aligned": true,
+    "from_char": 50689,
+    "to_char": 51894,
+    "ref_chars": 1205
+   },
+   {
+    "page": 62,
+    "slug": "r4l-6a5043b28b9a6870c42fcef8-p62",
+    "image": "https://images.sourcelibrary.org/archived/6a5043b28b9a6870c42fcef8/62.jpg",
+    "tess_letters": 822,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.391,
+    "pb_aligned": true,
+    "from_char": 51812,
+    "to_char": 52865,
+    "ref_chars": 1053
+   }
+  ]
+ },
+ "69bda005f6d63c9197483c73": {
+  "century": "1700s",
+  "order": 0,
+  "status": "skip",
+  "reason": "no page of the run located in any candidate edition",
+  "edition": "camena-thesaurus_Boschius_symbolographia",
+  "pages": [
+   {
+    "page": 632,
+    "slug": "r4l-69bda005f6d63c9197483c73-p632",
+    "image": "https://images.sourcelibrary.org/archived/69bda005f6d63c9197483c73/632.jpg",
+    "tess_letters": 0,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 633,
+    "slug": "r4l-69bda005f6d63c9197483c73-p633",
+    "image": "https://images.sourcelibrary.org/archived/69bda005f6d63c9197483c73/633.jpg",
+    "tess_letters": 13,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 634,
+    "slug": "r4l-69bda005f6d63c9197483c73-p634",
+    "image": "https://images.sourcelibrary.org/archived/69bda005f6d63c9197483c73/634.jpg",
+    "tess_letters": 0,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   }
+  ]
+ },
+ "69b6e47ea8d7b8d17a676440": {
+  "century": "1700s",
+  "order": 1,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-cera_schurzfleisch2",
+  "pages": [
+   {
+    "page": 483,
+    "slug": "r4l-69b6e47ea8d7b8d17a676440-p483",
+    "image": "https://www.e-rara.ch/i3f/v21/10978402/full/1000,/0/default.jpg",
+    "tess_letters": 1340,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.427,
+    "pb_aligned": true,
+    "from_char": 611131,
+    "to_char": 612856,
+    "ref_chars": 1725
+   },
+   {
+    "page": 484,
+    "slug": "r4l-69b6e47ea8d7b8d17a676440-p484",
+    "image": "https://www.e-rara.ch/i3f/v21/10978403/full/1000,/0/default.jpg",
+    "tess_letters": 1170,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.647,
+    "pb_aligned": true,
+    "from_char": 612791,
+    "to_char": 614110,
+    "ref_chars": 1319
+   },
+   {
+    "page": 485,
+    "slug": "r4l-69b6e47ea8d7b8d17a676440-p485",
+    "image": "https://www.e-rara.ch/i3f/v21/10978404/full/1000,/0/default.jpg",
+    "tess_letters": 1346,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.592,
+    "pb_aligned": false,
+    "from_char": 613735,
+    "to_char": 615562,
+    "ref_chars": 1827
+   }
+  ]
+ },
+ "69b6f0d9b1a3146c05270a07": {
+  "century": "1700s",
+  "order": 3,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-poemata_Weitenauer_carmina",
+  "pages": [
+   {
+    "page": 164,
+    "slug": "r4l-69b6f0d9b1a3146c05270a07-p164",
+    "image": "https://images.sourcelibrary.org/archived/69b6f0d9b1a3146c05270a07/164.jpg",
+    "tess_letters": 1008,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.497,
+    "pb_aligned": true,
+    "from_char": 138600,
+    "to_char": 139893,
+    "ref_chars": 1293
+   },
+   {
+    "page": 165,
+    "slug": "r4l-69b6f0d9b1a3146c05270a07-p165",
+    "image": "https://images.sourcelibrary.org/archived/69b6f0d9b1a3146c05270a07/165.jpg",
+    "tess_letters": 1023,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.398,
+    "pb_aligned": true,
+    "from_char": 139765,
+    "to_char": 141004,
+    "ref_chars": 1239
+   },
+   {
+    "page": 166,
+    "slug": "r4l-69b6f0d9b1a3146c05270a07-p166",
+    "image": "https://images.sourcelibrary.org/archived/69b6f0d9b1a3146c05270a07/166.jpg",
+    "tess_letters": 991,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.508,
+    "pb_aligned": true,
+    "from_char": 140808,
+    "to_char": 142112,
+    "ref_chars": 1304
+   }
+  ]
+ },
+ "6a4f22748afd506469a564d5": {
+  "century": "1700s",
+  "order": 2,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-historicapolitica_knipschild1",
+  "pages": [
+   {
+    "page": 277,
+    "slug": "r4l-6a4f22748afd506469a564d5-p277",
+    "image": "https://gallica.bnf.fr/iiif/ark:/12148/bpt6k9769271q/f277/full/full/0/default.jpg",
+    "tess_letters": 4404,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.506,
+    "pb_aligned": true,
+    "from_char": 1438010,
+    "to_char": 1443698,
+    "ref_chars": 5688
+   },
+   {
+    "page": 278,
+    "slug": "r4l-6a4f22748afd506469a564d5-p278",
+    "image": "https://gallica.bnf.fr/iiif/ark:/12148/bpt6k9769271q/f278/full/full/0/default.jpg",
+    "tess_letters": 4605,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.54,
+    "pb_aligned": true,
+    "from_char": 1443772,
+    "to_char": 1449694,
+    "ref_chars": 5922
+   },
+   {
+    "page": 279,
+    "slug": "r4l-6a4f22748afd506469a564d5-p279",
+    "image": "https://gallica.bnf.fr/iiif/ark:/12148/bpt6k9769271q/f279/full/full/0/default.jpg",
+    "tess_letters": 4402,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.463,
+    "pb_aligned": true,
+    "from_char": 1449580,
+    "to_char": 1455747,
+    "ref_chars": 6167
+   }
+  ]
+ },
+ "69b6c2018566c8381465699b": {
+  "century": "1700s",
+  "order": 4,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-thesaurus_Boschius_symbolographia",
+  "pages": [
+   {
+    "page": 80,
+    "slug": "r4l-69b6c2018566c8381465699b-p80",
+    "image": "https://www.e-rara.ch/i3f/v21/1505760/full/1000,/0/default.jpg",
+    "tess_letters": 1548,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.392,
+    "pb_aligned": true,
+    "from_char": 108083,
+    "to_char": 110024,
+    "ref_chars": 1941
+   },
+   {
+    "page": 81,
+    "slug": "r4l-69b6c2018566c8381465699b-p81",
+    "image": "https://www.e-rara.ch/i3f/v21/1505761/full/1000,/0/default.jpg",
+    "tess_letters": 1485,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.467,
+    "pb_aligned": true,
+    "from_char": 110089,
+    "to_char": 111947,
+    "ref_chars": 1858
+   },
+   {
+    "page": 82,
+    "slug": "r4l-69b6c2018566c8381465699b-p82",
+    "image": "https://www.e-rara.ch/i3f/v21/1505762/full/1000,/0/default.jpg",
+    "tess_letters": 1863,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.531,
+    "pb_aligned": false,
+    "from_char": 113192,
+    "to_char": 114206,
+    "ref_chars": 1014
+   }
+  ]
+ },
+ "69b6f32ab1a3146c05278d5a": {
+  "century": "1700s",
+  "order": 5,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-cera_baier1",
+  "pages": [
+   {
+    "page": 154,
+    "slug": "r4l-69b6f32ab1a3146c05278d5a-p154",
+    "image": "https://images.sourcelibrary.org/archived/69b6f32ab1a3146c05278d5a/154.jpg",
+    "tess_letters": 1506,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.433,
+    "pb_aligned": true,
+    "from_char": 259546,
+    "to_char": 261454,
+    "ref_chars": 1908
+   },
+   {
+    "page": 155,
+    "slug": "r4l-69b6f32ab1a3146c05278d5a-p155",
+    "image": "https://images.sourcelibrary.org/archived/69b6f32ab1a3146c05278d5a/155.jpg",
+    "tess_letters": 1574,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.432,
+    "pb_aligned": true,
+    "from_char": 261413,
+    "to_char": 263400,
+    "ref_chars": 1987
+   },
+   {
+    "page": 156,
+    "slug": "r4l-69b6f32ab1a3146c05278d5a-p156",
+    "image": "https://images.sourcelibrary.org/archived/69b6f32ab1a3146c05278d5a/156.jpg",
+    "tess_letters": 1639,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.445,
+    "pb_aligned": true,
+    "from_char": 263378,
+    "to_char": 265367,
+    "ref_chars": 1989
+   }
+  ]
+ },
+ "69af43920d84f505a88544b8": {
+  "century": "1700s",
+  "order": 6,
+  "status": "aligned",
+  "reason": null,
+  "edition": "ws-Columellae_opera_djvu",
+  "pages": [
+   {
+    "page": 227,
+    "slug": "r4l-69af43920d84f505a88544b8-p227",
+    "image": "https://images.sourcelibrary.org/archived/69af43920d84f505a88544b8/227.jpg",
+    "tess_letters": 1226,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.385,
+    "pb_aligned": true,
+    "from_char": 311964,
+    "to_char": 313532,
+    "ref_chars": 1568
+   },
+   {
+    "page": 228,
+    "slug": "r4l-69af43920d84f505a88544b8-p228",
+    "image": "https://images.sourcelibrary.org/archived/69af43920d84f505a88544b8/228.jpg",
+    "tess_letters": 1255,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.369,
+    "pb_aligned": true,
+    "from_char": 313438,
+    "to_char": 315048,
+    "ref_chars": 1610
+   },
+   {
+    "page": 229,
+    "slug": "r4l-69af43920d84f505a88544b8-p229",
+    "image": "https://images.sourcelibrary.org/archived/69af43920d84f505a88544b8/229.jpg",
+    "tess_letters": 1242,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.413,
+    "pb_aligned": true,
+    "from_char": 314969,
+    "to_char": 316577,
+    "ref_chars": 1608
+   }
+  ]
+ },
+ "69b65a0418b87551bfcffe7a": {
+  "century": "1500s",
+  "order": 43,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-historicapolitica_Beze_vindiciae",
+  "pages": [
+   {
+    "page": 5,
+    "slug": "r4l-69b65a0418b87551bfcffe7a-p5",
+    "image": "https://images.sourcelibrary.org/archived/69b65a0418b87551bfcffe7a/5.jpg",
+    "tess_letters": 578,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.489,
+    "pb_aligned": true,
+    "from_char": 810,
+    "to_char": 1610,
+    "ref_chars": 800
+   },
+   {
+    "page": 6,
+    "slug": "r4l-69b65a0418b87551bfcffe7a-p6",
+    "image": "https://images.sourcelibrary.org/archived/69b65a0418b87551bfcffe7a/6.jpg",
+    "tess_letters": 661,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.431,
+    "pb_aligned": true,
+    "from_char": 1556,
+    "to_char": 2416,
+    "ref_chars": 860
+   },
+   {
+    "page": 7,
+    "slug": "r4l-69b65a0418b87551bfcffe7a-p7",
+    "image": "https://images.sourcelibrary.org/archived/69b65a0418b87551bfcffe7a/7.jpg",
+    "tess_letters": 902,
+    "aligned": true,
+    "how": "pb-neighbour",
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": 2548,
+    "to_char": 3519,
+    "ref_chars": 969
+   }
+  ]
+ },
+ "6a9078467f9d520dd42e41e2": {
+  "century": "1500s",
+  "order": 41,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-cera_hessus2",
+  "pages": [
+   {
+    "page": 76,
+    "slug": "r4l-6a9078467f9d520dd42e41e2-p76",
+    "image": "https://images.sourcelibrary.org/pages/6a9078467f9d520dd42e41e2/0076.jpg",
+    "tess_letters": 843,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.412,
+    "pb_aligned": true,
+    "from_char": 73159,
+    "to_char": 74259,
+    "ref_chars": 1100
+   },
+   {
+    "page": 77,
+    "slug": "r4l-6a9078467f9d520dd42e41e2-p77",
+    "image": "https://images.sourcelibrary.org/pages/6a9078467f9d520dd42e41e2/0077.jpg",
+    "tess_letters": 858,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.629,
+    "pb_aligned": true,
+    "from_char": 74200,
+    "to_char": 75289,
+    "ref_chars": 1089
+   },
+   {
+    "page": 78,
+    "slug": "r4l-6a9078467f9d520dd42e41e2-p78",
+    "image": "https://images.sourcelibrary.org/pages/6a9078467f9d520dd42e41e2/0078.jpg",
+    "tess_letters": 780,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.474,
+    "pb_aligned": true,
+    "from_char": 75231,
+    "to_char": 76267,
+    "ref_chars": 1036
+   }
+  ]
+ },
+ "6a4e5a9a00c1250433dc2739": {
+  "century": "1500s",
+  "order": 40,
+  "status": "skip",
+  "reason": "image: Failed to fetch image: 400 https://iiif.archive.org/image/iiif/3/bim_early-english-books-1475-1640_d",
+  "pages": [
+   {
+    "page": 57,
+    "slug": "r4l-6a4e5a9a00c1250433dc2739-p57",
+    "image": "https://iiif.archive.org/image/iiif/3/bim_early-english-books-1475-1640_de-vniuersali-et-nouissi_willet-andrew_1590%2Fbim_early-english-books-1475-1640_de-vniuersali-et-nouissi_willet-andrew_1590_jp2.zip%2Fbim_early-english-books-1475-1640_de-vniuersali-et-nouissi_willet-andrew_1590_jp2%2Fbim_early-english-books-1475-1640_de-vniuersali-et-nouissi_willet-andrew_1590_0056.jp2/full/full/0/default.jpg",
+    "error": "Failed to fetch image: 400 https://iiif.archive.org/image/iiif/3/bim_early-english-books-1475-1640_d"
+   },
+   {
+    "page": 58,
+    "slug": "r4l-6a4e5a9a00c1250433dc2739-p58",
+    "image": "https://images.sourcelibrary.org/pages/6a4e5a9a00c1250433dc2739/0058.jpg"
+   },
+   {
+    "page": 59,
+    "slug": "r4l-6a4e5a9a00c1250433dc2739-p59",
+    "image": "https://images.sourcelibrary.org/pages/6a4e5a9a00c1250433dc2739/0059.jpg"
+   }
+  ]
+ },
+ "69aebe88a103e42dc94145ad": {
+  "century": "1500s",
+  "order": 42,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A00429",
+  "pages": [
+   {
+    "page": 237,
+    "slug": "r4l-69aebe88a103e42dc94145ad-p237",
+    "image": "https://images.sourcelibrary.org/archived/69aebe88a103e42dc94145ad/237.jpg",
+    "tess_letters": 1829,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.726,
+    "pb_aligned": true,
+    "from_char": 617979,
+    "to_char": 619956,
+    "ref_chars": 1977
+   },
+   {
+    "page": 238,
+    "slug": "r4l-69aebe88a103e42dc94145ad-p238",
+    "image": "https://images.sourcelibrary.org/archived/69aebe88a103e42dc94145ad/238.jpg",
+    "tess_letters": 2225,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.74,
+    "pb_aligned": false,
+    "from_char": 621018,
+    "to_char": 622795,
+    "ref_chars": 1777
+   },
+   {
+    "page": 239,
+    "slug": "r4l-69aebe88a103e42dc94145ad-p239",
+    "image": "https://images.sourcelibrary.org/archived/69aebe88a103e42dc94145ad/239.jpg",
+    "tess_letters": 1515,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.436,
+    "pb_aligned": true,
+    "from_char": 622778,
+    "to_char": 624428,
+    "ref_chars": 1650
+   }
+  ]
+ },
+ "6a4a5d549050f0b434326b99": {
+  "century": "1600s",
+  "order": 59,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-cera_languet3",
+  "pages": [
+   {
+    "page": 447,
+    "slug": "r4l-6a4a5d549050f0b434326b99-p447",
+    "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10352187_00447/full/full/0/default.jpg",
+    "tess_letters": 2261,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.446,
+    "pb_aligned": true,
+    "from_char": 2308748,
+    "to_char": 2311527,
+    "ref_chars": 2779
+   },
+   {
+    "page": 448,
+    "slug": "r4l-6a4a5d549050f0b434326b99-p448",
+    "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10352187_00448/full/full/0/default.jpg",
+    "tess_letters": 2285,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.374,
+    "pb_aligned": true,
+    "from_char": 2311465,
+    "to_char": 2314315,
+    "ref_chars": 2850
+   },
+   {
+    "page": 449,
+    "slug": "r4l-6a4a5d549050f0b434326b99-p449",
+    "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10352187_00449/full/full/0/default.jpg",
+    "tess_letters": 1936,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.452,
+    "pb_aligned": true,
+    "from_char": 2314269,
+    "to_char": 2316682,
+    "ref_chars": 2413
+   }
+  ]
+ },
+ "69ac83ddf37088db519184d5": {
+  "century": "1600s",
+  "order": 57,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A66493",
+  "pages": [
+   {
+    "page": 51,
+    "slug": "r4l-69ac83ddf37088db519184d5-p51",
+    "image": "https://images.sourcelibrary.org/archived/69ac83ddf37088db519184d5/51.jpg",
+    "tess_letters": 1559,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.521,
+    "pb_aligned": true,
+    "from_char": 60125,
+    "to_char": 62033,
+    "ref_chars": 1908
+   },
+   {
+    "page": 52,
+    "slug": "r4l-69ac83ddf37088db519184d5-p52",
+    "image": "https://images.sourcelibrary.org/archived/69ac83ddf37088db519184d5/52.jpg",
+    "tess_letters": 1607,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.467,
+    "pb_aligned": true,
+    "from_char": 61991,
+    "to_char": 63811,
+    "ref_chars": 1820
+   },
+   {
+    "page": 53,
+    "slug": "r4l-69ac83ddf37088db519184d5-p53",
+    "image": "https://images.sourcelibrary.org/archived/69ac83ddf37088db519184d5/53.jpg",
+    "tess_letters": 1396,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.468,
+    "pb_aligned": true,
+    "from_char": 63782,
+    "to_char": 65511,
+    "ref_chars": 1729
+   }
+  ]
+ },
+ "15c5d8e4-cea3-4b5b-9859-f3528660ecc8": {
+  "century": "1600s",
+  "order": 58,
+  "status": "skip",
+  "reason": "no page of the run located in any candidate edition",
+  "edition": "tcp-A52251",
+  "pages": [
+   {
+    "page": 542,
+    "slug": "r4l-15c5d8e4cea34b5b9859f3528660ecc8-p542",
+    "image": "https://images.sourcelibrary.org/archived/15c5d8e4-cea3-4b5b-9859-f3528660ecc8/542.jpg",
+    "tess_letters": 895,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 543,
+    "slug": "r4l-15c5d8e4cea34b5b9859f3528660ecc8-p543",
+    "image": "https://images.sourcelibrary.org/archived/15c5d8e4-cea3-4b5b-9859-f3528660ecc8/543.jpg",
+    "tess_letters": 1594,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   },
+   {
+    "page": 544,
+    "slug": "r4l-15c5d8e4cea34b5b9859f3528660ecc8-p544",
+    "image": "https://images.sourcelibrary.org/archived/15c5d8e4-cea3-4b5b-9859-f3528660ecc8/544.jpg",
+    "tess_letters": 1159,
+    "aligned": false,
+    "how": null,
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": null,
+    "to_char": null,
+    "ref_chars": 0
+   }
+  ]
+ },
+ "69b6b5c696dc15d4a16e974e": {
+  "century": "1600s",
+  "order": 56,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A51379",
+  "pages": [
+   {
+    "page": 380,
+    "slug": "r4l-69b6b5c696dc15d4a16e974e-p380",
+    "image": "https://images.sourcelibrary.org/archived/69b6b5c696dc15d4a16e974e/380.jpg",
+    "tess_letters": 3930,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.372,
+    "pb_aligned": true,
+    "from_char": 1528034,
+    "to_char": 1532877,
+    "ref_chars": 4843
+   },
+   {
+    "page": 381,
+    "slug": "r4l-69b6b5c696dc15d4a16e974e-p381",
+    "image": "https://images.sourcelibrary.org/archived/69b6b5c696dc15d4a16e974e/381.jpg",
+    "tess_letters": 4191,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.431,
+    "pb_aligned": true,
+    "from_char": 1532802,
+    "to_char": 1537957,
+    "ref_chars": 5155
+   },
+   {
+    "page": 382,
+    "slug": "r4l-69b6b5c696dc15d4a16e974e-p382",
+    "image": "https://images.sourcelibrary.org/archived/69b6b5c696dc15d4a16e974e/382.jpg",
+    "tess_letters": 4353,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.459,
+    "pb_aligned": true,
+    "from_char": 1537720,
+    "to_char": 1543098,
+    "ref_chars": 5378
+   }
+  ]
+ },
+ "6a9061f6c21b989bffd757b3": {
+  "century": "1600s",
+  "order": 60,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-cera_puteanus2",
+  "pages": [
+   {
+    "page": 571,
+    "slug": "r4l-6a9061f6c21b989bffd757b3-p571",
+    "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10403705_00571/full/full/0/default.jpg",
+    "tess_letters": 600,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.436,
+    "pb_aligned": true,
+    "from_char": 454287,
+    "to_char": 454886,
+    "ref_chars": 599
+   },
+   {
+    "page": 572,
+    "slug": "r4l-6a9061f6c21b989bffd757b3-p572",
+    "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10403705_00572/full/full/0/default.jpg",
+    "tess_letters": 725,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.356,
+    "pb_aligned": true,
+    "from_char": 455014,
+    "to_char": 455998,
+    "ref_chars": 984
+   },
+   {
+    "page": 573,
+    "slug": "r4l-6a9061f6c21b989bffd757b3-p573",
+    "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10403705_00573/full/full/0/default.jpg",
+    "tess_letters": 626,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.387,
+    "pb_aligned": true,
+    "from_char": 455928,
+    "to_char": 456742,
+    "ref_chars": 814
+   }
+  ]
+ },
+ "69b673ddb3f4fc04415af91d": {
+  "century": "1600s",
+  "order": 61,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-poemata_pont1",
+  "pages": [
+   {
+    "page": 182,
+    "slug": "r4l-69b673ddb3f4fc04415af91d-p182",
+    "image": "https://images.sourcelibrary.org/archived/69b673ddb3f4fc04415af91d/182.jpg",
+    "tess_letters": 397,
+    "aligned": true,
+    "how": "pb-neighbour",
+    "overlap": null,
+    "pb_aligned": null,
+    "from_char": 113768,
+    "to_char": 114224,
+    "ref_chars": 454
+   },
+   {
+    "page": 183,
+    "slug": "r4l-69b673ddb3f4fc04415af91d-p183",
+    "image": "https://images.sourcelibrary.org/archived/69b673ddb3f4fc04415af91d/183.jpg",
+    "tess_letters": 640,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.402,
+    "pb_aligned": true,
+    "from_char": 114163,
+    "to_char": 115021,
+    "ref_chars": 858
+   },
+   {
+    "page": 184,
+    "slug": "r4l-69b673ddb3f4fc04415af91d-p184",
+    "image": "https://images.sourcelibrary.org/archived/69b673ddb3f4fc04415af91d/184.jpg",
+    "tess_letters": 572,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.426,
+    "pb_aligned": true,
+    "from_char": 114926,
+    "to_char": 115653,
+    "ref_chars": 727
+   }
+  ]
+ },
+ "69b303fb983e01f74b98704a": {
+  "century": "1600s",
+  "order": 62,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-historicapolitica_matthiae1",
+  "pages": [
+   {
+    "page": 714,
+    "slug": "r4l-69b303fb983e01f74b98704a-p714",
+    "image": "https://images.sourcelibrary.org/archived/69b303fb983e01f74b98704a/714.jpg",
+    "tess_letters": 2857,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.367,
+    "pb_aligned": true,
+    "from_char": 2793542,
+    "to_char": 2797229,
+    "ref_chars": 3687
+   },
+   {
+    "page": 715,
+    "slug": "r4l-69b303fb983e01f74b98704a-p715",
+    "image": "https://images.sourcelibrary.org/archived/69b303fb983e01f74b98704a/715.jpg",
+    "tess_letters": 3425,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.473,
+    "pb_aligned": true,
+    "from_char": 2797159,
+    "to_char": 2801550,
+    "ref_chars": 4391
+   },
+   {
+    "page": 716,
+    "slug": "r4l-69b303fb983e01f74b98704a-p716",
+    "image": "https://images.sourcelibrary.org/archived/69b303fb983e01f74b98704a/716.jpg",
+    "tess_letters": 3543,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.53,
+    "pb_aligned": true,
+    "from_char": 2801519,
+    "to_char": 2805969,
+    "ref_chars": 4450
+   }
+  ]
+ },
+ "69b6962c4a5f9daef79e827e": {
+  "century": "1600s",
+  "order": 63,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A07600",
+  "pages": [
+   {
+    "page": 42,
+    "slug": "r4l-69b6962c4a5f9daef79e827e-p42",
+    "image": "https://images.sourcelibrary.org/archived/69b6962c4a5f9daef79e827e/42.jpg",
+    "tess_letters": 3174,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.509,
+    "pb_aligned": true,
+    "from_char": 87499,
+    "to_char": 91381,
+    "ref_chars": 3882
+   },
+   {
+    "page": 43,
+    "slug": "r4l-69b6962c4a5f9daef79e827e-p43",
+    "image": "https://images.sourcelibrary.org/archived/69b6962c4a5f9daef79e827e/43.jpg",
+    "tess_letters": 3231,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.405,
+    "pb_aligned": true,
+    "from_char": 91278,
+    "to_char": 95309,
+    "ref_chars": 4031
+   },
+   {
+    "page": 44,
+    "slug": "r4l-69b6962c4a5f9daef79e827e-p44",
+    "image": "https://images.sourcelibrary.org/archived/69b6962c4a5f9daef79e827e/44.jpg",
+    "tess_letters": 3124,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.462,
+    "pb_aligned": true,
+    "from_char": 95139,
+    "to_char": 99184,
+    "ref_chars": 4045
+   }
+  ]
+ },
+ "6a42d91f1894955eb72629fe": {
+  "century": "1600s",
+  "order": 67,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A33731",
+  "pages": [
+   {
+    "page": 198,
+    "slug": "r4l-6a42d91f1894955eb72629fe-p198",
+    "image": "https://images.sourcelibrary.org/archived/6a42d91f1894955eb72629fe/198.jpg",
+    "tess_letters": 695,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.558,
+    "pb_aligned": true,
+    "from_char": 151888,
+    "to_char": 152750,
+    "ref_chars": 862
+   },
+   {
+    "page": 199,
+    "slug": "r4l-6a42d91f1894955eb72629fe-p199",
+    "image": "https://images.sourcelibrary.org/archived/6a42d91f1894955eb72629fe/199.jpg",
+    "tess_letters": 706,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.387,
+    "pb_aligned": true,
+    "from_char": 152730,
+    "to_char": 153611,
+    "ref_chars": 881
+   },
+   {
+    "page": 200,
+    "slug": "r4l-6a42d91f1894955eb72629fe-p200",
+    "image": "https://images.sourcelibrary.org/archived/6a42d91f1894955eb72629fe/200.jpg",
+    "tess_letters": 702,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.444,
+    "pb_aligned": true,
+    "from_char": 153538,
+    "to_char": 154436,
+    "ref_chars": 898
+   }
+  ]
+ },
+ "69b6a321080b19f98fd195a6": {
+  "century": "1600s",
+  "order": 66,
+  "status": "aligned",
+  "reason": null,
+  "edition": "tcp-A67566",
+  "pages": [
+   {
+    "page": 67,
+    "slug": "r4l-69b6a321080b19f98fd195a6-p67",
+    "image": "https://images.sourcelibrary.org/archived/69b6a321080b19f98fd195a6/67.jpg",
+    "tess_letters": 1548,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.586,
+    "pb_aligned": true,
+    "from_char": 49182,
+    "to_char": 51120,
+    "ref_chars": 1938
+   },
+   {
+    "page": 68,
+    "slug": "r4l-69b6a321080b19f98fd195a6-p68",
+    "image": "https://images.sourcelibrary.org/archived/69b6a321080b19f98fd195a6/68.jpg",
+    "tess_letters": 1490,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.441,
+    "pb_aligned": true,
+    "from_char": 51098,
+    "to_char": 52982,
+    "ref_chars": 1884
+   },
+   {
+    "page": 69,
+    "slug": "r4l-69b6a321080b19f98fd195a6-p69",
+    "image": "https://images.sourcelibrary.org/archived/69b6a321080b19f98fd195a6/69.jpg",
+    "tess_letters": 1553,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.508,
+    "pb_aligned": true,
+    "from_char": 52945,
+    "to_char": 54892,
+    "ref_chars": 1947
+   }
+  ]
+ },
+ "6a4a5d1f9050f0b434324995": {
+  "century": "1600s",
+  "order": 64,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-cera_languet3",
+  "pages": [
+   {
+    "page": 112,
+    "slug": "r4l-6a4a5d1f9050f0b434324995-p112",
+    "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10352188_00112/full/full/0/default.jpg",
+    "tess_letters": 1802,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.452,
+    "pb_aligned": true,
+    "from_char": 899909,
+    "to_char": 902179,
+    "ref_chars": 2270
+   },
+   {
+    "page": 113,
+    "slug": "r4l-6a4a5d1f9050f0b434324995-p113",
+    "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10352188_00113/full/full/0/default.jpg",
+    "tess_letters": 1833,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.395,
+    "pb_aligned": true,
+    "from_char": 902229,
+    "to_char": 904172,
+    "ref_chars": 1943
+   },
+   {
+    "page": 114,
+    "slug": "r4l-6a4a5d1f9050f0b434324995-p114",
+    "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10352188_00114/full/full/0/default.jpg",
+    "tess_letters": 2059,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.358,
+    "pb_aligned": true,
+    "from_char": 904421,
+    "to_char": 906813,
+    "ref_chars": 2392
+   }
+  ]
+ },
+ "6a4a5d159050f0b434323f0b": {
+  "century": "1600s",
+  "order": 65,
+  "status": "aligned",
+  "reason": null,
+  "edition": "camena-cera_languet3",
+  "pages": [
+   {
+    "page": 651,
+    "slug": "r4l-6a4a5d159050f0b434323f0b-p651",
+    "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10352845_00651/full/full/0/default.jpg",
+    "tess_letters": 2371,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.467,
+    "pb_aligned": true,
+    "from_char": 1494771,
+    "to_char": 1497679,
+    "ref_chars": 2908
+   },
+   {
+    "page": 652,
+    "slug": "r4l-6a4a5d159050f0b434323f0b-p652",
+    "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10352845_00652/full/full/0/default.jpg",
+    "tess_letters": 2106,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.547,
+    "pb_aligned": true,
+    "from_char": 1497617,
+    "to_char": 1500270,
+    "ref_chars": 2653
+   },
+   {
+    "page": 653,
+    "slug": "r4l-6a4a5d159050f0b434323f0b-p653",
+    "image": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10352845_00653/full/full/0/default.jpg",
+    "tess_letters": 2399,
+    "aligned": true,
+    "how": "tesseract",
+    "overlap": 0.474,
+    "pb_aligned": true,
+    "from_char": 1500202,
+    "to_char": 1503179,
+    "ref_chars": 2977
+   }
+  ]
+ }
+}
