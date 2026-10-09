@@ -529,6 +529,67 @@ for (const [lang, trackId] of LANGS) {
   TRACKS.push({ id: 'pareto-6182', writeup: X.writeup, judges: 2 });
 }
 
+// #6331 test 1, the Antigravity-CLI arm on the same 365 pages: C38 (gemini-3.8-flash through `agy -p`, subscription)
+// beside the API's G38 and the page's stored production English, one blinded item per page, both Opus judges on every
+// item. Its own read, so its own panel per language, as the Tibetan one above. C38 billed $0; it is placed at G38's
+// billed Batch dollars on the same pages, and its cost basis says so.
+const X_6182_WRITEUP = 'scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md';
+const CLI_XL = { writeup: 'scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md', file: 'cli-arm-6182/xljudge/scores.json' };
+if (fs.existsSync(path.join(RES, CLI_XL.file))) {
+  const sc = JSON.parse(fs.readFileSync(path.join(RES, CLI_XL.file), 'utf8'));
+  if (!sc.judge_gate_pass) throw new Error(`${CLI_XL.file}: the judge gate did not pass, so no CLI number may be plotted`);
+  const C38 = 'gemini-3.8-flash+antigravity-cli';
+  LABEL[C38] = LABEL[C38] || 'Gemini 3.8 Flash, CLI';
+  const PRODE = { L31: LITE, FP: FLASH };
+  const fid = (r, a) => avg(Object.values(r.J).map(j => j[a].fid).filter(x => x != null));
+  const rev = (r, a) => Object.values(r.J).some(j => j[a].rev > 0);
+  for (const chart of charts) {
+    const all = sc.rows.filter(r => r.lang === chart.title && r.arms.length === 3);
+    const own = sc.primary.languages_ge_20[chart.title];
+    for (const a of ['C38', 'G38', 'PROD']) {
+      if (own && (own.pages_shared !== all.length || Math.abs(avg(all.map(r => fid(r, a))) - own.arms[a].fidelity) > 0.0005)) throw new Error(`${CLI_XL.file}: parse does not reproduce ${chart.title} ${a}`);
+    }
+    const lr = all.filter(r => keep(r.page_id));
+    if (lr.length < MIN_PAGES) continue;
+    if (lr.some(r => r.usd.G38 == null || r.usd.PROD == null)) throw new Error(`${CLI_XL.file}: ${chart.title} has a page with no billed cost`);
+    dumpSet(chart.id, 'gemini-cli-6331', lr.map(r => ({ page: r.page_id, book: r.book })));
+    // Production is each book's engine; where a language's books use two, the point is the stored English of both.
+    const prods = [...new Set(lr.map(r => PRODE[r.prod]))];
+    const mixed = prods.length > 1;
+    const prodEngine = mixed ? 'production-per-book' : prods[0];
+    const prodLabel = mixed ? 'Production (each book\'s engine)' : LABEL[prods[0]];
+    const g38 = r3(avg(lr.map(r => r.usd.G38)) * 1000);
+    const cost = {
+      PROD: { usd_per_1k: r3(avg(lr.map(r => r.usd.PROD)) * 1000), basis: 'metered', detail: `billed tokens of #6182's run of the production engine at the Batch rate; averaged over these ${lr.length} pages`, source: X_6182_WRITEUP },
+      G38: { usd_per_1k: g38, basis: 'metered', detail: `billed tokens of #6182's API run at the Batch rate, thinking included; averaged over these ${lr.length} pages`, source: X_6182_WRITEUP },
+      C38: { usd_per_1k: g38, basis: 'API price for comparison; $0 billed on the subscription',
+        detail: `run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at what the same model and prompt billed on the API for these pages (the Gemini 3.8 Flash run, Batch rate), for comparison. Its English is ${sc.cost.C38_over_G38_output_chars}× as long over all 365 pages`, source: CLI_XL.writeup },
+    };
+    const engine = { PROD: prodEngine, G38, C38 };
+    const label = { PROD: prodLabel, G38: LABEL[G38], C38: LABEL[C38] };
+    const placed = Object.keys(engine).map(a => ({ engine: engine[a], label: label[a], production: a === 'PROD',
+      ...stats(lr.map(r => ({ fidelity: fid(r, a), reversal: rev(r, a) })), hash(`${chart.title}|cli-6331|${a}`)), cost: cost[a] }));
+    for (const a of placed) a.on_frontier = !placed.some(b => b !== a
+      && b.cost.usd_per_1k <= a.cost.usd_per_1k && b.fidelity >= a.fidelity && (b.cost.usd_per_1k < a.cost.usd_per_1k || b.fidelity > a.fidelity));
+    placed.sort((a, b) => a.cost.usd_per_1k - b.cost.usd_per_1k || a.engine.localeCompare(b.engine));
+    const date = dateOf(CLI_XL.writeup);
+    chart.panels.push({
+      kind: 'gemini-cli-6331', heading: 'Gemini 3.8 Flash through the CLI, 8 Oct 2026 (#6331)', n_pages: lr.length, n_books: new Set(lr.map(r => r.book)).size,
+      frontier: true, frontier_note: null, judges: 2,
+      references: [{ stratum: '6182', reference: REFERENCE.default, pages: lr.length, date }],
+      date, files: [CLI_XL.writeup],
+      notes: [
+        'A separate read from the panels above, with the CLI run, the API run and production in one item per page, so its scores are compared only within this panel',
+        `Gemini 3.8 Flash, CLI is the same model run through Google's Antigravity command-line tool on a subscription, which billed nothing; it is drawn at the API's price for the same request so the two runs can be compared`,
+        ...(mixed ? [`Production is each book's engine: ${Object.entries(PRODE).map(([k, e]) => [LABEL[e], lr.filter(r => r.prod === k).length]).filter(([, n]) => n).map(([l, n]) => `${l} on ${n}`).join(', ')} of these pages`] : []),
+        'Every engine got the page alone, without the previous page that production sends',
+      ],
+      placed, no_cost: [],
+    });
+  }
+  TRACKS.push({ id: 'cli-arm-6331', writeup: CLI_XL.writeup, judges: 2 });
+}
+
 // #6182, Claude on the subscription (PREREG-claude-arms.md): Sonnet 5.5 (CS) and Haiku 4.5 (CH) as Claude Code
 // subagents, $0 billed, beside the API's Gemini 3.8 Flash (G38) and the page's production engine, one blinded item per
 // page, two blind Opus judges on every item. Its own read, so its own panel. G38 and production are placed at their

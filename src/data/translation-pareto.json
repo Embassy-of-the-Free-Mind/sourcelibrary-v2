@@ -41,6 +41,10 @@
   {
    "track": "pareto-6182",
    "writeup": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+  },
+  {
+   "track": "cli-arm-6331",
+   "writeup": "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
   }
  ],
  "charts": [
@@ -407,6 +411,117 @@
        "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
       }
      ]
+    },
+    {
+     "kind": "gemini-cli-6331",
+     "heading": "Gemini 3.8 Flash through the CLI, 8 Oct 2026 (#6331)",
+     "n_pages": 69,
+     "n_books": 69,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 69,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+     ],
+     "notes": [
+      "A separate read from the panels above, with the CLI run, the API run and production in one item per page, so its scores are compared only within this panel",
+      "Gemini 3.8 Flash, CLI is the same model run through Google's Antigravity command-line tool on a subscription, which billed nothing; it is drawn at the API's price for the same request so the two runs can be compared",
+      "Production is each book's engine: Gemini 3.1 Flash-Lite on 61, Gemini 3 Flash on 8 of these pages",
+      "Every engine got the page alone, without the previous page that production sends"
+     ],
+     "placed": [
+      {
+       "engine": "production-per-book",
+       "label": "Production (each book's engine)",
+       "production": true,
+       "fidelity": 4.21,
+       "fidelity_ci95": [
+        4.036,
+        4.377
+       ],
+       "share_ge4": 0.841,
+       "reversals": {
+        "pages": 11,
+        "n": 69,
+        "per_100": 15.9,
+        "ci95": [
+         9.1,
+         26.3
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.885,
+        "basis": "metered",
+        "detail": "billed tokens of #6182's run of the production engine at the Batch rate; averaged over these 69 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.652,
+       "fidelity_ci95": [
+        4.543,
+        4.754
+       ],
+       "share_ge4": 0.986,
+       "reversals": {
+        "pages": 2,
+        "n": 69,
+        "per_100": 2.9,
+        "ci95": [
+         0.8,
+         10
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.188,
+        "basis": "metered",
+        "detail": "billed tokens of #6182's API run at the Batch rate, thinking included; averaged over these 69 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash, CLI",
+       "production": false,
+       "fidelity": 4.681,
+       "fidelity_ci95": [
+        4.558,
+        4.79
+       ],
+       "share_ge4": 0.957,
+       "reversals": {
+        "pages": 3,
+        "n": 69,
+        "per_100": 4.3,
+        "ci95": [
+         1.5,
+         12
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.188,
+        "basis": "API price for comparison; $0 billed on the subscription",
+        "detail": "run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at what the same model and prompt billed on the API for these pages (the Gemini 3.8 Flash run, Batch rate), for comparison. Its English is 1.032× as long over all 365 pages",
+        "source": "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+       },
+       "on_frontier": true
+      }
+     ],
+     "no_cost": []
     },
     {
      "kind": "claude-subscription-6182",
@@ -968,6 +1083,116 @@
      ]
     },
     {
+     "kind": "gemini-cli-6331",
+     "heading": "Gemini 3.8 Flash through the CLI, 8 Oct 2026 (#6331)",
+     "n_pages": 62,
+     "n_books": 62,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 62,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+     ],
+     "notes": [
+      "A separate read from the panels above, with the CLI run, the API run and production in one item per page, so its scores are compared only within this panel",
+      "Gemini 3.8 Flash, CLI is the same model run through Google's Antigravity command-line tool on a subscription, which billed nothing; it is drawn at the API's price for the same request so the two runs can be compared",
+      "Every engine got the page alone, without the previous page that production sends"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 3.944,
+       "fidelity_ci95": [
+        3.734,
+        4.145
+       ],
+       "share_ge4": 0.742,
+       "reversals": {
+        "pages": 9,
+        "n": 62,
+        "per_100": 14.5,
+        "ci95": [
+         7.8,
+         25.3
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.908,
+        "basis": "metered",
+        "detail": "billed tokens of #6182's run of the production engine at the Batch rate; averaged over these 62 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.306,
+       "fidelity_ci95": [
+        4.105,
+        4.484
+       ],
+       "share_ge4": 0.839,
+       "reversals": {
+        "pages": 5,
+        "n": 62,
+        "per_100": 8.1,
+        "ci95": [
+         3.5,
+         17.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.596,
+        "basis": "metered",
+        "detail": "billed tokens of #6182's API run at the Batch rate, thinking included; averaged over these 62 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash, CLI",
+       "production": false,
+       "fidelity": 4.274,
+       "fidelity_ci95": [
+        4.056,
+        4.476
+       ],
+       "share_ge4": 0.823,
+       "reversals": {
+        "pages": 7,
+        "n": 62,
+        "per_100": 11.3,
+        "ci95": [
+         5.6,
+         21.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.596,
+        "basis": "API price for comparison; $0 billed on the subscription",
+        "detail": "run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at what the same model and prompt billed on the API for these pages (the Gemini 3.8 Flash run, Batch rate), for comparison. Its English is 1.032× as long over all 365 pages",
+        "source": "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": []
+    },
+    {
      "kind": "claude-subscription-6182",
      "heading": "Claude Sonnet and Haiku on the subscription, 8 Oct 2026 (#6182)",
      "n_pages": 62,
@@ -1525,6 +1750,117 @@
      ]
     },
     {
+     "kind": "gemini-cli-6331",
+     "heading": "Gemini 3.8 Flash through the CLI, 8 Oct 2026 (#6331)",
+     "n_pages": 22,
+     "n_books": 22,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 22,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+     ],
+     "notes": [
+      "A separate read from the panels above, with the CLI run, the API run and production in one item per page, so its scores are compared only within this panel",
+      "Gemini 3.8 Flash, CLI is the same model run through Google's Antigravity command-line tool on a subscription, which billed nothing; it is drawn at the API's price for the same request so the two runs can be compared",
+      "Production is each book's engine: Gemini 3.1 Flash-Lite on 18, Gemini 3 Flash on 4 of these pages",
+      "Every engine got the page alone, without the previous page that production sends"
+     ],
+     "placed": [
+      {
+       "engine": "production-per-book",
+       "label": "Production (each book's engine)",
+       "production": true,
+       "fidelity": 4.568,
+       "fidelity_ci95": [
+        4.364,
+        4.773
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 22,
+        "per_100": 0,
+        "ci95": [
+         0,
+         14.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.698,
+        "basis": "metered",
+        "detail": "billed tokens of #6182's run of the production engine at the Batch rate; averaged over these 22 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.886,
+       "fidelity_ci95": [
+        4.75,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 22,
+        "per_100": 0,
+        "ci95": [
+         0,
+         14.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.637,
+        "basis": "metered",
+        "detail": "billed tokens of #6182's API run at the Batch rate, thinking included; averaged over these 22 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash, CLI",
+       "production": false,
+       "fidelity": 4.886,
+       "fidelity_ci95": [
+        4.773,
+        4.977
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 22,
+        "per_100": 0,
+        "ci95": [
+         0,
+         14.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.637,
+        "basis": "API price for comparison; $0 billed on the subscription",
+        "detail": "run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at what the same model and prompt billed on the API for these pages (the Gemini 3.8 Flash run, Batch rate), for comparison. Its English is 1.032× as long over all 365 pages",
+        "source": "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+       },
+       "on_frontier": true
+      }
+     ],
+     "no_cost": []
+    },
+    {
      "kind": "claude-subscription-6182",
      "heading": "Claude Sonnet and Haiku on the subscription, 8 Oct 2026 (#6182)",
      "n_pages": 18,
@@ -2080,6 +2416,117 @@
        "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
       }
      ]
+    },
+    {
+     "kind": "gemini-cli-6331",
+     "heading": "Gemini 3.8 Flash through the CLI, 8 Oct 2026 (#6331)",
+     "n_pages": 14,
+     "n_books": 14,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 14,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+     ],
+     "notes": [
+      "A separate read from the panels above, with the CLI run, the API run and production in one item per page, so its scores are compared only within this panel",
+      "Gemini 3.8 Flash, CLI is the same model run through Google's Antigravity command-line tool on a subscription, which billed nothing; it is drawn at the API's price for the same request so the two runs can be compared",
+      "Production is each book's engine: Gemini 3.1 Flash-Lite on 9, Gemini 3 Flash on 5 of these pages",
+      "Every engine got the page alone, without the previous page that production sends"
+     ],
+     "placed": [
+      {
+       "engine": "production-per-book",
+       "label": "Production (each book's engine)",
+       "production": true,
+       "fidelity": 4.857,
+       "fidelity_ci95": [
+        4.679,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 14,
+        "per_100": 0,
+        "ci95": [
+         0,
+         21.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.819,
+        "basis": "metered",
+        "detail": "billed tokens of #6182's run of the production engine at the Batch rate; averaged over these 14 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.821,
+       "fidelity_ci95": [
+        4.643,
+        4.964
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 14,
+        "per_100": 0,
+        "ci95": [
+         0,
+         21.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.653,
+        "basis": "metered",
+        "detail": "billed tokens of #6182's API run at the Batch rate, thinking included; averaged over these 14 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash, CLI",
+       "production": false,
+       "fidelity": 4.964,
+       "fidelity_ci95": [
+        4.893,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 14,
+        "per_100": 0,
+        "ci95": [
+         0,
+         21.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.653,
+        "basis": "API price for comparison; $0 billed on the subscription",
+        "detail": "run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at what the same model and prompt billed on the API for these pages (the Gemini 3.8 Flash run, Batch rate), for comparison. Its English is 1.032× as long over all 365 pages",
+        "source": "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+       },
+       "on_frontier": true
+      }
+     ],
+     "no_cost": []
     }
    ],
    "not_on_shared_pages": [],
@@ -2440,6 +2887,116 @@
         "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
        },
        "on_frontier": false
+      }
+     ],
+     "no_cost": []
+    },
+    {
+     "kind": "gemini-cli-6331",
+     "heading": "Gemini 3.8 Flash through the CLI, 8 Oct 2026 (#6331)",
+     "n_pages": 10,
+     "n_books": 10,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 10,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+     ],
+     "notes": [
+      "A separate read from the panels above, with the CLI run, the API run and production in one item per page, so its scores are compared only within this panel",
+      "Gemini 3.8 Flash, CLI is the same model run through Google's Antigravity command-line tool on a subscription, which billed nothing; it is drawn at the API's price for the same request so the two runs can be compared",
+      "Every engine got the page alone, without the previous page that production sends"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "fidelity": 4.05,
+       "fidelity_ci95": [
+        3.5,
+        4.55
+       ],
+       "share_ge4": 0.6,
+       "reversals": {
+        "pages": 4,
+        "n": 10,
+        "per_100": 40,
+        "ci95": [
+         16.8,
+         68.7
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.673,
+        "basis": "metered",
+        "detail": "billed tokens of #6182's run of the production engine at the Batch rate; averaged over these 10 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.7,
+       "fidelity_ci95": [
+        4.2,
+        5
+       ],
+       "share_ge4": 0.9,
+       "reversals": {
+        "pages": 1,
+        "n": 10,
+        "per_100": 10,
+        "ci95": [
+         1.8,
+         40.4
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.862,
+        "basis": "metered",
+        "detail": "billed tokens of #6182's API run at the Batch rate, thinking included; averaged over these 10 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash, CLI",
+       "production": false,
+       "fidelity": 4.7,
+       "fidelity_ci95": [
+        4.45,
+        4.95
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 10,
+        "per_100": 0,
+        "ci95": [
+         0,
+         27.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.862,
+        "basis": "API price for comparison; $0 billed on the subscription",
+        "detail": "run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at what the same model and prompt billed on the API for these pages (the Gemini 3.8 Flash run, Batch rate), for comparison. Its English is 1.032× as long over all 365 pages",
+        "source": "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+       },
+       "on_frontier": true
       }
      ],
      "no_cost": []
@@ -3016,6 +3573,116 @@
      ]
     },
     {
+     "kind": "gemini-cli-6331",
+     "heading": "Gemini 3.8 Flash through the CLI, 8 Oct 2026 (#6331)",
+     "n_pages": 28,
+     "n_books": 28,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 28,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+     ],
+     "notes": [
+      "A separate read from the panels above, with the CLI run, the API run and production in one item per page, so its scores are compared only within this panel",
+      "Gemini 3.8 Flash, CLI is the same model run through Google's Antigravity command-line tool on a subscription, which billed nothing; it is drawn at the API's price for the same request so the two runs can be compared",
+      "Every engine got the page alone, without the previous page that production sends"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.25,
+       "fidelity_ci95": [
+        3.946,
+        4.536
+       ],
+       "share_ge4": 0.821,
+       "reversals": {
+        "pages": 4,
+        "n": 28,
+        "per_100": 14.3,
+        "ci95": [
+         5.7,
+         31.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.2,
+        "basis": "metered",
+        "detail": "billed tokens of #6182's run of the production engine at the Batch rate; averaged over these 28 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.571,
+       "fidelity_ci95": [
+        4.286,
+        4.804
+       ],
+       "share_ge4": 0.929,
+       "reversals": {
+        "pages": 2,
+        "n": 28,
+        "per_100": 7.1,
+        "ci95": [
+         2,
+         22.6
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.925,
+        "basis": "metered",
+        "detail": "billed tokens of #6182's API run at the Batch rate, thinking included; averaged over these 28 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash, CLI",
+       "production": false,
+       "fidelity": 4.536,
+       "fidelity_ci95": [
+        4.232,
+        4.768
+       ],
+       "share_ge4": 0.929,
+       "reversals": {
+        "pages": 2,
+        "n": 28,
+        "per_100": 7.1,
+        "ci95": [
+         2,
+         22.6
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.925,
+        "basis": "API price for comparison; $0 billed on the subscription",
+        "detail": "run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at what the same model and prompt billed on the API for these pages (the Gemini 3.8 Flash run, Batch rate), for comparison. Its English is 1.032× as long over all 365 pages",
+        "source": "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": []
+    },
+    {
      "kind": "claude-subscription-6182",
      "heading": "Claude Sonnet and Haiku on the subscription, 8 Oct 2026 (#6182)",
      "n_pages": 28,
@@ -3576,6 +4243,116 @@
        "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
       }
      ]
+    },
+    {
+     "kind": "gemini-cli-6331",
+     "heading": "Gemini 3.8 Flash through the CLI, 8 Oct 2026 (#6331)",
+     "n_pages": 22,
+     "n_books": 22,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 22,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+     ],
+     "notes": [
+      "A separate read from the panels above, with the CLI run, the API run and production in one item per page, so its scores are compared only within this panel",
+      "Gemini 3.8 Flash, CLI is the same model run through Google's Antigravity command-line tool on a subscription, which billed nothing; it is drawn at the API's price for the same request so the two runs can be compared",
+      "Every engine got the page alone, without the previous page that production sends"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.023,
+       "fidelity_ci95": [
+        3.636,
+        4.364
+       ],
+       "share_ge4": 0.773,
+       "reversals": {
+        "pages": 2,
+        "n": 22,
+        "per_100": 9.1,
+        "ci95": [
+         2.5,
+         27.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.727,
+        "basis": "metered",
+        "detail": "billed tokens of #6182's run of the production engine at the Batch rate; averaged over these 22 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.477,
+       "fidelity_ci95": [
+        4.136,
+        4.75
+       ],
+       "share_ge4": 0.909,
+       "reversals": {
+        "pages": 1,
+        "n": 22,
+        "per_100": 4.5,
+        "ci95": [
+         0.8,
+         21.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.297,
+        "basis": "metered",
+        "detail": "billed tokens of #6182's API run at the Batch rate, thinking included; averaged over these 22 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash, CLI",
+       "production": false,
+       "fidelity": 4.455,
+       "fidelity_ci95": [
+        4.136,
+        4.705
+       ],
+       "share_ge4": 0.909,
+       "reversals": {
+        "pages": 1,
+        "n": 22,
+        "per_100": 4.5,
+        "ci95": [
+         0.8,
+         21.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.297,
+        "basis": "API price for comparison; $0 billed on the subscription",
+        "detail": "run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at what the same model and prompt billed on the API for these pages (the Gemini 3.8 Flash run, Batch rate), for comparison. Its English is 1.032× as long over all 365 pages",
+        "source": "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": []
     },
     {
      "kind": "claude-subscription-6182",
@@ -4141,6 +4918,116 @@
      ]
     },
     {
+     "kind": "gemini-cli-6331",
+     "heading": "Gemini 3.8 Flash through the CLI, 8 Oct 2026 (#6331)",
+     "n_pages": 22,
+     "n_books": 22,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 22,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+     ],
+     "notes": [
+      "A separate read from the panels above, with the CLI run, the API run and production in one item per page, so its scores are compared only within this panel",
+      "Gemini 3.8 Flash, CLI is the same model run through Google's Antigravity command-line tool on a subscription, which billed nothing; it is drawn at the API's price for the same request so the two runs can be compared",
+      "Every engine got the page alone, without the previous page that production sends"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 3.727,
+       "fidelity_ci95": [
+        3.409,
+        4.045
+       ],
+       "share_ge4": 0.591,
+       "reversals": {
+        "pages": 4,
+        "n": 22,
+        "per_100": 18.2,
+        "ci95": [
+         7.3,
+         38.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.882,
+        "basis": "metered",
+        "detail": "billed tokens of #6182's run of the production engine at the Batch rate; averaged over these 22 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.182,
+       "fidelity_ci95": [
+        3.909,
+        4.432
+       ],
+       "share_ge4": 0.818,
+       "reversals": {
+        "pages": 2,
+        "n": 22,
+        "per_100": 9.1,
+        "ci95": [
+         2.5,
+         27.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.52,
+        "basis": "metered",
+        "detail": "billed tokens of #6182's API run at the Batch rate, thinking included; averaged over these 22 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash, CLI",
+       "production": false,
+       "fidelity": 4.023,
+       "fidelity_ci95": [
+        3.705,
+        4.341
+       ],
+       "share_ge4": 0.682,
+       "reversals": {
+        "pages": 3,
+        "n": 22,
+        "per_100": 13.6,
+        "ci95": [
+         4.7,
+         33.3
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.52,
+        "basis": "API price for comparison; $0 billed on the subscription",
+        "detail": "run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at what the same model and prompt billed on the API for these pages (the Gemini 3.8 Flash run, Batch rate), for comparison. Its English is 1.032× as long over all 365 pages",
+        "source": "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": []
+    },
+    {
      "kind": "claude-subscription-6182",
      "heading": "Claude Sonnet and Haiku on the subscription, 8 Oct 2026 (#6182)",
      "n_pages": 22,
@@ -4676,6 +5563,116 @@
        "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
       }
      ]
+    },
+    {
+     "kind": "gemini-cli-6331",
+     "heading": "Gemini 3.8 Flash through the CLI, 8 Oct 2026 (#6331)",
+     "n_pages": 27,
+     "n_books": 27,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 27,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+     ],
+     "notes": [
+      "A separate read from the panels above, with the CLI run, the API run and production in one item per page, so its scores are compared only within this panel",
+      "Gemini 3.8 Flash, CLI is the same model run through Google's Antigravity command-line tool on a subscription, which billed nothing; it is drawn at the API's price for the same request so the two runs can be compared",
+      "Every engine got the page alone, without the previous page that production sends"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 3.907,
+       "fidelity_ci95": [
+        3.704,
+        4.111
+       ],
+       "share_ge4": 0.741,
+       "reversals": {
+        "pages": 5,
+        "n": 27,
+        "per_100": 18.5,
+        "ci95": [
+         8.2,
+         36.7
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.106,
+        "basis": "metered",
+        "detail": "billed tokens of #6182's run of the production engine at the Batch rate; averaged over these 27 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.315,
+       "fidelity_ci95": [
+        4.074,
+        4.556
+       ],
+       "share_ge4": 0.852,
+       "reversals": {
+        "pages": 3,
+        "n": 27,
+        "per_100": 11.1,
+        "ci95": [
+         3.9,
+         28.1
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.84,
+        "basis": "metered",
+        "detail": "billed tokens of #6182's API run at the Batch rate, thinking included; averaged over these 27 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash, CLI",
+       "production": false,
+       "fidelity": 4.13,
+       "fidelity_ci95": [
+        3.833,
+        4.407
+       ],
+       "share_ge4": 0.815,
+       "reversals": {
+        "pages": 5,
+        "n": 27,
+        "per_100": 18.5,
+        "ci95": [
+         8.2,
+         36.7
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.84,
+        "basis": "API price for comparison; $0 billed on the subscription",
+        "detail": "run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at what the same model and prompt billed on the API for these pages (the Gemini 3.8 Flash run, Batch rate), for comparison. Its English is 1.032× as long over all 365 pages",
+        "source": "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": []
     },
     {
      "kind": "claude-subscription-6182",
@@ -5218,6 +6215,116 @@
        "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
       }
      ]
+    },
+    {
+     "kind": "gemini-cli-6331",
+     "heading": "Gemini 3.8 Flash through the CLI, 8 Oct 2026 (#6331)",
+     "n_pages": 28,
+     "n_books": 28,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 28,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+     ],
+     "notes": [
+      "A separate read from the panels above, with the CLI run, the API run and production in one item per page, so its scores are compared only within this panel",
+      "Gemini 3.8 Flash, CLI is the same model run through Google's Antigravity command-line tool on a subscription, which billed nothing; it is drawn at the API's price for the same request so the two runs can be compared",
+      "Every engine got the page alone, without the previous page that production sends"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.25,
+       "fidelity_ci95": [
+        4.018,
+        4.446
+       ],
+       "share_ge4": 0.964,
+       "reversals": {
+        "pages": 1,
+        "n": 28,
+        "per_100": 3.6,
+        "ci95": [
+         0.6,
+         17.7
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.813,
+        "basis": "metered",
+        "detail": "billed tokens of #6182's run of the production engine at the Batch rate; averaged over these 28 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.554,
+       "fidelity_ci95": [
+        4.393,
+        4.714
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 28,
+        "per_100": 0,
+        "ci95": [
+         0,
+         12.1
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.395,
+        "basis": "metered",
+        "detail": "billed tokens of #6182's API run at the Batch rate, thinking included; averaged over these 28 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash, CLI",
+       "production": false,
+       "fidelity": 4.607,
+       "fidelity_ci95": [
+        4.411,
+        4.804
+       ],
+       "share_ge4": 0.964,
+       "reversals": {
+        "pages": 1,
+        "n": 28,
+        "per_100": 3.6,
+        "ci95": [
+         0.6,
+         17.7
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.395,
+        "basis": "API price for comparison; $0 billed on the subscription",
+        "detail": "run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at what the same model and prompt billed on the API for these pages (the Gemini 3.8 Flash run, Batch rate), for comparison. Its English is 1.032× as long over all 365 pages",
+        "source": "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+       },
+       "on_frontier": true
+      }
+     ],
+     "no_cost": []
     },
     {
      "kind": "claude-subscription-6182",
@@ -5765,6 +6872,116 @@
        "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
       }
      ]
+    },
+    {
+     "kind": "gemini-cli-6331",
+     "heading": "Gemini 3.8 Flash through the CLI, 8 Oct 2026 (#6331)",
+     "n_pages": 21,
+     "n_books": 21,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 21,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+     ],
+     "notes": [
+      "A separate read from the panels above, with the CLI run, the API run and production in one item per page, so its scores are compared only within this panel",
+      "Gemini 3.8 Flash, CLI is the same model run through Google's Antigravity command-line tool on a subscription, which billed nothing; it is drawn at the API's price for the same request so the two runs can be compared",
+      "Every engine got the page alone, without the previous page that production sends"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.167,
+       "fidelity_ci95": [
+        3.857,
+        4.476
+       ],
+       "share_ge4": 0.714,
+       "reversals": {
+        "pages": 3,
+        "n": 21,
+        "per_100": 14.3,
+        "ci95": [
+         5,
+         34.6
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.448,
+        "basis": "metered",
+        "detail": "billed tokens of #6182's run of the production engine at the Batch rate; averaged over these 21 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.214,
+       "fidelity_ci95": [
+        4.048,
+        4.405
+       ],
+       "share_ge4": 0.952,
+       "reversals": {
+        "pages": 2,
+        "n": 21,
+        "per_100": 9.5,
+        "ci95": [
+         2.7,
+         28.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.884,
+        "basis": "metered",
+        "detail": "billed tokens of #6182's API run at the Batch rate, thinking included; averaged over these 21 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash, CLI",
+       "production": false,
+       "fidelity": 4.405,
+       "fidelity_ci95": [
+        4.143,
+        4.667
+       ],
+       "share_ge4": 0.905,
+       "reversals": {
+        "pages": 2,
+        "n": 21,
+        "per_100": 9.5,
+        "ci95": [
+         2.7,
+         28.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.884,
+        "basis": "API price for comparison; $0 billed on the subscription",
+        "detail": "run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at what the same model and prompt billed on the API for these pages (the Gemini 3.8 Flash run, Batch rate), for comparison. Its English is 1.032× as long over all 365 pages",
+        "source": "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+       },
+       "on_frontier": true
+      }
+     ],
+     "no_cost": []
     },
     {
      "kind": "claude-subscription-6182",

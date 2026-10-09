@@ -345,3 +345,103 @@ def run_claude(key, J, OUT, drops):
                   + " | rev " + "/".join(str(a[x]["reversal_pages"]) for x in ARMS) + " om " + "/".join(str(a[x]["omission_pages"]) for x in ARMS)
                   + " inv " + "/".join(str(a[x]["invention_pages"]) for x in ARMS)
                   + " | " + " ".join(f"{x}-{y} {st[f'{x}-{y}']['mean']:+.2f} {st[f'{x}-{y}']['ci_by_book']}" for x, y in PAIRS[:2] + PAIRS[3:4]))
+
+
+def run_cli(key, J, OUT, drops):
+    """#6331 test 1 (experiments/2026-10-08-cli-arm-xl-365-6331.md): C38 (CLI) beside G38 (API) and the page's production
+    engine on the 365 pages, both judges on every item. Gate per stratum and pooled: C38 − G38 by-book lower bound > −0.15
+    and C38 inversion pages ≤ G38's + 2. Primary on all pages; again without #6304's drops."""
+    items = key["items"]
+    dec = {j: {i: decode(o, items[i]["labels"]) for i, o in J[j].items()} for j in J}
+    gate = judge_gate(items, dec)
+    JP = [j for j in J if gate[j]["pass"]]
+    assert JP, "instrument failed: no judge passed the gate"
+    ARMS = ["C38", "G38", "PROD"]
+    cost = {}
+    for a in ("G38", "L31", "FP"):
+        for o in map(json.loads, open(f"{W}/arms/{a}.jsonl")):
+            if o.get("usd_batch") is not None:
+                cost[(a, o["uid"])] = o["usd_batch"]
+    rows = []
+    for i, k in items.items():
+        if k["kind"] != "ARMS":
+            continue
+        per = {j: dict(dec[j][i]) for j in JP}
+        for j in per:
+            if k["prod"] in per[j]:
+                per[j]["PROD"] = per[j].pop(k["prod"])
+        # an arm is scored on a page when it has text there and at least one scoring judge gave it a fidelity
+        arms = [a for a in ARMS if any(a in per[j] and per[j][a]["fid"] is not None for j in per)]
+        rows.append({"id": i, "page_id": k["page_id"], "book": k["page_id"].split("_")[0], "lang": k["lang"], "prod": k["prod"],
+                     "arms": arms, "J": {j: {a: per[j][a] for a in arms} for j in per},
+                     "usd": {"G38": cost.get(("G38", k["page_id"])), "PROD": cost.get((k["prod"], k["page_id"]))}})
+
+    def fid(r, a):
+        v = [r["J"][j][a]["fid"] for j in r["J"] if r["J"][j][a]["fid"] is not None]
+        return sum(v) / len(v)
+
+    def either(r, a, f):
+        return int(any(r["J"][j][a][f] for j in r["J"]))
+
+    def boot(rs, stat, seed=6182):  # run()'s clustered draw: books, then pages within each drawn book
+        by = {}
+        for r in rs:
+            by.setdefault(r["book"], []).append(r)
+        bks, rng, out = sorted(by), random.Random(seed), []
+        for _ in range(B):
+            d = []
+            for b in (rng.choice(bks) for _ in bks):
+                g = by[b]; d += [g[rng.randrange(len(g))] for _ in g]
+            out.append(stat(d))
+        out.sort()
+        return [round(out[int(0.025 * B)], 3), round(out[int(0.975 * B) - 1], 3)]
+
+    def stratum(rs_all):
+        rs = [r for r in rs_all if len(r["arms"]) == len(ARMS)]   # the three arms compared on shared pages
+        n = len(rs)
+        o = {"pages": len(rs_all), "pages_shared": n, "books": len({r["book"] for r in rs}),
+             "unscored_pages": sorted(r["page_id"] for r in rs_all if r not in rs),
+             "production": {p: sum(r["prod"] == p for r in rs) for p in ("L31", "FP")}, "arms": {}}
+        for a in ARMS:
+            o["arms"][a] = {"fidelity": round(sum(fid(r, a) for r in rs) / n, 3), "fidelity_ci_by_book": boot(rs, lambda d: sum(fid(r, a) for r in d) / len(d)),
+                            "reversal_pages": sum(either(r, a, "rev") for r in rs), "reversal_pages_both": sum(all(r["J"][j][a]["rev"] for j in r["J"]) for r in rs),
+                            "omission_pages": sum(either(r, a, "om") for r in rs), "invention_pages": sum(either(r, a, "inven") for r in rs),
+                            "span_off_pages": sum(either(r, a, "span_off") for r in rs)}
+        for x, y in (("C38", "G38"), ("C38", "PROD"), ("G38", "PROD")):
+            d = lambda r: fid(r, x) - fid(r, y)
+            o[f"{x}-{y}"] = {"pages": n, "mean": round(sum(d(r) for r in rs) / n, 3), "ci_by_book": boot(rs, lambda v: sum(d(r) for r in v) / len(v)),
+                             "pages_higher": sum(d(r) > 0 for r in rs), "pages_lower": sum(d(r) < 0 for r in rs)}
+        g = {"lower_bound_C38_minus_G38": o["C38-G38"]["ci_by_book"][0], "C38_reversal_pages": o["arms"]["C38"]["reversal_pages"],
+             "G38_reversal_pages": o["arms"]["G38"]["reversal_pages"]}
+        g["lower_bound_gt_-0.15"] = g["lower_bound_C38_minus_G38"] > -0.15
+        g["reversals_ok"] = g["C38_reversal_pages"] <= g["G38_reversal_pages"] + 2
+        g["pass"] = g["lower_bound_gt_-0.15"] and g["reversals_ok"]
+        o["gate"] = g
+        return o
+
+    def block(rs):
+        out = {"strata": {name: stratum([r for r in rs if r["lang"] in langs]) for name, langs in STRATA.items()}, "pooled": stratum(rs)}
+        out["languages_ge_20"] = {l: stratum(lr) for l in sorted({r["lang"] for r in rs}) if len(lr := [r for r in rs if r["lang"] == l]) >= 20}
+        out["gate_all_pass"] = all(s["gate"]["pass"] for s in out["strata"].values()) and out["pooled"]["gate"]["pass"]
+        return out
+
+    dropped = sorted(r["page_id"] for r in rows if r["page_id"].rsplit("_", 1)[0] + "_" + str(int(r["page_id"].rsplit("_", 1)[1])) in drops)
+    res = {"gate": gate, "judges_scoring": JP, "judge_gate_pass": all(gate[j]["pass"] for j in J),
+           "judge_fid_agree_within_1": round(sum(abs(r["J"]["J1"][a]["fid"] - r["J"]["J2"][a]["fid"]) <= 1 for r in rows if len(r["J"]) == 2 for a in r["arms"]
+                                                 if r["J"]["J1"][a]["fid"] is not None and r["J"]["J2"][a]["fid"] is not None)
+                                             / max(1, sum(1 for r in rows if len(r["J"]) == 2 for a in r["arms"] if r["J"]["J1"][a]["fid"] is not None and r["J"]["J2"][a]["fid"] is not None)), 3),
+           "primary": block(rows), "exclude_6304": {"dropped_pages": dropped, **block([r for r in rows if r["page_id"] not in dropped])}}
+    c38 = {o["uid"]: o["text"] for o in map(json.loads, open("/root/cli38-6182/C38-full.jsonl"))}
+    g38 = {o["uid"]: o["text"] for o in map(json.loads, open(f"{W}/arms/G38.jsonl")) if o.get("text")}
+    both = [r["page_id"] for r in rows if r["page_id"] in g38 and r["page_id"] in c38]
+    res["cost"] = {"C38_billed_usd": 0, "C38_over_G38_output_chars": round(sum(len(c38[u]) for u in both) / sum(len(g38[u]) for u in both), 3),
+                   "pages_with_G38_cost": sum(r["usd"]["G38"] is not None for r in rows), "pages_with_PROD_cost": sum(r["usd"]["PROD"] is not None for r in rows)}
+    res["rows"] = rows
+    json.dump(res, open(f"{OUT}/scores.json", "w"), indent=1)
+    print("gate", {j: g for j, g in gate.items() if j != "controls"}, "agree", res["judge_fid_agree_within_1"])
+    for lab, blk in (("ALL PAGES", res["primary"]), (f"WITHOUT #6304 DROPS ({len(dropped)})", res["exclude_6304"])):
+        print(f"\n#### {lab}: gate all pass = {blk['gate_all_pass']}")
+        for name, s in list(blk["strata"].items()) + [("Pooled", blk["pooled"])] + list(blk["languages_ge_20"].items()):
+            a = s["arms"]
+            print(f"{name:9} n={s['pages_shared']:3} C38 {a['C38']['fidelity']:.2f} G38 {a['G38']['fidelity']:.2f} PROD {a['PROD']['fidelity']:.2f} | rev {a['C38']['reversal_pages']}/{a['G38']['reversal_pages']}/{a['PROD']['reversal_pages']}"
+                  f" | C-G {s['C38-G38']['mean']:+.2f} {s['C38-G38']['ci_by_book']} C-P {s['C38-PROD']['mean']:+.2f} {s['C38-PROD']['ci_by_book']} G-P {s['G38-PROD']['mean']:+.2f} {s['G38-PROD']['ci_by_book']} gate {s['gate']['pass']}")
