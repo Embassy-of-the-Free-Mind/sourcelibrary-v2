@@ -16,8 +16,8 @@
  *   1. a LAUNCHER we can repeat: a non-transient systemd unit whose WorkingDirectory is the repo.
  *      A loop started by hand (nohup, tmux, a login session) is not restarted: how it was started is
  *      not on record, so restarting it is a guess.
- *   2. NO LOCK held by the worker or a process around it (its ancestors below pid 1, e.g. a
- *      `flock -n` wrapper, and its children). Source: /proc/locks.
+ *   2. NO LOCK held by the worker or a process around it (its ancestors inside its own cgroup, e.g.
+ *      a `flock -n` wrapper in the same unit, and its children). Source: /proc/locks.
  *   3. NO OPEN BATCH RUN it submitted: batch_jobs rows whose submitted_by is its script, status open,
  *      created in the last 14 days. Mongo unreadable → hold (could not check is not clear).
  *   4. NOT MID-REQUEST: no established inbound TCP connection on a port it listens on. A busy
@@ -86,10 +86,15 @@ export function judgeRestart({ unit, repo, locks = [], openBatches = null, conne
 const readText = (f) => { try { return readFileSync(f, 'utf8'); } catch { return null; } };
 const ppidOf = (pid) => { const s = readText(`/proc/${pid}/stat`); return s ? Number(s.slice(s.lastIndexOf(')') + 2).split(' ')[1]) : null; };
 
-/** The worker, its ancestors below pid 1 (a `flock -n x.lock node …` wrapper holds the lock), and its descendants. */
+/**
+ * The worker, its ancestors in the same cgroup (a `flock -n x.lock node …` wrapper in its unit holds
+ * the lock), and its descendants. The walk stops at the cgroup edge: cron, a login shell or a CI
+ * runner above the worker holds locks that are not the worker's.
+ */
 export function processTree(pid) {
   const tree = new Set([pid]);
-  for (let p = ppidOf(pid); p && p > 1 && !tree.has(p); p = ppidOf(p)) tree.add(p);
+  const cg = readText(`/proc/${pid}/cgroup`);
+  for (let p = ppidOf(pid); p && p > 1 && !tree.has(p) && readText(`/proc/${p}/cgroup`) === cg; p = ppidOf(p)) tree.add(p);
   const kids = new Map();
   for (const d of readdirSync('/proc')) {
     if (!/^\d+$/.test(d)) continue;

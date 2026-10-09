@@ -71,7 +71,9 @@ describe('heldLocks (live /proc)', () => {
       }
       expect(child).toBeTruthy();
       expect(heldLocks(child!)).toContain(lock);
-      expect(heldLocks(bare.pid!)).toEqual([]);
+      // Negative control: a process outside the wrapper does not inherit its lock. (Not `toEqual([])`:
+      // a test runner's own ancestors may hold unrelated locks inside the same cgroup.)
+      expect(heldLocks(bare.pid!)).not.toContain(lock);
     } finally {
       wrapped.kill(); bare.kill();
       rmSync(dir, { recursive: true, force: true });
