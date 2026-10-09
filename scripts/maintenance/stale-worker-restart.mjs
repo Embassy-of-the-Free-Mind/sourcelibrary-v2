@@ -13,9 +13,11 @@
  * (2026-10-08/09). The precondition it names can be checked, so it is checked here.
  *
  * FOR EACH STALE WORKER, all must hold before a restart:
- *   1. a LAUNCHER we can repeat: a non-transient systemd unit whose WorkingDirectory is the repo.
- *      A loop started by hand (nohup, tmux, a login session) is not restarted: how it was started is
- *      not on record, so restarting it is a guess.
+ *   1. a LAUNCHER we can repeat: a non-transient systemd unit whose WorkingDirectory is the repo,
+ *      whose ExecStart names the worker's script, and whose MainPID IS the worker. A loop started by
+ *      hand (nohup, tmux, a login session) is not restarted: how it was started is not on record.
+ *      Neither is a cron-started worker (its cgroup is cron.service, whose MainPID is crond:
+ *      restarting that would restart cron and leave the worker running) or a child of a wrapper unit.
  *   2. NO LOCK held by the worker or a process around it (its ancestors inside its own cgroup, e.g.
  *      a `flock -n` wrapper in the same unit, and its children). Source: /proc/locks.
  *   3. NO OPEN BATCH RUN it submitted: batch_jobs rows whose submitted_by is its script, status open,
@@ -24,7 +26,8 @@
  *      server is retried on the next run and paged only once it has been stale for 24 h.
  *   5. not restarted by this script in the last 6 h (a flapping restart is paged, not repeated).
  * After a restart: the unit is active with a NEW MainPID, /health on its *_PORT says ok (when it has
- * a port), and the drift audit no longer lists the new pid as stale. Anything else pages, high.
+ * a port), the drift audit sees the new pid and, judged with NO grace period, does not call it
+ * stale, and the checkout is not behind main. Anything else pages, high.
  *
  * Every decision (restart, verified, held + why) is one JSON line in --log. Pages go to ntfy
  * sourcelibrary-uptime, one message per changed set, at most every 6 h: priority high only when a
@@ -63,10 +66,12 @@ export const OPEN_BATCH_STATUSES = ['pending', 'processing', 'JOB_STATE_PENDING'
  *   restart = every precondition holds · hold = needs a person (paged) ·
  *   defer = busy right now, retry next run (paged only once stale past BUSY_PAGE_AFTER_MS)
  */
-export function judgeRestart({ unit, repo, locks = [], openBatches = null, connections = 0, lastRestartAt = null, staleForMs = 0, now = new Date() }) {
+export function judgeRestart({ pid, worker, unit, repo, locks = [], openBatches = null, connections = 0, lastRestartAt = null, staleForMs = 0, now = new Date() }) {
   const reasons = [];
   if (!unit) reasons.push('no systemd unit: started by hand (nohup/tmux/session), so how to restart it is not on record');
   else if (unit.transient) reasons.push(`unit ${unit.name} is transient: a restart would drop its definition`);
+  else if (unit.mainPid !== pid) reasons.push(`not the main process of ${unit.name} (MainPID ${unit.mainPid}): started by cron or a wrapper inside the unit, so restarting the unit would not restart it`);
+  else if (!(unit.execStart || '').includes(`${worker}.mjs`)) reasons.push(`unit ${unit.name} ExecStart does not name ${worker}.mjs`);
   else if (unit.workingDirectory && resolve(unit.workingDirectory) !== resolve(repo)) reasons.push(`unit ${unit.name} runs from ${unit.workingDirectory}, not ${repo}`);
   if (locks.length) reasons.push(`holds ${locks.length} lock(s): ${locks.join(', ')}`);
   if (openBatches == null) reasons.push('could not read batch_jobs: open batch runs unknown');
@@ -134,10 +139,10 @@ async function unitOf(pid) {
   const cg = readText(`/proc/${pid}/cgroup`) || '';
   const m = cg.match(/\/system\.slice\/(?:[^\n]*\/)?([^/\n]+\.service)\s*$/m);
   if (!m) return null;
-  const { stdout } = await execFileAsync('systemctl', ['show', m[1], '-p', 'Transient', '-p', 'WorkingDirectory', '-p', 'Environment', '-p', 'MainPID', '-p', 'ActiveState']);
+  const { stdout } = await execFileAsync('systemctl', ['show', m[1], '-p', 'Transient', '-p', 'WorkingDirectory', '-p', 'Environment', '-p', 'MainPID', '-p', 'ActiveState', '-p', 'ExecStart']);
   const p = Object.fromEntries(stdout.trim().split('\n').map((l) => [l.slice(0, l.indexOf('=')), l.slice(l.indexOf('=') + 1)]));
   const port = (p.Environment || '').match(/\b\w*_?PORT=(\d+)\b/)?.[1];
-  return { name: m[1], transient: p.Transient === 'yes', workingDirectory: p.WorkingDirectory || null, mainPid: Number(p.MainPID), active: p.ActiveState, port: port ? Number(port) : null };
+  return { name: m[1], transient: p.Transient === 'yes', workingDirectory: p.WorkingDirectory || null, mainPid: Number(p.MainPID), active: p.ActiveState, port: port ? Number(port) : null, execStart: p.ExecStart || '' };
 }
 
 /** Established inbound connections on the ports this pid listens on. */
@@ -188,8 +193,11 @@ async function restartAndVerify(db, repo, w, unit) {
   await sleep(15000);
   const again = await unitShow(unit.name);
   if (again.mainPid !== u.mainPid || again.active !== 'active') return { ok: false, newPid: again.mainPid, why: `unit ${unit.name} restarted again (MainPID ${u.mainPid} → ${again.mainPid}): crash loop?` };
-  const drift = await checkWorkerDrift(db, { repo });
-  if (drift.stale.some((s) => s.pid === u.mainPid)) return { ok: false, newPid: u.mainPid, why: 'new process is still older than main (is the checkout behind?)' };
+  // No grace: the new process is seconds old, and the default 30-min grace would call any code fresh.
+  const drift = await checkWorkerDrift(db, { repo, graceMs: 0 });
+  if (!drift.workers.some((x) => x.pid === u.mainPid)) return { ok: false, newPid: u.mainPid, why: `the drift audit does not see new pid ${u.mainPid}, so its code version is unverified` };
+  if (drift.checkoutBehind) return { ok: false, newPid: u.mainPid, why: 'the checkout is behind main, so the restart loaded old code (auto-pull failing?)' };
+  if (drift.stale.some((s) => s.pid === u.mainPid)) return { ok: false, newPid: u.mainPid, why: 'new process is still older than main' };
   return { ok: true, newPid: u.mainPid, why: unit.port ? `active, /health ok on :${unit.port}, not stale` : 'active, steady 15 s, not stale' };
 }
 
@@ -245,7 +253,7 @@ async function cli() {
       const unit = await unitOf(w.pid).catch(() => null);
       const staleForMs = Date.now() - Math.min(...w.behind.map((c) => new Date(c.at).getTime()));
       const verdict = judgeRestart({
-        unit, repo, locks: heldLocks(w.pid), openBatches: await openBatchesFor(db, repo, w),
+        pid: w.pid, worker: w.worker, unit, repo, locks: heldLocks(w.pid), openBatches: await openBatchesFor(db, repo, w),
         connections: await inboundConnections(w.pid), lastRestartAt: unit ? restarts[unit.name] : null, staleForMs,
       });
       const base = { worker: w.worker, pid: w.pid, unit: unit?.name || null, loaded: w.code_version?.slice(0, 9), main: drift.main.slice(0, 9), behind: w.behind.length };

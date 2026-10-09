@@ -13,8 +13,8 @@ import { judgeRestart, heldLocks, MIN_RESTART_INTERVAL_MS, BUSY_PAGE_AFTER_MS } 
 
 const now = new Date('2026-10-09T06:00:00Z');
 const REPO = '/root/sourcelibrary';
-const unit = { name: 'sl-clip-server.service', transient: false, workingDirectory: REPO, mainPid: 1, active: 'active', port: 3457 };
-const clear = { unit, repo: REPO, locks: [], openBatches: [], connections: 0, lastRestartAt: null, now };
+const unit = { name: 'sl-clip-server.service', transient: false, workingDirectory: REPO, mainPid: 2056020, active: 'active', port: 3457, execStart: '{ path=/usr/bin/node ; argv[]=/usr/bin/node scripts/workers/clip-server.mjs ; }' };
+const clear = { pid: 2056020, worker: 'clip-server', unit, repo: REPO, locks: [], openBatches: [], connections: 0, lastRestartAt: null, now };
 
 describe('judgeRestart', () => {
   it('a systemd worker with no lock, no open batch and no live request is restarted', () => {
@@ -34,6 +34,18 @@ describe('judgeRestart', () => {
     const unknown = judgeRestart({ ...clear, openBatches: null });
     expect(unknown.action).toBe('hold');
     expect(unknown.reasons[0]).toMatch(/unknown/);
+  });
+
+  it('a cron-started worker (cgroup cron.service, MainPID crond) is held: restarting the unit would restart cron', () => {
+    const cron = { name: 'cron.service', transient: false, workingDirectory: null, mainPid: 939, active: 'active', port: null, execStart: '{ path=/usr/sbin/cron ; argv[]=/usr/sbin/cron -f -P ; }' };
+    const r = judgeRestart({ ...clear, pid: 3508026, worker: 'pipeline-orchestrator', unit: cron });
+    expect(r.action).toBe('hold');
+    expect(r.reasons[0]).toMatch(/not the main process of cron\.service/);
+  });
+
+  it('a worker that is a child of a wrapper unit, or a unit whose ExecStart names another script, is held', () => {
+    expect(judgeRestart({ ...clear, pid: 4242 }).action).toBe('hold');
+    expect(judgeRestart({ ...clear, worker: 'embedding-server' }).reasons[0]).toMatch(/does not name embedding-server\.mjs/);
   });
 
   it('a transient unit, or one running from another checkout, is held', () => {
