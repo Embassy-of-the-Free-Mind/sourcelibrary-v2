@@ -290,7 +290,7 @@ export default async function DesignOptionsPage() {
             &larr; Back to home
           </Link>
           <h1 className="text-3xl md:text-4xl font-display text-primary mt-4">
-            Featured Collection — Design Options
+            Featured Collection: Design Options
           </h1>
           <p className="text-muted mt-2 max-w-2xl">
             Three layout options for the featured collection section on the home page.
@@ -330,7 +330,7 @@ export default async function DesignOptionsPage() {
           <h2 className="text-2xl font-display text-primary mt-1">Category Card Grid</h2>
           <p className="text-sm text-muted mt-1">
             6 collections in a 3-col grid with category color-coding, theme pills, and date ranges.
-            No images — text-only cards. Rotates daily via seeded shuffle.
+            No images, text-only cards. Rotates daily via seeded shuffle.
           </p>
         </div>
       </div>
@@ -354,7 +354,7 @@ export default async function DesignOptionsPage() {
       {/* Existing 4: Noon version (gallery hero + 2 side squares) */}
       <div className="max-w-[1500px] mx-auto px-6 md:px-12">
         <div className="mt-16 mb-6">
-          <span className="text-xs uppercase tracking-[0.2em] text-muted font-medium">Existing 4 &mdash; Yesterday ~12:00</span>
+          <span className="text-xs uppercase tracking-[0.2em] text-muted font-medium">Existing 4 · Yesterday ~12:00</span>
           <h2 className="text-2xl font-display text-primary mt-1">Gallery Hero + Side Squares</h2>
           <p className="text-sm text-muted mt-1">
             Gallery illustration as the main hero image (3fr) with two square gallery images stacked beside it (2fr).
@@ -368,7 +368,7 @@ export default async function DesignOptionsPage() {
       {/* Existing 5: 4pm version (text | tall hero | book list) */}
       <div className="max-w-[1500px] mx-auto px-6 md:px-12">
         <div className="mt-16 mb-6">
-          <span className="text-xs uppercase tracking-[0.2em] text-muted font-medium">Existing 5 &mdash; Yesterday ~16:00</span>
+          <span className="text-xs uppercase tracking-[0.2em] text-muted font-medium">Existing 5 · Yesterday ~16:00</span>
           <h2 className="text-2xl font-display text-primary mt-1">Three-Column: Text | Hero Illustration | Book List</h2>
           <p className="text-sm text-muted mt-1">
             Three-column layout: text description left, tall gallery illustration center (280x420, object-contain),
@@ -394,7 +394,7 @@ export default async function DesignOptionsPage() {
       <div className="max-w-[1500px] mx-auto px-6 md:px-12">
 
         {/* ═══════════════════════════════════════════════════════════════
-            OPTION A — "Editorial Spread"
+            OPTION A: "Editorial Spread"
             Full-width dark section with large hero image + overlaid text + book strip
         ═══════════════════════════════════════════════════════════════ */}
         <div className="mt-16 mb-6">
@@ -402,7 +402,7 @@ export default async function DesignOptionsPage() {
           <h2 className="text-2xl font-display text-primary mt-1">Editorial Spread</h2>
           <p className="text-sm text-muted mt-1">
             Magazine-style hero with a large background image, overlaid text, and a horizontal book strip below.
-            Dramatic, visual-first — draws the eye like a museum exhibition entrance.
+            Dramatic and visual-first. It draws the eye like a museum exhibition entrance.
           </p>
         </div>
       </div>
@@ -489,7 +489,7 @@ export default async function DesignOptionsPage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          OPTION B — "Gallery Wall"
+          OPTION B: "Gallery Wall"
           Clean, light background with staggered book grid and text beside it.
           Museum-like, calm, lets the books speak for themselves.
       ═══════════════════════════════════════════════════════════════ */}
@@ -498,7 +498,7 @@ export default async function DesignOptionsPage() {
           <span className="text-xs uppercase tracking-[0.2em] text-accent-rust font-medium">Option B</span>
           <h2 className="text-2xl font-display text-primary mt-1">Gallery Wall</h2>
           <p className="text-sm text-muted mt-1">
-            Light, airy layout with a masonry-style book grid. Museum gallery feel —
+            Light, airy layout with a masonry-style book grid. Museum gallery feel:
             the books are the art, displayed like objects on a white wall.
           </p>
         </div>
@@ -580,7 +580,7 @@ export default async function DesignOptionsPage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          OPTION C — "Cabinet of Curiosities"
+          OPTION C: "Cabinet of Curiosities"
           Dark, intimate layout with a featured "hero book" and supporting cast.
           Evokes the feeling of opening a scholar's private collection.
       ═══════════════════════════════════════════════════════════════ */}

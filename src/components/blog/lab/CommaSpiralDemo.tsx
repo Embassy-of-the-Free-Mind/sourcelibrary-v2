@@ -21,14 +21,14 @@ const DESCARTES_PLATES = [
     src: 'https://images.sourcelibrary.org/archived/69b1cafca282e3475aab4148/23.jpg',
     href: '/book/musicae-compendium-descartes?page=23',
     label: 'The consonances as nested arcs',
-    detail: 'Diapason, diapente, diatessaron — every consonance drawn as an arc of the same circle, so that adding a full turn adds an octave.',
+    detail: 'Diapason, diapente, diatessaron: every consonance drawn as an arc of the same circle, so that adding a full turn adds an octave.',
     focus: '50% 52%',
   },
   {
     src: 'https://images.sourcelibrary.org/archived/69b1cafca282e3475aab4148/33.jpg',
     href: '/book/musicae-compendium-descartes?page=33',
     label: 'The octave ring, with string numbers',
-    detail: 'The solmization syllables around concentric rings, each note pinned to a string number (C.360, D.320/324, A.432…) — the same angle-is-pitch convention as the diagram above, three centuries early.',
+    detail: 'The solmization syllables around concentric rings, each note pinned to a string number (C.360, D.320/324, A.432…), the same angle-is-pitch convention as the diagram above, three centuries early.',
     focus: '50% 38%',
   },
 ];
@@ -127,7 +127,7 @@ function CommaCircle({ n, fifth, temper }: { n: number; fifth: number; temper: '
           <path d={wedgePath} fill="#a8503c" fillOpacity={0.16} stroke="none" />
           <path d={gapPath} fill="none" stroke="#a8503c" strokeWidth={2.5} strokeLinecap="round" />
           <text x={C + 8} y={gapTextY} fontSize={10} fill="#a8503c">
-            +23.5 ¢ — the comma
+            +23.5 ¢ (the comma)
           </text>
         </g>
       )}
@@ -184,9 +184,9 @@ export default function CommaSpiralDemo() {
 
   return (
     <LabCard
-      title="Station II — Stack twelve fifths"
+      title="Station II: Stack twelve fifths"
       headerRight={<PlayToggle playing={playing} onClick={toggle} label="Play root + walker" />}
-      caption="One tone stays on the root; the other walks up a fifth at a time (folded back into the octave). With pure 3:2 fifths, the twelfth step should land back on the root — listen to what it does instead. Then switch to Zhu Zaiyu's equal fifths."
+      caption="One tone stays on the root; the other walks up a fifth at a time (folded back into the octave). With pure 3:2 fifths, the twelfth step should land back on the root. Listen to what it does instead. Then switch to Zhu Zaiyu's equal fifths."
       sourceHref="/book/complete-works-on-music-and-tuning-vol-1"
       sourceLabel="Zhu Zaiyu, Complete Works on Music and Tuning (1596)"
     >
@@ -256,16 +256,16 @@ export default function CommaSpiralDemo() {
 
       {n === 12 && temper === 'just' && (
         <p className="mt-4 text-xs text-muted font-mono">
-          3¹²/2¹⁹ = 531441/524288 ≈ 1.01364 — twelve pure fifths overshoot seven octaves by 23.46 ¢
+          3¹²/2¹⁹ = 531441/524288 ≈ 1.01364: twelve pure fifths overshoot seven octaves by 23.46 ¢
         </p>
       )}
 
       <div className="mt-5 pt-4 border-t border-border-light">
         <p className="text-[11px] uppercase tracking-wider text-muted mb-2">
-          Where the circle comes from — Descartes, age 22
+          Where the circle comes from: Descartes, age 22
         </p>
         <p className="text-xs text-secondary mb-3">
-          Drawing pitch as a circle — one octave per turn, intervals as arcs — was itself an
+          Drawing pitch as a circle (one octave per turn, intervals as arcs) was itself an
           invention. The earliest circular pitch diagrams we hold are in{' '}
           <Link href="/book/musicae-compendium-descartes" className="text-accent-rust underline">
             Descartes&apos; <em>Compendium Musicae</em>

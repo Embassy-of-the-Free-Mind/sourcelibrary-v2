@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // the Spanish site card. Never the English card: this page previews in
   // Spanish everywhere it is pasted (#4162).
   const cardImage = col.heroImage
-    ? { url: col.heroImage, alt: `${col.name} — colección de Source Library` }
+    ? { url: col.heroImage, alt: `${col.name}, colección de Source Library` }
     : siteOgImage('es');
   return {
     title: `${col.name} | Source Library`,

@@ -71,8 +71,9 @@ export default function GuidePage({ params }: GuidePageProps) {
       try {
         setLoading(true);
 
-        // Fetch book with pages (page text is returned to admins only)
-        const bookData = await books.get(bookId!, { full: true }) as import('@/lib/api-client').BookWithPages;
+        // Fetch book with every page (page text is returned to admins only;
+        // anonymous callers get pages in windows, #6281)
+        const bookData = await books.getWithAllPages(bookId!, { full: true }) as import('@/lib/api-client').BookWithPages;
         setBook(bookData);
         setPages(bookData.pages || []);
 
