@@ -642,6 +642,38 @@ export interface ReaderStrings {
   };
 }
 
+/** The Tengyur quality note in English (#6120). Hoisted so the Latin block can reuse it:
+ * a `/la` reader page exists only for a book written in Latin, so a Tibetan canon volume
+ *  never renders there and the note needs no Latin wording. */
+const TENGYUR_NOTE_EN: ReaderStrings['tengyurNote'] = {
+    rated: ({ section, n, date, light, work, specialist }) =>
+      `Of ${n} random ${section} pages checked against the Tibetan by AI reviewers (${date}), ${light}% needed only light edits${work ? `, ${work}% substantial revision` : ''}${specialist ? ` and ${specialist}% a specialist` : ''}.`,
+    faults: ({ kinds, revAgent, voice }) =>
+      `Measured errors: about ${revAgent} statements per 100 pages are reversed or attributed to the wrong speaker${voice ? ", including opponents' objections given as the author's view" : ''}${kinds.length ? `. Also common: ${kinds.join(', ')}` : ''}.`,
+    tooFew: ({ section, n, of, date, light, revAgent }) =>
+      `${section[0].toUpperCase()}${section.slice(1)}: too few pages reviewed for a section figure (${n ? `${n} of ${of}` : `none of ${of}`} random pages in an AI review, ${date}). Across the whole Tengyur, ${light}% of pages needed only light edits, and about ${revAgent} statements per 100 pages are reversed or attributed to the wrong speaker.`,
+    kinds: {
+      term: 'mistranslated technical terms',
+      structure: 'misread sentence structure',
+      gloss: 'inaccurate notes',
+      omission: 'omitted phrases',
+      addition: 'added words',
+      reversal: 'reversed statements',
+      agent: 'misattributed speakers',
+    },
+    vinayaTerms: (pct) => `mistranslated technical terms (Pali names for the offence classes on ${pct}% of Vinaya pages)`,
+    methodLink: 'How this was measured',
+    sectionNames: {
+      'Tantra commentary': 'tantra commentary',
+      'Sūtra commentary': 'sūtra commentary',
+      'Grammar & sciences': 'grammar and sciences',
+      Praises: 'praises',
+      Letters: 'letters',
+      Miscellaneous: 'miscellaneous',
+      Catalogue: 'catalogue',
+    },
+};
+
 export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
   en: {
     toolbar: {
@@ -1037,34 +1069,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       thanks: 'Thank you. We will look at this page.',
       failed: 'That did not send. Try again in a moment.',
     },
-    tengyurNote: {
-      rated: ({ section, n, date, light, work, specialist }) =>
-        `Of ${n} random ${section} pages checked against the Tibetan by AI reviewers (${date}), ${light}% needed only light edits${work ? `, ${work}% substantial revision` : ''}${specialist ? ` and ${specialist}% a specialist` : ''}.`,
-      faults: ({ kinds, revAgent, voice }) =>
-        `Measured errors: about ${revAgent} statements per 100 pages are reversed or attributed to the wrong speaker${voice ? ", including opponents' objections given as the author's view" : ''}${kinds.length ? `. Also common: ${kinds.join(', ')}` : ''}.`,
-      tooFew: ({ section, n, of, date, light, revAgent }) =>
-        `${section[0].toUpperCase()}${section.slice(1)}: too few pages reviewed for a section figure (${n ? `${n} of ${of}` : `none of ${of}`} random pages in an AI review, ${date}). Across the whole Tengyur, ${light}% of pages needed only light edits, and about ${revAgent} statements per 100 pages are reversed or attributed to the wrong speaker.`,
-      kinds: {
-        term: 'mistranslated technical terms',
-        structure: 'misread sentence structure',
-        gloss: 'inaccurate notes',
-        omission: 'omitted phrases',
-        addition: 'added words',
-        reversal: 'reversed statements',
-        agent: 'misattributed speakers',
-      },
-      vinayaTerms: (pct) => `mistranslated technical terms (Pali names for the offence classes on ${pct}% of Vinaya pages)`,
-      methodLink: 'How this was measured',
-      sectionNames: {
-        'Tantra commentary': 'tantra commentary',
-        'Sūtra commentary': 'sūtra commentary',
-        'Grammar & sciences': 'grammar and sciences',
-        Praises: 'praises',
-        Letters: 'letters',
-        Miscellaneous: 'miscellaneous',
-        Catalogue: 'catalogue',
-      },
-    },
+    tengyurNote: TENGYUR_NOTE_EN,
     history: {
       title: 'Revision history',
       loading: 'Loading revision history…',
@@ -2032,14 +2037,20 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         invented_text: 'Conversio aliquid addit',
         wrong_image: 'Imago alienae paginae',
         wrong_language: 'Lingua falsa',
+        translation_error: 'Conversio Anglica hic errat',
       },
       commentPlaceholder: 'Aliquid aliud? (si vis)',
+      passageLabel: 'Conversio ut nunc legitur',
+      correctionLabel: 'Quid dicere debeat',
+      sourceLabel: 'Verba fontis (si vis)',
       send: 'Relationem mitte',
       sending: 'Mittitur…',
       cancel: 'Omitte',
       thanks: 'Gratias agimus. Hanc paginam inspiciemus.',
       failed: 'Mitti non potuit. Paulo post iterum tempta.',
     },
+    // Unreachable on /la (Latin-language books only); English kept so the type stays total.
+    tengyurNote: TENGYUR_NOTE_EN,
     history: {
       title: 'Historia recensionum',
       loading: 'Historia recensionum arcessitur…',
