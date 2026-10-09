@@ -17,7 +17,7 @@ import PendingChangesInbox from '@/components/catalog/PendingChangesInbox';
  */
 
 export const metadata: Metadata = {
-  title: 'Catalogue review — BPH',
+  title: 'Catalogue review | BPH',
   robots: { index: false, follow: false },
 };
 
@@ -139,7 +139,7 @@ export default async function CatalogReviewPage({ params }: Props) {
       .select('ubn, title, parallel_title, uniform_title')
       .in('ubn', ubns);
     for (const w of (works || []) as Array<{ ubn: string; title: string | null; parallel_title: string | null; uniform_title: string | null }>) {
-      titlesByUbn.set(w.ubn, w.title || w.parallel_title || w.uniform_title || `(untitled — UBN ${w.ubn})`);
+      titlesByUbn.set(w.ubn, w.title || w.parallel_title || w.uniform_title || `(untitled, UBN ${w.ubn})`);
     }
   }
 

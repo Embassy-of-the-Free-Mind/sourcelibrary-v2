@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA historicapolitica/Beze_vindiciae",
+  "edition": "Vindiciae Contra Tyrannos : Sive, De Principis In Populum, Populique in Principem, legitima potestate / Stephano Iunio Bruto Celta, Auctore. — no place: no printer, 1580.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b65a0418b87551bfcffe7a",
+  "page_number": 5,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 810,
+    "to_char": 1610,
+    "overlap": 0.489,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (c-0)",
+    "at": "2026-10-06T10:13:06.818764+00:00",
+    "note": "Verse 'L. Scribonius Spinter Lectori' (italic verse, roman caps heading); ref matches, padded with 1 line before and next page's heading after.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "front-matter",
+    "typeface": "italic",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      5,
+      6,
+      7
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.759Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "3a7f7868601d509a9ffcc824d78e7f44fd5aee941c4f4905bdea6907df69b286",
+  "unit": {
+    "chars": 800
+  }
+}

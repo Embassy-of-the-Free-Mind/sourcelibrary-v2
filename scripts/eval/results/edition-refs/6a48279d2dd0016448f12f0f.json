@@ -1,0 +1,32 @@
+{
+  "summary": {
+    "book_id": "6a48279d2dd0016448f12f0f",
+    "title": "De veritate, prout distinguitur a revelatione, a verisimili, a possibili, et a falso. Hoc opus condidit Edoardus Baro Herbert de Chirbury [sic] in Anglia, et castri insulæ de Kerry in Hibernia, et par utriusque regni. Et lectori cuivis, integri & illibati iudicii dicavit.",
+    "published": "1633",
+    "source": "EEBO-TCP A03054",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 1,
+    "referenced": 1,
+    "skips": {},
+    "median_char_acc": 0.9641,
+    "median_char_acc_windowed": 0.9582,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": true,
+    "private_dir": "/root/sourcelibrary-ops/evals/refs-private"
+  },
+  "rows": [
+    {
+      "slug": "ed-6a48279d2dd0016448f12f0f-p27",
+      "page": 27,
+      "overlap": 0.834,
+      "probe_words": 253,
+      "ref_chars": 1882,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.103,
+      "char_acc": 0.9641,
+      "char_acc_windowed": 0.9582
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "source": "EEBO-TCP A69934",
+  "edition": "EEBO-TCP A69934 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "github.com/textcreationpartnership (CC0), 2026-10-04, job ocr-bakeoff-5660c",
+  "origin": "library",
+  "book_id": "6a94390b45a4780cb83dba46",
+  "page_number": 10,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 17469,
+    "to_char": 19713,
+    "overlap": 0.956,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-04",
+    "note": "Starts Aut meritas aequo (few extra); ends per dura pericula Martis",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T00:53:10.482Z",
+  "text_location": "repo",
+  "text_sha256": "edb7a706366fb6050f3878676d6d709102986d89a2ea0036495434ed2beef06c",
+  "unit": {
+    "chars": 2244
+  }
+}

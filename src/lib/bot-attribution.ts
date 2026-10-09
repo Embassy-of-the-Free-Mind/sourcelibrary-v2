@@ -98,16 +98,16 @@ export interface AttributionSubject {
  */
 export function attributionBlock(ref: string, book: AttributionSubject): string {
   const rule = '─'.repeat(58);
-  const byline = book.author ? `${book.title} — ${book.author}` : book.title;
+  const byline = book.author ? `${book.title}, ${book.author}` : book.title;
   return [
     rule,
-    'SOURCE LIBRARY — https://sourcelibrary.org',
+    'SOURCE LIBRARY | https://sourcelibrary.org',
     `${byline}`,
     `Read the original: ${book.url}`,
     '',
     'Transcribed and translated by the Ancient Wisdom Trust. The original',
     'texts are public domain; this transcription and translation are',
-    'CC BY-SA 4.0. Bulk and AI-training use is reserved — a standard',
+    'CC BY-SA 4.0. Bulk and AI-training use is reserved; a standard',
     'licence is available: https://sourcelibrary.org/licensing',
     '',
     `Extraction ref: ${ref}`,

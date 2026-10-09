@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A51379",
+  "edition": "Plantarum historiæ universalis Oxoniensis. Pars secunda seu herbarum distributio nova, per tabulas congnationis & affinitatis ex libro naturæ observata & detecta / authore Roberto Morison ... — Wing M2771; ESTC R32963 (1680)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A51379",
+  "origin": "library",
+  "book_id": "69b6b5c696dc15d4a16e974e",
+  "page_number": 382,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 1537720,
+    "to_char": 1543098,
+    "overlap": 0.459,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (c-2)",
+    "at": "2026-10-06T10:13:04+00:00",
+    "note": "p.367; ref opens ~2.5 lines early (end of p.366, 'nisi ipse florem praecidisset ...'), rest matches to 'saltem non-'; borderline window.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      380,
+      381,
+      382
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.783Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "6531296f7ee8dc2908aba3dc9090b01cfbc556dfece87b106572b60147f58b99",
+  "unit": {
+    "chars": 5378
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA historicapolitica/besold16",
+  "edition": "De Natura Populorum, Ejusque Pro Loci Positu, ac temporis decursu variatione: Et ... De Linguarum Ortu Atque Immutatione ... — Tubingae, Typis Philiberti Brunnii, 1632.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b694f8080b19f98fcee93f",
+  "page_number": 37,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 64185,
+    "to_char": 66253,
+    "overlap": 0.352,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-4)",
+    "at": "2026-10-06T10:11:18.118606+00:00",
+    "note": "p.34; ref ends about one line early, before 'cap.3. dum nempe Cretenses semper mendaces, malas bestias'.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      35,
+      36,
+      37
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.734Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "bfff91ed9ebf9dfa70050f1de56e3d184b831b162de319a5a71147d638110102",
+  "unit": {
+    "chars": 2068
+  }
+}

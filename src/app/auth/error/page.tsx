@@ -22,7 +22,7 @@ function describe(error: string | undefined, isInAppBrowser: boolean, browserNam
         title: 'Your sign-in link expired',
         body: isInAppBrowser
           ? `That magic link was already used or has expired. This often happens when your email app previews the link. ${openHint} Then request a fresh link.`
-          : 'That magic link was already used or has expired — this can happen if your email app previewed the link, or if you opened an older one. Request a fresh link and use the newest email.',
+          : 'That magic link was already used or has expired. This can happen if your email app previewed the link, or if you opened an older one. Request a fresh link and use the newest email.',
         cta: 'Send me a new link',
       };
     case 'Configuration':
@@ -32,7 +32,7 @@ function describe(error: string | undefined, isInAppBrowser: boolean, browserNam
         title: 'Sign-in couldn’t complete',
         body: isInAppBrowser
           ? `Sign-in can’t finish inside an in-app browser. ${openHint}`
-          : 'Something interrupted the sign-in handshake. This usually clears up on a second try — if it keeps happening, try a different browser or use the email sign-in option.',
+          : 'Something interrupted the sign-in handshake. This usually clears up on a second try. If it keeps happening, try a different browser or use the email sign-in option.',
         cta: 'Try again',
       };
     case 'AccessDenied':
