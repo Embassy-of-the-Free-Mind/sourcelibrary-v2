@@ -102,7 +102,7 @@ export function transcriptionReliability(
     const made =
       'This transcription was made by machine, by BDRC’s Yigdzin, an OCR ' +
       'model built for Tibetan manuscripts. ';
-    const tail = 'The English is a machine draft made from it. Check the scan before quoting either.';
+    const tail = 'The English is an AI translation made from it. Check the scan before quoting either.';
     return {
       level: 'caution',
       message: measured

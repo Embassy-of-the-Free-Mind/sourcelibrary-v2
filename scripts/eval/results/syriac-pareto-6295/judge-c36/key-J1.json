@@ -1,0 +1,342 @@
+{
+ "J1-000": {
+  "kind": "PLANT",
+  "uid": "69a5f3e0_197",
+  "labels": {
+   "T1": "C36-R_PLANT",
+   "T2": "C36-R"
+  },
+  "plant": {
+   "old": "For the sons of Japheth had a partnership with the sons of Shem, and governance was taken away from Japheth the younger and given to Shem the elder; and until today it is the very same, and unto eternity.",
+   "new": "For the sons of Japheth had a partnership with the sons of Shem, and governance was taken away from Japheth the younger and given to Shem the elder; and until today it is not the very same, and unto eternity.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "J1-001": {
+  "kind": "ARMS",
+  "uid": "6aaafbb1_300",
+  "labels": {
+   "T1": "C36-K",
+   "T2": "K",
+   "T3": "C36-R",
+   "T4": "R"
+  }
+ },
+ "J1-002": {
+  "kind": "ARMS",
+  "uid": "69a5eb64_461",
+  "labels": {
+   "T1": "R",
+   "T2": "C36-K",
+   "T3": "K",
+   "T4": "C36-R"
+  }
+ },
+ "J1-003": {
+  "kind": "ARMS",
+  "uid": "699443fa_308",
+  "labels": {
+   "T1": "K",
+   "T2": "C36-R",
+   "T3": "R",
+   "T4": "C36-K"
+  }
+ },
+ "J1-004": {
+  "kind": "DUP",
+  "uid": "699443fa_308",
+  "labels": {
+   "T1": "C36-R",
+   "T2": "C36-K",
+   "T3": "C36-R_DUP"
+  }
+ },
+ "J1-005": {
+  "kind": "ARMS",
+  "uid": "69a5f3e0_197",
+  "labels": {
+   "T1": "R",
+   "T2": "K",
+   "T3": "C36-R",
+   "T4": "C36-K"
+  }
+ },
+ "J1-006": {
+  "kind": "ARMS",
+  "uid": "69a5eaa8_205",
+  "labels": {
+   "T1": "C36-K",
+   "T2": "C36-R",
+   "T3": "R",
+   "T4": "K"
+  }
+ },
+ "J1-007": {
+  "kind": "PLANT",
+  "uid": "69a5eb6b_205",
+  "labels": {
+   "T1": "C36-R_PLANT",
+   "T2": "C36-R"
+  },
+  "plant": {
+   "old": "And he said to the holy man: Because you have denied before us the gods who govern heaven and earth, and confessed Jesus, the one whom the Jews crucified, we also will deny our love for you, and erase your friendship from our mind, and hand you over to bitter deaths.",
+   "new": "And he said to the holy man: Because you have denied before us the gods who govern heaven and earth, and confessed Jesus, the one whom the Jews crucified, we also will not deny our love for you, and erase your friendship from our mind, and hand you over to bitter deaths.",
+   "how": "\\bwill\\b → will not"
+  }
+ },
+ "J1-008": {
+  "kind": "ARMS",
+  "uid": "69943ce1_628",
+  "labels": {
+   "T1": "K",
+   "T2": "R",
+   "T3": "C36-K",
+   "T4": "C36-R"
+  }
+ },
+ "J1-009": {
+  "kind": "ARMS",
+  "uid": "69a5eb54_268",
+  "labels": {
+   "T1": "R",
+   "T2": "K",
+   "T3": "C36-K",
+   "T4": "C36-R"
+  }
+ },
+ "J1-010": {
+  "kind": "ARMS",
+  "uid": "69a5eb4d_529",
+  "labels": {
+   "T1": "K",
+   "T2": "C36-R",
+   "T3": "R",
+   "T4": "C36-K"
+  }
+ },
+ "J1-011": {
+  "kind": "PLANT",
+  "uid": "69943c78_154",
+  "labels": {
+   "T1": "C36-R_PLANT",
+   "T2": "C36-R"
+  },
+  "plant": {
+   "old": "Pride: do not think that it travels in darkness, and it does not know understanding and wisdom.",
+   "new": "Pride: do not think that it travels in darkness, and it does know understanding and wisdom.",
+   "how": "\\bdoes not\\b → does"
+  }
+ },
+ "J1-012": {
+  "kind": "DUP",
+  "uid": "69943c4f_169",
+  "labels": {
+   "T1": "C36-K",
+   "T2": "C36-R",
+   "T3": "C36-R_DUP"
+  }
+ },
+ "J1-013": {
+  "kind": "ARMS",
+  "uid": "69a5eaa3_611",
+  "labels": {
+   "T1": "C36-R",
+   "T2": "R",
+   "T3": "K",
+   "T4": "C36-K"
+  }
+ },
+ "J1-014": {
+  "kind": "ARMS",
+  "uid": "69943c78_154",
+  "labels": {
+   "T1": "C36-R",
+   "T2": "R",
+   "T3": "C36-K",
+   "T4": "K"
+  }
+ },
+ "J1-015": {
+  "kind": "PLANT",
+  "uid": "69943c68_564",
+  "labels": {
+   "T1": "C36-R",
+   "T2": "C36-R_PLANT"
+  },
+  "plant": {
+   "old": "For there is an adultery of the body, and there is an adultery of the soul.",
+   "new": "For there is not an adultery of the body, and there is an adultery of the soul.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "J1-016": {
+  "kind": "ARMS",
+  "uid": "69a5eb6b_205",
+  "labels": {
+   "T1": "R",
+   "T2": "K",
+   "T3": "C36-K",
+   "T4": "C36-R"
+  }
+ },
+ "J1-017": {
+  "kind": "ARMS",
+  "uid": "6aaafba3_151",
+  "labels": {
+   "T1": "C36-K",
+   "T2": "K",
+   "T3": "C36-R",
+   "T4": "R"
+  }
+ },
+ "J1-018": {
+  "kind": "ARMS",
+  "uid": "69a5ea9a_391",
+  "labels": {
+   "T1": "K",
+   "T2": "C36-R",
+   "T3": "C36-K",
+   "T4": "R"
+  }
+ },
+ "J1-019": {
+  "kind": "ARMS",
+  "uid": "69943c4f_169",
+  "labels": {
+   "T1": "K",
+   "T2": "C36-R",
+   "T3": "R",
+   "T4": "C36-K"
+  }
+ },
+ "J1-020": {
+  "kind": "ARMS",
+  "uid": "69a5f031_235",
+  "labels": {
+   "T1": "C36-R",
+   "T2": "K",
+   "T3": "R",
+   "T4": "C36-K"
+  }
+ },
+ "J1-021": {
+  "kind": "PLANT",
+  "uid": "69a5e9f0_81",
+  "labels": {
+   "T1": "C36-R_PLANT",
+   "T2": "C36-R"
+  },
+  "plant": {
+   "old": "For someone who has authority over his own self is obedient to whatever law is established for it by another, even one who himself holds authority over his own self.",
+   "new": "For someone who has authority over his own self is not obedient to whatever law is established for it by another, even one who himself holds authority over his own self.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "J1-022": {
+  "kind": "ARMS",
+  "uid": "69943c68_564",
+  "labels": {
+   "T1": "K",
+   "T2": "R",
+   "T3": "C36-K",
+   "T4": "C36-R"
+  }
+ },
+ "J1-023": {
+  "kind": "DUP",
+  "uid": "69a5eb4d_529",
+  "labels": {
+   "T1": "C36-K",
+   "T2": "C36-R",
+   "T3": "C36-R_DUP"
+  }
+ },
+ "J1-024": {
+  "kind": "DUP",
+  "uid": "69a5f031_235",
+  "labels": {
+   "T1": "C36-R_DUP",
+   "T2": "C36-K",
+   "T3": "C36-R"
+  }
+ },
+ "J1-025": {
+  "kind": "PLANT",
+  "uid": "69943c94_125",
+  "labels": {
+   "T1": "C36-R_PLANT",
+   "T2": "C36-R"
+  },
+  "plant": {
+   "old": "For the covenant given to Moses was not sealed until this other covenant arrived—which is the very first one, promised from above and inscribed below.",
+   "new": "For the covenant given to Moses was not sealed until this other covenant arrived—which is not the very first one, promised from above and inscribed below.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "J1-026": {
+  "kind": "ARMS",
+  "uid": "69943c94_125",
+  "labels": {
+   "T1": "R",
+   "T2": "C36-K",
+   "T3": "C36-R",
+   "T4": "K"
+  }
+ },
+ "J1-027": {
+  "kind": "PLANT",
+  "uid": "69a5ea9a_391",
+  "labels": {
+   "T1": "C36-R",
+   "T2": "C36-R_PLANT"
+  },
+  "plant": {
+   "old": "The Creator performs a new wonder in the son of destruction: with the corruption of his limbs, the dissolution of his soul is increased.",
+   "new": "The Creator performs a new wonder in the son of destruction: with the corruption of his limbs, the dissolution of his soul is not increased.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "J1-028": {
+  "kind": "ARMS",
+  "uid": "69a5e9f0_81",
+  "labels": {
+   "T1": "K",
+   "T2": "R",
+   "T3": "C36-R",
+   "T4": "C36-K"
+  }
+ },
+ "J1-029": {
+  "kind": "ARMS",
+  "uid": "6994400f_296",
+  "labels": {
+   "T1": "R",
+   "T2": "K",
+   "T3": "C36-K",
+   "T4": "C36-R"
+  }
+ },
+ "J1-030": {
+  "kind": "ARMS",
+  "uid": "69920b97_271",
+  "labels": {
+   "T1": "K",
+   "T2": "R",
+   "T3": "C36-K",
+   "T4": "C36-R"
+  }
+ },
+ "J1-031": {
+  "kind": "PLANT",
+  "uid": "69a5eb64_461",
+  "labels": {
+   "T1": "C36-R_PLANT",
+   "T2": "C36-R"
+  },
+  "plant": {
+   "old": "Even if the governance of these kings before me was dark, it was incumbent upon us to obey their command, yield to their will, and conform to their error.",
+   "new": "Even if the governance of these kings before me was dark, it was incumbent upon us to obey their command, yield to their will not, and conform to their error.",
+   "how": "\\bwill\\b → will not"
+  }
+ }
+}

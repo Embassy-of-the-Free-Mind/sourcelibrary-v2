@@ -186,7 +186,8 @@ await withMongo(async (db) => {
   });
 
   if (PER_BOOK) out.per_book = await perBookGap(db, live);
-});
+// The per-book GROUP BY alone runs ~8 min under load; the 300s default killed it.
+}, { timeoutMs: 1_200_000 });
 
 /**
  * Per-book coverage of page_translations against each live book's own page
@@ -216,7 +217,7 @@ async function perBookGap(db, live) {
   if (rowsByBook.size === 0) return null;
 
   const books = await db.collection('books')
-    .find(live, { projection: { id: 1, pages_translated: 1, pages_ocr: 1 } })
+    .find(live, { projection: { id: 1, pages_translated: 1, pages_ocr: 1, language: 1 } })
     .toArray();
   let measured = 0;
   let zeroRows = 0;
@@ -231,7 +232,7 @@ async function perBookGap(db, live) {
     if (rows === 0) zeroRows++;
     const missT = Math.max(0, (b.pages_translated || 0) - rows);
     missingTranslated += missT;
-    gap.push({ id: b.id, rows, pages_translated: b.pages_translated || 0, pages_ocr: b.pages_ocr || 0, missing_translated: missT });
+    gap.push({ id: b.id, rows, pages_translated: b.pages_translated || 0, pages_ocr: b.pages_ocr || 0, missing_translated: missT, language: b.language ?? null });
   }
   gap.sort((a, b) => b.missing_translated - a.missing_translated || (b.pages_ocr - b.rows) - (a.pages_ocr - a.rows));
   return {

@@ -31,6 +31,7 @@ import { createRevision } from './page-revisions';
 import { stripMarkupTags } from './strip-markup-tags';
 import { contentHash, missingProvenance, isNotRecorded, GEMINI_SOURCES, type GeminiEngine, type NotRecorded } from './write-provenance'; // 16-hex hash + the provenance contract (#4613)
 import { guardStray, strayScriptVerdict, STRAY_SCRIPT_REASON } from './stray-script';
+import { guardTranslationText } from './translation-write-guard';
 
 /**
  * `$unset` fragment every translation writer includes (#4927). `translation_stale`
@@ -374,7 +375,7 @@ export async function writePageTranslation(
   if (GEMINI_SOURCES.has(source)) {
     const stray = await strayScriptGate(db, { id: pageId, book_id: current?.book_id as string | undefined }, text, { targetLanguage: language, jobId, model });
     if (stray.refused) return { written: false, protected: false, refused: STRAY_SCRIPT_REASON, text: stray.text };
-    finalText = stray.text;
+    finalText = guardTranslationText(stray.text); // #5902: term definitions → <note>
   }
 
   // Promise 2: snapshot existing content first (non-fatal — createRevision

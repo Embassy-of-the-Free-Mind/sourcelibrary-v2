@@ -125,7 +125,7 @@ export default function ProseField({
     status === 'saving'
       ? 'Saving…'
       : status === 'error'
-        ? 'Not saved — try again'
+        ? 'Not saved. Try again'
         : status === 'saved'
           ? 'Saved'
           : dirty

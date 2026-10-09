@@ -149,7 +149,7 @@ export default function NatureOfHarmonyPage() {
         <p className="text-secondary leading-relaxed mb-8 font-body">
           Yet the same tradition was ferociously exact. To fix the twenty-two microtonal <em>śrutis</em> that divide the octave,
           Bharata's{' '}
-          <Link href="/book/natyashastram-sanskrit-text-ed" className="text-accent-rust hover:text-accent-rust underline"><em>Nāṭyaśāstra</em></Link>{' '}
+          <Link href="/book/natyashastra-muni" className="text-accent-rust hover:text-accent-rust underline"><em>Nāṭyaśāstra</em></Link>{' '}
           set two <em>vīṇās</em> side by side, tuned them identically, then lowered one by a single <em>śruti</em> and slid the
           whole instrument down, step by step, until the two answered as one again — counting the intervals by ear. A
           metaphysics as absolute as any ever written, and an experiment to test it, in the same book — the pattern-seer and the
@@ -231,8 +231,8 @@ export default function NatureOfHarmonyPage() {
             and "kernel," but it is not even the "husk." Indeed, it is a shadow without a body, and the dream of a shadow.
           </blockquote>
           <figcaption className="text-sm text-muted mt-2 pl-5 not-italic">
-            — Johannes Kepler, <em>Apology for the Harmony of the World</em>, p. 46 (1622).{' '}
-            <Link href="/q/Bg70gtiOQIGdJQX0RRe" className="text-accent-rust hover:text-accent-rust underline">sourcelibrary.org/q/Bg70gtiOQIGdJQX0RRe</Link>
+            — Johannes Kepler, <em>Apology for the Harmony of the World</em>, p. 50 (1622).{' '}
+            <Link href="/q/BejgGp20zfAHYNvTLwA" className="text-accent-rust hover:text-accent-rust underline">sourcelibrary.org/q/BejgGp20zfAHYNvTLwA</Link>
           </figcaption>
         </figure>
 
@@ -416,7 +416,7 @@ export default function NatureOfHarmonyPage() {
             ['c.700 BCE', 'Māṇḍūkya Upanishad', 'Sanskrit', '/book/the-thirteen-principal-upanishads-trans'],
             ['c.360 BCE', 'Plato, Timaeus', 'Greek', '/book/timaeus-ms-digby-23-plato'],
             ['c.330 BCE', 'Aristoxenus, Harmonic Elements', 'Greek', '/book/aristoxeni-musici-antiquissimi-harmonicorum-elementorum-ed'],
-            ['c.200 CE', 'Bharata, Nāṭyaśāstra', 'Sanskrit', '/book/natyashastram-sanskrit-text-ed'],
+            ['c.200 CE', 'Bharata, Nāṭyaśāstra', 'Sanskrit', '/book/natyashastra-muni'],
             ['1581', 'Vincenzo Galilei, Dialogue on Ancient and Modern Music', 'Italian', '/book/dialogo-della-musica-antica-et-della-moderna-galilei'],
             ['1596', 'Zhu Zaiyu, Complete Works on Music and Tuning', 'Chinese', '/book/complete-works-on-music-and-tuning-vols-4-5'],
             ['1596', 'Kepler, The Cosmographic Mystery', 'Latin', '/book/mysterium-cosmographicum-1596-first-edition-kepler'],

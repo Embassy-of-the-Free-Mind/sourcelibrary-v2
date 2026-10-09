@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic';
 
+import { withAuth } from '@/lib/auth-helpers';
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { assertLaneGuards } from '@/lib/lane-guards';
@@ -18,7 +19,7 @@ import { enqueuePagesForJob } from '@/lib/queue-utils';
  */
 export const maxDuration = 60;
 
-export async function POST(request: NextRequest) {
+async function handlePOST(request: NextRequest) {
   try {
     const { bookId } = await request.json();
 
@@ -138,3 +139,7 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+// Admin only (#6032), matching the /scan pages (scan/layout.tsx requireAdmin): this
+// route writes books/R2 or reaches a paid model, and was open to anonymous callers.
+export const POST = withAuth(async (request) => handlePOST(request), { minRole: 'admin' });

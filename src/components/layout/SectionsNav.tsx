@@ -241,7 +241,7 @@ export default function SectionsNav({ bookId, sections, pages, currentPage, illu
                                   )}
                                   {quote.significance && (
                                     <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
-                                      — {quote.significance}
+                                      · {quote.significance}
                                     </span>
                                   )}
                                 </div>

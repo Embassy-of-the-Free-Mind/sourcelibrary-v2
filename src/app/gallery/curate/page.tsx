@@ -3,7 +3,7 @@ import CurateClient from '@/components/gallery/CurateClient';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Curate Gallery — Source Library',
+  title: 'Curate Gallery | Source Library',
   description: 'Review and curate gallery images by quality',
   robots: { index: false },
 };

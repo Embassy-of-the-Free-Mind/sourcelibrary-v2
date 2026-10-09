@@ -1,0 +1,9 @@
+{
+ "script": "syriac",
+ "name": "empty",
+ "reference": "ܟܬܒܐ ܕܝܠܝܕܘܬܗ ܕܝܫܘܥ ܡܫܝܚܐ ܒܪܗ ܕܕܘܝܕ ܒܪܗ ܕܐܒܪܗܡ",
+ "hypothesis": "",
+ "expected_cer": 1,
+ "tolerance": 0,
+ "why": "nothing read"
+}

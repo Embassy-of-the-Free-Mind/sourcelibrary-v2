@@ -6,7 +6,7 @@
  *    `pages`, itself or through a local import, is a registered lane or an EXEMPT entry with a reason.
  * 2. Claims: a declared pause key is present in the lane's source, and a `marker` hold claim is too. A
  *    lane that skips a check says why.
- * 3. Pause names: no lane claims a name nothing reads (the 'ocr' / 'images' names the docs prescribe).
+ * 3. Pause names: no lane claims a name nothing reads (DEAD_PAUSE_NAMES). Keys are pause.mjs's (#5492).
  *
  * Static by design — importing a worker runs it. The write detector is a regex over source, so it can
  * miss a writer that builds a collection name at runtime; it errs toward flagging (a read-only importer
@@ -134,6 +134,13 @@ describe('lane registry — claims match the source', () => {
       if (!key.test.test(sourceOf(l))) problems.push(`${l.name}: declares ${l.pause} but its files never check it`);
     }
     expect(problems).toEqual([]);
+  });
+
+  it('every step key here is a key of scripts/lib/pause.mjs (one vocabulary, #5492)', async () => {
+    // @ts-expect-error — plain .mjs, no types
+    const { PAUSE_KEYS: CANONICAL } = await import('../../scripts/lib/pause.mjs');
+    const stray = Object.keys(PAUSE_KEYS).filter((k) => k !== 'paused' && !CANONICAL.includes(k));
+    expect(stray).toEqual([]);
   });
 
   it('every documented pause key stops at least one lane', () => {

@@ -1,0 +1,4820 @@
+{
+  "cadal_public": 12588,
+  "checked": 600,
+  "books_with_black": 1,
+  "ci95": [
+    0.0002942606305477184,
+    0.009379799586568826
+  ],
+  "projected_books": [
+    4,
+    118
+  ],
+  "all_checked_black": 1,
+  "rows": [
+    {
+      "id": "6a3c744301fe4f593c1efacd",
+      "title": "春秋師說·卷下 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c744301fe4f593c1efacd?page=1"
+    },
+    {
+      "id": "6a3c738f01fe4f593c1e97c7",
+      "title": "白孔六帖·卷二十七~卷二十九 (vol 13)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c738f01fe4f593c1e97c7?page=1"
+    },
+    {
+      "id": "6a3cec738642f0445b15cabb",
+      "title": "職官分紀·卷三十三~卷三十四 (vol 18)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cec738642f0445b15cabb?page=1"
+    },
+    {
+      "id": "6a3cbce1ec254ff6cadf40ed",
+      "title": "崔氏春秋經解·卷十二 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbce1ec254ff6cadf40ed?page=1"
+    },
+    {
+      "id": "6a3cb62857c1f37219c49449",
+      "title": "尚書注疏·卷十四~卷十五 (vol 30)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb62857c1f37219c49449?page=1"
+    },
+    {
+      "id": "6a3cc265ec254ff6cae10c29",
+      "title": "書集傳纂疏·卷四下 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc265ec254ff6cae10c29?page=1"
+    },
+    {
+      "id": "6a3ced934701a906f10e188e",
+      "title": "數度衍·卷二~卷五 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ced934701a906f10e188e?page=1"
+    },
+    {
+      "id": "6a3c652a39b4508b04e2ca0a",
+      "title": "御製增訂清文鑑·卷七 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c652a39b4508b04e2ca0a?page=1"
+    },
+    {
+      "id": "6a3c63daaf3c49b59c5c9095",
+      "title": "御定佩文韻府·卷二十二之四 (vol 393)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c63daaf3c49b59c5c9095?page=1"
+    },
+    {
+      "id": "6a3c745501fe4f593c1f0370",
+      "title": "春秋屬辭·卷九~卷十 (vol 14)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c745501fe4f593c1f0370?page=1"
+    },
+    {
+      "id": "6a3c763601fe4f593c1f98fe",
+      "title": "漢上易傳·卷三 (vol 10)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c763601fe4f593c1f98fe?page=1"
+    },
+    {
+      "id": "6a3c6325879008ba7e1663dd",
+      "title": "御定佩文韻府·卷八十八 (vol 217)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6325879008ba7e1663dd?page=1"
+    },
+    {
+      "id": "6a3cc1baec254ff6cae0e99d",
+      "title": "五燈會元·卷一 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc1baec254ff6cae0e99d?page=1"
+    },
+    {
+      "id": "6a3cec528642f0445b15b6d6",
+      "title": "古今姓氏書辯證·卷二十六~卷二十九 (vol 9)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cec528642f0445b15b6d6?page=1"
+    },
+    {
+      "id": "6a3c777c01fe4f593c20289c",
+      "title": "古今通韻·卷二~卷三 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c777c01fe4f593c20289c?page=1"
+    },
+    {
+      "id": "6a3c5f3f879008ba7e1539e9",
+      "title": "律呂新書箋義(一) — New Book on the Pitch-Pipes (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c5f3f879008ba7e1539e9?page=1"
+    },
+    {
+      "id": "6a3cc162ec254ff6cae0bcea",
+      "title": "居易錄·卷一~卷三 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc162ec254ff6cae0bcea?page=1"
+    },
+    {
+      "id": "6a3c5fc9879008ba7e157d95",
+      "title": "憨山老人夢遊集(一) (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c5fc9879008ba7e157d95?page=1"
+    },
+    {
+      "id": "6a3cbabb3dce6cfad749e3b8",
+      "title": "五禮通考·卷七~卷八 (vol 8)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbabb3dce6cfad749e3b8?page=1"
+    },
+    {
+      "id": "6a3c6d2301fe4f593c1b814c",
+      "title": "黃氏日抄·卷二十二 (vol 18)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6d2301fe4f593c1b814c?page=1"
+    },
+    {
+      "id": "6a3ceea74701a906f10eb4d2",
+      "title": "御定淵鑑類函·卷四百十~卷四百十一 (vol 225)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ceea74701a906f10eb4d2?page=1"
+    },
+    {
+      "id": "6a3cbc07ec254ff6caded104",
+      "title": "禮記注疏·卷二十一~卷二十二 (vol 76)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbc07ec254ff6caded104?page=1"
+    },
+    {
+      "id": "6a3c76f501fe4f593c1fec0c",
+      "title": "御定音韻闡微·卷二 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c76f501fe4f593c1fec0c?page=1"
+    },
+    {
+      "id": "6a3cbd33ec254ff6cadf6f13",
+      "title": "四書通旨·卷一 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbd33ec254ff6cadf6f13?page=1"
+    },
+    {
+      "id": "6a3c6d0a01fe4f593c1b74c8",
+      "title": "全芳備祖集·後集·卷十~卷十三 (vol 11)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6d0a01fe4f593c1b74c8?page=1"
+    },
+    {
+      "id": "6a3c6064879008ba7e15bef7",
+      "title": "御定駢字類編·卷一百八十二 — Imperial Parallel Characters (vol 131)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6064879008ba7e15bef7?page=1"
+    },
+    {
+      "id": "6a3ceec08642f0445b15e9e3",
+      "title": "御定淵鑑類函·卷一百九十二 (vol 246)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ceec08642f0445b15e9e3?page=1"
+    },
+    {
+      "id": "6992cfa9f5b4f75c1a4c9628",
+      "title": "海國圖志(27)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6992cfa9f5b4f75c1a4c9628?page=1"
+    },
+    {
+      "id": "6a3c7a6101fe4f593c216d07",
+      "title": "續名醫類案·卷十一 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c7a6101fe4f593c216d07?page=1"
+    },
+    {
+      "id": "6a3ce85b552d34d98411ae61",
+      "title": "儀禮注疏·卷三~卷四 (vol 17)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ce85b552d34d98411ae61?page=1"
+    },
+    {
+      "id": "6a3c725001fe4f593c1de4f3",
+      "title": "儀禮圖·卷三~卷五 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c725001fe4f593c1de4f3?page=1"
+    },
+    {
+      "id": "6a3cb60d3dce6cfad7484df0",
+      "title": "尚書注疏·卷二 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb60d3dce6cfad7484df0?page=1"
+    },
+    {
+      "id": "6a3c6f2201fe4f593c1c9538",
+      "title": "簡端錄·卷一~卷三 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6f2201fe4f593c1c9538?page=1"
+    },
+    {
+      "id": "6a3cc095f9474f825c1705be",
+      "title": "橫渠易說·卷一 (vol 1)",
+      "checked": 3,
+      "black": 3,
+      "ex": [
+        2,
+        71,
+        141
+      ],
+      "url": "https://sourcelibrary.org/book/6a3cc095f9474f825c1705be?page=2"
+    },
+    {
+      "id": "6a3c5fd9879008ba7e15869c",
+      "title": "御定駢字類編·卷九 — Imperial Parallel Characters (vol 8)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c5fd9879008ba7e15869c?page=1"
+    },
+    {
+      "id": "6a3c70bd01fe4f593c1d45a8",
+      "title": "春秋大事表·卷十一 (vol 16)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c70bd01fe4f593c1d45a8?page=1"
+    },
+    {
+      "id": "6a3cbaf53d799518cd71eb69",
+      "title": "五禮通考·卷八十七 (vol 62)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbaf53d799518cd71eb69?page=1"
+    },
+    {
+      "id": "6a3c7b4e01fe4f593c21d7f9",
+      "title": "大易粹言·卷五十五~卷五十九 (vol 17)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c7b4e01fe4f593c21d7f9?page=1"
+    },
+    {
+      "id": "6a3cf0468642f0445b163f36",
+      "title": "御製律呂正義後編·卷六十三~卷六十四 (vol 34)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cf0468642f0445b163f36?page=1"
+    },
+    {
+      "id": "6a3cc120ec254ff6cae09924",
+      "title": "御纂周易折中·卷二十一~卷二十二 (vol 26)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc120ec254ff6cae09924?page=1"
+    },
+    {
+      "id": "6a3c777101fe4f593c20227c",
+      "title": "唐韻正·卷三~卷五 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c777101fe4f593c20227c?page=1"
+    },
+    {
+      "id": "6a3c799701fe4f593c210dbb",
+      "title": "喻林·卷二十一~卷二十三 (vol 8)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c799701fe4f593c210dbb?page=1"
+    },
+    {
+      "id": "6a3c7afd01fe4f593c21b6ab",
+      "title": "江南經畧·卷三下 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c7afd01fe4f593c21b6ab?page=1"
+    },
+    {
+      "id": "6a3c5f0f40c88a541d8e678e",
+      "title": "景岳全書·卷十~卷十一 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c5f0f40c88a541d8e678e?page=1"
+    },
+    {
+      "id": "6a3ce9d50a0011cb4bc117ed",
+      "title": "日講禮記解義·卷三~卷五 (vol 23)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ce9d50a0011cb4bc117ed?page=1"
+    },
+    {
+      "id": "6a3c6b0639b4508b04e400b1",
+      "title": "欽定協紀辨方書·卷二十二~卷二十三 (vol 41)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6b0639b4508b04e400b1?page=1"
+    },
+    {
+      "id": "6a3cc2a5af74b230c69082a7",
+      "title": "寓簡·卷八~卷十 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc2a5af74b230c69082a7?page=1"
+    },
+    {
+      "id": "6a3c7a3c01fe4f593c215b57",
+      "title": "御定分類字錦·卷四十一 (vol 103)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c7a3c01fe4f593c215b57?page=1"
+    },
+    {
+      "id": "6a3cbacf3dce6cfad749ef70",
+      "title": "五禮通考·卷三十七 (vol 26)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbacf3dce6cfad749ef70?page=1"
+    },
+    {
+      "id": "6a3c785c39b4508b04e60f9e",
+      "title": "易原就正·卷二~卷三 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c785c39b4508b04e60f9e?page=1"
+    },
+    {
+      "id": "6a3c64d839b4508b04e2a82b",
+      "title": "御定佩文韻府·卷九十一之一 (vol 652)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c64d839b4508b04e2a82b?page=1"
+    },
+    {
+      "id": "6a3cc0a5ec254ff6cae067a4",
+      "title": "吳園周易解·卷四~卷六 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc0a5ec254ff6cae067a4?page=1"
+    },
+    {
+      "id": "6a3c6d1701fe4f593c1b7ab1",
+      "title": "黃氏日抄·卷十一 (vol 8)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6d1701fe4f593c1b7ab1?page=1"
+    },
+    {
+      "id": "6a3c724d01fe4f593c1de344",
+      "title": "禮說·卷十一~卷十二 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c724d01fe4f593c1de344?page=1"
+    },
+    {
+      "id": "6a3cbf98f9474f825c1697d2",
+      "title": "六藝之一錄·卷一百八十四~卷一百八十六 (vol 83)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbf98f9474f825c1697d2?page=1"
+    },
+    {
+      "id": "6a3c6d7901fe4f593c1bb911",
+      "title": "神農本草經疏·卷二十七~卷三十 (vol 14)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6d7901fe4f593c1bb911?page=1"
+    },
+    {
+      "id": "6a3c626c879008ba7e1624a3",
+      "title": "御定佩文韻府·卷八之二 (vol 34)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c626c879008ba7e1624a3?page=1"
+    },
+    {
+      "id": "6a40efb47f8d954eada8b7f1",
+      "title": "儒林外史(十八) — The Scholars, vol 18",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a40efb47f8d954eada8b7f1?page=1"
+    },
+    {
+      "id": "6a3cbfc9f9474f825c16b130",
+      "title": "六藝之一錄·卷二百九十四~卷二百九十五 (vol 127)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbfc9f9474f825c16b130?page=1"
+    },
+    {
+      "id": "6a3c7a0e01fe4f593c214131",
+      "title": "御定分類字錦·卷六十四 (vol 62)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c7a0e01fe4f593c214131?page=1"
+    },
+    {
+      "id": "6a3cf0f44701a906f10f446f",
+      "title": "四書通證·孟子集註通證卷上~孟子集註通證卷下 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cf0f44701a906f10f446f?page=1"
+    },
+    {
+      "id": "6a3c6995af3c49b59c5e0bb7",
+      "title": "普濟方·卷二百七十六 (vol 192)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6995af3c49b59c5e0bb7?page=1"
+    },
+    {
+      "id": "6a3c6875af3c49b59c5d939f",
+      "title": "類說·卷三十一~卷三十二 (vol 15)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6875af3c49b59c5d939f?page=1"
+    },
+    {
+      "id": "6a3c6e8639b4508b04e4c235",
+      "title": "儀禮析疑·卷十四~卷十五 (vol 7)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6e8639b4508b04e4c235?page=1"
+    },
+    {
+      "id": "6a3cb9723d799518cd71e1c3",
+      "title": "爾雅注疏·卷九~卷九 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb9723d799518cd71e1c3?page=1"
+    },
+    {
+      "id": "6a3c6ee201fe4f593c1c7029",
+      "title": "經典釋文·卷二十~卷二十一 (vol 21)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6ee201fe4f593c1c7029?page=1"
+    },
+    {
+      "id": "6a3c6033879008ba7e15b4e3",
+      "title": "御定駢字類編·卷九十 — Imperial Parallel Characters (vol 86)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6033879008ba7e15b4e3?page=1"
+    },
+    {
+      "id": "6a3c762101fe4f593c1f8e3c",
+      "title": "易小傳·卷三上~卷三下 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c762101fe4f593c1f8e3c?page=1"
+    },
+    {
+      "id": "6a3c7b2c01fe4f593c21cc23",
+      "title": "管子·卷二十三~卷二十四 (vol 22)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c7b2c01fe4f593c21cc23?page=1"
+    },
+    {
+      "id": "6a3c5f90879008ba7e155f91",
+      "title": "圖書編·卷六十 (vol 48)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c5f90879008ba7e155f91?page=1"
+    },
+    {
+      "id": "6a3c687239b4508b04e3acfb",
+      "title": "類說·卷二十五~卷二十六 (vol 12)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c687239b4508b04e3acfb?page=1"
+    },
+    {
+      "id": "6a3cebee8642f0445b158488",
+      "title": "欽定西域同文志·卷十四~卷十六 (vol 8)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cebee8642f0445b158488?page=1"
+    },
+    {
+      "id": "6a3cbd13ec254ff6cadf5db1",
+      "title": "孟子集疏·卷十三~卷十四 (vol 8)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbd13ec254ff6cadf5db1?page=1"
+    },
+    {
+      "id": "6a3cc105ec254ff6cae08803",
+      "title": "易經通注·卷八~卷九 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc105ec254ff6cae08803?page=1"
+    },
+    {
+      "id": "6a3cbfedf9474f825c16c6aa",
+      "title": "六藝之一錄·卷三百七十八~卷三百七十九 (vol 166)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbfedf9474f825c16c6aa?page=1"
+    },
+    {
+      "id": "6a3c61e940c88a541d8f0e1e",
+      "title": "讀書偶記(一) (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c61e940c88a541d8f0e1e?page=1"
+    },
+    {
+      "id": "6a3cbe0cec254ff6cadfcaed",
+      "title": "開元釋教錄·卷三~卷四下 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbe0cec254ff6cadfcaed?page=1"
+    },
+    {
+      "id": "6a3c771c01fe4f593c1ffb6d",
+      "title": "易纂言外翼·卷七~卷八 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c771c01fe4f593c1ffb6d?page=1"
+    },
+    {
+      "id": "6a3cef168642f0445b160887",
+      "title": "御定淵鑑類函·卷三百三十八~卷三百三十九 (vol 332)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cef168642f0445b160887?page=1"
+    },
+    {
+      "id": "6a3c71bf39b4508b04e54715",
+      "title": "欽定授時通考·卷七~卷九 (vol 32)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c71bf39b4508b04e54715?page=1"
+    },
+    {
+      "id": "6a3cef514701a906f10ee89e",
+      "title": "御定淵鑑類函·卷四百二十七~卷四百二十八 (vol 381)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cef514701a906f10ee89e?page=1"
+    },
+    {
+      "id": "6a3c62bb40c88a541d8f59f1",
+      "title": "御定佩文韻府·卷二十四之二 (vol 114)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c62bb40c88a541d8f59f1?page=1"
+    },
+    {
+      "id": "6a3cbb5d3dce6cfad74a30b8",
+      "title": "五禮通考·卷二百三十四 (vol 160)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbb5d3dce6cfad74a30b8?page=1"
+    },
+    {
+      "id": "6a3cc132ec254ff6cae0a3a1",
+      "title": "御纂周易述義·卷四~卷五 (vol 16)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc132ec254ff6cae0a3a1?page=1"
+    },
+    {
+      "id": "6a3c64ec39b4508b04e2b346",
+      "title": "御定佩文韻府·卷九十五之三 (vol 672)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c64ec39b4508b04e2b346?page=1"
+    },
+    {
+      "id": "6a3c6f2339b4508b04e4c35f",
+      "title": "五經蠡測·卷四~卷六 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6f2339b4508b04e4c35f?page=1"
+    },
+    {
+      "id": "6a3c723c01fe4f593c1dd760",
+      "title": "周禮纂訓·卷十四~卷十五 (vol 8)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c723c01fe4f593c1dd760?page=1"
+    },
+    {
+      "id": "6a3ced014701a906f10dcb34",
+      "title": "玉海·卷一百八十九 (vol 106)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ced014701a906f10dcb34?page=1"
+    },
+    {
+      "id": "6a3c5f8b40c88a541d8e774c",
+      "title": "圖書編·卷五十六 (vol 44)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c5f8b40c88a541d8e774c?page=1"
+    },
+    {
+      "id": "6a3cbe5bec254ff6cadff79a",
+      "title": "六壬大全·卷一 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbe5bec254ff6cadff79a?page=1"
+    },
+    {
+      "id": "6a3cbb1d3dce6cfad74a0caa",
+      "title": "五禮通考·卷一百四十一~卷一百四十二 (vol 95)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbb1d3dce6cfad74a0caa?page=1"
+    },
+    {
+      "id": "6a3c60e240c88a541d8eb97a",
+      "title": "御定駢字類編·卷七十~卷七十一 — Imperial Parallel Characters (vol 253)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c60e240c88a541d8eb97a?page=1"
+    },
+    {
+      "id": "6a3cb8103dce6cfad748ab59",
+      "title": "詩傳旁通·卷九~卷十一 (vol 4)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb8103dce6cfad748ab59?page=1"
+    },
+    {
+      "id": "6a3c6243879008ba7e161fdd",
+      "title": "西清古鑑·卷四十 (vol 60)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6243879008ba7e161fdd?page=1"
+    },
+    {
+      "id": "6a3c6010879008ba7e159fde",
+      "title": "御定駢字類編·卷五十三 — Imperial Parallel Characters (vol 50)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6010879008ba7e159fde?page=1"
+    },
+    {
+      "id": "6a3cbf85f9474f825c168e3e",
+      "title": "六藝之一錄·卷一百四十二~卷一百四十三 (vol 66)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbf85f9474f825c168e3e?page=1"
+    },
+    {
+      "id": "6a3c60a240c88a541d8e92c1",
+      "title": "御定駢字類編·卷一 — Imperial Parallel Characters (vol 185)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c60a240c88a541d8e92c1?page=1"
+    },
+    {
+      "id": "6a3c8fd21682bcf8f290e53d",
+      "title": "文公易說·卷七 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c8fd21682bcf8f290e53d?page=1"
+    },
+    {
+      "id": "6a3c77c401fe4f593c2048da",
+      "title": "日講易經解義·卷十一 (vol 10)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c77c401fe4f593c2048da?page=1"
+    },
+    {
+      "id": "6a3c6f9101fe4f593c1cd720",
+      "title": "論語注疏·卷一~卷三 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6f9101fe4f593c1cd720?page=1"
+    },
+    {
+      "id": "6a3cee964701a906f10eabae",
+      "title": "御定淵鑑類函·卷三百八十一~卷三百八十二 (vol 211)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cee964701a906f10eabae?page=1"
+    },
+    {
+      "id": "6a3c6ce401fe4f593c1b5dbf",
+      "title": "世醫得效方·卷十五 (vol 13)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6ce401fe4f593c1b5dbf?page=1"
+    },
+    {
+      "id": "6a3c6eec01fe4f593c1c74ed",
+      "title": "經典釋文·卷七~卷八 (vol 29)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6eec01fe4f593c1c74ed?page=1"
+    },
+    {
+      "id": "6a3cc11aec254ff6cae09466",
+      "title": "御纂周易折中·卷七~卷八 (vol 18)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc11aec254ff6cae09466?page=1"
+    },
+    {
+      "id": "6a3cbab23dce6cfad749debe",
+      "title": "皇極經世觀物外篇衍義·卷三~卷四 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbab23dce6cfad749debe?page=1"
+    },
+    {
+      "id": "6a3cc2daaf74b230c6909ee2",
+      "title": "毛詩注疏·卷三十 (vol 24)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc2daaf74b230c6909ee2?page=1"
+    },
+    {
+      "id": "6a3cbf81f9474f825c168c67",
+      "title": "六藝之一錄·卷一百二十九~卷一百三十一 (vol 61)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbf81f9474f825c168c67?page=1"
+    },
+    {
+      "id": "6a3cbcbcec254ff6cadf2b19",
+      "title": "禮書綱目·卷十九~卷二十一 (vol 10)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbcbcec254ff6cadf2b19?page=1"
+    },
+    {
+      "id": "6a3c730e39b4508b04e56dac",
+      "title": "欽定春秋傳說彙纂·卷十一~卷十二 (vol 9)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c730e39b4508b04e56dac?page=1"
+    },
+    {
+      "id": "6992ce3a3ea667fbac8288d4",
+      "title": "武備志(五十)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6992ce3a3ea667fbac8288d4?page=1"
+    },
+    {
+      "id": "6a3c712039b4508b04e51fd7",
+      "title": "御纂朱子全書·卷九~卷十 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c712039b4508b04e51fd7?page=1"
+    },
+    {
+      "id": "6a3c620540c88a541d8f207b",
+      "title": "西清古鑑·卷一 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c620540c88a541d8f207b?page=1"
+    },
+    {
+      "id": "6a3c60da40c88a541d8eb4fa",
+      "title": "御定駢字類編·卷六十一 — Imperial Parallel Characters (vol 244)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c60da40c88a541d8eb4fa?page=1"
+    },
+    {
+      "id": "6a3c722e01fe4f593c1dcddd",
+      "title": "周禮述註·卷十四~卷十六 (vol 8)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c722e01fe4f593c1dcddd?page=1"
+    },
+    {
+      "id": "6a3c666239b4508b04e348ab",
+      "title": "經濟類編·卷四十四 (vol 42)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c666239b4508b04e348ab?page=1"
+    },
+    {
+      "id": "6a3cec048642f0445b158e3b",
+      "title": "欽定西域同文志·卷二十三~卷二十四 (vol 25)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cec048642f0445b158e3b?page=1"
+    },
+    {
+      "id": "6a3cbd1bec254ff6cadf6191",
+      "title": "論語集說·卷三~卷四 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbd1bec254ff6cadf6191?page=1"
+    },
+    {
+      "id": "6a3c650039b4508b04e2bd0e",
+      "title": "御定佩文韻府·卷九十九之八 (vol 693)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c650039b4508b04e2bd0e?page=1"
+    },
+    {
+      "id": "6a3c6a0caf3c49b59c5e46d7",
+      "title": "普濟方·卷四百二十四~四百二十五 (vol 305)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6a0caf3c49b59c5e46d7?page=1"
+    },
+    {
+      "id": "6a3cbbb887ee3d48c89d0944",
+      "title": "周禮注疏·卷三十九~卷四十 (vol 64)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbbb887ee3d48c89d0944?page=1"
+    },
+    {
+      "id": "6a3c6ed301fe4f593c1c6599",
+      "title": "經典釋文·卷十四~卷十六 (vol 7)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6ed301fe4f593c1c6599?page=1"
+    },
+    {
+      "id": "6a3c710f39b4508b04e51474",
+      "title": "格物通·卷四十五~卷四十九 (vol 10)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c710f39b4508b04e51474?page=1"
+    },
+    {
+      "id": "6a3c5ff8879008ba7e1593c6",
+      "title": "御定駢字類編·卷三十三 — Imperial Parallel Characters (vol 31)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c5ff8879008ba7e1593c6?page=1"
+    },
+    {
+      "id": "6a3cbfc5f9474f825c16aed8",
+      "title": "六藝之一錄·卷二百八十四~卷二百八十五 (vol 123)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbfc5f9474f825c16aed8?page=1"
+    },
+    {
+      "id": "6a3c643239b4508b04e2518d",
+      "title": "御定佩文韻府·卷四十四之二 (vol 482)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c643239b4508b04e2518d?page=1"
+    },
+    {
+      "id": "6a3cb8393dce6cfad748c466",
+      "title": "御定佩文齋書畫譜·卷三十六 (vol 13)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb8393dce6cfad748c466?page=1"
+    },
+    {
+      "id": "6a3c6e4d01fe4f593c1c1707",
+      "title": "周官總義·卷三~卷四 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6e4d01fe4f593c1c1707?page=1"
+    },
+    {
+      "id": "6a3cecb84701a906f10daaf5",
+      "title": "玉海·卷九十五~卷九十六 (vol 50)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cecb84701a906f10daaf5?page=1"
+    },
+    {
+      "id": "6a3c6e1701fe4f593c1bfa36",
+      "title": "詩所·卷七~卷八 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6e1701fe4f593c1bfa36?page=1"
+    },
+    {
+      "id": "6a3c6bf939b4508b04e46f2a",
+      "title": "周易會通·卷七 (vol 22)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6bf939b4508b04e46f2a?page=1"
+    },
+    {
+      "id": "6a3cbcd5ec254ff6cadf39db",
+      "title": "禮書綱目·卷七十八~卷八十一 (vol 32)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbcd5ec254ff6cadf39db?page=1"
+    },
+    {
+      "id": "6a3cef034701a906f10ecc19",
+      "title": "御定淵鑑類函·卷三百十 (vol 315)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cef034701a906f10ecc19?page=1"
+    },
+    {
+      "id": "6a3ce6990a0011cb4bc067cb",
+      "title": "合訂刪補大易集義粹言·卷七十八 (vol 40)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ce6990a0011cb4bc067cb?page=1"
+    },
+    {
+      "id": "6a3c719c01fe4f593c1d9412",
+      "title": "欽定授時通考·卷一~卷二 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c719c01fe4f593c1d9412?page=1"
+    },
+    {
+      "id": "6a3c6f2f01fe4f593c1c9b82",
+      "title": "七經孟子考文補遺·卷十二~卷二十一 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6f2f01fe4f593c1c9b82?page=1"
+    },
+    {
+      "id": "6a3c75cf39b4508b04e5db5d",
+      "title": "榕村語錄·卷十三~卷十五 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c75cf39b4508b04e5db5d?page=1"
+    },
+    {
+      "id": "6a3cb8a13dce6cfad748f185",
+      "title": "三禮圖·卷十二~卷十三 — San li tu (vol 9)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb8a13dce6cfad748f185?page=1"
+    },
+    {
+      "id": "6a3cb9073dce6cfad7491e4d",
+      "title": "春秋左傳注疏·卷五十九~卷六十 (vol 32)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb9073dce6cfad7491e4d?page=1"
+    },
+    {
+      "id": "6a3c6c2b39b4508b04e4703b",
+      "title": "通雅·卷四十八~卷四十九 (vol 25)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6c2b39b4508b04e4703b?page=1"
+    },
+    {
+      "id": "6992cda043713c66ea637aa0",
+      "title": "三才圖會(四十一)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6992cda043713c66ea637aa0?page=1"
+    },
+    {
+      "id": "6a3c659339b4508b04e2ef97",
+      "title": "御定子史精華·卷一百四十七~卷一百四十九 (vol 47)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c659339b4508b04e2ef97?page=1"
+    },
+    {
+      "id": "6a3c6520af3c49b59c5cad3b",
+      "title": "御定佩文韻府·卷一百四之二 (vol 723)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6520af3c49b59c5cad3b?page=1"
+    },
+    {
+      "id": "6a3c642c39b4508b04e24d17",
+      "title": "御定佩文韻府·卷四十之二 (vol 474)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c642c39b4508b04e24d17?page=1"
+    },
+    {
+      "id": "6a3c6fa901fe4f593c1ce353",
+      "title": "孟子傳·卷七~卷九 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6fa901fe4f593c1ce353?page=1"
+    },
+    {
+      "id": "6a3c7ae701fe4f593c21ab92",
+      "title": "朱子語類·卷一百四~卷一百六 (vol 58)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c7ae701fe4f593c21ab92?page=1"
+    },
+    {
+      "id": "6a3c70b501fe4f593c1d405e",
+      "title": "春秋大事表·卷三 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c70b501fe4f593c1d405e?page=1"
+    },
+    {
+      "id": "6a3cc044ec254ff6cae04e6c",
+      "title": "法苑珠林·卷九十九~卷一百二 — Fayuan Zhulin (vol 37)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc044ec254ff6cae04e6c?page=1"
+    },
+    {
+      "id": "6a3cee564701a906f10e84fc",
+      "title": "御定淵鑑類函·卷二百七十四~卷二百七十五 (vol 152)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cee564701a906f10e84fc?page=1"
+    },
+    {
+      "id": "6a3cbed5ec254ff6cae03915",
+      "title": "御定韻府拾遺·卷一百二~卷一百三 (vol 76)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbed5ec254ff6cae03915?page=1"
+    },
+    {
+      "id": "6a3c731f01fe4f593c1e5af4",
+      "title": "欽定春秋傳說彙纂·卷首上 (vol 25)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c731f01fe4f593c1e5af4?page=1"
+    },
+    {
+      "id": "6a3c75f701fe4f593c1f7ea9",
+      "title": "緇衣集傳·卷一 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c75f701fe4f593c1f7ea9?page=1"
+    },
+    {
+      "id": "6a3cbaac3dce6cfad749db7a",
+      "title": "名賢氏族言行類稿·卷四十~卷四十二 (vol 18)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbaac3dce6cfad749db7a?page=1"
+    },
+    {
+      "id": "6a3cc2d3af74b230c6909a59",
+      "title": "毛詩注疏·卷二十三 (vol 18)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc2d3af74b230c6909a59?page=1"
+    },
+    {
+      "id": "6a3c76e401fe4f593c1fe2d8",
+      "title": "苑洛志樂·卷十八~卷十九 (vol 12)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c76e401fe4f593c1fe2d8?page=1"
+    },
+    {
+      "id": "6a3c6b5239b4508b04e42dc7",
+      "title": "攷古編·卷二~卷六 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6b5239b4508b04e42dc7?page=1"
+    },
+    {
+      "id": "6a3c679f39b4508b04e379d3",
+      "title": "御定孝經衍義·卷六十二~卷六十三 (vol 48)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c679f39b4508b04e379d3?page=1"
+    },
+    {
+      "id": "6a3c6fa001fe4f593c1cde3f",
+      "title": "論語注疏·卷八~卷十 (vol 14)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6fa001fe4f593c1cde3f?page=1"
+    },
+    {
+      "id": "6a3c632e879008ba7e1669f2",
+      "title": "御定佩文韻府·卷九十一之二 (vol 226)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c632e879008ba7e1669f2?page=1"
+    },
+    {
+      "id": "6a3c62c340c88a541d8f5e76",
+      "title": "御定佩文韻府·卷二十五之五 (vol 123)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c62c340c88a541d8f5e76?page=1"
+    },
+    {
+      "id": "6a3c6fb039b4508b04e4c6c1",
+      "title": "孟子傳·卷二十四~卷二十七 (vol 7)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6fb039b4508b04e4c6c1?page=1"
+    },
+    {
+      "id": "6a3c6b86af3c49b59c5ed0e1",
+      "title": "易通變·卷十八 (vol 8)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6b86af3c49b59c5ed0e1?page=1"
+    },
+    {
+      "id": "6a3cb94d3d799518cd71ce68",
+      "title": "朱子五經語類·卷十六~卷十九 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb94d3d799518cd71ce68?page=1"
+    },
+    {
+      "id": "6992cf3227dcac3f8ca1b64e",
+      "title": "武備志(一百三)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6992cf3227dcac3f8ca1b64e?page=1"
+    },
+    {
+      "id": "6a3c706201fe4f593c1d3c05",
+      "title": "禮記集說·卷三十~卷三十一 (vol 95)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c706201fe4f593c1d3c05?page=1"
+    },
+    {
+      "id": "6a3ceea34701a906f10eb2a2",
+      "title": "御定淵鑑類函·卷四百四~卷四百五 (vol 222)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ceea34701a906f10eb2a2?page=1"
+    },
+    {
+      "id": "6a3c688eaf3c49b59c5da289",
+      "title": "事實類苑·卷五十四~卷五十七 (vol 14)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c688eaf3c49b59c5da289?page=1"
+    },
+    {
+      "id": "6a3cedda4701a906f10e422b",
+      "title": "御定淵鑑類函·卷七十七~卷七十八 (vol 44)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cedda4701a906f10e422b?page=1"
+    },
+    {
+      "id": "6a3cb6df57c1f37219c4d361",
+      "title": "欽定周官義疏·卷二十五~卷二十六 (vol 16)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb6df57c1f37219c4d361?page=1"
+    },
+    {
+      "id": "6a3c737601fe4f593c1e8a14",
+      "title": "聖濟總錄纂要·卷一 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c737601fe4f593c1e8a14?page=1"
+    },
+    {
+      "id": "6a3cc24af9474f825c1766c3",
+      "title": "禹貢指南·卷三~卷四 (vol 4)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc24af9474f825c1766c3?page=1"
+    },
+    {
+      "id": "6a3ced634701a906f10dfd18",
+      "title": "春秋公羊傳注疏·卷一 (vol 15)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ced634701a906f10dfd18?page=1"
+    },
+    {
+      "id": "6a3cb8af3dce6cfad748f7e3",
+      "title": "義門讀書記·卷十八~卷十九 (vol 8)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb8af3dce6cfad748f7e3?page=1"
+    },
+    {
+      "id": "6a3c64b239b4508b04e293a7",
+      "title": "御定佩文韻府·卷八十四之一 (vol 611)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c64b239b4508b04e293a7?page=1"
+    },
+    {
+      "id": "6a3cc149ec254ff6cae0af4f",
+      "title": "易圖明辨·卷一~卷二 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc149ec254ff6cae0af4f?page=1"
+    },
+    {
+      "id": "6992cd5c43713c66ea63600f",
+      "title": "三才圖會(二十二)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6992cd5c43713c66ea63600f?page=1"
+    },
+    {
+      "id": "6a3c71b901fe4f593c1da47b",
+      "title": "欽定授時通考·卷七十二~卷七十五 (vol 28)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c71b901fe4f593c1da47b?page=1"
+    },
+    {
+      "id": "6a3c7ad901fe4f593c21a412",
+      "title": "朱子語類·卷七十九 (vol 45)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c7ad901fe4f593c21a412?page=1"
+    },
+    {
+      "id": "6a3c673aaf3c49b59c5d174f",
+      "title": "性理大全書·卷十~卷十一 (vol 7)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c673aaf3c49b59c5d174f?page=1"
+    },
+    {
+      "id": "6a3cef168642f0445b16092e",
+      "title": "御定淵鑑類函·卷三百四十~卷三百四十一 (vol 333)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cef168642f0445b16092e?page=1"
+    },
+    {
+      "id": "6a3c719d01fe4f593c1d94ab",
+      "title": "御纂朱子全書·卷六十五 (vol 123)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c719d01fe4f593c1d94ab?page=1"
+    },
+    {
+      "id": "6a3c62b3879008ba7e163bd6",
+      "title": "御定佩文韻府·卷二十三之三 (vol 106)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c62b3879008ba7e163bd6?page=1"
+    },
+    {
+      "id": "6a3ce90a0a0011cb4bc0e9c3",
+      "title": "欽定儀禮義疏·卷三十 (vol 72)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ce90a0a0011cb4bc0e9c3?page=1"
+    },
+    {
+      "id": "69de985b1b234a773e4384de",
+      "title": "六十種曲 (Sixty Plays), sample volume",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/69de985b1b234a773e4384de?page=1"
+    },
+    {
+      "id": "6a3cbbad87ee3d48c89d0262",
+      "title": "周禮注疏·卷十六~卷十七 (vol 52)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbbad87ee3d48c89d0262?page=1"
+    },
+    {
+      "id": "6a3ce86d552d34d98411b9a0",
+      "title": "欽定儀禮義疏·卷五~卷六 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ce86d552d34d98411b9a0?page=1"
+    },
+    {
+      "id": "6a3cef594701a906f10eecfc",
+      "title": "御定淵鑑類函·卷四百三十七~卷四百三十八 (vol 388)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cef594701a906f10eecfc?page=1"
+    },
+    {
+      "id": "6a3c66d3af3c49b59c5cdca7",
+      "title": "歷算全書·卷四十 (vol 25)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c66d3af3c49b59c5cdca7?page=1"
+    },
+    {
+      "id": "6a3c736101fe4f593c1e7eb1",
+      "title": "石渠寶笈·卷二十四~卷二十六 (vol 17)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c736101fe4f593c1e7eb1?page=1"
+    },
+    {
+      "id": "6a3cbc33ec254ff6cadee795",
+      "title": "周禮訂義·卷四十二~卷四十三 (vol 18)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbc33ec254ff6cadee795?page=1"
+    },
+    {
+      "id": "6a3cb8de3d799518cd71c09e",
+      "title": "泰泉鄉禮·卷四~卷七 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb8de3d799518cd71c09e?page=1"
+    },
+    {
+      "id": "6a3cb69757c1f37219c4b3cc",
+      "title": "增修東萊書說·卷三~卷五 (vol 12)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb69757c1f37219c4b3cc?page=1"
+    },
+    {
+      "id": "6a3c609340c88a541d8e89be",
+      "title": "御定駢字類編·卷二百二十四 — Imperial Parallel Characters (vol 171)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c609340c88a541d8e89be?page=1"
+    },
+    {
+      "id": "6a3ce84f552d34d98411a843",
+      "title": "儀禮注疏·卷九~卷十 (vol 8)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ce84f552d34d98411a843?page=1"
+    },
+    {
+      "id": "6a3cb8633dce6cfad748de00",
+      "title": "御定佩文齋書畫譜·卷八十一 (vol 53)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb8633dce6cfad748de00?page=1"
+    },
+    {
+      "id": "6a3c725c01fe4f593c1dec73",
+      "title": "儀禮要義·卷二十一~卷二十三 (vol 7)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c725c01fe4f593c1dec73?page=1"
+    },
+    {
+      "id": "6a3cc124ec254ff6cae09b2c",
+      "title": "御纂周易述義·卷四~卷五 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc124ec254ff6cae09b2c?page=1"
+    },
+    {
+      "id": "6a3c6be501fe4f593c1ae94c",
+      "title": "周易會通·卷一 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6be501fe4f593c1ae94c?page=1"
+    },
+    {
+      "id": "6a3c6737af3c49b59c5d15d3",
+      "title": "性理大全書·卷六~卷七 (vol 4)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6737af3c49b59c5d15d3?page=1"
+    },
+    {
+      "id": "6a3ced854701a906f10e0fd3",
+      "title": "仁齋直指·卷九~卷十一 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ced854701a906f10e0fd3?page=1"
+    },
+    {
+      "id": "6a3c6cc601fe4f593c1b4f83",
+      "title": "三命通會·卷十二 (vol 24)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6cc601fe4f593c1b4f83?page=1"
+    },
+    {
+      "id": "6a3cbb2d3dce6cfad74a13c7",
+      "title": "五禮通考·卷一百六十一~卷一百六十二 (vol 109)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbb2d3dce6cfad74a13c7?page=1"
+    },
+    {
+      "id": "6a3c6bc539b4508b04e45daa",
+      "title": "唐開元占經·卷八十九~卷九十 (vol 21)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6bc539b4508b04e45daa?page=1"
+    },
+    {
+      "id": "6a3c7a2201fe4f593c214c00",
+      "title": "御定分類字錦·卷十九 (vol 81)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c7a2201fe4f593c214c00?page=1"
+    },
+    {
+      "id": "6a3c6f5101fe4f593c1cb36a",
+      "title": "經稗·卷十~卷十一 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6f5101fe4f593c1cb36a?page=1"
+    },
+    {
+      "id": "6a3cb61e57c1f37219c48c2b",
+      "title": "尚書注疏·卷十二~卷十三 (vol 18)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb61e57c1f37219c48c2b?page=1"
+    },
+    {
+      "id": "6a3cbe1dec254ff6cadfd454",
+      "title": "廣博物志·卷十三~卷十四 (vol 8)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbe1dec254ff6cadfd454?page=1"
+    },
+    {
+      "id": "6a3ceeee4701a906f10ebe1a",
+      "title": "御定淵鑑類函·卷二百七十二~卷二百七十三 (vol 293)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ceeee4701a906f10ebe1a?page=1"
+    },
+    {
+      "id": "6a3cc12cec254ff6cae0a12a",
+      "title": "御纂周易述義·卷一 (vol 14)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc12cec254ff6cae0a12a?page=1"
+    },
+    {
+      "id": "6a3cedd24701a906f10e3c99",
+      "title": "御定淵鑑類函·卷六十一~卷六十二 (vol 37)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cedd24701a906f10e3c99?page=1"
+    },
+    {
+      "id": "6a3c636193327f06e834fcf9",
+      "title": "御定佩文韻府·卷一百二之二 (vol 273)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c636193327f06e834fcf9?page=1"
+    },
+    {
+      "id": "6a3c6c4739b4508b04e48191",
+      "title": "日知錄·卷二十八~卷三十 (vol 16)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6c4739b4508b04e48191?page=1"
+    },
+    {
+      "id": "6a3c604640c88a541d8e7b72",
+      "title": "御定駢字類編·卷一百四十六 — Imperial Parallel Characters (vol 105)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c604640c88a541d8e7b72?page=1"
+    },
+    {
+      "id": "6a3c703601fe4f593c1d1ca5",
+      "title": "禮記集說·卷九十三~卷九十四 (vol 47)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c703601fe4f593c1d1ca5?page=1"
+    },
+    {
+      "id": "6a3cc201f9474f825c17415b",
+      "title": "易象義·卷九~卷十一 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc201f9474f825c17415b?page=1"
+    },
+    {
+      "id": "6a3c646e39b4508b04e26fe6",
+      "title": "御定佩文韻府·卷六十六之八 (vol 543)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c646e39b4508b04e26fe6?page=1"
+    },
+    {
+      "id": "6a3cc0deec254ff6cae071e2",
+      "title": "周易集註·卷七~卷八 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc0deec254ff6cae071e2?page=1"
+    },
+    {
+      "id": "6a3c77a401fe4f593c203a0c",
+      "title": "孫氏唐韻考·卷四 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c77a401fe4f593c203a0c?page=1"
+    },
+    {
+      "id": "6a3c799101fe4f593c210a6e",
+      "title": "喻林·卷九~卷十一 (vol 4)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c799101fe4f593c210a6e?page=1"
+    },
+    {
+      "id": "6a3cbdb6ec254ff6cadf9acb",
+      "title": "證治準繩·卷二十 (vol 18)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbdb6ec254ff6cadf9acb?page=1"
+    },
+    {
+      "id": "6a3c60f740c88a541d8ec49a",
+      "title": "御定駢字類編·卷八十九 — Imperial Parallel Characters (vol 271)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c60f740c88a541d8ec49a?page=1"
+    },
+    {
+      "id": "6992cd2aae978f7d4159860a",
+      "title": "三才圖會(九)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6992cd2aae978f7d4159860a?page=1"
+    },
+    {
+      "id": "6a3cbff9f9474f825c16ce6f",
+      "title": "四書通·大學通 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbff9f9474f825c16ce6f?page=1"
+    },
+    {
+      "id": "6a3c705e01fe4f593c1d396e",
+      "title": "禮記集說·卷二十二~卷二十三 (vol 91)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c705e01fe4f593c1d396e?page=1"
+    },
+    {
+      "id": "6a3c6033879008ba7e15b5a6",
+      "title": "御定駢字類編·卷九十一 — Imperial Parallel Characters (vol 87)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6033879008ba7e15b5a6?page=1"
+    },
+    {
+      "id": "6a3c75cd39b4508b04e5d982",
+      "title": "榕村語錄·卷十一~卷十二 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c75cd39b4508b04e5d982?page=1"
+    },
+    {
+      "id": "6a3ce6450a0011cb4bc057a0",
+      "title": "合訂刪補大易集義粹言·卷十~卷十一 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ce6450a0011cb4bc057a0?page=1"
+    },
+    {
+      "id": "6a3c7b4139b4508b04e626dc",
+      "title": "大易粹言·卷三十~卷三十二 (vol 11)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c7b4139b4508b04e626dc?page=1"
+    },
+    {
+      "id": "6a3c793b01fe4f593c20e0c8",
+      "title": "藝文類聚·卷二十三~卷二十五 (vol 12)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c793b01fe4f593c20e0c8?page=1"
+    },
+    {
+      "id": "6a3c794e01fe4f593c20eac2",
+      "title": "藝文類聚·卷六十~卷六十一 (vol 28)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c794e01fe4f593c20eac2?page=1"
+    },
+    {
+      "id": "6a3c6a39af3c49b59c5e4e10",
+      "title": "松陽講義·卷八~卷九 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6a39af3c49b59c5e4e10?page=1"
+    },
+    {
+      "id": "6a3cedce4701a906f10e3a64",
+      "title": "御定淵鑑類函·卷五十三~卷五十四 (vol 31)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cedce4701a906f10e3a64?page=1"
+    },
+    {
+      "id": "6a3c6ab4af3c49b59c5e94e1",
+      "title": "四書因問·卷三 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6ab4af3c49b59c5e94e1?page=1"
+    },
+    {
+      "id": "6a3cb8fe3dce6cfad7491891",
+      "title": "春秋左傳注疏·卷四十四~四十五 (vol 24)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb8fe3dce6cfad7491891?page=1"
+    },
+    {
+      "id": "6a3c705701fe4f593c1d34d7",
+      "title": "禮記集說·卷八~卷九 (vol 84)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c705701fe4f593c1d34d7?page=1"
+    },
+    {
+      "id": "6a3cb9eb3dce6cfad7497f78",
+      "title": "赤水元珠·卷十 (vol 10)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb9eb3dce6cfad7497f78?page=1"
+    },
+    {
+      "id": "6a3c6091879008ba7e15d795",
+      "title": "御定駢字類編·卷二百二十五 — Imperial Parallel Characters (vol 172)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6091879008ba7e15d795?page=1"
+    },
+    {
+      "id": "6a3c6c6b01fe4f593c1b1009",
+      "title": "文昌雜錄·卷四~卷六 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6c6b01fe4f593c1b1009?page=1"
+    },
+    {
+      "id": "6a3cb9273dce6cfad7493102",
+      "title": "春秋權衡·卷十~卷十二 (vol 9)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb9273dce6cfad7493102?page=1"
+    },
+    {
+      "id": "6a3c698eaf3c49b59c5e08b6",
+      "title": "普濟方·卷二百六十六~卷二百六十七 (vol 185)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c698eaf3c49b59c5e08b6?page=1"
+    },
+    {
+      "id": "6a3c65fa39b4508b04e30936",
+      "title": "御定子史精華·卷一百十六~卷一百十八 (vol 89)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c65fa39b4508b04e30936?page=1"
+    },
+    {
+      "id": "6a3cbb953dce6cfad74a51fe",
+      "title": "周禮注疏·卷十~卷十一 (vol 26)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbb953dce6cfad74a51fe?page=1"
+    },
+    {
+      "id": "6a3c774901fe4f593c200f6a",
+      "title": "周易象旨決錄·卷六 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c774901fe4f593c200f6a?page=1"
+    },
+    {
+      "id": "6a3c77de01fe4f593c20540c",
+      "title": "日講易經解義·卷十八 (vol 30)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c77de01fe4f593c20540c?page=1"
+    },
+    {
+      "id": "6a3cb9a33dce6cfad749567f",
+      "title": "爾雅翼·卷七~卷十 (vol 11)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb9a33dce6cfad749567f?page=1"
+    },
+    {
+      "id": "6a3c669339b4508b04e364a9",
+      "title": "經濟類編·卷九十五 (vol 90)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c669339b4508b04e364a9?page=1"
+    },
+    {
+      "id": "6a3c746601fe4f593c1f0c74",
+      "title": "左傳事緯·卷八 (vol 7)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c746601fe4f593c1f0c74?page=1"
+    },
+    {
+      "id": "6a3cbff3f9474f825c16ca9b",
+      "title": "六藝之一錄·卷三百九十二~卷三百九十三 (vol 173)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbff3f9474f825c16ca9b?page=1"
+    },
+    {
+      "id": "6a3cbb183dce6cfad74a0c16",
+      "title": "五禮通考·卷一百四十四~一百四十五 (vol 97)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbb183dce6cfad74a0c16?page=1"
+    },
+    {
+      "id": "6a3ce9b30a0011cb4bc11091",
+      "title": "日講禮記解義·卷三十~卷三十二 (vol 10)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ce9b30a0011cb4bc11091?page=1"
+    },
+    {
+      "id": "6a3c678a39b4508b04e36bb3",
+      "title": "御定孝經衍義·卷八十六~卷八十七 (vol 25)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c678a39b4508b04e36bb3?page=1"
+    },
+    {
+      "id": "6a3c60ae40c88a541d8e9a7f",
+      "title": "御定駢字類編·卷十五 — Imperial Parallel Characters (vol 198)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c60ae40c88a541d8e9a7f?page=1"
+    },
+    {
+      "id": "6a3c714639b4508b04e532d8",
+      "title": "御纂朱子全書·卷五十七~卷五十八 (vol 42)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c714639b4508b04e532d8?page=1"
+    },
+    {
+      "id": "6a3c60a640c88a541d8e9567",
+      "title": "御定駢字類編·卷六 — Imperial Parallel Characters (vol 189)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c60a640c88a541d8e9567?page=1"
+    },
+    {
+      "id": "6a3cea4adb5eb2b676734d27",
+      "title": "禹貢長箋·卷十二 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cea4adb5eb2b676734d27?page=1"
+    },
+    {
+      "id": "6a3c792f01fe4f593c20db31",
+      "title": "藝文類聚·卷一~卷二 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c792f01fe4f593c20db31?page=1"
+    },
+    {
+      "id": "6a3c712339b4508b04e52191",
+      "title": "御纂朱子全書·卷十三~卷十四 (vol 9)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c712339b4508b04e52191?page=1"
+    },
+    {
+      "id": "6a3c77d701fe4f593c2050a2",
+      "title": "日講易經解義·卷九 (vol 22)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c77d701fe4f593c2050a2?page=1"
+    },
+    {
+      "id": "6a3cb6113dce6cfad7485041",
+      "title": "尚書注疏·卷十一~卷十二 (vol 7)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb6113dce6cfad7485041?page=1"
+    },
+    {
+      "id": "6a3c6a9aaf3c49b59c5e8489",
+      "title": "儀禮集釋·卷二十六~卷二十七 (vol 12)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6a9aaf3c49b59c5e8489?page=1"
+    },
+    {
+      "id": "6a3cbb313dce6cfad74a14ed",
+      "title": "五禮通考·卷一百七十一 (vol 115)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbb313dce6cfad74a14ed?page=1"
+    },
+    {
+      "id": "6a3c718301fe4f593c1d848d",
+      "title": "御纂朱子全書·卷二十八~卷二十九 (vol 104)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c718301fe4f593c1d848d?page=1"
+    },
+    {
+      "id": "6a3c689daf3c49b59c5dab60",
+      "title": "薛氏醫案·卷二十一~卷二十二 (vol 13)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c689daf3c49b59c5dab60?page=1"
+    },
+    {
+      "id": "6a3c789901fe4f593c2096d8",
+      "title": "書畫彙考·卷三十一 (vol 31)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c789901fe4f593c2096d8?page=1"
+    },
+    {
+      "id": "6a3cb65357c1f37219c4abff",
+      "title": "周禮註疏刪翼·卷二十四~卷二十五 (vol 20)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb65357c1f37219c4abff?page=1"
+    },
+    {
+      "id": "6a3cb68957c1f37219c4b1a5",
+      "title": "增修東萊書說·卷二十五~卷二十八 (vol 8)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb68957c1f37219c4b1a5?page=1"
+    },
+    {
+      "id": "6a3cb80b3dce6cfad748a816",
+      "title": "詩傳通釋·卷十九 (vol 13)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb80b3dce6cfad748a816?page=1"
+    },
+    {
+      "id": "6a3c756501fe4f593c1f5670",
+      "title": "欽定執中成憲·卷三~卷五 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c756501fe4f593c1f5670?page=1"
+    },
+    {
+      "id": "6a3ce8ee0a0011cb4bc0e4d6",
+      "title": "欽定儀禮義疏·卷十五 (vol 57)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ce8ee0a0011cb4bc0e4d6?page=1"
+    },
+    {
+      "id": "6a3c63534daf85677d17115e",
+      "title": "御定佩文韻府·卷一百之一 (vol 260)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c63534daf85677d17115e?page=1"
+    },
+    {
+      "id": "6a3c747401fe4f593c1f1325",
+      "title": "春秋毛氏傳·卷二十六~卷二十九 (vol 9)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c747401fe4f593c1f1325?page=1"
+    },
+    {
+      "id": "6a3ce7290a0011cb4bc087de",
+      "title": "書經大全·卷二 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ce7290a0011cb4bc087de?page=1"
+    },
+    {
+      "id": "6a3c709139b4508b04e4f8af",
+      "title": "禮記集說·卷一百十八~卷一百十九 (vol 141)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c709139b4508b04e4f8af?page=1"
+    },
+    {
+      "id": "6a3cb8fa3dce6cfad7491727",
+      "title": "春秋左傳注疏·卷四十~四十一 (vol 22)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb8fa3dce6cfad7491727?page=1"
+    },
+    {
+      "id": "6a3c613b40c88a541d8ef086",
+      "title": "御定駢字類編·卷一百六十六 — Imperial Parallel Characters (vol 342)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c613b40c88a541d8ef086?page=1"
+    },
+    {
+      "id": "6a3c613140c88a541d8ee9f0",
+      "title": "御定駢字類編·卷一百五十二 — Imperial Parallel Characters (vol 332)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c613140c88a541d8ee9f0?page=1"
+    },
+    {
+      "id": "6a3c6873af3c49b59c5d9310",
+      "title": "類說·卷二十九~卷三十 (vol 14)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6873af3c49b59c5d9310?page=1"
+    },
+    {
+      "id": "6a3c6f4201fe4f593c1ca88d",
+      "title": "經問·卷一~卷六 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6f4201fe4f593c1ca88d?page=1"
+    },
+    {
+      "id": "6a3cbd82f9474f825c161ffb",
+      "title": "漢隸分韻·卷七 (vol 4)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbd82f9474f825c161ffb?page=1"
+    },
+    {
+      "id": "6a3cf0198642f0445b162934",
+      "title": "御製歷象考成·表·卷十三 (vol 23)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cf0198642f0445b162934?page=1"
+    },
+    {
+      "id": "6a3c5e7440c88a541d8e243d",
+      "title": "御定康熙字典·卷九 (vol 8)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c5e7440c88a541d8e243d?page=1"
+    },
+    {
+      "id": "6a3c6185879008ba7e15ecc4",
+      "title": "御定駢字類編·卷二百三十六 — Imperial Parallel Characters (vol 408)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6185879008ba7e15ecc4?page=1"
+    },
+    {
+      "id": "6a3ceee88642f0445b15ffda",
+      "title": "御定淵鑑類函·卷二百六十二~卷二百六十三 (vol 287)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ceee88642f0445b15ffda?page=1"
+    },
+    {
+      "id": "6a3cf0338642f0445b1634a1",
+      "title": "御製律呂正義後編·卷二十六~卷二十七 (vol 14)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cf0338642f0445b1634a1?page=1"
+    },
+    {
+      "id": "6a3c6880af3c49b59c5d9b8b",
+      "title": "類說·卷五十九~卷六十 (vol 28)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6880af3c49b59c5d9b8b?page=1"
+    },
+    {
+      "id": "6a3cf0ab8642f0445b16666c",
+      "title": "大學衍義補·卷十三~卷十四 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cf0ab8642f0445b16666c?page=1"
+    },
+    {
+      "id": "6a3cf08a8642f0445b165512",
+      "title": "春秋集傳詳說·卷四~卷五 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cf08a8642f0445b165512?page=1"
+    },
+    {
+      "id": "6a3c743001fe4f593c1ef0e6",
+      "title": "稗編·卷一百六~卷一百七 (vol 56)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c743001fe4f593c1ef0e6?page=1"
+    },
+    {
+      "id": "6a3c6a8baf3c49b59c5e7d1b",
+      "title": "大統歷志·卷三~卷四 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6a8baf3c49b59c5e7d1b?page=1"
+    },
+    {
+      "id": "6a3c64cd39b4508b04e2a1f9",
+      "title": "御定佩文韻府·卷五十三之一 (vol 640)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c64cd39b4508b04e2a1f9?page=1"
+    },
+    {
+      "id": "6a3c6e1601fe4f593c1bf998",
+      "title": "詩所·卷三~卷四 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6e1601fe4f593c1bf998?page=1"
+    },
+    {
+      "id": "6992ce93673ee1e40e321116",
+      "title": "武備志(六十九)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6992ce93673ee1e40e321116?page=1"
+    },
+    {
+      "id": "6a3c6accaf3c49b59c5ea2c4",
+      "title": "日講四書解義·卷二~卷三 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6accaf3c49b59c5ea2c4?page=1"
+    },
+    {
+      "id": "6a3c62b840c88a541d8f582d",
+      "title": "御定佩文韻府·卷二十三之九~卷二十三之十 (vol 112)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c62b840c88a541d8f582d?page=1"
+    },
+    {
+      "id": "6a3cbd68ec254ff6cadf880a",
+      "title": "六書故·卷一 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbd68ec254ff6cadf880a?page=1"
+    },
+    {
+      "id": "6a3cb83b3dce6cfad748c4e5",
+      "title": "御定佩文齋書畫譜·卷三十九 (vol 15)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb83b3dce6cfad748c4e5?page=1"
+    },
+    {
+      "id": "6a3c781139b4508b04e5fff4",
+      "title": "聞見後錄·卷一~卷九 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c781139b4508b04e5fff4?page=1"
+    },
+    {
+      "id": "6a3cb9cb3dce6cfad7496ca1",
+      "title": "說文解字·卷一上~卷二下 (vol 21)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb9cb3dce6cfad7496ca1?page=1"
+    },
+    {
+      "id": "6a3c681daf3c49b59c5d69a6",
+      "title": "山堂肆考·卷九十七~卷九十八 (vol 44)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c681daf3c49b59c5d69a6?page=1"
+    },
+    {
+      "id": "6a3c655339b4508b04e2de1c",
+      "title": "御定子史精華·卷五十七~卷五十九 (vol 18)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c655339b4508b04e2de1c?page=1"
+    },
+    {
+      "id": "6a3c6dbd39b4508b04e49de3",
+      "title": "欽定詩經傳說彙纂·卷九 (vol 11)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6dbd39b4508b04e49de3?page=1"
+    },
+    {
+      "id": "6a3c6e1f01fe4f593c1bfeb8",
+      "title": "詩識名解·卷十一四~卷十五 (vol 7)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6e1f01fe4f593c1bfeb8?page=1"
+    },
+    {
+      "id": "6992cabad4d545ae73fee83d",
+      "title": "五行大義 (Wuxing Dayi: Great Meaning of the Five Elements) Vol 1",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6992cabad4d545ae73fee83d?page=1"
+    },
+    {
+      "id": "6a3cc0b3f9474f825c1717ee",
+      "title": "讀易詳說·卷十 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc0b3f9474f825c1717ee?page=1"
+    },
+    {
+      "id": "6a3c6232879008ba7e1617b8",
+      "title": "西清古鑑·卷二十三 (vol 46)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6232879008ba7e1617b8?page=1"
+    },
+    {
+      "id": "6992cde281c9d7efb84d09ce",
+      "title": "本草綱目·卷四十一~卷四十二",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6992cde281c9d7efb84d09ce?page=1"
+    },
+    {
+      "id": "6a3c6d5201fe4f593c1b9f7c",
+      "title": "別號錄·卷一 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6d5201fe4f593c1b9f7c?page=1"
+    },
+    {
+      "id": "6a3cc32daf74b230c690d374",
+      "title": "三傳辨疑·卷九 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc32daf74b230c690d374?page=1"
+    },
+    {
+      "id": "6a3cc0b5f9474f825c17196f",
+      "title": "趙氏易說·卷三~卷四 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc0b5f9474f825c17196f?page=1"
+    },
+    {
+      "id": "6a3c621a40c88a541d8f2baa",
+      "title": "西清古鑑·卷二十五 (vol 19)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c621a40c88a541d8f2baa?page=1"
+    },
+    {
+      "id": "6a3c608f879008ba7e15d66d",
+      "title": "御定駢字類編·卷二百二十二 — Imperial Parallel Characters (vol 169)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c608f879008ba7e15d66d?page=1"
+    },
+    {
+      "id": "6a3c674baf3c49b59c5d204a",
+      "title": "性理大全書·卷三十九 (vol 25)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c674baf3c49b59c5d204a?page=1"
+    },
+    {
+      "id": "6a3c783b39b4508b04e601b8",
+      "title": "周易象辭·卷五 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c783b39b4508b04e601b8?page=1"
+    },
+    {
+      "id": "6a3cbb353dce6cfad74a1749",
+      "title": "五禮通考·卷一百七十八~卷一百七十九 (vol 120)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbb353dce6cfad74a1749?page=1"
+    },
+    {
+      "id": "6a3cf08c8642f0445b1656cc",
+      "title": "春秋集傳詳說·卷二~卷三 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cf08c8642f0445b1656cc?page=1"
+    },
+    {
+      "id": "6a3cb8803d799518cd71bf88",
+      "title": "御定佩文齋書畫譜·卷十九 (vol 83)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb8803d799518cd71bf88?page=1"
+    },
+    {
+      "id": "6a3c696baf3c49b59c5df4ad",
+      "title": "普濟方·卷二百二十五~卷二百二十六 (vol 155)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c696baf3c49b59c5df4ad?page=1"
+    },
+    {
+      "id": "6a3c73d501fe4f593c1ebd15",
+      "title": "春秋本義·卷二十五~卷二十六 (vol 13)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c73d501fe4f593c1ebd15?page=1"
+    },
+    {
+      "id": "6a3c6b76af3c49b59c5ec651",
+      "title": "讀書紀數略·卷二十五~卷二十八 (vol 9)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6b76af3c49b59c5ec651?page=1"
+    },
+    {
+      "id": "6a3c6d8001fe4f593c1bbc1d",
+      "title": "周禮集說·卷二 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6d8001fe4f593c1bbc1d?page=1"
+    },
+    {
+      "id": "6a3c639d93327f06e8351be4",
+      "title": "御定佩文韻府·卷十一之二 (vol 337)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c639d93327f06e8351be4?page=1"
+    },
+    {
+      "id": "6a3ceb5595fcd4556305582e",
+      "title": "周易章句證異·卷四~卷六 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ceb5595fcd4556305582e?page=1"
+    },
+    {
+      "id": "6a3c60c240c88a541d8ea512",
+      "title": "御定駢字類編·卷三十四 — Imperial Parallel Characters (vol 217)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c60c240c88a541d8ea512?page=1"
+    },
+    {
+      "id": "6a3c746c01fe4f593c1f0fb4",
+      "title": "春秋毛氏傳·卷七~卷九 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c746c01fe4f593c1f0fb4?page=1"
+    },
+    {
+      "id": "6a3cef504701a906f10ee740",
+      "title": "御定淵鑑類函·卷四百二十五~卷四百二十六 (vol 380)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cef504701a906f10ee740?page=1"
+    },
+    {
+      "id": "6a3c68fe39b4508b04e3af5f",
+      "title": "普濟方·卷六十九~卷七十 (vol 46)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c68fe39b4508b04e3af5f?page=1"
+    },
+    {
+      "id": "69de98711b234a773e4387ef",
+      "title": "古本董解元西廂記 (Dong Jieyuan's Western Chamber Romance)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/69de98711b234a773e4387ef?page=1"
+    },
+    {
+      "id": "6a3c71e439b4508b04e56236",
+      "title": "證類本草·卷十四 (vol 14)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c71e439b4508b04e56236?page=1"
+    },
+    {
+      "id": "6a3c68e0af3c49b59c5dd414",
+      "title": "普濟方·卷三十~卷三十一 (vol 22)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c68e0af3c49b59c5dd414?page=1"
+    },
+    {
+      "id": "6a3cc146ec254ff6cae0ad65",
+      "title": "易學象數論·卷三~卷四 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc146ec254ff6cae0ad65?page=1"
+    },
+    {
+      "id": "6a3c6a61af3c49b59c5e64fd",
+      "title": "七政推步·卷五 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6a61af3c49b59c5e64fd?page=1"
+    },
+    {
+      "id": "6a3c5fb0879008ba7e156e94",
+      "title": "圖書編·卷九十 (vol 73)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c5fb0879008ba7e156e94?page=1"
+    },
+    {
+      "id": "6a3cbb8b3dce6cfad74a4b86",
+      "title": "周禮注疏·卷三十一~卷三十三 (vol 15)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbb8b3dce6cfad74a4b86?page=1"
+    },
+    {
+      "id": "6a3c6eb801fe4f593c1c56bb",
+      "title": "春秋正傳·卷三十三~卷三十四 (vol 15)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6eb801fe4f593c1c56bb?page=1"
+    },
+    {
+      "id": "6a3c6811af3c49b59c5d61e3",
+      "title": "山堂肆考·卷六十七~卷六十八 (vol 30)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6811af3c49b59c5d61e3?page=1"
+    },
+    {
+      "id": "6a3cef624701a906f10ef1cb",
+      "title": "御定淵鑑類函·卷一~卷二 (vol 396)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cef624701a906f10ef1cb?page=1"
+    },
+    {
+      "id": "6a3ce7180a0011cb4bc084b4",
+      "title": "尚書全解·卷 三十二~卷三十三 (vol 40)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ce7180a0011cb4bc084b4?page=1"
+    },
+    {
+      "id": "6a3c701701fe4f593c1d08b8",
+      "title": "禮記集說·卷二十七~卷二十八 (vol 14)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c701701fe4f593c1d08b8?page=1"
+    },
+    {
+      "id": "6a3c60d640c88a541d8eb1fb",
+      "title": "御定駢字類編·卷五十六 — Imperial Parallel Characters (vol 239)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c60d640c88a541d8eb1fb?page=1"
+    },
+    {
+      "id": "6a3c654139b4508b04e2d6dd",
+      "title": "御製增訂清文鑑·卷二十九 (vol 28)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c654139b4508b04e2d6dd?page=1"
+    },
+    {
+      "id": "6a3c6d2a01fe4f593c1b84b1",
+      "title": "黃氏日抄·卷二十八~卷二十九 (vol 22)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6d2a01fe4f593c1b84b1?page=1"
+    },
+    {
+      "id": "6a3c5e8e40c88a541d8e350e",
+      "title": "御定康熙字典·卷三十三 (vol 32)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c5e8e40c88a541d8e350e?page=1"
+    },
+    {
+      "id": "6a3cee6d4701a906f10e91e0",
+      "title": "御定淵鑑類函·卷三百十二 (vol 173)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cee6d4701a906f10e91e0?page=1"
+    },
+    {
+      "id": "6a3cbf5ef9474f825c1678ee",
+      "title": "六藝之一錄·卷五十四~卷五十五 (vol 27)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbf5ef9474f825c1678ee?page=1"
+    },
+    {
+      "id": "6a3cb9903dce6cfad7494df2",
+      "title": "埤雅·卷四~卷七 (vol 8)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb9903dce6cfad7494df2?page=1"
+    },
+    {
+      "id": "6a3c6fde01fe4f593c1ce6a6",
+      "title": "儀禮集說·卷三~卷四 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6fde01fe4f593c1ce6a6?page=1"
+    },
+    {
+      "id": "6a3c762501fe4f593c1f8f46",
+      "title": "易小傳·卷四上~卷四下 (vol 4)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c762501fe4f593c1f8f46?page=1"
+    },
+    {
+      "id": "6a3c6ea601fe4f593c1c4c17",
+      "title": "春秋胡傳附錄纂疏·卷二十三~卷二十四 (vol 16)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6ea601fe4f593c1c4c17?page=1"
+    },
+    {
+      "id": "6a3cee654701a906f10e8d4b",
+      "title": "御定淵鑑類函·卷二百九十四~卷二百九十六 (vol 162)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cee654701a906f10e8d4b?page=1"
+    },
+    {
+      "id": "6a3cba3b3dce6cfad749a917",
+      "title": "菽園雜記·卷九~卷十一 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cba3b3dce6cfad749a917?page=1"
+    },
+    {
+      "id": "6a3cbd03ec254ff6cadf538c",
+      "title": "春秋左傳讞·卷三~卷五 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbd03ec254ff6cadf538c?page=1"
+    },
+    {
+      "id": "6a3c701e01fe4f593c1d0cff",
+      "title": "禮記集說·卷四十一~卷四十二 (vol 21)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c701e01fe4f593c1d0cff?page=1"
+    },
+    {
+      "id": "6a3cec188642f0445b1597bd",
+      "title": "琴譜合璧·卷十四 (vol 13)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cec188642f0445b1597bd?page=1"
+    },
+    {
+      "id": "6a3cb61e57c1f37219c48c2a",
+      "title": "尚書注疏·卷十四~卷十五 (vol 19)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb61e57c1f37219c48c2a?page=1"
+    },
+    {
+      "id": "6a3c78bc01fe4f593c20a92c",
+      "title": "書畫彙考·卷六十 (vol 59)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c78bc01fe4f593c20a92c?page=1"
+    },
+    {
+      "id": "6a3c6f0201fe4f593c1c83c2",
+      "title": "六經正誤·卷四~卷五 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6f0201fe4f593c1c83c2?page=1"
+    },
+    {
+      "id": "6a3c6d8801fe4f593c1bc217",
+      "title": "周官集傳·卷一 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6d8801fe4f593c1bc217?page=1"
+    },
+    {
+      "id": "6a3c6b3239b4508b04e419b3",
+      "title": "說略·卷四~卷五 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6b3239b4508b04e419b3?page=1"
+    },
+    {
+      "id": "6a3c693839b4508b04e3d533",
+      "title": "普濟方·卷一百五十八~卷一百五十九 (vol 106)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c693839b4508b04e3d533?page=1"
+    },
+    {
+      "id": "6a3c69ecaf3c49b59c5e3afd",
+      "title": "普濟方·卷三百八十四 (vol 274)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c69ecaf3c49b59c5e3afd?page=1"
+    },
+    {
+      "id": "6a3cb93c3dce6cfad7493c97",
+      "title": "春秋分記·卷五十七~卷五十九 (vol 17)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb93c3dce6cfad7493c97?page=1"
+    },
+    {
+      "id": "6a3c60cb40c88a541d8eaa99",
+      "title": "御定駢字類編·卷四十四 — Imperial Parallel Characters (vol 227)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c60cb40c88a541d8eaa99?page=1"
+    },
+    {
+      "id": "6a3cb8713d799518cd71b48b",
+      "title": "御定佩文齋書畫譜·卷九十五 (vol 66)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb8713d799518cd71b48b?page=1"
+    },
+    {
+      "id": "6a3cb9653d799518cd71daed",
+      "title": "樂律表微·卷六~卷七 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb9653d799518cd71daed?page=1"
+    },
+    {
+      "id": "6a3c66a4af3c49b59c5cbe7b",
+      "title": "周易口義·卷十 (vol 13)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c66a4af3c49b59c5cbe7b?page=1"
+    },
+    {
+      "id": "6a3c6ea901fe4f593c1c4ccf",
+      "title": "春秋胡傳附錄纂疏·卷二十五 (vol 17)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6ea901fe4f593c1c4ccf?page=1"
+    },
+    {
+      "id": "6a3cb69757c1f37219c4b3cd",
+      "title": "增修東萊書說·卷六~卷九 (vol 13)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb69757c1f37219c4b3cd?page=1"
+    },
+    {
+      "id": "6a3ce877552d34d98411bf21",
+      "title": "欽定儀禮義疏·卷十三 (vol 12)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ce877552d34d98411bf21?page=1"
+    },
+    {
+      "id": "6a3cc25bec254ff6cae105e8",
+      "title": "書經集傳·卷五~卷六 (vol 9)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc25bec254ff6cae105e8?page=1"
+    },
+    {
+      "id": "6a3c653d39b4508b04e2d4cb",
+      "title": "御製增訂清文鑑·卷二十六 (vol 25)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c653d39b4508b04e2d4cb?page=1"
+    },
+    {
+      "id": "6a3cb71157c1f37219c4ebc3",
+      "title": "欽定周官義疏·卷四十六 (vol 63)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb71157c1f37219c4ebc3?page=1"
+    },
+    {
+      "id": "6a3cef0f8642f0445b16049e",
+      "title": "御定淵鑑類函·卷三百二十五 (vol 325)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cef0f8642f0445b16049e?page=1"
+    },
+    {
+      "id": "6a3c60d940c88a541d8eb46e",
+      "title": "御定駢字類編·卷六十 — Imperial Parallel Characters (vol 243)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c60d940c88a541d8eb46e?page=1"
+    },
+    {
+      "id": "6a3cbabd3dce6cfad749e500",
+      "title": "五禮通考·卷五~卷六 (vol 7)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbabd3dce6cfad749e500?page=1"
+    },
+    {
+      "id": "6a3c67dc39b4508b04e39e4e",
+      "title": "天中記·卷三十六 (vol 36)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c67dc39b4508b04e39e4e?page=1"
+    },
+    {
+      "id": "6a3c6747af3c49b59c5d1e3c",
+      "title": "性理大全書·卷三十二~卷三十三 (vol 21)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6747af3c49b59c5d1e3c?page=1"
+    },
+    {
+      "id": "6a3cbf17f9474f825c1657ad",
+      "title": "全史日至源流·卷十一~卷十二 (vol 7)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbf17f9474f825c1657ad?page=1"
+    },
+    {
+      "id": "6a3ce9e30a0011cb4bc11a21",
+      "title": "日講禮記解義·卷二十一~卷二十三 (vol 28)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ce9e30a0011cb4bc11a21?page=1"
+    },
+    {
+      "id": "6a3c69d9af3c49b59c5e321c",
+      "title": "普濟方·卷三百六十二~卷三百六十三 (vol 255)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c69d9af3c49b59c5e321c?page=1"
+    },
+    {
+      "id": "6a3cc288af74b230c69074b7",
+      "title": "陸氏詩疏廣要·卷下之下 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc288af74b230c69074b7?page=1"
+    },
+    {
+      "id": "6a3c72b801fe4f593c1e222c",
+      "title": "春秋經筌·卷十五~卷十六 (vol 22)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c72b801fe4f593c1e222c?page=1"
+    },
+    {
+      "id": "6a3cbe09ec254ff6cadfc8c6",
+      "title": "證治準繩·卷一百二十 (vol 97)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbe09ec254ff6cadfc8c6?page=1"
+    },
+    {
+      "id": "6a3c72cc01fe4f593c1e2e24",
+      "title": "春秋左傳屬事·卷十~卷十一 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c72cc01fe4f593c1e2e24?page=1"
+    },
+    {
+      "id": "6a3cb71357c1f37219c4ed6b",
+      "title": "欽定周官義疏·卷四十八 (vol 65)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb71357c1f37219c4ed6b?page=1"
+    },
+    {
+      "id": "6a3c7b1301fe4f593c21be96",
+      "title": "紀效新書·卷十八 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c7b1301fe4f593c21be96?page=1"
+    },
+    {
+      "id": "6a3cf0d98642f0445b168080",
+      "title": "四書集編·大學集编 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cf0d98642f0445b168080?page=1"
+    },
+    {
+      "id": "6a3c738d01fe4f593c1e9699",
+      "title": "白孔六帖·卷二十二~卷二十四 (vol 11)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c738d01fe4f593c1e9699?page=1"
+    },
+    {
+      "id": "6a3cbe84ec254ff6cae011d0",
+      "title": "星學大成·卷三十 (vol 31)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbe84ec254ff6cae011d0?page=1"
+    },
+    {
+      "id": "6a3c716201fe4f593c1d70cc",
+      "title": "御纂朱子全書·卷二十一~卷二十二 (vol 71)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c716201fe4f593c1d70cc?page=1"
+    },
+    {
+      "id": "6a3c679539b4508b04e373ab",
+      "title": "御定孝經衍義·卷二十八~卷三十 (vol 38)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c679539b4508b04e373ab?page=1"
+    },
+    {
+      "id": "6a3c6fe101fe4f593c1ce950",
+      "title": "儀禮集說·卷八下 (vol 7)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6fe101fe4f593c1ce950?page=1"
+    },
+    {
+      "id": "6a3c74ac39b4508b04e58529",
+      "title": "春秋繁露·卷十~卷十七 (vol 9)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c74ac39b4508b04e58529?page=1"
+    },
+    {
+      "id": "6a3c612240c88a541d8edfa5",
+      "title": "御定駢字類編·卷一百三十二 — Imperial Parallel Characters (vol 313)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c612240c88a541d8edfa5?page=1"
+    },
+    {
+      "id": "6a3c6dcd39b4508b04e4a66f",
+      "title": "欽定詩經傳說彙纂·卷一 (vol 26)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6dcd39b4508b04e4a66f?page=1"
+    },
+    {
+      "id": "6a3cee954701a906f10eaaf8",
+      "title": "御定淵鑑類函·卷三百七十七~卷三百七十八 (vol 209)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cee954701a906f10eaaf8?page=1"
+    },
+    {
+      "id": "6a3c611d40c88a541d8edce7",
+      "title": "御定駢字類編·卷一百二十八 — Imperial Parallel Characters (vol 309)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c611d40c88a541d8edce7?page=1"
+    },
+    {
+      "id": "6a3cbf0bf9474f825c165118",
+      "title": "御定星厯考原·卷二~卷三 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbf0bf9474f825c165118?page=1"
+    },
+    {
+      "id": "6a3c697aaf3c49b59c5dfd1b",
+      "title": "普濟方·卷二百四十四 (vol 167)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c697aaf3c49b59c5dfd1b?page=1"
+    },
+    {
+      "id": "6a3ced944701a906f10e1997",
+      "title": "數度衍·卷十~卷十一 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ced944701a906f10e1997?page=1"
+    },
+    {
+      "id": "6a3cc2cfaf74b230c6909839",
+      "title": "毛詩注疏·卷十二~卷十四 (vol 9)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc2cfaf74b230c6909839?page=1"
+    },
+    {
+      "id": "6a3ce7380a0011cb4bc08c31",
+      "title": "書經大全·卷八 (vol 8)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ce7380a0011cb4bc08c31?page=1"
+    },
+    {
+      "id": "6a3cea50db5eb2b676734f4b",
+      "title": "日講春秋解義·卷九~卷十一 (vol 4)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cea50db5eb2b676734f4b?page=1"
+    },
+    {
+      "id": "6992cd5043713c66ea635bef",
+      "title": "本草綱目·卷上之中",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6992cd5043713c66ea635bef?page=1"
+    },
+    {
+      "id": "6a3c721901fe4f593c1dc21e",
+      "title": "周官新義·卷九~卷十一 (vol 4)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c721901fe4f593c1dc21e?page=1"
+    },
+    {
+      "id": "6a3cc197ec254ff6cae0d996",
+      "title": "仕學規範·卷三十三~卷四十 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc197ec254ff6cae0d996?page=1"
+    },
+    {
+      "id": "6a3c67f2af3c49b59c5d4e97",
+      "title": "天中記·卷五十九 (vol 59)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c67f2af3c49b59c5d4e97?page=1"
+    },
+    {
+      "id": "6a3cc135ec254ff6cae0a587",
+      "title": "讀易大旨·卷二 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc135ec254ff6cae0a587?page=1"
+    },
+    {
+      "id": "6a3cc152ec254ff6cae0b407",
+      "title": "石林燕語·卷一~卷四 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc152ec254ff6cae0b407?page=1"
+    },
+    {
+      "id": "6a3cbc9dec254ff6cadf1964",
+      "title": "讀禮通考·卷一百五~卷一百七 (vol 52)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbc9dec254ff6cadf1964?page=1"
+    },
+    {
+      "id": "6a3c6d4301fe4f593c1b9568",
+      "title": "黃氏日抄·卷九十七 (vol 49)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6d4301fe4f593c1b9568?page=1"
+    },
+    {
+      "id": "6a3c665a39b4508b04e34333",
+      "title": "經濟類編·卷三十三 (vol 32)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c665a39b4508b04e34333?page=1"
+    },
+    {
+      "id": "6a3cb6f357c1f37219c4df12",
+      "title": "欽定周官義疏·卷三~卷四 (vol 35)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb6f357c1f37219c4df12?page=1"
+    },
+    {
+      "id": "6a3cb51d3dce6cfad7481717",
+      "title": "淙山讀周易·卷十一~卷十三 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb51d3dce6cfad7481717?page=1"
+    },
+    {
+      "id": "6a3c692239b4508b04e3c7b9",
+      "title": "普濟方·卷一百三十 (vol 84)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c692239b4508b04e3c7b9?page=1"
+    },
+    {
+      "id": "6a3ce8320a0011cb4bc0c95e",
+      "title": "六家詩名物疏·卷四十五~卷四十八 (vol 14)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ce8320a0011cb4bc0c95e?page=1"
+    },
+    {
+      "id": "6992ca94d4d545ae73fee548",
+      "title": "針灸大成 (Zhenjiu Dacheng: Great Compendium of Acupuncture) Vol 1",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6992ca94d4d545ae73fee548?page=1"
+    },
+    {
+      "id": "6a3ceb3d95fcd45563054caf",
+      "title": "周易辨畫·卷一~卷二 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ceb3d95fcd45563054caf?page=1"
+    },
+    {
+      "id": "6a3cbbf2ec254ff6cadec44b",
+      "title": "禮記注疏·卷四十三~卷四十四 (vol 54)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbbf2ec254ff6cadec44b?page=1"
+    },
+    {
+      "id": "6a3c6f2801fe4f593c1c976d",
+      "title": "五經稽疑·卷三~卷六 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6f2801fe4f593c1c976d?page=1"
+    },
+    {
+      "id": "6a3ceacec895e71c6023cc04",
+      "title": "十三經注疏正字·卷三十一~卷三十三 (vol 11)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ceacec895e71c6023cc04?page=1"
+    },
+    {
+      "id": "6992cdb443713c66ea63812e",
+      "title": "武備志(二十三)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6992cdb443713c66ea63812e?page=1"
+    },
+    {
+      "id": "6a3c626840c88a541d8f4386",
+      "title": "御定佩文韻府·卷七之六 (vol 29)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c626840c88a541d8f4386?page=1"
+    },
+    {
+      "id": "6a3ced5b4701a906f10df869",
+      "title": "春秋公羊傳注疏·卷十一~卷十二 (vol 7)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ced5b4701a906f10df869?page=1"
+    },
+    {
+      "id": "6a3ced294701a906f10ddf58",
+      "title": "小學紺珠·卷九 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ced294701a906f10ddf58?page=1"
+    },
+    {
+      "id": "6a3cc05fec254ff6cae0608d",
+      "title": "易經存疑·卷五 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc05fec254ff6cae0608d?page=1"
+    },
+    {
+      "id": "6a3c6774af3c49b59c5d3773",
+      "title": "御定孝經衍義·卷十五~卷十八 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6774af3c49b59c5d3773?page=1"
+    },
+    {
+      "id": "6a40ef533a63957730efed48",
+      "title": "儒林外史(六) — The Scholars, vol 6",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a40ef533a63957730efed48?page=1"
+    },
+    {
+      "id": "6a1d60bcd274b9630ccf8e65",
+      "title": "抱朴子外篇 (卷三) — Baopuzi, Outer Chapters, vol.3",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a1d60bcd274b9630ccf8e65?page=1"
+    },
+    {
+      "id": "6a3c6e6f01fe4f593c1c2bb1",
+      "title": "儀禮鄭註句讀·卷一~卷三 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6e6f01fe4f593c1c2bb1?page=1"
+    },
+    {
+      "id": "6a3c6c4b39b4508b04e483cc",
+      "title": "湛園札記·卷三~卷四 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6c4b39b4508b04e483cc?page=1"
+    },
+    {
+      "id": "6a3c7b2101fe4f593c21c68f",
+      "title": "管子·卷十五~卷十九 (vol 12)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c7b2101fe4f593c21c68f?page=1"
+    },
+    {
+      "id": "6a3c7a1601fe4f593c2145b2",
+      "title": "御定分類字錦·卷八 (vol 70)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c7a1601fe4f593c2145b2?page=1"
+    },
+    {
+      "id": "6a3cbb333dce6cfad74a160a",
+      "title": "五禮通考·卷一百七十三 (vol 117)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbb333dce6cfad74a160a?page=1"
+    },
+    {
+      "id": "6a3c66bcaf3c49b59c5ccef0",
+      "title": "歷算全書·卷一~卷二 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c66bcaf3c49b59c5ccef0?page=1"
+    },
+    {
+      "id": "6a3ced1f4701a906f10ddb6b",
+      "title": "韻府羣玉·卷十八 (vol 18)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ced1f4701a906f10ddb6b?page=1"
+    },
+    {
+      "id": "6a3c6c5639b4508b04e48a29",
+      "title": "論衡·卷二十三~卷二十五 (vol 9)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6c5639b4508b04e48a29?page=1"
+    },
+    {
+      "id": "6a3c68afaf3c49b59c5db7c0",
+      "title": "薛氏醫案·卷六十二~卷六十三 (vol 32)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c68afaf3c49b59c5db7c0?page=1"
+    },
+    {
+      "id": "6a3c5ed040c88a541d8e6203",
+      "title": "御定康熙字典·卷二十一 (vol 94)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c5ed040c88a541d8e6203?page=1"
+    },
+    {
+      "id": "6a3cbf07f9474f825c164d77",
+      "title": "遁甲演義·卷一~卷二 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbf07f9474f825c164d77?page=1"
+    },
+    {
+      "id": "6a3c799e01fe4f593c2110a5",
+      "title": "喻林·卷三十七~卷三十九 (vol 14)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c799e01fe4f593c2110a5?page=1"
+    },
+    {
+      "id": "6a3c780c39b4508b04e5fd28",
+      "title": "易酌·卷十 (vol 10)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c780c39b4508b04e5fd28?page=1"
+    },
+    {
+      "id": "6a3c736c01fe4f593c1e8577",
+      "title": "石渠寶笈·卷三十六~卷三十七 (vol 24)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c736c01fe4f593c1e8577?page=1"
+    },
+    {
+      "id": "6a3c66e9af3c49b59c5ce816",
+      "title": "新書·卷一~卷六 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c66e9af3c49b59c5ce816?page=1"
+    },
+    {
+      "id": "6a3c6abdaf3c49b59c5e9a92",
+      "title": "論語類考·卷五~卷七 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6abdaf3c49b59c5e9a92?page=1"
+    },
+    {
+      "id": "6a3cba4d3dce6cfad749b003",
+      "title": "記纂淵海·卷一 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cba4d3dce6cfad749b003?page=1"
+    },
+    {
+      "id": "6a3c626740c88a541d8f427a",
+      "title": "御定佩文韻府·卷七之七 (vol 30)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c626740c88a541d8f427a?page=1"
+    },
+    {
+      "id": "6a3c780539b4508b04e5fa06",
+      "title": "易酌·卷五 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c780539b4508b04e5fa06?page=1"
+    },
+    {
+      "id": "6a3c71b101fe4f593c1d9ef3",
+      "title": "欽定授時通考·卷五十二 (vol 20)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c71b101fe4f593c1d9ef3?page=1"
+    },
+    {
+      "id": "6a3c758539b4508b04e5c2f4",
+      "title": "御覽經史講義·卷二十七 (vol 26)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c758539b4508b04e5c2f4?page=1"
+    },
+    {
+      "id": "6a3c6231879008ba7e161611",
+      "title": "西清古鑑·卷十九~卷二十 (vol 44)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6231879008ba7e161611?page=1"
+    },
+    {
+      "id": "6a3c60fd40c88a541d8ec70d",
+      "title": "御定駢字類編·卷九十一 — Imperial Parallel Characters (vol 273)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c60fd40c88a541d8ec70d?page=1"
+    },
+    {
+      "id": "6a3cef9d4701a906f10f1363",
+      "title": "御定淵鑑類函·卷九十一~卷九十二 (vol 452)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cef9d4701a906f10f1363?page=1"
+    },
+    {
+      "id": "6a3c644c39b4508b04e25e5a",
+      "title": "御定佩文韻府·卷六十一 (vol 506)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c644c39b4508b04e25e5a?page=1"
+    },
+    {
+      "id": "6a3cbeaaec254ff6cae01f7f",
+      "title": "御定韻府拾遺·卷一百上~卷一百下 (vol 34)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbeaaec254ff6cae01f7f?page=1"
+    },
+    {
+      "id": "6a3c758b39b4508b04e5c746",
+      "title": "御覽經史講義·卷二 (vol 34)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c758b39b4508b04e5c746?page=1"
+    },
+    {
+      "id": "6a3cf0168642f0445b16265d",
+      "title": "御製歷象考成·表·卷八 (vol 20)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cf0168642f0445b16265d?page=1"
+    },
+    {
+      "id": "6a3c724201fe4f593c1ddba4",
+      "title": "周官集注·卷四 (vol 4)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c724201fe4f593c1ddba4?page=1"
+    },
+    {
+      "id": "6a3cb63257c1f37219c49a77",
+      "title": "書傳·卷十一~卷十三 (vol 9)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb63257c1f37219c49a77?page=1"
+    },
+    {
+      "id": "6a3c755001fe4f593c1f48a5",
+      "title": "宋高僧傳·卷二十四~卷二十七 (vol 9)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c755001fe4f593c1f48a5?page=1"
+    },
+    {
+      "id": "6a3cf02b8642f0445b1630ae",
+      "title": "御製律呂正義後編·卷十四~卷十六 (vol 9)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cf02b8642f0445b1630ae?page=1"
+    },
+    {
+      "id": "6a3c6a3639b4508b04e3fe61",
+      "title": "松陽講義·卷一 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6a3639b4508b04e3fe61?page=1"
+    },
+    {
+      "id": "6a3c7b2901fe4f593c21cab8",
+      "title": "管子·卷十四~卷十六 (vol 19)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c7b2901fe4f593c21cab8?page=1"
+    },
+    {
+      "id": "6a3cb8783d799518cd71b8cb",
+      "title": "御定佩文齋書畫譜·卷三 (vol 72)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb8783d799518cd71b8cb?page=1"
+    },
+    {
+      "id": "6992ce87673ee1e40e320f0d",
+      "title": "考工創物小記",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6992ce87673ee1e40e320f0d?page=1"
+    },
+    {
+      "id": "6a3cbc49ec254ff6cadef492",
+      "title": "周禮訂義·卷十~卷十一 (vol 39)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbc49ec254ff6cadef492?page=1"
+    },
+    {
+      "id": "6a3ced494701a906f10def52",
+      "title": "新序·卷四~卷七 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ced494701a906f10def52?page=1"
+    },
+    {
+      "id": "6a3cc270ec254ff6cae112b6",
+      "title": "讀書叢說·卷三~卷六 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc270ec254ff6cae112b6?page=1"
+    },
+    {
+      "id": "6a3ce858552d34d98411ac3a",
+      "title": "儀禮注疏·卷十六~卷十七 (vol 14)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ce858552d34d98411ac3a?page=1"
+    },
+    {
+      "id": "6a3cea130a0011cb4bc124ee",
+      "title": "竹譜·卷八~卷十 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cea130a0011cb4bc124ee?page=1"
+    },
+    {
+      "id": "6a3ced1f4701a906f10ddac0",
+      "title": "韻府羣玉·卷十五 (vol 15)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ced1f4701a906f10ddac0?page=1"
+    },
+    {
+      "id": "6a3c613c40c88a541d8ef102",
+      "title": "御定駢字類編·卷一百六十七 — Imperial Parallel Characters (vol 343)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c613c40c88a541d8ef102?page=1"
+    },
+    {
+      "id": "6a3c6d2b01fe4f593c1b855f",
+      "title": "黃氏日抄·卷三十二 (vol 24)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6d2b01fe4f593c1b855f?page=1"
+    },
+    {
+      "id": "6a3c6525af3c49b59c5cb0c5",
+      "title": "御定佩文韻府·卷一百六之三 (vol 729)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6525af3c49b59c5cb0c5?page=1"
+    },
+    {
+      "id": "6a3cbc6dec254ff6cadf0a30",
+      "title": "讀禮通考·卷五~卷六 (vol 4)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbc6dec254ff6cadf0a30?page=1"
+    },
+    {
+      "id": "6a3c611840c88a541d8ed934",
+      "title": "御定駢字類編·卷一百二十三 — Imperial Parallel Characters (vol 304)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c611840c88a541d8ed934?page=1"
+    },
+    {
+      "id": "6a3c70fe39b4508b04e50ad2",
+      "title": "語林·卷十四~卷十五 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c70fe39b4508b04e50ad2?page=1"
+    },
+    {
+      "id": "6992cdab43713c66ea637dca",
+      "title": "本草綱目·卷十八上~十八下",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6992cdab43713c66ea637dca?page=1"
+    },
+    {
+      "id": "6a3c7b1701fe4f593c21c05c",
+      "title": "管子·卷一~卷三 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c7b1701fe4f593c21c05c?page=1"
+    },
+    {
+      "id": "6a3c728b01fe4f593c1e052c",
+      "title": "春秋集義·卷十五~卷十八 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c728b01fe4f593c1e052c?page=1"
+    },
+    {
+      "id": "6a3c6c6639b4508b04e493e4",
+      "title": "論衡·卷十九~卷二十二 (vol 27)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6c6639b4508b04e493e4?page=1"
+    },
+    {
+      "id": "6a3c6bff01fe4f593c1af63b",
+      "title": "周易會通·卷八 (vol 23)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6bff01fe4f593c1af63b?page=1"
+    },
+    {
+      "id": "6992ce8e673ee1e40e32103c",
+      "title": "三才圖會(一百六)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6992ce8e673ee1e40e32103c?page=1"
+    },
+    {
+      "id": "6a3cef994701a906f10f1189",
+      "title": "御定淵鑑類函·卷八十七 (vol 448)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cef994701a906f10f1189?page=1"
+    },
+    {
+      "id": "6a3c738101fe4f593c1e9024",
+      "title": "聖濟總錄纂要·卷二十三~卷二十四 (vol 14)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c738101fe4f593c1e9024?page=1"
+    },
+    {
+      "id": "6a3c6d9201fe4f593c1bc88d",
+      "title": "詩經世本古義·卷八 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6d9201fe4f593c1bc88d?page=1"
+    },
+    {
+      "id": "6a3cef474701a906f10ee3e4",
+      "title": "御定淵鑑類函·卷四百十四~卷四百十五 (vol 374)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cef474701a906f10ee3e4?page=1"
+    },
+    {
+      "id": "6a3c6743af3c49b59c5d1c59",
+      "title": "性理大全書·卷二十六 (vol 16)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6743af3c49b59c5d1c59?page=1"
+    },
+    {
+      "id": "6a3c5f26879008ba7e153343",
+      "title": "景岳全書·卷四十五 (vol 26)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c5f26879008ba7e153343?page=1"
+    },
+    {
+      "id": "6a3c78da01fe4f593c20b6b2",
+      "title": "池北偶談·卷四~卷五 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c78da01fe4f593c20b6b2?page=1"
+    },
+    {
+      "id": "6992ca96d4d545ae73fee5c3",
+      "title": "針灸大成 (Zhenjiu Dacheng: Great Compendium of Acupuncture) Vol 2",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6992ca96d4d545ae73fee5c3?page=1"
+    },
+    {
+      "id": "6a3cea000a0011cb4bc120d2",
+      "title": "日講禮記解義·卷五十五~卷五十七 (vol 38)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cea000a0011cb4bc120d2?page=1"
+    },
+    {
+      "id": "6a3c6abbaf3c49b59c5e99f9",
+      "title": "論語類考·卷一~卷四 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6abbaf3c49b59c5e99f9?page=1"
+    },
+    {
+      "id": "6a3c761101fe4f593c1f855d",
+      "title": "春秋大全·卷二十一~卷二十二 (vol 13)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c761101fe4f593c1f855d?page=1"
+    },
+    {
+      "id": "6a3cbe6fec254ff6cae00469",
+      "title": "星學大成·卷十三~卷十四 (vol 8)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbe6fec254ff6cae00469?page=1"
+    },
+    {
+      "id": "6a3c6db839b4508b04e49d36",
+      "title": "欽定詩經傳說彙纂·卷四 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6db839b4508b04e49d36?page=1"
+    },
+    {
+      "id": "6a3cbdfbec254ff6cadfc0fd",
+      "title": "證治準繩·卷一百一 (vol 84)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbdfbec254ff6cadfc0fd?page=1"
+    },
+    {
+      "id": "6a3c665e39b4508b04e34658",
+      "title": "經濟類編·卷三十九 (vol 38)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c665e39b4508b04e34658?page=1"
+    },
+    {
+      "id": "6a3ced404701a906f10dea6e",
+      "title": "說苑·卷九~卷十二 (vol 13)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ced404701a906f10dea6e?page=1"
+    },
+    {
+      "id": "6a3c5eae40c88a541d8e4aac",
+      "title": "御定康熙字典·卷二十七 (vol 62)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c5eae40c88a541d8e4aac?page=1"
+    },
+    {
+      "id": "6a3cbafe3d799518cd71f175",
+      "title": "五禮通考·卷一百四~一百五 (vol 74)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbafe3d799518cd71f175?page=1"
+    },
+    {
+      "id": "6a3c68b4af3c49b59c5dba7d",
+      "title": "薛氏醫案·卷六十九~卷七十 (vol 36)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c68b4af3c49b59c5dba7d?page=1"
+    },
+    {
+      "id": "6a3c725901fe4f593c1dea5d",
+      "title": "儀禮要義·卷十一~卷十四 (vol 4)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c725901fe4f593c1dea5d?page=1"
+    },
+    {
+      "id": "6a3c751b39b4508b04e5b253",
+      "title": "鑒誡錄·卷六~卷十 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c751b39b4508b04e5b253?page=1"
+    },
+    {
+      "id": "6a3c6aecaf3c49b59c5eb666",
+      "title": "欽定協紀辨方書·卷十四 (vol 12)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6aecaf3c49b59c5eb666?page=1"
+    },
+    {
+      "id": "6a3c71db39b4508b04e55a25",
+      "title": "證類本草·卷六 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c71db39b4508b04e55a25?page=1"
+    },
+    {
+      "id": "6a3cee524701a906f10e8306",
+      "title": "御定淵鑑類函·卷二百六十七 (vol 148)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cee524701a906f10e8306?page=1"
+    },
+    {
+      "id": "6a3cbc7dec254ff6cadf134a",
+      "title": "讀禮通考·卷三十八~卷三十九 (vol 19)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbc7dec254ff6cadf134a?page=1"
+    },
+    {
+      "id": "6a3c713539b4508b04e52a92",
+      "title": "御纂朱子全書·卷三十三~卷三十四 (vol 26)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c713539b4508b04e52a92?page=1"
+    },
+    {
+      "id": "6a3c6f6b01fe4f593c1cc398",
+      "title": "古微書·卷二十~卷二十四 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6f6b01fe4f593c1cc398?page=1"
+    },
+    {
+      "id": "6a3c60f240c88a541d8ec212",
+      "title": "御定駢字類編·卷八十二 — Imperial Parallel Characters (vol 264)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c60f240c88a541d8ec212?page=1"
+    },
+    {
+      "id": "6a3c71a801fe4f593c1d992c",
+      "title": "欽定授時通考·卷十九~卷二十一 (vol 9)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c71a801fe4f593c1d992c?page=1"
+    },
+    {
+      "id": "6a3cc276ec254ff6cae11712",
+      "title": "書傳輯錄纂註·卷五 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc276ec254ff6cae11712?page=1"
+    },
+    {
+      "id": "6a3c68c8af3c49b59c5dc58b",
+      "title": "巢氏諸病源候總論·卷三十五~卷四十 (vol 7)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c68c8af3c49b59c5dc58b?page=1"
+    },
+    {
+      "id": "6a0a4ed07cd8e1e3d0f49aea",
+      "title": "皇極經世書 (Huangji Jingshi Shu, juan slice 11 of 24) — Shao Yong Neo-Confu",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a0a4ed07cd8e1e3d0f49aea?page=1"
+    },
+    {
+      "id": "6a3cb7353dce6cfad7486e97",
+      "title": "書蔡氏傳旁通·卷三 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb7353dce6cfad7486e97?page=1"
+    },
+    {
+      "id": "6a3c65b839b4508b04e2f40d",
+      "title": "御定子史精華·卷十~卷十二 (vol 54)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c65b839b4508b04e2f40d?page=1"
+    },
+    {
+      "id": "6a3c783601fe4f593c207976",
+      "title": "周易象辭·卷二 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c783601fe4f593c207976?page=1"
+    },
+    {
+      "id": "6a3c6aa6af3c49b59c5e8ad0",
+      "title": "四書蒙引·卷四 (vol 4)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6aa6af3c49b59c5e8ad0?page=1"
+    },
+    {
+      "id": "6a3cbe91f9474f825c1638ac",
+      "title": "御定韻府拾遺·卷十六 (vol 10)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbe91f9474f825c1638ac?page=1"
+    },
+    {
+      "id": "6a3c705501fe4f593c1d338f",
+      "title": "禮記集說·卷四~卷五 (vol 82)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c705501fe4f593c1d338f?page=1"
+    },
+    {
+      "id": "6a3c7b1c01fe4f593c21c350",
+      "title": "管子·卷一~卷三 (vol 8)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c7b1c01fe4f593c21c350?page=1"
+    },
+    {
+      "id": "6a3c78c901fe4f593c20ae55",
+      "title": "齊東野語·卷十九~卷二十 (vol 7)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c78c901fe4f593c20ae55?page=1"
+    },
+    {
+      "id": "6a3c746501fe4f593c1f0b5f",
+      "title": "左傳事緯·卷七 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c746501fe4f593c1f0b5f?page=1"
+    },
+    {
+      "id": "6a3ce9cf0a0011cb4bc11612",
+      "title": "日講禮記解義·卷四十七~卷四十九 (vol 16)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ce9cf0a0011cb4bc11612?page=1"
+    },
+    {
+      "id": "6a3c5f8a40c88a541d8e7459",
+      "title": "圖書編·卷五十三 (vol 42)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c5f8a40c88a541d8e7459?page=1"
+    },
+    {
+      "id": "6a3c603b879008ba7e15b980",
+      "title": "御定駢字類編·卷九十八 — Imperial Parallel Characters (vol 93)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c603b879008ba7e15b980?page=1"
+    },
+    {
+      "id": "6a3c70de01fe4f593c1d5b26",
+      "title": "管子補注·卷八~卷十 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c70de01fe4f593c1d5b26?page=1"
+    },
+    {
+      "id": "6a3c77d101fe4f593c204e99",
+      "title": "日講易經解義·卷六 (vol 19)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c77d101fe4f593c204e99?page=1"
+    },
+    {
+      "id": "6a3cc2a9af74b230c69084b0",
+      "title": "雲麓漫抄·卷七~卷十 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc2a9af74b230c69084b0?page=1"
+    },
+    {
+      "id": "6a3c6818af3c49b59c5d6570",
+      "title": "山堂肆考·卷八十三~卷八十四 (vol 38)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6818af3c49b59c5d6570?page=1"
+    },
+    {
+      "id": "6a3c6c1201fe4f593c1b0067",
+      "title": "徐氏筆精·卷四~卷五 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6c1201fe4f593c1b0067?page=1"
+    },
+    {
+      "id": "6a3c637a93327f06e835080c",
+      "title": "御定佩文韻府·卷三 (vol 299)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c637a93327f06e835080c?page=1"
+    },
+    {
+      "id": "6a3cba7e3dce6cfad749c230",
+      "title": "記纂淵海·卷五十四 (vol 36)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cba7e3dce6cfad749c230?page=1"
+    },
+    {
+      "id": "6a3c6f0f01fe4f593c1c8a93",
+      "title": "六經奧論·卷一 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6f0f01fe4f593c1c8a93?page=1"
+    },
+    {
+      "id": "6a3cbecdec254ff6cae033df",
+      "title": "御定韻府拾遺·卷七十六~卷七十七 (vol 67)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbecdec254ff6cae033df?page=1"
+    },
+    {
+      "id": "6a3ceef84701a906f10ec5a9",
+      "title": "御定淵鑑類函·卷二百八十九 (vol 302)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ceef84701a906f10ec5a9?page=1"
+    },
+    {
+      "id": "6a3c6c6f01fe4f593c1b1222",
+      "title": "春明夢餘錄·卷六 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6c6f01fe4f593c1b1222?page=1"
+    },
+    {
+      "id": "6a3cc1fdf9474f825c173ed3",
+      "title": "易象義·卷一 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc1fdf9474f825c173ed3?page=1"
+    },
+    {
+      "id": "6a3c68c2af3c49b59c5dc2f5",
+      "title": "巢氏諸病源候總論·卷十~卷十四 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c68c2af3c49b59c5dc2f5?page=1"
+    },
+    {
+      "id": "6a3cbee8f9474f825c16440f",
+      "title": "皇極經世書解·卷六~卷七 (vol 7)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbee8f9474f825c16440f?page=1"
+    },
+    {
+      "id": "6a3c741201fe4f593c1ede4f",
+      "title": "稗編·卷四十四~卷四十五 (vol 26)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c741201fe4f593c1ede4f?page=1"
+    },
+    {
+      "id": "6a3cefee4701a906f10f31d7",
+      "title": "西陽雜俎·卷一~卷四 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cefee4701a906f10f31d7?page=1"
+    },
+    {
+      "id": "6a3cb9d83dce6cfad74975ed",
+      "title": "說文解字篆韻譜·卷五 (vol 4)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb9d83dce6cfad74975ed?page=1"
+    },
+    {
+      "id": "6a3cb57f3dce6cfad748387b",
+      "title": "周易孔義集說·卷六~卷七 (vol 4)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb57f3dce6cfad748387b?page=1"
+    },
+    {
+      "id": "6a3cc03cec254ff6cae04b2f",
+      "title": "法苑珠林·卷八十一~卷八十二 — Fayuan Zhulin (vol 31)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc03cec254ff6cae04b2f?page=1"
+    },
+    {
+      "id": "6a3c6dcf39b4508b04e4a781",
+      "title": "欽定詩經傳說彙纂·卷二 (vol 27)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6dcf39b4508b04e4a781?page=1"
+    },
+    {
+      "id": "6a0a4ea97cd8e1e3d0f49799",
+      "title": "皇極經世書 (Huangji Jingshi Shu, juan slice 4 of 24) — Shao Yong Neo-Confuc",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a0a4ea97cd8e1e3d0f49799?page=1"
+    },
+    {
+      "id": "6a3cbde5ec254ff6cadfb323",
+      "title": "證治準繩·卷六十九 (vol 58)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbde5ec254ff6cadfb323?page=1"
+    },
+    {
+      "id": "6a3c7aea01fe4f593c21adae",
+      "title": "朱子語類·卷一百十五~卷一百十六 (vol 61)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c7aea01fe4f593c21adae?page=1"
+    },
+    {
+      "id": "6a3cb7083dce6cfad7485cd3",
+      "title": "欽定周官義疏·卷三十~卷三十一 (vol 52)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb7083dce6cfad7485cd3?page=1"
+    },
+    {
+      "id": "6a3c5ea040c88a541d8e407b",
+      "title": "御定康熙字典·卷十四 (vol 49)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c5ea040c88a541d8e407b?page=1"
+    },
+    {
+      "id": "6a3c5f2a40c88a541d8e6a2b",
+      "title": "景岳全書·卷四十七 (vol 28)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c5f2a40c88a541d8e6a2b?page=1"
+    },
+    {
+      "id": "6a3c6043879008ba7e15bd68",
+      "title": "御定駢字類編·卷一百五 — Imperial Parallel Characters (vol 100)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6043879008ba7e15bd68?page=1"
+    },
+    {
+      "id": "6a3c655d39b4508b04e2e35d",
+      "title": "御定子史精華·卷八十八~卷九十 (vol 28)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c655d39b4508b04e2e35d?page=1"
+    },
+    {
+      "id": "6a3c79c601fe4f593c2123f3",
+      "title": "御定分類字錦·卷二 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c79c601fe4f593c2123f3?page=1"
+    },
+    {
+      "id": "6a3cb90c3dce6cfad749220d",
+      "title": "春秋釋例·卷八 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb90c3dce6cfad749220d?page=1"
+    },
+    {
+      "id": "6a3cbd66ec254ff6cadf8726",
+      "title": "漢隸字源·卷二~卷三 (vol 12)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbd66ec254ff6cadf8726?page=1"
+    },
+    {
+      "id": "6a3cf1028642f0445b168931",
+      "title": "四書纂箋·孟子集註纂箋卷十一~孟子集註纂箋卷十二 (vol 12)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cf1028642f0445b168931?page=1"
+    },
+    {
+      "id": "6a3cf0cc8642f0445b167906",
+      "title": "大學衍義補·卷一百十四~卷一百十五 (vol 36)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cf0cc8642f0445b167906?page=1"
+    },
+    {
+      "id": "6a3c72ef01fe4f593c1e42ea",
+      "title": "讀春秋略記·卷三~卷四 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c72ef01fe4f593c1e42ea?page=1"
+    },
+    {
+      "id": "6a3c5f7a879008ba7e155c4c",
+      "title": "圖書編·卷三十五~卷三十六 (vol 29)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c5f7a879008ba7e155c4c?page=1"
+    },
+    {
+      "id": "6992cf87f5b4f75c1a4c9232",
+      "title": "植物名實圖考(三十四)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6992cf87f5b4f75c1a4c9232?page=1"
+    },
+    {
+      "id": "6a3c798c01fe4f593c2107fd",
+      "title": "石門文字禪·卷二十三~卷二十五 (vol 9)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c798c01fe4f593c2107fd?page=1"
+    },
+    {
+      "id": "6a3cc105ec254ff6cae08802",
+      "title": "御纂周易折中·卷三 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc105ec254ff6cae08802?page=1"
+    },
+    {
+      "id": "6a3cb9163dce6cfad7492802",
+      "title": "春秋集傳辨疑·卷四~卷七 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb9163dce6cfad7492802?page=1"
+    },
+    {
+      "id": "6a3c7a8c01fe4f593c21822c",
+      "title": "太玄經·卷六~卷九 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c7a8c01fe4f593c21822c?page=1"
+    },
+    {
+      "id": "6a3cbc9eec254ff6cadf1a21",
+      "title": "讀禮通考·卷一百八~卷一百九 (vol 53)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbc9eec254ff6cadf1a21?page=1"
+    },
+    {
+      "id": "6a3cc302af74b230c690b89c",
+      "title": "毛詩注疏·卷二十 (vol 63)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc302af74b230c690b89c?page=1"
+    },
+    {
+      "id": "6a3c777f01fe4f593c202939",
+      "title": "古今通韻·卷八~卷九 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c777f01fe4f593c202939?page=1"
+    },
+    {
+      "id": "6a3c6d6e39b4508b04e49879",
+      "title": "澠水燕談録·卷一~卷五 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6d6e39b4508b04e49879?page=1"
+    },
+    {
+      "id": "6a3ced554701a906f10df52a",
+      "title": "春秋公羊傳注疏·卷四~卷五 (vol 3)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3ced554701a906f10df52a?page=1"
+    },
+    {
+      "id": "6a3c78cc01fe4f593c20af28",
+      "title": "玉堂嘉話·卷四~卷八 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c78cc01fe4f593c20af28?page=1"
+    },
+    {
+      "id": "6a3cbc92f9474f825c1616ab",
+      "title": "讀禮通考·卷八十四~卷八十五 (vol 41)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbc92f9474f825c1616ab?page=1"
+    },
+    {
+      "id": "6a3cee0a4701a906f10e5ad9",
+      "title": "御定淵鑑類函·卷一百四十八~卷一百五十 (vol 84)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cee0a4701a906f10e5ad9?page=1"
+    },
+    {
+      "id": "6a3c6fee01fe4f593c1cf04d",
+      "title": "儀禮集說·卷五下 (vol 19)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6fee01fe4f593c1cf04d?page=1"
+    },
+    {
+      "id": "6a3cb7db3dce6cfad7488d5a",
+      "title": "欽定禮記義疏·卷七十九 (vol 92)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb7db3dce6cfad7488d5a?page=1"
+    },
+    {
+      "id": "6a3c6d4f01fe4f593c1b9d5d",
+      "title": "春秋長歷·卷三~卷四 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6d4f01fe4f593c1b9d5d?page=1"
+    },
+    {
+      "id": "6a3c7b4f01fe4f593c21d882",
+      "title": "大易粹言·卷五十~卷五十四 (vol 16)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c7b4f01fe4f593c21d882?page=1"
+    },
+    {
+      "id": "6992cd8f43713c66ea63737f",
+      "title": "三才圖會(三十六)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6992cd8f43713c66ea63737f?page=1"
+    },
+    {
+      "id": "6a3cc2dcaf74b230c690a042",
+      "title": "毛詩注疏·詩譜下,毛詩注疏·傅述人,毛詩注疏·原目 (vol 26)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cc2dcaf74b230c690a042?page=1"
+    },
+    {
+      "id": "6a3cedb64701a906f10e2bea",
+      "title": "御定淵鑑類函·卷十九~卷二十 (vol 11)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cedb64701a906f10e2bea?page=1"
+    },
+    {
+      "id": "6a3c7b6401fe4f593c21e423",
+      "title": "大易粹言·卷五十五~卷五十九 (vol 37)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c7b6401fe4f593c21e423?page=1"
+    },
+    {
+      "id": "6a3c645439b4508b04e2623e",
+      "title": "御定佩文韻府·卷六十三之十 (vol 516)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c645439b4508b04e2623e?page=1"
+    },
+    {
+      "id": "6a3cf0338642f0445b1634a0",
+      "title": "御製律呂正義後編·卷二十八~卷二十九 (vol 15)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cf0338642f0445b1634a0?page=1"
+    },
+    {
+      "id": "6a3cee354701a906f10e7185",
+      "title": "御定淵鑑類函·卷二百十六~卷二百十七 (vol 122)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cee354701a906f10e7185?page=1"
+    },
+    {
+      "id": "6a3c727101fe4f593c1df6ad",
+      "title": "左氏傳說·卷四~卷八 (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c727101fe4f593c1df6ad?page=1"
+    },
+    {
+      "id": "6a3c64bd39b4508b04e29a2e",
+      "title": "御定佩文韻府·卷九十之三 (vol 624)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c64bd39b4508b04e29a2e?page=1"
+    },
+    {
+      "id": "6a3c73fc01fe4f593c1ed278",
+      "title": "稗編·卷六~卷七 (vol 5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c73fc01fe4f593c1ed278?page=1"
+    },
+    {
+      "id": "6a3cecb44701a906f10da869",
+      "title": "玉海·卷八十七~卷八十八 (vol 46)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cecb44701a906f10da869?page=1"
+    },
+    {
+      "id": "6a3cb9e73dce6cfad7497ca8",
+      "title": "赤水元珠·卷七 (vol 7)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb9e73dce6cfad7497ca8?page=1"
+    },
+    {
+      "id": "6992ce83673ee1e40e320d58",
+      "title": "三才圖會(一百三)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6992ce83673ee1e40e320d58?page=1"
+    },
+    {
+      "id": "6a3c5f3f879008ba7e1539ea",
+      "title": "律呂新書箋義(二) — New Book on the Pitch-Pipes (vol 2)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c5f3f879008ba7e1539ea?page=1"
+    },
+    {
+      "id": "6a3cb4593dce6cfad7481196",
+      "title": "周易輯聞·卷六 (vol 6)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb4593dce6cfad7481196?page=1"
+    },
+    {
+      "id": "6a3cbe3aec254ff6cadfe4cd",
+      "title": "中庸衍義·卷八 (vol 7)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbe3aec254ff6cadfe4cd?page=1"
+    },
+    {
+      "id": "6a3c6db239b4508b04e49967",
+      "title": "讀詩略記·卷四 (vol 4)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6db239b4508b04e49967?page=1"
+    },
+    {
+      "id": "6992cdcfc8c0c1ab515dcbe0",
+      "title": "本草綱目·卷三十四",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6992cdcfc8c0c1ab515dcbe0?page=1"
+    },
+    {
+      "id": "6a3c5e5540c88a541d8e10ba",
+      "title": "錦繡萬花谷別集(一) (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c5e5540c88a541d8e10ba?page=1"
+    },
+    {
+      "id": "6a3c6761af3c49b59c5d2c33",
+      "title": "榕壇問業·卷一~卷四 (vol 1)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3c6761af3c49b59c5d2c33?page=1"
+    },
+    {
+      "id": "6a3cb9a33dce6cfad749567e",
+      "title": "爾雅翼·卷十六~卷十九 (vol 13)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cb9a33dce6cfad749567e?page=1"
+    },
+    {
+      "id": "6a3cbf33f9474f825c16673c",
+      "title": "測圓海鏡分類釋術·卷一~卷三 (vol 4)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6a3cbf33f9474f825c16673c?page=1"
+    },
+    {
+      "id": "6992cf44f5b4f75c1a4c8640",
+      "title": "海國圖志(5)",
+      "checked": 3,
+      "black": 0,
+      "ex": [],
+      "url": "https://sourcelibrary.org/book/6992cf44f5b4f75c1a4c8640?page=1"
+    }
+  ]
+}

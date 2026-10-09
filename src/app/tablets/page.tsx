@@ -9,7 +9,7 @@ import {
 import CroppedSurfaceImage from './CroppedSurfaceImage';
 
 export const metadata: Metadata = {
-  title: 'Cuneiform Tablet Corpus — Source Library',
+  title: 'Cuneiform Tablet Corpus | Source Library',
   description:
     '107 cuneiform tablets from CDLI with photos, metadata, and scholarly ATF transliterations.',
 };
@@ -493,7 +493,7 @@ function SignsColumn({ section }: { section: ParsedSection }) {
                 className="text-[10px] font-mono italic"
                 style={{ color: 'var(--text-faint)' }}
               >
-                {line.text.startsWith('$') ? line.text : '—'}
+                {line.text.startsWith('$') ? line.text : '–'}
               </span>
             )}
           </div>
@@ -519,7 +519,7 @@ function TranslationColumn({ section }: { section: ParsedSection }) {
             className="text-xs font-body"
             style={{ color: line.translation ? 'var(--text-secondary)' : 'var(--text-faint)' }}
           >
-            {line.translation || '—'}
+            {line.translation || '–'}
           </span>
         </div>
       ))}

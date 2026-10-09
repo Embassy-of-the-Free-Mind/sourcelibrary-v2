@@ -12,7 +12,7 @@ export const metadata: Metadata = {
       'IIIF as a universal input layer for an AI pipeline: import rare books from thirteen institutions through one importer, then serve them back as IIIF with machine OCR and translation overlaid on the original page.',
     images: [
       {
-        url: 'https://images.sourcelibrary.org/pages/69bd9e336120d54bd037bf37/0010.jpg',
+        url: 'https://images.sourcelibrary.org/pages/69bd9e336120d54bd037bf37/0009.jpg',
         width: 1200,
         height: 630,
       },
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    images: [{ url: 'https://images.sourcelibrary.org/pages/69bd9e336120d54bd037bf37/0010.jpg' }],
+    images: [{ url: 'https://images.sourcelibrary.org/pages/69bd9e336120d54bd037bf37/0009.jpg' }],
   },
   alternates: {
     canonical: '/blog/iiif',
@@ -53,7 +53,7 @@ export default function IIIFPage() {
         <ContentHeader
           title="How IIIF Helped Us Translate the Renaissance"
           subtitle="One image standard turned thirteen institutional archives into a single input layer for an AI pipeline — and let us hand the results back to the whole IIIF world."
-          image="https://images.sourcelibrary.org/pages/69bd9e336120d54bd037bf37/0010.jpg"
+          image="https://images.sourcelibrary.org/pages/69bd9e336120d54bd037bf37/0009.jpg"
           imageAlt="Engraved frontispiece of Michael Maier's Atalanta Fugiens (Oppenheim, 1617), an alchemical emblem book digitized by e-rara and re-hosted on Source Library"
         >
           <p className="text-stone-400 text-sm mt-4">

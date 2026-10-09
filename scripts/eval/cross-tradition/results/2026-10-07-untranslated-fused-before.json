@@ -1,0 +1,380 @@
+{
+ "queries": 40,
+ "answered": 40,
+ "lane_state": [
+  "unavailable"
+ ],
+ "page_in_top10": "4/40",
+ "page_in_top20": "5/40",
+ "book_in_top10": "6/40",
+ "by_language_top20": {
+  "Latin": "1/10",
+  "German": "1/10",
+  "French": "3/10",
+  "Chinese": "0/10"
+ },
+ "mean_original_rows_in_20": 1.9,
+ "rows_with_no_snippet": 0,
+ "per_query": [
+  {
+   "qid": "q01",
+   "lang": "Latin",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 1,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q02",
+   "lang": "Latin",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 1,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q03",
+   "lang": "Latin",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 1,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q04",
+   "lang": "Latin",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 0,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q05",
+   "lang": "Latin",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 0,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q06",
+   "lang": "Latin",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": 20,
+   "original_rows": 1,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q07",
+   "lang": "Latin",
+   "lane": "unavailable",
+   "rank": 1,
+   "book_rank": 1,
+   "original_rows": 3,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q08",
+   "lang": "Latin",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 0,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q09",
+   "lang": "Latin",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 0,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q10",
+   "lang": "Latin",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 1,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q11",
+   "lang": "German",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 1,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q12",
+   "lang": "German",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 0,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q13",
+   "lang": "German",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 0,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q14",
+   "lang": "German",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 0,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q15",
+   "lang": "German",
+   "lane": "unavailable",
+   "rank": 1,
+   "book_rank": 1,
+   "original_rows": 2,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q16",
+   "lang": "German",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 0,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q17",
+   "lang": "German",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 2,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q18",
+   "lang": "German",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 0,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q19",
+   "lang": "German",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 0,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q20",
+   "lang": "German",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 0,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q21",
+   "lang": "French",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": 1,
+   "original_rows": 0,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q22",
+   "lang": "French",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 0,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q23",
+   "lang": "French",
+   "lane": "unavailable",
+   "rank": 2,
+   "book_rank": 2,
+   "original_rows": 2,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q24",
+   "lang": "French",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 0,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q25",
+   "lang": "French",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 0,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q26",
+   "lang": "French",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 0,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q27",
+   "lang": "French",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 2,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q28",
+   "lang": "French",
+   "lane": "unavailable",
+   "rank": 18,
+   "book_rank": 5,
+   "original_rows": 4,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q29",
+   "lang": "French",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 0,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q30",
+   "lang": "French",
+   "lane": "unavailable",
+   "rank": 1,
+   "book_rank": 1,
+   "original_rows": 5,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q31",
+   "lang": "Chinese",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 20,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q32",
+   "lang": "Chinese",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 0,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q33",
+   "lang": "Chinese",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 0,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q34",
+   "lang": "Chinese",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 0,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q35",
+   "lang": "Chinese",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 0,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q36",
+   "lang": "Chinese",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 7,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q37",
+   "lang": "Chinese",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 1,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q38",
+   "lang": "Chinese",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 0,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q39",
+   "lang": "Chinese",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 0,
+   "empty_snippets": 0
+  },
+  {
+   "qid": "q40",
+   "lang": "Chinese",
+   "lane": "unavailable",
+   "rank": null,
+   "book_rank": null,
+   "original_rows": 20,
+   "empty_snippets": 0
+  }
+ ]
+}

@@ -1,0 +1,21 @@
+{
+ "A": {
+  "rev_agent_found": 11,
+  "of": 12,
+  "missed": [
+   "\\bthe master\\b → the student"
+  ],
+  "unplanted_pages_flagged": 3,
+  "pass": true
+ },
+ "B": {
+  "rev_agent_found": 10,
+  "of": 12,
+  "missed": [
+   "swap Tathagata ↔ Lotus",
+   "\\b[Yy]ou ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → I $1"
+  ],
+  "unplanted_pages_flagged": 1,
+  "pass": true
+ }
+}
