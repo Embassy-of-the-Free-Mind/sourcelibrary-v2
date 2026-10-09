@@ -10,13 +10,13 @@ export const metadata: Metadata = {
     canonical: '/contribute/wikipedia',
   },
   openGraph: {
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
     title: 'Help Bring Historical Texts to Wikipedia',
-    description: 'Copy-paste Talk page posts to help Wikipedia readers discover thousands of translated primary sources — Copernicus, Galileo, Kepler, and more.',
+    description: 'Copy-paste Talk page posts to help Wikipedia readers discover thousands of translated primary sources: Copernicus, Galileo, Kepler, and more.',
   },
   twitter: {
     title: 'Help Bring Historical Texts to Wikipedia',
-    description: 'Copy-paste Talk page posts to help Wikipedia readers discover thousands of translated primary sources — Copernicus, Galileo, Kepler, and more.',
+    description: 'Copy-paste Talk page posts to help Wikipedia readers discover thousands of translated primary sources: Copernicus, Galileo, Kepler, and more.',
   },
 };
 
@@ -215,13 +215,13 @@ function buildWikiText(config: typeof FEATURED_BOOKS[number], book: BookStats, f
     ? '== External link suggestion: Utriusque Cosmi Historia at Source Library =='
     : '== External link suggestion: English translation at Source Library ==';
 
-  let body = `* [${bookUrl} ${config.wikiTitle}] — ${desc}${langNote} Free access, CC-BY-4.0.`;
+  let body = `* [${bookUrl} ${config.wikiTitle}]: ${desc}${langNote} Free access, CC-BY-4.0.`;
 
   // Add Fludd vol 2 if applicable
   if (config.slug === 'history-of-both-worlds-macrocosm-fludd' && fludd2) {
     const f2denom = Math.max(fludd2.pages_count - (fludd2.pages_blank || 0), 1);
     const f2pct = fludd2.pages_count > 0 ? Math.round(fludd2.pages_translated / f2denom * 100) : 0;
-    body += `\n* [https://sourcelibrary.org/book/history-of-both-worlds-microcosm-fludd Utriusque Cosmi Historia Vol. 2 (1619)] — ${fludd2.pages_count.toLocaleString('en-US')} pages, ${f2pct}% complete.`;
+    body += `\n* [https://sourcelibrary.org/book/history-of-both-worlds-microcosm-fludd Utriusque Cosmi Historia Vol. 2 (1619)]: ${fludd2.pages_count.toLocaleString('en-US')} pages, ${f2pct}% complete.`;
   }
 
   return `${heading}\n\n{{edit COI}} I'm affiliated with Source Library.\n\n${body}\n\n~~~~`;

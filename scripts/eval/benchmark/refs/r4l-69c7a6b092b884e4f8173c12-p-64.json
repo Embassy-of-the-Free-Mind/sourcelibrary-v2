@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA historicapolitica/besold14",
+  "edition": "Tractatus Posthumus Iuris Publici De Origine, Et Successione, Variisque Imperii Romani Mutationibus, Imperatoris item ac Imperialium Iudiciorum ut et Statuum potestate ac Iurisdictione. — Augsburg: Weh; Ingolstadt: Eder, 1646.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69c7a6b092b884e4f8173c12",
+  "page_number": -64,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 83487,
+    "to_char": 84941,
+    "overlap": 0.469,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-2)",
+    "at": "2026-10-06T10:11:07+00:00",
+    "note": "two-page spread pp.100-101, Caput VI heading; ref covers both pages",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      -66,
+      -65,
+      -64
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.675Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "65efe61be36aa36f5d1bf8ce832a7f3516e98c3a6b62769063122733caa45ded",
+  "unit": {
+    "chars": 1454
+  }
+}
