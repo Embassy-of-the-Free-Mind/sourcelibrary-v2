@@ -1,0 +1,530 @@
+{
+ "date": "2026-10-08",
+ "judge": "claude-fable-5-1 (subscription, $0), claude -p / Agent subagents, prompt JUDGE-PROMPT-REF-R3.md verbatim, J1's input files",
+ "role": "robustness check; the preregistered primary judges (two blind Opus) are unchanged",
+ "packets": {
+  "main": {
+   "items_missing": {
+    "J1": 0,
+    "J2": 0,
+    "F": 0
+   },
+   "sides_scored": 171,
+   "gate": {
+    "J1": {
+     "plants": 8,
+     "plant_caught": 8,
+     "plant_caught_strict": 8,
+     "dups": 4,
+     "dup_tie": 4,
+     "pass": true
+    },
+    "J2": {
+     "plants": 8,
+     "plant_caught": 8,
+     "plant_caught_strict": 7,
+     "dups": 4,
+     "dup_tie": 4,
+     "pass": true
+    },
+    "F": {
+     "plants": 8,
+     "plant_caught": 8,
+     "plant_caught_strict": 8,
+     "dups": 4,
+     "dup_tie": 4,
+     "pass": true
+    }
+   },
+   "arm_means_by_judge": {
+    "J1": {
+     "S": 4.632,
+     "FP": 4.585,
+     "AA": 4.591,
+     "L31": 4.123,
+     "L35": 4.135,
+     "G35": 4.55,
+     "G36": 4.643,
+     "G37": 4.749,
+     "G38": 4.789,
+     "PRO": 4.667,
+     "O": 4.865
+    },
+    "J2": {
+     "S": 4.596,
+     "FP": 4.55,
+     "AA": 4.55,
+     "L31": 4.029,
+     "L35": 4.053,
+     "G35": 4.556,
+     "G36": 4.591,
+     "G37": 4.702,
+     "G38": 4.795,
+     "PRO": 4.62,
+     "O": 4.842
+    },
+    "F": {
+     "S": 4.48,
+     "FP": 4.52,
+     "AA": 4.456,
+     "L31": 4.047,
+     "L35": 4.076,
+     "G35": 4.491,
+     "G36": 4.509,
+     "G37": 4.684,
+     "G38": 4.719,
+     "PRO": 4.591,
+     "O": 4.848
+    },
+    "Opus (J1+J2)/2": {
+     "S": 4.614,
+     "FP": 4.567,
+     "AA": 4.57,
+     "L31": 4.076,
+     "L35": 4.094,
+     "G35": 4.553,
+     "G36": 4.617,
+     "G37": 4.725,
+     "G38": 4.792,
+     "PRO": 4.643,
+     "O": 4.854
+    }
+   },
+   "arm_order_by_judge": {
+    "J1": [
+     "O",
+     "G38",
+     "G37",
+     "PRO",
+     "G36",
+     "S",
+     "AA",
+     "FP",
+     "G35",
+     "L35",
+     "L31"
+    ],
+    "J2": [
+     "O",
+     "G38",
+     "G37",
+     "PRO",
+     "S",
+     "G36",
+     "G35",
+     "FP",
+     "AA",
+     "L35",
+     "L31"
+    ],
+    "F": [
+     "O",
+     "G38",
+     "G37",
+     "PRO",
+     "FP",
+     "G36",
+     "G35",
+     "S",
+     "AA",
+     "L35",
+     "L31"
+    ],
+    "Opus (J1+J2)/2": [
+     "O",
+     "G38",
+     "G37",
+     "PRO",
+     "G36",
+     "S",
+     "AA",
+     "FP",
+     "G35",
+     "L35",
+     "L31"
+    ]
+   },
+   "fable_minus_opus_by_arm": {
+    "S": {
+     "F_minus_Opus": -0.134,
+     "ci_by_text": [
+      -0.234,
+      -0.031
+     ]
+    },
+    "FP": {
+     "F_minus_Opus": -0.047,
+     "ci_by_text": [
+      -0.141,
+      0.053
+     ]
+    },
+    "AA": {
+     "F_minus_Opus": -0.114,
+     "ci_by_text": [
+      -0.203,
+      -0.008
+     ]
+    },
+    "L31": {
+     "F_minus_Opus": -0.029,
+     "ci_by_text": [
+      -0.134,
+      0.121
+     ]
+    },
+    "L35": {
+     "F_minus_Opus": -0.018,
+     "ci_by_text": [
+      -0.125,
+      0.09
+     ]
+    },
+    "G35": {
+     "F_minus_Opus": -0.062,
+     "ci_by_text": [
+      -0.132,
+      0.033
+     ]
+    },
+    "G36": {
+     "F_minus_Opus": -0.108,
+     "ci_by_text": [
+      -0.228,
+      0.043
+     ]
+    },
+    "G37": {
+     "F_minus_Opus": -0.041,
+     "ci_by_text": [
+      -0.117,
+      0.067
+     ]
+    },
+    "G38": {
+     "F_minus_Opus": -0.073,
+     "ci_by_text": [
+      -0.156,
+      0.003
+     ]
+    },
+    "PRO": {
+     "F_minus_Opus": -0.052,
+     "ci_by_text": [
+      -0.132,
+      0.036
+     ]
+    },
+    "O": {
+     "F_minus_Opus": -0.006,
+     "ci_by_text": [
+      -0.067,
+      0.074
+     ]
+    }
+   },
+   "inversion_sides_per100_by_judge": {
+    "J1": {
+     "S": 4.1,
+     "FP": 4.7,
+     "AA": 5.3,
+     "L31": 13.5,
+     "L35": 12.3,
+     "G35": 6.4,
+     "G36": 4.7,
+     "G37": 4.7,
+     "G38": 1.8,
+     "PRO": 1.8,
+     "O": 4.1
+    },
+    "J2": {
+     "S": 5.8,
+     "FP": 6.4,
+     "AA": 5.8,
+     "L31": 17.0,
+     "L35": 15.8,
+     "G35": 8.2,
+     "G36": 4.7,
+     "G37": 4.7,
+     "G38": 1.8,
+     "PRO": 2.9,
+     "O": 4.1
+    },
+    "F": {
+     "S": 4.7,
+     "FP": 3.5,
+     "AA": 4.1,
+     "L31": 9.4,
+     "L35": 8.2,
+     "G35": 6.4,
+     "G36": 3.5,
+     "G37": 4.1,
+     "G38": 2.3,
+     "PRO": 2.3,
+     "O": 2.9
+    }
+   },
+   "agreement": {
+    "J1~J2": {
+     "fid_exact": 0.792,
+     "fid_within_1": 0.999,
+     "fid_pearson": 0.698,
+     "inversion_flag_kappa": 0.769,
+     "inversion_flags": {
+      "J1": 108,
+      "J2": 132,
+      "both": 94
+     }
+    },
+    "F~J1": {
+     "fid_exact": 0.764,
+     "fid_within_1": 0.999,
+     "fid_pearson": 0.651,
+     "inversion_flag_kappa": 0.58,
+     "inversion_flags": {
+      "F": 88,
+      "J1": 108,
+      "both": 59
+     }
+    },
+    "F~J2": {
+     "fid_exact": 0.771,
+     "fid_within_1": 0.999,
+     "fid_pearson": 0.667,
+     "inversion_flag_kappa": 0.615,
+     "inversion_flags": {
+      "F": 88,
+      "J2": 132,
+      "both": 70
+     }
+    }
+   },
+   "disagreements_gt1": 3,
+   "disagreements_gt1_either_judge": 3,
+   "fable_off_both_opus_by_ge1": 244,
+   "inversion_flag_fable_alone": 53,
+   "self_preference": {
+    "O": {
+     "vs": [
+      "FP",
+      "L31",
+      "L35",
+      "G35",
+      "G36",
+      "G37",
+      "G38",
+      "PRO"
+     ],
+     "Opus_J1": 0.336,
+     "Opus_J2": 0.355,
+     "Opus_mean": 0.345,
+     "Fable": 0.393,
+     "Fable_minus_Opus": 0.048,
+     "Fable_minus_Opus_ci_by_text": [
+      -0.01,
+      0.108
+     ],
+     "rank_of_arm": {
+      "J1": 1,
+      "J2": 1,
+      "F": 1,
+      "Opus (J1+J2)/2": 1
+     }
+    }
+   }
+  },
+  "c38": {
+   "items_missing": {
+    "J1": 0,
+    "J2": 0,
+    "F": 33
+   },
+   "sides_scored": 81,
+   "gate": {
+    "J1": {
+     "plants": 6,
+     "plant_caught": 6,
+     "plant_caught_strict": 6,
+     "dups": 4,
+     "dup_tie": 4,
+     "pass": true
+    },
+    "J2": {
+     "plants": 6,
+     "plant_caught": 6,
+     "plant_caught_strict": 6,
+     "dups": 4,
+     "dup_tie": 4,
+     "pass": true
+    },
+    "F": {
+     "plants": 5,
+     "plant_caught": 5,
+     "plant_caught_strict": 5,
+     "dups": 4,
+     "dup_tie": 4,
+     "pass": true
+    }
+   },
+   "arm_means_by_judge": {
+    "J1": {
+     "FP": 4.469,
+     "G38": 4.84,
+     "C38": 4.84
+    },
+    "J2": {
+     "FP": 4.481,
+     "G38": 4.827,
+     "C38": 4.84
+    },
+    "F": {
+     "FP": 4.358,
+     "G38": 4.753,
+     "C38": 4.716
+    },
+    "Opus (J1+J2)/2": {
+     "FP": 4.475,
+     "G38": 4.833,
+     "C38": 4.84
+    }
+   },
+   "arm_order_by_judge": {
+    "J1": [
+     "G38",
+     "C38",
+     "FP"
+    ],
+    "J2": [
+     "C38",
+     "G38",
+     "FP"
+    ],
+    "F": [
+     "G38",
+     "C38",
+     "FP"
+    ],
+    "Opus (J1+J2)/2": [
+     "C38",
+     "G38",
+     "FP"
+    ]
+   },
+   "fable_minus_opus_by_arm": {
+    "FP": {
+     "F_minus_Opus": -0.117,
+     "ci_by_text": [
+      -0.214,
+      0.0
+     ]
+    },
+    "G38": {
+     "F_minus_Opus": -0.08,
+     "ci_by_text": [
+      -0.203,
+      0.078
+     ]
+    },
+    "C38": {
+     "F_minus_Opus": -0.124,
+     "ci_by_text": [
+      -0.232,
+      0.038
+     ]
+    }
+   },
+   "inversion_sides_per100_by_judge": {
+    "J1": {
+     "FP": 8.6,
+     "G38": 0.0,
+     "C38": 2.5
+    },
+    "J2": {
+     "FP": 6.2,
+     "G38": 1.2,
+     "C38": 2.5
+    },
+    "F": {
+     "FP": 6.2,
+     "G38": 0.0,
+     "C38": 1.2
+    }
+   },
+   "agreement": {
+    "J1~J2": {
+     "fid_exact": 0.885,
+     "fid_within_1": 1.0,
+     "fid_pearson": 0.733,
+     "inversion_flag_kappa": 0.695,
+     "inversion_flags": {
+      "J1": 9,
+      "J2": 8,
+      "both": 6
+     }
+    },
+    "F~J1": {
+     "fid_exact": 0.794,
+     "fid_within_1": 1.0,
+     "fid_pearson": 0.592,
+     "inversion_flag_kappa": 0.656,
+     "inversion_flags": {
+      "F": 6,
+      "J1": 9,
+      "both": 5
+     }
+    },
+    "F~J2": {
+     "fid_exact": 0.761,
+     "fid_within_1": 1.0,
+     "fid_pearson": 0.515,
+     "inversion_flag_kappa": 0.559,
+     "inversion_flags": {
+      "F": 6,
+      "J2": 8,
+      "both": 4
+     }
+    }
+   },
+   "disagreements_gt1": 0,
+   "disagreements_gt1_either_judge": 0,
+   "fable_off_both_opus_by_ge1": 40,
+   "inversion_flag_fable_alone": 3,
+   "self_preference": {}
+  },
+  "ctib": {
+   "items_missing": {
+    "J1": 0,
+    "J2": 0,
+    "F": 183
+   },
+   "sides_scored": 0,
+   "gate": {
+    "J1": {
+     "plants": 8,
+     "plant_caught": 8,
+     "plant_caught_strict": 5,
+     "dups": 4,
+     "dup_tie": 0,
+     "pass": false
+    },
+    "J2": {
+     "plants": 8,
+     "plant_caught": 8,
+     "plant_caught_strict": 6,
+     "dups": 4,
+     "dup_tie": 0,
+     "pass": false
+    },
+    "F": {
+     "plants": 0,
+     "plant_caught": 0,
+     "plant_caught_strict": 0,
+     "dups": 0,
+     "dup_tie": 0,
+     "pass": false
+    }
+   }
+  }
+ },
+ "disagreements_gt1_total": 319
+}
