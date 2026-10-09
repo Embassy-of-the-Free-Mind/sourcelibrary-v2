@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: [la]
+scripts: [Latn]
+canons: []
+n_books: 71
+n_pages: 71
+verdict: "Served Latin English scores 4.16/5 (incunabula 3.55, OCR-bound); Flash beats Lite by +0.22 beyond the A-vs-A floor; context and negation check do not."
+status: undecided
+decision: "PENDING Derek in DECISIONS.md (default: keep lite until the dial rises)"
+superseded_by: null
+issue: 5695
+---
 ## 2026-10-03 · How faithful is our served Latin English against published human translations, and which lever helps? (#5695 T1)
 
 **Question.** For Latin 1450–1800 (1.57M of our 1.87M translated Latin pages), against a public-domain English translation of the same passage: how faithful is what readers see, what goes wrong, and which cheap lever fixes it?

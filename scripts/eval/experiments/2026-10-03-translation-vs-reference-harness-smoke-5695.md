@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: [pi]
+scripts: []
+canons: [pali]
+n_books: 6
+n_pages: 6
+verdict: "The translation-vs-reference harness passes its controls with two blind Opus judges on 6 Pali pages (weighted kappa 0.90); an instrument check, not a finding."
+status: informational
+decision: null
+superseded_by: null
+issue: 5695
+---
 <!-- PRIOR ART: 2026-10-02-translation-flash-vs-lite-sanskrit-pali-chinese-5606.md (same Pali references and arm outputs, judged with the #4742 rubric); this record is the instrument check of the new #5695 harness on six of those pages, plus the served arm. -->
 ## 2026-10-03 · Smoke run of the translation-vs-reference judge harness: do the controls pass on six Pali pages? (#5695 step 0)
 

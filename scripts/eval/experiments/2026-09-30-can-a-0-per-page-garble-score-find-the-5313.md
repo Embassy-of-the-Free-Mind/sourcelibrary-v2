@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 327
+n_pages: 327
+verdict: "A $0 lexicon and repetition garble score reaches precision 0.24-0.60 and recall 0.09-0.19 against the judge's 32 positives; corpus precision about 15-20%."
+status: rejected
+decision: "Gate (P >= 0.8) not met; no ocr.read_quality field written, reader note unchanged (#5313)"
+superseded_by: null
+issue: 5313
+---
 ## 2026-09-30 — Can a $0 per-page garble score find the audit's "fluent prose over garbled OCR" pages? No: precision 0.24–0.60, recall 0.09–0.19; no field written (#5313)
 
 **Question.** The reader note (#5315) reaches only pages whose OCR admitted difficulty (1.08%); the #5274 judge found 6.6% garble passthrough. Can lexicon, token-garbage and repetition features over `ocr.data` flag those pages with precision ≥ 0.8, enough to store `ocr.read_quality`?

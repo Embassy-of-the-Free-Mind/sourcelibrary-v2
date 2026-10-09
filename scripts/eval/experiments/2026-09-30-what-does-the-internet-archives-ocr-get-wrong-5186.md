@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: agreement
+languages: [en]
+scripts: [Latn]
+canons: []
+n_books: 246
+n_pages: 4470
+verdict: "Archive OCR words are fine (1-3 per mille glyph misreads) but numbers are not: 0.7-8.0% of years wrong per book, driven by typeface; flash-lite eye-skips 0.5% of interior pages."
+status: informational
+decision: null
+superseded_by: null
+issue: 5186
+---
 ## 2026-09-30 — What does the Internet Archive's OCR get wrong? Class-by-class taxonomy on 4,470 Archive-vs-flash-lite page pairs (#5186)
 
 - **Question.** The free OCR lane accepts Archive text at ≥ 0.80 sequence agreement; four

@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [en]
+scripts: [Latn]
+canons: []
+n_books: 114
+n_pages: 114
+verdict: "MinerU is neither peer nor tier-3 fallback, narrowly: catastrophic 2.6% (bar 2%), refused-page pooled CER 2.25x lite (bar 2x), mostly from dropped footnotes; median delta +0.19 pp."
+status: undecided
+decision: null
+superseded_by: null
+issue: [5182, 3389]
+---
 ## 2026-09-30 — MinerU on the English reference pages: peer engine, tier-3 fallback, or neither? (#5182, #3389)
 
 **Headline: the preregistered rule says NEITHER, narrowly on both counts, and the main failure is mechanical.**

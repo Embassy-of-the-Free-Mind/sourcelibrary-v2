@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [grc]
+scripts: [Grek]
+canons: []
+n_books: 109
+n_pages: 109
+verdict: "Flash-preview beats flash-lite on Greek print in both periods (1700s 46W/6L, pre-1700 55W/1L); Kraken matches preview on letters; lite 'inadequate' for 1700s withdrawn"
+status: adopted
+decision: "Greek OCR routes to flash for visible/new books (#5575); Kraken greek-cllg stays eval-only (#4744)"
+superseded_by: null
+issue: [4925, 4744]
+---
 ## 2026-09-21 — Which engine should read Greek print, per period? (#4925 step 2, #4744)
 
 **Headline: for 1700–1799 (53 referenced books, decision-grade) production flash-lite is

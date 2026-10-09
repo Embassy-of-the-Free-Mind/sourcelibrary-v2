@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [la]
+scripts: [Latn]
+canons: []
+n_books: 82
+n_pages: 82
+verdict: "1600s Latin print: rule says keep lite (flash 0.3 pp better, under the 1 pp margin, 50 books); 1500s, 1700s and incunabula lack references; lite misreads long s."
+status: undecided
+decision: "UNJUDGED, for Derek (DECISIONS.md); routing unchanged on lite"
+superseded_by: null
+issue: [5126, 4925]
+---
 ## 2026-10-04 — Latin print by century: does flash-lite read well enough, or should early Latin go to flash? 1600s: keep lite. 1500s, 1700s, incunabula: not enough references (#5126, #4925)
 
 PRIOR ART: 2026-09-21-which-engine-should-read-greek-print-per-period-4925.md — the same question and decision rules for Greek, from a screened draw against modern critical editions; 2026-10-01-early-english-ocr-accuracy-against-eebo-tcp-5488.md — the same same-edition reference route for English (its 15 Latin 1600s books ran with the generic prompt and are not pooled here). Neither has a Latin library page referenced by century under the production prompt.

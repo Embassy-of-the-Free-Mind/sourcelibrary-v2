@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: [accuracy, judged]
+languages: []
+scripts: []
+canons: []
+n_books: 320
+n_pages: 320
+verdict: "v15 lifts verified original-note rate 66.7% to 96.3% but cuts interpretive notes by a third and loses 8:1 to a blind judge; not flipped, v16 follows."
+status: rejected
+decision: "v15 not flipped; v13 stays; v16 also not established (PR #5703)"
+superseded_by: null
+issue: 3825
+---
 ## 2026-09-12 — Does translation prompt v15 (#3825) make original-notes real?
 
 **Headline: the verbatim rule works — verified-note rate 66.7% → 96.3% while

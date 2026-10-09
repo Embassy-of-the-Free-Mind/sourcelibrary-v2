@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: [agreement, accuracy]
+languages: [bo]
+scripts: [Tibt]
+canons: [tibetan]
+n_books: 494
+n_pages: 494
+verdict: "Flash-lite and Yigdzin rarely agree on held Tibetan pages (median syllable agreement 0.11, n 494); on the Kangyur control Yigdzin matches Derge 0.962 vs lite 0.149, 23 of 23 pages."
+status: informational
+decision: "Yigdzin read applied to the held books (job yigdzin-527); any future Yigdzin lane needs a script gate in front (#4523)"
+superseded_by: null
+issue: 4523
+---
 ## 2026-10-04 · On the same held Tibetan pages, how often do Gemini 3.1 flash-lite and Yigdzin agree, and which one reads the Kangyur? (#4523)
 
 **Question.** 527 held Tibetan books had preview OCR from `gemini-3.1-flash-lite` (10,630 pages) and no Yigdzin read. Once Yigdzin had read them, which this job did anyway, how often do the two engines diverge on the same page? And on the one Kangyur book, which engine matches Derge?

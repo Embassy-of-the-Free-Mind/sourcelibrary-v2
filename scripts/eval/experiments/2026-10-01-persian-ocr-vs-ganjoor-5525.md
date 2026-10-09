@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [fa]
+scripts: [Arab]
+canons: [persian-poetry]
+n_books: 21
+n_pages: 21
+verdict: "Served Persian manuscript OCR scores sequence accuracy 0.41 and line accuracy 0.74 vs Ganjoor, 4/21 pages degenerate; the 0.90 gate is not met."
+status: rejected
+decision: "Stage 2 (OCR and translate the six prose manuscripts on the served lane) not run; needs a different OCR lane first (#5525)"
+superseded_by: null
+issue: 5525
+---
 ## 2026-10-01 · Is served Persian OCR accurate enough to OCR and translate the six prose Sufi manuscripts? Measured on classical poetry vs Ganjoor (#5525)
 
 **Question.** Eternity's Persian shelf (110 hidden books). Before paying to OCR and translate six prose manuscripts (*Laṭāyif-i Ashrafī*, *ʿImād-i Subḥāniyah*, the *Tarjumah-i Upnakhat*, *Khulāṣat al-Akhbār*, *Tārīkh al-Ḥukamāʾ*, *48 Texts on Philosophy*; ~4,700 pages), how accurate is the Persian OCR we already serve? The gate set in the issue: median character accuracy ≳ 0.90, or by-eye reads that say the text is usable.

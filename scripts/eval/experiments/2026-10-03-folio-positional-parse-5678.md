@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: [Latn]
+canons: []
+n_books: 120
+n_pages: null
+verdict: "Reading folio markers by position cuts parse failures 17 to 1 (Lite) and 11 to 0 (Flash); real seam defects per 100 breaks fall 28 to 15 and 18 to 8."
+status: informational
+decision: "Positional parser merged into the lane code (#5719); TRANSLATE_FOLIO_MARKERS flag stays off"
+superseded_by: null
+issue: 5678
+---
 ## 2026-10-03 · Folio markers read by position: how many of the seam A/B marker defects were the parser's? (#5678)
 
 PRIOR ART: `2026-10-03-seam-ab-markers-5678.md` (the A/B and its post-hoc "Amendment 2" positional reading, an

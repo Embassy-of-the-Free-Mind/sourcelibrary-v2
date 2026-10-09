@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: agreement
+languages: [en]
+scripts: [Latn]
+canons: []
+n_books: 82
+n_pages: 82
+verdict: "The 1880-1930 number-free cohort gate admits 0 of 1,241 pages with Archive number errors and 34% of cohort pages; after v2 fixes, 2 letter/Greek number misreads remain in 82 admitted pages."
+status: adopted
+decision: "Cohort page gate v2 (folio and digit-lookalike rules) in ia-ocr-cohort.mjs, IA text-first lane (PR #5361)"
+superseded_by: null
+issue: [5124, 5186]
+---
 ## 2026-09-30 — Does the adopted English Archive cohort (1880–1930, number-free, ≥ 90% Latin) keep the Archive's number errors out, and how much does it admit? (#5124, #5186)
 
 **Design.** Rule implemented in `scripts/lib/ia-ocr-cohort.mjs`, applied per page in `scripts/import/ia-ocr-ingest.mjs`. Three free checks and one paid one, all read-only:

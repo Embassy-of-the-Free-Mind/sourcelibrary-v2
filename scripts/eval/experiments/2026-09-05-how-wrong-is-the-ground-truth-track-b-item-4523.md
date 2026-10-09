@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [grc, de, la]
+scripts: [Grek, Latn]
+canons: []
+n_books: null
+n_pages: 69
+verdict: "Reference error is 0.07% Greek, 0.06% German, 1.15% Latin; Latin engine gaps sit inside it, and our own reference cleaner cost Greek 6.0% of letters."
+status: informational
+decision: null
+superseded_by: null
+issue: 4523
+---
 ## 2026-09-05 — How wrong is the ground truth? (Track B item 1, #4523)
 
 - **Question.** Every engine accuracy we quote is `1 − CER(reference, output)`. At 98–99%

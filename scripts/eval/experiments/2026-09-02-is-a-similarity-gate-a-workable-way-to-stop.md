@@ -1,3 +1,16 @@
+---
+stage: pipeline
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "No: four rounds of tuning could not get the block rate below about 30% while keeping the true duplicates (0.60 blocks 49%, catching 2/2)."
+status: rejected
+decision: "No similarity gate; the prior-art guard was made unconditional instead and the similarity list is advisory only"
+superseded_by: null
+---
 ## 2026-09-02 — Is a similarity gate a workable way to stop duplicated work?
 
 - **Design.** Replay all 2,043 watched files as if newly created; sweep the

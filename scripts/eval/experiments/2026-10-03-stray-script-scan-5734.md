@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: none
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: 5395496
+verdict: "4,913 of 5.4M English pages carry a stray script; Hangul (mostly a 그 for 'that') on 2,689, 2,677 of them from gemini-3-flash-preview, across all source languages."
+status: adopted
+decision: "2,083 pages repaired; write-time stray-script guard added at every translation writer (Derek, 2026-10-03)"
+superseded_by: null
+issue: 5734
+---
 <!-- PRIOR ART: scripts/audit/translation-bridging.mjs counts CJK left untranslated in the English (the source's own script, a different defect); no earlier walk asked which scripts in the English belong to neither the source nor the book. -->
 ## 2026-10-03 · Which English translations carry a script that belongs to neither the source nor the book? (#5734 part 3)
 

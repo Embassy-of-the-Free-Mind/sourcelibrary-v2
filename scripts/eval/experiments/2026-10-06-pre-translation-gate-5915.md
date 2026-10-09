@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 13971
+n_pages: 13971
+verdict: "A pre-translation gate (strip shape, CJK/Devanagari density and fragment share, structure) refuses 0.21% of pages; by eye only 0.03% of pages refused are legible."
+status: adopted
+decision: "Gate ON in the translation worker and both Batch lanes, switch TRANSLATE_PRE_GATE=0 (scripts/lib/pre-translation-gate.mjs, #5915)"
+superseded_by: null
+issue: 5915
+---
 ## 2026-10-06 · Can a page the pipeline could not read be refused before translation, from the page document alone, without refusing legible pages? (#5915)
 <!-- PRIOR ART: 2026-10-02-illegible-gate-5305.md (a gate on what the OCR says about itself; it found no text-only feature that separates fluent misreadings, lexicon AUC 0.61–0.74); 2026-10-02-quality-by-date-chars-resolution-5615.md (resolution above 1,500 px does not move judged quality; it did not look at pixels per letter or at image shape). Neither measures image size against transcribed length, token shape, or page structure on a corpus draw. -->
 

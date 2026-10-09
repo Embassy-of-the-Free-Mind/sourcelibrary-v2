@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: agreement
+languages: [en]
+scripts: [Latn]
+canons: []
+n_books: 150
+n_pages: 150
+verdict: "A tags-only Gemini pass over GLM-OCR text recovers every tag but marginalia (margin F1 0.64) at $0.43 per 1,000 pages, 47% of a full lite OCR ($0.91); $0 rules give only language and script."
+status: undecided
+decision: null
+superseded_by: null
+issue: 5830
+---
 ## 2026-10-04 · If GLM-OCR reads the text, how much Gemini do we need to get the page-structure tags back, and what does it cost? (#5830)
 <!-- PRIOR ART: 2026-10-04-ocr-bakeoff-round-3-5660.md (PR #5786) produced the GLM-OCR text and JPEGs reused here. It scored body CER with the tags stripped, so it never measured what an open engine loses. ocr-v18-ab.mjs (#4195) supplies the Batch stages and the production OCR request, imported unchanged. Nothing before this measured the tags themselves. -->
 

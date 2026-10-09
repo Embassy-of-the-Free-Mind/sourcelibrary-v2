@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: agreement
+languages: [bo]
+scripts: [Tibt]
+canons: [tibetan]
+n_books: null
+n_pages: null
+verdict: "A $0 Tibetan-Sanskrit table never matched a wrong note (0 of 18) and all 6 conflicts were wrong notes, but it settles only 11% of candidates and finds 3 of 18 known wrongs."
+status: informational
+decision: "Stage-3 grounded verifier (~$20) run next on the 885 no-entry notes; no note corrected here (#5647)"
+superseded_by: null
+issue: [5647, 5624]
+---
 ## 2026-10-02 · Can a $0 reference table settle translation-note facts before a model is paid to? (#5647 stages 1–2)
 <!-- PRIOR ART: 2026-10-02-note-facts-full-tibetan-run-5624.md (PR #5640) judged all 359 candidate notes with subagents; this builds the standing $0 lane that #5647 asks for and scores it against those verdicts. 2026-10-02-are-the-facts-translation-notes-add-right-5624.md (PR #5632) supplied the page-apparatus controls (A09, A14). -->
 

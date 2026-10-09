@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: 188
+verdict: "Not established: v18 stops invented text on clean white leaves but not show-through; pre-registered S1 (5 better vs 2 worse, p 0.45) and S2 blank-recall clauses fail."
+status: superseded
+decision: "Not promoted on this evidence; re-run with by-eye labels (#4195)"
+superseded_by: "2026-10-02-ocr-v19-showthrough-4195.md"
+issue: [4195, 4149]
+---
 ## 2026-10-02 · Does OCR prompt v18 (blank narrowing + `<insert>`) stop invented text on blank leaves without declaring real pages blank? Three arms, Batch, k=3 (#4195, #4149)
 <!-- PRIOR ART: prompt-ab.mjs (#4610, realtime k-run A/B on 10 cases), blank-page-study.mjs (#3444, reference-free blank scoring, reused), ocr-preprocessing/gemini-score.mjs (#5250, windowed CER + A/A rule, reused). None ran three prompt arms through Batch over labelled strata. -->
 
