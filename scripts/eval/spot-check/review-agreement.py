@@ -3,7 +3,12 @@ Repeated-measures agreement between shelf-overview review runs.
 Usage: python3 scripts/eval/spot-check/review-agreement.py NAME=reviews_dir [NAME=reviews_dir ...] > report
 Per page: serious (same definition as overview-score.mjs), right_page, ocr_score, tr_score, serious error classes.
 Per book: fit_to_show. Pairwise: % agreement, Cohen's kappa, weighted kappa (verdict), Spearman (scores),
-class-level Jaccard on pages both runs flagged. Plus Fleiss' kappa across all runs and a bootstrap CI by book.
+class-level Jaccard on pages both runs flagged. Plus Fleiss' kappa across all runs and a bootstrap CI by book, and
+Krippendorff's alpha across any number of runs with missing pages allowed (#6338): nominal on serious and right_page,
+ordinal on ocr_score, tr_score and fit_to_show. `--self-test` checks alpha against Krippendorff (2011)'s worked example.
+PRIOR ART for alpha: scripts/eval/lib/agreement-stats.mjs has binary agreement and weighted kappa but no alpha, and is
+JavaScript; this file already loads the review JSON and prints the pairwise table, so alpha sits beside Fleiss here.
+The function is the same formula as krippendorffAlpha in scripts/eval/second-reader/lib.mjs (#6347).
 """
 import json, glob, os, sys, random, itertools, collections
 
@@ -19,7 +24,7 @@ def load(d):
                 ser = any(e.get('severity') == 'serious' for e in errs) or p.get('right_page') == 'no'
                 classes = {str(e.get('class', '?'))[:3] for e in errs if e.get('severity') == 'serious'}
                 pages[(b['book_id'], p.get('page_number'))] = dict(
-                    serious=int(ser), wrong=int(p.get('right_page') == 'no'), ocr=p.get('ocr_score'), tr=p.get('tr_score'),
+                    serious=int(ser), wrong=int(p.get('right_page') == 'no'), right=p.get('right_page'), ocr=p.get('ocr_score'), tr=p.get('tr_score'),
                     classes=classes, book=b['book_id'])
     return pages, books
 
@@ -102,7 +107,29 @@ def kalpha(units, level='nominal'):
     De = sum(nc[c] * nc[k] * d2(c, k) for c in range(K) for k in range(K)) / (n * (n - 1))
     return None if De == 0 else 1 - Do / De
 
+def self_test():
+    # Krippendorff, K. (2011). Computing Krippendorff's Alpha-Reliability, Annenberg School, U. Pennsylvania, section C:
+    # 4 observers x 12 units, values 1-5, 7 missing. Published: nominal .743, ordinal .815, interval .849.
+    N = None
+    obs = [[1, 2, 3, 3, 2, 1, 4, 1, 2, N, N, N],
+           [1, 2, 3, 3, 2, 2, 4, 1, 2, 5, N, 3],
+           [N, 3, 3, 3, 2, 3, 4, 2, 2, 5, 1, N],
+           [1, 2, 3, 3, 2, 4, 4, 1, 2, 5, 1, N]]
+    units = [list(u) for u in zip(*obs)]
+    got = {lv: round(kalpha(units, lv), 3) for lv in ('nominal', 'ordinal', 'interval')}
+    want = {'nominal': 0.743, 'ordinal': 0.815, 'interval': 0.849}
+    # nominal on strings (right_page is "yes"/"no"/"unsure"): relabelling the categories must not change alpha
+    lab = {1: 'a', 2: 'b', 3: 'c', 4: 'd', 5: 'e', None: None}
+    got['nominal_str'] = round(kalpha([[lab[v] for v in u] for u in units]), 3); want['nominal_str'] = 0.743
+    # perfect agreement with one category has no expected disagreement: undefined, not 1
+    got['one_category'] = kalpha([[1, 1], [1, 1]]); want['one_category'] = None
+    print(json.dumps({'got': got, 'want': want}))
+    sys.exit(0 if got == want else 1)
+
 def f(x): return '—' if x is None else f'{x:.2f}'
+
+if sys.argv[1:] == ['--self-test']:
+    self_test()
 
 runs = {}
 for arg in sys.argv[1:]:
@@ -133,7 +160,10 @@ if len(names) > 2:
 # Krippendorff's alpha over the UNION of pages: a page one run did not return is missing, not dropped (#6338).
 union = sorted(set().union(*(set(runs[n][0]) for n in names)), key=str)
 col = lambda fld: [[runs[n][0][k][fld] if k in runs[n][0] else None for n in names] for k in union]
+ubooks = sorted(set().union(*(set(runs[n][1]) for n in names)))
+fit = [[runs[n][1].get(b) for n in names] for b in ubooks]
 print(f"\nKrippendorff α across {len(names)} runs, {len(union)} pages (missing allowed): serious (nominal) {f(kalpha(col('serious')))}, "
-      f"OCR score (ordinal) {f(kalpha(col('ocr'), 'ordinal'))}, English score (ordinal) {f(kalpha(col('tr'), 'ordinal'))}")
+      f"right_page (nominal) {f(kalpha(col('right')))}, OCR score (ordinal) {f(kalpha(col('ocr'), 'ordinal'))}, "
+      f"English score (ordinal) {f(kalpha(col('tr'), 'ordinal'))}; {len(ubooks)} books: fit_to_show (ordinal) {f(kalpha(fit, 'ordinal'))}")
 # per-stratum serious-rate stability
 print('\nserious-page rate by book-tradition prefix is in each run\'s overview-score report.')
