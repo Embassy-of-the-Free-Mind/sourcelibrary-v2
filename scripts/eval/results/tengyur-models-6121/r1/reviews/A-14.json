@@ -1,0 +1,232 @@
+[
+ {
+  "id": "Q9O0R",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "Follows the lemma-by-lemma commentary on cowness and universals closely; the inline Sāṃkhya gloss is clumsy but the argument is carried."
+ },
+ {
+  "id": "QOJZ2",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "བསམ་པའི་ལས",
+    "english": "the karma of what is intended",
+    "why": "བསམ་པའི་ལས (cetayitvā karma) is the bodily/verbal action performed after having intended, not the object of intention."
+   }
+  ],
+  "note": "Faithful rendering of Avalokitavrata's gloss on volition and intended action; only the rendering of cetayitvā karma is loose."
+ },
+ {
+  "id": "QW3PM",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "Accurate on the Mahāyāna-as-Buddhavacana argument and the patriarch lineage; names correctly identified."
+ },
+ {
+  "id": "Q4EH1",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "ལྷག་པར་ཞེན་པའི་དབང་གིས",
+    "english": "Through the force of excessive conceptual attachment",
+    "why": "ལྷག་པར་ཞེན་པ is adhyavasāya, conceptual determination, not 'excessive attachment'.",
+    "fix": {
+     "find": "Through the force of excessive conceptual attachment",
+     "replace": "Through the force of determination (adhyavasāya)"
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "གཞན་གྱིས་བསམ་པ་མ་རིག་ནས",
+    "english": "Not understanding the opponent's thought, one might formulate an objection",
+    "why": "It is the other party (གཞན་གྱིས) who, failing to understand the author's intention, raises the objection; the English makes the opponent's thought the thing misunderstood.",
+    "fix": {
+     "find": "Not understanding the opponent's thought, one might formulate an objection",
+     "replace": "Another, not understanding the intention, raises an objection"
+    }
+   },
+   {
+    "type": "reversal",
+    "confidence": "high",
+    "tibetan": "དེ་དག་ལས་ནི་རྣམ་པར་རྟོག་པ་མི་འཇུག་པ་ཡིན་ནམ་ཞེས་བྱ་བ་ནི་རང་གི་མཚན་ཉིད་རྣམས་ལ་སྟེ།",
+    "english": "That is to say, does it engage with specific characteristics?",
+    "why": "The commentary only glosses 'those' as the particulars (does conceptual thought NOT engage with them?); the English inverts the question.",
+    "fix": {
+     "find": "That is to say, does it engage with specific characteristics?",
+     "replace": "\"Those\" refers to the specific characteristics."
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "དོན་བྱ་བ་བྱེད་པའི་དོན་ལ་འཇུག་གོ",
+    "english": "they engage in practical actions directed at purposeful objects",
+    "why": "དོན་བྱ་བ་བྱེད་པ is arthakriyā: they act toward objects capable of causal efficacy / fulfilling a purpose."
+   }
+  ],
+  "note": "Overall argument on svalakṣaṇa vs. conceptual appearance is recognisable, but key Pramāṇa terms and one speaker/question are mishandled."
+ },
+ {
+  "id": "QPXHL",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "མེད་པའི་བློས་རྒྱུན་གཅོད་པ་ཡིན་ནོ།",
+    "english": "It is the very engagement of the mind with an entity that, by producing an incompatible cause in the nature of a latent tendency (vasana) habitual imprint or predisposition, causes the mind that perceives the absence of an entity to cut the continuity.",
+    "why": "The cognition of absence (ergative བློས) cuts off the continuity of the very operation of the cognition of an entity; the English makes the entity-cognition the agent.",
+    "fix": {
+     "find": "It is the very engagement of the mind with an entity that, by producing an incompatible cause in the nature of a latent tendency (vasana) habitual imprint or predisposition, causes the mind that perceives the absence of an entity to cut the continuity.",
+     "replace": "By producing an incompatible cause in the nature of a latent tendency (vāsanā), the mind that perceives the absence of an entity cuts off the continuity of the very operation of the mind that perceives an entity."
+    }
+   },
+   {
+    "type": "reversal",
+    "confidence": "medium",
+    "tibetan": "དེའི་ཚེ་མེ་ལས་གྲང་བ་ལྟར།",
+    "english": "just as coldness comes from fire at that time",
+    "why": "Fire and cold is the stock example of incompatibility (cold is removed by fire); 'coldness comes from fire' inverts the example."
+   }
+  ],
+  "note": "Usable on the non-coexistence (sahānavasthāna) argument, but the agent of the vāsanā-mechanism is reversed and the fire/cold example garbled."
+ },
+ {
+  "id": "QDXY3",
+  "score": 2,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "ཤེས་རབ་རྩལ་མེད་པས་ན",
+    "english": "lack the power of faith",
+    "why": "ཤེས་རབ is prajñā, insight/wisdom, not faith.",
+    "fix": {
+     "find": "lack the power of faith",
+     "replace": "lack the power of insight"
+    }
+   },
+   {
+    "type": "structure",
+    "confidence": "high",
+    "tibetan": "རྒྱུ་ལ་རང་བཞིན་ཇི་སྙེད་ཅིག །མེད་ན་མི་འབྱུང་འབྲས་བུ་ནི།",
+    "english": "However many natures svabhāva or causes hetu there may be,\nAn effect kārya does not arise without them.",
+    "why": "PV I.3: the effect is a reason with respect to the cause (རྒྱུ་ལ), with as many natures as it is invariably connected to; 'cause' is not a member of a list alongside 'natures'.",
+    "fix": {
+     "find": "However many natures svabhāva or causes hetu there may be,\nAn effect kārya does not arise without them.",
+     "replace": "The effect kārya, which cannot occur without the cause hetu\nwith however many natures svabhāva, [is a reason for the cause]."
+    }
+   },
+   {
+    "type": "structure",
+    "confidence": "high",
+    "tibetan": "ཚད་མ་རྣམས་ནི་མི་འཇུག་པ། །མེད་ལ་མི་འཇུག་འབྲས་བུ་ཅན།",
+    "english": "The means of valid cognition pramāṇa do not apply to what is absent;\nThis results in the knowledge of non-existence.",
+    "why": "PV I.4: the non-operation of the pramāṇas has as its result non-engagement (in behaviour) toward what is absent; 'knowledge of non-existence' belongs to the following line.",
+    "fix": {
+     "find": "The means of valid cognition pramāṇa do not apply to what is absent;\nThis results in the knowledge of non-existence.",
+     "replace": "The non-operation of the means of valid cognition pramāṇa\nHas as its result non-engagement with what is absent."
+    }
+   },
+   {
+    "type": "addition",
+    "confidence": "medium",
+    "tibetan": "ཀུན་ཏུ་བཟང་པོའི་འོད་ཟེར་དག །ཀུན་ནས་འཕྲོ་ལ",
+    "english": "And whose rays of light, like those of the \"All-Good\"",
+    "why": "The verse says the (Buddha's) rays are all-good (samantabhadra) and radiate everywhere; 'like those of' adds a comparison not in the text."
+   }
+  ],
+  "note": "The opening of the Pramāṇavārttika: the prose-ified dedicatory verse is fine, but 'faith' for prajñā and the misconstrued kārikās I.3–4 would mislead a reader on the core logic."
+ },
+ {
+  "id": "QVHN5",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "Accurate rendering of the refutation of Sāṃkhya pradhāna, including the guṇa verse and the dilemma on capacity; odd paragraph breaks only."
+ },
+ {
+  "id": "Q3X2C",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "སྒྲའི་ཡུལ་ལྡན་པ་སྣ་ཚོགས་པའི་ངོ་བོ་མ་ཡིན་པ",
+    "english": "although the object of sound does not have a nature of various conjunctions",
+    "why": "The sense is that conjunction, the object of the word ['variegated'], is not of a variegated nature; 'object of sound' as subject garbles the argument."
+   }
+  ],
+  "note": "Sound treatment of the refutation of the Vaiśeṣika variegated whole and conjunction; one clause muddled."
+ },
+ {
+  "id": "QOUZC",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "Precise rendering of the analysis of pakṣadharma, pervasion and the three possible restrictions (eva); technical vocabulary correct."
+ },
+ {
+  "id": "QIB6P",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "གཞལ་བྱ་ཞེས་བྱའི་སྒྲ་",
+    "english": "(jñeya)",
+    "why": "གཞལ་བྱ is prameya, the object of valid cognition, not jñeya.",
+    "fix": {
+     "find": "(jñeya)",
+     "replace": "(prameya)"
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "སེལ་བ་སྒྲའི་དོན་དུ་ཁས་བླང་བར་མི་བྱ་སྟེ། དེ་འགེགས་པའི་ཕྱིར་རོ་ཞེ་ན",
+    "english": "One should not accept (Apoha) exclusion of others as the primary object of sound, because this would be a denial",
+    "why": "This is the opponent's objection (ཞེ་ན): exclusion should not be accepted as word-meaning because [a cognition] negates it; the English states it as a bare assertion and misreads the reason."
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "དེ་ནི་ཞེས་བྱ་བ་ནི་སེལ་བ་མ་ཡིན་པའི་སྒྲ་ལ་སོགས་པའོ།",
+    "english": "refers to things other than (Apoha), such as the sounds themselves",
+    "why": "'That' refers to the non-exclusion word[-meaning] etc. (i.e. what the opponent proposes), not to 'the sounds themselves'."
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ཡང་དག་པ་མ་ཡིན་པའི་དོན་མངོན་པར་ཞེན་པ",
+    "english": "attachment to unreal objects",
+    "why": "མངོན་པར་ཞེན་པ here is adhyavasāya, conceptual determination of an unreal object, not emotional attachment."
+   }
+  ],
+  "note": "The apoha discussion is followable, but the opponent's objection is not marked as such, prameya is mislabelled, and a stray 'sentence continues to next page' remark is left in the text."
+ }
+]

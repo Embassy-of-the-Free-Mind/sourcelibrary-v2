@@ -29,6 +29,7 @@ import {
   stageSubmit, stagePoll, makeResolver, readJsonl, writeJsonl, md5, r4, shuffle,
   SAFETY, OCR_GENERATION_CONFIG, LANGUAGE_INSTRUCTION, docContext, MODEL,
 } from './ocr-v18-ab.mjs';
+import { registerEvalBatch, closeEvalBatch } from '../lib/eval-batch-registry.mjs';
 import { makeRng } from './lib/paired-stats.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -160,11 +161,20 @@ async function registerJobs() {
   const { withMongo } = await import('../lib/mongo.mjs');
   await withMongo(async (db) => {
     for (const j of rec.jobs) {
-      await db.collection('batch_jobs').updateOne({ gemini_job_name: j.job_name }, { $setOnInsert: {
-        id: `ocr-tags-5830-${j.arm}`, job_name: j.job_name, gemini_job_name: j.job_name, status: 'external_eval', type: 'eval', model: j.model,
-        page_count: j.requests, created_at: new Date(j.submitted_at), updated_at: new Date(), issue: 5830,
-        note: 'hand-submitted eval Batch (scripts/eval/ocr-tags-5830.mjs); results go to files only, never to pages' } }, { upsert: true });
+      await registerEvalBatch(db, { jobName: j.job_name, id: `ocr-tags-5830-${j.arm}`, model: j.model, pageCount: j.requests,
+        submittedAt: j.submitted_at, issue: 5830, submittedBy: 'scripts/eval/ocr-tags-5830.mjs' });
       console.log(`registered ${j.arm} ${j.job_name} as external_eval`);
+    }
+  });
+}
+
+/** #5897: a collected job ends its registration, or the daily paid-vs-got audit reports it as open at Gemini. */
+async function closeCollected() {
+  const rec = JSON.parse(fs.readFileSync(F('batch.json'), 'utf8'));
+  const { withMongo } = await import('../lib/mongo.mjs');
+  await withMongo(async (db) => {
+    for (const j of rec.jobs.filter((x) => x.collected_at)) {
+      if (await closeEvalBatch(db, j.job_name, { evidence: `${j.responses} responses collected ${j.collected_at} (batch.json)`, usage: { cost_usd: r4(j.cost_usd), input_tokens: j.in_tokens, output_tokens: j.out_tokens } })) console.log(`closed ${j.arm} ${j.job_name} as collected`);
     }
   });
 }
@@ -402,7 +412,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   const STAGES = {
     draw: stageDraw, build: stageBuild,
     submit: async () => { await stageSubmit(MAIN); await registerJobs(); },
-    poll: async () => process.exit((await stagePoll({ ...MAIN, arms: ['R', 'R2', 'T', 'L', 'L2'] })) ? 0 : 1),
+    poll: async () => { const done = await stagePoll({ ...MAIN, arms: ['R', 'R2', 'T', 'L', 'L2'] }); await closeCollected(); process.exit(done ? 0 : 1); },
     'build-l2': stageBuildL2,
     'submit-l2': async () => { await stageSubmit(L2CFG); await registerJobs(); },
     eye: stageEye, score: stageScore,

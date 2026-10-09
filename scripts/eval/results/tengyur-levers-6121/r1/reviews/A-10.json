@@ -1,0 +1,61 @@
+[
+{"id": "QJ8FT", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "medium", "tibetan": "དམིགས་པ་འབྲེལ་ཏོ", "english": "this relates to the object of perception", "why": "The Tibetan says the phrase is construed with the verb 'is perceived' (dmigs), not that it refers to an object of perception."},
+  {"type": "structure", "confidence": "medium", "tibetan": "རྒྱུ་དེ་ཞེས་བྱ་བ་མདུན་དུ་བྱས་ལ", "english": "The phrase \"at that time\" should be placed first", "why": "What is placed first is 'that cause' (rgyu de), supplied from the relative 'which'; 'at that time' is only the lemma being explained."},
+  {"type": "agent", "confidence": "medium", "tibetan": "ངེས་པའི་ཁྱད་པར་གྱི་ལྷན་ཅིག་བྱེད་པ་ཅན་ཡིན་པའི་ཕྱིར་རོ་ཞེས་དོགས་པ་བསུ་བ་ནི་འོན་ཏེ་འབྲས་བུ་ཞེས་བྱ་བའོ", "english": "Even if any particular humor like wind were the cause, not every particular instance would possess all forms of desire and so forth. One must infer this by observing the certain result at all times.", "why": "The whole passage from 'gal te rlung...' is the anticipated objection introduced by 'But if the result', not the author's own assertion."}
+ ],
+ "note": "Generally follows the commentary, but several construal glosses are misread and an objection is partly presented as the author's view."},
+{"id": "Q5T42", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "medium", "tibetan": "དེ་གཏན་ཚིགས་ཉིད་དུ་བྲལ་བར་འགྱུར་བ་ནི་མ་ཡིན་ཏེ", "english": "it is not the case that they are excluded from being reasons themselves", "why": "The Tibetan says they are not separated out (as an exception) to become reasons; the English implies they are reasons."}
+ ],
+ "note": "A sound rendering of a difficult dialectical passage, with verses kept as verse; one sentence inverts the point."},
+{"id": "QPEF4", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "high", "tibetan": "དེའི་བདག་ཉིད་དུ་ཞེས་བྱ་བ་ལ་སོགས་པ་ནི་ཕ་རོལ་གྱིའོ", "english": "refers to the position of we", "why": "pha rol gyi means the passage is the opponent's statement, not 'our' position.", "fix": {"find": "refers to the position of we", "replace": "is the opponent's statement"}},
+  {"type": "term", "confidence": "medium", "tibetan": "བྱུང་བ་དང་མ་བྱུང་བ་ལས་གྱུར་པ", "english": "such as arising and not arising", "why": "The pair paralleling 'mind and mental factors' is the elements and what is derived from them (bhūta/bhautika), not arising and non-arising."},
+  {"type": "term", "confidence": "medium", "tibetan": "བདེ་བ་ལ་སོགས་པ་དང་སེམས་པ་ཅན་གཞན་ཕན་ཚུན་དུའོ", "english": "between feelings like pleasure and other sentient factors", "why": "sems pa can here is the Sāṃkhya conscious principle (cetana/puruṣa), contrasted with pleasure etc. (the guṇas), not 'other sentient factors'."}
+ ],
+ "note": "Readable, but Sāṃkhya terminology is misread and the opponent's statement is attributed to the author's side."},
+{"id": "QOP41", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "མེ་ལས་མི་འཁྲུལ་བར་བརྗོད་ན", "english": "if one speaks without error regarding fire", "why": "mi 'khrul ba is the logical non-deviation of smoke from fire (avyabhicāra), not speaking without error.", "fix": {"find": "if one speaks without error regarding fire", "replace": "if one states that smoke never deviates from fire"}},
+  {"type": "gloss", "confidence": "high", "tibetan": "བརྒྱ་བྱིན་གྱི་སྤྱི་བོ", "english": "here referring to a specific plant or substance named after him", "why": "Śakramūrdhan in this stock example is an anthill emitting smoke-like vapour, not a plant or substance.", "fix": {"find": "here referring to a specific plant or substance named after him", "replace": "śakramūrdhan, the anthill from which smoke-like vapour rises"}}
+ ],
+ "note": "The argument is mostly followed, but the key logical term 'non-deviation' is mistranslated and the stock example is wrongly glossed."},
+{"id": "QCQ47", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "medium", "tibetan": "མཚམས་ཀྱི་ཁོངས་སུ་གཏོགས་པའི་ས་ལ་གནས་པའི་ཁྱེར་བ་པོ་ལ་དགོས་པ་མེད་པ་དེ་ལ་ལྟུང་བ་མེད་དོ", "english": "if the person being carried is standing on land included within the border but has no such purpose [note: of evasion], there is no downfall", "why": "khyer ba po is the carrier, and the rule is: where (the magic) needs no carrier standing on land within the boundary there is no offence, but where there is such a carrier it is a sthūlātyaya. The English makes it the carried person's intention."}
+ ],
+ "note": "Generally adequate on a technical Vinaya passage, but the final rule on carriers is misconstrued."},
+{"id": "QL0FT", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "high", "tibetan": "རིན་ཆེན་ལ་གནས་དེ་བསྔགས་པ།", "english": "The sapphire and the peacock's crest are both praised for their precious quality.", "why": "The verse says that although the blue is the same in sapphire and peacock eye-feather, it is praised only where it resides in the jewel.", "fix": {"find": "The sapphire and the peacock's crest are both praised for their precious quality.", "replace": "In the sapphire and the peacock's eye-feather, it is praised where it resides in the jewel."}},
+  {"type": "agent", "confidence": "medium", "tibetan": "བདག་པོས་རྗེས་སུ་གནང་བས་སྤུན་ཟླ་རྣམས་དང་ལྷན་ཅིག་ཏུ་རང་གི་ཡུལ་དུ་སོང་ནས", "english": "with the permission of Chandra, the lord of men, the brothers went to their own lands", "why": "Candra, with the permission of the lord of men (the king), went with his brothers to his own land; Candra does not grant the permission."},
+  {"type": "structure", "confidence": "medium", "tibetan": "ཡོན་ཏན་གཉེན་དང་བློ་གྲོས་བཟང་པོ་སྐྱེས་ཏེ་ཤིན་ཏུ་ལྕི་བ་བསྔགས་པར་བྱ་བའི་གནས།", "english": "Having developed noble qualities and a fine intellect, he became a most venerable object of praise.", "why": "This is the first line of the stanza, a general maxim about one born with virtues, and it has been turned into narrative prose about Candra."},
+  {"type": "addition", "confidence": "medium", "tibetan": "ཟླ་བ་ཡིད་འཕྲོག་དང་རྣམ་པར་བྲལ་", "english": "and completely separated from us", "why": "'From us' is not in the Tibetan; Candra is to be separated from what is charming (or his life), not from the speakers."}
+ ],
+ "note": "The narrative is followed, but the gnomic verses are partly misread and the permission is misattributed."},
+{"id": "QVG93", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "omission", "confidence": "medium", "tibetan": "ཁྱེའུ་ཁ་འཐོན་པར་རུང་བར་མ་བྱས་པ", "english": "a collection of seeds or the seeds of an abode of living beings", "why": "The list of objects includes sprouted shoots (khye'u kha 'thon pa), which the English leaves out."}
+ ],
+ "note": "A faithful rendering of the Vinaya definitions; the plant and insect names are reasonably handled."},
+{"id": "Q4JD6", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "གདུང་མ་འདེགས་པ་དེ་ལ", "english": "when the pillars do not support [the load]", "why": "The example is lifting a beam (gdung ma 'degs pa): people who cannot lift it individually can when combined; it is not about pillars failing to support.", "fix": {"find": "when the pillars do not support [the load], those", "replace": "in lifting a beam, those [people]"}}
+ ],
+ "note": "Sound on the argument about the whole and its parts, apart from the misread beam-lifting example."},
+{"id": "QNXOM", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "ཕྱོགས་ཆོས་དེའི་ཆས་ཞེས་བྱ་བ", "english": "the property of the thesis being a part of it", "why": "This is the definition 'pakṣadharma [pervaded] by a part of it (tadaṃśena)'; the English makes the property itself a part."}
+ ],
+ "note": "Follows the dense logic in a literal but often opaque way, and misreads the key definitional phrase."},
+{"id": "QO40U", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "མདོའི་དོན་བསྟན་པའི་ཕྱིར", "english": "the meaning of the (Sutra) scriptural discourse", "why": "mdo here is the root text (the verse) being commented on, not a scriptural discourse of the Buddha.", "fix": {"find": "the meaning of the (Sutra) scriptural discourse", "replace": "the meaning of the root text"}},
+  {"type": "term", "confidence": "medium", "tibetan": "ཡོངས་སུ་བརྩལ་བར་བྱས་ན", "english": "if one were to search for them atom by atom", "why": "The argument is that when the atoms are removed one by one, the cognition of a pot no longer arises; it is not about searching."}
+ ],
+ "note": "A good rendering of the atom argument, with one mislabelled root text and one blurred example."}
+]

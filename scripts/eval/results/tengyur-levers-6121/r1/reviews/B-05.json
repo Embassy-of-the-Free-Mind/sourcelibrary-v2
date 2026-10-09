@@ -1,0 +1,62 @@
+[
+{"id": "QOUCU", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "དོན་དུ་རྟོགས་པའི་དོན་ལ་འགྱུར་ཏེ", "english": "This occurs for the meaning understood as the object", "why": "དོན་དུ་རྟོགས་པ is implication (arthāpatti): the qualification applies to the meaning understood by implication, not 'understood as the object'."},
+  {"type": "reversal", "confidence": "medium", "tibetan": "སྨོས་པ་དེ་ཉིད་དེ་ཁྱད་པར་དུ་བྱས་པ་མ་ཡིན་ནོ་ཞེ་ན། དེ་ཁྱད་པར་དུ་བྱས་པ་ནི་མ་ཡིན་ཏེ", "english": "If you say that the very mention of \"proving the probandum\" is not what makes it a particular, it is not a particular.", "why": "The objection asks whether the mention of 'proving the probandum' itself is not the qualification (i.e. claims it is), and the reply denies it; the English makes objection and reply say the same thing."}
+ ],
+ "note": "The argument is followed in outline, but the objection-and-reply structure and the term for implication are muddled in places."},
+{"id": "QUBUZ", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "སེམས་ཀྱིས་བྱིན་གྱིས་བརླབ་པར་བྱའོ", "english": "he should bless his mind with the thought", "why": "Here སེམས་ཀྱིས་བྱིན་གྱིས་བརླབ (adhiṣṭhāna) is the Vinaya act of mentally resolving or determining, not blessing his mind.", "fix": {"find": "he should bless his mind with the thought", "replace": "he should mentally resolve with the thought"}},
+  {"type": "term", "confidence": "medium", "tibetan": "བདག་རང་བྱུང་སྟེ་འདུག་པར་བྱ་བ", "english": "Sitting naturally", "why": "The elder should himself get up and be ready (seated in place), a duty of conduct, not 'sitting naturally'."}
+ ],
+ "note": "An accurate rendering of the five modes of Prātimokṣa recitation and the reciter's duties, with one Vinaya term mistranslated."},
+{"id": "QO40U", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "medium", "tibetan": "དེ་ལྟ་མ་ཡིན་ཏེ། འདི་ཆ་ཤས་དང་བཅས་པ་ཡིན་ན་རྫས་སུ་ཡོད་པ་ཉིད་དུ་མི་འགྱུར་རོ", "english": "This is not the case; if it possessed parts, it would not be a substantial reality.", "why": "དེ་ལྟ་མ་ཡིན་ཏེ here means 'otherwise': if it had parts it would not be substantially real; the text does not reject the preceding consequence."}
+ ],
+ "note": "A sound translation of the argument about the shapes of atoms and the conventional existence of the pot."},
+{"id": "Q6F2U", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "བརྒྱ་བྱིན་གྱི་སྤྱི་བོ", "english": "the crown of Indra's head", "why": "བརྒྱ་བྱིན་གྱི་སྤྱི་བོ (śakramūrdhan) is the standard Pramāṇa example meaning an anthill, which emits vapour like smoke, not Indra's head literally.", "fix": {"find": "When the crown of Indra's head is of a nature that is not fire, at that time, if smoke arises from the crown of Indra's head", "replace": "When an anthill (lit. 'Indra's head') is of a nature that is not fire, at that time, if smoke arises from the anthill"}},
+  {"type": "structure", "confidence": "medium", "tibetan": "རང་གི་ངོ་བོར་གྱུར་པའི་ཁྱད་པར་ཡང་ཡོད་པ་ཁོ་ནའོ", "english": "there are only those specific characteristics that have become its own essence", "why": "The reply says that although fire has particulars, it certainly also has a particular that is its own nature; ཁོ་ན marks emphasis, not 'only those'."}
+ ],
+ "note": "The dense argument about fire, smoke and causal specificity is mostly tracked, but the key śakramūrdhan (anthill) example is mistranslated."},
+{"id": "Q6O4B", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "medium", "tibetan": "ཤེས་པ་དང་དེའི་ཡུལ་དགག་པར་བྱ་བའི་དོན་ནི་ཡོད་པར་གདགས་པས་ཡོད་པ་ཡིན་ལ། དེ་དག་ལོག་པ་ནི་མི་དམིགས་པའི་མེད་པ་ཡིན་ནོ། །དེ་ལྟ་བས་ན་དམིགས་པ་ཡང་མེད་པ་ཞེས་བརྗོད་དོ", "english": "the object of cognition and the negation of that object are designated as existing because they are present, while their reversal is the non-existence of non-perception. Thus, even the perceived is said to be non-existent.", "why": "The text says the cognition and its object (the thing to be negated) are what is designated 'existence', their cessation is the absence that is non-perception, and hence absence is also called non-perception; the English turns the negandum into 'the negation' and inverts the conclusion."},
+  {"type": "structure", "confidence": "medium", "tibetan": "ལུས་དང་བློ་ཐམས་ཅད་མཁྱེན་པ་ལ་སོགས་པ་དང་མི་འགལ་བ་དག་གིས", "english": "by using signs that are not incompatible with the body or the mind", "why": "The Mīmāṃsakas use reasons such as having a body or intellect, which are not incompatible with omniscience; the English makes the signs compatible with the body or mind."}
+ ],
+ "note": "The topic of non-perception and the final causal complex comes through, but two key sentences are misconstrued."},
+{"id": "Q0W3R", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "medium", "tibetan": "དེ་ལ་མི་སླུ་བ་ལ་གནོད་པ་ཅན་མེད་པ་ནི་རྣལ་མ་ཡིན་ནོ", "english": "In this context, being authentic means that non-deceptiveness remains uncontradicted.", "why": "The Tibetan denies the claim: the absence of anything that defeats non-deceptiveness is not genuine there (in dreams), since in a dream one later experiences that same thing or something else."},
+  {"type": "gloss", "confidence": "medium", "tibetan": "སྐྱེས་མོས་ཀྱིས", "english": "(Kumarila) [note: refers to the Mimamsa scholar Kumarila Bhatta]", "why": "The Tibetan does not name Kumārila (his usual Tibetan name is གཞོན་ནུ་མ་ལེན), so the attribution is speculative."},
+  {"type": "term", "confidence": "medium", "tibetan": "བདག་གི་རྣམ་པའི་སྐྱེད་བྱེད་དུ་མངོན་པར་སེམས་པ་ཡིན་ནོ", "english": "is intended to be the producer of its own aspect", "why": "མངོན་པར་སེམས་པ here is the cognition's (mis)conception (abhimāna) of the object as producing its own image, as the next side's མངོན་པར་རློམ་པ confirms, not 'intended'."}
+ ],
+ "note": "The dream-versus-waking and non-perception discussion is partly followed, but there is a likely reversal at the opening and a speculative attribution."},
+{"id": "Q1F9J", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "ཅུང་ཟད་ལྕི་བ་ལ་སོགས་པ་རིགས་མི་མཐུན་པ་ལས་ཨུཏྤལ་ལ་སོགས་པ་འབྱུང་བར", "english": "such as a lotus from dissimilar kinds like somewhat heavy [mud] and so forth", "why": "ལྕི་བ is cow dung (the classic example of things arising from a dissimilar kind), not 'heavy [mud]'.", "fix": {"find": "such as a lotus from dissimilar kinds like somewhat heavy [mud] and so forth", "replace": "such as a lotus and so forth from dissimilar kinds like cow dung"}},
+  {"type": "structure", "confidence": "medium", "tibetan": "གཞན་དུ་ན་དོན་ལན་འགའ་ཡང་མེད་པའི་ཕྱིར་རོ", "english": "Otherwise, there would sometimes be no meaning at all.", "why": "The point is that otherwise its occasional occurrence (sometimes seen, sometimes not) would be impossible, not that 'there would sometimes be no meaning'."},
+  {"type": "structure", "confidence": "medium", "tibetan": "དེའི་རང་བཞིན་ཉིད་ཡིན་ན་ནི་དེ་ཉིད་མ་ཡིན་པས་འཁྲུལ་པ་མེད་དོ", "english": "If it is of its very nature, there is no error since it is not that very thing.", "why": "If it has that nature, there is no deviation through something that is not that (cause); the English garbles the logic."}
+ ],
+ "note": "The summary verses (with 'anthill' correctly rendered) are fine, but the prose has a mistranslated example and two garbled inferential clauses."},
+{"id": "QBOSH", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "high", "tibetan": "ཆོས་འདི་དག་ནི་ཉོན་མོངས་པ་མེད་པ་འདི་དག་ནི་ཉོན་མོངས་པ་དང་བཅས་པ་མ་ཡིན་པའོ", "english": "These phenomena are neither with affliction nor without affliction.", "why": "The sūtra says these dharmas are without affliction and are not afflicted; it does not deny that they are without affliction.", "fix": {"find": "These phenomena are neither with affliction nor without affliction.", "replace": "These phenomena are without affliction; they are not afflicted."}}
+ ],
+ "note": "A good translation of the dharma-smṛtyupasthāna passage and the Akṣayamati quotation, with one reversed clause and heavy inline glossing."},
+{"id": "QOGL4", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "ཡིད་མི་ཆེས་པའི་སེམས་དང་ལྡན་པ་ལ་ཐམས་ཅད་དུ་ལྟུང་བ་མེད་དོ", "english": "there is no downfall in any case for one who possesses a mind lacking the intent to deceive", "why": "ཡིད་མི་ཆེས་པའི་སེམས means a mind of distrust or disbelief, not 'lacking the intent to deceive'."},
+  {"type": "gloss", "confidence": "medium", "tibetan": "ཁྱེར་བ་པོ་ལ་དགོས་པ་མེད་པ་དེ་ལ་ལྟུང་བ་མེད་དོ", "english": "has no specific purpose [note: to evade], there is no downfall", "why": "The bracketed notes 'to evade' and 'with intent' impose a reading the Tibetan does not support; the contrast concerns whether a carrier standing on ground inside the boundary is needed."}
+ ],
+ "note": "The toll-evasion rulings are rendered serviceably, with an interpretive gloss and one term to correct."},
+{"id": "QL0FT", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "addition", "confidence": "medium", "tibetan": "དུམ་བུ་འཛིན་པའི་མིང་གིས་མཚན་པའི་ཡོ་བྱད", "english": "the steward (Dumbu dzinpa) Fragment-Holder", "why": "Nothing in the Tibetan calls Dum bu 'dzin pa a steward; it is just a name."},
+  {"type": "addition", "confidence": "medium", "tibetan": "ཟླ་བ་ཡིད་འཕྲོག་དང་རྣམ་པར་བྲལ་", "english": "Chandra must be deprived of his charms and completely separated from us.", "why": "The Tibetan says only that Candra is to be separated from ཡིད་འཕྲོག (charm, or a name); 'from us' is added."}
+ ],
+ "note": "The narrative is followed, but the verses and some speeches are loose and there are small additions about the antagonist."}
+]

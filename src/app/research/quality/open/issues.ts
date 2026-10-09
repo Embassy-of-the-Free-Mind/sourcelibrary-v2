@@ -192,6 +192,12 @@ export const GROUPS: IssueGroup[] = [
         status: 'planned',
       },
       {
+        n: 6338,
+        title: 'How much the AI reviewers miss, and whether a second one helps',
+        detail: 'Each page check is read by one AI reviewer, Claude Opus, whose miss rate has not been measured. A preregistered study plants known errors on some pages of three scripts and compares a second Opus read with a Gemini read, counting only errors confirmed against the page image. Every outcome will be published, with the data.',
+        status: 'planned',
+      },
+      {
         n: 5762,
         title: 'The human ceiling',
         detail: 'How far two published translators, or two human transcribers, differ on our own scales. The first figures are in the paper.',

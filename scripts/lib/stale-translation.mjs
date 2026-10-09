@@ -222,6 +222,14 @@ export const WITHHOLD_REASONS = {
   SOURCE_LOOP: 'source_loop',
   UNVERIFIED_SCRIPT_OCR: 'unverified_script_ocr',
   ILLEGIBLE_SOURCE: ILLEGIBLE_SOURCE_REASON,
+  /**
+   * A person opened the page image and the English is not what is on the leaf (#6048). The one
+   * reason that is NOT a predicate: nothing in the page document says a fluent translation was
+   * invented, so the caller names the pages (`withhold-stale-translations.mjs --by-eye-pages`),
+   * and the book must already carry a pipeline hold — gap-fill reads a withheld page as an
+   * untranslated one and would pay to translate the same bad transcription again.
+   */
+  INVENTED_BY_EYE: 'invented_by_eye',
 };
 
 /** `page_revisions.reason` for the snapshot taken before a withhold. */

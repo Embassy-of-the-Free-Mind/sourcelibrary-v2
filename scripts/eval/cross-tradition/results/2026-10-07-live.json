@@ -1,0 +1,785 @@
+{
+ "date": "2026-10-07",
+ "queries": 25,
+ "answered": 25,
+ "pool_families": 4.68,
+ "off_families": 2.84,
+ "on_families": 4.16,
+ "off_top_share": 0.7,
+ "on_top_share": 0.5,
+ "off_books": 7.4,
+ "on_books": 8.1,
+ "one_family_pool": 1,
+ "one_family_off": 3,
+ "one_family_on": 1,
+ "rows_moved_into_top10": 2.2,
+ "per_query": [
+  {
+   "qid": "c01",
+   "query": "the soul's ascent through the heavens to the divine",
+   "candidates": 36,
+   "pool_families": 6,
+   "off_families": 3,
+   "on_families": 6,
+   "off_top_share": 0.6,
+   "on_top_share": 0.2,
+   "off_books": 10,
+   "on_books": 10,
+   "moved": 5,
+   "off10": {
+    "greco-roman": 6,
+    "modern-europe": 1,
+    "esoteric": 3
+   },
+   "on10": {
+    "greco-roman": 2,
+    "modern-europe": 1,
+    "esoteric": 2,
+    "islamic": 2,
+    "zoroastrian": 1,
+    "early-modern-europe": 2
+   },
+   "pool40": {
+    "greco-roman": 21,
+    "modern-europe": 1,
+    "esoteric": 8,
+    "islamic": 2,
+    "zoroastrian": 2,
+    "early-modern-europe": 2
+   }
+  },
+  {
+   "qid": "c02",
+   "query": "prima materia: the first matter from which all things are made",
+   "candidates": 38,
+   "pool_families": 4,
+   "off_families": 1,
+   "on_families": 3,
+   "off_top_share": 1,
+   "on_top_share": 0.6,
+   "off_books": 8,
+   "on_books": 9,
+   "moved": 4,
+   "off10": {
+    "early-modern-europe": 10
+   },
+   "on10": {
+    "early-modern-europe": 6,
+    "modern-europe": 2,
+    "esoteric": 2
+   },
+   "pool40": {
+    "early-modern-europe": 30,
+    "modern-europe": 2,
+    "esoteric": 4,
+    "jewish": 2
+   }
+  },
+  {
+   "qid": "c03",
+   "query": "emptiness: things have no fixed nature of their own",
+   "candidates": 40,
+   "pool_families": 3,
+   "off_families": 2,
+   "on_families": 3,
+   "off_top_share": 0.6,
+   "on_top_share": 0.5,
+   "off_books": 9,
+   "on_books": 9,
+   "moved": 1,
+   "off10": {
+    "east-asian": 4,
+    "buddhist": 6
+   },
+   "on10": {
+    "east-asian": 4,
+    "buddhist": 5,
+    "indic": 1
+   },
+   "pool40": {
+    "east-asian": 11,
+    "buddhist": 28,
+    "indic": 1
+   }
+  },
+  {
+   "qid": "c04",
+   "query": "what makes a human life go well; the highest good and true flourishing for a person",
+   "candidates": 39,
+   "pool_families": 3,
+   "off_families": 2,
+   "on_families": 3,
+   "off_top_share": 0.9,
+   "on_top_share": 0.8,
+   "off_books": 6,
+   "on_books": 7,
+   "moved": 1,
+   "off10": {
+    "greco-roman": 9,
+    "early-modern-europe": 1
+   },
+   "on10": {
+    "greco-roman": 8,
+    "early-modern-europe": 1,
+    "christian": 1
+   },
+   "pool40": {
+    "greco-roman": 37,
+    "early-modern-europe": 1,
+    "christian": 1
+   }
+  },
+  {
+   "qid": "c05",
+   "query": "the annihilation of the self in union with the divine",
+   "candidates": 38,
+   "pool_families": 4,
+   "off_families": 2,
+   "on_families": 4,
+   "off_top_share": 0.9,
+   "on_top_share": 0.5,
+   "off_books": 7,
+   "on_books": 9,
+   "moved": 4,
+   "off10": {
+    "islamic": 9,
+    "esoteric": 1
+   },
+   "on10": {
+    "islamic": 5,
+    "esoteric": 2,
+    "early-modern-europe": 2,
+    "modern-europe": 1
+   },
+   "pool40": {
+    "islamic": 29,
+    "esoteric": 2,
+    "early-modern-europe": 5,
+    "modern-europe": 2
+   }
+  },
+  {
+   "qid": "c06",
+   "query": "spirits that stand between gods and humans",
+   "candidates": 38,
+   "pool_families": 6,
+   "off_families": 3,
+   "on_families": 5,
+   "off_top_share": 0.6,
+   "on_top_share": 0.4,
+   "off_books": 9,
+   "on_books": 9,
+   "moved": 3,
+   "off10": {
+    "greco-roman": 6,
+    "esoteric": 1,
+    "east-asian": 3
+   },
+   "on10": {
+    "greco-roman": 4,
+    "esoteric": 2,
+    "east-asian": 2,
+    "christian": 1,
+    "modern-europe": 1
+   },
+   "pool40": {
+    "greco-roman": 17,
+    "esoteric": 3,
+    "east-asian": 14,
+    "christian": 1,
+    "modern-europe": 2,
+    "jewish": 1
+   }
+  },
+  {
+   "qid": "c07",
+   "query": "the human being as a small copy of the whole universe",
+   "candidates": 40,
+   "pool_families": 6,
+   "off_families": 4,
+   "on_families": 6,
+   "off_top_share": 0.5,
+   "on_top_share": 0.2,
+   "off_books": 10,
+   "on_books": 10,
+   "moved": 3,
+   "off10": {
+    "modern-europe": 2,
+    "early-modern-europe": 5,
+    "jewish": 1,
+    "esoteric": 2
+   },
+   "on10": {
+    "modern-europe": 2,
+    "early-modern-europe": 2,
+    "jewish": 2,
+    "esoteric": 2,
+    "greco-roman": 1,
+    "islamic": 1
+   },
+   "pool40": {
+    "modern-europe": 7,
+    "early-modern-europe": 21,
+    "jewish": 7,
+    "esoteric": 3,
+    "greco-roman": 1,
+    "islamic": 1
+   }
+  },
+  {
+   "qid": "c08",
+   "query": "the divine is beyond every name and description",
+   "candidates": 30,
+   "pool_families": 5,
+   "off_families": 2,
+   "on_families": 5,
+   "off_top_share": 0.7,
+   "on_top_share": 0.4,
+   "off_books": 2,
+   "on_books": 5,
+   "moved": 3,
+   "off10": {
+    "esoteric": 7,
+    "indic": 3
+   },
+   "on10": {
+    "esoteric": 4,
+    "indic": 3,
+    "christian": 1,
+    "buddhist": 1,
+    "zoroastrian": 1
+   },
+   "pool40": {
+    "esoteric": 16,
+    "indic": 11,
+    "christian": 1,
+    "buddhist": 1,
+    "zoroastrian": 1
+   }
+  },
+  {
+   "qid": "c09",
+   "query": "light as the nature of the divine or of the mind",
+   "candidates": 39,
+   "pool_families": 3,
+   "off_families": 2,
+   "on_families": 3,
+   "off_top_share": 0.9,
+   "on_top_share": 0.8,
+   "off_books": 7,
+   "on_books": 7,
+   "moved": 1,
+   "off10": {
+    "early-modern-europe": 9,
+    "modern-europe": 1
+   },
+   "on10": {
+    "early-modern-europe": 8,
+    "modern-europe": 1,
+    "greco-roman": 1
+   },
+   "pool40": {
+    "early-modern-europe": 37,
+    "modern-europe": 1,
+    "greco-roman": 1
+   }
+  },
+  {
+   "qid": "c10",
+   "query": "how the many things come forth from the One",
+   "candidates": 40,
+   "pool_families": 2,
+   "off_families": 1,
+   "on_families": 2,
+   "off_top_share": 1,
+   "on_top_share": 0.8,
+   "off_books": 4,
+   "on_books": 5,
+   "moved": 2,
+   "off10": {
+    "greco-roman": 10
+   },
+   "on10": {
+    "greco-roman": 8,
+    "jewish": 2
+   },
+   "pool40": {
+    "greco-roman": 38,
+    "jewish": 2
+   }
+  },
+  {
+   "qid": "c12",
+   "query": "the soul is reborn in another body after death",
+   "candidates": 35,
+   "pool_families": 4,
+   "off_families": 3,
+   "on_families": 3,
+   "off_top_share": 0.8,
+   "on_top_share": 0.7,
+   "off_books": 8,
+   "on_books": 9,
+   "moved": 1,
+   "off10": {
+    "esoteric": 8,
+    "modern-europe": 1,
+    "indic": 1
+   },
+   "on10": {
+    "esoteric": 7,
+    "modern-europe": 1,
+    "indic": 2
+   },
+   "pool40": {
+    "esoteric": 29,
+    "modern-europe": 1,
+    "indic": 4,
+    "buddhist": 1
+   }
+  },
+  {
+   "qid": "c13",
+   "query": "acting without striving; letting go of one's own will",
+   "candidates": 40,
+   "pool_families": 1,
+   "off_families": 1,
+   "on_families": 1,
+   "off_top_share": 1,
+   "on_top_share": 1,
+   "off_books": 9,
+   "on_books": 9,
+   "moved": 0,
+   "off10": {
+    "east-asian": 10
+   },
+   "on10": {
+    "east-asian": 10
+   },
+   "pool40": {
+    "east-asian": 40
+   }
+  },
+  {
+   "qid": "c14",
+   "query": "the heart as the organ of spiritual knowledge",
+   "candidates": 38,
+   "pool_families": 2,
+   "off_families": 2,
+   "on_families": 2,
+   "off_top_share": 0.9,
+   "on_top_share": 0.8,
+   "off_books": 5,
+   "on_books": 6,
+   "moved": 1,
+   "off10": {
+    "early-modern-europe": 9,
+    "modern-europe": 1
+   },
+   "on10": {
+    "early-modern-europe": 8,
+    "modern-europe": 2
+   },
+   "pool40": {
+    "early-modern-europe": 33,
+    "modern-europe": 5
+   }
+  },
+  {
+   "qid": "c15",
+   "query": "the creative power of the divine word, name, letters or sound",
+   "candidates": 39,
+   "pool_families": 7,
+   "off_families": 5,
+   "on_families": 5,
+   "off_top_share": 0.4,
+   "on_top_share": 0.2,
+   "off_books": 10,
+   "on_books": 9,
+   "moved": 2,
+   "off10": {
+    "esoteric": 4,
+    "modern-europe": 2,
+    "early-modern-europe": 1,
+    "jewish": 2,
+    "indic": 1
+   },
+   "on10": {
+    "esoteric": 2,
+    "modern-europe": 2,
+    "early-modern-europe": 2,
+    "jewish": 2,
+    "indic": 2
+   },
+   "pool40": {
+    "esoteric": 9,
+    "modern-europe": 2,
+    "early-modern-europe": 11,
+    "jewish": 13,
+    "indic": 2,
+    "greco-roman": 1,
+    "christian": 1
+   }
+  },
+  {
+   "qid": "c17",
+   "query": "the stages of the spiritual path",
+   "candidates": 40,
+   "pool_families": 2,
+   "off_families": 2,
+   "on_families": 2,
+   "off_top_share": 0.9,
+   "on_top_share": 0.8,
+   "off_books": 9,
+   "on_books": 9,
+   "moved": 1,
+   "off10": {
+    "buddhist": 9,
+    "esoteric": 1
+   },
+   "on10": {
+    "buddhist": 8,
+    "esoteric": 2
+   },
+   "pool40": {
+    "buddhist": 38,
+    "esoteric": 2
+   }
+  },
+  {
+   "qid": "c22",
+   "query": "know yourself and you will know the divine",
+   "candidates": 39,
+   "pool_families": 4,
+   "off_families": 2,
+   "on_families": 3,
+   "off_top_share": 0.9,
+   "on_top_share": 0.7,
+   "off_books": 4,
+   "on_books": 5,
+   "moved": 2,
+   "off10": {
+    "early-modern-europe": 9,
+    "esoteric": 1
+   },
+   "on10": {
+    "early-modern-europe": 7,
+    "esoteric": 2,
+    "islamic": 1
+   },
+   "pool40": {
+    "early-modern-europe": 33,
+    "esoteric": 4,
+    "islamic": 1,
+    "medieval-europe": 1
+   }
+  },
+  {
+   "qid": "c23",
+   "query": "fasting and bodily austerity as purification",
+   "candidates": 40,
+   "pool_families": 7,
+   "off_families": 4,
+   "on_families": 6,
+   "off_top_share": 0.4,
+   "on_top_share": 0.2,
+   "off_books": 8,
+   "on_books": 9,
+   "moved": 3,
+   "off10": {
+    "early-modern-europe": 3,
+    "esoteric": 4,
+    "east-asian": 1,
+    "medieval-europe": 2
+   },
+   "on10": {
+    "early-modern-europe": 2,
+    "esoteric": 2,
+    "east-asian": 1,
+    "medieval-europe": 2,
+    "christian": 2,
+    "modern-europe": 1
+   },
+   "pool40": {
+    "early-modern-europe": 19,
+    "esoteric": 7,
+    "east-asian": 1,
+    "medieval-europe": 5,
+    "christian": 6,
+    "modern-europe": 1,
+    "jewish": 1
+   }
+  },
+  {
+   "qid": "c24",
+   "query": "the elements and how they change into one another",
+   "candidates": 40,
+   "pool_families": 5,
+   "off_families": 3,
+   "on_families": 4,
+   "off_top_share": 0.7,
+   "on_top_share": 0.6,
+   "off_books": 8,
+   "on_books": 9,
+   "moved": 1,
+   "off10": {
+    "greco-roman": 2,
+    "esoteric": 1,
+    "early-modern-europe": 7
+   },
+   "on10": {
+    "greco-roman": 2,
+    "esoteric": 1,
+    "early-modern-europe": 6,
+    "medieval-europe": 1
+   },
+   "pool40": {
+    "greco-roman": 7,
+    "esoteric": 3,
+    "early-modern-europe": 28,
+    "medieval-europe": 1,
+    "modern-europe": 1
+   }
+  },
+  {
+   "qid": "c25",
+   "query": "dreams as a source of knowledge or revelation",
+   "candidates": 40,
+   "pool_families": 7,
+   "off_families": 6,
+   "on_families": 6,
+   "off_top_share": 0.3,
+   "on_top_share": 0.2,
+   "off_books": 8,
+   "on_books": 9,
+   "moved": 1,
+   "off10": {
+    "greco-roman": 3,
+    "medieval-europe": 1,
+    "esoteric": 2,
+    "modern-europe": 1,
+    "early-modern-europe": 2,
+    "jewish": 1
+   },
+   "on10": {
+    "greco-roman": 2,
+    "medieval-europe": 2,
+    "esoteric": 2,
+    "modern-europe": 1,
+    "early-modern-europe": 2,
+    "jewish": 1
+   },
+   "pool40": {
+    "greco-roman": 9,
+    "medieval-europe": 3,
+    "esoteric": 4,
+    "modern-europe": 4,
+    "early-modern-europe": 15,
+    "jewish": 4,
+    "christian": 1
+   }
+  },
+  {
+   "qid": "c26",
+   "query": "what happens to the soul after death; judgment of the dead",
+   "candidates": 37,
+   "pool_families": 7,
+   "off_families": 4,
+   "on_families": 6,
+   "off_top_share": 0.5,
+   "on_top_share": 0.2,
+   "off_books": 9,
+   "on_books": 10,
+   "moved": 4,
+   "off10": {
+    "greco-roman": 5,
+    "esoteric": 1,
+    "early-modern-europe": 1,
+    "ancient-near-east": 3
+   },
+   "on10": {
+    "greco-roman": 2,
+    "esoteric": 2,
+    "early-modern-europe": 1,
+    "ancient-near-east": 2,
+    "medieval-europe": 1,
+    "modern-europe": 2
+   },
+   "pool40": {
+    "greco-roman": 19,
+    "esoteric": 6,
+    "early-modern-europe": 3,
+    "ancient-near-east": 5,
+    "medieval-europe": 1,
+    "modern-europe": 2,
+    "jewish": 1
+   }
+  },
+  {
+   "qid": "c28",
+   "query": "the divine dwells within every being",
+   "candidates": 30,
+   "pool_families": 4,
+   "off_families": 3,
+   "on_families": 4,
+   "off_top_share": 0.8,
+   "on_top_share": 0.6,
+   "off_books": 6,
+   "on_books": 7,
+   "moved": 2,
+   "off10": {
+    "esoteric": 8,
+    "indic": 1,
+    "zoroastrian": 1
+   },
+   "on10": {
+    "esoteric": 6,
+    "indic": 2,
+    "zoroastrian": 1,
+    "early-modern-europe": 1
+   },
+   "pool40": {
+    "esoteric": 22,
+    "indic": 6,
+    "zoroastrian": 1,
+    "early-modern-europe": 1
+   }
+  },
+  {
+   "qid": "c29",
+   "query": "compassion for all living beings; do to others as you would have done to you",
+   "candidates": 39,
+   "pool_families": 7,
+   "off_families": 3,
+   "on_families": 7,
+   "off_top_share": 0.5,
+   "on_top_share": 0.2,
+   "off_books": 6,
+   "on_books": 8,
+   "moved": 4,
+   "off10": {
+    "buddhist": 3,
+    "indic": 5,
+    "slavic-finnic": 2
+   },
+   "on10": {
+    "buddhist": 2,
+    "indic": 2,
+    "slavic-finnic": 2,
+    "modern-europe": 1,
+    "esoteric": 1,
+    "ancient-near-east": 1,
+    "east-asian": 1
+   },
+   "pool40": {
+    "buddhist": 13,
+    "indic": 13,
+    "slavic-finnic": 5,
+    "modern-europe": 2,
+    "esoteric": 1,
+    "ancient-near-east": 1,
+    "east-asian": 4
+   }
+  },
+  {
+   "qid": "c31",
+   "query": "correspondence between the heavens and things on earth",
+   "candidates": 39,
+   "pool_families": 4,
+   "off_families": 2,
+   "on_families": 3,
+   "off_top_share": 0.5,
+   "on_top_share": 0.4,
+   "off_books": 5,
+   "on_books": 6,
+   "moved": 2,
+   "off10": {
+    "modern-europe": 5,
+    "esoteric": 5
+   },
+   "on10": {
+    "modern-europe": 4,
+    "esoteric": 4,
+    "early-modern-europe": 2
+   },
+   "pool40": {
+    "modern-europe": 12,
+    "esoteric": 17,
+    "early-modern-europe": 9,
+    "jewish": 1
+   }
+  },
+  {
+   "qid": "c32",
+   "query": "silence and stillness of mind as the way to truth",
+   "candidates": 34,
+   "pool_families": 6,
+   "off_families": 3,
+   "on_families": 5,
+   "off_top_share": 0.8,
+   "on_top_share": 0.5,
+   "off_books": 9,
+   "on_books": 9,
+   "moved": 3,
+   "off10": {
+    "esoteric": 8,
+    "jewish": 1,
+    "greco-roman": 1
+   },
+   "on10": {
+    "esoteric": 5,
+    "jewish": 2,
+    "greco-roman": 1,
+    "early-modern-europe": 1,
+    "modern-europe": 1
+   },
+   "pool40": {
+    "esoteric": 25,
+    "jewish": 5,
+    "greco-roman": 1,
+    "early-modern-europe": 1,
+    "modern-europe": 1,
+    "indic": 1
+   }
+  },
+  {
+   "qid": "c33",
+   "query": "how the world first came into being",
+   "candidates": 33,
+   "pool_families": 8,
+   "off_families": 6,
+   "on_families": 7,
+   "off_top_share": 0.4,
+   "on_top_share": 0.2,
+   "off_books": 9,
+   "on_books": 9,
+   "moved": 2,
+   "off10": {
+    "indic": 1,
+    "greco-roman": 4,
+    "medieval-europe": 1,
+    "esoteric": 1,
+    "buddhist": 2,
+    "americas": 1
+   },
+   "on10": {
+    "indic": 2,
+    "greco-roman": 2,
+    "medieval-europe": 1,
+    "esoteric": 1,
+    "buddhist": 2,
+    "americas": 1,
+    "early-modern-europe": 1
+   },
+   "pool40": {
+    "indic": 3,
+    "greco-roman": 13,
+    "medieval-europe": 1,
+    "esoteric": 2,
+    "buddhist": 11,
+    "americas": 1,
+    "early-modern-europe": 1,
+    "oceanian": 1
+   }
+  }
+ ]
+}

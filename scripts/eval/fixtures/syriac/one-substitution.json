@@ -1,0 +1,9 @@
+{
+ "script": "syriac",
+ "name": "one-substitution",
+ "reference": "ܟܬܒܐ ܕܝܠܝܕܘܬܗ ܕܝܫܘܥ ܡܫܝܚܐ ܒܪܗ ܕܕܘܝܕ ܒܪܗ ܕܐܒܪܗܡ",
+ "hypothesis": "ܟܬܒܐ ܕܝܠܝܕܘܬܗ ܕܝܫܘܥ ܡܫܝܟܐ ܒܪܗ ܕܕܘܝܕ ܒܪܗ ܕܐܒܪܗܡ",
+ "expected_cer": 0.021739130434782608,
+ "tolerance": 1e-9,
+ "why": "one wrong consonant (ܚ→ܟ) is one edit over the reference length"
+}
