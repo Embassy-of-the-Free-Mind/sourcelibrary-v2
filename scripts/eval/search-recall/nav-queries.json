@@ -1,0 +1,348 @@
+{
+ "_prior_art": "PRIOR ART: scripts/eval/search-recall/queries.json — 30 queries scored on expected BOOKS from /api/search; #5945 asks where a visitor lands when they type a PAGE's name, scored on expected URLs from /api/search/unified. Same runner (run.mjs --suite nav).",
+ "issue": 5945,
+ "note": "Fixed on 2026-10-06 before any change was written. The first 10 'page' rows, 'Drebbel collection', 'Huygens' and 'hidden engineers' are the issue's own measured hits and misses. Every expected URL answered 200 on prod that day (/timeline redirects to /explore/timeline).",
+ "queries": [
+  {
+   "id": "page-about",
+   "query": "about",
+   "kind": "page",
+   "expect": [
+    "/about"
+   ]
+  },
+  {
+   "id": "page-donate",
+   "query": "donate",
+   "kind": "page",
+   "expect": [
+    "/support",
+    "/give"
+   ]
+  },
+  {
+   "id": "page-volunteer",
+   "query": "volunteer",
+   "kind": "page",
+   "expect": [
+    "/volunteers",
+    "/contribute",
+    "/contribute/volunteer"
+   ]
+  },
+  {
+   "id": "page-map",
+   "query": "map",
+   "kind": "page",
+   "expect": [
+    "/explore/map"
+   ]
+  },
+  {
+   "id": "page-libraries",
+   "query": "libraries",
+   "kind": "page",
+   "expect": [
+    "/libraries"
+   ]
+  },
+  {
+   "id": "page-languages",
+   "query": "languages",
+   "kind": "page",
+   "expect": [
+    "/languages"
+   ]
+  },
+  {
+   "id": "page-research",
+   "query": "research",
+   "kind": "page",
+   "expect": [
+    "/research"
+   ]
+  },
+  {
+   "id": "page-timeline",
+   "query": "timeline",
+   "kind": "page",
+   "expect": [
+    "/explore/timeline",
+    "/timeline"
+   ]
+  },
+  {
+   "id": "page-check-pages",
+   "query": "check pages",
+   "kind": "page",
+   "expect": [
+    "/review",
+    "/review/page-check"
+   ]
+  },
+  {
+   "id": "page-quality",
+   "query": "quality",
+   "kind": "page",
+   "expect": [
+    "/research/quality"
+   ]
+  },
+  {
+   "id": "page-faq",
+   "query": "faq",
+   "kind": "page",
+   "expect": [
+    "/about/faq"
+   ]
+  },
+  {
+   "id": "page-roadmap",
+   "query": "roadmap",
+   "kind": "page",
+   "expect": [
+    "/roadmap"
+   ]
+  },
+  {
+   "id": "page-privacy-policy",
+   "query": "privacy policy",
+   "kind": "page",
+   "expect": [
+    "/privacy"
+   ]
+  },
+  {
+   "id": "page-press-releases",
+   "query": "press releases",
+   "kind": "page",
+   "expect": [
+    "/press-releases"
+   ]
+  },
+  {
+   "id": "page-sponsors",
+   "query": "sponsors",
+   "kind": "page",
+   "expect": [
+    "/sponsors"
+   ]
+  },
+  {
+   "id": "page-for-libraries",
+   "query": "for libraries",
+   "kind": "page",
+   "expect": [
+    "/for-libraries"
+   ]
+  },
+  {
+   "id": "page-vision",
+   "query": "vision",
+   "kind": "page",
+   "expect": [
+    "/vision"
+   ]
+  },
+  {
+   "id": "page-licensing",
+   "query": "licensing",
+   "kind": "page",
+   "expect": [
+    "/licensing"
+   ]
+  },
+  {
+   "id": "page-models",
+   "query": "models",
+   "kind": "page",
+   "expect": [
+    "/about/models"
+   ]
+  },
+  {
+   "id": "page-page-errors",
+   "query": "page errors",
+   "kind": "page",
+   "expect": [
+    "/research/page-errors"
+   ]
+  },
+  {
+   "id": "page-translation-gap",
+   "query": "translation gap",
+   "kind": "page",
+   "expect": [
+    "/research/translation-gap"
+   ]
+  },
+  {
+   "id": "page-feedback",
+   "query": "feedback",
+   "kind": "page",
+   "expect": [
+    "/feedback"
+   ]
+  },
+  {
+   "id": "tool-ngram-viewer",
+   "query": "ngram viewer",
+   "kind": "tool",
+   "expect": [
+    "/ngrams"
+   ]
+  },
+  {
+   "id": "tool-librarian",
+   "query": "librarian",
+   "kind": "tool",
+   "expect": [
+    "/librarian"
+   ]
+  },
+  {
+   "id": "tool-gallery",
+   "query": "gallery",
+   "kind": "tool",
+   "expect": [
+    "/gallery"
+   ]
+  },
+  {
+   "id": "tool-census",
+   "query": "census",
+   "kind": "tool",
+   "expect": [
+    "/census"
+   ]
+  },
+  {
+   "id": "tool-api",
+   "query": "api",
+   "kind": "tool",
+   "expect": [
+    "/developers"
+   ]
+  },
+  {
+   "id": "tool-identify-artwork",
+   "query": "identify artwork",
+   "kind": "tool",
+   "expect": [
+    "/identify"
+   ]
+  },
+  {
+   "id": "tool-podcast",
+   "query": "podcast",
+   "kind": "tool",
+   "expect": [
+    "/podcast"
+   ]
+  },
+  {
+   "id": "collection-drebbel-collection",
+   "query": "Drebbel collection",
+   "kind": "collection",
+   "expect": [
+    "/collections/drebbel"
+   ]
+  },
+  {
+   "id": "collection-alchemy-collection",
+   "query": "alchemy collection",
+   "kind": "collection",
+   "expect": [
+    "/collections/alchemy"
+   ]
+  },
+  {
+   "id": "collection-mycology",
+   "query": "mycology",
+   "kind": "collection",
+   "expect": [
+    "/collections/mycology"
+   ]
+  },
+  {
+   "id": "collection-kabbalah",
+   "query": "kabbalah",
+   "kind": "collection",
+   "expect": [
+    "/collections/kabbalah"
+   ]
+  },
+  {
+   "id": "author-huygens",
+   "query": "Huygens",
+   "kind": "author",
+   "expect": [
+    "/author/christiaan-huygens"
+   ]
+  },
+  {
+   "id": "author-paracelsus",
+   "query": "Paracelsus",
+   "kind": "author",
+   "expect": [
+    "/author/paracelsus"
+   ]
+  },
+  {
+   "id": "author-ficino",
+   "query": "Ficino",
+   "kind": "author",
+   "expect": [
+    "/author/marsilio-ficino"
+   ]
+  },
+  {
+   "id": "author-kircher-author-page",
+   "query": "Kircher author page",
+   "kind": "author",
+   "expect": [
+    "/author/athanasius-kircher"
+   ]
+  },
+  {
+   "id": "blog-hidden-engineers",
+   "query": "hidden engineers",
+   "kind": "blog",
+   "expect": [
+    "/blog/hidden-engineers"
+   ]
+  },
+  {
+   "id": "blog-philosophers-stone-essay",
+   "query": "philosophers stone essay",
+   "kind": "blog",
+   "expect": [
+    "/blog/philosophers-stone"
+   ]
+  },
+  {
+   "id": "blog-how-we-measure-ocr-quality",
+   "query": "how we measure ocr quality",
+   "kind": "blog",
+   "expect": [
+    "/blog/how-we-measure-ocr-quality"
+   ]
+  },
+  {
+   "id": "browse-latin",
+   "query": "latin",
+   "kind": "browse",
+   "expect": [
+    "/languages/latin"
+   ]
+  },
+  {
+   "id": "browse-hermeticism",
+   "query": "hermeticism",
+   "kind": "browse",
+   "expect": [
+    "/categories/hermeticism"
+   ]
+  }
+ ]
+}

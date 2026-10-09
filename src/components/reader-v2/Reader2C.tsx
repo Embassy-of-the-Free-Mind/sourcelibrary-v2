@@ -3902,7 +3902,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                   style={{ overscrollBehavior: 'contain' }}
                 >
                   <div key={r.currentPageId} className="rv2-page-in">
-                    {!paired && !showingSpanish && <MachineDraftLine page={displayPage} />}
+                    {!paired && !showingSpanish && <MachineDraftLine page={displayPage} book={r.book} />}
                     {!paired && !showingSpanish && <QualityWarningLine warnings={qualityWarnings} pageNumber={r.currentPage.page_number} bookPath={r.book.slug || r.book.id} />}
                     {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} page={r.currentPage} paired={!!paired} />}
                     {!paired && <ReadCautionNote page={r.currentPage} book={r.book} />}
@@ -4275,7 +4275,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                     )}
                   </p>
                 )}
-                {!paired && !showingSpanish && <MachineDraftLine page={displayPage} />}
+                {!paired && !showingSpanish && <MachineDraftLine page={displayPage} book={r.book} />}
                     {!paired && !showingSpanish && <QualityWarningLine warnings={qualityWarnings} pageNumber={r.currentPage.page_number} bookPath={r.book.slug || r.book.id} />}
                 {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} page={r.currentPage} paired={!!paired} />}
                 {!paired && <ReadCautionNote page={r.currentPage} book={r.book} />}

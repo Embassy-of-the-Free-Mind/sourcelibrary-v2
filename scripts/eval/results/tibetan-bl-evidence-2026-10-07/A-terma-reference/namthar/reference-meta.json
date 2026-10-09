@@ -1,0 +1,184 @@
+{
+ "group": "namthar",
+ "volumes": [
+  "UT10736-002",
+  "UT1KG4306-001",
+  "UT1PD107937-I1PD107953",
+  "UT1PD95844-I1PD95869",
+  "UT1PD95844-I1PD95901",
+  "UT1PD95844-I1PD95939",
+  "UT1PD96682-I1PD96817",
+  "UT1PD96682-I1PD96831",
+  "UT1PD96682-I1PD96833",
+  "UT1PD96682-I1PD96847",
+  "UT1PD96682-I1PD96858",
+  "UT30541-001",
+  "UT30541-002",
+  "UT3JT13306-350",
+  "UT3JT13344-014"
+ ],
+ "files": [
+  {
+   "vol": "v001",
+   "rid": "UT10736-002-0001",
+   "w": "W10736",
+   "coll": "DharmaDownload",
+   "title": "༄༅།  །ཆོས་འབྱུང་བསྟན་པའི་པདྨོ་རྒྱས་པའི་ཉིན་བྱེད་ཅེས་བྱ་བ་བཞུགས་སོ།  །",
+   "licence": "http://creativecommons.org/licenses/by/3.0/",
+   "pages": 373
+  },
+  {
+   "vol": "v002",
+   "rid": "UT1KG4306-001-0001",
+   "w": "W1KG4306",
+   "coll": "VajraVidya",
+   "title": "གཞུང་འདིའི་མ་དཔེ་ནི།གནས་དུས་ཀྱི་དབང་གིས་ཕྱག་དཔེ་འདི་ཉིད་ཤིན་ཏུ་དཀོན་པས་མི་མངོན་པའི་དབྱིངས་སུ་ཕེབས་པར་ཉེ་མོད།དཔལ་རྒྱལ་བའི་དབང་པོ་",
+   "licence": "http://creativecommons.org/licenses/by/3.0/",
+   "pages": 270
+  },
+  {
+   "vol": "v003",
+   "rid": "UT1PD107937-I1PD107953-0000",
+   "w": "W1PD107937",
+   "coll": "UCB-OCR",
+   "title": "pod 15 gsung 'bum/_ngag dbang blo bzang rgya mtsho/",
+   "licence": null,
+   "pages": 621
+  },
+  {
+   "vol": "v004",
+   "rid": "UT1PD95844-I1PD95869-0000",
+   "w": "W1PD95844",
+   "coll": "UCB-OCR",
+   "title": "pod 24 bstan 'gyur/ (dpe bsdur ma)",
+   "licence": null,
+   "pages": 1485
+  },
+  {
+   "vol": "v005",
+   "rid": "UT1PD95844-I1PD95901-0000",
+   "w": "W1PD95844",
+   "coll": "UCB-OCR",
+   "title": "pod 56 bstan 'gyur/ (dpe bsdur ma)",
+   "licence": null,
+   "pages": 1594
+  },
+  {
+   "vol": "v006",
+   "rid": "UT1PD95844-I1PD95939-0000",
+   "w": "W1PD95844",
+   "coll": "UCB-OCR",
+   "title": "pod 94 bstan 'gyur/ (dpe bsdur ma)",
+   "licence": null,
+   "pages": 1512
+  },
+  {
+   "vol": "v007",
+   "rid": "UT1PD96682-I1PD96817-0000",
+   "w": "W1PD96682",
+   "coll": "UCB-OCR",
+   "title": "pod 34 bka' 'gyur/ （dpe bsdur ma/）",
+   "licence": null,
+   "pages": 851
+  },
+  {
+   "vol": "v008",
+   "rid": "UT1PD96682-I1PD96831-0000",
+   "w": "W1PD96682",
+   "coll": "UCB-OCR",
+   "title": "pod 48 bka' 'gyur/ （dpe bsdur ma/）",
+   "licence": null,
+   "pages": 756
+  },
+  {
+   "vol": "v009",
+   "rid": "UT1PD96682-I1PD96833-0000",
+   "w": "W1PD96682",
+   "coll": "UCB-OCR",
+   "title": "pod 50 bka' 'gyur/ （dpe bsdur ma/）",
+   "licence": null,
+   "pages": 781
+  },
+  {
+   "vol": "v010",
+   "rid": "UT1PD96682-I1PD96847-0000",
+   "w": "W1PD96682",
+   "coll": "UCB-OCR",
+   "title": "pod 64 bka' 'gyur/ （dpe bsdur ma/）",
+   "licence": null,
+   "pages": 842
+  },
+  {
+   "vol": "v011",
+   "rid": "UT1PD96682-I1PD96858-0000",
+   "w": "W1PD96682",
+   "coll": "UCB-OCR",
+   "title": "pod 75 bka' 'gyur/ （dpe bsdur ma/）",
+   "licence": null,
+   "pages": 785
+  },
+  {
+   "vol": "v012",
+   "rid": "UT30541-001-0001",
+   "w": "W30541",
+   "coll": "DharmaDownload",
+   "title": "༈ཀརྨ་པ་གསུམ་པ་རང་བྱུང་རྡོ་རྗེའི་གསུང་འབུམ།ཀ",
+   "licence": "http://creativecommons.org/licenses/by/3.0/",
+   "pages": 2
+  },
+  {
+   "vol": "v013",
+   "rid": "UT30541-001-0002",
+   "w": "W30541",
+   "coll": "DharmaDownload",
+   "title": "༄༅།  །སངས་རྒྱས་ཀྱི་སྐྱེས་པའི་རབས་ཀྱི་བསྡུས་དོན་བཞུགས་སོ།  །",
+   "licence": "http://creativecommons.org/licenses/by/3.0/",
+   "pages": 45
+  },
+  {
+   "vol": "v014",
+   "rid": "UT30541-001-0003",
+   "w": "W30541",
+   "coll": "DharmaDownload",
+   "title": "༄༅།  །སྟོན་པ་ཐམས་ཅད་མཁྱེན་པའི་སྐྱེས་རབས་ཕྲེང༌།  །བཅུ་ཕྲག་གསུམ་དང་བཞི་ནི་དཔའ་བོའི་སྟེ།  །ཕྱི་ནས་རང་བྱུང་རྡོ་རྗེས་བདུན་ལྷག་པའི།  །",
+   "licence": "http://creativecommons.org/licenses/by/3.0/",
+   "pages": 271
+  },
+  {
+   "vol": "v015",
+   "rid": "UT30541-002-0001",
+   "w": "W30541",
+   "coll": "DharmaDownload",
+   "title": "༈ཀརྨ་པ་གསུམ་པ་རང་བྱུང་རྡོ་རྗེའི་གསུང་འབུམ།ཁ།",
+   "licence": "http://creativecommons.org/licenses/by/3.0/",
+   "pages": 2
+  },
+  {
+   "vol": "v016",
+   "rid": "UT30541-002-0002",
+   "w": "W30541",
+   "coll": "DharmaDownload",
+   "title": "༄༅།  །ཀརྨ་པ་རང་བྱུང་རྡོ་རྗེས་མཛད་པའི་སངས་རྒྱས་ཀྱི་སྐྱེས་རབས་བཞུགས་པས་གཟིགས།  །",
+   "licence": "http://creativecommons.org/licenses/by/3.0/",
+   "pages": 461
+  },
+  {
+   "vol": "v017",
+   "rid": "UT3JT13306-350-0000",
+   "w": "W3JT13306",
+   "coll": "GuruLamaWorks",
+   "title": "༄༅།  །འབུམ་ཐང་དངུལ་གདུང་རིན་པོ་ཆེའི་གདན་རབས་བླ་བརྒྱུད་བཅས་གསར་བཞེངས་སྐབས་སྦྱིན་བདག་སྐུའི་འདོད་གསོལ་བཞུགས་སོ།  །ཨོཾ་སྭསྟི།དམིགས་པ",
+   "licence": "http://creativecommons.org/licenses/by/3.0/",
+   "pages": 42
+  },
+  {
+   "vol": "v018",
+   "rid": "UT3JT13344-014-0000",
+   "w": "W3JT13344",
+   "coll": "DharmaDownload",
+   "title": "༄༅།  །འབྲུག་ལུགས་སྨོན་ལམ་ཆེན་མོའི་ཆོག་ཁྲིགས་བཀླག་ཆོག་ཏུ་བཀོད་པ་བྱང་ཆུབ་ལམ་བཟང་ཞེས་བྱ་བ་བཞུགས་སོ།  །",
+   "licence": "http://creativecommons.org/licenses/by/3.0/",
+   "pages": 90
+  }
+ ]
+}

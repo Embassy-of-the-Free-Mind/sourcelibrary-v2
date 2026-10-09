@@ -210,7 +210,7 @@ export const POST = withAuth(async (request, session, context) => {
 
     if (submittedChildren.length === 0) {
       return NextResponse.json(
-        { error: 'All Gemini batch submissions failed — no DB records created' },
+        { error: 'All Gemini batch submissions failed; no DB records created' },
         { status: 500 }
       );
     }
