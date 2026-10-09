@@ -1,0 +1,202 @@
+{
+ "p00": {
+  "uid": "69aec48e3b6ebce5e0ee6a89-p142",
+  "A": "lite",
+  "B": "cli"
+ },
+ "p01": {
+  "uid": "69ae9be3f3bd47924cacd360-p214",
+  "A": "cli",
+  "B": "lite"
+ },
+ "p02": {
+  "uid": "69b6abc9080b19f98fd4680f-p40",
+  "A": "cli",
+  "B": "lite"
+ },
+ "p03": {
+  "uid": "6a08a41dfc6cdaefe240c874-p204",
+  "A": "lite",
+  "B": "cli"
+ },
+ "p04": {
+  "uid": "6a42f6163ad4d80da1236e8a-p58",
+  "A": "lite",
+  "B": "cli"
+ },
+ "p05": {
+  "uid": "69b6487618b87551bfc55415-p25",
+  "A": "lite",
+  "B": "cli"
+ },
+ "p06": {
+  "uid": "6a4df502739bc1fc670e6ef7-p98",
+  "A": "cli",
+  "B": "lite"
+ },
+ "p07": {
+  "uid": "6a08ac090e77acb4f93094c6-p90",
+  "A": "lite",
+  "B": "cli"
+ },
+ "p08": {
+  "uid": "6a905e19785d9b40577fe091-p4",
+  "A": "cli",
+  "B": "lite"
+ },
+ "p09": {
+  "uid": "6a243fcf0f0e4f405e6362af-p126",
+  "A": "lite",
+  "B": "cli"
+ },
+ "p10": {
+  "uid": "6a4afa1b19bd0084b1bf0920-p33",
+  "A": "lite",
+  "B": "cli"
+ },
+ "p11": {
+  "uid": "6a90923a0f0bff48dccbcf4d-p140",
+  "A": "cli",
+  "B": "lite"
+ },
+ "p12": {
+  "uid": "69b6464518b87551bfc423b9-p261",
+  "A": "cli",
+  "B": "lite"
+ },
+ "p13": {
+  "uid": "69bf61c276287c6679d5f4d7-p82",
+  "A": "cli",
+  "B": "lite"
+ },
+ "p14": {
+  "uid": "6a90d6af723952418ddd1d33-p240",
+  "A": "cli",
+  "B": "lite"
+ },
+ "p15": {
+  "uid": "69b6480418b87551bfc516ed-p21",
+  "A": "cli",
+  "B": "lite"
+ },
+ "p16": {
+  "uid": "6a454ee389beae48d3af88e5-p166",
+  "A": "cli",
+  "B": "lite"
+ },
+ "p17": {
+  "uid": "6a94462c7ec53276be45beda-p90",
+  "A": "lite",
+  "B": "cli"
+ },
+ "p18": {
+  "uid": "69b51eb347b06ecd58195363-p699",
+  "A": "lite",
+  "B": "cli"
+ },
+ "p19": {
+  "uid": "69b632dd1c1c21a373814112-p98",
+  "A": "lite",
+  "B": "cli"
+ },
+ "p20": {
+  "uid": "69b6486218b87551bfc54b91-p72",
+  "A": "cli",
+  "B": "lite"
+ },
+ "p21": {
+  "uid": "69b647e018b87551bfc4fba2-p116",
+  "A": "lite",
+  "B": "cli"
+ },
+ "p22": {
+  "uid": "69b6bbbe8566c838146380d0-p49",
+  "A": "lite",
+  "B": "cli"
+ },
+ "p23": {
+  "uid": "69af4ad93fdb796f745b5eeb-p295",
+  "A": "lite",
+  "B": "cli"
+ },
+ "p24": {
+  "uid": "6a455d5989beae48d3af9110-p60",
+  "A": "lite",
+  "B": "cli"
+ },
+ "p25": {
+  "uid": "69b645e618b87551bfc3fba3-p81",
+  "A": "lite",
+  "B": "cli"
+ },
+ "p26": {
+  "uid": "69b636b01c1c21a37382e9a6-p18",
+  "A": "lite",
+  "B": "cli"
+ },
+ "p27": {
+  "uid": "69b645cb18b87551bfc3f134-p199",
+  "A": "cli",
+  "B": "lite"
+ },
+ "p28": {
+  "uid": "6a514a72e7035973effbbe37-p340",
+  "A": "lite",
+  "B": "cli"
+ },
+ "p29": {
+  "uid": "69b633c51c1c21a37381bccd-p74",
+  "A": "cli",
+  "B": "lite"
+ },
+ "p30": {
+  "uid": "6a4976cb7bb5de633e30cf52-p128",
+  "A": "cli",
+  "B": "lite"
+ },
+ "p31": {
+  "uid": "69b663f4b3f4fc044154cd30-p25",
+  "A": "lite",
+  "B": "cli"
+ },
+ "p32": {
+  "uid": "69b64c0d18b87551bfc70f11-p211",
+  "A": "lite",
+  "B": "cli"
+ },
+ "p33": {
+  "uid": "69b6ed963c7947b468d3a627-p11",
+  "A": "lite",
+  "B": "cli"
+ },
+ "p34": {
+  "uid": "6a94358e7680120fac24f40e-p225",
+  "A": "lite",
+  "B": "cli"
+ },
+ "p35": {
+  "uid": "6a4bb188241e69221d26db19-p239",
+  "A": "cli",
+  "B": "lite"
+ },
+ "p36": {
+  "uid": "69b6e97cb1a3146c0524205c-p2",
+  "A": "lite",
+  "B": "cli"
+ },
+ "p37": {
+  "uid": "69b67d0f2467723471250928-p20",
+  "A": "cli",
+  "B": "lite"
+ },
+ "p38": {
+  "uid": "69b647db18b87551bfc4f8d4-p241",
+  "A": "cli",
+  "B": "lite"
+ },
+ "p39": {
+  "uid": "6a429a2e8e351c27eb8594a3-p313",
+  "A": "lite",
+  "B": "cli"
+ }
+}
