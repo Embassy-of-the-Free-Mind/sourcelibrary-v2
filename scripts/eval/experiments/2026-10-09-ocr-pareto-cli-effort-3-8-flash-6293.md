@@ -1,3 +1,15 @@
+---
+stage: ocr
+measure: accuracy
+languages: [la, en]
+scripts: [Latn]
+canons: []
+n_books: 187
+n_pages: 187
+verdict: "3.8 Flash CLI's gap to 3 Flash on Latin and Early English print is mostly the CLI route's failed replies, which vary run to run; a same-level repeat closes most of it and high effort does not help."
+status: informational
+issue: [6293]
+---
 ## 2026-10-09 · OCR Pareto, Amendment 3: is 3.8 Flash CLI's gap to 3 Flash on Latin and Early English the model, or the route? (#6293) — mostly the route: a second read at the same low level closes most of it, high effort does not help
 
 Preregistration: `scripts/eval/PREREGISTRATION-ocr-pareto-6293.md`, **Amendment 3** (`a8eabb17f`, committed and pushed
