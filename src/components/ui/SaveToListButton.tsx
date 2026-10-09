@@ -214,7 +214,7 @@ export default function SaveToListButton({
                 </div>
               ) : myLists.length === 0 ? (
                 <p className="text-sm text-center px-4 py-6" style={{ color: 'var(--text-muted)' }}>
-                  No lists yet — name your first one below.
+                  No lists yet. Name your first one below.
                 </p>
               ) : (
                 myLists.map(list => (

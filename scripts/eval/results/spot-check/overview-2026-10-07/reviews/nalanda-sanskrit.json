@@ -1,0 +1,558 @@
+[
+  {
+    "book_id": "6a3067c9c4fd77fb5b9f8143",
+    "slot": 5,
+    "title": "Mahāyānasūtrālaṃkāra (Sanskrit, ed. Sylvain Lévi)",
+    "tradition": "nalanda-sanskrit",
+    "shelf_fit": "fits",
+    "shelf_note": "Asaṅga/Maitreya's Mahāyānasūtrālaṃkāra with bhāṣya, Lévi's edition: core Yogācāra text of the Nālandā curriculum.",
+    "rights_flag": null,
+    "structure_note": "The scan is two works under one title: Lévi's Sanskrit text (1907; p69 = printed 62) followed by his French translation volume (1911; p248 = printed 27 'LA FAMILLE', p367 = 139, p509 = 279). The 225 printed_repeats and 60 backsteps are the second volume's page numbering restarting, not misreads. The catalogue calls it the Sanskrit edition only (I7); 3 of the 4 sampled pages are French, so the English for most of the book is a translation of Lévi's French, not of the Sanskrit.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 69,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "(2) ... Le tibétain traduit par *snang-ba* \"ombre\", \"image\".",
+            "image": "Le chinois traduit par yng (ying) \"ombre\"",
+            "problem": "footnote says the CHINESE renders the term; OCR substitutes Tibetan and an invented Tibetan word",
+            "severity": "serious",
+            "class": "O8"
+          },
+          {
+            "ocr": "(3) ... Le tibétain traduit par *brag-ca* \"écho\".",
+            "image": "Le chinois traduit par hiang \"écho\"",
+            "problem": "same substitution: Chinese evidence turned into an invented Tibetan equivalent",
+            "severity": "serious",
+            "class": "O8"
+          },
+          {
+            "ocr": "आक्षेप्यार्थे श्लोकः",
+            "image": "औपम्यार्थे श्लोकः",
+            "problem": "verse heading 'on the meaning of the similes' misread; translation becomes 'Regarding this intended meaning'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "क्षेपपर्यन्ते श्लोकः",
+            "image": "ज्ञेयपर्यन्ते श्लोकः",
+            "problem": "'on the limit of the knowable' misread",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "षडेवाध्यात्मिकान्यायतनानि ... प्रतिभासोपमा ... प्रतिश्रुत्कोपमा ... उदकचन्द्र ... निर्माणोपमा ... verse 31 and its commentary",
+            "english": "Again, the six internal sense-",
+            "problem": "translation stops mid-word; the rest of the page (four similes, verse 31, commentary, footnotes) is missing",
+            "severity": "serious",
+            "class": "T1"
+          },
+          {
+            "source": "मायाराजस्थानीया ... राजस्थानीया",
+            "english": "like the ministers of a phantom king ... like royal ministers",
+            "problem": "-sthānīya 'standing in the place of' the (phantom) king rendered as 'ministers'; the analogy (remedies = phantom king, defilements = real king) is lost",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "प्रोद्भासयुत्कोपमा",
+            "english": "an image, and like a reflection",
+            "problem": "the echo simile (pratiśrutkā) is missing from the verse",
+            "severity": "moderate",
+            "class": "T9"
+          }
+        ],
+        "other": [
+          {
+            "note": "<margin>Footnotes in French and Latin script</margin> — a description of the page, not its text, in the OCR",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 248,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "*āśrayabala*",
+            "image": "āçayabala (abbreviated -b° forms)",
+            "problem": "term normalised and abbreviations silently expanded",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "(cf inf XX, 51) ... (M Vy § 26) ... s XVI 16",
+            "english": "(omitted)",
+            "problem": "cross-references to other chapters dropped from the notes",
+            "severity": "minor",
+            "class": "T13"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 367,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "Ce vers explique le Sens des quatre Comme il est dit dans la Brahmapariprecha Pourvus de quatre Idéaux les Bodhi-",
+            "english": "the full preaching of the Bodhisattvas <gloss>beings dedicated",
+            "problem": "translation cut off inside an unclosed gloss; last sentence (citation of the Brahmaparipṛcchā) missing",
+            "severity": "moderate",
+            "class": "T1"
+          }
+        ],
+        "other": [
+          {
+            "note": "unclosed <gloss> tag at the end of the reader text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 509,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "footnotes 55.1, 55.2 at foot of page",
+            "english": "<margin>Commentary I. 1. Instead of çodhanopâye ...</margin> inserted mid-sentence",
+            "problem": "textual footnotes spliced into the running prose",
+            "severity": "minor",
+            "class": "T13"
+          }
+        ],
+        "other": [
+          {
+            "note": "<meta>The source text is a French translation of a Sanskrit Buddhist treatise, likely the Mahayana Sutralamkara ...</meta> — model commentary at the head of the reader text",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A sound Lévi scan, but half of it is the French translation volume while the record calls it the Sanskrit edition. On the Sanskrit page the OCR rewrote Lévi's notes about Chinese renderings into invented Tibetan, and the English stops halfway down the page.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      248,
+      509
+    ],
+    "reader_summary": "This is Sylvain Lévi's edition of the Mahāyānasūtrālaṃkāra bound with his French translation, so most of the English is translated from Lévi's French rather than from the Sanskrit. The French pages are transcribed accurately and the English follows them well. On the sampled Sanskrit page, though, the footnotes were rewritten (Chinese turned into Tibetan) and the English covers only half the page."
+  },
+  {
+    "book_id": "6a308257675ed2bdbe36eddd",
+    "slot": 6,
+    "title": "Tattvasaṃgraha, Vol. I — with Kamalaśīla’s Pañjikā (Sanskrit, GOS)",
+    "tradition": "nalanda-sanskrit",
+    "shelf_fit": "fits",
+    "shelf_note": "Śāntarakṣita and Kamalaśīla: the core of late Nālandā/Vikramaśīla pramāṇa literature.",
+    "rights_flag": null,
+    "structure_note": "Front matter in English (foreword p17 = xxiii) followed by the Sanskrit text; the backsteps and repeats come from roman then arabic numbering and are not a defect. The book is visible:false, so readers cannot open it now. 807 pages, 803 OCR'd, 802 translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 17,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "S'ântarakṣita",
+            "english": "Śāntarakṣita",
+            "problem": "English foreword re-emitted with modernised diacritics as its 'translation'",
+            "severity": "minor",
+            "class": "T12"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 243,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "यस्तु मन्यते साध्यः पुरुषस्यापि",
+            "image": "यस्तु मन्यते साङ्ख्यः पुरुषस्यापि",
+            "problem": "the opponent 'Sāṅkhya' read as 'sādhya' (the thing to be proved); the translation then says 'There is an object to be accomplished' and never names the school",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "तं प्रत्येवं व्याचक्ष्माहे—मुक्त इत्यर्थः",
+            "image": "तं प्रत्येवं व्याख्या । परश्चासावात्मा च—मुक्त इत्यर्थः",
+            "problem": "the gloss 'para = the supreme self' dropped and a verb invented",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "प्रतिबिम्बवन्न्यायेन",
+            "image": "प्रतिबिम्बोदयन्यायेन",
+            "problem": "misread compound",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "अविद्यमानसाध्य...श्चाभिमतः पदार्थ इति व्यापकानुपलब्धिः",
+            "english": "[Whatever] does not have an existing object to be accomplished is the accepted substance ... this is the non-perception of a universal",
+            "problem": "fluent but hard to follow; the bracketed fills are guesses",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 491,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "न्यापोढ इत्युच्यते । तेनापोहः शब्दार्थ इति प्रसिद्धम्",
+            "english": "...and because it is the result of achieving the object of apoha, it is said that apoha is the meaning of the word",
+            "problem": "the opening fragment ('...is called excluded') is padded with an invented clause",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "बाधकं प्रमाणम्",
+            "english": "the proving contradiction",
+            "problem": "'refuting evidence' rendered obscurely",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "<header>Together with the Pañjikā</header> running head carried into the reader text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 689,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "तस्माद्वादिषद्वस्तु",
+            "image": "तस्माद्गवादिवद्वस्तु",
+            "problem": "'like a cow etc.' garbled in the verse (the translation restores it from the commentary)",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "तत्रानुवृत्तिबुद्धिरुपलभ्यमानभावोऽभाव इत्येषाकारः",
+            "image": "तत्रानुवृत्तिबुद्धि...अभावोऽभाव इत्येकाकारः",
+            "problem": "definition of the continuing cognition altered; the English 'an existing being is perceived as absent' rests on the misreading",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "दोषमाश्रित्य परिहरन्नाह",
+            "image": "चोद्यमाशङ्क्य परिहरन्नाह",
+            "problem": "misread verb phrase",
+            "severity": "minor"
+          },
+          {
+            "ocr": "अभावशब्दावाच्यत्वादात्मलक्षादेश विश्रमे ... प्रमेयत्वाद्यथाऽऽत्मज्ञानात्प्रमाणत्वम्",
+            "image": "verses 1658–59 (faint, broken type)",
+            "problem": "the last four verse lines are a guess where the print is poor; at least the last line does not match what is visible",
+            "severity": "moderate",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "verses 1658–1659 as OCR'd",
+            "english": "Due to being expressed by the word absence, in resting on the self-nature, etc., ... like knowledge of the self, it has the status of a means of knowledge.",
+            "problem": "fluent English over garbled verse, with no uncertainty marked",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      }
+    ],
+    "book_verdict": "The right text, mostly transcribed well. On sampled pages, misreads change who is speaking (Sāṅkhya read as sādhya), and fluent English covers garbled verse. The book is currently hidden.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      17,
+      491
+    ],
+    "reader_summary": "This is the Gaekwad's Oriental Series Tattvasaṃgraha with Kamalaśīla's Pañjikā, and the transcription is of the right text. Clean pages such as p491 read accurately. Elsewhere, misreads of names and of the verses carry into confident English, so a specialist should check the Sanskrit before quoting the English."
+  },
+  {
+    "book_id": "6a3067e4c4fd77fb5b9f882d",
+    "slot": 7,
+    "title": "Ratnāvalī (Sanskrit, ed. Mishra & Goswami)",
+    "tradition": "nalanda-sanskrit",
+    "shelf_fit": "fits",
+    "shelf_note": "Nāgārjuna's Ratnāvalī, a Madhyamaka work central to the Nālandā tradition.",
+    "rights_flag": true,
+    "structure_note": "Sanskrit verses each followed by the editors' Hindi rendering, plus a Hindi preface and a verse index (p82, printed 78). The record calls it Sanskrit only. The English mostly translates the Hindi gloss. 81 of 85 pages are translated. The OCR'd page number on p82 reads ७४ for printed ७८.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 5,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [
+          {
+            "source": "केवल उत्तरी देशों में ही",
+            "english": "primarily in northern countries",
+            "problem": "'only' softened to 'primarily'",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "<meta>page number 1 of the preface</meta> in the reader text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 33,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "शरीरतापनं धर्मः",
+            "image": "शरीरतापनाद्धर्मः",
+            "problem": "ablative lost",
+            "severity": "minor"
+          },
+          {
+            "ocr": "पैशुन्यान्निन्नभेदनम्",
+            "image": "पैशुन्यान्मित्रभेदनम्",
+            "problem": "'mitra' misread (the translation still has 'friendships')",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "न परद्रोहविरतिर्न परेषामनुग्रहः (with Hindi gloss)",
+            "english": "Therefore, one should neither completely abandon nor show favor to the relative objects with hatred",
+            "problem": "the verse says bodily mortification has no dharma because it involves neither refraining from harm nor helping others; the English follows a confused reading and inverts it into advice",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "Sanskrit verse + Hindi rendering",
+            "english": "one English rendering per verse",
+            "problem": "one translation stands for both the Sanskrit and the Hindi, without saying which it renders",
+            "severity": "moderate",
+            "class": "T11"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 57,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "नपुंसक राजगण मनोरथों से भी जिसकी क्षति नहीं पहुँचा सके ... धर्म का स्थान बनाओ ॥ १० ॥",
+            "english": "(omitted)",
+            "problem": "the end of verse 10's Hindi rendering, at the top of the page, is not translated",
+            "severity": "moderate",
+            "class": "T9"
+          }
+        ],
+        "other": [
+          {
+            "note": "OCR metadata tags (<scan-quality>, <language>...) appear after the text instead of before it",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 82,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "मरीचिस्तोसदृशी",
+            "image": "मरीचिस्तोयसदृशी",
+            "problem": "syllable dropped from index entry",
+            "severity": "minor"
+          },
+          {
+            "ocr": "यावच्च न विमुध्येरन्",
+            "image": "यावच्च न विमुच्येरन्",
+            "problem": "misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "( ७४ )",
+            "image": "( ७८ )",
+            "problem": "page number misread",
+            "severity": "minor",
+            "class": "O7"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A modern Hindi-Sanskrit study edition of the Ratnāvalī, probably in copyright. The English renders the Hindi glosses and inverts one verse's meaning.",
+    "fit_to_show": "do_not_show",
+    "showcase_pages": [
+      57
+    ],
+    "reader_summary": "This is a modern Indian edition of Nāgārjuna's Ratnāvalī with the editors' Hindi translation after each verse. The Sanskrit and Hindi are transcribed well. The English follows the Hindi rather than the Sanskrit and at least once reverses a verse's meaning. The edition is probably still in copyright."
+  },
+  {
+    "book_id": "69bc7feb9615ef57a9cec2bc",
+    "slot": 8,
+    "title": "Avadana Kalpalata",
+    "tradition": "nalanda-sanskrit",
+    "shelf_fit": "doubtful",
+    "shelf_note": "Kṣemendra's 11th-century Kashmiri verse avadāna collection is Buddhist Sanskrit literature, not a Nālandā śāstra. It is acceptable on a Buddhist-Sanskrit shelf but stretches a Nālandā one.",
+    "rights_flag": null,
+    "structure_note": "Bibliotheca Indica edition (1888, ed. Sarat Chandra Das and Harimohan Sarma) with Sanskrit and Tibetan on facing pages (p268 is a Tibetan page, 'Sixth pallava'). The record says language Sanskrit. The backsteps are the facing-page numbering pattern, not a defect. 510 of 515 pages are translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 11,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 171,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "स्त्वार्थिभ्यो निजजीवितेऽपि",
+            "image": "स्त्वार्थिबन्धोर्निजजीवितेऽपि",
+            "problem": "'friend of petitioners' (vocative epithet) misread",
+            "severity": "minor",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "कमलानिकायः कायः",
+            "english": "This body, which is like a cluster of lotuses",
+            "problem": "kamalā-niketa/abode of Lakṣmī rendered loosely",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "running head turned into an H1 '# The Third Chapter' plus '<meta>continues from previous page</meta>' in the reader text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 268,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ཇི་སྟེ་དུས་ནི་བར་དུ་འདས། གང་དུ་འང་བདར་ཡི་གླིང་།",
+            "image": "ཇི་སྙེད་དུས་ནི་རབ་ཏུ་འདས། གང་དུའང་བ་ད་ར་ཡི་གླིང་།",
+            "problem": "misread syllables in verse 127",
+            "severity": "minor"
+          },
+          {
+            "ocr": "ལས་ཀྱི་བཻ་དྷཱ་བས་ཀྱིས",
+            "image": "ལས་ཀྱི་རླབས་ཀྱིས (approx.)",
+            "problem": "invented Sanskrit-like syllables in verse 128",
+            "severity": "moderate",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "<meta>The source language is Tibetan, not Sanskrit as initially suggested in the prompt instructions...</meta> — model reasoning shown at the head of the reader text",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "low"
+      },
+      {
+        "page_number": 391,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "अनुरागान्नितप्तानां",
+            "image": "अनुरागाग्नितप्तानां",
+            "problem": "'fire of passion' misread (sense kept in the English)",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A solid 1888 bilingual edition, accurately transcribed. The English is sound, apart from model chatter and running-head headings in the reader text. Its shelf is doubtful.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      11,
+      171,
+      391
+    ],
+    "reader_summary": "This is the Bibliotheca Indica edition of Kṣemendra's Avadānakalpalatā, with Sanskrit and Tibetan on facing pages. The Sanskrit verse is transcribed accurately and the English follows it closely. The Tibetan pages are serviceable, but one shows the model's own note about the source language at the top of the reader text."
+  }
+]

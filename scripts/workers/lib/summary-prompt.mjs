@@ -13,7 +13,7 @@
  * marketing copy. See PR (fix/about-book-prompt) for the before/after rationale.
  */
 
-export const SUMMARY_PROMPT_VERSION = '2026-05-29-plain-encyclopedic';
+export const SUMMARY_PROMPT_VERSION = '2026-10-07-no-ai-vocabulary';
 
 // Low temperature keeps the prose factual. At the default (~1.0) flash-lite
 // reaches for grand register ("seminal", "delineates the trajectory of...")
@@ -40,10 +40,17 @@ export const SUMMARY_GEN_CONFIG = { temperature: 0.2, thinkingConfig: { thinking
  */
 export function buildSummaryPrompt(o) {
   const {
-    bookTitle, englishTitle = '', bookAuthor, languageContext = '', researchSection = '',
+    bookTitle: rawTitle, englishTitle: rawEnglishTitle = '', bookAuthor, languageContext = '', researchSection = '',
     chapterSection = '', themes = [], people = [], places = [], concepts = [],
     sectionSummariesText = '', quotesText = '', hasChapters = false,
   } = o;
+
+  // "Exactly as given" beat the no-em-dash rule whenever a catalogue title
+  // carried one ("… juan 9–12 — vol. 3 of 5"), so the brief opened with a dash
+  // (#6215). The model only ever sees the title with the dash already a comma.
+  const proseTitle = (t) => String(t ?? '').replace(/\s*\u2014\s*/g, ', ');
+  const bookTitle = proseTitle(rawTitle);
+  const englishTitle = proseTitle(rawEnglishTitle);
 
   // Only treat the English title as a distinct gloss when it actually differs.
   const hasGloss = englishTitle && englishTitle.trim() && englishTitle.trim() !== bookTitle.trim();
@@ -78,7 +85,7 @@ Synthesize the material above into a plain, encyclopedic description. Ground eve
 - On first naming the author, add a short factual identifier: who they were in a few words (role, period, place), e.g. "Irenaeus, a second-century bishop of Lyon and early Church Father" or "Robert Fludd, an English physician and Paracelsian philosopher". Only state facts you are confident are well established. If the author is obscure or you are unsure, give the name alone and invent nothing.
 - Say in one concrete sentence why the text is notable, when there is a real, factual answer: what it preserves, what it influenced, what it is a source for, what is unusual about it. Example: a polemic against a movement can be a principal source for that movement because it quotes it at length (as with Irenaeus and the Gnostics). This is factual significance, not a rating. If nothing concrete is known, omit it rather than padding with praise.
 
-**Hard rules — these are the difference between a catalog note and ad copy:**
+**Hard rules. These are the difference between a catalog note and ad copy:**
 ${titleRule}
 - Do NOT address or refer to the reader. Ban "you", "your", "readers", "readers will discover", "imagine", "discover". The description talks about the text, never to a prospective reader.
 - Do NOT open with a question. No rhetorical hooks ("What if...?", "Why did...?", "How can...?"). Open by naming the work and stating plainly what it is.
@@ -86,13 +93,13 @@ ${titleRule}
 - Significance must be concrete and specific. Drop empty praise adjectives: no "seminal", "important", "fascinating", "remarkable", "essential", "profound", "rich", "masterful", "groundbreaking", "radical", "bold", "urgent". Say what the text did or preserves, not how impressive it is.
 
 **Style:**
-- Also avoid these AI tells: "delves into", "rich tapestry", "sheds light on", "offers a window into", "pulls back the curtain", "comprehensive", "intricate", "nuanced", "multifaceted", and stiff verbs like "delineates", "elucidates", "utilizes" (write "uses"), "explores the trajectory of".
+- Also avoid these AI tells: "delves into", "rich tapestry", "sheds light on", "offers a window into", "pulls back the curtain", "comprehensive", "intricate", "nuanced", "multifaceted", "meticulous", "pivotal", "vibrant", "interplay", "showcases", "landscape of", "a testament to", "serves as", "not only X but also Y", "not merely X but Y", and stiff verbs like "delineates", "elucidates", "utilizes" (write "uses"), "explores the trajectory of".
 - No em-dashes (—). Use commas, colons, semicolons, or separate sentences.
 - Short, concrete sentences. Plain words over Latinate ones. Name people, places, and specifics instead of gesturing at them.
 
-Example of the WRONG register (sells, addresses the reader, empty praise — do NOT write like this):
+Example of the WRONG register (sells, addresses the reader, empty praise; do NOT write like this):
   "Willem Teellinck strips away the distractions of modern life to focus on a singular, urgent question. Readers will discover a seminal manual for the soul that delineates the trajectory toward sanctification."
-Example of the RIGHT register (identifies the author, states concrete significance, factual, no reader — write like this):
+Example of the RIGHT register (identifies the author, states concrete significance, factual, no reader; write like this):
   "Adversus haereses (Against Heresies) is a theological treatise by Irenaeus, a second-century bishop of Lyon and one of the early Church Fathers. Writing around 180 AD, he lays out the teachings of Valentinus and other Gnostic groups in order to refute them and defend what he held to be apostolic tradition. Because he quotes those teachings at length, the work is now a principal source for Gnostic thought that survives almost nowhere else."
 
 1. **BRIEF** (2-4 sentences):

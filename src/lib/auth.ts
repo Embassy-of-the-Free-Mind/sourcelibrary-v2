@@ -1,5 +1,11 @@
 import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
+// The provider module imports `createTransport` from `nodemailer` at load, so the
+// package must be installed, but this app never calls it: `sendVerificationRequest`
+// below is overridden and sends through the Resend SDK. A nodemailer advisory about
+// SMTP transport or address parsing is therefore not reachable here (#5890).
+// next-auth declares a peer of `^7.0.7 || ^8.0.5`; we install outside it under
+// `legacy-peer-deps`, which is safe only while that one named import keeps working.
 import Email from 'next-auth/providers/nodemailer';
 import { MongoDBAdapter } from '@auth/mongodb-adapter';
 import { toUserId } from './user-id';

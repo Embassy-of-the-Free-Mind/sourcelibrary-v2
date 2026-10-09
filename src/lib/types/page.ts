@@ -360,7 +360,9 @@ export interface GeminiEngine {
   model: string;
   model_version: string | null;
   model_version_source: string;
-  api: 'realtime' | 'batch';
+  api: 'realtime' | 'batch' | 'cli';
+  /** The subscription CLI that made the read; present when `api` is 'cli'. */
+  cli?: { name: string; version: string };
   call_site: string;
   prompt: { id: string | null; name: string | null; version: string; hash: string | null; sent_hash: string; sent_chars: number | null };
   generation: {
@@ -416,7 +418,9 @@ export interface TranslationData extends ProcessingMetadata {
  * `WITHHOLD_REASONS` in `scripts/lib/stale-translation.mjs` — that module owns
  * the rule; this is the reading half of the same contract.
  */
-export type WithheldTranslationReason = 'stale_after_reocr' | 'ocr_unreadable';
+export type WithheldTranslationReason =
+  | 'stale_after_reocr' | 'ocr_unreadable' | 'source_loop' | 'unverified_script_ocr'
+  | 'illegible_source' | 'invented_by_eye';
 
 export interface WithheldTranslation extends Omit<TranslationData, 'data'> {
   reason: WithheldTranslationReason;

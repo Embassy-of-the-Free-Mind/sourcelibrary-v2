@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import type { CSSProperties, ReactNode } from 'react';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import PageEditMode from '@/components/PageEditMode';
 import { ENGLISH, HATCH, Figure, Step, Swatch, ImprovementChart } from '../canon-gap/diagrams';
 import { IMPROVEMENTS } from '../canon-gap/improvements';
 
@@ -134,7 +135,7 @@ const CANONS: Canon[] = [
         </>
       ),
       shown: (
-        <>All 213 volumes are held from public view. Every page is labelled an unreviewed machine draft.</>
+        <>All 213 volumes have been public since 7 October 2026. Every page is labelled an AI translation not yet reviewed by a scholar.</>
       ),
       notMeasured: (
         <>
@@ -687,7 +688,8 @@ export default function CanonQualityPage() {
         <p className="text-sm text-stone-500 mt-8">
           Prepared for the Eternity Foundation working session, October 2026. Every figure is copied from a published
           write-up of a measurement made between 30 September and 4 October 2026, and links to it. A companion to{' '}
-          <a href="/research/canon-gap" className="text-amber-800 underline underline-offset-2">The Open Canons</a>.
+          <a href="/research/canon-gap" className="text-amber-800 underline underline-offset-2">The Open Canons</a>. What is still open across
+          all languages is listed on <a href="/research/quality/open" className="text-amber-800 underline underline-offset-2">open quality work</a>.
         </p>
 
         <p className="mt-6">
@@ -834,6 +836,7 @@ export default function CanonQualityPage() {
           </p>
         </Section>
       </div>
+      <PageEditMode />
     </ContentPageLayout>
   );
 }

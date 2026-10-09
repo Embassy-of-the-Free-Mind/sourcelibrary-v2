@@ -139,9 +139,15 @@ describe('vercel-prod-watch judge', () => {
 });
 
 describe('build inputs come from vercel.json, so the check and Vercel cannot drift', () => {
-  it('parses the live ignoreCommand to the fixture paths', () => {
+  it('reads the live ignoreCommand: the fixture paths, plus the scripts/ files src/ imports', () => {
     const vercel = JSON.parse(readFileSync(join(__dirname, '../../vercel.json'), 'utf8'));
-    expect(buildInputsFromIgnoreCommand(vercel.ignoreCommand)).toEqual(fx.build_inputs);
+    const inputs = buildInputsFromIgnoreCommand(vercel.ignoreCommand);
+    expect(inputs.slice(0, fx.build_inputs.length)).toEqual(fx.build_inputs);
+    // The data a page imports from scripts/ is a build input (#5889: a refresh never deployed).
+    expect(inputs).toContain('scripts/catalog-coverage/results/canon-gap-status-2026-10.json');
+  });
+  it('still parses an inline `… HEAD -- <paths>` command', () => {
+    expect(buildInputsFromIgnoreCommand('git diff --quiet "$P" HEAD -- src/ public/')).toEqual(['src/', 'public/']);
   });
   it('throws (exit 2) on an ignoreCommand it cannot read', () => {
     expect(() => buildInputsFromIgnoreCommand('exit 1')).toThrow(/could not read build-input paths/);

@@ -1,0 +1,102 @@
+[
+{"id": "Q8RQQ", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "འདོད་པའི་སྡུག་བསྔལ་ངོ་ཚ་རྣམ་བྲལ་", "english": "people desire the women of others, a suffering of desire devoid of shame",
+   "why": "The shameless people tormented by desire are the subject who covet others' wives; the English attaches 'suffering of desire devoid of shame' to the women/act."},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "དེ་ལྟར་གཞན་གྱི་བུད་མེད་ལ་ཆགས་པ། །སྐྱོན་མང་བར་ཤེས་", "english": "Thus, knowing the many faults of attachment to the women of others, and focusing on stability, one should view them with the perception of a sister.",
+   "why": "This is a four-line verse in which the steadfast/wise one, knowing the faults, should regard her as a sister and turn away; it is run into prose with the following prose sentence and 'brtan pa' is made 'stability'."}
+ ],
+ "note": "Ornate kāvya verse rendered as prose; the sense of the lover's fantasy and the hell warning comes through, with a few mis-attached clauses."},
+{"id": "QBES8", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "ཇི་ལྟར་སྲིད་པའི་རྒྱུ་ལ་", "english": "just as when there is a distinction in the cause of existence",
+   "why": "ཇི་ལྟར་སྲིད་པ is 'according as it obtains' (yathāsambhavam), glossed below as 'as it exists, in excellence and decline', not 'the cause of existence' (bhava)."}
+ ],
+ "note": "The materialist-refutation argument (body vs. consciousness, milk example) is followed accurately apart from one idiom."},
+{"id": "QAOWA", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "high",
+   "tibetan": "དེ་ལྟ་ན་ཡང་ནུས་པ་ཐོགས་པ་མེད་པའི་དོན་མ་ཡིན་ཏེ", "english": "Even so, this does not mean the capacity is hindered.",
+   "why": "The Tibetan says that case is not one of unhindered capacity, i.e. the capacity has not yet become unobstructed.",
+   "fix": {"find": "this does not mean the capacity is hindered", "replace": "this is not a case of unhindered capacity"}},
+  {"type": "agent", "confidence": "high",
+   "tibetan": "རྒྱུ་ནི་འབྲས་བུ་མེད་པར་ཡོད་པ་ཡང་སྲིད་པས་དམིགས་པ་མེད་པ་ཡུལ་མེད་པ་མི་འགྲུབ་པོ་ཞེས་བྱ་བའི་ལན་ཡང་", "english": "Since it is possible for a cause to exist without the result, the answer to the claim that \"non-perception does not prove the absence of an object\" has been thoroughly explained.",
+   "why": "'A cause may exist without its effect' is part of the opponent's objection being answered, not the author's premise.",
+   "fix": {"find": "Since it is possible for a cause to exist without the result, the answer to the claim that \"non-perception does not prove the absence of an object\" has been thoroughly explained.", "replace": "This also answers the objection that \"since a cause may exist without its result, non-perception does not prove the absence of an object.\""}},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "ཐམས་ཅད་མཁྱེན་པ་དག་འདོད་ཆགས་དང་བྲལ་བ་དག་འགོག་པར་བྱེད་པ", "english": "who attempt to negate that the All-Knowing One [note: the Buddha] is free from attachment",
+   "why": "The Mīmāṃsakas deny omniscient beings and passion-free beings (two items), by reasons such as having a body or intellect that are not incompatible with them; the English fuses this into one proposition."}
+ ],
+ "note": "Dharmottara-style discussion of non-perception; the argument is roughly traceable but one negation is flipped and an objection is given as the author's premise."},
+{"id": "QEC6D", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "high",
+   "tibetan": "མ་ངེས་པ་མ་ཡིན་པ་ཁོ་ནའོ", "english": "is precisely not certain.",
+   "why": "The double negative says the determination of the whole arising from memory and recognition is precisely not uncertain.",
+   "fix": {"find": "is precisely not certain.", "replace": "is precisely not uncertain."}},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "གདུང་མ་འདེགས་པ་དེ་ལ་སོ་སོར་ནུས་པ་མེད་པ་", "english": "those individual pillars that lack the power to support a roof",
+   "why": "The stock example is lifting a beam (those individually unable to lift it can do so together), not pillars supporting a roof."}
+ ],
+ "note": "The avayavin debate (recognition, memory, water-jar example) is followed in outline, but a key double negation is lost."},
+{"id": "QUT1M", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "དོན་རྣམས་ལ་ནི་སྒྲ་རྣམས་དག །རྒྱུ་མེད་ཅན་འཇུག་མི་འགྱུར་ཞིང་།", "english": "then the words for the objects of other philosophical views would not engage without a cause",
+   "why": "The summary verse says words would not apply to the baseless (causeless) objects of other views; 'causeless' qualifies the objects, and the verse is rendered as prose."}
+ ],
+ "note": "Sound rendering of the apoha/pradhāna argument with its verses; one verse line is misparsed."},
+{"id": "QGPEX", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "high",
+   "tibetan": "འགའ་ཞིག་ཞིག་པ་ཡང་མ་ངེས་འཇིག་པ་མ་ཡིན་ནོ", "english": "the destruction of certain things is not an uncertain destruction",
+   "why": "The Tibetan concludes that the destruction of some things is also uncertain: they do not necessarily perish.",
+   "fix": {"find": "the destruction of certain things is not an uncertain destruction", "replace": "the destruction of some things is also uncertain; they do not necessarily perish"}},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "གང་གི་ཕྱིར་དེ་མེད་ན་འཇིག་པ་མི་རྩོམ་མོ་ཞེ་ན། དེ་ནི་མི་རིགས་ཏེ།", "english": "If one asks, \"Why is destruction not initiated if that cause is absent?\" that is unreasonable.",
+   "why": "གང་གི་ཕྱིར closes the opponent's argument ('because without it destruction does not start'), which 'that is unreasonable' then rejects; it is not a question."},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "འགལ་བས་ཁྱབ་པ་དམིགས་པ་ཡིན་ནོ", "english": "is a inference of a pervading contradiction",
+   "why": "This is the reason-type 'perception of what is pervaded by a contradictory' (viruddhavyāptopalabdhi)."},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "འབྲས་བུ་བྱེད་པ་ཚད་མ་མེད་ཅིང་", "english": "then producing an effect is not valid",
+   "why": "The Tibetan says there is no pramāṇa (evidence) for destruction producing an effect, not that producing an effect is invalid."}
+ ],
+ "note": "Argument on whether destruction needs a separate cause; the dialectic is partly scrambled and the conclusion of one exchange is reversed."},
+{"id": "Q4DWG", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "medium",
+   "tibetan": "གཞན་ལས་དབེན་པ་དང་བྲལ་བས་མི་སྣང་བའི་ཕྱིར་རོ", "english": "because it is secluded and free from other things",
+   "why": "The Tibetan says existence does not appear because it is NOT isolated from other things (it lacks such isolation)."},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "ཉེ་བར་བརྟེན་པ་དང་བྲལ་ན་ཤེས་ན་ཅུང་ཟད་སྐྱེ་མི་འགྱུར་", "english": "If it is free from dependence and is known, will it not fail to arise even slightly?",
+   "why": "The objection is that if cognition lacks a support (object), no cognition at all would arise."}
+ ],
+ "note": "Dream vs. waking non-deceptiveness passage; the first half is fine, the latter part on cognizing absence is garbled in places."},
+{"id": "Q9E9N", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "high",
+   "tibetan": "ཡང་ཅི་ལྟར་ན་འབྲས་བུ་གསོག་ཏུ་གྱུར་པས་དེ་ཡང་གསོག་ཉིད་ཡིན་སྙམ་ན", "english": "How can the effect be hollow just because the cause is hollow?",
+   "why": "The question is how the cause (pradhāna) is also hollow because the effect is hollow; the direction of inference is inverted.",
+   "fix": {"find": "How can the effect be hollow just because the cause is hollow?", "replace": "How can the cause also be hollow just because the effect is hollow?"}}
+ ],
+ "note": "Good rendering of the critique of Sāṃkhya pradhāna (with the guṇānāṃ paramaṃ rūpam verse), one inverted question."},
+{"id": "QQJUF", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "དགེ་འདུན་ལྷག་མ་", "english": "the thirteen (sanghadisesa) rules requiring an assembly of the community",
+   "why": "In the Mūlasarvāstivāda Vinaya the Sanskrit term is saṃghāvaśeṣa; sanghadisesa is the Pali form.",
+   "fix": {"find": "(sanghadisesa) rules requiring", "replace": "(saṃghāvaśeṣa) rules requiring"}},
+  {"type": "term", "confidence": "high",
+   "tibetan": "སེམས་ཀྱིས་བྱིན་གྱིས་བརླབ་པར་བྱའོ", "english": "This mental resolve is the blessing.",
+   "why": "བྱིན་གྱིས་བརླབ here is the Vinaya adhiṣṭhāna 'to resolve/determine' mentally; the monk should make that resolution, not receive a blessing.",
+   "fix": {"find": "This mental resolve is the blessing.", "replace": "He should make this resolution mentally."}}
+ ],
+ "note": "Clear, accurate account of the five modes of Prātimokṣa recitation and the reciter's and elder's duties, with two Vinaya term slips."},
+{"id": "QYLM3", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "Faithful rendering of the apoha passage; the translator's note on the probably corrupt 'connected' is reasonable."}
+]

@@ -12,7 +12,7 @@ export default function GallerySchema() {
     '@type': 'CollectionPage',
     '@id': `${pageUrl}#collection`,
     url: pageUrl,
-    name: 'Image Gallery — Source Library',
+    name: 'Image Gallery | Source Library',
     description: 'Browse illustrations, diagrams, and engravings extracted from rare Hermetic, alchemical, and philosophical texts. Searchable by subject, type, and period.',
     isPartOf: { '@id': `${BASE_URL}/#website` },
     about: [

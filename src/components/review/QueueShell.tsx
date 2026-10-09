@@ -88,7 +88,7 @@ export function QueueShell(props: {
                 <div className="rounded-md border border-accent-rust/30 bg-accent-rust/5 p-4 text-sm">
                   <p className="text-stone-800 font-medium mb-1">Sign in to record your answer</p>
                   <p className="text-stone-600 mb-3">
-                    Judgments are credited to you, not to this browser &mdash; so your work
+                    Judgments are credited to you, not to this browser, so your work
                     follows you between devices, and we can come back to you about it.
                   </p>
                   <Link
@@ -129,7 +129,7 @@ export function QueueShell(props: {
                   Anything the buttons can't say?
                 </label>
                 <p className="text-xs text-stone-500 mt-0.5 mb-2">
-                  Optional. Sent with your rating — or on its own if none of the options is right.
+                  Optional. Sent with your rating, or on its own if none of the options is right.
                 </p>
                 <textarea
                   id="review-note"
@@ -149,7 +149,7 @@ export function QueueShell(props: {
                   >
                     Send note only
                   </button>
-                  {noteSaved && <span className="text-sm text-green-700">Note saved — thank you.</span>}
+                  {noteSaved && <span className="text-sm text-green-700">Note saved. Thank you.</span>}
                 </div>
               </div>
             </div>

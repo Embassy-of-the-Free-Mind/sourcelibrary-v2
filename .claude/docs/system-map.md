@@ -78,7 +78,7 @@ Import (IA/Gallica/IIIF/Wellcome/etc.)
        Polls Gemini Batch API, saves OCR results, zombie reaper (>6h), ghost cleanup
 ```
 
-Concurrency limits managed by `system_config.adaptive_limits` (auto-halved when Atlas degrades). Backpressure: `system_config.paused_phases` array.
+Concurrency limits managed by `system_config.adaptive_limits` (auto-halved when Atlas degrades). Backpressure: `system_config.paused_phases` array — one vocabulary, `scripts/lib/pause.mjs` (#5492): paused_phases (array of 'archive' / 'ocr' / 'translate' / 'enrich' / 'images' / 'embeddings'). Legacy `'translation'`, `'enrichment'` and phase numbers are aliases; any other word pauses nothing.
 
 ## Supabase Layer (added 2026-03-27+)
 

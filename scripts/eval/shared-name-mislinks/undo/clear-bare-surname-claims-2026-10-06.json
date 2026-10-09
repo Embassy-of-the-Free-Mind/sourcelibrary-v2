@@ -1,0 +1,139 @@
+{
+ "sweep": "clear-bare-surname-claims-5950",
+ "applied_at": {
+  "$date": "2026-10-06T17:47:03.569Z"
+ },
+ "docs": [
+  {
+   "_id": "69953307fb05b02a153a45e3",
+   "name": "Montanus",
+   "removed": {
+    "wikidata_id": "Q1697209",
+    "wikidata_birth_date": "1498",
+    "wikidata_death_date": "1551-05-06",
+    "wikidata_enriched_at": {
+     "$date": "2026-05-30T10:51:37.425Z"
+    },
+    "description": "Likely referring to Giovanni Battista Monte, a 16th-century Italian physician and humanist who was instrumental in reviving clinical medicine and Galenic teaching. His works were frequently cited in medical and alchemical compendiums of the early modern period.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Giovanni_Battista_Monte",
+    "birth_place": {
+     "city": "Verona",
+     "lat": 45.438611111,
+     "lng": 10.992777777,
+     "country": "Italy"
+    },
+    "death_place": {
+     "city": "Padua",
+     "lat": 45.407777777,
+     "lng": 11.873333333,
+     "country": "Italy"
+    },
+    "aliases": [
+     "Johannes Baptista Montanus",
+     "Giovanni Battista Monte",
+     "Montanus of Padua"
+    ]
+   }
+  },
+  {
+   "_id": "69953efdfb05b02a153a4fd3",
+   "name": "Bruno",
+   "removed": {
+    "wikidata_id": "Q36330",
+    "wikidata_birth_date": "1548",
+    "wikidata_death_date": "1600-02-17",
+    "wikidata_enriched_at": {
+     "$date": "2026-05-30T10:51:37.425Z"
+    },
+    "description": "Likely referring to Giordano Bruno, the Italian friar and philosopher known for his cosmological theories, hermetic mnemonic systems, and pantheism.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Giordano_Bruno",
+    "birth_place": {
+     "city": "Nola",
+     "lat": 40.933333333,
+     "lng": 14.533333333,
+     "country": "Italy"
+    },
+    "death_place": {
+     "city": "Rome",
+     "lat": 41.893055555,
+     "lng": 12.482777777,
+     "country": "Italy"
+    },
+    "work_places": [
+     {
+      "city": "Lutherstadt Wittenberg",
+      "lat": 51.8671,
+      "lng": 12.6484,
+      "country": "Germany"
+     }
+    ],
+    "aliases": [
+     "Giordano Bruno",
+     "Filippo Bruno",
+     "The Nolan"
+    ]
+   }
+  },
+  {
+   "_id": "6995433dfb05b02a153a5afd",
+   "name": "Fabricius",
+   "removed": {
+    "wikidata_id": "Q60204",
+    "wikidata_birth_date": "1564-03-09",
+    "wikidata_death_date": "1617-05-07",
+    "wikidata_enriched_at": {
+     "$date": "2026-05-30T10:51:37.425Z"
+    },
+    "description": "A German astronomer and correspondent of Kepler who was one of the first to use a telescope for astronomical observations.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/David_Fabricius",
+    "birth_place": {
+     "city": "Esens",
+     "lat": 53.646944444,
+     "lng": 7.612777777,
+     "country": "Germany"
+    },
+    "death_place": {
+     "city": "Osteel",
+     "lat": 53.533333333,
+     "lng": 7.266666666,
+     "country": "Germany"
+    },
+    "aliases": [
+     "David Fabricius",
+     "Davidus Fabricius"
+    ]
+   }
+  },
+  {
+   "_id": "6991e2c0fb05b02a1539a920",
+   "name": "Agrippa",
+   "removed": {
+    "wikidata_id": "Q76568",
+    "wikidata_birth_date": "1486-09-14",
+    "wikidata_death_date": "1535-02-18",
+    "wikidata_enriched_at": {
+     "$date": "2026-05-30T10:51:37.425Z"
+    },
+    "description": "Heinrich Cornelius Agrippa von Nettesheim was a 16th-century German polymath and occultist whose 'De Occulta Philosophia' synthesized Renaissance magic, Kabbalah, and Neoplatonism.",
+    "wikipedia_url": "https://en.wikipedia.org/wiki/Heinrich_Cornelius_Agrippa",
+    "birth_place": {
+     "city": "Cologne",
+     "lat": 50.942222222,
+     "lng": 6.957777777,
+     "country": "Germany"
+    },
+    "death_place": {
+     "city": "Grenoble",
+     "lat": 45.186944444,
+     "lng": 5.726388888,
+     "country": "France"
+    },
+    "aliases": [
+     "Heinrich Cornelius Agrippa",
+     "Agrippa von Nettesheim",
+     "Cornelius Agrippa"
+    ]
+   }
+  }
+ ]
+}

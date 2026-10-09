@@ -1,0 +1,809 @@
+{
+ "summary": {
+  "books_with_edition_key": 108955,
+  "groups_more_than_one_copy": 932,
+  "books_in_those_groups": 1975,
+  "groups_more_than_one_VISIBLE": 37,
+  "visible_books_in_them": 76,
+  "groups_more_than_one_LIVE": 37,
+  "live_books_in_them": 76,
+  "visible_groups_with_year": 37,
+  "visible_groups_zero_pages_only": 0,
+  "visible_groups_created_after_2026_10_01": 0
+ },
+ "groups": [
+  {
+   "edition_key": "ausfuhrlicher bericht vom gebrauch desz instruments so titulirt physico astrologicum instrumentum|hafenreffer|1640|v",
+   "visible": [
+    {
+     "id": "6867aa3e009d20a23245ab41",
+     "pages_count": 72,
+     "pages_translated": 66,
+     "provider": "bph",
+     "created_at": "2025-07-04T10:17:34.247Z",
+     "title": "Ausführlicher Bericht vom Gebrauch desz Instruments so titulirt physico astrologicum instrumentum"
+    },
+    {
+     "id": "69c7e57afb10016c3f389b7e",
+     "pages_count": 72,
+     "pages_translated": 65,
+     "provider": "bph",
+     "created_at": "2026-03-28T14:28:10.838Z",
+     "title": "Ausführlicher Bericht vom Gebrauch desz Instruments so titulirt physico astrologicum instrumentum"
+    }
+   ]
+  },
+  {
+   "edition_key": "sabiduria universal del raymundo lullio|fullana|1712|v",
+   "visible": [
+    {
+     "id": "6909bd18cf28baa1b4caf5a5",
+     "pages_count": 52,
+     "pages_translated": 47,
+     "provider": "bph",
+     "created_at": "2025-11-04T08:45:12.252Z",
+     "title": "La sabiduria universal del Raymundo Lullio"
+    },
+    {
+     "id": "69c8014b6c6f3cc53c844292",
+     "pages_count": 52,
+     "pages_translated": 45,
+     "provider": "bph",
+     "created_at": "2026-03-28T16:26:51.761Z",
+     "title": "La sabiduria universal del Raymundo Lullio"
+    }
+   ]
+  },
+  {
+   "edition_key": "philaletha illustratus|faust|1728|v",
+   "visible": [
+    {
+     "id": "6909d208cf28baa1b4cb003b",
+     "pages_count": 197,
+     "pages_translated": 189,
+     "provider": "bph",
+     "created_at": "2025-11-04T10:14:32.194Z",
+     "title": "Philaletha illustratus"
+    },
+    {
+     "id": "69c4ec33a3a4a7c546ee610b",
+     "pages_count": 104,
+     "pages_translated": 102,
+     "provider": "bph",
+     "created_at": "2026-03-26T08:20:03.442Z",
+     "title": "Philaletha illustratus"
+    }
+   ]
+  },
+  {
+   "edition_key": "warhafft umbstand und grundlicher bericht aus einem original schreiben hoher potentaten extrahiret|anonymous|1624|v",
+   "visible": [
+    {
+     "id": "68fb0f9712055a03a58d32fb",
+     "pages_count": 10,
+     "pages_translated": 10,
+     "provider": "bph",
+     "created_at": "2025-10-24T05:33:11.422Z",
+     "title": "Warhafft, umbständ und gründlicher Bericht, aus einem Original Schreiben hoher Potentaten extrahiret"
+    },
+    {
+     "id": "69c6e84dda9771c7163145ff",
+     "pages_count": 10,
+     "pages_translated": 10,
+     "provider": "bph",
+     "created_at": "2026-03-27T20:27:57.532Z",
+     "title": "Warhafft, umbständ und gründlicher Bericht, aus einem Original Schreiben hoher Potentaten extrahiret"
+    }
+   ]
+  },
+  {
+   "edition_key": "seht da den menschen aus dem franzoesischen ecce homo|saintmartin|1819|v",
+   "visible": [
+    {
+     "id": "6909b0a0cf28baa1b4caf0e9",
+     "pages_count": 152,
+     "pages_translated": 146,
+     "provider": "bph",
+     "created_at": "2025-11-04T07:52:00.642Z",
+     "title": "Seht da den Menschen! Aus dem Franzoesischen: Ecce homo"
+    },
+    {
+     "id": "69c764b46a0f3d112faf8ed5",
+     "pages_count": 152,
+     "pages_translated": 143,
+     "provider": "bph",
+     "created_at": "2026-03-28T05:18:44.318Z",
+     "title": "Seht da den Menschen! Aus dem Franzoesischen: Ecce homo"
+    }
+   ]
+  },
+  {
+   "edition_key": "brunnen der weisheit und erkanntniss der natur|anonymous|1706|v",
+   "visible": [
+    {
+     "id": "6909c8ebcf28baa1b4cafbb7",
+     "pages_count": 57,
+     "pages_translated": 53,
+     "provider": "bph",
+     "created_at": "2025-11-04T09:35:39.829Z",
+     "title": "Brunnen der Weisheit und Erkänntniss der Natur"
+    },
+    {
+     "id": "69c8244f6c6f3cc53c84b3cf",
+     "pages_count": 56,
+     "pages_translated": 49,
+     "provider": "bph",
+     "created_at": "2026-03-28T18:56:15.793Z",
+     "title": "Brunnen der Weisheit und Erkänntniss der Natur"
+    }
+   ]
+  },
+  {
+   "edition_key": "amphitheatrum sapientiae aeternae|khunrath|1609|v",
+   "visible": [
+    {
+     "id": "6952d08677f38f6761bc5477",
+     "pages_count": 337,
+     "pages_translated": 336,
+     "provider": "internet_archive",
+     "created_at": "2025-12-29T19:03:34.336Z",
+     "title": "Amphitheatrum sapientiae aeternae"
+    },
+    {
+     "id": "69ef33e26c5c0455cc3f602f",
+     "pages_count": 239,
+     "pages_translated": 0,
+     "provider": "bph",
+     "created_at": "2026-04-27T10:01:06.856Z",
+     "title": "Amphitheatrum sapientiae aeternae"
+    }
+   ]
+  },
+  {
+   "edition_key": "tomus secundus de supernaturali naturali praeternaturali et contranaturali microcosmi historia|fludd|1619|v2",
+   "visible": [
+    {
+     "id": "695201a9ab34727b1f041826",
+     "pages_count": 416,
+     "pages_translated": 401,
+     "provider": "gallica",
+     "created_at": "2025-12-29T04:20:57.986Z",
+     "title": "Tomus secundus de supernaturali, naturali, praeternaturali et contranaturali microcosmi historia"
+    },
+    {
+     "id": "69a0278f677e04041df0334e",
+     "pages_count": 210,
+     "pages_translated": 202,
+     "provider": "bph",
+     "created_at": "2026-02-26T10:59:27.208Z",
+     "title": "Tomus secundus de supernaturali, naturali, praeternaturali et contranaturali microcosmi historia"
+    }
+   ]
+  },
+  {
+   "edition_key": "sphinx mystagoga|kircher|1676|v",
+   "visible": [
+    {
+     "id": "69520539ab34727b1f04267d",
+     "pages_count": 99,
+     "pages_translated": 99,
+     "provider": "gallica",
+     "created_at": "2025-12-29T04:36:09.820Z",
+     "title": "Sphinx mystagoga"
+    },
+    {
+     "id": "6a08aaa026bf28a2268d1f6b",
+     "pages_count": 116,
+     "pages_translated": 106,
+     "provider": "internet_archive",
+     "created_at": "2026-05-16T17:34:24.095Z",
+     "title": "Sphinx Mystagoga"
+    }
+   ]
+  },
+  {
+   "edition_key": "tree of faith|lead|1696|v",
+   "visible": [
+    {
+     "id": "695258b9ab34727b1f045731",
+     "pages_count": 126,
+     "pages_translated": 126,
+     "provider": "internet_archive",
+     "created_at": "2025-12-29T10:32:25.270Z",
+     "title": "The Tree of Faith"
+    },
+    {
+     "id": "69ef36856c5c0455cc3f687a",
+     "pages_count": 184,
+     "pages_translated": 0,
+     "provider": "bph",
+     "created_at": "2026-04-27T10:12:21.901Z",
+     "title": "The tree of faith"
+    }
+   ]
+  },
+  {
+   "edition_key": "veritatis proscenium|fludd|1621|v",
+   "visible": [
+    {
+     "id": "6952722eab34727b1f04805e",
+     "pages_count": 66,
+     "pages_translated": 56,
+     "provider": "internet_archive",
+     "created_at": "2025-12-29T12:21:02.754Z",
+     "title": "Veritatis Proscenium"
+    },
+    {
+     "id": "69c581e4a0ac0c96f42b4016",
+     "pages_count": 33,
+     "pages_translated": 29,
+     "provider": "bph",
+     "created_at": "2026-03-26T18:58:44.698Z",
+     "title": "Veritatis proscenium"
+    }
+   ]
+  },
+  {
+   "edition_key": "fable of the bees or private vices publick benefits|mandeville|1714|v",
+   "visible": [
+    {
+     "id": "69569080aeb4b980d9ebd5db",
+     "pages_count": 369,
+     "pages_translated": 357,
+     "provider": "internet_archive",
+     "created_at": "2026-01-01T15:19:28.089Z",
+     "title": "The Fable of the Bees: Or Private Vices, Publick Benefits"
+    },
+    {
+     "id": "6991dc5879a19ded6bdb433a",
+     "pages_count": 495,
+     "pages_translated": 494,
+     "provider": "internet_archive",
+     "created_at": "2026-02-15T14:46:48.484Z",
+     "title": "The Fable of the Bees: or, Private Vices, Publick Benefits"
+    }
+   ]
+  },
+  {
+   "edition_key": "symbola aureae mensae duodecim nationum|maier|1617|v",
+   "visible": [
+    {
+     "id": "6952587bab34727b1f045546",
+     "pages_count": 698,
+     "pages_translated": 698,
+     "provider": "internet_archive",
+     "created_at": "2025-12-29T10:31:23.530Z",
+     "title": "Symbola aureae mensae duodecim nationum"
+    },
+    {
+     "id": "69b51d75261c58d63664a9f1",
+     "pages_count": 700,
+     "pages_translated": 518,
+     "provider": "mdz",
+     "created_at": "2026-03-14T08:33:57.797Z",
+     "title": "Symbola aureae mensae duodecim nationum"
+    },
+    {
+     "id": "69c88ae96c6f3cc53c85a7c3",
+     "pages_count": 696,
+     "pages_translated": 690,
+     "provider": "bph",
+     "created_at": "2026-03-29T02:14:01.384Z",
+     "title": "Symbola aureae mensae duodecim nationum"
+    }
+   ]
+  },
+  {
+   "edition_key": "summum bonum|fludd|1629|v",
+   "visible": [
+    {
+     "id": "6952dacd77f38f6761bc7016",
+     "pages_count": 55,
+     "pages_translated": 55,
+     "provider": "internet_archive",
+     "created_at": "2025-12-29T19:47:25.605Z",
+     "title": "Summum Bonum"
+    },
+    {
+     "id": "69a0278c71a9e3ffd8bfe901",
+     "pages_count": 154,
+     "pages_translated": 149,
+     "provider": "bph",
+     "created_at": "2026-02-26T10:59:24.507Z",
+     "title": "Summum bonum"
+    }
+   ]
+  },
+  {
+   "edition_key": "monas hieroglyphica|dee|1564|v",
+   "visible": [
+    {
+     "id": "69520571ab34727b1f042c78",
+     "pages_count": 61,
+     "pages_translated": 57,
+     "provider": "gallica",
+     "created_at": "2025-12-29T04:37:05.826Z",
+     "title": "Monas hieroglyphica"
+    },
+    {
+     "id": "6952d04f77f38f6761bc4ee2",
+     "pages_count": 56,
+     "pages_translated": 56,
+     "provider": "internet_archive",
+     "created_at": "2025-12-29T19:02:39.216Z",
+     "title": "Monas Hieroglyphica"
+    },
+    {
+     "id": "69b51e79768235dc65993cff",
+     "pages_count": 64,
+     "pages_translated": 1,
+     "provider": "mdz",
+     "created_at": "2026-03-14T08:38:17.380Z",
+     "title": "Monas hieroglyphica"
+    }
+   ]
+  },
+  {
+   "edition_key": "tibetan book of the dead bardo thodol|evanswentz|1927|v",
+   "visible": [
+    {
+     "id": "6953c95477f38f6761bde815",
+     "pages_count": 257,
+     "pages_translated": 0,
+     "provider": "internet_archive",
+     "created_at": "2025-12-30T12:45:08.476Z",
+     "title": "Tibetan Book of the Dead (Bardo Thodol)"
+    },
+    {
+     "id": "699249b6a2d53df4853bec9d",
+     "pages_count": 211,
+     "pages_translated": 0,
+     "provider": "internet_archive",
+     "created_at": "2026-02-15T22:33:26.563Z",
+     "title": "The Tibetan Book of the Dead (Bardo Thodol)"
+    }
+   ]
+  },
+  {
+   "edition_key": "magia adamica or the antiquitie of magic|vaughan|1650|v",
+   "visible": [
+    {
+     "id": "695934afb282844d7b278396",
+     "pages_count": 200,
+     "pages_translated": 189,
+     "provider": "internet_archive",
+     "created_at": "2026-01-03T15:24:31.905Z",
+     "title": "Magia Adamica, or The Antiquitie of Magic"
+    },
+    {
+     "id": "698192058fb5ea37caee24ba",
+     "pages_count": 189,
+     "pages_translated": 184,
+     "provider": "bph",
+     "created_at": "2026-02-03T06:13:25.832Z",
+     "title": "Magia adamica or the antiquitie of magic"
+    }
+   ]
+  },
+  {
+   "edition_key": "einige originalschriften des illuminatenordens|zwack|1787|v",
+   "visible": [
+    {
+     "id": "697b0799093f320f0a302167",
+     "pages_count": 451,
+     "pages_translated": 441,
+     "provider": "bph",
+     "created_at": "2026-01-29T07:09:13.887Z",
+     "title": "Einige Originalschriften des Illuminatenordens"
+    },
+    {
+     "id": "69c8406f6c6f3cc53c85071a",
+     "pages_count": 435,
+     "pages_translated": 426,
+     "provider": "bph",
+     "created_at": "2026-03-28T20:56:15.064Z",
+     "title": "Einige Originalschriften des Illuminatenordens"
+    }
+   ]
+  },
+  {
+   "edition_key": "informatorium oder kurzer unterricht|weigel|1695|v",
+   "visible": [
+    {
+     "id": "697e23cb32e94c72715dd0cf",
+     "pages_count": 128,
+     "pages_translated": 121,
+     "provider": "bph",
+     "created_at": "2026-01-31T15:46:19.131Z",
+     "title": "Informatorium oder kurzer Unterricht"
+    },
+    {
+     "id": "69c81fb36c6f3cc53c84a634",
+     "pages_count": 119,
+     "pages_translated": 112,
+     "provider": "bph",
+     "created_at": "2026-03-28T18:36:35.402Z",
+     "title": "Informatorium oder kurzer Unterricht"
+    }
+   ]
+  },
+  {
+   "edition_key": "eine kurze eroeffnung und anweisung der dreyen principien|gichtel|1779|v",
+   "visible": [
+    {
+     "id": "69804b94a2d708b2ae066d39",
+     "pages_count": 219,
+     "pages_translated": 205,
+     "provider": "bph",
+     "created_at": "2026-02-02T07:00:36.515Z",
+     "title": "Eine kurze Eroeffnung und Anweisung der dreyen Principien"
+    },
+    {
+     "id": "69c7ff336c6f3cc53c843acf",
+     "pages_count": 144,
+     "pages_translated": 141,
+     "provider": "bph",
+     "created_at": "2026-03-28T16:17:55.606Z",
+     "title": "Eine kurze Eroeffnung und Anweisung der dreyen Principien"
+    }
+   ]
+  },
+  {
+   "edition_key": "lexicon chymicum cum obscuriorum verborum et rerum hermeticarum|johnson|1657|v",
+   "visible": [
+    {
+     "id": "6980941d60e14b26f355058e",
+     "pages_count": 287,
+     "pages_translated": 277,
+     "provider": "bph",
+     "created_at": "2026-02-02T12:10:05.095Z",
+     "title": "Lexicon chymicum. Cum obscuriorum verborum, et rerum hermeticarum"
+    },
+    {
+     "id": "69b51dcbefd8df28f2dab248",
+     "pages_count": 358,
+     "pages_translated": 346,
+     "provider": "mdz",
+     "created_at": "2026-03-14T08:35:23.666Z",
+     "title": "Lexicon Chymicum : Cum Obscuriorum verborum et rerum hermeticarum ..."
+    }
+   ]
+  },
+  {
+   "edition_key": "origine de la maconnerie adonhiramite|guillemain de saintvictor|1787|v",
+   "visible": [
+    {
+     "id": "6984e84ed13e559bb970b9a4",
+     "pages_count": 166,
+     "pages_translated": 159,
+     "provider": "bph",
+     "created_at": "2026-02-05T18:58:22.844Z",
+     "title": "Origine de la maçonnerie adonhiramite"
+    },
+    {
+     "id": "69c8a3ef6c6f3cc53c85e76e",
+     "pages_count": 175,
+     "pages_translated": 168,
+     "provider": "bph",
+     "created_at": "2026-03-29T04:00:47.113Z",
+     "title": "Origine de la maçonnerie adonhiramite"
+    }
+   ]
+  },
+  {
+   "edition_key": "memoire sur la decouverte du magnetisme animal|mesmer|1779|v",
+   "visible": [
+    {
+     "id": "6990580e1729589044135366",
+     "pages_count": 394,
+     "pages_translated": 378,
+     "provider": "internet_archive",
+     "created_at": "2026-02-14T11:10:06.521Z",
+     "title": "Memoire sur la decouverte du magnetisme animal"
+    },
+    {
+     "id": "69c7ae7925ec2ba5ccd7f25b",
+     "pages_count": 101,
+     "pages_translated": 94,
+     "provider": "bph",
+     "created_at": "2026-03-28T10:33:29.501Z",
+     "title": "Mémoire sur la découverte du magnétisme animal"
+    }
+   ]
+  },
+  {
+   "edition_key": "magie et religion dans lafrique du nord|doutte|1908|v",
+   "visible": [
+    {
+     "id": "6990793c7d066daf3b4a9536",
+     "pages_count": 611,
+     "pages_translated": 610,
+     "provider": "internet_archive",
+     "created_at": "2026-02-14T13:31:40.659Z",
+     "title": "Magie et Religion dans l'Afrique du Nord"
+    },
+    {
+     "id": "69908a6393003de39c96519b",
+     "pages_count": 626,
+     "pages_translated": 621,
+     "provider": "gallica",
+     "created_at": "2026-02-14T14:44:51.636Z",
+     "title": "Magie et religion dans lAfrique du Nord"
+    }
+   ]
+  },
+  {
+   "edition_key": "historia critica philosophiae|brucker|1742|v",
+   "visible": [
+    {
+     "id": "69ae9bcff3bd47924cacc93e",
+     "pages_count": 1416,
+     "pages_translated": 1411,
+     "provider": "internet_archive",
+     "created_at": "2026-03-09T10:07:11.443Z",
+     "title": "Historia Critica Philosophiae"
+    },
+    {
+     "id": "69c7bffd25ec2ba5ccd7fcae",
+     "pages_count": 1416,
+     "pages_translated": 0,
+     "provider": "bph",
+     "created_at": "2026-03-28T11:48:13.444Z",
+     "title": "Historia critica philosophiae"
+    }
+   ]
+  },
+  {
+   "edition_key": "erster entwurf eines systems der naturphilosophie|schelling|1799|v",
+   "visible": [
+    {
+     "id": "69afdbfae42898a2828787bf",
+     "pages_count": 432,
+     "pages_translated": 418,
+     "provider": "internet_archive",
+     "created_at": "2026-03-10T08:53:15.163Z",
+     "title": "Erster Entwurf eines Systems der Naturphilosophie"
+    },
+    {
+     "id": "69c7246301e1be0c9ac74b72",
+     "pages_count": 344,
+     "pages_translated": 339,
+     "provider": "bph",
+     "created_at": "2026-03-28T00:44:19.918Z",
+     "title": "Erster Entwurf eines Systems der Naturphilosophie"
+    }
+   ]
+  },
+  {
+   "edition_key": "johannis danielis mylii vetterani hassi m c opus medicochymicum continens tres tractatus sive basilicas quorum prior inscribitur basilica medica secundus basilica chymica tertius basilica philosophica",
+   "visible": [
+    {
+     "id": "69b51db7cf111105c428ea03",
+     "pages_count": 236,
+     "pages_translated": 23,
+     "provider": "mdz",
+     "created_at": "2026-03-14T08:35:03.857Z",
+     "title": "Johannis Danielis Mylii Vetterani Hassi M. C. Opus Medico-Chymicum : Continens tres Tractatus sive B"
+    },
+    {
+     "id": "69b51d7ef23ccdcced308295",
+     "pages_count": 230,
+     "pages_translated": 224,
+     "provider": "mdz",
+     "created_at": "2026-03-14T08:34:06.370Z",
+     "title": "Johannis Danielis Mylii Vetterani Hassi M. C. Opus Medico-Chymicum : Continens tres Tractatus sive B"
+    }
+   ]
+  },
+  {
+   "edition_key": "versuch uber die beschuldigungen welche dem tempelherrenorden gemacht worden und uber dessen geheimniss|nicolai|1782|v",
+   "visible": [
+    {
+     "id": "69c6332f3e8cae136d1496fd",
+     "pages_count": 502,
+     "pages_translated": 494,
+     "provider": "bph",
+     "created_at": "2026-03-27T07:35:11.185Z",
+     "title": "Versuch über die Beschuldigungen welche dem Tempelherrenorden gemacht worden, und über dessen Geheim"
+    },
+    {
+     "id": "69c634823e8cae136d1497fa",
+     "pages_count": 236,
+     "pages_translated": 229,
+     "provider": "bph",
+     "created_at": "2026-03-27T07:40:50.652Z",
+     "title": "Versuch über die Beschuldigungen welche dem Tempelherrenorden gemacht worden, und über dessen Geheim"
+    }
+   ]
+  },
+  {
+   "edition_key": "doma wolmeinendes bedencken von der fama und confession der bruderschafft dess rosencreutzes|libavius|1616|v",
+   "visible": [
+    {
+     "id": "69c6f4d8da9771c716314f6f",
+     "pages_count": 312,
+     "pages_translated": 307,
+     "provider": "bph",
+     "created_at": "2026-03-27T21:21:28.344Z",
+     "title": "D.O.M.A. Wolmeinendes Bedencken, von der Fama, und Confession der Brüderschafft dess RosenCreutzes"
+    },
+    {
+     "id": "69c6f4ebda9771c716314f85",
+     "pages_count": 320,
+     "pages_translated": 311,
+     "provider": "bph",
+     "created_at": "2026-03-27T21:21:47.852Z",
+     "title": "D.O.M.A. Wolmeinendes Bedencken, von der Fama und Confession der Bruderschafft dess RosenCreutzes"
+    }
+   ]
+  },
+  {
+   "edition_key": "pandora d ist die edelste gab gottes oder der werde und heilsame stein der weysen|reusner|1598|v",
+   "visible": [
+    {
+     "id": "69b51cf047b06ecd581825bf",
+     "pages_count": 342,
+     "pages_translated": 340,
+     "provider": "mdz",
+     "created_at": "2026-03-14T08:31:44.504Z",
+     "title": "Pandora : d. ist die edelste Gab Gottes, oder der werde und heilsame Stein der Weysen"
+    },
+    {
+     "id": "69b51db1f23ccdcced308bff",
+     "pages_count": 344,
+     "pages_translated": 343,
+     "provider": "mdz",
+     "created_at": "2026-03-14T08:34:57.156Z",
+     "title": "Pandora : d. ist die edelste Gab Gottes, oder der werde und heilsame Stein der Weysen"
+    }
+   ]
+  },
+  {
+   "edition_key": "oratore|cicero|1470|v",
+   "visible": [
+    {
+     "id": "69dbc98f1040d1d5e20a4422",
+     "pages_count": 229,
+     "pages_translated": 221,
+     "provider": "bsb",
+     "created_at": "2026-04-12T16:34:23.530Z",
+     "title": "De oratore"
+    },
+    {
+     "id": "69dbc9901040d1d5e20a4508",
+     "pages_count": 151,
+     "pages_translated": 143,
+     "provider": "bsb",
+     "created_at": "2026-04-12T16:34:24.786Z",
+     "title": "De oratore"
+    }
+   ]
+  },
+  {
+   "edition_key": "quattuor virtutibus cardinalibus sive de formula honestae vitae cum commento latin and german verse translation preceded by vita senecae|seneca|1490|v",
+   "visible": [
+    {
+     "id": "69dbcbe21040d1d5e20bb21b",
+     "pages_count": 57,
+     "pages_translated": 48,
+     "provider": "bsb",
+     "created_at": "2026-04-12T16:44:18.597Z",
+     "title": "De quattuor virtutibus cardinalibus, sive De formula honestae vitae, cum commento [Latin and German "
+    },
+    {
+     "id": "69dbcbe31040d1d5e20bb255",
+     "pages_count": 57,
+     "pages_translated": 52,
+     "provider": "bsb",
+     "created_at": "2026-04-12T16:44:19.722Z",
+     "title": "De quattuor virtutibus cardinalibus, sive De formula honestae vitae, cum commento [Latin and German "
+    }
+   ]
+  },
+  {
+   "edition_key": "buc georg aeneis p virgilii maronis mantuani doctiss virorum notationibus illustrata opera et industria io a meyen bergizomii belgae|manuzio|1576|v",
+   "visible": [
+    {
+     "id": "6a06d1ac9a48d5139995fd4b",
+     "pages_count": 988,
+     "pages_translated": 17,
+     "provider": "internet_archive",
+     "created_at": "2026-05-15T07:56:28.267Z",
+     "title": "Buc. Georg. Aeneis P. Virgilii Maronis Mantuani doctiss. virorum notationibus illustrata opera et in"
+    },
+    {
+     "id": "6a085ae949638a50931ca4f3",
+     "pages_count": 996,
+     "pages_translated": 0,
+     "provider": "internet_archive",
+     "created_at": "2026-05-16T11:54:17.533Z",
+     "title": "Buc. Georg. Aeneis P. Virgilii Maronis Mantuani doctiss. virorum notationibus illustrata opera et in"
+    }
+   ]
+  },
+  {
+   "edition_key": "regole grammaticali della volgar lingua di messer francesco fortunio|fortunio|1545|v",
+   "visible": [
+    {
+     "id": "6a06d9c09a48d5139996910c",
+     "pages_count": 348,
+     "pages_translated": 21,
+     "provider": "internet_archive",
+     "created_at": "2026-05-15T08:30:56.653Z",
+     "title": "Regole grammaticali della volgar lingua, di messer Francesco Fortunio."
+    },
+    {
+     "id": "6a0854e849638a50931c0bdb",
+     "pages_count": 122,
+     "pages_translated": 114,
+     "provider": "internet_archive",
+     "created_at": "2026-05-16T11:28:40.345Z",
+     "title": "Regole grammaticali della volgar lingua, di messer Francesco Fortunio."
+    }
+   ]
+  },
+  {
+   "edition_key": "didone tragedia di m lodouico dolce|1568|1547|v",
+   "visible": [
+    {
+     "id": "6a06f5224dcc6d5d8f037517",
+     "pages_count": 96,
+     "pages_translated": 18,
+     "provider": "internet_archive",
+     "created_at": "2026-05-15T10:27:46.384Z",
+     "title": "Didone, tragedia di m. Lodouico Dolce."
+    },
+    {
+     "id": "6a08541d49638a50931bec00",
+     "pages_count": 448,
+     "pages_translated": 445,
+     "provider": "internet_archive",
+     "created_at": "2026-05-16T11:25:17.051Z",
+     "title": "Didone, tragedia di m. Lodouico Dolce."
+    }
+   ]
+  },
+  {
+   "edition_key": "marci tullii ciceronis officiorum libri tres cato maior vel de senectute laelius vel de amicitia paradoxa stoicorum sex somnium scipionis ex libro sexto de republica additæ sunt in extremo opere uariæ",
+   "visible": [
+    {
+     "id": "6a0851e015c643eb1af4b8bf",
+     "pages_count": 143,
+     "pages_translated": 142,
+     "provider": "internet_archive",
+     "created_at": "2026-05-16T11:15:44.305Z",
+     "title": "Marci Tullii Ciceronis Officiorum libri tres Cato maior, vel De senectute Laelius, vel De amicitia P"
+    },
+    {
+     "id": "6a085ad249638a50931ca2f1",
+     "pages_count": 292,
+     "pages_translated": 283,
+     "provider": "internet_archive",
+     "created_at": "2026-05-16T11:53:54.837Z",
+     "title": "Marci Tullii Ciceronis Officiorum libri tres: Cato maior, vel De senectute: Laelius, vel De amicitia"
+    }
+   ]
+  },
+  {
+   "edition_key": "guerneri rolfincii phil ac med doctoris et professoris publici non ens chimicum mercurius metallorum et mineralium|rolfinck|1670|v",
+   "visible": [
+    {
+     "id": "6a2679ee6c1f37c9c4f2c9ec",
+     "pages_count": 40,
+     "pages_translated": 24,
+     "provider": "slub_dresden",
+     "created_at": "2026-06-08T08:14:38.886Z",
+     "title": "Guerneri Rolfincii, Phil. Ac Med. Doctoris Et Professoris Publici Non Ens Chimicum, Mercurius Metall"
+    },
+    {
+     "id": "6a2679f26c1f37c9c4f2ca16",
+     "pages_count": 28,
+     "pages_translated": 28,
+     "provider": "slub_dresden",
+     "created_at": "2026-06-08T08:14:42.335Z",
+     "title": "Guerneri Rolfincii, Phil. Ac Med. Doctoris Et Professoris Publici, Non Ens Chimicum, Mercurius Metal"
+    }
+   ]
+  }
+ ]
+}

@@ -60,6 +60,58 @@ describe('editionSurname', () => {
     expect(editionSurname(null)).toBe('');
     expect(editionSurname('')).toBe('');
   });
+
+  // Every string below is a real `books.author` value (snapshot 2026-10-06, #4444).
+  it('never keys a role word as the surname', () => {
+    const real: [string, string][] = [
+      ['Lazarus Zetzner (ed.)', 'zetzner'],
+      ['Brasseur de Bourbourg (ed.)', 'bourbourg'],
+      ['Aldus Manutius (editor)', 'manutius'],
+      ['Nikodemos & Makarios (eds.)', 'makarios'],
+      ['John Wortley (trans.)', 'wortley'],
+      ['Giovanni Boccaccio (German trans.)', 'boccaccio'],
+      ['W.G. Aston (tr.)', 'aston'],
+      ['Mark Lidzbarski (ed./trans.)', 'lidzbarski'],
+      ['T. W. Rhys Davids (Translator)', 'davids'],
+      ['Kanton Bern [Hrsg.]', 'bern'],
+      ['Athanasius; Evagrius Scholasticus [Übers.]', 'scholasticus'],
+      ['Hermannus de Monasterio [Bearb.]', 'monasterio'],
+      ['Johann Valentin Andreae (attr.)', 'andreae'],
+      ['al-Majriti (attrib.)', 'almajriti'],
+      ['George Ripley (attributed)', 'ripley'],
+      ['Elias Ashmole (compiler)', 'ashmole'],
+      ['Boethius (Pseudo-)', 'boethius'],
+      ['Plato (Ficino translation)', 'plato'],
+      ['Various (Roberts & Donaldson, eds.)', 'various'],
+      ['Various Authors', 'various'],
+      ['Guo Pu (郭璞) commentary', 'pu'],
+    ];
+    for (const [author, surname] of real) expect(editionSurname(author), author).toBe(surname);
+  });
+
+  it('gives the role-marked record the key of the plain catalogue record', () => {
+    // The five pairs the fix reunites in the live corpus; each was two keys.
+    expect(editionSurname('Hero of Alexandria; Federico Commandino (trans.)')).toBe(editionSurname('Commandino, Federico'));
+    expect(editionSurname('Hero of Alexandria; Alessandro Giorgi (trans.)')).toBe(editionSurname('Giorgi, Alessandro'));
+    expect(editionSurname('Liezi; Lionel Giles (trans.)')).toBe(editionSurname('Liezi (列子) / translated by Lionel Giles'));
+    expect(editionSurname('Brasseur de Bourbourg (ed.)')).toBe(editionSurname('Brasseur de Bourbourg'));
+    expect(editionSurname('Snorri Sturluson; Peder Hansen Resen (ed.)')).toBe(editionSurname('Snorri Sturluson; ed. Peder Hansen Resen'));
+  });
+
+  it('leaves names alone when the role word is not the tail', () => {
+    // Already keyed on a name; a role followed by a name is out of scope here.
+    expect(editionSurname('Zetzner, Lazarus (ed.)')).toBe('zetzner');
+    expect(editionSurname('Schwarz, Johann Ludwig [Hrsg.]')).toBe('schwarz');
+    expect(editionSurname('Thucydides (ed. Henri II Estienne)')).toBe('estienne');
+    expect(editionSurname('Song Yingxing (宋應星)')).toBe('yingxing');
+    expect(editionSurname('Yogi Ramacharaka (William Walker Atkinson)')).toBe('atkinson');
+    expect(editionSurname('[s.n.]')).toBe('sn');
+  });
+
+  it('returns empty when nothing but the role is left', () => {
+    expect(editionSurname('(ed.)')).toBe('');
+    expect(editionSurname('Editor')).toBe('');
+  });
 });
 
 describe('buildEditionKey', () => {

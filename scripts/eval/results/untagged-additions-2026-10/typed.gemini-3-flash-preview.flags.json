@@ -1,0 +1,1944 @@
+{
+ "model": "gemini-3-flash-preview",
+ "groups": {
+  "typed, not Tibetan": {
+   "pages": 86,
+   "sentences": 1607,
+   "pages_flagged_vs_typed": 38,
+   "pages_flagged_vs_ocr": 13,
+   "pages_both": 7,
+   "pages_typed_only": 33,
+   "pages_ocr_only": 6,
+   "sentences_both": 8,
+   "sentences_typed_only": 70,
+   "sentences_ocr_only": 8,
+   "uncheckable_typed": 0,
+   "uncheckable_ocr": 0
+  },
+  "same-edition transcription (Latin)": {
+   "pages": 26,
+   "sentences": 547,
+   "pages_flagged_vs_typed": 8,
+   "pages_flagged_vs_ocr": 6,
+   "pages_both": 5,
+   "pages_typed_only": 4,
+   "pages_ocr_only": 1,
+   "sentences_both": 5,
+   "sentences_typed_only": 14,
+   "sentences_ocr_only": 1,
+   "uncheckable_typed": 0,
+   "uncheckable_ocr": 0
+  },
+  "e-text window or pinned passage": {
+   "pages": 60,
+   "sentences": 1060,
+   "pages_flagged_vs_typed": 30,
+   "pages_flagged_vs_ocr": 7,
+   "pages_both": 2,
+   "pages_typed_only": 29,
+   "pages_ocr_only": 5,
+   "sentences_both": 3,
+   "sentences_typed_only": 56,
+   "sentences_ocr_only": 7,
+   "uncheckable_typed": 0,
+   "uncheckable_ocr": 0
+  },
+  "Tibetan (typed text is the stored text)": {
+   "pages": 60,
+   "sentences": 1322,
+   "pages_flagged_vs_typed": 3,
+   "pages_flagged_vs_ocr": 0,
+   "pages_both": 0,
+   "pages_typed_only": 3,
+   "pages_ocr_only": 0,
+   "sentences_both": 0,
+   "sentences_typed_only": 9,
+   "sentences_ocr_only": 0,
+   "uncheckable_typed": 0,
+   "uncheckable_ocr": 0
+  }
+ },
+ "pages": [
+  {
+   "id": "6a3c5f05879008ba7e15291d_00029",
+   "language": "Chinese",
+   "ref": "benchmark/refs/chinese-15291d-p29",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "13",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "sentences": [
+    {
+     "n": 6,
+     "sentence": "This is a summary and [the following] two lines clarify it specifically.",
+     "where": "ocr_only",
+     "typed": null,
+     "ocr": {
+      "n": 6,
+      "words": "[the following]",
+      "whole": false,
+      "kind": "explanation",
+      "source_has": "此是總舉下二句。別明",
+      "reason": "Translator added bracketed text to specify the direction of the reference."
+     }
+    }
+   ]
+  },
+  {
+   "id": "6a3c5f3c879008ba7e153862_00025",
+   "language": "Chinese",
+   "ref": "benchmark/refs/chinese-153862-p25",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "13",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 8,
+     "sentence": "The Chapter on No-Attainment and No-Discourse, Chapter Seven",
+     "where": "typed_only",
+     "typed": {
+      "n": 8,
+      "words": "The Chapter on No-Attainment and No-Discourse, Chapter Seven",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "This chapter title and number do not appear in the source text provided."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "6a3ceb0c95fcd45563052e60_00064",
+   "language": "Chinese",
+   "ref": "benchmark/refs/chinese-ext-052e60-p64",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "13",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "sentences": [
+    {
+     "n": 1,
+     "sentence": "Catalog of Metal and Stone, Volume 3",
+     "where": "typed_only",
+     "typed": {
+      "n": 1,
+      "words": "Catalog of Metal and Stone, Volume 3",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "繪事備考 三",
+      "reason": "Source title is Huishi Beikao (Painting Reference), not Catalog of Metal and Stone."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "6992c907453c7175dc1bccbb_00076",
+   "language": "Chinese",
+   "ref": "benchmark/refs/chinese-ext-1bccbb-p76",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "v5.2026-02",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 5,
+     "sentence": "Full-material bracket (zucai gong, 足材拱): A bracket set that includes both the horizontal arm and the \"filler block\" (zhi) above it, reaching the full standard height of a timber unit.",
+     "where": "both",
+     "typed": {
+      "n": 5,
+      "words": "Full-material bracket (zucai gong, 足材拱): A bracket set that includes both the horizontal arm and the \"filler block\" (zhi) above it",
+      "whole": true,
+      "kind": "definition",
+      "source_has": "若造足材栱",
+      "reason": "The translator provides a technical definition not present in the source text."
+     },
+     "ocr": {
+      "n": 5,
+      "words": "Full-material bracket (zucai gong, 足材拱): A bracket set that includes both the horizontal arm and the \"filler block\" (zhi) above it, reaching the full",
+      "whole": true,
+      "kind": "definition",
+      "source_has": "足材拱",
+      "reason": "The translator provides a technical definition not present in the source text."
+     }
+    },
+    {
+     "n": 7,
+     "sentence": "Command bracket (ling gong, 令拱): The outermost bracket arm in a set, which supports the tie beams or the eaves' purlins.",
+     "where": "both",
+     "typed": {
+      "n": 7,
+      "words": "Command bracket (ling gong, 令拱): The outermost bracket arm in a set, which supports the tie beams or the eaves' purlins.",
+      "whole": true,
+      "kind": "definition",
+      "source_has": "令栱",
+      "reason": "The translator provides a technical definition not present in the source text."
+     },
+     "ocr": {
+      "n": 7,
+      "words": "Command bracket (ling gong, 令拱): The outermost bracket arm in a set, which supports the tie beams or the eaves' purlins.",
+      "whole": true,
+      "kind": "definition",
+      "source_has": "令拱",
+      "reason": "The translator provides a technical definition and functional description not present in the source text."
+     }
+    }
+   ]
+  },
+  {
+   "id": "6992cec7673ee1e40e321834_00145",
+   "language": "Chinese",
+   "ref": "benchmark/refs/chinese-ext-321834-p145",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "v5.2026-02",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 1,
+     "sentence": "Annotations on the Treatise on Cold Damage, Volume 1",
+     "where": "typed_only",
+     "typed": {
+      "n": 1,
+      "words": "Annotations on the Treatise on Cold Damage, Volume 1",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "This title/heading does not appear in the provided source text for this page."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "6a3c637893327f06e8350724_00066",
+   "language": "Chinese",
+   "ref": "benchmark/refs/chinese-ext-350724-p66",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "13",
+   "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+   "sentences": [
+    {
+     "n": 34,
+     "sentence": "Imperial Edition of the Peiwen Yunfu",
+     "where": "typed_only",
+     "typed": {
+      "n": 34,
+      "words": "Imperial Edition of the Peiwen Yunfu",
+      "whole": true,
+      "kind": "transcriber_block",
+      "source_has": "NONE",
+      "reason": "Renders the transcriber's header/title not present in the source text."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "69de99261b234a773e43a275_00256",
+   "language": "Chinese",
+   "ref": "benchmark/refs/chinese-ext-43a275-p256",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "11",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "sentences": [
+    {
+     "n": 6,
+     "sentence": "Not working but having enough support (Able to be supported without working hard.)",
+     "where": "typed_only",
+     "typed": {
+      "n": 6,
+      "words": "Able to be supported without working hard.",
+      "whole": false,
+      "kind": "explanation",
+      "source_has": "不作而養足",
+      "reason": "The parenthetical phrase is a redundant explanatory gloss not present in the source text."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "699998884310a6713945261c_00166",
+   "language": "Chinese",
+   "ref": "benchmark/refs/chinese-ext-45261c-p166",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "v5.2026-02",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 16,
+     "sentence": "A-Zi!\"—\"A-Zi\" being a common name for a fox .",
+     "where": "ocr_only",
+     "typed": null,
+     "ocr": {
+      "n": 16,
+      "words": "being a common name for a fox",
+      "whole": false,
+      "kind": "explanation",
+      "source_has": "狐字也",
+      "reason": "The source says 'is the word for fox'; 'common name' is an added interpretation."
+     }
+    }
+   ]
+  },
+  {
+   "id": "6992cdf781c9d7efb84d10d9_00170",
+   "language": "Chinese",
+   "ref": "benchmark/refs/chinese-ext-4d10d9-p170",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "v10",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 11,
+     "sentence": "Some say the \"chuan\" otter has no females and uses the \"xi\" as a mate, which is why it is said: \"The boar cries and the otter waits.\"",
+     "where": "typed_only",
+     "typed": {
+      "n": 11,
+      "words": "which is why it is said: \"The boar cries and the otter waits.\"",
+      "whole": false,
+      "kind": "unsupported",
+      "source_has": "故云猨鳴而獺候",
+      "reason": "The translator mistranslates 猨 (ape) as boar and adds an explanatory 'which is why' clause."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "6992cdfb81c9d7efb84d129c_00066",
+   "language": "Chinese",
+   "ref": "benchmark/refs/chinese-ext-4d129c-p66",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "v10",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 1,
+     "sentence": "Gold-Standard Complete Library of the Four Treasuries",
+     "where": "typed_only",
+     "typed": {
+      "n": 1,
+      "words": "Gold-Standard Complete Library of the Four Treasuries",
+      "whole": true,
+      "kind": "transcriber_block",
+      "source_has": "NONE",
+      "reason": "Renders the transcriber's metadata/header not present in the source text provided."
+     },
+     "ocr": null
+    },
+    {
+     "n": 22,
+     "sentence": "Use a needle to puncture the four sides , take the pus from the sore, and apply it.",
+     "where": "typed_only",
+     "typed": {
+      "n": 22,
+      "words": "Use a needle to puncture the four sides",
+      "whole": false,
+      "kind": "unsupported",
+      "source_has": "以針决其四邊",
+      "reason": "This is in the source text; no flag needed."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "6992cbe7018b80967354c4ae_00083",
+   "language": "Chinese",
+   "ref": "benchmark/refs/chinese-ext-54c4ae-p83",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "v2",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 1,
+     "sentence": "By Imperial Order: The Complete Library of the Four Treasuries",
+     "where": "typed_only",
+     "typed": {
+      "n": 1,
+      "words": "By Imperial Order: The Complete Library of the Four Treasuries",
+      "whole": true,
+      "kind": "transcriber_block",
+      "source_has": "NONE",
+      "reason": "Renders the transcriber's header '欽定四庫全書' which is not part of the source page text."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "6992cc0f018b80967354cb4c_00123",
+   "language": "Chinese",
+   "ref": "benchmark/refs/chinese-ext-54cb4c-p123",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "v5.2026-02",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 1,
+     "sentence": "Essential Techniques for the Welfare of the People",
+     "where": "typed_only",
+     "typed": {
+      "n": 1,
+      "words": "Essential Techniques for the Welfare of the People",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "齊民要術卷第二",
+      "reason": "Translates the title found at the end, but adds 'for the Welfare of the People'."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "6992cdbe43713c66ea6384a8_00075",
+   "language": "Chinese",
+   "ref": "benchmark/refs/chinese-ext-6384a8-p75",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "v5.2026-02",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 15,
+     "sentence": "[Li] Shizhen says: According to Xu Xuan’s commentary on the Explanation of Graphs and Analysis of Characters [Shuowen Jiezi], the character for Taro (Yu) is similar to the character for \"to sigh\" (Xu), which refers to a person’s appearance of being startled or surprised.",
+     "where": "ocr_only",
+     "typed": null,
+     "ocr": {
+      "n": 15,
+      "words": "Explanation of Graphs and Analysis of Characters",
+      "whole": false,
+      "kind": "definition",
+      "source_has": "說文",
+      "reason": "Translator added the full English title of the book Shuowen."
+     }
+    },
+    {
+     "n": 16,
+     "sentence": "Furthermore, in the \"Biography of Zhuo Wenjun\" in the Records of the Grand Historian [Shiji], it is said: \"Beneath Mount Min in the wild, there are 'crouching owls'; even until death, one does not go hungry.\"",
+     "where": "ocr_only",
+     "typed": null,
+     "ocr": {
+      "n": 16,
+      "words": "Records of the Grand Historian",
+      "whole": false,
+      "kind": "definition",
+      "source_has": "史記",
+      "reason": "Translator added the full English title of the Shiji."
+     }
+    }
+   ]
+  },
+  {
+   "id": "6a3c61db40c88a541d8f091d_00094",
+   "language": "Chinese",
+   "ref": "benchmark/refs/chinese-ext-8f091d-p94",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "13",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "sentences": [
+    {
+     "n": 6,
+     "sentence": "At that time, the World-Honored One spoke a verse:",
+     "where": "typed_only",
+     "typed": {
+      "n": 6,
+      "words": "At that time, the World-Honored One spoke a verse:",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "This introductory sentence and the verse following it are not present in the source text."
+     },
+     "ocr": null
+    },
+    {
+     "n": 7,
+     "sentence": "\"If one sees me by form, or seeks me by sound, this person walks a crooked path; they cannot see the Tathagata.\"",
+     "where": "typed_only",
+     "typed": {
+      "n": 7,
+      "words": "\"If one sees me by form, or seeks me by sound, this person walks a crooked path; they cannot see the Tathagata.\"",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "This verse is missing from the source page; it appears on the previous page."
+     },
+     "ocr": null
+    },
+    {
+     "n": 8,
+     "sentence": "\"If\" is the beginning of the statement.",
+     "where": "typed_only",
+     "typed": {
+      "n": 8,
+      "words": "\"If\" is the beginning of the statement.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "This commentary on the verse is not found in the source text."
+     },
+     "ocr": null
+    },
+    {
+     "n": 9,
+     "sentence": "\"Form\" is appearance; \"see\" is consciousness.",
+     "where": "typed_only",
+     "typed": {
+      "n": 9,
+      "words": "\"Form\" is appearance; \"see\" is consciousness.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "This commentary on the verse is not found in the source text."
+     },
+     "ocr": null
+    },
+    {
+     "n": 10,
+     "sentence": "\"Me\" is the true, constant body of nature—pure, inactive, and formless—that exists within all sentient beings.",
+     "where": "typed_only",
+     "typed": {
+      "n": 10,
+      "words": "\"Me\" is the true, constant body of nature—pure, inactive, and formless—that exists within all sentient beings.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "This commentary on the verse is not found in the source text."
+     },
+     "ocr": null
+    },
+    {
+     "n": 11,
+     "sentence": "One cannot achieve success by chanting the Buddha's name aloud.",
+     "where": "typed_only",
+     "typed": {
+      "n": 11,
+      "words": "One cannot achieve success by chanting the Buddha's name aloud.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "This commentary on the verse is not found in the source text."
+     },
+     "ocr": null
+    },
+    {
+     "n": 12,
+     "sentence": "Chanting must be done with righteous, clear thoughts to gain understanding.",
+     "where": "typed_only",
+     "typed": {
+      "n": 12,
+      "words": "Chanting must be done with righteous, clear thoughts to gain understanding.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "This commentary on the verse is not found in the source text."
+     },
+     "ocr": null
+    },
+    {
+     "n": 13,
+     "sentence": "If one seeks it through form and sound, one cannot see it.",
+     "where": "typed_only",
+     "typed": {
+      "n": 13,
+      "words": "If one seeks it through form and sound, one cannot see it.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "This commentary on the verse is not found in the source text."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "69e80681fdad300064d9f7a0_00109",
+   "language": "Chinese",
+   "ref": "benchmark/refs/chinese-ext-d9f7a0-p109",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "11",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "sentences": [
+    {
+     "n": 5,
+     "sentence": "\"A frail and thin body\" is a further description of the \"emaciation\" mentioned in the previous passage, emphasizing the severity of the wasting.",
+     "where": "ocr_only",
+     "typed": null,
+     "ocr": {
+      "n": 5,
+      "words": "emphasizing the severity of the wasting",
+      "whole": false,
+      "kind": "explanation",
+      "source_has": "言其瘦之甚也",
+      "reason": "The source says 'speaks of the severity of the thinness'; the translator adds 'emphasizing'."
+     }
+    },
+    {
+     "n": 6,
+     "sentence": "\"Feet swollen as if falling off\" refers to the severe swelling of the feet mentioned in the previous passage.",
+     "where": "ocr_only",
+     "typed": null,
+     "ocr": {
+      "n": 6,
+      "words": "mentioned in the previous passage",
+      "whole": false,
+      "kind": "explanation",
+      "source_has": "即上條",
+      "reason": "The source says 'namely the previous entry'; the translator adds 'mentioned in'."
+     }
+    }
+   ]
+  },
+  {
+   "id": "6992ca56d4d545ae73fedb8a_00030",
+   "language": "Chinese",
+   "ref": "benchmark/refs/chinese-ext-fedb8a-p30",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "v10",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "sentences": [
+    {
+     "n": 5,
+     "sentence": "We must compare numbers that are close to one another; therefore, this is called Comparing Fractions.",
+     "where": "typed_only",
+     "typed": {
+      "n": 5,
+      "words": "We must compare numbers that are close to one another;",
+      "whole": false,
+      "kind": "explanation",
+      "source_has": "校其相多之數",
+      "reason": "The source says 'compare their differences', not that numbers must be close to one another."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "6992caf6d4d545ae73feeb7c_00122",
+   "language": "Chinese",
+   "ref": "benchmark/refs/chinese-ext-feeb7c-p122",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "v2",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 1,
+     "sentence": "Inner Chapters of the Master Who Embraces Simplicity",
+     "where": "typed_only",
+     "typed": {
+      "n": 1,
+      "words": "Inner Chapters of the Master Who Embraces Simplicity",
+      "whole": true,
+      "kind": "transcriber_block",
+      "source_has": "NONE",
+      "reason": "Renders the transcriber's header/title, not the source text on this page."
+     },
+     "ocr": null
+    },
+    {
+     "n": 2,
+     "sentence": "Volume One — Section Six",
+     "where": "typed_only",
+     "typed": {
+      "n": 2,
+      "words": "Volume One — Section Six",
+      "whole": true,
+      "kind": "transcriber_block",
+      "source_has": "NONE",
+      "reason": "Renders the transcriber's header/title, not the source text on this page."
+     },
+     "ocr": null
+    },
+    {
+     "n": 14,
+     "sentence": "The failure to achieve the Way is due exactly to this kind of \"one-sided witheredness\"—being partial to one art while ignoring the others.",
+     "where": "both",
+     "typed": {
+      "n": 14,
+      "words": "being partial to one art while ignoring the others",
+      "whole": false,
+      "kind": "explanation",
+      "source_has": "學道之不成就由乎偏枯之若此也",
+      "reason": "Adds an interpretive explanation of the term 'one-sided witheredness' not in source."
+     },
+     "ocr": {
+      "n": 14,
+      "words": "being partial to one art while ignoring the others",
+      "whole": false,
+      "kind": "explanation",
+      "source_has": "偏枯之若此也",
+      "reason": "The translator adds an explanatory clause defining 'one-sided witheredness' not in the source."
+     }
+    }
+   ]
+  },
+  {
+   "id": "6953e4fa77f38f6761bef1dc_00053",
+   "language": "Latin",
+   "ref": "benchmark/refs/ed-6953e4fa77f38f6761bef1dc-p53",
+   "ref_kind": "same-edition-transcription",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "v5.2026-02",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 1,
+     "sentence": "...contained. I have indeed put forward these Lemmas so that I might avoid the tediousness of deriving complex proofs by reductio ad absurdum—a method of proving a point by showing its opposite is impossible—in the manner of the ancient Geometers.",
+     "where": "both",
+     "typed": {
+      "n": 1,
+      "words": "a method of proving a point by showing its opposite is impossible",
+      "whole": false,
+      "kind": "definition",
+      "source_has": "ad absurdum",
+      "reason": "The translator adds a definition of the Latin term 'ad absurdum'."
+     },
+     "ocr": {
+      "n": 1,
+      "words": "—a method of proving a point by showing its opposite is impossible—",
+      "whole": false,
+      "kind": "definition",
+      "source_has": "ad absurdum",
+      "reason": "The translator adds a definition of the Latin term 'ad absurdum'."
+     }
+    }
+   ]
+  },
+  {
+   "id": "697a6e5cb981745f5fac1d7e_00031",
+   "language": "Latin",
+   "ref": "benchmark/refs/ed-697a6e5cb981745f5fac1d7e-p31",
+   "ref_kind": "same-edition-transcription",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "v2",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 1,
+     "sentence": "On the Types [of Servitude]. Discourse I.",
+     "where": "both",
+     "typed": {
+      "n": 1,
+      "words": "On the Types [of Servitude]. Discourse I.",
+      "whole": true,
+      "kind": "transcriber_block",
+      "source_has": "NONE",
+      "reason": "Renders the transcriber's own introductory description, not the source text."
+     },
+     "ocr": {
+      "n": 1,
+      "words": "[of Servitude]",
+      "whole": false,
+      "kind": "explanation",
+      "source_has": "Speciebus. Discursus I.",
+      "reason": "The translator adds the subject of the species which is not in the source text."
+     }
+    }
+   ]
+  },
+  {
+   "id": "697a8014e680cef7cedae395_00031",
+   "language": "Latin",
+   "ref": "benchmark/refs/ed-697a8014e680cef7cedae395-p31",
+   "ref_kind": "same-edition-transcription",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "v2",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 9,
+     "sentence": "Æneas Sylvius himself, in his History of Frederick III, testifies that this oath was not demanded by the Pontiffs in the old days, but was introduced by Clement V, the author of the Clementines Clementines: a collection of decrees in Canon Law promulgated by Pope Clement V in the early 14th century , in Clementine 1, On the Oath.",
+     "where": "both",
+     "typed": {
+      "n": 9,
+      "words": "Clementines: a collection of decrees in Canon Law promulgated by Pope Clement V in the early 14th century",
+      "whole": false,
+      "kind": "definition",
+      "source_has": "Clementinarum",
+      "reason": "The translator added a definition of the 'Clementines' not present in the source text."
+     },
+     "ocr": {
+      "n": 9,
+      "words": "Clementines: a collection of decrees in Canon Law promulgated by Pope Clement V in the early 14th century",
+      "whole": false,
+      "kind": "definition",
+      "source_has": "authore Clementinarum",
+      "reason": "The translator added a definition of the Clementines not present in the source text."
+     }
+    }
+   ]
+  },
+  {
+   "id": "6990505e7d19f3f2aac1e2b7_00072",
+   "language": "Latin",
+   "ref": "benchmark/refs/ed-6990505e7d19f3f2aac1e2b7-p72",
+   "ref_kind": "same-edition-transcription",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "v2",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 1,
+     "sentence": "THE WORKS OF ATHANASIUS KIRCHER",
+     "where": "typed_only",
+     "typed": {
+      "n": 1,
+      "words": "THE WORKS OF ATHANASIUS KIRCHER",
+      "whole": true,
+      "kind": "page_note",
+      "source_has": "NONE",
+      "reason": "Translator's title or series header not present in the source text."
+     },
+     "ocr": null
+    },
+    {
+     "n": 9,
+     "sentence": "First, he supposes that Ninus, after the death of his father Belus—who had reigned in Babylon—was either driven out by the Babylonians and therefore found it necessary to wage war against them, or he left there of his own accord to establish the seat of his Kingdom in Assyria, and consequently the Babylonians, taking this poorly, revolted against him.",
+     "where": "typed_only",
+     "typed": {
+      "n": 9,
+      "words": "was either driven out by the Babylonians and therefore found it necessary to wage war against them, or",
+      "whole": false,
+      "kind": "explanation",
+      "source_has": "vel inde ultro exierit",
+      "reason": "Translator adds a hypothetical scenario about being driven out/waging war not in the Latin."
+     },
+     "ocr": null
+    },
+    {
+     "n": 22,
+     "sentence": "Truly, in such a short course of years, I cannot marvel enough how the human race could have multiplied to such an extent that so many and such great provinces were already filled with people, and Kings had such numerous armies; on the other hand, if the generation [of Cainan] is admitted and calculated...",
+     "where": "ocr_only",
+     "typed": null,
+     "ocr": {
+      "n": 22,
+      "words": "of Cainan",
+      "whole": false,
+      "kind": "explanation",
+      "source_has": "admissâ, & computatâ generatio-",
+      "reason": "The translator added the name 'Cainan' in brackets to complete the sense of the broken sentence."
+     }
+    }
+   ]
+  },
+  {
+   "id": "69b303fb983e01f74b98704a_01127",
+   "language": "Latin",
+   "ref": "benchmark/refs/ed-69b303fb983e01f74b98704a-p1127",
+   "ref_kind": "same-edition-transcription",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "v10",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "sentences": [
+    {
+     "n": 20,
+     "sentence": "Wherefore the Emperor, girded by the forces of the German Empire, transferred the war into France in the month of October, and occupied the town of Landrecies, with the Italian and French soldiers killed.",
+     "where": "typed_only",
+     "typed": {
+      "n": 20,
+      "words": "with the Italian and French soldiers killed.",
+      "whole": false,
+      "kind": "unsupported",
+      "source_has": "oppidum Landresium. et Luceburgum occuparunt.",
+      "reason": "The source mentions occupying towns but not the killing of Italian and French soldiers."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "69c8a3f26c6f3cc53c85e777_00036",
+   "language": "Latin",
+   "ref": "benchmark/refs/ed-69c8a3f26c6f3cc53c85e777-p36",
+   "ref_kind": "same-edition-transcription",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "v10",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "sentences": [
+    {
+     "n": 31,
+     "sentence": "Which you see this should not be understood as but as or deceitful; yet religion, God, religion and obedience of the soul.",
+     "where": "typed_only",
+     "typed": {
+      "n": 31,
+      "words": "Which you see this should not be understood as but as or deceitful; yet religion, God, religion and obedience of the soul.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "Content from 22-40 is not found on the source page provided."
+     },
+     "ocr": null
+    },
+    {
+     "n": 32,
+     "sentence": "Augustine on the quantity of the soul.",
+     "where": "typed_only",
+     "typed": {
+      "n": 32,
+      "words": "Augustine on the quantity of the soul.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "Content from 22-40 is not found on the source page provided."
+     },
+     "ocr": null
+    },
+    {
+     "n": 33,
+     "sentence": "To piety it pertains to lead to that interior worship.",
+     "where": "typed_only",
+     "typed": {
+      "n": 33,
+      "words": "To piety it pertains to lead to that interior worship.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "Content from 22-40 is not found on the source page provided."
+     },
+     "ocr": null
+    },
+    {
+     "n": 34,
+     "sentence": "Grimal on the Best Senator, page 85.",
+     "where": "typed_only",
+     "typed": {
+      "n": 34,
+      "words": "Grimal on the Best Senator, page 85.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "Content from 22-40 is not found on the source page provided."
+     },
+     "ocr": null
+    },
+    {
+     "n": 35,
+     "sentence": "II. [Pietas] and religion are the firmest foundation of all public affairs; laws and philosophers have established this.",
+     "where": "typed_only",
+     "typed": {
+      "n": 35,
+      "words": "II. [Pietas] and religion are the firmest foundation of all public affairs; laws and philosophers have established this.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "Content from 22-40 is not found on the source page provided."
+     },
+     "ocr": null
+    },
+    {
+     "n": 36,
+     "sentence": "Bodin, book 4 of the Republic, chapter 7.",
+     "where": "typed_only",
+     "typed": {
+      "n": 36,
+      "words": "Bodin, book 4 of the Republic, chapter 7.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "Content from 22-40 is not found on the source page provided."
+     },
+     "ocr": null
+    },
+    {
+     "n": 37,
+     "sentence": "They are mistaken who say republics are held together by human commands and kings, rather than the fear of divine vengeance. Valerius Maximus.",
+     "where": "typed_only",
+     "typed": {
+      "n": 37,
+      "words": "They are mistaken who say republics are held together by human commands and kings, rather than the fear of divine vengeance. Valerius Maximus.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "Content from 22-40 is not found on the source page provided."
+     },
+     "ocr": null
+    },
+    {
+     "n": 38,
+     "sentence": "See also Casmann's Biography, page 180.",
+     "where": "typed_only",
+     "typed": {
+      "n": 38,
+      "words": "See also Casmann's Biography, page 180.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "Content from 22-40 is not found on the source page provided."
+     },
+     "ocr": null
+    },
+    {
+     "n": 39,
+     "sentence": "Thus Aristotle learned in the school of Plato that piety is to be preferred above all things in the republic.",
+     "where": "typed_only",
+     "typed": {
+      "n": 39,
+      "words": "Thus Aristotle learned in the school of Plato that piety is to be preferred above all things in the republic.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "Content from 22-40 is not found on the source page provided."
+     },
+     "ocr": null
+    },
+    {
+     "n": 40,
+     "sentence": "Agostino Steuco, book 4 on Perennial Philosophy.",
+     "where": "typed_only",
+     "typed": {
+      "n": 40,
+      "words": "Agostino Steuco, book 4 on Perennial Philosophy.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "Content from 22-40 is not found on the source page provided."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "6a26c136aad44c98627bfb47_00021",
+   "language": "Latin",
+   "ref": "benchmark/refs/ed-6a26c136aad44c98627bfb47-p21",
+   "ref_kind": "same-edition-transcription",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "11",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 3,
+     "sentence": "He thinks those subtleties should be separated from stoicheiosis (the science of elements) and shut away in libraries.",
+     "where": "both",
+     "typed": {
+      "n": 3,
+      "words": "(the science of elements)",
+      "whole": false,
+      "kind": "definition",
+      "source_has": "στοιχειώσει",
+      "reason": "The translator added a definition for the Greek term not present in the source."
+     },
+     "ocr": {
+      "n": 3,
+      "words": "(the science of elements)",
+      "whole": false,
+      "kind": "definition",
+      "source_has": "στοιχείωσει",
+      "reason": "The translator adds a definition for the Greek term not present in the source."
+     }
+    },
+    {
+     "n": 11,
+     "sentence": "The occasion of this Book I.",
+     "where": "typed_only",
+     "typed": {
+      "n": 11,
+      "words": "The occasion of this Book I.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "This heading is not present in the source text."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "6a425310343d756d34e34ea7_00015",
+   "language": "Latin",
+   "ref": "benchmark/refs/ed-6a425310343d756d34e34ea7-p15",
+   "ref_kind": "ocr-same-text",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "13",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 5,
+     "sentence": "When you have risen, exonerate the body of all excrements, cleanse the head from all phlegm with sternutatories (sneezing powders) and masticatories; then those who have a desire for tobacco at this time may use it: however, tobacco is hot and dry in temperament, and suitable for the phlegmatic: therefore, it is only appropriate for the yellow-bile-natured and the melancholic, because it desiccates.",
+     "where": "both",
+     "typed": {
+      "n": 5,
+      "words": "(sneezing powders)",
+      "whole": false,
+      "kind": "definition",
+      "source_has": "caput sternutatoriis, & masticatoriis,",
+      "reason": "The translator adds a parenthetical definition for 'sternutatories' not present in the source text."
+     },
+     "ocr": {
+      "n": 5,
+      "words": "(sneezing powders)",
+      "whole": false,
+      "kind": "definition",
+      "source_has": "caput sternutatoriis, & masticatoriis",
+      "reason": "The translator added a definition for 'sternutatoriis' not present in the source text."
+     }
+    }
+   ]
+  },
+  {
+   "id": "69d147de1c2a66dc094b2249_00054",
+   "language": "Greek",
+   "ref": "benchmark/refs/greek-4b2249-p54",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "v10",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 1,
+     "sentence": "DE COMMVNI MATH. SCIENTIA (c. VI).",
+     "where": "typed_only",
+     "typed": {
+      "n": 1,
+      "words": "DE COMMVNI MATH. SCIENTIA (c. VI).",
+      "whole": true,
+      "kind": "transcriber_block",
+      "source_has": "NONE",
+      "reason": "Renders the transcriber's header/metadata which is not part of the source text provided."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "69a5f6b51cf742c360413eb8_00030",
+   "language": "Greek",
+   "ref": "benchmark/refs/greek-ext-413eb8-p30",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "v1",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 6,
+     "sentence": "This has been shown in these [propositions].",
+     "where": "typed_only",
+     "typed": {
+      "n": 6,
+      "words": "This has been shown in these [propositions].",
+      "whole": true,
+      "kind": "explanation",
+      "source_has": "NONE",
+      "reason": "Translator added a reference to previous proofs not in the source text."
+     },
+     "ocr": null
+    },
+    {
+     "n": 7,
+     "sentence": "And since the polygons are similar, the radius [of the sphere] has the same ratio to $K$ as the radius of the sphere to the line from the center of the sphere to the side of the inscribed figure.",
+     "where": "ocr_only",
+     "typed": null,
+     "ocr": {
+      "n": 7,
+      "words": "[of the sphere]",
+      "whole": false,
+      "kind": "explanation",
+      "source_has": "ἡ ἐκ τοῦ",
+      "reason": "The translator identifies the referent of the article 'the [one] from' as the radius."
+     }
+    },
+    {
+     "n": 24,
+     "sentence": "Therefore, the duplicate ratio is also less than the duplicate ratio.",
+     "where": "typed_only",
+     "typed": {
+      "n": 24,
+      "words": "Therefore, the duplicate ratio is also less than the duplicate ratio.",
+      "whole": true,
+      "kind": "explanation",
+      "source_has": "NONE",
+      "reason": "Translator added an intermediate logical step not present in the source text."
+     },
+     "ocr": null
+    },
+    {
+     "n": 25,
+     "sentence": "And the duplicate ratio of $B$ to $\\Delta$ is the ratio of $B$ to $\\Gamma$.",
+     "where": "typed_only",
+     "typed": {
+      "n": 25,
+      "words": "And the duplicate ratio of B to Δ is the ratio of B to Γ.",
+      "whole": true,
+      "kind": "explanation",
+      "source_has": "NONE",
+      "reason": "Translator added a definition of the mean proportional relationship."
+     },
+     "ocr": null
+    },
+    {
+     "n": 26,
+     "sentence": "But the ratio of the side of the circumscribed polygon to the side of the inscribed polygon is the duplicate of the ratio of the surface of the circumscribed solid to the surface of the inscribed solid.",
+     "where": "typed_only",
+     "typed": {
+      "n": 26,
+      "words": "But the ratio of the side of the circumscribed polygon to the side of the inscribed polygon is the duplicate of the ratio",
+      "whole": false,
+      "kind": "explanation",
+      "source_has": "NONE",
+      "reason": "Translator added an explanatory premise for the proof."
+     },
+     "ocr": null
+    },
+    {
+     "n": 29,
+     "sentence": "For the surface of the inscribed figure has been shown to be less than four times the greatest circle of those in the sphere, or equal to it.",
+     "where": "typed_only",
+     "typed": {
+      "n": 29,
+      "words": "For the surface of the inscribed figure has been shown to be less than four times the greatest circle",
+      "whole": true,
+      "kind": "explanation",
+      "source_has": "NONE",
+      "reason": "Translator added a summary of a previous proof to explain the absurdity."
+     },
+     "ocr": null
+    },
+    {
+     "n": 30,
+     "sentence": "And circle $A$ is four times the greatest circle.",
+     "where": "typed_only",
+     "typed": {
+      "n": 30,
+      "words": "And circle A is four times the greatest circle.",
+      "whole": true,
+      "kind": "explanation",
+      "source_has": "NONE",
+      "reason": "Translator added a clarifying premise not in the source text."
+     },
+     "ocr": null
+    },
+    {
+     "n": 34,
+     "sentence": "And let it be inscribed and circumscribed again, such that the side of the circumscribed has a less ratio than $B$ to $\\Delta$, and thus their duplicates as well.",
+     "where": "typed_only",
+     "typed": {
+      "n": 34,
+      "words": "and thus their duplicates as well",
+      "whole": false,
+      "kind": "explanation",
+      "source_has": "NONE",
+      "reason": "Translator added an explanatory clause regarding the ratios."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "69938a93d5a98fd66f42d3fa_00297",
+   "language": "Greek",
+   "ref": "benchmark/refs/greek-ext-42d3fa-p297",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "v5.2026-02",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 7,
+     "sentence": "The Athenians imprisoned the others to await execution, and the brother was the brother of Isagoras, a man of great reputation.",
+     "where": "typed_only",
+     "typed": {
+      "n": 7,
+      "words": "and the brother was the brother of Isagoras, a man of great reputation",
+      "whole": false,
+      "kind": "explanation",
+      "source_has": "ἐν δὲ αὐτοῖσι καὶ Τιμησίθεον τὸν Δελφόν",
+      "reason": "Replaces 'Timesitheus the Delphian' with an invented identification not in the source."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "69b21ba0429e087c6f862ab8_00105",
+   "language": "Greek",
+   "ref": "benchmark/refs/greek-ext-862ab8-p105",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "v10",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 1,
+     "sentence": "Mixture of the contingent and the premises or syllogisms from it, or its conversion.",
+     "where": "typed_only",
+     "typed": {
+      "n": 1,
+      "words": "Mixture of the contingent and the premises or syllogisms from it, or its conversion.",
+      "whole": true,
+      "kind": "summary",
+      "source_has": "NONE",
+      "reason": "Translator's summary/heading not found in the source text provided."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "69b2ffb05545150b61b491d9_00174",
+   "language": "Greek",
+   "ref": "benchmark/refs/greek-ext-b491d9-p174",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "v10",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 5,
+     "sentence": "1. in ω εοτα tilena .",
+     "where": "typed_only",
+     "typed": {
+      "n": 5,
+      "words": "1. in ω εοτα tilena .",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "Nonsensical or dictionary-style note not present in the source text."
+     },
+     "ocr": null
+    },
+    {
+     "n": 6,
+     "sentence": "Pos . est ado not like the rooster of Aristophanes in he says in the mountains",
+     "where": "typed_only",
+     "typed": {
+      "n": 6,
+      "words": "Pos . est ado not like the rooster of Aristophanes in he says in the mountains",
+      "whole": true,
+      "kind": "explanation",
+      "source_has": "NONE",
+      "reason": "External literary reference and commentary not found in the source text."
+     },
+     "ocr": null
+    },
+    {
+     "n": 17,
+     "sentence": "ma impet gano , which ant panni skeuazo",
+     "where": "typed_only",
+     "typed": {
+      "n": 17,
+      "words": "ma impet gano , which ant panni skeuazo",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "Fragmentary notes or dictionary entries not in the source."
+     },
+     "ocr": null
+    },
+    {
+     "n": 27,
+     "sentence": "tunchano . future teuxomai aorist second etuchon",
+     "where": "typed_only",
+     "typed": {
+      "n": 27,
+      "words": "tunchano . future teuxomai aorist second etuchon",
+      "whole": true,
+      "kind": "definition",
+      "source_has": "NONE",
+      "reason": "Grammatical/dictionary entry for a word not on this page."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "69e80627fdad300064d9e2d7_00186",
+   "language": "Greek",
+   "ref": "benchmark/refs/greek-ext-d9e2d7-p186",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "11",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 1,
+     "sentence": "S E C T I O V. 159",
+     "where": "typed_only",
+     "typed": {
+      "n": 1,
+      "words": "S E C T I O V. 159",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "The source transcription provided does not contain the section title or page number."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "6a084ddf15c643eb1af402a2_00253",
+   "language": "Greek",
+   "ref": "benchmark/refs/greek-ext-f402a2-p253",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "11",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 4,
+     "sentence": "If they do not tell him, he says he will kill them.",
+     "where": "typed_only",
+     "typed": {
+      "n": 4,
+      "words": "If they do not tell him, he says he will kill them.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "ἔφησεν οὐκ ἀποδώσειν, ἐὰν μὴ φράσωσιν ὅπη ἐστὶν ἡ Γοργώ.",
+      "reason": "The source says he won't return the eye; it doesn't mention killing them here."
+     },
+     "ocr": null
+    },
+    {
+     "n": 37,
+     "sentence": "Apollodorus says that there is a proverbial \"goat-nymph old woman,\" or one who has grown old in virginity.",
+     "where": "typed_only",
+     "typed": {
+      "n": 37,
+      "words": "Apollodorus says that there is a proverbial \"goat-nymph old woman,\" or one who has grown old in virginity.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "This sentence and the following ones (37-40) are not in the provided source text."
+     },
+     "ocr": null
+    },
+    {
+     "n": 38,
+     "sentence": "Others say it comes from the grasshopper.",
+     "where": "typed_only",
+     "typed": {
+      "n": 38,
+      "words": "Others say it comes from the grasshopper.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "This sentence is not in the provided source text."
+     },
+     "ocr": null
+    },
+    {
+     "n": 39,
+     "sentence": "For the field grasshopper, called a prophet by some in Sicily, is called \"old woman goat\" or \"old woman kid.\"",
+     "where": "typed_only",
+     "typed": {
+      "n": 39,
+      "words": "For the field grasshopper, called a prophet by some in Sicily, is called \"old woman goat\" or \"old woman kid.\"",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "This sentence is not in the provided source text."
+     },
+     "ocr": null
+    },
+    {
+     "n": 40,
+     "sentence": "They say that any animal it looks at suffers some evil.",
+     "where": "typed_only",
+     "typed": {
+      "n": 40,
+      "words": "They say that any animal it looks at suffers some evil.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "This sentence is not in the provided source text."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "6a0853f515c643eb1af5190c_00137",
+   "language": "Greek",
+   "ref": "benchmark/refs/greek-ext-f5190c-p137",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "11",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 3,
+     "sentence": "If something is named paronymously , it is not the same as that from which it is named.",
+     "where": "typed_only",
+     "typed": {
+      "n": 3,
+      "words": "it is not the same as that from which it is named",
+      "whole": false,
+      "kind": "unsupported",
+      "source_has": "ταὐτὸν ἐστιν ἐκείνῳ τῷ ἀφ’ οὗ λέγεται",
+      "reason": "The source says it IS the same (ταὐτὸν ἐστιν); the translator added 'not' (negation)."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "69b2fee065b9d6bf89925253_00299",
+   "language": "Greek",
+   "ref": "benchmark/refs/greek-ext2-925253-p299",
+   "ref_kind": "e-text-window",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "v10",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 12,
+     "sentence": "Much is said about this.",
+     "where": "typed_only",
+     "typed": {
+      "n": 12,
+      "words": "Much is said about this.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "This sentence is not in the source; the source proceeds directly to the Cato anecdote."
+     },
+     "ocr": null
+    },
+    {
+     "n": 16,
+     "sentence": "However, he did not order his friends to dismount and walk with him.",
+     "where": "typed_only",
+     "typed": {
+      "n": 16,
+      "words": "However, he did not order his friends to dismount and walk with him.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "τοὺς μέντοι φίλους ἐκέλευσε καταβῆναι καὶ πορεύεσθαι μετʼ αὐτοῦ",
+      "reason": "The source says he DID order them; the translator added a negative and a whole sentence of opposite meaning."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "69b302af3613a84e6806788a_00111",
+   "language": "German",
+   "ref": "ground-truth/german-de-zesen-rosemund-p100.json",
+   "ref_kind": "pinned-passage",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "v10",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 8,
+     "sentence": "End of the First Book.",
+     "where": "typed_only",
+     "typed": {
+      "n": 8,
+      "words": "End of the First Book.",
+      "whole": true,
+      "kind": "summary",
+      "source_has": "NONE",
+      "reason": "The translator adds a summary statement not present in the source text."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "69e7515d10ee9075bcdcd67f_00018",
+   "language": "Greek",
+   "ref": "ground-truth/greek-el-orphica-abel-p17.json",
+   "ref_kind": "pinned-passage",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "v10",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 19,
+     "sentence": "2 peak Voss] peak. — Parnassian Hermann] Parnassus. — rock Voss] rock. — 9 when Wiel] when or whenever. — 10 missiles proclaimed Hermann, missiles proclaimed Wiel instead of proclaimed missiles (proclaimed missiles). — 11 pure Wiel] pure. — rites Sanctamand] oaths (oaths). — Necessity Abel] necessity. — 13 Chronos Zoëga] time. — in boundless wombs Stouchus] in boundless (boundless) under tracks. — 14 fire-eyed Abel] looked around. — 15 Phanes manuscripts — 16 call Stephanus] summon.",
+     "where": "typed_only",
+     "typed": {
+      "n": 19,
+      "words": "2 peak Voss] peak. — Parnassian Hermann] Parnassus. — rock Voss] rock. — 9 when Wiel] when or whenever. — 10 missiles proclaimed Hermann, missiles",
+      "whole": true,
+      "kind": "page_note",
+      "source_has": "NONE",
+      "reason": "This is a list of critical apparatus/textual variants provided by the translator, not in the source."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "695aa97dbe4023bd34bd6715_00252",
+   "language": "Greek",
+   "ref": "ground-truth/greek-hero-pneumatica-178.json",
+   "ref_kind": "pinned-passage",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "v10",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 13,
+     "sentence": "Chapter XXXIX according to b: \"There is also another way the doors open when a fire is lit.\"",
+     "where": "typed_only",
+     "typed": {
+      "n": 13,
+      "words": "Chapter XXXIX according to b: \"There is also another way the doors open when a fire is lit.\"",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "This sentence is not in the source text or the provided apparatus notes."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "695aa97dbe4023bd34bd6715_00340",
+   "language": "Greek",
+   "ref": "ground-truth/greek-hero-pneumatica-266.json",
+   "ref_kind": "pinned-passage",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "v10",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 1,
+     "sentence": "HERO OF ALEXANDRIA, PNEUMATICA, BOOK II.",
+     "where": "typed_only",
+     "typed": {
+      "n": 1,
+      "words": "HERO OF ALEXANDRIA, PNEUMATICA, BOOK II.",
+      "whole": true,
+      "kind": "summary",
+      "source_has": "NONE",
+      "reason": "Translator's title/header not present in the provided source text."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "695aa97dbe4023bd34bd6715_00380",
+   "language": "Greek",
+   "ref": "ground-truth/greek-hero-pneumatica-306.json",
+   "ref_kind": "pinned-passage",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "v10",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 1,
+     "sentence": "THE PNEUMATICS OF HERO OF ALEXANDRIA II.",
+     "where": "typed_only",
+     "typed": {
+      "n": 1,
+      "words": "THE PNEUMATICS OF HERO OF ALEXANDRIA II.",
+      "whole": true,
+      "kind": "transcriber_block",
+      "source_has": "NONE",
+      "reason": "Renders the transcriber's header/title which is not in the Greek source text."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "699382dd84cf5845c644b377_00365",
+   "language": "Greek",
+   "ref": "ground-truth/greek-iliad-13-idomeneus.json",
+   "ref_kind": "pinned-passage",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "v10",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 30,
+     "sentence": "The battle around the corpse of Alcathous.",
+     "where": "typed_only",
+     "typed": {
+      "n": 30,
+      "words": "The battle around the corpse of Alcathous.",
+      "whole": true,
+      "kind": "summary",
+      "source_has": "NONE",
+      "reason": "Translator's summary of the preceding action; not in source."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "69e7518610ee9075bcdcde12_00008",
+   "language": "Hebrew",
+   "ref": "ground-truth/hebrew-psalms-1.json",
+   "ref_kind": "pinned-passage",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "v10",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 16,
+     "sentence": "Why do the nations rage, and the peoples",
+     "where": "typed_only",
+     "typed": {
+      "n": 16,
+      "words": "Why do the nations rage, and the peoples",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "This is the beginning of Psalm 2, which is not on this source page."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "69b52593cced70d8e6d72941_00020",
+   "language": "Hebrew",
+   "ref": "ground-truth/hebrew-sefer-hayirah-blessings.json",
+   "ref_kind": "pinned-passage",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "v10",
+   "ocr_model": "gemini-3-flash-preview",
+   "sentences": [
+    {
+     "n": 2,
+     "sentence": "barriers in the washing of hands.",
+     "where": "typed_only",
+     "typed": {
+      "n": 2,
+      "words": "barriers in the washing of hands.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "This phrase does not appear in the source text provided for this page."
+     },
+     "ocr": null
+    },
+    {
+     "n": 4,
+     "sentence": "And he shall dry them well, for anyone who eats without drying his hands is as if he is eating defiled bread, for it is said: \"Their bread is defiled among the nations.\"",
+     "where": "typed_only",
+     "typed": {
+      "n": 4,
+      "words": "for anyone who eats without drying his hands is as if he is eating defiled bread, for it is said: \"Their bread is defiled among the nations.\"",
+      "whole": false,
+      "kind": "explanation",
+      "source_has": "וינגבם היטב",
+      "reason": "The translator added a lengthy homiletic explanation not found in the source text."
+     },
+     "ocr": null
+    },
+    {
+     "n": 5,
+     "sentence": "And he shall recite the blessing over the washing of hands, and he shall sit to eat, and he shall recite over the bread, \"Who brings forth bread from the earth.\"",
+     "where": "typed_only",
+     "typed": {
+      "n": 5,
+      "words": "And he shall recite the blessing over the washing of hands, and he shall sit to eat,",
+      "whole": false,
+      "kind": "unsupported",
+      "source_has": "ויברך על הלחם המוציא",
+      "reason": "The source only mentions the blessing over bread, not the washing blessing or sitting."
+     },
+     "ocr": null
+    },
+    {
+     "n": 11,
+     "sentence": "And when he blesses, he shall focus his heart to bless the Creator, and not like a thing that is common in the mouth of a person to exit [the mouth] without focus.",
+     "where": "typed_only",
+     "typed": {
+      "n": 11,
+      "words": "And when he blesses, he shall focus his heart to bless the Creator, and not like a thing that is common in the mouth",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "This entire sentence about focus (kavanah) is missing from the provided source text."
+     },
+     "ocr": null
+    },
+    {
+     "n": 12,
+     "sentence": "And likewise, for the blessings of the commandments, and for every action of a person, he shall do things for the sake of...",
+     "where": "typed_only",
+     "typed": {
+      "n": 12,
+      "words": "And likewise, for the blessings of the commandments, and for every action of a person, he shall do things for the sake of...",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "This sentence is not present in the source text provided."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "6abeb583896ea18127c84e6f_00229",
+   "language": "Tibetan",
+   "ref": "results/folio-markers-5678/pages/v113-p229.json",
+   "ref_kind": "esukhia-folio",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "13",
+   "ocr_model": null,
+   "sentences": [
+    {
+     "n": 39,
+     "sentence": "It says: \"The stainless sphere of the wise.\"",
+     "where": "typed_only",
+     "typed": {
+      "n": 39,
+      "words": "It says: \"The stainless sphere of the wise.\"",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "Content not found in provided source or next page blocks."
+     },
+     "ocr": null
+    },
+    {
+     "n": 40,
+     "sentence": "This means those who have seen the truth. Why not others?",
+     "where": "typed_only",
+     "typed": {
+      "n": 40,
+      "words": "This means those who have seen the truth. Why not others?",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "Content not found in provided source or next page blocks."
+     },
+     "ocr": null
+    },
+    {
+     "n": 41,
+     "sentence": "Because it is \"stainless,\" meaning it is supramundane.",
+     "where": "typed_only",
+     "typed": {
+      "n": 41,
+      "words": "Because it is \"stainless,\" meaning it is supramundane.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "Content not found in provided source or next page blocks."
+     },
+     "ocr": null
+    },
+    {
+     "n": 42,
+     "sentence": "Therefore, it is not to be known by mundane knowledge.",
+     "where": "typed_only",
+     "typed": {
+      "n": 42,
+      "words": "Therefore, it is not to be known by mundane knowledge.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "Content not found in provided source or next page blocks."
+     },
+     "ocr": null
+    },
+    {
+     "n": 43,
+     "sentence": "Thus, even if one explains that profound meaning as best as one can, it remains difficult: \"The world, having heard it, becomes deluded.\"",
+     "where": "typed_only",
+     "typed": {
+      "n": 43,
+      "words": "Thus, even if one explains that profound meaning as best as one can, it remains difficult: \"The world, having heard it, becomes deluded.\"",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "Content not found in provided source or next page blocks."
+     },
+     "ocr": null
+    },
+    {
+     "n": 45,
+     "sentence": "By grasping at the meaning exactly according to the literal sound.",
+     "where": "typed_only",
+     "typed": {
+      "n": 45,
+      "words": "By grasping at the meaning exactly according to the literal sound.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "Content not found in provided source or next page blocks."
+     },
+     "ocr": null
+    },
+    {
+     "n": 46,
+     "sentence": "\"Having heard it\" refers to the difficulty of explaining it after it has been heard.",
+     "where": "typed_only",
+     "typed": {
+      "n": 46,
+      "words": "\"Having heard it\" refers to the difficulty of explaining it after it has been heard.",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "Content not found in provided source or next page blocks."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "6abeb158896ea18127c82682_00032",
+   "language": "Tibetan",
+   "ref": "results/folio-markers-5678/pages/v96-p032.json",
+   "ref_kind": "esukhia-folio",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "13",
+   "ocr_model": null,
+   "sentences": [
+    {
+     "n": 13,
+     "sentence": "If nirvana were both an entity and a non-entity, then it would follow that liberation is both an entity and a non-entity; that is not correct.",
+     "where": "typed_only",
+     "typed": {
+      "n": 13,
+      "words": "then it would follow that liberation is both an entity and a non-entity;",
+      "whole": false,
+      "kind": "explanation",
+      "source_has": "དངོས་དང་དངོས་པོ་མེད་པ་དག །ཐལ་#བར་འགྱུར་ན་",
+      "reason": "The translator interprets 'it would follow' by adding 'liberation' which is not in the source."
+     },
+     "ocr": null
+    }
+   ]
+  },
+  {
+   "id": "6abeb158896ea18127c82682_00034",
+   "language": "Tibetan",
+   "ref": "results/folio-markers-5678/pages/v96-p034.json",
+   "ref_kind": "esukhia-folio",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "13",
+   "ocr_model": null,
+   "sentences": [
+    {
+     "n": 18,
+     "sentence": "Chapter 27: Examination of Views",
+     "where": "typed_only",
+     "typed": {
+      "n": 18,
+      "words": "Chapter 27: Examination of Views",
+      "whole": true,
+      "kind": "unsupported",
+      "source_has": "NONE",
+      "reason": "The source contains the title for chapter 26, but not a heading for chapter 27."
+     },
+     "ocr": null
+    }
+   ]
+  }
+ ]
+}

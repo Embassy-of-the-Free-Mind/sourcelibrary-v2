@@ -1,0 +1,9 @@
+{
+ "script": "syriac",
+ "name": "arabic-script-transliteration",
+ "reference": "ܟܬܒܐ ܕܝܠܝܕܘܬܗ ܕܝܫܘܥ ܡܫܝܚܐ ܒܪܗ ܕܕܘܝܕ ܒܪܗ ܕܐܒܪܗܡ",
+ "hypothesis": "كتبا دیلیدوته دیشوع مشیحا بره ددوید بره دابرهم",
+ "expected_cer": 1,
+ "tolerance": 0,
+ "why": "the page read into Arabic letters (a Gemini failure mode) shares no Syriac letter: CER 1"
+}

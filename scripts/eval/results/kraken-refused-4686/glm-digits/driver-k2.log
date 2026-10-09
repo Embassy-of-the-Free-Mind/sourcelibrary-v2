@@ -1,0 +1,85 @@
+2026-10-06T13:45:45Z [k2] created 9804b730-e85d-4ddd-85a0-ff4e5cf6eab4 sl-kraken-digits-4686-k2 L4-1-24G pl-waw-2 (€0.7875/h ≈ $0.9214/h) lease-until=2026-10-06T16:45:44Z
+2026-10-06T13:45:46Z [k2] poweron: {"task": {"id": "00000000-0000-0000-0000-000000000000", "description": "fake task", "status": "pending", "href_from": "/servers/9804b730-e85d-4ddd-85a0-ff4e5cf6eab4/action", "href_result": "/servers/9804b730-e85d-4ddd-85a0-ff4e5cf6eab4", "started_at": "2026-10-06T13:45:46.216066+00:00", "terminated_
+sl-kraken-digits-4686-k2 (L4-1-24G, pl-waw-2): lease until 2026-10-06T16:45:57.239Z, owner 4686 (no progress tag: lease-only)
+2026-10-06T13:46:22Z [k2] SSH-OK 151.115.81.212
+active
+NVIDIA L4, 580.126.20
+ + yarl==1.25.1
+ + z3-solver==4.15.4.0
+ + urllib3==2.8.0
+ + yarl==1.25.1
+vllm 0.31.0 2.13.0+cu132 True
+kraken-torch 2.13.0+cu132 True
+kraken, version 7.1
+serving
+2026-10-06T13:49:25Z [k2] SERVE-UP after 131 s
+2026-10-06T13:49:26Z [k2] box: { "server_id": "9804b730-e85d-4ddd-85a0-ff4e5cf6eab4", "host": "scaleway:pl-waw-2:9804b730-e85d-4ddd-85a0-ff4e5cf6eab4", "type": "L4-1-24G", "glm_revision": "2e85a62840ccac27daa451df36c736c4636b8628", "versions": "NVIDIA L4, 580.126.20\n + yarl==1.25.1\n + z3-solver==4.15.4.0\n + urllib3==2.8.0\n + yarl==1.25.1\nvllm 0.31.0 2.13.0+cu132 True\nkraken-torch 2.13.0+cu132 True\nkraken, version 7.1\n", "cost_per_hr": 0.9214, "code_rev": "93c1f8a9500b9601e54e20d7fd156d7635dec892"}
+launched
+2026-10-06T13:49:27Z [k2] launched on 715 pages
+2026-10-06T13:51:30Z [k2] pulled: glm 27 read, 0 err; kraken 9; spend $0.088; gpu 100 %
+2026-10-06T13:53:34Z [k2] pulled: glm 67 read, 0 err; kraken 22; spend $0.120; gpu 100 %
+2026-10-06T13:55:39Z [k2] pulled: glm 103 read, 0 err; kraken 36; spend $0.152; gpu 100 %
+2026-10-06T13:57:45Z [k2] pulled: glm 143 read, 0 err; kraken 49; spend $0.184; gpu 99 %
+2026-10-06T13:59:50Z [k2] pulled: glm 178 read, 0 err; kraken 63; spend $0.216; gpu 99 %
+2026-10-06T14:01:55Z [k2] pulled: glm 218 read, 0 err; kraken 78; spend $0.248; gpu 100 %
+2026-10-06T14:06:09Z [k2] pulled: glm 296 read, 0 err; kraken 105; spend $0.313; gpu 100 %
+2026-10-06T14:08:14Z [k2] pulled: glm 330 read, 0 err; kraken 119; spend $0.345; gpu 100 %
+2026-10-06T14:10:19Z [k2] pulled: glm 368 read, 0 err; kraken 132; spend $0.377; gpu 100 %
+2026-10-06T14:12:24Z [k2] pulled: glm 404 read, 0 err; kraken 146; spend $0.409; gpu 100 %
+2026-10-06T14:14:28Z [k2] pulled: glm 439 read, 0 err; kraken 161; spend $0.441; gpu 100 %
+2026-10-06T14:16:32Z [k2] pulled: glm 476 read, 0 err; kraken 174; spend $0.473; gpu 100 %
+2026-10-06T14:18:36Z [k2] pulled: glm 511 read, 0 err; kraken 190; spend $0.504; gpu 100 %
+2026-10-06T14:20:40Z [k2] pulled: glm 549 read, 0 err; kraken 202; spend $0.536; gpu 99 %
+2026-10-06T14:22:45Z [k2] pulled: glm 586 read, 0 err; kraken 218; spend $0.568; gpu 100 %
+2026-10-06T14:24:49Z [k2] pulled: glm 618 read, 0 err; kraken 230; spend $0.600; gpu 100 %
+2026-10-06T14:26:54Z [k2] pulled: glm 654 read, 0 err; kraken 244; spend $0.632; gpu 100 %
+2026-10-06T14:28:58Z [k2] pulled: glm 690 read, 0 err; kraken 260; spend $0.664; gpu 100 %
+2026-10-06T14:31:04Z [k2] pulled: glm 715 read, 0 err; kraken 271; spend $0.696; gpu 0 %
+2026-10-06T14:33:09Z [k2] pulled: glm 715 read, 0 err; kraken 285; spend $0.728; gpu 0 %
+2026-10-06T14:35:13Z [k2] pulled: glm 715 read, 0 err; kraken 299; spend $0.759; gpu 9 %
+2026-10-06T14:37:17Z [k2] pulled: glm 715 read, 0 err; kraken 313; spend $0.791; gpu 12 %
+2026-10-06T14:39:21Z [k2] pulled: glm 715 read, 0 err; kraken 329; spend $0.823; gpu 0 %
+2026-10-06T14:41:26Z [k2] pulled: glm 715 read, 0 err; kraken 346; spend $0.855; gpu 0 %
+2026-10-06T14:43:30Z [k2] pulled: glm 715 read, 0 err; kraken 362; spend $0.887; gpu 0 %
+2026-10-06T14:45:33Z [k2] pulled: glm 715 read, 0 err; kraken 377; spend $0.918; gpu 0 %
+2026-10-06T14:47:37Z [k2] pulled: glm 715 read, 0 err; kraken 391; spend $0.950; gpu 0 %
+2026-10-06T14:49:41Z [k2] pulled: glm 715 read, 0 err; kraken 406; spend $0.982; gpu 5 %
+2026-10-06T14:51:45Z [k2] pulled: glm 715 read, 0 err; kraken 421; spend $1.013; gpu 11 %
+2026-10-06T14:53:49Z [k2] pulled: glm 715 read, 0 err; kraken 437; spend $1.045; gpu 7 %
+2026-10-06T14:55:53Z [k2] pulled: glm 715 read, 0 err; kraken 452; spend $1.077; gpu 3 %
+2026-10-06T14:57:57Z [k2] pulled: glm 715 read, 0 err; kraken 467; spend $1.109; gpu 10 %
+2026-10-06T15:00:03Z [k2] pulled: glm 715 read, 0 err; kraken 481; spend $1.141; gpu 0 %
+2026-10-06T15:02:09Z [k2] pulled: glm 715 read, 0 err; kraken 495; spend $1.173; gpu 8 %
+2026-10-06T15:04:12Z [k2] pulled: glm 715 read, 0 err; kraken 511; spend $1.205; gpu 0 %
+2026-10-06T15:06:17Z [k2] pulled: glm 715 read, 0 err; kraken 526; spend $1.237; gpu 3 %
+2026-10-06T15:08:20Z [k2] pulled: glm 715 read, 0 err; kraken 540; spend $1.268; gpu 10 %
+2026-10-06T15:10:24Z [k2] pulled: glm 715 read, 0 err; kraken 555; spend $1.300; gpu 13 %
+2026-10-06T15:12:28Z [k2] pulled: glm 715 read, 0 err; kraken 570; spend $1.332; gpu 10 %
+2026-10-06T15:14:32Z [k2] pulled: glm 715 read, 0 err; kraken 586; spend $1.363; gpu 39 %
+2026-10-06T15:16:36Z [k2] pulled: glm 715 read, 0 err; kraken 601; spend $1.395; gpu 0 %
+2026-10-06T15:18:41Z [k2] pulled: glm 715 read, 0 err; kraken 612; spend $1.427; gpu 7 %
+2026-10-06T15:20:45Z [k2] pulled: glm 715 read, 0 err; kraken 621; spend $1.459; gpu 2 %
+2026-10-06T15:22:49Z [k2] pulled: glm 715 read, 0 err; kraken 633; spend $1.490; gpu 5 %
+2026-10-06T15:24:53Z [k2] pulled: glm 715 read, 0 err; kraken 645; spend $1.522; gpu 2 %
+2026-10-06T15:26:57Z [k2] pulled: glm 715 read, 0 err; kraken 655; spend $1.554; gpu 0 %
+2026-10-06T15:29:01Z [k2] pulled: glm 715 read, 0 err; kraken 665; spend $1.586; gpu 0 %
+2026-10-06T15:31:05Z [k2] pulled: glm 715 read, 0 err; kraken 677; spend $1.617; gpu 0 %
+2026-10-06T15:33:09Z [k2] pulled: glm 715 read, 0 err; kraken 688; spend $1.649; gpu 13 %
+2026-10-06T15:35:13Z [k2] pulled: glm 715 read, 0 err; kraken 700; spend $1.681; gpu 5 %
+2026-10-06T15:37:17Z [k2] pulled: glm 715 read, 0 err; kraken 710; spend $1.713; gpu 1 %
+2026-10-06T15:39:21Z [k2] pulled: glm 715 read, 0 err; kraken 715; spend $1.744; gpu 0 %
+{"pages": 715, "wall_secs": 2429.5, "clients": 12, "max_tokens": 8192}
+kraken wall 6529s
+==> /root/pz/kr/part.00.log <==
+Processing ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 40/40 0:00:00 0:00:02
+Writing recognition results for img/6ac39a92693fbfc19e37bb27_194.jpg	✓
+Segmenting img/6ac39a92693fbfc19e37bb27_195.jpg	rc=143
+
+==> /root/pz/kr/part.01.log <==
+Writing recognition results for img/6ac39ad74bd5d854980237ff_212.jpg	✓
+Segmenting img/6ac39ad74bd5d854980237ff_213.jpg	✓
+rc=143
+2026-10-06T15:39:25Z [k2] RUN-END
+2026-10-06T15:39:57Z [k2] volume 3600a247-9a8b-4c58-81bc-b2b496d0acc2 delete -> 204
+2026-10-06T15:39:57Z [k2] DELETED 9804b730-e85d-4ddd-85a0-ff4e5cf6eab4 (now: gone -); billed ≈ $1.753
+2026-10-06T15:39:57Z [k2] RUN-DONE spend $1.753
