@@ -60,6 +60,7 @@ src/data/*
 !src/data/marcianus-berthelot-overlay.json
 !src/data/jung-bph-alignment-2026-05-22.json
 !src/data/concept-aliases.json
+!src/data/tengyur-section-quality.json
 !src/data/language-card-images.json
 !src/data/image-subjects.json
 !src/data/image-subject-map.json

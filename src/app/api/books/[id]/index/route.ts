@@ -15,6 +15,7 @@ import {
   type PageAttribution,
   type PagePrecision,
 } from '@/lib/entity-page-match';
+import { isHeldSurname } from '../../../../../../scripts/lib/shared-surname-hold.mjs';
 import { entityCounters, type EntityBookRef } from '@/lib/entity-books';
 import { getGeminiClient } from '@/lib/gemini-client';
 
@@ -1131,6 +1132,8 @@ async function syncBookEntities(
   const syncEntity = async (term: string, type: 'person' | 'place' | 'concept', entry: ConceptEntry) => {
     // Resolve to canonical name
     const canonicalName = aliasResolver.resolve(term, type);
+    // A surname several people share is attached to no person record (#5950).
+    if (isHeldSurname(canonicalName, type)) return;
 
     const bookEntry = {
       book_id: bookId,

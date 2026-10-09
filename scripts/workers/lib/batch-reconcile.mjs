@@ -115,6 +115,7 @@ export async function probeBatchJob(jobName, clients, keys = []) {
  */
 export async function listActiveJobs(clients, { pageBudget = DEFAULT_LIST_PAGE_BUDGET, log = console.log } = {}) {
   const activeNames = new Set();
+  const displayNames = new Map(); // name → displayName, for the orphan rule
   const perKey = [];
   const issues = [];
   let truncated = false;
@@ -129,7 +130,7 @@ export async function listActiveJobs(clients, { pageBudget = DEFAULT_LIST_PAGE_B
         seen++;
         if (ACTIVE_STATES.has(job.state)) {
           keyActive++;
-          if (job.name) activeNames.add(job.name);
+          if (job.name) { activeNames.add(job.name); displayNames.set(job.name, job.displayName || ''); }
         }
         if (seen >= itemBudget) { keyTruncated = true; break; }
       }
@@ -144,10 +145,31 @@ export async function listActiveJobs(clients, { pageBudget = DEFAULT_LIST_PAGE_B
     }
     perKey.push({ active: keyActive, seen, truncated: keyTruncated });
   }
-  return { activeNames, perKey, issues, truncated };
+  return { activeNames, displayNames, perKey, issues, truncated };
 }
 
 function jobNameOf(j) { return j.job_name || j.gemini_job_name; }
+
+/**
+ * The only jobs the orphan sweep may cancel: ones whose display name says a pipeline submitter
+ * made them for a `batch_jobs` row (`ocr-<book>-…`, `reocr-<book>-<row id>`, …) while no row
+ * holds them, i.e. a submit that died between create and record, whose pages the pipeline will
+ * submit again.
+ *
+ * Every other job absent from batch_jobs belongs to someone the sweep cannot see: the enrich,
+ * embedding and concept lanes keep their own job collections, evals and one-off scripts meter
+ * by display name. Until 2026-10-09 the sweep cancelled all of them on absence: 1,519 cancels
+ * in eight days (cron_runs batch_health.orphansCancelled, 2026-10-01..08). On 2026-10-07 it
+ * cancelled 17 at 13:10Z, the minute sixteen `tattva-6184-*` reads ended with 1-2 requests
+ * lost each, and both `ep-*` embedding jobs (30,000 requests) the minute each was listed
+ * (#6333). Absence from one store is not evidence that nobody owns a job; such jobs are
+ * counted (`orphansLeftUnknown`) and left to finish, and scripts/audit/paid-vs-got.mjs
+ * --collection-only reports them from Gemini's side once they do.
+ */
+const PIPELINE_CHILD_NAME = /^(?:pipeline-ocr|reocr|ocr|translate|translation|images|backfill-ocr)-[0-9a-f]{24}-/;
+export function isPipelineOrphanName(displayName) {
+  return PIPELINE_CHILD_NAME.test(String(displayName || ''));
+}
 
 /**
  * Reconcile DB batch_jobs with Gemini. `deps`:
@@ -180,6 +202,7 @@ export async function reconcileBatchState(db, deps) {
     dbZombies: 0,
     orphansCancelled: 0,
     orphansSparedKnownToDb: 0,
+    orphansLeftUnknown: 0,
     ghostCandidates: 0,
     ghostsProbed: 0,
     ghostsConfirmed: 0,
@@ -253,7 +276,13 @@ export async function reconcileBatchState(db, deps) {
     if (result.orphansSparedKnownToDb > 0) {
       log(`[batch-health] ${result.orphansSparedKnownToDb} Gemini-active jobs are known to the DB in a non-active status — NOT cancelling (a failed row is not an orphan)`);
     }
-    const orphanNames = orphanCandidates.filter(n => !knownNames.has(n));
+    const unknownNames = orphanCandidates.filter(n => !knownNames.has(n));
+    // Cancel only what the pipeline itself submitted and lost (see isPipelineOrphanName).
+    const orphanNames = unknownNames.filter(n => isPipelineOrphanName(listing.displayNames?.get(n)));
+    result.orphansLeftUnknown = unknownNames.length - orphanNames.length;
+    if (result.orphansLeftUnknown > 0) {
+      log(`[batch-health] ${result.orphansLeftUnknown} Gemini-active job(s) are in no batch_jobs / translate_batch_runs row and do not carry a pipeline display name — NOT cancelling (another lane or script owns them)`);
+    }
     for (const name of orphanNames) {
       if (dryRun) { log(`[batch-health] dry-run: would cancel orphan ${name}`); continue; }
       for (const client of clients) {
