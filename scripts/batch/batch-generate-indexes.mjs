@@ -21,6 +21,7 @@ import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/ge
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
 import { buildPageTexts, attributeEntityPages, entityCounters } from '../lib/entity-page-match.mjs';
+import { isHeldSurname } from '../lib/shared-surname-hold.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
@@ -419,6 +420,8 @@ async function syncBookEntities(db, bookId, bookTitle, bookAuthor, conceptIndex)
 
   const syncEntity = async (term, type, entry) => {
     if (!term) return;
+    // A surname several people share is attached to no person record (#5950).
+    if (isHeldSurname(term, type)) return;
     const bookEntry = {
       book_id: bookId,
       book_title: bookTitle,
