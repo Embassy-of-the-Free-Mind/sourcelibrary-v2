@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   description:
     'Twenty-five ideas that several traditions wrote about, each with passages from the books themselves, quoted and linked to the page.',
   alternates: { canonical: '/ideas' },
+  // Unlinked and out of the index until Derek has read the pages (#6173).
+  robots: { index: false, follow: false },
 };
 
 export default function IdeasIndexPage() {

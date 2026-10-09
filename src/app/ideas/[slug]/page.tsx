@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: `${ideaTitle(idea)} | Ideas Across Traditions | Source Library`,
     description: `${idea.passages.length} passages on one idea from ${traditions.length} traditions (${traditions.join(', ')}), each quoted and linked to its page.`,
     alternates: { canonical: `/ideas/${idea.slug}` },
+    robots: { index: false, follow: false },
   };
 }
 
