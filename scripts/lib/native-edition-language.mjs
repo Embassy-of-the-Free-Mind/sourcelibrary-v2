@@ -31,6 +31,8 @@ export const NATIVE_EDITION_LANGUAGE = {
   // translated INTO Latin, so there is no `pages_translated_la` counter and the
   // `$or` in `localizedEditionFilter` below reduces to this pattern for `la`.
   la: /^\s*(latin|latina|latine|lat|neo-latin|ecclesiastical latin)\s*$/i,
+  nl: /^\s*(dutch|nederlands|flemish|nld|dut)\s*$/i,
+  zh: /^\s*(chinese|zho|chi|mandarin|cmn|traditional chinese|simplified chinese)\s*$/i,
 };
 
 /** True when `bookLanguage` means the text already IS `lang`. */

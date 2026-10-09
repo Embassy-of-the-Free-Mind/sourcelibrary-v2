@@ -116,6 +116,15 @@ export const NATIVE_EDITION_LANGUAGE: Record<Exclude<Locale, 'en'>, RegExp> = {
   // table's aliases for Latin (`language-normalize.ts`) and a Latin reader reads
   // both; the parity test holds this pattern to that table.
   la: /^\s*(latin|latina|latine|lat|neo-latin|ecclesiastical latin)\s*$/i,
+  // Dutch and Chinese (#6382), anchored for the same reason. Refused real
+  // values: "Latin-Dutch", "Dutch-English", "Dutch-German", "Chinese-English",
+  // "Chinese, Latin", "Classical Chinese / Japanese". Measured 2026-10-09:
+  // "Dutch" 568 live books, "Middle Dutch" 7; "Chinese" 12,786, "Classical
+  // Chinese" 88. Middle Dutch and Classical Chinese are left out: the language
+  // table counts them as languages of their own, and the parity test holds
+  // these patterns to the table's codes (nld, zho).
+  nl: /^\s*(dutch|nederlands|flemish|nld|dut)\s*$/i,
+  zh: /^\s*(chinese|zho|chi|mandarin|cmn|traditional chinese|simplified chinese)\s*$/i,
 };
 
 /** Is the book's own text already in `lang` (no translation involved)? */

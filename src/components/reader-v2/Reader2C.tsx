@@ -4,6 +4,7 @@ import { Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, use
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { localeHref, localeFromPathname, useLocale, type Locale } from '@/lib/i18n';
+import { ORIGINAL_TEXT_LOCALE_LIST, readsOriginal } from '@/lib/locale-path';
 import { isNativeEdition, localizedTitle } from '@/lib/localized';
 import { getReaderStrings, type ReaderStrings } from '@/lib/reader-strings';
 import { transcriptionReliability } from '@/lib/transcription-reliability';
@@ -834,14 +835,15 @@ function SearchHighlighter() {
  * the middle column scrolls.
  */
 /** Each language's own name for itself, for the reader menu's site-language links. */
-const SITE_LANGUAGE_LABEL: Record<Locale, string> = { en: 'English', es: 'Español', la: 'Latine' };
+const SITE_LANGUAGE_LABEL: Record<Locale, string> = { en: 'English', es: 'Español', la: 'Latine', nl: 'Nederlands', zh: '中文' };
 
-function ReaderSiteMenu({ onClose, spanishAvailable, latinAvailable = false }: {
+function ReaderSiteMenu({ onClose, spanishAvailable, nativeLocales = [] }: {
   onClose: () => void;
   /** Whether THIS page has Spanish text, not merely a Spanish interface. */
   spanishAvailable: boolean;
   /** The book is written in Latin, so its `/la` page exists (#6254). */
-  latinAvailable?: boolean;
+  /** Original-text locales this book is WRITTEN in (`la`, `nl`, `zh`): its page exists there. */
+  nativeLocales?: Locale[];
 }) {
   const { data: session } = useSession();
   const pathname = usePathname();
@@ -852,7 +854,9 @@ function ReaderSiteMenu({ onClose, spanishAvailable, latinAvailable = false }: {
   // one being read; nothing is offered that the route would 307 away from.
   const siteLanguages: Locale[] = ['en'];
   if (spanishAvailable || siteLocale === 'es') siteLanguages.push('es');
-  if (latinAvailable || siteLocale === 'la') siteLanguages.push('la');
+  for (const l of ORIGINAL_TEXT_LOCALE_LIST) {
+    if (nativeLocales.includes(l) || siteLocale === l) siteLanguages.push(l);
+  }
   const signedIn = !!session?.user;
   const [imgError, setImgError] = useState(false);
 
@@ -2503,7 +2507,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   // On the Latin site the Latin text is what the reader came for: open on the
   // scan and the transcription, with the English translation off until asked
   // for (#6254). Everywhere else all three panes start on.
-  const r = useReaderV2('2c', initialBook, initialPage, initialPageList, { scan: true, ocr: true, en: siteLocale !== 'la', translit: false });
+  const r = useReaderV2('2c', initialBook, initialPage, initialPageList, { scan: true, ocr: true, en: !readsOriginal(siteLocale), translit: false });
   const browserTranslated = useBrowserTranslation();
   const t = getReaderStrings(siteLocale);
   // The title in the reader's bar follows the page's language, as it does on
@@ -3481,7 +3485,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
         <ReaderSiteMenu
           onClose={() => setSiteMenuOpen(false)}
           spanishAvailable={spanishEligible(r.currentPage)}
-          latinAvailable={isNativeEdition(r.book as unknown as Record<string, unknown>, 'la')}
+          nativeLocales={ORIGINAL_TEXT_LOCALE_LIST.filter((l) => isNativeEdition(r.book as unknown as Record<string, unknown>, l))}
         />
       )}
       <Suspense fallback={null}>
@@ -4073,9 +4077,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
           <PhonePanePicker
             views={r.views}
             onPick={pickPane}
-            // On the Latin site the stored value is the English word "Latin";
-            // name the pane as the desktop toggle does (#6254).
-            language={siteLocale === 'la' ? t.panes.viewOcr : (r.book.language || t.panes.originalFallback)}
+            // On an original-text site the stored value is an English word
+            // ("Latin", "Dutch"); name the pane as the desktop toggle does (#6254).
+            language={readsOriginal(siteLocale) ? t.panes.viewOcr : (r.book.language || t.panes.originalFallback)}
             hasScan={!!(scan.display || witness)}
             showTranslit={translitEligible}
             translationLabel={showingSpanish ? 'Español' : t.panes.viewEnglish}

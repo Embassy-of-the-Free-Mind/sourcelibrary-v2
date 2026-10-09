@@ -109,7 +109,27 @@ export const CARD_LABELS_LA: CollectionBookCardLabels = {
   editedBy: 'edidit',
 };
 
-const CARD_LABELS: Record<Locale, CollectionBookCardLabels> = { en: CARD_LABELS_EN, es: CARD_LABELS_ES, la: CARD_LABELS_LA };
+export const CARD_LABELS_NL: CollectionBookCardLabels = {
+  firstTranslation: 'Eerste vertaling',
+  pages: 'pagina’s',
+  ocr: 'OCR',
+  translated: 'Vertaald',
+  complete: 'Volledig',
+  inEnglish: 'Engelstalig',
+  editedBy: 'bezorgd door',
+};
+
+export const CARD_LABELS_ZH: CollectionBookCardLabels = {
+  firstTranslation: '首次译出',
+  pages: '页',
+  ocr: 'OCR',
+  translated: '已译',
+  complete: '全译',
+  inEnglish: '英文原著',
+  editedBy: '编者',
+};
+
+const CARD_LABELS: Record<Locale, CollectionBookCardLabels> = { en: CARD_LABELS_EN, es: CARD_LABELS_ES, la: CARD_LABELS_LA, nl: CARD_LABELS_NL, zh: CARD_LABELS_ZH };
 
 interface CollectionBookCardProps {
   book: CollectionBook;

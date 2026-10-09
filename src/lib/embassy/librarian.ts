@@ -412,7 +412,7 @@ async function loadLocalizedTexts(
   return out;
 }
 
-const LANG_NAMES: Record<Locale, string> = { en: 'English', es: 'Spanish', la: 'Latin' };
+const LANG_NAMES: Record<Locale, string> = { en: 'English', es: 'Spanish', la: 'Latin', nl: 'Dutch', zh: 'Chinese' };
 
 // ── Tool Execution ────────────────────────────────────────────────────
 

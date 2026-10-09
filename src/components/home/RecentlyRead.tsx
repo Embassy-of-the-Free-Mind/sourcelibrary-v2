@@ -17,6 +17,8 @@ const STRINGS: Record<Locale, { heading: string; subtitle: string; seeAll: strin
   en: { heading: 'Recently looked at', subtitle: 'Pick up where you left off.', seeAll: 'See all' },
   es: { heading: 'Vistos recientemente', subtitle: 'Retoma donde lo dejaste.', seeAll: 'Ver todo' },
   la: { heading: 'Nuper inspecta', subtitle: 'Perge unde destitisti.', seeAll: 'Omnia specta' },
+  nl: { heading: 'Onlangs bekeken', subtitle: 'Ga verder waar je gebleven was.', seeAll: 'Alles bekijken' },
+  zh: { heading: '最近浏览', subtitle: '从上次停下的地方继续。', seeAll: '查看全部' },
 };
 
 /**

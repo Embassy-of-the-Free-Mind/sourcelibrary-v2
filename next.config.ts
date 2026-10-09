@@ -414,6 +414,11 @@ const nextConfig: NextConfig = {
         { source: `/${name}`, destination: '/la', permanent: false },
         { source: `/${name}/:path*`, destination: '/la/:path*', permanent: false },
       ]),
+      // The same for the Dutch and Chinese sites (#6382).
+      ...[['dutch', 'nl'], ['nederlands', 'nl'], ['chinese', 'zh'], ['zhongwen', 'zh']].flatMap(([name, code]) => [
+        { source: `/${name}`, destination: `/${code}`, permanent: false },
+        { source: `/${name}/:path*`, destination: `/${code}/:path*`, permanent: false },
+      ]),
       // The processing page described the same steps as /how-it-works and drifted from
       // it; one page now tells it (#6074).
       {

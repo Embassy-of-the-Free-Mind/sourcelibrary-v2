@@ -4,25 +4,23 @@ import HomeView from '@/components/home/HomeView';
 import { FEED_TYPES } from '@/lib/feed-links';
 import { siteOgImage } from '@/lib/og-locale';
 
-// Latin edition of the homepage (#6254) — a real, server-rendered, indexable
-// route sharing the same data + body as `/` and `/es`.
-//
-// Latin is the reverse of the Spanish case. Nothing is translated INTO it; it
-// is the language the largest share of the library was WRITTEN in. So this is
-// a Latin front door onto books that are already Latin, and the shelf under the
-// hero (`latinShelf`) is the one section whose books are in the page's language.
+// Chinese edition of the homepage (#6382), the mirror of `/la` (#6254): a
+// front door onto books WRITTEN in Chinese, read in the original. Nothing is
+// translated into Chinese; the shelf under the hero (`nativeShelf`) is the one
+// section whose books are in the page's language. Interface in Simplified
+// characters; the texts are shown as printed.
 export const revalidate = 60;
 export const maxDuration = 60;
 
-const TITLE = 'Source Library: bibliotheca fontium antiquorum';
+const TITLE = 'Source Library：历史文献图书馆';
 const DESCRIPTION =
-  'Source Library textus antiquos photographice describit, transcribit, convertit. Milia librorum Latine scriptorum hic in ipso textu Latino leguntur: alchemia, Hermetica, philosophia, scientia.';
+  'Source Library 将古籍数字化、转录并翻译。一万多种以中文写成的书籍，可在此对照原书影像阅读原文。';
 
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   alternates: {
-    canonical: '/la',
+    canonical: '/zh',
     languages: {
       en: '/',
       es: '/es',
@@ -37,29 +35,29 @@ export const metadata: Metadata = {
   },
   // Both blocks, or neither: declaring `openGraph` replaces the layout's block
   // whole while its `twitter` block survives (.claude/docs/i18n.md, share card).
-  // The image is the English card until Latin art exists (see og-locale.ts).
+  // The image is the English card until art in this language exists (see og-locale.ts).
   openGraph: {
-    images: [siteOgImage('la')],
+    images: [siteOgImage('zh')],
     title: TITLE,
     description: DESCRIPTION,
     siteName: 'Source Library',
     type: 'website',
-    locale: 'la_VA',
-    url: 'https://sourcelibrary.org/la',
+    locale: 'zh_CN',
+    url: 'https://sourcelibrary.org/zh',
   },
   twitter: {
     card: 'summary_large_image',
     site: '@SourceLibrary_',
     title: TITLE,
     description: DESCRIPTION,
-    images: [siteOgImage('la')],
+    images: [siteOgImage('zh')],
   },
 };
 
-export default async function HomePageLa() {
-  const data = await getHomeData('la');
+export default async function HomePageZh() {
+  const data = await getHomeData('zh');
   // Reading language is the URL prefix and nothing else: links out of this page
-  // keep `/la` where a twin route exists (localePath), and no preference is
+  // keep `/zh` where a twin route exists (localePath), and no preference is
   // stored anywhere (.claude/docs/i18n.md rule 6).
-  return <HomeView data={data} lang="la" />;
+  return <HomeView data={data} lang="zh" />;
 }

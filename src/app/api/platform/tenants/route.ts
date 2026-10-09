@@ -31,9 +31,9 @@ export const POST = withSuperadminAuth(async (req: NextRequest, session) => {
     'libraries', 'blog', 'not-found', 'admin', 'search', 'analytics',
     // Locale prefixes (`/es/…`, `/la/…`): a tenant with one of these slugs would
     // be shadowed by the locale routes. Keep in step with PREFIXED_LOCALES.
-    'es', 'la',
-    // Redirect aliases for the Latin site (next.config.ts).
-    'latin', 'latine', 'latina',
+    'es', 'la', 'nl', 'zh',
+    // Redirect aliases for the Latin, Dutch and Chinese sites (next.config.ts).
+    'latin', 'latine', 'latina', 'dutch', 'nederlands', 'chinese', 'zhongwen',
   ]);
   if (RESERVED_SLUGS.has(slug)) {
     return NextResponse.json({ error: 'This slug is reserved and cannot be used' }, { status: 400 });
