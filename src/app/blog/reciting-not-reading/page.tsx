@@ -278,7 +278,7 @@ export default function RecitingNotReadingPage() {
         <hr className="my-10 border-stone-200" />
 
         <p className="text-sm text-muted leading-relaxed">
-          The page is <Link href="/book/biblia-ad-vetvstissima-exemplaria-nvnc-recens-castigata-his-rab" className="text-accent-rust underline hover:text-accent-gold-dark">a Louvain Bible of 1566</Link>, held in our library. Masks, prompts, and raw model outputs are in the repository under <code>scripts/eval/</code> so the runs can be reproduced or re-scored; the whole investigation cost about a dollar fifty in inference.
+          The page is a Louvain Bible of 1566, held in our library. Masks, prompts, and raw model outputs are in the repository under <code>scripts/eval/</code> so the runs can be reproduced or re-scored; the whole investigation cost about a dollar fifty in inference.
         </p>
 
       </article>

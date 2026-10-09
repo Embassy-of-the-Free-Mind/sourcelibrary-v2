@@ -219,7 +219,7 @@ export default function AtlasOfLostInstrumentsPage() {
           stops to describe something he seems genuinely astonished by. It is a box of gut strings, all
           tuned to the same note, hung in a window where the wind can cross it.
         </p>
-        <Quote cite="Kircher, Musurgia Universalis, vol. II, 1650, p. 380" href="/book/695592747bd6d2cd1d61a5c3?page=380">
+        <Quote cite="Kircher, Musurgia Universalis, vol. II, 1650, p. 380" href="/book/universal-musical-work-volume-ii-musurgia-universalis-kircher?page=387">
           All the strings must be tuned to a unison or in octaves, so that a harmonious sound may follow.
           And it is truly marvelous and nearly a paradox how strings stretched in unison or in octaves
           can constitute various harmonies. Indeed, so that this musical phenomenon, which I do not
@@ -237,7 +237,7 @@ export default function AtlasOfLostInstrumentsPage() {
           src="https://images.sourcelibrary.org/artwork/art-kircher-windharfe.jpg"
           alt="Woodcut of Kircher's wind harp: a box of strings between two angled boards that funnel the wind across it, with a cherub's head blowing from the right"
           caption="The instrument, lettered for assembly: pegs at CA, bridges at IK and SD, and the two boards that squeeze the wind across the strings. This is the same woodcut in the Deutsche Fotothek's copy; our scan of the page is linked."
-          href="/book/695592747bd6d2cd1d61a5c3?page=380"
+          href="/book/universal-musical-work-volume-ii-musurgia-universalis-kircher?page=387"
           sourceLabel="Kircher, Musurgia Universalis, vol. II, 1650"
         />
 
@@ -256,7 +256,7 @@ export default function AtlasOfLostInstrumentsPage() {
           src={`${IMG}/695592747bd6d2cd1d61a5c3/198.jpg`}
           alt="Page of Kircher's Musurgia showing three combinations of numbered columns for composing"
           caption="What a slat carries: three combinations of columns, each column a voice, each number a scale degree. A layperson who could count syllables could produce a motet."
-          href="/book/695592747bd6d2cd1d61a5c3?page=198"
+          href="/book/universal-musical-work-volume-ii-musurgia-universalis-kircher?page=202"
           sourceLabel="Kircher, Musurgia Universalis, vol. II, 1650"
         />
 
@@ -284,7 +284,7 @@ export default function AtlasOfLostInstrumentsPage() {
           &ldquo;authentic testimonies&rdquo; on the question of priority, and one of the witnesses is
           candid enough to record both sides.
         </p>
-        <Quote cite="Ghibbesius, in Kircher, Phonurgia Nova, 1673, p. 34" href="/book/69b6b01d96dc15d4a16cb021?page=34">
+        <Quote cite="Ghibbesius, in Kircher, Phonurgia Nova, 1673, p. 34" href="/book/phonurgia-nova-kircher">
           It is a recent invention of the Academicians of the Royal Society of London, but the
           principal praise is attributed to the famous man, Sir Samuel Morland, Knight, as the first and
           only inventor. Although Athanasius Kircher cries out <em>Eureka</em>, and claims the honor and
@@ -352,7 +352,7 @@ export default function AtlasOfLostInstrumentsPage() {
           src={`${IMG}/69905808172958904413516a/111.jpg`}
           alt="Copperplate of twenty square diagrams, numbered 127 to 146, each showing a symmetrical pattern of nodal lines"
           caption="Table X: twenty figures from a square plate. Chladni numbered every one and recorded the pitch that produced it."
-          href="/book/69905808172958904413516a?page=111"
+          href="/book/entdeckungen-uber-die-theorie-des-klanges-chladni-2?page=111"
           sourceLabel="Chladni, Entdeckungen über die Theorie des Klanges, 1787"
         />
         <Quote cite="Chladni, Entdeckungen über die Theorie des Klanges, 1787, p. 55" href="/book/6990627b40bf901934ab9b7f?page=55">

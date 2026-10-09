@@ -23,6 +23,10 @@ export const metadata: Metadata = {
 export default function ParetoPage() {
   return (
     <ContentPageLayout header={<SiteHeader variant="light" />} bg="bg-cream" maxWidth="wide">
+      {/* One wrapper, exempt from the site's scroll reveal (ScrollReveal.tsx). Without it the translation
+          section was a single block thousands of pixels tall at opacity 0 until scrolled to, so a
+          full-page capture or a print to PDF showed ~11,000 px of blank page where it should be (#6217). */}
+      <div data-reveal-skip="">
       <header className="max-w-3xl">
         <p className="text-sm uppercase tracking-wider text-stone-600">
           <Link href="/quality" className="hover:text-amber-800">Quality Center</Link>
@@ -31,7 +35,7 @@ export default function ParetoPage() {
         <p className="text-lg text-stone-700 leading-relaxed mt-4">
           One chart per script for reading, then one per language for translation. Within a chart, the engines are compared
           only on pages every one of them handled, against a typed edition or a published translation of the same pages. The
-          bar on each dot is its 95% interval; where only a few books were read, the chart says so. A check of the pages
+          whisker on each dot is its 95% interval; where only a few books were read, the chart says so. A check of the pages
           behind the charts on {auditDate} left out {audit.dropped.translation + audit.dropped.ocr} that do not suit the
           measure; the limits it found are under each chart and{' '}
           <Link href="/quality#chart-limits" className="text-amber-800 underline decoration-amber-800/30 underline-offset-2">summed up on the Quality Center</Link>. Each chart has its own
@@ -45,10 +49,10 @@ export default function ParetoPage() {
       <p className="text-lg text-stone-700 leading-relaxed mt-4 max-w-3xl">
         One chart per language. The score is model-judged, not human-scored: blind AI judges compare our English with a
         published human translation of the same page and grade it from 1 to 5. They read our transcription, not the page
-        image, so a misread page can still score well. The dashed ring is the share of pages where the English reverses a
-        statement.
+        image, so a misread page can still score well.
       </p>
       <ParetoPresentation m={TRANSLATION} />
+      </div>
     </ContentPageLayout>
   );
 }

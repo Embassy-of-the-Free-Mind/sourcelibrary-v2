@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: agreement
+languages: []
+scripts: []
+canons: []
+n_books: 129
+n_pages: null
+verdict: "IA word confidence cannot replace the paid gate sample: rejected books score higher (73 vs 51), r = -0.11; the scale is not comparable between items"
+status: rejected
+decision: "IA x-confidence not used to gate free text fills; the paid preview sample stays (#4763)"
+superseded_by: null
+issue: [4763, 4784]
+---
 ## 2026-09-24 — can the Archive's own OCR confidence replace the paid reference? NO (#4763, #4784)
 
 **Question.** The free IA text lane admits a book only when the Archive's reading agrees with OUR

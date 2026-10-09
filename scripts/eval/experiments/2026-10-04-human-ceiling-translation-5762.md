@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: [grc, la]
+scripts: [Grek, Latn]
+canons: []
+n_books: 66
+n_pages: 66
+verdict: "A second published translator scores 4.21 (Greek) / 4.14 (Latin); Flash reaches 87% / 105% of that ceiling, Lite 74% / 98%; the Greek gap is wrong OCR."
+status: informational
+decision: null
+superseded_by: null
+issue: 5762
+---
 ## 2026-10-04 · Where does a second published translator land on our fidelity scale, and how much of that do Flash and Lite reach? Greek and Latin (#5762 track 1)
 
 <!-- PRIOR ART: 2026-10-03-xlref-t1-latin-vs-reference-5695.md and 2026-10-03-greek-served-english-vs-published-translations-5695-t2.md (the pages, the first reference, the Flash and Lite arms, the harness; all reused unchanged); 2026-10-01-translation-recitation-pilot-5523.md (two PD translators per work, but word overlap at chapter level, no judge). Neither puts a human translation in the candidate seat. -->

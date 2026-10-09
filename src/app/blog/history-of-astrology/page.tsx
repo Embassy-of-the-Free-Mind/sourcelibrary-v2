@@ -124,7 +124,7 @@ export default function HistoryOfAstrologyPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           By the 6th century CE, this synthesis had matured into a full tradition. Varahamihira (505&ndash;587 CE), working at the court of the Gupta emperor Chandragupta II, wrote three major works that defined Indian astrology for centuries. His{' '}
-          <Link href="/book/69905f4440bc3a0478efb9b2" className="text-accent-rust hover:text-accent-rust underline"><em>Brihat Jataka</em></Link>
+          <Link href="/book/brihat-jataka-vivritti-bhattotpala-comm" className="text-accent-rust hover:text-accent-rust underline"><em>Brihat Jataka</em></Link>
           {' '}(the &ldquo;Great Nativity&rdquo;) systematised the Greek-derived horoscopic tradition into Sanskrit. The printed edition in Source Library dates to 966 CE, making it among the oldest books in the collection, and it has been translated in full.
         </p>
 
@@ -435,7 +435,7 @@ export default function HistoryOfAstrologyPage() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/book/69905f4440bc3a0478efb9b2" className="text-accent-rust hover:text-accent-rust text-sm">
+                  <Link href="/book/brihat-jataka-vivritti-bhattotpala-comm" className="text-accent-rust hover:text-accent-rust text-sm">
                     Varahamihira, <em>Brihat Jataka</em> (966 CE)
                   </Link>
                 </li>

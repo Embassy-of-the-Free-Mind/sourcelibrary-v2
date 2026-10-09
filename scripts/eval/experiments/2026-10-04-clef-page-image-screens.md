@@ -1,3 +1,17 @@
+---
+stage: image
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: 60
+n_pages: 60
+verdict: "Clef answers text-to-image match well (AUC 0.996, 60/60 next-page texts caught) and beats Gemini flash-lite on real pages; script class, blank and date screens fail."
+status: informational
+decision: "Clef chosen for the leaf-match screen; it ran the #5803 corpus screen"
+superseded_by: null
+issue: [5776, 5803]
+---
 ## 2026-10-04 — Which page-image questions can Clef answer well enough to use? — RESULT
 
 PRIOR ART: scripts/eval/experiments/2026-10-04-clef-vs-jev-instruction-page-screen.md — the text-only comparison; this is Clef's image input, scored against labels people made by eye (no new labels).

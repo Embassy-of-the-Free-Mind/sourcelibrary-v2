@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: judged
+languages: [lzh]
+scripts: [Hani]
+canons: [chinese-classics]
+n_books: 40
+n_pages: 40
+verdict: "Kanripo aligns 36/40 SKQS pages but 28% have shifted page breaks; Paddle's English beats lite's 20-4 (both orders); Kanripo text does not improve the English over Paddle."
+status: undecided
+decision: "Recommends Paddle for all 7,894 books, Kanripo for 0 as page text (licence is Derek's call); rides on #5547's pending row"
+superseded_by: null
+issue: [5568, 5547]
+---
 ## 2026-10-01 · Held Siku Quanshu cohort: can Kanripo's text replace OCR, does the OCR engine show in the English, and does Paddle's output fit the production writer? (#5568)
 
 **Question.** Three follow-ups to #5547 (7,894 Chinese books held out of #4719, 97.7 % Wenyuange SKQS brush manuscript). #5547 asks which engine should read them. This entry asks: (1) Kanripo already transcribes the Wenyuange copy. Can its text stand in for OCR? (2) Does the OCR engine change the English a reader gets? (3) Would PaddleOCR-VL's raw output go through the production OCR writer and the translation lane unchanged? Prereg: `PREREGISTRATION-chinese-skqs-5568.md`, committed before any score (PR #5578). The inputs are #5547's sealed set, engine outputs and pilot texts, and nothing in them was changed.

@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "26 meter-recorded refusals across 10 strata plus 7 inferred; only EEBO-TCP's headline moves (flash mean CER 0.133 to 0.054 on answered pages), and flash still beats lite."
+status: informational
+decision: "Benchmark scorer and dashboard now score refusals apart (PR #5605); refusal fix itself is the recitation retry (#5521)"
+superseded_by: null
+issue: 5581
+---
 ## 2026-10-02 · OCR benchmark: what changes in the headline numbers when a refused page is counted as a refusal, not a blank read? (#5581)
 <!-- PRIOR ART: en-ocr-reference-5124.mjs:694 tests finishReason inline for one runner's label; ocr-error-classes.py (#5572) calls any output under 30 folded characters a "refusal" (wrong on the Greek strata and on genuinely empty Japanese STOP outputs). Neither is shared by benchmark-score.mjs and benchmark-dashboard-data.mjs, so this adds scripts/eval/lib/refusals.mjs. -->
 

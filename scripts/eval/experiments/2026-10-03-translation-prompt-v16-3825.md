@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 320
+n_pages: 320
+verdict: "v16's scoping sentence still cuts interpretive notes 28.7% (fails the -15% floor); verified original-notes 88.0 to 91.3%, not decisive. Not established."
+status: rejected
+decision: "Not established: keep v13 (PR #5703); a v17 typed-apparatus candidate is next (#5698)"
+superseded_by: null
+issue: [3825, 5698]
+---
 ## 2026-10-03 · Does v16 (v15 + one sentence scoping the OMIT rule) keep v15's verified original-notes without losing interpretive notes? (#3825, #5698 step 1)
 
 **Question.** v15 raised verified original-notes 66.7% → 96.3% but cut interpretive notes 1.27 → 0.81 per page, and the judge scored 8:1 against it (2026-09-12). Does one sentence restore the notes? The sentence: "This omit rule applies only to the quoted phrase in a `<note>original: "…"</note>`; interpretive and clarifying notes … are still wanted wherever a reader would need them."

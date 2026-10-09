@@ -47,7 +47,7 @@ import { holdBook, isHeld } from '../lib/pipeline-hold.mjs';
 import { juanRange } from '../eval/zh-cohort-5547-duplicates.mjs';
 import {
   LANE, LANE_ISSUE, REVISION_REASON, BOOK_EVENT, HOLD_REASON, HOLD_RELEASE, MIN_HAN, PADDLE,
-  convertPaddle, envelope, hanCount, workTitleOf, pagePolicy, ocrSetFields,
+  convertPaddle, envelope, hanCount, bodyHanCount, longestCharRun, MAX_CHAR_RUN, workTitleOf, pagePolicy, ocrSetFields,
   isHumanEdited, STALE_OCR_FIELDS, markTranslationsStale,
 } from '../lib/paddle-zh-lane.mjs';
 
@@ -55,7 +55,7 @@ const argv = process.argv.slice(2);
 const CMD = argv[0];
 const arg = (n, d) => { const i = argv.indexOf(n); return i >= 0 && argv[i + 1] != null ? argv[i + 1] : d; };
 const flag = (n) => argv.includes(n);
-const DIR = arg('--dir', '/root/paddle-zh-5600');
+const DIR = arg('--dir', process.env.LANE_DIR || '/root/paddle-zh-5600');
 const COHORT = arg('--cohort', '/root/preview-stubs-4719/ids-chinese-held-5481.txt');
 const APPLY = flag('--apply');
 const BOOK = arg('--book', null);
@@ -296,7 +296,8 @@ async function apply() {
         if (!p) { if (APPLY) append(F.skipped, { bid, pn: r.pn, why: 'page_gone' }); continue; }
         if (isHumanEdited(p.ocr)) { if (APPLY) append(F.skipped, { bid, pn: r.pn, why: 'human_edited' }); totals.human_edited++; continue; }
         const { body, stats } = convertPaddle(fs.readFileSync(outTxt(bid, r.pn), 'utf8'), { workTitle });
-        const han = hanCount(body);
+        // margin marks alone are not a reading (#5660: a blank leaf read as a recited 卷一 … 卷十 list)
+        const han = bodyHanCount(body);
         const oldLoop = p.ocr?.data ? loopVerdict(p.ocr.data).refuse : false;
         if (han < MIN_HAN && !oldLoop) {
           // Paddle saw no text (a plate, a blank leaf): never store an empty reading. A stored reading is
@@ -306,6 +307,9 @@ async function apply() {
         }
         const text = envelope(body);
         const v = loopVerdict(text);
+        // a single-character run (○ ×4,000) is a loop the period guard cannot see (#5660 stress re-test)
+        const run = longestCharRun(body);
+        if (!v.refuse && run > MAX_CHAR_RUN) Object.assign(v, { refuse: true, reason: 'char_run', share: 1, period: 1, reps: run, chars: run, body: body.length });
         if (v.refuse) {
           if (APPLY) { await recordLoopRefusal(db, { pageId: p.id, bookId: bid, pageNumber: p.page_number, text, model: PADDLE.model, verdict: v }); append(F.refused, { bid, pn: r.pn, pid: r.pid, share: v.share }); }
           totals.refused++; continue;
@@ -332,7 +336,11 @@ async function apply() {
       let modified = 0;
       const unset = Object.fromEntries([...STALE_OCR_FIELDS, 'translation.health_blocked', 'translation.health_blocked_at'].map((k) => [k, '']));
       for (const w of writes) {
-        const set = { ...ocrSetFields(w.text, { run, now, imageUrl: w.r.src, box, stats: w.stats }), 'ocr.qa_screen': qaOf(w.r.pn) };
+        // a retried page (the fleet's wave 3) can be read on another box than its book: assign.json keys it `bid/pn`
+        const pageBox = assign[`${bid}/${w.r.pn}`];
+        const set = pageBox && pageBox !== boxName
+          ? { ...ocrSetFields(w.text, { run: `${LANE}/${pageBox}`, now, imageUrl: w.r.src, box: boxInfo(pageBox), stats: w.stats }), 'ocr.qa_screen': qaOf(w.r.pn) }
+          : { ...ocrSetFields(w.text, { run, now, imageUrl: w.r.src, box, stats: w.stats }), 'ocr.qa_screen': qaOf(w.r.pn) };
         // pipeline update: `ocr` can be null on never-read pages; every value $literal (a transcription is arbitrary text)
         const literal = Object.fromEntries(Object.entries(set).map(([k, v]) => [k, { $literal: v }]));
         const res = await P.updateOne({ id: w.p.id, 'ocr.edited_by': { $exists: false }, 'ocr.edited_at': { $exists: false }, 'ocr.source': { $ne: 'manual' } }, [

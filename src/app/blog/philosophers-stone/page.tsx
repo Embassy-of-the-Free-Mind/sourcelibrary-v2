@@ -535,7 +535,7 @@ export default function PhilosophersStonePage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/69819203084978306e4933f6?page=1"
+                href="/book/revealer-of-the-great-secret-of-the-philosophers-anonymous-2"
                 className="text-accent-rust hover:underline"
               >
                 The Revealer of the Great Secret, p. 186

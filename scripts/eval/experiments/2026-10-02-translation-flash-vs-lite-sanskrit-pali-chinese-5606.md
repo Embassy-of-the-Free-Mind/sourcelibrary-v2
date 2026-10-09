@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: [sa, pi, lzh]
+scripts: [Deva, Latn, Hani]
+canons: [sanskrit, pali, chinese-classics, chinese-buddhist]
+n_books: 57
+n_pages: 57
+verdict: "Flash beats lite beyond the A-vs-A floor for Sanskrit (p 0.009); Pali ahead but fragile; Chinese ahead (p 0.002) but lite's run-to-run instability exceeds the margin."
+status: superseded
+decision: "Absorbed by #5695 T5; flash now routes Sanskrit, Pali and Chinese translation (PR #5740)"
+superseded_by: "2026-10-03-xlref-t5-sanskrit-pali-chinese-vs-reference.md"
+issue: [5606, 4742]
+---
 ## 2026-10-02 · Should Sanskrit, Pali and classical Chinese translate on flash instead of lite? Blind A/B against published English, with an A-vs-A floor (#5606)
 
 **Question.** Every language except Tibetan and BPH translates on `gemini-3.1-flash-lite` (`getTranslateModelForBook`). #4742 found lite inverting negations and collapsing lists in canonical Tibetan, and Tibetan moved to flash. The Eternity corpus (#5513, #5494, #5566) is mostly Sanskrit, Pali and classical Chinese. Does lite fail the same way there? Derek approved the run on 2026-10-02, with a hard cap of $10.

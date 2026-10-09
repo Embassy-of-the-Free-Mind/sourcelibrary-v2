@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [bo]
+scripts: [Tibt]
+canons: [derge-kangyur]
+n_books: 100
+n_pages: 100
+verdict: "Fresh redraw replicates Kangyur Yigdzin OCR at median 0.947 identity vs Derge (76/100 >= 0.9); about 5% of pages drop a line."
+status: informational
+decision: null
+superseded_by: null
+issue: 4523
+---
 ## 2026-10-01 · Kangyur OCR accuracy, confirmatory re-draw: does the 0.95 hold on fresh pages, and how often is a line dropped? (#4523)
 
 **Question.** Derek, 2026-10-01: "confirm the error rate with another sampling experiment on the OCR." The 09-30 readiness draw put the served Yigdzin read at median 0.950 identity vs the Derge e-text on 65 Kangyur books; one draw is one point.

@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 75
+n_pages: 75
+verdict: "Chained Batch lane pages: fidelity >= 4 on 85.4% (81.5-88.6), major defect 6.9%; seam pages no worse than seeded; the fidelity-1 page was an echo-shift lane defect."
+status: informational
+decision: "Echo guard: an echoed entry now discards the whole block (shipped with this row, #4681)"
+superseded_by: null
+issue: 4681
+---
 ## 2026-10-01 · Chained Batch lane: random-sample fidelity of pages the lane wrote (#4681)
 
 - **Question.** What is the judged defect rate of pages the chained Batch translation lane wrote, and do block-first (seam) pages do worse?

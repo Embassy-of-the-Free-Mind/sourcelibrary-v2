@@ -95,7 +95,7 @@ export default function PlayablePagePage() {
           src="https://images.sourcelibrary.org/gallery/69ac83c55d2908b26341c442/69ac83c55d2908b26341c4c4-0.jpg"
           alt="Woodcut monochord division from Zarlino's Le istitutioni harmoniche: a long ruled diagram dividing a string into tetrachords with numerical ratios."
           caption={<>The instrument as the orthodoxy drew it: a monochord division from Gioseffo Zarlino&apos;s <em>Le istitutioni harmoniche</em> (1558). Zarlino was Galilei&apos;s teacher, and the <em>Dialogo</em>&apos;s chief target.</>}
-          href="/book/69ac83c55d2908b26341c442?page=130"
+          href="/book/le-istitutioni-harmoniche-zarlino?page=130"
           sourceLabel="Zarlino, Le istitutioni harmoniche (1558)"
         />
 

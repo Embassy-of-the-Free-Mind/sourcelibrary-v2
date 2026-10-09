@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: 370
+n_pages: 370
+verdict: "Only NDL v3 on cursive Japanese beats lite; elsewhere flash-preview > lite >= best specialist, and Paddle matches flash-preview on Chinese woodblock only."
+status: undecided
+decision: "NDL lane unjudged in ledger; Paddle adopted as Chinese cost lane (#4925), no other specialist"
+superseded_by: null
+issue: [4743, 4744, 4745, 4746]
+---
 ## 2026-09-15 — Does any current specialist OCR engine beat flash-lite on our pages? (five strata, one protocol: #4743 #4744 #4745 #4746 #4800, registry #4735)
 
 **Headline: one does, on one script. NDL classical OCR v3 reads Japanese kuzushiji where both

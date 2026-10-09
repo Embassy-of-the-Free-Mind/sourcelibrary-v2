@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: [de, fr, it, nl, es]
+scripts: [Latn]
+canons: []
+n_books: 59
+n_pages: 59
+verdict: "Served vernacular English scores 4.39/5 (92% of pages at 4 or more); Flash beats Lite by +0.21 (German +0.39); thinking adds nothing, dropping context costs 0.21."
+status: undecided
+decision: "PENDING Derek in DECISIONS.md (default: keep lite until the dial rises); Flash for German proposed"
+superseded_by: null
+issue: 5695
+---
 <!-- PRIOR ART: 2026-10-03-translation-vs-reference-harness-smoke-5695.md (the harness's instrument check, 6 Pali pages) and the #5274 paired lite-vs-flash arm (reference-free judge, 304 pages). This is the first run of the harness on German, French, Italian, Dutch and Spanish against published human English. -->
 ## 2026-10-03 · Against published human translations, how faithful is the served English for German, French, Italian, Dutch and Spanish, and which lever helps? (#5695 T3)
 

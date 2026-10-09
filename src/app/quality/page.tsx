@@ -8,7 +8,7 @@ import ocrEvidence from '@/data/ocr-benchmark-evidence.json';
 import feedback from '@/data/quality-feedback-themes.json';
 import { listExperiments, latestCanonStatus, sampleAudit, typedPages, type DropReason, type Of } from '@/lib/quality-center';
 import { AS_OF as OPEN_WORK_AS_OF, GROUPS } from '../research/quality/open/issues';
-import { LEAF, leafHref, PROSE_AS_OF, WAYS, WORKED_FIX } from './content';
+import { GRADES, LEAF, leafHref, PROSE_AS_OF, WAYS, WORKED_FIX } from './content';
 import ParetoCharts, { TRANSLATION } from './ParetoCharts';
 
 // The Quality Center (#5918): where text quality stands, what we are doing about it, and how
@@ -439,6 +439,43 @@ export default function QualityCenterPage() {
             (status as of {OPEN_WORK_AS_OF}). Each item links to its public issue, which is the current record.
           </Source>
 
+          <Sub>How a page will be graded, and which pages we check</Sub>
+          <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
+            The figures above use different scales, chosen study by study. We are replacing them with one grade per page,
+            built from published standards: the error severities of{' '}
+            <A href="https://arxiv.org/abs/2405.16969">MQM</A>, the scheme translation research uses to count errors, and
+            the transcription levels of the <A href="https://ocr-d.de/en/gt-guidelines/trans/trLevels.html">OCR-D guidelines</A>,
+            which keep the long s, u and v and abbreviation marks as printed. To these we add three checks of our own: is
+            it the right page, does the text contain words that are not on the page, and did the machine refuse to read it.
+          </p>
+          <dl className="max-w-3xl">
+            {GRADES.map(g => (
+              <div key={g.name} className="py-3 border-b border-stone-200 md:grid md:grid-cols-[12rem_1fr] md:gap-x-6">
+                <dt className="font-semibold text-stone-900 mb-1">{g.name}</dt>
+                <dd className="text-stone-700 leading-relaxed">
+                  <p>{g.means}</p>
+                  <p className="mt-1 text-sm text-stone-500">{g.rule}</p>
+                </dd>
+              </div>
+            ))}
+          </dl>
+          <p className="text-stone-700 leading-relaxed mt-4 mb-4 max-w-3xl">
+            Which pages: each month a random draw of books, one page per book, so that no single book counts twice. Every
+            language and period is drawn, with more books where we serve more pages and where errors have been more
+            common. Title pages, blank pages,
+            tables, pages in two scripts and damaged pages are drawn separately, because that is where machines most often
+            invent text, and then weighted back to their share of the library. Pages used to score a month are never used
+            to tune the next fix.
+          </p>
+          <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
+            None of this has run yet. The first graded round, and a check of the grades by people who read each language,
+            come before any grade replaces the figures above.
+          </p>
+          <Source>
+            The rubric, the sampling plan, and a count of what is measured in each language and period today:{' '}
+            <A href={`${BLOB}.claude/docs/quality-rubric-and-sampling.md`}>quality-rubric-and-sampling.md</A> (<IssueLink num={5984} />).
+          </Source>
+
           <Sub>By canon</Sub>
           <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
             For some canons the text beside the scan was typed by people (an open e-text edition aligned page by page to our
@@ -497,9 +534,10 @@ export default function QualityCenterPage() {
             Each OCR engine we have measured: what it costs to read 1,000 pages, and how closely its text agrees with a
             typed reference. Where the reference is a modern edition rather than a transcription of the same print, the
             score is partly agreement with that edition (<a href="#chart-limits" className={LINK}>how far these charts can be
-            trusted</a>). Within a figure, the engines are compared only on pages every one of them read. The bar is
-            the 95% interval. The dashed ring grows with the share of words that appear nowhere in the reference
-            (invented text). The teal line joins the engines no other engine beats on both cost and score. Gemini
+            trusted</a>). Within a figure, the engines are compared only on pages every one of them read. The thin
+            whisker is the 95% interval. The teal line joins the engines no other engine beats on both cost and score;
+            the amber dot is the engine we use now. Hover over or tap a dot for its numbers, including the share of words
+            that appear nowhere in the reference (invented text). Gemini
             costs are metered Batch spend. A hollow marker (<sup>c</sup> in the table) is a self-hosted engine
             priced on its inference time alone, which assumes the machine does nothing else, so it reads low.{' '}
             <Link href="/quality/pareto" className="text-amber-800 underline decoration-amber-800/30 underline-offset-2 hover:decoration-amber-800">
@@ -522,8 +560,8 @@ export default function QualityCenterPage() {
             keeps to the meaning of a published human translation of the same page. The score is model-judged, not
             human-scored: blind AI judges read both and grade from 1 to 5, and they read our transcription, not the page
             image, so this is not accuracy. Within a figure, the engines are compared only on pages every one of them
-            translated, graded in the same read. The bar is the 95% interval; the dashed ring grows with the share of pages
-            where the English reverses a statement. Costs are the billed tokens of each test run at the Batch rate. An
+            translated, graded in the same read. The thin whisker is the 95% interval; hover over or tap a dot for its
+            numbers, including the share of pages where the English reverses a statement. Costs are the billed tokens of each test run at the Batch rate. An
             engine run without a metered cost is listed under its chart, scored on the pages it did translate.{' '}
             <Link href="/quality/pareto#translation" className="text-amber-800 underline decoration-amber-800/30 underline-offset-2 hover:decoration-amber-800">
               One per screen, for presenting

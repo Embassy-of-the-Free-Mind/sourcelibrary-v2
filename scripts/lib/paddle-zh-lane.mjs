@@ -42,14 +42,17 @@ export { isHumanEdited, hasRealTranslation, STALE_OCR_FIELDS, markTranslationsSt
 
 /** `ocr.pipeline` value, `sweep_log.sweep` name and `translation_stale.lane` — one id for the lane. */
 export const LANE = 'paddle-zh-2026-10';
-export const LANE_ISSUE = 5600;
+// A later run of the SAME lane (same engine, writer and guards) names its own issue, hold and revision reason
+// through PADDLE_ZH_ISSUE / PADDLE_ZH_HOLD / PADDLE_ZH_HOLD_RELEASE (#5660 job gpu-backlog-5660: the ≈ 5K SKQS
+// volumes outside the #4719 cohort). Unset, every value is the #5600 run's.
+export const LANE_ISSUE = Number(process.env.PADDLE_ZH_ISSUE || 5600);
 /** `page_revisions.reason` for the reading this lane supersedes. */
-export const REVISION_REASON = 'reocr_paddle_zh_5600';
+export const REVISION_REASON = `reocr_paddle_zh_${LANE_ISSUE}`;
 /** `book_events.type` — one row per book, advanced in place. */
 export const BOOK_EVENT = 'paddle_zh_reocr';
 /** `pipeline_auto.hold.reason` for every book the lane touches. */
-export const HOLD_REASON = 'paddle-zh-5600-ocr-only';
-export const HOLD_RELEASE = 'translation of the Paddle-read Siku Quanshu cohort is approved as its own priced decision (#5600 is OCR only); release with --to ocr_complete';
+export const HOLD_REASON = process.env.PADDLE_ZH_HOLD || 'paddle-zh-5600-ocr-only';
+export const HOLD_RELEASE = process.env.PADDLE_ZH_HOLD_RELEASE || 'translation of the Paddle-read Siku Quanshu cohort is approved as its own priced decision (#5600 is OCR only); release with --to ocr_complete';
 /** Below this many Han characters a Paddle read is textless: it replaces a loop, never a reading. */
 export const MIN_HAN = 8;
 
@@ -81,6 +84,29 @@ export function hanCount(text) {
   let n = 0;
   for (const ch of String(text || '')) if (HAN.test(ch)) n++;
   return n;
+}
+
+/**
+ * Han characters OUTSIDE the margin marks (<header>, <page-num>) — the reading a page actually carries. A read whose
+ * only text is margin furniture is textless. #5660 stress canary: on a blank SKQS leaf Paddle wrote 欽定四庫全書
+ * followed by a recited 卷一 … 卷十 (26 Han, every line a bare juan line, so all of it became <header>); counted
+ * with hanCount it passed MIN_HAN and would have been written as the page's text.
+ */
+/** Longest run of one repeated non-space character. */
+export function longestCharRun(text) {
+  let best = 0, run = 0, prev = '';
+  for (const ch of String(text || '').replace(/\s+/g, '')) { run = ch === prev ? run + 1 : 1; prev = ch; if (run > best) best = run; }
+  return best;
+}
+/**
+ * A run this long of ONE character is a loop, not a table (#5660 stress re-test: a rhyme table read as one line of
+ * thousands of ○, which ocr-loop-guard cannot see — ○ is a symbol, and its units must carry a letter or digit).
+ * The densest real cell runs seen in the SKQS numeric tables are ~12 (〇〇〇… in a zero column).
+ */
+export const MAX_CHAR_RUN = 40;
+
+export function bodyHanCount(body) {
+  return hanCount(String(body || '').replace(/<(header|page-num)>[\s\S]*?<\/\1>/g, ''));
 }
 
 /** Conversion 3: Paddle's HTML → lines. Returns { text, img, tables }. */

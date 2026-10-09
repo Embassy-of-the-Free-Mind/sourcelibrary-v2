@@ -1,3 +1,17 @@
+---
+stage: image
+measure: judged
+languages: [bo]
+scripts: [Tibt]
+canons: [tibetan]
+n_books: null
+n_pages: 12
+verdict: "The Yigdzin leaf cut does not drop the lower leaf's first line (short pages are symmetric across leaves, 7/7 by eye); the dropped line comes from whole-page reads."
+status: rejected
+decision: "Overlapping leaf crops not built; never-leaf-read pages left to the approved tibetan-step2 job (#4523)"
+superseded_by: null
+issue: 4523
+---
 ## 2026-10-01 · Does the Yigdzin per-leaf crop drop the lower leaf's first line, and should the "lines < book median" pages be re-read? (#4523)
 <!-- PRIOR ART: 2026-09-29 #5250 round-2 entry (band crops) — it found the vowel-less overlap line in BAND crops; this entry asks whether the production LEAF crop has it. -->
 

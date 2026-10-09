@@ -1,3 +1,17 @@
+---
+stage: metadata
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 20
+n_pages: 20
+verdict: "A per-book fit of OCR page numbers labels 51.5% of visible OCR pages (3.24M of 6.29M) with a printed page; 20 of 20 correct on an image-read control."
+status: adopted
+decision: "pages.printed_page backfilled (PR #5687); citations cite the printed page (PR #5688)"
+superseded_by: null
+issue: 4291
+---
 ## 2026-10-03 · Can a per-book fit of the OCR's page numbers give the printed page of a scan? (#4291)
 
 <!-- PRIOR ART: scripts/eval/results/page-integrity-* and the 2026-09-24 page-integrity entry (#5059) measured BREAKS in the printed sequence; none measured which printed page a scan is. -->

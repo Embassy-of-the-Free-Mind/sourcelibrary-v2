@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: [bo]
+scripts: [Tibt]
+canons: [derge-tengyur]
+n_books: 5
+n_pages: 40
+verdict: "Tengyur pilot English is draft-grade: 33 of 40 sampled pages at fidelity 4+, 4 of 40 reversed, 16 of 40 seam shifts; no loops or truncation on 1,269 pages."
+status: informational
+decision: "Full run approved, but on one page per request rather than the chained pilot lane (PR #5717)"
+superseded_by: null
+issue: [5497, 5676]
+---
 ## 2026-10-03 · Is the Tengyur pilot English good enough to run on all 213 volumes? (#5497)
 <!-- PRIOR ART: 2026-10-02-note-facts-full-tibetan-run-5624.md (note-fact method, reused for part D); scripts/eval/tibetan-mt-ab/ (the 84000-referenced judge, reused for part B); 2026-10-02-what-the-judge-calls-invention-5274.md (invention typing, reused in part C). None of them covers the Tengyur pilot or a source that is a verified e-text rather than OCR. -->
 

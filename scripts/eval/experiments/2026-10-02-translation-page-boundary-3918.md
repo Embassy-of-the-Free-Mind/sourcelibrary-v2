@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 1800
+n_pages: 1800
+verdict: "2.44% (1.83-3.27) of served translated pages carry or lose text across a page boundary, in every lane (chained Batch 1.6%, pre-fix realtime 2.7%); about 116K pages corpus-wide."
+status: informational
+decision: null
+superseded_by: null
+issue: 3918
+---
 ## 2026-10-02 · How many served translations carry text from the adjacent page, and which lane writes it? 2.4% of pages, every lane (#3918)
 
 PRIOR ART: 2026-10-02-what-the-judge-calls-invention-5274.md (the 13 confirmed positives used here); `scripts/audit/translation-bridging.mjs` (#5305, any bridging, P 0.25) and `translation-page-boundaries.mjs` (#5026 LEAK / #5021 DRIFT, mirror-only). This entry measures one defect, text that belongs to a neighbouring page, with lane provenance.

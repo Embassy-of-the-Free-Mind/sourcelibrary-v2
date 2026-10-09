@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [syc]
+scripts: [Syrc]
+canons: []
+n_books: null
+n_pages: 350
+verdict: "Gemini Syriac OCR recites rather than reads: 19% of 350 NT 1905 pages carry the right passage at <=10% CER; Isaac and Narsai have no page under 20% CER"
+status: superseded
+decision: "Withdraw-by-book recommendation replaced the same day by a Kraken lane + withhold by page (#4883, PR #4901)"
+superseded_by: "2026-09-16-syriac-retest-do-the-beth-mardutho-kraken-models-read-4746.md"
+issue: 4883
+---
 ## 2026-09-16 (logged 2026-09-25) — Is our Syriac OCR a reading of the page? Against published Syriac and published English (#4883)
 
 *Logged late.* The headline was posted on #4883 the same day and drove the Syriac decision;
