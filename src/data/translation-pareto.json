@@ -407,6 +407,144 @@
        "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
       }
      ]
+    },
+    {
+     "kind": "claude-subscription-6182",
+     "heading": "Claude Sonnet and Haiku on the subscription, 8 Oct 2026 (#6182)",
+     "n_pages": 61,
+     "n_books": 61,
+     "frontier": false,
+     "frontier_note": "two engines with a measured cost here; the Claude runs have none, so they are listed below the chart",
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 61,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+     ],
+     "notes": [
+      "A separate read from the other panels, with both Claude runs, Gemini 3.8 Flash and the engine in use in one item per page, so its scores are compared only within this panel",
+      "Claude Sonnet 5.5 and Claude Haiku 4.5 ran on a subscription, which billed nothing, so they have no point on the cost axis",
+      "Both judges are Claude Opus; any preference they have for Claude would raise the two Claude scores, not lower them"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "fidelity": 4.279,
+       "fidelity_ci95": [
+        4.066,
+        4.459
+       ],
+       "share_ge4": 0.82,
+       "reversals": {
+        "pages": 9,
+        "n": 61,
+        "per_100": 14.8,
+        "ci95": [
+         8,
+         25.7
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.831,
+        "basis": "metered",
+        "detail": "billed tokens of the #6182 production-engine run at the Batch rate, thinking included; averaged over these 61 pages",
+        "source": "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.672,
+       "fidelity_ci95": [
+        4.557,
+        4.787
+       ],
+       "share_ge4": 0.967,
+       "reversals": {
+        "pages": 2,
+        "n": 61,
+        "per_100": 3.3,
+        "ci95": [
+         0.9,
+         11.2
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.253,
+        "basis": "metered",
+        "detail": "billed tokens of the #6182 Gemini 3.8 Flash run at the Batch rate, thinking included; averaged over these 61 pages",
+        "source": "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-sonnet-5.5",
+       "label": "Claude Sonnet 5.5",
+       "production": false,
+       "fidelity": 4.533,
+       "fidelity_ci95": [
+        4.377,
+        4.672
+       ],
+       "share_ge4": 0.902,
+       "reversals": {
+        "pages": 4,
+        "n": 61,
+        "per_100": 6.6,
+        "ci95": [
+         2.6,
+         15.7
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 61,
+        "production_label": "Gemini 3.1 Flash-Lite",
+        "production_fidelity": 4.279
+       },
+       "note": "run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it"
+      },
+      {
+       "engine": "claude-haiku-4.5",
+       "label": "Claude Haiku 4.5",
+       "production": false,
+       "fidelity": 3.795,
+       "fidelity_ci95": [
+        3.59,
+        4
+       ],
+       "share_ge4": 0.639,
+       "reversals": {
+        "pages": 16,
+        "n": 61,
+        "per_100": 26.2,
+        "ci95": [
+         16.8,
+         38.4
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 61,
+        "production_label": "Gemini 3.1 Flash-Lite",
+        "production_fidelity": 4.279
+       },
+       "note": "run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it"
+      }
+     ]
     }
    ],
    "not_on_shared_pages": [
@@ -828,6 +966,144 @@
        "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
       }
      ]
+    },
+    {
+     "kind": "claude-subscription-6182",
+     "heading": "Claude Sonnet and Haiku on the subscription, 8 Oct 2026 (#6182)",
+     "n_pages": 62,
+     "n_books": 62,
+     "frontier": false,
+     "frontier_note": "two engines with a measured cost here; the Claude runs have none, so they are listed below the chart",
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 62,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+     ],
+     "notes": [
+      "A separate read from the other panels, with both Claude runs, Gemini 3.8 Flash and the engine in use in one item per page, so its scores are compared only within this panel",
+      "Claude Sonnet 5.5 and Claude Haiku 4.5 ran on a subscription, which billed nothing, so they have no point on the cost axis",
+      "Both judges are Claude Opus; any preference they have for Claude would raise the two Claude scores, not lower them"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.048,
+       "fidelity_ci95": [
+        3.831,
+        4.25
+       ],
+       "share_ge4": 0.758,
+       "reversals": {
+        "pages": 4,
+        "n": 62,
+        "per_100": 6.5,
+        "ci95": [
+         2.5,
+         15.4
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.908,
+        "basis": "metered",
+        "detail": "billed tokens of the #6182 production-engine run at the Batch rate, thinking included; averaged over these 62 pages",
+        "source": "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.323,
+       "fidelity_ci95": [
+        4.121,
+        4.508
+       ],
+       "share_ge4": 0.79,
+       "reversals": {
+        "pages": 3,
+        "n": 62,
+        "per_100": 4.8,
+        "ci95": [
+         1.7,
+         13.3
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.596,
+        "basis": "metered",
+        "detail": "billed tokens of the #6182 Gemini 3.8 Flash run at the Batch rate, thinking included; averaged over these 62 pages",
+        "source": "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-sonnet-5.5",
+       "label": "Claude Sonnet 5.5",
+       "production": false,
+       "fidelity": 4.177,
+       "fidelity_ci95": [
+        3.968,
+        4.379
+       ],
+       "share_ge4": 0.774,
+       "reversals": {
+        "pages": 7,
+        "n": 62,
+        "per_100": 11.3,
+        "ci95": [
+         5.6,
+         21.5
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 62,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 4.048
+       },
+       "note": "run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it"
+      },
+      {
+       "engine": "claude-haiku-4.5",
+       "label": "Claude Haiku 4.5",
+       "production": false,
+       "fidelity": 3.202,
+       "fidelity_ci95": [
+        2.984,
+        3.411
+       ],
+       "share_ge4": 0.339,
+       "reversals": {
+        "pages": 18,
+        "n": 62,
+        "per_100": 29,
+        "ci95": [
+         19.2,
+         41.3
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 62,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 4.048
+       },
+       "note": "run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it"
+      }
+     ]
     }
    ],
    "not_on_shared_pages": [],
@@ -1245,6 +1521,144 @@
         "production_fidelity": 4.714
        },
        "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
+    },
+    {
+     "kind": "claude-subscription-6182",
+     "heading": "Claude Sonnet and Haiku on the subscription, 8 Oct 2026 (#6182)",
+     "n_pages": 18,
+     "n_books": 18,
+     "frontier": false,
+     "frontier_note": "two engines with a measured cost here; the Claude runs have none, so they are listed below the chart",
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 18,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+     ],
+     "notes": [
+      "A separate read from the other panels, with both Claude runs, Gemini 3.8 Flash and the engine in use in one item per page, so its scores are compared only within this panel",
+      "Claude Sonnet 5.5 and Claude Haiku 4.5 ran on a subscription, which billed nothing, so they have no point on the cost axis",
+      "Both judges are Claude Opus; any preference they have for Claude would raise the two Claude scores, not lower them"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "fidelity": 4.556,
+       "fidelity_ci95": [
+        4.306,
+        4.778
+       ],
+       "share_ge4": 0.944,
+       "reversals": {
+        "pages": 1,
+        "n": 18,
+        "per_100": 5.6,
+        "ci95": [
+         1,
+         25.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.569,
+        "basis": "metered",
+        "detail": "billed tokens of the #6182 production-engine run at the Batch rate, thinking included; averaged over these 18 pages",
+        "source": "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.889,
+       "fidelity_ci95": [
+        4.722,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 18,
+        "per_100": 0,
+        "ci95": [
+         0,
+         17.6
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.614,
+        "basis": "metered",
+        "detail": "billed tokens of the #6182 Gemini 3.8 Flash run at the Batch rate, thinking included; averaged over these 18 pages",
+        "source": "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-sonnet-5.5",
+       "label": "Claude Sonnet 5.5",
+       "production": false,
+       "fidelity": 4.778,
+       "fidelity_ci95": [
+        4.556,
+        4.944
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 18,
+        "per_100": 0,
+        "ci95": [
+         0,
+         17.6
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 18,
+        "production_label": "Gemini 3.1 Flash-Lite",
+        "production_fidelity": 4.556
+       },
+       "note": "run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it"
+      },
+      {
+       "engine": "claude-haiku-4.5",
+       "label": "Claude Haiku 4.5",
+       "production": false,
+       "fidelity": 4.278,
+       "fidelity_ci95": [
+        4.028,
+        4.528
+       ],
+       "share_ge4": 0.889,
+       "reversals": {
+        "pages": 0,
+        "n": 18,
+        "per_100": 0,
+        "ci95": [
+         0,
+         17.6
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 18,
+        "production_label": "Gemini 3.1 Flash-Lite",
+        "production_fidelity": 4.556
+       },
+       "note": "run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it"
       }
      ]
     }
@@ -2029,6 +2443,144 @@
       }
      ],
      "no_cost": []
+    },
+    {
+     "kind": "claude-subscription-6182",
+     "heading": "Claude Sonnet and Haiku on the subscription, 8 Oct 2026 (#6182)",
+     "n_pages": 10,
+     "n_books": 10,
+     "frontier": false,
+     "frontier_note": "two engines with a measured cost here; the Claude runs have none, so they are listed below the chart",
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 10,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+     ],
+     "notes": [
+      "A separate read from the other panels, with both Claude runs, Gemini 3.8 Flash and the engine in use in one item per page, so its scores are compared only within this panel",
+      "Claude Sonnet 5.5 and Claude Haiku 4.5 ran on a subscription, which billed nothing, so they have no point on the cost axis",
+      "Both judges are Claude Opus; any preference they have for Claude would raise the two Claude scores, not lower them"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "fidelity": 4.25,
+       "fidelity_ci95": [
+        3.8,
+        4.65
+       ],
+       "share_ge4": 0.8,
+       "reversals": {
+        "pages": 3,
+        "n": 10,
+        "per_100": 30,
+        "ci95": [
+         10.8,
+         60.3
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.673,
+        "basis": "metered",
+        "detail": "billed tokens of the #6182 production-engine run at the Batch rate, thinking included; averaged over these 10 pages",
+        "source": "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.75,
+       "fidelity_ci95": [
+        4.5,
+        4.95
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 1,
+        "n": 10,
+        "per_100": 10,
+        "ci95": [
+         1.8,
+         40.4
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.862,
+        "basis": "metered",
+        "detail": "billed tokens of the #6182 Gemini 3.8 Flash run at the Batch rate, thinking included; averaged over these 10 pages",
+        "source": "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-sonnet-5.5",
+       "label": "Claude Sonnet 5.5",
+       "production": false,
+       "fidelity": 4.55,
+       "fidelity_ci95": [
+        4.1,
+        4.9
+       ],
+       "share_ge4": 0.9,
+       "reversals": {
+        "pages": 1,
+        "n": 10,
+        "per_100": 10,
+        "ci95": [
+         1.8,
+         40.4
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 10,
+        "production_label": "Gemini 3.1 Flash-Lite",
+        "production_fidelity": 4.25
+       },
+       "note": "run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it"
+      },
+      {
+       "engine": "claude-haiku-4.5",
+       "label": "Claude Haiku 4.5",
+       "production": false,
+       "fidelity": 3.95,
+       "fidelity_ci95": [
+        3.35,
+        4.5
+       ],
+       "share_ge4": 0.7,
+       "reversals": {
+        "pages": 3,
+        "n": 10,
+        "per_100": 30,
+        "ci95": [
+         10.8,
+         60.3
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 10,
+        "production_label": "Gemini 3.1 Flash-Lite",
+        "production_fidelity": 4.25
+       },
+       "note": "run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it"
+      }
+     ]
     }
    ],
    "not_on_shared_pages": [
@@ -2462,6 +3014,144 @@
        "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
       }
      ]
+    },
+    {
+     "kind": "claude-subscription-6182",
+     "heading": "Claude Sonnet and Haiku on the subscription, 8 Oct 2026 (#6182)",
+     "n_pages": 28,
+     "n_books": 28,
+     "frontier": false,
+     "frontier_note": "two engines with a measured cost here; the Claude runs have none, so they are listed below the chart",
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 28,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+     ],
+     "notes": [
+      "A separate read from the other panels, with both Claude runs, Gemini 3.8 Flash and the engine in use in one item per page, so its scores are compared only within this panel",
+      "Claude Sonnet 5.5 and Claude Haiku 4.5 ran on a subscription, which billed nothing, so they have no point on the cost axis",
+      "Both judges are Claude Opus; any preference they have for Claude would raise the two Claude scores, not lower them"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.393,
+       "fidelity_ci95": [
+        4.214,
+        4.571
+       ],
+       "share_ge4": 0.964,
+       "reversals": {
+        "pages": 1,
+        "n": 28,
+        "per_100": 3.6,
+        "ci95": [
+         0.6,
+         17.7
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.2,
+        "basis": "metered",
+        "detail": "billed tokens of the #6182 production-engine run at the Batch rate, thinking included; averaged over these 28 pages",
+        "source": "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.571,
+       "fidelity_ci95": [
+        4.339,
+        4.786
+       ],
+       "share_ge4": 0.964,
+       "reversals": {
+        "pages": 0,
+        "n": 28,
+        "per_100": 0,
+        "ci95": [
+         0,
+         12.1
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.925,
+        "basis": "metered",
+        "detail": "billed tokens of the #6182 Gemini 3.8 Flash run at the Batch rate, thinking included; averaged over these 28 pages",
+        "source": "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-sonnet-5.5",
+       "label": "Claude Sonnet 5.5",
+       "production": false,
+       "fidelity": 4.304,
+       "fidelity_ci95": [
+        3.982,
+        4.571
+       ],
+       "share_ge4": 0.857,
+       "reversals": {
+        "pages": 3,
+        "n": 28,
+        "per_100": 10.7,
+        "ci95": [
+         3.7,
+         27.2
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 28,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 4.393
+       },
+       "note": "run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it"
+      },
+      {
+       "engine": "claude-haiku-4.5",
+       "label": "Claude Haiku 4.5",
+       "production": false,
+       "fidelity": 3.232,
+       "fidelity_ci95": [
+        2.857,
+        3.607
+       ],
+       "share_ge4": 0.393,
+       "reversals": {
+        "pages": 5,
+        "n": 28,
+        "per_100": 17.9,
+        "ci95": [
+         7.9,
+         35.6
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 28,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 4.393
+       },
+       "note": "run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it"
+      }
+     ]
     }
    ],
    "not_on_shared_pages": [],
@@ -2884,6 +3574,144 @@
         "production_fidelity": 4.2
        },
        "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
+    },
+    {
+     "kind": "claude-subscription-6182",
+     "heading": "Claude Sonnet and Haiku on the subscription, 8 Oct 2026 (#6182)",
+     "n_pages": 22,
+     "n_books": 22,
+     "frontier": false,
+     "frontier_note": "two engines with a measured cost here; the Claude runs have none, so they are listed below the chart",
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 22,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+     ],
+     "notes": [
+      "A separate read from the other panels, with both Claude runs, Gemini 3.8 Flash and the engine in use in one item per page, so its scores are compared only within this panel",
+      "Claude Sonnet 5.5 and Claude Haiku 4.5 ran on a subscription, which billed nothing, so they have no point on the cost axis",
+      "Both judges are Claude Opus; any preference they have for Claude would raise the two Claude scores, not lower them"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.295,
+       "fidelity_ci95": [
+        3.977,
+        4.591
+       ],
+       "share_ge4": 0.818,
+       "reversals": {
+        "pages": 2,
+        "n": 22,
+        "per_100": 9.1,
+        "ci95": [
+         2.5,
+         27.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.727,
+        "basis": "metered",
+        "detail": "billed tokens of the #6182 production-engine run at the Batch rate, thinking included; averaged over these 22 pages",
+        "source": "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.523,
+       "fidelity_ci95": [
+        4.25,
+        4.75
+       ],
+       "share_ge4": 0.909,
+       "reversals": {
+        "pages": 0,
+        "n": 22,
+        "per_100": 0,
+        "ci95": [
+         0,
+         14.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.297,
+        "basis": "metered",
+        "detail": "billed tokens of the #6182 Gemini 3.8 Flash run at the Batch rate, thinking included; averaged over these 22 pages",
+        "source": "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-sonnet-5.5",
+       "label": "Claude Sonnet 5.5",
+       "production": false,
+       "fidelity": 4.341,
+       "fidelity_ci95": [
+        4.045,
+        4.614
+       ],
+       "share_ge4": 0.864,
+       "reversals": {
+        "pages": 1,
+        "n": 22,
+        "per_100": 4.5,
+        "ci95": [
+         0.8,
+         21.8
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 22,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 4.295
+       },
+       "note": "run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it"
+      },
+      {
+       "engine": "claude-haiku-4.5",
+       "label": "Claude Haiku 4.5",
+       "production": false,
+       "fidelity": 3.477,
+       "fidelity_ci95": [
+        3.114,
+        3.886
+       ],
+       "share_ge4": 0.409,
+       "reversals": {
+        "pages": 3,
+        "n": 22,
+        "per_100": 13.6,
+        "ci95": [
+         4.7,
+         33.3
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 22,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 4.295
+       },
+       "note": "run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it"
       }
      ]
     }
@@ -3311,6 +4139,144 @@
        "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
       }
      ]
+    },
+    {
+     "kind": "claude-subscription-6182",
+     "heading": "Claude Sonnet and Haiku on the subscription, 8 Oct 2026 (#6182)",
+     "n_pages": 22,
+     "n_books": 22,
+     "frontier": false,
+     "frontier_note": "two engines with a measured cost here; the Claude runs have none, so they are listed below the chart",
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 22,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+     ],
+     "notes": [
+      "A separate read from the other panels, with both Claude runs, Gemini 3.8 Flash and the engine in use in one item per page, so its scores are compared only within this panel",
+      "Claude Sonnet 5.5 and Claude Haiku 4.5 ran on a subscription, which billed nothing, so they have no point on the cost axis",
+      "Both judges are Claude Opus; any preference they have for Claude would raise the two Claude scores, not lower them"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4,
+       "fidelity_ci95": [
+        3.682,
+        4.295
+       ],
+       "share_ge4": 0.727,
+       "reversals": {
+        "pages": 3,
+        "n": 22,
+        "per_100": 13.6,
+        "ci95": [
+         4.7,
+         33.3
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.882,
+        "basis": "metered",
+        "detail": "billed tokens of the #6182 production-engine run at the Batch rate, thinking included; averaged over these 22 pages",
+        "source": "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.114,
+       "fidelity_ci95": [
+        3.841,
+        4.341
+       ],
+       "share_ge4": 0.864,
+       "reversals": {
+        "pages": 2,
+        "n": 22,
+        "per_100": 9.1,
+        "ci95": [
+         2.5,
+         27.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.52,
+        "basis": "metered",
+        "detail": "billed tokens of the #6182 Gemini 3.8 Flash run at the Batch rate, thinking included; averaged over these 22 pages",
+        "source": "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-sonnet-5.5",
+       "label": "Claude Sonnet 5.5",
+       "production": false,
+       "fidelity": 3.705,
+       "fidelity_ci95": [
+        3.409,
+        3.977
+       ],
+       "share_ge4": 0.591,
+       "reversals": {
+        "pages": 4,
+        "n": 22,
+        "per_100": 18.2,
+        "ci95": [
+         7.3,
+         38.5
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 22,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 4
+       },
+       "note": "run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it"
+      },
+      {
+       "engine": "claude-haiku-4.5",
+       "label": "Claude Haiku 4.5",
+       "production": false,
+       "fidelity": 2.341,
+       "fidelity_ci95": [
+        2.114,
+        2.591
+       ],
+       "share_ge4": 0.045,
+       "reversals": {
+        "pages": 14,
+        "n": 22,
+        "per_100": 63.6,
+        "ci95": [
+         43,
+         80.3
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 22,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 4
+       },
+       "note": "run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it"
+      }
+     ]
     }
    ],
    "not_on_shared_pages": [],
@@ -3708,6 +4674,144 @@
         "production_fidelity": 4.167
        },
        "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
+    },
+    {
+     "kind": "claude-subscription-6182",
+     "heading": "Claude Sonnet and Haiku on the subscription, 8 Oct 2026 (#6182)",
+     "n_pages": 27,
+     "n_books": 27,
+     "frontier": false,
+     "frontier_note": "two engines with a measured cost here; the Claude runs have none, so they are listed below the chart",
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 27,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+     ],
+     "notes": [
+      "A separate read from the other panels, with both Claude runs, Gemini 3.8 Flash and the engine in use in one item per page, so its scores are compared only within this panel",
+      "Claude Sonnet 5.5 and Claude Haiku 4.5 ran on a subscription, which billed nothing, so they have no point on the cost axis",
+      "Both judges are Claude Opus; any preference they have for Claude would raise the two Claude scores, not lower them"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 3.944,
+       "fidelity_ci95": [
+        3.741,
+        4.148
+       ],
+       "share_ge4": 0.741,
+       "reversals": {
+        "pages": 4,
+        "n": 27,
+        "per_100": 14.8,
+        "ci95": [
+         5.9,
+         32.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.106,
+        "basis": "metered",
+        "detail": "billed tokens of the #6182 production-engine run at the Batch rate, thinking included; averaged over these 27 pages",
+        "source": "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.148,
+       "fidelity_ci95": [
+        3.87,
+        4.407
+       ],
+       "share_ge4": 0.852,
+       "reversals": {
+        "pages": 3,
+        "n": 27,
+        "per_100": 11.1,
+        "ci95": [
+         3.9,
+         28.1
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.84,
+        "basis": "metered",
+        "detail": "billed tokens of the #6182 Gemini 3.8 Flash run at the Batch rate, thinking included; averaged over these 27 pages",
+        "source": "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-sonnet-5.5",
+       "label": "Claude Sonnet 5.5",
+       "production": false,
+       "fidelity": 4.037,
+       "fidelity_ci95": [
+        3.685,
+        4.37
+       ],
+       "share_ge4": 0.667,
+       "reversals": {
+        "pages": 5,
+        "n": 27,
+        "per_100": 18.5,
+        "ci95": [
+         8.2,
+         36.7
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 27,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 3.944
+       },
+       "note": "run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it"
+      },
+      {
+       "engine": "claude-haiku-4.5",
+       "label": "Claude Haiku 4.5",
+       "production": false,
+       "fidelity": 2.426,
+       "fidelity_ci95": [
+        2.222,
+        2.63
+       ],
+       "share_ge4": 0,
+       "reversals": {
+        "pages": 14,
+        "n": 27,
+        "per_100": 51.9,
+        "ci95": [
+         34,
+         69.3
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 27,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 3.944
+       },
+       "note": "run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it"
       }
      ]
     }
@@ -4112,6 +5216,144 @@
         "production_fidelity": 4
        },
        "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
+    },
+    {
+     "kind": "claude-subscription-6182",
+     "heading": "Claude Sonnet and Haiku on the subscription, 8 Oct 2026 (#6182)",
+     "n_pages": 28,
+     "n_books": 28,
+     "frontier": false,
+     "frontier_note": "two engines with a measured cost here; the Claude runs have none, so they are listed below the chart",
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 28,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+     ],
+     "notes": [
+      "A separate read from the other panels, with both Claude runs, Gemini 3.8 Flash and the engine in use in one item per page, so its scores are compared only within this panel",
+      "Claude Sonnet 5.5 and Claude Haiku 4.5 ran on a subscription, which billed nothing, so they have no point on the cost axis",
+      "Both judges are Claude Opus; any preference they have for Claude would raise the two Claude scores, not lower them"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.393,
+       "fidelity_ci95": [
+        4.125,
+        4.625
+       ],
+       "share_ge4": 0.929,
+       "reversals": {
+        "pages": 1,
+        "n": 28,
+        "per_100": 3.6,
+        "ci95": [
+         0.6,
+         17.7
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.813,
+        "basis": "metered",
+        "detail": "billed tokens of the #6182 production-engine run at the Batch rate, thinking included; averaged over these 28 pages",
+        "source": "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.643,
+       "fidelity_ci95": [
+        4.482,
+        4.786
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 28,
+        "per_100": 0,
+        "ci95": [
+         0,
+         12.1
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.395,
+        "basis": "metered",
+        "detail": "billed tokens of the #6182 Gemini 3.8 Flash run at the Batch rate, thinking included; averaged over these 28 pages",
+        "source": "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-sonnet-5.5",
+       "label": "Claude Sonnet 5.5",
+       "production": false,
+       "fidelity": 4.607,
+       "fidelity_ci95": [
+        4.429,
+        4.786
+       ],
+       "share_ge4": 0.964,
+       "reversals": {
+        "pages": 1,
+        "n": 28,
+        "per_100": 3.6,
+        "ci95": [
+         0.6,
+         17.7
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 28,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 4.393
+       },
+       "note": "run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it"
+      },
+      {
+       "engine": "claude-haiku-4.5",
+       "label": "Claude Haiku 4.5",
+       "production": false,
+       "fidelity": 2.911,
+       "fidelity_ci95": [
+        2.589,
+        3.25
+       ],
+       "share_ge4": 0.25,
+       "reversals": {
+        "pages": 10,
+        "n": 28,
+        "per_100": 35.7,
+        "ci95": [
+         20.7,
+         54.2
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 28,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 4.393
+       },
+       "note": "run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it"
       }
      ]
     }
@@ -4521,6 +5763,144 @@
         "production_fidelity": 3.667
        },
        "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
+    },
+    {
+     "kind": "claude-subscription-6182",
+     "heading": "Claude Sonnet and Haiku on the subscription, 8 Oct 2026 (#6182)",
+     "n_pages": 21,
+     "n_books": 21,
+     "frontier": false,
+     "frontier_note": "two engines with a measured cost here; the Claude runs have none, so they are listed below the chart",
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 21,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+     ],
+     "notes": [
+      "A separate read from the other panels, with both Claude runs, Gemini 3.8 Flash and the engine in use in one item per page, so its scores are compared only within this panel",
+      "Claude Sonnet 5.5 and Claude Haiku 4.5 ran on a subscription, which billed nothing, so they have no point on the cost axis",
+      "Both judges are Claude Opus; any preference they have for Claude would raise the two Claude scores, not lower them"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 3.976,
+       "fidelity_ci95": [
+        3.714,
+        4.262
+       ],
+       "share_ge4": 0.714,
+       "reversals": {
+        "pages": 3,
+        "n": 21,
+        "per_100": 14.3,
+        "ci95": [
+         5,
+         34.6
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.448,
+        "basis": "metered",
+        "detail": "billed tokens of the #6182 production-engine run at the Batch rate, thinking included; averaged over these 21 pages",
+        "source": "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.167,
+       "fidelity_ci95": [
+        3.976,
+        4.357
+       ],
+       "share_ge4": 0.952,
+       "reversals": {
+        "pages": 1,
+        "n": 21,
+        "per_100": 4.8,
+        "ci95": [
+         0.8,
+         22.7
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.884,
+        "basis": "metered",
+        "detail": "billed tokens of the #6182 Gemini 3.8 Flash run at the Batch rate, thinking included; averaged over these 21 pages",
+        "source": "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-sonnet-5.5",
+       "label": "Claude Sonnet 5.5",
+       "production": false,
+       "fidelity": 4.119,
+       "fidelity_ci95": [
+        3.786,
+        4.429
+       ],
+       "share_ge4": 0.714,
+       "reversals": {
+        "pages": 4,
+        "n": 21,
+        "per_100": 19,
+        "ci95": [
+         7.7,
+         40
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 21,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 3.976
+       },
+       "note": "run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it"
+      },
+      {
+       "engine": "claude-haiku-4.5",
+       "label": "Claude Haiku 4.5",
+       "production": false,
+       "fidelity": 3.143,
+       "fidelity_ci95": [
+        2.81,
+        3.5
+       ],
+       "share_ge4": 0.286,
+       "reversals": {
+        "pages": 7,
+        "n": 21,
+        "per_100": 33.3,
+        "ci95": [
+         17.2,
+         54.6
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 21,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 3.976
+       },
+       "note": "run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it"
       }
      ]
     }
@@ -4994,6 +6374,144 @@
       }
      ],
      "no_cost": []
+    },
+    {
+     "kind": "claude-subscription-6182",
+     "heading": "Claude Sonnet and Haiku on the subscription, 8 Oct 2026 (#6182)",
+     "n_pages": 113,
+     "n_books": 8,
+     "frontier": false,
+     "frontier_note": "two engines with a measured cost here; the Claude runs have none, so they are listed below the chart",
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "Tib",
+       "reference": "84000's published English",
+       "pages": 113,
+       "date": "2026-10-08"
+      }
+     ],
+     "date": "2026-10-08",
+     "files": [
+      "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+     ],
+     "notes": [
+      "A separate read from the other panels, with both Claude runs, Gemini 3.8 Flash and the engine in use in one item per page, so its scores are compared only within this panel",
+      "Claude Sonnet 5.5 and Claude Haiku 4.5 ran on a subscription, which billed nothing, so they have no point on the cost axis",
+      "Both judges are Claude Opus; any preference they have for Claude would raise the two Claude scores, not lower them"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.624,
+       "fidelity_ci95": [
+        4.54,
+        4.712
+       ],
+       "share_ge4": 0.991,
+       "reversals": {
+        "pages": 7,
+        "n": 113,
+        "per_100": 6.2,
+        "ci95": [
+         3,
+         12.2
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.77,
+        "basis": "metered",
+        "detail": "billed tokens of the #6182 production-engine run at the Batch rate, thinking included; averaged over these 113 pages",
+        "source": "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.832,
+       "fidelity_ci95": [
+        4.77,
+        4.889
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 4,
+        "n": 113,
+        "per_100": 3.5,
+        "ci95": [
+         1.4,
+         8.7
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.293,
+        "basis": "metered",
+        "detail": "billed tokens of the #6182 Gemini 3.8 Flash run at the Batch rate, thinking included; averaged over these 113 pages",
+        "source": "scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-sonnet-5.5",
+       "label": "Claude Sonnet 5.5",
+       "production": false,
+       "fidelity": 4.531,
+       "fidelity_ci95": [
+        4.429,
+        4.628
+       ],
+       "share_ge4": 0.965,
+       "reversals": {
+        "pages": 6,
+        "n": 113,
+        "per_100": 5.3,
+        "ci95": [
+         2.5,
+         11.1
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 113,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 4.624
+       },
+       "note": "run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it"
+      },
+      {
+       "engine": "claude-haiku-4.5",
+       "label": "Claude Haiku 4.5",
+       "production": false,
+       "fidelity": 2.951,
+       "fidelity_ci95": [
+        2.867,
+        3.031
+       ],
+       "share_ge4": 0.071,
+       "reversals": {
+        "pages": 37,
+        "n": 113,
+        "per_100": 32.7,
+        "ci95": [
+         24.8,
+         41.8
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 113,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 4.624
+       },
+       "note": "run as Claude Code subagents on the subscription, so no metered cost; the judges are Opus, also Claude, which may flatter it"
+      }
+     ]
     }
    ],
    "not_on_shared_pages": [],

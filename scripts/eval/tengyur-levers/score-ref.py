@@ -18,6 +18,10 @@ writes results/.../refjudge/scores.json (no quotes).
                  pool with --round cli6182's rows (descriptive). [--exclude drops.json] drops those sides (#6304)
   --round 6182xl #6182, every language but Tibetan (365 pages × 9 Gemini arms + the tracks' Opus): #5695's
                  judge schema (one reversal, boolean omission), so gate, strata and rule B are score-xl.py's
+  --round claude6182 #6182 Claude subscription arms (CS = Sonnet 5.5, CH = Haiku 4.5) beside G38 and FP on the 171
+                 Tengyur sides (PREREG-claude-arms.md; companion packet), PREREG.md's judge gate, by-text CIs,
+                 C38 (#6321's packet) bridged through G38; [--exclude drops.json] as above
+  --round claude6182xl the same arms on the 365 other-language pages: score-xl.run_claude
 """
 import collections, glob, itertools, json, random, sys
 
@@ -40,17 +44,35 @@ if ROUND == "6182xl":  # J1 on every item, J2 on the preregistered subset (J2-su
     m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
     m.run(key=key, J=J, OUT=OUT, subset=subset)
     sys.exit(0)
+if ROUND == "claude6182xl":  # both judges on every item (companion packet, PREREG-claude-arms.md)
+    import importlib.util
+    OUT, JW = "scripts/eval/results/pareto-6182/claude/xljudge", "/root/pareto-claude-sub-6182/xljudge"
+    key = json.load(open(f"{OUT}/key.json"))
+    J = {"J1": {}, "J2": {}}
+    for f in glob.glob(f"{JW}/out-J*-*.jsonl"):
+        for l in open(f):
+            if l.strip():
+                o = json.loads(l); J["J2" if "-J2" in f else "J1"][o["id"]] = o
+    missing = {j: [i for i in key["items"] if i not in J[j]] for j in J}
+    assert not any(missing.values()), missing
+    drops = {d["page"] for d in json.load(open(sys.argv[sys.argv.index("--exclude") + 1]))["drops"]} if "--exclude" in sys.argv else set()
+    spec = importlib.util.spec_from_file_location("p6182xl", "scripts/eval/pareto-6182/score-xl.py")
+    m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+    m.run_claude(key=key, J=J, OUT=OUT, drops=drops)
+    sys.exit(0)
 P6182 = ROUND == "6182"
+CLT = ROUND == "claude6182"
 C113 = ROUND == "cli6182-113"
-CLI = ROUND == "cli6182" or C113
+CLI = ROUND == "cli6182" or C113 or CLT
 R2 = ROUND == "2" or P6182 or CLI  # 6182 applies round 2's rule (PREREG.md rule A), FP in A's place
 OUT = {"1": "scripts/eval/results/tengyur-levers-6121/refjudge", "2": "scripts/eval/results/tengyur-models-6121/refjudge",
        "6182": "scripts/eval/results/pareto-6182/tibjudge", "cli6182": "scripts/eval/results/cli-arm-6182/refjudge",
-       "cli6182-113": "scripts/eval/results/cli-arm-6182/refjudge113"}[ROUND]
-JW = {"1": "/root/tlev/refjudge", "2": "/root/tlev2/refjudge", "6182": "/root/pareto-6182/tibjudge", "cli6182": "/root/tlev3/refjudge", "cli6182-113": "/root/cli38-6182/refjudge113"}[ROUND]
+       "cli6182-113": "scripts/eval/results/cli-arm-6182/refjudge113", "claude6182": "scripts/eval/results/pareto-6182/claude/tibjudge"}[ROUND]
+JW = {"1": "/root/tlev/refjudge", "2": "/root/tlev2/refjudge", "6182": "/root/pareto-6182/tibjudge", "cli6182": "/root/tlev3/refjudge", "cli6182-113": "/root/cli38-6182/refjudge113",
+      "claude6182": "/root/pareto-claude-sub-6182/tibjudge"}[ROUND]
 BASE = "FP" if P6182 or CLI else "A"  # the production rerun: planted twin and rule-A floor
 key = json.load(open(f"{OUT}/key.json"))
-if P6182:  # this key has no toh: the 113 take it from #5497's key, the 58 from the set's text label
+if P6182 or CLT:  # this key has no toh: the 113 take it from #5497's key, the 58 from the set's text label
     toh = {k["page_id"]: k["toh"] for k in json.load(open("/root/tref/judge/key.json")).values() if isinstance(k, dict) and k.get("toh")}
     for k in key.values():
         if k["kind"] == "ARMS":
@@ -82,11 +104,13 @@ for iid, k in key.items():
                                   "lower_fid": pl["fidelity"] < tw["fidelity"],
                                   "ranked_below": any(BASE in t and f"{BASE}_PLANT" not in t for t in rk[:1])})
         else:
-            ctrl["DUP"].append({"judge": j, "tie": any(set(t) == {"S", "S_DUP"} for t in rk), "same_fid": sc["S"]["fidelity"] == sc["S_DUP"]["fidelity"]})
+            d = next(l[:-4] for l in sc if l.endswith("_DUP"))  # S in rounds 1-2 and 6182, FP in the Claude packet
+            # tie = the twins share a tier; the Claude packet's duplicates carry a third arm (G38) that may share it too
+            ctrl["DUP"].append({"judge": j, "tie": any({d, f"{d}_DUP"} <= set(t) if CLT else set(t) == {d, f"{d}_DUP"} for t in rk), "same_fid": sc[d]["fidelity"] == sc[f"{d}_DUP"]["fidelity"]})
 gate = {j: {"plant_caught": sum(x["caught"] for x in ctrl["PLANT"] if x["judge"] == j), "plants": sum(1 for x in ctrl["PLANT"] if x["judge"] == j),
             "dup_tie": sum(x["tie"] for x in ctrl["DUP"] if x["judge"] == j), "dups": sum(1 for x in ctrl["DUP"] if x["judge"] == j)} for j in J}
 
-if P6182:  # PREREG.md: caught = reversal listed OR a lower fidelity than its twin, in >= 6 of 8; duplicates tie in >= 3 of 4
+if P6182 or CLT:  # PREREG.md: caught = reversal listed OR a lower fidelity than its twin, in >= 6 of 8; duplicates tie in >= 3 of 4
     for j, g in gate.items():
         mine = [x for x in ctrl["PLANT"] if x["judge"] == j]
         g["plant_caught_prereg"] = sum(x["caught"] or x["lower_fid"] for x in mine)
@@ -99,7 +123,7 @@ elif R2:  # preregistered judge gate: each judge catches >= 5 of 6 plants and ti
     for g in gate.values():
         g["pass"] = g["plant_caught"] >= 5 and g["dup_tie"] >= 3
 
-ARMS = (["FP", "C38", "G38"] if CLI else ["S", "FP", "AA", "L31", "L35", "G35", "G36", "G37", "G38", "PRO", "O"] if P6182 else
+ARMS = (["FP", "G38", "CS", "CH"] if CLT else ["FP", "C38", "G38"] if CLI else ["S", "FP", "AA", "L31", "L35", "G35", "G36", "G37", "G38", "PRO", "O"] if P6182 else
         ["S", "A", "G38", "G35", "O"] if R2 else ["S", "A", "C", "P"])
 NEW = ARMS[1:]
 rows = []
@@ -176,7 +200,7 @@ if P6182:  # rule A's numbers above; strata, by-text CIs and rule B live beside 
     sys.exit(0)
 if CLI:  # the gate preregistered on #6182 (2026-10-08 "taking this: … Antigravity CLI" comment)
     B, SECTION = 2000, {"D4231": "Pramana", "D3862": "Madhyamaka"}
-    if C113:  # per text only where a text has >= 25 sides (prereg); the rest are in the pool
+    if C113 or CLT:  # per text only where a text has >= 25 sides (prereg); the rest are in the pool
         n_by = collections.Counter(r["toh"] for r in rows)
         SECTION = {t: t for t, n in n_by.items() if n >= 25}
     fid = lambda r, a: sum(r["J"][j][a]["fid"] for j in J) / NJ
@@ -207,12 +231,45 @@ if CLI:  # the gate preregistered on #6182 (2026-10-08 "taking this: … Antigra
                     "invention_sides_either": sum(any(r["J"][j][a]["inven"] for j in J) for r in rs),
                     "span_off_either": sum(any(r["J"][j][a]["span_off"] for j in J) for r in rs),
                     "mean_rank": round(sum(r["J"][j][a]["rank"] for r in rs for j in J) / (NJ * n), 2)}
-        for x, y in (("C38", "G38"), ("C38", "FP"), ("G38", "FP")):
+        for x, y in PAIRS:
             d = lambda r: fid(r, x) - fid(r, y)
             o[f"{x}-{y}"] = {"mean": round(sum(d(r) for r in rs) / n, 3), "ci_by_text": boot(rs, lambda v: sum(d(r) for r in v) / len(v)),
                              "sides_higher": sum(d(r) > 0 for r in rs), "sides_lower": sum(d(r) < 0 for r in rs)}
         return o
 
+    PAIRS = ((("CS", "G38"), ("CH", "G38"), ("CS", "CH"), ("CS", "FP"), ("CH", "FP"), ("G38", "FP")) if CLT else
+             (("C38", "G38"), ("C38", "FP"), ("G38", "FP")))
+    if CLT:  # no preregistered pass/fail for these arms: report, with and without #6304's drops, and C38 through G38
+        def bridge(rs):
+            """C38 was judged in #6321's packet (same 113 sides, same judge prompt, other items): per side,
+            (X − G38 here) − (C38 − G38 there). Descriptive; it assumes the G38 anchor means the same in both packets."""
+            c = {r["page_id"]: r for r in json.load(open("scripts/eval/results/cli-arm-6182/refjudge113/scores.json"))["rows"]}
+            rs = [r for r in rs if r["page_id"] in c]
+            f2 = lambda r, a: sum(c[r["page_id"]]["J"][j][a]["fid"] for j in c[r["page_id"]]["J"]) / len(c[r["page_id"]]["J"])
+            o = {"sides": len(rs), "C38_minus_G38_there": round(sum(f2(r, "C38") - f2(r, "G38") for r in rs) / len(rs), 3),
+                 "G38_here": round(sum(fid(r, "G38") for r in rs) / len(rs), 3), "G38_there": round(sum(f2(r, "G38") for r in rs) / len(rs), 3),
+                 "C38_there": round(sum(f2(r, "C38") for r in rs) / len(rs), 3)}
+            for x in ("CS", "CH"):
+                d = lambda r: (fid(r, x) - fid(r, "G38")) - (f2(r, "C38") - f2(r, "G38"))
+                o[f"{x}-C38_bridged"] = {"mean": round(sum(d(r) for r in rs) / len(rs), 3), "ci_by_text": boot(rs, lambda v: sum(d(r) for r in v) / len(v))}
+            return o
+        keep = [r for r in rows if r["page_id"] not in DROPPED]
+        res = {"gate": gate, "judges_scoring": list(J), "judge_gate_pass": all(gate[j]["pass"] for j in J),
+               "judge_fid_agree_within_1": round(sum(abs(r["J"]["J1"][a]["fid"] - r["J"]["J2"][a]["fid"]) <= 1 for r in rows for a in ARMS) / (len(ARMS) * len(rows)), 3),
+               "pooled_171": stratum(rows), "tib-ref113": stratum([r for r in rows if r["set"] == "tib-ref113"]),
+               "tib-ref58": stratum([r for r in rows if r["set"] == "tib-ref58"]),
+               **{f"text {t}": stratum([r for r in rows if r["toh"] == t]) for t in sorted(SECTION)},
+               "C38_bridged_113": bridge([r for r in rows if r["set"] == "tib-ref113"]),
+               "exclude": {"dropped_sides": DROPPED, **({"pooled_without": stratum(keep)} if DROPPED else {})}}
+        g = {o["uid"]: o for o in map(json.loads, open("/root/pareto-6182/arms/G38.jsonl")) if o["uid"] in {r["page_id"] for r in rows}}
+        res["cost"] = {"G38_api_batch_usd_per_1k": round(1000 * sum(o["usd_batch"] for o in g.values()) / len(g), 3), "pages": len(g), "CS_CH_billed_usd": 0}
+        for r in rows:  # the API G38 run's billed Batch dollars per side (the 113 fresh sides; round 2's 58 have none here)
+            r["usd_G38"] = g[r["page_id"]]["usd_batch"] if r["page_id"] in g else None
+        res["rows"] = rows
+        json.dump(res, open(f"{OUT}/scores.json", "w"), indent=1)
+        print(json.dumps({k: v for k, v in res.items() if k not in ("rows", "gate")}, indent=1))
+        print("gate", {j: g for j, g in gate.items() if j != "controls"})
+        sys.exit(0)
     res = {"gate": gate, "judge_gate_pass": all(g["pass"] for g in gate.values()),
            "pooled": stratum(rows), **{SECTION[t]: stratum([r for r in rows if r["toh"] == t]) for t in sorted(SECTION)}}
     P = res["pooled"]
