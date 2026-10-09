@@ -49,15 +49,28 @@ const signed = (x) => (x == null ? '—' : `${x > 0 ? '+' : x < 0 ? '−' : ''}$
 const compact = (n) => (n >= 1e6 ? `${(n / 1e6).toFixed(1)}M` : n >= 1e4 ? `${Math.round(n / 1e3)}K` : n >= 1e3 ? `${(n / 1e3).toFixed(1)}K` : String(n));
 const short = (m) => (m === OCR_MODEL_LITE ? 'lite' : m === OCR_MODEL_FLASH ? 'flash' : m);
 
-/** What the live router does for a book of this family, under OCR_LITE_ONLY (the default). */
-function production(family, name) {
+/**
+ * The three probe books per family: a visible book, a hidden book created today ("new") and a hidden
+ * book created before the family's FLASH_OCR_FROM date ("hidden backlog"). Under OCR_LITE_ONLY unless
+ * the caller says otherwise. scripts/audit/routing-drift.mjs imports this, so the audit and the table
+ * cannot probe differently.
+ */
+export function probeOcr(family, name, { liteOnly = true } = {}) {
   const language = family === 'und' ? null : name;
   const from = FLASH_OCR_FROM[family];
   const before = new Date((from ? from.getTime() : Date.UTC(2026, 0, 1)) - 86400000);
-  const probe = (book) => short(getOcrModelForBook({ language, ...book }, { liteOnly: true }));
-  const visible = probe({ visible: true, created_at: before });
-  const fresh = probe({ visible: false, created_at: new Date(Date.UTC(2099, 0, 1)) });
-  const backlog = probe({ visible: false, created_at: before });
+  const probe = (book) => short(getOcrModelForBook({ language, ...book }, { liteOnly }));
+  return {
+    visible: probe({ visible: true, created_at: before }),
+    new: probe({ visible: false, created_at: new Date(Date.UTC(2099, 0, 1)) }),
+    'hidden backlog': probe({ visible: false, created_at: before }),
+  };
+}
+
+/** What the live router does for a book of this family, under OCR_LITE_ONLY (the default). */
+function production(family, name) {
+  const p = probeOcr(family, name);
+  const visible = p.visible, fresh = p.new, backlog = p['hidden backlog'];
   if (visible === fresh && fresh === backlog) return visible === 'lite' ? 'lite' : `${visible} (visible, new, hidden backlog)`;
   const by = {}; for (const [k, v] of [['visible', visible], ['new', fresh], ['hidden backlog', backlog]]) (by[v] ||= []).push(k);
   return Object.entries(by).sort(([a], [b]) => (a === 'lite') - (b === 'lite')).map(([m, ks]) => `${m} (${ks.join(', ')})`).join('; ');
@@ -96,15 +109,25 @@ function routingEvals(family) {
   return out.length ? out.join(' · ') : '—';
 }
 
+/** The cells of every row of one `## ` section of the ledger (header and rule rows dropped). */
+export function ledgerRows(decisions, heading) {
+  const section = decisions.split(/^## /m).find((s) => s.startsWith(heading)) || '';
+  return section.split('\n').filter((l) => l.startsWith('| ') && !/^\| (Stratum|Lane) \|/.test(l) && !l.startsWith('|---')).map((l) => l.split(' | ').map((c) => c.replace(/^\|\s*|\s*\|$/g, '').trim()));
+}
+
+/** The Decision cell; a row nobody judged says so in the Rule output cell and leaves Decision empty. */
+export function rowStatus(r) {
+  const d = r[4] || '';
+  return /^DECIDED|^Derek \d/.test(d) ? 'decided' : /^PENDING/.test(d) ? 'pending' : /^UNJUDGED/.test(d) || /^UNJUDGED/.test(r[3] || '') ? 'unjudged' : 'no decision recorded';
+}
+
 /** Rows of the ledger's OCR table whose Stratum cell names the language. */
 function ledger(decisions, name, aliases) {
-  const section = decisions.split(/^## /m).find((s) => s.startsWith('OCR engine per stratum')) || '';
-  const rows = section.split('\n').filter((l) => l.startsWith('| ') && !l.startsWith('| Stratum') && !l.startsWith('|---')).map((l) => l.split(' | ').map((c) => c.replace(/^\|\s*|\s*\|$/g, '').trim()));
+  const rows = ledgerRows(decisions, 'OCR engine per stratum');
   const re = new RegExp(`(^|[^\\p{L}])(${[name, ...aliases].map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})([^\\p{L}]|$)`, 'u');
   const mine = rows.filter((r) => re.test(r[0]));
   if (!mine.length) return '—';
-  // The Decision cell; a row nobody judged says so in the Rule output cell and leaves Decision empty.
-  const status = (r) => { const d = r[4] || ''; return /^DECIDED|^Derek \d/.test(d) ? 'decided' : /^PENDING/.test(d) ? 'pending' : /^UNJUDGED/.test(d) || /^UNJUDGED/.test(r[3] || '') ? 'unjudged' : 'no decision recorded'; };
+  const status = rowStatus;
   const counts = {}; const issues = new Set();
   for (const r of mine) { counts[status(r)] = (counts[status(r)] || 0) + 1; const m = (r[2] || '').match(/#\d+/); if (m) issues.add(m[0]); }
   return `${['decided', 'pending', 'unjudged', 'no decision recorded'].filter((k) => counts[k]).map((k) => `${counts[k]} ${k}`).join(', ')}${issues.size ? ` (${[...issues].join(', ')})` : ''}`;

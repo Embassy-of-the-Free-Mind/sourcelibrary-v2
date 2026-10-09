@@ -62,7 +62,7 @@ export function PathPicker() {
   return (
     <figure className="my-8 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-950 p-6">
       <figcaption className="mb-1 text-xs font-mono uppercase tracking-wide text-stone-500 dark:text-stone-400">
-        Interactive — Per-book cost by model and serving mode
+        Interactive: Per-book cost by model and serving mode
       </figcaption>
       <div className="mb-6 text-stone-700 dark:text-stone-300 text-sm">
         Pick a model and a serving mode. The numbers below show what it

@@ -516,13 +516,38 @@ export interface ReaderStrings {
       invented_text: string;
       wrong_image: string;
       wrong_language: string;
+      translation_error: string;
     };
     commentPlaceholder: string;
+    /** The three fields a `translation_error` report adds (#6120). */
+    passageLabel: string;
+    correctionLabel: string;
+    sourceLabel: string;
     send: string;
     sending: string;
     cancel: string;
     thanks: string;
     failed: string;
+  };
+
+  /**
+   * The Derge Tengyur section note under the machine-draft line (#6120). Every number comes from
+   * src/data/tengyur-section-quality.json; these are only the sentences around them.
+   */
+  tengyurNote: {
+    /** How good: the section's measured light/work/specialist split, who judged it and when. */
+    rated: (a: { section: string; n: number; date: string; light: number; work: number; specialist: number }) => string;
+    /** What goes wrong: the commonest kinds, then reversal/agent findings per 100 pages. */
+    faults: (a: { kinds: string[]; revAgent: number; voice: boolean }) => string;
+    /** n below the threshold: no rate of its own, the whole-Tengyur figures instead. */
+    tooFew: (a: { section: string; n: number; of: number; date: string; light: number; revAgent: number }) => string;
+    kinds: { term: string; structure: string; gloss: string; omission: string; addition: string; reversal: string; agent: string };
+    /** Section-specific failure the reviewers named (#5829 Result 2, Result 5). */
+    /** The Vinaya's term kind, naming the Pali offence-class names (#5829 Result 6). */
+    vinayaTerms: (pct: number) => string;
+    methodLink: string;
+    /** Section names as a reader of this locale says them; Sanskrit names stay. */
+    sectionNames: Record<string, string>;
   };
 
   /** Revision history panel (public; the Restore action itself stays
@@ -616,6 +641,38 @@ export interface ReaderStrings {
     viewCurrentEdition: string;
   };
 }
+
+/** The Tengyur quality note in English (#6120). Hoisted so the Latin block can reuse it:
+ * a `/la` reader page exists only for a book written in Latin, so a Tibetan canon volume
+ *  never renders there and the note needs no Latin wording. */
+const TENGYUR_NOTE_EN: ReaderStrings['tengyurNote'] = {
+    rated: ({ section, n, date, light, work, specialist }) =>
+      `Of ${n} random ${section} pages checked against the Tibetan by AI reviewers (${date}), ${light}% needed only light edits${work ? `, ${work}% substantial revision` : ''}${specialist ? ` and ${specialist}% a specialist` : ''}.`,
+    faults: ({ kinds, revAgent, voice }) =>
+      `Measured errors: about ${revAgent} statements per 100 pages are reversed or attributed to the wrong speaker${voice ? ", including opponents' objections given as the author's view" : ''}${kinds.length ? `. Also common: ${kinds.join(', ')}` : ''}.`,
+    tooFew: ({ section, n, of, date, light, revAgent }) =>
+      `${section[0].toUpperCase()}${section.slice(1)}: too few pages reviewed for a section figure (${n ? `${n} of ${of}` : `none of ${of}`} random pages in an AI review, ${date}). Across the whole Tengyur, ${light}% of pages needed only light edits, and about ${revAgent} statements per 100 pages are reversed or attributed to the wrong speaker.`,
+    kinds: {
+      term: 'mistranslated technical terms',
+      structure: 'misread sentence structure',
+      gloss: 'inaccurate notes',
+      omission: 'omitted phrases',
+      addition: 'added words',
+      reversal: 'reversed statements',
+      agent: 'misattributed speakers',
+    },
+    vinayaTerms: (pct) => `mistranslated technical terms (Pali names for the offence classes on ${pct}% of Vinaya pages)`,
+    methodLink: 'How this was measured',
+    sectionNames: {
+      'Tantra commentary': 'tantra commentary',
+      'Sūtra commentary': 'sūtra commentary',
+      'Grammar & sciences': 'grammar and sciences',
+      Praises: 'praises',
+      Letters: 'letters',
+      Miscellaneous: 'miscellaneous',
+      Catalogue: 'catalogue',
+    },
+};
 
 export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
   en: {
@@ -731,15 +788,15 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       aiShort: 'AI',
       aiTitle: 'Produced with AI assistance',
       corpusChip: (shortName) => `${shortName} translation`,
-      corpusChipTitle: (name) => `The English follows the scholarly translation of the ${name} — it is not machine-made`,
+      corpusChipTitle: (name) => `The English follows the scholarly translation of the ${name}. It is not machine-made`,
       tabletWitness: 'Tablet witness',
       witnessCount: (index, total) => `Tablet ${index} of ${total}`,
-      witnessNotSource: (shortName) => `The text follows the ${shortName} edition — it is not read from this photograph`,
+      witnessNotSource: (shortName) => `The text follows the ${shortName} edition. It is not read from this photograph`,
       witnessAlt: (designation) => `Photograph of tablet ${designation}`,
       prevWitness: 'Previous tablet',
       nextWitness: 'Next tablet',
       viewOnCdli: 'View on CDLI',
-      noFacsimile: 'No facsimile — this is a text edition',
+      noFacsimile: 'No facsimile: this is a text edition',
       scanAlt: (pageNumber, title) => `Scan of page ${pageNumber} of ${title}`,
 
       originalScan: 'Original scan',
@@ -827,7 +884,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       inputAria: 'Ask the librarian',
       ask: 'Ask',
       consulting: 'Consulting the text…',
-      askErrorInline: "The librarian couldn't answer just now — try again.",
+      askErrorInline: "The librarian couldn't answer just now. Try again.",
     },
     info: {
       thisPage: 'This page',
@@ -849,8 +906,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       translatedBy: (model) => `Translated from the transcript by ${model}`,
       machineNotice: 'Machine transcription and translation carry errors. The scan is the source, so read it alongside the text wherever a reading matters.',
       corpusNoScan: (witnessCount) => witnessCount > 0
-        ? `None — this is a digital text edition. The composition survives on ${witnessCount} clay tablet${witnessCount === 1 ? '' : 's'} catalogued at CDLI.`
-        : 'None — this is a digital text edition; no page images exist.',
+        ? `None. This is a digital text edition. The composition survives on ${witnessCount} clay tablet${witnessCount === 1 ? '' : 's'} catalogued at CDLI.`
+        : 'None. This is a digital text edition; no page images exist.',
       corpusTranscript: (name, org) => `Composite transliteration from the ${name}${org ? ` (${org})` : ''}`,
       krakenTranscript: (route) => route === 'print'
         ? 'Read from the scan by omnisyr, a model trained on printed Syriac.'
@@ -905,8 +962,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       qualityDetectorLink: 'What the check looks for',
       licenceLink: 'licence',
       sourceLink: 'source',
-      corpusTranslation: (name) => `Scholarly translation from the ${name} — not machine-made`,
-      corpusNotice: 'This page reproduces a scholarly corpus edition: the transliteration and translation are the work of its editors, not of AI. The page divisions are ours — the corpus divides the text by lines, not pages.',
+      corpusTranslation: (name) => `Scholarly translation from the ${name}, not machine-made`,
+      corpusNotice: 'This page reproduces a scholarly corpus edition: the transliteration and translation are the work of its editors, not of AI. The page divisions are ours; the corpus divides the text by lines, not pages.',
       corpusAiNotice: (name) => `The transliteration follows the ${name}; the English is a machine translation of it and may contain errors.`,
     },
     cite: {
@@ -938,13 +995,13 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       requestFailed: 'That request did not go through. Try again in a moment.',
       sending: 'Sending…',
       requested: 'Requested',
-      thanksWillEmail: 'Thanks — we’ll email you when this page is translated.',
-      thanksWillPrioritise: 'Thanks — we’ll prioritize this book.',
+      thanksWillEmail: 'Thanks. We’ll email you when this page is translated.',
+      thanksWillPrioritise: 'Thanks. We’ll prioritize this book.',
     },
     paneGated: {
       label: 'Sign in to keep reading',
       body: (freePages) => `The scan is free to browse. Reading the transcription and translation past the first ${freePages} pages asks for a free account.`,
-      signIn: 'Sign in — it’s free',
+      signIn: 'Sign in (it’s free)',
     },
     save: {
       anonymousNotice: 'Saves work without an account, on this device only.',
@@ -1000,14 +1057,19 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         invented_text: 'Translation adds things',
         wrong_image: 'Wrong page image',
         wrong_language: 'Wrong language',
+        translation_error: 'The English is wrong here',
       },
       commentPlaceholder: 'Anything else? (optional)',
+      passageLabel: 'The English as it reads now',
+      correctionLabel: 'What it should say',
+      sourceLabel: 'The original words (optional)',
       send: 'Send report',
       sending: 'Sending…',
       cancel: 'Cancel',
       thanks: 'Thank you. We will look at this page.',
       failed: 'That did not send. Try again in a moment.',
     },
+    tengyurNote: TENGYUR_NOTE_EN,
     history: {
       title: 'Revision history',
       loading: 'Loading revision history…',
@@ -1017,7 +1079,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       chars: 'chars',
       showMaintenance: (n) => `Show ${n} bulk-maintenance ${n === 1 ? 'revision' : 'revisions'}`,
       hideMaintenance: (n) => `Hide ${n} bulk-maintenance ${n === 1 ? 'revision' : 'revisions'}`,
-      maintenanceNote: 'Corpus repairs and library-wide sweeps that happened to touch this page — not fresh readings of the scan.',
+      maintenanceNote: 'Corpus repairs and library-wide sweeps that happened to touch this page, not fresh readings of the scan.',
       restoreForbidden: 'You are not signed in as an editor any more. Sign in again to restore this version.',
       restoreFailed: 'That version could not be restored. Try again in a moment.',
       today: (time) => `Today ${time}`,
@@ -1072,9 +1134,9 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       resolving: 'Resolving the cited edition…',
       unresolvable: (v) => `This link cites edition v${v}, but it could not be resolved. Showing the current text.`,
       continueReadingLink: 'Continue reading →',
-      pageNotInEdition: (label, date) => `This page was not part of edition ${label}, published ${date} — showing the current text.`,
+      pageNotInEdition: (label, date) => `This page was not part of edition ${label}, published ${date}. Showing the current text.`,
       readingEdition: (label, date) => `You are reading edition ${label}, published ${date}.`,
-      readingEditionRevised: (label, date) => `You are reading edition ${label}, published ${date} — the translation has since been revised.`,
+      readingEditionRevised: (label, date) => `You are reading edition ${label}, published ${date}. The translation has since been revised.`,
       viewCurrentEdition: 'View current edition →',
     },
   },
@@ -1197,15 +1259,15 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       aiShort: 'IA',
       aiTitle: 'Generado con ayuda de IA',
       corpusChip: (shortName) => `Traducción ${shortName}`,
-      corpusChipTitle: (name) => `El inglés sigue la traducción académica de ${name} — no es obra de una máquina`,
+      corpusChipTitle: (name) => `El inglés sigue la traducción académica de ${name}. No es obra de una máquina`,
       tabletWitness: 'Tablilla testigo',
       witnessCount: (index, total) => `Tablilla ${index} de ${total}`,
-      witnessNotSource: (shortName) => `El texto sigue la edición ${shortName} — no se leyó de esta fotografía`,
+      witnessNotSource: (shortName) => `El texto sigue la edición ${shortName}. No se leyó de esta fotografía`,
       witnessAlt: (designation) => `Fotografía de la tablilla ${designation}`,
       prevWitness: 'Tablilla anterior',
       nextWitness: 'Tablilla siguiente',
       viewOnCdli: 'Ver en CDLI',
-      noFacsimile: 'Sin facsímil — es una edición de texto',
+      noFacsimile: 'Sin facsímil: es una edición de texto',
       scanAlt: (pageNumber, title) => `Escaneo de la página ${pageNumber} de ${title}`,
 
       originalScan: 'Escaneo original',
@@ -1320,8 +1382,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       translatedBy: (model) => `Traducida de la transcripción por ${model}`,
       machineNotice: 'La transcripción y la traducción automáticas contienen errores. El escaneo es la fuente, así que léelo junto al texto siempre que una lectura sea importante.',
       corpusNoScan: (witnessCount) => witnessCount > 0
-        ? `Ninguno — es una edición digital de texto. La composición sobrevive en ${witnessCount} tablilla${witnessCount === 1 ? '' : 's'} de arcilla catalogada${witnessCount === 1 ? '' : 's'} en CDLI.`
-        : 'Ninguno — es una edición digital de texto; no existen imágenes de página.',
+        ? `Ninguno. Es una edición digital de texto. La composición sobrevive en ${witnessCount} tablilla${witnessCount === 1 ? '' : 's'} de arcilla catalogada${witnessCount === 1 ? '' : 's'} en CDLI.`
+        : 'Ninguno. Es una edición digital de texto; no existen imágenes de página.',
       corpusTranscript: (name, org) => `Transliteración compuesta procedente de ${name}${org ? ` (${org})` : ''}`,
       krakenTranscript: (route) => route === 'print'
         ? 'Leída del escaneo por omnisyr, un modelo entrenado con siríaco impreso.'
@@ -1339,7 +1401,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       manualTranscript: (model) => model ? `Leída del escaneo por ${model}, corregida a mano` : 'Transcrita a mano',
       transcriptChipIa: (engine) => `OCR del Internet Archive${engine ? ` · ${engine}` : ''}`,
       transcriptChipIaTitle: (agreement) =>
-        'OCR del Archive — los números pueden estar mal leídos (véase #5186)' +
+        'OCR del Archive: los números pueden estar mal leídos (véase #5186)' +
         (agreement != null ? ` · coincide con nuestra lectura de muestra en el ${Math.round(agreement * 100)}% de las palabras` : ''),
       transcriptChipManual: 'Manual',
       transcriptChipCorpus: (shortName) => `Corpus: ${shortName}`,
@@ -1376,8 +1438,8 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       qualityDetectorLink: 'Qué busca la comprobación',
       licenceLink: 'licencia',
       sourceLink: 'fuente',
-      corpusTranslation: (name) => `Traducción académica procedente de ${name} — no es obra de una máquina`,
-      corpusNotice: 'Esta página reproduce una edición académica de corpus: la transliteración y la traducción son obra de sus editores, no de la IA. La división en páginas es nuestra — el corpus divide el texto por líneas, no por páginas.',
+      corpusTranslation: (name) => `Traducción académica procedente de ${name}, no obra de una máquina`,
+      corpusNotice: 'Esta página reproduce una edición académica de corpus: la transliteración y la traducción son obra de sus editores, no de la IA. La división en páginas es nuestra; el corpus divide el texto por líneas, no por páginas.',
       corpusAiNotice: (name) => `La transliteración sigue ${name}; el inglés es una traducción automática de ella y puede contener errores.`,
     },
     cite: {
@@ -1415,7 +1477,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     paneGated: {
       label: 'Inicia sesión para seguir leyendo',
       body: (freePages) => `El escaneo se puede hojear libremente. Para leer la transcripción y la traducción más allá de las primeras ${freePages} páginas hace falta una cuenta gratuita.`,
-      signIn: 'Inicia sesión — es gratis',
+      signIn: 'Inicia sesión (es gratis)',
     },
     save: {
       anonymousNotice: 'Puedes guardar sin una cuenta; se guarda solo en este dispositivo.',
@@ -1471,13 +1533,45 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         invented_text: 'La traducción añade cosas',
         wrong_image: 'Imagen de página equivocada',
         wrong_language: 'Idioma equivocado',
+        translation_error: 'La traducción está mal aquí',
       },
       commentPlaceholder: '¿Algo más? (opcional)',
+      passageLabel: 'La traducción tal como se lee ahora',
+      correctionLabel: 'Lo que debería decir',
+      sourceLabel: 'Las palabras del original (opcional)',
       send: 'Enviar',
       sending: 'Enviando…',
       cancel: 'Cancelar',
       thanks: 'Gracias. Revisaremos esta página.',
       failed: 'No se ha enviado. Inténtalo de nuevo en un momento.',
+    },
+    tengyurNote: {
+      rated: ({ section, n, date, light, work, specialist }) =>
+        `De ${n} páginas al azar de ${section}, cotejadas con el tibetano por revisores de IA (${date}), el ${light} % necesitaba solo retoques${work ? `, el ${work} % una revisión sustancial` : ''}${specialist ? ` y el ${specialist} % un especialista` : ''}.`,
+      faults: ({ kinds, revAgent, voice }) =>
+        `Errores medidos: unas ${revAgent} afirmaciones por cada 100 páginas salen invertidas o atribuidas a otro hablante${voice ? ', entre ellas objeciones de un oponente presentadas como la opinión del autor' : ''}${kinds.length ? `. También frecuentes: ${kinds.join(', ')}` : ''}.`,
+      tooFew: ({ section, n, of, date, light, revAgent }) =>
+        `${section[0].toUpperCase()}${section.slice(1)}: muy pocas páginas revisadas para una cifra de la sección (${n ? `${n} de ${of}` : `ninguna de ${of}`} páginas al azar en una revisión por IA, ${date}). En todo el Tengyur, el ${light} % de las páginas necesitaba solo retoques, y unas ${revAgent} afirmaciones por cada 100 páginas salen invertidas o atribuidas a otro hablante.`,
+      kinds: {
+        term: 'términos técnicos mal traducidos',
+        structure: 'estructura de la frase mal leída',
+        gloss: 'notas inexactas',
+        omission: 'frases omitidas',
+        addition: 'palabras añadidas',
+        reversal: 'afirmaciones invertidas',
+        agent: 'hablantes mal atribuidos',
+      },
+      vinayaTerms: (pct) => `términos técnicos mal traducidos (nombres pali para las clases de faltas en el ${pct} % de las páginas del Vinaya)`,
+      methodLink: 'Cómo se midió',
+      sectionNames: {
+        'Tantra commentary': 'comentario tántrico',
+        'Sūtra commentary': 'comentario de sūtras',
+        'Grammar & sciences': 'gramática y ciencias',
+        Praises: 'himnos de alabanza',
+        Letters: 'cartas',
+        Miscellaneous: 'miscelánea',
+        Catalogue: 'catálogo',
+      },
     },
     history: {
       title: 'Historial de revisiones',
@@ -1943,14 +2037,20 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         invented_text: 'Conversio aliquid addit',
         wrong_image: 'Imago alienae paginae',
         wrong_language: 'Lingua falsa',
+        translation_error: 'Conversio Anglica hic errat',
       },
       commentPlaceholder: 'Aliquid aliud? (si vis)',
+      passageLabel: 'Conversio ut nunc legitur',
+      correctionLabel: 'Quid dicere debeat',
+      sourceLabel: 'Verba fontis (si vis)',
       send: 'Relationem mitte',
       sending: 'Mittitur…',
       cancel: 'Omitte',
       thanks: 'Gratias agimus. Hanc paginam inspiciemus.',
       failed: 'Mitti non potuit. Paulo post iterum tempta.',
     },
+    // Unreachable on /la (Latin-language books only); English kept so the type stays total.
+    tengyurNote: TENGYUR_NOTE_EN,
     history: {
       title: 'Historia recensionum',
       loading: 'Historia recensionum arcessitur…',

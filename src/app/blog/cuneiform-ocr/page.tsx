@@ -4,10 +4,10 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 
 export const metadata: Metadata = {
   title: 'Can AI Read Cuneiform? - Research Notes - Source Library',
-  description: 'We ran eight experiments testing Gemini and Claude on 107 cuneiform tablets — the oldest writing system on Earth. Claude Opus breaks through the 15% accuracy ceiling, a contamination test proves genuine visual analysis, and temperature tuning reveals opposite preferences across model families.',
+  description: 'We ran eight experiments testing Gemini and Claude on 107 cuneiform tablets, the oldest writing system on Earth. Claude Opus breaks through the 15% accuracy ceiling, a contamination test proves genuine visual analysis, and temperature tuning reveals opposite preferences across model families.',
   openGraph: {
     title: 'Can AI Read Cuneiform?',
-    description: 'Eight experiments testing Gemini and Claude on cuneiform tablets — the oldest writing system on Earth. Claude Opus breaks through the 15% accuracy ceiling.',
+    description: 'Eight experiments testing Gemini and Claude on cuneiform tablets, the oldest writing system on Earth. Claude Opus breaks through the 15% accuracy ceiling.',
     images: [{ url: 'https://images.sourcelibrary.org/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg', width: 1200, height: 630 }],
   },
   twitter: {
@@ -101,11 +101,11 @@ export default function CuneiformOcrPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          We selected four tablets spanning 1,500 years of Mesopotamian history, wrote a custom OCR prompt, and asked <strong>Gemini 3 Flash</strong> to read them. The model correctly identified Law 196 of the Code of Hammurabi, independently detected a 2,500-year-old forgery &mdash; and also fabricated an entire Sumerian document with 0.95 confidence.
+          We selected four tablets spanning 1,500 years of Mesopotamian history, wrote a custom OCR prompt, and asked <strong>Gemini 3 Flash</strong> to read them. The model correctly identified Law 196 of the Code of Hammurabi, independently detected a 2,500-year-old forgery, and also fabricated an entire Sumerian document with 0.95 confidence.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          We ran eight experiments. <strong>Experiment 1</strong> asked Gemini to produce scholarly ATF transliterations &mdash; the standard format used by Assyriologists. <strong>Experiment 2</strong> asked a simpler question: can you just identify the individual cuneiform signs? <strong>Experiment 3</strong> scaled up to 107 tablets and tested whether the model is reading from its training data or genuinely analyzing the photographs. <strong>Experiment 4</strong> compared four Gemini models. <strong>Experiment 5</strong> tested whether cropping and image preprocessing could help the model see better. <strong>Experiment 6</strong> tested edge detection, raking light simulation, multi-pass prompting, and thinking models. <strong>Experiment 7</strong> brought in Claude to test whether the ~15% F1 ceiling was Gemini-specific. <strong>Experiment 8</strong> discovered that temperature settings were confounding all prior results.
+          We ran eight experiments. <strong>Experiment 1</strong> asked Gemini to produce scholarly ATF transliterations, the standard format used by Assyriologists. <strong>Experiment 2</strong> asked a simpler question: can you just identify the individual cuneiform signs? <strong>Experiment 3</strong> scaled up to 107 tablets and tested whether the model is reading from its training data or genuinely analyzing the photographs. <strong>Experiment 4</strong> compared four Gemini models. <strong>Experiment 5</strong> tested whether cropping and image preprocessing could help the model see better. <strong>Experiment 6</strong> tested edge detection, raking light simulation, multi-pass prompting, and thinking models. <strong>Experiment 7</strong> brought in Claude to test whether the ~15% F1 ceiling was Gemini-specific. <strong>Experiment 8</strong> discovered that temperature settings were confounding all prior results.
         </p>
 
         {/* --- How to Read Cuneiform --- */}
@@ -124,11 +124,11 @@ export default function CuneiformOcrPage() {
         <ul className="list-disc pl-6 mb-6 space-y-2 text-secondary leading-relaxed">
           <li><strong>A syllable:</strong> the sign <em>an</em> represents the syllable &ldquo;an&rdquo;</li>
           <li><strong>A word (logogram):</strong> the same sign <em>AN</em> means &ldquo;heaven&rdquo; or &ldquo;sky&rdquo;</li>
-          <li><strong>A determinative:</strong> placed before a word to indicate its category &mdash; <em>{'{'}d{'}'}</em> before a name marks it as a god, <em>{'{'}ki{'}'}</em> marks a place</li>
+          <li><strong>A determinative:</strong> placed before a word to indicate its category: <em>{'{'}d{'}'}</em> before a name marks it as a god, <em>{'{'}ki{'}'}</em> marks a place</li>
         </ul>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The same sign can have multiple readings depending on context. The script was used for over a dozen languages &mdash; Sumerian, Akkadian, Elamite, Hittite, Urartian &mdash; each assigning their own values to the signs. Reading cuneiform requires knowing which language the text is in, which period it comes from (sign forms evolved over 3,000 years), and often which genre of text you&apos;re looking at.
+          The same sign can have multiple readings depending on context. The script was used for over a dozen languages (Sumerian, Akkadian, Elamite, Hittite, Urartian), each assigning their own values to the signs. Reading cuneiform requires knowing which language the text is in, which period it comes from (sign forms evolved over 3,000 years), and often which genre of text you&apos;re looking at.
         </p>
 
         <h3 className="text-xl text-primary mt-10 mb-4">
@@ -136,7 +136,7 @@ export default function CuneiformOcrPage() {
         </h3>
 
         <p className="text-secondary leading-relaxed mb-6">
-          When Assyriologists &ldquo;read&rdquo; a cuneiform tablet, they produce a <strong>transliteration</strong> &mdash; converting the wedge impressions into a standardized Roman-letter encoding called{' '}
+          When Assyriologists &ldquo;read&rdquo; a cuneiform tablet, they produce a <strong>transliteration</strong>, converting the wedge impressions into a standardized Roman-letter encoding called{' '}
           <a href="https://cdli.mpiwg-berlin.mpg.de/info/ATF" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">ATF</a>{' '}
           (ASCII Transliteration Format). Here is what ATF looks like for a simple Sumerian administrative text:
         </p>
@@ -152,11 +152,11 @@ export default function CuneiformOcrPage() {
 3. mu en-mah-gal-an-na ... year: Enmahgalanna was installed...`}</code></pre>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Every convention carries meaning. The <code className="bg-warm px-1.5 py-0.5 rounded text-sm">@obverse</code> and <code className="bg-warm px-1.5 py-0.5 rounded text-sm">@reverse</code> markers indicate the physical face of the tablet. Curly-brace determinatives like <code className="bg-warm px-1.5 py-0.5 rounded text-sm">{'{'}d{'}'}</code> (divine name) aren&apos;t pronounced &mdash; they&apos;re a scribal classifier. Lowercase readings (<em>udu</em>, &ldquo;sheep&rdquo;) represent Sumerian syllabic values; UPPERCASE (<em>LUGAL</em>, &ldquo;king&rdquo;) represents Sumerian logograms in Akkadian text. Square brackets mark broken or missing signs: <code className="bg-warm px-1.5 py-0.5 rounded text-sm">[x]</code>. Half-brackets mark partially visible signs: <code className="bg-warm px-1.5 py-0.5 rounded text-sm">&#x2E22;x&#x2E23;</code>.
+          Every convention carries meaning. The <code className="bg-warm px-1.5 py-0.5 rounded text-sm">@obverse</code> and <code className="bg-warm px-1.5 py-0.5 rounded text-sm">@reverse</code> markers indicate the physical face of the tablet. Curly-brace determinatives like <code className="bg-warm px-1.5 py-0.5 rounded text-sm">{'{'}d{'}'}</code> (divine name) aren&apos;t pronounced; they&apos;re a scribal classifier. Lowercase readings (<em>udu</em>, &ldquo;sheep&rdquo;) represent Sumerian syllabic values; UPPERCASE (<em>LUGAL</em>, &ldquo;king&rdquo;) represents Sumerian logograms in Akkadian text. Square brackets mark broken or missing signs: <code className="bg-warm px-1.5 py-0.5 rounded text-sm">[x]</code>. Half-brackets mark partially visible signs: <code className="bg-warm px-1.5 py-0.5 rounded text-sm">&#x2E22;x&#x2E23;</code>.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          This is what we asked Gemini to produce &mdash; not a freeform description of the tablet, but a precise ATF transliteration that could be compared sign-by-sign against the published scholarship in the{' '}
+          This is what we asked Gemini to produce: not a freeform description of the tablet, but a precise ATF transliteration that could be compared sign-by-sign against the published scholarship in the{' '}
           <a href="https://cdli.earth" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">Cuneiform Digital Library Initiative</a>{' '}
           (CDLI), the central repository for cuneiform tablet data.
         </p>
@@ -187,7 +187,7 @@ export default function CuneiformOcrPage() {
                 </td>
                 <td className="py-3 pr-4">ca. 2100 BCE</td>
                 <td className="py-3 pr-4">Sumerian</td>
-                <td className="py-3 pr-4">Small, clear, well-preserved &mdash; the easy test</td>
+                <td className="py-3 pr-4">Small, clear, well-preserved: the easy test</td>
               </tr>
               <tr className="border-b border-light">
                 <td className="py-3 pr-4">
@@ -195,7 +195,7 @@ export default function CuneiformOcrPage() {
                 </td>
                 <td className="py-3 pr-4">ca. 550 BCE (claims 2270 BCE)</td>
                 <td className="py-3 pr-4">Akkadian</td>
-                <td className="py-3 pr-4">Known forgery &mdash; tests paleographic judgment</td>
+                <td className="py-3 pr-4">Known forgery: tests paleographic judgment</td>
               </tr>
               <tr className="border-b border-light">
                 <td className="py-3 pr-4">
@@ -211,7 +211,7 @@ export default function CuneiformOcrPage() {
                 </td>
                 <td className="py-3 pr-4">ca. 650 BCE</td>
                 <td className="py-3 pr-4">Akkadian</td>
-                <td className="py-3 pr-4">Damaged multi-fragment tablet &mdash; the hard test</td>
+                <td className="py-3 pr-4">Damaged multi-fragment tablet: the hard test</td>
               </tr>
             </tbody>
           </table>
@@ -227,7 +227,7 @@ export default function CuneiformOcrPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Our first experiment asked Gemini to do what Assyriologists do: produce a full ATF transliteration from a tablet photograph. This is the hardest possible ask &mdash; it requires reading individual wedge impressions, knowing which signs they form, determining the correct reading in context, and encoding the result in a precise scholarly format.
+          Our first experiment asked Gemini to do what Assyriologists do: produce a full ATF transliteration from a tablet photograph. This is the hardest possible ask: it requires reading individual wedge impressions, knowing which signs they form, determining the correct reading in context, and encoding the result in a precise scholarly format.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -239,7 +239,7 @@ export default function CuneiformOcrPage() {
         </h3>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The Ur III administrative tablet (P102318) was our &ldquo;easy&rdquo; test case &mdash; the kind of tablet we need AI to handle if cuneiform OCR is going to matter. It&apos;s a small, well-preserved clay tablet from Drehem (ancient Puzrish-Dagan), a livestock management center near Nippur, dating to the Third Dynasty of Ur (ca. 2100 BCE). Thousands of nearly identical tablets survive from this period, recording the daily flow of animals, grain, and other commodities through the Ur III state bureaucracy.
+          The Ur III administrative tablet (P102318) was our &ldquo;easy&rdquo; test case, the kind of tablet we need AI to handle if cuneiform OCR is going to matter. It&apos;s a small, well-preserved clay tablet from Drehem (ancient Puzrish-Dagan), a livestock management center near Nippur, dating to the Third Dynasty of Ur (ca. 2100 BCE). Thousands of nearly identical tablets survive from this period, recording the daily flow of animals, grain, and other commodities through the Ur III state bureaucracy.
         </p>
 
         <figure className="my-12">
@@ -293,7 +293,7 @@ export default function CuneiformOcrPage() {
 4. mu {d}szu-{d}suen lugal                → year: Shu-Suen (became) king`}</code></pre>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The format is perfect. The ATF conventions are correct &mdash; <code className="bg-warm px-1.5 py-0.5 rounded text-sm">@obverse</code>, <code className="bg-warm px-1.5 py-0.5 rounded text-sm">@reverse</code>, determinatives, capacity measures, date formula. The Sumerian vocabulary is real and appropriate to an Ur III administrative context. It even added a scholarly note: &ldquo;In Umma, apples were frequently intercropped in onion gardens.&rdquo;
+          The format is perfect. The ATF conventions are correct: <code className="bg-warm px-1.5 py-0.5 rounded text-sm">@obverse</code>, <code className="bg-warm px-1.5 py-0.5 rounded text-sm">@reverse</code>, determinatives, capacity measures, date formula. The Sumerian vocabulary is real and appropriate to an Ur III administrative context. It even added a scholarly note: &ldquo;In Umma, apples were frequently intercropped in onion gardens.&rdquo;
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -409,11 +409,11 @@ export default function CuneiformOcrPage() {
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The model correctly read the Akkadian vocabulary, identified the specific column and line numbers on the stele (Column XXV, reverse, lines 40&ndash;44), and even noted the class distinction: this &ldquo;eye for an eye&rdquo; principle applied only between members of the <em>awīlum</em> (upper) class. It described the relief sculpture &mdash; King Hammurabi receiving the rod and ring from the sun god Shamash. Confidence: 1.0.
+          The model correctly read the Akkadian vocabulary, identified the specific column and line numbers on the stele (Column XXV, reverse, lines 40&ndash;44), and even noted the class distinction: this &ldquo;eye for an eye&rdquo; principle applied only between members of the <em>awīlum</em> (upper) class. It described the relief sculpture: King Hammurabi receiving the rod and ring from the sun god Shamash. Confidence: 1.0.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          <strong>But:</strong> Law 196 is the most reproduced cuneiform text in the world. It appears in every introductory textbook, every museum label, every popular article about ancient Mesopotamia. This is the easiest possible test &mdash; recognizing the context may be sufficient to produce the correct reading without actually discriminating individual signs.
+          <strong>But:</strong> Law 196 is the most reproduced cuneiform text in the world. It appears in every introductory textbook, every museum label, every popular article about ancient Mesopotamia. This is the easiest possible test: recognizing the context may be sufficient to produce the correct reading without actually discriminating individual signs.
         </p>
 
         <h3 className="text-xl text-primary mt-10 mb-4">
@@ -434,7 +434,7 @@ export default function CuneiformOcrPage() {
         </figure>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The most surprising result. This black diorite monument claims to be an inscription of King Manishtushu of Akkad (ca. 2270 BCE), recording land purchases and temple offerings. But scholars have long suspected it&apos;s a <em>pious fraud</em> &mdash; a forgery created by Neo-Babylonian temple priests around 550 BCE to &ldquo;discover&rdquo; ancient royal grants justifying their tax exemptions.
+          The most surprising result. This black diorite monument claims to be an inscription of King Manishtushu of Akkad (ca. 2270 BCE), recording land purchases and temple offerings. But scholars have long suspected it&apos;s a <em>pious fraud</em>, a forgery created by Neo-Babylonian temple priests around 550 BCE to &ldquo;discover&rdquo; ancient royal grants justifying their tax exemptions.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -446,7 +446,7 @@ export default function CuneiformOcrPage() {
 <genre>royal-inscription (Pseudo-Old Akkadian "Pious Fraud")</genre>`}</code></pre>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The model classified the script as &ldquo;archaizing Neo-Babylonian mimicking Old Akkadian&rdquo; and the genre as a &ldquo;Pious Fraud.&rdquo; It explained its reasoning: the sign forms are &ldquo;extremely regular&rdquo; for an ostensibly archaic text, and noted grammatical features (like the <em>-ni</em> verb suffix) that Neo-Babylonian scribes <em>believed</em> were characteristic of ancient Akkadian. It then transliterated the daily offerings the &ldquo;ancient&rdquo; king supposedly established for Shamash at Sippar &mdash; 20 GUR of wheat, 20 mina of honey, 20 mina of ghee.
+          The model classified the script as &ldquo;archaizing Neo-Babylonian mimicking Old Akkadian&rdquo; and the genre as a &ldquo;Pious Fraud.&rdquo; It explained its reasoning: the sign forms are &ldquo;extremely regular&rdquo; for an ostensibly archaic text, and noted grammatical features (like the <em>-ni</em> verb suffix) that Neo-Babylonian scribes <em>believed</em> were characteristic of ancient Akkadian. It then transliterated the daily offerings the &ldquo;ancient&rdquo; king supposedly established for Shamash at Sippar: 20 GUR of wheat, 20 mina of honey, 20 mina of ghee.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -458,11 +458,11 @@ export default function CuneiformOcrPage() {
         </h3>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The Neo-Assyrian tablet (P394421) is catalogued as a medical prescription text (BAM 6, 555). Gemini identified it as the final section of <strong>Tablet VII of Enūma Eliš</strong>, the Babylonian Creation Epic &mdash; a different text entirely. However, it correctly identified the fragment numbers (K.2421, K.2511, K.16765), the provenance (Library of Ashurbanipal, Nineveh), and the period (ca. 668&ndash;631 BCE).
+          The Neo-Assyrian tablet (P394421) is catalogued as a medical prescription text (BAM 6, 555). Gemini identified it as the final section of <strong>Tablet VII of Enūma Eliš</strong>, the Babylonian Creation Epic, a different text entirely. However, it correctly identified the fragment numbers (K.2421, K.2511, K.16765), the provenance (Library of Ashurbanipal, Nineveh), and the period (ca. 668&ndash;631 BCE).
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          <strong>Interpretation:</strong> The model correctly reads the museum labels and fragment numbers visible in the photograph. Its period identification is accurate. But the sign readings appear to be influenced by its strong prior about what K-numbered Nineveh fragments typically contain &mdash; Enūma Eliš is one of the most famous texts from Ashurbanipal&apos;s library. The model matched the context correctly but the content incorrectly.
+          <strong>Interpretation:</strong> The model correctly reads the museum labels and fragment numbers visible in the photograph. Its period identification is accurate. But the sign readings appear to be influenced by its strong prior about what K-numbered Nineveh fragments typically contain; Enūma Eliš is one of the most famous texts from Ashurbanipal&apos;s library. The model matched the context correctly but the content incorrectly.
         </p>
 
         {/* --- Analysis --- */}
@@ -471,19 +471,19 @@ export default function CuneiformOcrPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Across all three experiments, the same pattern emerges. Gemini has extensive <em>knowledge</em> about cuneiform &mdash; it knows ATF format, Sumerian and Akkadian vocabulary, administrative tablet conventions, royal inscription formulae, sign names, Unicode code points, and the scholarly literature. But its ability to visually discriminate individual cuneiform signs from a photograph remains limited.
+          Across all three experiments, the same pattern emerges. Gemini has extensive <em>knowledge</em> about cuneiform: it knows ATF format, Sumerian and Akkadian vocabulary, administrative tablet conventions, royal inscription formulae, sign names, Unicode code points, and the scholarly literature. But its ability to visually discriminate individual cuneiform signs from a photograph remains limited.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          When knowledge and vision align (Hammurabi), the output is correct. When the model can reason from context without needing sign-level vision (Manishtushu forgery detection), the output is impressive. But when the task requires reading unfamiliar signs in an unfamiliar text (Ur III sheep receipt), the model generates from its distributional knowledge rather than reading what&apos;s in front of it &mdash; and this happens whether we ask for ATF transliteration (Experiment 1) or simple sign identification (Experiment 2).
+          When knowledge and vision align (Hammurabi), the output is correct. When the model can reason from context without needing sign-level vision (Manishtushu forgery detection), the output is impressive. But when the task requires reading unfamiliar signs in an unfamiliar text (Ur III sheep receipt), the model generates from its distributional knowledge rather than reading what&apos;s in front of it, and this happens whether we ask for ATF transliteration (Experiment 1) or simple sign identification (Experiment 2).
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Experiment 3&apos;s contamination test adds an important nuance: the model isn&apos;t simply reciting memorized transliterations. The Pearson correlation between training data overlap and vision performance is effectively zero (r = &minus;0.076). Whatever the model is doing when it looks at a cuneiform photograph, it&apos;s doing it the same way regardless of whether it has the text memorized. The problem isn&apos;t memory contamination &mdash; it&apos;s that the visual analysis itself is limited.
+          Experiment 3&apos;s contamination test adds an important nuance: the model isn&apos;t simply reciting memorized transliterations. The Pearson correlation between training data overlap and vision performance is effectively zero (r = &minus;0.076). Whatever the model is doing when it looks at a cuneiform photograph, it&apos;s doing it the same way regardless of whether it has the text memorized. The problem isn&apos;t memory contamination; it&apos;s that the visual analysis itself is limited.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          <strong>The honest summary: Gemini 3 Flash is a cuneiform <em>commentator</em>, not a cuneiform <em>reader</em>.</strong> It can discuss cuneiform tablets with scholarly precision. It cannot reliably read them. But it is genuinely <em>trying</em> to read them &mdash; the contamination test proves that. Sign detection is real but low-accuracy (~37% of expected signs), making it a starting point for future improvement rather than a fundamental dead end.
+          <strong>The honest summary: Gemini 3 Flash is a cuneiform <em>commentator</em>, not a cuneiform <em>reader</em>.</strong> It can discuss cuneiform tablets with scholarly precision. It cannot reliably read them. But it is genuinely <em>trying</em> to read them, and the contamination test proves that. Sign detection is real but low-accuracy (~37% of expected signs), making it a starting point for future improvement rather than a fundamental dead end.
         </p>
 
         {/* --- Model Comparison --- */}
@@ -564,7 +564,7 @@ Line 2: 𒈗 LUGAL (1 horizontal + 3 vertical) | 𒆧 KIS (5 horizontal + 3 vert
         </h3>
 
         <p className="text-secondary leading-relaxed mb-6">
-          We ran the sign transcription prompt on the same four tablets. The outputs now contain Unicode cuneiform characters &mdash; actual glyphs you can compare visually against the photographs.
+          We ran the sign transcription prompt on the same four tablets. The outputs now contain Unicode cuneiform characters: actual glyphs you can compare visually against the photographs.
         </p>
 
         <h4 className="text-lg font-semibold text-secondary mt-8 mb-4">
@@ -581,7 +581,7 @@ Line 6: 𒈬 MU  | 𒂗 EN | 𒀭 DINGIR
 Line 7: 𒆠 KI  | 𒉘 AG2 | 𒂗 EN`}</code></pre>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The model found 7 lines with 25 signs, confidence 0.85. It correctly identifies a repeating pattern on the obverse (MA-NA-ŠE, which could refer to a <em>mana</em> weight of grain) and the standard Ur III receipt formula on the reverse (<em>šu ba-ti</em>, &ldquo;received&rdquo;). The structure is plausible. But the ground truth is sheep (<em>udu niga</em>), not grain &mdash; the same content mismatch as Experiment 1, expressed through different signs.
+          The model found 7 lines with 25 signs, confidence 0.85. It correctly identifies a repeating pattern on the obverse (MA-NA-ŠE, which could refer to a <em>mana</em> weight of grain) and the standard Ur III receipt formula on the reverse (<em>šu ba-ti</em>, &ldquo;received&rdquo;). The structure is plausible. But the ground truth is sheep (<em>udu niga</em>), not grain: the same content mismatch as Experiment 1, expressed through different signs.
         </p>
 
         <h4 className="text-lg font-semibold text-secondary mt-8 mb-4">
@@ -593,7 +593,7 @@ Line 7: 𒆠 KI  | 𒉘 AG2 | 𒂗 EN`}</code></pre>
 Confidence: 0.98`}</code></pre>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The model correctly identified the signs spelling <em>šumma awīlum ina</em> &mdash; the opening of the &ldquo;eye for an eye&rdquo; law. It also noted that the bottom portion of the image is a &ldquo;modern artistic graphic&rdquo; rather than the actual stele surface. Confidence: 0.98. But this is a modern digital rendering with vector-sharp signs, not ancient clay. The test doesn&apos;t tell us about vision on real tablets.
+          The model correctly identified the signs spelling <em>šumma awīlum ina</em>, the opening of the &ldquo;eye for an eye&rdquo; law. It also noted that the bottom portion of the image is a &ldquo;modern artistic graphic&rdquo; rather than the actual stele surface. Confidence: 0.98. But this is a modern digital rendering with vector-sharp signs, not ancient clay. The test doesn&apos;t tell us about vision on real tablets.
         </p>
 
         <h4 className="text-lg font-semibold text-secondary mt-8 mb-4">
@@ -609,7 +609,7 @@ Line 4: [DAMAGED] | 𒀸 AŠ | 𒀭 DINGIR | [DAMAGED]
 Confidence: 0.65`}</code></pre>
 
         <p className="text-secondary leading-relaxed mb-6">
-          A notable improvement over Experiment 1. Where the ATF prompt produced 8 lines of confident (but wrong) Enūma Eliš, the sign transcription prompt produced 40 lines that are mostly <code className="bg-warm px-1.5 py-0.5 rounded text-sm">[DAMAGED]</code>. The model defaulted to AŠ (the simplest cuneiform sign &mdash; a single horizontal wedge) for most readable positions, which is honest if not useful. The lower confidence (0.65 vs. 0.9) is better calibrated to the actual difficulty.
+          A notable improvement over Experiment 1. Where the ATF prompt produced 8 lines of confident (but wrong) Enūma Eliš, the sign transcription prompt produced 40 lines that are mostly <code className="bg-warm px-1.5 py-0.5 rounded text-sm">[DAMAGED]</code>. The model defaulted to AŠ (the simplest cuneiform sign, a single horizontal wedge) for most readable positions, which is honest if not useful. The lower confidence (0.65 vs. 0.9) is better calibrated to the actual difficulty.
         </p>
 
         <h4 className="text-lg font-semibold text-secondary mt-8 mb-4">
@@ -627,7 +627,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
 ...62 signs total, 0.9 confidence`}</code></pre>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The model correctly identified <em>Manishtushu, LUGAL KIŠ</em> (&ldquo;King of Kish&rdquo;) using individual Unicode signs. The detail view identified repetitive formulaic patterns: <em>DINGIR EN-LIL</em> (the god Enlil), <em>LUGAL KISH</em> (King of Kish). The repetition is consistent with what we know about this monument &mdash; it lists land purchases in formulaic blocks.
+          The model correctly identified <em>Manishtushu, LUGAL KIŠ</em> (&ldquo;King of Kish&rdquo;) using individual Unicode signs. The detail view identified repetitive formulaic patterns: <em>DINGIR EN-LIL</em> (the god Enlil), <em>LUGAL KISH</em> (King of Kish). The repetition is consistent with what we know about this monument: it lists land purchases in formulaic blocks.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -645,11 +645,11 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         <ol className="list-decimal pl-6 mb-6 space-y-3 text-secondary leading-relaxed">
           <li><strong>Visual verifiability.</strong> Unicode cuneiform characters are rendered as actual glyphs. A non-specialist can compare the glyph shape to what they see in the photograph. This doesn&apos;t require knowing Sumerian.</li>
           <li><strong>Better calibration.</strong> The Neo-Assyrian tablet went from 0.9 confidence (Experiment 1, wrong text) to 0.65 confidence (Experiment 2, honestly marking damage). The model produces more calibrated confidence when it&apos;s not trying to read language.</li>
-          <li><strong>Separation of concerns.</strong> If sign identification is reasonably accurate, translation can be handled as a separate downstream step &mdash; potentially by a specialized model or rule-based system, rather than asking one model to do everything.</li>
+          <li><strong>Separation of concerns.</strong> If sign identification is reasonably accurate, translation can be handled as a separate downstream step, potentially by a specialized model or rule-based system, rather than asking one model to do everything.</li>
         </ol>
 
         <p className="text-secondary leading-relaxed mb-6">
-          But the core question remains: <strong>is the model seeing the signs or knowing what should be there?</strong> The Ur III tablet produces different content from Experiment 1 but the same pattern of plausible-but-unverifiable output. The Manishtushu monument produces correct royal titles that the model has certainly seen in its training data. Only the damaged Neo-Assyrian tablet &mdash; where the model can&apos;t fall back on knowledge &mdash; gives us a clean signal, and there the output is mostly <code className="bg-warm px-1.5 py-0.5 rounded text-sm">[DAMAGED]</code>.
+          But the core question remains: <strong>is the model seeing the signs or knowing what should be there?</strong> The Ur III tablet produces different content from Experiment 1 but the same pattern of plausible-but-unverifiable output. The Manishtushu monument produces correct royal titles that the model has certainly seen in its training data. Only the damaged Neo-Assyrian tablet, where the model can&apos;t fall back on knowledge, gives us a clean signal, and there the output is mostly <code className="bg-warm px-1.5 py-0.5 rounded text-sm">[DAMAGED]</code>.
         </p>
 
         {/* --- Experiment 3: Contamination Test --- */}
@@ -658,7 +658,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Experiments 1 and 2 tested four tablets. That&apos;s a proof of concept, not evidence. The core ambiguity remained: when Gemini produces a correct reading, is it <em>seeing</em> the cuneiform signs or <em>remembering</em> the text from its training data? The Code of Hammurabi is in every textbook. The Manishtushu monument is extensively published. Even the Ur III sheep receipt &mdash; while the model got it wrong &mdash; comes from a corpus of thousands of nearly identical tablets.
+          Experiments 1 and 2 tested four tablets. That&apos;s a proof of concept, not evidence. The core ambiguity remained: when Gemini produces a correct reading, is it <em>seeing</em> the cuneiform signs or <em>remembering</em> the text from its training data? The Code of Hammurabi is in every textbook. The Manishtushu monument is extensively published. Even the Ur III sheep receipt (while the model got it wrong) comes from a corpus of thousands of nearly identical tablets.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -722,7 +722,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </h3>
 
         <p className="text-secondary leading-relaxed mb-6">
-          For each tablet, we gave Gemini <strong>only the P-number and catalog metadata</strong> &mdash; no photograph. We asked: &ldquo;Can you reproduce the ATF transliteration of this tablet from memory?&rdquo; If the model can reproduce the text without seeing it, the tablet&apos;s transliteration was in its training data.
+          For each tablet, we gave Gemini <strong>only the P-number and catalog metadata</strong>, no photograph. We asked: &ldquo;Can you reproduce the ATF transliteration of this tablet from memory?&rdquo; If the model can reproduce the text without seeing it, the tablet&apos;s transliteration was in its training data.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -758,11 +758,11 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </div>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Contamination varied dramatically by period. <strong>46% of Ur III tablets</strong> were contaminated &mdash; unsurprising, since Ur III administrative texts are the most heavily published cuneiform corpus. <strong>Zero Old Akkadian tablets</strong> were contaminated, making them ideal clean benchmarks. Old Babylonian tablets (50% contaminated) are also well-published.
+          Contamination varied dramatically by period. <strong>46% of Ur III tablets</strong> were contaminated, unsurprising, since Ur III administrative texts are the most heavily published cuneiform corpus. <strong>Zero Old Akkadian tablets</strong> were contaminated, making them ideal clean benchmarks. Old Babylonian tablets (50% contaminated) are also well-published.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          A striking detail: 104 out of 107 tablets, the model <em>claimed</em> to know the text &mdash; but only 31 could actually reproduce it. The model confabulates knowledge it doesn&apos;t have.
+          A striking detail: 104 out of 107 tablets, the model <em>claimed</em> to know the text, but only 31 could actually reproduce it. The model confabulates knowledge it doesn&apos;t have.
         </p>
 
         <h3 className="text-xl text-primary mt-10 mb-4">
@@ -812,7 +812,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          That&apos;s essentially zero. There is no meaningful relationship between whether a tablet&apos;s text appears in the model&apos;s training data and how well the model performs on the vision task. If anything, the model performs <em>slightly better</em> on clean tablets &mdash; the opposite of what you&apos;d expect from memorization.
+          That&apos;s essentially zero. There is no meaningful relationship between whether a tablet&apos;s text appears in the model&apos;s training data and how well the model performs on the vision task. If anything, the model performs <em>slightly better</em> on clean tablets, the opposite of what you&apos;d expect from memorization.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -824,15 +824,15 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </h3>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>The model is doing genuine visual analysis, not reading from memory.</strong> When Gemini looks at a cuneiform photograph, it is attempting to process the visual features of the clay surface &mdash; not retrieving a memorized transliteration. This is the most important finding of the three experiments, because it tells us that the model&apos;s cuneiform vision, while limited, is <em>real</em>.
+          <strong>The model is doing genuine visual analysis, not reading from memory.</strong> When Gemini looks at a cuneiform photograph, it is attempting to process the visual features of the clay surface, not retrieving a memorized transliteration. This is the most important finding of the three experiments, because it tells us that the model&apos;s cuneiform vision, while limited, is <em>real</em>.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The 20 Old Akkadian tablets with 0% training data contamination are particularly valuable: they represent a gold-standard test set where we can be confident the model has never seen the content. These tablets scored an average confidence of 0.79 &mdash; higher than the overall average &mdash; suggesting that Old Akkadian sign forms (larger, more distinct wedge impressions) may actually be easier for vision models than the cramped Ur III administrative script.
+          The 20 Old Akkadian tablets with 0% training data contamination are particularly valuable: they represent a gold-standard test set where we can be confident the model has never seen the content. These tablets scored an average confidence of 0.79 (higher than the overall average), suggesting that Old Akkadian sign forms (larger, more distinct wedge impressions) may actually be easier for vision models than the cramped Ur III administrative script.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          The limitation is that the model detects roughly <strong>37% of ground-truth signs</strong> regardless of contamination status. It&apos;s genuinely looking, but it&apos;s not seeing very well yet. This is the gap that future models &mdash; or fine-tuning on cuneiform data &mdash; would need to close.
+          The limitation is that the model detects roughly <strong>37% of ground-truth signs</strong> regardless of contamination status. It&apos;s genuinely looking, but it&apos;s not seeing very well yet. This is the gap that future models (or fine-tuning on cuneiform data) would need to close.
         </p>
 
         {/* --- Infrastructure --- */}
@@ -900,7 +900,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         <ul className="list-disc pl-6 mb-8 space-y-2 text-secondary leading-relaxed">
           <li><strong>Period</strong> (25 each): Ur III, Old Babylonian, Middle Babylonian/Assyrian, Neo-Assyrian</li>
           <li><strong>Genre</strong> (balanced within each period): administrative, literary, legal, letters, ritual</li>
-          <li><strong>Publication date</strong>: 50 tablets with transliterations published before 2020 (&ldquo;known&rdquo; &mdash; likely in training data) and 50 published 2023&ndash;2026 (&ldquo;unknown&rdquo; &mdash; likely not in training data)</li>
+          <li><strong>Publication date</strong>: 50 tablets with transliterations published before 2020 (&ldquo;known&rdquo;: likely in training data) and 50 published 2023&ndash;2026 (&ldquo;unknown&rdquo;: likely not in training data)</li>
           <li><strong>Photograph quality</strong>: all tablets must have CDLI photographs rated &ldquo;good&rdquo; or &ldquo;excellent&rdquo; by the cataloguer</li>
           <li><strong>Size</strong>: 5&ndash;30 lines per face (to control for length effects)</li>
         </ul>
@@ -962,7 +962,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
 
         <ul className="list-disc pl-6 mb-8 space-y-2 text-secondary leading-relaxed">
           <li><strong>Baseline 1 (random):</strong> Randomly generated ATF from a Markov model trained on CDLI corpus, to establish floor accuracy</li>
-          <li><strong>Baseline 2 (retrieval):</strong> TF-IDF matching against CDLI corpus using only the photograph metadata (museum number, period) &mdash; measures how far pure knowledge retrieval can go without vision</li>
+          <li><strong>Baseline 2 (retrieval):</strong> TF-IDF matching against CDLI corpus using only the photograph metadata (museum number, period); measures how far pure knowledge retrieval can go without vision</li>
           <li><strong>Human expert:</strong> 20 of the 100 tablets independently transliterated by a professional Assyriologist, providing a ceiling and inter-rater reliability baseline</li>
           <li><strong>Repeated runs:</strong> Each model&times;prompt&times;tablet combination run 3 times to measure variance (temperature 0.0 for deterministic baseline, 0.3 for variance measurement)</li>
         </ul>
@@ -985,7 +985,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </h3>
 
         <p className="text-secondary leading-relaxed mb-8">
-          This design separates four capabilities that our PoC tangled together: (1) visual sign discrimination, (2) knowledge of cuneiform conventions, (3) document-level pattern matching, and (4) training data memorization. Experiment 3 already settled question (4) &mdash; memorization does not drive vision performance. A full factorial experiment like this would settle the remaining three, telling us whether a model that scores high on &ldquo;unknown&rdquo; tablets with no context hints has genuine cuneiform vision, or is doing sophisticated retrieval. Both are useful, but for different purposes &mdash; and only the first would transform the field.
+          This design separates four capabilities that our PoC tangled together: (1) visual sign discrimination, (2) knowledge of cuneiform conventions, (3) document-level pattern matching, and (4) training data memorization. Experiment 3 already settled question (4): memorization does not drive vision performance. A full factorial experiment like this would settle the remaining three, telling us whether a model that scores high on &ldquo;unknown&rdquo; tablets with no context hints has genuine cuneiform vision, or is doing sophisticated retrieval. Both are useful, but for different purposes, and only the first would transform the field.
         </p>
 
         {/* --- Experiment 5: Cropping and Image Preprocessing --- */}
@@ -994,7 +994,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          If the model is genuinely trying to read cuneiform but struggling, maybe the problem is the input image. CDLI composite photographs pack six views of a tablet &mdash; obverse, reverse, top edge, bottom edge, left edge, right edge &mdash; into a single image on a black background. That&apos;s a lot of visual noise. What if we cropped the image to show just the inscribed face? Or enhanced the contrast to make wedge impressions more visible?
+          If the model is genuinely trying to read cuneiform but struggling, maybe the problem is the input image. CDLI composite photographs pack six views of a tablet (obverse, reverse, top edge, bottom edge, left edge, right edge) into a single image on a black background. That&apos;s a lot of visual noise. What if we cropped the image to show just the inscribed face? Or enhanced the contrast to make wedge impressions more visible?
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -1006,7 +1006,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </h3>
 
         <p className="text-secondary leading-relaxed mb-6">
-          We tested three levels of cropping on tablet <strong>P250675</strong> (Ur III, 1949&times;3053px &mdash; a high-resolution image):
+          We tested three levels of cropping on tablet <strong>P250675</strong> (Ur III, 1949&times;3053px, a high-resolution image):
         </p>
 
         <ul className="list-disc pl-6 mb-8 space-y-2 text-secondary leading-relaxed">
@@ -1089,11 +1089,11 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </div>
 
         <p className="text-secondary leading-relaxed mb-6">
-          On this high-resolution tablet, <strong>line strips won decisively</strong>. The full composite produced zero parseable signs. The face crop produced only 8 signs, but with 100% precision &mdash; every sign it identified was correct. The line strips produced 74 signs with 20 correct sign types (KU, MA, NA, SAG, KI, DU, GA, DA, LUGAL, KA, AN, UD, DUB, GI, DUG, MU, and others). Narrowing the visual field helped the model focus.
+          On this high-resolution tablet, <strong>line strips won decisively</strong>. The full composite produced zero parseable signs. The face crop produced only 8 signs, but with 100% precision: every sign it identified was correct. The line strips produced 74 signs with 20 correct sign types (KU, MA, NA, SAG, KI, DU, GA, DA, LUGAL, KA, AN, UD, DUB, GI, DUG, MU, and others). Narrowing the visual field helped the model focus.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          But does this pattern hold? We ran the same experiment on <strong>P100500</strong> (also Ur III, but only 1039&times;1487px &mdash; roughly half the resolution):
+          But does this pattern hold? We ran the same experiment on <strong>P100500</strong> (also Ur III, but only 1039&times;1487px, roughly half the resolution):
         </p>
 
         <div className="grid grid-cols-3 gap-4 mb-8">
@@ -1182,7 +1182,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </h3>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Can we enhance the image to make wedge impressions more visible? We tested seven preprocessing techniques on the P100500 obverse crop &mdash; the condition that scored 0.0% F1 with no preprocessing:
+          Can we enhance the image to make wedge impressions more visible? We tested seven preprocessing techniques on the P100500 obverse crop, the condition that scored 0.0% F1 with no preprocessing:
         </p>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -1190,7 +1190,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://images.sourcelibrary.org/blog/cuneiform/p100500_obverse.jpg"
-              alt="Raw obverse crop — baseline"
+              alt="Raw obverse crop: baseline"
               className="w-full rounded-lg shadow-md"
             />
             <figcaption className="text-center text-xs text-muted mt-2 italic">
@@ -1201,7 +1201,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://images.sourcelibrary.org/blog/cuneiform/p100500_sharpen.jpg"
-              alt="Sharpened — unsharp mask"
+              alt="Sharpened: unsharp mask"
               className="w-full rounded-lg shadow-md"
             />
             <figcaption className="text-center text-xs text-muted mt-2 italic">
@@ -1237,7 +1237,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://images.sourcelibrary.org/blog/cuneiform/p100500_invert.jpg"
-              alt="Inverted — dark background reveals wedge impressions"
+              alt="Inverted: dark background reveals wedge impressions"
               className="w-full rounded-lg shadow-md"
             />
             <figcaption className="text-center text-xs text-muted mt-2 italic">
@@ -1270,7 +1270,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://images.sourcelibrary.org/blog/cuneiform/p100500_upscale_clahe.jpg"
-              alt="Upscale 2x + CLAHE + sharpen — best performing technique"
+              alt="Upscale 2x + CLAHE + sharpen: best performing technique"
               className="w-full rounded-lg shadow-md"
             />
             <figcaption className="text-center text-xs text-muted mt-2 italic">
@@ -1356,7 +1356,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The other techniques offered marginal improvements at best. CLAHE alone (4.7%) and inversion (4.9%) showed some promise, but without the upscaling step the pixel density was too low for meaningful enhancement. The combined pipeline (grayscale + CLAHE + sharpen + normalize) performed worst of all &mdash; too many transformations degraded the image rather than enhancing it.
+          The other techniques offered marginal improvements at best. CLAHE alone (4.7%) and inversion (4.9%) showed some promise, but without the upscaling step the pixel density was too low for meaningful enhancement. The combined pipeline (grayscale + CLAHE + sharpen + normalize) performed worst of all: too many transformations degraded the image rather than enhancing it.
         </p>
 
         <h3 className="text-xl text-primary mt-10 mb-4">
@@ -1364,7 +1364,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </h3>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Image preprocessing helps &mdash; but modestly and conditionally. The optimal strategy depends on the input image:
+          Image preprocessing helps, but modestly and conditionally. The optimal strategy depends on the input image:
         </p>
 
         <ul className="list-disc pl-6 mb-8 space-y-3 text-secondary leading-relaxed">
@@ -1383,11 +1383,11 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Experiments 4 and 5 established that model choice and cropping both matter, but accuracy stayed in the 15&ndash;30% F1 range. Experiment 6 explored two remaining ideas: could image processing techniques borrowed from archaeology and epigraphy help the model see wedge impressions more clearly? And could a multi-pass prompting strategy &mdash; surveying the tablet first, then identifying signs, then reviewing against the image &mdash; improve accuracy over a single-pass approach?
+          Experiments 4 and 5 established that model choice and cropping both matter, but accuracy stayed in the 15&ndash;30% F1 range. Experiment 6 explored two remaining ideas: could image processing techniques borrowed from archaeology and epigraphy help the model see wedge impressions more clearly? And could a multi-pass prompting strategy (surveying the tablet first, then identifying signs, then reviewing against the image) improve accuracy over a single-pass approach?
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          We tested 21 conditions across two sub-experiments on the P250675 obverse crop &mdash; the same Ur III tablet from Experiment 5 (208 ground truth signs). All image processing used the <a href="https://sharp.pixelplumbing.com/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">sharp</a> library in Node.js. All conditions were evaluated using the same bag-of-signs F1 metric.
+          We tested 21 conditions across two sub-experiments on the P250675 obverse crop, the same Ur III tablet from Experiment 5 (208 ground truth signs). All image processing used the <a href="https://sharp.pixelplumbing.com/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">sharp</a> library in Node.js. All conditions were evaluated using the same bag-of-signs F1 metric.
         </p>
 
         <h3 className="text-xl text-primary mt-10 mb-4">
@@ -1395,7 +1395,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </h3>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Archaeologists use <strong>raking light</strong> &mdash; a low-angle light source that casts shadows along surface relief &mdash; to make wedge impressions visible on clay tablets. We simulated this digitally, along with several other image processing techniques:
+          Archaeologists use <strong>raking light</strong> (a low-angle light source that casts shadows along surface relief) to make wedge impressions visible on clay tablets. We simulated this digitally, along with several other image processing techniques:
         </p>
 
         <ul className="list-disc pl-6 mb-6 space-y-2 text-secondary leading-relaxed">
@@ -1512,15 +1512,15 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </div>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The most striking result: the raw photograph &mdash; which Experiment 5 had already shown was unreadable as a face crop &mdash; produced zero signs. But <strong>Sobel edge detection on the same image matched the best results from Experiment 5</strong> (15.1% F1, 43.2% precision). Edge detection converts the photograph into a map of brightness gradients, which corresponds directly to the physical wedge impressions on clay.
+          The most striking result: the raw photograph, which Experiment 5 had already shown was unreadable as a face crop, produced zero signs. But <strong>Sobel edge detection on the same image matched the best results from Experiment 5</strong> (15.1% F1, 43.2% precision). Edge detection converts the photograph into a map of brightness gradients, which corresponds directly to the physical wedge impressions on clay.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Raking light from the left &mdash; the digital simulation of the technique archaeologists use in the field &mdash; achieved the highest precision of any condition (53.3%), though with very few signs. This makes sense: the technique is highly selective, emphasizing only the strongest wedge impressions while losing fainter signs.
+          Raking light from the left (the digital simulation of the technique archaeologists use in the field) achieved the highest precision of any condition (53.3%), though with very few signs. This makes sense: the technique is highly selective, emphasizing only the strongest wedge impressions while losing fainter signs.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Multi-image input consistently performed <em>worse</em> than single processed images. Sending the model three image variants (raw + raking + sobel) produced zero signs. The sign reference chart &mdash; a lookup table of 50 common cuneiform signs &mdash; was also useless. More information confused the model rather than helping it.
+          Multi-image input consistently performed <em>worse</em> than single processed images. Sending the model three image variants (raw + raking + sobel) produced zero signs. The sign reference chart (a lookup table of 50 common cuneiform signs) was also useless. More information confused the model rather than helping it.
         </p>
 
         <h3 className="text-xl text-primary mt-10 mb-4">
@@ -1631,11 +1631,11 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>2. Multi-pass hurt accuracy.</strong> For both Flash and Pro, the single-pass approach outperformed multi-pass. Pro single-pass achieved 15.2% F1 vs. 11.0&ndash;12.0% for multi-pass. The review step introduced new errors while losing some correct identifications &mdash; the model second-guessed itself into worse performance. The only multi-pass advantage was precision: Pro multi-pass with dual images achieved 53.8% precision (highest of any condition), but at the cost of fewer total signs and lower F1.
+          <strong>2. Multi-pass hurt accuracy.</strong> For both Flash and Pro, the single-pass approach outperformed multi-pass. Pro single-pass achieved 15.2% F1 vs. 11.0&ndash;12.0% for multi-pass. The review step introduced new errors while losing some correct identifications; the model second-guessed itself into worse performance. The only multi-pass advantage was precision: Pro multi-pass with dual images achieved 53.8% precision (highest of any condition), but at the cost of fewer total signs and lower F1.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>3. Thinking tokens don&apos;t help for cuneiform.</strong> Gemini 3 Flash Preview is a &ldquo;thinking&rdquo; model that spends tokens on internal deliberation before responding. On the P250675 photograph, it burned 15,587 thinking tokens (compared to zero for 2.0 Flash), took 102 seconds instead of 4 seconds, and produced 74 signs &mdash; but at only 12.2% precision and 6.4% F1. It confidently hallucinated a repeating field survey pattern (&ldquo;GAN SHA LA KU MU&rdquo;), reported 0.95 confidence, and performed worse than the non-thinking 2.5 Pro. Extended reasoning doesn&apos;t compensate for limited visual capability.
+          <strong>3. Thinking tokens don&apos;t help for cuneiform.</strong> Gemini 3 Flash Preview is a &ldquo;thinking&rdquo; model that spends tokens on internal deliberation before responding. On the P250675 photograph, it burned 15,587 thinking tokens (compared to zero for 2.0 Flash), took 102 seconds instead of 4 seconds, and produced 74 signs, but at only 12.2% precision and 6.4% F1. It confidently hallucinated a repeating field survey pattern (&ldquo;GAN SHA LA KU MU&rdquo;), reported 0.95 confidence, and performed worse than the non-thinking 2.5 Pro. Extended reasoning doesn&apos;t compensate for limited visual capability.
         </p>
 
         <h3 className="text-xl text-primary mt-10 mb-4">
@@ -1643,11 +1643,11 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </h3>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The strongest single finding is that <strong>Sobel edge detection on an otherwise-unreadable face crop matches the best accuracy of any technique we tested</strong> (15.1% F1). This is practically useful: many CDLI photographs are composite views (obverse + reverse in one image) that produce zero results when cropped to a single face. Running a 3&times;3 Sobel kernel on the crop &mdash; a few milliseconds of computation &mdash; can rescue these images entirely.
+          The strongest single finding is that <strong>Sobel edge detection on an otherwise-unreadable face crop matches the best accuracy of any technique we tested</strong> (15.1% F1). This is practically useful: many CDLI photographs are composite views (obverse + reverse in one image) that produce zero results when cropped to a single face. Running a 3&times;3 Sobel kernel on the crop (a few milliseconds of computation) can rescue these images entirely.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          But the ceiling remains. Across all 21 conditions, no technique exceeded 15.2% F1. More compute (multi-pass), more images (dual/triple input), more deliberation (thinking tokens), and specialized image processing all failed to break through the ~15% barrier established in Experiments 4&ndash;5. The bottleneck is neither image quality nor prompting strategy nor compute &mdash; it is the model&apos;s ability to visually discriminate cuneiform signs.
+          But the ceiling remains. Across all 21 conditions, no technique exceeded 15.2% F1. More compute (multi-pass), more images (dual/triple input), more deliberation (thinking tokens), and specialized image processing all failed to break through the ~15% barrier established in Experiments 4&ndash;5. The bottleneck is neither image quality nor prompting strategy nor compute; it is the model&apos;s ability to visually discriminate cuneiform signs.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -1726,15 +1726,15 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </div>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>Claude Opus matched the best Gemini result</strong> at 16.4% F1 on the raw photograph &mdash; the same level as Gemini 2.5 Pro in Experiment 4. But the Gemini models showed unexpected failures: Pro 2.5 produced <em>empty output</em> despite spending 8,000 thinking tokens, and Pro 3 entered an infinite repetition loop, outputting the same sign 400+ times. Only Flash 3 with Sobel edge detection produced usable output among the Gemini models.
+          <strong>Claude Opus matched the best Gemini result</strong> at 16.4% F1 on the raw photograph, the same level as Gemini 2.5 Pro in Experiment 4. But the Gemini models showed unexpected failures: Pro 2.5 produced <em>empty output</em> despite spending 8,000 thinking tokens, and Pro 3 entered an infinite repetition loop, outputting the same sign 400+ times. Only Flash 3 with Sobel edge detection produced usable output among the Gemini models.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Opus also identified 17 of 27 unique sign types in the ground truth (MA, NA, E, LA, BA, UR, KI, GA, DA, LUGAL, AN, UD, UM, LIL, GI, RA, MU) and correctly inferred the tablet&apos;s genre (administrative), period (Ur III), and institutional context (real estate sale with witnesses). It reported 0.25 confidence &mdash; a realistic self-assessment compared to Gemini 3 Flash&apos;s 0.95 confidence on worse results.
+          Opus also identified 17 of 27 unique sign types in the ground truth (MA, NA, E, LA, BA, UR, KI, GA, DA, LUGAL, AN, UD, UM, LIL, GI, RA, MU) and correctly inferred the tablet&apos;s genre (administrative), period (Ur III), and institutional context (real estate sale with witnesses). It reported 0.25 confidence, a realistic self-assessment compared to Gemini 3 Flash&apos;s 0.95 confidence on worse results.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The precision pattern was particularly striking. Opus with Sobel edge detection achieved <strong>55.9% precision</strong> &mdash; the highest of any condition across all experiments. More than half of the signs it identified were correct. But like every other condition, recall remained low (6.3%) because the model identified far fewer signs than exist on the tablet.
+          The precision pattern was particularly striking. Opus with Sobel edge detection achieved <strong>55.9% precision</strong>, the highest of any condition across all experiments. More than half of the signs it identified were correct. But like every other condition, recall remained low (6.3%) because the model identified far fewer signs than exist on the tablet.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -1747,11 +1747,11 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The Gemini failures in Experiment 7 led us to check the temperature parameter. We discovered that all Gemini experiments (1&ndash;7) had been run at <code className="text-sm bg-warm px-1.5 py-0.5 rounded">temperature: 0.1</code> &mdash; very low, pushing the model toward deterministic output. Claude, meanwhile, had been using its API default of <code className="text-sm bg-warm px-1.5 py-0.5 rounded">temperature: 1.0</code> (no explicit setting).
+          The Gemini failures in Experiment 7 led us to check the temperature parameter. We discovered that all Gemini experiments (1&ndash;7) had been run at <code className="text-sm bg-warm px-1.5 py-0.5 rounded">temperature: 0.1</code>, very low, pushing the model toward deterministic output. Claude, meanwhile, had been using its API default of <code className="text-sm bg-warm px-1.5 py-0.5 rounded">temperature: 1.0</code> (no explicit setting).
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Low temperature makes sense for tasks with clear right answers (code, math, factual recall). But cuneiform sign identification from photographs is inherently uncertain &mdash; the model needs room to explore multiple possible readings. At t=0.1, thinking models may get locked into repetition loops or exhaust their output budget on deliberation.
+          Low temperature makes sense for tasks with clear right answers (code, math, factual recall). But cuneiform sign identification from photographs is inherently uncertain: the model needs room to explore multiple possible readings. At t=0.1, thinking models may get locked into repetition loops or exhaust their output budget on deliberation.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -1864,11 +1864,11 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>2. Higher temperature rescued the Gemini thinking models.</strong> Pro 2.5, which produced empty output at t=0.1 and t=0.5, finally generated 17 signs at t=1.0 &mdash; with 47.1% precision, its highest ever. Pro 3 broke out of its repetition loop and produced usable (if inaccurate) output. Flash 3 went from 0% F1 at t=0.5 to 8.5% at t=1.0.
+          <strong>2. Higher temperature rescued the Gemini thinking models.</strong> Pro 2.5, which produced empty output at t=0.1 and t=0.5, finally generated 17 signs at t=1.0, with 47.1% precision, its highest ever. Pro 3 broke out of its repetition loop and produced usable (if inaccurate) output. Flash 3 went from 0% F1 at t=0.5 to 8.5% at t=1.0.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>3. The Gemini failures in earlier experiments were partly a temperature artifact.</strong> When Gemini 2.5 Pro achieved 15.2% F1 in Experiment 4, it was likely a different API version or deployment &mdash; the same model ID at t=0.1 now produces nothing. This suggests that the Experiment 4 results, while real, may not be reproducible with the current API. Temperature sensitivity is a confound that affects all historical comparisons.
+          <strong>3. The Gemini failures in earlier experiments were partly a temperature artifact.</strong> When Gemini 2.5 Pro achieved 15.2% F1 in Experiment 4, it was likely a different API version or deployment; the same model ID at t=0.1 now produces nothing. This suggests that the Experiment 4 results, while real, may not be reproducible with the current API. Temperature sensitivity is a confound that affects all historical comparisons.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -1935,7 +1935,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </div>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Claude Opus 4.6 at t=0.3 is the new overall best at 18.8% F1 &mdash; breaking through the ~15% ceiling that had held across all six Gemini-only experiments. The top 5 all cluster between 13&ndash;19% F1, with precision consistently between 41&ndash;56%. The highest-precision condition remains Opus with Sobel (55.9%), meaning more than half of identified signs are correct, but recall stays stubbornly low.
+          Claude Opus 4.6 at t=0.3 is the new overall best at 18.8% F1, breaking through the ~15% ceiling that had held across all six Gemini-only experiments. The top 5 all cluster between 13&ndash;19% F1, with precision consistently between 41&ndash;56%. The highest-precision condition remains Opus with Sobel (55.9%), meaning more than half of identified signs are correct, but recall stays stubbornly low.
         </p>
 
         {/* --- What the model actually produces --- */}
@@ -1944,7 +1944,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Statistics only go so far. Here is the actual output from our best condition &mdash; Claude Opus 4.6 at t=0.3 &mdash; alongside the tablet photograph it was reading. You can compare each cuneiform sign the model produced against the clay surface yourself.
+          Statistics only go so far. Here is the actual output from our best condition (Claude Opus 4.6 at t=0.3) alongside the tablet photograph it was reading. You can compare each cuneiform sign the model produced against the clay surface yourself.
         </p>
 
         <div className="grid md:grid-cols-2 gap-6 mb-8">
@@ -1953,11 +1953,11 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://images.sourcelibrary.org/blog/cuneiform/P250675_raw.jpg"
-              alt="Cuneiform tablet P250675 (CUSAS 35, 426) — obverse face, Old Akkadian period"
+              alt="Cuneiform tablet P250675 (CUSAS 35, 426), obverse face, Old Akkadian period"
               className="w-full rounded-lg shadow-md"
             />
             <figcaption className="text-center text-xs text-muted mt-2 italic">
-              P250675 (CUSAS 35, 426) &mdash; Old Akkadian, ca. 2340&ndash;2200 BCE. Three columns on the obverse face. 208 signs in the published ground truth.
+              P250675 (CUSAS 35, 426): Old Akkadian, ca. 2340&ndash;2200 BCE. Three columns on the obverse face. 208 signs in the published ground truth.
             </figcaption>
           </figure>
 
@@ -1978,7 +1978,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
             </div>
             <div className="mt-4 pt-3 border-t border-medium/30 text-xs text-muted space-y-1">
               <p>58 signs extracted &middot; 25 matched ground truth &middot; 43% precision &middot; 12% recall</p>
-              <p>Self-reported confidence: 0.28 &mdash; &ldquo;low due to the photographic angle, surface damage, and the difficulty of resolving individual wedge impressions from photographs rather than direct examination.&rdquo;</p>
+              <p>Self-reported confidence: 0.28, &ldquo;low due to the photographic angle, surface damage, and the difficulty of resolving individual wedge impressions from photographs rather than direct examination.&rdquo;</p>
             </div>
           </div>
         </div>
@@ -1988,7 +1988,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The model correctly reads the tablet as multi-column and identifies many real sign shapes &mdash; <span className="font-mono text-lg">𒀭</span> AN, <span className="font-mono text-lg">𒈗</span> LUGAL, <span className="font-mono text-lg">𒂍</span> E₂, <span className="font-mono text-lg">𒆠</span> KI are all signs that appear in the ground truth ATF. Line 7&apos;s <span className="font-mono text-lg">𒅆</span> IGI <span className="font-mono text-lg">𒃲</span> GAL <span className="font-mono text-lg">𒈗</span> LUGAL reads as &ldquo;before the king&rdquo; &mdash; a witness formula common in Old Akkadian legal texts, which is exactly what this tablet is (a real estate sale). The model inferred the document genre correctly.
+          The model correctly reads the tablet as multi-column and identifies many real sign shapes: <span className="font-mono text-lg">𒀭</span> AN, <span className="font-mono text-lg">𒈗</span> LUGAL, <span className="font-mono text-lg">𒂍</span> E₂, <span className="font-mono text-lg">𒆠</span> KI are all signs that appear in the ground truth ATF. Line 7&apos;s <span className="font-mono text-lg">𒅆</span> IGI <span className="font-mono text-lg">𒃲</span> GAL <span className="font-mono text-lg">𒈗</span> LUGAL reads as &ldquo;before the king,&rdquo; a witness formula common in Old Akkadian legal texts, which is exactly what this tablet is (a real estate sale). The model inferred the document genre correctly.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -2005,11 +2005,11 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Can AI read cuneiform? Not yet &mdash; but the picture is more nuanced than &ldquo;no.&rdquo; Across 107 tablets and eight experiments spanning two model families, these models correctly identify the Code of Hammurabi, detect a Neo-Babylonian forgery from its script style, produce excellent scholarly commentary, and &mdash; crucially &mdash; perform genuine visual analysis that is independent of their training data. They are not reading from memory.
+          Can AI read cuneiform? Not yet, but the picture is more nuanced than &ldquo;no.&rdquo; Across 107 tablets and eight experiments spanning two model families, these models correctly identify the Code of Hammurabi, detect a Neo-Babylonian forgery from its script style, produce excellent scholarly commentary, and, crucially, perform genuine visual analysis that is independent of their training data. They are not reading from memory.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The contamination test (Experiment 3) settles the most important methodological question: the model&apos;s vision performance is the same whether or not it has the text memorized (Pearson r = &minus;0.076). This means there is a real, if limited, visual signal being extracted from cuneiform photographs. The model detects ~37% of expected signs at ~0.7 confidence &mdash; not enough for production use, but enough to build on.
+          The contamination test (Experiment 3) settles the most important methodological question: the model&apos;s vision performance is the same whether or not it has the text memorized (Pearson r = &minus;0.076). This means there is a real, if limited, visual signal being extracted from cuneiform photographs. The model detects ~37% of expected signs at ~0.7 confidence: not enough for production use, but enough to build on.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -2017,11 +2017,11 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The best result so far &mdash; 18.8% F1 with 43% precision &mdash; means that when the model identifies a sign, it is correct nearly half the time. But it only identifies a small fraction of the signs on the tablet. The bottleneck is not image quality, prompting, or compute: it is the model&apos;s ability to reliably distinguish individual cuneiform wedge patterns.
+          The best result so far (18.8% F1 with 43% precision) means that when the model identifies a sign, it is correct nearly half the time. But it only identifies a small fraction of the signs on the tablet. The bottleneck is not image quality, prompting, or compute: it is the model&apos;s ability to reliably distinguish individual cuneiform wedge patterns.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          For Source Library, this means cuneiform support is infrastructure-ready but model-limited. The prompts, import pipeline, evaluation corpus, and contamination testing framework are built. The optimal processing pipeline is established: crop to face, apply Sobel edge detection as a fallback, use the most capable available model (currently Claude Opus 4.6 at t=0.3), single pass. When a model can reliably read wedge impressions &mdash; whether through fine-tuning on CDLI&apos;s 300,000 tablet photographs, improved vision capabilities, or the next generation of foundation models &mdash; Source Library can process cuneiform tablets with the same pipeline it uses for Renaissance printed books.
+          For Source Library, this means cuneiform support is infrastructure-ready but model-limited. The prompts, import pipeline, evaluation corpus, and contamination testing framework are built. The optimal processing pipeline is established: crop to face, apply Sobel edge detection as a fallback, use the most capable available model (currently Claude Opus 4.6 at t=0.3), single pass. When a model can reliably read wedge impressions (whether through fine-tuning on CDLI&apos;s 300,000 tablet photographs, improved vision capabilities, or the next generation of foundation models), Source Library can process cuneiform tablets with the same pipeline it uses for Renaissance printed books.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -2031,7 +2031,7 @@ Line 2: 𒈗 LUGAL  | 𒆳 KUR | 𒆳 KUR
         <hr className="border-light my-12" />
 
         <p className="text-muted text-sm leading-relaxed">
-          <strong>Technical details:</strong> Experiments 1&ndash;3: Gemini 3 Flash Preview. Experiment 1 (4 tablets): ATF transliteration prompt. Experiment 2 (4 tablets): sign identification prompt requesting Unicode characters and sign names. Experiment 3 (107 tablets): contamination test (text-only memory probe, &gt;30% sign overlap threshold) and cross-analysis against vision performance. Experiment 4: model comparison across Gemini 3 Flash, 2.5 Flash, 2.5 Pro, and 3 Pro on 4 tablets. Experiment 5: cropping (composite vs. face crop vs. line strips) and image preprocessing (CLAHE, sharpen, upscale 2x, invert, combined, upscale+CLAHE) using Gemini 2.5 Pro on P250675 and P100500. Experiment 6: 13 image processing conditions (Sobel edge detection, pseudo-heightmap, raking light simulation, edge overlay, multi-image input, sign reference chart) using Gemini 2.5 Pro on P250675 obverse crop; 8 multi-pass prompting conditions (single-pass vs. 3-pass survey/identify/review) across Gemini 2.0 Flash, 2.5 Pro, and 3 Flash Preview (thinking model). Experiment 7: cross-vendor comparison using Claude Opus 4.6, Claude Sonnet 4.6 (Anthropic Messages API, anthropic-version 2023-06-01) and Gemini 2.5 Pro, 3 Pro, 3 Flash (Gemini REST API) on P250675 obverse raw photograph; 3 trials per condition, standard deviation reported; Opus additionally tested with Sobel edge detection. Experiment 8: temperature sweep &mdash; Claude Opus at t=0.3 and t=1.0; Gemini 2.5 Pro, 3 Pro, and 3 Flash each at t=0.1, t=0.5, and t=1.0; single trial per condition on P250675 raw photograph. Corpus: 107 tablets from CDLI spanning 11 periods. Tablet photographs sourced from CDLI. Ground truth ATF from CDLI published transliterations. Preprocessing: sharp library (Node.js). Evaluation: bag-of-signs F1, precision, recall, Jaccard. Full evaluation reports, corpus data, and analysis scripts available on request.
+          <strong>Technical details:</strong> Experiments 1&ndash;3: Gemini 3 Flash Preview. Experiment 1 (4 tablets): ATF transliteration prompt. Experiment 2 (4 tablets): sign identification prompt requesting Unicode characters and sign names. Experiment 3 (107 tablets): contamination test (text-only memory probe, &gt;30% sign overlap threshold) and cross-analysis against vision performance. Experiment 4: model comparison across Gemini 3 Flash, 2.5 Flash, 2.5 Pro, and 3 Pro on 4 tablets. Experiment 5: cropping (composite vs. face crop vs. line strips) and image preprocessing (CLAHE, sharpen, upscale 2x, invert, combined, upscale+CLAHE) using Gemini 2.5 Pro on P250675 and P100500. Experiment 6: 13 image processing conditions (Sobel edge detection, pseudo-heightmap, raking light simulation, edge overlay, multi-image input, sign reference chart) using Gemini 2.5 Pro on P250675 obverse crop; 8 multi-pass prompting conditions (single-pass vs. 3-pass survey/identify/review) across Gemini 2.0 Flash, 2.5 Pro, and 3 Flash Preview (thinking model). Experiment 7: cross-vendor comparison using Claude Opus 4.6, Claude Sonnet 4.6 (Anthropic Messages API, anthropic-version 2023-06-01) and Gemini 2.5 Pro, 3 Pro, 3 Flash (Gemini REST API) on P250675 obverse raw photograph; 3 trials per condition, standard deviation reported; Opus additionally tested with Sobel edge detection. Experiment 8: temperature sweep, Claude Opus at t=0.3 and t=1.0; Gemini 2.5 Pro, 3 Pro, and 3 Flash each at t=0.1, t=0.5, and t=1.0; single trial per condition on P250675 raw photograph. Corpus: 107 tablets from CDLI spanning 11 periods. Tablet photographs sourced from CDLI. Ground truth ATF from CDLI published transliterations. Preprocessing: sharp library (Node.js). Evaluation: bag-of-signs F1, precision, recall, Jaccard. Full evaluation reports, corpus data, and analysis scripts available on request.
         </p>
       </article>
 

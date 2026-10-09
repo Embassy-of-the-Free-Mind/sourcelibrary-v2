@@ -1,0 +1,271 @@
+{
+ "engines": {
+  "dots-ocr": {
+   "english-1600-1699": {
+    "n_pages": 59,
+    "n_library": 59,
+    "lite_cer": 0.053,
+    "engine_cer": 0.038,
+    "delta": -0.009,
+    "delta_ci95": [
+     -0.02,
+     0.002
+    ],
+    "wlt": "34/24/1",
+    "catastrophic": {
+     "engine": 0,
+     "lite": 3
+    },
+    "lite_refused": 3,
+    "answered_only": {
+     "n": 56,
+     "lite_cer": 0.053,
+     "engine_cer": 0.039,
+     "delta": -0.004,
+     "catastrophic_engine": 0,
+     "catastrophic_lite": 0
+    },
+    "invention": {
+     "dots-ocr": 0.07,
+     "gemini-3.1-flash-lite": 0.171
+    },
+    "checks": {
+     "median_delta_le_margin": true,
+     "ci_upper_le_max": true,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": true,
+     "invention_le_ref": true,
+     "loops_le_ref": false
+    },
+    "verdict": "REJECTED"
+   },
+   "latin-1500-1699": {
+    "n_pages": 36,
+    "n_library": 15,
+    "lite_cer": 0.067,
+    "engine_cer": 0.064,
+    "delta": 0.002,
+    "delta_ci95": [
+     -0.005,
+     0.008
+    ],
+    "wlt": "13/20/3",
+    "catastrophic": {
+     "engine": 1,
+     "lite": 2
+    },
+    "lite_refused": 0,
+    "answered_only": {
+     "n": 36,
+     "lite_cer": 0.067,
+     "engine_cer": 0.064,
+     "delta": 0.002,
+     "catastrophic_engine": 1,
+     "catastrophic_lite": 2
+    },
+    "invention": {
+     "dots-ocr": 0.152,
+     "gemini-3.1-flash-lite": 0.231
+    },
+    "checks": {
+     "median_delta_le_margin": true,
+     "ci_upper_le_max": true,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": true,
+     "invention_le_ref": true,
+     "loops_le_ref": true
+    },
+    "verdict": "directional (n=15 library < 50) — no lane decision"
+   },
+   "english-1700+": {
+    "n_pages": 106,
+    "n_library": 106,
+    "lite_cer": 0.022,
+    "engine_cer": 0.017,
+    "delta": 0,
+    "delta_ci95": [
+     0,
+     0
+    ],
+    "wlt": "32/14/60",
+    "catastrophic": {
+     "engine": 0,
+     "lite": 21
+    },
+    "lite_refused": 21,
+    "answered_only": {
+     "n": 85,
+     "lite_cer": 0.017,
+     "engine_cer": 0.018,
+     "delta": 0,
+     "catastrophic_engine": 0,
+     "catastrophic_lite": 0
+    },
+    "invention": {
+     "dots-ocr": 0.019,
+     "gemini-3.1-flash-lite": 0.018
+    },
+    "checks": {
+     "median_delta_le_margin": true,
+     "ci_upper_le_max": true,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": true,
+     "invention_le_ref": false,
+     "loops_le_ref": true
+    },
+    "verdict": "REJECTED"
+   },
+   "german": {
+    "n_pages": 29,
+    "n_library": 0,
+    "lite_cer": 0.005,
+    "engine_cer": 0.013,
+    "delta": 0.01,
+    "delta_ci95": [
+     0.007,
+     0.024
+    ],
+    "wlt": "3/26/0",
+    "catastrophic": {
+     "engine": 2,
+     "lite": 0
+    },
+    "lite_refused": 0,
+    "answered_only": {
+     "n": 29,
+     "lite_cer": 0.005,
+     "engine_cer": 0.013,
+     "delta": 0.01,
+     "catastrophic_engine": 2,
+     "catastrophic_lite": 0
+    },
+    "invention": {
+     "dots-ocr": null,
+     "gemini-3.1-flash-lite": null
+    },
+    "checks": {
+     "median_delta_le_margin": true,
+     "ci_upper_le_max": true,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": false,
+     "invention_le_ref": false,
+     "loops_le_ref": true
+    },
+    "verdict": "directional (n=0 library < 50) — no lane decision"
+   },
+   "latin-1700+": {
+    "n_pages": 39,
+    "n_library": 0,
+    "lite_cer": 0.007,
+    "engine_cer": 0.017,
+    "delta": 0.001,
+    "delta_ci95": [
+     0,
+     0.004
+    ],
+    "wlt": "10/20/9",
+    "catastrophic": {
+     "engine": 2,
+     "lite": 2
+    },
+    "lite_refused": 0,
+    "answered_only": {
+     "n": 39,
+     "lite_cer": 0.007,
+     "engine_cer": 0.017,
+     "delta": 0.001,
+     "catastrophic_engine": 2,
+     "catastrophic_lite": 2
+    },
+    "invention": {
+     "dots-ocr": null,
+     "gemini-3.1-flash-lite": null
+    },
+    "checks": {
+     "median_delta_le_margin": true,
+     "ci_upper_le_max": true,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": true,
+     "invention_le_ref": false,
+     "loops_le_ref": true
+    },
+    "verdict": "directional (n=0 library < 50) — no lane decision"
+   },
+   "greek-print": {
+    "n_pages": 114,
+    "n_library": 114,
+    "lite_cer": 0.145,
+    "engine_cer": 0.504,
+    "delta": 0.354,
+    "delta_ci95": [
+     0.195,
+     0.542
+    ],
+    "wlt": "1/113/0",
+    "catastrophic": {
+     "engine": 57,
+     "lite": 1
+    },
+    "lite_refused": 0,
+    "answered_only": {
+     "n": 114,
+     "lite_cer": 0.145,
+     "engine_cer": 0.504,
+     "delta": 0.354,
+     "catastrophic_engine": 57,
+     "catastrophic_lite": 1
+    },
+    "invention": {
+     "dots-ocr": 0.74,
+     "gemini-3.1-flash-lite": 0.244
+    },
+    "checks": {
+     "median_delta_le_margin": false,
+     "ci_upper_le_max": false,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": false,
+     "invention_le_ref": false,
+     "loops_le_ref": false
+    },
+    "verdict": "REJECTED"
+   }
+  }
+ },
+ "agreement": {
+  "latin-pre1700": {
+   "n": 20,
+   "gemini-3-flash-preview_vs_lite": 0.955,
+   "dots-ocr_vs_lite": 0.954
+  },
+  "latin-1700s": {
+   "n": 20,
+   "gemini-3-flash-preview_vs_lite": 0.977,
+   "dots-ocr_vs_lite": 0.956
+  },
+  "german-fraktur": {
+   "n": 20,
+   "gemini-3-flash-preview_vs_lite": 0.985,
+   "dots-ocr_vs_lite": 0.978
+  },
+  "longs-en-fr": {
+   "n": 20,
+   "gemini-3-flash-preview_vs_lite": 0.962,
+   "dots-ocr_vs_lite": 0.942
+  }
+ },
+ "cost": {
+  "dots-ocr": {
+   "pages": 609,
+   "errors": null,
+   "wall_secs": 3533.7,
+   "s_per_page": 5.802,
+   "usd_per_page_gex45": 0.00055
+  },
+  "gemini-3.1-flash-lite": {
+   "pages": 195,
+   "usd_per_page_realtime": 0.000902,
+   "usd_per_page_batch": 0.000451,
+   "note": "generic transcription prompt, thinking 0; production prompt output is longer"
+  }
+ }
+}

@@ -1,0 +1,26 @@
+{
+ "packet": 2,
+ "prompt_version": "ai-exposure-r2-6038-verify",
+ "ids": [
+  "decoy-17",
+  "69aec44d3b6ebce5e0ee5ba8",
+  "6a90b3a953c5573b4bc30ac2",
+  "3df15003-6bc5-4bec-931c-9ecb7386fc85",
+  "decoy-10",
+  "694f45b610e4f9487722ec40",
+  "69e748cd49abba5e98281879",
+  "6aa1d47477169abff161f9a2",
+  "decoy-03",
+  "697d9ca2e930671f09614566",
+  "69520c46ab34727b1f044141",
+  "6a4305274e06bc233ecff259",
+  "69924f3609c5da0cf50d73fb",
+  "decoy-26",
+  "69d5adf3d0bd3547a5656821",
+  "decoy-19",
+  "59e68f94-49d0-4ed7-a610-b1f53e55b2f8",
+  "decoy-04",
+  "697e23cbcb3f7c9faa3f06a8"
+ ],
+ "prompt": "You are helping a library find out which of its historical works AI models know. Answer from your own memory only. Never invent a quotation.\n\nEach numbered work below is given by its title, the year of the edition we hold and its language. The author's name is withheld; where the title printed it, it is replaced by […].\n\nFor each work give:\n- \"known\": do you know this specific work? \"yes\", \"no\" or \"unsure\".\n- \"author\": who wrote it, in Latin script (romanised if necessary), or \"unknown\".\n- \"author_native\": the author's name in the work's own script if that is not the Latin script, else \"\".\n- \"author_is_guess\": true if the author is your best guess rather than something you know, else false.\n- \"date\": roughly when the work was written or first published, or \"unknown\".\n- \"about\": one line on what the work is about, or \"unknown\".\n\nWorks:\n1. Title: Verhandeling van de geheime vuuren der natuur | Year of this edition: 1694 | Language: Dutch\n2. Title: Notes on the State of Virginia | Year of this edition: 1787 | Language: English\n3. Title: Opera omnia quae exstant : Ex sola fere Codd Mss. fide emendata , studio atq[ue] industria Jani Gulielmii [et] Jani Gruteri Teil: 1: Quo Omnes Eius Libri Oratorii Continentur | Year of this edition: 1618 | Language: Latin\n4. Title: Sidereus Nuncius | Year of this edition: 1610 | Language: Latin\n5. Title: Geistlicher Rosengarten der wahren Weißheit | Year of this edition: 1622 | Language: German\n6. Title: Elementa (Elements) | Year of this edition: 1482 | Language: Latin\n7. Title: مخزن الاسرار (Makhzan al-Asrār) | Year of this edition: 1163 | Language: Persian\n8. Title: Truth and tradition in Chinese Buddhism : a study of Chinese Mahayana Buddhism | Language: English\n9. Title: Disputatio physica de igne coelesti et terrestri | Year of this edition: 1642 | Language: Latin\n10. Title: Harmonices mundi | Year of this edition: 1619 | Language: Latin\n11. Title: Atalanta fugiens: Emblemata nova de secretis naturae chymica | Year of this edition: 1618 | Language: Latin\n12. Title: Parasynagma Perthense et iuramentum Ecclesiæ Scoticanæ et A.M. Antitamicamicategoria | Year of this edition: 1620 | Language: Latin\n13. Title: On the Nature of Things (De Rerum Natura) | Year of this edition: 1864 | Language: English\n14. Title: رسالة في أسرار المعادن الخفية | Year of this edition: 1240 | Language: Arabic\n15. Title: Mahavamsa | Year of this edition: 1912 | Language: English\n16. Title: Περὶ τῆς ἱερᾶς τέχνης ὑπομνήματα | Year of this edition: 1550 | Language: Greek\n17. Title: Canon Medicinae | Year of this edition: 1180 | Language: Latin\n18. Title: Speculum mysteriorum Hermeticorum | Year of this edition: 1609 | Language: Latin\n19. Title: [Greek: Ilias kai Odysseia] Ilias et Ulyssea | Year of this edition: 1535 | Language: Greek-Latin\n\nReturn ONLY a JSON array with one object per work, in order: [{\"i\":1,\"known\":\"...\",\"author\":\"...\",\"author_native\":\"...\",\"author_is_guess\":false,\"date\":\"...\",\"about\":\"...\"}, ...]"
+}

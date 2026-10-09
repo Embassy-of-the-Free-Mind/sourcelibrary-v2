@@ -18,7 +18,7 @@ import { getDb } from '@/lib/mongodb';
  */
 
 export const metadata: Metadata = {
-  title: 'Revision history — BPH catalogue',
+  title: 'Revision history | BPH catalogue',
   robots: { index: false, follow: false },
 };
 
@@ -45,7 +45,7 @@ interface RevisionRow {
 }
 
 function formatValue(v: unknown): string {
-  if (v === null || v === undefined || v === '') return '—';
+  if (v === null || v === undefined || v === '') return '–';
   return String(v);
 }
 
@@ -71,7 +71,7 @@ function timeAgo(iso: string): string {
  */
 function maskEmail(email: string): string {
   const at = email.indexOf('@');
-  if (at <= 0) return '—';
+  if (at <= 0) return '–';
   const local = email.slice(0, at);
   const domain = email.slice(at + 1);
   return `${local[0]}••@${domain}`;
@@ -119,7 +119,7 @@ export default async function CatalogHistoryPage({ params }: Props) {
     .maybeSingle();
   if (!workRow) notFound();
   const work = workRow as { ubn: string; title: string | null; parallel_title: string | null; uniform_title: string | null };
-  const displayTitle = work.title || work.parallel_title || work.uniform_title || `(untitled — UBN ${work.ubn})`;
+  const displayTitle = work.title || work.parallel_title || work.uniform_title || `(untitled, UBN ${work.ubn})`;
 
   // `bph_works_revisions` is RLS-protected — the anon client returns zero
   // rows with no error, which used to render as a permanently-empty history
@@ -143,7 +143,7 @@ export default async function CatalogHistoryPage({ params }: Props) {
   const editorNames = await resolveDisplayNames(
     rows.flatMap((r) => [r.editor_email, r.proposed_by].filter(Boolean) as string[]),
   );
-  const nameFor = (email: string | null) => (email ? editorNames.get(email) || maskEmail(email) : '—');
+  const nameFor = (email: string | null) => (email ? editorNames.get(email) || maskEmail(email) : '–');
 
   return (
     <div className="bg-cream min-h-screen">
@@ -213,7 +213,7 @@ export default async function CatalogHistoryPage({ params }: Props) {
                           </td>
                           <td className="py-1.5 pr-3 text-primary break-words">{formatValue(change.to)}</td>
                           <td className="py-1.5 text-xs text-muted break-words">
-                            {change.source || '—'}
+                            {change.source || '–'}
                             {change.evidence && (
                               <a href={change.evidence} target="_blank" rel="noopener noreferrer" className="ml-1 text-accent-rust hover:underline">
                                 [link]

@@ -95,7 +95,7 @@ function generateTxtDownload(book: Book, pages: Page[], format: 'translation' | 
   lines.push('Produced by SourceLibrary.org in Amsterdam, 2026');
   lines.push('Please cite Source Library when using this material.');
   lines.push('');
-  lines.push('This edition carries a Trithemian imprimatur — an invisible');
+  lines.push('This edition carries a Trithemian imprimatur, an invisible');
   lines.push('provenance mark in the tradition of the printer\'s device,');
   lines.push('asserting that this translation was produced by Source Library.');
   lines.push('It does not identify you or track your usage.');
@@ -413,7 +413,7 @@ async function generateEpubDownload(
     <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
     <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
     <p><strong>License:</strong> CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)</p>
-    <p><em>This edition carries a Trithemian imprimatur — an invisible provenance mark
+    <p><em>This edition carries a Trithemian imprimatur, an invisible provenance mark
     in the tradition of the printer's device, asserting that this translation was produced
     by Source Library. It does not identify you or track your usage.</em></p>
   `;
@@ -466,7 +466,7 @@ async function generateParallelFlowEpubDownload(
     <p><strong>Author:</strong> ${book.author}</p>
     <p><strong>Original Language:</strong> ${book.language}</p>
     ${book.published ? `<p><strong>Published:</strong> ${book.published}</p>` : ''}
-    <p><strong>Content:</strong> Parallel Text Edition — original and translation interleaved page by page</p>
+    <p><strong>Content:</strong> Parallel Text Edition, original and translation interleaved page by page</p>
     <div class="colophon">
       <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
       <p><strong>Downloaded:</strong> ${now}</p>
@@ -514,7 +514,7 @@ async function generateParallelFlowEpubDownload(
     <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
     <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
     <p><strong>License:</strong> CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)</p>
-    <p><em>This edition carries a Trithemian imprimatur — an invisible provenance mark
+    <p><em>This edition carries a Trithemian imprimatur, an invisible provenance mark
     in the tradition of the printer's device, asserting that this translation was produced
     by Source Library. It does not identify you or track your usage.</em></p>
   `;
@@ -2276,7 +2276,7 @@ async function generateScholarlyEpubDownload(
         .map(entry => `
           <div class="glossary-term">
             <strong>${escapeXml(entry.term)}</strong>
-            ${entry.definition ? `<span class="definition"> — ${escapeXml(entry.definition)}</span>` : ''}
+            ${entry.definition ? `<span class="definition">: ${escapeXml(entry.definition)}</span>` : ''}
             ${entry.pages?.length ? `<span class="pages"> (pp. ${entry.pages.join(', ')})</span>` : ''}
           </div>
         `).join('\n');
@@ -2427,7 +2427,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       if (imageAccess === 'blocked') {
         return NextResponse.json(
           {
-            error: 'Image downloads are not available for this book — the source institution has not released the scans under a redistributable license.',
+            error: 'Image downloads are not available for this book. The source institution has not released the scans under a redistributable license.',
             license_restricted: true,
           },
           { status: 403 },

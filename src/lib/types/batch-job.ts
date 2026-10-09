@@ -38,6 +38,7 @@ export interface BatchJob {
   prompt_name?: string;   // Display name of prompt
   prompt_hash?: string;   // md5 of prompt content for immutable provenance
   force?: boolean;  // Overwrite existing data
+  submitted_by?: string;  // Repo path of the code that wrote this row (#5498) — every writer stamps it
 
   // Timestamps
   created_at: Date;

@@ -121,7 +121,7 @@ export function renderDigestHtml(content: DigestContent): string {
   </div>
   <div style="border-top: 1px solid #e8e4dc; padding-top: 24px; text-align: center;">
     <p style="color: #8a8480; font-size: 12px; line-height: 1.6; margin: 0;">
-      Source Library &mdash; Rare texts, translated and searchable.
+      Source Library: rare texts, translated and searchable.
       <br />
       <a href="https://sourcelibrary.org" style="color: #8a8480;">sourcelibrary.org</a>
       <br /><br />
@@ -152,7 +152,7 @@ export function wrapInEmailShell(subject: string, bodyHtml: string): string {
   </div>
   <div style="border-top: 1px solid #e8e4dc; padding-top: 24px; margin-top: 32px; text-align: center;">
     <p style="color: #8a8480; font-size: 12px; line-height: 1.6; margin: 0;">
-      Source Library &mdash; Rare texts, translated and searchable.
+      Source Library: rare texts, translated and searchable.
       <br />
       <a href="https://sourcelibrary.org" style="color: #8a8480;">sourcelibrary.org</a>
       <br /><br />

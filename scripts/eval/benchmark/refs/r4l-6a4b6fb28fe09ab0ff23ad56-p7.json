@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A61502",
+  "edition": "Mormonostolismos, sive Lamiarum vestitus A poem on the King and Queen of Fairy. Translated into Latine, by Mr. Walter Dennestone. — Wing S5529A; ESTC R218096 (1691)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A61502",
+  "origin": "library",
+  "book_id": "6a4b6fb28fe09ab0ff23ad56",
+  "page_number": 7,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 4133,
+    "to_char": 5451,
+    "overlap": 0.526,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-2)",
+    "at": "2026-10-06T10:11:07+00:00",
+    "note": "Latin poem 'In Reginam' st.1-8 + FINIS; heavy ink blotting in middle column; ref matches",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      5,
+      6,
+      7
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.655Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "f8db3c622e6fdc7f4b19e874fa8fb695896cd1dcf3329cad5404ef86b974efa3",
+  "unit": {
+    "chars": 1318
+  }
+}

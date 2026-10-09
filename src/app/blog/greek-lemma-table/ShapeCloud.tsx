@@ -174,7 +174,7 @@ export default function ShapeCloud() {
               <span lang="grc" className="font-semibold text-stone-800">{picked.form}</span>
               {' '}<span className="text-stone-500">({romanize(picked.form)})</span>
               {picked.parse && (
-                <> &mdash; <span className="text-accent-rust">{picked.parse}</span> of{' '}
+                <>: <span className="text-accent-rust">{picked.parse}</span> of{' '}
                 <span lang="grc" className="font-semibold text-stone-800">{word.headword}</span>,{' '}
                 <span className="italic">{word.gloss}</span></>
               )}
@@ -189,7 +189,7 @@ export default function ShapeCloud() {
       </div>
       <figcaption className="text-sm text-stone-500 mt-3">
         Real attested spellings and inflections from 471,544 scanned pages, sized by how often
-        they occur. Shapes shared with other dictionary words are excluded here &mdash; ποιέω
+        they occur. Shapes shared with other dictionary words are excluded here; ποιέω
         alone has {shapeData['ποιέω'].total} unambiguous shapes.
       </figcaption>
     </figure>

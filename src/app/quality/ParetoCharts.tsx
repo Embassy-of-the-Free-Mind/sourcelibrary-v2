@@ -85,7 +85,7 @@ export type Measure = {
   noChart: NoChartRow[];
 };
 
-const pctOf = (x: number | null | undefined, d = 1) => (x == null ? '—' : `${(x * 100).toFixed(d)}%`);
+const pctOf = (x: number | null | undefined, d = 1) => (x == null ? '–' : `${(x * 100).toFixed(d)}%`);
 
 // ── adapters: each data file to the renderer's shape ─────────────────────────────────────────
 type OcrPoint = { engine: string; label: string; production: boolean; accuracy: number | null; accuracy_ci95: number[] | null; invented: { median: number | null } | null; cost: Cost | null; on_frontier?: boolean };
@@ -119,7 +119,7 @@ type XData = { charts: (Omit<Chart, 'panels'> & { panels: XPanel[] })[]; no_char
 const ocrData = pareto as unknown as OcrData;
 const xData = xlate as unknown as XData;
 
-const score = (v: number | null | undefined, d = 2) => (v == null ? '—' : v.toFixed(d));
+const score = (v: number | null | undefined, d = 2) => (v == null ? '–' : v.toFixed(d));
 
 export const OCR: Measure = {
   key: 'ocr', anchor: 'pareto-',
@@ -177,7 +177,14 @@ const usd = (x: number) => `$${x < 0.1 ? x.toFixed(3) : x.toFixed(2)}`;
 const plural = (n: number, w: string) => `${n} ${w}${n === 1 ? '' : 's'}`;
 const listOf = (xs: string[]) => (xs.length <= 1 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`);
 
-const panelHeading = (p: Panel) => p.heading ?? (p.kind === 'most-pages' ? 'The engines read on the most pages' : 'The most engines read on the same pages');
+const panelHeading = (p: Panel) => p.heading ?? (p.kind === 'most-pages' ? 'Main view: the most pages' : 'Second view: every engine, on fewer pages');
+
+/** Why a second view exists, said once under its heading: readers otherwise take it for a repeat of the
+ *  first chart and wonder why the same engines score so differently. */
+const SECOND_VIEW_WHY =
+  'The main view leaves out engines that were not run on enough of its pages. This view keeps every engine, ' +
+  'on only the pages all of them read. Those pages are not the same pages, and are often easier, so compare ' +
+  'engines within a view, not across the two.';
 
 /** "28 pages from 28 books" — always on the face of the figure. */
 function sample(p: Panel) {
@@ -237,6 +244,18 @@ export function meaning(p: Panel, m: Measure = OCR): string {
   return out.join(' ') + offPlot;
 }
 
+/** Points far below the cluster: under the lower quartile by more than three interquartile ranges (and at
+ *  least a tenth of the spread of the whole field). Needs five points, and never takes more than a quarter. */
+function lowOutliers(pts: Point[]): Set<Point> {
+  const ys = pts.map(p => p.y!).sort((a, b) => a - b);
+  if (ys.length < 5) return new Set();
+  const q = (f: number) => ys[Math.floor(f * (ys.length - 1))];
+  const iqr = q(0.75) - q(0.25);
+  const cut = q(0.25) - Math.max(3 * iqr, (ys[ys.length - 1] - ys[0]) / 10);
+  const out = pts.filter(p => p.y! < cut);
+  return out.length && out.length <= ys.length / 4 ? new Set(out) : new Set();
+}
+
 // ── geometry ─────────────────────────────────────────────────────────────────
 // Font sizes are in viewBox units. The grid figure is 300 wide and shows at ≈ 400 px on /quality at
 // 1280, so 11 units ≈ 14.7 px; at 390 px it shows at ≈ 310 px, so 11 units ≈ 11.4 px.
@@ -251,19 +270,25 @@ function PlotBody({ panel, m, W, H, f }: { panel: Panel; m: Measure; W: number; 
   const M = { l: f * 3.6, r: f * 1.2, t: f * (3.7 + heads.length * 1.3), b: f * 3.4 };
   const costs = pts.map(p => p.cost!.usd_per_1k);
   const x0 = Math.log10(Math.min(...costs) / 1.8), x1 = Math.log10(Math.max(...costs) * 1.8);
-  const lows = pts.map(p => p.y_ci95?.[0] ?? p.y ?? m.yRange[1]);
-  const highs = pts.map(p => p.y_ci95?.[1] ?? p.y ?? m.yRange[1]);
+  // One engine far below the rest (a route that failed on many pages) would stretch the axis to the floor
+  // and flatten every other engine into a line along the top. Such a point sits on the bottom edge,
+  // marked ↓ with its value, and the axis spans the others.
+  const below = lowOutliers(pts);
+  const inRange = pts.filter(p => !below.has(p));
+  const lows = inRange.map(p => p.y_ci95?.[0] ?? p.y ?? m.yRange[1]);
+  const highs = inRange.map(p => p.y_ci95?.[1] ?? p.y ?? m.yRange[1]);
   // y range in whole steps that leave a margin; the measure picks a step that gives 3–6 ticks
   const step = m.step(Math.max(...highs) - Math.min(...lows));
   const y0 = Math.max(m.yRange[0], Math.floor((Math.min(...lows) - step / 4) / step) * step);
   const y1 = Math.min(m.yRange[1], Math.ceil((Math.max(...highs) + step / 4) / step) * step);
   const sx = (c: number) => M.l + ((Math.log10(c) - x0) / (x1 - x0)) * (W - M.l - M.r);
   const sy = (a: number) => H - M.b - ((a - y0) / (y1 - y0 || 1)) * (H - M.t - M.b);
+  const yOf = (p: Point) => (below.has(p) ? H - M.b : sy(p.y!));
   const yTicks: number[] = [];
   for (let v = y0; v <= y1 + 1e-9; v += step) yTicks.push(Math.round(v * 1000) / 1000);
   const xTicks = X_TICKS.filter(t => Math.log10(t) >= x0 && Math.log10(t) <= x1);
   const frontier = panel.frontier ? pts.filter(p => p.on_frontier) : [];
-  const r = f * 0.8;
+  const r = f * 0.62;
 
   return (
     <g fontFamily={FONT}>
@@ -290,23 +315,26 @@ function PlotBody({ panel, m, W, H, f }: { panel: Panel; m: Measure; W: number; 
 
       {/* frontier */}
       {frontier.length >= 2 && (
-        <polyline points={frontier.map(p => `${sx(p.cost!.usd_per_1k)},${sy(p.y!)}`).join(' ')} fill="none" stroke={FRONTIER} strokeWidth={f * 0.2} strokeLinejoin="round" />
+        <polyline points={frontier.map(p => `${sx(p.cost!.usd_per_1k)},${yOf(p)}`).join(' ')} fill="none" stroke={FRONTIER} strokeWidth={f * 0.2} strokeLinejoin="round" />
       )}
 
       {pts.map((p, i) => {
-        const cx = sx(p.cost!.usd_per_1k), cy = sy(p.y!);
+        const cx = sx(p.cost!.usd_per_1k), cy = yOf(p), off = below.has(p);
         const ring = p.ring != null ? r + f * 0.2 + p.ring * f * 3 : null;
         const compute = p.cost!.basis === 'compute';
         const tip = `${p.label}${p.production ? ' (in production)' : ''}: ${m.scoreWord} ${m.fmtY(p.y)}${p.y_ci95 ? ` [${m.fmtY(p.y_ci95[0])}–${m.fmtY(p.y_ci95[1])}]` : ''}, ${usd(p.cost!.usd_per_1k)} per 1,000 pages (${p.cost!.basis})${p.ring_text ? `, ${m.ringColumn}: ${p.ring_text}` : ''}${p.on_frontier ? ', on the frontier' : ''}`;
         return (
           <g key={p.engine}>
             <title>{tip}</title>
-            {p.y_ci95 && (
+            {off && (
+              <text x={cx + r * 1.4} y={cy - r * 0.4} fontSize={f * 0.85} fill={MUTED}>↓ {m.fmtY(p.y)}</text>
+            )}
+            {p.y_ci95 && !off && (
               <line x1={cx} x2={cx} y1={sy(p.y_ci95[0])} y2={sy(p.y_ci95[1])} stroke="#a8a29e" strokeWidth={f * 0.2} strokeLinecap="round" />
             )}
             {ring && <circle cx={cx} cy={cy} r={ring} fill="none" stroke="#a8a29e" strokeWidth={1} strokeDasharray="2 2" />}
-            <circle cx={cx} cy={cy} r={r} fill={compute ? '#fff' : p.production ? PRODUCTION : INK} stroke={p.production ? PRODUCTION : INK} strokeWidth={compute ? 1.5 : 2} />
-            <text x={cx} y={cy} dy="0.35em" textAnchor="middle" fontSize={f * 0.95} fontWeight={700} fill={compute ? INK : '#fff'}>{i + 1}</text>
+            <circle cx={cx} cy={cy} r={r} fill={compute ? '#fff' : p.production ? PRODUCTION : INK} stroke={p.production ? PRODUCTION : INK} strokeWidth={compute ? 1.2 : 1.5} />
+            <text x={cx} y={cy} dy="0.35em" textAnchor="middle" fontSize={f * 0.78} fontWeight={600} fill={compute ? INK : '#fff'}>{i + 1}</text>
             {/* a hit target bigger than the mark */}
             <circle cx={cx} cy={cy} r={r * 1.6} fill="transparent" />
           </g>
@@ -388,13 +416,19 @@ function Tag({ color, children }: { color: string; children: ReactNode }) {
 function PanelView({ chart, panel, m, present }: { chart: Chart; panel: Panel; m: Measure; present?: boolean }) {
   const refs = panel.references;
   const ciDigits = m.key === 'ocr' ? 0 : 2;
-  // Presenting: wider and shorter, so the plot and its table fit one 1280×800 screen.
-  const [W, H, f] = present ? [340, 230, 11] : [300, 250, 11];
-  const plot = (
-    <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" role="img" aria-label={`${m.title(chart)}: ${m.scoreWord} against cost per 1,000 pages for ${panel.placed.length} engines. ${sample(panel)}.${m.badge ? ` ${m.badge}.` : ''}${caution(panel) ? ` ${caution(panel)}.` : ''}`}>
+  // The figure scales to its column, so text and marks grow with it. Presenting, the column is
+  // ≈ 680 px at 1280: a 480-unit viewBox keeps 11 units ≈ 15 px there (340 gave ≈ 22 px; 560, ≈ 13 px,
+  // left the dot numbers unreadable). On a phone that box would shrink text to ≈ 8 px, so below md the
+  // presenting view falls back to the 300-unit grid geometry.
+  const label = `${m.title(chart)}: ${m.scoreWord} against cost per 1,000 pages for ${panel.placed.length} engines. ${sample(panel)}.${m.badge ? ` ${m.badge}.` : ''}${caution(panel) ? ` ${caution(panel)}.` : ''}`;
+  const svg = ([W, H, f]: number[], className: string) => (
+    <svg viewBox={`0 0 ${W} ${H}`} className={`w-full h-auto ${className}`} role="img" aria-label={label}>
       <PlotBody panel={panel} m={m} W={W} H={H} f={f} />
     </svg>
   );
+  const plot = present
+    ? <>{svg([300, 250, 11], 'md:hidden')}{svg([480, 310, 11], 'hidden md:block')}</>
+    : svg([300, 250, 11], '');
   const table = (
     <div className="overflow-x-auto"><table className="w-full tabular-nums text-sm">
       <thead>
@@ -426,7 +460,7 @@ function PanelView({ chart, panel, m, present }: { chart: Chart; panel: Panel; m
                 </a>
               ) : <span className="text-stone-600">not measured</span>}
             </td>
-            <td className="py-1 text-right text-stone-700">{p.ring_text ?? '—'}</td>
+            <td className="py-1 text-right text-stone-700">{p.ring_text ?? '–'}</td>
           </tr>
         ))}
         {panel.no_cost.map(p => (
@@ -443,7 +477,7 @@ function PanelView({ chart, panel, m, present }: { chart: Chart; panel: Panel; m
                 {p.y_ci95 && <span className="text-stone-600 whitespace-nowrap"> [{m.fmtY(p.y_ci95[0], ciDigits)}–{m.fmtY(p.y_ci95[1], ciDigits)}]</span>}
               </td>
               <td className="py-1 pr-2 text-right whitespace-nowrap"><span className="text-stone-600">not measured</span></td>
-              <td className="py-1 text-right text-stone-700">{p.ring_text ?? '—'}</td>
+              <td className="py-1 text-right text-stone-700">{p.ring_text ?? '–'}</td>
             </>)}
           </tr>
         ))}
@@ -470,7 +504,12 @@ function PanelView({ chart, panel, m, present }: { chart: Chart; panel: Panel; m
     </p>
   );
   const heading = chart.panels.length > 1 && (
-    <div className={`uppercase tracking-wider text-stone-600 mb-1 ${present ? 'text-sm' : 'text-xs'}`}>{panelHeading(panel)}</div>
+    <>
+      <div className={`uppercase tracking-wider text-stone-600 mb-1 ${present ? 'text-sm' : 'text-xs'}`}>{panelHeading(panel)}</div>
+      {panel.kind !== 'most-pages' && !panel.heading && (
+        <p className={`text-stone-600 leading-snug mb-2 ${present ? 'text-base' : 'text-xs'}`}>{SECOND_VIEW_WHY}</p>
+      )}
+    </>
   );
   const says = <p className={`text-stone-900 leading-snug ${present ? 'text-lg' : 'text-sm font-medium mb-2'}`}>{meaning(panel, m)}</p>;
   const download = (
@@ -534,11 +573,19 @@ export function ParetoPresentation({ m = OCR }: { m?: Measure }) {
       {m.charts.map(chart => chart.panels.map((panel, i) => (
         <figure key={`${chart.id}-${panel.kind}`} id={anchorOf(m, chart, panel)}
           className="min-h-screen flex flex-col justify-center first:justify-start py-8 border-b border-stone-200 scroll-mt-0">
-          <div className="font-serif text-3xl md:text-4xl text-stone-900">
-            {m.title(chart)}<Anchor chart={chart} m={m} base="/quality/pareto" />
-          </div>
-          <div className="text-base text-stone-600 mb-2">In use now: {chart.production_label}</div>
-          <Explain m={m} present />
+          {/* The title and the how-to-read paragraph once per script; a later view of the same script is
+              marked as a continuation, so it does not read as a second chart with the same name. */}
+          {i === 0 ? (
+            <>
+              <div className="font-serif text-3xl md:text-4xl text-stone-900">
+                {m.title(chart)}<Anchor chart={chart} m={m} base="/quality/pareto" />
+              </div>
+              <div className="text-base text-stone-600 mb-2">In use now: {chart.production_label}</div>
+              <Explain m={m} present />
+            </>
+          ) : (
+            <div className="font-serif text-xl text-stone-600">{m.title(chart)}, continued</div>
+          )}
           <div className="mt-4"><PanelView chart={chart} panel={panel} m={m} present /></div>
           {i === chart.panels.length - 1 && <Caption chart={chart} m={m} present />}
         </figure>
