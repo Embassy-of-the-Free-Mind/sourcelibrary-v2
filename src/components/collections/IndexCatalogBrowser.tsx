@@ -67,7 +67,7 @@ export default async function IndexCatalogBrowser({ collectionSlug }: { collecti
       </div>
       <p className="mt-2 max-w-2xl text-stone-600 text-sm leading-relaxed">
         We scanned {editions.length} printed editions of the <em>Index Librorum Prohibitorum</em> and read them
-        cover to cover — <strong>{totalEntries.toLocaleString()}</strong> condemnations in all, of which{' '}
+        cover to cover: <strong>{totalEntries.toLocaleString()}</strong> condemnations in all, of which{' '}
         <strong>{totalHeld.toLocaleString()}</strong> link to a banned book you can read here. Open any edition to
         see the bans as they were printed; search below to trace a work or author across the editions.
       </p>

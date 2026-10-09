@@ -10,7 +10,7 @@ import type { AuditRun, QualityData } from '@/lib/quality-report';
 
 type Metric = 'any_major' | 'ge4';
 const METRIC_LABEL: Record<Metric, string> = { any_major: 'Any major defect', ge4: 'Rated ≥ 4 of 5' };
-const pct = (v: number | null | undefined) => (v == null ? '—' : `${v.toFixed(1)}%`);
+const pct = (v: number | null | undefined) => (v == null ? '–' : `${v.toFixed(1)}%`);
 const day = (iso: string) => new Date(iso).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 const hour = (iso: string) => new Date(iso).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'UTC' });
 

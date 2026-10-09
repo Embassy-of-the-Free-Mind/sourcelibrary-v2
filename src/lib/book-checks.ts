@@ -20,6 +20,15 @@ export interface CheckProvenance {
   source?: string;
 }
 
+export type FindingStage = 'ocr' | 'translation' | 'other';
+
+/** One page with a serious finding (#6199). A page read and found clean has no entry. */
+export interface PageFinding {
+  page_number: number;
+  wrong_page?: true;
+  errors: { stage: FindingStage; class?: string; problem?: string }[];
+}
+
 export interface BookCheck {
   book_id: string;
   checked_at: Date;
@@ -33,6 +42,8 @@ export interface BookCheck {
   verdict_source?: string;
   classes?: string[];
   note?: string;
+  /** Absent = the run kept no per-page record; `[]` = every page read was free of serious errors. */
+  page_findings?: PageFinding[];
   evidence_path: string;
   text_provenance: CheckProvenance[];
   api_usd?: number;

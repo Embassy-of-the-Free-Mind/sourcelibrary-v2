@@ -34,6 +34,16 @@ const STRINGS: Record<Locale, {
     cta: 'Crea tu cuenta gratuita',
     footnote: 'Entra con tu correo \u00b7 Nunca enviamos spam',
   },
+  // Latin (#6254): the inline nudge renders on `/la`; draft copy.
+  la: {
+    inlineNudge: 'Rationem gratuitam crea, ut libros serves et lecta tua sequaris.',
+    inlineLink: 'Inscriptione electronica intra',
+    eyebrow: 'Operi te adiunge',
+    heading: 'Adiuva ut hereditas ingenii humani amissa recuperetur',
+    body: 'Rationem gratuitam crea, ut libros serves, lecta tua sequaris, novas conversiones editas cognoscas.',
+    cta: 'Rationem gratuitam crea',
+    footnote: 'Inscriptione electronica intra \u00b7 Nihil umquam molestum mittimus',
+  },
 };
 
 interface SignUpCTAProps {

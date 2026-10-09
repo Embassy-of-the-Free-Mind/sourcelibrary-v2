@@ -716,6 +716,21 @@ export function translationReasoningLeak(text) {
   if ((m = t.match(TRANSLATION_INPUT_TALK))) return hit('input-talk', m, false);
   return null;
 }
+/** Stamped on `translation.health_blocked` when a translation writer refuses a leak (#6117). */
+export const REASONING_LEAK_REASON = 'reasoning-leak';
+/**
+ * THE refusable leak (#6117): the model's scratchpad or a chat reply, in the page body. One predicate for
+ * the corpus count's headline (scripts/audit/translation-reasoning-leak.mjs), the withhold of the pages
+ * already stored (scripts/maintenance/withhold-leaked-reasoning-6117.mjs) and the write gate
+ * (translate-core `assessTranslationHealth`), so the three cannot drift. The milder kinds ('thought-token',
+ * 'input-talk') and a phrase that sits only in a metadata-panel block are counted, never refused: the
+ * page body there is usually a real translation.
+ * @returns {{ kind: 'reasoning'|'assistant-reply', phrase: string, readerVisible: true } | null}
+ */
+export function refusableReasoningLeak(text) {
+  const v = translationReasoningLeak(text);
+  return v && v.readerVisible && (v.kind === 'reasoning' || v.kind === 'assistant-reply') ? v : null;
+}
 /** A milder, separate thing: a translator's note that tells the reader what "the OCR" reads or what "the
  *  <gloss> tags" hold. Not reasoning, but pipeline vocabulary in the page body. True only when it survives
  *  outside the metadata-panel blocks. */

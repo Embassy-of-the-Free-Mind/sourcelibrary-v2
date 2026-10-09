@@ -34,11 +34,25 @@
  *   7. CONTROLS    a positive control every run (a fake 41 h-old open batch, in memory, must
  *                  FAIL the collection check — else exit 2), and --negative-control (fresh and
  *                  terminal fakes must NOT flag), run once and recorded in the PR.
+ *   8. GEMINI      the same guarantee asked from GEMINI's side (#6276): walk batches.list on
+ *                  every key; every job Gemini says SUCCEEDED must have a record that was
+ *                  collected (or is in flight, < 3 h since Gemini finished it). Section 1 only
+ *                  sees NON-terminal rows, so a row wrongly written cancelled/failed is invisible
+ *                  to it — this section is what sees it. Classes: succeeded-uncollected,
+ *                  unknown-to-DB, DB-terminal-while-Gemini-alive (scripts/lib/gemini-batch-ledger.mjs).
+ *                  Daily walks every job Gemini retains; findings older than 48 h since Gemini
+ *                  ended them are reported, not FAILed.
  *
- * FAIL (exit 1) when: a batch is open past 40 h; duplicate-submission spend > $1/day; or
- * unattributed paid usage > 5% of metered. Exit 2 = could not measure (a store unreadable, the
- * positive control did not fire, the bill unreadable on a bill day). 0 = ran, clean (WARNs
- * included). Never branch on != 0 — measurement-instruments.md.
+ * HOURLY: --collection-only runs sections 1 and 8 only (Gemini window: jobs created in the last
+ * 72 h), writes ops_reports `paid-vs-got-collection` (with --apply), pages ntfy
+ * sourcelibrary-uptime when the set of findings changes, and keeps ONE issue open
+ * ("paid-vs-got: batch collection FAIL") while findings stand — closed by a passing run.
+ *
+ * FAIL (exit 1) when: a batch is open past 40 h; Gemini finished a job inside 48 h that nothing
+ * collected (or is running one the DB calls over); duplicate-submission spend > $1/day; or
+ * unattributed paid usage > 5% of metered. Exit 2 = could not measure (a store unreadable, a
+ * Gemini key that cannot be listed, a positive control that did not fire, the bill unreadable on
+ * a bill day). 0 = ran, clean (WARNs included). Never branch on != 0 — measurement-instruments.md.
  *
  * CLOCKS. "Paid" is the collection clock; "got" is the page-write clock (the collector writes
  * both in one pass, so they agree to the minute); duplicates and repeats use the SUBMIT clock.
@@ -54,6 +68,8 @@
  *   node --env-file=.env.production.local scripts/audit/paid-vs-got.mjs                 # dry run, yesterday
  *   node --env-file=.env.production.local scripts/audit/paid-vs-got.mjs --date=2026-09-30 --bill-check
  *   node --env-file=.env.production.local scripts/audit/paid-vs-got.mjs --apply          # cron (06:10Z)
+ *   node --env-file=.env.production.local scripts/audit/paid-vs-got.mjs --collection-only [--apply]  # hourly
+ *   ... --no-gemini   skip section 8 (the run is then not a statement about Gemini's side)
  *   node scripts/audit/paid-vs-got.mjs --negative-control                                 # no DB
  *   ... --json   machine-readable report on stdout
  */
@@ -61,6 +77,10 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { MongoClient, ObjectId } from 'mongodb';
 import { estimateBatchCostUsd } from '../workers/lib/supabase-usage-logger.mjs';
+import {
+  listAllBatches, readLedgerRecords, classifyLedger, countFindings, ledgerPositiveControl,
+  makeSupabaseUsageReader, fillRequestCounts, HOURLY_WINDOW_H, ACTIONABLE_H, IN_FLIGHT_GRACE_H, LEDGER_CLASSES,
+} from '../lib/gemini-batch-ledger.mjs';
 
 const HOUR = 3600e3;
 const DAY = 24 * HOUR;
@@ -71,7 +91,10 @@ export const DUP_FAIL_USD = 1;
 export const UNATTRIBUTED_FAIL_PCT = 5;
 const REPEAT_LOOKBACK_DAYS = 7;
 const ISSUE_TITLE = 'paid-vs-got: daily ledger FAIL';
+export const COLLECTION_ISSUE_TITLE = 'paid-vs-got: batch collection FAIL';
 export const REPORT_TYPE = 'paid_vs_got_daily';
+export const COLLECTION_REPORT_TYPE = 'paid_vs_got_collection';
+const NTFY_TOPIC = process.env.PAID_VS_GOT_NTFY || 'https://ntfy.sh/sourcelibrary-uptime';
 
 /**
  * batch_jobs statuses that are finished. Anything else — including a status this list has
@@ -366,11 +389,22 @@ export function headline({ paid, got, waste }) {
   });
 }
 
-export function verdict({ collection, dupUsd, unattributedPct }) {
+export function verdict({ collection, dupUsd = 0, unattributedPct = 0, gemini = null }) {
   const fails = [];
   const warns = [];
   if (collection.fail) fails.push(`${collection.fail} batch job(s) open at Gemini past ${FAIL_AGE_H} h (expire at 48 h)`);
   if (collection.warn) warns.push(`${collection.warn} open job(s) past ${WARN_AGE_H} h`);
+  if (gemini?.counts) {
+    const c = gemini.counts;
+    const label = { succeeded_uncollected: 'Gemini SUCCEEDED, our record never collected it',
+      unknown_to_db: 'Gemini SUCCEEDED, no store records the job',
+      terminal_while_alive: 'Gemini still running, every record we hold says it is over' };
+    for (const k of LEDGER_CLASSES) {
+      if (c[k].actionable) fails.push(`${c[k].actionable} batch job(s): ${label[k]} (${c[k].actionable_pages.toLocaleString('en-US')} pp)`);
+      const old = c[k].jobs - c[k].actionable;
+      if (old) warns.push(`${old} older (> ${ACTIONABLE_H} h) job(s): ${label[k]}`);
+    }
+  }
   if (dupUsd > DUP_FAIL_USD) fails.push(`duplicate-submission spend $${dupUsd.toFixed(2)} > $${DUP_FAIL_USD}/day`);
   if (unattributedPct > UNATTRIBUTED_FAIL_PCT) fails.push(`unattributed paid usage ${unattributedPct.toFixed(1)}% > ${UNATTRIBUTED_FAIL_PCT}% of metered`);
   return { status: fails.length ? 'FAIL' : warns.length ? 'WARN' : 'PASS', fails, warns };
@@ -502,27 +536,100 @@ async function billCheck(db, dayStart) {
     trend_pts: first && last.metered_pct != null ? r2(last.metered_pct - first.metered_pct) : null };
 }
 
+// ─────────────────────────────────────────── 8. Gemini side (#6276)
+
+/** Every unique Gemini key the pipeline submits with — the collector's list. */
+export function geminiKeys(env = process.env) {
+  const clean = (v) => (v || '').replace(/\\n/g, '').trim();
+  const all = [env.GEMINI_API_KEY, ...Array.from({ length: 9 }, (_, i) => env[`GEMINI_API_KEY_${i + 2}`]), env.GEMINI_API_KEY_TIER3]
+    .map(clean).filter(Boolean);
+  return [...new Set(all)];
+}
+
+/**
+ * Section 8. `windowH` null = every job Gemini retains (daily); a number = jobs created in that
+ * window (hourly). Returns the section; `unknown` non-empty means it could not be measured.
+ */
+async function geminiSection(db, { now, windowH, log }) {
+  const keys = geminiKeys();
+  if (!keys.length) return { unknown: ['no GEMINI_API_KEY* set — Gemini side not measured'] };
+  const { GoogleGenAI } = await import('@google/genai');
+  const clients = keys.map((apiKey) => new GoogleGenAI({ apiKey }));
+  const sinceMs = windowH == null ? null : now.getTime() - windowH * HOUR;
+  const listing = await listAllBatches(clients, { keys, sinceMs, log });
+  const supabaseUsage = makeSupabaseUsageReader({
+    url: clean(process.env.SUPABASE_URL) || 'https://ykhxaecbbxaaqlujuzde.supabase.co',
+    key: clean(process.env.SUPABASE_SERVICE_ROLE_KEY),
+  });
+  const unknown = [...listing.unknown];
+  if (!supabaseUsage) unknown.push('SUPABASE_SERVICE_ROLE_KEY not set — usage rows (how one-off scripts record their jobs) unreadable');
+  let records = new Map();
+  try {
+    records = await readLedgerRecords(db, listing.jobs, { supabaseUsage, log });
+  } catch (e) {
+    unknown.push(`records unreadable: ${e.message}`);
+  }
+  const res = classifyLedger({ jobs: listing.jobs, records, now });
+  const positive = ledgerPositiveControl({ jobs: listing.jobs, records, now });
+  const asked = await fillRequestCounts(res.findings, keys);
+  return {
+    window_h: windowH, listed: res.listed, per_key: listing.perKey, unknown,
+    counts: countFindings(res.findings), ok_counts: res.ok_counts, grace_h: IN_FLIGHT_GRACE_H, actionable_h: ACTIONABLE_H,
+    findings: res.findings.slice(0, 200), findings_total: res.findings.length, request_counts_asked: asked,
+    positive,
+  };
+}
+
+export function renderGemini(G) {
+  const L = [];
+  if (!G) return '8. GEMINI  not run (--no-gemini).';
+  if (!G.counts) { L.push(`8. GEMINI  UNKNOWN — ${G.unknown.join('; ')}`); return L.join('\n'); }
+  L.push(`8. GEMINI  ${G.listed.toLocaleString('en-US')} jobs listed (${G.window_h == null ? 'everything Gemini retains' : `created in the last ${G.window_h} h`}); `
+    + `ok: ${G.ok_counts.collected} collected, ${G.ok_counts.in_flight} in flight (< ${G.grace_h} h since Gemini finished), ${G.ok_counts.discarded} discarded on purpose, ${G.ok_counts.twin_collected} re-submissions whose twin was collected (paid twice, not lost), ${G.ok_counts.alive_tracked} running and tracked`);
+  if (G.unknown.length) for (const u of G.unknown) L.push(`  UNKNOWN  ${u}`);
+  L.push(`  ${pad('class', 26)}${lpad('jobs', 7)}${lpad('pages', 10)}${lpad(`≤${G.actionable_h} h`, 9)}${lpad('pages', 10)}`);
+  for (const k of LEDGER_CLASSES) {
+    const c = G.counts[k];
+    L.push(`  ${pad(k, 26)}${lpad(int(c.jobs), 7)}${lpad(int(c.pages), 10)}${lpad(int(c.actionable), 9)}${lpad(int(c.actionable_pages), 10)}`);
+  }
+  for (const f of G.findings.slice(0, 15)) {
+    L.push(`    ${f.actionable ? 'FAIL' : 'old '}  ${pad(f.class, 22)} ${pad(f.name, 48)} ${pad(f.display_name || '', 34).slice(0, 34)} ${lpad(f.since_end_h == null ? 'running' : f.since_end_h + ' h', 9)} ${lpad(int(f.pages), 6)} pp  ${f.records.join(', ') || '(no record)'}`);
+  }
+  if (G.findings_total > 15) L.push(`    … ${G.findings_total - 15} more (ops_reports row holds the first 200)`);
+  L.push(`  keys: ${G.per_key.map((k) => `${k.key_index}${k.canonical !== k.key_index ? `=${k.canonical}` : ''}:${k.error ? 'ERROR' : `${k.listed}/${k.stop}`}`).join(' ')}`);
+  L.push(`  positive control: ${G.positive.ok ? 'PASS' : 'BROKEN'} (uncollected → ${G.positive.succeeded_uncollected}, unknown → ${G.positive.unknown_to_db}, alive → ${G.positive.terminal_while_alive})`);
+  return L.join('\n');
+}
+
+/** A stable key per finding, so the hourly run pages and comments only when the set changes. */
+const findingKeys = (G) => (G?.findings || []).filter((f) => f.actionable).map((f) => `${f.class}:${f.name}`).sort();
+
+async function page(title, body, priority) {
+  const res = await fetch(NTFY_TOPIC, { method: 'POST', headers: { Title: title, Priority: priority, Tags: 'moneybag' }, body, signal: AbortSignal.timeout(15_000) });
+  if (!res.ok) throw new Error(`ntfy HTTP ${res.status}`);
+}
+
 // ─────────────────────────────────────────── GitHub issue (dedupe by title)
 
 function gh(args) {
   return execFileSync('gh', args, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], timeout: 60_000 }).trim();
 }
-function openLedgerIssue() {
-  const list = JSON.parse(gh(['issue', 'list', '--state', 'open', '--search', `"${ISSUE_TITLE}" in:title`, '--json', 'number,title', '--limit', '20']) || '[]');
-  return list.find((i) => i.title.startsWith(ISSUE_TITLE)) || null;
+function openLedgerIssue(title = ISSUE_TITLE) {
+  const list = JSON.parse(gh(['issue', 'list', '--state', 'open', '--search', `"${title}" in:title`, '--json', 'number,title', '--limit', '20']) || '[]');
+  return list.find((i) => i.title.startsWith(title)) || null;
 }
-function fileOrUpdateIssue(report, text) {
+function fileOrUpdateIssue(report, text, { title = ISSUE_TITLE, footer = null } = {}) {
   const body = `${report.verdict.fails.map((f) => `- **${f}**`).join('\n')}\n\n\`\`\`\n${text}\n\`\`\`\n\n`
-    + `Ledger day ${report.day}; full row: ops_reports \`${report._id}\`, and /admin/spend. Filed by `
-    + '`scripts/audit/paid-vs-got.mjs --apply` (#5499). It comments here while the FAIL stands and closes this when a run passes.';
-  const open = openLedgerIssue();
+    + (footer || (`Ledger day ${report.day}; full row: ops_reports \`${report._id}\`, and /admin/spend. Filed by `
+    + '`scripts/audit/paid-vs-got.mjs --apply` (#5499). It comments here while the FAIL stands and closes this when a run passes.'));
+  const open = openLedgerIssue(title);
   if (open) { gh(['issue', 'comment', String(open.number), '--body', body]); return `commented on #${open.number}`; }
-  const url = gh(['issue', 'create', '--title', `${ISSUE_TITLE} — ${report.day}`, '--body', body]);
+  const url = gh(['issue', 'create', '--title', `${title} — ${report.day}`, '--body', body]);
   return `filed ${url}`;
 }
-function closeIssueIfOpen(report) {
-  const open = openLedgerIssue();
-  if (!open) return 'no open ledger issue';
+function closeIssueIfOpen(report, title = ISSUE_TITLE) {
+  const open = openLedgerIssue(title);
+  if (!open) return `no open "${title}" issue`;
   gh(['issue', 'close', String(open.number), '--comment', `paid-vs-got passed for ${report.day} (${report.verdict.status}). Closing.`]);
   return `closed #${open.number}`;
 }
@@ -592,16 +699,89 @@ export function renderText(R) {
     for (const w of B.weeks) L.push(`  ${pad(`${w.from} .. ${w.to}`, 26)}${lpad($(w.billed_usd), 11)}${lpad($(w.metered_usd), 11)}${lpad($(w.attributed_usd), 12)}${lpad(w.metered_pct == null ? '—' : w.metered_pct + '%', 10)}${lpad(w.attributed_pct == null ? '—' : w.attributed_pct + '%', 9)}`);
     L.push(`  trend (metered%, last week vs first): ${B.trend_pts == null ? '—' : (B.trend_pts > 0 ? '+' : '') + B.trend_pts + ' pts'}`);
   }
+  if (R.gemini !== undefined) { L.push(''); L.push(renderGemini(R.gemini)); }
+  return L.join('\n');
+}
+
+/** The hourly report: section 1 (DB side) and section 8 (Gemini side) only. */
+export function renderCollectionText(R) {
+  const L = [];
+  L.push(`═══ Paid vs got — batch collection, ${R.generated_at.toISOString().slice(0, 16)}Z — ${R.verdict.status} ═══`);
+  for (const f of R.verdict.fails) L.push(`  FAIL  ${f}`);
+  for (const w of R.verdict.warns) L.push(`  WARN  ${w}`);
+  L.push('');
+  const C = R.collection;
+  L.push(`1. COLLECTION (DB side)  ${C.open} open (${C.at_gemini} at Gemini), oldest ${C.oldest_h} h; ${C.warn} WARN (>${WARN_AGE_H} h), ${C.fail} FAIL (>${FAIL_AGE_H} h)`);
+  for (const i of C.flagged.slice(0, 10)) L.push(`    ${pad(i.level, 5)} ${pad(i.kind, 14)} ${pad(i.id, 40)} ${pad(i.state, 18)} ${lpad(i.age_h.toFixed(1) + ' h', 8)}`);
+  if (C.flagged.length > 10) L.push(`    … ${C.flagged.length - 10} more`);
+  L.push(`  positive control: ${R.controls.positive.ok ? 'PASS' : 'BROKEN'}`);
+  L.push('');
+  L.push(renderGemini(R.gemini));
   return L.join('\n');
 }
 
 // ─────────────────────────────────────────── main
+
+/**
+ * The hourly run. Writes (with --apply) one rolling ops_reports row, pages ntfy when the set of
+ * actionable findings CHANGES (new ones, or all cleared) — not every hour a finding stands — and
+ * keeps one issue: filed on the first FAIL, commented when the set changes, closed on a PASS.
+ */
+async function collectionOnly(db, { now, collection, positive, gemini, geminiUnknown, geminiForVerdict, APPLY, JSON_OUT }) {
+  const v = verdict({ collection, gemini: geminiForVerdict });
+  const report = {
+    _id: 'paid-vs-got-collection', type: COLLECTION_REPORT_TYPE, day: now.toISOString().slice(0, 13) + 'Z', generated_at: now,
+    generated_by: 'scripts/audit/paid-vs-got.mjs --collection-only', verdict: v,
+    collection: { ...collection, flagged: collection.flagged.slice(0, 100) }, gemini,
+    controls: { positive, gemini: gemini?.positive || null },
+    finding_keys: findingKeys(gemini),
+  };
+  const text = renderCollectionText(report);
+  if (JSON_OUT) console.log(JSON.stringify(report, null, 2)); else console.log(text);
+
+  let exitCode = 0;
+  if (!positive.ok) { console.error('\nPOSITIVE CONTROL DID NOT FIRE (DB side). Exit 2.'); exitCode = 2; }
+  else if (v.status === 'FAIL') exitCode = 1;
+  else if (geminiUnknown) { console.error(`\nGemini side UNKNOWN: ${(gemini?.unknown || []).join('; ') || 'positive control did not fire'}. Exit 2 — not clear.`); exitCode = 2; }
+
+  if (!APPLY) {
+    console.error(`\n(dry run — nothing written. --apply would replace ops_reports ${report._id}, page ntfy on a changed finding set, and file/comment/close "${COLLECTION_ISSUE_TITLE}".)`);
+    return exitCode;
+  }
+  const prev = await db.collection('ops_reports').findOne({ _id: report._id }, { projection: { paged_keys: 1, verdict: 1 } });
+  const prevKeys = prev?.paged_keys || [];
+  const fresh = report.finding_keys.filter((k) => !prevKeys.includes(k));
+  const cleared = exitCode === 0 && prevKeys.length > 0;
+  report.paged_keys = prevKeys;
+  if (exitCode === 1 && (fresh.length || (prev?.verdict?.status !== 'FAIL'))) {
+    try {
+      await page(`Gemini batches not collected: ${v.fails.length} finding(s)`, `${v.fails.join('\n')}\n\nscripts/audit/paid-vs-got.mjs --collection-only (#6276)`, 'high');
+      report.paged_keys = report.finding_keys;
+    } catch (e) { console.error(`ntfy page failed (${e.message}) — will page again next run`); }
+    try { console.error(fileOrUpdateIssue(report, text, { title: COLLECTION_ISSUE_TITLE,
+      footer: 'Filed by `scripts/audit/paid-vs-got.mjs --collection-only --apply` (#6276), hourly. It comments here when the set of findings changes and closes this when a run passes. Rolling row: ops_reports `paid-vs-got-collection`.' })); }
+    catch (e) { console.error(`GitHub issue step failed: ${String(e.stderr || e.message).split('\n')[0]}`); }
+  } else if (exitCode === 0) {
+    if (cleared) {
+      try { await page('Gemini batch collection clear', 'paid-vs-got --collection-only passed.', 'default'); report.paged_keys = []; }
+      catch (e) { console.error(`ntfy page failed (${e.message})`); }
+    }
+    try { console.error(closeIssueIfOpen(report, COLLECTION_ISSUE_TITLE)); }
+    catch (e) { console.error(`GitHub issue step failed: ${String(e.stderr || e.message).split('\n')[0]}`); exitCode = 2; }
+  }
+  await db.collection('ops_reports').replaceOne({ _id: report._id }, report, { upsert: true });
+  console.error(`wrote ops_reports ${report._id}`);
+  return exitCode;
+}
 
 async function main() {
   const args = process.argv.slice(2);
   const arg = (k) => args.find((a) => a.startsWith(`--${k}=`))?.split('=')[1];
   const APPLY = args.includes('--apply');
   const JSON_OUT = args.includes('--json');
+  const COLLECTION_ONLY = args.includes('--collection-only');
+  const NO_GEMINI = args.includes('--no-gemini');
+  const windowArg = arg('gemini-window-h');
 
   if (args.includes('--negative-control')) {
     const n = negativeControl(new Date());
@@ -634,6 +814,21 @@ async function main() {
     ]);
     const collection = collectionCheck({ jobs: openJobs, runs: openRuns, now });
     const positive = positiveControl({ jobs: openJobs, runs: openRuns, now });
+
+    // 8. Gemini side — before the long DB reads, so a dead key is known early.
+    const glog = (m) => console.error(m);
+    const gemini = NO_GEMINI ? null : await geminiSection(db, {
+      now, log: glog,
+      windowH: windowArg ? Number(windowArg) : COLLECTION_ONLY ? HOURLY_WINDOW_H : null,
+    });
+    const geminiUnknown = gemini && (gemini.unknown?.length || !gemini.counts || !gemini.positive?.ok);
+    const geminiForVerdict = gemini?.counts ? gemini : null;
+
+    if (COLLECTION_ONLY) {
+      exitCode = await collectionOnly(db, { now, collection, positive, gemini, geminiUnknown, geminiForVerdict, APPLY, JSON_OUT });
+      process.exitCode = exitCode; // `finally` closes Mongo; main() then resolves and the process exits with this
+      return;
+    }
 
     // 2–3. got and paid
     const usage = await readUsage(db, dayStart, dayEnd);
@@ -677,14 +872,14 @@ async function main() {
       if (last[0]?.bill) bill = { ...last[0].bill, carried: true };
     }
 
-    const v = verdict({ collection, dupUsd: waste.duplicate_usd, unattributedPct: paid.unattributed_pct });
+    const v = verdict({ collection, dupUsd: waste.duplicate_usd, unattributedPct: paid.unattributed_pct, gemini: geminiForVerdict });
     const report = {
       _id: `paid-vs-got-${dayStr}`, type: REPORT_TYPE, day: dayStr, generated_at: now,
       generated_by: 'scripts/audit/paid-vs-got.mjs', verdict: v,
       headline: headline({ paid, got, waste }),
       collection: { ...collection, flagged: collection.flagged.slice(0, 100) },
-      got, paid, waste, bill, usage_rows: usage.rows,
-      controls: { positive },
+      got, paid, waste, bill, usage_rows: usage.rows, gemini,
+      controls: { positive, gemini: gemini?.positive || null },
     };
     const text = renderText(report);
     if (JSON_OUT) console.log(JSON.stringify(report, null, 2)); else console.log(text);
@@ -694,6 +889,9 @@ async function main() {
       exitCode = 2;
     } else if (v.status === 'FAIL') {
       exitCode = 1;
+    } else if (geminiUnknown) {
+      console.error(`\nGemini side UNKNOWN: ${(gemini.unknown || []).join('; ') || 'positive control did not fire'}. Exit 2 — not clear.`);
+      exitCode = 2;
     } else if (BILL_DAY && bill?.unreadable) {
       console.error(`\nBill check could not run: ${bill.unreadable}. Exit 2.`);
       exitCode = 2;

@@ -715,6 +715,40 @@ export async function semanticPageSearchUntranslated(
   };
 }
 
+/**
+ * The concept lane (#6173, stage 1, EXPERIMENTAL): pages ranked by the
+ * embedding of a model-written abstract of their ideas (`page_concepts`,
+ * `scripts/migration/add-page-concepts.sql`) instead of their text. Built to
+ * put several traditions into a concept query's first ten results; it holds
+ * ~2,000 books, so it is reached only by an explicit flag (`lane=concept`) and
+ * is not part of any default search.
+ *
+ * The snippet is the PAGE's own text, never the abstract: the abstract is an
+ * index key, and a paraphrase shown as the page is a misquote
+ * (`quote-and-snippet-integrity.md`). The RPCs do not return it.
+ *
+ * Scope as everywhere else (#4330): closed returns nothing; a tenant ranks
+ * inside its book set (`match_page_concepts_in_books`, exact over the set).
+ */
+export async function semanticConceptSearch(
+  query: string,
+  limit: number,
+  opts: { scope: SearchScope; maxPerBook?: number },
+): Promise<SemanticPageResult[]> {
+  if (opts.scope.kind === 'closed') return [];
+  const queryEmbedding = await getQueryEmbedding(query);
+  if (!queryEmbedding) return [];
+  const count = (opts.maxPerBook ?? 0) > 0 ? Math.min(limit * 3, 100) : limit;
+  const embedding = JSON.stringify(queryEmbedding);
+  const result = await scopedMatch<any>(opts.scope, {
+    global: { fn: 'match_page_concepts', args: { query_embedding: embedding, match_threshold: 0.3, match_count: count } },
+    scoped: { fn: 'match_page_concepts_in_books', args: { query_embedding: embedding, match_threshold: 0.3, match_count: count } },
+    fallbackMaxCount: 100,
+  });
+  if (result.error) throw new SemanticSearchError(result.rpc, result.error);
+  return shapePageRows(result.rows, limit, opts.maxPerBook);
+}
+
 // ── Page-level scoped search (step 2: within specific books) ────────
 
 export interface SemanticPageResult {

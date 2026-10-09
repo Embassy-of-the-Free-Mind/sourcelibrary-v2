@@ -13,8 +13,39 @@ Source Library has **six embedding stores** in Supabase, indexing different thin
 | `clip_embeddings` | 512 (vector) | CLIP visual | One row per image (artwork covers, gallery extractions) | `scripts/backfill-clip-embeddings.mjs` + `scripts/workers/image-embeddings-cron.mjs` | `match_gallery_text` (CLIP text→image) | gallery similar-image queries |
 | `site_pages` | 768 (vector; NULL on author rows) | `gemini-embedding-2-preview` | One row per ~1,600-char chunk of every public, indexable page that is not a book: static routes in `src/app` + sitemap chunk 0 + `/languages/*` (crawled; robots.txt, redirects and `noindex` respected), collection intros (from Mongo), the tool registry, and author pages (names only, no embedding). Chunk 0 also carries `names` / `name_tokens` / `weight` for the navigational match (#1180, #5945) | `scripts/workers/embed-site-pages.mjs` (daily; hash-diffed; prunes vanished pages, refuses a >20% prune of any one page type) | `match_site_pages` (best chunk per URL; NULL tenant = main site only) | "From the site" lane in `/api/search/unified` → `/search` |
 | `page_texts` | 768 (vector) | `gemini-embedding-2-preview` | One row per translated page **per language** (`page_id, lang`) | `scripts/workers/embed-page-texts.mjs --lang=<iso>` (bulk) + `es-translate-worker.mjs` (inline) | `match_page_texts`, `match_page_texts_in_books`, `search_page_texts` (lexical) | Spanish/localized page search: `/api/search?lang=es`, `/api/books/:id/search?lang=es` |
+| `page_concepts` | 768 (**halfvec**) | `gemini-embedding-2-preview` | One row per page: the embedding of a model-written **concept abstract** of the page's ideas (flash-lite, `concept-abstract-v1`), NOT of its text. Stage 1 (#6173): ~1,200 books | `scripts/batch/concept-abstracts.mjs` (Batch; select → submit → collect → embed → load) | `match_page_concepts`, `match_page_concepts_in_books` (both return the PAGE's text as snippet, never the abstract) | EXPERIMENTAL, flag only: `/api/search?lane=concept`, `/api/search/semantic?level=page&lane=concept`, MCP `search_concept` `lane:"concept"` |
 
 Approximate current row counts (May 2026): pages ~3.9M, books 33,828, artworks 19,731, gallery_text 116,641, clip 151,957.
+
+## `page_concepts` — the concept lane (#6173, stage 1, experimental)
+
+The page vectors find a page by its own words; a concept query ("the soul's
+ascent through the heavens") then fills its top 10 with one tradition's
+vocabulary. The pilot (`scripts/eval/experiments/2026-10-07-embedding-granularity-cross-tradition.md`)
+embedded a 2–4 sentence abstract of each page's ideas in neutral language and
+put more traditions into the first ten. `page_concepts` is that lane:
+
+- **The abstract is an index key, not text.** It lives on the page as
+  `pages.concept_abstract` (with a `gemini-engine/1` provenance block whose
+  `input.source_text_hash` is the page text it was made from) and in this table
+  for the vector. No read path returns it; the RPCs return the page's own text.
+- **It goes stale like a translation does.** A re-OCR or re-translation changes
+  the page text and leaves the abstract describing the old one. Detect it by
+  comparing `concept_abstract.engine.input.source_text_hash` with the hash of the
+  page's current composed text (`abstractInputText(pageEmbeddingInput(page).text)`).
+- **A partner's scope is ranked two ways** (`match_page_concepts_in_books`): exactly when the set holds 20,000 rows or fewer, and through the HNSW index with pgvector's iterative scan when it holds more (BPH holds 78,230 of 325,308). The exact plan on a share that large is a scan of the whole table, 4 s cold against the anon role's 3 s, and the lane answered "Search failed" on the BPH host until 2026-10-07. Recall@40 of the index walk against exact: 0.96 over 6 queries.
+- **Not public.** No default search reads it; it is reached only by the
+  `lane=concept` flag until stage 1 is judged. All three flag paths go through
+  `conceptPageSearch(..., { abstractLane: true })` (`src/lib/search/concept-search.ts`),
+  so hidden books are dropped and `diversity=tradition` applies as on the page lane.
+  The Librarian reads it as one more RRF source only when `LIBRARIAN_CONCEPT_LANE=on`.
+- **Stage 1 result (2026-10-07):** on the same 1,216 books with the tradition spread on, relevant traditions in the first ten are 4.36 for this lane against 3.76 for the page vectors (+0.60, CI [0.16, 1.00]); P@10 is level. `scripts/eval/experiments/2026-10-07-concept-lane-stage1.md`.
+- **Stage 1 holds 1,216 books, 325,308 embedded pages** (343,347 abstracts; 18,039
+  are `NONE` and are stored on the page but never embedded).
+- **The writer's `--dir` is rebuildable.** `concept-abstracts.mjs rebuild` restores
+  `abstracts.jsonl` from Mongo and re-reads finished embedding jobs' result files
+  (free). `pages.jsonl` is not rebuildable: requests that errored inside a finished
+  generation job (about 2,000 pages in the first run) are not re-sent by it.
 
 ## `page_texts` — the language-keyed store (#4095)
 

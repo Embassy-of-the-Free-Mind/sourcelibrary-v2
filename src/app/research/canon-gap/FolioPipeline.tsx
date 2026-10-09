@@ -371,8 +371,8 @@ export default function FolioPipeline({
             lede={
               <p>
                 Esukhia&rsquo;s folio {f.folio} is laid against the scan line by line, so every sentence can be checked against
-                the woodblock. The match is tested, not assumed: an OCR engine read sample sides of this volume, and each read
-                had to match its own typed folio far better than any other.
+                the woodblock. To test the match, an OCR engine read sample sides of this volume, and each read had to match
+                its own typed folio far better than any other.
               </p>
             }
             aside={
@@ -484,10 +484,9 @@ export default function FolioPipeline({
             title="Awaiting a scholar"
             lede={
               <p>
-                No page of the Tengyur draft has yet been read by a scholar. The machine checks above measure how often the draft
-                goes wrong; only a reader who knows the text can say where, on a given page, and fix it. We have asked a
-                Tibetologist to read the first 15 pages (<Src href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5800">#5800</Src>).
-                Drafting this page cost {centsPerPage}¢; reviewing it is the step that needs support.
+                No scholar has read any page of the Tengyur draft yet. The checks above estimate how often the draft is
+                wrong, but not where on a given page. Tibetologists are to read 30 pages through Eternity (<Src href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5800">#5800</Src>).
+                Drafting this page cost {centsPerPage}¢.
               </p>
             }
             aside={
@@ -515,13 +514,11 @@ export default function FolioPipeline({
           <Panel
             i={5}
             on={beat === 5}
-            title="The page as a reader will see it"
+            title="The page as a reader sees it"
             lede={
               <p>
-                Woodblock, Tibetan and English side by side, with the label on every page of machine English.{' '}
-                {f.book_public
-                  ? 'This volume is public.'
-                  : 'The Tengyur volumes stay out of public view until their English has been checked, so this is the reader as it will appear.'}
+                Woodblock, Tibetan and English side by side, with the label on every page of machine English. All 213
+                Tengyur volumes have been public since 7 October 2026.
               </p>
             }
           >

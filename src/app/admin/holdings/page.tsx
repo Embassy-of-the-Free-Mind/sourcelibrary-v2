@@ -89,7 +89,7 @@ export default function HoldingsCheckPage() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
       <h1 className="text-2xl font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>Do we hold this?</h1>
       <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
-        Paste a library URL (Internet Archive, Gallica, e-rara, BSB, a IIIF manifest), one of our book links, or a title — before importing. Hidden books and the warehouse are included.
+        Paste a library URL (Internet Archive, Gallica, e-rara, BSB, a IIIF manifest), one of our book links, or a title, before importing. Hidden books and the warehouse are included.
       </p>
 
       <form onSubmit={run} className="space-y-3 mb-8">

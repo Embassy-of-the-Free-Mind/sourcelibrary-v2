@@ -153,7 +153,7 @@ export default function WelcomeForm({
           Who are you, and what interests you about Source Library?
         </label>
         <p className="text-sm text-stone-500 mb-3">
-          A few words — your background, the authors or traditions you&rsquo;re drawn to, questions you&rsquo;re chasing.
+          A few words: your background, the authors or traditions you&rsquo;re drawn to, questions you&rsquo;re chasing.
         </p>
         <textarea
           id="about-you"
@@ -194,7 +194,7 @@ export default function WelcomeForm({
           <span className="font-sans font-normal text-base text-stone-500 ml-2">if at all</span>
         </label>
         <p className="text-sm text-stone-500 mb-3">
-          Reviewing translations, annotating texts, suggesting books, writing, coding, study groups — or just here to read.
+          Reviewing translations, annotating texts, suggesting books, writing, coding, study groups, or just here to read.
         </p>
         <textarea
           id="help-description"
@@ -219,7 +219,7 @@ export default function WelcomeForm({
           {initials}
         </span>
         <span>
-          You can add to or change all of this later on your reader profile — open this menu at the
+          You can add to or change all of this later on your reader profile. Open this menu at the
           top right of any page and choose <span className="text-stone-700 font-medium">Account</span>.
         </span>
       </p>

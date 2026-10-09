@@ -1,0 +1,99 @@
+[
+ {
+  "book_id": "69b52c953dd6d94230281474",
+  "slot": 8,
+  "title": "Vitruvii de architectura libri X",
+  "tradition": "greek-latin-classics",
+  "shelf_fit": "fits",
+  "shelf_note": "A 13th-century Latin manuscript of Vitruvius fits perfectly in the Greek-Latin Classics tradition.",
+  "rights_flag": null,
+  "structure_note": "The 18 printed backsteps and 14 repeats are likely due to foliation (numbering only rectos) or misread leaf numerals. Page 115 is a flyleaf with Arabic inscriptions.",
+  "on_sight_defect": true,
+  "fit_to_show": "do_not_show",
+  "showcase_pages": [
+   60
+  ],
+  "reader_summary": "The reader finds a 13th-century Latin manuscript of Vitruvius' De architectura. The transcription handles the script reasonably well but struggles with some specific names and terms. The English translation cannot be trusted, as it drops substantial passages and leaks markup into the final text.",
+  "pages": [
+   {
+    "page_number": 24,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "munuipiũ",
+      "image": "municipium",
+      "problem": "misread municipium",
+      "severity": "minor",
+      "class": "other:misread"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "dissoluunt. Itẽ saxa... Cũ edificandũ fuit an biennium",
+      "english": "[Omitted]",
+      "problem": "The first half of the page is completely dropped in the translation.",
+      "severity": "serious",
+      "class": "other:dropped_passage"
+     }
+    ],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 30,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "socerem",
+      "image": "Socratem",
+      "problem": "misread Socrates as socerem (father-in-law)",
+      "severity": "serious",
+      "class": "other:misread_name"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "The image-desc tag '[Large blue Lombardic initial D]' leaked into the reader text.",
+      "severity": "moderate",
+      "class": "other:markup_leak"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 60,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "at̃stilon",
+      "image": "tetrastylon",
+      "problem": "architectural term tetrastylon misread",
+      "severity": "moderate",
+      "class": "other:misread"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 115,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 5,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "The transcription is mostly competent for this script but misreads key terms. The translation is severely flawed due to a massive omission on page 24 and markup leakage on page 30."
+ }
+]

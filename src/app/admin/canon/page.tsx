@@ -79,7 +79,7 @@ const STATUS_GOOD = '#0ca30c';
 const STATUS_WARN = '#fab219';
 
 const fmt = (n: number | undefined) => (n ?? 0).toLocaleString('en-US');
-const pct = (n: number, d: number) => (d > 0 ? `${(n / d * 100).toFixed(1)}%` : '—');
+const pct = (n: number, d: number) => (d > 0 ? `${(n / d * 100).toFixed(1)}%` : '–');
 
 // ─── Building blocks ─────────────────────────────────────────────────────
 
@@ -102,7 +102,7 @@ function BarRow({ label, value, max, color, note }: {
   const w = max > 0 ? Math.max(1, value / max * 100) : 0;
   return (
     <div
-      title={`${label}: ${fmt(value)}${note ? ` — ${note}` : ''}`}
+      title={`${label}: ${fmt(value)}${note ? ` (${note})` : ''}`}
       style={{ display: 'grid', gridTemplateColumns: '170px 1fr 90px', gap: 10, alignItems: 'center', padding: '3px 0' }}
     >
       <div style={{ fontSize: 12.5, color: INK_2, textAlign: 'right', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -223,7 +223,7 @@ export default function CanonDashboardPage() {
           <span style={{ flex: 1 }} />
           {snap && (
             <span style={{ fontSize: 12, color: snap.stale ? STATUS_WARN : INK_2 }}>
-              {snap.stale ? '⚠ stale — ' : ''}snapshot {new Date(snap.updated_at).toLocaleString()}
+              {snap.stale ? '⚠ stale: ' : ''}snapshot {new Date(snap.updated_at).toLocaleString()}
             </span>
           )}
           <button
@@ -238,7 +238,7 @@ export default function CanonDashboardPage() {
           </button>
         </div>
         <p style={{ fontSize: 12.5, color: INK_2, margin: '0 0 24px' }}>
-          Live = visible with processed pages. Totals include the hidden import backlog — the gap between the two is where resolution work remains.
+          Live = visible with processed pages. Totals include the hidden import backlog. The gap between the two is where resolution work remains.
         </p>
 
         {error && (
@@ -257,7 +257,7 @@ export default function CanonDashboardPage() {
         {w && (
           <Section
             title="Works & editions"
-            sub="Editions clustered under books.work_id — the layer that answers “do we already hold this work?”"
+            sub="Editions clustered under books.work_id, the layer that answers “do we already hold this work?”"
           >
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 12 }}>
               <Tile label="Distinct works (live)" value={fmt(w.distinct_works_live)} />
@@ -343,7 +343,7 @@ export default function CanonDashboardPage() {
               />
             </div>
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-              <Card title="Resolution funnel — live vs all books" grow>
+              <Card title="Resolution funnel: live vs all books" grow>
                 <BarRow label="live: author string" value={a.author_string_live} max={a.author_string_all} color={ORDINAL_3[0]} />
                 <BarRow label="live: author_id linked" value={a.author_id_live} max={a.author_string_all} color={ORDINAL_3[1]} />
                 <div style={{ height: 8 }} />
@@ -354,7 +354,7 @@ export default function CanonDashboardPage() {
                 </div>
               </Card>
               <Card title="Top unresolved author strings (live)" grow>
-                {a.top_unresolved.length === 0 && <div style={{ fontSize: 12.5, color: INK_2 }}>None — fully resolved.</div>}
+                {a.top_unresolved.length === 0 && <div style={{ fontSize: 12.5, color: INK_2 }}>None. Fully resolved.</div>}
                 {a.top_unresolved.map(r => (
                   <div key={r.author} style={{ display: 'flex', justifyContent: 'space-between', gap: 12, padding: '2px 0', fontSize: 12.5 }}>
                     <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.author}</span>
@@ -370,11 +370,11 @@ export default function CanonDashboardPage() {
         {ft && (
           <Section
             title="First translations"
-            sub="Badges resolved by graded verdicts on recorded search attempts — one writer (nightly reconcile), evidence over assertion."
+            sub="Badges resolved by graded verdicts on recorded search attempts: one writer (nightly reconcile), evidence over assertion."
           >
             {ft.process && (
               <div style={{ marginBottom: 10 }}>
-                <Card title="Process coverage — how much of the live corpus has been through FT" grow>
+                <Card title="Process coverage: how much of the live corpus has been through FT" grow>
                   <BarRow label="live books" value={ft.process.live_total} max={ft.process.live_total} color={ORDINAL_4[0]} />
                   <BarRow
                     label="searched (≥1 attempt)"
@@ -446,12 +446,12 @@ export default function CanonDashboardPage() {
                   />
                 ))}
                 <div style={{ fontSize: 12, color: INK_2, marginTop: 8 }}>
-                  Only strong/moderate render the assertive claim; weak stays “candidate” — none_found is weak evidence by doctrine.
+                  Only strong/moderate render the assertive claim; weak stays “candidate”, since none_found is weak evidence by doctrine.
                 </div>
               </Card>
             </div>
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 10 }}>
-              <Card title="Search attempts — last 30 days" grow>
+              <Card title="Search attempts: last 30 days" grow>
                 {ft.attempts_by_day.length > 0
                   ? <Sparkbars data={ft.attempts_by_day} />
                   : <div style={{ fontSize: 12.5, color: INK_2 }}>No attempts recorded in the window.</div>}
