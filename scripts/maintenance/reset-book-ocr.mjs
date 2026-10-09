@@ -10,7 +10,9 @@
  *
  * This script does the reset safely, in order:
  *   1. Saves a page_revisions snapshot of every cleared field (recoverable).
- *   2. Cancels the book's outstanding (pending/processing) OCR batch_jobs.
+ *   2. Ends the book's outstanding (pending/processing) OCR batch_jobs: never-submitted rows are
+ *      cancelled; submitted single-book rows are marked `superseded` (paid output discarded on
+ *      purpose — see step 4); cross-book rows are left to the generation guard.
  *   3. Bumps pipeline_auto.ocr_generation — submitters stamp this on new jobs,
  *      and batch-collector refuses to save results from an older generation.
  *   4. Clears ocr (and optionally translation) on the selected pages.
@@ -54,6 +56,8 @@
 import { MongoClient } from 'mongodb';
 import { randomBytes } from 'crypto';
 import { isHeld } from '../lib/pipeline-hold.mjs';
+import { endNamelessBatchJobs } from '../lib/end-batch-job.mjs';
+import { hasGeminiJobNameClause } from '../lib/batch-job-filters.mjs';
 
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
@@ -181,11 +185,25 @@ for (const p of pages) {
 }
 console.log(`Revisions saved: ${revisions}`);
 
-// 4. Cancel outstanding jobs BEFORE clearing pages (closes the resurrect window)
-const cancelRes = await db.collection('batch_jobs').updateMany(activeJobFilter, {
-  $set: { status: 'cancelled', error: `cancelled by reset-book-ocr: ${REASON}`, updated_at: new Date() },
+// 4. End outstanding jobs BEFORE clearing pages (closes the resurrect window).
+// A row with no Gemini name never reached Gemini: cancelled. A submitted row is PAID output
+// this reset discards on purpose, so it is written `superseded` — the collector skips it and
+// the Gemini-side ledger (paid-vs-got section 8) counts it as a deliberate discard — never
+// `cancelled`, which reads as "nothing to collect" and hides a billed job (#6276). A submitted
+// CROSS-book job also carries other books' pages: it is left in flight, and for OCR the
+// generation bump below drops only this book's pages when it is collected.
+const RESET_BY = 'scripts/maintenance/reset-book-ocr.mjs';
+const namelessRes = await endNamelessBatchJobs(db, activeJobFilter, {
+  status: 'cancelled', reason: `reset-book-ocr: ${REASON}`, by: RESET_BY, set: { error: `cancelled by reset-book-ocr: ${REASON}` },
 });
-console.log(`Jobs cancelled: ${cancelRes.modifiedCount}`);
+const singleBook = { $or: [{ book_ids: { $exists: false } }, { book_ids: { $size: 0 } }, { book_ids: [book.id] }] };
+const discardRes = await db.collection('batch_jobs').updateMany(
+  { ...activeJobFilter, $and: [singleBook, hasGeminiJobNameClause()] },
+  { $set: { status: 'superseded', error: `discarded by reset-book-ocr: ${REASON}`, discarded_by: RESET_BY, updated_at: new Date() } },
+);
+const crossBook = await db.collection('batch_jobs').countDocuments({ ...activeJobFilter, $and: [hasGeminiJobNameClause()] });
+console.log(`Jobs ended: ${namelessRes.modifiedCount} never-submitted cancelled, ${discardRes.modifiedCount} submitted discarded (superseded)`
+  + (crossBook ? `, ${crossBook} cross-book left in flight${TRANSLATION_ONLY ? ' — WARNING: no generation guard covers translation; they may re-write cleared text when collected' : ' (generation guard drops this book\'s pages)'}` : ''));
 
 // 5. Bump generation BEFORE clearing — any not-yet-cancelled job (e.g. created
 // by a concurrent submitter mid-reset) is now stale by generation.

@@ -1,0 +1,275 @@
+[
+ {
+  "id": "K202",
+  "score": 3,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "ལས་ཀྱི་སྒྲིབ་པ་གང་གིས་བསྒྲིབས་ནས་#སེམས་ཅན་དམྱལ་",
+    "english": "because of which sentient beings are reborn in hells",
+    "why": "sems can dmyal ba is the word for the hells; the confessant says that by these obscurations he himself would go to the hells, not that sentient beings are reborn there.",
+    "fix": {
+     "find": "because of which sentient beings are reborn in hells",
+     "replace": "because of which I would go to the hells"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "དེ་བཞིན་གཤེགས་པ་པདྨའི་འོད་ཟེར་རྣམ་པར་རོལ་པས་མངོན་པར་མཁྱེན་པ་ལ",
+    "english": "Homage to the Lotus who clearly understands through the playful manifestation of the Tathagata light rays.",
+    "why": "The name is the Tathāgata Padmajyotirvikrīḍitābhijña: the Tathāgata who knows through the play of lotus light rays; 'Tathāgata' and 'lotus' are swapped.",
+    "fix": {
+     "find": "Homage to the Lotus who clearly understands through the playful manifestation of the Tathagata light rays.",
+     "replace": "Homage to the Tathagata who clearly understands through the playful manifestation of lotus light rays."
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "དབང་པོ་ཏོག་གི་རྒྱལ་མཚན་གྱི་རྒྱལ་པོ་",
+    "english": "King of the Victory Banner of Indomitable Power",
+    "why": "dbang po here is Indra (Indraketudhvajarāja, as the note itself says), not 'indomitable power'."
+   }
+  ],
+  "note": "A faithful confession litany overall, but one Buddha name is garbled and the final clause turns the confessant's own rebirth in hell into 'sentient beings' being reborn there."
+ },
+ {
+  "id": "K205",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "Accurate rendering of the commentary on the ālambana of atoms, including the Buddhadeva doctrine and the two components of the object-condition."
+ },
+ {
+  "id": "K219",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "སེར་སྐྱའི་ནི་རབ་ཏུ་དང་བ་ལ་སོགས་པར་འགྱུར་ལ།",
+    "english": "For the followers of the (Samkhya) the Enumerators, an ancient Indian school of dualistic philosophy, the result is clarity",
+    "why": "ser skya completes drang srong from the previous side: the sage Kapila (for whom the purusha yields serenity), not the Sāṃkhya school (grangs can).",
+    "fix": {
+     "find": "For the followers of the (Samkhya) the Enumerators, an ancient Indian school of dualistic philosophy, the result is clarity",
+     "replace": "For the sage Kapila, the result is clarity"
+    }
+   },
+   {
+    "type": "reversal",
+    "confidence": "high",
+    "tibetan": "ཁས་མི་ལེན་ན་ཡང་ཞེས་པ་ལ་སོགས་པས",
+    "english": "By stating \"if it is accepted,\"",
+    "why": "The cited phrase is 'even if it is not accepted' (khas mi len na yang).",
+    "fix": {
+     "find": "By stating \"if it is accepted,\"",
+     "replace": "By stating \"even if it is not accepted,\""
+    }
+   },
+   {
+    "type": "gloss",
+    "confidence": "medium",
+    "tibetan": "རྩ་བའི་གཏན་ཚིགས་ཡོན་ཏན་རྗེས་སུ་འགྲོ་བ་",
+    "english": "the fundamental reason that the qualities follow after [note: referring to the logical concomitance between the soul and its experiences]",
+    "why": "The root reason is the objects' being accompanied by (consisting of) the guṇas; the note's 'concomitance between the soul and its experiences' misdescribes it."
+   }
+  ],
+  "note": "The argument about the purusha's inferability is followed well, but Kapila is turned into the Sāṃkhya school and a negated root-text lemma is cited as positive."
+ },
+ {
+  "id": "K215",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "ཚུར་ཤོག་འོངས་པ་ལེགས་སོ",
+    "english": "\"Come here, I am welcome.\"",
+    "why": "The greeting is addressed to the visitor: 'Come, welcome (you have come well)'.",
+    "fix": {
+     "find": "\"Come here, I am welcome.\"",
+     "replace": "\"Come here, welcome.\""
+    }
+   }
+  ],
+  "note": "Sound rendering of the forest-dweller duties and the start of the miscellaneous duṣkṛta rules, with one garbled greeting."
+ },
+ {
+  "id": "K213",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "structure",
+    "confidence": "high",
+    "tibetan": "ཐོག་མར་འབྲིང་ཙམ་དུ་སྡུག་པ་དེ་ཕ་མ་ལ་སོགས་པར་རབ་ཏུ་བསྒོམ་མོ།",
+    "english": "Initially, one should meditate intensely on those who are moderately dear, such as parents and so on.",
+    "why": "One meditates on the moderately dear AS one's parents etc. (same pattern as the following steps), not on the moderately dear 'such as parents'.",
+    "fix": {
+     "find": "Initially, one should meditate intensely on those who are moderately dear, such as parents and so on.",
+     "replace": "Initially, one should meditate on those who are moderately dear as being like one's parents and so on."
+    }
+   }
+  ],
+  "note": "Clear and accurate on the three kinds of love and the graded meditation, except that the first step misreads 'as one's parents'."
+ },
+ {
+  "id": "K216",
+  "score": 3,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "reversal",
+    "confidence": "high",
+    "tibetan": "ཅི་ལྟར་འདི་ནི་འདྲ་བ་ཞེས། །",
+    "english": "how could one otherwise perceive \"this is not similar\"?",
+    "why": "The verse asks how one understands 'this is similar'; there is no negation.",
+    "fix": {
+     "find": "\"this is not similar\"",
+     "replace": "\"this is similar\""
+    }
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "རྒྱུའི་དབང་གིས་བྱེད་པའི་ཚོགས་པ་དེ་ལྟར་འགྱུར་བ་ལ་ཅི་སྟེ་འདི། འདི་ལྟར་འགྱུར་ཞེས་བརྒལ་ཞིང་བརྟག་པ་ལ་བརྟེན་པ་ནི་མ་ཡིན་ནོ་ཞེ་ན།",
+    "english": "If you ask why this occurs through the assembly of causes and conditions without relying on investigation and analysis, we reply:",
+    "why": "The opponent asserts that the collection of factors comes about by force of causes and is not subject to the challenge 'why is this thus?'; it is a claim, not a question."
+   }
+  ],
+  "note": "The upamāna-into-anumāna argument is followed correctly, but a negation is inserted into the staff-bearer verse and the opening objection is recast as a question."
+ },
+ {
+  "id": "K206",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "སྒྲ་ངེས་པར་གཟུང་བའི་འབྲས་བུ་ཅི་ཡང་མ་ཡིན་ནོ།",
+    "english": "the result of grasping the word with certainty is nothing at all",
+    "why": "sgra nges par gzung ba is the restrictive particle ('only', avadhāraṇa): the word 'only' would have no purpose.",
+    "fix": {
+     "find": "the result of grasping the word with certainty is nothing at all",
+     "replace": "the restrictive word \"only\" would serve no purpose at all"
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "བཤད་པ། རྗེས་སུ་འགྲོ་བ་ཡང་མ་ཡིན་ལ།",
+    "english": "regarding it, you say:",
+    "why": "bshad pa introduces the author's reply, not the opponent's statement.",
+    "fix": {
+     "find": "regarding it, you say:",
+     "replace": "regarding it, we reply:"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "བྱ་ཉིད་རྗེས་སུ་འགྲོ་བ་མི་རུང་བའི་ཕྱིར",
+    "english": "Because the nature of an action itself cannot follow",
+    "why": "bya nyid completes gzhal from the previous side: knowability (prameyatva), the kevalānvayin reason under discussion, not 'the nature of an action'."
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "འདིར་རིགས་པ་ཅན་གྱི་བརྗོད་པར་བྱ་བ་མེད་པ་ནི་གཞི་འམ་གཞན་མ་ཡིན་པའི་ཕྱིར་",
+    "english": "Here, the Logicians have nothing to say because",
+    "why": "The sentence reports the Naiyāyika's stated position (exclusion from the non-existent is impossible) and then says that point recurs; it does not say the Logicians have nothing to say."
+   },
+   {
+    "type": "gloss",
+    "confidence": "medium",
+    "tibetan": "མི་མཐུན་པའི་ཕྱོགས་རྟག་པ་ལ་མ་ཡིན་ཏེ",
+    "english": "[note: original: \"vapakṣa\"]",
+    "why": "The term is vipakṣa (and the earlier note's 'anuvaya' should be anvaya)."
+   }
+  ],
+  "note": "The kevalānvayin debate is broadly tracked, but the reason under discussion is misidentified, the restrictive particle is mistranslated and the author's reply is given to the opponent."
+ },
+ {
+  "id": "K211",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "addition",
+    "confidence": "high",
+    "tibetan": "རྫོགས་པའི་",
+    "english": "The perfect one line of text follows, cut off at the page break",
+    "why": "Only rdzogs pa'i ('the perfect …') is on the side; the rest is meta-text not in the Tibetan.",
+    "fix": {
+     "find": "The perfect one line of text follows, cut off at the page break",
+     "replace": "The perfect…"
+    }
+   }
+  ],
+  "note": "A faithful verse rendering of the non-conceptual samādhi verses, marred only by stray meta-text at the end."
+ },
+ {
+  "id": "K217",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "རྗེ་བོ་ནི་སྔར་ཁོ་ནར་གྲུབ་ཟིན་པ་ཉིད་ཀྱི་ཕྱིར་རོ།",
+    "english": "because the student would have already been established previously",
+    "why": "rje bo is the master/owner, not a student.",
+    "fix": {
+     "find": "because the student would have already been established previously",
+     "replace": "because the master would have already been established previously"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ལྷག་མ་མི་འཐད་པའི་ཕྱིར་ཏེ། ལྷག་མས་གྲུབ་པ་",
+    "english": "The remainder is logically untenable.",
+    "why": "lhag ma is the Nyāya śeṣavat inference ('from the remainder'), a technical term; rendered as plain 'the remainder' here and later ('the remainder is realized later', where the Tibetan says even one who does not know the relation understands the śeṣavat)."
+   }
+  ],
+  "note": "Sound rendering of the argument about the owner–wealth relation and avinābhāva, with one wrong referent and an unrecognised technical term."
+ },
+ {
+  "id": "K204",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "gloss",
+    "confidence": "medium",
+    "tibetan": "མིའི་འགྲོ་#བ་པས་ཡོངས་སུ་བཟུང་བ་ལ་དེའི་འདུ་ཤེས་ཀྱིས་ཞེས་བྱ་བའི་ཁྱད་པར་",
+    "english": "yet one possesses that specific perception [note: a mistaken identity of the owner]",
+    "why": "de'i 'du shes is the perception of it as such (owned by a human), not a mistaken identity; the passage on the absent branch, commissioning and the five māṣakas is run together into one conditional the Tibetan does not have."
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "དངོས་གཞིའི་ཆོ་ག་ལ་གཏོགས་པ་",
+    "english": "this specific branch of the primary ritual",
+    "why": "cho ga in this Vinaya analysis is the procedure/manner of the act (of the fundamental offence), not a ritual."
+   }
+  ],
+  "note": "The sthūlātyaya and duṣkṛta cases of mistaken ownership are rendered correctly, but the middle passage on the absent branch and the five māṣakas is muddled."
+ }
+]

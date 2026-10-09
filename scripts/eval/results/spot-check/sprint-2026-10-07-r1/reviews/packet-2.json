@@ -1,0 +1,730 @@
+[
+  {
+    "book_id": "69e7ab4f5f1a22ab19a96632",
+    "slot": 6,
+    "title": "Thadrak Kanjur 'Bum Ca",
+    "tradition": "tibetan",
+    "shelf_fit": "fits",
+    "shelf_note": "A manuscript Kanjur volume of the Śatasāhasrikā Prajñāpāramitā ('Bum), handwritten pothi leaves. It belongs on the Tibetan shelf.",
+    "rights_flag": null,
+    "structure_note": "Each photograph holds two pothi leaves (I5), and the run is not in reading order. Text runs 524-top → 524-bottom → 525-top (ending 'དེ་ནས་བཅོམ་ལྡན་འདས་ཀྱིས།') → 526-top ('ལྷའི་དབང་པོ་བརྒྱ་བྱིན་ལ་བཀའ་སྩལ་པ', ending '…ཐོབ་པར') → 525-bottom ('གྱུར་པ་དང་།…') → 526-bottom. The bottom leaf of 525 and the top leaf of 526 are swapped in reading order, so a reader hits a non sequitur at 525. The run has no printed numbers, and 439 of 556 pages are translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 524,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "འཐོ་བ་བོ ... འཚད་རྒྱའོ ... བྱབ་དང་",
+            "image": "འཐོབ་བོ ... འཚང་རྒྱའོ ... བྱ་བ་དང་",
+            "problem": "scattered syllable slips; sense unaffected",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཀཽ་ཤི་ཀ",
+            "english": "Koushika (vs Kaushika on the next pages)",
+            "problem": "name spelled inconsistently",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 525,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ཕྱིནད་པ་སྟོང་ཕྲག་བརྒྱ་པ",
+            "image": "ཕྱིན་པ་སྟོང་ཕྲག་བརྒྱ་པ",
+            "problem": "stray letter in the colophon",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "…སངས་རྒྱས་སོ། …འཚང་རྒྱའོ། …འཚང་རྒྱ་བར་འགྱུར་རོ",
+            "english": "will awaken, are awakening, and will awaken",
+            "problem": "the past/present/future triad is rendered future/present/future",
+            "severity": "minor"
+          },
+          {
+            "source": "…ཞུགས་པར་གྱུར་པ་དང་། འཇུག་པ་དང་…དེ་ལྟ་བུའི་ཆོས་མང་པོ་རྒྱ་ཆེར་བསྟན་ཏོ",
+            "english": "many such extensive teachings were shown, such as entering, having entered...",
+            "problem": "misparsed: dharmas were taught BY WHICH beings enter; the English makes the entering the content of the teachings",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "The bottom leaf of this photograph continues the top leaf of page 526; the reader shows the leaves out of reading order",
+            "severity": "moderate",
+            "class": "I5"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 526,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "རིགསཀྱི ... ཀཽ་ཤིཀ ... མཚང་རྒྱ",
+            "image": "རིགས་ཀྱི ... ཀཽ་ཤི་ཀ ... འཚང་རྒྱ",
+            "problem": "dropped tshegs and a letter slip",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཡང་དག་པའི་སྐྱོན་མྱེད་པར",
+            "english": "the state of faultlessness",
+            "problem": "'ཡང་དག་པའི' dropped",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "'total recall <note>original: \"dharani\"</note>' gives Sanskrit as the 'original' of Tibetan གཟུངས",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The BDRC OCR is serviceable and the translation is faithful to the stock formulas. The defect is structural: two leaves per photograph, with leaves swapped between consecutive records, so the reading order breaks at page 525."
+  },
+  {
+    "book_id": "69e13adf0dae29249d20bb57",
+    "slot": 7,
+    "title": "Īśvara-Pratyabhijñā-Vivṛti-Vimarśinī, Part III",
+    "tradition": "sanskrit",
+    "shelf_fit": "fits",
+    "shelf_note": "Abhinavagupta's commentary, Kashmir Series of Texts and Studies (KSTS), 1943; Kashmir Śaiva shelf.",
+    "rights_flag": true,
+    "structure_note": "The scan offset is constant (printed 203–205 = records 207–209). The 8 backsteps and 8 repeats look like misread or duplicated numerals, not splices.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 207,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "प्रमाणम्रीमध्यनिवेशी",
+            "image": "प्रमाणसामग्रीमध्यनिवेशी",
+            "problem": "'सामग्री' dropped",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "निर्विकल्पाश्रमरूपम्",
+            "image": "निर्विकल्पाभ्रमरूपम्",
+            "problem": "'non-erroneous' (abhrama) misread as āśrama",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "व्यावृत्तिं स्वस्य",
+            "image": "व्यावृत्तिमस्य",
+            "problem": "normalised",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "…व्यावृत्तरूपज्ञापकं लक्षणं निर्विकल्पाभ्रमरूपम्, तत्र…",
+            "english": "a characteristic is used to remove disagreement regarding a specific type of direct perception",
+            "problem": "the content of Dharmottara's definition (non-conceptual, non-erroneous) is dropped",
+            "severity": "moderate",
+            "class": "T9"
+          }
+        ],
+        "other": [
+          {
+            "note": "Header rendered 'Chapter 2, Section 4, Commentary'; the page says 'composed by Abhinavagupta'",
+            "severity": "minor"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 208,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "असंभवाव्याप्तिव्याप्तिदोषयोगात्",
+            "image": "असंभवाव्याप्त्यतिव्याप्तिदोषयोगात्",
+            "problem": "'अति' dropped (over-pervasion becomes pervasion)",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "अन्नापि / किं पुष्यति / सुभाव",
+            "image": "अत्रापि / किंच पुष्यति / स्वभाव",
+            "problem": "letter slips",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "तस्यां सत्यामपि असंभवादसत्यामपिच संभवात्",
+            "english": "…<note>impossibility</note> … <note>over-pervasion</note>",
+            "problem": "inserted notes guess the flaw labels",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 209,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "असंभवोऽग्नौ धूमस्येति",
+            "image": "असंभवोऽनग्नौ धूमस्येति",
+            "problem": "'in non-fire' becomes 'in fire'; negation dropped",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "कुड्येऽग्नौ … दृष्टोऽन्यन्तरेऽपितु",
+            "image": "कुड्येऽनग्नौ … दृष्टोऽनग्न्यन्तरेऽपितु",
+            "problem": "two more 'non-fire' negations dropped",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "भगवनियतशक्तिः",
+            "image": "भगवन्नियतिशक्तिः",
+            "problem": "Niyati normalised to niyata",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "साधुतां दृष्टतां",
+            "image": "साधुतां दुष्टतां",
+            "problem": "'faultiness' misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "स्वसंवेदनलक्षणस्वत्वात्मतत्त्व",
+            "image": "स्वसंवेदलक्षणस्वतन्त्रात्मतत्त्व",
+            "problem": "'independent Self' lost",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "कुड्येऽनग्नौ न संभवो धूमस्य दृष्टः (image)",
+            "english": "the possibility of smoke is not seen in a wall or in fire",
+            "problem": "sense inverted: the source says smoke is not seen in a wall, a NON-fire",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "असंभवोऽनग्नौ धूमस्य",
+            "english": "impossibility in the case of fire and smoke",
+            "problem": "the argument (no smoke without fire) is blurred",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "भगवन्नियतिशक्तिः",
+            "english": "the fixed power of the Lord",
+            "problem": "technical term Niyati lost",
+            "severity": "moderate"
+          },
+          {
+            "source": "साधुतां दुष्टतां च",
+            "english": "validity or correctness",
+            "problem": "'faultiness' lost",
+            "severity": "moderate"
+          }
+        ],
+        "other": [
+          {
+            "note": "Opens with '<meta>continues from previous page: …</meta>' repeating the previous page's English",
+            "severity": "moderate",
+            "class": "T5"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean print and good OCR on pages 207–208. On page 209 the OCR drops three 'an-' (non-fire) prefixes, so the English states the reverse of the argument, plus several losses of technical terms."
+  },
+  {
+    "book_id": "6a0f06c5900fb4799cef25f2",
+    "slot": 8,
+    "title": "Tantrik Texts Vol. VI (1917)",
+    "tradition": "sanskrit",
+    "shelf_fit": "fits",
+    "shelf_note": "The Kālīvilāsa Tantra (Avalon ed.); Sanskrit tantra shelf. The title should name the work.",
+    "rights_flag": null,
+    "structure_note": "Printed page numbers are sparse. Record 23's OCR takes the signature mark '२' at the foot as page-num '2', which explains the 16 backsteps and 22 repeats. They are misreads, not a splice.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 21,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "शूद्रोऽपि वैष्णवत्वं याति",
+            "image": "शूद्रोऽपि वैश्यभावत्वं याति",
+            "problem": "'Vaiśya status' normalised to 'Vaiṣṇava-hood'",
+            "severity": "serious",
+            "class": "O8"
+          },
+          {
+            "ocr": "श्रीतत्पुरुपुष",
+            "image": "श्रीतत्पुरुष",
+            "problem": "stutter",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "वैश्यभावत्वं (image)",
+            "english": "even a Shudra attains the state of a Vaishnava <gloss>a devotee of Vishnu</gloss>",
+            "problem": "a caste-rank claim becomes a sectarian one, reinforced by a gloss",
+            "severity": "serious",
+            "class": "O8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 22,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "दुष्टशूद्रञ्च स्वाहाप्रणवसंयुतम्",
+            "image": "a blurred half-verse not reading 'दुष्टशूद्रञ्च'",
+            "problem": "half-line reconstructed",
+            "severity": "moderate",
+            "class": "O1"
+          },
+          {
+            "ocr": "सिद्धोऽग्रगे / निशयं",
+            "image": "सिद्धोऽग्रगो / निश्चयं",
+            "problem": "letter slips",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "दुष्टशूद्रञ्च स्वाहाप्रणवसंयुतम्",
+            "english": "A wicked Shudra should never use a mantra…",
+            "problem": "translates the reconstruction and borrows 'never' from v.13",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      },
+      {
+        "page_number": 23,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "शिवस्य मन्त्रवद्विधिं",
+            "image": "शिवस्य मन्त्रवद्देवि",
+            "problem": "vocative misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "<page-num>२</page-num>",
+            "image": "signature mark at the foot",
+            "problem": "signature recorded as the page number",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "footnotes १–४",
+            "english": "(absent)",
+            "problem": "variant-reading footnotes not translated",
+            "severity": "minor",
+            "class": "T13"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Ritual verse, mostly rendered faithfully. But the OCR on page 21 normalises वैश्यभावत्वं to वैष्णवत्वं, so the English says a Śūdra becomes a Vaiṣṇava, not a Vaiśya. The scan is low resolution and some half-lines are reconstructed."
+  },
+  {
+    "book_id": "6984e84db96022f6fa69b4c8",
+    "slot": 9,
+    "title": "Opus mago-cabbalisticum et theosophicum",
+    "tradition": "kabbalah",
+    "shelf_fit": "fits",
+    "shelf_note": "Welling's Opus mago-cabbalisticum (1784), section on Sulphur; esoteric/kabbalah shelf.",
+    "rights_flag": null,
+    "structure_note": "Record 242 is a second copy of printed page 180 (identical to 240) placed after page 181 (241): a duplicate record (I2), translated twice. There are 801 records against pages_count 794 and 127 printed repeats, so the duplication is likely widespread, not a misread numeral.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 240,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "im dritten Theil vom ⊖",
+            "image": "vom ☿",
+            "problem": "Mercury sign read as Salt",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "der Ursprung des elementarischen △ … Dieses Schwefels",
+            "english": "the origin of the elemental fire",
+            "problem": "the sign is Sulphur (the next sentence says so); the subject is misnamed 'fire' throughout. Page 242 says 'sulfur'",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "dritten Theil vom ☿",
+            "english": "third part concerning Salt",
+            "problem": "wrong cross-reference, carried from the OCR",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 241,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "so bestiehe davon den ersten Theil vom ☉",
+            "image": "so besiehe … vom ⊖",
+            "problem": "Salt sign read as Sun",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ersten Theil vom ⊖",
+            "english": "first part concerning the Sun <term>…solar principle, gold, or the vital spirit</term>",
+            "problem": "wrong cross-reference plus an invented gloss on the wrong symbol",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "Running header rendered as a chapter heading",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 242,
+        "right_page": "no",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "dritten Theil vom $\\ominus$",
+            "image": "vom ☿",
+            "problem": "same misread as 240",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "Scheide-Kunst",
+            "english": "art of alchemy",
+            "problem": "flattened",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Duplicate of printed page 180 (= record 240) placed after page 181, with a different translation",
+            "severity": "serious",
+            "class": "I2"
+          },
+          {
+            "note": "LaTeX '$\\triangle$' / '$\\ominus$' in the reader text",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Good Fraktur OCR, but alchemical signs are misread (☿→⊖, ⊖→☉), the translations disagree on the subject (fire vs sulphur), and record 242 duplicates page 180."
+  },
+  {
+    "book_id": "6990630be7b7642c081de08b",
+    "slot": 10,
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "tradition": "kabbalah",
+    "shelf_fit": "fits",
+    "shelf_note": "Cremona Zohar, Terumah, Rashi-type print; correct shelf.",
+    "rights_flag": null,
+    "structure_note": "Order is right: folio קעב recto (345), its unnumbered verso (346), then קעג (347). The OCR invents folio 'קסג' (163) for 346 and the English shows '163'. pages_translated_field 539 vs 548 actually translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 345,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "חינון/חלין/חיקו/חקרי",
+            "image": "אינון/אלין/איהו/אקרי",
+            "problem": "aleph systematically read as heth",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "וכל עמיא חזאן בחינון חלונין",
+            "image": "וכל שמשא אזיל באינון חלונין",
+            "problem": "'the sun goes through the windows' becomes 'nations see'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "חלון וכיף כפלא",
+            "image": "חלון זהרא וביה נפקא",
+            "problem": "window name garbled",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "ילך כעיר חניניך",
+            "image": "ידך בערף אויביך",
+            "problem": "Gen 49:8 garbled",
+            "severity": "serious",
+            "class": "O3"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "וכל שמשא אזיל באינון חלונין",
+            "english": "All the nations see through those windows",
+            "problem": "sense replaced",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "חלון זהרא",
+            "english": "\"Window of the Double Cave\" <note>…resembling Machpelah</note>",
+            "problem": "invented name and gloss",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "ידך בערף אויביך",
+            "english": "he shall go like a city of your grace <note>alluding to the strength of Judah</note>",
+            "problem": "invented scripture quotation",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "שלטי בכ\"ה ופלגא … לליליא",
+            "english": "rule here and there like the loops of the curtains",
+            "problem": "fluent over garble",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "אית חמש חלוני",
+            "english": "fifty <note>…contextually fifty</note> windows",
+            "problem": "translator emends the number",
+            "severity": "moderate",
+            "class": "O7"
+          }
+        ],
+        "other": [
+          {
+            "note": "OCR carries a descriptive <meta> and '## Main Text (Zohar)' headings",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 346,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "<page-num>קסג</page-num>",
+            "image": "no folio on this verso; catchword 'חדוה' at the foot",
+            "problem": "folio invented, catchword dropped",
+            "severity": "moderate",
+            "class": "O16"
+          },
+          {
+            "ocr": "<note>אולי צ\"ל בינ\"א</note>",
+            "image": "no such note on the page",
+            "problem": "invented editorial emendation inside the transcription",
+            "severity": "serious",
+            "class": "O15"
+          },
+          {
+            "ocr": "ולא אמר ליה אלא לזל עיני כונן זמירות כולה'",
+            "image": "ולא אמר איה אלוה עשי נותן זמירות בלילה",
+            "problem": "Job 35:10 garbled",
+            "severity": "serious",
+            "class": "O3"
+          },
+          {
+            "ocr": "סמא דאלוד סמא כלא",
+            "image": "אלא שמא דאלוה",
+            "problem": "'Name' read as 'medicine'",
+            "severity": "serious",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "ולא אמר איה אלוה עשי נותן זמירות בלילה",
+            "english": "He did not say it except to the one whose eyes are fixed on the melodies of all",
+            "problem": "the homily's verse is lost",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "שמא דאלוה",
+            "english": "the medicine of the birth … a complete medicine that includes male and female",
+            "problem": "invented doctrine",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "ככבא חדא דאקרי …",
+            "english": "a star called Binah <note>…a note suggests it should be Binah</note>",
+            "problem": "names a Sefirah on an invented note",
+            "severity": "serious",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "Invented apparatus ('perhaps read Binah') presented as part of the source",
+            "severity": "serious",
+            "class": "T10"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 347,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "חדוה. וכל אינון זמירות",
+            "image": "חדוה ועל דא נותן זמירות",
+            "problem": "Job keyword dropped",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "תלת סטרין לאכחא ליה לקב\"ה",
+            "image": "תלת משריין לשבחא ליה לקב\"ה",
+            "problem": "'to praise' misread",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "כלהו חטא וחטא לא מקבלי חסרנו",
+            "image": "כלהו אשא ואשא לא מקבלא מסאבו",
+            "problem": "'fire' read as 'sin'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "כריך מיזא דמרכבה דקדשא",
+            "image": "כריך חויא סחרניה דקדשא",
+            "problem": "serpent of the parable garbled",
+            "severity": "serious",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "לשבחא ליה לקב\"ה",
+            "english": "divide into three sides to oppose the Holy One",
+            "problem": "sense inverted: they divide to PRAISE God",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "כלהו אשא ואשא לא מקבלא מסאבו",
+            "english": "they all sin and do not receive their lack",
+            "problem": "angels made sinners",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "כריך חויא סחרניה דקדשא",
+            "english": "coiled the \"husk\" of the Holy Chariot",
+            "problem": "invented Merkavah reference",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "Catchword rendered as a centred line '-> To be mixed <-'",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The OCR fails on Rashi-type print: aleph is read as heth, and verses and key nouns are garbled. The fluent translations reverse sense (angels 'oppose' God, angels 'sin') and invent scripture and notes (Binah, Machpelah). Readers should not trust these pages."
+  }
+]

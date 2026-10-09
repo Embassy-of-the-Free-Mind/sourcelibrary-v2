@@ -88,7 +88,7 @@ for (const stratum of strata) {
         try { res = await runModel(MODEL, buf, PROMPT, { maxTokens: 16000, thinkingBudget: 0, temperature: 0 }); } catch (e) { err = e; break; }
       }
       const text = res?.text ?? '';
-      const row = { ...(promptInfo.mode === 'production' ? { prompt: `production-v${promptInfo.version}`, prompt_hash: promptInfo.content_hash } : {}), slug, engine: ENGINE, finishReason: res?.finishReason || null, inputTokens: res?.inputTokens || 0, outputTokens: res?.outputTokens || 0, thinkingTokens: res?.thinkingTokens || 0, costUsd: res?.costUsd || 0, durationMs: res?.durationMs || null, chars: text.length, error: res ? null : (err?.message || 'unknown').slice(0, 120), at: new Date().toISOString() };
+      const row = { ...(promptInfo.mode === 'production' ? { prompt: `production-v${promptInfo.version}`, prompt_hash: promptInfo.content_hash } : {}), slug, engine: ENGINE, ...(res?.route ? { route: res.route } : {}), finishReason: res?.finishReason || null, inputTokens: res?.inputTokens || 0, outputTokens: res?.outputTokens || 0, thinkingTokens: res?.thinkingTokens || 0, costUsd: res?.costUsd || 0, durationMs: res?.durationMs || null, chars: text.length, error: res ? null : (err?.message || 'unknown').slice(0, 120), at: new Date().toISOString() };
       fs.appendFileSync(meterPath, JSON.stringify(row) + '\n');
       if (!res) { failed++; console.log(`  ! ${slug}: ${row.error}`); continue; }
       // An empty transcription is a result (a blank page, a refusal): write it so the page

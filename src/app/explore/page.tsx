@@ -5,6 +5,8 @@ import CenturyHeatmap from '@/components/explore/CenturyHeatmap';
 import ExploreNav from '@/components/explore/ExploreNav';
 import DataSources from '@/components/explore/DataSources';
 import { getReadDb } from '@/lib/mongodb';
+import { getLibraryStats } from '@/lib/library-stats';
+import type { Db } from 'mongodb';
 import {
   ENTITY_STATS_CONFIG_ID,
   canonicalEntitiesReadpathEnabled,
@@ -12,15 +14,31 @@ import {
 } from '@/lib/canonical-entities';
 
 export const revalidate = 86400;
+
+/**
+ * Live book count — the same number the homepage shows. A bare
+ * `books.estimatedDocumentCount()` also counts hidden books and artwork-only
+ * records (`pages_count: 0`) and read ~3x the live figure (134,002 vs 42,133,
+ * 2026-10-07). Falls back to the canonical live filter if the stats cache is
+ * missing (visibility-and-stats.md).
+ */
+async function liveBookCount(db: Db): Promise<number> {
+  const stats = await getLibraryStats();
+  if (stats?.books) return stats.books;
+  return db.collection('books').countDocuments(
+    { visible: true, pages_count: { $gt: 0 } },
+    { maxTimeMS: 15000 },
+  );
+}
 export const maxDuration = 30;
 
 export const metadata: Metadata = {
-  title: 'Explore — Source Library',
-  description: 'Interactive visualizations of 12,500+ people, places, and concepts from the Western esoteric tradition. Century heatmaps, era highlights, and data source breakdowns.',
+  title: 'Explore | Source Library',
+  description: 'Interactive visualizations of the people, places, and concepts indexed across the library. Century heatmaps, era highlights, and data source breakdowns.',
   alternates: { canonical: '/explore' },
   openGraph: {
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
-    title: 'Explore — Source Library',
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
+    title: 'Explore | Source Library',
     description: 'Interactive visualizations of the Western esoteric tradition, enriched with Wikidata.',
   },
 };
@@ -45,7 +63,7 @@ async function fetchExploreStatsCanonical() {
   const [statsDocRaw, totalBooks, heatmapData] = await Promise.all([
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     db.collection('system_config').findOne({ _id: ENTITY_STATS_CONFIG_ID as any }),
-    db.collection('books').estimatedDocumentCount(),
+    liveBookCount(db),
     db.collection('books').aggregate([
       { $match: { year: { $exists: true, $gt: 0 }, visible: true } },
       {
@@ -150,7 +168,7 @@ async function fetchExploreStats() {
     heatmapData,
   ] = await Promise.all([
     db.collection('entities').estimatedDocumentCount(),
-    db.collection('books').estimatedDocumentCount(),
+    liveBookCount(db),
     Promise.all(entityTypes.map(async (t) => ({
       type: t,
       count: await db.collection('entities').countDocuments({ type: t }, { maxTimeMS: 25000 }),
@@ -256,7 +274,7 @@ export default async function ExplorePage() {
       header={
         <ContentHeader maxWidth="wide"
           title="Explore"
-          subtitle="Interactive visualizations of 12,500+ people, places, and concepts extracted from the Western esoteric tradition — enriched with Wikidata."
+          subtitle="Interactive visualizations of the people, places, and concepts indexed across the library, enriched with Wikidata."
         />
       }
       maxWidth="wide"

@@ -1,0 +1,465 @@
+{
+ "dta": {
+  "texts": 5481,
+  "typed_pages": 762041,
+  "chars": 1310059337,
+  "raw_bytes": 1987923074,
+  "licences": {
+   "dta-cc-by-sa-4.0": 2645,
+   "dta-other:http://creativecommons.org/licenses/by-nc/3.0/de/": 1524,
+   "dta-other:http://creativecommons.org/licenses/by-sa/3.0/de/": 617,
+   "dta-other:http://creativecommons.org/publicdomain/zero/1.0/": 370,
+   "dta-other:http://creativecommons.org/licenses/by/4.0/deed.de": 115,
+   "dta-other:http://creativecommons.org/licenses/by-nc/3.0/": 34,
+   "dta-other:http://creativecommons.org/licenses/by/4.0/": 1,
+   "dta-other:http://creativecommons.org/licenses/by-sa/3.0/": 3,
+   "dta-other:http://www.deutsche-digitale-bibliothek.de/lizenzen/nug-kkn/": 1,
+   "dta-other:http://creativecommons.org/licenses/by-sa/2.0/de/": 50,
+   "dta-other:https://creativecommons.org/licenses/by/4.0/deed.de": 98,
+   "dta-other:http://creativecommons.org/licenses/by/3.0/de/": 3,
+   "dta-other:https://creativecommons.org/licenses/by-sa/3.0/de/": 1,
+   "dta-other:https://web.archive.org/web/20180927123034/http://www.gutenberg.org/wiki/Gutenberg:The_Project_Gutenberg_License": 9,
+   "dta-other:https://creativecommons.org/licenses/by/4.0/": 1,
+   "dta-other:https://creativecommons.org/licenses/by-sa/3.0/": 1,
+   "dta-other:https://creativecommons.org/licenses/by-nc-sa/4.0/deed.de": 1,
+   "dta-other:http://creativecommons.org/licenses/by-sa/2.0/de": 1,
+   "dta-other:http://creativecommons.org/licenses/by-sa/3.0/de": 1,
+   "dta-other:https://www.europeana.eu/portal/de/rights/out-of-copyright-non-commercial.html": 1,
+   "dta-other:http://mdz.bib-bvb.de/copyright.htm": 1,
+   "dta-other:http://creativecommons.org/licenses/by-nc/3.0/de": 1,
+   "dta-other:https://creativecommons.org/licenses/by-nc-sa/4.0/": 1,
+   "dta-other:http://rightsstatements.org/vocab/NoC-NC/1.0/": 1
+  },
+  "candidate_pairs": 760,
+  "pairs_by_verdict": {
+   "text-not-found": 606,
+   "no-text": 11,
+   "same-work-other-edition": 44,
+   "same-edition": 93,
+   "text-found-but-inconsistent": 6
+  },
+  "pairs_by_tier_kind": {
+   "author-title|same-work-other-edition": 32,
+   "author-title|same-edition": 25,
+   "author-title-year|same-edition": 50,
+   "edition-key|same-edition": 16,
+   "author-title-year|same-work-other-edition": 9,
+   "edition-key|same-work-other-edition": 3,
+   "title-year|same-edition": 2
+  },
+  "texts_matched": 114,
+  "pairs_dated_by_typed_text": 9,
+  "books_matched": 124,
+  "books_by_kind": {
+   "same-edition": 89,
+   "same-work-other-edition": 35
+  },
+  "books_by_language_period": {
+   "German|1800s": {
+    "same-edition": 37,
+    "same-work-other-edition": 5
+   },
+   "Latin|1600s": {
+    "same-edition": 4,
+    "same-work-other-edition": 2
+   },
+   "German|1700s": {
+    "same-edition": 24,
+    "same-work-other-edition": 15
+   },
+   "Latin|1500s": {
+    "same-edition": 1,
+    "same-work-other-edition": 0
+   },
+   "German|1600s": {
+    "same-edition": 21,
+    "same-work-other-edition": 5
+   },
+   "German|unknown": {
+    "same-edition": 0,
+    "same-work-other-edition": 3
+   },
+   "German|1900+": {
+    "same-edition": 0,
+    "same-work-other-edition": 4
+   },
+   "Latin|unknown": {
+    "same-edition": 0,
+    "same-work-other-edition": 1
+   },
+   "German|1500s": {
+    "same-edition": 1,
+    "same-work-other-edition": 0
+   },
+   "Latin-German|1600s": {
+    "same-edition": 1,
+    "same-work-other-edition": 0
+   }
+  },
+  "aligned_pages": 23322,
+  "aligned_pages_by_language_period": {
+   "German|1800s": {
+    "same-edition": 8949,
+    "same-work-other-edition": 1415
+   },
+   "Latin|1600s": {
+    "same-edition": 267,
+    "same-work-other-edition": 146
+   },
+   "German|1700s": {
+    "same-edition": 5969,
+    "same-work-other-edition": 2895
+   },
+   "Latin|1500s": {
+    "same-edition": 17,
+    "same-work-other-edition": 0
+   },
+   "German|1600s": {
+    "same-edition": 1772,
+    "same-work-other-edition": 475
+   },
+   "German|unknown": {
+    "same-edition": 0,
+    "same-work-other-edition": 96
+   },
+   "German|1900+": {
+    "same-edition": 0,
+    "same-work-other-edition": 1077
+   },
+   "Latin|unknown": {
+    "same-edition": 0,
+    "same-work-other-edition": 4
+   },
+   "German|1500s": {
+    "same-edition": 173,
+    "same-work-other-edition": 0
+   },
+   "Latin-German|1600s": {
+    "same-edition": 67,
+    "same-work-other-edition": 0
+   }
+  },
+  "congruent_pages": 17457,
+  "manifest_full": {
+   "bucket": "sl-corpus-snapshots",
+   "key": "eval-refs/typed-refs-6012/manifests/dta.manifest.jsonl.gz",
+   "bytes": 1339720,
+   "sha256": "7df6c8389438a3e20deb18d08d10dc0ba76a7835e9c02364dba96cab1d6fa8d4",
+   "rows": 5481
+  }
+ },
+ "camena": {
+  "texts": 1751,
+  "typed_pages": 199513,
+  "chars": 346634492,
+  "raw_bytes": 472694993,
+  "licences": {
+   "camena-cc-by-sa": 1751
+  },
+  "candidate_pairs": 2877,
+  "pairs_by_verdict": {
+   "text-not-found": 2649,
+   "no-text": 30,
+   "same-edition": 97,
+   "same-work-other-edition": 87,
+   "text-found-but-inconsistent": 14
+  },
+  "pairs_by_tier_kind": {
+   "author-title|same-edition": 47,
+   "edition-key|same-edition": 6,
+   "author-title-year|same-edition": 40,
+   "author-title|same-work-other-edition": 81,
+   "title-year|same-edition": 4,
+   "author-title-year|same-work-other-edition": 6
+  },
+  "texts_matched": 158,
+  "pairs_dated_by_typed_text": 27,
+  "books_matched": 168,
+  "books_by_kind": {
+   "same-edition": 88,
+   "same-work-other-edition": 80
+  },
+  "books_by_language_period": {
+   "Latin|1600s": {
+    "same-edition": 54,
+    "same-work-other-edition": 39
+   },
+   "Latin|1700s": {
+    "same-edition": 6,
+    "same-work-other-edition": 1
+   },
+   "Latin|1500s": {
+    "same-edition": 26,
+    "same-work-other-edition": 20
+   },
+   "Latin|unknown": {
+    "same-edition": 2,
+    "same-work-other-edition": 20
+   }
+  },
+  "aligned_pages": 7764,
+  "aligned_pages_by_language_period": {
+   "Latin|1600s": {
+    "same-edition": 869,
+    "same-work-other-edition": 1470
+   },
+   "Latin|1700s": {
+    "same-edition": 1697,
+    "same-work-other-edition": 5
+   },
+   "Latin|1500s": {
+    "same-edition": 1391,
+    "same-work-other-edition": 1953
+   },
+   "Latin|unknown": {
+    "same-edition": 43,
+    "same-work-other-edition": 336
+   }
+  },
+  "congruent_pages": 4038,
+  "manifest_full": {
+   "bucket": "sl-corpus-snapshots",
+   "key": "eval-refs/typed-refs-6012/manifests/camena.manifest.jsonl.gz",
+   "bytes": 210282,
+   "sha256": "138e232b3f5310d57eee00c3bc59896221dfeeea8f0764fd052ac35b2290ae2d",
+   "rows": 1751
+  }
+ },
+ "eebo-tcp": {
+  "texts": 60326,
+  "typed_pages": 4029127,
+  "chars": 8029759449,
+  "raw_bytes": 10253330628,
+  "licences": {
+   "eebo-tcp-phase1-cc0": 24202,
+   "eebo-tcp-phase1-released-header-not-updated": 1166,
+   "eebo-tcp-phase2-cc0": 34958
+  },
+  "candidate_pairs": 5522,
+  "pairs_by_verdict": {
+   "text-not-found": 4662,
+   "same-work-other-edition": 194,
+   "same-edition": 347,
+   "text-found-but-inconsistent": 31,
+   "no-text": 288
+  },
+  "pairs_by_tier_kind": {
+   "author-title|same-work-other-edition": 167,
+   "catalogue-number|same-edition": 121,
+   "author-title-year|same-edition": 150,
+   "author-title|same-edition": 43,
+   "edition-key|same-edition": 9,
+   "title-year|same-edition": 24,
+   "author-title-year|same-work-other-edition": 18,
+   "title-year|same-work-other-edition": 5,
+   "catalogue-number|same-work-other-edition": 3,
+   "edition-key|same-work-other-edition": 1
+  },
+  "texts_matched": 450,
+  "pairs_dated_by_typed_text": 3,
+  "books_matched": 464,
+  "books_by_kind": {
+   "same-work-other-edition": 133,
+   "same-edition": 331
+  },
+  "books_by_language_period": {
+   "Latin|unknown": {
+    "same-edition": 0,
+    "same-work-other-edition": 3
+   },
+   "Latin|1600s": {
+    "same-edition": 63,
+    "same-work-other-edition": 25
+   },
+   "English|pre-1500": {
+    "same-edition": 1,
+    "same-work-other-edition": 1
+   },
+   "English|1600s": {
+    "same-edition": 228,
+    "same-work-other-edition": 29
+   },
+   "English|1500s": {
+    "same-edition": 24,
+    "same-work-other-edition": 11
+   },
+   "English|1800s": {
+    "same-edition": 0,
+    "same-work-other-edition": 9
+   },
+   "Middle English|1800s": {
+    "same-edition": 0,
+    "same-work-other-edition": 2
+   },
+   "English|1700s": {
+    "same-edition": 2,
+    "same-work-other-edition": 20
+   },
+   "Latin|1500s": {
+    "same-edition": 7,
+    "same-work-other-edition": 15
+   },
+   "Latin|pre-1500": {
+    "same-edition": 0,
+    "same-work-other-edition": 7
+   },
+   "Latin|1700s": {
+    "same-edition": 0,
+    "same-work-other-edition": 1
+   },
+   "French|1500s": {
+    "same-edition": 1,
+    "same-work-other-edition": 0
+   },
+   "English|1900+": {
+    "same-edition": 1,
+    "same-work-other-edition": 4
+   },
+   "Unknown|1600s": {
+    "same-edition": 1,
+    "same-work-other-edition": 0
+   },
+   "Latin|1800s": {
+    "same-edition": 0,
+    "same-work-other-edition": 2
+   },
+   "Latin-English|1600s": {
+    "same-edition": 3,
+    "same-work-other-edition": 0
+   },
+   "English|unknown": {
+    "same-edition": 0,
+    "same-work-other-edition": 2
+   },
+   "French|unknown": {
+    "same-edition": 0,
+    "same-work-other-edition": 1
+   },
+   "French|1600s": {
+    "same-edition": 0,
+    "same-work-other-edition": 1
+   }
+  },
+  "aligned_pages": 76178,
+  "aligned_pages_by_language_period": {
+   "Latin|unknown": {
+    "same-edition": 0,
+    "same-work-other-edition": 55
+   },
+   "Latin|1600s": {
+    "same-edition": 3681,
+    "same-work-other-edition": 1561
+   },
+   "English|pre-1500": {
+    "same-edition": 23,
+    "same-work-other-edition": 3
+   },
+   "English|1600s": {
+    "same-edition": 50462,
+    "same-work-other-edition": 6239
+   },
+   "English|1500s": {
+    "same-edition": 4582,
+    "same-work-other-edition": 861
+   },
+   "English|1800s": {
+    "same-edition": 0,
+    "same-work-other-edition": 1609
+   },
+   "Middle English|1800s": {
+    "same-edition": 0,
+    "same-work-other-edition": 714
+   },
+   "English|1700s": {
+    "same-edition": 753,
+    "same-work-other-edition": 2067
+   },
+   "Latin|1500s": {
+    "same-edition": 134,
+    "same-work-other-edition": 734
+   },
+   "Latin|pre-1500": {
+    "same-edition": 0,
+    "same-work-other-edition": 274
+   },
+   "Latin|1700s": {
+    "same-edition": 0,
+    "same-work-other-edition": 16
+   },
+   "French|1500s": {
+    "same-edition": 19,
+    "same-work-other-edition": 0
+   },
+   "English|1900+": {
+    "same-edition": 217,
+    "same-work-other-edition": 614
+   },
+   "Unknown|1600s": {
+    "same-edition": 21,
+    "same-work-other-edition": 0
+   },
+   "Latin|1800s": {
+    "same-edition": 0,
+    "same-work-other-edition": 890
+   },
+   "Latin-English|1600s": {
+    "same-edition": 537,
+    "same-work-other-edition": 0
+   },
+   "English|unknown": {
+    "same-edition": 0,
+    "same-work-other-edition": 72
+   },
+   "French|unknown": {
+    "same-edition": 0,
+    "same-work-other-edition": 14
+   },
+   "French|1600s": {
+    "same-edition": 0,
+    "same-work-other-edition": 26
+   }
+  },
+  "congruent_pages": 60361,
+  "manifest_full": {
+   "bucket": "sl-corpus-snapshots",
+   "key": "eval-refs/typed-refs-6012/manifests/eebo-tcp.manifest.jsonl.gz",
+   "bytes": 17420992,
+   "sha256": "194ee85a1f0428f9efb3070b8666d02a7b9a9d7e20f2ef31128f30cf775336de",
+   "rows": 60326
+  },
+  "manifest_in_repo": {
+   "rows": 745,
+   "note": "texts that matched a book we hold, as the same text or as a translation; the full manifest is on R2"
+  }
+ },
+ "eebo-tcp-translations": {
+  "matches": {
+   "tcp_texts": 115,
+   "our_books": 281,
+   "our_works": 211,
+   "by_tier": {
+    "author+title": 40,
+    "uniform-title": 322
+   },
+   "by_language": {
+    "Latin": 343,
+    "German": 19
+   }
+  },
+  "candidates_one_shared_title_stem": {
+   "tcp_texts": 206,
+   "our_books": 486,
+   "our_works": 365
+  },
+  "author_only_tcp_texts": 1293,
+  "passage_level": {
+   "pairs": 45,
+   "tcp_texts": 25,
+   "our_books": 40,
+   "our_pages": 6670,
+   "rows": 7286,
+   "pairs_from_matches": 21,
+   "pairs_from_candidates": 24
+  }
+ }
+}

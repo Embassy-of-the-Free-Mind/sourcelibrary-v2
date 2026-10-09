@@ -10,7 +10,7 @@ import { useLocale, FEEDBACK_STRINGS } from '@/lib/i18n';
 const HIDE_ON = ['/collections/mycology'];
 // Homepage editions opt out entirely — they carry their own "Be part of this"
 // band. Matched exactly, since every path startsWith('/').
-const HIDE_EXACT = ['/', '/es'];
+const HIDE_EXACT = ['/', '/es', '/la'];
 
 /**
  * A warm callout section inviting visitors to share feedback.

@@ -153,7 +153,7 @@ export default function AdminErrorsPage() {
                           {group.slice(0, 10).map((err) => (
                             <div key={err._id} className="flex items-center gap-3">
                               {deviceIcon(err.user_agent)}
-                              <span>{err.url ? new URL(err.url, 'https://sourcelibrary.org').pathname : '—'}</span>
+                              <span>{err.url ? new URL(err.url, 'https://sourcelibrary.org').pathname : '–'}</span>
                               <span>{timeAgo(err.timestamp)}</span>
                             </div>
                           ))}

@@ -117,7 +117,7 @@ export default function CollectionImageCurator({ slug, onClose }: { slug: string
                       style={{ borderColor: pinned ? '#9e4a3a' : '#e8e4dc' }} />
                     <figcaption className="flex items-center justify-between mt-1">
                       <span className="text-[10px] flex items-center gap-0.5" style={{ color: '#8a8170' }}>
-                        <GripVertical className="w-3 h-3" />{pinned ? `#${i + 1}` : '—'}
+                        <GripVertical className="w-3 h-3" />{pinned ? `#${i + 1}` : '–'}
                       </span>
                       <button onClick={() => toggleHidden(c.id)} aria-label={hidden ? 'Show' : 'Hide'}
                         style={{ color: hidden ? '#9e4a3a' : '#8a8170' }}>

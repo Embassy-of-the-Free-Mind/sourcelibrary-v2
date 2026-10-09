@@ -1,7 +1,7 @@
 name: Auto-merge tier:auto PRs
 
 # Merges ONE green `tier:auto` PR per run (scripts/maintenance/auto-merge.mjs):
-# test + DCO green, no `blocked`, settled ≥10 min, main quiet ≥8 min (one
+# test + DCO green, next-build not failed, no `blocked`, settled ≥10 min, main quiet ≥8 min (one
 # Vercel build at a time), entities-sweep interlock clear. `tier:hold` PRs are
 # never touched — a human merges those. Labels come from pr-tier.yml.
 #
@@ -12,7 +12,7 @@ on:
   schedule:
     - cron: '*/15 * * * *'
   workflow_run:
-    workflows: ['Unit & Integration Tests']
+    workflows: ['Unit & Integration Tests', 'Next build check']
     types: [completed]
   workflow_dispatch:
     inputs:

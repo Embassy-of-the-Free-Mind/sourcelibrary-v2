@@ -89,24 +89,26 @@ function PublishedCard({ col, priority = false }: { col: CuratedCollection; prio
       ) : (
         <div className="absolute inset-0 bg-warm" />
       )}
-      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
-      <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6">
+      {/* Deeper where the text sits: white type over a pale engraving (Forbidden
+          Books, Music of the Spheres) was unreadable at 0.35 mid-stop (#6092). */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.92)] via-[rgba(26,22,18,0.6)] via-45% to-transparent" />
+      <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6 [text-shadow:0_1px_3px_rgba(0,0,0,0.6)]">
         <h2 className="font-serif text-xl sm:text-2xl text-white font-semibold leading-tight mb-1.5 group-hover:text-accent-gold transition-colors">
           {col.name}
         </h2>
         {col.subtitle && (
-          <p className="text-sm sm:text-base text-white/70 leading-relaxed line-clamp-2 mb-2">
+          <p className="text-sm sm:text-base text-white/80 leading-relaxed line-clamp-2 mb-2">
             {col.subtitle}
           </p>
         )}
         {col.description && (
-          <p className="text-xs sm:text-sm text-white/50 leading-relaxed line-clamp-2 hidden sm:block">
+          <p className="text-xs sm:text-sm text-white/65 leading-relaxed line-clamp-2 hidden sm:block">
             {col.description.slice(0, 180)}
             {col.description.length > 180 ? '...' : ''}
           </p>
         )}
         {col.book_count > 0 && (
-          <p className="text-xs text-white/40 mt-2">
+          <p className="text-xs text-white/60 mt-2">
             {col.book_count.toLocaleString('en-US')} books
           </p>
         )}

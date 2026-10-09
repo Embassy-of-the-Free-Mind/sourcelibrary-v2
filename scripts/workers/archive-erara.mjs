@@ -58,6 +58,7 @@ import * as os from 'os';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
 import { fetchToFileWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
+import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 
 // CLI args
 const args = process.argv.slice(2);
@@ -359,7 +360,11 @@ async function processBook(book, db) {
       );
     }
 
-    // If all pages archived, mark book as archive_complete
+    // If all pages archived, mark book as archive_complete — but only a book that is not yet past
+    // archiving and not held. This worker selects e-rara books at ANY status, so an unconditional
+    // write lifted 329 pipeline holds (`held` -> archive_complete, no audit row) and the orchestrator
+    // then OCR'd 30 of them (#6122). It could equally move a translated book back to OCR. The page
+    // images above are archived either way; only the status advance is conditional.
     const remainingUnarchived = await db.collection(pagesCol).countDocuments({
       book_id: book.id,
       $or: [
@@ -370,7 +375,14 @@ async function processBook(book, db) {
     });
     if (remainingUnarchived === 0) {
       await db.collection(booksCol).updateOne(
-        { id: book.id },
+        {
+          id: book.id,
+          ...NOT_HELD,
+          $or: [
+            { 'pipeline_auto.status': { $exists: false } },
+            { 'pipeline_auto.status': { $in: ['queued', 'archiving'] } },
+          ],
+        },
         {
           $set: {
             'pipeline_auto.status': 'archive_complete',

@@ -79,7 +79,7 @@ export default function TranslationCheckSummary() {
                   {l.transcription_failed > 0 && (
                     <>
                       {' '}
-                      A further {l.transcription_failed} failed before the translation —
+                      A further {l.transcription_failed} failed before the translation:
                       the transcription did not match the page.
                     </>
                   )}

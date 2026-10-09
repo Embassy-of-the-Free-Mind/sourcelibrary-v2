@@ -1,0 +1,9 @@
+{
+ "script": "syriac",
+ "name": "rtl-reversed",
+ "reference": "ܟܬܒܐ ܕܝܠܝܕܘܬܗ ܕܝܫܘܥ ܡܫܝܚܐ ܒܪܗ ܕܕܘܝܕ ܒܪܗ ܕܐܒܪܗܡ",
+ "hypothesis": "ܡܗܪܒܐܕ ܗܪܒ ܕܝܘܕܕ ܗܪܒ ܐܚܝܫܡ ܥܘܫܝܕ ܗܬܘܕܝܠܝܕ ܐܒܬܟ",
+ "expected_cer": 0.8,
+ "tolerance": 0.2,
+ "why": "a visually reversed string (left-to-right storage) is wrong, never normalised away: expected ≥ 0.6"
+}

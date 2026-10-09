@@ -1,0 +1,748 @@
+[
+  {
+    "book_id": "6993899a0f04c37dcfa61b3c",
+    "slot": 5,
+    "title": "Sophocles, Hesiod, Euripides (18 tragedies), and Aeschylus",
+    "tradition": "greek-latin-classics",
+    "shelf_fit": "fits",
+    "shelf_note": "A Greek manuscript of the tragedians (Laurenziana); sampled leaves are Sophocles' Electra, Euripides' Bacchae and Medea. Squarely on the classics shelf. The hand looks later than the catalogue date '1350'; not verified.",
+    "rights_flag": null,
+    "structure_note": "printed_repeats 143 and backsteps 33 fit a foliated manuscript (one folio number per leaf, read on both faces, plus misread numerals) rather than a splice. Page 524 is a correctly marked blank endleaf. 25 pages have no OCR.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 40,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "αἰ' φίλος ὁ πίσις ἠδ' ὑποδύσεται",
+            "image": "ἇς φίλος οὔτις ἀνὴρ ὑπερίσταται (Soph. El. 189)",
+            "problem": "verse line garbled into different words",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "οἱ κοινὸν ὠφέλημα προσφιλῶς σέθεν",
+            "image": "οἰκονομῶ θαλάμους πατρός, ὧδε μὲν (El. 190)",
+            "problem": "line invented, not on the page",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "<gloss>…</gloss> followed by the same line again, for every line",
+            "image": "one main line each, with small separate interlinear glosses above",
+            "problem": "every main-text line is emitted twice, once as a 'gloss'; the real interlinear glosses are not transcribed",
+            "severity": "serious",
+            "class": "O4"
+          },
+          {
+            "ocr": "speaker margins 'ὀρ: χορ:' / 'ὀρ: Η:'",
+            "image": "speaker sigla χορ(ός) and Ἠλ(έκτρα) only",
+            "problem": "Orestes invented as a speaker",
+            "severity": "moderate",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "garbled OCR",
+            "english": "the friend, the trust, and he will enter … the common benefit, lovingly of yours",
+            "problem": "fluent English rendered from text that is not on the page; nothing here is Sophocles' Electra",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "broken markup shown in reader text: '<margin>or:</margin>\\ncho:</margin>', '<margin></margin>'",
+            "severity": "moderate",
+            "class": "D1"
+          },
+          {
+            "note": "summary and vocab name the play as Euripides' Orestes with Orestes speaking; the leaf is Sophocles' Electra (Chorus and Electra)",
+            "severity": "serious",
+            "class": "E1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 173,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "φονίου Διὸς ὕβριν κατασχεῖν",
+            "image": "φονίου δ' ἀνδρὸς ὕβριν κατάσχες (Ba. 555)",
+            "problem": "'man' read as 'Zeus'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "μόλε κτύπος π' ἐν δώμασιν",
+            "image": "μόλε χρυσῶπα τινάσσων",
+            "problem": "line rewritten",
+            "severity": "moderate",
+            "class": "O1"
+          },
+          {
+            "ocr": "αἰῶ κλύετ' π' μοῦ κ' ἴδε ταῦτα … ἡ γ' ὑμῶ πόλιν αὐτ' ὅσε μη' ὅ' 2ὶ πᾶσ'",
+            "image": "ἰὼ κλύετ' ἐμᾶς κλύετ' αὐδᾶς … ἰὼ ἰὼ πάλιν αὐδῶ ὁ Σεμέλας ὁ Διὸς παῖς (Dionysus' voice, Ba. 576-581)",
+            "problem": "Dionysus' epiphany lines garbled; red speaker sigla (Δι., Χο.) dropped",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "φονίου Διὸς ὕβριν κατασχεῖν",
+            "english": "To restrain the violence of murderous Zeus",
+            "problem": "the chorus asks Dionysus to check the murderous man (Pentheus); English makes Zeus the murderer",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "column 2 OCR",
+            "english": "Under the darkness … the age, hear and see these things, the fetters, and the…",
+            "problem": "much of column 2 is word-salad from the garbled OCR, presented as verse",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "broken tags at the end of the reader text: '<margin></margin>\\n<insert></insert> … </insert>\\n</margin>'",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 363,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "κἀμοὶ ξυνήκεις καὶ ξυνεκπλήσσεις φρένας",
+            "image": "a different line (Medea messenger speech, c. 1125ff.)",
+            "problem": "plausible trimeters composed rather than read in column 1",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "τί πλοῖον εἶποι σῶν τέκνων οὐκ ὄμματα",
+            "image": "πέπλοι δὲ λεπτοί, σῶν τέκνων δωρήματα (Med. 1188)",
+            "problem": "'fine robes, your children's gifts' read as nonsense about a boat",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "χρυσῷ μὲν ἀμφὶ κρᾶτ' ἔχων χρυσὸν πλόκον",
+            "image": "χρυσοῦς μὲν ἀμφὶ κρατὶ κείμενος πλόκος",
+            "problem": "line rewritten",
+            "severity": "moderate",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "column 2 (c. 37 lines incl. ὦ τάλαινα χεὶρ ἐμή, λαβὲ ξίφος)",
+            "english": "(nothing; translation stops at 'O dearest, if this is some')",
+            "problem": "second column, including Medea's resolve speech, not translated",
+            "severity": "serious",
+            "class": "T1"
+          },
+          {
+            "source": "column 1 invented Greek",
+            "english": "You might have the couch, just as you came from home…",
+            "problem": "English of lines that are not in the manuscript",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 524,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A real tragedians manuscript on the right shelf, but the OCR has not read the hand. Lines are invented or garbled, speakers are made up, and on one leaf every line is doubled. The English translates that invented text, and one leaf's translation stops after the first column.",
+    "fit_to_show": "do_not_show",
+    "showcase_pages": [],
+    "reader_summary": "A Byzantine-era manuscript of Sophocles and Euripides (Electra, Bacchae, Medea seen). The transcription is largely not the manuscript's text: lines are reconstructed or garbled, and on page 40 the play is misidentified as Euripides' Orestes. The English cannot be trusted as a translation of these leaves. Only the images are useful."
+  },
+  {
+    "book_id": "69a5e60885fa13e734e42186",
+    "slot": 6,
+    "title": "Procli In Platonis Alcibiadem Commentarius (Barocci 140)",
+    "tradition": "greek-latin-classics",
+    "shelf_fit": "fits",
+    "shelf_note": "Proclus' commentary on the Alcibiades I in a Bodleian Greek manuscript. Belongs on the shelf.",
+    "rights_flag": null,
+    "structure_note": "Few backsteps/repeats (7/8) against 162 numbered pages; consistent with a foliated manuscript plus a few misread numerals. pages_translated_field 304 vs 334 counted translated: the stored counter is stale.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 47,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "δαίμων οὖν οὗτος κἀκεῖνος· … ὡς δὲ ἀκινήτου ψυχῆς δαίμων",
+            "image": "δαίμων οὖν οὗτος καὶ νοῦς· … ὡς δὲ ἀν(θρωπ)ίνης ψυχῆς δαίμων",
+            "problem": "abbreviation for 'human' expanded as 'unmoved'; 'and intellect' read as 'and that one'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "ἄκοσμος οἱ τὸ ἐντὸς",
+            "image": "different word (ἀ…ως) before οἱ τὸ",
+            "problem": "misread adverb becomes 'the disorderly'",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ὡς δὲ ἀκινήτου ψυχῆς δαίμων",
+            "english": "as demon of an unmoved soul",
+            "problem": "the source says daimon of the human soul; carried from the OCR misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "νοουμένων ὡς κἀνώμαλος τίς ψυχὴ καταλειπομένη ὑφέστηκε",
+            "english": "intellect being understood as a soul that has been left behind as uneven, it exists",
+            "problem": "fluent-looking but unintelligible",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "editorial <note> on the scribe's dittography sits in both OCR and English; it is correct (the image repeats the clause), but it is model commentary in the reader text",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 124,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "τὸ αὐτὸ <insert>καλὸν α</insert> ὁρᾶν … τὰ λοιπὰ <insert>πάντα β</insert> εἴδη",
+            "image": "β and α written above 'πάντα ἄλλα' as transposition marks (= τὰ ἄλλα πάντα)",
+            "problem": "transposition marks read as inserted words",
+            "severity": "moderate",
+            "class": "O12"
+          },
+          {
+            "ocr": "καὶ πᾶσι αὐτὰ κοινεῖν· πᾶσι μετεχομένοις",
+            "image": "καὶ τὰ μὲν αὐτὰ καλεῖν, τὰ δὲ μετέχοντα",
+            "problem": "'call some the things-themselves, others participants' read as 'communicate them to all'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "καὶ πᾶσι αὐτὰ κοινεῖν",
+            "english": "And to communicate them to all, to all that participate",
+            "problem": "follows the misread; Proclus' distinction between the Forms themselves and their participants is lost",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [
+          {
+            "note": "'<insert>beautiful A</insert>' and '<insert>all B</insert>' shown in the English",
+            "severity": "moderate",
+            "class": "D1"
+          },
+          {
+            "note": "vocab names Hermias and the Phaedrus; the work is Proclus on the Alcibiades",
+            "severity": "minor",
+            "class": "O16"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 236,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "οὐδ' περὶ ἀκμῆς ἀμφότερα",
+            "image": "… περὶ αὐτῆς ἀμφότερα",
+            "problem": "'about it' read as 'about the prime'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "οὐ γὰρ κυρίως παντελῶς ἀποπέπτωκε",
+            "image": "οὐδ' ὁ Ἀλκιβιάδης παντελῶς ἀποπέπτωκε",
+            "problem": "Alcibiades' name dropped; subject lost",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "ἐπ' οὐρανὸν καὶ ἀπ' οὐρανοῦ φέρεσθαι τὸν νοῦν",
+            "image": "ἐπὶ τὸ ὅλον(?) κατὰ φύσιν φέρεσθαι τὸν νοῦν",
+            "problem": "phrase 'to heaven and from heaven' not on the page",
+            "severity": "moderate",
+            "class": "O1"
+          },
+          {
+            "ocr": "ἐπὶ τὸν μέσον καὶ ὑψηλότατον",
+            "image": "ἐπὶ τὸν μέγιστον καὶ ὑψηλότατον",
+            "problem": "'greatest' read as 'middle'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "οὐ γὰρ κυρίως παντελῶς ἀποπέπτωκε",
+            "english": "for it has not fallen away completely",
+            "problem": "the source says Alcibiades has not wholly fallen from the truth",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "ὁ νεανίσκος ὁ μυστικὸς καὶ ἀπορούμενος",
+            "english": "the young man is consistently mystical and perplexed",
+            "problem": "'mystical' rests on an unclear OCR phrase; likely not what Proclus says (low confidence)",
+            "severity": "moderate",
+            "class": "O1"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      },
+      {
+        "page_number": 270,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "οὐ κοινῶς δὲ ἔλεγχος ὁ πρὸς αὐτὴν οἰκείως ἔχει",
+            "image": "οὐκοῦν ὁ ἔλεγχος ὁ παρ' ἑαυτῶν(?) οἰκείως ἔχει πρὸς τὴν οὐσίαν",
+            "problem": "'therefore' read as 'not commonly', turning an affirmation into a negation",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "καὶ ὁ διάλογος δῆλον λόγος· ὁ δι' ἀποκρινομένου ἐλέγχων",
+            "image": "καὶ ὁ δεικνὺς δήπου λόγος ὅτι ὁ ἀποκρινόμενος ὁ λέγων",
+            "problem": "Proclus' point that the answerer is the one speaking (Alc. 113a) is lost",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "τὸ ἀγαθὸν εὐθὺν φυσαμᾶς ἐστιν ἀγαθοειδές",
+            "image": "τὸ δ' ἀγαθὸν ἔνδοθεν· φύσει γάρ ἐστιν ἀγαθοειδής",
+            "problem": "nonce word produced",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "οὐ κοινῶς δὲ ἔλεγχος … οἰκείως ἔχει πρὸς τὴν οὐσίαν τῆς ψυχῆς",
+            "english": "The refutation, however, is not commonly [something] which has an affinity toward the soul's essence",
+            "problem": "sense reversed: the source says self-refutation IS proper to the soul's essence",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "εὐθὺν φυσαμᾶς",
+            "english": "<term>physemas</term> <gloss>a natural quality</gloss>",
+            "problem": "a non-word glossed as a technical term",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "κατὰ τὸ σῶμα τῆς ψυχικῆς οὐσίας",
+            "english": "according to the body of the psychic essence",
+            "problem": "phrase rests on unverified OCR; reads as doctrine Proclus would not state",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Correct leaves and a recognisable Proclus text, but every page has meaning-changing misreadings of abbreviations and names. On page 270 a misread turns Proclus' claim about self-refutation into its negation, and the English follows it.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      47
+    ],
+    "reader_summary": "Proclus' commentary on Plato's Alcibiades I in a Renaissance Greek hand. The transcription follows the manuscript line by line and gets most words, but it misexpands abbreviations and sometimes drops or inverts the sense. The English is a usable guide to the argument and should be checked against the Greek (or Westerink's edition) before anyone quotes it."
+  },
+  {
+    "book_id": "69a9768ee12635ded71c4e2f",
+    "slot": 7,
+    "title": "Quaestiones de Primis Principiis",
+    "tradition": "greek-latin-classics",
+    "shelf_fit": "fits",
+    "shelf_note": "Kopp's 1826 edition of Damascius' Problems and Solutions on First Principles: Greek text with Latin apparatus.",
+    "rights_flag": null,
+    "structure_note": "Printed page numbers track the leaves (82, 111, 216, 342); the 14 backsteps / 10 repeats are probably misread numerals or front matter. The catalogue language 'Latin' is wrong for a Greek text with Latin notes (I7, minor).",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 98,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "footnotes 2) and 3) (Latin paraphrase and Hamburg/Munich variants)",
+            "english": "(not translated)",
+            "problem": "apparatus and Kopp's Latin paraphrase omitted from the English",
+            "severity": "moderate",
+            "class": "T13"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 127,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "τῶν μετ' αὐτό, ἐπεὶ οὐδὲ ἑνούμεθα ἐκείνῳ",
+            "english": "(omitted) But it is beyond that which is after it",
+            "problem": "clause 'since we are not even united with that' dropped",
+            "severity": "moderate",
+            "class": "T9"
+          },
+          {
+            "source": "τί δέ, τὸ φῶς αὐτὸ οὐ συνῆπται τῷ ἀπ' αὐτοῦ;",
+            "english": "Why, then, is the light itself, that which is from it, not connected?",
+            "problem": "question mis-parsed (should be: is not the light itself joined to what comes from it?)",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "footnotes 1)-5), 10)-11)",
+            "english": "(not translated)",
+            "problem": "apparatus omitted",
+            "severity": "minor",
+            "class": "T13"
+          }
+        ],
+        "other": [
+          {
+            "note": "stray '<note>tried to adapt</note>' inside a sentence",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 232,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "καὶ ἐν παντὶ τῷ τὰ τρία ἐστί",
+            "image": "καὶ ἐν παντὶ νῷ τὰ τρία ἐστί",
+            "problem": "'in every intellect' becomes 'in everything'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ἔχει τὴν τριπλῆν σχέσιν καὶ πρὸς τὸ ὂν κατὰ τὴν ἀπ' ἐκείνου γένεσιν. Ἀλλὰ περὶ μὲν τούτων καὶ αὖθις.",
+            "english": "(not translated)",
+            "problem": "opening sentence of the page dropped",
+            "severity": "moderate",
+            "class": "T9"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 358,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "<gloss>2)</gloss> … <gloss>2) Hamb. …</gloss>",
+            "image": "footnote numbers and the footnote block",
+            "problem": "footnote markers and notes tagged as glosses",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ἡ μὲν οὐσία ἐστὶ σύνθετος, ἡ δὲ ἁπλῆ",
+            "english": "essence is compound, while the simple [is not]",
+            "problem": "should be 'one essence is composite, the other simple'",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean printed Greek with near-perfect OCR. The English follows the argument with occasional mis-parses and drops Kopp's apparatus.",
+    "fit_to_show": "show",
+    "showcase_pages": [
+      98,
+      232,
+      358
+    ],
+    "reader_summary": "Damascius' late Neoplatonic treatise on first principles, in Kopp's 1826 Greek edition with Latin notes. The Greek transcription is accurate. The English is a sound working translation of the main text, with a few mis-parsed sentences, and it leaves out the textual notes."
+  },
+  {
+    "book_id": "69b52c953dd6d94230281474",
+    "slot": 8,
+    "title": "Vitruvii de architectura libri X",
+    "tradition": "greek-latin-classics",
+    "shelf_fit": "fits",
+    "shelf_note": "A medieval Latin manuscript of Vitruvius (Laurenziana); on the shelf.",
+    "rights_flag": null,
+    "structure_note": "18 backsteps and 14 repeats in 116 pages: the leaves carry a modern foliation in the top corner (18, 24, 54), and the OCR misreads some of these (page 24 reads '14' where the leaf shows 18). Page 30 has a large loss at the lower inner corner (the white area is missing parchment, not an overlay). The last leaf (115) is a stained endleaf.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 24,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "sũt fer̃ ab oñib̃ antepstant̃ iniuriis",
+            "image": "sufferũt ab oib; tẽpestatib; iniurias",
+            "problem": "misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "Itaq; ñ ẽ r̃p̃henda et̃oz̃ struct̃",
+            "image": "Itaq; ñ ẽ ɔtẽpnenda grecoz structa",
+            "problem": "'of the Greeks' lost",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "plũbo siomel in t̃er̃",
+            "image": "plũbo frontes uincte",
+            "problem": "'faces bound' misread",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "first c. 17 lines (Tiburtine stone, the Anician quarries near Tarquinii and Lake Volsinii, Statonia, the Ferentum monuments, bronze-casting moulds)",
+            "english": "(not translated; English begins mid-sentence '...falling, which are in the first [place] near the city')",
+            "problem": "first half of the page has no translation",
+            "severity": "serious",
+            "class": "T1"
+          },
+          {
+            "source": "Simul aũ hũmida potestate … fuit structa calx",
+            "english": "But when the wall has been constructed with a soft capacity",
+            "problem": "source: when the moisture has been sucked out through the porous rubble; sense lost",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "ẽ uiuo se pitinũ",
+            "english": "as a living fortification",
+            "problem": "Vitruvius: 'everlasting as if in living rock'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 30,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "Delphis Apollo socerem omnium sapientissimum",
+            "image": "Delphic(us) apollo Socratem omnium sapientissimum (Book III preface)",
+            "problem": "Socrates read as 'socerem' (father-in-law)",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "huiusque naturam demonstrare: ut non modo sanet praeterit. Namque reliquis",
+            "image": "Haec autem per padum Rauennam deportatur in colonia Fanestri Pisauri Ancone reliquisq;",
+            "problem": "line invented; the Po, Ravenna, Fano, Pesaro, Ancona missing",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "Olarius vero plura tractavit ad res cum opitimum a sapina … medetur tuncis",
+            "image": "Materies earum prolixa tractabilis ad intestinum opus non minus quam sapina … resinam liquidam mellis attici colore, quae etiam medetur phthisicis",
+            "problem": "invented; Attic honey and the remedy for consumptives lost",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "Oportet aspicere in primis montes ab septentrione",
+            "image": "Montes Appennini primo motus ab Tyrreno mari in Alpes …",
+            "problem": "Apennines and Tyrrhenian Sea replaced by an invented instruction",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "Delphis Apollo socerem omnium sapientissimum",
+            "english": "Apollo declared the father-in-law of all as the wisest",
+            "problem": "Socrates becomes 'the father-in-law'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "Olarius vero plura tractavit",
+            "english": "The potter, however, treated more [things]",
+            "problem": "a potter invented from the misread",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "Namque in iis locis agens in machina…",
+            "english": "acting in the machine when it often touches, these are seen to be mostly of the Adriatic",
+            "problem": "unintelligible English presented as translation",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "'[Large blue Lombardic initial D]' image description appears in the reader's English",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 60,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "uinstella ĩ ĩr̃ martis feruentissima s latm̃ frigidissima",
+            "image": "iouis stella int' martis feruentissimã & saturni frigidissimã",
+            "problem": "Jupiter dropped",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "regionẽ q; ĩ medio mũdi ppt̃ r̃e possidet sinet",
+            "image": "regionesq; i medio mundi ppls R(omanus) possidet fines",
+            "problem": "'the Roman people' read as 'ppt r̃e'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "uinstella … media crẽs tẽpat",
+            "english": "the star of Mars … very hot, and [Saturn] is very cold, the middle [planet] creates a temperate [state]",
+            "problem": "Jupiter, the subject of the comparison, is missing",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "ppt̃ r̃e possidet",
+            "english": "it possesses … the region in the middle of the world by the reason of things",
+            "problem": "the Roman people as possessor of the middle region lost",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "m̃tcoꝝ r̃sphore sig̃noꝝ fig̃ẽ p̃minẽtel̃",
+            "english": "the figures of the signs of the spheres of the mechanics",
+            "problem": "mutulorum ecphorae (projecting mutules) garbled",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "simetiã … limetar̃",
+            "english": "the limetars [and] the smaller separations",
+            "problem": "non-word left in the English",
+            "severity": "minor",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 115,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "<unclear>يا كببيج</unclear> … احفظ الورق … ١٢٨٧ (language: Arabic)",
+            "image": "faint rotated cursive notes in the right margin; I cannot confirm they are Arabic",
+            "problem": "possibly invented Arabic kabīkaj formula and AH date on a Latin manuscript's endleaf",
+            "severity": "moderate",
+            "class": "O2"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "OCR note asserts a Kabīkaj invocation and 'possibly 1287 AH' as manuscript facts",
+            "severity": "moderate",
+            "class": "O15"
+          }
+        ],
+        "confidence": "low"
+      }
+    ],
+    "book_verdict": "A fine early manuscript of Vitruvius, but the OCR often composes plausible Latin instead of expanding the abbreviations. The English follows it: Socrates becomes 'the father-in-law', and half of page 24 is untranslated.",
+    "fit_to_show": "do_not_show",
+    "showcase_pages": [],
+    "reader_summary": "A medieval Latin copy of Vitruvius, De architectura. The transcription is a partly abbreviated, partly invented reading: some passages are close, others (e.g. Book II on larch and the Apennines) are not the manuscript's text. The English cannot be trusted. A reader should use a printed Vitruvius alongside the images."
+  }
+]

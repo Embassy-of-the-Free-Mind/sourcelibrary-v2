@@ -141,4 +141,4 @@ export const POST = withAuth(async (request, session) => {
     console.error('Error creating book:', error);
     return NextResponse.json({ error: 'Failed to create book' }, { status: 500 });
   }
-});
+}, { minRole: 'admin' }); // #6032: creating a book record is an admin action (was the default reader role)

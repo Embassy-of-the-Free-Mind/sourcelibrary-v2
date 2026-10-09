@@ -17,9 +17,9 @@ const REPO = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2';
 const n = (v: number) => Math.round(v).toLocaleString('en-US');
 const money = (v: number, currency: string) =>
   v.toLocaleString('en-US', { style: 'currency', currency, maximumFractionDigits: v > 0 && v < 10 ? 2 : 0 });
-const rate = (v: number, currency: string) => (v === 0 ? '—' : `${currency === 'EUR' ? '€' : '$'}${v.toFixed(5).replace(/0+$/, '')}`);
+const rate = (v: number, currency: string) => (v === 0 ? '–' : `${currency === 'EUR' ? '€' : '$'}${v.toFixed(5).replace(/0+$/, '')}`);
 const utc = (d: Date | string | null | undefined) =>
-  d ? `${new Date(d).toISOString().slice(0, 16).replace('T', ' ')} UTC` : '—';
+  d ? `${new Date(d).toISOString().slice(0, 16).replace('T', ' ')} UTC` : '–';
 
 const muted = { color: 'var(--text-muted)' };
 const faint = { color: 'var(--text-faint)' };
@@ -47,7 +47,7 @@ function Sources({ r }: { r: WorkRow }) {
     <>
       {r.price.sources.map((s) => (
         <div key={`${s.where}-${s.value}`} className="text-[11px] leading-snug" style={faint}>
-          {rate(s.value, r.price.currency)} — {s.what}{s.measured ? `, measured ${s.measured}` : ''} · <code>{s.where}</code>
+          {rate(s.value, r.price.currency)}: {s.what}{s.measured ? `, measured ${s.measured}` : ''} · <code>{s.where}</code>
         </div>
       ))}
     </>
@@ -84,11 +84,11 @@ export function NextStepPanel({ report, error }: { report: PipelineNextReport | 
         {' '}· ops_reports <code>{report._id}</code> · <code>{report.generated_by}</code>
         {' '}· denominator: {n(report.denominator.books)} {report.denominator.rule} ({n(report.denominator.live)} live, <code>{report.denominator.live_rule}</code>)
         {' '}· audit <span style={{ color: report.verdict.status === 'PASS' ? 'var(--accent-sage)' : 'var(--accent-rust)' }}>{report.verdict.status}</span>
-        {ageH > 30 && <span style={{ color: 'var(--accent-rust)' }}> · {Math.round(ageH)} h old — the daily audit has not run since</span>}
+        {ageH > 30 && <span style={{ color: 'var(--accent-rust)' }}> · {Math.round(ageH)} h old; the daily audit has not run since</span>}
       </div>
 
       <Card
-        title="Remaining work — live books"
+        title="Remaining work: live books"
         sub={<>Pages left × a measured price per page, as a low–high range (cheapest lane to dearest). Each step reads the book&apos;s stored next step (<code>books.pipeline_next</code>), so a book counts once, at the step it is waiting on. Prices are observations with dates, not quotes: re-measure before a spend decision. Nothing here is approved spend; each cutover is its own decision row (#5481).</>}
       >
         <table className="w-full text-xs">
@@ -122,7 +122,7 @@ export function NextStepPanel({ report, error }: { report: PipelineNextReport | 
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Card
-          title="Held — listed, not priced"
+          title="Held: listed, not priced"
           sub={<>Books with a hold marker (<code>pipeline_auto.hold</code>): out of every lane until the condition on the issue is met. Most wait on a specialist lane or a decision, so a Gemini rate would mislead. All books, not just live.</>}
         >
           <table className="w-full text-xs">
@@ -160,7 +160,7 @@ export function NextStepPanel({ report, error }: { report: PipelineNextReport | 
               {Object.entries(report.shapes).map(([k, v]) => (
                 <tr key={k} className="border-t" style={{ borderColor: 'var(--border-light)' }}>
                   <Td style={primary}>{k.replace(/_/g, ' ')}{v.note && <div className="text-[11px]" style={faint}>{v.note}</div>}</Td>
-                  <Td right>{v.all == null ? (k === 'needs_human' ? '—' : 'not measured') : n(v.all)}</Td>
+                  <Td right>{v.all == null ? (k === 'needs_human' ? '–' : 'not measured') : n(v.all)}</Td>
                   <Td right>{v.live == null ? 'not measured' : n(v.live)}</Td>
                 </tr>
               ))}

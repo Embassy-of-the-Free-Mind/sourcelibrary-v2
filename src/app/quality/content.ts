@@ -7,6 +7,30 @@
 /** ISO date the prose on /quality was last checked against the data. */
 export const PROSE_AS_OF = '2026-10-06';
 
+/**
+ * The leaf the page opens on (#5918 design direction): a real page whose margins hold a later
+ * reader's notes. Chosen by eye from three candidates posted on #5918; Derek picks the final one.
+ * Crop boxes are in pixels of `image` (1000 × 1565) and were checked by eye.
+ */
+export const LEAF = {
+  bookId: '6952b0fb77f38f6761bc28b7',
+  page: 272,
+  title: 'Angelo Poliziano, Omnium operum tomus prior',
+  date: '1519',
+  image: 'https://images.sourcelibrary.org/archived/6952b0fb77f38f6761bc28b7/272.jpg',
+  width: 1000,
+  height: 1565,
+  alt: 'A printed folio page of Latin commentary with a woodcut initial A. A reader has written notes in ink in the left margin and a full line at the foot of the page, and underlined words in the text.',
+  /** The end of one printed line: the worked example of a check. */
+  line: { x: 630, y: 185, w: 370, h: 17 },
+  /** The reader's line at the foot of the page. */
+  note: { x: 10, y: 1330, w: 680, h: 110 },
+  /** Blank paper beside it: where a reader's note on our page would go. */
+  margin: { x: 660, y: 1310, w: 280, h: 240 },
+} as const;
+
+export const leafHref = `/book/${LEAF.bookId}?page=${LEAF.page}`;
+
 export type Door = { label: string; href: string };
 
 export type Way = {

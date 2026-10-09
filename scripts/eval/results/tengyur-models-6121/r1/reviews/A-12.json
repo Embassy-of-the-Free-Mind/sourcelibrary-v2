@@ -1,0 +1,249 @@
+[
+ {
+  "id": "QVLFY",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "འདི་ཆ་ཤས་དང་བཅས་པ་ཡིན་ན་རྫས་སུ་ཡོད་པ་ཉིད་དུ་མི་འགྱུར་རོ",
+    "english": "This is not the case; if it were to possess parts",
+    "why": "de lta ma yin te here means 'otherwise' (supporting the claim that it must be partless), not a denial of the preceding statement."
+   }
+  ],
+  "note": "Faithful rendering of Vinītadeva's argument on atoms and conventional existence; only a misleading connective."
+ },
+ {
+  "id": "QCNIJ",
+  "score": 3,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "structure",
+    "confidence": "high",
+    "tibetan": "རི་བོང་གི་རྭ་ལ་སོགས་པ་མེད་པ་ལ་མཐོང་བ་འདིས་ནི་ཆོས་ཅན་ནམ་",
+    "english": "By seeing that non-existent things like a rabbit's horns do not exist, this argument actually establishes",
+    "why": "The reason ('being uncreated') is seen to occur in non-existents such as a hare's horn, so it proves the subject space non-existent; nothing about seeing that horns do not exist.",
+    "fix": {
+     "find": "By seeing that non-existent things like a rabbit's horns do not exist, this argument actually establishes",
+     "replace": "Since this reason (being uncreated) is seen in non-existent things such as a rabbit's horns, it actually establishes"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ཆོས་ཅན་གྱི་རང་གི་ངོ་བོ་དང་འབྲེལ་བ་ནི",
+    "english": "An connection with the actual nature of the subject",
+    "why": "In this list of viruddha reasons (cf. the preceding chos kyi rang gi ngo bo dang 'gal ba) the category is contradiction of the subject's own nature (dharmisvarūpaviparīta); 'brel ba is a slip for 'gal ba."
+   }
+  ],
+  "note": "Generally accurate on svayam/iṣṭa in the pakṣa definition, but the hare's-horn example is misconstrued."
+ },
+ {
+  "id": "Q9UG1",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "དེ་བཞིན་གཤེགས་དག་མཆོག་ཏུ་གསལ་མཛད་པ།",
+    "english": "the Tathagatas [note: the Buddhas], who bring supreme light, performed",
+    "why": "It is the one Tathāgata (the Buddha, Śuddhodana's son; Skt. tathāgatas singular) who honoured his father's body and built a stūpa, which is why the monks then question him.",
+    "fix": {
+     "find": "the Tathagatas [note: the Buddhas], who bring supreme light, performed",
+     "replace": "the Tathagata [note: the Buddha], who brings supreme light, performed"
+    }
+   }
+  ],
+  "note": "Tibetan verses rendered faithfully, Sanskrit lines transliterated; one plural for the Buddha distorts the narrative."
+ },
+ {
+  "id": "QZZQI",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "སྐད་ཅིག་མ་ཉིད་ལ་སོགས་པ་བཞིན",
+    "english": "just like impermanence and the like",
+    "why": "skad cig ma nyid is momentariness (kṣaṇikatva), not impermanence (mi rtag pa).",
+    "fix": {
+     "find": "Therefore, just like impermanence and the like, this is",
+     "replace": "Therefore, just like momentariness and the like, this is"
+    }
+   }
+  ],
+  "note": "The fire/smoke causal argument is followed accurately; 'Indra's head' is left literal (it is the anthill example) but defensibly so."
+ },
+ {
+  "id": "QAZZG",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "བདག་ལ་གནོད་པར་བྱེད་པ་དགག་པའི་ཆེད་དུ་ཐལ་བར་འགྱུར་བ་བརྗོད་པ",
+    "english": "in order to refute that which harms the self",
+    "why": "bdag la gnod par byed pa is the objection that harms 'us' (the author's selflessness position), which the following verse states as the opponent's consequence; 'the self' suggests the ātman."
+   }
+  ],
+  "note": "Accurate commentary on BCA 9.73-75 (past/present mind, banana tree); one ambiguous referent at the transition."
+ },
+ {
+  "id": "QLS01",
+  "score": 2,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "དེས་ཀྱང་དྲི་བ་མ་གཏོགས་ཀྱི། །འདི་དག་དེ་ལ་བྱ་ཞེས་པ་ཡིན་ཏེ། གནས་ཀྱིས་ཀྱང་ཞུ་བར་མི་བྱར་ཟད་ཀྱི།",
+    "english": "**The dependent also performs these duties for the teacher, with the exception of questioning.**",
+    "why": "The sūtra says the niśraya teacher in turn does these services for the pupil, except asking (his) permission; the roles are reversed and dri ba/zhu ba is asking permission (āpṛcchā), not questioning.",
+    "fix": {
+     "find": "**The dependent also performs these duties for the teacher, with the exception of questioning.**",
+     "replace": "**He [the teacher] too should do these for him [the pupil], except asking permission.**"
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "གནས་ཀྱིས་ཀྱང་ཞུ་བར་མི་བྱར་ཟད་ཀྱི། ལྷུང་བཟེད་དང་ཆོས་གོས་ཀྱི་ལས་ལ་སོགས་པ་གོང་དུ་སྨོས་པ་བཞིན་དུ་བསྟང་ཞིང་གྲོགས་བྱ་བའོ",
+    "english": "This means that while the one in dependence should not interrogate the teacher, they must assist and support the teacher in tasks such as managing",
+    "why": "It is the teacher (gnas) who, apart from not asking permission, must help the pupil with bowl and robe work as listed above.",
+    "fix": {
+     "find": "This means that while the one in dependence should not interrogate the teacher, they must assist and support the teacher in tasks such as managing",
+     "replace": "This means that the teacher, except that he need not ask permission, must assist and support the pupil in tasks such as managing"
+    }
+   },
+   {
+    "type": "structure",
+    "confidence": "high",
+    "tibetan": "བསྙེན་པར་རྫོགས་ནས་ལོ་བཅུ་མ་ལོན་པས་མཁན་པོ་དང་གནས་དང་མི་གནས་པར་འདུག་པར་མི་བྱ",
+    "english": "must not live without relying on a preceptor (Upādhyāya) or a resident teacher (Ācārya).",
+    "why": "One under ten years must not act as preceptor, nor as niśraya teacher, nor live without dependence: these are the 'three' asked about next.",
+    "fix": {
+     "find": "must not live without relying on a preceptor (Upādhyāya) or a resident teacher (Ācārya).",
+     "replace": "must not act as a preceptor (Upādhyāya) or as a teacher of dependence (Ācārya), nor live without dependence."
+    }
+   },
+   {
+    "type": "reversal",
+    "confidence": "high",
+    "tibetan": "ཕྲུགས་འོག་ནས་འབྱུང་བ་གང་དང་ཡང་",
+    "english": "**Not if they lack even one of the qualities mentioned in the sets of five.**",
+    "why": "The sūtra disqualifies one who possesses none of the pentads described below (any one pentad suffices), not one who lacks a single quality.",
+    "fix": {
+     "find": "**Not if they lack even one of the qualities mentioned in the sets of five.**",
+     "replace": "**Not one who possesses none of the sets of five described below.**"
+    }
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "ལྔ་ཕྲུགས་དེ་དག་གང་ཞེ་ན།",
+    "english": "What are those five qualities?",
+    "why": "lnga phrugs are pentads (sets of five qualifications); what follows is the content of a pentad, not 'five qualities', and the English then lists only four."
+   },
+   {
+    "type": "gloss",
+    "confidence": "medium",
+    "tibetan": "མནོད་པ་དང་འབྲལ་བར་རོ",
+    "english": "the state of being under a tutor's instruction",
+    "why": "The commentary glosses this as freeing the preceptor quickly from the saṅgha's penalty (gnod pa), not separation from the state of dependence."
+   }
+  ],
+  "note": "Vinaya duties of teacher and dependent are systematically misassigned and the ten-year rule and pentad clause are misread."
+ },
+ {
+  "id": "Q835G",
+  "score": 3,
+  "verdict": "work",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "structure",
+    "confidence": "high",
+    "tibetan": "དེ་ནི་དེ་ཉིད་རིགས་ཅན་མིན། གང་དག་གིས་ཤེ་ན།",
+    "english": "That is not the nature of reality itself. By whom [note: is this perceived]?",
+    "why": "The root verse (PV 3 'tad atattvavidaḥ sarve') says these are not knowers of reality; the commentary then asks who is meant.",
+    "fix": {
+     "find": "That is not the nature of reality itself. By whom [note: is this perceived]?",
+     "replace": "Therefore they are not knowers of reality. Who are they?"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "མངོན་པར་འདོད་པའི་སྐྱེས་བུ་བཞིན",
+    "english": "much like a person who is the object of desire",
+    "why": "mngon par 'dod pa here means 'accepted/asserted': the person you posit (the perceiver of the previous side), not an object of desire."
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "དེ་ལྟར་ན་ཞེན་པ་མངའ་བའི་རྒྱུ་བསྟན་པ་ཡིན་ནོ",
+    "english": "In this way, the cause of their attachment is shown.",
+    "why": "The honorific mnga' ba refers to the Buddha: this explains why the Buddha appears to have attachment (by teaching as things are seen), not the cause of beings' attachment."
+   },
+   {
+    "type": "addition",
+    "confidence": "medium",
+    "tibetan": "གླང་ཆེན་བཞིན་དུ་དོན་གྱི་དེ་ཁོ་ན་ཉིད་གཟིགས་སུ་ཟིན་ཀྱང་བདག་ཉིད་ཀྱིས་མི་གཟིགས་པ་ལྟར་སྟོན་པ",
+    "english": "Just as an elephant looks back",
+    "why": "The image (gajanimīlana) is the elephant feigning not to see, closing its eyes; 'looks back' is not in the text."
+   }
+  ],
+  "note": "The PV 3 passage on Buddha's 'elephant gaze' is broadly followed but the root verse and several referents are misread."
+ },
+ {
+  "id": "QVVYS",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "reversal",
+    "confidence": "medium",
+    "tibetan": "སྐྱོན་ནི་ཆེན་པོ་ཁ་ཅིག་ལ་ནི་སྐྱེ་བའི་མཐར་ཐུག་ཡང་བ་ཉིད་ནི་བཀག་བྱས་པ།",
+    "english": "Indeed, a noble birth prevents one from falling into utter insignificance.",
+    "why": "The verse says that in some, a great fault (frivolity) negates even the highest birth, which the following lines (well-born men like dogs) illustrate; the English says the opposite."
+   }
+  ],
+  "note": "Narrative and gem verses well rendered; one verse line about noble birth is inverted."
+ },
+ {
+  "id": "QIBLP",
+  "score": 5,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [],
+  "note": "Accurate rendering of the asiddha section with correct technical vocabulary (pakṣadharmatā, Digambara example, definition of death)."
+ },
+ {
+  "id": "Q94W8",
+  "score": 4,
+  "verdict": "light",
+  "span": "ok",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "དོན་གཅིག་ལ་འཕྲོད་པ་འདུ་བ་ཞེས་བྱ་བར་རིགས་ན",
+    "english": "then it would be reasonable to call it an assembly meeting in a single object",
+    "why": "'du ba here is the Vaiśeṣika relation of inherence (samavāya), 'inherence in a single object' (ekārthasamavāya), not an assembly; the forest-number example turns on inherence."
+   }
+  ],
+  "note": "Argument against the variegated whole and successive grasping is followed well; the inherence terminology is blurred at the opening."
+ }
+]

@@ -176,7 +176,7 @@ function VoiceAgentInner() {
       console.error('[voice-agent]', message);
       const msg = message || 'Connection error';
       if (msg.includes('Permission') || msg.includes('NotAllowed') || msg.includes('permission'))
-        setErrorMsg('Microphone access needed. Your browser should prompt you — if not, click the lock icon in the address bar and allow microphone access.');
+        setErrorMsg('Microphone access needed. Your browser should prompt you. If not, click the lock icon in the address bar and allow microphone access.');
       else setErrorMsg(msg);
       setAppStatus('error');
     },
@@ -234,7 +234,7 @@ function VoiceAgentInner() {
     catch (err: any) {
       const msg = err.message || String(err);
       if (msg.includes('Permission') || msg.includes('NotAllowed') || msg.includes('permission'))
-        setErrorMsg('Microphone access needed. Your browser should prompt you — if not, click the lock icon in the address bar and allow microphone access.');
+        setErrorMsg('Microphone access needed. Your browser should prompt you. If not, click the lock icon in the address bar and allow microphone access.');
       else setErrorMsg(msg);
       setAppStatus('error');
     }
@@ -274,7 +274,7 @@ function VoiceAgentInner() {
           <div className="relative flex flex-col items-center max-w-[520px]">
             <h1 className="text-4xl sm:text-5xl text-white font-display mb-3 drop-shadow-lg" style={{ fontWeight: 500 }}>The Librarian</h1>
             <p className="text-white/60 text-base font-body leading-relaxed mb-10">
-              Ask aloud &mdash; the Librarian searches the collection as you speak.
+              Ask aloud. The Librarian searches the collection as you speak.
             </p>
             {appStatus === 'connecting' ? (
               <div className="w-32 h-32 rounded-full bg-[#c9a86c]/40 text-white flex items-center justify-center animate-pulse text-sm font-sans">Connecting&hellip;</div>
@@ -288,7 +288,7 @@ function VoiceAgentInner() {
             {signInRequired && (
               <Link href="/auth/signin?callbackUrl=/librarian/voice&reason=limit"
                 className="mt-3 inline-block px-5 py-2.5 rounded-full bg-[#c9a86c]/90 hover:bg-[#c9a86c] text-[#0e0c0a] text-sm font-sans font-medium transition-colors">
-                Sign in &mdash; free
+                Sign in (free)
               </Link>
             )}
             <Link href="/librarian" className="mt-10 text-sm text-white/50 hover:text-white/80 font-display">Prefer to type? Switch to text chat &rarr;</Link>
@@ -307,7 +307,7 @@ function VoiceAgentInner() {
                 <div className="text-center py-12">
                   <img src="/brand/png/icon-only--black-on-transparent--96h.png" alt="" className="w-10 h-10 mx-auto mb-3 opacity-30" />
                   <p className="text-[#8a8480] text-sm font-body max-w-[360px] mx-auto leading-relaxed animate-pulse">
-                    The Librarian is listening &mdash; just ask your question aloud.
+                    The Librarian is listening. Just ask your question aloud.
                   </p>
                 </div>
               ) : transcript.map((entry, i) => (
@@ -393,7 +393,7 @@ function VoiceAgentInner() {
                   <span className="text-[10px] mt-0.5 font-sans">{holding ? 'Speaking' : agentSpeaking ? 'Speaking' : pttMode ? 'Hold to talk' : 'Listening'}</span>
                 </div>
               </div>
-              <p className="text-xs text-[#8a8480] font-sans">{pttMode ? 'Hold the mic or press spacebar to talk' : 'Open mic — just speak'}</p>
+              <p className="text-xs text-[#8a8480] font-sans">{pttMode ? 'Hold the mic or press spacebar to talk' : 'Open mic: just speak'}</p>
 
               <div className="flex gap-2 w-full">
                 <input type="text" value={textInput}

@@ -135,7 +135,7 @@ const CANONS: Canon[] = [
         </>
       ),
       shown: (
-        <>All 213 volumes are held from public view. Every page is labelled an unreviewed machine draft.</>
+        <>All 213 volumes have been public since 7 October 2026. Every page is labelled an AI translation not yet reviewed by a scholar.</>
       ),
       notMeasured: (
         <>
