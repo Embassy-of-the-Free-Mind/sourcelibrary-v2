@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [en]
+scripts: [Latn]
+canons: []
+n_books: 3
+n_pages: 9
+verdict: "GLM-OCR writing whole English 1600s books makes about one meaning-changing word swap and three silent spelling modernisations per page, where flash-lite keeps the print."
+status: rejected
+decision: "GLM-OCR is not routed English print from 1600 on; any GLM lane needs a by-eye spelling-fidelity check first"
+superseded_by: null
+issue: [5660]
+---
 ## 2026-10-04 — Does GLM-OCR hold up when it writes whole English 1600–1699 books? No: by eye it swaps plausible words and modernises spelling, where lite keeps the print (#5660)
 
 PRIOR ART: 2026-10-04-ocr-bakeoff-round-3-5660.md (PR #5786, the CER verdict this pilot tests); 2026-10-03-open-engine-print-5660.md (the cells, scorer and generic lite prompt reused here).
