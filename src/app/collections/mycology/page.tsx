@@ -39,8 +39,8 @@ const BTN_DARK = 'inline-flex items-center gap-2 bg-dark text-white text-sm font
 const RUST_LINK = 'inline-flex items-center gap-1 text-sm text-accent-rust hover:opacity-70 transition-opacity';
 const BTN_OUTLINE = 'inline-flex items-center gap-2 border border-border-medium text-primary text-sm font-medium px-5 py-2.5 rounded-lg hover:border-accent-rust hover:text-accent-rust transition-colors';
 
-const OG_TITLE = 'Fungi & Mycology — Source Library';
-const OG_DESC = 'Fungi built the soil that built our world. These are the books that first studied them — original source texts and first English translations on Source Library.';
+const OG_TITLE = 'Fungi & Mycology | Source Library';
+const OG_DESC = 'Fungi built the soil that built our world. These are the books that first studied them: original source texts and first English translations on Source Library.';
 
 export const metadata: Metadata = {
   title: OG_TITLE,
@@ -354,10 +354,10 @@ export default async function MycologyCollectionPage() {
             {/* Intro plate — Tulasne frontispiece engraving (transparent ground, no frame). */}
             <figure className="w-full md:w-[min(33%,53.333vh)] shrink-0 m-0 mx-auto md:mx-0">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/collections/mycology/intro-plate.webp" alt="A microscope amid fungi, plants, and books — frontispiece engraving" loading="lazy" decoding="async" className="w-full h-auto" />
+              <img src="/collections/mycology/intro-plate.webp" alt="A microscope amid fungi, plants, and books, frontispiece engraving" loading="lazy" decoding="async" className="w-full h-auto" />
               <figcaption className="mt-2 text-xs text-muted text-center">
                 <Link href="/gallery/image/69d8ca9ea09828f83ddcbbbe-0" className="hover:text-primary transition-colors">
-                  Selecta Fungorum Carpologia — L.-R. &amp; C. Tulasne, 1863
+                  Selecta Fungorum Carpologia, L.-R. &amp; C. Tulasne, 1863
                 </Link>
               </figcaption>
             </figure>

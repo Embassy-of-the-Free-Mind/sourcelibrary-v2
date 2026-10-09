@@ -1,0 +1,398 @@
+{
+  "_generated": "by scripts/eval/tengyur-characterize/build-disclosure.mjs from scripts/eval/results/tengyur-characterize-5829/ and scripts/eval/results/tengyur-check-2026-10/ — do not edit by hand",
+  "measured": "2026-10-04",
+  "method": "scripts/eval/experiments/2026-10-04-tengyur-characterize-random-sample-5829.md",
+  "issue": 5829,
+  "min_pages": 10,
+  "sample": {
+    "n": 150,
+    "population": 116703,
+    "light": 75.3,
+    "work": 23.3,
+    "specialist": 1.3,
+    "light_ci": [
+      69,
+      81.7
+    ],
+    "rev_agent_per100_adjusted": 37.9,
+    "rev_agent_ci_adjusted": [
+      23,
+      50.3
+    ],
+    "rev_agent_pages_pct": 38
+  },
+  "verse": {
+    "prose": {
+      "n": 105,
+      "rev_agent_per100": 37.1
+    },
+    "mostly_verse": {
+      "n": 13,
+      "rev_agent_per100": 100
+    }
+  },
+  "reviewers": {
+    "who": "two independent Claude Opus reviewers reading the Tibetan, blind to each other; no human scholar yet",
+    "precision_pct": 70,
+    "precision_ci": [
+      52.1,
+      83.3
+    ],
+    "planted_recall_pct": 97.5,
+    "kappa": 0.613
+  },
+  "defects": {
+    "measured": "2026-10-04",
+    "issue": 5797,
+    "unclear_guess_tags": 3432,
+    "colophon_missing_ending": 241,
+    "body_text_in_note": 82,
+    "tibetan_outside_notes": 37,
+    "vinaya_pali_pages": 1148,
+    "vinaya_pali_pct": 11.2
+  },
+  "section_words": {
+    "བསྟོད་ཚོགས": "Praises",
+    "རྒྱུད་འགྲེལ": "Tantra commentary",
+    "ཤེར་ཕྱིན": "Prajñāpāramitā",
+    "དབུ་མ": "Madhyamaka",
+    "མདོ་སྡེ": "Sūtra commentary",
+    "སེམས་ཙམ": "Cittamātra",
+    "མངོན་པ": "Abhidharma",
+    "འདུལ་བ": "Vinaya",
+    "སྐྱེས་རབས": "Jātaka",
+    "འཁྲི་ཤིང": "Jātaka",
+    "སྤྲིང་ཡིག": "Letters",
+    "ཚད་མ": "Pramāṇa",
+    "སྒྲ་མདོ": "Grammar & sciences",
+    "གསོ་རིག": "Grammar & sciences",
+    "སྣ་ཚོགས": "Miscellaneous",
+    "དཀར་ཆག": "Catalogue"
+  },
+  "sections": {
+    "Praises": {
+      "corpus_pages": 514,
+      "volumes": 1,
+      "n": 0,
+      "rated": false,
+      "pali_pages": 2
+    },
+    "Tantra commentary": {
+      "corpus_pages": 44887,
+      "volumes": 78,
+      "n": 59,
+      "rated": true,
+      "light": 82.2,
+      "work": 17.8,
+      "specialist": 0,
+      "light_ci": [
+        73.7,
+        89.8
+      ],
+      "rev_agent_per100": 39,
+      "rev_agent_ci": [
+        25.4,
+        54.2
+      ],
+      "reversal_per100": 6.8,
+      "agent_per100": 32.2,
+      "term_per100": 81.4,
+      "top_kinds": [
+        "term",
+        "agent",
+        "structure",
+        "gloss",
+        "omission",
+        "addition",
+        "reversal"
+      ],
+      "pali_pages": 32
+    },
+    "Prajñāpāramitā": {
+      "corpus_pages": 9117,
+      "volumes": 16,
+      "n": 10,
+      "rated": true,
+      "light": 100,
+      "work": 0,
+      "specialist": 0,
+      "light_ci": [
+        100,
+        100
+      ],
+      "rev_agent_per100": 30,
+      "rev_agent_ci": [
+        0,
+        60
+      ],
+      "reversal_per100": 30,
+      "agent_per100": 0,
+      "term_per100": 10,
+      "top_kinds": [
+        "gloss",
+        "reversal",
+        "structure",
+        "term",
+        "agent"
+      ],
+      "pali_pages": 19
+    },
+    "Madhyamaka": {
+      "corpus_pages": 10845,
+      "volumes": 17,
+      "n": 12,
+      "rated": true,
+      "light": 83.3,
+      "work": 16.7,
+      "specialist": 0,
+      "light_ci": [
+        58.3,
+        100
+      ],
+      "rev_agent_per100": 66.7,
+      "rev_agent_ci": [
+        25,
+        125
+      ],
+      "reversal_per100": 8.3,
+      "agent_per100": 58.3,
+      "term_per100": 58.3,
+      "top_kinds": [
+        "term",
+        "agent",
+        "structure",
+        "reversal",
+        "addition",
+        "gloss"
+      ],
+      "pali_pages": 45
+    },
+    "Sūtra commentary": {
+      "corpus_pages": 5562,
+      "volumes": 10,
+      "n": 5,
+      "rated": false,
+      "light": 90,
+      "work": 10,
+      "specialist": 0,
+      "light_ci": [
+        70,
+        100
+      ],
+      "rev_agent_per100": 20,
+      "rev_agent_ci": [
+        0,
+        60
+      ],
+      "reversal_per100": 20,
+      "agent_per100": 0,
+      "term_per100": 80,
+      "top_kinds": [
+        "term",
+        "reversal",
+        "addition",
+        "gloss",
+        "structure"
+      ],
+      "pali_pages": 36
+    },
+    "Cittamātra": {
+      "corpus_pages": 8887,
+      "volumes": 16,
+      "n": 13,
+      "rated": true,
+      "light": 76.9,
+      "work": 23.1,
+      "specialist": 0,
+      "light_ci": [
+        53.8,
+        96.2
+      ],
+      "rev_agent_per100": 30.8,
+      "rev_agent_ci": [
+        0,
+        69.2
+      ],
+      "reversal_per100": 0,
+      "agent_per100": 30.8,
+      "term_per100": 46.2,
+      "top_kinds": [
+        "structure",
+        "agent",
+        "term",
+        "addition",
+        "omission"
+      ],
+      "pali_pages": 58
+    },
+    "Abhidharma": {
+      "corpus_pages": 6335,
+      "volumes": 11,
+      "n": 7,
+      "rated": false,
+      "light": 100,
+      "work": 0,
+      "specialist": 0,
+      "light_ci": [
+        100,
+        100
+      ],
+      "rev_agent_per100": 42.9,
+      "rev_agent_ci": [
+        14.3,
+        85.7
+      ],
+      "reversal_per100": 14.3,
+      "agent_per100": 28.6,
+      "term_per100": 42.9,
+      "top_kinds": [
+        "term",
+        "reversal",
+        "agent",
+        "structure"
+      ],
+      "pali_pages": 88
+    },
+    "Vinaya": {
+      "corpus_pages": 10229,
+      "volumes": 18,
+      "n": 11,
+      "rated": true,
+      "light": 63.6,
+      "work": 36.4,
+      "specialist": 0,
+      "light_ci": [
+        40.9,
+        86.4
+      ],
+      "rev_agent_per100": 36.4,
+      "rev_agent_ci": [
+        9.1,
+        63.6
+      ],
+      "reversal_per100": 0,
+      "agent_per100": 36.4,
+      "term_per100": 145.5,
+      "top_kinds": [
+        "term",
+        "structure",
+        "agent",
+        "addition",
+        "gloss"
+      ],
+      "pali_pages": 1148
+    },
+    "Jātaka": {
+      "corpus_pages": 2954,
+      "volumes": 5,
+      "n": 7,
+      "rated": false,
+      "light": 64.3,
+      "work": 35.7,
+      "specialist": 0,
+      "light_ci": [
+        28.6,
+        92.9
+      ],
+      "rev_agent_per100": 128.6,
+      "rev_agent_ci": [
+        57.1,
+        200
+      ],
+      "reversal_per100": 14.3,
+      "agent_per100": 114.3,
+      "term_per100": 57.1,
+      "top_kinds": [
+        "agent",
+        "term",
+        "structure",
+        "addition",
+        "reversal",
+        "omission"
+      ],
+      "pali_pages": 24
+    },
+    "Letters": {
+      "corpus_pages": 373,
+      "volumes": 1,
+      "n": 0,
+      "rated": false,
+      "pali_pages": 7
+    },
+    "Pramāṇa": {
+      "corpus_pages": 12784,
+      "volumes": 20,
+      "n": 19,
+      "rated": true,
+      "light": 39.5,
+      "work": 55.3,
+      "specialist": 5.3,
+      "light_ci": [
+        21.1,
+        57.9
+      ],
+      "rev_agent_per100": 73.7,
+      "rev_agent_ci": [
+        47.4,
+        105.3
+      ],
+      "reversal_per100": 31.6,
+      "agent_per100": 42.1,
+      "term_per100": 105.3,
+      "top_kinds": [
+        "term",
+        "structure",
+        "agent",
+        "reversal",
+        "omission",
+        "gloss",
+        "addition"
+      ],
+      "pali_pages": 14
+    },
+    "Grammar & sciences": {
+      "corpus_pages": 4216,
+      "volumes": 10,
+      "n": 7,
+      "rated": false,
+      "light": 57.1,
+      "work": 28.6,
+      "specialist": 14.3,
+      "light_ci": [
+        28.6,
+        85.7
+      ],
+      "rev_agent_per100": 28.6,
+      "rev_agent_ci": [
+        0,
+        85.7
+      ],
+      "reversal_per100": 28.6,
+      "agent_per100": 0,
+      "term_per100": 114.3,
+      "top_kinds": [
+        "term",
+        "reversal",
+        "structure",
+        "gloss",
+        "addition",
+        "omission"
+      ],
+      "pali_pages": 4
+    },
+    "Miscellaneous": {
+      "corpus_pages": 0,
+      "volumes": 9,
+      "n": 0,
+      "rated": false,
+      "pali_pages": 0
+    },
+    "Catalogue": {
+      "corpus_pages": 0,
+      "volumes": 1,
+      "n": 0,
+      "rated": false,
+      "pali_pages": 0
+    }
+  }
+}

@@ -13,16 +13,16 @@ const rowY = (i: number) => 404 - i * 27;
 
 /** Arcs between the FIXED strings — these hold in every genus. */
 const ARCS: { lo: number; hi: number; label: string; big: boolean }[] = [
-  { lo: 0, hi: 7, label: 'diapason — the octave', big: true },
-  { lo: 7, hi: 14, label: 'diapason — the octave', big: true },
-  { lo: 4, hi: 8, label: 'diapente — the fifth', big: false },
-  { lo: 7, hi: 11, label: 'diapente — the fifth', big: false },
-  { lo: 1, hi: 4, label: 'diatessaron — the fourth', big: false },
-  { lo: 4, hi: 7, label: 'diatessaron — the fourth', big: false },
-  { lo: 8, hi: 11, label: 'diatessaron — the fourth', big: false },
-  { lo: 11, hi: 14, label: 'diatessaron — the fourth', big: false },
-  { lo: 0, hi: 1, label: 'tonus — the tone', big: false },
-  { lo: 7, hi: 8, label: 'tonus — the disjunction tone', big: false },
+  { lo: 0, hi: 7, label: 'diapason (the octave)', big: true },
+  { lo: 7, hi: 14, label: 'diapason (the octave)', big: true },
+  { lo: 4, hi: 8, label: 'diapente (the fifth)', big: false },
+  { lo: 7, hi: 11, label: 'diapente (the fifth)', big: false },
+  { lo: 1, hi: 4, label: 'diatessaron (the fourth)', big: false },
+  { lo: 4, hi: 7, label: 'diatessaron (the fourth)', big: false },
+  { lo: 8, hi: 11, label: 'diatessaron (the fourth)', big: false },
+  { lo: 11, hi: 14, label: 'diatessaron (the fourth)', big: false },
+  { lo: 0, hi: 1, label: 'tonus (the tone)', big: false },
+  { lo: 7, hi: 8, label: 'tonus (the disjunction tone)', big: false },
 ];
 
 const GENUS_LABEL: Record<Genus, string> = { dia: 'Diatonic', chr: 'Chromatic', enh: 'Enharmonic' };
@@ -111,7 +111,7 @@ export default function BoethiusLadderDemo() {
   return (
     <LabCard
       title="The Greater Perfect System, strung"
-      caption="The fifteen strings of ancient music as our manuscript diagrams them, with each string's monochord number on the 9,216 ruler. Tap strings, tap arcs, switch the genus — the brass strings are the movable notes, and their numbers re-divide as the manuscript's own diagrams show. Replicated from"
+      caption="The fifteen strings of ancient music as our manuscript diagrams them, with each string's monochord number on the 9,216 ruler. Tap strings, tap arcs, switch the genus. The brass strings are the movable notes, and their numbers re-divide as the manuscript's own diagrams show. Replicated from"
       sourceHref="/book/de-institutione-musica-15th-c-ms-boethius?page=80"
       sourceLabel="Boethius, De institutione musica (15th-c. MS)"
     >
@@ -137,7 +137,7 @@ export default function BoethiusLadderDemo() {
                 className="cursor-pointer hover:stroke-[var(--accent-rust,#a8503c)]"
                 onClick={() => playArc(a.lo, a.hi, a.label)}
               >
-                <title>{`${a.label} — play both strings`}</title>
+                <title>{`${a.label}: play both strings`}</title>
               </path>
               {a.big && (
                 <text
@@ -157,7 +157,7 @@ export default function BoethiusLadderDemo() {
               strokeWidth={r.rings ? 2.6 : 2}
               className="cursor-pointer" onClick={() => pluckRow(r.i)}
             >
-              <title>{`${r.name} — ${r.freq.toFixed(1)} Hz, number ${r.num}`}</title>
+              <title>{`${r.name}: ${r.freq.toFixed(1)} Hz, number ${r.num}`}</title>
             </line>
             <text x={478} y={r.y + 3.5} fontSize="10.5" fontFamily="monospace"
               fill={r.rings ? RUST : '#78716c'}>{r.name}</text>
@@ -172,8 +172,8 @@ export default function BoethiusLadderDemo() {
       <p className="font-mono text-xs text-muted mt-3 min-h-[1.2em]" aria-live="polite">{now || ' '}</p>
       <p className="text-xs text-muted mt-2">
         The middle column gives each string&apos;s nearest modern note with its deviation in cents.
-        Even the diatonic sits a few cents off a modern tuner — pure 9:8 tones against equal
-        temperament — while the enharmonic&apos;s quarter-tones land ~50¢ between any modern frets.
+        Even the diatonic sits a few cents off a modern tuner (pure 9:8 tones against equal
+        temperament), while the enharmonic&apos;s quarter-tones land ~50¢ between any modern frets.
         The dieses here split the semitone equally; Boethius divides the ruler arithmetically, a
         hair&apos;s difference the ear forgives.
       </p>

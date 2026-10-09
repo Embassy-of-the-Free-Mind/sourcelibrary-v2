@@ -18,7 +18,7 @@ export interface DatasetTierConfig {
 export const DATASET_TIERS: Record<DatasetTier, DatasetTierConfig> = {
   explorer: {
     name: 'Explorer',
-    description: 'Free keyed tier — 2,000 pages/day, any language',
+    description: 'Free keyed tier: 2,000 pages/day, any language',
     monthlyPrice: 0,
     annualPrice: 0,
     // A key must be an UPGRADE over staying anonymous (#4366): anon gets 500

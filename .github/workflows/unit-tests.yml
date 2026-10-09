@@ -45,6 +45,16 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: node scripts/audit/append-only-ledgers.mjs --pr ${{ github.event.pull_request.number }}
 
+      # Every NEW experiment write-up carries the header the index and the public
+      # pages read (status, verdict, measure …; schema in experiments/README.md,
+      # #5939). Older entries are grandfathered until the backfill lands; any header
+      # present must be valid.
+      - name: Experiment headers valid
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/eval/experiments-lint.mjs --pr ${{ github.event.pull_request.number }}
+
       # Static source check — no network, no secrets — so it gates PRs here
       # rather than running nightly. Vercel Blob is retired in favour of R2
       # (#3645); this refuses new hardcoded Blob URLs (plain OR percent-encoded)
@@ -57,3 +67,9 @@ jobs:
       # fine) fails unless the file's ratchet in em-dash-allowlist.txt allows it.
       - name: No new em dashes in reader-facing copy
         run: node scripts/maintenance/check-em-dashes.mjs
+      # The generated routing table (.claude/docs/ocr-engine-routing.md) against the live
+      # routing constants (#5871). Class (c) of scripts/audit/routing-drift.mjs only: the
+      # other classes compare the code with the decisions ledger and are filed as issues by
+      # the daily cron, never failed on a PR. Exit 2 (could not run) fails the step too.
+      - name: Generated routing table is current
+        run: node scripts/audit/routing-drift.mjs --ci

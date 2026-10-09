@@ -54,13 +54,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     tenantDescription = canonicalPartner.description;
   }
   if (!tenantDescription) {
-    tenantDescription = `Browse the ${tenantName} reading room on Source Library — digitized, OCR'd, and translated rare texts curated for this collection.`;
+    tenantDescription = `Browse the ${tenantName} reading room on Source Library: digitized, OCR'd, and translated rare texts curated for this collection.`;
   }
   if (tenantDescription.length > 200) {
     tenantDescription = tenantDescription.slice(0, 197) + '...';
   }
 
-  const title = `${tenantName} — Source Library`;
+  const title = `${tenantName} | Source Library`;
 
   // Canonical must be absolute and host-aware. metadataBase is fixed to
   // https://sourcelibrary.org, so a relative '/bph' would 308-canonical the
