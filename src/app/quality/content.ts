@@ -109,3 +109,20 @@ export const WAYS: Way[] = [
     planned: true,
   },
 ];
+
+/**
+ * One error and its fix, worked end to end (#5918, Derek 2026-10-06: "a great example of a type of
+ * error and a type of fix"). Every figure is copied from the write-up in `writeup`; change them only
+ * together with it. Taxonomy classes: O7 (sub-variant) and O18 in .claude/docs/page-error-taxonomy.md.
+ */
+export const WORKED_FIX = {
+  issue: 4686,
+  title: 'Numbers read as letters, on pages that were blank',
+  writeup: 'scripts/eval/experiments/2026-10-06-glm-digit-repair-4686.md',
+  example: { href: '/book/6ac2798d02c7f994f8506911?page=287', label: 'Birch, History of the Royal Society, 1756, vol. II, page 287' },
+  saw: 'Our usual transcription engine refuses to read pages of famous published texts. It returns nothing at all, so 715 pages of the Philosophical Transactions (1669–78) and of Birch’s History of the Royal Society (1756) show a scan and no text.',
+  line: { scan: 'whoſe angle is about 66 or 67 degrees', before: 'whoſe angle is about cé or éy degrees', after: 'whoſe angle is about 66 or 67 degrees' },
+  measured: 'A free engine with no refusal, Kraken, read 20 of these pages, drawn before the test. Each was checked against a careful transcription of the same scan. The letters came out very well, with 0.9% of characters wrong. The numbers did not: 17th-century type sets figures that hang below the line, and Kraken read them as letters. Only 79% of printed numbers came out right, against a bar of 90% set before the test.',
+  fix: 'Keep Kraken’s letters, and take only the numbers from a second engine that reads figures as figures (GLM-OCR), wherever the two readings line up word for word.',
+  after: 'On the same 20 pages, 89% of printed numbers were right (83 of 93), and 96% in the body text, with no extra errors in the letters. That is one number short of the bar. The numbers still missed are in the running heads: dates printed one above the other, and page numbers the second engine leaves out. So the pages have not been filled yet, and the next step is decided in the open on the issue.',
+} as const;
