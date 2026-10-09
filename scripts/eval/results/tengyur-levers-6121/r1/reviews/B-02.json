@@ -1,0 +1,57 @@
+[
+{"id": "QIPI2", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "high", "tibetan": "སྐྱོན་མེད་བྱེད་པོ་སོགས", "english": "an'erroneous creator", "why": "The Tibetan asks the Mīmāṃsaka to establish a FAULTLESS author (skyon med byed po), not an erroneous one.", "fix": {"find": "an'erroneous creator", "replace": "a faultless author"}},
+  {"type": "term", "confidence": "high", "tibetan": "སྙིང་རྗེ་#སོགས་ལྡན་པའི", "english": "wisdom, equanimity, and so forth", "why": "snying rje is compassion (karuṇā), not equanimity.", "fix": {"find": "wisdom, equanimity, and so forth", "replace": "wisdom, compassion, and so forth"}},
+  {"type": "structure", "confidence": "medium", "tibetan": "དེས་ན་དེ་ཉིད་རབ་སྤོང་ལ། །ཁོ་བོ་ལ་ནི་ཆེར་མོས་མེད།", "english": "Therefore, I utterly reject that, and I have no great interest in it.", "why": "The author says he has no great inclination to refute it at length (hence 'who would obstruct what is not needed now?'), not that he rejects it and has no interest in it."}
+ ],
+ "note": "Generally follows the anti-Mīmāṃsā verse argument, but one slip inverts 'faultless author' and karuṇā is mistranslated."},
+{"id": "QIEJB", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "གྲངས་ཅན་ཉེ་བར་འགོད་པ་སྟེ", "english": "introduces the Sāmkhya [position]", "why": "In context 'sogs pa' sets out the enumerated items (colour etc.), as the gloss that follows says; a Sāṃkhya position is out of place in this discussion of cowness."}
+ ],
+ "note": "A careful rendering of a dense lemma-and-gloss commentary on universals; one doubtful reading."},
+{"id": "Q152Y", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "Faithful rendering of the Tibetan verses (the Sanskrit lines are parallel text); the imagery and the goddess's speech are correct."},
+{"id": "QX9VJ", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "high", "tibetan": "སྔོ་བསངས་ཡིན་ཏེ་ཕ་དེའི་བུ། །ཡིན་ཕྱིར་", "english": "Being blue, he is the son of that father, because of being it, like the other appearing.", "why": "This is the stock inference 'he is dark, because he is that man's son, like the other [son] seen': darkness is the thesis and sonship the reason, which the English scrambles.", "fix": {"find": "Being blue, he is the son of that father, because of being it, like the other appearing.", "replace": "He is dark, because he is that father's son, like the other [son] who is seen."}},
+  {"type": "term", "confidence": "medium", "tibetan": "ཇི་ལྟར་ཡང་ནི་མེད་བདག་ཉིད། །ཇི་ལྟར་ཡང་ནི་མ་དམིགས་ཕྱིར", "english": "however they are of the nature of non-existence, because they are not observed however they are", "why": "ji ltar yang means 'in some respect / somehow' (the qualified-predication examples), not 'however they are'; the rendering obscures the argument."},
+  {"type": "agent", "confidence": "medium", "tibetan": "དེ་ཅི་སྤྱི་ཡིས་རྟོགས་བྱ་འམ", "english": "Does this reason possessing this characteristic cause realization generally", "why": "rtogs bya asks whether the reason is itself to be ascertained in general, not whether it causes realization."}
+ ],
+ "note": "Literal and often opaque; the key example inference is garbled and the qualified-predication examples are hard to follow."},
+{"id": "Q2VPD", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "Accurate rendering of Avalokitavrata on cetanā/cetayitvā karma, with the root-text quotations correctly set off."},
+{"id": "QYTWA", "score": 4, "verdict": "light", "span": "short", "span_why": "The opening glosses (rjes su mthun pa'i gnas, ri sul, gnas shing spyod pa, de nas, ri'i khrod, de na ni) before 'stag mo ni' are not translated.",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "ཡིད་གཅུགས་འཇིགས་མེད", "english": "Loving and fearless", "why": "yid gcugs means trusting/confident (viśvasta), which is why it is glossed 'without suspicion'; it does not mean loving."},
+  {"type": "structure", "confidence": "medium", "tibetan": "བརྟན་ཡང་སྙིང་རྗེའི་དབང་གྱུར་བས", "english": "though steadfast, fell under the power of compassion", "why": "The quoted root verse is the lemma being commented on, but it is put into a bracketed translator's note rather than given as the quoted text."}
+ ],
+ "note": "The word-by-word glosses on the tigress episode are rendered correctly, but the side's opening is missing."},
+{"id": "Q7FWH", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "medium", "tibetan": "དེ་ལྟ་མ་ཡིན་ཏེ། ", "english": "This is not the case; if it were to possess parts", "why": "de lta ma yin te here means 'otherwise' (if it had parts it would not be a substance), supporting the preceding claim rather than rejecting it."},
+  {"type": "term", "confidence": "medium", "tibetan": "མདོའི་དོན་བསྟན་པའི་ཕྱིར", "english": "In order to demonstrate the meaning of the scripture", "why": "mdo here is the root verse of the treatise that the author (Dignāga) explains in his own commentary, not a scripture."},
+  {"type": "addition", "confidence": "medium", "tibetan": "བྱེ་བྲག་པའི་ལྟར", "english": "a school of ancient Indian philosophy that asserts the reality of atoms and substances", "why": "An unmarked explanatory gloss is inserted into the running translation."}
+ ],
+ "note": "Sound rendering of Vinītadeva on atoms and conventional existence, with minor argumentative and framing slips."},
+{"id": "QNADQ", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "gloss", "confidence": "medium", "tibetan": "གལ་ཏེ་ལྡན་པ་ལ་ཡང་", "english": "the relation of inherence or conjunction", "why": "ldan pa is conjunction (saṃyoga); inherence is 'du ba (samavāya), which the text treats separately right after."}
+ ],
+ "note": "Follows the argument on svabhāva/tadutpatti versus conjunction-based reasons faithfully; the notes are mostly helpful."},
+{"id": "Q20U9", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "དམིགས་\nཔ་ནི་ཡོད་པར་བརྗོད་པ", "english": "the object of inference is said to exist", "why": "dmigs pa here is perception/observation (the image is perceived), not an object of inference.", "fix": {"find": "the object of inference is said to exist", "replace": "perception is said to exist"}},
+  {"type": "structure", "confidence": "medium", "tibetan": "དེས་རྟོགས་པ་མེད་པའི་བདག་\nཉིད་གསལ་བར་བྱེད་པ", "english": "Because it clarifies the nature of what is unapprehended through the power of consciousness, it thinks that such appearances exist.", "why": "This whole clause belongs to the opponent's single thought (waking cognition reveals that the dream content is unreal, while its appearance is due to the power of consciousness); the English splits it and makes the agent unclear."}
+ ],
+ "note": "The dream/rebirth argument is broadly followed, but there is a wrong term for dmigs pa and the opponent's position is muddled."},
+{"id": "QX0PF", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "high", "tibetan": "བསམ་གཏན་དང་པོ་ལ་སྙོམས་པར་ཞུགས་ཏེ་", "english": "enters and rises from cessation, secluded from desires", "why": "The Tathāgata enters the FIRST DHYĀNA (secluded from desires, etc.) and rises from cessation; the English makes cessation the state that is secluded and possesses joy.", "fix": {"find": "enters and rises from cessation, secluded from desires, secluded from unwholesome, non-virtuous states, accompanied by coarse investigation and subtle analysis, and possessing the joy and bliss born of seclusion, which is the first concentration.", "replace": "enters the first concentration, which is secluded from desires, secluded from unwholesome, non-virtuous states, accompanied by coarse investigation and subtle analysis, and possessing the joy and bliss born of seclusion, and rises from cessation."}},
+  {"type": "term", "confidence": "medium", "tibetan": "འགྱུར་བའི་རྒྱུ་གང་ཡིན་པ་དང་།", "english": "the cause of transformation", "why": "The sentence continues 'rnam par dag par' from the previous side: it is the cause of sentient beings becoming purified, not a 'transformation'."}
+ ],
+ "note": "Most of the cause/condition list is right, but the dhyāna/cessation sequence is garbled."}
+]

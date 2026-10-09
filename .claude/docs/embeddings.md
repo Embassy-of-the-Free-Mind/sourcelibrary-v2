@@ -11,10 +11,41 @@ Source Library has **six embedding stores** in Supabase, indexing different thin
 | `artwork_embeddings` | **3072 (halfvec)** | `gemini-embedding-2-preview` | One row per artwork (title + author + summary + subjects + figures + symbols) | `scripts/migration/backfill-artwork-embeddings.mjs` + `scripts/workers/image-embeddings-cron.mjs` | `match_artworks_semantic` | `src/lib/semantic-search.ts` artwork retrieval |
 | `gallery_text_embeddings` | 768 (vector) | `gemini-embedding-2-preview` | One row per gallery image (museum description text) | `scripts/workers/image-embeddings-cron.mjs` | `match_gallery_text` | `src/lib/embeddings.ts`, `src/app/api/gallery/{route,similar/route}.ts` |
 | `clip_embeddings` | 512 (vector) | CLIP visual | One row per image (artwork covers, gallery extractions) | `scripts/backfill-clip-embeddings.mjs` + `scripts/workers/image-embeddings-cron.mjs` | `match_gallery_text` (CLIP text→image) | gallery similar-image queries |
-| `site_pages` | 768 (vector) | `gemini-embedding-2-preview` | One row per ~1,600-char chunk of the site's OWN writing: blog essays, collection intros (from Mongo), editorial pages (#1180) | `scripts/workers/embed-site-pages.mjs` (hash-diffed; prunes vanished pages, refuses a >20% prune) | `match_site_pages` (best chunk per URL; NULL tenant = main site only) | "From the site" lane in `/api/search/unified` → `/search` |
+| `site_pages` | 768 (vector; NULL on author rows) | `gemini-embedding-2-preview` | One row per ~1,600-char chunk of every public, indexable page that is not a book: static routes in `src/app` + sitemap chunk 0 + `/languages/*` (crawled; robots.txt, redirects and `noindex` respected), collection intros (from Mongo), the tool registry, and author pages (names only, no embedding). Chunk 0 also carries `names` / `name_tokens` / `weight` for the navigational match (#1180, #5945) | `scripts/workers/embed-site-pages.mjs` (daily; hash-diffed; prunes vanished pages, refuses a >20% prune of any one page type) | `match_site_pages` (best chunk per URL; NULL tenant = main site only) | "From the site" lane in `/api/search/unified` → `/search` |
 | `page_texts` | 768 (vector) | `gemini-embedding-2-preview` | One row per translated page **per language** (`page_id, lang`) | `scripts/workers/embed-page-texts.mjs --lang=<iso>` (bulk) + `es-translate-worker.mjs` (inline) | `match_page_texts`, `match_page_texts_in_books`, `search_page_texts` (lexical) | Spanish/localized page search: `/api/search?lang=es`, `/api/books/:id/search?lang=es` |
+| `page_concepts` | 768 (**halfvec**) | `gemini-embedding-2-preview` | One row per page: the embedding of a model-written **concept abstract** of the page's ideas (flash-lite, `concept-abstract-v1`), NOT of its text. Stage 1 (#6173): ~1,200 books | `scripts/batch/concept-abstracts.mjs` (Batch; select → submit → collect → embed → load) | `match_page_concepts`, `match_page_concepts_in_books` (both return the PAGE's text as snippet, never the abstract) | EXPERIMENTAL, flag only: `/api/search?lane=concept`, `/api/search/semantic?level=page&lane=concept`, MCP `search_concept` `lane:"concept"` |
 
 Approximate current row counts (May 2026): pages ~3.9M, books 33,828, artworks 19,731, gallery_text 116,641, clip 151,957.
+
+## `page_concepts` — the concept lane (#6173, stage 1, experimental)
+
+The page vectors find a page by its own words; a concept query ("the soul's
+ascent through the heavens") then fills its top 10 with one tradition's
+vocabulary. The pilot (`scripts/eval/experiments/2026-10-07-embedding-granularity-cross-tradition.md`)
+embedded a 2–4 sentence abstract of each page's ideas in neutral language and
+put more traditions into the first ten. `page_concepts` is that lane:
+
+- **The abstract is an index key, not text.** It lives on the page as
+  `pages.concept_abstract` (with a `gemini-engine/1` provenance block whose
+  `input.source_text_hash` is the page text it was made from) and in this table
+  for the vector. No read path returns it; the RPCs return the page's own text.
+- **It goes stale like a translation does.** A re-OCR or re-translation changes
+  the page text and leaves the abstract describing the old one. Detect it by
+  comparing `concept_abstract.engine.input.source_text_hash` with the hash of the
+  page's current composed text (`abstractInputText(pageEmbeddingInput(page).text)`).
+- **A partner's scope is ranked two ways** (`match_page_concepts_in_books`): exactly when the set holds 20,000 rows or fewer, and through the HNSW index with pgvector's iterative scan when it holds more (BPH holds 78,230 of 325,308). The exact plan on a share that large is a scan of the whole table, 4 s cold against the anon role's 3 s, and the lane answered "Search failed" on the BPH host until 2026-10-07. Recall@40 of the index walk against exact: 0.96 over 6 queries.
+- **Not public.** No default search reads it; it is reached only by the
+  `lane=concept` flag until stage 1 is judged. All three flag paths go through
+  `conceptPageSearch(..., { abstractLane: true })` (`src/lib/search/concept-search.ts`),
+  so hidden books are dropped and `diversity=tradition` applies as on the page lane.
+  The Librarian reads it as one more RRF source only when `LIBRARIAN_CONCEPT_LANE=on`.
+- **Stage 1 result (2026-10-07):** on the same 1,216 books with the tradition spread on, relevant traditions in the first ten are 4.36 for this lane against 3.76 for the page vectors (+0.60, CI [0.16, 1.00]); P@10 is level. `scripts/eval/experiments/2026-10-07-concept-lane-stage1.md`.
+- **Stage 1 holds 1,216 books, 325,308 embedded pages** (343,347 abstracts; 18,039
+  are `NONE` and are stored on the page but never embedded).
+- **The writer's `--dir` is rebuildable.** `concept-abstracts.mjs rebuild` restores
+  `abstracts.jsonl` from Mongo and re-reads finished embedding jobs' result files
+  (free). `pages.jsonl` is not rebuildable: requests that errored inside a finished
+  generation job (about 2,000 pages in the first run) are not re-sent by it.
 
 ## `page_texts` — the language-keyed store (#4095)
 
@@ -181,6 +212,45 @@ which keeps walking the graph until enough rows survive the filter. A
 fenced exact pre-filter (`OFFSET 0` + `enable_indexscan = off`) is correct on any
 version but costs a scan of everything the predicate admits — 47.6s measured for
 an `exclude_languages` query. Migration: `scripts/migration/fix-semantic-language-prefilter.sql`.
+
+### Tenant scope: a book set, decided once (#4330, #2753)
+
+**No embedding table has a tenant column**, and `match_semantic` accepts
+`filter_tenant_id` and ignores it. Until 2026-10-06 every vector lane ranked the
+whole library and each caller filtered afterwards in Mongo — except
+`/api/search/semantic`, `/api/gallery?visual=true` and `?semantic=true`, which
+did not filter at all and served the global corpus on partner subdomains. The
+lanes that did filter were pure and starved: BPH got 20% of its true top-15
+pages, and nothing at all for 2 of 5 queries.
+
+The scope is now a value. `resolveSearchScope(request)` in
+`src/lib/tenant-search-scope.ts` returns `global`, `tenant` (the tenant's
+visible book ids, from `books.tenantId`) or `closed` (a tenant signal that
+could not be resolved — returns nothing, never global). The `semantic*Search`
+functions and `matchClip` / `matchGalleryText` REQUIRE one; a raw
+`.rpc('match_…')` anywhere else fails `tests/unit/embedding-rpc-scope-guard.test.ts`.
+
+Under a tenant the wrappers call the `*_in_books` functions in
+`scripts/migration/add-scoped-embedding-rpcs.sql`, which select by `book_id`
+first and rank inside a fenced subquery, so the vector index cannot turn the
+scope into a post-filter. Three things to know:
+
+- **`match_pages_in_books` is not safe for a large id list.** Given a tenant's
+  ~2,000 ids the planner answers it through HNSW and filters afterwards: 10 rows
+  in 150 ms on-topic, ZERO off-topic. It is fine for the one-book case it was
+  written for. Tenant page search uses `match_pages_in_scope`.
+- **Pages are bounded work, not exact.** An exact scan of a tenant's 226K–830K
+  page vectors did not finish in 90 s. `match_pages_in_scope` ranks the pages of
+  the nearest few books in scope exactly and unions one HNSW pass. Measured
+  recall@15 against exact truth: Bhutan 67%, BPH 84%
+  (`scripts/audit/scoped-page-recall.mjs`). Exact recall needs a tenant column
+  plus a partial index per tenant — ~1.05M updates on `page_translations`.
+- **A missing function or a statement timeout falls back** to the global RPC
+  cut to the book set. Closed either way; the migration is what buys recall.
+
+Purity is checked over HTTP, per route, with a control arm:
+`scripts/audit/search-tenant-purity.mjs <slug>` (the real subdomain) or
+`--local=http://localhost:3111` (before a merge).
 
 ### Index health
 The HNSW index has to be present and the planner has to choose it — `CREATE INDEX` succeeds silently even when it produces an unusable index above the dim cap. Always `EXPLAIN ANALYZE` a real `match_*` query after touching a vector column or index. See `lesson_pgvector_hnsw_dim_cap.md` and `lesson_silent_probe_failures.md`.

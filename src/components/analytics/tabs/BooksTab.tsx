@@ -163,8 +163,8 @@ export default function BooksTab() {
             ))}</ol>
           )}
         </Panel>
-        <Panel title="Searches that came up short" icon={<HelpCircle className="w-4 h-4" />} sub="≤2 results · 30d — acquisition signal">
-          {d.searchGaps.length === 0 ? <div className="px-4 py-8 text-center text-sm" style={{ color: 'var(--text-muted)' }}>No low-result searches — nice.</div> : (
+        <Panel title="Searches that came up short" icon={<HelpCircle className="w-4 h-4" />} sub="≤2 results · 30d · acquisition signal">
+          {d.searchGaps.length === 0 ? <div className="px-4 py-8 text-center text-sm" style={{ color: 'var(--text-muted)' }}>No low-result searches. Nice.</div> : (
             <ol>{d.searchGaps.map((s, i) => (
               <li key={s.term + i} className="flex items-center gap-3 px-4 py-2 text-sm" style={{ borderTop: i ? '1px solid var(--border-light)' : 'none' }}>
                 <span className="w-5 text-right tabular-nums" style={{ color: 'var(--text-muted)' }}>{i + 1}</span>

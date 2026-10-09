@@ -24,7 +24,7 @@
  * than hand-rolling the regexes again.
  */
 
-import { separateTermDefinitions } from '@/lib/term-definitions';
+import { splitInlineTermDefinitions } from '@/lib/term-definitions';
 
 /** Tags marking text physically on the page, as opposed to AI commentary. */
 export const PAGE_MARK_TAGS = 'margin|gloss|insert|unclear';
@@ -85,7 +85,15 @@ export function stripAiAnnotations(text: string): string {
  * survives is page text. Model definitions are first moved out of `<term>`
  * chips into `<note>`s (#5895), so the toggle hides them with the rest of the
  * commentary instead of unwrapping them into the book's text.
+ *
+ * Only shape 1 (the definition INSIDE the chip) runs here. Shape 2 — a
+ * `<gloss>` after a term, relabelled `<note>` for display — must not: it turns
+ * a headword line like `<term>Abba</term> <gloss>father</gloss>` into a
+ * term+note pair, and the glossary-line rule in `preprocessTerms` then deletes
+ * the book's own line (#5942: 7 of 800 pages). `preprocessTerms` already keeps
+ * the term and drops the gloss. So callers pass the text BEFORE
+ * `separateTermDefinitions`, which belongs to the notes-on path only.
  */
 export function applyNotesOff(text: string): string {
-  return stripAiAnnotations(unwrapPageMarks(preprocessTerms(separateTermDefinitions(text))));
+  return stripAiAnnotations(unwrapPageMarks(preprocessTerms(splitInlineTermDefinitions(text).text)));
 }

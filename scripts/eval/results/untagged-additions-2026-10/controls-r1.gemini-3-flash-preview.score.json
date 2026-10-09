@@ -1,0 +1,2012 @@
+{
+ "round": 1,
+ "arm": "v13-a",
+ "model": "gemini-3-flash-preview",
+ "positives": 38,
+ "recall": 38,
+ "recall_by_kind": {
+  "explanation": "10/10",
+  "image_description": "8/8",
+  "definition": "10/10",
+  "summary": "10/10"
+ },
+ "kind_right": 29,
+ "negatives": 50,
+ "clean_pages_flagged": 29,
+ "clean_flags": 83,
+ "clean_units": 891,
+ "clean_continuation_pages": 31,
+ "unanswered": 0,
+ "recall_by_form": {
+  "bare": "32/32",
+  "bracketed": "6/6"
+ },
+ "clean_flags_by_kind": {
+  "unsupported": 51,
+  "definition": 17,
+  "explanation": 15
+ },
+ "judge_named": {
+  "pages": 30,
+  "pages_flagged": 26,
+  "quotes_located": 51,
+  "quotes_flagged": 20,
+  "by_kind": {
+   "unreadable_fill/bare": "7/34",
+   "gloss/bracket": "3/3",
+   "boundary/bare": "2/4",
+   "gloss/bare": "2/3",
+   "added_fact/bare": "6/7"
+  }
+ },
+ "pass": {
+  "recall_ge_80": true,
+  "false_flag_le_10": false
+ },
+ "positives_detail": [
+  {
+   "id": "pos:6a22d6e168f6a1498e2ffe6a_00160",
+   "lang": "German",
+   "kind": "explanation",
+   "sentence": "Here the author is alluding to require, a commonplace of the period.",
+   "n": 3,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69906485ef12272ffdc93acc_00116",
+   "lang": "French",
+   "kind": "image_description",
+   "sentence": "A woodcut at the head of the page shows two figures standing beside a furnace.",
+   "n": 16,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "image_description",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:6954347b1479a63c11089b35_00091",
+   "lang": "German",
+   "kind": "definition",
+   "sentence": "provide: a term used for the first stage of the work.",
+   "n": 13,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "unsupported",
+   "kind_right": false,
+   "extra": 0
+  },
+  {
+   "id": "pos:1a8485e5-5331-41df-bfc1-6efd65238f55_00581",
+   "lang": "Latin",
+   "kind": "summary",
+   "sentence": "This page continues the discussion begun in the previous chapter.",
+   "n": 20,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "summary",
+   "kind_right": true,
+   "extra": 4
+  },
+  {
+   "id": "pos:695262d8ab34727b1f046ade_00167",
+   "lang": "Latin",
+   "kind": "explanation",
+   "sentence": "This refers to Lunar, which readers of the time would have recognised at once.",
+   "n": 5,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69ade6cc2fcf4ffa86cec233_00093",
+   "lang": "German",
+   "kind": "image_description",
+   "sentence": "[Illustration: an ornamental initial letter decorated with vines and a small bird.]",
+   "n": 4,
+   "form": "bracketed",
+   "answered": true,
+   "hit": true,
+   "kind_given": "image_description",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:695594f97bd6d2cd1d61e685_00331",
+   "lang": "Latin",
+   "kind": "definition",
+   "sentence": "[Hebron: literally, 'that which is hidden']",
+   "n": 7,
+   "form": "bracketed",
+   "answered": true,
+   "hit": true,
+   "kind_given": "definition",
+   "kind_right": true,
+   "extra": 1
+  },
+  {
+   "id": "pos:6a06d39b9a48d5139996355a_00151",
+   "lang": "Italian",
+   "kind": "summary",
+   "sentence": "In summary, the author argues that experience must be preferred to authority.",
+   "n": 9,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "summary",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:6a09ff43fa20006dbaba8d78_00193",
+   "lang": "Pali",
+   "kind": "explanation",
+   "sentence": "The point of the comparison is that Section stands for the whole of the argument.",
+   "n": 20,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": true,
+   "extra": 6
+  },
+  {
+   "id": "pos:69908ac1c0656c0b3bcc0813_00050",
+   "lang": "Arabic",
+   "kind": "image_description",
+   "sentence": "The page is decorated with a printer's device depicting an anchor and a dolphin.",
+   "n": 18,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "image_description",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69b18a89c4be2cdd0edc810d_00135",
+   "lang": "Latin",
+   "kind": "definition",
+   "sentence": "beginning here means the inner or spiritual sense, as opposed to the letter.",
+   "n": 5,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": false,
+   "extra": 0
+  },
+  {
+   "id": "pos:69b51dcc47b06ecd58184b91_00073",
+   "lang": "German",
+   "kind": "summary",
+   "sentence": "The author now turns from theory to practical instruction.",
+   "n": 12,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "summary",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69b6fb4a3c7947b468d7aa52_00309",
+   "lang": "Latin",
+   "kind": "explanation",
+   "sentence": "By this the writer means that the practice had already fallen out of use.",
+   "n": 4,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": true,
+   "extra": 1
+  },
+  {
+   "id": "pos:69920bff01d3dcea63458842_00389",
+   "lang": "Greek",
+   "kind": "image_description",
+   "sentence": "Below the text is an engraving of a seated scholar holding an open book.",
+   "n": 14,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "image_description",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69de989b1b234a773e438e19_00234",
+   "lang": "Italian",
+   "kind": "definition",
+   "sentence": "(importance is an old measure equal to about half a litre.)",
+   "n": 10,
+   "form": "bracketed",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": false,
+   "extra": 1
+  },
+  {
+   "id": "pos:6953e58d77f38f6761bf0cfc_00123",
+   "lang": "French",
+   "kind": "summary",
+   "sentence": "The following section lists the remaining items in the same manner.",
+   "n": 12,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "summary",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69905e262fd6a039938a154f_00067",
+   "lang": "Latin",
+   "kind": "explanation",
+   "sentence": "Pentagons was a well-known authority in the schools of the time.",
+   "n": 2,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": true,
+   "extra": 2
+  },
+  {
+   "id": "pos:69a6827ed5bf106c72bb8d6f_00286",
+   "lang": "French",
+   "kind": "image_description",
+   "sentence": "A decorative border of flowers and scrollwork surrounds the text.",
+   "n": 4,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "image_description",
+   "kind_right": true,
+   "extra": 2
+  },
+  {
+   "id": "pos:69520588ab34727b1f042d0c_00165",
+   "lang": "Italian",
+   "kind": "definition",
+   "sentence": "The word translated here as 'virtue' means power or efficacy rather than moral goodness.",
+   "n": 6,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": false,
+   "extra": 1
+  },
+  {
+   "id": "pos:6952603cab34727b1f04647b_00194",
+   "lang": "German",
+   "kind": "summary",
+   "sentence": "The rest of the page repeats the same argument with further examples.",
+   "n": 3,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "summary",
+   "kind_right": true,
+   "extra": 2
+  },
+  {
+   "id": "pos:69d5ad004dc55b8478dde8b5_01455",
+   "lang": "Hebrew",
+   "kind": "explanation",
+   "sentence": "This is a reference to the doctrine discussed in the earlier chapters of the work.",
+   "n": 57,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69935b692c63944063133f67_00112",
+   "lang": "Chinese",
+   "kind": "image_description",
+   "sentence": "In the margin a small hand-drawn pointing finger marks this passage.",
+   "n": 33,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "image_description",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69a5d924a63a00aaae8aae3b_00105",
+   "lang": "Dutch",
+   "kind": "definition",
+   "sentence": "Swammerdam, that is, the common name for quicksilver among the older writers.",
+   "n": 5,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": false,
+   "extra": 0
+  },
+  {
+   "id": "pos:69b99e681f30176bf4d3798a_00155",
+   "lang": "Pali",
+   "kind": "summary",
+   "sentence": "Having set out the objections, the text proceeds to answer each in turn.",
+   "n": 13,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "summary",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69ade7946a6b945bbdfa2d0a_00091",
+   "lang": "German",
+   "kind": "explanation",
+   "sentence": "The passage echoes a saying usually attributed to Aristotle.",
+   "n": 7,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69557433f63a75710917330c_00146",
+   "lang": "Greek",
+   "kind": "definition",
+   "sentence": "[i.e., the philosophers' stone]",
+   "n": 7,
+   "form": "bracketed",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": false,
+   "extra": 1
+  },
+  {
+   "id": "pos:8a9eea4b-6be1-4424-9a38-b7a0deb58f95_00256",
+   "lang": "Latin",
+   "kind": "summary",
+   "sentence": "The passage concludes by restating the main point of the chapter.",
+   "n": 47,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "summary",
+   "kind_right": true,
+   "extra": 2
+  },
+  {
+   "id": "pos:69a6849d7ab725b59be41319_00173",
+   "lang": "Italian",
+   "kind": "explanation",
+   "sentence": "In other words, the reader is being warned not to take the statement literally.",
+   "n": 13,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": true,
+   "extra": 1
+  },
+  {
+   "id": "pos:69ac7ee520878c5c9ba51e75_00098",
+   "lang": "Latin",
+   "kind": "definition",
+   "sentence": "By Demonstration is meant a kind of salt obtained by burning plants.",
+   "n": 13,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "unsupported",
+   "kind_right": false,
+   "extra": 0
+  },
+  {
+   "id": "pos:69b185e9c4be2cdd0edc464c_00489",
+   "lang": "Dutch",
+   "kind": "summary",
+   "sentence": "What follows is a list of the authorities cited in support of this view.",
+   "n": 7,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "summary",
+   "kind_right": true,
+   "extra": 2
+  },
+  {
+   "id": "pos:6991eac02f801130a473e424_00074",
+   "lang": "Italian",
+   "kind": "explanation",
+   "sentence": "The allusion is to a story told by Pliny in his Natural History.",
+   "n": 7,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": true,
+   "extra": 2
+  },
+  {
+   "id": "pos:69593274b91a6184ea943873_00315",
+   "lang": "French",
+   "kind": "image_description",
+   "sentence": "(The page has a large ornamental tailpiece showing a vase of fruit.)",
+   "n": 6,
+   "form": "bracketed",
+   "answered": true,
+   "hit": true,
+   "kind_given": "image_description",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:6a2198371994d1df1e5e0235_00118",
+   "lang": "Arabic",
+   "kind": "definition",
+   "sentence": "The term Jewish denotes a vessel with a long neck used for distillation.",
+   "n": 13,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": false,
+   "extra": 0
+  },
+  {
+   "id": "pos:69e7518010ee9075bcdcdaf0_00223",
+   "lang": "Spanish",
+   "kind": "summary",
+   "sentence": "To summarise: the three causes named above are treated as one.",
+   "n": 5,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "summary",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69aebfa4c337b1e6a4d582f3_00161",
+   "lang": "Italian",
+   "kind": "explanation",
+   "sentence": "This reflects the common belief of the age that such things were governed by the stars.",
+   "n": 11,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:69593291b91a6184ea943bbe_00122",
+   "lang": "French",
+   "kind": "image_description",
+   "sentence": "The text is laid out in two columns separated by a vertical rule.",
+   "n": 16,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "image_description",
+   "kind_right": true,
+   "extra": 0
+  },
+  {
+   "id": "pos:6976f5fb7b4366f057e0e974_00631",
+   "lang": "Latin",
+   "kind": "definition",
+   "sentence": "(Hellebore: an honorific title given to a learned teacher.)",
+   "n": 11,
+   "form": "bracketed",
+   "answered": true,
+   "hit": true,
+   "kind_given": "explanation",
+   "kind_right": false,
+   "extra": 0
+  },
+  {
+   "id": "pos:69b4d643853c26e0d15603c8_00136",
+   "lang": "Latin",
+   "kind": "summary",
+   "sentence": "The text breaks off here and resumes on the following page.",
+   "n": 6,
+   "form": "bare",
+   "answered": true,
+   "hit": true,
+   "kind_given": "summary",
+   "kind_right": true,
+   "extra": 9
+  }
+ ],
+ "clean_flag_detail": [
+  {
+   "id": "neg:1a8485e5-5331-41df-bfc1-6efd65238f55_00581",
+   "lang": "Latin",
+   "flags": [
+    {
+     "n": 6,
+     "words": "to the dog",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source has 'ei' (to it), translator specifies 'to the dog'.",
+     "sentence": "Or carry a young weasel's severed tail on your foot, or give a frog to the dog in a morsel of food; all these things are to avoid the barking of dogs."
+    },
+    {
+     "n": 19,
+     "words": "maidenhair fern",
+     "whole": false,
+     "kind": "definition",
+     "reason": "Source has only 'adianti'; translator adds the common name.",
+     "sentence": "If you give them twigs of maidenhair fern adiantum in their food, according to Pliny, and:"
+    },
+    {
+     "n": 21,
+     "words": "for one who is fierce and overly inclined to battle",
+     "whole": false,
+     "kind": "explanation",
+     "reason": "Source has 'pro vehementi, ac nimis in pugnam procliui', which is the author's text.",
+     "sentence": "By giving them garlic in their food just before they are to fight, from which the term eskorodismenoi is most wittily used in ancient comedy for one who is fierce and overly inclined to battle."
+    },
+    {
+     "n": 24,
+     "words": "at all",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source has 'non possit'; 'at all' is an added intensifier.",
+     "sentence": "That a bird cannot fly at all."
+    }
+   ]
+  },
+  {
+   "id": "neg:6952603cab34727b1f04647b_00194",
+   "lang": "German",
+   "flags": [
+    {
+     "n": 3,
+     "words": "proceed",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source has 'machete es Gott' (did God do/make it).",
+     "sentence": "Now, how did God proceed to cure him and tincture him again?"
+    },
+    {
+     "n": 5,
+     "words": "namely",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source uses 'als' (as/than) or direct apposition.",
+     "sentence": "No; He took the equality and cured him with that which had been corrupted in him, namely with the divine Mercurius and with the divine Venus , and with the divine Jupiter ."
+    },
+    {
+     "n": 6,
+     "words": "this:",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source has 'verstehet/' (understand/imperative) without 'this'.",
+     "sentence": "Understand this: in man was the spoken Word; I call that the eternal Mercurius in man, for it is the true guiding life."
+    },
+    {
+     "n": 7,
+     "words": "human",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source has 'Menschen Bilde' (man's image), 'human' is an added adjective.",
+     "sentence": "It was breathed or spoken into the human image, which God created from His own essence into an image according to God, as into a creaturely image."
+    }
+   ]
+  },
+  {
+   "id": "neg:6953e58d77f38f6761bf0cfc_00123",
+   "lang": "French",
+   "flags": [
+    {
+     "n": 12,
+     "words": "transparent medium",
+     "whole": false,
+     "kind": "explanation",
+     "reason": "Source has 'diaphane' (diaphanous/transparent), translator adds 'medium' to clarify the noun.",
+     "sentence": "the transparent medium K B, it was necessary according to the law of refractions, which"
+    }
+   ]
+  },
+  {
+   "id": "neg:6954347b1479a63c11089b35_00091",
+   "lang": "German",
+   "flags": [
+    {
+     "n": 9,
+     "words": "has a value in itself:",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "replaces 'an sich einen Wert habe' which appears earlier in the source sentence",
+     "sentence": "But that the existence of a human being who merely lives (and is ever so busy in this intention) in order to enjoy, even if he were to best facilitate this for others who are also only out for enjoyment, because he shares all pleasure through sympathy, has a value in itself: reason will never allow itself to be persuaded of this."
+    }
+   ]
+  },
+  {
+   "id": "neg:69557433f63a75710917330c_00146",
+   "lang": "Greek",
+   "flags": [
+    {
+     "n": 3,
+     "words": "and the differences will likewise be double",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "The source says 'twice the term below them' but does not repeat the 'double' clause for differences.",
+     "sentence": "But in a triple ratio, the terms will have a difference twice the value of the term below them, and the differences will likewise be double 10 ; in a quadruple ratio, three times; and in a quintuple ratio, four times; and so on infinitely."
+    },
+    {
+     "n": 6,
+     "words": "the proportions",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "The source ends at 'ἐπλάσσο-' (we modeled/formed), without the object 'proportions' explicitly present.",
+     "sentence": "20 5 Let this be a sufficient and self-evident example for us that the property of this proportion is preserved in all relations: in every kind of multiple, every kind of epimoric, every kind of epimeric, and every kind of mixed relation; it is that example in which we modeled the proportions starting from equality ."
+    }
+   ]
+  },
+  {
+   "id": "neg:695594f97bd6d2cd1d61e685_00331",
+   "lang": "Latin",
+   "flags": [
+    {
+     "n": 5,
+     "words": "or shepherd",
+     "whole": false,
+     "kind": "definition",
+     "reason": "Source has 'pastor enim seu pascens', translator adds 'shepherd' as a synonym.",
+     "sentence": "4712; and from the signification of the flock, that it is those who are learning, for a pastor or shepherd is one who teaches and leads to the good of charity, and the flock is one that learns and is led, concerning which n."
+    },
+    {
+     "n": 11,
+     "words": "He would teach",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source has 'doceret' (would teach); 'He' is added as a specific subject not in the Latin.",
+     "sentence": "2909; thus by those words it is signified that He would teach those things which are the lower things of the Church, and this because the higher things would not be grasped; for he who teaches faith and not charity can never perceive the higher or interior things of the Church, for he does not have anything that leads, and that dictates whether this is of faith or whether this is true; but if he teaches charity, then he has good, this is the dictate to him, and it leads him, for all truth is from good and acts concerning good, or what is the same, all of faith is from charity and acts concerning charity; that everything of doctrine regards life, everyone can know from mere natural light."
+    }
+   ]
+  },
+  {
+   "id": "neg:69905e262fd6a039938a154f_00067",
+   "lang": "Latin",
+   "flags": [
+    {
+     "n": 3,
+     "words": "sigillum",
+     "whole": false,
+     "kind": "definition",
+     "reason": "source has 'sigillum', translation provides both 'seal' and the original Latin word.",
+     "sentence": "nine, and which are distant one from another by one palm: and in the middle circle, write first the name of the hour in which you perform the work, in the second place the name of the Angel of the hour, third the seal sigillum of the Angel of the hour: Fourth the name of the Angel, who presides over that day in which you perform the work, and of his ministers: Fifth the name of the present season."
+    },
+    {
+     "n": 10,
+     "words": "Pentagoni",
+     "whole": false,
+     "kind": "definition",
+     "reason": "source has 'Pentagoni', translation provides both 'Pentagons' and the original Latin word.",
+     "sentence": "Outside the circle, in the four corners, let there be Pentagons Pentagoni ."
+    }
+   ]
+  },
+  {
+   "id": "neg:69908ac1c0656c0b3bcc0813_00050",
+   "lang": "Arabic",
+   "flags": [
+    {
+     "n": 1,
+     "words": "Serious effort and",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "The source starts with 'الجد' (The grandfather/seriousness), but the translator added 'effort'.",
+     "sentence": "Serious effort and passion, however, involve an obsession with women, idle talk, drinking, hunting, and the like."
+    },
+    {
+     "n": 1,
+     "words": "idle talk, drinking,",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source has 'والحديث والصرف' (talk and spending/exchange); 'drinking' is an interpretive addition.",
+     "sentence": "Serious effort and passion, however, involve an obsession with women, idle talk, drinking, hunting, and the like."
+    },
+    {
+     "n": 2,
+     "words": "it is spoiled by",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "The source lists terms; the translator added the verb 'is spoiled by' to create a full sentence.",
+     "sentence": "As for eloquence, it is spoiled by excessive cursing and physical violence."
+    },
+    {
+     "n": 3,
+     "words": "they are ruined by",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "The source lists terms; the translator added 'they are ruined by' to create a full sentence.",
+     "sentence": "As for the times, they are ruined by drought and the loss of harvests."
+    },
+    {
+     "n": 9,
+     "words": "serpent",
+     "whole": false,
+     "kind": "explanation",
+     "reason": "Source has 'اسودا' (a black one); 'serpent' is an identification not in the source text.",
+     "sentence": "Have you not heard how a crow destroyed a black serpent?"
+    },
+    {
+     "n": 11,
+     "words": "serpent",
+     "whole": false,
+     "kind": "explanation",
+     "reason": "Source has 'اسود' (a black one); 'serpent' is an identification not in the source text.",
+     "sentence": "Dimna said: It is mentioned that a crow had a nest in a mountain, and near it was the burrow of a black serpent."
+    },
+    {
+     "n": 12,
+     "words": "serpent",
+     "whole": false,
+     "kind": "explanation",
+     "reason": "Source has 'الاسود' (the black one); 'serpent' is an identification not in the source text.",
+     "sentence": "When the crow had chicks, the serpent ate them."
+    },
+    {
+     "n": 13,
+     "words": "serpent",
+     "whole": false,
+     "kind": "explanation",
+     "reason": "Source has 'الاسود' (the black one); 'serpent' is an identification not in the source text.",
+     "sentence": "When the serpent did this repeatedly, it became too much for the crow to bear."
+    },
+    {
+     "n": 14,
+     "words": "serpent",
+     "whole": false,
+     "kind": "explanation",
+     "reason": "Source has 'الاسود' (the black one); 'serpent' is an identification not in the source text.",
+     "sentence": "He complained about this to a friend of his, a jackal, and said to him: I intend to go to the serpent and peck out its eyes while it is sleeping, so that perhaps I might be rid of it."
+    }
+   ]
+  },
+  {
+   "id": "neg:6991eac02f801130a473e424_00074",
+   "lang": "Italian",
+   "flags": [
+    {
+     "n": 4,
+     "words": "a creature",
+     "whole": false,
+     "kind": "explanation",
+     "reason": "Source uses 'quel che' (that which) without the noun 'creature'.",
+     "sentence": "All parts of any animal must correspond to its whole: that is, a creature that is short and thick must have every limb short and thick; one that is long and thin should have long and thin limbs; and a creature of medium build should have limbs of the same medium proportions."
+    },
+    {
+     "n": 4,
+     "words": "a creature of",
+     "whole": false,
+     "kind": "explanation",
+     "reason": "Source uses 'il mediocre' (the medium one) without the noun 'creature'.",
+     "sentence": "All parts of any animal must correspond to its whole: that is, a creature that is short and thick must have every limb short and thick; one that is long and thin should have long and thin limbs; and a creature of medium build should have limbs of the same medium proportions."
+    },
+    {
+     "n": 9,
+     "words": "muscoli domestici",
+     "whole": false,
+     "kind": "definition",
+     "reason": "The source provides only the Italian term; the translation repeats it as a gloss.",
+     "sentence": "This occurs because, when the hand is opened, the inner muscles muscoli domestici extend and make the arm between the elbow and the hand thinner."
+    },
+    {
+     "n": 10,
+     "words": "muscoli siluestri",
+     "whole": false,
+     "kind": "definition",
+     "reason": "The source provides only the Italian term; the translation repeats it as a gloss.",
+     "sentence": "When the hand is clenched, both the inner and outer muscles muscoli siluestri retract and thicken, though only the outer ones pull away from the bone because they are drawn by the bending of the hand."
+    }
+   ]
+  },
+  {
+   "id": "neg:69920bff01d3dcea63458842_00389",
+   "lang": "Greek",
+   "flags": [
+    {
+     "n": 12,
+     "words": "of youthful passion",
+     "whole": false,
+     "kind": "explanation",
+     "reason": "The source has only ὑπεκκαύματα (fuels/kindlings) without specifying passion.",
+     "sentence": "It is also wonderful that the fuels of youthful passion, the prostitutes, were removed from their commonwealth."
+    }
+   ]
+  },
+  {
+   "id": "neg:69935b692c63944063133f67_00112",
+   "lang": "Chinese",
+   "flags": [
+    {
+     "n": 12,
+     "words": "wu wei",
+     "whole": false,
+     "kind": "definition",
+     "reason": "Source has 無為; translator kept the transliteration as a gloss.",
+     "sentence": "Then one can act without departing from wu wei ."
+    },
+    {
+     "n": 26,
+     "words": "\"Doing nothing is left undone\"",
+     "whole": false,
+     "kind": "definition",
+     "reason": "Source has 無不為; translator added the quoted definition.",
+     "sentence": "\"Doing nothing is left undone\" means that when stimulated, one penetrates all the causes under heaven."
+    },
+    {
+     "n": 47,
+     "words": "heart",
+     "whole": false,
+     "kind": "definition",
+     "reason": "Source has 心; translator added the transliteration 'xin' or 'heart' gloss.",
+     "sentence": "The Sage has no fixed heart ; he takes the heart of the people as his own heart."
+    },
+    {
+     "n": 52,
+     "words": "with a cautious and clouded mind",
+     "whole": false,
+     "kind": "explanation",
+     "reason": "Source has 惛惛; translator added descriptive adjectives not in text.",
+     "sentence": "The Sage dwells in the world with a cautious and clouded mind, making the heart of the world simple and whole."
+    },
+    {
+     "n": 55,
+     "words": "The Wings of Laozi, Volume Two",
+     "whole": true,
+     "kind": "unsupported",
+     "reason": "Renders 老子元翼 卷下, which is the book title/volume, not author text.",
+     "sentence": "The Wings of Laozi, Volume Two"
+    }
+   ]
+  },
+  {
+   "id": "neg:69a6827ed5bf106c72bb8d6f_00286",
+   "lang": "French",
+   "flags": [
+    {
+     "n": 5,
+     "words": "for you",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "The source ends at 't'auancer' without the final 'pour toi'.",
+     "sentence": "I would like to do much for you, and I would wish to advance you as heartily as my own child: but I fear that in showing you the art of earth , it would be more of a step backward than a step forward for you."
+    }
+   ]
+  },
+  {
+   "id": "neg:69a6849d7ab725b59be41319_00173",
+   "lang": "Italian",
+   "flags": [
+    {
+     "n": 14,
+     "words": "force",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "The source has 'grauità' (gravity) without the word 'force'.",
+     "sentence": "For while I consider the heavy body thrown upward to go on continuously diminishing that virtue impressed upon it by the projector , which, as long as it was superior to the other contrary force of gravity, pushed it upward, once this and that have reached equilibrium, the moving object ceases to rise further and passes through the state of rest, in which the impressed impetus is not otherwise annihilated, but only that excess having been consumed, which"
+    }
+   ]
+  },
+  {
+   "id": "neg:69ac7ee520878c5c9ba51e75_00098",
+   "lang": "Latin",
+   "flags": [
+    {
+     "n": 5,
+     "words": "For",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "The source starts with 'Deus autem'; 'For' is an added conjunction.",
+     "sentence": "For on the first day of Creation, God created only Light, and He assigned an entire day to that work; He did not create any material work on that day."
+    },
+    {
+     "n": 9,
+     "words": "I have spoken",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source uses 'loquuti' (we have spoken); 'I' is a translator's choice of person.",
+     "sentence": "For the present, I have spoken only of common experience, as of a poor Demonstration."
+    }
+   ]
+  },
+  {
+   "id": "neg:69b185e9c4be2cdd0edc464c_00489",
+   "lang": "Dutch",
+   "flags": [
+    {
+     "n": 7,
+     "words": "small",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source has 'Schelviffchen' (haddock); 'small' is an added descriptor.",
+     "sentence": "Reflecting upon the multitude of these very tasty haddock, which were being caught with nets at that time, whereas they are otherwise caught with bait placed upon a fishhook, I imagined that there must be a reason why the small haddock approached our sea coasts in such abundance, seeing as a month or two later, not a single haddock was caught on our coasts."
+    },
+    {
+     "n": 8,
+     "words": "small",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source has 'Schelviffchen' (haddock); 'small' is an added descriptor.",
+     "sentence": "I imagined that the abundance of the small haddock was dependent upon the bait, or food, that they were finding on our sea coasts."
+    }
+   ]
+  },
+  {
+   "id": "neg:69b21d1a429e087c6f866ee7_00452",
+   "lang": "Latin",
+   "flags": [
+    {
+     "n": 43,
+     "words": "The rising of a comet makes the whole year suspect.",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "The translator repeats the clause twice; the source has 'annum totum suspectum facit' only once.",
+     "sentence": "So that you know this is the case, a comet does not immediately threaten winds and rains at its rising, as Aristotle says, but The rising of a comet makes the whole year suspect. it makes the whole year suspect."
+    }
+   ]
+  },
+  {
+   "id": "neg:69b4d643853c26e0d15603c8_00136",
+   "lang": "Latin",
+   "flags": [
+    {
+     "n": 2,
+     "words": "quinta essentia",
+     "whole": false,
+     "kind": "definition",
+     "reason": "Source has only 'quinta ess:'",
+     "sentence": "of the additions, so that they may become such that the fifth essence quinta essentia remains in their odor, color, and taste, and increases rather than diminishes in these properties; such as Musk, Amber, and Civet."
+    },
+    {
+     "n": 2,
+     "words": "rather than diminishes",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source says 'non minuat' (not diminishes)",
+     "sentence": "of the additions, so that they may become such that the fifth essence quinta essentia remains in their odor, color, and taste, and increases rather than diminishes in these properties; such as Musk, Amber, and Civet."
+    },
+    {
+     "n": 5,
+     "words": "Crescentibus",
+     "whole": false,
+     "kind": "definition",
+     "reason": "Source has only 'Crescentibus'",
+     "sentence": "Although Musk, Amber, and Civet are not referred to in this present chapter, because we describe those specifically, and here we are dealing only with things that grow Crescentibus , such as Lilies, Lavender Spica , and Leaves; the process of their extraction is as follows."
+    },
+    {
+     "n": 5,
+     "words": "Lavender",
+     "whole": false,
+     "kind": "explanation",
+     "reason": "Source has only 'Spica'",
+     "sentence": "Although Musk, Amber, and Civet are not referred to in this present chapter, because we describe those specifically, and here we are dealing only with things that grow Crescentibus , such as Lilies, Lavender Spica , and Leaves; the process of their extraction is as follows."
+    },
+    {
+     "n": 5,
+     "words": "Spica",
+     "whole": false,
+     "kind": "definition",
+     "reason": "Source has only 'Spica'",
+     "sentence": "Although Musk, Amber, and Civet are not referred to in this present chapter, because we describe those specifically, and here we are dealing only with things that grow Crescentibus , such as Lilies, Lavender Spica , and Leaves; the process of their extraction is as follows."
+    },
+    {
+     "n": 6,
+     "words": "balneum",
+     "whole": false,
+     "kind": "definition",
+     "reason": "Source has only 'balneum'",
+     "sentence": "Take the growing things, well bruised, and having placed them in a pot, digest them in horse dung for four weeks and distill them through a bath balneum ."
+    },
+    {
+     "n": 8,
+     "words": "Alembicum",
+     "whole": false,
+     "kind": "definition",
+     "reason": "Source has only 'Alembicum'",
+     "sentence": "The fifth essence will rise through the alembic Alembicum , and the body will remain at the bottom."
+    },
+    {
+     "n": 10,
+     "words": "pellicanum",
+     "whole": false,
+     "kind": "definition",
+     "reason": "Source has only 'pellicanum'",
+     "sentence": "Afterward, take the distilled water and add that growing thing to it again, and digest it for six days by means of a pelican pellicanum ; it will turn into a dense color."
+    },
+    {
+     "n": 12,
+     "words": "torcular retortæ",
+     "whole": false,
+     "kind": "definition",
+     "reason": "Source has only 'torcular retortæ'",
+     "sentence": "The body will exit, but the fifth essence will reside at the bottom, which you shall separate from the dregs by a retort press torcular retortæ , and leave the fifth essence for four"
+    }
+   ]
+  },
+  {
+   "id": "neg:69b6fb4a3c7947b468d7aa52_00309",
+   "lang": "Latin",
+   "flags": [
+    {
+     "n": 7,
+     "words": "can dye",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source has 'inficiat' (infect/stain); 'can' is a translator's modal addition.",
+     "sentence": "For example: that a small drop of ink is extended to so many letters or lines; that silver, gilded only on the outside, is continued to such a great length of gilded wire; that a tiny little worm, such as is found in the skin, has within itself a spirit and a dissimilar arrangement of parts; that a small amount of saffron can dye a cask of water; that a little civet or aromatic substance can scent a much larger volume of air; that from a small"
+    },
+    {
+     "n": 7,
+     "words": "can scent",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source has 'odore' (with a scent); 'can scent' is a verbal construction not in source.",
+     "sentence": "For example: that a small drop of ink is extended to so many letters or lines; that silver, gilded only on the outside, is continued to such a great length of gilded wire; that a tiny little worm, such as is found in the skin, has within itself a spirit and a dissimilar arrangement of parts; that a small amount of saffron can dye a cask of water; that a little civet or aromatic substance can scent a much larger volume of air; that from a small"
+    }
+   ]
+  },
+  {
+   "id": "neg:69bd9c796120d54bd036f318_00389",
+   "lang": "Latin",
+   "flags": [
+    {
+     "n": 3,
+     "words": "They claim that",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source begins 'Quia et res naturales', lacking the introductory verb 'They claim that'.",
+     "sentence": "They claim that natural things possess certain hidden virtues for which no reason can be assigned by man, just as the magnet attracts iron, and many other things which Augustine enumerates in book twenty-one of The City of God."
+    },
+    {
+     "n": 4,
+     "words": "they argue,",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source has 'Ideo', lacking a verb of arguing.",
+     "sentence": "Therefore, they argue, in matters of seeking health where medicinal and natural remedies fail, it should not be illicit if one seeks to procure health for oneself or another through things such as non-necromantic and astrological images, or through rings and similar objects."
+    },
+    {
+     "n": 8,
+     "words": "they argue,",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source has 'ergo', lacking a verb of arguing.",
+     "sentence": "Therefore, they argue, it is licit to use their power to remove those afflictions."
+    },
+    {
+     "n": 8,
+     "words": "afflictions",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source has 'illa' (those things), lacking a specific noun.",
+     "sentence": "Therefore, they argue, it is licit to use their power to remove those afflictions."
+    },
+    {
+     "n": 11,
+     "words": "the Summa Theologica,",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source has 'Tho. ii. ii.', identifying the author and part but not the title.",
+     "sentence": "If, however, they add characters or any other unknown and vain observations which manifestly do not have a natural efficacy, this will be superstitious and illicit, as Thomas treats in the Summa Theologica, part two of the second part, question ninety-six, article two, at the end of the question."
+    }
+   ]
+  },
+  {
+   "id": "neg:69d5ad004dc55b8478dde8b5_01455",
+   "lang": "Hebrew",
+   "flags": [
+    {
+     "n": 10,
+     "words": "In the Name standing for the generation",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source has 'בשם עומד לדור' which is likely a liturgical instruction, not part of the prayer text.",
+     "sentence": "And he says: In the Name standing for the generation, and it is written..."
+    },
+    {
+     "n": 35,
+     "words": "of the house of His Presence",
+     "whole": false,
+     "kind": "explanation",
+     "reason": "Source has 'מאתר בית שכינתיה' which is an Aramaic Targum paraphrase, not in the Hebrew verse.",
+     "sentence": "And a spirit lifted me up, and I heard behind me a voice of great movement of those who praise and say: Blessed is the glory of the Lord from the place of the house of His Presence."
+    }
+   ]
+  },
+  {
+   "id": "neg:69de10185cedf736edb851e4_00244",
+   "lang": "Sanskrit",
+   "flags": [
+    {
+     "n": 17,
+     "words": "meaning her physical gestures and actions",
+     "whole": false,
+     "kind": "explanation",
+     "reason": "Source has 'चेष्टां' (gestures) but no further explanation.",
+     "sentence": "Just as one approaches a maiden, he should observe her behavior, meaning her physical gestures and actions."
+    },
+    {
+     "n": 24,
+     "words": "if she stays away for a few days",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source says 'कियतो-दिवसान्स्थित्वा' (having stayed for some days).",
+     "sentence": "After she has rejected the advance made by the hero , if she stays away for a few days and then once again associates with him or seeks his company, he should recognize her as having a divided mind."
+    }
+   ]
+  },
+  {
+   "id": "neg:69de989b1b234a773e438e19_00234",
+   "lang": "Italian",
+   "flags": [
+    {
+     "n": 8,
+     "words": "plug",
+     "whole": false,
+     "kind": "definition",
+     "reason": "The source has only 'spina'; 'plug' is an added gloss.",
+     "sentence": "Then, with speed, while keeping the fire continuously at the furnace with fresh wood, boldly strike the said plug spina with the mandriano (for that is the name of the iron used to strike the plug)."
+    }
+   ]
+  },
+  {
+   "id": "neg:69e7518010ee9075bcdcdaf0_00223",
+   "lang": "Spanish",
+   "flags": [
+    {
+     "n": 2,
+     "words": "offering",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source has 'hazen' (do/make); 'offering' is an interpretive addition.",
+     "sentence": "for another: if that is based on a certain affection, service, or offense that that soul or the other is then offering to God, and in such a way that if they persevere in that, as we have said, it will be fulfilled."
+    },
+    {
+     "n": 10,
+     "words": "truth be told",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source has 'como quiera que sea verdad' (however it may be true).",
+     "sentence": "However, truth be told, even though He answers them, it is neither a good method nor does God like it; rather, it displeases Him."
+    }
+   ]
+  },
+  {
+   "id": "neg:69e9617a2beefe2f6f72ba14_00253",
+   "lang": "Hebrew",
+   "flags": [
+    {
+     "n": 6,
+     "words": "Therefore,",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "The source begins with 'and makes' (ועושה), not a causal transition.",
+     "sentence": "Therefore, he makes mats, signs them with his seal, and his officers sell them in the market."
+    },
+    {
+     "n": 7,
+     "words": "these earnings",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "The source says 'from their likeness' (ומדמהן), referring to the mats/proceeds.",
+     "sentence": "The nobles of the land purchase them, and from these earnings he eats and drinks."
+    },
+    {
+     "n": 9,
+     "words": "directly",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "The source simply says 'to see him' (לראותו).",
+     "sentence": "The Ishmaelites cannot see him directly."
+    },
+    {
+     "n": 10,
+     "words": "When",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "The source uses a simple conjunction 'and' (והתועים).",
+     "sentence": "When the wanderers who come from distant lands to go to Mecca in the land of Al-Yaman ask to come before him, they call out from the palace: \"Our Lord, Light of the Ishmaelites and Radiance of our Law, show us the brightness of your face!\""
+    },
+    {
+     "n": 13,
+     "words": "lowers",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "The source says 'places' or 'leaves' (ומניח).",
+     "sentence": "At that moment, he lifts and lowers the hem of his garment from the window, and they come"
+    }
+   ]
+  },
+  {
+   "id": "neg:69ea0f5413a685002bb8dc8a_00107",
+   "lang": "Spanish",
+   "flags": [
+    {
+     "n": 22,
+     "words": "approaching to kill us",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "The source has 'a matacuallo' (at full speed), not 'to kill us'.",
+     "sentence": "Because as soon as they felt the great noise they made approaching to kill us, our field scouts and spies came to sound the alarm."
+    },
+    {
+     "n": 25,
+     "words": "What the diviners and their sorcerers said of us.",
+     "whole": true,
+     "kind": "unsupported",
+     "reason": "This renders a marginal note or summary heading not present in the main body text.",
+     "sentence": "What the diviners and their sorcerers said of us."
+    },
+    {
+     "n": 26,
+     "words": "The Indian diviners make them believe that we have no strength at night.",
+     "whole": true,
+     "kind": "unsupported",
+     "reason": "This renders a marginal note or summary heading not present in the main body text.",
+     "sentence": "The Indian diviners make them believe that we have no strength at night."
+    }
+   ]
+  },
+  {
+   "id": "neg:6a06d39b9a48d5139996355a_00151",
+   "lang": "Italian",
+   "flags": [
+    {
+     "n": 11,
+     "words": "signal",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source has 'modo' (way/mode), not 'signal'.",
+     "sentence": "And if you command with sound, you must ensure that there is such a difference between one signal and another that they cannot be mistaken for each other."
+    }
+   ]
+  },
+  {
+   "id": "neg:6a09ff43fa20006dbaba8d78_00193",
+   "lang": "Pali",
+   "flags": [
+    {
+     "n": 2,
+     "words": "people will be",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "source has only the plural adjective/noun pânâtipâtino",
+     "sentence": "I say this to them: If that is so, venerable sirs, then people will be killers of living beings pāṇātipātino because of what was done in the past."
+    },
+    {
+     "n": 6,
+     "words": "All manuscripts read pisuṇâvâcâ and pharusâvâcâ.",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "renders transcriber's footnote 1 into the main text",
+     "sentence": "They will use slanderous speech pisuṇāvācā All manuscripts read pisuṇāvācā and pharusāvācā."
+    },
+    {
+     "n": 7,
+     "words": "Compare below section XVI.",
+     "whole": true,
+     "kind": "unsupported",
+     "reason": "renders transcriber's footnote 1 into the main text",
+     "sentence": "Compare below section XVI."
+    },
+    {
+     "n": 14,
+     "words": "The manuscripts here and below vary between gacchantam and gacchatam.",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "renders transcriber's footnote 2 into the main text",
+     "sentence": "But monks, for those who fall back on The manuscripts here and below vary between gacchantam and gacchatam. what was done in the past as the essential truth , there is no desire to act, no effort, no sense that this should be done or this should not be done."
+    },
+    {
+     "n": 19,
+     "words": "D. and T. manuscripts read āmo.",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "renders transcriber's footnote 3 into the main text",
+     "sentence": "When I ask them this, they acknowledge D. and T. manuscripts read āmo. it, saying: Yes."
+    }
+   ]
+  },
+  {
+   "id": "neg:6a2198155ce215cb9ac70f53_00209",
+   "lang": "Latin",
+   "flags": [
+    {
+     "n": 10,
+     "words": "reside",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source has 'est' (is), 'reside' is an added verb for the clause.",
+     "sentence": "The interior mind of man, where his intellectual ideas—which are called immaterial—reside, is in that light."
+    },
+    {
+     "n": 18,
+     "words": "the former serves the latter",
+     "whole": false,
+     "kind": "explanation",
+     "reason": "Source has 'ille huic inservit' (that serves this).",
+     "sentence": "There is a correspondence between these lights, or between the things that are in the light of heaven and in the light of the world, when the external or natural man makes one with the internal or spiritual man—that is, when the former serves the latter."
+    }
+   ]
+  },
+  {
+   "id": "neg:8a9eea4b-6be1-4424-9a38-b7a0deb58f95_00256",
+   "lang": "Latin",
+   "flags": [
+    {
+     "n": 32,
+     "words": "a medicine",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source heading is 'Corrigo Medicu quid' (What I correct/What to correct).",
+     "sentence": "What it is to correct a medicine."
+    },
+    {
+     "n": 55,
+     "words": "masked by smoke",
+     "whole": false,
+     "kind": "unsupported",
+     "reason": "Source says 'correctus suffitu' (corrected by fumigation/perfume).",
+     "sentence": "Indeed, it is present, but masked by smoke."
+    }
+   ]
+  }
+ ],
+ "judge_named_detail": [
+  {
+   "id": "named:6991e171b53cae6bb6024476_00216",
+   "flags": 5,
+   "quotes": [
+    {
+     "kind": "gloss",
+     "where": "not-located",
+     "quote": "[Sin]",
+     "unit": null,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "Law \"Qui vades,\" final section, Digest of Theft.",
+     "unit": 18,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "Hostiensis, title on the same.",
+     "unit": 34,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "gloss",
+     "where": "bracket",
+     "quote": "\"Peccatum\" [Sin]",
+     "unit": 3,
+     "flagged": true,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:6953e46f77f38f6761bee559_00040",
+   "flags": 3,
+   "quotes": [
+    {
+     "kind": "boundary",
+     "where": "bare",
+     "quote": "You will encounter a gathering of stars.",
+     "unit": 2,
+     "flagged": true,
+     "both_judges": true
+    }
+   ]
+  },
+  {
+   "id": "named:697947a145e954e8a877872d_00218",
+   "flags": 3,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "to exit through the same path",
+     "unit": 2,
+     "flagged": true,
+     "both_judges": true
+    }
+   ]
+  },
+  {
+   "id": "named:6952872cab34727b1f04d284_00499",
+   "flags": 2,
+   "quotes": [
+    {
+     "kind": "gloss",
+     "where": "bare",
+     "quote": "—the Catholics—",
+     "unit": 11,
+     "flagged": true,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69affc54b3b18e354e59b7d8_00198",
+   "flags": 14,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "Augustus followed his own judgment regarding the word order",
+     "unit": 17,
+     "flagged": true,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69938e26d5a98fd66f4307b0_00136",
+   "flags": 3,
+   "quotes": [
+    {
+     "kind": "added_fact",
+     "where": "bare",
+     "quote": "Fainting from loss of blood...",
+     "unit": 35,
+     "flagged": true,
+     "both_judges": true
+    }
+   ]
+  },
+  {
+   "id": "named:69bfccd88ab50eb88e8c69fd_00521",
+   "flags": 1,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "And that which is not whipped by God.",
+     "unit": 26,
+     "flagged": false,
+     "both_judges": true
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "But why rather do they trade the day?",
+     "unit": 20,
+     "flagged": false,
+     "both_judges": true
+    }
+   ]
+  },
+  {
+   "id": "named:69bd9d6a6120d54bd0376a04_00060",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "They use the heart and the tongue for the inundation of Egypt.",
+     "unit": 2,
+     "flagged": false,
+     "both_judges": true
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "They also attribute the rising to the rains",
+     "unit": 9,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "Two water-vessels",
+     "unit": 6,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:6a26c3beaad44c98627cb64a_00013",
+   "flags": 2,
+   "quotes": [
+    {
+     "kind": "gloss",
+     "where": "bracket",
+     "quote": "[kind]",
+     "unit": 8,
+     "flagged": true,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:699047e512d83c216b7e8c3f_00086",
+   "flags": 2,
+   "quotes": [
+    {
+     "kind": "boundary",
+     "where": "bare",
+     "quote": "successive powers of unity increased by the rate of interest",
+     "unit": 2,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:699ef9f2c2bcb75dbdbaad92_00102",
+   "flags": 7,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "Thus it is written regarding Job, that he spoke without knowledge",
+     "unit": 51,
+     "flagged": true,
+     "both_judges": true
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "the secret was revealed to him only in part, as the sages said",
+     "unit": 52,
+     "flagged": false,
+     "both_judges": true
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "The voice of the Lord is upon the waters",
+     "unit": 48,
+     "flagged": true,
+     "both_judges": false
+    },
+    {
+     "kind": "added_fact",
+     "where": "bare",
+     "quote": "his expulsion from Eden",
+     "unit": 2,
+     "flagged": true,
+     "both_judges": true
+    }
+   ]
+  },
+  {
+   "id": "named:69b2f3b821208ea9dc278c50_00277",
+   "flags": 11,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "To give life to the matter of my living in them.",
+     "unit": 4,
+     "flagged": false,
+     "both_judges": true
+    }
+   ]
+  },
+  {
+   "id": "named:6990630be7b7642c081de08b_00353",
+   "flags": 5,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "all of them are radiant cups, depending on one another",
+     "unit": 16,
+     "flagged": false,
+     "both_judges": true
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "the nakedness of a daughter-in-law and the youth of your father-in-law",
+     "unit": 27,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "surely these are exquisite",
+     "unit": 54,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "A window opens within us, opening and being renewed and prepared from the smoke",
+     "unit": 38,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69e7933580b52390feb18277_00263",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "or rather, what his father knew. God bless his later life!",
+     "unit": null,
+     "flagged": false,
+     "both_judges": true
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "and let your companions see what befell you",
+     "unit": 14,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "and the freedom of the situation had clearly passed",
+     "unit": 11,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "the freedom of the situation had clearly passed",
+     "unit": 11,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "I bid him farewell, not asking out of shame and sadness",
+     "unit": 16,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69d5ac07d0bd3547a5654dcc_00313",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "boundary",
+     "where": "bare",
+     "quote": "The Moon is the companion and follower of the Sun.",
+     "unit": 1,
+     "flagged": false,
+     "both_judges": true
+    }
+   ]
+  },
+  {
+   "id": "named:69e74ef95cf1eaf3ad80e04c_00131",
+   "flags": 4,
+   "quotes": [
+    {
+     "kind": "added_fact",
+     "where": "bare",
+     "quote": "a metaphor for quality overcoming quantity",
+     "unit": 10,
+     "flagged": true,
+     "both_judges": true
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "Was flashing the lightning of its blades from afar",
+     "unit": 16,
+     "flagged": false,
+     "both_judges": true
+    }
+   ]
+  },
+  {
+   "id": "named:69f33c97876dd827cbc5a94f_00258",
+   "flags": 1,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "The day the locust reaches its hand into the trees in springtime",
+     "unit": 6,
+     "flagged": false,
+     "both_judges": true
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "The crime is that the trees remain without leaves in winter.",
+     "unit": 7,
+     "flagged": false,
+     "both_judges": true
+    }
+   ]
+  },
+  {
+   "id": "named:69e729a1a409200ea79f0ca5_00257",
+   "flags": 0,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "The Gabriel-like quality in them was a ringing sound",
+     "unit": 24,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "Narrow was that house and that feminine trait",
+     "unit": 23,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69e80670fdad300064d9ef9d_00599",
+   "flags": 6,
+   "quotes": [
+    {
+     "kind": "added_fact",
+     "where": "bare",
+     "quote": "### Chapter on Aphrodisiacs",
+     "unit": 1,
+     "flagged": true,
+     "both_judges": true
+    }
+   ]
+  },
+  {
+   "id": "named:69906a861cf6ed5fbc8f5d21_00078",
+   "flags": 7,
+   "quotes": [
+    {
+     "kind": "gloss",
+     "where": "bare",
+     "quote": "which equals 6 birds",
+     "unit": 18,
+     "flagged": true,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69e72c6ba409200ea79f484e_00102",
+   "flags": 3,
+   "quotes": [
+    {
+     "kind": "boundary",
+     "where": "bare",
+     "quote": "replied...",
+     "unit": 16,
+     "flagged": true,
+     "both_judges": false
+    },
+    {
+     "kind": "gloss",
+     "where": "bare",
+     "quote": "the tree I sought shade under was chopped down in Song",
+     "unit": 15,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69e792f880b52390feb17389_00344",
+   "flags": 8,
+   "quotes": [
+    {
+     "kind": "added_fact",
+     "where": "bare",
+     "quote": "Ying Yang, Liu Zhen, Xie Lingyun, Ruan Ji, Yu Xin, and Bao Zhao",
+     "unit": 38,
+     "flagged": true,
+     "both_judges": true
+    }
+   ]
+  },
+  {
+   "id": "named:69b6e791f8a84d859cde1de2_00473",
+   "flags": 2,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "<margin>where they come</margin> <margin>from.</margin> <margin>beings</margin> <margin>end.</margin>",
+     "unit": null,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "<margin>gotten</margin>\n<margin>greater.</margin>",
+     "unit": null,
+     "flagged": false,
+     "both_judges": true
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "<margin>where they come</margin>\n<margin>from.</margin>\n<margin>beings</margin>",
+     "unit": null,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69dbcc3e0f8c5edf20f484a0_00330",
+   "flags": 5,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "And a person observes \"body\" first, then \"animal,\" then \"man.\"",
+     "unit": 26,
+     "flagged": true,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69b21c6c429e087c6f8646f6_00223",
+   "flags": 2,
+   "quotes": [
+    {
+     "kind": "added_fact",
+     "where": "bare",
+     "quote": "EUPHEMIUS: What birds do I see here?",
+     "unit": 2,
+     "flagged": false,
+     "both_judges": true
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "whom I thought I valued most",
+     "unit": 8,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:699062f5ef12272ffdc8e9d5_00505",
+   "flags": 4,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "But the unlearned and even the philosopher himself, who truly did not receive gifts",
+     "unit": 3,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "forbids in His law that He gave to His people, the Hebrews, that sacrifice be made to idols",
+     "unit": 13,
+     "flagged": true,
+     "both_judges": false
+    },
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "But the unlearned and even the philosopher himself, who truly did not receive",
+     "unit": 3,
+     "flagged": false,
+     "both_judges": false
+    },
+    {
+     "kind": "added_fact",
+     "where": "bare",
+     "quote": "that sacrifice be made to idols",
+     "unit": 13,
+     "flagged": true,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:694bf8d2343422769f237558_00277",
+   "flags": 1,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "During the movement from the mainland, they move in a circle",
+     "unit": 1,
+     "flagged": false,
+     "both_judges": false
+    }
+   ]
+  },
+  {
+   "id": "named:69b1de4ea205bd982d8285bd_00396",
+   "flags": 1,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "The Emperor’s realm",
+     "unit": 27,
+     "flagged": false,
+     "both_judges": true
+    }
+   ]
+  },
+  {
+   "id": "named:69b525ba6be60460830310a9_00065",
+   "flags": 3,
+   "quotes": [
+    {
+     "kind": "gloss",
+     "where": "bracket",
+     "quote": "wandering stars [planets]",
+     "unit": 6,
+     "flagged": true,
+     "both_judges": true
+    }
+   ]
+  },
+  {
+   "id": "named:695910f2ecb01322b3068302_00444",
+   "flags": 3,
+   "quotes": [
+    {
+     "kind": "unreadable_fill",
+     "where": "bare",
+     "quote": "say that they were treated very well by the Spaniards",
+     "unit": 17,
+     "flagged": true,
+     "both_judges": false
+    }
+   ]
+  }
+ ]
+}

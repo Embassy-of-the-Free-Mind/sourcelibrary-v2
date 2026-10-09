@@ -116,7 +116,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const id = decodeURIComponent(rawId);
   const title = canonWork(id)?.title || workTitle(id);
   return {
-    title: `Compare Translations — ${title} | Source Library`,
+    title: `Compare Translations: ${title} | Source Library`,
     description: `Compare translations across editions of ${title}. View original language texts alongside AI and human translations side by side.`,
     robots: { index: true, follow: true },
     alternates: { canonical: `/work/${id}/compare` },

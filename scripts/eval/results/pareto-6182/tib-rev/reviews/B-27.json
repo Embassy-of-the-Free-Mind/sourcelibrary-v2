@@ -1,0 +1,54 @@
+[
+{"id": "Q8ZYJ", "score": 4, "verdict": "light", "span": "extra", "span_why": "The opening two sentences (three verses establishing the wrong time; 'this' = thinking 'I will do it later') translate the previous side's last line.",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "འདི་བརྩམས་པ་ནི་དགོས་པ་གང་ཞིག་དང་པོ་ཉིད་དུ་བྱེད་པར་འདོད་པའོ", "english": "What was intended to be done at the very beginning is this composition.", "why": "The gloss explains the verse's 'this' as the undertaking (brtsams pa) one meant to do first, not a literary composition."}
+ ],
+ "note": "Faithful commentary on the death verses; only the gloss on 'this' is skewed, and the opening carries over the previous side."},
+{"id": "QVRI4", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "high", "tibetan": "ཕྱི་རོལ་ལྡོག་པ་ལས་གྲུབ་འགྱུར།", "english": "It is established from the exclusion of the external.", "why": "The root verse says the external object is what is established, from vyatireka (the effect's absence when it is absent), as the commentary then explains.", "fix": {"find": "It is established from the exclusion of the external.", "replace": "The external object is established from negative concomitance (vyatireka)."}},
+  {"type": "structure", "confidence": "medium", "tibetan": "དེ་ཕྱིར་སྣང་དོན་བློ་དེ་དག །ཕྱི་དོན་ཡོད་ཀྱང་ཐ་དད་མིན།", "english": "those cognitions that appear as objects are not distinct from the objects", "why": "The verse says the appearing object and the cognition (two items) are not distinct even if an external object exists, not that cognitions are not distinct from objects."},
+  {"type": "structure", "confidence": "medium", "tibetan": "དེས་ན་བློ་ནི་ཚུལ་གཉིས་པ།", "english": "### The Mind has Two Aspects", "why": "This is a line of the root verse (Pramāṇavārttika) cited before its commentary, turned here into a section heading."}
+ ],
+ "note": "Generally follows the svasaṃvedana argument, but the key root line on establishing the external object is misconstrued and verse lines are flattened into prose and a heading."},
+{"id": "QQOZ6", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "བཅོམ་ལྡན་འདས་མར་ཡང་གསུངས་པ།", "english": "The Blessed One also said:", "why": "bcom ldan 'das ma is the Bhagavatī, i.e. the Prajñāpāramitā scripture cited as source, not the Buddha speaking.", "fix": {"find": "The Blessed One also said:", "replace": "It is also said in the Bhagavatī [Prajñāpāramitā]:"}},
+  {"type": "reversal", "confidence": "high", "tibetan": "འབྲས་བུ་ཁམས་གསུམ་པའི་སྐྱེ་བ་ལྡོག་སྟེ་ཟག་པ་མེད་པའི་དབྱིངས་སུ་སྐྱེ་", "english": "however, this is not a birth within the stainless sphere (anasrava-dhatu)", "why": "The Tibetan says birth in the three realms ceases but birth in the uncontaminated sphere does not, i.e. that birth continues.", "fix": {"find": "however, this is not a birth within the stainless sphere (anasrava-dhatu)", "replace": "but birth within the stainless sphere (anasrava-dhatu) is not reversed"}},
+  {"type": "term", "confidence": "medium", "tibetan": "ཡང་སྲིད་པ་ཞེས་པ་ཡང་", "english": "the term \"existence\" is expressed", "why": "yang srid pa is rebirth/re-existence (punarbhava), not mere existence."}
+ ],
+ "note": "Readable account of the mind-made body, but the Bhagavatī citation is turned into the Buddha speaking and the point about birth in the uncontaminated sphere is inverted."},
+{"id": "QEXMJ", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "མི་འམ་ཅི་ལྟར་བཅས་འཇིག་རྟེན།", "english": "Whether human or (kinnara) half-human celestial musicians, the world", "why": "mi 'am ci is one word, kiṃnara; there is no 'human or' — it is the world together with its kinnaras.", "fix": {"find": "Whether human or (kinnara) half-human celestial musicians, the world", "replace": "The world together with its (kinnara) half-human celestial musicians"}},
+  {"type": "agent", "confidence": "high", "tibetan": "འཇིག་རྟེན་འདི་ཉིད་མཁྱེན་བརྩེར་ལྡན། །ཅི་ཕྱིར་བཏང་སྙོམས་ཁྱེད་བརྟེན་མཛད།", "english": "toward this world that possesses your knowledge and love", "why": "'Possessing knowledge and love' is a vocative to the Buddha, not a description of the world.", "fix": {"find": "toward this world that possesses your knowledge and love", "replace": "toward this very world, you who possess knowledge and love"}},
+  {"type": "agent", "confidence": "medium", "tibetan": "པོ་ཁྱོད་དང་བྲལ་བས་ན། །འཁོར་བར་རྣམ་པར་འཁྱམས་པར་གྱུར།", "english": "Hero, because we are separated from you, we wander aimlessly", "why": "པོ completes mgon po ('Protector') from the previous side, and the subject who wanders is 'this world blinded by ignorance', not 'we'."},
+  {"type": "agent", "confidence": "medium", "tibetan": "ཞབས་ཀྱི་རྡུལ་གྱི་མཆོག་གྱུར་པ། །གང་ཞིག་ཡང་ནི་འཇིག་པར་འགྱུར།", "english": "Who else shall receive the supreme dust of your feet upon their heads", "why": "The verse laments that he whose foot-dust the gods placed on their heads has himself perished; it does not ask who will receive the dust."}
+ ],
+ "note": "Lament verses rendered as fluent prose with the overall sense kept, but several referents are confused and kinnara is mistranslated."},
+{"id": "QPYF1", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "བརྟད་པ་ལས་བྱུང་བའི་གོས་ཞེས་བྱ་བ་ལ", "english": "Concerning the text titled", "why": "The commentary is glossing a phrase of the rule (atyayika-cīvara, emergency robes), not a text title.", "fix": {"find": "Concerning the text titled", "replace": "Concerning the phrase"}},
+  {"type": "term", "confidence": "medium", "tibetan": "བགོ་བའི་དུས་ལས་འདས་བ་འཆང་ན", "english": "if it is worn during the summer or if one keeps it after the time for wearing such robes has passed", "why": "bgo/bgos here most likely means distributing the robes (inside the rains; the robe-distribution period), not wearing them."}
+ ],
+ "note": "Follows the Vinaya rules on emergency robes and the forest-dweller's robe deposit, but presents the glossed phrase as a text title and probably misreads robe distribution as wearing."},
+{"id": "Q6TTJ", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Accurate rendering of the argument against universals benefiting particulars, with sound notes."},
+{"id": "QHV0S", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "རྣམ་པར་འགྲེལ་པར་བཤད་པ་ནི", "english": "What is explained in the commentary", "why": "rnam 'grel is the title Pramāṇavārttika, not a generic commentary.", "fix": {"find": "What is explained in the commentary", "replace": "What is explained in the Pramāṇavārttika"}}
+ ],
+ "note": "Sound handling of the pakṣa/pakṣābhāsa discussion, with some clumsy phrasing; one title rendered as a generic noun."},
+{"id": "QEDXY", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "Faithful rendering of the pregnant doe episode; verse is given as prose but nothing is lost."},
+{"id": "QD815", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "gloss", "confidence": "medium", "tibetan": "སྐྲ་ལ་སོགས་པ་ལ་འདུས་བྱས་པ་ཡང་དོན་མ་ཡིན་པར་", "english": "To be composed [note: conditioned or constructed] by hair and such things is also without purpose.", "why": "'dus byas here means grooming or adorning the hair and so on (which the next two verses show is pointless), not 'conditioned'."}
+ ],
+ "note": "Good rendering of the meditation on the body's impurity; one closing transition is misread and wrongly glossed."},
+{"id": "Q44VZ", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "འཇམ་དཔལ་རྣམ་པར་རོལ་པའི་མདོ", "english": "(Arya Manjushri-vikurvana Sutra) The Noble Sutra of the Manifestations of Manjushri", "why": "rnam par rol pa is vikrīḍita ('play'); the sūtra is the Mañjuśrīvikrīḍita."}
+ ],
+ "note": "Accurate rendering of the Ratnakūṭa, Sarvāstivāda and Upāli citations; only one sūtra title is misidentified."}
+]

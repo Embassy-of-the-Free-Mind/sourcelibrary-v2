@@ -1,0 +1,346 @@
+[
+ {
+  "slot": 17,
+  "stratum": "korean",
+  "book_id": "69f325ae52a77bb28fdb58e9",
+  "book_url": "https://sourcelibrary.org/book/69f325ae52a77bb28fdb58e9",
+  "tradition": "korean",
+  "book": {
+   "id": "69f325ae52a77bb28fdb58e9",
+   "title": "Yŏja sanghaeng pʻyŏn",
+   "display_title": "Yŏja sanghaeng pʻyŏn",
+   "author": "Unknown",
+   "language": "Korean",
+   "published": "17--?]",
+   "pages_count": 62,
+   "pages_ocr": 62,
+   "pages_translated": 33,
+   "image_source": {
+    "provider": "harvard"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 62,
+   "distinct_page_numbers": 62,
+   "duplicate_records": 0,
+   "pages_with_ocr": 62,
+   "pages_translated": 33,
+   "with_printed_number": 0,
+   "printed_backsteps": 0,
+   "printed_repeats": 0,
+   "pages_count_field": 62,
+   "pages_translated_field": 33
+  },
+  "run": [
+   7,
+   18,
+   30,
+   48
+  ],
+  "pages": [
+   {
+    "page_number": 7,
+    "page_id": "69f325ae52a77bb28fdb58f0",
+    "image_url": "https://images.sourcelibrary.org/archived/69f325ae52a77bb28fdb58e9/7.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Korean</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<warning>Handwritten Korean (Hangul and Hanja mixed, \"Gungche\" style)</warning>\n\n녀자상행편\n\n대개 현제 가풍을 익히어 마음을 현하 품행이 바른 것을 가\n티 가장 귀히 제치고 귀히 여기는 마음을 아울러야 하느니\n은 사람의 행실은 다만 행실을 비로소 어떠한 것인가 집의\n녀 도부 부모를 효도하고 부모를 섬기어 효를 지키는\n며 나아가 군님을 섬기어 충을 다하여 공경하고 효\n어른은 어떠한 이를 섬기어 현되기를 힘쓰지 아니\n모지 아니하며 좋은 도로 섬기어 그치 아니하고 그치 아니하\n며 일상적인 행실을 회복하여 벗의 계신 벗을 살피라 이다음에\n덧, 효를 비라 녀자 노릇을 지키어 어떠한 어떠한 아니함을\n뜻을 좇아 효를 구치 아니하고 뜻을 제하여 남을 돕는 그릇\n을 품을 제하여 이제 가지 아니하고 녀자의 도를 지키어 훌륭한\n된 도를 반질히 제하여 이 사람의 부모를 섬기어 효를 다하라\n\n<vocab>녀자상행편, 효(孝), 충(忠), 부모(父母), 행실(行實), 녀자의 도(女子之道)</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "## Manual of Regular Conduct for Women\n\nGenerally, one must learn the family traditions of a wise mother and harmonize the heart so that one’s conduct is upright. This is to be held most precious; one must combine this with a mind that values virtue. A person’s <term>haengsil</term> <gloss>conduct</gloss> is the very beginning of determining what kind of person they are. \n\nWithin the home, a woman must practice <term>hyo</term> <gloss>filial piety</gloss> toward her parents and serve them to maintain the virtue of filial duty. Furthermore, she must go forth to serve the ruler with <term>chung</term> <gloss>loyalty</gloss>, fulfilling her duties with respect. If one does not strive to be wise in serving elders, or if one does not serve them with the \"Good Way\" without ceasing, then they fail. \n\nOne should restore their daily conduct and observe their friends. In the future, follow the path of <term>hyo</term> <gloss>filial piety</gloss> and keep the duties of a woman. Do not follow the desire to ignore filial piety, but rather remove the vessel of helping others <note>likely a metaphor for selfish interference</note>. Remove such thoughts and do not proceed with them; instead, keep the <term>nyeoja-ui do</term> <gloss>the Way of Women</gloss>. Purify the path that has become rough and serve your parents with all your filial heart.",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 18,
+    "page_id": "69f325ae52a77bb28fdb58fb",
+    "image_url": "https://images.sourcelibrary.org/archived/69f325ae52a77bb28fdb58e9/18.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Korean</language>\n<script>handwritten</script>\n<warning>Handwritten Korean (Hangul) in a cursive style (Eonhae/Gungche influence)</warning>\n<page-type>text</page-type>\n\n깨두 셋을 먹지 말며 국진이 콩진이 됴흔 됴흔 잇지 말지\n니라 쏘고 가며 묵거든 됴흔 됴흔 싀의 녑시 잇어 란 됴흔\n종이나 됴모 가며 됴흔 싀의 됴흔 싀의 됴흔 됴흔 됴흔\n방으로 됴흔 그릇 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔\n괴쳘 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔\n됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔\n됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔\n됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔\n됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔\n됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔\n됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔\n됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔 됴흔\n\n<note>The text appears to be a repetitive instructional or practice manuscript, likely related to etiquette or household management, characterized by the frequent repetition of the phrase \"됴흔\" (good/fine).</note>\n\n<vocab>\n됴흔 (good/fine), 묵거든 (when eating), 됴모 (fine paper/preparation), 됴흔 됴흔 (repetition for emphasis or practice)\n</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "<meta>continues from previous page: the scheme of the rice, the hundred schemes, the rice scheme, the scheme.</meta>\n\nDo not eat sesame seeds in threes <note>this may refer to a specific etiquette rule regarding small portions or a folk belief about luck</note>, and do not forget the fine, fine <term>guk-jin-i</term> <gloss>soup preparations</gloss> and <term>kong-jin-i</term> <gloss>bean preparations</gloss>. When you go and eat, if there is a side-seat <note>original: \"nyeopsi,\" likely referring to an adjacent seating arrangement for attendants</note> in a fine, fine time, use fine paper or a fine <term>dyomo</term> <gloss>governess or maidservant</gloss> as you go, and in a fine, fine room, with a fine vessel, fine, fine, fine, fine, fine, fine, fine, fine\n<unclear>goecheol</unclear> <note>possibly referring to a metal chest or a specific household utensil</note> fine, fine, fine, fine, fine, fine, fine, fine, fine, fine, fine\nfine, fine, fine, fine, fine, fine, fine, fine, fine, fine, fine, fine\nfine, fine, fine, fine, fine, fine, fine, fine, fine, fine, fine, fine\nfine, fine, fine, fine, fine, fine, fine, fine, fine, fine, fine, fine\nfine, fine, fine, fine, fine, fine, fine, fine, fine, fine, fine, fine\nfine, fine, fine, fine, fine, fine, fine, fine, fine, fine, fine, fine\nfine, fine, fine, fine, fine, fine, fine, fine, fine, fine, fine, fine\nfine, fine, fine, fine, fine, fine, fine, fine, fine, fine, fine, fine\nfine, fine, fine, fine, fine, fine, fine, fine, fine, fine, fine, fine\nfine, fine, fine, fine, fine, fine, fine, fine, fine, fine, fine, fine\n\n<note>The extreme repetition of the word \"fine\" or \"good\" (dyo-heun) suggests this page served as a calligraphy practice sheet or a rhythmic mnemonic. The student or scribe practiced the strokes of this specific adjective, which was central to the manuscript's theme of refined conduct.</note>\n\n<summary>This page lists specific dietary and seating etiquettes for a household before transitioning into a repetitive calligraphy exercise. The scribe repeatedly writes the word for fine or good, likely to practice the handwriting style while reinforcing a positive moral concept.</summary>\n<keywords>etiquette, calligraphy practice, household management, sesame seeds, mnemonic, refined conduct</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 30,
+    "page_id": "69f325ae52a77bb28fdb5907",
+    "image_url": "https://images.sourcelibrary.org/archived/69f325ae52a77bb28fdb58e9/30.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Korean</language>\n<script>handwritten</script>\n<warning>Handwritten Korean (Hangul) in a cursive style (eonhae/nara-geul)</warning>\n<page-type>text</page-type>\n\n흔히 자식 때어지면 못 촌 맏으려 하되 \n도리어 흉이 되나니 \n남의 자식이라도 \n내 자식과 같이 \n사랑하고 \n내 자식이라도 \n잘못하면 \n꾸짖어 \n가르칠지니 \n남의 자식이라 \n하여 \n미워하면 \n내 자식도 \n남이 미워할 것이요 \n내 자식이라 \n하여 \n사랑하면 \n남의 자식도 \n남이 사랑할 것이니 \n이것이 \n곧 \n사람의 \n도리라 \n남의 자식을 \n내 자식과 \n같이 \n사랑하면 \n남이 \n또한 \n내 자식을 \n내 자식과 \n같이 \n사랑할 것이니 \n이것이 \n곧 \n사람의 \n도리라 \n남의 자식을 \n내 자식과 \n같이 \n사랑하면 \n남이 \n또한 \n내 자식을 \n내 자식과 \n같이 \n사랑할 것이니 \n이것이 \n곧 \n사람의 \n도리라 \n남의 자식을 \n내 자식과 \n같이 \n사랑하면 \n남이 \n또한 \n내 자식을 \n내 자식과 \n같이 \n사랑할 것이니 \n이것이 \n곧 \n사람의 \n도리라 \n남의 자식을 \n내 자식과 \n같이 \n사랑하면 \n남이 \n또한 \n내 자식을 \n내 자식과 \n같이 \n사랑할 것이니 \n이것이 \n곧 \n사람의 \n도리라 \n남의 자식을 \n내 자식과 \n같이 \n사랑하면 \n남이 \n또한 \n내 자식을 \n내 자식과 \n같이 \n사랑할 것이니 \n이것이 \n곧 \n사람의 \n도리라\n\n<vocab>자식 (children), 사랑 (love), 도리 (duty/way), 사람 (person)</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "<meta>continues from previous page: the text now transitions to the ethics of speech and social conduct.</meta>\n\nOften, when children are separated from one another <note>original: 때어지면 (ttaeeojimyeon); refers to children living apart or being distinguished by social status</note>, people try to claim a higher rank or closer kinship <note>original: 못 촌 맏으려 (mot chon madeuryeo); refers to the 'chon' system of kinship degrees in Korea</note>, but this instead becomes a source of shame. Even if a child belongs to someone else, you should love them as you love your own child. Conversely, even if a child is your own, if they do something wrong, you must scold and teach them. \n\nIf you hate another person's child simply because they are not yours, then others will surely hate your own child as well. If you love your child only because they are your own <note>referring to a selfish or exclusionary love</note>, then others will treat your child as a stranger. This is truly the <term>dori</term> <gloss>rightful way</gloss> of a human being. \n\nIf you love another's child as if they were your own, others will also love your child as if they were their own. This is truly the <term>dori</term> <gloss>rightful way</gloss> of a human being. \n\nIf you love another's child as if they were your own, others will also love your child as if they were their own. This is truly the <term>dori</term> <gloss>rightful way</gloss> of a human being. \n\nIf you love another's child as if they were your own, others will also love your child as if they were their own. This is truly the <term>dori</term> <gloss>rightful way</gloss> of a human being. \n\nIf you love another's child as if they were your own, others will also love your child as if they were their own. This is truly the <term>dori</term> <gloss>rightful way</gloss> of a human being. \n\nIf you love another's child as if they were your own, others will also love your child as if they were their own. This is truly the <term>dori</term> <gloss>rightful way</gloss> of a human being.\n\n<summary>This page outlines the ethical necessity of treating all children with the same love and discipline one provides to their own offspring, emphasizing the social reciprocity of care. It argues that the way a person treats the children of others directly influences how the community will treat their own children.</summary>\n<keywords>parenting, social ethics, dori, reciprocity, childcare, moral duty, kinship, Hangul manuscript</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 48,
+    "page_id": "69f325ae52a77bb28fdb5919",
+    "image_url": "https://images.sourcelibrary.org/archived/69f325ae52a77bb28fdb58e9/48.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Korean</language>\n<script>handwritten</script>\n<warning>Handwritten Korean (Hangul) in a cursive style (eonhae/nara-geul)</warning>\n<page-type>text</page-type>\n\n출가한 부모를 섬기는 예는 그와 같으니라\n비록 부모가 비록 비록 비록 비록 비록 비록 비록\n안으로 부모의 비록 비록 비록 비록 비록 비록 비록\n부모를 모시고 비록 비록 비록 비록 비록 비록 비록\n비록 비록 비록 비록 비록 비록 비록 비록 비록 비록\n비록 비록 비록 비록 비록 비록 비록 비록 비록 비록\n비록 비록 비록 비록 비록 비록 비록 비록 비록 비록\n비록 비록 비록 비록 비록 비록 비록 비록 비록 비록\n비록 비록 비록 비록 비록 비록 비록 비록 비록 비록\n비록 비록 비록 비록 비록 비록 비록 비록 비록 비록\n\n<note>The manuscript text is written in a highly cursive, stylized form of Korean (Hangul). Due to the extreme stylistic variation and the repetitive nature of the calligraphy in this specific sample, the transcription reflects the primary legible characters while noting the high degree of cursive abstraction.</note>\n\n<vocab>Yŏja sanghaeng pʻyŏn, filial piety, Confucian ethics, Korean manuscript</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "[This page could not be translated due to content recitation restrictions.]",
+    "translation_model": null,
+    "translation_source": "skip"
+   }
+  ]
+ },
+ {
+  "slot": 18,
+  "stratum": "korean",
+  "book_id": "69f327ea52a77bb28fdb8163",
+  "book_url": "https://sourcelibrary.org/book/69f327ea52a77bb28fdb8163",
+  "tradition": "korean",
+  "book": {
+   "id": "69f327ea52a77bb28fdb8163",
+   "title": "Hanʾgwa",
+   "display_title": "Hanʾgwa",
+   "author": "Unknown",
+   "language": "Korean",
+   "published": "[17--]",
+   "pages_count": 150,
+   "pages_ocr": 150,
+   "pages_translated": 135,
+   "image_source": {
+    "provider": "harvard"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 150,
+   "distinct_page_numbers": 150,
+   "duplicate_records": 0,
+   "pages_with_ocr": 150,
+   "pages_translated": 135,
+   "with_printed_number": 2,
+   "printed_backsteps": 0,
+   "printed_repeats": 1,
+   "pages_count_field": 150,
+   "pages_translated_field": 135
+  },
+  "run": [
+   13,
+   57,
+   95,
+   133
+  ],
+  "pages": [
+   {
+    "page_number": 13,
+    "page_id": "69f327ea52a77bb28fdb8170",
+    "image_url": "https://images.sourcelibrary.org/archived/69f327ea52a77bb28fdb8163/13.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<warning>Handwritten semi-cursive script (Haengseo). Contains red ink annotations/punctuation marks.</warning>\n\n鄭聲臣賀二公相繼為周司徒善其職周人愛之作緇衣詩\n\n侯服于基盛念懋述哉之道 我衣之新 恭禮勤王帛 鞶結臨戎沾泊車馬之會\n玉翱襲爵詩人旌余矣之章 民服厥德 恭位列藩屏 施常著績四方專弓矢之征\n\n念我公世襲于玉帛 貴子有世蕩之美所彈補黼袞之誠 追大夫素履之言幾為王室之馬裘\n而令德俱徐于厥服 威儀在具朕之考憲考宜察狀之面 萬方人尚攝規久外眾民之而由 據\n\n得兩世在位而允恭 命由之章昭示阮仰頭亦世之盛 懿矣庭教民之官美但事服之懋德\n何詩人托物而頌休 毋長之誠善切序承易且吉之條 同周公補王之忍如見哀衣之明強\n\n肆其善甚哉之辰 緇衣四改為之所愛而不忘 勳烈俱甚於前後有祈甚服之休\n乃有賁厥矣之什 子粲有逐援之誠歌也有思 愛慕至發於亦噪蓋出於匪之意\n\n惟此輿人威頌之滋 譬王風承衣之規允仰奕世之盛烈\n蓋驗我后及德之功 類幽民而朱裳之惘係見余德之群情\n\n<vocab>鄭聲, 周司徒, 緇衣詩, 侯服, 玉帛, 黼袞, 周公, 詩人, 輿人, 王風</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "<meta>continues from previous page: the internal strife and worry that plagued the administration.</meta>\n\n### Ministers Zheng and He Serve the Zhou as Directors of Education; Their Success Leads the People to Compose the \"Black Robes\" Poem\n\nZheng Shengchen and He Ergong <note>two legendary virtuous officials</note> successively served as the <term>Zhou Sitiao</term> <gloss>Minister of Education during the Zhou Dynasty</gloss>. They performed their duties with such excellence that the people of Zhou loved them and composed the poem <term>Ziyi</term> <gloss>Black Robes</gloss> in their honor.\n\nThe noble robes are worn at the foundation of the state; with great effort, they follow the path of ancestral narration. My garments are new. Through respectful ritual and diligent service to the King, they wear the silk sashes and belts, attending the gatherings of chariots and horses.\nLike jade soaring to inherit a title, the poets signal this with their stanzas. The people submit to their virtue. Respectfully positioned as the screens of the feudal states, they manifest their achievements in all directions, focusing on the defense of the realm.\n\nWe reflect on how your Excellency’s family has inherited the tradition of jade and silk <note>symbols of high office and refinement</note>. The noble sons possess the beauty of generational continuity, with a sincerity that mends the <term>fufu</term> <gloss>sacrificial robes embroidered with ax patterns</gloss>. Following the words of the great officers who lived simply, they nearly became the \"horse and fur\" <note>symbolizing humble but sturdy support</note> of the royal house.\nTheir excellent virtue is fully expressed in their garments. Their dignified presence is a model for my investigation; their appearance should be carefully observed. People from all directions still follow these regulations, as the common people have long relied upon them.\n\nTwo generations have held office with true reverence. The decree follows these chapters, clearly showing our admiration for this era of prosperity. How beautiful is the education provided at court! The officials of the people are excellent, but their focus is on the diligent virtue represented by their service robes.\nWhy did the poets use objects to praise this excellence? It was to show a sincerity that does not grow weary, following the orderly succession of the <term>Yi</term> <gloss>Book of Changes</gloss> for auspiciousness. Like the Duke of Zhou assisting the King, they are as clear and strong as the \"lamented robes\" <note>referring to the concern for the state even in fine dress</note>.\n\nTheir goodness was great indeed during that time. The \"Black Robes\" poem was revised four times because of the love the people felt, a love they could not forget. Their meritorious deeds were great both before and after, leading to prayers for the excellence of their service garments.\nThere is a collection of poems that adorns their legacy. The children are brilliant and have the sincerity to support and aid; their songs reflect their thoughts. Their admiration reaches a point where it bursts forth in song, truly coming from an unwavering heart.\n\nOnly these songs of the people bring such abundant praise. Like the \"Royal Airs\" <note>a section of the Classic of Poetry</note> following the standard of the garments, we truly look up to the magnificent achievements of successive generations.\nThis proves the merit and virtue of our rulers. Like the common people who were once lost but now wear red garments <note>symbolizing status and protection</note>, we see the collective sentiment of those who admire this virtue.",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 57,
+    "page_id": "69f327ea52a77bb28fdb819c",
+    "image_url": "https://images.sourcelibrary.org/archived/69f327ea52a77bb28fdb8163/57.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<warning>Handwritten semi-cursive script (Haeseo/Haengseo style). The text contains red and blue ink annotations (dots and circles) used for reading guidance or emphasis.</warning>\n\n一唐翊拜知制誥之日御筆書春城無處不飛花之韓翊\n籍通金閨盛舉也初除 侍非舊人 才退華筆 職補衰賢 恐青袍之名士\n名登寶墨者甚多仍題 恩實縣也 彌爾旬班 薛奏御筵名銜白衣之翰林\n\n碩儒平日莫稽人才 昌齡敕藝於閣隸亦有為世之高名 跡同冷官之候者不過一時官樣\n偶有佳名不充花之家 尚遺異於梅花之佳句 事美鳴鶴之在皋 詎期九天之徹響\n\n造為三字句之新除 詞頭所屬美才偶值官名之同姓 少日公卿中之議論合視草之任\n乃有二人名之造句 寒暄合於華筵自笑陳尊之舊友 侍郎與此處手知有判花之才\n\n何昌齡心之由中 記春城飛花之句御筆親飛 倦墨偶書於佳句於外御賜花之龍梅之句\n至有墓語之書下 異玉惜宣麻之所徵名自著 傳送深得於名臣之名分於人侍鳳池之飛\n\n筆意相如同蘭之詠 詠白雪之花凋元非情外之有事 依據再萌者有過人之氣\n及博楊炯居盧前之榮 草素紙之倫浩然名下之墓房 侍郎待筆且祀於天之分\n\n木卜平九首\n\n<image-desc size=\"small\" type=\"symbol\" significance=\"low\">The text features numerous red and blue ink dots and circles, likely used as reading marks (gugyeol or emphasis markers) common in historical East Asian manuscripts.</image-desc>\n\n<vocab>韓翊, 春城無處不飛花, 何昌齡, 御筆, 翰林, 侍郎, 龍梅</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "# On the Day Han Yi of Tang Was Appointed Drafter, the Emperor Wrote the Poem: \"Throughout the Spring City, Fallen Petals Everywhere\"\n\nRecords show the great event of entering the \"Golden Gate\" <note>the imperial palace</note>. At the first appointment, the official was not an old acquaintance. His talent had retreated to the flowery brush. The position supplemented a fading sage. I fear for the famous scholars in their green robes.\nMany of those whose names were recorded in the \"Precious Ink\" wrote on the same theme. The grace was truly in the prefecture. For ten days, he was in the ranks. Xue presented a petition to the imperial banquet; his name was that of a commoner in the Hanlin Academy.\n\nGreat scholars of normal days have no way to examine talent. He Changling was commanded to practice his art in the pavilion; he also had a high reputation in the world. Those who left traces like a minor official's waiting were nothing more than a temporary official style.\nOccasionally, there were beautiful names that did not fill the \"House of Flowers.\" There remains the excellence of the \"Plum Flower\" couplet. The matter is as beautiful as the \"cry of a crane in the marsh\" <note>a metaphor for a hidden talent being heard</note>. Who could have expected it to resound through the nine heavens?\n\nHe created a new appointment with three-character phrases. The leader of the words belonged to a beautiful talent who happened to share the same surname as the official name. Among the high officials of his youth, the discussion was that he was suitable for the responsibility of drafting.\nThus, there were two people whose names were used to create phrases. The warmth of the season harmonized with the flowery banquet. He laughed at the old friend of Chen Zun. The Vice Minister and this place knew there was the talent to judge the flowers.\n\nThe heart of He Changling came from within. He remembered the line \"Fallen petals everywhere in the spring city.\" The imperial brush flew personally. Tired of ink, he occasionally wrote the beautiful line on the outside. The Emperor bestowed the line about the \"Dragon Plum.\"\nThere were even words written at the bottom of the tomb. It was different from the precious jade; the name for the drafting of the silk mandate was written by itself. The transmission deeply obtained the reputation and status of a famous minister. He was a person attending the \"Phoenix Pond\" <note>the central government</note>.\n\nThe brush's intention is like the chanting of the orchid. Chanting the flowers of the white snow is not something outside of emotion. For those who rely on what sprouts again, there is a spirit that surpasses others.\nHe reached the glory of Bo Yangjing and Lu Qian. On the plain paper, the graves of those under the vast name were recorded. The Vice Minister waits with his brush and offers sacrifices to the portion of Heaven.\n\nNine poems by Mu Bopping.",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 95,
+    "page_id": "69f327ea52a77bb28fdb81c2",
+    "image_url": "https://images.sourcelibrary.org/archived/69f327ea52a77bb28fdb8163/95.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<warning>Handwritten semi-cursive script (Xingshu). The text contains red and blue ink annotations/underlining throughout.</warning>\n\n明高皓等謝諭以家在雲南令賜夏衣\n\n今者久客亦受衣而自憐，表而以念，南荒賤職，北回莊砌之汴，萬里長安，遠人領受，何行冠，步且若也，此學初志，仍作何著之內十年旅食。\n\n預以雲州家在遠，所道途云，恐途壯充，以家室，天涯以路，自難也，矣旅，以旅子，每切旅，其衣未授，以嘆，幾福不分，寒暑子，溫袍，客書，以步月，番接差，元儒休，以人故。\n\n若為失前，以同，征實契察，已多不聽者，憂，旅以盈，憂，侵，頃，居，換，危，以同，先由中，服，以遠寄，為暑，珍飾，恐致未服，以益，故存以更，敢，異，僕，字，須，儒，以冠。\n\n何為章，春律，日，日，南家，遠，以，無，家，客，僅，以信，客，行，春，蓋，許，矣，書，以教，乃降賜夏衣，以言，天中，以近，特行，須，輕衣，以恩，宮，客，須，夏，頓，覺，着，未，以情。\n\n契，福，以暑，如，深，衣，無，到，以夏，豈，無，事，名，以煩，仰，信，以遠，行，輕，祐，處，源，今，至，服，受，宜，以喜，餘，俗，恥，未，不，夏，天，時，以盡，煥。\n\n路途扶，傷，以惠，自，羨，且，偏，力，一，身，\n從勝，衣，第，以，氣，以，未，以，薄，以，奴，里。\n\n<vocab>明高皓, 雲南, 夏衣, 旅食, 雲州, 賜衣, 儒生</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "# Gao Hao and Others of the Ming Dynasty Express Gratitude for the Instruction Regarding Their Home in Yunnan and the Gift of Summer Clothing\n\nToday, as long-term guests in a distant land, we receive these clothes and look upon ourselves with pity. We express our thoughts through this memorial. From my lowly position in the desolate south, I look back toward the brickwork of <term>Bian</term> <gloss>Kaifeng</gloss> and the ten-thousand-mile journey to <term>Chang’an</term> <gloss>the capital</gloss>. We distant people receive this gift; how could we not walk with our heads held high? This was my initial ambition in my studies, yet for ten years I have lived as a traveler.\n\nKnowing that my home in <term>Yunzhou</term> <gloss>Yunnan</gloss> is far away, the roads are said to be long. I feared the journey would be arduous for my family. At the edge of the sky, the road is difficult. As a traveler, I am always cut by the journey. These clothes had not yet been granted, and I sighed, feeling that good fortune was not shared between us. Through the cold of winter and the heat of summer, a warm robe and a traveler’s book were my companions as I walked under the moon. Successive assignments kept me from rest, and as a scholar, I rested only when others did.\n\nIf I were to lose what was before me, it would be the same. The evidence of my service is clear, though many do not listen. My worries as a traveler are overflowing; they invade me constantly. My dwelling has changed and is often in peril. From within, these clothes were sent from afar for the summer heat. They are precious ornaments, and I feared I would never wear them. Therefore, I preserve them to change my appearance; I, a lowly servant, must now dress as a scholar with a proper cap.\n\nWhy this formal document? The laws of spring and the passing days remind me of my distant home in the south. Without a home, I am merely a guest, relying on letters. As a guest on the road, spring arrives, and I receive the teacher's letters. Now, the gift of summer clothes has descended from the heavens. They are light garments granted by grace. For a guest of the palace, summer clothes are needed. Suddenly, I feel the need to wear them, moved by emotion.\n\nThe blessing of these summer clothes is profound. Without them, how could I handle the summer heat? It is not that I have no achievements or fame to my name, but I am bothered by the distance. I rely on this gift from afar. Traveling light, I reach the source of blessings. Having received these clothes today, I am filled with joy. The common customs are usually shameful, but this summer, the time is filled with brilliance.\n\nThe journey is supported, my injuries are healed by this grace. I envy myself, for although my strength is partial and I am but one person, I follow the excellence of these clothes. The spirit is restored, though I was thin and lowly before.\n\n<summary>Gao Hao, an official stationed in the remote region of Yunnan, writes a letter of deep gratitude to the Ming Emperor for sending summer clothing, reflecting on his ten years of service far from the capital.</summary>\n<keywords>Gao Hao, Ming Dynasty, Yunnan, summer clothes, imperial gift, travel, scholar-official</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 133,
+    "page_id": "69f327ea52a77bb28fdb81e8",
+    "image_url": "https://images.sourcelibrary.org/archived/69f327ea52a77bb28fdb8163/133.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>handwritten</script>\n<warning>Handwritten semi-cursive script (Haengseo)</warning>\n<page-type>text</page-type>\n\n周畢公謝於東郊保釐之日作丹命於豐\n周伯叔諸侯亦謝分寶玉時庸展親\n\n賀周公作立政之後綴衣庸貢之送始重\n朝貢諸侯亦謝宅洛後之四方道里均\n\n君陳勉以昭周公之訓復再精微之訓而告之\n殷士亦謝洛邑初政呼商王士以告之\n\n周公請遂自今則其各淫于逸視將佃以萬民惟正之供\n周公謝命寧享以祚鬯二首曰明禋\n\n師尚父進白魚火為之瑞\n賀東征之日篚厥玄黃\n\n賀克殷之後訪問箕子以天道\n漢董仲舒請太學興置明師以養天下士\n賀天下初定日不暇給而親謨弘遠\n\n<vocab>周公 (Duke of Zhou), 畢公 (Duke of Bi), 君陳 (Jun Chen), 師尚父 (Jiang Ziya), 箕子 (Jizi), 董仲舒 (Dong Zhongshu), 洛邑 (Luoyi), 天道 (Heavenly Way), 明禋 (Bright Sacrifice)</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "The <term>Duke of Bi</term> of the Zhou thanked the King on the day he protected the eastern suburbs; he composed the \"Dan Ming\" <gloss>Order to Dan</gloss> at Feng.\nThe uncles and brothers of the Zhou lords also thanked the King when he distributed the precious jades; they displayed their kinship through service.\n\nCongratulations to the <term>Duke of Zhou</term> after he established the government; the sending of the \"Zhuiyi\" <gloss>royal robes</gloss> as tribute began to be emphasized.\nThe feudal lords of the court also thanked the King after the capital was settled at <term>Luoyi</term>; the distances from all four directions were made equal.\n\n<term>Jun Chen</term> was encouraged to illuminate the instructions of the Duke of Zhou; he repeated the refined instructions and announced them.\nThe officials of Yin also thanked the King for the initial administration at Luoyi; they called upon the officials of the Shang king to inform them.\n\nThe Duke of Zhou requested that from now on, each should avoid wallowing in ease; they should look to the common people and provide only the righteous offerings.\nThe Duke of Zhou thanked the King for the command, hoping to enjoy prosperity; he offered two jars of aromatic wine and performed the <term>Bright Sacrifice</term> <gloss>Mingyin</gloss>.\n\nThe Grand Tutor <term>Jiang Ziya</term> <gloss>Shangfu</gloss> presented a white fish; the fire was taken as an auspicious omen.\nCongratulations on the day of the Eastern Expedition; the baskets were filled with black and yellow silks.\n\nCongratulations after the conquest of Yin; the King visited <term>Jizi</term> to ask about the <term>Way of Heaven</term>.\n<term>Dong Zhongshu</term> of the Han requested the establishment of the Grand Academy and the placement of enlightened teachers to nurture the world's scholars.\nCongratulations on the day the world was first settled; even when there was no time to spare, the King's personal plans were grand and far-reaching.\n\n<summary>This page lists historical precedents from the Zhou and Han dynasties where officials thanked the emperor or offered advice and tribute. It highlights the ritualistic and administrative actions of famous figures like the Duke of Zhou, Jiang Ziya, and Dong Zhongshu.</summary>\n<keywords>Duke of Zhou, Jiang Ziya, Dong Zhongshu, Luoyi, tribute, Zhou Dynasty, Eastern Expedition</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 19,
+  "stratum": "korean",
+  "book_id": "69f33f58876dd827cbc618c2",
+  "book_url": "https://sourcelibrary.org/book/69f33f58876dd827cbc618c2",
+  "tradition": "korean",
+  "book": {
+   "id": "69f33f58876dd827cbc618c2",
+   "title": "Tʻonggam chu, Sŏhan chi odae",
+   "display_title": "Tʻonggam chu, Sŏhan chi odae",
+   "author": "Unknown",
+   "language": "Korean",
+   "published": "1800",
+   "pages_count": 126,
+   "pages_ocr": 126,
+   "pages_translated": 118,
+   "image_source": {
+    "provider": "harvard"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 126,
+   "distinct_page_numbers": 126,
+   "duplicate_records": 0,
+   "pages_with_ocr": 126,
+   "pages_translated": 118,
+   "with_printed_number": 13,
+   "printed_backsteps": 3,
+   "printed_repeats": 9,
+   "pages_count_field": 126,
+   "pages_translated_field": 118
+  },
+  "run": [
+   23,
+   38,
+   79,
+   98
+  ],
+  "pages": [
+   {
+    "page_number": 23,
+    "page_id": "69f33f58876dd827cbc618d9",
+    "image_url": "https://images.sourcelibrary.org/archived/69f33f58876dd827cbc618c2/23.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<warning>Handwritten East Asian calligraphy (Kaishu/Semi-cursive style). Some characters are heavily inked or obscured by brush strokes.</warning>\n\n命別外婦之子肥。外婦胡姬也。通者漢書高帝。七國之禍。\n也。八子孫夫人。生音悼惠王肥。\n<margin>高帝諸子。皆以母貴。而肥以長。故皆欲立之。呂后欲立趙王如意。而肥亦欲立。故有此言。</margin>\n昔在於昔。\n<margin>謂高帝時也。</margin>\n語偶對趙王。\n<margin>如意也。</margin>\n夢之矣。\n<margin>謂夢見高帝也。</margin>\n生而\n<margin>謂生而有之。</margin>\n不趨。\n<margin>君前必趨。堂放今賜劍履。上殿入朝不趨。此殊禮也。</margin>\n韓信。\n<margin>客不入。按皆不許。後故韓信王韓子。高帝三年為韓王。</margin>\n為學者。\n<margin>若綿。</margin>\n辛丑上壽。\n<margin>壽者人之所欲也。卑下奉觴進酒。皆為壽。七月為君。此乃履壽。陸賈之言在下。</margin>\n信上年。以馬。\n<margin>色降。與口。告得官。在邑。</margin>\n<margin>奉制有侯。多居食。無色。</margin>\n就宮室。\n<margin>見下。伯梁。平。名達。</margin>\n章。\n<margin>申年。</margin>\n<margin>高帝后。</margin>\n<margin>元長。皆不魚。高弟五年。趙王張子。不以取家人子。</margin>\n癸卯家。\n<margin>耳辛子。教詞教弟。</margin>\n\n<image-desc size=\"small\" type=\"symbol\" significance=\"low\">Red vertical ink marks (annotation/punctuation) appear next to certain characters.</image-desc>\n\n<vocab>高帝 (Gaozu of Han), 呂后 (Empress Lü), 韓信 (Han Xin), 趙王 (King of Zhao), 陸賈 (Lu Jia), 漢書 (Book of Han)</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "A command was given to distinguish the son of a concubine, who was well-fed. This \"woman from outside\" <gloss>concubine</gloss> was a lady of the Hu people. This is recorded in the *Book of Han* regarding the reign of the High Emperor <note>Emperor Gaozu</note> and the Rebellion of the Seven States. The lady, a woman of the \"Eight Ranks\" <note>a palace consort level</note>, gave birth to Fei, the King Daohui of Qi.\n\n<margin>All the sons of the High Emperor were honored because of their mothers' high status. However, because Fei was the eldest, there was a desire to establish him. Empress Lü wanted to establish Ruyi, the King of Zhao, but Fei also wished to be established. Therefore, these words were spoken.</margin>\n\nIn the past, during the time of the ancients.\n\n<margin>This refers to the time of the High Emperor.</margin>\n\nThe words were spoken to the King of Zhao.\n\n<margin>Referring to Ruyi.</margin>\n\nHe dreamed of it.\n\n<margin>Meaning he saw the High Emperor in a dream.</margin>\n\nBorn with it.\n\n<margin>Meaning he possessed it from birth.</margin>\n\nNot scurrying.\n\n<margin>When in the presence of the ruler, one must normally scurry or move quickly to show respect. This was a special honor, like being granted the right to wear a sword and shoes into the hall and not scurry when entering the court.</margin>\n\nHan Xin.\n\n<margin>Guests were not allowed to enter. It is noted that none were permitted. Later, Han Xin was made the King of Han; in the third year of the High Emperor, he became the King of Han.</margin>\n\nFor those who are scholars.\n\n<margin>Soft as silk.</margin>\n\nOffering a toast of long life on the day of Xinchou.\n\n<margin>Long life is what all people desire. When those of lower rank offer a goblet and present wine, it is called \"offering a toast of long life.\" In the seventh month, the ruler was honored. This is the \"record of long life.\" The words of Lu Jia are below.</margin>\n\nBelieving in the previous year, using horses.\n\n<margin>The color declined. Giving word. Obtained an official post in the city.</margin>\n<margin>Holding the decree, there were marquises. Many lived and ate there. There was no color.</margin>\n\nApproaching the palace chambers.\n\n<margin>See below. Bo Liang. Peaceful. The name is Da.</margin>\n\nA chapter.\n\n<margin>The year of the Monkey.</margin>\n\n<margin>The Empress of the High Emperor.</margin>\n\n<margin>Yuan Zhang. None were fish. In the fifth year of the High Emperor, the son of Zhang, King of Zhao. He did not take the child of a commoner family.</margin>\n\nThe family of Guimao.\n\n<margin>The son of Erxin. Words of instruction for the younger brother.</margin>\n\n<note>Small red vertical ink marks appear next to certain characters, likely used by a student or scholar to mark punctuation or specific points of interest in the commentary.</note>\n\n<summary>This page contains historical commentary on the succession struggles and court protocols during the reign of Emperor Gaozu, specifically involving the King of Qi and the King of Zhao.</summary>\n<keywords>Emperor Gaozu, Empress Lü, Han Xin, King of Zhao, Lu Jia, Book of Han, court protocol</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 38,
+    "page_id": "69f33f58876dd827cbc618e8",
+    "image_url": "https://images.sourcelibrary.org/archived/69f33f58876dd827cbc618c2/38.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<warning>Handwritten semi-cursive script (Xingshu)</warning>\n\n書穎濱巢父帝嚳欲飲之見由洗耳 恥也龍共鮑魚守死 曰汙吾懷口遂上流飲之\n善道 語泰 貞而不諒貞正而固也諒不 郭公將謂 眷居損皆之病氣故 紀唐紀唐後丁丹教言之眾口紛紜 鄉里小不出戶卒於家紀唐林唐道 \n通 音履甚 旁緣夷狄旁因緣眷之 \n刻 \n識請曰誌 定王教景帝 懷慨憤激也 識記符命之書 識緯皆言 新市平林兵綠林賊乃各分散王匡等北入南陽 將末之驗 復聚千騷擾伯 \n林人陳牧廖湛等 號新市兵王匡等更南郡下江兵 \n餘人號林平兵以應新市 \n定王發先春 絳衣大冠即將 淮陽王青赤貴殺之 \n先武詔鄭昌為侯 矣未戴侯節侯無服亦 \n之亦朝廷交 \n馮 \n馮 檄徵兵書也急 振庭振宮舍也 承明 \n名 斗柄向坐今司命員之券出在入前在旁三旁吉門之順置 \n置者吉近亞者凶斗柄中正月成竹達室至室外方指午三月亥外 \n達卯至卯時方至未餘月做此畫夜循環斗罡杓所指之變必敗 \n\n西漢\n\n<vocab>西漢, 王匡, 新市兵, 平林兵, 綠林軍, 淮陽王, 斗柄, 符命</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "<meta>continues from previous page</meta>\n\nWriting about <term>Yingbin</term> <gloss>Su Che</gloss> and <term>Chaofu</term> <gloss>the Nest-Dweller, a legendary recluse</gloss>. When <term>Di Ku</term> <gloss>the legendary Emperor Ku</gloss> wanted to yield the throne to him, <term>Xu You</term> <note>another legendary recluse</note> saw this and washed his ears, considering it a shame to have heard such a worldly proposal. <term>Longgong</term> <gloss>Dragon-Shared</gloss> and <term>Baoyu</term> <gloss>Dried Fish</gloss> stayed faithful until death. It is said: \"It would defile my heart.\" He then went upstream to drink water. \n\nThe path of virtue. The language is grand. \"Righteous but not stubborn\" <note>original: \"貞而不諒\"</note>: \"Righteous\" means correct and firm, while \"not stubborn\" refers to inflexible adherence to a small point. Master Guo will speak of it. Family residence and health are affected by the nature of the <term>Qi</term> <gloss>vital energy</gloss>. Therefore, in the records of the Tang, after the records of the Tang, <term>Ding Dan</term> taught these words. The voices of the crowd were confused. The small village people did not leave their doors and died at home. The records of Tang Lin and the Way of Tang.\n\nThe sound of the <term>Tong</term> <gloss>the Comprehensive Mirror</gloss> is very clear. It follows the borders of the <term>Yi</term> and <term>Di</term> <gloss>non-Han peoples</gloss> on the periphery, caused by the circumstances of the family.\n\nEngraved.\n\nTo recognize and request is called a <term>Zhi</term> <gloss>record or chronicle</gloss>. King Ding taught Emperor Jing. Holding a sense of indignation and being stirred with emotion. <term>Shi</term> <gloss>Omen-texts</gloss> are books recording the Mandate of Heaven. Both the <term>Shi</term> and <term>Wei</term> <gloss>apocryphal texts</gloss> speak of this. The <term>Xinshi</term>, <term>Pinglin</term>, and <term>Lulin</term> <gloss>Greenwood</gloss> rebels then dispersed. Wang Kuang and others entered Nanyang from the north. This was the proof of the end. They gathered again and caused a disturbance.\n\nPeople from <term>Pinglin</term>, such as Chen Mu and Liao Zhan, were called the <term>Xinshi</term> Army. Wang Kuang and others later changed to the <term>Xiajiang</term> <gloss>Lower River</gloss> Army of Nan-jun. The remaining people were called the <term>Pinglin</term> Army to respond to the <term>Xinshi</term>.\n\nKing Ding sent forth the early spring. Wearing crimson clothes and a large crown, he was about to depart. The King of Huaiyang, dressed in blue and red, was noble, but they killed him.\n\nEarlier, the <term>Wudi</term> <gloss>Martial Emperor</gloss> decreed Zheng Chang to be a Marquis. However, he had not yet received the Marquis's tally, nor did he have the Marquis's robes. \n\nThere was also interaction in the imperial court. \n\nFeng.\n\nThe <term>Fengxi</term> <gloss>urgent summons</gloss> is a letter for drafting soldiers. To shake the court means to shake the palace buildings. <term>Chengming</term> <gloss>the Chengming Hall</gloss>.\n\nThe name. When the handle of the <term>Dipper</term> <gloss>the Big Dipper constellation</gloss> points toward the seat, now the <term>Siming</term> <gloss>Director of Fate</gloss> issues the tally. Entering from the front and exiting from the side, the three sides are the gate of favorable alignment. Placing it in the center is auspicious; placing it near the secondary position is inauspicious. When the Dipper's handle points to the center in the first month, it reaches the room. Outside the room, it points to the direction of <term>Wu</term> <gloss>South</gloss>. In the third month, it is at <term>Hai</term> <gloss>North-Northwest</gloss>.\n\nIt reaches <term>Mao</term> <gloss>East</gloss> and then the time reaches <term>Wei</term> <gloss>South-Southwest</gloss>. For the other months, follow this cycle of day and night. The changes indicated by the Dipper's ladle and handle will surely lead to defeat if ignored.\n\nWestern Han.\n\n<summary>This page discusses historical anecdotes about recluses who refused power, the formation of rebel armies like the Greenwood and Xinshi during the fall of Wang Mang, and astronomical guidelines for divination based on the Big Dipper.</summary>\n<keywords>Chaofu, Xu You, Greenwood Rebels, Xinshi Army, Big Dipper, Wang Kuang, divination, Mandate of Heaven</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 79,
+    "page_id": "69f33f58876dd827cbc61911",
+    "image_url": "https://images.sourcelibrary.org/archived/69f33f58876dd827cbc618c2/79.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>mixed</script>\n<page-type>text</page-type>\n<page-num>N/A</page-num>\n\n星填去皇斗南斗牛女景略猛本戎狄也符氏臣也曆數繼之次\n吾越楊廿分\n第猶歲時余癸未後苻軍有前後耗七志音楷皆夷然夷坦\n節之先後將軍\n也言坦然無別有旨其指通桓沖夔之子而溫之弟也時為都安石字\n勘平日也意向也督江荊等卅諸軍事同三司\n開也梁成秦劉牢之相趣讀曰阻澗阻恃也陳讀曰\n悔也失意懸軍見上處也略陳略行也蹈籍共踏周哭鶴鳴\n銳犀堅也古以犀兕皮鉅鹿謂項靈武唐肅宗見甲六朝吳東晉宋\n為鎧故謂堅曰犀羽二卷丙申年齊梁陳\n祖述晉元帝丁丑年流民張平樊雅各劉裕在三十卷到彥之在三十\n聚眾在誰為塢主欲攻降之卷庚午\n\n蕭詵齊明帝乙亥年陳慶之見三十三吳明徹見三十三系弱倉\n其魏戰勝之卷己酉年卷癸巳\n皇一作蒼黃失措暉睨邪視腥穢謂五濟符丕之飢在下里\n免訪注忽遽兒也也胡申年\n失冉氏運符氏臣也撫也屐齒之折喜甚也風卑遙切霄雲霄\n切乞伏國仁隴西鮮卑人長樂公丕符堅之庶長甲申起兵列人城名\n北也郡疇昔之恩疇數語辭太保安拓也乙酉健世子不\n\n<vocab>\nTʻonggam chu, Sima Guang, Sŏhan chi odae, 苻堅 (Fu Jian), 桓沖 (Huan Chong), 劉裕 (Liu Yu), 陳慶之 (Chen Qingzhi), 乞伏國仁 (Qifu Guoren), 蕭詵 (Xiao Shen)\n</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "The Year Star has moved to the Imperial Dipper, South Dipper, Ox, and Maid constellations. <term>Jinglüe</term> <gloss>Wang Meng</gloss> was originally from the Rong and Di barbarians. He was a minister to the Fu clan. The succession of the mandate followed.\n\nMy region, Yang province, twenty parts.\n\nLike the seasons. After the <term>Guiwei</term> year <note>383 CE</note>, the army of <term>Fu Jian</term> had both progress and exhaustion. The \"Seven Records\" is pronounced \"Kai.\" All were calm and level.\n\nThe sequence of integrity. The General.\n\nIt means being calm without distinction. His intent reached <term>Huan Chong</term>, the son of Huan Yi and younger brother of Huan Wen. At that time, he was the Commander of Jiang and Jing provinces, overseeing all military affairs and holding the rank of the Three Excellencies.\n\nTo open. <term>Liang Cheng</term> of the Qin. <term>Liu Laozhi</term> went toward him. Pronounced \"Zu.\" To rely on mountain streams for defense. \n\nRegret. Losing one's intent. \"Suspended army\" as mentioned above. A brief arrangement or action. \"Treading\" refers to stepping together. The cry of the cranes <note>at the Battle of Fei River</note>.\n\nSharp and firm like a rhinoceros. In ancient times, the skins of rhinoceroses and wild oxen were used for armor. <term>Julu</term> refers to Xiang Yu. <term>Lingwu</term> refers to Emperor Suzong of Tang. See the six dynasties of Wu, Eastern Jin, Song, Qi, Liang, and Chen.\n\n<term>Liu Yu</term> is mentioned in volume thirty. <term>Dao Yanzi</term> is in volume thirty. The <term>Gengwu</term> year.\n\n<term>Xiao Shen</term> of the Qi dynasty. Emperor Ming in the <term>Yihai</term> year. <term>Chen Qingzhi</term> appears in volume thirty-three. <term>Wu Mingche</term> appears in volume thirty-three. The weakness of the lineage.\n\nThe Wei won the battle. The <term>Jiyou</term> year. The <term>Guisi</term> year.\n\nTo lose composure in panic. To look sideways with anger. \"Stinking filth\" refers to the five rivers. The famine of <term>Fu Pi</term> is mentioned below.\n\n<term>Mianfang</term> means sudden or hurried.\n\nThe fate of the Ran clan was lost. A minister of the Fu clan. To comfort or stroke. The breaking of the wooden clog's teeth because of great joy <note>referring to Xie An's reaction to the victory at Fei River</note>. <term>Xiao</term> refers to the high clouds.\n\n<term>Qifu Guoren</term> was a Xianbei from Longxi. The Duke of Changle, <term>Fu Pi</term>, was the illegitimate eldest son of Fu Jian. He raised troops in the <term>Jiashen</term> year at Lieren City.\n\nThe north. The kindness of former days. The Grand Tutor <term>Xie An</term> stabilized the state. In the <term>Yiyou</term> year, the heir apparent <term>Fu Jian</term> did not...",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 98,
+    "page_id": "69f33f58876dd827cbc61924",
+    "image_url": "https://images.sourcelibrary.org/archived/69f33f58876dd827cbc618c2/98.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<warning>Handwritten East Asian calligraphy (Kaishu/Regular script)</warning>\n\n辛卯徵也 貫卿也 覆審也 宗子也 葉也 下諸\n<margin>諸卅 滅罪也</margin> 卅者 廢也 將護也 持也 壬辰供頓 俱也頓\n<margin>扈後後 衛也</margin> 崔莽 崔莽居莽音姆宿 皆也 厭也 給復 除也除免徭 役也 \n<margin>徭役</margin> 懷柔 懷柔 \n<margin>後未柔 矣也</margin> 會頃 會要 \n<margin>長孫無忌第</margin> 后 統葉護 回統太子之號 \n<margin>大臣之稱也</margin> 斌媚 斌亦媚也亦作嫵悅也 生特故宅 宮在武功縣太宗 \n<margin>統其名也</margin> 舞 功成慶善系後更名九功 \n<margin>之舞承書九功惟敘之義</margin> 道宗 太宗虎 \n<margin>開姓也夏之 忠臣也</margin> 龍逢 宣慈 明也 \n<margin>宣通口捷</margin> 給 險設 不正 \n<margin>職也主</margin> 敦也 癸巳外戚 \n<margin>神通之第</margin> 甲午分行 巡視也 \n<margin>奇計</margin> 馨 乙未後主 \n<margin>高緯</margin> 天元 宣帝字 \n<margin>文贊</margin> 饒 饒也貪嗜 \n<margin>飲食曰饕</margin> 獻替 獻可 \n<margin>替否</margin> 諛 別也異死 \n<margin>王君曰</margin> 昏眊 \n<margin>徵憂以目 疾辭位</margin> 朱俱汝甘棠 \n<margin>並西域名</margin> 投珠於谷 陸賈新語曰 聖人不用珠 \n<margin>玉而寶其身故舜棄黃金於巖之山 指珠玉於五湖之川以社淫邪之欲也</margin> 遠疎近數 岳志五百里為五番千 \n<margin>千里十番外為</margin> \n<margin>二千番皆一日上</margin> 丁酉殷 讀曰隱 \n<margin>痛也</margin> 六親 父母兄 \n<margin>弟妻子</margin> 挹 \n<margin>時教語</margin> 文子 \n<margin>唐</margin>\n\n<vocab>Tʻonggam chu, Sima Guang, Classical Chinese, historical commentary, administrative terminology, imperial history</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "The <term>Xinmao</term> year <note>631 CE</note>. To summon. A minister or high official <term>guanqing</term>. To review and judge. A member of the imperial clan. A leaf or a generation. Below various...\n<margin>Various thirty. To extinguish sins.</margin> The \"thirty\" refers to... To abolish. To protect and assist. To hold. The <term>Renchen</term> year <note>632 CE</note>. To provide food and lodging. Together. A station.\n<margin>To follow behind. To guard.</margin> Cui Mang. Cui Mang resided there. The sound of <term>mang</term> is like <term>mu</term>. A lodging. All. To be satisfied or tired of. To grant exemption. To remove. To exempt from corvée labor and taxes.\n<margin>Corvée labor.</margin> To cherish and soften <note>original: huairou, meaning to win over through kindness</note>. To cherish and soften.\n<margin>Later not yet softened.</margin> A meeting or moment. The \"General Essentials\" <term>Huiyao</term>.\n<margin>The residence of Zhangsun Wuji.</margin> The Empress. Tong Yabghu. The title for the Heir Apparent of the Huighur.\n<margin>A title for a great minister.</margin> Elegant and charming. <term>Bin</term> also means charming. Also written as lovely and pleasing. The old residence of the birth. The palace is in Wugong County. Emperor Taizong...\n<margin>Tong was his name.</margin> Dance. The \"Dance of Accomplishing Success and Celebrating Goodness\" was later renamed the \"Dance of Nine Accomplishments.\"\n<margin>The dance follows the meaning of the Classic of History: \"The Nine Accomplishments are in order.\"</margin> Daozong. The \"Tiger\" of Emperor Taizong.\n<margin>The origin of the surname. A loyal minister of the Xia Dynasty.</margin> Longfeng. Proclaiming kindness. Brightness.\n<margin>To proclaim and communicate; quick of speech.</margin> To provide. A dangerous setup. Not upright.\n<margin>The office in charge.</margin> To be sincere or generous. The <term>Guisi</term> year <note>633 CE</note>. Relatives of the Empress <term>waiqi</term>.\n<margin>The residence of Shen Tong.</margin> The <term>Jiawu</term> year <note>634 CE</note>. To travel separately. To inspect.\n<margin>A clever plan.</margin> Fragrance. The <term>Yiwei</term> year <note>635 CE</note>. The Last Ruler.\n<margin>Gao Wei <note>the last ruler of Northern Qi</note>.</margin> Tianyuan. The style name of Emperor Xuan.\n<margin>Wanzan.</margin> Abundant. Abundant. To be greedy for food is called <term>tao</term> <gloss>gluttony</gloss>.\n<margin>To eat and drink is called gluttony.</margin> To propose the good and reject the bad <term>xianti</term>. To offer what is acceptable.\n<margin>To replace what is not.</margin> To flatter. Different or separate. To die in a strange place.\n<margin>The king said.</margin> Confused and dim-sighted <term>hunmao</term>.\n<margin>Zheng Yu resigned from his position due to an eye ailment.</margin> Zhu, Ju, and Ru. Sweet pear tree <term>gantang</term>.\n<margin>These are all names from the Western Regions.</margin> To throw pearls into a valley. The \"New Speeches\" of Lu Jia says: The sage does not use pearls.\n<margin>He treasures his own person. Thus, Emperor Shun abandoned gold at Mount Yan and threw pearls and jade into the five lakes to suppress lewd and evil desires.</margin>\nDistancing the distant and drawing near the near. The records of the mountains state that five hundred miles make five ranks; a thousand miles...\n<margin>A thousand miles make ten ranks; beyond that...</margin>\n<margin>Two thousand ranks are all reached in one day.</margin>\nThe <term>Dingyou</term> year <note>637 CE</note>. Flourishing <term>yin</term>. Pronounced like <term>yin</term> <gloss>pain</gloss>.\n<margin>Pain.</margin> The six relatives: parents, brothers, wife, and children.\n<margin>Brother, wife, and child.</margin> To pull or draw.\n<margin>The teachings of the time.</margin> Wenzi.\nTang Dynasty.",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 20,
+  "stratum": "korean",
+  "book_id": "69f33bc1876dd827cbc593cd",
+  "book_url": "https://sourcelibrary.org/book/69f33bc1876dd827cbc593cd",
+  "tradition": "korean",
+  "book": {
+   "id": "69f33bc1876dd827cbc593cd",
+   "title": "Sinpʻyŏn Sanhak kyemong",
+   "display_title": "Sinpʻyŏn Sanhak kyemong",
+   "author": "Zhu, Shijie active 13th century creator",
+   "language": "Korean",
+   "published": "1660?]",
+   "pages_count": 168,
+   "pages_ocr": 167,
+   "pages_translated": 154,
+   "image_source": {
+    "provider": "harvard"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 168,
+   "distinct_page_numbers": 168,
+   "duplicate_records": 0,
+   "pages_with_ocr": 167,
+   "pages_translated": 154,
+   "with_printed_number": 17,
+   "printed_backsteps": 4,
+   "printed_repeats": 1,
+   "pages_count_field": 168,
+   "pages_translated_field": 154
+  },
+  "run": [
+   38,
+   81,
+   83,
+   124
+  ],
+  "pages": [
+   {
+    "page_number": 38,
+    "page_id": "69f33bc1876dd827cbc593f3",
+    "image_url": "https://images.sourcelibrary.org/archived/69f33bc1876dd827cbc593cd/38.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n\n今有萱秣一千七百五十九斤〇三兩八錢每五斤六兩用萱一斗問萱幾何\n答曰三十三碩七斗三升\n\n術曰列粉數斤下留兩為宗以五斤三分七厘半<note>此處有側註：三分七厘半者為除法也</note>為六兩蜀數也為法除之問撥麻幾何\n答曰九千七百六十五斤一十兩\n\n術曰列細數為宗以尺二分四厘為法而一斤下今者身外加六為兩合問\n今有錢二萬貫欲買細絲每斤價四貫九十六文問得絲幾何\n答曰四千八百八十二斤一十三兩\n\n術曰列錢數為宗以斤價為法除之下分者身外加六為兩合問\n今有米三萬斛每分八升九勺二秒折萱一斗問折萱幾何\n\n<vocab>算學啟蒙, 朱世傑, 數學, 算術, 單位換算</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "<meta>continues from previous page: If every 9 sheng and 1 he is equivalent to 1 dou of coarse grain, how much is obtained?</meta>\n\nNow there is <term>xuanmo</term> <gloss>day-lily fodder</gloss> weighing 1,759 <term>jin</term> <gloss>catties</gloss>, 3 <term>liang</term> <gloss>taels</gloss>, and 8 <term>qian</term> <gloss>mace</gloss>. If every 5 <term>jin</term> and 6 <term>liang</term> is worth 1 <term>dou</term> <gloss>approximately 10 liters</gloss> of fodder, what is the total volume of fodder?\nAnswer: 33 <term>shuo</term> <gloss>a unit of volume equal to 10 dou</gloss>, 7 <term>dou</term>, and 3 <term>sheng</term> <gloss>approximately 1 liter</gloss>.\n\n**The Method:**\nSet the amount of powder <note>referring to the quantity from a related problem or calculation step</note> in <term>jin</term>, leaving the <term>liang</term> as the remainder. Use 5 <term>jin</term> and 0.375 <note>A side note clarifies: 0.375 is used as the divisor</note> — which represents the 6 <term>liang</term> according to the Shu counting system — as the divisor. Divide by this to find the answer.\nQuestion: How much hemp is drawn?\nAnswer: 9,765 <term>jin</term> and 10 <term>liang</term>.\n\n**The Method:**\nSet the fine quantity as the base. Use 1.24 <term>chi</term> <gloss>Chinese feet</gloss> as the divisor. For the amount remaining under one <term>jin</term>, multiply the remainder by sixteen <note>original: \"身外加六\", a calculation mnemonic for base-16 conversion</note> to convert it into <term>liang</term> to match the question.\n\nNow there are 20,000 <term>guan</term> <gloss>strings of 1,000 copper coins</gloss> to buy fine silk. The price per <term>jin</term> is 4 <term>guan</term> and 96 <term>wen</term> <gloss>individual coins</gloss>. How much silk is obtained?\nAnswer: 4,882 <term>jin</term> and 13 <term>liang</term>.\n\n**The Method:**\nSet the amount of money as the base. Use the price per <term>jin</term> as the divisor. For the decimal remainder, multiply by sixteen to convert into <term>liang</term> to match the question.\n\nNow there are 30,000 <term>hu</term> <gloss>bushels</gloss> of rice. For every 8 <term>sheng</term>, 9 <term>yao</term> <gloss>0.01 sheng</gloss>, and 2 <term>miao</term> <gloss>0.001 sheng</gloss>, it is converted to 1 <term>dou</term> of fodder. How much fodder is converted?",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 81,
+    "page_id": "69f33bc1876dd827cbc5941e",
+    "image_url": "https://images.sourcelibrary.org/archived/69f33bc1876dd827cbc593cd/81.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<page-num>三九</page-num>\n<warning>Handwritten East Asian block-style script (Kaishu)</warning>\n\n答曰上鄉二百二十八戶共五千二百上等每戶二十六碩五十六戶共一千中等每戶二十三碩四斗七十四戶共二千下等每戶二十五石六升九十八戶共二千三百六十二石八升\n中鄉三百六十二戶共三千八百八十二石六十六戶共一千六百四十五石三斗上等每戶二十三石八十六戶共一千三百三十二石二斗中等每戶二十石二百四十七戶共四千七百七十三石四斗下等每戶十九石\n上等每戶六石五斗九十五戶共六百十七石五斗\n下等每戶三石一斗八升半一百八十戶共五百七十三石三斗\n\n術曰列配粟以一萬乘之得十億八千七百萬為實併九等戶分數得四百十八萬八百為法如法而一得上鄉上等每戶之數折半得中鄉上等每戶之數連用九曰中鄉通用八曰下鄉通用七曰各得逐等每戶數也\n草曰先列上鄉上等戶數以一萬乘之得五十六\n\n<vocab>算學啟蒙, 朱世傑, 數學, 比例, 戶數, 粟</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "**The Answer:** \nThe 228 households of the Upper township receive a total of 5,200 <term>dan</term>. Grade 1 households receive 26 <term>dan</term> each; 56 households total 1,456 <term>dan</term>. Grade 2 households receive 23 <term>dan</term> 4 <term>dou</term> each; 74 households total 1,731 <term>dan</term> 6 <term>dou</term>. Grade 3 households receive 21 <term>dan</term> 6 <term>sheng</term> each; 98 households total 2,063 <term>dan</term> 8 <term>sheng</term>.\nThe 352 households of the Middle township receive a total of 3,882 <term>dan</term>. Grade 1 households receive 13 <term>dan</term> each; 82 households total 1,066 <term>dan</term>. Grade 2 households receive 10 <term>dan</term> 4 <term>dou</term> each; 110 households total 1,144 <term>dan</term>. Grade 3 households receive 8 <term>dan</term> 3 <term>dou</term> 2 <term>sheng</term> each; 160 households total 1,331 <term>dan</term> 2 <term>sheng</term>.\nThe Lower township Grade 1 households receive 6 <term>dan</term> 5 <term>dou</term> each; 95 households total 617 <term>dan</term> 5 <term>dou</term>. Grade 3 households receive 3 <term>dan</term> 1 <term>dou</term> 8.5 <term>sheng</term> each; 180 households total 573 <term>dan</term> 3 <term>dou</term>.\n\n**The Method:** Multiply the grain to be allocated by 10,000 to get 1,087,000,000 as the dividend. Sum the weighted household proportions of the nine grades to get 4,180,800 as the divisor. Dividing the dividend by the divisor gives the amount for a Grade 1 household in the Upper township. Halve this amount to find the Grade 1 amount for the Middle township. Multiply by 0.9 successively for the Upper township grades. Multiply by 0.8 successively for the Middle township grades. Multiply by 0.7 successively for the Lower township grades. This gives the amount per household for each grade.\n\n**The Draft:** First, list the Grade 1 households of the Upper township and multiply by 10,000 to get 560,000.",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 83,
+    "page_id": "69f33bc1876dd827cbc59420",
+    "image_url": "https://images.sourcelibrary.org/archived/69f33bc1876dd827cbc593cd/83.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<warning>Handwritten semi-cursive script (Haengseo)</warning>\n\n中鄉上等每戶粟二石碩折半得六碩五斗乃下鄉上等每戶之數七斗得四碩五斗五升乃中等每戶之數又七斗得三碩二斗八升五合乃下等每戶之數各以每戶之率乘其各等之戶即得共粟合問\n商功修門十三問\n\n今有穿地積三百六十尺問為堅壤各幾何\n答曰堅二百七十尺 壤四百五十尺\n\n術曰列三百六十尺以等堅三尺目之得一千八十尺以穿地四尺除之得二百七十尺為堅也又列三百六十尺以壤五尺目之得一千八百尺亦以穿地四尺除之得四百五十尺為壤也合問\n\n今有城高四丈六尺下廣三丈六尺上廣一丈八尺袤六十四里問積幾何\n\n<vocab>算學啟蒙, 朱世傑, 商功, 穿地, 堅壤, 城積</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "...halve it to get 6 <term>dan</term> 5 <term>dou</term> for a Grade 1 household in the Lower township. Multiply by 0.7 to get 4 <term>dan</term> 5 <term>dou</term> 5 <term>sheng</term> for a Grade 2 household. Multiply by 0.7 again to get 3 <term>dan</term> 1 <term>dou</term> 8.5 <term>sheng</term> <note>original text says 2 dou 8 sheng 5 ge</note> for a Grade 3 household. Multiply the rate for each household by the number of households in each grade to find the total grain. This completes the calculation.\n\n### Calculations for Works: Thirteen Questions\n\nSuppose a volume of earth excavated from the ground is 360 cubic feet. How much will this be as packed soil and as loose soil?\n**The Answer:** Packed soil is 270 cubic feet. Loose soil is 450 cubic feet.\n\n**The Method:** List the 360 feet and multiply by the packed soil ratio of 3 to get 1,080 feet. Divide by the excavation ratio of 4 to get 270 feet of packed soil. Also, list the 360 feet and multiply by the loose soil ratio of 5 to get 1,800 feet. Divide by the excavation ratio of 4 to get 450 feet of loose soil. This completes the calculation.\n\nSuppose a city wall is 4 <term>zhang</term> 6 <term>chi</term> high. The lower width is 3 <term>zhang</term> 6 <term>chi</term>, and the upper width is 1 <term>zhang</term> 8 <term>chi</term>. The length is 64 <term>li</term>. What is the total volume?",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 124,
+    "page_id": "69f33bc1876dd827cbc59449",
+    "image_url": "https://images.sourcelibrary.org/archived/69f33bc1876dd827cbc593cd/124.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n\n今有五鷄四兔共重十斤半兔重鷄輕交稷其一秤之重適亦問鷄兔各一重幾何\n答曰鷄一十五兩兔一斤六兩\n術曰依\n| 鷄 | 兔 | 重 |\n|---|---|---|\n| 川 | 一 | Ⅲ |\n乃四鷄一兔重八十四兩以右上鷄四遍因左行仍以國布等\n| 鷄 | 兔 | 重 |\n|---|---|---|\n| 1 | 川 | Ⅲ |\n右行直減之左上鷄空餘兔十一重二百五十二兩\n上法下案而一得兔重通分內子得二百五十二寄位以分母十一\n通右下重得九百二十四以減寄位餘六百七十二以四而一得一百\n六十八又以分母十一約之得鷄重不滿法者命之合問\n今有甲乙丙持絲不知其數甲云得乙絲強半丙絲半滿一百四十八斤\n乙云得甲絲弱半丙絲強半滿一百二十八斤丙云得甲乙絲各半合問\n\n<image-desc size=\"medium\" type=\"diagram\" significance=\"high\">Mathematical counting rod notation (suan-chou) arranged in a table format to represent algebraic coefficients.</image-desc>\n\n<vocab>算學 (Mathematics), 鷄兔同籠 (Chicken-Rabbit problem), 算籌 (Counting rods), 斤 (Catty), 兩 (Tael)</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "Question:\nThere are 5 chickens and 4 rabbits weighing a total of 10 <term>jin</term> <gloss>catties</gloss>. It is said that a rabbit is heavy and a chicken is light. If you exchange one of each and weigh them, the weights are exactly equal. What is the weight of one chicken and one rabbit?\n\nThe Answer: A chicken weighs 15 <term>liang</term> <gloss>ounces</gloss>. A rabbit weighs 1 <term>jin</term> 6 <term>liang</term>.\n\nThe Method: According to the diagram\n| Chicken | Rabbit | Weight |\n| :--- | :--- | :--- |\n| 3 | 1 | 3 |\n\nThus 4 chickens and 1 rabbit weigh 84 <term>liang</term>. Multiply the left column by the chicken value of 4 from the upper right. Use the arrangement of the national cloth <note>likely a reference to the standard counting board layout</note>:\n| Chicken | Rabbit | Weight |\n| :--- | :--- | :--- |\n| 1 | 3 | 3 |\n\nSubtract the right column from the left. The chicken position in the upper left becomes empty, leaving 11 rabbits weighing 252 <term>liang</term>.\nDivide the weight by the number of rabbits to get the rabbit's weight. To find the chicken's weight, take the numerator 252 and set it aside. Multiply the weight in the lower right by the denominator 11 to get 924. Subtract the set-aside weight to get 672. Divide this by 4 to get 168. Then divide by the denominator 11 to find the chicken's weight. If there is a remainder from the divisor, express it as a fraction. This matches the question.\n\nQuestion:\nThere are three people, A, B, and C, holding silk, but the quantity is unknown. A says: \"If I take a <term>qiangban</term> <gloss>strong half, i.e., 3/4</gloss> of B's silk and <term>ban</term> <gloss>half</gloss> of C's silk, I will have 148 <term>jin</term>.\" B says: \"If I take a <term>ruoban</term> <gloss>weak half, i.e., 1/4</gloss> of A's silk and a <term>qiangban</term> <gloss>strong half</gloss> of C's silk, I will have 128 <term>jin</term>.\" C says: \"If I take half of A's and B's silk...\"\n\n<note>A mathematical diagram using counting rod notation is arranged in a table to represent the coefficients of the three people's silk quantities.</note>\n\n<summary>This page contains two problems: one determining the weights of chickens and rabbits after a weight-equalizing exchange, and another involving three individuals pooling portions of their silk.</summary>\n<keywords>chicken and rabbit, weight calculation, jin and liang, linear equations, fractional parts, strong half, weak half, rod numerals</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   }
+  ]
+ }
+]

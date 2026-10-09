@@ -158,7 +158,7 @@ await withMongo(async (db) => {
       const rows = await db.collection('books').find({ collections: { $in: env.collections } }).project({ id: 1 }).toArray();
       for (const b of rows) envIds.add(String(b.id));
     }
-    const s = await getScopeSpendUsd(db, { ids: [...envIds], since: env.created_at });
+    const s = await getScopeSpendUsd(db, { ids: [...envIds], since: env.created_at, endpoints: env.meter_endpoints });
     envelopes.push({
       tag: env.tag,
       budget_usd: env.budget_usd,

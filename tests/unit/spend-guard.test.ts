@@ -228,6 +228,33 @@ describe('budgetAllowsDispatchScoped — a second ceiling, never an absence of o
     expect(readScopeEnvelopes(envControl())[0].lanes).toBeNull();
   });
 
+  it('meter_endpoints narrows a LANED envelope\'s meter to its own writer\'s rows (#5729)', async () => {
+    const seen: { mongo: unknown[]; supa: unknown[] } = { mongo: [], supa: [] };
+    _setSupabaseScopeSpendReaderForTests(async (_ids: string[], _since: Date, endpoints: string[] | null) => {
+      seen.supa.push(endpoints);
+      return { usd: 0, rows: 0, error: null };
+    });
+    const scoped = {
+      book_ids: ['b1'], budget_usd: 10, created_at: new Date('2026-09-01T00:00:00Z'),
+      lanes: ['embed-gemini'], meter_endpoints: ['worker/embed-gemini'],
+    };
+    const db = makeScopedDbStub({ dailyUsd: 21, scopeUsd: 3, control: envControl({ allow_scopes: { lane: scoped } }) });
+    const orig = db.collection;
+    db.collection = (name: string) => {
+      const c = orig(name);
+      return { ...c, aggregate: (p: Array<{ $match?: Record<string, unknown> }>) => { if (p[0]?.$match?.book_id) seen.mongo.push(p[0].$match.endpoint); return c.aggregate(p); } };
+    };
+    const g = await budgetAllowsDispatchScoped(db, 'embed-gemini');
+    expect(g.allowed).toBe(true);
+    expect(seen.mongo).toEqual([{ $in: ['worker/embed-gemini'] }]);
+    expect(seen.supa).toEqual([['worker/embed-gemini']]);
+    // Negative control: without lanes, meter_endpoints is ignored — any worker may spend an
+    // unlaned envelope, so its meter must keep counting every endpoint.
+    const unlaned = readScopeEnvelopes({ allow_scopes: { x: { ...scoped, lanes: undefined } } });
+    expect(unlaned[0].meter_endpoints).toBeNull();
+    expect(readScopeEnvelopes(envControl())[0].meter_endpoints).toBeNull();
+  });
+
   it('dial UNSET (default-closed) + envelope with room → scoped dispatch (an envelope is an explicit bounded grant)', async () => {
     const db = makeScopedDbStub({ scopeUsd: 3, control: envControl({ daily_budget_usd: null }) });
     const g = await budgetAllowsDispatchScoped(db, 'test');

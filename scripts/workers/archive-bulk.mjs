@@ -28,6 +28,7 @@ import * as os from 'os';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
+import { isPaused } from '../lib/pause.mjs';
 import { fetchAccessLeaves, indexJp2FilesByLeaf } from '../lib/ia-access-leaves.mjs';
 import { hashBuffer, hammingHex, HASH_MATCH } from '../lib/page-alignment.mjs';
 import { fetchToFileWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
@@ -655,6 +656,13 @@ async function main() {
   // should run regardless of the queue-level pause (matching the "bypassing the queue"
   // intent of --book-id). The pause only gates the automatic queue path.
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
+  // The archive step pause (scripts/lib/pause.mjs, #5492) stops the queue path; a --book-id
+  // one-off bypasses it for the same reason it bypasses the global pause.
+  if (!TARGET_BOOK_ID && isPaused(control, 'archive')) {
+    console.log(`[archive-bulk] archive step paused. Exiting.`);
+    await client.close();
+    process.exit(0);
+  }
   if (!shouldBypassPause(control, { bookOverride: !!TARGET_BOOK_ID })) {
     console.log(`[archive-bulk] Pipeline paused. Exiting.`);
     await client.close();

@@ -53,6 +53,7 @@ import { GoogleGenAI } from '@google/genai';
 import { loadTranslationPrompts, syncBookTranslationCounters } from '../lib/translate-core.mjs';
 import {
   planRun, startRun, advanceRun, estimateRunUsd, gateAllowsBook, batchRequestToJsonlLine, RUNS_COLLECTION, TERMINAL_PHASES,
+  translateSubmitBrake,
 } from '../lib/translate-batch-seam.mjs';
 import {
   enrolChainedRun, tickChained, submitRounds, selectAutoCandidates, planNextRound, estimateChainedUsd,
@@ -257,6 +258,14 @@ async function chained(db) {
       },
     };
   };
+
+  // The pause (#5492). Enrolment sends nothing, but an open run is stored spend, so a paused lane
+  // enrols nothing. A tick still runs: collecting a finished round is free and writes pages the
+  // run already paid for, and submitRounds asks the same brake before every job it sends.
+  if (has('enrol-auto') || has('enrol')) {
+    const brake = await translateSubmitBrake(db);
+    if (brake.stop) { console.log(`  ${brake.stop} — enrolling nothing`); return; }
+  }
 
   if (has('plan')) {
     const bookId = arg('book');

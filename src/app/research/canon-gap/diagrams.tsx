@@ -133,7 +133,7 @@ export function CanonBars({ rows, n }: { rows: CanonBar[]; n: number }) {
       caption={
         <>
           Bars are to scale across canons. Left: characters of typed source text, split by the share a catalogue
-          reports as published in English (84000, SuttaCentral, Sefaria). Right: the cost of a first AI draft of what
+          reports as published in English (84000, SuttaCentral, Sefaria, Perseus, First1KGreek). Right: the cost of a first AI draft of what
           has no English, at the rate we measure on our own translation runs. Hatched cost bars price the whole corpus
           because nobody publishes its English coverage, so they are upper bounds. Hover a bar for exact figures.
         </>
@@ -394,13 +394,13 @@ export function TengyurProgress({
     { n: fmt(pagesImaged), label: 'page images imported from BDRC (W23703)', href: 'https://library.bdrc.io/show/bdr:W23703' },
     { n: fmt(pagesWithText), label: 'pages carrying the Esukhia public-domain text, aligned folio by folio', href: 'https://github.com/Esukhia/derge-tengyur' },
     { n: fmt(pagesTranslated), label: `pages with a draft English translation, for $${fmt(Math.round(spendUsd))} in model costs` },
-    { n: `${drafted} / ${perVolume.length}`, label: 'volumes drafted in full; every page is an unreviewed machine draft' },
+    { n: `${drafted} / ${perVolume.length}`, label: 'volumes drafted in full; no page has yet been reviewed by a scholar' },
   ];
   return (
     <Figure
       n={n}
       title="The Derge Tengyur, volume by volume"
-      caption={`Each square is one of the ${perVolume.length} volumes we imported, in volume order. All are held from public view until their English has been checked. ${drafted} have a draft English translation for the whole volume${partly ? ` and ${partly} for part of it` : ''}.`}
+      caption={`Each square is one of the ${perVolume.length} volumes we imported, in volume order. All have been public since 7 October 2026, labelled as AI translations not yet reviewed by a scholar. ${drafted} have a draft English translation for the whole volume${partly ? ` and ${partly} for part of it` : ''}.`}
     >
       <div className="grid grid-cols-[repeat(auto-fill,minmax(14px,1fr))] gap-[3px] max-w-xl" role="img" aria-label={`${perVolume.length} volumes, ${drafted} drafted in English${partly ? `, ${partly} in part` : ''}`}>
         {perVolume.map((v) => (
@@ -594,9 +594,9 @@ export function QualityLoop({ n, adopted, tested, issueUrl, resultsHref }: { n: 
         <>
           The same four steps run for each language and script, and again after every change. A change becomes the
           default only when it beats the old method on the same pages;{' '}
-          <a href={resultsHref} className="text-amber-800 underline underline-offset-2">each result is charted here</a>. AI judges find
-          errors quickly and cheaply, but they are not scholars: a scholar&rsquo;s reading is the test the machine
-          checks are calibrated against, and the first one, on the Tengyur draft, is planned.{' '}
+          <a href={resultsHref} className="text-amber-800 underline underline-offset-2">each result is charted here</a>. The
+          judges are AI models. Their scores will be compared with a scholar&rsquo;s reading of the same pages; the
+          first scholar review, on the Tengyur draft, is planned.{' '}
           <a href={`${issueUrl}5800`} className="text-amber-800 underline underline-offset-2">#5800</a>
         </>
       }

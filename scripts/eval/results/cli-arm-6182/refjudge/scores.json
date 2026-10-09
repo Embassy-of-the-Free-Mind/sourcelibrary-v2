@@ -1,0 +1,4066 @@
+{
+ "gate": {
+  "J1": {
+   "plant_caught": 6,
+   "plants": 6,
+   "dup_tie": 4,
+   "dups": 4,
+   "pass": true
+  },
+  "J2": {
+   "plant_caught": 6,
+   "plants": 6,
+   "dup_tie": 4,
+   "dups": 4,
+   "pass": true
+  }
+ },
+ "judge_gate_pass": true,
+ "pooled": {
+  "sides": 58,
+  "texts": [
+   "D3862",
+   "D4231"
+  ],
+  "FP": {
+   "fidelity_mean": 4.267,
+   "inversion_sides_either": 6,
+   "inversion_sides_both": 4,
+   "inversions_total_both_judges": 10,
+   "omissions_per_side": 0.14,
+   "omission_sides_either": 10,
+   "inventions_per_side": 0.12,
+   "invention_sides_either": 11,
+   "span_off_either": 3,
+   "mean_rank": 0.75
+  },
+  "C38": {
+   "fidelity_mean": 4.724,
+   "inversion_sides_either": 2,
+   "inversion_sides_both": 1,
+   "inversions_total_both_judges": 3,
+   "omissions_per_side": 0.08,
+   "omission_sides_either": 4,
+   "inventions_per_side": 0.05,
+   "invention_sides_either": 4,
+   "span_off_either": 1,
+   "mean_rank": 0.21
+  },
+  "G38": {
+   "fidelity_mean": 4.664,
+   "inversion_sides_either": 3,
+   "inversion_sides_both": 2,
+   "inversions_total_both_judges": 5,
+   "omissions_per_side": 0.04,
+   "omission_sides_either": 3,
+   "inventions_per_side": 0.04,
+   "invention_sides_either": 3,
+   "span_off_either": 0,
+   "mean_rank": 0.21
+  },
+  "C38-G38": {
+   "mean": 0.06,
+   "ci_by_text": [
+    -0.098,
+    0.225
+   ],
+   "sides_higher": 11,
+   "sides_lower": 8
+  },
+  "C38-FP": {
+   "mean": 0.457,
+   "ci_by_text": [
+    0.283,
+    0.643
+   ],
+   "sides_higher": 33,
+   "sides_lower": 4
+  },
+  "G38-FP": {
+   "mean": 0.397,
+   "ci_by_text": [
+    0.158,
+    0.643
+   ],
+   "sides_higher": 31,
+   "sides_lower": 4
+  }
+ },
+ "Madhyamaka": {
+  "sides": 30,
+  "texts": [
+   "D3862"
+  ],
+  "FP": {
+   "fidelity_mean": 4.317,
+   "inversion_sides_either": 4,
+   "inversion_sides_both": 2,
+   "inversions_total_both_judges": 6,
+   "omissions_per_side": 0.17,
+   "omission_sides_either": 5,
+   "inventions_per_side": 0.13,
+   "invention_sides_either": 6,
+   "span_off_either": 0,
+   "mean_rank": 0.72
+  },
+  "C38": {
+   "fidelity_mean": 4.7,
+   "inversion_sides_either": 1,
+   "inversion_sides_both": 1,
+   "inversions_total_both_judges": 2,
+   "omissions_per_side": 0.15,
+   "omission_sides_either": 4,
+   "inventions_per_side": 0.1,
+   "invention_sides_either": 4,
+   "span_off_either": 1,
+   "mean_rank": 0.23
+  },
+  "G38": {
+   "fidelity_mean": 4.567,
+   "inversion_sides_either": 2,
+   "inversion_sides_both": 2,
+   "inversions_total_both_judges": 4,
+   "omissions_per_side": 0.08,
+   "omission_sides_either": 3,
+   "inventions_per_side": 0.08,
+   "invention_sides_either": 3,
+   "span_off_either": 0,
+   "mean_rank": 0.28
+  },
+  "C38-G38": {
+   "mean": 0.133,
+   "ci_by_text": [
+    -0.05,
+    0.333
+   ],
+   "sides_higher": 7,
+   "sides_lower": 3
+  },
+  "C38-FP": {
+   "mean": 0.383,
+   "ci_by_text": [
+    0.167,
+    0.583
+   ],
+   "sides_higher": 15,
+   "sides_lower": 2
+  },
+  "G38-FP": {
+   "mean": 0.25,
+   "ci_by_text": [
+    0.067,
+    0.433
+   ],
+   "sides_higher": 12,
+   "sides_lower": 3
+  }
+ },
+ "Pramana": {
+  "sides": 28,
+  "texts": [
+   "D4231"
+  ],
+  "FP": {
+   "fidelity_mean": 4.214,
+   "inversion_sides_either": 2,
+   "inversion_sides_both": 2,
+   "inversions_total_both_judges": 4,
+   "omissions_per_side": 0.11,
+   "omission_sides_either": 5,
+   "inventions_per_side": 0.11,
+   "invention_sides_either": 5,
+   "span_off_either": 3,
+   "mean_rank": 0.79
+  },
+  "C38": {
+   "fidelity_mean": 4.75,
+   "inversion_sides_either": 1,
+   "inversion_sides_both": 0,
+   "inversions_total_both_judges": 1,
+   "omissions_per_side": 0.0,
+   "omission_sides_either": 0,
+   "inventions_per_side": 0.0,
+   "invention_sides_either": 0,
+   "span_off_either": 0,
+   "mean_rank": 0.18
+  },
+  "G38": {
+   "fidelity_mean": 4.768,
+   "inversion_sides_either": 1,
+   "inversion_sides_both": 0,
+   "inversions_total_both_judges": 1,
+   "omissions_per_side": 0.0,
+   "omission_sides_either": 0,
+   "inventions_per_side": 0.0,
+   "invention_sides_either": 0,
+   "span_off_either": 0,
+   "mean_rank": 0.12
+  },
+  "C38-G38": {
+   "mean": -0.018,
+   "ci_by_text": [
+    -0.179,
+    0.143
+   ],
+   "sides_higher": 4,
+   "sides_lower": 5
+  },
+  "C38-FP": {
+   "mean": 0.536,
+   "ci_by_text": [
+    0.304,
+    0.75
+   ],
+   "sides_higher": 18,
+   "sides_lower": 2
+  },
+  "G38-FP": {
+   "mean": 0.554,
+   "ci_by_text": [
+    0.375,
+    0.732
+   ],
+   "sides_higher": 19,
+   "sides_lower": 1
+  }
+ },
+ "prereg_gate": {
+  "lower_bound_C38_minus_G38": -0.098,
+  "lower_bound_gt_-0.15": true,
+  "C38_inversion_sides": 2,
+  "G38_inversion_sides": 3,
+  "inversions_ok": true,
+  "pass": true
+ },
+ "judge_fid_agree_within_1": 1.0,
+ "rows": [
+  {
+   "id": "R001",
+   "page_id": "6abed8d1896ea18127c8f7b5",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R002",
+   "page_id": "6abed8d1896ea18127c8f7c2",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R003",
+   "page_id": "6abed8d1896ea18127c8f7aa",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": true,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R004",
+   "page_id": "6abed8d1896ea18127c8f7b1",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R005",
+   "page_id": "6abed8d1896ea18127c8f7b8",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R006",
+   "page_id": "6abe825259b86b7d32a65b33",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 3,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 2
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 2
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R008",
+   "page_id": "6abed8d1896ea18127c8f7a8",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R010",
+   "page_id": "6abed8d1896ea18127c8f7bd",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R011",
+   "page_id": "6abe825259b86b7d32a65b4b",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "inven_n": 1,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "inven_n": 1,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R012",
+   "page_id": "6abe825259b86b7d32a65b3b",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R013",
+   "page_id": "6abed8d1896ea18127c8f7b3",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R014",
+   "page_id": "6abed8d1896ea18127c8f7b6",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "inven_n": 1,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R015",
+   "page_id": "6abe825259b86b7d32a65b42",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R016",
+   "page_id": "6abed8d1896ea18127c8f7af",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R017",
+   "page_id": "6abed8d1896ea18127c8f7ac",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R019",
+   "page_id": "6abe825259b86b7d32a65b38",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R020",
+   "page_id": "6abed8d1896ea18127c8f7be",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     }
+    }
+   }
+  },
+  {
+   "id": "R021",
+   "page_id": "6abed8d1896ea18127c8f7b0",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "inven_n": 1,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "inven_n": 1,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R022",
+   "page_id": "6abed8d1896ea18127c8f7b9",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 3,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 3,
+      "inv": 1,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "inven_n": 1,
+      "rank": 2
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R023",
+   "page_id": "6abe825259b86b7d32a65b41",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 2
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 3,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 2
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     }
+    }
+   }
+  },
+  {
+   "id": "R024",
+   "page_id": "6abed8d1896ea18127c8f7ba",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     }
+    }
+   }
+  },
+  {
+   "id": "R025",
+   "page_id": "6abe825259b86b7d32a65b4a",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R026",
+   "page_id": "6abe825259b86b7d32a65b44",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 2
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 1,
+      "span_off": false,
+      "inven_n": 1,
+      "rank": 2
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R027",
+   "page_id": "6abe825259b86b7d32a65b39",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 3,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 2
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 3,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 2
+     }
+    }
+   }
+  },
+  {
+   "id": "R028",
+   "page_id": "6abed8d1896ea18127c8f7ab",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R029",
+   "page_id": "6abe825259b86b7d32a65b37",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 3,
+      "inv": 1,
+      "om": 2,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 3,
+      "inv": 0,
+      "om": 3,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 2,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 2,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R030",
+   "page_id": "6abed8d1896ea18127c8f7a9",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": true,
+      "inven_n": 1,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R032",
+   "page_id": "6abe825259b86b7d32a65b46",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "inven_n": 1,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "inven_n": 1,
+      "rank": 1
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R033",
+   "page_id": "6abed8d1896ea18127c8f7b2",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R034",
+   "page_id": "6abe825259b86b7d32a65b36",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R036",
+   "page_id": "6abed8d1896ea18127c8f7bf",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R037",
+   "page_id": "6abe825259b86b7d32a65b3c",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R038",
+   "page_id": "6abed8d1896ea18127c8f7bc",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R039",
+   "page_id": "6abed8d1896ea18127c8f7bb",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R041",
+   "page_id": "6abe825259b86b7d32a65b4e",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R043",
+   "page_id": "6abed8d1896ea18127c8f7c0",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R045",
+   "page_id": "6abe825259b86b7d32a65b45",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R046",
+   "page_id": "6abed8d1896ea18127c8f7b7",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": true,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R047",
+   "page_id": "6abed8d1896ea18127c8f7b4",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 3,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "inven_n": 1,
+      "rank": 2
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     }
+    }
+   }
+  },
+  {
+   "id": "R048",
+   "page_id": "6abe825259b86b7d32a65b43",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 3,
+      "inv": 1,
+      "om": 1,
+      "inven": 1,
+      "span_off": false,
+      "inven_n": 1,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R049",
+   "page_id": "6abe825259b86b7d32a65b40",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "inven_n": 1,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "inven_n": 1,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R050",
+   "page_id": "6abed8d1896ea18127c8f7ae",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R051",
+   "page_id": "6abed8d1896ea18127c8f7c1",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 3,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 2
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     }
+    }
+   }
+  },
+  {
+   "id": "R052",
+   "page_id": "6abe825259b86b7d32a65b4c",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R053",
+   "page_id": "6abe825259b86b7d32a65b3f",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     }
+    }
+   }
+  },
+  {
+   "id": "R054",
+   "page_id": "6abe825259b86b7d32a65b34",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R055",
+   "page_id": "6abe825259b86b7d32a65b4d",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 2,
+      "inven": 0,
+      "span_off": true,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 2,
+      "inven": 0,
+      "span_off": true,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R056",
+   "page_id": "6abe825259b86b7d32a65b3a",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R057",
+   "page_id": "6abe825259b86b7d32a65b48",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R058",
+   "page_id": "6abe825259b86b7d32a65b32",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "inven_n": 1,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "inven_n": 1,
+      "rank": 1
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "inven_n": 1,
+      "rank": 1
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "inven_n": 1,
+      "rank": 2
+     }
+    }
+   }
+  },
+  {
+   "id": "R059",
+   "page_id": "6abed8d1896ea18127c8f7c3",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 2
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R060",
+   "page_id": "6abed8d1896ea18127c8f7ad",
+   "toh": "D4231",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R061",
+   "page_id": "6abe825259b86b7d32a65b3d",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "inven_n": 1,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "inven_n": 1,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R063",
+   "page_id": "6abe825259b86b7d32a65b3e",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "inven_n": 1,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "inven_n": 1,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 2,
+      "span_off": false,
+      "inven_n": 2,
+      "rank": 1
+     }
+    }
+   }
+  },
+  {
+   "id": "R064",
+   "page_id": "6abe825259b86b7d32a65b31",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R065",
+   "page_id": "6abe825259b86b7d32a65b35",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R067",
+   "page_id": "6abe825259b86b7d32a65b49",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     },
+     "C38": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 1,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     }
+    }
+   }
+  },
+  {
+   "id": "R068",
+   "page_id": "6abe825259b86b7d32a65b47",
+   "toh": "D3862",
+   "set": null,
+   "J": {
+    "J1": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 1,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 2
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     }
+    },
+    "J2": {
+     "FP": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 1,
+      "span_off": false,
+      "inven_n": 1,
+      "rank": 2
+     },
+     "C38": {
+      "fid": 5,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 0
+     },
+     "G38": {
+      "fid": 4,
+      "inv": 0,
+      "om": 0,
+      "inven": 0,
+      "span_off": false,
+      "inven_n": 0,
+      "rank": 1
+     }
+    }
+   }
+  }
+ ]
+}
