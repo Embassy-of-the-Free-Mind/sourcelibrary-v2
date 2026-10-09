@@ -13,7 +13,7 @@ Run one Gemini CLI arm (`agy -p`, subscription, $0) over a list of eval requests
 REQ.jsonl rows: {uid, prompt?, image?}. `prompt` is sent verbatim; with --prompt-file every row gets that file's text.
 If `image` is set, the image is copied into a one-file workspace and attached as `@./<uid>.<ext>` at the end of the
 prompt (the #6295 export's command shape), with that directory as the CLI's cwd. Every call runs with
-`--mode plan --print-timeout 120s` (no tools; #6345).
+`--mode plan --print-timeout 120s` (no tools; #6345); --print-timeout changes the 120.
 
 OUT.jsonl rows: {uid, arm, model, route: "cli", date, text, secs, attempts, blocked, empty, error}. A uid already
 written with non-empty text is skipped on restart; a row without text is retried on restart (its last row wins).
@@ -120,6 +120,7 @@ def main():
     ap.add_argument('--prompt-file'); ap.add_argument('--attempts', type=int, default=2); ap.add_argument('--probe', action='store_true')
     ap.add_argument('--workdir', default=os.environ.get('JOB_SCRATCH', '/tmp') + '/cli-ws'); ap.add_argument('--limit', type=int)
     ap.add_argument('--gap-wait', type=float, default=20, help='seconds to wait for a gap in other jobs\' image calls before going alongside one')
+    ap.add_argument('--print-timeout', type=int, default=120, help='agy --print-timeout in seconds; the process is killed 60 s later')
     a = ap.parse_args()
 
     if a.probe:
@@ -156,9 +157,9 @@ def main():
         for tries in range(1, a.attempts + 1):
             if cls == 'denied_tool' and meta.get('conversation'):
                 nudged = True
-                out, err, code, secs, cls, waited, meta = call(NUDGE, a.model, cwd=cwd, gap_wait=a.gap_wait, conversation=meta['conversation'])
+                out, err, code, secs, cls, waited, meta = call(NUDGE, a.model, cwd=cwd, timeout=a.print_timeout + 60, gap_wait=a.gap_wait, conversation=meta['conversation'])
             else:
-                out, err, code, secs, cls, waited, meta = call(prompt, a.model, cwd=cwd, add_dir=add_dir, gap_wait=a.gap_wait)
+                out, err, code, secs, cls, waited, meta = call(prompt, a.model, cwd=cwd, add_dir=add_dir, timeout=a.print_timeout + 60, gap_wait=a.gap_wait)
             overlaps += waited[1] > 0; waits += waited[0]
             total += secs
             log_call(a.job, a.model, a.kind, secs, cls in (None, 'safety_filter'), cls)
