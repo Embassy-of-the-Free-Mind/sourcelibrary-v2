@@ -15,6 +15,16 @@ export const CLIP_URL = process.env.CLIP_URL || DEFAULT_CLIP_URL;
 /** True when CLIP_URL is explicitly configured (not relying on the fallback host). */
 export const isClipConfigured = (): boolean => !!process.env.CLIP_URL;
 
+/**
+ * Headers for every request to the CLIP/embedding server (#6206). Adds `x-embed-key` when
+ * EMBED_SERVER_KEY is set; with it unset the server is in rollout mode and the header is omitted.
+ */
+export function clipHeaders(): Record<string, string> {
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+  if (process.env.EMBED_SERVER_KEY) headers['x-embed-key'] = process.env.EMBED_SERVER_KEY;
+  return headers;
+}
+
 // Surface the liability once per cold start: if we're in production and no
 // CLIP_URL is set, visual search depends on the hardcoded fallback host.
 if (process.env.NODE_ENV === 'production' && !process.env.CLIP_URL) {

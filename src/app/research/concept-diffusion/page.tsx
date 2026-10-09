@@ -4,7 +4,7 @@ import ConceptDiffusionViz from '@/components/research/ConceptDiffusionViz';
 import dataRaw from '@/data/concept-diffusion.json';
 
 export const metadata: Metadata = {
-  title: 'Concept Diffusion — Source Library Research',
+  title: 'Concept Diffusion | Source Library Research',
   description:
     'Tracking how concepts and vocabulary spread across languages and centuries in 2,400 pre-modern texts. A Google Ngrams for specialist historical literature.',
   alternates: { canonical: '/research/concept-diffusion' },
@@ -209,7 +209,7 @@ export default function ConceptDiffusionPage() {
         <div className="bg-white rounded-lg border border-[var(--border-light)] p-4 sm:p-6">
           <h2 className="font-serif text-xl mb-4">Most Temporally Variable</h2>
           <p className="text-[var(--text-muted)] text-sm mb-4">
-            Keywords with the highest coefficient of variation — concentrated in specific eras rather
+            Keywords with the highest coefficient of variation, concentrated in specific eras rather
             than evenly distributed.
           </p>
           <div className="space-y-2">
@@ -273,7 +273,7 @@ export default function ConceptDiffusionPage() {
           category of books most frequently produces each keyword.
         </p>
         <p className="mb-2">
-          <strong>Original vocabulary</strong> is extracted from OCR output of the original texts —
+          <strong>Original vocabulary</strong> is extracted from OCR output of the original texts:
           Latin, German, Greek, French, Sanskrit, and other languages. These{' '}
           {vocab.length.toLocaleString('en-US')} terms (each appearing in 20+ books) are grouped by primary
           language. This preserves the actual terminology used by historical authors, complementing
@@ -284,11 +284,11 @@ export default function ConceptDiffusionPage() {
           Bibliographic noise (shelfmarks, binding terms, digitization artifacts) is filtered.
           &ldquo;Normalized frequency&rdquo; divides the number of books containing a term by the
           total books in that period, controlling for the uneven corpus distribution (densest in the
-          1600s). The coefficient of variation (CV) measures temporal concentration — higher values
+          1600s). The coefficient of variation (CV) measures temporal concentration. Higher values
           indicate terms that surge and decline, while low values indicate persistent concepts.
         </p>
         <p>
-          This is analogous to Google Ngrams but for specialist pre-modern literature — covering
+          This is analogous to Google Ngrams but for specialist pre-modern literature, covering
           alchemical, Hermetic, Kabbalistic, theological, philosophical, and natural philosophical
           texts that are underrepresented in general book corpora.
         </p>

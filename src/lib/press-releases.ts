@@ -40,14 +40,14 @@ export const PRESS_RELEASES: PressReleaseMeta[] = [
     slug: 'source-library-public-beta-launch',
     title: 'The Embassy of the Free Mind Launches Source Library',
     subtitle:
-      'The largest freely available collection of translated historical primary sources ever assembled — free to read beside their originals',
+      'The largest freely available collection of translated historical primary sources ever assembled, free to read beside their originals',
     dateline: '4 June 2026 · Amsterdam, the Netherlands',
     date: '2026-06-04',
     status: 'published',
     summary:
-      'The Embassy of the Free Mind announces the public beta of Source Library: an open-access library that opens with 15,000+ books in 55+ languages, 15,000+ translated into English — 6,000+ for the first time ever, roughly 7 billion words in all — each read beside a scan of the original page.',
+      'The Embassy of the Free Mind announces the public beta of Source Library: an open-access library that opens with 15,000+ books in 55+ languages, 15,000+ translated into English (6,000+ for the first time ever), roughly 7 billion words in all. Each is read beside a scan of the original page.',
     metaDescription:
-      'The Embassy of the Free Mind launches Source Library, an open-access library of translated historical primary sources. At beta it spans 15,000+ books in 55+ languages, 15,000+ translated into English and 6,000+ first-ever English translations — roughly 7 billion words, about the size of the entire English Wikipedia — each read beside the original page.',
+      'The Embassy of the Free Mind launches Source Library, an open-access library of translated historical primary sources. At beta it spans 15,000+ books in 55+ languages, 15,000+ translated into English and 6,000+ first-ever English translations: roughly 7 billion words, about the size of the entire English Wikipedia. Each is read beside the original page.',
     ogImage: 'https://sourcelibrary.org/og-image.jpg',
   },
   {

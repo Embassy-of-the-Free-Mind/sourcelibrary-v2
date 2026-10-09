@@ -1,0 +1,291 @@
+{
+ "stratum": "eebo-tcp-latin-5660",
+ "issue": 5660,
+ "sealed_at": "2026-10-04",
+ "max_width": 2400,
+ "n": 25,
+ "draw_rule": "not drawn: every leaf_check-ok EEBO-TCP Latin reference record written in round 3 of #5660, one page per book, image = pages.photo of that leaf (resized to ≤2400 px wide, JPEG q92). Pages were chosen when the references were built (build-edition-refs --draw=8 --seed=1, middle accepted page; one alternate for a non-Latin page); the checks are in results/edition-refs/leaf-check-eebo-tcp-latin-2026-10-04.json.",
+ "substrata": [
+  {
+   "name": "Latin by period",
+   "reference": "EEBO-TCP same-edition transcription (CC0), leaf-checked"
+  }
+ ],
+ "pages": [
+  {
+   "slug": "ed-6a46062f896a4826cccdf873-p7",
+   "book_id": "6a46062f896a4826cccdf873",
+   "page_number": 7,
+   "substratum": "Latin 1500s",
+   "title": "Rudimenta grammatices et docendi methodus",
+   "year": 1529,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1475-1640_rudimenta-grammatices-_t-wolsey_1529/page/n6/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A19129 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a4710ef9e05dee59fe3cae8-p10",
+   "book_id": "6a4710ef9e05dee59fe3cae8",
+   "page_number": 10,
+   "substratum": "Latin 1500s",
+   "title": "Principum, ac illustrium aliquot & eruditorum in Anglia virorum, encomia, trophaea, genethliaca, & epithalamia. A Ioanne Lelando antiquario conscripta, nunc primùm in lucem edita. Quibus etiam adiuncta sunt, illustrissimorum aliquot herôum, hodiè viventium, aliorúmque hinc indè Anglorum, encomia quaedam: à Thoma Newtono, Cestreshyrio, succisivis horulis exarata",
+   "year": 1589,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1475-1640_principum-ac-illustrium_leland-john_1589/page/n9/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A05302 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a4fa9cdb5772a3dacaac6a6-p9",
+   "book_id": "6a4fa9cdb5772a3dacaac6a6",
+   "page_number": 9,
+   "substratum": "Latin 1500s",
+   "title": "Baptistes sive calumnia",
+   "year": 1578,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1475-1640_baptistes-sive-calumnia_george-buchanan_1578/page/n8/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A17090 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a503c772f6539fb38937d92-p15",
+   "book_id": "6a503c772f6539fb38937d92",
+   "page_number": 15,
+   "substratum": "Latin 1500s",
+   "title": "Armilla aurea, id est, Miranda series causarum et salutis & damnationis iuxta verbum Dei Eius synopsin continet annexa tabula",
+   "year": 1590,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1475-1640_armilla-aurea-miran_perkins-w_1590/page/n14/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A09349 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a4252e5343d756d34e33e36-p10",
+   "book_id": "6a4252e5343d756d34e33e36",
+   "page_number": 10,
+   "substratum": "Latin 1600s",
+   "title": "De ortu et natura sanguinis. A Joanne Betto M.D. Regis medico ordinario & Colegii Londinensis Socio.",
+   "year": 1669,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1641-1700_de-ortu-et-natura-sangui_betts-john_1669/page/n9/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A27552 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a4263b1744db9e3105b1125-p10",
+   "book_id": "6a4263b1744db9e3105b1125",
+   "page_number": 10,
+   "substratum": "Latin 1600s",
+   "title": "Oeconomia animalis, novis in medicina hypothesibus superstructa, & mechanicè explicata. Autore Gualtero Charleton, M.D. & Caroli Magnæ Britanniæ Regis. olian medico.",
+   "year": 1659,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1641-1700_oeconomia-animalis-novi_charleton-walter_1659/page/n9/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A32705 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a42acc65207af7c42f4db34-p14",
+   "book_id": "6a42acc65207af7c42f4db34",
+   "page_number": 14,
+   "substratum": "Latin 1600s",
+   "title": "Clauis apocalyptica ex innatis et insitis visionum characteribus eruta et demonstrata. Ad eorum usum quibus deus amorem studiúmq[ue] indiderit prophetiam illam admirandam cognoscendi scrutandíque.",
+   "year": 1627,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1475-1640_clauis-apocalyptica_mede-joseph_1627/page/n13/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A07382 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a42c73497284560a2b10fee-p1",
+   "book_id": "6a42c73497284560a2b10fee",
+   "page_number": 1,
+   "substratum": "Latin 1600s",
+   "title": "Theses philosophicae, quas auspice & propitio D.O.M. adolescentes, magisterii candidati, in Academia Mareschallana, die 21 Iulii, Anno 1637. In publico clarissimorum philosophorum confessu propugnabunt, ab aurora ad meridiem.",
+   "year": 1637,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1475-1640_theses-philosophic-_seton-john-of-aberdeen_1637/page/n0/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A20710 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a42ce3be76baa13aa851af5-p10",
+   "book_id": "6a42ce3be76baa13aa851af5",
+   "page_number": 10,
+   "substratum": "Latin 1600s",
+   "title": "Oratio funebris habita in templo beatæ Mariæ Oxon. Ab Isaaco Wake, Publico academie̜ oratore, Maij 25. An. 1607. quum moesti Oxonienses, pijs manibus Iohannis Rainoldi parentarent.",
+   "year": 1608,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1475-1640_oratio-funebris-habita-_wake-isaac_1608/page/n9/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A14631 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a42d8f7e76baa13aa85e9b9-p9",
+   "book_id": "6a42d8f7e76baa13aa85e9b9",
+   "page_number": 9,
+   "substratum": "Latin 1600s",
+   "title": "Panegyricon inaugurale honoratissimi & amplissimi domini prætoris regii, sive majoris, nobilissimæ & florentissimæ reipublicæ Londinensis, Richardi Fenn, sub finem anni Christi 1637.",
+   "year": 1638,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1475-1640_panegyricon-inaugurale_sictor-joannes_1638/page/n8/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A12223 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a42d8f8e76baa13aa85e9d0-p10",
+   "book_id": "6a42d8f8e76baa13aa85e9d0",
+   "page_number": 10,
+   "substratum": "Latin 1600s",
+   "title": "Icones & descriptiones rariorum plantarum Siciliæ, Melitæ, Galliæ, & Italiæ. Quarum unaquæque proprio charactere signata, ab aliis ejusdem classis facile distinguitur. Auctore Paulo Boccone Panormitano Siculo, serenissimi Magni Hetruriæ Ducis olim botanico.",
+   "year": 1674,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1641-1700_icones-descriptiones-r_boccone-paolo_1674/page/n9/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A28509 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a42d91f1894955eb72629fe-p10",
+   "book_id": "6a42d91f1894955eb72629fe",
+   "page_number": 10,
+   "substratum": "Latin 1600s",
+   "title": "De secretione animali cogitata. Authore Gulielmo Cole, M.D.",
+   "year": 1674,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1641-1700_de-secretione-animali-co_cole-william-md_1674/page/n9/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A33731 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a42f62b3ad4d80da1237aed-p15",
+   "book_id": "6a42f62b3ad4d80da1237aed",
+   "page_number": 15,
+   "substratum": "Latin 1600s",
+   "title": "Thomæ Bradwardini Archiepiscopi olim Cantuariensis, De causa Dei, contra Pelagium, et De virtute causarum, ad suos Mertonenses, libri tres: iussu reverendiss. Georgii Abbot Cantuariensis Archiepiscopi; opera et studio Di. Henrici Savilii, Collegij Mertonensis in Academia Oxoniensi custodis, ex scriptis codicibus nunc primum editi.",
+   "year": 1618,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1475-1640_thomae-bradwardini-archi_bradwardine-t_1618/page/n14/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A16626 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a432b29e797132cc665b266-p10",
+   "book_id": "6a432b29e797132cc665b266",
+   "page_number": 10,
+   "substratum": "Latin 1600s",
+   "title": "Nuncius inanimatus.",
+   "year": 1629,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1475-1640_nuncius-inanimatus_godwin-francis_1629/page/n9/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A01809 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a434778201f98f53c3efe9d-p16",
+   "book_id": "6a434778201f98f53c3efe9d",
+   "page_number": 16,
+   "substratum": "Latin 1600s",
+   "title": "Opera posthuma chronologica, &c. Viz. De serie et successione primorum Romæ episcoporum dissertationes duæ: quibus præfiguntur Annales Paulini, et Lectiones in Acta Apostolorum. Singula prælo tradidit, edenda curavit & dissertationis novis additionibus auxit H. Dodwellus, A.M. Dubliniensis: cujus etiam accessit de eâdem successione usque ad annales cl. Cestriensis Cyprianicos, dissertatio singularis.",
+   "year": 1688,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1641-1700_opera-posthuma-chronolog_pearson-john-bp_1688/page/n15/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A53895 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a437b6257a09c2c0fcb48d7-p10",
+   "book_id": "6a437b6257a09c2c0fcb48d7",
+   "page_number": 10,
+   "substratum": "Latin 1600s",
+   "title": "Barnabæ itinerarium, Mirtili & Faustuli nominibus insignitum viatoris solatio nuperrimè editum, aptissimis numeris redactum, veterique Tono Barnabæ, publicè decantatum.",
+   "year": 1636,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1475-1640_barnab-itinerarium-mir_brathwait-richard_1636/page/n9/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A16649 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a48279d2dd0016448f12f0f-p27",
+   "book_id": "6a48279d2dd0016448f12f0f",
+   "page_number": 27,
+   "substratum": "Latin 1600s",
+   "title": "De veritate, prout distinguitur a revelatione, a verisimili, a possibili, et a falso. Hoc opus condidit Edoardus Baro Herbert de Chirbury [sic] in Anglia, et castri insulæ de Kerry in Hibernia, et par utriusque regni. Et lectori cuivis, integri & illibati iudicii dicavit.",
+   "year": 1633,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1475-1640_de-veritate-prout-disti_herbert-edward-baron_1633/page/n26/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A03054 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a4f7c25a13ff00e22df18f1-p10",
+   "book_id": "6a4f7c25a13ff00e22df18f1",
+   "page_number": 10,
+   "substratum": "Latin 1600s",
+   "title": "Ad fraternam communionem inter evangelicas ecclesias restaurandam adhortatio; in cosundata, quòd non dissentiant in ullo fundamentali Catholicæ fidei articulo. Per Reverendum in Christo patrem, Johann. Davenantium Episcopum Sarisburiensem. Cui præfixa est ejusdem de pace itiden ecclesiastica commentatio Johanni Dictæo non ità pridem missa.",
+   "year": 1640,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1475-1640_ad-fraternam-communionem_davenant-john-bp_1640/page/n9/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A19865 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a51d78d612243b274118e89-p9",
+   "book_id": "6a51d78d612243b274118e89",
+   "page_number": 9,
+   "substratum": "Latin 1600s",
+   "title": "In Henricum Fridericum primogenitum Iacobi ter maximi Regis Magnæ Britanniæ, Galliæ, & Hiberniæ: serenissimum vero Walliae principem, morbo de hac vita decedentem Novemb. 1612 lachrymæ Alexr. Julii Scoti, suo & conterraneorum suorum nomine, namq́[ue] ab vno disce omnes.",
+   "year": 1612,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1475-1640_in-henricum-fridericum-p_julius-alexander_1612/page/n8/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A04717 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a90e7e5544007b776b3806a-p10",
+   "book_id": "6a90e7e5544007b776b3806a",
+   "page_number": 10,
+   "substratum": "Latin 1600s",
+   "title": "Disputatio theologica de vero discrimine peccati mortalis & venialis, deque impossibilitate implendi legem Dei ob quotidianam peccatorum venialium incursionem. Cvi annexa est appendix de possibilitate præstandi legem consideratam secundum epieikeian euangelicam. Authore, Roberto Baronio, Ecclesiæ Abredonensi, S.S. Theologiæ Doctore, & ejusdem in Academia Marescallana professore.",
+   "year": 1633,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1475-1640_disputatio-theologica-_baron-robert_1633/page/n9/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A04814 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a94341a7680120fac24d808-p15",
+   "book_id": "6a94341a7680120fac24d808",
+   "page_number": 15,
+   "substratum": "Latin 1600s",
+   "title": "Duellum poeticum. Contendentibus, Georgio Eglisemmio medico regio, & Georgio Buchanano regio præceptore. Pro dignitate paraphraseos Psalmi centisimi quarti. Adiectis prophylacticis aduersus Andreæ Meluini Cauillum iin aram Regiam, aliísq[ue]; epigrammatis.",
+   "year": 1618,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1475-1640_duellum-poeticum-conten_eglisham-george_1618_0/page/n14/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A21194 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a9437f67e41ac276318823e-p10",
+   "book_id": "6a9437f67e41ac276318823e",
+   "page_number": 10,
+   "substratum": "Latin 1600s",
+   "title": "Carmen panegyricum, sive Paræneticum, postridie inaugurationis Dom. Protectori ab Auguo. Wingfieldo dicatum. Ac nuper cum scholiis & animadversionibus in selectiora vocabula, ab anonymo benevolo illustratum.",
+   "year": 1656,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1641-1700_carmen-panegyricum-_wingfield-augustine_1656/page/n9/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A66675 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a94390b45a4780cb83dba46-p10",
+   "book_id": "6a94390b45a4780cb83dba46",
+   "page_number": 10,
+   "substratum": "Latin 1600s",
+   "title": "Academiæ Edinburgenæ gratulatio, ob serenissimi, augustissimiq[ue], Monarchæ Caroli II. Britanniarum, Galliæ & Hiberniæ Regis, fidei defensoris, in solium paternum restitutionem, oblata illustrissimo dynastæ, D. Johanni Middiltonio, Middiltonii Comiti, Clarimontis & Fethercarniæ Domino, &c. inclytissimo Regis Legato, in aulâ ejusdem academiæ, 29 Maij 1661.",
+   "year": 1661,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1641-1700_academi-edinburgen-gra_middleton-john-middleto_1661/page/n9/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A69934 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a42a33fdec0f9e2ecca5a38-p11",
+   "book_id": "6a42a33fdec0f9e2ecca5a38",
+   "page_number": 11,
+   "substratum": "Latin 1600s",
+   "title": "Europa lachrymans: Gulielmi Ballæi armigeri Angli, poema heroicvm.",
+   "year": 1650,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1641-1700_europa-lachrymans_ball-william_1650/page/n10/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A30431 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  },
+  {
+   "slug": "ed-6a9057a0ab26ecd307a0cd7c-p10",
+   "book_id": "6a9057a0ab26ecd307a0cd7c",
+   "page_number": 10,
+   "substratum": "Latin 1600s",
+   "title": "Problemata physica. De gravitate. Cap.I. De Æstibus marinis. Cap.II. De vacuo. Cap.III. De calore & luce. Cap.IV. De duro & molli. Cap.V. De pluvia, vento, aliisq[ue] coeli varietatibus. Cap. VI. De motuum speciebus. Cap. VII. Adjunctae sunt etiam propositiones duae de duplicatione cubi, & dimensione circuli.",
+   "year": 1662,
+   "language": "Latin",
+   "image_url": "https://archive.org/download/bim_early-english-books-1641-1700_problemata-physica_hobbes-thomas_1662/page/n9/full/full/0/default.jpg",
+   "reference_plan": "EEBO-TCP A44008 (CC0-1.0), leaf_check ok by model-eye 2026-10-04"
+  }
+ ]
+}

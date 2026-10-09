@@ -18,17 +18,17 @@ export const QUEUE_RATINGS: Record<string, RatingOption[]> = {
     { key: 'u', rating: 'unclear',       label: '? unclear',       color: '#6b7280', hint: "Can't tell" },
   ],
   'gallery-quality': [
-    { key: 'h', rating: 'hero',    label: '★ hero',    color: '#a855f7', hint: 'Iconic — could be the book\'s cover image' },
+    { key: 'h', rating: 'hero',    label: '★ hero',    color: '#a855f7', hint: 'Iconic: could be the book\'s cover image' },
     { key: 'k', rating: 'yes',     label: '✓ yes',     color: '#10b981', hint: 'Belongs in the curated gallery' },
     { key: 'j', rating: 'no',      label: '✗ no',      color: '#ef4444', hint: 'Decorative / fragment / not gallery-worthy' },
     { key: 'u', rating: 'unclear', label: '? unclear', color: '#6b7280', hint: "Can't tell" },
   ],
   'scan-quality': [
     { key: 'p', rating: 'pristine',         label: '★ pristine',         color: '#a855f7', hint: 'Crisp color scan, sharp, no defects' },
-    { key: 'k', rating: 'good',             label: '✓ good',             color: '#10b981', hint: 'Acceptable — minor age/discoloration' },
+    { key: 'k', rating: 'good',             label: '✓ good',             color: '#10b981', hint: 'Acceptable: minor age/discoloration' },
     { key: 'b', rating: 'bitonal',          label: '◐ bitonal',          color: '#3b82f6', hint: 'Black-and-white, but clean and readable' },
     { key: 'm', rating: 'microfilm',        label: '⚠ microfilm',        color: '#f59e0b', hint: 'Microfilm/microfiche, washed out, low contrast' },
-    { key: 'j', rating: 'degraded',         label: '✗ degraded',         color: '#ef4444', hint: 'Blurry / cropped / corrupt — unusable' },
+    { key: 'j', rating: 'degraded',         label: '✗ degraded',         color: '#ef4444', hint: 'Blurry / cropped / corrupt: unusable' },
     { key: 'n', rating: 'blank',            label: '∅ blank',            color: '#6b7280', hint: 'Effectively blank page' },
     // Added 2026-09-01 because volunteers kept typing it. Of the three
     // qualitative notes this queue has ever received, all three said the same
@@ -37,7 +37,7 @@ export const QUEUE_RATINGS: Record<string, RatingOption[]> = {
     // looking at a colour target or a ruler had no honest answer, so the
     // signal arrived as prose that nothing reads. If a queue's notes keep
     // repeating one sentence, that sentence is a missing option.
-    { key: 'x', rating: 'not-a-page',       label: '⊘ not a page',       color: '#6366f1', hint: 'Colour chart, ruler, scanner furniture, box or shelf — not a page of the book' },
+    { key: 'x', rating: 'not-a-page',       label: '⊘ not a page',       color: '#6366f1', hint: 'Colour chart, ruler, scanner furniture, box or shelf, not a page of the book' },
     { key: 'u', rating: 'unclear',          label: '? unclear',          color: '#9ca3af', hint: "Can't tell" },
   ],
   // UI copy, not book pages. The item is a translated interface string and the
@@ -59,7 +59,7 @@ export const QUEUE_RATINGS: Record<string, RatingOption[]> = {
   // coverage. One click is what makes the queue drain visibly.
   'page-check': [
     { key: 'k', rating: 'fine',    label: '\u2713 looks right', color: '#10b981', hint: 'I looked, nothing wrong' },
-    { key: 'j', rating: 'problem', label: '\u2717 found something', color: '#ef4444', hint: 'Something is off \u2014 please say what in the box' },
+    { key: 'j', rating: 'problem', label: '\u2717 found something', color: '#ef4444', hint: 'Something is off. Please say what in the box' },
     { key: 'u', rating: 'unclear', label: '? unclear', color: '#6b7280', hint: "Couldn't tell, or the page wouldn't load" },
   ],
   // Translation fidelity, judged by someone who reads the original language.
@@ -76,16 +76,16 @@ export const QUEUE_RATINGS: Record<string, RatingOption[]> = {
   'translation-check': [
     { key: 'k', rating: 'both_sound',        label: '✓ both sound',           color: '#10b981', hint: 'The transcription matches the page, and the English matches the original' },
     { key: 'j', rating: 'translation_drift', label: '✗ translation drifts',   color: '#ef4444', hint: 'The transcription is right, but the English departs from it' },
-    { key: 'x', rating: 'transcription_off', label: '✗ transcription wrong',  color: '#f59e0b', hint: "The text doesn't match the page — so the English can't be judged" },
+    { key: 'x', rating: 'transcription_off', label: '✗ transcription wrong',  color: '#f59e0b', hint: "The text doesn't match the page, so the English can't be judged" },
     { key: 'b', rating: 'both_off',          label: '✗✗ both wrong',          color: '#b91c1c', hint: 'Neither the transcription nor the English can be trusted here' },
-    { key: 'u', rating: 'unclear',           label: '? unclear',              color: '#6b7280', hint: "Can't tell — say why in the box if you can" },
+    { key: 'u', rating: 'unclear',           label: '? unclear',              color: '#6b7280', hint: "Can't tell. Say why in the box if you can" },
   ],
   // Wikipedia contribution events. Not a rating queue — used as an event log
   // for the /contribute/wikipedia playbook (claim → post → response → merged).
   // No keyboard shortcuts; events come from explicit button clicks.
   wikipedia: [
     { key: '',  rating: 'claimed',    label: 'Claimed',    color: '#3b82f6', hint: "I'll post this one" },
-    { key: '',  rating: 'released',   label: 'Released',   color: '#6b7280', hint: 'Giving up my claim — someone else take it' },
+    { key: '',  rating: 'released',   label: 'Released',   color: '#6b7280', hint: 'Giving up my claim so someone else can take it' },
     { key: '',  rating: 'posted',     label: 'Posted',     color: '#10b981', hint: 'Posted on Wikipedia Talk page' },
     { key: '',  rating: 'responded',  label: 'Responded',  color: '#a855f7', hint: 'A Wikipedia editor responded to my post' },
     { key: '',  rating: 'merged',     label: 'Merged',     color: '#16a34a', hint: 'The article was actually updated' },

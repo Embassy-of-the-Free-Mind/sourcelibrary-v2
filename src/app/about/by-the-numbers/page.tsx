@@ -4,7 +4,7 @@ import { BookOpen, FileText, Languages, Image as ImageIcon, Database, HardDrive,
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
 export const metadata: Metadata = {
-  title: 'By the Numbers — Source Library',
+  title: 'By the Numbers | Source Library',
   description: 'How big is Source Library? A visual tour of the corpus: books, pages, languages, time periods, and the storage that holds it all.',
   alternates: { canonical: '/about/by-the-numbers' },
 };
@@ -73,9 +73,9 @@ const PERIODS: { label: string; count: number }[] = [
 ];
 
 const SOURCES: { name: string; count: number; note?: string }[] = [
-  { name: 'Wikimedia Commons', count: 11_287, note: 'Mostly artworks — open-licensed scans & paintings' },
+  { name: 'Wikimedia Commons', count: 11_287, note: 'Mostly artworks: open-licensed scans & paintings' },
   { name: 'Internet Archive', count: 5_216, note: 'Public-domain books' },
-  { name: 'Embassy of the Free Mind (BPH)', count: 2_273, note: 'Hermetica, alchemy, Rosicrucian — books' },
+  { name: 'Embassy of the Free Mind (BPH)', count: 2_273, note: 'Hermetica, alchemy, Rosicrucian books' },
   { name: 'Rijksmuseum', count: 1_697, note: 'Prints & illustrated artworks' },
   { name: 'Munich Digital Library (MDZ)', count: 1_338, note: 'German & Latin books' },
   { name: 'e-rara (Swiss libraries)', count: 537, note: 'Books from Swiss research libraries' },
@@ -169,7 +169,7 @@ export default function ByTheNumbersPage() {
       header={
         <ContentHeader maxWidth="wide"
           title="Source Library, by the Numbers"
-          subtitle="A snapshot of the corpus — what's in it, where it came from, and what it takes to hold it together."
+          subtitle="A snapshot of the corpus: what's in it, where it came from, and what it takes to hold it together."
           image="https://images.sourcelibrary.org/archived/695591547bd6d2cd1d618a62/154.jpg"
           imageAlt="Historical manuscript page"
         />
@@ -188,7 +188,7 @@ export default function ByTheNumbersPage() {
             <StatCard label="First translations" value={HERO.firstTranslations} sub="First English translation by Source Library" icon={Sparkles} accent="sage" />
           </div>
           <p className="text-sm text-muted mt-4 text-center">
-            Source Library holds {fmt(HERO.totalWorks)} works in total — {fmt(HERO.books)} books and {fmt(HERO.artworks)} artworks.
+            Source Library holds {fmt(HERO.totalWorks)} works in total: {fmt(HERO.books)} books and {fmt(HERO.artworks)} artworks.
             The numbers below describe the book corpus unless noted.
           </p>
         </section>
@@ -200,7 +200,7 @@ export default function ByTheNumbersPage() {
             <div className="bg-white rounded-2xl border border-border-light p-6">
               <div className="text-sm uppercase tracking-wider text-secondary font-medium mb-3">Source Library</div>
               <div className="font-serif text-5xl text-primary tabular-nums leading-none mb-2">3.83B</div>
-              <div className="text-sm text-secondary mb-4">words — original languages + English translation</div>
+              <div className="text-sm text-secondary mb-4">words, original languages + English translation</div>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between"><span className="text-secondary">Original-language OCR</span><span className="tabular-nums text-primary">1.69B</span></div>
                 <div className="flex justify-between"><span className="text-secondary">English translation</span><span className="tabular-nums text-primary">2.14B</span></div>
@@ -285,7 +285,7 @@ export default function ByTheNumbersPage() {
           <h2 className="font-serif text-3xl text-primary mb-2">{HERO.totalLanguages} languages, from Sumerian to Russian</h2>
           <p className="text-secondary mb-8 max-w-2xl">
             Books in their original languages, before AI translation. The corpus spans {HERO.totalLanguages} distinct
-            languages and language combinations — the top fourteen are below. Latin and German anchor the European
+            languages and language combinations; the top fourteen are below. Latin and German anchor the European
             corpus; ETCSL contributes Sumerian; dedicated import streams bring in Chinese, Sanskrit, and Hebrew.
           </p>
           <div className="bg-white rounded-2xl border border-border-light p-6 md:p-8">
@@ -303,7 +303,7 @@ export default function ByTheNumbersPage() {
           <h2 className="font-serif text-3xl text-primary mb-2">Across nearly five thousand years</h2>
           <p className="text-secondary mb-8 max-w-2xl">
             Distribution of works by century of original composition. The earliest item dates to{' '}
-            <span className="text-primary font-medium">2880 BCE</span> — a stela of King Raneb of Egypt's Second Dynasty —
+            <span className="text-primary font-medium">2880 BCE</span> (a stela of King Raneb of Egypt's Second Dynasty),
             and the corpus runs unbroken through to the present. The book corpus peaks in the 1600s (the heyday of
             Hermetic and alchemical printing), with strong shoulders in the 1500s and 1800s.
           </p>
@@ -317,7 +317,7 @@ export default function ByTheNumbersPage() {
               <div>
                 <div className="text-xs uppercase tracking-wider text-muted mb-1">Earliest work</div>
                 <div className="text-primary font-medium">{HERO.oldestWorkTitle}</div>
-                <div className="text-secondary">{Math.abs(HERO.oldestWorkYear)} BCE — Egyptian Second Dynasty</div>
+                <div className="text-secondary">{Math.abs(HERO.oldestWorkYear)} BCE, Egyptian Second Dynasty</div>
               </div>
               <div>
                 <div className="text-xs uppercase tracking-wider text-muted mb-1">Longest book</div>
@@ -428,7 +428,7 @@ export default function ByTheNumbersPage() {
           <h2 className="font-serif text-3xl text-primary mb-2">Generated by AI</h2>
           <p className="text-secondary mb-8 max-w-2xl">
             Every translation, summary, and chapter index in Source Library is produced by Google Gemini models.
-            The original text is always preserved — one click away on every page.
+            The original text is always preserved, one click away on every page.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <StatCard label="OCR transcriptions" value={HERO.pagesOcr} sub="From scan to original-language text" icon={FileText} accent="gold" />
@@ -454,7 +454,7 @@ export default function ByTheNumbersPage() {
               </div>
               <div className="font-serif text-4xl text-primary tabular-nums leading-none mb-2">{fmt(HERO.entityConcepts)}</div>
               <div className="text-sm text-secondary">
-                Ideas, doctrines, symbols, schools of thought — the abstract anchors of the Hermetic and Renaissance corpus.
+                Ideas, doctrines, symbols, schools of thought: the abstract anchors of the Hermetic and Renaissance corpus.
               </div>
             </div>
             <div className="bg-white rounded-2xl border border-border-light p-6">
@@ -464,7 +464,7 @@ export default function ByTheNumbersPage() {
               </div>
               <div className="font-serif text-4xl text-primary tabular-nums leading-none mb-2">{fmt(HERO.entityPeople)}</div>
               <div className="text-sm text-secondary">
-                Authors, philosophers, alchemists, kings, mystics — every named person across the translated corpus.
+                Authors, philosophers, alchemists, kings, mystics: every named person across the translated corpus.
               </div>
             </div>
             <div className="bg-white rounded-2xl border border-border-light p-6">
@@ -474,7 +474,7 @@ export default function ByTheNumbersPage() {
               </div>
               <div className="font-serif text-4xl text-primary tabular-nums leading-none mb-2">{fmt(HERO.entityPlaces)}</div>
               <div className="text-sm text-secondary">
-                Cities, monasteries, libraries, regions — geocoded where possible and linked to the books that mention them.
+                Cities, monasteries, libraries, regions: geocoded where possible and linked to the books that mention them.
               </div>
             </div>
           </div>

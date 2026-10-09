@@ -1,0 +1,16 @@
+{
+  "note": "Gate 2 (four-read rule, before the other-script rule). Read from the page images, four pages per book. Samples 1-8 could not be displayed in the session and are unjudged. Verdict is about the proposed EDITION language.",
+  "unjudged": [1, 2, 3, 4, 5, 6, 7, 8],
+  "verdicts": {
+    "9": ["miss", "Patrologia Graeca 124: every page is Greek and Latin in parallel columns"],
+    "10": ["ok", "Latin commentary"], "11": ["ok", "English (Yonge's Philo)"], "12": ["ok", "German, Fraktur"],
+    "13": ["ok", "Latin grammar of Greek, Greek paradigms inside Latin"], "14": ["ok", "Greek"], "15": ["ok", "Greek"], "16": ["ok", "Latin"],
+    "17": ["ok", "Latin verse and notes; one Greek epigram on one page"], "18": ["ok", "Latin"],
+    "19": ["miss", "Sanskrit verses with Hindi commentary: bilingual, the label is not wrong"],
+    "20": ["ok", "Latin"], "21": ["ok", "Latin"], "22": ["ok", "Latin"], "23": ["ok", "French"], "24": ["ok", "Latin"], "25": ["ok", "Latin"],
+    "26": ["ok", "Awadhi verse with Hindi commentary, no Sanskrit"], "27": ["ok", "Latin"], "28": ["ok", "Latin, short Greek quotations"], "29": ["ok", "Latin"],
+    "30": ["ok", "Greek"], "31": ["ok", "Latin"], "32": ["ok", "German"], "33": ["ok", "German"], "34": ["ok", "Latin"], "35": ["ok", "Latin"], "36": ["ok", "Latin"],
+    "37": ["miss", "Marini vita Procli: Latin version and Latin notes with Greek lemmata; a Greek-Latin edition whose Greek text was not among the four pages"],
+    "38": ["ok", "Latin"], "39": ["ok", "Latin"], "40": ["ok", "English"]
+  }
+}

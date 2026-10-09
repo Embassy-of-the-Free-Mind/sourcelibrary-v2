@@ -1,0 +1,77 @@
+{
+  "summary": {
+    "book_id": "6a90d696723952418ddd1c3d",
+    "title": "Donatus minor cum Remigio ad usum pusillorum anglicanarum scholarium",
+    "published": "1508-1509",
+    "source": "EEBO-TCP A73846",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 0,
+    "skips": {
+      "no-window": 5,
+      "guard-refused": 1,
+      "probe-too-short": 2
+    },
+    "median_char_acc": null,
+    "median_char_acc_windowed": null,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a90d696723952418ddd1c3d-p7",
+      "page": 7,
+      "skipped": "no-window",
+      "overlap": 0.116
+    },
+    {
+      "slug": "ed-6a90d696723952418ddd1c3d-p8",
+      "page": 8,
+      "skipped": "no-window",
+      "overlap": 0.07
+    },
+    {
+      "slug": "ed-6a90d696723952418ddd1c3d-p9",
+      "page": 9,
+      "skipped": "no-window",
+      "overlap": 0.036
+    },
+    {
+      "slug": "ed-6a90d696723952418ddd1c3d-p10",
+      "page": 10,
+      "skipped": "no-window",
+      "overlap": 0.125
+    },
+    {
+      "slug": "ed-6a90d696723952418ddd1c3d-p15",
+      "page": 15,
+      "overlap": 0.505,
+      "probe_words": 276,
+      "ref_chars": 2543,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.431,
+      "char_acc": 0.8948,
+      "char_acc_windowed": 0.5883,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-6a90d696723952418ddd1c3d-p16",
+      "page": 16,
+      "skipped": "no-window",
+      "overlap": 0.341
+    },
+    {
+      "slug": "ed-6a90d696723952418ddd1c3d-p24",
+      "page": 24,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a90d696723952418ddd1c3d-p25",
+      "page": 25,
+      "skipped": "probe-too-short"
+    }
+  ]
+}

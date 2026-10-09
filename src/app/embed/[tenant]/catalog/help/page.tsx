@@ -10,7 +10,7 @@ import type { Metadata } from 'next';
  */
 
 export const metadata: Metadata = {
-  title: 'Editing the catalogue — help · BPH',
+  title: 'Editing the catalogue: help · BPH',
   robots: { index: false, follow: false },
 };
 
@@ -54,7 +54,7 @@ export default async function CatalogHelpPage({ params }: Props) {
 
         <Step n="1" title="Sign in">
           <p>
-            Use the <strong>Sign in</strong> link with your email — you&rsquo;ll get a one-time link, no
+            Use the <strong>Sign in</strong> link with your email. You&rsquo;ll get a one-time link, no
             password to remember. You&rsquo;re set up as an <em>editor</em>, which means your changes go
             live immediately.
           </p>
@@ -71,7 +71,7 @@ export default async function CatalogHelpPage({ params }: Props) {
 
         <Step n="3" title="Make the change, cite your source, save">
           <p>
-            The form begins by asking <strong>where the correction comes from</strong> — a title page, a
+            The form begins by asking <strong>where the correction comes from</strong>: a title page, a
             USTC record, the scan, an accession note. That one line is what turns an edit into a citable,
             accountable change, so it&rsquo;s required.
           </p>
@@ -85,7 +85,7 @@ export default async function CatalogHelpPage({ params }: Props) {
         <Step n="4" title="Add a brand-new record">
           <p>
             Use the <strong>+ New record</strong> button on the catalogue toolbar. It opens the same form
-            with a fresh <strong>UBN</strong> (catalogue id) already filled in — an{' '}
+            with a fresh <strong>UBN</strong> (catalogue id) already filled in: an{' '}
             <code className="text-xs bg-warm px-1 rounded">SL-…</code> id that won&rsquo;t clash with the
             BPH&rsquo;s own numbering. If the book already has a real BPH UBN, just type it over the
             suggestion. Fill in at least a title, cite your source, and click <strong>Create record</strong>.
@@ -95,7 +95,7 @@ export default async function CatalogHelpPage({ params }: Props) {
         <Step n="5" title="Every change is on the record">
           <p>
             Click <strong>History</strong> on any entry to see every edit: which field changed, from what
-            to what, who made it, and the source they cited. It&rsquo;s append-only — a mistake is
+            to what, who made it, and the source they cited. It&rsquo;s append-only: a mistake is
             corrected with a new edit, never by erasing the old one. This is the catalogue&rsquo;s audit
             trail.
           </p>
@@ -105,7 +105,7 @@ export default async function CatalogHelpPage({ params }: Props) {
           <h2 className="text-lg text-primary font-display mb-2">A few notes</h2>
           <p>
             <strong>Found something off, or have an idea?</strong> Use the <strong>Feedback</strong> button
-            on any of these pages — it comes straight to us, and your hands-on notes shape the tool.
+            on any of these pages. It comes straight to us, and your hands-on notes shape the tool.
           </p>
           <p>
             Maybe start with a handful of records you know well. The editor is young and your feedback is
