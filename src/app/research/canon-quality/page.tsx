@@ -7,7 +7,8 @@ import { IMPROVEMENTS } from '../canon-gap/improvements';
 import { getDb } from '@/lib/mongodb';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
 import { TENGYUR_QUALITY, namedKinds } from '@/lib/tengyur-quality';
-import tengyurCounts from '../../../../scripts/eval/results/tengyur-characterize-5829/counts.json';
+// A copy, not an import from scripts/eval/results: .vercelignore drops that folder from the production build.
+import tengyurVolumes from '@/lib/tengyur-volume-ids.json';
 
 // Built for the Eternity Foundation working session (#5513, #5864): how each core canon's text and
 // English are checked, and where a scholar's time would go. No new numbers: every figure is copied
@@ -699,7 +700,7 @@ const ci = (c?: number[]) => (c ? ` [${Math.round(c[0])}–${Math.round(c[1])}]`
  * history; the feedback row does not record whether the change was made, so this does not claim it.
  */
 async function tengyurCorrections(): Promise<{ received: number; reviewed: number }> {
-  const ids = tengyurCounts.by_volume.map((v) => v.book_id);
+  const ids = tengyurVolumes.book_ids;
   const q = { 'page_report.kind': 'translation_error', 'page_report.book_id': { $in: ids } };
   const feedback = (await getDb()).collection('feedback');
   const [received, reviewed] = await Promise.all([
