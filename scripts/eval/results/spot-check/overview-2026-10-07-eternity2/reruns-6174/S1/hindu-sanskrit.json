@@ -1,0 +1,687 @@
+[
+  {
+    "book_id": "69d7e10be9e5e67989c373f9",
+    "slot": 1,
+    "title": "Sharada Tilaka Tantra (Laxmanacharya)",
+    "tradition": "hindu-sanskrit",
+    "shelf_fit": "fits",
+    "shelf_note": "Śāradātilaka, a core Śākta/Tantric ritual manual, Sanskrit text only in Devanagari print.",
+    "rights_flag": null,
+    "structure_note": "Pages 1-291 with OCR and translation on every page. The 59 backsteps and 69 repeats look like misread page numerals: on leaf 222 the printed number is २१९ but the OCR records 214 and also writes a 'विंशः पटलः । २१४' line that is not on the page. The 'published 1100' field gives the date of composition, not of this printed edition.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 45,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "गोक्षीरेण चं पचेत्",
+            "image": "गोक्षीरेण चरुं पचेत्",
+            "problem": "'caru' (the rice oblation) dropped, so the sentence loses its object",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "देवाज्ञां सावयन्तः परित्य प्रदक्षिणम्",
+            "image": "देवाज्ञां श्रावयन्नन्तः परिवृत्य प्रदक्षिणम्",
+            "problem": "syllables dropped in two words",
+            "severity": "minor"
+          },
+          {
+            "ocr": "निषिप्यास्त्रमनुं",
+            "image": "निक्षिप्यास्त्रमनुं",
+            "problem": "conjunct misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ततः शम्भोर्दिशि गुरुर्विकिरेत् पूर्वसञ्चिते । हेमवस्त्रादिसंयुक्तां कर्क्करीं तोयपूरिताम्",
+            "english": "the teacher should scatter [water] from a vessel filled with water, decorated with gold and cloth",
+            "problem": "two clauses merged: the 'vikira' grains are scattered on what was gathered earlier, and the water pot is set up as a separate act (continued in 124). The English makes it one act of scattering water.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "रक्षेति लोकपालानां नालमुक्तेन वारिणा",
+            "english": "protecting it with water released from the palms, as is done for the guardians of the directions",
+            "problem": "'nāla' is the spout of the pot, not the palms; and 'rakṣa' is a command spoken to the lokapālas ('protect!'), not something the teacher does",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "ततश्च संहते वह्नौ गोक्षीरेण चं पचेत्",
+            "english": "then, in the combined fire, he should cook with cow's milk",
+            "problem": "the object 'caru' is missing (the OCR dropped it) and 'combined fire' is too literal",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [
+          {
+            "note": "the translation opens with '# Fourth Chapter', a heading that is not on the page (the running head reads सारदातिलकम्)",
+            "severity": "moderate",
+            "class": "other:invented heading"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 138,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "गणाधिपगणेशानं द्वितीयं गणनायकम्",
+            "image": "गणाधिपगणेशानं तृतीयं गणनायकम्",
+            "problem": "'third' read as 'second', so the order of the four Gaṇa-deities is wrong",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "प्रजुहुयादश्वः स्युः सर्वजन्तवः",
+            "image": "प्रजुहुयाद्वश्याः स्युः सर्वजन्तवः",
+            "problem": "'vaśyāḥ' (subjugated) misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "सम्प्रोतिं कुरुते तदहश्यं वितनुते सदा",
+            "image": "सम्प्रीतिं कुरुते तद्वश्यं वितनुते सदा",
+            "problem": "'tad vaśyam' (subjection) misread as a non-word, and the English then invents a meaning from it",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "साधयेदीक्षितं",
+            "image": "साधयेदीप्सितं",
+            "problem": "misread, though the translation guessed the right sense",
+            "severity": "minor"
+          },
+          {
+            "ocr": "एकदन्तं",
+            "image": "एकदंष्ट्रं",
+            "problem": "the OCR normalised the word toward the familiar epithet",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "सम्प्रोतिं कुरुते तदहश्यं वितनुते सदा",
+            "english": "creates great affection and makes the invisible visible forever",
+            "problem": "the source says the rite makes [people] subject to the practitioner. 'Makes the invisible visible' is invented from the OCR misreading.",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "पाठमन्त्रोऽयम्",
+            "english": "With this patra-mantra <gloss>mantra for the vessel</gloss>",
+            "problem": "this is the seat (pīṭha) mantra, not a vessel mantra",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "प्रजुहुयादश्वः स्युः सर्वजन्तवः",
+            "english": "he becomes like a master of all beings",
+            "problem": "the source says all beings become subject to him. The English is a paraphrase built on a garbled word.",
+            "severity": "minor",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 150,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "स्वभमदन्तं प्रतिचिन्त्य मौम्बदााक्रोष्टुकामः",
+            "image": "स्वभग्नदन्तं प्रतिचिक्षिप्य मौग्ध्यादाक्रोष्टुकामः",
+            "problem": "first line garbled (the verse about Gaṇeśa throwing his own broken tusk)",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "अगोदिताश्रयगुणं",
+            "image": "मृगोदिताश्रयगुणं",
+            "problem": "'mṛga' (the deer in the moon's lap) lost",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "अङ्गानि केशरैस्तुष्टैः पत्रमध्यगाः",
+            "image": "अङ्गानि केशरेषु स्युस्तद्व्यः पत्रमध्यगाः",
+            "problem": "half-line garbled",
+            "severity": "moderate"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "स्वभमदन्तं प्रतिचिन्त्य मौम्बदााक्रोष्टुकामः श्रियमातनोतु",
+            "english": "may the one who wishes to invoke the Elephant-faced one increase his prosperity",
+            "problem": "a fluent sentence written over garbled OCR, with no sign that the source is uncertain",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "सोमाय हृदयान्तोऽयं मन्त्रः प्रोक्तः षडक्षरः",
+            "english": "a six-syllable mantra: \"Om to Soma.\" <note>original: \"Om Somāya namah\"</note>",
+            "problem": "the note supplies a mantra the page does not give. The verse encodes the bīja (sauṃ) and the note substitutes 'Om'; the 'Bhrigu = śa' gloss is also wrong (bhṛgu = sa).",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "स्वस्याङ्कस्थमगोदिताश्रयगुणं",
+            "english": "who has the qualities of the support of the gods in his own lap",
+            "problem": "this should be the deer in his lap (from the OCR misreading)",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 222,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "<page-num>214</page-num> … विंशः पटलः । २१४",
+            "image": "printed page २१९; no such line in the body",
+            "problem": "page number misread, and a running-head line is added to the body that is not on the page",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "यस्य संस्कारादेव",
+            "image": "यस्य संस्मरणादेव",
+            "problem": "'by mere remembering' misread as 'by consecration', and the English follows it",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "अघोरस्य मुनिः",
+            "image": "अघोरोऽस्य मुनिः",
+            "problem": "'Aghora is its seer' becomes 'the seer of Aghora'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "श्मशानाद्भवावुभौ",
+            "image": "श्मशानाङ्गभीषणौ (approx.)",
+            "problem": "the epithet is misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "अथाभ्याख्ये",
+            "image": "अथाभिधास्ये",
+            "problem": "misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "verse numbers ॥ १२४ ॥ … ॥ १२९ ॥ and ॥ १ ॥ … ॥ ५ ॥",
+            "english": "(124)…(130) and (2)…(5)",
+            "problem": "the verse numbers are shifted by one against the text throughout, so a citation by verse number points to the wrong verse",
+            "severity": "moderate",
+            "class": "T4"
+          },
+          {
+            "source": "पञ्चक्रूरान्वसा चाज्ये",
+            "english": "with the five cruel ones mixed with fat and ghee",
+            "problem": "the source reads 'andhasā' (with food), which the OCR misread as 'vasā' (fat)",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "अघोरस्य मुनिः प्रोक्तः",
+            "english": "The seer of the Aghora is declared",
+            "problem": "the source names Aghora as the seer; the English leaves the seer unnamed",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [
+          {
+            "note": "the translation repeats 'Twentieth Chapter. 214' as body text under a '# Twentieth Chapter.' heading, and the 214 is a wrong number",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The right text on every page and a broadly accurate translation of a ritual manual, but each page has several meaning-changing OCR misreadings that the English carries forward fluently. One of them invents a magical effect ('makes the invisible visible') that the text does not state.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      45
+    ],
+    "reader_summary": "This is the Sanskrit text of the Śāradātilaka, a medieval Tantric manual of mantra rites, transcribed from a printed Devanagari edition. The transcription is of the right text but drops or misreads several syllables per page. The English follows the ritual sequence correctly but repeats those misreadings, mixes up some technical terms, and shifts verse numbers on some pages, so it should be checked against the Sanskrit before anyone quotes it."
+  },
+  {
+    "book_id": "6953e2ff77f38f6761beb2fa",
+    "slot": 2,
+    "title": "Tantraloka Vol. 1 with Jayaratha Commentary",
+    "tradition": "hindu-sanskrit",
+    "shelf_fit": "fits",
+    "shelf_note": "Abhinavagupta's Tantrāloka with Jayaratha's Viveka, Kashmir Series of Texts and Studies edition (1918), from a Toronto copy.",
+    "rights_flag": null,
+    "structure_note": "Leaf 211 is printed p.201 (Āhnika 1, verse 166), but leaf 348 is printed p.26 with verses 31-32 of a later āhnika. A second pagination sequence therefore begins in the last part of the scan, probably the next volume bound with this one. The title 'Vol. 1' covers only part of the scan. The 28 backsteps fit this restart plus misread numerals. 368 of 372 pages have OCR, but pages_translated_field is 359 against 368 counted.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 51,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "तदप्यन्तःकृताशेषस्[सृ]ष्टावसुनिर्भरम्",
+            "image": "तदप्यन्तःकृताशेषस्प[सृ]ष्टभावसुनिर्भरम्",
+            "problem": "one syllable lost",
+            "severity": "minor"
+          },
+          {
+            "ocr": "इत्थं युगपदेवैतद्भेदषोडशात्मकम्",
+            "image": "इत्थं युगपदेवैतद्भेदषोडशकात्मकम्",
+            "problem": "syllable lost",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "प्रथमाह्निकम् (running head)",
+            "english": "### [Verse 18] First Chapter ###",
+            "problem": "the running head is rendered as a section heading",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "an English <meta> paragraph and a <summary> written by the model come before and after the translation",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 182,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "इति ॥१३२॥",
+            "image": "इति ॥१३१॥ (as printed)",
+            "problem": "a printed verse numeral silently corrected toward the expected number",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "तस्य प्रकाशमानत्वाप्रकाशमानत्वविकल्पोपहृतत्वात्",
+            "english": "if it is manifest, it is already part of the Light; if it is unmanifest, it is nothing at all",
+            "problem": "explanatory expansion added without brackets",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "the translation has a '### Light on the Tantras' heading followed by raw <page-num>172</page-num><header>…</header> tags in the text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 211,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "अभावात् को नाम फलभूतेऽपि मोक्षे भेदः स्यात्",
+            "english": "...en universal Consciousness? Therefore, since there is no difference in the underlying reality, what possible difference...",
+            "problem": "the translation opens with a word fragment and a clause carried over from the previous page",
+            "severity": "moderate",
+            "class": "T5"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 348,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "कल्पवृत्तीनां",
+            "english": "for those whose mental fluctuations have settled into a state of pure stillness",
+            "problem": "this word is the tail of a compound split across the page (probably nirvikalpa-), and the English guesses a meaning for the whole without saying so",
+            "severity": "minor",
+            "class": "T6"
+          }
+        ],
+        "other": [
+          {
+            "note": "the running head is rendered as '# The Holy Tantrāloka #', and raw <page-num>/<header> tags appear in the translation",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean transcriptions of a clearly printed edition and careful English with useful terms. The defects are display furniture (headings, leaked tags) and one carry-over fragment from the previous page.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      51,
+      211,
+      348
+    ],
+    "reader_summary": "This is the Sanskrit Tantrāloka of Abhinavagupta with Jayaratha's commentary, in the 1918 Kashmir Series edition. The transcription matches the printed page almost word for word, and the English renders both verse and commentary faithfully, including the editor's variant-reading notes. Warn the reader that the reader text carries stray headings and tags, and that the scan seems to continue into a second volume with its own page numbers."
+  },
+  {
+    "book_id": "6991d8a08c1030b12444c14c",
+    "slot": 3,
+    "title": "Paramesvaratantra",
+    "tradition": "hindu-sanskrit",
+    "shelf_fit": "fits",
+    "shelf_note": "An early Nepalese palm-leaf manuscript of a Śaiva tantra (Cambridge). It belongs on the shelf.",
+    "rights_flag": null,
+    "structure_note": "124 single palm leaves photographed with a ruler and no foliation recorded. The OCR page numbers come from leaf numerals in the margin (e.g. 56 on leaf 112), which explains the many backsteps and repeats. All 124 leaves are 'translated' even though the OCR is mostly unreadable.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 31,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "whole page",
+            "image": "five lines in three blocks, in early Nepalese (pre-Newari) script",
+            "problem": "a few strings match the leaf (e.g. 'कथा गाथ' at the end of line 1, 'कुर्याद्' in line 3), but most of the text is garbled or filled in with plausible Sanskrit that is not on the leaf",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "garbled OCR",
+            "english": "the ballad of the merchant… Know the Garuda-lore… eight hundred mantras",
+            "problem": "fluent English, glossed themes and a summary are built on an OCR that is mostly not the leaf's text. Ellipses mark some gaps, but the summary states the leaf's content as fact.",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "the <summary> invents a confident description ('a collection of eight hundred mantras used to provide protection against serpents')",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "confidence": "low"
+      },
+      {
+        "page_number": 62,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "शिवसायुज्यमस्तु … सायुज्यमस्तु नमोऽस्तु (repeated throughout)",
+            "image": "a litany of '… नमोऽस्तु', 'शिवाय नमोऽस्तु', 'व्याधि …' formulas; I could not find 'सायुज्य' in the readable middle block",
+            "problem": "a repeated formula ('may there be union') appears to be invented and imposed on the leaf",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "शिवसायुज्यमस्तु",
+            "english": "May there be union with Shiva… union through divine presence",
+            "problem": "the page's theme as translated ('sāyujya', liberation by union) rests on a word that does not appear to be on the leaf",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "the <meta> refers to the previous page's metadata suggesting 'Mahayana Buddhist themes': model commentary on its own earlier output",
+            "severity": "moderate",
+            "class": "T17"
+          }
+        ],
+        "confidence": "low"
+      },
+      {
+        "page_number": 80,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "<gloss>सावित्री मंत्रः सप्राणाः प्रपात : विनिपातिता वि</gloss>",
+            "image": "line 1 of the left block, which is main text (roughly '…शिवः प्रश्ना… शिवा… विना…')",
+            "problem": "a line of main text is replaced by an invented 'gloss' about the Sāvitrī mantra",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "most of the three columns",
+            "image": "only fragments match (e.g. 'अविद्या भावकाधिका', 'हृदयगत्या', 'गायत्री')",
+            "problem": "the rest is garbled or confabulated",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          {
+            "source": "garbled OCR",
+            "english": "# The Ritual of the Teacher's Armor … the son of the protector of the gods is capable of forgiveness … even unto the Cremation Ground",
+            "problem": "connected English 'meaning' is made from non-text; it is not a translation of this leaf",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "an invented heading '# The Ritual of the Teacher's Armor'; the <meta> claims the previous page began a 'Kavacha'",
+            "severity": "moderate",
+            "class": "other:invented heading"
+          }
+        ],
+        "confidence": "low"
+      },
+      {
+        "page_number": 112,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "whole page",
+            "image": "five-line palm leaf with leaf number 56 in the margin",
+            "problem": "the leaf number and a few words ('दीक्षा', 'गरुड') match; most of the transcription is garbled, and the bīja mantra 'श्री ह्रीं भद्रकाली ह्रीं नमः' could not be found on the leaf",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "garbled OCR",
+            "english": "protective rituals… centered on the goddess Bhadrakali and the twelve Rudras",
+            "problem": "a confident summary and theme built on unreliable OCR, and the notes guess at the meaning of non-words ('madidyāsākā, likely vidyā-sādhaka')",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      }
+    ],
+    "book_verdict": "A precious early palm-leaf manuscript whose script the OCR cannot read. Each leaf's transcription is mostly garbage or invented Sanskrit, and the English presents confident ritual content built on it.",
+    "fit_to_show": "do_not_show",
+    "showcase_pages": [],
+    "reader_summary": "The images are of a very early Nepalese palm-leaf manuscript of the Parameśvaratantra, which is valuable in itself. The transcription is not a reading of these leaves: only scattered words match, and the rest is garbled or plausible Sanskrit made up to fill the gaps. The English and its summaries therefore describe contents the leaves may not contain and cannot be trusted. Show the images only."
+  },
+  {
+    "book_id": "699209a9bed8f4b5ff5b1fd0",
+    "slot": 4,
+    "title": "Rig-Veda-Sanhita: Sacred Hymns of the Brahmans (Vol. 3)",
+    "tradition": "hindu-sanskrit",
+    "shelf_fit": "fits",
+    "shelf_note": "Max Müller's editio princeps of the Ṛgveda with Sāyaṇa's commentary, Vol. III (Maṇḍalas 5-7). The footer reads 'VOL. III.'",
+    "rights_flag": null,
+    "structure_note": "Pages run in order (309, 623, 922 at leaves 375, 691, 990), with 1,058 of 1,062 pages OCR'd. The 101 backsteps and 134 repeats are probably the Devanagari page numbers misread, or the Ashtaka/Adhyāya numbers in the running heads taken as page numbers; none showed in this sample. pages_translated_field is 1049 against 1058 counted.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 2,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "the OCR of a blank flyleaf carries template headings ('## Hymn Text [Blank Page]', '## Commentary (Sayana) [Blank Page]')",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 375,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "प्रमरे",
+            "image": "प्रभरे",
+            "problem": "misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "## Hymn Text / ## Commentary (Sayana)",
+            "image": "no such headings",
+            "problem": "section headings added by the model",
+            "severity": "minor",
+            "class": "O11"
+          },
+          {
+            "ocr": "accents as Unicode udātta/anudātta marks",
+            "image": "Müller's underline/vertical-stroke accent notation",
+            "problem": "the accent notation is converted, and I could not verify it mark by mark",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "पदपाठ",
+            "english": "Prasada-patha (Word-for-word)",
+            "problem": "wrong name for the pada-pāṭha (corrected to 'Padapatha' further down the same page)",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "a <vocab> glossary block and a <summary> are added to the reader text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 691,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [
+          {
+            "ocr": "देवमंजस",
+            "image": "देवमृंजस",
+            "problem": "vowel sign lost",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "bold markup (**…**) inserted into the Sanskrit transcription of the commentary",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 990,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "अरणस्यान्यस्य रेक्णो",
+            "image": "अरणस्यानृणस्य रेक्णो",
+            "problem": "Sāyaṇa's gloss misread ('anṛṇasya' becomes 'anyasya'), and the English follows it",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "श्रुतमैव",
+            "image": "श्रुतमेव",
+            "problem": "vowel misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ऋत्वा प्रज्ञयामृतान्देवानतारीत्",
+            "english": "Agni has surpassed the immortals by his wisdom",
+            "problem": "Sāyaṇa takes 'atārīt' as 'carried the gods across / saved them', not 'surpassed', which changes Agni's relation to the gods",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "अरणस्यानृणस्य रेक्णो धनं परिषद्यं पर्याप्तं भवति हि",
+            "english": "The wealth of a stranger… is to be avoided or is merely something that surrounds us",
+            "problem": "Sāyaṇa's first gloss says 'pariṣadyam = sufficient/abundant'. The English gives the alternative gloss ('to be avoided') as the first reading.",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "An accurate transcription of a cleanly printed Vedic edition, with a careful, useful English rendering of hymn and Sāyaṇa. A few glosses slip, and model furniture (headings, vocab blocks) is added to the reader text.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      375,
+      691
+    ],
+    "reader_summary": "This is Max Müller's printed Ṛgveda with Sāyaṇa's commentary, Volume III, with saṃhitā text, pada-pāṭha and commentary transcribed almost exactly. The English follows Sāyaṇa closely and is mostly reliable, though a few of his glosses are misrendered. The reader text also carries headings and glossary blocks that are not in the book."
+  }
+]

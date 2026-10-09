@@ -51,9 +51,9 @@ const STAGE_LABELS: Record<string, string> = {
   identity: 'Identity (work_id + edition_key, live books)',
 };
 
-const num = (n: number | null | undefined) => (n == null ? '—' : n.toLocaleString('en-US'));
+const num = (n: number | null | undefined) => (n == null ? '–' : n.toLocaleString('en-US'));
 const pct = (s: StageMeasurement) =>
-  s.status !== 'ok' || s.covered == null || !s.total ? '—' : `${((100 * s.covered) / s.total).toFixed(1)}%`;
+  s.status !== 'ok' || s.covered == null || !s.total ? '–' : `${((100 * s.covered) / s.total).toFixed(1)}%`;
 
 const C = {
   card: { background: '#161b22', border: '1px solid #30363d', borderRadius: 8, padding: '16px 18px' } as const,
@@ -65,7 +65,7 @@ const C = {
 };
 
 function DeltaArrow({ delta }: { delta: number | null | undefined }) {
-  if (delta == null) return <span style={{ color: '#56606b' }}>—</span>;
+  if (delta == null) return <span style={{ color: '#56606b' }}>–</span>;
   const flat = delta === 0;
   const up = delta > 0;
   const color = flat ? '#8b949e' : up ? '#3fb950' : '#f85149';
@@ -144,7 +144,7 @@ export default async function LinePage() {
           <div style={C.label}>Spend today (UTC)</div>
           {(latest.spend_costless_rows ?? 0) > 0 && (
             <div style={{ fontSize: 11, color: '#d29922', marginTop: 4 }}>
-              {num(latest.spend_costless_rows)} usage rows without cost — undercounted
+              {num(latest.spend_costless_rows)} usage rows without cost (undercounted)
             </div>
           )}
         </div>
@@ -210,7 +210,7 @@ export default async function LinePage() {
       <p style={{ fontSize: 12, color: '#6e7681', marginTop: 16, lineHeight: 1.5 }}>
         STALLED = queue depth &gt; 0 and covered didn&apos;t move since the previous nightly snapshot (the
         &ldquo;quietly stops advancing&rdquo; detector). PROBE BROKEN = the measurement&apos;s positive control found no
-        known-present case, so its counts are untrustworthy — fix the probe before believing any number in that row.
+        known-present case, so its counts are untrustworthy. Fix the probe before believing any number in that row.
         Written nightly by <code>scripts/workers/stage-coverage-snapshot.mjs</code>; API twin at <code>/api/admin/line</code>.
       </p>
     </div>

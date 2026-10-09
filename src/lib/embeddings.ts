@@ -1,7 +1,7 @@
 import { Db } from 'mongodb';
 import { getGeminiClient, reportRateLimitError } from './gemini-client';
 import { TaskType } from '@google/generative-ai';
-import { supabase } from './supabase';
+import { GLOBAL_SCOPE, matchGalleryText, type SearchScope } from './tenant-search-scope';
 
 // The gallery_text_embeddings table (~203K rows, verified 2026-07-18) is fully
 // on gemini-embedding-2-preview — the model here MUST match or every similarity
@@ -153,6 +153,8 @@ export interface SimilarImageOptions {
   minQuality?: number;
   candidateLimit?: number; // Max candidates to fetch (default 500)
   limit?: number; // Final results (default 12)
+  /** Book set to rank inside. Omitted = the whole gallery (main site). */
+  scope?: SearchScope;
 }
 
 export interface SimilarImageResult {
@@ -181,14 +183,14 @@ export async function findSimilarImages(
 
   // Try Supabase pgvector first
   try {
-    const { data: matches, error } = await supabase.rpc('match_gallery_text', {
-      query_embedding: JSON.stringify(targetEmbedding),
-      match_threshold: 0.2,
-      match_count: limit * 3, // fetch extra for diversity filtering
-      exclude_book_id: excludeBookId || null,
+    const { rows: matches, error } = await matchGalleryText(targetEmbedding, {
+      scope: options.scope ?? GLOBAL_SCOPE,
+      threshold: 0.2,
+      count: limit * 3, // fetch extra for diversity filtering
+      excludeBookId: excludeBookId || null,
     });
 
-    if (!error && matches && matches.length > 0) {
+    if (!error && matches.length > 0) {
       // Deduplicate by book — max 2 per book for diversity
       const byBook = new Map<string, number>();
       const results: SimilarImageResult[] = [];

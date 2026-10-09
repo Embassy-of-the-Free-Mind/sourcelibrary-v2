@@ -39,9 +39,9 @@ interface Payload {
 type Filter = 'all' | 'help' | 'substantial' | 'volunteered' | 'awaiting';
 
 function fmtDate(s: string | null) {
-  if (!s) return '—';
+  if (!s) return '–';
   const d = new Date(s);
-  return isNaN(d.getTime()) ? '—' : d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  return isNaN(d.getTime()) ? '–' : d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 }
 
 function csvCell(v: unknown) {

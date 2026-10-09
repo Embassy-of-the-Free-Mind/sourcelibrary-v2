@@ -90,6 +90,12 @@ export interface Book {
   image_source_url?: string;   // Original source URL (Wikimedia, IA, etc.) — provenance only, never displayed
   categories?: string[];
   faceted_tags?: FacetedTags;
+  /**
+   * 0–2 of the 31 tradition labels in src/lib/taxonomy/traditions.json (#4773): the
+   * tradition of the WORK, not of the edition's language. `[]` = read, none
+   * discernible; absent = never read. Written by scripts/maintenance/tradition-4773.mjs.
+   */
+  tradition?: string[];
   pages_count?: number;
   pages_translated?: number;  // CACHED — synced from pages collection by cron every 6h + inline by workers
   pages_ocr?: number;         // CACHED — synced from pages collection by cron every 6h + inline by workers
@@ -102,6 +108,12 @@ export interface Book {
 
   // Workflow status
   status?: BookStatus;
+  /** True when this record is a partial scan / preview of a larger work — the
+   *  source site (e.g. museumsofindia) hosts only a handful of page images
+   *  where the physical object has many more. Public books carrying this flag
+   *  show a "Preview" badge on their page and cards. Absent/null = not a
+   *  preview. Independent of `publication`/`visible`: a preview can be public. */
+  preview?: boolean;
   /** Libraries/institutions that hold a copy of this work (e.g. ['bph', 'mdz']) */
   held_by?: string[];
   summary?: string | BookSummary;

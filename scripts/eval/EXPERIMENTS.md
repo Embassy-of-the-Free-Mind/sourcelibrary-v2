@@ -77,6 +77,965 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 |---|---:|---|---:|---|---:|---:|---:|---|---|
 | 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
 
+## 2026-10-07 · Tengyur weak sections (Pramāṇa, Madhyamaka, Vinaya, Jātaka): does context or a stronger model fix the reversals? (#6121)
+<!-- PRIOR ART: 2026-10-04-tengyur-characterize-random-sample-5829.md (the instrument reused here: rubric, two blind Opus reviewers, planted controls, by-eye check) and 2026-10-03-tengyur-quality-arms-5497.md (production's one-page request; glossary, Sanskrit, thinking and the negation detector + Pro fix pass were already ruled out, on 84000's texts only). Neither tested a lever where the errors are. -->
+
+**Question.** #5829 found the Tengyur draft's reversed statements and wrong speakers/agents concentrated in Pramāṇa (74 per 100 pages), with verse and Jātaka also high. Does either lever that had never been tried there fix them: (C) giving the production model the text's title and the two previous sides as read-only context, or (P) a stronger model, Gemini 3.1 Pro? And what would each cost per 1,000 pages?
+
+**Answer.** **No lever clears the preregistered bar, so nothing changes.** The draft is published as it is, and the money goes to human review (#5800).
+- **Context (C) does not help, and on the reference sides it hurts.**
+  - Reviewers: 68 reversal/agent findings per 100 pages, against 63 for the stored English. Better on 13 pages, worse on 14.
+  - Reference judges: fidelity −0.14 [−0.28, +0.01] against S, with more inversions and more span errors.
+- **Pro (P) looks better to the reviewers, but nothing else confirms it.**
+  - Reviewers: pooled 38 against 63 per 100 (−25 [−47, −5], p = 0.016); Pramāṇa 33 against 60 (p = 0.068).
+  - **The gate failed:** reviewer B caught 9 of 12 planted reversal/agent errors, and the preregistered bar was 10. The registered rule output is therefore "instrument failed".
+  - **Two other instruments disagree with the reviewers.**
+    - Reference judges against Stcherbatsky's and La Vallée Poussin's published translations: Pro is +0.03 [−0.15, +0.22] in fidelity. On the Pramāṇa text (Dharmottara's *Nyāyabinduṭīkā*) it has *more* inversions than the stored English.
+    - By eye: only 2 of 5 of the stored English's findings were confirmed, against 5 of 5 for Pro's. Weighting each arm by its precision removes Pro's lead.
+- **Cost per 1,000 pages** (billed tokens, thinking included; Batch-equivalent, with realtime in brackets):
+  - A (production): **$1.74** ($3.47);
+  - C (context): **$2.25** ($4.51);
+  - P (Pro, thinking budget 128): **$10.17** ($20.34);
+  - PC: not run (C failed). It would cost about P's price plus 30 % more input.
+  - A Pro re-translation would cost about **$130** for Pramāṇa (12,784 pages) or **$375** for all four sections (36,812 pages), at Batch rates.
+
+These are AI reviewers and judges (Opus), checked by Claude. They are not a human review.
+
+**Design** (preregistered at `6c8a45e17`, `scripts/eval/tengyur-levers/PREREG.md`, before any arm output).
+- **Sample.** 60 mid-text pages: 30 Pramāṇa, and 10 each of Madhyamaka, Vinaya and Jātaka.
+  - The draw is uniform by global index within each section, seeded with 6121 (never `$sample`).
+  - A page was redrawn if it, or the side before it, opens a text, or if it holds a colophon. This happened once.
+  - Population: 36,812 pages with English. All 60 were `gemini-3-flash-preview`, prompt v13.
+- **Arms** (outputs to files only; no page writes). Spend: **$3.31 of the $5 cap**, endpoint `eval/tengyur-levers-6121`.
+  - **S:** the stored English.
+  - **A:** production again. `buildTranslationPrompt` + `PAGE_BREAK_SCOPED`, the pinned v13 prompt, one page, thinking 0, realtime. This is the A-vs-A floor.
+  - **C:** A plus a read-only block: the Tohoku number and Tibetan/Sanskrit titles from the text's opening side, and the two previous sides' Tibetan, with "translate only this page".
+  - **P:** `gemini-3.1-pro-preview`, A's request unchanged, thinking budget 128.
+    - It billed thinking on 9 of 60 pages, a mean of 344 tokens. A 3-page probe off the sample billed none.
+- **Review (round 1).** 240 arm items (60 pages × S, A, C, P) plus 20 planted controls.
+  - Items were shuffled, given opaque ids and left unlabelled. No batch of 10 held the same page twice.
+  - Each item was read by two blind Opus reviewers, with #5829's `REVIEW-PROMPT.md` verbatim plus one field, `span` (`REVIEW-ADDENDUM.md`). 52 subagent runs.
+  - Plants: 6 negation flips, 6 agent swaps and 4 term swaps (#5829's planters, moved to `plants.mjs` unchanged), plus 4 span plants (the previous side's last sentences prepended).
+- **Rule.** Per section, and for the pooled 60 pages, an arm is adopted only if all three hold:
+  - its reversal+agent rate (union of the two reviewers) is lower than S's by more than |A − S|;
+  - a one-sided paired sign-flip test gives p < 0.10;
+  - its span-error pages do not exceed S's + |A − S|.
+  - Gate: each reviewer finds at least 10 of the 12 reversal/agent plants.
+- **External references (step 4, about 1 hour of the 2-hour box).** Two published translations aligned by hand (subagents), 58 sides in all:
+  - Pramāṇa: Stcherbatsky, *Buddhist Logic* vol. 2 (1930), English from the Sanskrit. Dharmottara's *Nyāyabinduṭīkā* D4231, 28 consecutive sides (vol. 189, pp. 72–99), 25 high and 3 medium confidence.
+    - The obvious file, D4230, turned out to be Vinītadeva's commentary, not Dharmottara's.
+  - Madhyamaka: La Vallée Poussin, *Le Muséon* 8 (1907), French from the Tibetan. Candrakīrti's *Madhyamakāvatārabhāṣya* D3862, 30 sides (vol. 102, pp. 437–466), 28 high and 2 medium.
+  - A, C and P were run on these sides. Two blind Opus judges graded S/A/C/P against the reference with `tengyur-arms/JUDGE-PROMPT.md`, changed only in the reference paragraph (`JUDGE-PROMPT-REF.md`). Controls: 6 planted reversals and 4 duplicates.
+  - The reference text stays on the box (`/root/tlev/ref/`). Only alignment ids and scores are committed.
+
+**Result 1: the review round** (`r1/analysis.json`). Reversal + agent findings per 100 pages, either reviewer [95 % bootstrap CI].
+
+| | S stored | A again | C context | P Pro |
+|---|---|---|---|---|
+| **pool (60)** | 63 [43–87] | 58 [40–77] | 68 [47–90] | **38** [23–57] |
+| Pramāṇa (30) | 60 | 57 | 67 | 33 |
+| Madhyamaka (10) | 30 | 50 | 40 | 0 |
+| Vinaya (10) | 120 | 60 | 70 | 40 |
+| Jātaka (10) | 50 | 70 | 100 | 90 |
+| both reviewers, pool | 28 | 35 | 35 | 22 |
+| all findings, pool | 258 | 238 | 240 | 185 |
+| span-error pages, pool | 1 | 0 | 1 | 2 |
+| mean score / light share | 3.61 / 57 % | 3.69 / 61 % | 3.69 / 59 % | 3.73 / 63 % |
+
+| rule vs S | gain / 100 [CI] | better / worse pages | p (one-sided) | floor | span | rule |
+|---|---|---|---|---|---|---|
+| C, pool | −5 [−30, +20] | 13 / 14 | 0.70 | 5 | ok | no |
+| **P, pool** | **+25** [+5, +47] | 20 / 9 | **0.016** | 5 | ok | passes on its own terms |
+| P, Pramāṇa | +27 [−3, +57] | 10 / 4 | 0.068 | 3 | ok | passes on its own terms |
+| P, Vinaya | +80 [+30, +130] | 6 / 0 | 0.016 | 60 | ok | passes on its own terms |
+| P, Madhyamaka | +30 | 3 / 0 | 0.125 | 20 | ok | no (p) |
+| P, Jātaka | −40 | 1 / 5 | 0.98 | 20 | rises | no |
+| A (floor), pool | +5 | 16 / 15 | 0.39 | — | — | — |
+
+- **Gate (controls): failed by one plant.**
+  - Reviewer A found 10 of 12 reversal/agent plants; reviewer B found 9 (the bar was 10). Both missed a mild "is not → is" flip inside a long Pramāṇa sentence and an agent swap whose result read as ungrammatical ("we argues"). B also missed one "you → I" swap.
+  - Terms: 3 of 4 for each reviewer. Span plants: 3 of 4 marked by either reviewer.
+  - Recall on reversal/agent plants is 79 % (19 of 24 reviews), against 97.5 % in #5829. These pages are denser, and the plants are less blunt.
+  - Under the preregistered rule, **the rule output is "instrument failed"**, and no arm is adopted.
+- **Floors are noisy at n = 10.** A against S is +60 per 100 in Vinaya (S 120, A 60), so in that section the stored English happened to fare worst.
+- **Agreement:** the two reviewers' verdicts agree 80 % of the time. Pages flagged for reversal/agent: A 83, B 89, both 62 (of 240 page-arms).
+
+**Result 2: against the published translations** (`refjudge/scores.json`). Judge gate passed: plants 6/6 and 6/6, duplicates tied 4/4 and 4/4, and the two judges were within one fidelity point everywhere.
+
+| 58 sides | S | A | C | P |
+|---|---|---|---|---|
+| fidelity (1–5) | 4.41 | 4.40 | 4.28 | 4.45 |
+| … vs S [95 % CI] | — | −0.02 [−0.13, +0.10] | **−0.14** [−0.28, +0.01] | +0.03 [−0.15, +0.22] |
+| inversion sides, either / both judges | 8 / 3 | 6 / 4 | 9 / 6 | 5 / 3 |
+| omission sides, either | 8 | 9 | 10 | 3 |
+| span off, either | 1 | 4 | 5 | 2 |
+| Madhyamaka (Poussin, 30): fidelity / inversions per 100 | 4.45 / 13.3 | 4.37 / 8.3 | 4.25 / 11.7 | **4.57 / 3.3** |
+| Pramāṇa (Stcherbatsky, 28): fidelity / inversions per 100 | 4.38 / 5.4 | 4.43 / 8.9 | 4.30 / 14.3 | 4.32 / **10.7** |
+
+- On the one Pramāṇa text a published translation lets us check, Pro is **not** better: fidelity −0.05, and more inversions than the stored English.
+- On Candrakīrti, Pro is the best arm (fidelity +0.12 [−0.12, +0.37], inversions 13 → 3 per 100), but inside the interval.
+- Context is the worst arm on both texts.
+- These sides have lower error rates than the random sample, and the reference judge counts inversions more strictly than the reviewers count reversal/agent findings, so the two scales are not directly comparable.
+
+**Result 3: by eye, 20 findings read against the Tibetan** (`r1/byeye.tsv`). Seeded draw, 5 reversal/agent findings per arm, one per page.
+
+| | confirmed | debatable | rejected |
+|---|---|---|---|
+| S | 2 | 2 | 1 |
+| A | 4 | 1 | 0 |
+| C | 5 | 0 | 0 |
+| P | 5 | 0 | 0 |
+| **all** | **16** | **3** | **1** (precision 80 %) |
+
+- **Confirmed examples:**
+  - (A) སྤོང་བར་བྱེད་པའི་གཉེན་པོ, "the antidote that abandons" wrong views, rendered "to counteract the abandonment of" them;
+  - (C) ནུས་པ་ཐོགས་པ་མེད་པའི་དོན་མ་ཡིན ("it is not a case of unhindered capacity") rendered "this does not mean the capacity is hindered";
+  - (C) "how is the cause hollow because the effect is" turned round into "how can the effect be hollow because the cause is";
+  - (P) གྲང་བ་ལ་སོགས་པའི་མེ ("fire, the counter of cold") rendered "cold acts upon fire";
+  - (P) an anticipated objection (གལ་ཏེ…ཞེས་དོགས་པ་བསུ་བ) half given as the author's statement.
+- **Rejected:** a reviewer read a denial into an affirmative …རྣལ་མ་ཡིན་ནོ (S).
+- **Debatable:** two readings where the e-text supports the draft but the doctrine supports the reviewer. One is the genitive དྲང་སྲོང་མཆོག་གི in a quotation of MMK 17.2.
+- **What this means for P's lead:** the stored English's findings were the least reliable (precision 0.6 counting debatable as half, against 1.0 for P). Weighting each arm by its precision gives S ≈ 38 and P ≈ 38 per 100. At n = 5 per arm this is only suggestive, but it points the same way as Result 2.
+
+**Consequences.**
+1. **Decision (default): no re-translation of the weak sections. Publish the draft as is, with its stated shortcomings (#6120), and put the money into human review (#5800).** No arm cleared the preregistered rule, and the instrument failed its own gate.
+2. **Do not add context to the one-page request.** It did not reduce reversals on either instrument. It lowered reference fidelity (−0.14), and span errors went up against the reference. This confirms #5704's choice of one page with no context.
+3. **Pro is the only lever with a signal, and it is unconfirmed.**
+   - It is 6 times the cost of Flash: $10.17 against $1.74 per 1,000 pages, Batch.
+   - Before anyone prices a Pro re-translation of Pramāṇa (about $130), it needs a confirmatory run: 60 fresh Pramāṇa pages, the same rule, a gate the reviewers pass, and Pro with a real thinking budget as a second arm. That run is about $2–5.
+   - Nothing here says Pro is better on Dharmottara, the one Pramāṇa text with a published reference.
+4. **The error class is the model's, not the request's.** As in #5713, the confirmed errors are of the same kinds in every arm: case roles misread (las, gis, gi), prasaṅga turned into assertion, an objection's scope lost. They belong to the model, not to the prompt, and they are what a human reviewer (#5800) should be pointed at.
+5. **Instrument note.** On dense Pramāṇa pages, reviewer recall on planted reversal/agent errors is about 80 %, not 97 %. A future gate on these sections should use plants that are as subtle as the real errors (#5647's lesson), and should say in advance what happens at a one-plant miss.
+
+**Replicated?** No.
+- One run. Pro's reviewer-side gain is p = 0.016 pooled, but the gate failed, and two other instruments (the reference judges, n = 58, and the by-eye precision, n = 20) do not support it.
+- Context's null holds on both instruments.
+- Per section, n = 10 is exploratory (decision card §10.2: below directional).
+
+**Artifacts** (`scripts/eval/results/tengyur-levers-6121/`; code in `scripts/eval/tengyur-levers/`):
+- **Sample and controls:** `sample.json`, `controls-log.json`.
+- **Arms:** `arms/{A,C,P}.jsonl` (sample), `arms/{A,C,P}-ref.jsonl` (reference sides), `arms/probe-P.jsonl`, `arms/ledger.jsonl` (every call, billed tokens).
+- **Review round 1:** `r1/key.json`, `r1/reviews/{A,B}-NN.json` (52), `r1/analysis.json`, `r1/byeye-draw.json`, `r1/byeye.tsv`.
+- **Reference round:** `ref-alignment.json` (ids, folios, confidence, source; no text), `refjudge/key.json`, `refjudge/scores.json` (numbers only).
+- **Kept on the box, not committed:** `/root/tlev/ref/` (the Stcherbatsky and La Vallée Poussin texts and the aligned cuts), `/root/tlev/refjudge/` (the judge packets and verdicts, which quote the reference), and `/root/tlev/r1/items.jsonl` (the packet).
+- No writes to `books`, `pages` or `page_translations`.
+
+## 2026-10-07 · Tengyur: what does each section read like, and can one reviewed rendering per much-quoted root verse replace the scattered page-by-page ones? (#6141)
+<!-- PRIOR ART: 2026-10-07-tengyur-weak-section-levers-6121.md (re-translation levers; no lever adopted, and its vol 174 p312 read proposed this verse check) and the 2026-10-07 shelf overview (`results/spot-check/overview-2026-10-07/`, the Tengyur as ONE stratum). Neither split the Tengyur by section or compared the renderings of one verse across pages. -->
+
+**Question.**
+1. What is the "before" for each Tengyur section?
+2. Do the root verses that commentaries quote again and again read differently from page to page?
+3. Would one reviewed rendering per verse (a "verse memory"), written over only the verse lines, make those pages better?
+
+**Answer.**
+- **The baseline:** serious-page rates are 0–13% by section; Pramāṇa and Vinaya carry the serious pages.
+- **The verses do diverge,** and the detector finds them: 3,766 verses recur on 3 or more pages.
+- **The verse memory did not pass its gate.** Of 20 proposed replacements read against the Tibetan, 15 were better, 2 were no better and **3 were worse** (the bar was 18 or more better, 0 worse). Nothing was written.
+- All three worse cases come from **span mapping**, not from the references. The English verse block does not map line for line onto the Tibetan pādas: a prose lead-in sits inside the block, or the block reorders the verse. Replacing "lines i–j" then drops the lead-in or duplicates a line.
+- The references themselves held up. The blind checker graded 46 of 50 `ok`, and in the 20 read by eye none was the cause of a worse page.
+
+These are AI reviewers (Opus), checked by Claude, not a human review.
+
+**Step 1: baseline by section** (`results/spot-check/overview-2026-10-07-tengyur-sections/`). Method: `shelf-overview`, 4 volumes × 4 pages per stratum, seed 2026100741, hidden books included; REVIEWER.md and OVERVIEW-ADDENDUM.md unchanged; one Opus reviewer per stratum.
+
+| section | frame (vols) | serious pages (95% CI, by book) | EN | on-sight | show / caveat / don't |
+|---|---|---|---|---|---|
+| Pramāṇa | 20 | 13% (0–38%) | 3.94 | 1/4 | 0 / 4 / 0 |
+| Madhyamaka | 17 | 6% (0–19%) | 4.19 | 3/4 | 1 / 3 / 0 |
+| Vinaya | 18 | 13% (0–25%) | 3.88 | 4/4 | 0 / 4 / 0 |
+| tantra commentary | 78 | 0% (0–0%) | 4.19 | 1/4 | 2 / 2 / 0 |
+| sūtra comm. + Cittamātra + Abhidharma | 37 | 0% (0–0%) | 4.50 | 1/4 | 3 / 1 / 0 |
+| Jātaka + Miscellaneous | 14 | 0% (0–0%) | 3.88 | 1/4 | 0 / 4 / 0 |
+
+- **Frame-weighted serious-page rate: 3%.** The weights are volumes per frame. Quote the intervals: there are 4 books per stratum.
+- **Not in the frame:** 29 volumes (Praises, Prajñāpāramitā, Letters, Grammar, Catalogue).
+- **Classes on 3 or more distinct books:**
+  - Esukhia `#` and `{a,b}` markup visible in the Tibetan pane, about 11 of 24 volumes (#5797).
+  - An invented "line missing" note at the page foot, vols 180, 126 and 174 (#5678).
+- **Vinaya Pali names:** not confirmed in this draw.
+
+**Step 2: verse-consistency detector** (`tengyur-improve/verse-detect.mjs`, $0, reads `dump-pages.mjs`'s dump of all 128,333 pages with English).
+- **What counts as a verse.**
+  - A pāda is a segment in a run of 2 or more consecutive shad-delimited segments of equal length (7, 9 or 11 syllables).
+  - Pāda pairs adjacent on 3 or more pages are linked into verses. A weak link is cut if w < 0.25 × the rarer pāda's page count, and components over 8 pādas are chunked into 4s.
+  - Prose enumerations (half or more of the pādas end in དང) are dropped.
+- **Matching the English.** Each Tibetan run is aligned to the page's English verse blocks: monotone, line count within ±1, relative position.
+  - Divergence is the mean pairwise (1 − character-trigram Dice) over the verse's most-rendered span.
+  - Root text: the `{D####}` text the page is in. PV D4210, MMK D3824/D3860, AK D4089/D4090 and BCA D3871 count as "Sanskrit held".
+- **Result** (`summary.json`, `verses-top200.json`).
+  - 3,766 verses recur on 3 or more pages; 1,011 occur inside a root text whose Sanskrit we hold.
+  - The top 200 by pages (median 18 pages) are mostly tantric liturgy: 35 MMK, 2 AK, 1 PV.
+  - Pramāṇa commentaries weave PV into prose, so few PV verses are seen as verse.
+  - **Only 25% of quotations (6,788 of 26,818) have a matchable English verse block.** The draft often renders a quoted verse as prose.
+
+**Step 3: verse memory, dry run** (`verse-packets.mjs`, `DRAFT-PROMPT.md`, `check-packets.mjs`, `CHECK-PROMPT.md`, `scripts/maintenance/verse-memory-6141.mjs`; $0 API, 12 Opus subagent runs on the subscription).
+- **Selection:** the top 50 verses by pages × divergence, with 3 or more renderings of their primary span: 259 stored renderings in all, every one of them shown to the drafters.
+- **Drafters (6):**
+  - one reference per verse, one English line per pāda;
+  - 18 verses located in our Sanskrit (locus and page URL only; no Sanskrit is committed);
+  - 28 of 259 renderings flagged as misaligned (the line matching was wrong);
+  - grades of the rest: ok 131, weak 83, wrong 17.
+- **Blind checkers (6):** they graded the reference shuffled among the stored renderings under opaque ids.
+  - The reference was `ok` for 46 of 50 verses and the checker's best for 39.
+  - Stored renderings: ok 103, weak 73, wrong 55.
+  - The two readers agree on ok/not-ok for 169 of 231.
+- **Proposal rule:**
+  - the reference is `ok` blind;
+  - both readers graded the stored lines weak or wrong (77 pages);
+  - the block has exactly one line per pāda of its run (29 skipped);
+  - no `<note>` inside the lines (8 skipped);
+  - not human-edited, and no open `translate_batch_runs` run.
+  - **40 proposals.**
+- **Gate: 20 drawn with seed 6141, read by Claude against the Tibetan** (`byeye.tsv`). 15 better, 2 no better, **3 worse**, so the gate FAILED.
+  - Better examples:
+    - MMK 3.2 had been turned into a counterfactual ("If seeing were its own self").
+    - MMK 1.7 had dropped its verb.
+    - "View the authentic as truly authentic" misparsed ཡང་དག་ཉིད་ལ་ཡང་དག་ལྟ.
+    - A request had been rendered "I bow to you".
+  - Worse:
+    - a block that reorders the verse across lines (vol 73 p487), sliced;
+    - a lead-in "The Bhagavan is said to possess six excellences:" inside the block, lost;
+    - a lead-in "The teacher then says:" inside a 5-line block, lost, and a line duplicated.
+
+**Consequences.**
+1. **No write.** Step 4 was gated on 18 or more better and 0 worse. Nothing changed in `pages`, `page_revisions` or the mirrors, so there is no step 5.
+2. **The fix is mechanical, and it needs a fresh gate.**
+   - Replace only whole blocks whose line count equals the pāda count, never a slice.
+   - Refuse a block that has a lead-in line (ending in ":").
+   - Show the readers the whole block, not the sliced lines.
+   - Re-draw 20 from the narrowed set, excluding the 20 already read.
+   - The 50 references (`verse-memory.json`) can be reused as they are.
+3. **The reach is small even when it works.** At most about 25% of quotations have a verse block to replace. Pramāṇa, where the #6121 error sits, quotes PV in prose. A verse memory for Pramāṇa would have to locate the verse inside prose, which is a translation task, not a splice.
+4. **Divergence is half misalignment.** The drafters flagged 11% of matched renderings as another verse. Rank verses by divergence only after a reader has confirmed the matching.
+
+**Replicated?** No. It is one run, and the gate is n = 20 read by one Claude session (the same model family as the drafters and checkers).
+
+**Artifacts.**
+- `results/spot-check/overview-2026-10-07-tengyur-sections/`: strata, packets, reviews, report.
+- `results/tengyur-improve-6141/`:
+  - `summary.json`, `verses-top200.json`;
+  - `verse-memory.json` (50 references, loci, blind grades, hashes);
+  - `step3-stats.json`, `proposals-dryrun.json` (40 before/after spans);
+  - `byeye-draw.json`, `byeye.tsv`.
+- **On the box only:** `/root/timp/` (page dump, occurrences, packets, drafts, checks; Sanskrit transcriptions in `/root/timp/sanskrit/`).
+
+## 2026-10-07 · Tengyur weak sections, round 2: do newer models (Gemini 3.8 / 3.5 Flash, Opus) fix them? (#6121)
+<!-- PRIOR ART: 2026-10-07-tengyur-weak-section-levers-6121.md (round 1: same sample, same aligned references, same harness; context and Pro tested, no lever adopted, reviewer gate failed). Round 2 reuses all of it and changes only the arms. -->
+
+**Question.** The Tengyur draft was made with `gemini-3-flash-preview`. Our key now lists `gemini-3.5-flash` and `gemini-3.8-flash`, and neither had been tried on Tibetan. Opus had only been tried on 84000's easier texts (#5713). On the weak sections, does any of them beat the stored English by more than a rerun of production does? And what would a re-translation cost?
+
+**Answer.** **Yes, two of the three: `gemini-3.8-flash` (G38) and Opus (O) pass the preregistered rule on both texts that have a published reference.**
+- **The rule on the reference texts:**
+  - **G38:** Pramāṇa, Dharmottara D4231 against Stcherbatsky: fidelity +0.48 [+0.29, +0.68], p < 0.001, inversions 5 → 1. Madhyamaka, Candrakīrti D3862 against La Vallée Poussin: +0.30 [+0.12, +0.50], p = 0.005, inversions 8 → 2.
+  - **O:** +0.79 and +0.50 on the same two texts, inversions 5 → 2 and 8 → 0.
+  - **`gemini-3.5-flash` (G35) does not pass:** −0.01 pooled. It is the same as the stored English at about 2.3 times the cost.
+- **The reviewers point the same way.** This round their gate passed: A 11/12 and B 10/12 on fresh plants, at the first attempt. Pooled over 60 random pages, reversal + agent findings per 100 pages: S 85, A 80, G35 58, G38 42, O 30.
+- **Cost per 1,000 pages, Batch** (realtime is twice that):
+  - G38: **$2.21**, against $1.74 for the production model;
+  - G35: $5.07;
+  - O at API list price: **$19.1**.
+- **What a re-translation would cost with G38:** about $28 for Pramāṇa (12,784 pp), $52 for Pramāṇa + Madhyamaka, and $81 for all four sections (36,812 pp). The same with O at list price: $244, $451 and $703.
+
+These are AI judges and reviewers (Opus), with a by-eye check by Claude. They are not a human review. O is the same model family as every judge (see Threats). G38 is not, and its result does not depend on that.
+
+**Design** (preregistered at `1e92837cd` (first pushed as `33c2558fa`, re-signed for DCO), `scripts/eval/tengyur-levers/PREREG-R2.md`, before any round-2 arm output on the sample or the reference sides).
+- **Reused from round 1, not redrawn:**
+  - the 60-page sample (30 Pramāṇa, 10 each of Madhyamaka, Vinaya and Jātaka);
+  - the 58 sides aligned to the published translations (28 of D4231, 30 of D3862);
+  - the stored English (S) and round 1's production rerun (A, the A-vs-A floor);
+  - the packet builders, the judge and reviewer prompts, and the analysis scripts (each given a round-2 switch).
+- **New arms:**
+  - **G38 and G35:** the production request unchanged (v13, `buildTranslationPrompt` + `PAGE_BREAK_SCOPED`, one page, no context, thinking budget 0, temperature 1.0, realtime).
+    - Probe: 2 off-sample pages per model, then all 118 pages. Every call billed **0 thinking tokens** and finished `STOP`, in the house tag format.
+  - **O:** Claude Opus as subagents on the subscription, at most 6 at a time.
+    - Its instructions were the exact production prompt string for the page, one page, no context. It was not allowed other files, tools or extra instructions.
+    - 12 runs of 10 pages.
+- **Primary measure: fidelity against the published references.**
+  - Two blind Opus judges scored all five arms of each side together, in random order (S and A were re-judged in this round). The prompt was round 1's `JUDGE-PROMPT-REF.md`, changed only to allow five candidates (`JUDGE-PROMPT-REF-R2.md`). 20 judge runs.
+  - Controls: 6 planted reversals and 4 duplicates.
+  - **Rule**, per text and pooled. An arm is worth a priced re-translation only if all three hold:
+    - fid(X) − fid(S) > |fid(A) − fid(S)|;
+    - a one-sided paired sign-flip p < 0.10;
+    - total inversions(X) ≤ inversions(S).
+- **Secondary measure: round 1's reviewers.** 300 items (60 pages × 5 arms) plus 20 fresh plants, two blind reviewer partitions, 64 runs.
+  - The two planter defects behind round 1's gate failure were filtered: no-op flips, and "the opponent → we", which produced "we argues".
+  - Gate: each reviewer finds at least 10 of the 12 reversal/agent plants, with up to two re-plants.
+
+**Result 1 (primary): against the published translations** (`refjudge/scores.json`).
+- **Judge gate passed:** plants 6/6 and 6/6, duplicates tied 4/4 and 4/4. The two judges were within one fidelity point on every side × arm.
+
+| 58 sides | S | A | G35 | G38 | O |
+|---|---|---|---|---|---|
+| fidelity (1–5), mean of judges | 4.27 | 4.27 | 4.26 | **4.66** | **4.91** |
+| … vs S [95 % CI] | — | 0.00 [−0.10, +0.11] | −0.01 [−0.13, +0.13] | **+0.39** [+0.25, +0.53] | **+0.64** [+0.49, +0.78] |
+| sides better / worse than S | — | 8 / 11 | 11 / 14 | 29 / 3 | 42 / 1 |
+| inversions (both judges summed) | 13 | 11 | 12 | 3 | 2 |
+| omission sides, either judge | 13 | 13 | 10 | 2 | 0 |
+| span off, either judge | 4 | 3 | 3 | 3 | 0 |
+
+| rule | D4231 Pramāṇa (28) | D3862 Madhyamaka (30) | pool (58) |
+|---|---|---|---|
+| floor \|A − S\| | 0.07 | 0.07 | 0.00 |
+| **G38** | +0.48, p < 0.001, inv 1 ≤ 5 → **passes** | +0.30, p = 0.005, inv 2 ≤ 8 → **passes** | +0.39, p < 0.001 → passes |
+| G35 | +0.09, p = 0.24, inv 7 > 5 → no | −0.10, p = 0.90 → no | −0.01 → no |
+| **O** | +0.79, p < 0.001, inv 2 ≤ 5 → **passes** | +0.50, p < 0.001, inv 0 ≤ 8 → **passes** | +0.64, p < 0.001 → passes |
+
+- **O against G38, head to head:** +0.25 [+0.13, +0.37], with O better on 21 sides and worse on 3. On D4231 it is +0.30, and on D3862 +0.20.
+- **G38 against G35:** +0.40 [+0.24, +0.54]. The newer and cheaper Flash is the better one.
+- **The scale is relative.** S scores 4.27 here and scored 4.41 in round 1. The same text reads lower beside stronger candidates. Compare arms within a round, never across rounds.
+
+**Result 2 (secondary): the reviewers on 60 random pages** (`r1/analysis.json`).
+- **Gate passed at the first attempt:** reviewer A found 11 of 12 reversal/agent plants and reviewer B 10 of 12. Each caught 3 of 4 term plants. All 4 span plants were marked. No re-plant was needed.
+- Reversal + agent findings per 100 pages, union of the two reviewers [95 % CI]:
+
+| | S | A | G35 | G38 | O |
+|---|---|---|---|---|---|
+| **pool (60)** | 85 [62–110] | 80 | 58 [42–78] | **42** [27–57] | **30** [18–43] |
+| Pramāṇa (30) | 87 | 77 | 60 | 43 | 33 |
+| Madhyamaka (10) | 50 | 60 | 30 | 30 | 30 |
+| Vinaya (10) | 120 | 90 | 70 | 30 | 20 |
+| Jātaka (10) | 80 | 100 | 70 | 60 | 30 |
+| all findings, pool | 308 | 305 | 240 | 163 | 85 |
+| mean score / "light edits" share | 3.56 / 53 % | 3.51 / 50 % | 3.68 / 59 % | 4.04 / 80 % | 4.44 / 98 % |
+
+- **Round 1's reviewer rule** (floor |A − S| = 5 pooled):
+  - Pooled, all three arms pass: G38 p = 0.0003, O p = 0.0001, G35 p = 0.017.
+  - Pramāṇa: all three pass.
+  - Vinaya: G38 and O pass.
+  - Jātaka: only O passes.
+  - Madhyamaka: none passes (n = 10, p ≥ 0.31).
+  - Sections at n = 10 are exploratory.
+- **G35 passes with the reviewers but not against the references.** The references are the primary measure, so G35 is not worth a re-translation.
+
+**Result 3: by eye, 20 findings read against the Tibetan** (`r1/byeye.tsv`). Seeded draw, 5 per arm (S, G38, G35, O), one per page.
+
+| | confirmed | debatable | rejected | precision (debatable = ½) |
+|---|---|---|---|---|
+| S | 3 | 2 | 0 | 0.8 |
+| G38 | 2 | 3 | 0 | 0.7 |
+| G35 | 4 | 1 | 0 | 0.9 |
+| O | 4 | 1 | 0 | 0.9 |
+| **all** | **13** | **7** | **0** | |
+
+- **Weighting by precision leaves the order unchanged:** S 68, G35 53, G38 29, O 27 per 100.
+- **Errors still left in G38 and O:**
+  - (O) an honorific ignored: ཞེན་པ་མངའ་བའི་རྒྱུ, the Buddha's apparent clinging, becomes "the cause of those who cling";
+  - (O) a negation dropped across an e-text line break: མ་|བསྐལ་བ, "non-remoteness", becomes "Remoteness";
+  - (G38) "makes the Primary Matrix … hollow", a verb the verse does not have;
+  - (G38) the subjects (སྐྱེ་རྒུ) dropped as agents.
+- **G35's confirmed errors include a reversed quantifier and a refuted view asserted.**
+  - ཇི་ལྟར་ཡང་ ("in some way") becomes "in no way existent".
+  - སྐྱོན་ནི་ཆེན་པོ ("a great fault") is dropped, so the English asserts that noble birth prevents insignificance.
+
+**Cost** (billed tokens; `arms/ledger.jsonl`, `opus-cost.json`).
+- **Gemini, per 1,000 pages** (thinking 0 on every call):
+
+| model | realtime | Batch |
+|---|---|---|
+| gemini-3-flash-preview (A, round 1) | $3.47 | $1.74 |
+| G38 `gemini-3.8-flash` | $4.42 | $2.21 |
+| G35 `gemini-3.5-flash` | $10.14 | $5.07 |
+
+- **O at API list price** (claude-opus-5-5, $4 in and $20 out per million tokens).
+  - Measured on 3 pages: 4,900 input and 926 output tokens a page, so **$38.1 realtime and $19.1 Batch** per 1,000 pages, without thinking.
+  - Prompt caching of the shared ~3.9K-token instruction block would bring the realtime figure to about $24.
+- **O on the subscription:** the 118 pages took 12 subagent runs and 1.02M subagent tokens (8.6K a page), about 7 minutes at 6 concurrent.
+  - A full four-section run would be about 3,700 runs and 320M tokens, roughly 36 hours at 6 concurrent before any usage limit.
+  - That is not a production lane. The Anthropic API key on Hetzner is also dead (401).
+- **Spend this round:** $1.75 Gemini of the $5 cap (endpoint `eval/tengyur-models-6121`), plus about $0.10 on OpenRouter for the Opus token counts. Judges and reviewers ran on the subscription.
+
+**Consequences.**
+1. **Decision (Derek), default: re-translate Pramāṇa and Madhyamaka with `gemini-3.8-flash` on Batch (about $52), keeping the production request otherwise unchanged.**
+   - It passes the preregistered rule on both reference texts. It cuts reference inversions from 13 to 3, and reviewer reversal/agent findings from 85 to 42 per 100.
+   - It costs 27 % more than the current model.
+   - Vinaya and Jātaka have no reference. The reviewers favour G38 in Vinaya, but in Jātaka its edge (80 → 60) is within the noise. Adding both sections would cost $29 more.
+2. **Opus is the ceiling:** +0.25 above G38 on the references, and the fewest findings on every instrument. At about $19 per 1,000 pages Batch it costs 9 times G38, and we have no working Anthropic key. Priced as an option, not the default.
+3. **Do not use `gemini-3.5-flash` for Tibetan.** It equals the stored English at 2.3 times the cost.
+4. **"Pro was unconfirmed" (round 1) is now moot.** A cheaper Flash beats the stored English on the reference texts, where Pro did not (+0.03).
+5. **Before any re-translation ships:**
+   - **The stored English becomes a revision, not a deletion** (preservation policy).
+   - **Use the Tengyur lane's Batch path with `gemini-3.8-flash`.** That is a model switch in one lane, so `ai-models.md` and the translation routing note need the change.
+   - **Spot-read 20 re-translated pages against the Tibetan before the full run.**
+6. **Instrument note.** Round 1's reviewer gate failure was largely the planters. With the no-op flips and the "the opponent → we" swap filtered out, both reviewers passed at the first attempt.
+
+**Threats.**
+- **Self-preference:** O is judged by Opus. The reference anchors the primary measure and the arms were unlabelled. O's by-eye precision (0.9) is no worse than the other arms', so its findings are not being missed. Still, O's margin over G38 could be partly style.
+- **References:** two texts, one per section. Stcherbatsky translates from the Sanskrit, and the judges were told the Tibetan decides.
+- **Sections at n = 10** (reviewers) are exploratory.
+
+**Replicated?** No, one run. G38's gain holds on two independent instruments (the references and the reviewers) and two texts. It is not replicated on a fresh sample.
+
+**Artifacts** (`scripts/eval/results/tengyur-models-6121/`; code in `scripts/eval/tengyur-levers/`):
+- **Arms:** `arms/{G38,G35,O}{,-ref}.jsonl`, `arms/probe-*.jsonl`, `arms/ledger.jsonl`, `opus-cost.json`.
+- **Reference round:** `refjudge/key.json`, `refjudge/scores.json` (numbers only).
+- **Review round:** `r1/key.json`, `r1/reviews/{A,B}-NN.json` (64), `r1/analysis.json`, `r1/byeye-draw.json`, `r1/byeye.tsv`, `controls-log-1.json`.
+- **Code:**
+  - `run-arms.mjs` gains G38/G35, `--ledger` and `--endpoint`;
+  - `opus-arm.mjs` is new (O's prompts and ingest);
+  - `build-ref-packet.py --round 2`, `score-ref.py --round 2`;
+  - `build-controls.mjs --round 2`, `build-packet.mjs --models`, `analyze.py --models`, `byeye-draw.py --models`;
+  - `JUDGE-PROMPT-REF-R2.md`.
+- **Kept on the box, not committed:** `/root/tlev/ref/` (the references), `/root/tlev2/refjudge/` (judge packets and verdicts, which quote the references), `/root/tlev2/r1/items.jsonl` and `/root/tlev2/o/` (O's prompts and raw outputs).
+- No writes to `books`, `pages` or `page_translations`.
+
+## 2026-10-07 · After the first word-form fix, which forms of a word still find a fraction of what their sibling finds? (#5517)
+<!-- PRIOR ART: scripts/eval/experiments/2026-10-06-site-search-recall-5905.md scores /api/search for book recall on names and concepts; it has no word-form pairs. PR #5518 (the first fix) reported one number, the "botanical" filter going 0 → 114, and no query list. -->
+
+- **Question.** #5518 folded word forms in the catalogue book lane and the collections lane, and the issue stayed open. Does a reader who types an adjective, a plural or an agent noun now get what the noun gets, and does the folding touch non-Latin queries?
+- **Answer.** The issue's own examples were fixed by #5518 (botanical 122 books = botany 122). What was left is every word whose root has four letters, plus plurals in -es and agent nouns: the first rules needed five letters after the suffix. "magical" found 35 books where "magic" finds 176, "optical" 1 where "optics" finds 51 (97 before, 46 of them Coptic titles matched inside the word), "astronomer" 2 where "astronomy" finds 295, "witches" 27 of 52. After the second pass the typed form finds **0.98** of what its best sibling finds, up from **0.54** (mean of 24 queries that have siblings; a count ratio, capped at 1). The 13 non-Latin and control queries return the same book ids in the lane, before and after.
+- **measure:** agreement between forms (how many books the lane returns for the typed form against the count for its sibling). It is not accuracy: nobody judged the added books relevant. Result lists for magical, optical, astronomer, herbal, witches and surgical were read by eye before and after, and the lane's losses and gains were read as titles.
+
+### Design
+
+- 38 fixed queries in `scripts/eval/search-word-forms/queries.json`: the issue's 3, 4 long-root adjectives, 8 short-root, 4 plurals, 3 agent nouns, 3 multi-word, 7 non-Latin (Chinese, Arabic, Hebrew, Devanagari, Greek, Cyrillic), 6 controls (Latin, German with an umlaut, two names, a word with no forms, a two-word Latin title).
+- `lanes.harness.ts` runs this checkout's code on production data: the catalogue lane (`searchBookIds`, limit 1000, ids kept), the Atlas page stage (pages matched), and the real `/api/search` and `/api/search/unified` handlers. Before = `main` at 1fb8c4764. After = this PR. `compare.mjs` prints the table.
+
+### Result (catalogue book lane, books for the typed form / for its best sibling)
+
+| kind | queries | before | after |
+|---|---|---|---|
+| named in the issue | 3 | 1.00 | 1.00 |
+| long root (astronomical, theological, anatomical, kabbalistic) | 4 | 0.91 | 1.00 |
+| short root (magical, mystical, musical, medical, surgical, poetic, herbal, optical) | 8 | 0.19 | 1.00 |
+| plural (witches, herbs, prophecies, emblems) | 4 | 0.84 | 0.90 |
+| agent noun (alchemists, astronomer, magician) | 3 | 0.34 | 0.99 |
+| multi-word | 2 | 0.20 | 1.00 |
+
+- **On the route.** `/api/search` book rows in the first 50: optical 2 → 39, astronomer 2 → 46, magician 6 → 39, surgical 23 → 50, musical 24 → 45, mystical 30 → 49. Collections on the All tab: optical 0 → 3 (Optics first), magician 0 → 3 (Magic first).
+- **Pages.** The Atlas page lane was left alone. Every form of every query matches at least 13,000 pages (non-Latin: 57 to 100,000+), so no reader gets an empty passage list from a word form, and widening there would only reorder.
+- **What got worse.** (1) "herbs" 157 → 100 in the lane: the 76 lost titles were read and are all noise the old unanchored `%herb%` matched (Herbipolensis = Würzburg 30+, Herborn, Herbert, Scherbius, Guelpherbytanus). (2) "botanical" collections 2 → 1: stems now match only at the start of a word, so the collection whose description says "ethnobotanical" is no longer returned for "botanical"; Herbalism & Botany still is. The anchor is what stops "optical" returning every Coptic title. (3) One or two ids lost on astrological, astronomical, witches for the same reason (a stem inside a longer word).
+- **Rejected on the way.** A single widened query: the lane returns an unordered sample of `limit` rows, so 40 of the 176 "magic" books at random could drop every title that says "magical". Shipped instead: the typed form's rows first, related forms fill the rest. A bare `herb` stem: it starts Herborn, an academy named in hundreds of imprints. A general -al, -er or -ian rule: "general" → "gener", "silver" → "silv", "Herodian" → "herod" (only -ician is folded: magician, physician). Ordering collections by size alone once folding widened them: "poetic" lost the Poetry collection; name matches now come first.
+- **Latency.** Catalogue lane, 38 queries, two runs each: `searchBookIds` median 303–312 ms → 389–394 ms, p90 459–495 → 446–578; `searchBooksCatalog` median 125 → 162–193 ms. The second query runs in parallel and only when a word has related forms.
+- **Caveats.** "botanical gardens" reaches books keyed botany + garden only through the Mongo fallback, a regex scan with a 3 s limit: 21 book rows in one run, 1 in the others (timed out, `degraded_lanes: ["book"]`, as before the change). The artwork lexical lane was counted directly (as typed → with forms: herbal 0 → 17, surgical 1 → 14, magician 10 → 37, Paracelsus 5 → 5), not through the route, whose artwork count mixes a vector lane that times out under load.
+- *Replicated?* The after run was taken four times while the rules were tightened (the lane counts above are from the last; the earlier ones differ only where a rule changed). Before was run twice; lane counts agree. One after run lost the related-forms query for one word to a transient error and returned the typed rows only (179 → 12, back to 179 on four retries): that is the designed fallback.
+- **Artifacts.** `scripts/eval/search-word-forms/` (queries, harness, compare, `results/2026-10-07-{before,after}.json`).
+
+## 2026-10-07 · Can an English query find an untranslated Latin/German/French/Chinese page by meaning? (#5729)
+<!-- PRIOR ART: scripts/eval/search-recall/ (#5905; book recall of /api/search over the live English lanes, expected sets from period-term phrase facets) and scripts/eval/librarian-search/ (page-grain golden set over TRANSLATED books). Neither embeds original-language OCR with an open model, and neither has a gold set of untranslated pages. -->
+
+- **Question.** #5729 proposed embedding the original-language OCR of untranslated books with an open multilingual model, so that an English query could find them. Does an open model on this box (multilingual-e5-base, BGE-M3) retrieve those pages? Compare it with what production already has.
+- **Answer: not an open model.** Production already embeds untranslated pages from their OCR with Gemini (`pageEmbeddingInput` falls back to OCR when there is no translation). Those vectors find the right page far better than either open model:
+  - **Gemini 0.93** recall@10 vs **e5-base 0.38** over the same 8,576-page pool;
+  - **Gemini 0.93 vs BGE-M3 0.82** on a 3,000-page sub-pool.
+
+  **The pages are lost by the shared index, not by the model.** In a lane of their own, the gold page is in the top 10 for 0.64 of queries at full scale (1.46M OCR-only rows, exact). Through `match_semantic`, where 6.7M rows (most of them English translations) compete with them, it falls to **0.10**. So the gap is a missing lane, plus ≈814K OCR-only pages not yet embedded (≈$15 of Gemini). A second model is not needed. The pre-stated bar is **not met** for either open model, so no open-model backfill is proposed.
+- **measure:** page-level recall@10 against one by-eye gold page per query (accuracy of retrieval, not agreement). Wilson 95% intervals. n = 40, so per-language cells (n = 10) are directional only.
+
+### Design (fixed before any arm was scored; committed in 6e270bd)
+
+- **Pool.** 8,576 pages of untranslated live books (`pages_translated: 0`), all four languages in one cross-lingual pool:
+
+  | language | pages | books |
+  |---|---|---|
+  | Latin | 1,702 | 80 |
+  | German | 1,985 | 80 |
+  | French | 966 | 42 (every eligible book; most are 25-page stubs) |
+  | Chinese | 3,923 | 80 |
+
+  Books were drawn with seed 5729, up to 60 pages per book. Pages need ≥ 300 cleaned OCR characters (≥ 100 for Chinese). Text is the production composer's (`cleanPageText`). `build-pool.mjs`.
+- **Gold.** 40 queries, 10 per language, in `gold.json`. One page drawn at random per book. Non-substantive pages were skipped (an index, a dedication poem, Latin text in a book labelled French). I read the OCR and wrote an English query for what a reader would ask that page to answer. Wording is not copied from the page, but names are kept. Relevant set = that one page.
+- **Arms.** All under `scripts/eval/orig-lang-recall/`.
+
+  | arm | what it is | script |
+  |---|---|---|
+  | **global** | `match_semantic` over all of `page_translations`, top 10: the lane search and the Librarian call today | `gemini-arm.mjs` |
+  | **gemini** | the vectors production stores for the pool pages (5,654 of 8,576 have one) | `gemini-arm.mjs` |
+  | **gemini-full** | the same plus the 2,986 missing pool pages, embedded the production way (2,904 of them Chinese; $0.0315, logged to `gemini_usage` as `eval/orig-lang-recall-5729`) | `gemini-arm.mjs --fill-pool` |
+  | **ocr_only** | the gold page's exact rank among every OCR-only row (1,456,484), i.e. a dedicated original-text lane at real size | `gemini-arm.mjs --ocr-only-rank` |
+  | **e5-base** | the `sl-embedding-server` model, in-process; parity with the server checked at cosine 0.997 | `embed-local.mjs` |
+  | **bge-m3** | dense head, int8 ONNX; on the 3,000-page sub-pool only (gold pages + 2,960 seeded others), because it runs at ~1.1 pages/s here | `embed-local.mjs --subset` |
+
+  Both open models are cut at 512 tokens.
+- **Decision bar, stated in advance.** Propose an open-model backfill only if the model:
+  1. reaches recall@10 **≥ 0.50** over the 40 queries;
+  2. reaches **≥ 0.30 in every language**;
+  3. is **within 0.10 of the stored Gemini vectors** on shared pages.
+
+### Result (recall@10, Wilson 95%)
+
+| arm | candidates | R@10 | MRR | La | De | Fr | Zh |
+|---|---|---|---|---|---|---|---|
+| global `match_semantic` (production today) | 6.7M rows | **0.10** [0.04, 0.23] | 0.17 | 1/10 | 1/10 | 2/10 | 0/10 |
+| Gemini, OCR-only lane, exact | 1.46M rows | **0.64** [0.46, 0.79] (n = 28) | 0.31 | 6/10 | 5/10 | 6/7 | 1/1 |
+| Gemini, OCR-only lane, existing HNSW + `iterative_scan` | 1.46M rows | 0.50 (14/28) | — | | | | |
+| gemini-full | pool 8,576 | **0.93** [0.80, 0.97] | 0.68 | 10/10 | 10/10 | 8/10 | 9/10 |
+| e5-base | pool 8,576 | **0.38** [0.24, 0.53] | 0.24 | 2/10 | 6/10 | 7/10 | 0/10 |
+| e5-base, shared pages | 5,590 | 0.45 [0.28, 0.62] (n = 29) | 0.26 | 2/10 | 6/10 | 5/8 | 0/1 |
+| gemini, shared pages | 5,590 | 0.93 [0.78, 0.98] (n = 29) | 0.66 | 10/10 | 10/10 | 6/8 | 1/1 |
+| gemini-full | sub-pool 3,000 | 0.93 [0.80, 0.97] | 0.76 | 10/10 | 10/10 | 8/10 | 9/10 |
+| bge-m3 | sub-pool 3,000 | **0.82** [0.68, 0.91] | 0.69 | 8/10 | 10/10 | 9/10 | 6/10 |
+| e5-base | sub-pool 3,000 | 0.60 [0.45, 0.74] | 0.33 | 6/10 | 9/10 | 7/10 | 2/10 |
+
+- **Against the bar.**
+  - **e5-base fails all three parts.** It scores 0.38 overall, Latin 0.20 and Chinese 0.00, and is 0.48 below Gemini on shared pages. Its Chinese gold pages rank 20–1,392.
+  - **BGE-M3 passes (1) and (2), but only on the sub-pool, and misses (3) by 0.01:** 0.82 against Gemini's 0.93 there, a gap of −0.11. The sub-pool flatters every arm: e5 goes 0.38 → 0.60 when the pool shrinks from 8.6K to 3K. So BGE-M3 at full pool size would score lower than 0.82. It doesn't clear the bar either.
+- **Why the global lane fails.** The global lane found the gold page 4/40 times, and the gold book 6/40. The cross-lingual vectors are sound: the same Gemini vectors score 0.64 against 1.46M OCR-only rows. But an English query sits closer to any English translation than to a Latin page on its exact subject. With 5.2M translated rows in the same HNSW index, the original-language pages never reach the top 10. #4439 (language post-filter) is the same shape: a minority of the table is invisible to an unfiltered nearest-neighbour search.
+- **Chinese.** The embedder has barely reached Chinese: 9 of the 10 Chinese gold pages had no vector, and 3,438 Chinese books have zero rows (`embedding-coverage.mjs`, 2026-10-07). Once embedded, Gemini found 9/10. e5 found 0/10 and BGE-M3 6/10.
+- **Cost of the alternatives, measured on this box.**
+  - e5-base: 2.4 pages/s. The ≈1.67M untranslated OCR pages would take **≈8 days** of CPU, then a new 768-d table and HNSW index of ≈12 GB in Supabase (the database is at 166 GB), plus a new query path with its own query-embedding call.
+  - BGE-M3: 1.1 pages/s, so **≈17 days**.
+  - Neither is needed. The Gemini vectors exist for 1.46M OCR-only rows already. The ≈814K missing OCR pages would cost **≈$15** (Chinese 690,753 pages × 197 chars ≈ $6.30; the rest ≈ $8.50; at 4.29 chars/token, $0.20/M), ≈12 h of `embed-gemini --books-file`.
+- **The lane.** `hnsw.iterative_scan = relaxed_order` on the existing index (pgvector 0.8.0) costs no storage. It returned the gold page for 14/28 queries, against 18/28 exact. Latency is median 2.9 s, p90 8.3 s, max 13.5 s, on a loaded database. A partial HNSW index on `page_translations WHERE coalesce(translation,'') = ''` would sit close to the exact result at normal HNSW latency. It would cost ≈5.7 GB now (the existing index is 26 GB for 6.7M rows) and ≈9 GB once the tail is embedded.
+- **Caveats.**
+  - The queries were written by an AI reader, not by people, and keep the page's proper names. That may favour Gemini, whose embedding model shares a lineage with the models that write our translations.
+  - One relevant page per query, so a correct neighbouring page counts as a miss. That understates every arm equally.
+  - The OCR-only exact arm has n = 28, because 12 gold pages had no stored vector.
+  - Where the open models win: BGE-M3 finds q25 (1605 Guinea, palm-oil anointing) at rank 2, where Gemini has it at 12 on the sub-pool. e5 ranks the French Vattel pages (q26, q29) first. Misses common to Gemini and BGE-M3: q24, a catalogue page that is mostly Greek incipits; and q32, Leijing on strong vs mild drugs.
+  - *Replicated?* Single run. e5 and BGE-M3 are deterministic on this runtime. The Gemini query vectors were embedded once.
+- **Artifacts.** `scripts/eval/orig-lang-recall/` (pool builder, gold set, the two embedders, scorer); `results/2026-10-07-score.json` (per-query ranks for every arm). The pool and the vectors are not committed: 11 MB of OCR plus ~200 MB of vectors at `/root/claude-jobs/librarian-orig-5867/` on Hetzner, rebuildable with the seed.
+
+## 2026-10-07 · Do the wave-1 OCR engines hold their place on each chart's FULL page set? (#6011, wave 2)
+
+- **Question.** Each chart on `/quality/pareto` has a big "most-pages" panel. Before this run, those panels plotted only the two Gemini engines, plus PaddleOCR or olmOCR on some scripts, because wave 1 read 6–60 pages per script. Wave 2 ran the wave-1 engines on the rest of every chart's most-pages set. Where do they land with tight intervals?
+- **Answer.**
+  - **Five of the six engines now sit in every big panel they could reach.** Placed engines per panel went 2 → 7 on Latin, 3 → 8 on Chinese manuscript, 4 → 8 on Greek, 5 → 10 on other Latin-script, 2 → 6 on Syriac and 8 → 9 on Chinese print. The exceptions are Opus, which was unaffordable this wave, Sonnet on Greek and Syriac, and Armenian, where the new engines' output mostly cannot be aligned to the reference.
+  - **No new engine joins a frontier except DeepSeek-OCR**, and DeepSeek joins only as the cheapest, least accurate point, on Latin, Chinese manuscript and Syriac.
+  - **Gemini 3 Flash** is the top of every Latin-script and Greek panel.
+  - **Qwen3-VL 8B** ties PaddleOCR-VL on Chinese manuscript at three times the cost: 0.817 [0.801, 0.831] against 0.817 [0.804, 0.833], on 503 pages.
+  - **Claude Sonnet 5.5** is second only to Flash on Latin (0.940 against 0.947, 147 pages). It costs six times as much.
+  - **On Syriac, all four open/API engines score 0**, against Flash at 0.233 and Kraken Sophro at 0.624 (no cost measured for Sophro). They loop or emit a different script.
+- **Wave 1 replicates.** Each engine's position relative to Flash and Flash-Lite is the same on the full sets as on wave 1's subsets:
+  - **Chinese manuscript:** Qwen is better than Flash and Flash-Lite. Its CER was 0.175 on 60 pages and is 0.183 on 503.
+  - **Latin:** Sonnet is just under Flash.
+  - **Greek:** Chandra, Mistral and Qwen are far under Flash-Lite.
+- **Measure:** accuracy, as 1 − median CER against typed references. It is computed by `benchmark-score.mjs`, and Syriac by `score-syriac-retest.py`, the same scorers and references as the charts. Every panel compares engines only on the pages every plotted engine read.
+- **Grade:**
+  - **Confirmatory-size panels:** Latin (147), Greek (127) and Chinese manuscript (503).
+  - **Directional:** other Latin-script (23) and Chinese print (19).
+  - **Exploratory:** Armenian (5). Syriac has 40 pages but only 2 manuscripts.
+- **run_id:** `engine-wave2-6011-2026-10-07`.
+- **Spend: $10.77** against a hard cap of $50:
+  - **Mistral:** $2.64 for 661 pages.
+  - **Sonnet:** $4.36 for 578 pages.
+  - **GPU:** $3.77 for the whole H100 lease, 1.12 h.
+
+  The H100 `37176570` and its volume were deleted, and Scaleway returns 404.
+- **Decision:** none in production; the charts change. Opus, and Sonnet on Greek and Syriac, wait for OpenRouter credit or a working Anthropic key (#6011).
+
+### Design (preregistered `PREREGISTRATION-engine-wave2-6011.md`, `3aaf314c0`, pushed before any arm read a page)
+
+**Pages.** For each chart, the pages are its most-pages panel before this wave (`build-ocr-pareto.mjs --dump-sets`), minus the pages each engine read in wave 1. `engine-wave2-6011/build-bench.mjs` builds this set; the result is in `results/engine-wave2-6011/selection.json`:
+
+| engine | pages read |
+|---|---|
+| DeepSeek-OCR, Qwen3-VL 8B, Chandra 2 | 661 each |
+| Mistral OCR 4.1 | 661 |
+| Sonnet 5.5 | 578 of the 745 it needed |
+| Opus 5.5 | 0 of 835 |
+
+**Arms** were wave 1's, unchanged: same models, revisions, prompts and runners.
+- The GPU engines ran on one leased Scaleway H100-1-80G in pl-waw-2, on vLLM 0.31.0, now pinned in `engine-wave1-box.sh`.
+- DeepSeek-OCR failed to start on vLLM 0.31's V2 model runner, as in wave 1. It ran on the V1 runner with its n-gram processor, and that recipe is now encoded in `engine-wave1-box.sh`.
+
+**The Claude constraint.** The Anthropic key returns 401, and OpenRouter held $5.25 at the start. By the preregistered rule, Sonnet ran chart by chart, cheapest first, and only where it could finish the chart while keeping a $1 floor. That covered Armenian, Chinese print, other Latin-script, Latin and Chinese manuscript. Greek and Syriac were skipped. Seven pages hit OpenRouter's 402 for credit reserved by in-flight requests and were re-run at concurrency 1. Opus did not run.
+
+### Result: most-pages panel per chart, before → after
+
+| chart | before: placed (+ no cost), n | after: placed (+ no cost), n | frontier after |
+|---|---|---|---|
+| Latin print | 2, n = 158 | **7, n = 147** | DeepSeek-OCR, Flash-Lite, Flash (none drawn before: 2 engines) |
+| Early English print | 9, n = 44 | 9, n = 44 (unchanged; wave 1 already covered it; Opus unrun) | PaddleOCR-VL, olmOCR, Flash, Sonnet |
+| other Latin-script | 5 (+1), n = 23 | **10 (+1), n = 23** | PaddleOCR-VL, olmOCR, Flash-Lite, Flash |
+| Greek | 4 (+1), n = 127 | **8 (+1), n = 127** | PaddleOCR-VL, olmOCR, Flash-Lite, Flash |
+| Chinese manuscript | 3, n = 503 | **8, n = 503** | DeepSeek-OCR, PaddleOCR-VL |
+| Chinese print | 8, n = 19 | **9, n = 19** | DeepSeek-OCR, PaddleOCR-VL, Flash |
+| Armenian | 3 (+1), n = 5 | 4 (+1), n = 5 | Surya 2, Flash-Lite, Flash |
+| Syriac manuscript | 2 (+4), n = 40 | **6 (+4), n = 40** | DeepSeek-OCR, Flash-Lite, Flash (none drawn before) |
+
+Accuracy, with the 95 % CI, on the after panels:
+
+| chart | engine | accuracy [95 % CI] |
+|---|---|---|
+| Latin (147) | Flash | 0.947 [0.939, 0.955] |
+| | Sonnet | 0.940 [0.928, 0.949] |
+| | Flash-Lite | 0.933 [0.925, 0.939] |
+| | Chandra | 0.933 [0.922, 0.941] |
+| | Mistral | 0.929 [0.916, 0.943] |
+| | Qwen | 0.920 [0.915, 0.933] |
+| | DeepSeek | 0.904 [0.893, 0.911] |
+| Greek (127) | Flash | 0.923 [0.906, 0.935] |
+| | Flash-Lite | 0.878 [0.841, 0.893] |
+| | Chandra | 0.750 [0.718, 0.793] |
+| | Mistral | 0.747 [0.703, 0.798] |
+| | Qwen | 0.712 [0.679, 0.774] |
+| | olmOCR | 0.564 |
+| | PaddleOCR-VL | 0.520 |
+| | DeepSeek | 0.121 [0, 0.446] |
+| Chinese manuscript (503) | PaddleOCR-VL | 0.817 [0.804, 0.833] |
+| | Qwen | 0.817 [0.801, 0.831] |
+| | Flash | 0.798 [0.782, 0.816] |
+| | Chandra | 0.790 [0.775, 0.808] |
+| | Sonnet | 0.782 [0.755, 0.804] |
+| | Flash-Lite | 0.742 [0.720, 0.761] |
+| | Mistral | 0.736 [0.719, 0.756] |
+| | DeepSeek | 0.571 [0.528, 0.609] |
+| Syriac (40) | Flash | 0.233 [0.145, 0.330] |
+| | Mistral | 0.036 |
+| | Flash-Lite | 0.009 |
+| | DeepSeek, Qwen, Chandra | 0 |
+
+The Kraken Syriac models were unchanged and still have no measured cost.
+
+**Failure counts** for the wave-2 pages, excluding Syriac:
+
+| engine | catastrophic (CER > 0.5) | loops | empty | unaligned, ref tiers |
+|---|---|---|---|---|
+| DeepSeek-OCR | 243 / 621 | 147 | 31 | 10 |
+| Mistral | 37 | 7 | 1 | 5 |
+| Sonnet | 27 / 578 | 0 | 0 | 2 |
+| Qwen | 19 | 9 | 0 | 12 |
+| Chandra | 12 | 0 | 0 | 3 |
+
+No engine refused a page.
+
+**Syriac, all 40 pages:** every engine scored at or above CER 0.5 on all 40 pages. The loop counts were DeepSeek 26, Qwen 22, Chandra 16 and Mistral 33.
+
+**Measured cost, this wave.**
+
+| engine | $ / 1,000 pages | basis |
+|---|---|---|
+| Sonnet 5.5 | **$12.32 per 1,000 pages** on Chinese print | metered, 19 pages |
+| Sonnet 5.5 | $16.18 on Latin | metered |
+| Sonnet 5.5 | $5.12 on Chinese manuscript | metered |
+| Sonnet 5.5 | $14.89 on other Latin-script | metered |
+| Mistral | $4.00 | metered |
+| DeepSeek-OCR | $0.85 | billed lease, split by inference time |
+| Qwen | $1.78 | billed lease, split by inference time |
+| Chandra | $3.07 | billed lease, split by inference time |
+
+The API rates are within 25 % of wave 1. The GPU rates are 11–59 % under wave 1's ($0.96 / $3.43 / $7.55), because this page mix is two-thirds short Chinese leaves. As preregistered, the charts keep wave 1's figures, plus the one new Sonnet figure for Chinese print, where wave 1 had none.
+
+### Caveats
+
+- **Latin 158 → 147.** In the `ref-ws` / `ref-pinned` passage tiers, a page where an engine's text cannot be aligned to the passage reference is coverage, not a CER. On 11 Latin tier pages at least one new engine could not be aligned: DeepSeek 8, Qwen 7, Chandra 3, Mistral 3, Sonnet 1. Those pages leave the shared set.
+- **Armenian.** Most new engines could not be aligned on these 5 pages: Qwen on 0 of 5, DeepSeek and Mistral on 3, Sonnet on 4. Only Chandra joins the panel.
+- **Baseline check.** Re-scoring the chart engines' outputs on the wave-2 pages reproduced 2,665 of 2,681 committed cells, and Syriac lite 40 of 40. The exceptions:
+  - one EEBO lite output, the same later-run file wave 1 found;
+  - 15 `ref-ws` cells on 6 German pages. On three of them every engine re-scores 0.004–0.031 CER lower now. The new engines on those pages are therefore scored against a slightly more favourable alignment than the committed comparators: 3 of 23 pages, at most 0.03.
+- **Chinese cohort references** are bundled (`refs/chinese-cohort-5547.refs.jsonl`). They must be unpacked before scoring. Left packed, the scorer silently scores all 432 pages against the proxy engine instead of the reference: the first scoring attempt here did exactly that.
+
+**Replicated?** Yes, in rank order on every script both waves read; see the Answer.
+
+**Artifacts:**
+- `results/engine-wave2-6011/`: `selection.json`, `outputs-*.jsonl`, `meter-*.jsonl`, `scored/`, `syriac-gt-score.json`, `gpu-box-raw.json`;
+- `src/data/ocr-pareto.json`;
+- `PREREGISTRATION-engine-wave2-6011.md`.
+
+## 2026-10-07 · Can Jev, asked one English sentence at a time, screen translations for reversed meaning? (#6062)
+<!-- PRIOR ART: scripts/eval/translation-vs-reference/backtrans/ (#5695 extra test) built the 150-page labelled set and ran three reference-free detectors at page level (D3 page AUC 0.71); scripts/eval/jev/additions-screen.py asked Jev a page-level question about added words. Neither asked Jev the sentence-level question. -->
+
+**Question.** Reversed meaning is the top translation defect in the #5695 reference runs (about 11 per 100 Latin pages, 16 Greek). The three reference-free detectors failed at page level (#5748). Jev works best on pairs. Does a sentence-sized question work better than a page-sized one?
+
+**Answer.** No, not as a screen. Jev ranks sentences that the judges quoted as reversed above clean sentences (AUC 0.84), and it catches every planted negation flip (21 of 21). At any useful threshold, though, about 96 of every 100 flagged sentences in the library would be false alarms. Its page-level ranking (AUC 0.72) is no better than D3's 0.71, and it costs about 2.7 times more per page, because the source page is sent once per sentence. **Recommendation: do not adopt it.** Close #6062 as a null result. Reversals stay a reading task for the reference judges.
+
+**Method.**
+- **Labels:** `scripts/eval/results/xlref-backtrans-2026-10/set.jsonl`, the same 150 served pages D1–D3 were scored on: 47 pages where at least one of the two blind Opus judges quoted a reversal, and 103 random pages that neither judge marked reversed. The English is cleaned (notes, glosses, summaries and markup removed) and split into 2,437 sentences.
+  - **Positive:** a sentence that contains or overlaps (at least 60% of the words) a judge's quoted reversal. 74 of the 75 quotes matched a sentence, giving 72 positive sentences.
+  - **Negative:** every sentence of the 103 unreversed pages (1,516).
+  - **Excluded:** the 849 unquoted sentences on reversed pages. They are used only for the page-level score.
+  - The "8 gallery pages" in the issue are served pages from the same #5695 tracks, whose quoted reversals are already among the 75 quotes. No separate set was built.
+- **Item:** the whole source page (first 6,000 characters) plus ONE English sentence. This is the "aligned pair" with the alignment left to Jev. The #5935 k-gram aligner matches same-language text and cannot align Latin or Tibetan to English.
+- **Questions:** two noul wordings, fixed before the run and not tuned. w1: "the English sentence reverses the meaning of the source at the place it translates (negates what it affirms, affirms what it denies, says the opposite)". w2: "the English sentence agrees in meaning with the source", scored as 1 − p. `mean` is their average.
+- **Positive control:** the #5695 gate's own plants (`raw/plants.json`: one negation dropped or added). Of the 30 plants, 21 changed exactly one sentence and kept the sentence count, so they could be paired. Each planted sentence is scored against its unplanted original.
+- **A/A:** 60 random sentences, re-asked.
+- **Code and data:** `scripts/eval/jev/reversal-screen.py`. Scores per sentence, with no text, are in `scripts/eval/results/jev-reversals-2026-10/`.
+
+**Results** (2,437 sentences, 150 pages)
+
+| wording | sentence AUC | page AUC (max over sentences) | planted > original | planted vs original AUC |
+|---|---:|---:|---:|---:|
+| w1 (reverses) | **0.837** | 0.714 | 21/21 | 0.982 |
+| w2 (agrees, inverted) | 0.757 | 0.701 | 21/21 | 0.963 |
+| mean | 0.805 | **0.723** | 21/21 | 0.982 |
+
+w1 at three operating points. The threshold is set on clean sentences.
+
+| clean sentences flagged | sentence recall | quoted reversals found | precision in this pool | precision at library base rate (0.84% of sentences) | pages flagged | reversed pages flagged | page precision, reweighted to 10.8% base rate |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 10% (p > 0.16) | 31/72 = 43% | 39/74 | 18% | **3.7%** | 102/150 | 41/47 | 15% |
+| 5% (p > 0.24) | 21/72 = 29% | 29/74 | 22% | 4.8% | 78/150 | 35/47 | 18% |
+| 1% (p > 0.50) | 8/72 = 11% | 15/74 | 33% | 8.2% | 34/150 | 20/47 | 28% |
+
+- **A/A:** the mean change in p on a re-asked sentence is 0.010 (w1). The score is stable, so the weakness is in the signal itself, not in noise.
+- **Sentence AUC by track (mean wording):** Latin 0.83, Greek 0.78, vernaculars 0.91 (one positive page), Hebrew/Arabic/Persian 0.72, Sanskrit/Pali/Chinese 0.78, Tengyur 0.89. All of these rest on 1–20 positives.
+- **The plants are easy and the real reversals are not.** Planted flips raise p by 0.70 on average. A real reversal is usually a wrong referent (outer vs inner emptiness), a wrong voice, or a misread particle. That is the same split D3 showed (93% of plants caught against about 34% of real reversals at the right spot).
+- **Top false alarms, read from the English only** (the source is not read by eye): Tibetan p.513 and p.528, Sanskrit p.722, a Dutch page whose English is itself garbled, a Persian page, and Tibetan p.589. One of them looks like it could be a real error the judges did not quote: Tengyur [p.528](https://sourcelibrary.org/book/6abeafd3896ea18127c8218e?page=528), "if these three features are not complete, one becomes a Universal Monarch". That would put true precision a little above the judge-based figure. It would not lift it to a usable level.
+
+**Cost.** 2,512 calls, 6.2M input tokens, $0.261 (gateway-billed), which is $0.0017 per page. D3 (Flash-Lite page check) costs $0.00062 per page at the same page AUC, so Jev here is about 2.7 times dearer, not cheaper. The page-level Jev pilots cost about $0.00007 per page.
+
+**Limits.**
+- **Labels are agreement with two Opus judges** who had a reference, not truth.
+- **Few positives:** 72 positive sentences on 47 pages, so per-track figures carry no weight.
+- **Base-rate estimate:** the library base rate of a reversed sentence (0.84%) is the quoted share of sentences on reversed pages (7.8%) × the 10.8% page base rate from the #5695 universe. Precision scales with it.
+- **The judges quote one or two spots per page.** An unquoted reversal on a clean-labelled page counts here as a false alarm.
+- **Untested variants:** one model, two wordings, no source alignment, and the source is cut at 6,000 characters (a few long pages).
+
+## 2026-10-07 · Can Jev screen served translations for omissions (source text left out of the English)? (#6061)
+<!-- PRIOR ART: 2026-10-06-jev-additions-screen-5982.md asked Jev the opposite question (words added) on the same client and threshold rule; the #5695 translation-vs-reference tracks (2026-10-04-translation-vs-reference-synthesis-5695.md) are the omission labels this reuses. Neither tested a cheap screen for omissions. -->
+
+**Question.** Omission is the most frequent fidelity defect the #5695 judges found (40% of 321 served pages; Sanskrit 70%). Can Jev (typed-decision model, about $0.00009 per page) rank pages so that a reviewer or a costlier judge reads the likely omissions first?
+
+**Method.** One state per page: the OCR source text, then the served English. The OCR's own metadata tags are stripped from the source, and notes, summaries and page metadata from the English (they render nothing of the source). Runs of `&nbsp;` padding are collapsed. A page longer than 6,000 characters on either side is split into proportional chunks that overlap their neighbours by 12%; the page score is the highest chunk score. That applies to 13 of 321 pages. Two noul wordings were set before the run and not tuned. w1: "the translation leaves out at least one sentence or clause of the source text…". w2 is the reverse ("renders the whole source text…"), scored 1 − p. `mean` is their average. Scripts: `scripts/eval/jev/omission-screen-fetch.mjs`, then `scripts/eval/jev/omission-screen.py`. Scores per page are in `scripts/eval/results/jev-omissions-2026-10/` (ids and scores only, no texts).
+
+Labels:
+- **(a) Planted controls.** 40 clean pages (no omission flagged, fidelity ≥ 4; seed 6061). One English sentence of eight or more words, neither the first nor the last, is deleted from each. Each planted page is paired with the same page unmodified.
+- **(b) Live pages.** All 321 #5695 served pages with their judges' label: omission is true when either of two blind Opus judges flagged a sentence, clause, list item, name, number or repeated formula on the source page as absent. The judges read the transcription and a published reference, not the image. 129 pages carry an omission and 192 do not.
+
+The threshold is the score at which 90% of the 40 clean pages fall at or below it, the same rule as the #5982 additions screen.
+
+**Results** (second run, after the `&nbsp;` fix below)
+
+| | controls AUC | planted recall | clean flagged | live AUC | live precision | live recall |
+|---|---:|---:|---:|---:|---:|---:|
+| w1 | 0.901 | 23/40 = 58% | 4/40 | **0.749** | 51/75 = **68%** | 51/129 = **40%** |
+| w2 | 0.794 | 45% | 4/40 | 0.724 | 42/63 = 67% | 33% |
+| mean | 0.860 | 48% | 4/40 | 0.746 | 46/68 = 68% | 36% |
+
+- **Base rate:** 40% of live pages carry an omission. Flagging 75 pages at 68% precision is a 1.7× lift over reading pages at random.
+- **By track (w1, live AUC):** Latin 0.82 (all 8 pages flagged were true), vernaculars 0.75 (7 omissions in 59 pages), Sanskrit/Pali/Chinese 0.68, Hebrew/Arabic/Persian 0.67, Greek 0.66.
+- **A/A:** the same 20 pages were asked again (10 planted, 10 live). Mean |Δp| was 0.025 (w1) and 0.029 (w2); the largest was 0.09. The score is stable, so the gap between controls and live pages is not noise.
+- **The 2 pages re-translated after judging** change nothing (AUC 0.747 without them).
+- **Length is not the signal.** The ratio of English to source characters gives live AUC 0.55. Combining it with Jev by rank lowers the AUC to 0.71.
+- **Cost:** two full runs of 396–401 calls each, $0.069 gateway-billed in all ($0.0337 for the reported run, about $0.00009 per call).
+
+**First run, and the fix.** The first run (live AUC 0.714, w1) left the `&nbsp;` padding in. One Latin page had 19,377 source characters, most of them padding, against 1,822 English characters. Its proportional chunks then paired different passages, and Jev scored it 0.94 on a complete translation. Collapsing the padding raised live AUC to 0.749. Neither the wordings nor the threshold were changed between runs.
+
+**Spot check of the disagreements** (read from the stored source and English texts, not the page image; 5 pages Jev ranked highest whose label is "no omission", 2 lowest with "omission"):
+- Clement, *Paedagogus* p.142 ([link](https://sourcelibrary.org/book/69942a43045dfc482ad76202?page=142)), labelled no omission, Jev 0.94 in run 1 and 0.68 in run 2 (just under the 0.78 threshold). **Jev is right:** the English stops at "belly-demon" and the last two source sentences are not rendered. The judges' reference cut presumably ended there.
+- Pseudo-Dionysius p.116 (a Greek page whose OCR repeats one word in a loop), Orphic Hymns p.381 (critical apparatus), Gregory of Nyssa p.502 and Acosta p.444 are complete renderings. These are Jev's false flags, and three of the four are apparatus- or loop-heavy pages.
+- Samaritan Pentateuch p.342 ([link](https://sourcelibrary.org/book/69920bb1e0a548a13d884da7?page=342)), labelled omission, Jev 0.38. The English renders verses 16–28 and drops the whole textual apparatus below them. **Jev misses a whole untranslated block** when the main text is complete.
+
+**Limits.** The labels are judged, not accuracy, and are noisy in both directions: one of five high-scoring "negatives" read was a real omission. The planted controls are single sentences of eight or more words; real omissions are often a clause, a name or a number, which is harder still. Only 13 pages were long enough to need chunking, so the chunking itself is barely tested. There was one threshold, chosen on 40 clean pages, and two wordings, not tuned.
+
+**Reading.** Jev is a weak omission screen.
+- At the control threshold it misses 42% of planted whole-sentence deletions and 60% of judged live omissions. As a gate in front of a judge it would drop most omissions.
+- As a **ranker** (read the highest-scored pages first) it offers a 1.7× lift, strongest on Latin.
+
+**Recommendation: do not adopt it as a screen.** Use it at most to order a by-eye review queue. A cheaper, more direct check for the commonest large omission seen here, an untranslated apparatus or commentary block, is structural (blocks present in the OCR but absent from the English), not a yes/no question to Jev. The question asked in #6062 (reversals, sentence pairs) suits Jev's strength on short paired texts better than a whole-page omission question does.
+
+## 2026-10-07 · Run 3: is our text in the public crawl, do models know what it says, and is it already online as text? Mostly not in the crawl; the content test failed its controls; three quarters already exist as raw OCR (#6038)
+
+**Question.** Run 2 found that for 52.2% [47.4–56.9] of identifiable works (W = 416) in the seed-6038 random 500, no frontier model can name the author from the title. That supports "models cannot recall these works". Run 3 tests three stronger statements a lab would care about, without relying on a model's self-report, on the same 500:
+(A) our transcription's text is not in the public crawl / open training corpora;
+(B) models do not know what these texts *say*;
+(C) no machine-readable text of the work exists publicly.
+Preregistered before any data query (commit aa05d5ee5). Four amendments were all written before any passage of the 500 was queried; one of them corrects a false statement in another.
+
+**Answer.**
+- **A, crawl presence (instrument passed its gates).** For **85.5% of works (424/496), none of 5 exact passages from our transcription occurs anywhere** in Common Crawl (Jan and Jul 2025 snapshots), the OLMo-2 pre-training mix (incl. DCLM-baseline), Dolma 1.7, RedPajama or the Pile. **A+ = 14.5% [11.7–17.9]** have ≥ 1 passage found (A++ ≥ 2: 6.3%). Read by eye, only 54% of hits are the same work (15/28); the rest are shared quotations (Scripture, the Digest, liturgy) or formulas. Same-work presence is therefore **≈ 8%**. Among works no model recalls (run 2), presence is 6.0% (13/217); among recalled works it is 22.6%.
+  **Sensitivity is the caveat.** Passages taken *from* the web copies of 27 famous works are found for 96% of works (77% of passages). Passages taken from *our OCR* of the same works are found for only **64% of works (41% of passages)**. Almost all the misses are early-print editions (Aldine Ovid, Caesar and Commedia; Bacon 1620; Schlegel's Gītā; a Servius manuscript), whose spelling, abbreviations and accents differ from modern web texts. Modern editions (Legge's Chinese, English translations) are found. Most of the 500 are early-modern Latin, so for them "not found" is weak evidence. A crude sensitivity-adjusted upper bound is 22.6%.
+  **And archive.org's own OCR is mostly not in these crawls.** Passages from the public `_djvu.txt` of 53 IA works were found for 6 works (11.3%; 5.3% of passages). Hyphenated line breaks lower this a little; see caveats.
+- **B, content knowledge: BROKEN INSTRUMENT. No content-knowledge number is published.** On the 20 famous controls, Gemini 3.1 Pro answered 63% of valid questions from a neutral description alone ("a classic Greek work") (gate ≤ 40%). It answered 24% of the rest (gate ≥ 60%), and closed-book beat the baseline by 5 points (gate ≥ 25). Read by eye, the cause is the questions themselves: they carry names and details (Nausicaa, the ships of Tarshish, Archimedes' fixed point) that identify a famous work without its title. The "guessability" baseline therefore measures recognition, not guessing. The judge is reliable: 48/50 agreement with blind eye labels, κ 0.92. The Opus arm was not run, because it is scored against the broken baseline.
+- **C, public machine-readable text: 73.8% [69.8–77.5] of the 500 already have one.** Almost all of it is raw machine OCR: IA `_djvu.txt` for every IA item (182/182), MDZ hOCR for 144/146, e-rara full text for 27/38. Curated e-texts (Wikisource, Kanripo, GRETIL, ETCSL) cover 6.0%. That is a lower bound: the seeded 40-work eye check found 2 Wikisource texts the search missed. The provider's OCR could not be queried for 21.4% (bph, Gallica 403, Kloss, BL, BDRC, Manchester…); these are "unknown", not "absent". IA's OCR of Śāradā manuscripts is noise (3/3 checked), so "raw OCR exists" overstates usable text for manuscripts.
+- **Fused, the preregistered "strongest offer":** in W, not recalled, not in the crawl, and no public e-text. That is **11.5% [8.8–15.0] of works (48/416); 8.6% [5.8–12.0] of volumes; 6.4% [3.4–10.1] of pages.** It is 4.6% if unknown-provider works are excluded (conservative), 12.3% without A, and 19.2% unrestricted over the 500. B is excluded as broken. Layer C drives this, and it is concentrated in providers without a public OCR service ("other": 50.6%; IA 0%, MDZ 1.4%, e-rara 17.1%).
+- **Post hoc** (not preregistered): **not recalled AND not in the crawl, ignoring public OCR, is 49.0% [44.3–53.8] of W** (volumes 36.5%, pages 33.8%). The crawl layer removes only 13 of run 2's 217 unrecalled works.
+
+**Design.** `measure: accuracy` (exact-match presence; closed-book QA against references) with positive and negative controls.
+- **A.** k = 5 passages per work from our OCR body pages (10th–95th percentile), cleaned identically for every source: 8 words (≥ 40 chars), 10 CJK characters, or 8 Tibetan syllables; punctuation-free windows preferred; a `\n` variant where the source line breaks. Counted with infini-gram mini (`v2_cc-2025-30`, `v2_cc-2025-05`; per passage) and infini-gram (`v4_olmo-mix-1124_llama`, `v4_dolma-v1_7_llama`, `v4_rpj_llama_s4`, `v4_piletrain_llama`; OR-group-tested, ≤ 4 passages per query, groups with a hit split down to exact per-passage counts). 4,581 strings × 6 indexes, 0 error cells. Both APIs sit behind an AWS gateway that answers 403 above ~1 request/s. Amendments 2–4 cut the CC snapshots from 7 to 2 and moved DCLM and the Pile to the OR-capable API, before any passage of the 500 was queried. Controls: P-web, 27 works with passages from Perseus, the Latin Library, Wikisource (la/it/zh/sa), Sefaria and Gutenberg (Chymische Hochzeit failed to fetch). P-ours: our OCR of the same 28 works. P-IA: a seeded 60 IA works (53 with usable `_djvu.txt` passages). Negatives: 496 word-shuffled passages, 0 hits. Provenance: one hit per work for a seeded 40 works, retrieved from CC 2025-30 (28 retrieved, 12 failed on the API) and labelled by eye.
+- **B.** 176 works of the 500 with ≥ 10 translated pages, plus 20 famous controls. Questions: 5 per work, one per randomly chosen translated page, written by `gemini-3-flash-preview` (973). Open-book filter (Flash): 959 valid. Guessability: Pro with a neutral description. Closed-book: Pro with title, author, year and language. Pro was set to `thinkingBudget` 256 and used ~650–900 thinking tokens anyway. Judge: Flash.
+- **C.** Per work: IA metadata API, MDZ manifest + hOCR of a middle canvas, e-rara / Göttingen / SBB / SLUB METS FULLTEXT, Wikisource search (author + title words, in the work's language), the Kanripo GitHub repo for Kanripo-keyed Chinese works, Sefaria name API, GRETIL index. Every curated candidate (28) was checked by eye, and a seeded 40 per-work results were re-checked by eye: 34/40 fully right; 1 code bug (fixed and re-run), 2 Wikisource misses, 3 junk-OCR manuscripts. CText's API refuses this IP (unknown). Perseus has no work in scope (no pre-1400 Latin/Greek in the 500). BDRC/84000 were not queryable by title.
+
+**Agreement.** On W, recall vs crawl presence agree 59.9% (κ 0.17). Recall vs public e-text 53.4% (κ 0.09). On the 500, crawl presence vs public e-text 36.9% (κ 0.05). The layers measure different things. Recalled works are more often in the crawl (23% vs 6%), but a public OCR file almost never puts the text in the crawl: 303 of the 365 works with public e-text and passages were not found.
+
+**What this does not cover.**
+- Training data beyond the public crawl: book corpora (Google Books, Books3, LibGen-derived sets), licensed and private data, and anything crawled after July 2025. Most of our transcriptions were published after these snapshots.
+- File-level exposure of *our* transcription. With the CC snapshots dated Jan–Jul 2025, A asks whether the work's text was on the crawled web, not whether our site was crawled.
+- Content knowledge (B failed). Redesign proposed in the PR: questions with identifying names masked; or multiple choice with distractors drawn from other pages of the same work, which fixes chance at 25%; famous-work gate unchanged.
+- P-IA's sensitivity is a slight underestimate: cleaning joins hyphenated line breaks, which a raw crawled `_djvu.txt` keeps.
+
+*Grade.* A: decision-grade for "most of our works' text is not in the 2025 public crawl in the form we hold it", with the sensitivity caveat attached. B: failed instrument. C: decision-grade for raw OCR, lower bound for curated text. *Decision.* Do not say "our text is not in the public crawl" without the sensitivity clause. Do not say "models do not know what these texts say" (untested). Do say "three quarters of these works already exist publicly as raw machine OCR, and that OCR is almost never in the crawl". *Replicated?* No. *Cost.* Gemini $6.65 of the $10 cap (endpoint `eval/ai-exposure-r3`, realtime: the script client has no batch path). infini-gram and the e-text APIs were free. No Claude subagents were used. Mongo was read-only. *Artifacts:* `scripts/eval/ai-exposure-r3-6038.mjs` (A), `scripts/eval/ai-exposure-r3-6038-bc.mjs` (B, C, report); `results/ai-exposure-r3-6038/` holds `counts.jsonl` and `counts-long.jsonl` (sha256-20 of each passage × index counts; no text), `per-work.jsonl`, `report.json` and `report.md`, `a-prov-labels.jsonl`, `b-grades.jsonl`, `b-eye-judge.jsonl`, `b-works.jsonl`, `c-per-work.jsonl`, `c-eye.jsonl`, `c-eye40.jsonl`, `controls-A.jsonl`, `r2-labels.jsonl` and `spend.jsonl`. Passages, query strings, questions and answers stay private (`/root/claude-jobs/ai-exposure-r3-6038-private/`).
+
+## 2026-10-06 · Six untried OCR engines on the Pareto charts' own pages: does any of them beat Gemini? (#6011, wave 1)
+
+- **Question.** The Pareto charts (#5983) compare engines we have tried. Do the untried ones do better on the same pages and references? Six were tested: DeepSeek-OCR, Qwen3-VL-8B-Instruct, Chandra OCR 2, Mistral OCR 4.1, Claude Opus 5.5 and Claude Sonnet 5.5. For each we measured accuracy, catastrophic pages, invention, refusals and the cost of a page. This was a benchmark only: nothing was written to production.
+- **Answer.** **No arm beats Gemini 3 Flash outside the margin on any script.** Three arms beat production Flash-Lite clearly:
+  - **Qwen3-VL-8B on Chinese manuscript.** 49 wins / 5 losses against lite, median Δ CER +0.025 [0.017, 0.033]. Against flash: 34 / 15, +0.011 [0.000, 0.017]. It costs **$3.43 per 1,000 pages** self-hosted.
+  - **Claude Opus 5.5 on Greek.** 53 / 5 against lite, +0.025 [0.011, 0.036]. It ties flash (30 / 23, +0.001 [−0.001, 0.005]).
+  - **Claude Sonnet 5.5 on early English.** 45 / 5 against lite, +0.014 [0.005, 0.027]. It ties flash (27 / 11 / 22 ties, +0.000).
+
+  Where the reference was weak or absent, these results hold: nothing general-purpose comes near BDRC Yigdzin on Tibetan (best: Opus at identity 0.715 against 0.949). Chandra 2, DeepSeek-OCR and Mistral OCR 4.1 lose to lite almost everywhere except early English. Opus and Qwen both **invent** Tibetan, and Mistral invented a page tail by eye.
+- **measure:** accuracy. CER is measured against typed references with `benchmark-score.mjs`. Tibetan is measured as syllable identity against the Derge e-text (`kanjur_align.py`). Every comparison is **paired on shared pages** against the committed per-page CER of the chart's engines. **Grade:** directional at most (≤ 60 books per script). The Sanskrit, Persian, Arabic and Hebrew cells are exploratory (9–14 pages per language).
+- **run_id:** `engine-wave1-6011-2026-10-06`.
+- **Spend: $18.41** against an estimate of $27 and a hard stop of $30.
+  - Mistral: $1.54.
+  - Sonnet: $2.21.
+  - Opus: $10.06.
+  - GPU: $4.60 for the whole H100 lease, 1.37 h.
+- **Decision:** none in production. The wave-2 conditions are set out below, and the decisions go to Derek on #6011.
+
+### Design (preregistered `PREREGISTRATION-engine-wave1-6011.md`, `595eaf33a`, pushed before any arm ran; amendment 1 also before)
+
+**Pages.** 385 pages, one per book, drawn with seed 6011 from the referenced pages of each chart stratum (`engine-wave1-6011/build-bench.mjs`, `results/engine-wave1-6011/selection.json`):
+
+| script | pages | stratum |
+|---|---|---|
+| Latin print | 60 | `latin-period-5126` |
+| Early English | 60 | `eebo-tcp-5488` |
+| Greek | 11 + 49 | `greek` + `greek-ext` |
+| Chinese woodblock / canon | 28 + 12 | `chinese` + `chinese-ext` (woodblock class) |
+| Chinese manuscript | 60 | `chinese-cohort-5547` |
+| Tibetan | 60 | new registry `tibetan-kangyur-4523`: 60 of the 100 Kangyur pages of the 2026-10-01 redraw |
+| Sanskrit / Persian / Arabic / Hebrew | 14 / 10 / 11 / 6 | new registry `a5-nonlatin-5700`: every #5695 track page with a by-eye corrected transcription |
+| Hebrew (pinned) | 4 | the pinned Hebrew pages |
+
+**Baseline check, $0.** Re-scoring the chart engines' outputs on these pages with the current scorer reproduced the committed per-page CER on **764 of 766 cells**. The two exceptions are EEBO lite texts on Hetzner that come from a later run. Pairing therefore always uses the committed CER.
+
+**Arms**, all reading identical JPEG bytes (max 2,400 px):
+
+| arm | how it ran | prompt | pages |
+|---|---|---|---|
+| DeepSeek-OCR | vLLM 0.31, n-gram anti-repeat processor (V1 runner) | `Free OCR.` | all 385 |
+| Qwen3-VL-8B-Instruct | vLLM 0.31 | the benchmark's generic transcription prompt | all 385 |
+| Chandra OCR 2 | vLLM 0.31, the vendor's own client and prompt; HTML → text, headers kept | vendor prompt | all 385 |
+| Mistral OCR 4.1 | `/v1/ocr` endpoint | none | all 385 |
+| Claude Opus 5.5 | effort `low` | generic | Greek, Chinese woodblock, Tibetan, Sanskrit/Persian/Arabic/Hebrew (205) |
+| Claude Sonnet 5.5 | effort `low` | generic | Latin, early English, Chinese manuscript (180) |
+
+The three self-hosted models ran on one leased Scaleway H100-1-80G; their model revisions are in `results/engine-wave1-6011/gpu-box.json`. Both Claude arms ran through OpenRouter, with the provider pinned to Anthropic and no fallback.
+
+**Comparators.** The chart's own committed results: flash-preview and lite, plus PaddleOCR-VL and others where the chart has them. For A5 the comparators are flash-preview (#5700 re-read) and the served OCR. For Tibetan, the comparator is Yigdzin.
+
+**Statistics.**
+- Paired Δ = CER(comparator) − CER(arm), so a positive Δ means the arm is better.
+- Results are reported as wins / losses / ties, with a median Δ and a seeded bootstrap 95 % CI.
+- Catastrophic means CER > 0.5. Invention = `invention_ref`, the share of the arm's words that are absent from the reference.
+- No A-vs-A arm was bought for the new engines. The chart's lite A-vs-A is the only noise floor available.
+
+**Deviations from the priced plan** (amendment 1, all made before any arm read a bench page):
+- **Claude went through OpenRouter.** The Anthropic key on Hetzner returns 401.
+- **Sonnet ran adaptive thinking at effort `low`.** OpenRouter will not disable reasoning. Sonnet used 0 thinking tokens, and Opus used 1,481 across all its pages.
+- **The GPU was an H100, not an L4.** L4s were in "shortage" in every zone.
+- **DeepSeek-OCR needed three attempts.**
+  - vLLM 0.31's V2 runner rejects its n-gram processor.
+  - The plain serve hits a Triton bug.
+  - The first V1-runner run sent `max_tokens` 8,192, which exceeds the model's 8,192 context, and every page returned HTTP 400.
+  - It finally ran on the V1 runner with the processor and `max_tokens` 7,000.
+
+### Result: accuracy (median CER on answered referenced pages, 95 % CI; paired against the chart's committed CER)
+
+| script | arm | median CER | catastrophic | invention | vs flash-preview W/L/T, Δ [CI] | vs lite W/L/T, Δ [CI] |
+|---|---|---|---:|---:|---|---|
+| **Latin** (60) | flash-preview | 0.072 [0.061, 0.080] | 0 | | | |
+| | lite | 0.081 [0.076, 0.087] | 1 | | | |
+| | Sonnet 5.5 | 0.087 [0.079, 0.101] | 0 | 0.16 | 16/44/0, −0.013 [−0.020, −0.006] | 24/33/3, −0.001 [−0.012, 0.002] |
+| | Chandra 2 | 0.091 [0.084, 0.097] | 0 | 0.17 | 12/45/3, −0.017 | 16/42/2, −0.007 [−0.014, −0.002] |
+| | Qwen3-VL-8B | 0.099 [0.085, 0.110] | 0 | 0.24 | 8/52/0, −0.027 | 9/51/0, −0.013 |
+| | Mistral 4.1 | 0.105 [0.093, 0.116] | 0 | 0.20 | 6/53/1, −0.027 | 13/46/1, −0.018 |
+| | DeepSeek-OCR | 0.121 [0.110, 0.135] | 2 | 0.34 | 0/60/0, −0.048 | 4/55/1, −0.038 |
+| **Early English** (60) | flash-preview | 0.043 [0.036, 0.051] | 5 | | | |
+| | lite | 0.057 [0.052, 0.073] | 1 | | | |
+| | **Sonnet 5.5** | **0.042 [0.032, 0.047]** | 0 | 0.04 | 27/11/22, +0.000 [0.000, 0.001] | **45/5/10, +0.014 [0.005, 0.027]** |
+| | Chandra 2 | 0.042 [0.034, 0.051] | 0 | 0.05 | 13/36/11, −0.001 | 36/17/7, +0.007 [0.000, 0.023] |
+| | Mistral 4.1 | 0.047 [0.041, 0.056] | 0 | 0.06 | 18/37/5, −0.002 | 37/19/4, +0.003 [0.000, 0.019] |
+| | Qwen3-VL-8B | 0.050 [0.040, 0.056] | 0 | 0.08 | 13/41/6, −0.004 | 36/19/5, +0.008 [0.000, 0.018] |
+| | DeepSeek-OCR | 0.074 [0.061, 0.087] | 1 | 0.18 | 7/52/1, −0.018 | 19/40/1, −0.006 |
+| **Greek** (60) | flash-preview | 0.085 [0.064, 0.110] | 0 | | | |
+| | lite | 0.119 [0.098, 0.160] | 0 | | | |
+| | **Opus 5.5** | **0.082 [0.064, 0.096]** | 1 | 0.11 | 30/23/7, +0.001 [−0.001, 0.005] | **53/5/2, +0.025 [0.011, 0.036]** |
+| | Chandra 2 | 0.260 | 3 | 0.50 | 0/60/0, −0.100 | 0/60/0, −0.080 |
+| | Mistral 4.1 | 0.260 | 2 | 0.47 | 2/57/1, −0.107 | 1/57/2, −0.093 |
+| | Qwen3-VL-8B | 0.298 | 4 | 0.52 | 0/60/0, −0.141 | 0/60/0, −0.120 |
+| | DeepSeek-OCR | 0.678 | 38 | 0.73 | 0/60/0, −0.540 | 0/60/0, −0.454 |
+| **Chinese woodblock / canon** (40) | flash-preview | 0.180 [0.139, 0.229] | 0 | | | |
+| | lite | 0.207 [0.149, 0.316] | 2 | | | |
+| | Qwen3-VL-8B | 0.164 [0.133, 0.227] | 0 | 0.09 | 21/12/7, +0.003 [0.000, 0.010] | 29/5/6, +0.017 [0.008, 0.030] |
+| | Opus 5.5 | 0.171 [0.137, 0.214] | 0 | 0.13 | 17/11/12, +0.000 [0.000, 0.005] | 25/8/7, +0.008 [0.000, 0.026] |
+| | Chandra 2 | 0.180 | 0 | 0.13 | 10/22/8, −0.004 | 25/9/6, +0.007 |
+| | Mistral 4.1 | 0.256 | 1 | 0.24 | 2/37/1, −0.048 | 8/30/2, −0.023 |
+| | DeepSeek-OCR | 0.374 | 17 | 0.26 | 0/38/2, −0.135 | 4/33/3, −0.092 |
+| **Chinese manuscript** (60) | flash-preview | 0.196 [0.160, 0.267] | 1 | | | |
+| | lite | 0.255 [0.176, 0.338] | 6 | | | |
+| | **Qwen3-VL-8B** | **0.175 [0.150, 0.244]** | 3 | 0.09 | **34/15/11, +0.011 [0.000, 0.017]** | **49/5/6, +0.025 [0.017, 0.033]** |
+| | Chandra 2 | 0.207 | 2 | 0.17 | 18/30/12, −0.003 | 34/16/10, +0.007 [0.000, 0.015] |
+| | Sonnet 5.5 | 0.226 | 8 | 0.16 | 15/34/11, −0.006 | 31/19/10, +0.006 [0.000, 0.016] |
+| | Mistral 4.1 | 0.241 | 6 | 0.27 | 3/55/2, −0.045 | 16/41/3, −0.015 |
+| | DeepSeek-OCR | 0.435 | 27 | 0.26 | 1/55/4, −0.206 | 9/49/2, −0.112 |
+
+**Sanskrit, Persian, Arabic, Hebrew (A5; exploratory, 9–14 pages each).** The reference is the served OCR corrected by eye, so it **favours the engine that made the served OCR**. The by-eye checks found two concrete cases of this, set out below.
+- **Opus 5.5** is level with flash-preview on Sanskrit (6/6/2) and Persian (median CER 0.080 for both). It is behind on Arabic (2/9) and ahead on Hebrew (8/2, +0.032).
+- **Chandra 2 and Mistral 4.1** are behind flash on every one of the four languages.
+- **Qwen3-VL-8B and DeepSeek-OCR** fail on all four (median CER on Hebrew 1.0).
+
+  Four of the 41 A5 references cover less than 60 % of what the complete readers transcribe; the served OCR had dropped an apparatus or a column. Excluding those four changes no sign: Opus vs flash on Sanskrit is 5/5, Δ 0.000, and on Arabic 1/8, −0.023.
+
+**Tibetan** (60 Kangyur manuscript pages, syllable identity against Derge, higher is better; no page was off-index):
+
+| arm | median identity [CI] | pages < 0.5 | vs Yigdzin W/L/T, Δ [CI] |
+|---|---|---:|---|
+| BDRC Yigdzin (served) | 0.949 [0.932, 0.968] (the 10-01 redraw: 0.947) | 0 | |
+| Claude Opus 5.5 | 0.715 [0.680, 0.785] | 4 | 6/54/0, −0.191 [−0.257, −0.144] |
+| Mistral OCR 4.1 | 0.564 [0.468, 0.646] | 25 | 3/57/0, −0.365 |
+| Qwen3-VL-8B | 0.032 | 58 | 0/60/0 (loops) |
+| Chandra 2 | 0.000 | 60 | 0/60/0 (describes the leaf in English instead of transcribing it) |
+| DeepSeek-OCR | 0.000 | 60 | 0/60/0 (loops one syllable cluster) |
+
+**Refusals.** No arm returned a stated refusal on any page.
+- **Four Claude calls ended with an API-side `invalid_request_error`**, unbilled: three Opus, one Sonnet. One came back empty (a Herodotus page; the preregistered retry reproduced it) and three were cut off part-way. They are scored as delivered and counted here. This is not a misread and not a stated refusal.
+- **Flash-preview's committed outputs are empty on 5 EEBO pages** (CER 1.0; likely unrecorded RECITATION, since the 10-01 run kept no meter). Those pages are where Sonnet, Chandra and DeepSeek record "wins" of about 0.95 over flash.
+
+### Result: cost per page, measured
+
+The table below gives the cost per page of each arm. In each row the measured rate is the first figure.
+
+| arm | $ per 1,000 pages | basis |
+|---|---|---|
+| DeepSeek-OCR | DeepSeek-OCR **$0.96 per 1,000 pages** (H100 billed share; $0.82 inference only) | whole lease, split by inference time |
+| Qwen3-VL-8B | Qwen3-VL-8B **$3.43 per 1,000 pages** (H100 billed share; $2.92 inference only) | same |
+| Chandra 2 | Chandra 2 **$7.55 per 1,000 pages** (H100 billed share; $6.41 inference only) | same, long Tibetan retries |
+| Mistral OCR 4.1 | Mistral OCR 4.1 **$4.00 per 1,000 pages** realtime | metered, list price |
+| Claude Sonnet 5.5 | Sonnet 5.5 **$16.89 per 1,000 pages** on Latin, **$15.27** on early English, **$4.62** on Chinese manuscript | metered realtime (OpenRouter usage.cost) |
+| Claude Opus 5.5 | Opus 5.5 **$43.65 per 1,000 pages** on Greek, **$17.20** on Chinese print, **$75.81** on Tibetan, **$49.12** on A5 | metered realtime |
+| for scale | lite $1.28 and flash-preview $2.71 per 1,000 (metered Batch, `ocr-cost-2026-10-06.json`) | |
+
+All the API rates are realtime; Batch would halve the Claude and Mistral lines. The GPU rates are for an H100 at €2.87/h. An L4, as priced, would be slower per page and cheaper per hour.
+
+Sonnet 5.5 bills about 1,100 image tokens on Chinese manuscript pages and 2,900 on Latin ones, so the API downsizes some pages more than others.
+
+### By eye (20 pages, one per book, each read from the image; `results/engine-wave1-6011/by-eye.jsonl`)
+
+The pages were chosen as each script's largest paired wins and losses. The closer read was flash on 8 pages, Opus on 6, Sonnet on 1, Qwen on 1, Yigdzin on 1 and a tie on 2; on 1 page the reference itself was defective.
+
+**Invented text.** Six arms invented text on the pages read by eye, counting each arm once:
+- **Flash-preview:** on a Hebrew commentary it replaced "כלומר גם עליו גם" with the next words of Genesis 27:1.
+- **Mistral:** it appended a count from 一 to 一百 to a Chinese leaf.
+- **Opus:** it wrote fluent Kangyur-style Tibetan that is not on the leaf (identity 0.26).
+- **Qwen:** it loops on Tibetan and on Hebrew.
+- **Chandra:** it added niqqud to an unvocalised Hebrew manuscript.
+- **DeepSeek:** it loops on Sanskrit.
+
+**Failure modes that look like misreads but are not:**
+- Qwen read a 180°-rotated Chinese leaf backwards.
+- Sonnet read a Siku leaf left-to-right.
+- Qwen dropped the lower half of the second column of a Latin folio.
+- Mistral dropped the first hemistich of every couplet on a Persian page.
+
+**The reference was the problem on 2 of the 20 pages:**
+- On an Arabic page, Opus reproduces the print's typo (لأنشي) and its partial vowelling. The served-OCR-derived reference and flash both normalise them, so Opus is scored down for being faithful.
+- On a Sanskrit critical-edition page, the reference omits the whole apparatus.
+
+**The Greek win is real reading.** Opus reads the ligatured 16th-c. Greek of Victorius as printed (δοκίμου), not as Aristotle's vulgate (δοκεῖ που).
+
+**Sonnet's Latin gap is mostly one error class.** It writes f for every long s (prifca ftirpe). The scorer folds ſ but cannot fold f.
+
+### What this means for wave 2 (the issue's own conditions)
+
+- **Qwen3-VL-32B on an H100.** The condition was "only if the 8B beats lite on Chinese". **It does**, on manuscript (49/5) and on woodblock / canon (29/5), at about $3 per 1,000 pages self-hosted. It does not yet beat flash outside the CI. The 32B is the natural next arm, together with an orientation check, since a 180° leaf defeats it.
+- **GPT (astra).** The condition was "only on strata where Opus or GPT sol show a gain". Opus gains over **lite** on Greek but only **ties flash**, at 16 times flash's cost. Whether "a gain" means over the production engine or over the best engine is Derek's call.
+- **Tibetan.** Nothing general-purpose is close to Yigdzin, and both Claude and Qwen invent on these leaves. Do not route Tibetan to any of these engines.
+- **Chandra 2.** It is not better than lite outside English and Chinese. Its research-licence threshold makes it moot as a production lane for now.
+
+**Replicated?** No. The DeepSeek-OCR and Mistral results agree in sign with the July `dataset/v0.3` runs (both below lite on Latin print).
+
+**Artifacts.**
+- Code: `scripts/eval/engine-wave1-6011/` (`build-bench.mjs`, `analyze.mjs`, `bundle-outputs.mjs`) and `scripts/gpu/engine-wave1-{scw.sh,box.sh,run.py}`.
+- Results, all in `results/engine-wave1-6011/`:
+  - `outputs-<engine>.jsonl` and `meter-<engine>.jsonl`;
+  - `scored/` (fed to the Pareto charts);
+  - `summary.json`, `tibetan-scores.jsonl`, `by-eye.jsonl`, `gpu-box.json` and `selection.json`.
+- Registries: `benchmark/{a5-nonlatin-5700,tibetan-kangyur-4523}.json` and the 41 A5 references.
+- Scaleway server `bfd082e0` was deleted with its volume; the provider confirmed 404.
+
 ## 2026-10-06 · How often does a translation carry untagged words of ours, and at which stage do they come in? (source-grounded additions detector, #5982)
 <!-- PRIOR ART: 2026-10-02-what-the-judge-calls-invention-5274.md typed the audit judge's "invention" flags by hand on 45 pages; 2026-10-06-translation-notes-free-5919.md and the #5942 phase-1 entry (PR #5958) hold the judge verdicts re-read in Q1; scripts/audit/translation-bridging.mjs (#5305) is the mechanical work list. None lists the untagged sentences of a page that render nothing in the source, and none compares against a typed text. -->
 
@@ -183,6 +1142,148 @@ One more page (`Latin Translation (Neo-Latin)` v2) was flagged and is a false fl
 
 **Artifacts.** `scripts/eval/untagged-additions/` (detector, runner, controls, draw, typed join, analysis); `scripts/eval/results/untagged-additions-2026-10/` (`results.json`, `q1.json`, control keys and scores, `draw.jsonl`, `typed.jsonl`, detector rows per model, `by-eye/`). Nothing was written to `pages`; no prompt row was changed.
 
+## 2026-10-06 · How many of our Latin and German pages can be checked against a human-typed text, and against a period English translation? DTA, CAMENA and EEBO-TCP as internal references (#6012)
+<!-- PRIOR ART: 2026-10-06-typed-editions-ground-truth-chinese-pali-5935.md (Kanripo, CBETA, VRI: the storage precedent and the k-gram offset voting reused here; it scores CER, this run builds the references and scores nothing); 2026-10-04-latin-print-by-century-5126.md (82 same-edition Latin pages, 65 from CAMENA, one page per book, located by hand); 2026-10-01-early-english-ocr-accuracy-against-eebo-tcp-5488.md (72 IA microfilm books joined to EEBO-TCP Phase I by catalogue number). None holds a whole corpus with provenance, matches German, or uses Phase II. -->
+
+**Question.** Latin is 37 % of our translated pages and German 11 %. Latin had 71 translation references and no typed source editions in use beyond #5126's 82 pages; German had 22 pages. Which of our books have a human-typed text in the Deutsches Textarchiv, CAMENA or EEBO-TCP, page by page? And which works we hold in Latin or German have a 16th- or 17th-century English translation in EEBO-TCP?
+
+**Design.** Run on 2026-10-06. $0: no model call. Read-only on Mongo. Nothing is served to readers; no book or page was created; no field was written. `measure: none` (this run builds references; it scores no engine).
+
+- **Rights first.** Each source's own terms page was read and quoted before anything was downloaded: `scripts/eval/typed-refs-6012/rights.json`. After download, the licence in every text's own header was read too.
+- **Storage.** Raw packages and derived text are in the private R2 bucket `sl-corpus-snapshots`, prefix `eval-refs/typed-refs-6012/`. Each object's sha256 was read back from R2 after upload. `images.sourcelibrary.org` answers 404 for that bucket. The main bucket's `private/` and `eval-artifacts/` prefixes are served by the public image host and were not used. The repo holds scripts, `rights.json`, manifests, and match and alignment rows (ids, hashes, offsets, scores). No corpus text is in the repo. No Mongo collection was added. This follows #5935: files under `scripts/eval/`, corpora outside the repo.
+- **Raw is never edited.** Text is derived by one versioned parse (`tei-pages-v1`): one record per typed page; running heads, signatures, catchwords and editorial corrections dropped; notes kept apart from the body; gaps counted.
+- **Match in two steps.**
+  1. *Candidates* from identifiers and catalogue fields: a shared scan id; the Internet Archive microfilm catalogue number against the TCP's STC / Wing / ESTC numbers; `edition_key` (the one definition, `scripts/lib/identity-fields.mjs`); then surname + title tokens (+ year).
+  2. *Decision by reading both texts.* Twelve seeded pages of our stored OCR are looked for in the typed text by k-gram offset voting (#5935's method). A pair is kept only if at least two are found. Then every page is aligned.
+- **Kind, from the page breaks, not the catalogue.**
+  - `same-edition`: at least 60 % of our aligned pages start and end where the typed text's own page breaks fall.
+  - `same-work-other-edition`: the text is found, the page breaks fall elsewhere.
+- **Per aligned page:** book id, page number, source id, the span in the typed text, the overlap score (share of the page's 8-grams found in the span), the alignment version (`kgram-vote-v2`).
+- **English translations (EEBO-TCP).** Work level. Evidence: the TCP header's own uniform title with "English" (*"Helvetius … Vitulus aureus … English."*) contained in our title, author agreeing; or author + a translation statement in the English title + two shared title stems. Then a probe at passage level: our page's stored English translation against each typed page of the old English, by idf-weighted shared words.
+- **By eye.** Claude subagents, one per source and check, reading the page image. The machine's claim was withheld from them. Verdicts: `scripts/eval/typed-refs-6012/eye-verdicts.json`.
+
+**Result: rights.**
+
+| source | licence as the source states it | found in the files | bulk package used |
+|---|---|---|---|
+| DTA | CC BY-SA 4.0 "soweit nicht anderweitig gekennzeichnet"; plain text "im Sinne der Gemeinfreiheit ohne jegliche Einschränkungen" | 2,645 of 5,481 headers say CC BY-SA 4.0. The rest: CC BY-NC 3.0 1,559, CC BY-SA 3.0/2.0 674, CC0 370, CC BY 218, Project Gutenberg licence 9, others 6 | `dta_komplett_2026-02-10.zip` (MD5 matches the download page) |
+| CAMENA | "Creative Commons Attribution / Share Alike" (the page links 3.0; the GitHub republication carries 4.0) | — | `nevenjovanovic/camena-neolatinlit` @771bb7f (the project has no dump) |
+| EEBO-TCP Phase I | released to the public 2015-01-01; "no restrictions whatever" | CC0 in 24,202 of 25,368 headers; 1,166 P4 headers still carry the pre-2015 partner-only text | the TCP's Dropbox folder, one 13.3 GB zip |
+| EEBO-TCP Phase II | "freely available to the public" since 2020-08-01; no licence deed on the page | **CC0 in all 34,958 headers** | same zip |
+
+All four allow bulk download and internal use. 1,574 DTA texts are NC or otherwise not for redistribution; the manifest marks each text.
+
+**Result: downloaded.**
+
+| source | texts | typed pages | characters |
+|---|---:|---:|---:|
+| DTA | 5,481 | 762,041 | 1.31 billion |
+| CAMENA | 1,751 files | 199,513 | 0.35 billion |
+| EEBO-TCP (I + II) | 60,326 | 4,029,127 | 8.03 billion |
+
+**Result: matched to our books.** 754 books in all, 107,252 distinct aligned pages (81,643 in same-edition books).
+
+| source | candidate pairs | not kept after reading | our books: same edition / other edition | aligned pages | of them on a typed page break |
+|---|---:|---:|---:|---:|---:|
+| DTA | 760 | 623 | 89 / 35 | 23,322 | 17,457 |
+| CAMENA | 2,877 | 2,693 | 88 / 80 | 7,764 | 4,038 |
+| EEBO-TCP | 5,522 | 4,981 | 331 / 133 | 76,178 | 60,361 |
+
+- Identifiers found little. DTA names 60 BSB scans and we hold none of them. `edition_key` gave 16 DTA, 6 CAMENA and 9 EEBO same-edition pairs. The microfilm catalogue number gave 121 EEBO pairs. The rest came from surname + title tokens (8,974 pairs), and reading the texts kept 703 of them (8 %).
+- CAMENA pages are few per book because most matched Latin books have stored OCR on their first 25 pages only. 74 of its 88 same-edition books are hidden.
+
+**Result: books and aligned pages by language × century of the edition** (all three sources; one row per book, same edition wins).
+
+| language × century | books, same edition | of those, not in any earlier stratum | books, other edition | pages, same edition | pages, other edition |
+|---|---:|---:|---:|---:|---:|
+| German 1500s | 1 | 1 | 0 | 173 | 0 |
+| German 1600s | 21 | 21 | 5 | 1,772 | 475 |
+| German 1700s | 24 | 24 | 15 | 5,969 | 2,895 |
+| German 1800s | 37 | 37 | 5 | 8,949 | 1,415 |
+| German 1900+ / undated | 0 | 0 | 7 | 0 | 1,173 |
+| Latin before 1500 | 0 | 0 | 7 | 0 | 274 |
+| Latin 1500s | 34 | 23 | 34 | 1,542 | 2,677 |
+| Latin 1600s | 125 | 79 | 65 | 5,421 | 3,175 |
+| Latin 1700s | 6 | 4 | 2 | 1,697 | 21 |
+| Latin 1800s / undated | 2 | 2 | 26 | 43 | 1,285 |
+| English 1500s | 24 | 19 | 11 | 4,582 | 861 |
+| English 1600s | 228 | 162 | 29 | 50,462 | 6,239 |
+| English, other centuries | 4 | 4 | 38 | 993 | 5,079 |
+
+- 36 books we hold undated take the century of the typed edition, only where the page breaks say it is that edition.
+- "Latin" includes Latin-German and Latin-English books; "English" includes Middle English. Pages are distinct pages. Four matched books in other languages (3 French, 1 unlabelled) are not shown.
+
+**Result: by eye.**
+
+| | DTA | CAMENA | EEBO-TCP |
+|---|---:|---:|---:|
+| **Leaves read** | 12 | 12 | 12 |
+| the typed text is the text on that leaf | 12 | 12 | 11 |
+| claimed "on the typed page breaks" → exact by eye | 8 of 9 | 5 of 7 | 9 of 10 |
+| claimed "off the page breaks" → superset or partial by eye | 3 of 3 | 4 of 5 | 2 of 2 |
+| leaves where the reader saw a typed error | 4 | 11 | 5 |
+| **Title pages read** | 20 | 20 | 20 |
+| judged (the rest: the image is not a title page) | 17 | 19 | 19 |
+| same work, or the same text inside another book | 17 of 17 | 17 of 19 | 19 of 19 |
+| claimed same edition → same edition by title page | 7 of 11 | 9 of 11 | 14 of 16 |
+| claimed other edition → other edition by title page | 5 of 6 | 6 of 8 | 3 of 3 |
+
+- **Page level: 35 of 36 leaves carry the claimed text** (97 %, Wilson 95 % 86–99.5). The one miss is ours, not the aligner's: Maier's book `69bd9e0b…`, page 137. Our stored OCR is typed page 123; the archived image shown for page 137 is the leaf before. The typed text found an image/text offset in our own record (the #3368 class).
+- **"Same edition" means same pagination.** 30 of 38 claims hold by title page (79 %, 64–89). The 8 misses run page for page with the typed text but carry another title page: another bookseller (Lehmann 1756: Lange, not Klüter), a piracy imprint (*Wilhelm Meister* 1795: "Frankfurt und Leipzig", not Unger), a reset title, Newton 1726 against 1687. They are reissues and line-for-line reprints. For scoring a page's reading they serve; as a bibliographic statement they do not.
+- **Two CAMENA "other edition" matches are a text inside a different book**: a Saumaise letter in his collected letters; Conring's 1648 book and its 1669 revision under a new title.
+- **CAMENA's typing errors show on 11 of 12 leaves** (*mohi* for *mihi*, *institiam* for *justitiam*, dropped words). DTA 4 of 12, EEBO-TCP 5 of 12, all small. This is the reference error #5126 left unmeasured, as a page share; a character rate still needs the 20 hand-read pages of eval-design §4.1.
+
+**Result: English translations of works we hold in Latin or German (EEBO-TCP).**
+
+| | TCP texts | our books | our works |
+|---|---:|---:|---:|
+| matches (uniform title + "English", or author + two title stems) | 115 | 281 | 211 |
+| candidates (author + one distinctive title stem) | 206 | 486 | 365 |
+| author and a translation statement only: work not established | 1,293 | — | — |
+
+- **By eye, 20 matches:** the relation holds for 16 (80 %, 58–92). 6 translate the whole work. 9 are a volume that contains a translation of it, or of part of it (one satire of Juvenal, the Narcissus episode of Ovid). 1 is the reverse: our book is a collection that contains the original. 4 are wrong (2 the same author's other work, 2 not translations). By evidence: author + two title stems 6 of 6; uniform title 10 of 14.
+- The candidates were read from their catalogue lines only (23 pairs of an earlier, looser rule: about half right). They are a list to check, not matches. It holds the books the brief named: Paracelsus' *Archidoxis* 1660, Croll's *Basilica chymica* 1670, Everard's *Divine Pymander* 1657, Böhme's *Signatura rerum* 1651.
+- **Passage level is feasible, and for these it is done.** Of 200 pairs whose book has ≥ 40 stored translated pages, 45 place coherently (≥ 30 % of pages placed, ≥ 90 % in rising order): **25 TCP texts, 40 of our books, 6,670 of our pages.** By eye, 12 of 12 placed pages are the same passage, with most of our page rendered (Wilson 95 % lower bound 76 %). In 7 of the 12 a few lines spill onto the neighbouring English page.
+  - Placed: Petrarch *Phisicke against Fortune* 1579, Willis (three texts), Suetonius 1606, Caesar 1655, Ovid (Golding 1567, Sandys 1628), Erasmus *Praise of Folly* 1668, Lucan (Gorges 1614, May 1627), Croll, Paracelsus *Archidoxis*, Comenius, Böhme *Signatura rerum*, Boccalini, Quercetanus, Hierocles, Innocent III, Helvetius, Roger Bacon's *Mirror of Alchimy* 1597.
+  - 24 of the 45 pairs came from the candidate list, so the placement also confirms those candidates by content.
+  - Not placed: the *Pymander* (2 % of pages; Everard's English follows another text), and pairs where the English is a short extract.
+  - What the readers saw: the English is often made from another version (the Latin of a German text, the Greek of a Latin one), carries the translator's commentary between chapters (Edmonds' Caesar), or paraphrases. It is a human translation of the same passage, not a line-for-line key.
+
+**What each consumer can now use.**
+
+- **#5126 (Latin by century, one page per book).** Same-edition Latin books not in any earlier stratum: **1500s 23, 1600s 79, 1700s 4, before 1500 none.**
+  - The 1500s cell was 3 short of directional and 23 short of decision grade: these 23 close it, if their leaf checks pass at the #5126 standard (79 % of same-edition claims hold by title page, 97 % of leaves are the right leaf).
+  - The 1700s stays short. The source is used up: CAMENA has 31 files after 1700.
+  - Incunabula: no same-edition text. 7 Latin books before 1500 have the same text in a later edition typed by the TCP (274 pages: Sarum primers and Hours, Terence, *Secreta mulierum*). An abbreviated incunable against an expanded later print reads as word error (#5508), so these are not OCR references yet.
+  - Only 58 of the 165 same-edition Latin books are visible, and most have 25 OCR'd pages.
+- **#4925 decision 4 (German Fraktur, long s).** German same-edition books: **1600s 21, 1700s 24, 1800s 37, 1500s 1**, none in an earlier stratum (German had 22 referenced pages). Pooled 83 books; no single century reaches 50. 1800s is directional (37), 1600s and 1700s exploratory. DTA keeps ſ, the umlaut-e and line breaks, so a scorer must fold or use them on purpose.
+  - Caveat: on clean 19th-century print the overlap is at its ceiling, and the titles are canonical (Goethe, Kant, Hegel), which a model may recite. The 1600s and 1700s books (Andreae 1616, Weigel, Francisci, Schwenter, Zesen, Lange 1729, Swedenborg 1776) are the useful ones.
+- **#4925, English.** English 1600s has 228 same-edition books (162 new; the cell stood at 49). English 1500s 24 (19 new).
+- **#5982 and #5695-style judging.** A human English translation now exists as a reference for 211 of our Latin and German works at work level, and for 6,670 of our pages at passage level (35 Latin books, 5 German). For 2,328 of those pages, in 21 books, the placed pair is a match; for the rest it is a candidate that the placement itself supports. These are period translations: free, sometimes via another language, sometimes with the translator's commentary. An "addition" judged against them needs the page image, as #5982 already found for typed source texts.
+- **#5513 (canon gap map).** `rights.json` and the three manifests are reusable as they stand.
+
+**Limits.**
+- Only books with stored OCR could be matched: 5,871 of 9,114 German books and 32,187 of 51,638 Latin books have any. Books without OCR that the typed texts cover are not counted here.
+- Candidates come from catalogue fields. A book whose author or title we hold wrongly was never offered to the reader of texts, so recall is unmeasured.
+- The overlap score is letters-only 8-gram containment after folding ſ, u/v, i/j and umlauts. It finds a page; it is not a CER.
+- Pages are located through the stored OCR, so a page the served engine read catastrophically is missing from the aligned set (the same selection #5126 named).
+- Notes are kept apart from the body in the parse; a page that is mostly marginal commentary aligns poorly.
+- The by-eye readers are AI reading images, one reader per check, not scholars. 12 leaves and 20 title pages per source give wide intervals.
+- The translation passages are placed through our own stored translation, so a page we translated badly is less likely to be placed.
+
+**Deviations.**
+- The alignment rule changed once after the first DTA by-eye read (v1 → v2): the typed page of a span is now read 200 letters inside it, and a page may end where the typed body ends, before its notes. The same blind verdicts were re-scored against v2. DTA moved from 87 / 37 to 89 / 35 books.
+- The EEBO transfer was started once before CAMENA was done and stopped within two minutes (the brief asked for one source at a time); its multipart upload was aborted.
+- The translation rule's weaker tier was tightened twice while reading its output; the by-eye 20 were drawn after the last change.
+
+**Replicated?** No.
+
+**Artifacts.**
+- Code: `scripts/eval/typed-refs-6012/` (`ingest.mjs`, `eebo-stream.mjs`, `meta.mjs`, `match.mjs`, `align.mjs`, `match-translations.mjs`, `translation-passage-probe.mjs`, `eye-packets.mjs`, `eye-score.mjs`, `summarise.mjs`, `lib.mjs`).
+- Rights: `scripts/eval/typed-refs-6012/rights.json`. By eye: `scripts/eval/typed-refs-6012/eye-verdicts.json`; the readers' instructions: `scripts/eval/typed-refs-6012/readers/`.
+- Packed rows: `scripts/eval/output/typed-refs-6012-2026-10-06.*` (manifests for DTA and CAMENA; for EEBO-TCP the 745 matched texts' rows; pairs; aligned pages; translations; translation passages; `summary.json`).
+- Private R2, bucket `sl-corpus-snapshots`, prefix `eval-refs/typed-refs-6012/`: `raw/` (three packages), `derived/<source>/tei-pages-v1/` (text by page), `manifests/` (full manifests, 60,326 EEBO rows; keys and hashes in `summary.json`).
+
 ## 2026-10-06 · How accurate is our Chinese and Pali transcription against typed editions, and can it be extrapolated to pages nobody checked? (#5935, phase 1)
 <!-- PRIOR ART: quality-covariates.mjs (#5623/#5643) models judged translation pages by covariate, unpooled, with no reference CER and no held-out test; zh-skqs-5568-kanripo.mjs and the #5600 lane's Kanripo Dice screen (which Kanripo page, not how many characters differ); the #5566 CBETA fit (spans, not scored against our reads independently). This run is the first ground-truth CER over those references, with a floor, a pooled model and leave-one-reference-out. -->
 
@@ -254,6 +1355,78 @@ All CBETA pages, not one per book: flash-lite served 2.98 % median (838 pages), 
 - Per stratum, read by #5918 at build time: `scripts/eval/output/ground-truth-5935-2026-10-06.estimates.json`.
 - Floor verdicts: `scripts/eval/ground-truth-5935/floor-verdicts.json`.
 - Phase 2 adds references as rows: GRETIL, Sefaria, OpenITI, Wikisource.
+
+## 2026-10-06 · Can a write-time rule tell a bracketed gloss after a `<term>` from the translator's supplied words?
+
+**Design.** `bracketDefinitionsToNotes` (scripts/lib/translation-write-guard.mjs, #5902) run, $0, over (a) the
+#5919 note-free arm and its two v13 arms (48 pages each), and (b) repeated random draws of ~12.5K stored pages
+whose translation has a `<term>`, every new `<note>` read by eye. Then a 3-page live run through the production
+prompt and routing (Latin, Chinese, Arabic; nothing stored).
+
+**Result.**
+- The first rule (any bracket after a term) fired on 147 brackets in 99 of 12,584 stored pages, about half of
+  them supplied words: `hot <term>apathetic</term> [conditions]`, `<term>Tiphereth</term> [is denoted]`,
+  legal names completed (`<term>Vincentius</term> [Hispanus]`), long-s respellings (`<term>Fufina</term> [fusina]`).
+  Moving one into a note takes a word out of the sentence when notes are off, while a gloss left in brackets
+  still reads as the translator's (#4385). So the rule was cut to **precision**: a bracket becomes a note only
+  when the sentence NAMES the term ("called", "the term", "the word", "the name", "said"…), and never a
+  supplied-clause opener, a speech verb, a one-word past tense, an abbreviation, a respelling or a reference.
+- Final rule, stored draws: 0, 2, 1, 2 fires on four draws of ~12.5K term pages; the last draw's 2 are both glosses
+  (`the word <term>gale</term> [itch]`, `When I said <term>ficus</term> [fig]`). Each false fire seen on the way
+  is a unit test.
+- #5919: **5 of the 12** bracket glosses in the note-free arm become notes; 0 fires on v13-a / v13-b; the
+  supplied verb `<term>Zisang Hu</term> [replied]` stays.
+- Live run ($0.0076): the guard changed nothing on any of the 3 pages — no definition inside a `<term>`, no
+  bracket gloss. The Arabic page has 3 `<term>…</term> <gloss>` pairs, the out-of-scope #5942 case.
+
+**Replicated?** The stored check four times on independent draws; the live run once.
+**Artifact.** scripts/eval/translation-write-guard-5902/ (live-dry.mjs, stored-draw.mjs),
+scripts/eval/results/translation-write-guard-5902/.
+
+## 2026-10-06 · How many stored translations are the model talking about its job instead of the page? A model-free count (#6056, #5918)
+<!-- PRIOR ART: `ocrReasoningLeak()` in scripts/lib/page-integrity.mjs (taxonomy O15, 25 pages, #5055) looks for the same thing in the OCR. Nothing had looked in the translation, where it reaches a reader as plain English. scripts/audit/page-integrity.mjs walks the local mirror, which the job box does not hold, so this walk reads Atlas. -->
+
+**Question.** The Eternity shelf review met a page whose English was "*Wait, the prompt says:* Style: warm museum label" (`69e7484085f786e884a4c10f` p.20). How many pages carry the model's reasoning as the translation?
+
+**Design.**
+- **Rule.** `translationReasoningLeak()` in `scripts/lib/page-integrity.mjs`: phrase rules, no model. Four kinds, strongest first:
+  - *reasoning*: the scratchpad. It names the prompt, the user, a tag as a tag, or is a markdown label such as `*Self-Correction during drafting:*`, `*Constraints:*`, `*Formatting check:*`.
+  - *assistant-reply*: a chat reply to the requester ("Please provide the OCR transcription you would like me to translate").
+  - *thought-token*: the page opens with the bare word "thought" on its own line.
+  - *input-talk*: "the provided OCR / transcription / text is …". The mildest, and mostly inside `<meta>`.
+- **Seed and extension.** The seed was `/Wait, the prompt|the prompt says|Style: warm museum/`. The rest was added by reading hits. Bare first-person lines ("I will translate…", "Wait, I…") are left out on purpose: sermons, dialogues and translators' prefaces say them.
+- **Walk.** `scripts/audit/translation-reasoning-leak.mjs walk`: every `pages` record in `_id` order, one `_id` type at a time, in planned ranges of 20,000 with a checkpoint per range. A wide net runs on the server so page text leaves Atlas only for candidates. Read-only, secondary preferred. 28,967,125 records in 27 minutes; 9,274 candidates.
+- **Headline.** *reasoning* or *assistant-reply*, with the phrase in the page body (not only in a `<meta>`, `<summary>`, `<keywords>` or `<vocab>` block, which the reader keeps in its metadata panel), on a live book (`visible: true`, `pages_count > 0`) at `page_number > 0`.
+- **Read by eye.** A seeded sample of 40 headline pages (seed 6056), then up to four rows from each less common phrase group (about 75 rows) and the 8 chat replies that are long or start late in the page. Each was read as text around the matched phrase.
+
+**Result.** Measured 2026-10-06.
+
+| | pages | books |
+|---|---:|---:|
+| **Headline: reasoning or a chat reply, in the page body of a live book** | **549** | **269** |
+| … reasoning | 352 | |
+| … chat reply | 197 | |
+| Live, in the page body, any kind (adds 177 input-talk and 12 thought-token) | 738 | 397 |
+| Live, any kind, including phrases only inside a metadata block | 1,151 | 680 |
+| All books, any kind | 1,327 | 763 |
+
+- **By source language (headline pages):** English 176, Latin 138, Dutch 63, Greek 50, German 28, French 28, Latin-German 16, Tibetan 8, Chinese 7, Italian 6, Sanskrit 5, Persian 4, others 20.
+- **By model:** gemini-3-flash-preview 330, gemini-3.1-flash-lite-preview 190, gemini-2.5-flash 18, gemini-3.1-flash-lite 11.
+- **By month written:** January to April 2026 hold 475 of the 549. It did not stop: 14 are from October 2026 and 11 from September.
+- **Clustered.** 202 of the 269 books have one such page. Six books hold 131: *Apocalypse Explained* vol. 2 (39) and vol. 3 (18), *Ann Lee* (26), Colet's *Two Treatises* (18), *On the Revolutions* (16), the Dowson *Ikhwan al-Safa* (14). The pages read from them were chat replies to an empty transcription.
+- **A side class, not counted above:** 5,337 pages in 2,451 books where a note in the page body tells the reader what "the OCR reads" or what "the `<gloss>` tags" hold. That is pipeline vocabulary in a reader's note, and it is not reasoning.
+
+**By-eye check.** The sample of 40 held 38 leaks and 2 that were book text: a gloss "(self-correction)" on the Pali *pavāraṇā*, and a bold glossary label "Refinement/Struggle". The wider read found two more shapes: a commentary lemma "**We shall check:**" and a treaty's "once you provide the further information". All four were removed from the rule and are pinned as negatives in `tests/unit/page-integrity.test.ts`. The sample was not redrawn after the fix, so the 549 has no measured precision. No other non-leak was met in the rows read.
+
+**Conclusion.** At least 549 pages of 269 public books show the model's reasoning or a chat reply where the translation should be. It is rare per page and easy to find, and it is still being written. It also sits in books that pass a two-page check: the Bardo Thödol cycle `69dfee83ce6bb8619e07f177`, tier 1 on the Eternity shelf, has seven such pages (p.23, 24, 196, 245, 310, 350, 408).
+
+**Limits.**
+- **A floor.** The rule is a list of phrases. A leak worded another way is not counted, and a leak past the first 60,000 characters of a page is not seen.
+- **Not a rate.** The denominator here is page records, with or without a translation.
+- **"In the page body" is a rule about tags**, not a render. 176 headline pages are English-source books, where the stored "translation" is the modernised text and the reader shows that panel only for early editions. A page with a withheld translation is not excluded.
+- **Nothing was written.** No page was changed, hidden or queued.
+
+*Replicated?* No. Data: `scripts/eval/results/quality-sprint/2026-10-06-translation-reasoning-leak/` (`summary.json`; `pages.jsonl` has ids, page numbers and the matched phrase, no page text).
 
 ## 2026-10-06 · Does the translation get worse when the prompt stops asking for notes? (v13 with the notes instructions removed, #5919)
 <!-- PRIOR ART: 2026-10-04-translation-prompt-v17-typed-notes-5698.md (PR #5764) typed the notes and tested a stance on the same 40 pages; its runner, mechanical scorer and v13-a/v13-b noise-floor design are reused here. The #5695 fidelity harness (translation-vs-reference/) is used unchanged. Nothing before this removed the notes instructions. -->
@@ -714,6 +1887,32 @@ Gate, applied to stock CATMuS, the preregistered arm: G1 pass, G2 pass, G3 pass,
 - **Cost:** $0. Gemini was not called. About 1 CPU-hour of Kraken and 10 minutes of MinerU.
 - *run_id:* `kraken-refused-4686`.
 
+## 2026-10-06 · Can Jev screen translated pages for untagged additions, in front of the Gemini detector? (#5982)
+<!-- PRIOR ART: scripts/eval/jev/ (instruction-page, seam and Clef screens) never asked whether a translation adds words; scripts/eval/untagged-additions/ is the Gemini detector and its controls and by-eye labels, which this reuses as ground truth but does not test a cheaper first pass against. -->
+
+**Question.** Jev (typed-decision model, $0.042/M input) answers yes/no probabilities per page with no prose. Could it rank pages so the Gemini sentence-level detector only reads the top?
+
+**Method.** One state per page: source text (OCR) then translation, each cut to the first 6,000 characters (truncation: a planted sentence or an addition past 6,000 characters is invisible to Jev); tagged blocks (`note`, `gloss`, `summary`, `meta`, `keywords`, `image-desc`) are stripped from the translation first. Two noul questions per call, two wordings, no further tuning: w1 "the translation contains at least one sentence or clause that renders nothing in the source (an explanation, definition, description or comment added by the translator)"; w2 the reverse ("only a rendering ... nothing added"), scored as 1 - p. `mean` is their average. Script: `scripts/eval/jev/additions-screen-fetch.mjs` then `scripts/eval/jev/additions-screen.py`; scores per page in `scripts/eval/results/jev-additions-2026-10/` (no texts).
+
+Labels: (a) round-2 controls of #5982 (37 pages with one planted commentary sentence, 57 clean pages; regenerated deterministically by `build-controls.mjs --round 2`, key unchanged). (b) the 60 live pages read by eye in #5982: 22 true additions, 38 not (16 false flags, 2 neighbour-page text, 20 unflagged pages with no addition of five words or more). Label basis: read from the source text, not the image. The live set is the Gemini-flagged 40 plus 20 unflagged, so it is enriched for hard pages and its precision is not a corpus precision.
+
+**Results** (threshold = the value at which 90% of clean controls fall at or below it, so about 10% of clean controls flagged)
+
+| | controls AUC | controls recall | clean flagged | live AUC | live precision | live recall |
+|---|---:|---:|---:|---:|---:|---:|
+| w1 | 0.964 | 32/37 = 86% | 6/57 = 11% | 0.803 | 16/30 = 53% | 16/22 = 73% |
+| w2 | 0.959 | 86% | 5/57 | 0.760 | 15/31 = 48% | 68% |
+| mean | 0.960 | 86% | 6/57 | 0.807 | 16/32 = 50% | 73% |
+
+- **A/A:** 20 pages re-run (10 controls, 10 live): mean |delta p| 0.017 (w1), 0.012 (w2). The score is stable.
+- **Cost:** 174 calls (154 pages + 20 A/A), 291,301 input tokens, $0.0122 gateway-billed ($0.00007 per page). The Gemini detector cost about $0.0013 per page in the same experiment: Jev is roughly 18 times cheaper.
+- **Controls versus live:** planted whole-sentence commentary is nearly separable (AUC 0.96); real additions are not (AUC 0.80). Real ones are often short parentheses or a definition run into a sentence, and Jev flags 30 of 60 live pages at the control threshold, 14 of them with no addition.
+- Of the 20 unflagged pages (no addition), Jev flagged 4 (20%); that is the false-flag rate at this threshold on ordinary pages.
+
+**Limits.** n = 22 true live pages (AUC 95% interval wide, about +-0.1, not computed). One threshold, chosen on controls. Truncation at 6,000 characters. Wordings picked a priori, two tried, none tuned. The by-eye labels came from the same session that built the detector.
+
+**Reading.** As a first pass that discards the bottom half of pages, Jev would keep 16 of 22 true additions (73%) and halve the Gemini reads; it would drop 6 of 22. That is a recall loss the detector does not have. Whether that trade is acceptable is a decision for the owner of #5982; this run does not make it.
+
 ## 2026-10-06 · Greek manuscripts: full Kraken read + edition fit on the five public-domain-edition codices (#5619)
 <!-- PRIOR ART: 2026-10-02-greek-manuscripts-fit-open-edition-5619.md (#5635) is the pilot this completes — same scripts, same fold, same edition files; sefaria-fit (#5560, FIT_RULES v2 since #5637) is the fitting code. -->
 
@@ -750,6 +1949,347 @@ Gate, applied to stock CATMuS, the preregistered arm: G1 pass, G2 pass, G3 pass,
 - Nothing here touches the CC BY-SA question for the 85 First1K/Perseus matches.
 
 *Grade.* Full run over the five books (2,600 images); a single pass, not replicated. *Cost:* $0 (CPU only), about 78 h wall-clock on a shared box, starved at load 15–37 for much of it. *Artifacts:* `scripts/eval/greek-ms-kraken-5619.sh`, `scripts/eval/greek-ms-fit-5619.mjs` (`--reads kraken`), `scripts/eval/results/greek-ms-align-5619/full-fit-summaries.json` (20 runs: 5 books × {Kraken, Flash} × {edition, wrong edition}). Kraken reads and per-page fits: `hetzner:/mnt/HC_Volume_105839809/greek-ms-align-5619/{kraken-full,fit-*.json}`.
+
+## 2026-10-06 · Can GLM-OCR's numbers repair Kraken's read of the pages Gemini refuses? (#4686)
+
+- **Question.** Kraken reads the 715 English pages Gemini refuses (RECITATION) at CER 0.009, but it reads 17th-century old-style figures as letters ("66 or 67" → "cé or éy", "10." → "io.", "5°" → "g°"), so only 78.5 % of printed digit strings survived and the preregistered gate stopped. Derek chose option (b) on #4686: keep Kraken's letters, take the numbers from GLM-OCR on a rented GPU, and re-gate on the same 20 pages before writing anything.
+- **Answer.** **The repair works on the body text but misses the preregistered bar by one number, so the gate STOPS again and nothing was written.** Digit strings reproduced rose from **78.5 % to 89.2 % (73 → 83 of 93)**, and the bar is 90 % (84 of 93). In the body text, leaving out running heads and stacked split-years, they rose from **81 % to 95.6 % (55 → 65 of 68)**. CER did not get worse: the median went from 0.009 to 0.008, 4 pages better, 15 the same, 1 worse by 0.001. The ten misses left are ones GLM cannot help with, because GLM does not transcribe running heads: four stacked split-years ("166⁰₁"), three page numbers in running heads, one "8o." that both engines read as "80", and one figure that Kraken fused into the word before it ("aboutio.").
+- **measure:** accuracy. CER is against the same blind by-eye references as the first run (adjudicated, 0.14 corrections per 1,000 characters), scored with `benchmark-score.mjs` unchanged. Digits are counted with `analyze.mjs` unchanged; Amendment 1 adds G5. The reference is a model's (Claude's) transcription, not a human key; see the first write-up.
+
+### Design (Amendment 1 of `PREREGISTRATION-kraken-refused-4686.md`, pushed in 93c1f8a95 before any GLM output existed)
+
+- **Rule** (`scripts/lib/glm-digit-repair.mjs`, pinned by `tests/unit/glm-digit-repair.test.ts`). The two reads are aligned token by token (longest common subsequence). Only the gaps between tokens both engines agree on are candidates. A Kraken token is replaced only by a GLM *number* token, and only when the Kraken token could be a misread number: it has a digit, or it is at most 4 characters long, and it is never a spelled number or a roman numeral. GLM's words never enter, and Kraken's lines, running heads and line breaks stay as they are. The rule was written after Kraken's 20 misses were known, but before GLM had read any page.
+- **Engines,** both on one leased Scaleway L4 (pl-waw-2; fr-par had no L4 capacity), driven by `scripts/gpu/kraken-digits-4686-scw.sh` under `idle-poweroff.sh run --` with a 3-hour lease:
+  - GLM-OCR (`zai-org/GLM-OCR` rev `2e85a628`), on vLLM 0.31.0 with MTP. The prompt was `Text Recognition:`, temperature 0, one attempt. The client was the #5816 one, unchanged. It took 2,430 s for 715 pages: 3.4 s/page with 12 clients, on a GPU it shared with Kraken.
+  - Kraken 7.1 CATMuS-Print large on CUDA, the same model file (sha256 `1ed39e73…`). It was CPU-bound on the L4 box's 8 cores, at about 7 pages/min. **The GPU read equals the scored CPU read:** 15 of 20 pages are identical, and the other 5 differ by 1–2 characters. Both arms have median CER 0.009 and 73/93 digits.
+- **Gate:** G1–G4 as before, plus G5, no CER regression against the plain Kraken read: the median may not rise, and no page may get more than 0.005 worse.
+
+### Result (n = 20 pages, 6 books)
+
+| arm | median CER [95 %] | digit strings | body digits (no running heads, no stacked years) | ſ read as f, per 100 | lines dropped |
+|---|---|---:|---:|---:|---:|
+| Kraken CATMuS (CPU, first run) | 0.009 [0.006, 0.018] | 78.5 % (73/93) | 80.9 % (55/68) | 1.7 | 0 % |
+| Kraken CATMuS (GPU, this run) | 0.009 [0.006, 0.017] | 78.5 % (73/93) | 80.9 % (55/68) | 1.8 | 0 % |
+| GLM-OCR alone | 0.006 [0.005, 0.011] | 66.7 % (62/93) | 91.2 % (62/68) | 1.5 | 0.1 % |
+| **Kraken + GLM digits (gated)** | **0.008 [0.005, 0.017]** | **89.2 % (83/93)** | **95.6 % (65/68)** | 1.8 | 0 % |
+| Kraken (CPU) + GLM digits | 0.008 [0.005, 0.018] | 89.2 % (83/93) | 95.6 % (65/68) | 1.7 | 0 % |
+
+**Gate:** G1 pass, G2 pass (0 catastrophic), G3 pass, **G4 fail (0.892 < 0.90)**, G5 pass (median 0.009 → 0.008; worst page +0.001, Birch II p. 287). **→ STOP. No page was written.** `#5969` stays `blocked`.
+
+**Read by eye (every change on the eval pages, every miss left):**
+- **Fixed** (10 strings): "cé or éy" → "66 or 67", "éo" → "60", "rth," → "5th,", "g°." → "5°.", "r7,5," → "1755,", "28" → "25", "88-," → "882-,", "227;" → "22;", "Svo" → "8vo".
+- **Not fixed** (10): running-head years "166⁰₁" and "166⁴₅" (×4, Kraken writes "1662"/"1664"; GLM reads no running heads); page numbers "( 931 )", "(895)" and "15" (GLM drops them, Kraken misses them); "8o." (both read "80"); "aboutio." (no token boundary to repair).
+- **Changes that look wrong:** "22" → "21/2" for a printed "2½" (GLM writes the fraction as 21/2), and "4n" → "4ᵉᵉ" on Birch II p. 287 (GLM's superscript letters). Neither is a new error in a number the reference has, so neither moves the digit count.
+- **A bug found after scoring:** Kraken writes some accents decomposed ("ce" + U+0301), and the rule left the accent behind, giving "66́". It is fixed in the lib, with a test. Re-scored after the fix, every gate number is the same (`gate-posthoc-accent-fix.json`). This is reported, not gated.
+
+**All 715 pages** (the merge was built; nothing was written): 283 pages changed, 691 of 274,054 tokens (0.25 %). The median page changed 0 % of its tokens, the 95th percentile 1.2 %, the maximum 3.5 %. No page reached the 5 % by-eye threshold. The most common changes, punctuation aside, are figures read as letters: "s"→"5" (14), "ó"→"6" (12), "a"→"4" (10), "I"→"1" (9), "roth"→"10th" (8), "oth"→"9th" (7), "1o"→"10" (7). Some, like "12."→"13.", are cases where the two engines disagree on a digit, and the rule trusts GLM. That was not measured separately. Fourteen single-letter changes ("a", "I", "s") were read in context. Most are right: "till a the next morning" → "till 4", "a Hen, bringing forth s well-formed" → "5", "3 or a foot" → "3 or 4". At least one is a misalignment: "or a thousand Inhabitants" → "or 4 thousand", where GLM's "4" belongs to "the 4. of May" a line away. A single letter beside a gap is the rule's weak point, and any write would want that case tightened first.
+
+### Implication
+
+- On these pages, **the fix works where GLM can see the number**, which is the body text: 95.6 % of body digit strings. The bar is lost on page furniture. Neither engine reads 17th-century stacked split-years, and GLM does not transcribe running heads at all.
+- By the rule set before the run, nothing is written. What happens next is Derek's call on #4686:
+  - (a) write the repaired text, with the running-head numbers marked as unverified;
+  - change the gate to body text only, before any new run;
+  - leave the pages empty.
+  The GLM and Kraken reads of all 715 pages are kept on Hetzner. Writing them later needs no GPU.
+- **For the Quality Center** (#5918), this is the worked error → fix example (O7 sub-variant and O18 in `.claude/docs/page-error-taxonomy.md`): a measured error, a targeted fix, and the honest after-number, which here falls just short of the bar.
+
+- **Replicated?** No. Each engine ran once and is deterministic; the GPU and CPU Kraken reads agree as above.
+- **Artifacts:** `results/kraken-refused-4686/glm-digits/`:
+  - `gate.json` (the gate);
+  - `scored.json`;
+  - `outputs/<arm>/` (the 20 pages);
+  - `changes-715.jsonl.gz` (every change on every page);
+  - `box.json`;
+  - the driver logs.
+  The full GLM and Kraken reads of the 715 pages are on Hetzner under `/root/kraken-digits-4686/{out,kr,merged}`. The driver scripts are `scripts/gpu/kraken-digits-4686-{scw,box}.sh` and `scripts/eval/kraken-refused-4686/glm-digits.mjs`.
+- **Cost: $1.75** (one L4 for 1.90 h at $0.92/h, deleted and confirmed gone). The first box, in fr-par-2, was created but never started (no capacity) and was deleted. No Gemini was used. *run_id:* `kraken-digits-4686`.
+
+## 2026-10-06 · Which books in Eternity's traditions can we show a scholar today? A hand-picked curation check, not a rate (#5918, #6056)
+<!-- PRIOR ART: 2026-10-06-random-book-spot-check-canon-shelves-5914.md (30 books drawn at random from the canon shelves) and the shelf overviews in scripts/eval/results/spot-check/overview-2026-10-07*/ (PR #6079, #6090: stratified random draws with rates) answer "how often is a page wrong". This entry is the hand-picked complement: a worklist of named books, which those draws cannot give and which cannot give their rates. -->
+
+**Question.** A partner judges the library by opening the famous books of the traditions it cares about. Which of those books can be put in front of a scholar now, which need a warning, and which must be fixed first?
+
+**This is a curation check. It is not a rate.** The books were chosen because they are interesting: candidates were listed per language by `read_count`, or looked up by title. Two pages were read in each. The tier shares below describe this list and nothing else: they must not be quoted as the quality of a tradition, a shelf or the corpus. For a rate use the random instruments: the fortnightly spot check (#5914) and the stratified shelf overviews (`overview-2026-10-07`: a frame-weighted serious-page rate with intervals by book).
+
+**Design.**
+- **Books.** 107, picked by hand across nine traditions, mostly from public books at least 80% translated. 17 were hidden at the snapshot: some were chosen before publication, some have been hidden since. They sit in the private collection `eternity-spot-check`.
+- **Pages.** Two consecutive translated pages from the middle of each book (the page 45% of the way through its translated pages, and the next).
+- **Reading.** The transcription and the English were read against the page image. Each book got a tier (1 show, 2 show with care, 3 fix first or do not show), a note with the page to open, and a line on why a reader would open it.
+- **Who read.** Three passes, kept apart in every table below because they are not equally strong:
+  - *reviewer by eye*: 68 books, read by 7 Opus subagents, one per tradition, each told to open the image;
+  - *read from image*: 15 books, read by the session itself with the image open;
+  - *earlier session*: 24 books carried over from earlier sessions. Their notes say the page was checked, but how was not recorded. Treat these as the weakest.
+- **Cost.** No paid API calls.
+- **Data.** `scripts/eval/results/spot-check/curation-2026-10-06-eternity/shelf.json` (one row per book: tier, tradition, who read it, note, page) and `summary.json`. Rights wording is left out; it is in the private ops repo.
+
+**Result.** 43 show, 30 show with care, 34 fix first or do not show.
+
+| tradition | books | show | with care | fix / don't |
+|---|---:|---:|---:|---:|
+| Sanskrit (Nālandā, Prajñāpāramitā) | 6 | 4 | 0 | 2 |
+| Tibetan | 16 | 6 | 5 | 5 |
+| Pali | 10 | 5 | 4 | 1 |
+| Chinese | 18 | 8 | 5 | 5 |
+| Korean | 9 | 4 | 3 | 2 |
+| Japanese | 9 | 1 | 3 | 5 |
+| Hebrew and Aramaic | 15 | 3 | 4 | 8 |
+| Arabic | 13 | 6 | 4 | 3 |
+| Persian | 11 | 6 | 2 | 3 |
+| **all** | **107** | **43** | **30** | **34** |
+
+| who read | books | show | with care | fix / don't |
+|---|---:|---:|---:|---:|
+| reviewer by eye | 68 | 26 | 24 | 18 |
+| read from image | 15 | 7 | 3 | 5 |
+| earlier session | 24 | 10 | 3 | 11 |
+
+The tradition is the book's catalogued language on 2026-10-06, before the label fixes below. One English edition of a Korean author is counted under Korean.
+
+**Defect classes.** Each was seen on the pages named; the label says who saw it. None is a count.
+
+| class | what a reader meets | examples | seen by |
+|---|---|---|---|
+| Leaked model reasoning as the English | "Wait, the prompt says: Style: warm museum label" where the translation should be | `69e7484085f786e884a4c10f` p.20 (Life of Tsangpa Gyare) | reviewer by eye |
+| Repetition loop | one phrase or word repeated to the end of the page, sometimes translated as such | `69dfebad090ad7d5c33b1903` p.32 (Kojiki vol. 1); `69e76134cc48e59ad74ee309` p.143 (gold-ink Aṣṭasāhasrikā) | reviewer by eye |
+| | | `69c7a0a892b884e4f8173817` p.57 (Zohar Ḥadash 1702) | read from image |
+| Verse half-lines or columns out of order | half-lines paired wrongly; a whole column missing | `69e74eeb5cf1eaf3ad80ddc1` p.190 (Ḥāfiẓ 1957); `6976db51097b3607ee4be2f9` p.133 (Avodat ha-Kodesh 1578) | reviewer by eye |
+| | | `69e7299ba409200ea79f0b56` p.150 (Masnavī, Bulaq 1851: the Turkish columns unread) | read from image |
+| Rabbinic type garbled under good square type | the main text is right and the commentary below it is guesswork | `6990633def12272ffdc907b0` p.277 (Zohar, Mantua 1558); `699ef9f2c2bcb75dbdbaad92` p.101 (Sha'arei Orah 1715) | reviewer by eye |
+| Cursive Japanese: the English is not a translation | the kuzushiji reading is good or near, and the English is nonsense or a summary | `69dfedec8d34461cbe7f4fc2` p.45 (Tsurezuregusa); `69dfeded8d34461cbe7f5026` p.12 (Hōjōki) | reviewer by eye |
+| Negative page numbers | the pages drawn are numbered below 1 and show a blank or the title page | `699243fabc722ec0ee80b251` (Prague Haggadah 1526); `69b6363a8ab57a1de53a75c8` (Ikhwān al-Ṣafāʾ, Bombay 1887) | reviewer by eye |
+| Wrong title or language on the record | the book is not what its label says | `69e8b27a2ff2a8dc09e77e4c`, `69e748aa85f786e884a4ca1f`, `69e9617a2beefe2f6f72ba14`, `69920ba8e0a548a13d8846fe` | reviewer by eye; then each title page and the page-language tags of every page read for the fix |
+
+Pages numbered below 1 are soft-hidden records and are not rendered (`scripts/lib/page-counts.mjs`), so the two "negative page number" books are a finding about what the check drew, and their body text was not read.
+
+**What it changed.**
+- **Hidden** (`broken_text_6056`, reversible): Zohar Ḥadash 1702, Kojiki vol. 1, Life of Tsangpa Gyare.
+- **Labels corrected** (`scripts/maintenance/fix-6056-eternity-shelf-labels.mjs`, applied 2026-10-06, a `sweep_log` row each):
+  - `69e8b27a2ff2a8dc09e77e4c`: title 傳習錄 (Chuanxilu) → 陽明先生集要 經濟編 卷四. It is the statecraft part of the 1787 *Yangming xiansheng jiyao*, volume 7.
+  - `69e748aa85f786e884a4ca1f`: Persian → English-French-German, with the title-page title. It is Dole's 1896 variorum of translations around FitzGerald; `original_language` Persian, `text_role` modern-translation.
+  - `69e9617a2beefe2f6f72ba14`: Hebrew → Hebrew-English. Asher's 1840 volume holds the Hebrew text (156 of 319 pages) and his translation (175). The reviewer's "it is English" came from one page.
+  - `69920ba8e0a548a13d8846fe`: Persian → Middle Persian-English (Pahlavi text on 193 of 428 pages, English on 210).
+- **A detector for the first class**: `translationReasoningLeak()` and `scripts/audit/translation-reasoning-leak.mjs`. Its corpus count is its own entry (`2026-10-06-translation-reasoning-leak-6056.md`): at least 549 pages in 269 public books. One of them is a tier-1 book on this shelf: the Bardo Thödol cycle `69dfee83ce6bb8619e07f177` has seven such pages, none of them the two that were read.
+- **The method** is now a variant of the `shelf-overview` skill: `overview-draw.mjs --picked`, `CURATION-ADDENDUM.md`, `curation-shelf.mjs`. `overview-score.mjs` refuses a picked run, so no rate can be formed from one by accident.
+
+**Limits.**
+- Chosen books, two pages each: a tier-1 book can hold bad pages elsewhere, and a tier-3 book may be bad only where it was opened.
+- The readers are AI. Their confidence on cursive Japanese, rabbinic type and Tibetan manuscript hands was low at the stored image size, and those are the scripts where most tier-3 verdicts fall.
+- One reviewer per tradition and no second read, so there is no agreement figure.
+- 24 of the 107 verdicts have no record of how the page was read.
+
+*Replicated?* No. The stratified random overviews of the same traditions (PR #6079, #6090) are the independent look; they share no books by design and measure a different thing.
+
+## 2026-10-06 · What does dropping role words from the `edition_key` surname do to the corpus? (#4444, #6019 decision 6)
+<!-- PRIOR ART: scripts/maintenance/edition-key-integrity.ts counts stored-vs-computed drift but not which groups a change merges or splits, and reads `books` only; scripts/maintenance/materialize-edition-keys.ts (dry run) reports cluster totals after a change, not the difference; the #6019 review (2026-10-06-dedupe-review-6019.md §4) counted the role-word keys but did not replay a fix. -->
+
+**Question.** `editionSurname()` took the last word of an author string, so "Lazarus Zetzner (ed.)" keyed as `ed`. Before changing the key the import gate matches on: how many keys change, and which duplicate groups appear or break?
+
+**Measures.** `measure`: exact counts over a snapshot, no sample and no model. Every non-artwork row of `books` (109,087) and `books_warehouse` (22,542), read once by `_id` on 2026-10-06 21:10 UTC. Each row's key was computed twice from the same inputs: with the builder at `origin/main` (`eb1dcb41f`) and with the builder in this change. Groups are counted across both collections together, as the import gate's edition-key tier queries them. "Live" is `visible: true` with `pages_count > 0` (41,977 rows).
+
+**Script.** `scripts/audit/edition-key-replay.mjs` (`snapshot`, then `diff --before origin/main`). Artifact: `scripts/audit/edition-key-replay-4444/role-words.json` (every changed row, every merge).
+
+**Result: the change itself.**
+
+| | count |
+|---|---:|
+| keys that change | **1,275** (1,156 in `books`, 119 in `books_warehouse`) |
+| … on live books | **805** |
+| key quality tier changes | 0 |
+| new shared keys (merges) | **5 groups, 12 rows** |
+| … with two or more live books | 1 |
+| groups broken (splits) | **0** |
+| groups of 2+ rows, before → after | 21,286 → 21,289 |
+| groups with 2+ live books, before → after | 47 → 48 |
+
+1. **All five merges are the same printing catalogued twice**, read from title, author and year (no image opened): Commandino's Hero *Spiritalium liber* 1575 (both live), Giorgi's *Spiritali di Herone* 1592, Giles's *Taoist Teachings from the Book of Lieh Tzŭ* 1912, Brasseur de Bourbourg's *Popol Vuh* 1861, Resen's *Edda Islandorum* 1665. In each, one record carried "(ed.)" or "(trans.)" and the other did not. The import gate would have declined the second copy of each.
+2. **Nothing splits**, because two records that both said "(ed.)" still share a surname afterwards.
+3. The old surname slot on the changed rows: `ed` 565, `trans` 254, `editor` 96, `eds` 63, `hrsg` 51, `tr` 32, then 30 rarer forms (`commentary`, `comm`, `translator`, `attrib`, `bearb`, `attr`, `attributed`, `compiler`…). The #6019 review counted 734 live books on a shorter word list; with the German catalogue forms and the commentary/compiler family the live count is 805.
+4. The TypeScript builder and its `.mjs` twin agree on the surname for all 131,629 rows.
+
+**Result: what the re-stamp will also do.** 2,706 stored keys already differed from what the builder at `origin/main` computes, because a year, author or title was edited after the key was stamped. The identity sweep rewrites those too, so the write is larger than the change:
+
+| re-stamp (stored key → new builder) | count |
+|---|---:|
+| rows rewritten | 3,969 (3,850 `books`, 119 warehouse; 1,897 live) |
+| … caused by this change | 1,275 |
+| merges | 17 groups, 37 rows (11 with 2+ live books) |
+| splits | 249 groups, 500 rows (0 with 2+ live books) |
+| groups with 2+ live books, stored → after | 37 → 48 |
+
+The 249 splits are mostly a `books` row and its own `books_warehouse` copy whose year was later corrected on one side (201 by year alone). The 12 merges not caused by this change are pairs whose author or year was corrected after stamping (five Aldine editions stored under `manuzio` whose author is now Cicero, Machiavelli, Dante, Statius, Propertius).
+
+**The re-stamp as run (2026-10-06 22:34 UTC, after #6069 was live).** `scripts/maintenance/materialize-edition-keys.ts --apply`, which writes the edition fields only. `identity-worker.mjs --restamp` was not used: its dry count showed it would also rewrite `normalized_title` or `normalized_author` on 10,471 `books` rows.
+
+| | `books` | `books_warehouse` |
+|---|---:|---:|
+| scanned | 109,090 | 22,542 |
+| written | **4,283** | **122** |
+| … role-word fix | 1,156 | 119 |
+| … BCE year now in the key | 435 | 0 |
+| … other drift | about 2,690 | 3 |
+
+The sweep runs the TypeScript builder, which keeps a negative year where the `.mjs` twin dropped it, so 435 keys of BCE-dated books gained their year; none merged or split. Checked afterwards on a fresh read of both collections (131,632 rows): the stored key equals the builder's on every row, no stored key has a role word in the surname slot, the five pairs above share a key, and the group counts are the predicted ones (21,289 groups of 2+, 48 with 2+ live books; 17 merges and 249 splits against the stored state). `edition-key-integrity.ts`: key drift 0. **`edition_key` is read by the import gate** on the next import and by the admin duplicates queue. Undo: gunzip `scripts/audit/edition-key-replay-4444/restamp-backup-<collection>-2026-10-06.jsonl.gz` and pass it to `--restore` (with `--collection`).
+
+**Not fixed here, measured on the way.**
+- A role word followed by a name still keys on that name: "Thucydides (ed. Henri II Estienne)" → `estienne`. 528 rows end in such a group ("(ed. …)" 254, "(trans. …)" 220, "(tr. …)" 54), 297 of them live.
+- Non-names in the slot: `unknown` 9,658 rows, `sn` 2,142 ("[s.n.]"), `anonymous` 1,394, `collection` 1,244.
+- The `.mjs` twin's `editionYear()` still rejects a negative (BCE) year that the TypeScript side accepts: 435 rows get a different year slot depending on which side stamps them. The re-stamp stored the TypeScript form; the twin is the side to fix.
+
+**Limits.** One snapshot; rows imported during the run are not in it. "Same printing" for the five merges is a metadata judgement.
+
+*Replicated?* No; one run. *Artifacts:* `scripts/audit/edition-key-replay.mjs`, `scripts/audit/edition-key-replay-4444/role-words.json`.
+
+## 2026-10-06 · How many duplicates do we still hold, where does the dedupe process lose them, and is the e-rara merge worth doing? (dedupe process review, #6019 part 3)
+<!-- PRIOR ART: scripts/maintenance/duplicate-integrity-check.mjs (#3102 step 5) validates the duplicate_of graph by `id` only and does not look at stranded text; scripts/audit/duplicate-fingerprint-groups.mjs lists same-fingerprint groups without a keeper or a page-level delta; tests/unit/dedup-normalizer-forks.test.ts pins the normalizer census but not how often the forks disagree; #5470 step 4 counted and resolved the visible edition_key groups on 2026-10-01. None samples live books for duplicates the keys miss, and none says what a merge would actually move. -->
+
+**Question.** Derek is deciding which merges to approve, whether duplicates should become relations (#3102), and whether the matching rules need fixing. Six measurements, all read-only, $0.
+
+**Measures.** Each number is labelled *count* (a query over a snapshot of `books`, 133,999 rows, taken 2026-10-06 18:23 UTC), *metadata judgement* (I compared title, author, year and page count; no image opened) or *read from the image* (I opened the title pages of both books). `measure`: counts and one by-eye classified sample; nothing here is a model's judgement. Intervals are Wilson 95%.
+
+**Script.** `scripts/audit/dedupe-review.mjs` (`snapshot`, then `m1`…`m6`). Artifacts: `scripts/audit/dedupe-review-6019/`.
+
+### 1. Fuzzy-duplicate rate on live books
+
+Uniform sample of 80 of the 42,078 live books (`visible: true`, `pages_count > 0`): ids listed, sorted, shuffled locally with seed 6019. `checkHoldings()` (#6028, read from `origin/feat/holdings-check`) ran on each book's own title, author and year; the book itself was dropped and the top remaining candidate classified.
+
+| top non-self candidate | books | rate [95% CI] | how |
+|---|---:|---:|---|
+| **same edition (a true duplicate)** | 6 | **7.5% [3.5, 15.4]** | read from the image, all 6 |
+| … both copies visible | 2 | 2.5% [0.7, 8.7] | read from the image |
+| … the other copy hidden, no `duplicate_of` | 4 | 5.0% [2.0, 12.2] | read from the image |
+| other edition of the same work | 10 | 12.5% [6.9, 21.5] | 2 read from the image, 8 metadata judgement |
+| other volume of the same set | 25 | 31.2% [22.2, 42.1] | metadata judgement |
+| different work | 19 | 23.8% [15.8, 34.1] | 1 read from the image, 18 metadata judgement |
+| no candidate | 20 | 25.0% [16.8, 35.5] | count |
+
+1. **About 1 live book in 13 has a second copy of the same edition in `books`.** The six (title pages of both sides opened for each): Mylius *Memorabilia Bibliothecae Academicae Ienensis* 1746 (two BSB copies, both visible); Todd *The Books of the Vaudois* 1865 (two Google scans, both visible); Popp *De Pestilitate* 1625 (two BSB copies); Hornung *Cista medica* (two BSB copies, 542 and 784 page images); Gretser *Commentariolus* 1610 (BNCF and ZB Zürich); Eyb / Aeneas Silvius *Praecepta artis rhetoricae* [Basel, not after 1488] (IA and UB Basel). For the Eyb pair the title pages match and the page after the prologue breaks at the same words; that second check used the sample side's OCR and the candidate's image.
+2. **The import gate's keys caught none of the six** (0/6): no shared `edition_key`, no shared fingerprint. They differ in how the record was catalogued: an English title against the Latin one, "Various" against the author's name, and **no year on the live record in 3 of the 6**.
+3. **`checkHoldings()` found all six as its top candidate, but called only one "possibly this edition".** Three were labelled *same work*, two *similar title*. It made that stronger claim three times in the sample and was right once (Hornung); the other two were another volume of a manuscript set and a variant 1507 issue of Basin's letter-writing manual (the Gallica copy has the author's name and a woodcut on the title page, the Heidelberg copy has neither).
+4. Every book found itself from its own title, author and year (80/80).
+5. I also opened three pairs that turned out not to be duplicates: Dee *Propaedeumata* (1558 against 1568), the Basin pair above, and two Dillingen disputations under Visler with the same page count (1664 and 1663).
+
+**Limits.** Only the top candidate was classified, so a duplicate ranked lower is not counted (I scanned candidates 2 to 8 for an identical title or a same-edition reason and found none). The 18 "different work" and 25 "other volume" verdicts are metadata judgements. 6 of 80 is a small count: the interval, 3.5% to 15.4%, is the finding. Scaled to the corpus that is roughly 1,500 to 6,500 live books; an extrapolation, not a count.
+
+### 2. The 5,525 books carrying `duplicate_of` (count)
+
+3,922 of them are artwork records (`pages_count: 0`, all hidden, all with the prose reason "duplicate of <slug>"); 3,207 of those point at a visible record and 715 at a hidden one. They carry no text. The rest of this section is the **1,603 with pages**.
+
+| | books | of 1,603 |
+|---|---:|---:|
+| hidden / visible / neither flag set | 1,594 / 7 / 2 | |
+| target exists (by `id`; none needed the `_id` fallback) | 1,603 | 100% |
+| self-reference | 0 | |
+| **target visible** | 547 | 34.1% [31.8, 36.5] |
+| target hidden, not itself a duplicate | 1,038 | 64.8% |
+| target hidden and itself marked a duplicate (a chain) | 18 | 1.1% |
+| … chain ends at a visible book / is a cycle | 13 / 5 | |
+| **copy has more OCR or translation than its target** | 114 | 7.1% [6.0, 8.5] |
+| … OCR pages / translated pages ahead | 2,073 / 1,050 | |
+| … at least 20 translated pages ahead | 12 | |
+| … page count differs from the target's | 95 of 114 | 83% [75, 89] |
+
+1. **The pointers are sound; what they point at is mostly not published.** No pointer is broken. But 1,038 targets are hidden for another reason (884 with no `hidden_reason`, 83 `launch_curation`, 70 `unprocessed`): these are e-rara pairs where neither copy is live, so the pointer hides nothing a reader would have seen.
+2. **Text stranded on a hidden copy is small, and most of it is not on a duplicate.** 114 copies are ahead of their target, by 1,050 translated pages in total. In 95 of them the two records have different page counts. The largest is not a duplicate at all: *Magia Adamica* [Sammelband], 474 pages with 300 translated, is marked a duplicate of an 89-page record with 82 translated. Twelve copies account for most of the stranded translation.
+3. **Seven visible books carry `duplicate_of`, and five pointers sit in two-book cycles.** Three of the seven are in cycles (*Pymander*, *Liber Razielis*, *Hermetic and Alchemical Anthology*, each pointing at a hidden book that points back); the other two cycle pointers are a hidden pair pointing at each other. Three are e-rara books: two whose pointer runs from the visible copy to the hidden one, one second visible copy (section 3). The seventh is *Kitab al-Bulhan*. Lists: `duplicate-of-graph.json` (`visible_but_marked`, `chains`, `stranded`).
+4. **Hidden copies with no pointer: 313.** A hidden book with pages and no `duplicate_of`, beside a live book: 62 share a source fingerprint, 157 share a complete `edition_key` with a year, 94 share `work_id` + year with a page count within 5% (a candidate, not a verdict). 31 of the 313 are ahead of the live copy, by 254 translated pages. The Kircher *Musurgia* pair from the brief (hidden `69b69e6c…`, live `69b69ddb…`) is found **only** by the third route: two different e-rara objects, and the live record's title is cut short, so the edition keys differ.
+
+### 3. e-rara same-object copies: the merge plan (count; plan only, nothing executed)
+
+Grouped by `e-rara:<id>` fingerprint: **1,140 objects held more than once, 2,288 records, 1,148 extra copies.** Page counts agree in every group. In 1,034 groups neither copy is visible.
+
+| | groups / copies |
+|---|---:|
+| every other copy already points at the keeper | 1,138 of 1,140 groups (99.8%) |
+| other copies with their own OCR or translation | 132 copies: 3,996 OCR pages, 577 translated pages |
+| … holding a page of text the keeper lacks (page by page) | **11 copies: 161 OCR pages, 0 translated pages** |
+| pointer runs the wrong way (visible keeper marked a duplicate of its hidden copy) | 2 (Grotius *Poemata omnia*; *Scholae in duos titulos Digestorum*) |
+| both copies visible | 1 (*Summula confessionis*; the copy holds nothing the keeper lacks) |
+
+Keeper rule: visible first, then most translated, most OCR, most pages, the one not already marked, the older. Plan by group in `scripts/audit/dedupe-review-6019/erara-merge-plan.json`:
+
+| action | groups |
+|---|---:|
+| nothing to do | 1,127 |
+| move OCR text to the keeper (1 page each in 9 groups, 3 in one) | 10 |
+| move 149 OCR pages to the keeper and reverse the pointer (*Scholae*) | 1 |
+| reverse the pointer (Grotius) | 1 |
+| hide the second visible copy | 1 |
+
+- **The e-rara merge is 13 groups, not 1,146.** The 132 copies with their own text are work paid for twice (3,996 OCR pages, 577 translated pages), not work that would be lost: page by page the keeper already has all of it except 161 OCR pages. No translated page exists only on a copy.
+
+### 4. Normalizer divergence (#4444) (count)
+
+Title normalizers in `src/` and `scripts/lib/` (`git grep`): `normalizeTitle` (`src/lib/dedup.ts`, twin `scripts/lib/dedup-normalize.mjs`), `normalizeEditionTitle` (`src/lib/edition-key.ts`, twin `scripts/lib/identity-fields.mjs`), `normaliseTitle` (`scripts/lib/work-identity-match.mjs`), `norm` (`scripts/lib/work-identity-util.mjs`, used by `work-merge-lib.mjs`), `normalizeTitle` (`scripts/lib/artwork-work-resolver.mjs`), and `rankingTokens` in #6028 (ranking only). Author keys: `normalizeAuthor` (dedup), `editionSurname` (edition-key), `authorKey` (artwork resolver), `canonicalKey` (`author-name-key.mjs`), `surname` (`work-identity-util.mjs`). Outside those two directories 33 more local `normalizeTitle`/`normalizeAuthor` definitions remain in `scripts/` (the census the fork test pins).
+
+2,000 live titles (seed 6023). For each, "same title" under a normalizer is the set of other live books with the same non-empty key; two normalizers disagree on a title when those sets differ.
+
+| pair | disagree on [95% CI] |
+|---|---:|
+| the two `.ts` / `.mjs` twins, titles and authors, all 42,078 live books | 0 differences |
+| `dedup.normalizeTitle` vs `normalizeEditionTitle` | 166 = 8.3% [7.2, 9.6] |
+| `dedup.normalizeTitle` vs artwork-resolver `normalizeTitle` | 2 = 0.1% [0.0, 0.4] |
+| `dedup.normalizeTitle` vs `normaliseTitle` / `norm` (work lane) | 587 = 29.4% [27.4, 31.4] |
+| `normalizeEditionTitle` vs `normaliseTitle` / `norm` | 587 = 29.4% [27.4, 31.4] |
+| `normalizeEditionTitle` vs `rankingTokens` (#6028) | 75 = 3.8% [3.0, 4.7] |
+| `normaliseTitle` vs `norm` | 0 |
+
+1. **Keep `normalizeEditionTitle`** (with its `identity-fields.mjs` twin). It is the only one that gives every title a key: `dedup.normalizeTitle` returns an empty key for 552 of 2,000 live titles (27.6% [25.7, 29.6]), every title not in Latin script. 140 of its 166 disagreements with `normalizeEditionTitle` are those titles.
+2. **The work-lane `norm` must never be used as a title key.** It strips everything outside a-z0-9, so a Chinese title with a volume number becomes the number: 521 of 2,000 titles "match" unrelated books ("黃氏日抄·卷二十五 (vol 20)" and "御定康熙字典·卷二十一 (vol 20)"). Today it is used for token overlap and, in `identicalTitleKey`, behind a three-word minimum, which is why this has not merged anything.
+3. **`editionSurname` has a defect that hides duplicates.** It takes the last word, so "Lazarus Zetzner (ed.)" keys as `ed` and "James Legge (trans.)" as `trans`. **734 live books (1.7%)** have a role word (`ed`, `eds`, `editor`, `trans`, `translator`, `attributed`…) as the author segment of their `edition_key`; the same edition catalogued as "Zetzner, Lazarus" gets a different key. It also returns an empty surname for 12,507 of 41,900 live books with an author (names not in Latin script), where the key falls back to title and year.
+4. Author functions disagree far more than title ones (34% to 87% of authors per pair) because they answer different questions: full name, surname, sorted words, Latin stem. Only `normalizeAuthor` and `authorKey` are close (2.6%).
+
+### 5. Relation model (#3102)
+
+The measurements argue for a relation row for **copies and parts**, and against one for same-object duplicates. Same-object is handled: 1,138 of 1,140 e-rara groups are linked and no pointer is broken, so `duplicate_of` works for "this record is redundant, hide it". What it cannot say is everything else it is being used for. 83% of the copies that are ahead of their target have a different page count, so they are another scan, a fuller copy or a Sammelband that contains the target, and hiding them loses text (1,050 translated pages) or a better scan. A one-way pointer stored on the book has also gone wrong in the ways a symmetric row cannot: 5 pointers in cycles, 2 running from the visible copy to the hidden one, 7 visible books still marked. And the sample says the common relation is not "duplicate" at all: 25 of 80 top candidates were another volume of the same set and 10 another edition, against 6 same-edition copies, of which 4 sit hidden with no link. **Recommended default:** build `book_relations` narrowly: typed, symmetric rows (`other_copy_of_edition`, `contains` / `bound_with`), no effect on visibility, backfilled from the 114 stranded pairs, the 313 unlinked hidden copies and the six sample pairs; keep `duplicate_of` as it is for same-object records.
+
+### 6. #5470's 231 visible duplicate groups (count)
+
+Same definition (`edition_key` shared by more than one `visible: true` book): **37 groups, 76 books today**, down from 231 on 2026-10-01 and 46 after #5470 step 4. So 194 of the 231 (84%) are resolved. None of the 37 contains a book created since that step; all 37 keys carry a year; in 14 the visible copies' page counts are within 5% of each other (likely real duplicates), in 23 they are not (likely volumes or parts sharing a key). This equals the 37 live groups in the brief: every visible book in them has pages. `edition_key` groups with more than one copy of any visibility: 932 (1,975 books).
+
+**Limits of the whole entry.** One snapshot; the pipeline moved during the run. `pages_ocr` and `pages_translated` are stored counters, checked page by page only in section 3. Sections 2, 3 and 6 are exact counts, not samples. Nothing was merged, hidden, linked or deleted.
+
+*Replicated?* No; one run, one reader for the images. *Artifacts:* `scripts/audit/dedupe-review.mjs`, `scripts/audit/dedupe-review-6019/*.json`.
+
+## 2026-10-06 · Moving "Bacon" mentions to Roger and Francis: applied, and how good each evidence tier was (#5950)
+<!-- PRIOR ART: 2026-10-06-shared-name-mislinks-5950.md measured how many mentions sit on the wrong person and dry-ran this plan, checking 5 moves per tier. This entry is the apply and the full read of two tiers that the 5-row check could not judge. -->
+
+- **Question.** The dry run proposed 351 moves off the bare "Bacon" record on four kinds of evidence and checked five of each by eye. Applied to production, are the moves right?
+- **Answer.** **Not all, and the 5-row check could not have shown it.** The first apply moved 351 mentions. Re-reading 20 found one wrong, in the same-book tier. Reading that tier in full: **143 of 163 right (88%), 15 wrong, 5 not decidable from the page.** The note tier in full: 61 of 63 right, 2 not decidable. The printed-cue tier was sampled only: 12 of 12. The apply was undone from its undo file and run again with the 22 by-eye verdicts entered. Now on production: **340 mentions moved (223 to Francis Bacon, 117 to Roger Bacon), 164 left on "Bacon"** (30 held on date alone, 11 left by eye, 123 with nothing that decides).
+- **measure:** accuracy of the proposed person against one reader (the model that ran the job) reading the page text. One judge, no second reading. The printed tier's figure is a sample of 12.
+
+### What was read
+
+| Tier | Moves in the first apply | Read | Right | Wrong | Not decidable |
+|---|---|---|---|---|---|
+| printed cue on the page | 123 | 12 (7 here, 5 in the dry run) | 12 | 0 | 0 |
+| same book names one of them in full | 165 (163 pages, 2 section entries) | 163 pages | 143 | 15 | 5 |
+| translator's note or keywords | 63 | 63 pages | 61 | 0 | 2 |
+
+- The 20-mention check is `bacon-apply-check.tsv`: 19 of 20 as read (one row repeats a page from the dry-run check, so 19 new pages).
+- **The same-book errors come in whole books.** Rozanov's *O ponimanii* (1886) names Roger Bacon once in full and means Francis on seven other pages ("the logic of Bacon" against Aristotle's). A 1709 Dutch recipe book cites "the Physician Bacon", a third man, on four pages. Francis Bacon's own *Temporis partus masculus* says "qualis est Bacon" of Roger. Kittredge, Dutens and one page of *Isis Unveiled* are Francis in books that name Roger.
+- The 7 undecidable: "conviction comes not through arguments but through experiments, says Bacon" (twice); Bacon on garlic and the lodestone; the powers of phantasy "according to Bacon" (two pages of Wirdig); a scholastic "Bacon" on the Intelligences in Raynaud (two pages, probably John Baconthorpe). They were put back on the bare record.
+
+### What changed in the method
+
+- `SURNAMES.<name>.byEye` in `scripts/audit/shared-surname-reattribution-plan.mjs`: a page read by eye outranks the tiers (#6024). **Read every same-book and note proposal before an apply.** At 163 + 63 short passages that took about twenty minutes.
+- **The plan must not read its own moves as evidence.** A dry run after the first apply proposed 21 further moves, only because the apply had put those books on a person's record. Each `sweep_log` move row now records `target_had_book`; rows that say no are left out of the same-book evidence. After the second apply a dry run proposes 0.
+
+### The writes
+
+- Three `entities` documents, one transaction: "Bacon" 211 → 98 books, 494 → 156 page mentions; "Roger Bacon" 470 → 482 books; "Francis Bacon" 243 → 291 books. No entry the two targets held before was lost or shortened (checked against the undo file).
+- `sweep_log`, sweep `shared-surname-reattribution-5950`: 147 rows from the first apply, one `entity-moves-undone` row, 144 rows from the second.
+- Undo: `scripts/eval/shared-name-mislinks/undo/bacon-reattribution-2026-10-06.json` (the old `books[]` of all three), applied with `--undo`.
+- The same day, the one-person claim was cleared on the bare records Montanus, Bruno, Fabricius and Agrippa (`scripts/maintenance/clear-bare-surname-claims.mjs`; undo file beside the other).
+
+### Limits
+
+- The printed tier is 123 moves and 12 were read. Its cues are explicit ("Rogerius", "Verulam", a title), but the same-book tier also passed its first five.
+- One reader. The translation's notes were stripped from what the tiers saw, but not from what I saw.
+- It decays. A re-index of a moved book writes that book's entry on "Roger Bacon" again from the book's own index, without the moved pages, and the full rebuild (`POST /api/entities`) does that for every book at once. Mentions then go missing; they do not go back to the wrong man once #6026 is merged.
+- 2 section-precision entries moved with no page to read.
+
+**Next:** #6026 (the index writers stop attaching a held surname to a person record), then the next surnames on #5950.
 
 ## 2026-10-05 · Can an open OCR engine replace the Flash re-read, judged on the English? (#5870)
 

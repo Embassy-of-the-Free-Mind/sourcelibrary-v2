@@ -52,4 +52,18 @@ describe('robots.txt content signals', () => {
       expect(star).toContain(`Disallow: ${path}`);
     }
   });
+
+  // The tripwire (#5995) is only evidence if EVERY crawler was told to stay
+  // out: a group that may fetch it turns a polite crawler into a "scraper".
+  it('disallows the tripwire for every user-agent group', async () => {
+    const { TRIPWIRE_PATH } = await import('@/lib/tripwire');
+    const text = await body();
+    const groups = text.split(/\n\n/).filter((b) => b.startsWith('User-agent:'));
+    for (const g of groups) {
+      const allows = [...g.matchAll(/^Allow: (.+)$/gm)].map((m) => m[1]);
+      const explicit = g.includes(`Disallow: ${TRIPWIRE_PATH}\n`) || g.endsWith(`Disallow: ${TRIPWIRE_PATH}`);
+      const blanket = /^Disallow: \/$/m.test(g) && !allows.some((a) => a !== '/' && TRIPWIRE_PATH.startsWith(a));
+      expect(explicit || blanket, g.split('\n')[0]).toBe(true);
+    }
+  });
 });

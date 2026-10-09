@@ -44,6 +44,22 @@
  * which links books by exact NFD variant match to exactly one doc (its own
  * safety rules, provenance, and --undo).
  *
+ * AUTHORITY IDS (added 2026-10-07 for the Tengyur, #6145). A verdict may carry
+ * `authority: { bdrc: "P6120" }` — the person's id in an external authority that
+ * already separates namesakes. canonicalKey folds "Dharmakīrti I", "Dharmakīrti
+ * II" and the translator BDRC also labels "Dharmakīrti" onto ONE key
+ * (`dharmakirt`), and the same-run convergence below would have merged three
+ * men into one doc. With an authority id the id decides, not the key:
+ *   - two verdicts with different ids never converge — each mints its own doc;
+ *   - an existing doc that already carries a DIFFERENT id is never appended to;
+ *   - minted docs carry `bdrc_ids: [id]`, and appends add the id to the doc,
+ *     so a resolver can join on the id instead of a name.
+ * Further optional verdict fields: `slug` (explicit doc id, still clash-checked),
+ * `extra_variants` (other catalogue forms of the SAME person, e.g. the Wylie
+ * name), `link_to` (a hand-reviewed existing doc: append there, no key match),
+ * and `standalone: true` (a reviewed REJECTED match: mint, never append).
+ * Run with `--source=<tag> --backup=<path>` so a batch reverts on its own.
+ *
  * Usage:
  *   node --env-file=.env.production.local scripts/maintenance/additive-mint-authors-3780.mjs --input <verdicts.jsonl>           # dry-run
  *   node --env-file=.env.production.local scripts/maintenance/additive-mint-authors-3780.mjs --input <verdicts.jsonl> --apply
@@ -57,8 +73,10 @@ const APPLY = process.argv.includes('--apply');
 const REVERT = process.argv.includes('--revert');
 const INPUT = (process.argv.find(a => a.startsWith('--input=')) || '').split('=')[1]
   || process.argv[process.argv.indexOf('--input') + 1];
-const BACKUP = 'scripts/output/additive-mint-3780-backup.json';
-const SOURCE = 'additive-mint-3780';
+const argv = (k) => (process.argv.find(a => a.startsWith(`--${k}=`)) || '').split('=').slice(1).join('=') || null;
+const BACKUP = argv('backup') || 'scripts/output/additive-mint-3780-backup.json';
+const SOURCE = argv('source') || 'additive-mint-3780';
+const PLAN_OUT = argv('plan');   // optional: write the full plan (mints, appends, skips, notes) as JSON
 
 // The builder's clustering + slug rules — shared via scripts/lib/author-name-key.mjs.
 import { norm, canonicalKey, authorSlug } from '../lib/author-name-key.mjs';
@@ -80,7 +98,7 @@ if (REVERT) {
   const del = await authors.deleteMany({ _id: { $in: saved.minted }, source: SOURCE });
   let pulls = 0;
   for (const ap of saved.appended) {
-    const r = await authors.updateOne({ _id: ap.doc }, { $pull: { variants: ap.variant, variant_slugs: ap.variant_slug || '__none__' } });
+    const r = await authors.updateOne({ _id: ap.doc }, { $pull: { variants: { $in: [ap.variant, ...(ap.extra_variants || [])] }, variant_slugs: ap.variant_slug || '__none__', ...(ap.bdrc ? { bdrc_ids: ap.bdrc } : {}) } });
     pulls += r.modifiedCount;
   }
   console.log(`Reverted: deleted ${del.deletedCount} minted docs, pulled variants from ${pulls} docs.`);
@@ -98,7 +116,11 @@ console.log(`${verdicts.length} verdicts; acting on ${actionable.length} (person
 const byVariant = new Map();
 const byKey = new Map();
 const usedIds = new Set();
-for await (const a of authors.find({}, { projection: { canonical_name: 1, variants: 1, merged_into: 1, is_person: 1 } })) {
+const byId = new Map();
+const byQid = new Map();
+for await (const a of authors.find({}, { projection: { canonical_name: 1, variants: 1, merged_into: 1, is_person: 1, bdrc_ids: 1, wikidata_id: 1 } })) {
+  byId.set(a._id, a);
+  if (a.wikidata_id) byQid.set(a.wikidata_id, a._id);
   usedIds.add(a._id);
   for (const v of new Set([...(a.variants || []), a.canonical_name].filter(Boolean))) {
     if (!byVariant.has(norm(v))) byVariant.set(norm(v), a);
@@ -127,7 +149,7 @@ const EXCLUDE_APPEND = new Set([
 // becomes a variant, and so does the display unless buildDoc withholds it —
 // which it can only do if this index scored it.
 const candidateForms = new Set(
-  actionable.flatMap(v => [v.string, v.canonical_name])
+  actionable.flatMap(v => [v.string, v.canonical_name, ...(v.extra_variants || [])])
     .map(s => norm(s || '').trim())
     .filter(s => s && !/[\s,]/.test(s)),
 );
@@ -208,6 +230,10 @@ const appends = [];    // { doc, variant, variant_slug }
 const skips = [];
 const notes = [];      // decisions worth reading even though they are not skips
 const claimedKeys = new Map();   // key -> minted doc id, so same-person strings in one run converge
+const claimedAuthority = new Map(); // minted doc id -> its authority id (bdrc), so different ids never converge
+const authorityOf = (v) => v.authority?.bdrc || null;
+// Does an existing doc already belong to a DIFFERENT authority id?
+const otherAuthority = (doc, v) => Boolean(authorityOf(v) && doc?.bdrc_ids?.length && !doc.bdrc_ids.includes(authorityOf(v)));
 const mintedBySlug = new Map();  // slug -> { source } for docs minted THIS run, to resolve slug clashes
 
 // The CJK characters of a string, in order — the part romanization throws away.
@@ -236,7 +262,8 @@ const buildDoc = (id, display, s, v) => {
   // actually carry.
   const displayPoison = display !== s && poisonScore(display) >= POISON_MIN_EXTENDERS;
   if (displayPoison) notes.push(`${JSON.stringify(display)} kept as canonical_name of ${id} but NOT as a variant — ${poisonScore(display)} distinct people extend it`);
-  const variants = [...new Set(displayPoison ? [s] : [s, display])];
+  const extra = (v.extra_variants || []).filter(x => x && poisonScore(x) < POISON_MIN_EXTENDERS);
+  const variants = [...new Set([...(displayPoison ? [s] : [s, display]), ...extra])];
   return {
     _id: id,
     canonical_name: display,
@@ -244,18 +271,43 @@ const buildDoc = (id, display, s, v) => {
     variants,
     variant_slugs: [...new Set(variants.map(authorSlug).filter(Boolean))],
     book_count: v.books ?? null,
-    viaf_id: null,
-    wikidata_id: null,
+    viaf_id: v.viaf_id || null,
+    wikidata_id: v.wikidata_id || null,
     entity_ids: [],
     ...(v.verdict === 'institution' ? { is_person: false } : {}),
+    ...(authorityOf(v) ? { bdrc_ids: [authorityOf(v)] } : {}),
     source: SOURCE,
     built_at: new Date(),
   };
 };
 
+const appendOf = (doc, v, extra = {}) => ({
+  doc, variant: v.string, variant_slug: authorSlug(v.string) || null,
+  ...(authorityOf(v) ? { bdrc: authorityOf(v) } : {}),
+  ...(v.extra_variants?.length ? { extra_variants: v.extra_variants.filter(x => x && poisonScore(x) < POISON_MIN_EXTENDERS) } : {}),
+  ...extra,
+});
+
 for (const v of actionable) {
   const s = v.string;
-  if (byVariant.has(norm(s))) { skips.push({ s, why: 'already a variant (matched since enumeration)' }); continue; }
+  // A hand-reviewed link to an existing doc: append there and nothing else.
+  if (v.link_to) {
+    const d = byId.get(v.link_to);
+    if (!d || d.merged_into || d.is_person === false || otherAuthority(d, v)) { skips.push({ s, why: `link_to ${v.link_to} is missing, a tombstone, quarantined, or another authority's doc` }); continue; }
+    appends.push(appendOf(v.link_to, v, { via: 'hand-reviewed link_to' }));
+    continue;
+  }
+  // No two docs may share a wikidata_id (the merge-by-QID discipline): a QID
+  // already on a doc means the person is there — review it into link_to.
+  if (v.wikidata_id && byQid.has(v.wikidata_id)) { skips.push({ s, why: `wikidata ${v.wikidata_id} is already on doc ${byQid.get(v.wikidata_id)} — review, then set link_to` }); continue; }
+  if (byVariant.has(norm(s))) {
+    const d = byVariant.get(norm(s));
+    if (!authorityOf(v)) { skips.push({ s, why: 'already a variant (matched since enumeration)' }); continue; }
+    // With an authority id, an exact string hit is a CANDIDATE, not a match: the
+    // string "Samantabhadra" is already on the Jain author's doc. Only a reviewed
+    // link_to adopts an existing doc; otherwise mint, and say so.
+    if (!v.standalone) { skips.push({ s, why: `exact variant of existing doc ${d._id} — review, then set link_to or standalone` }); continue; }
+  }
   const ext = extenders.get(norm(s).trim());
   if (ext && ext.size >= POISON_MIN_EXTENDERS) {
     skips.push({ s, why: `POISON FORM — bare name extended by ${ext.size} distinct people in our own corpus (e.g. ${[...ext].slice(0, 3).join(', ')}); as a variant it would claim all of them` });
@@ -293,7 +345,19 @@ for (const v of actionable) {
   // at worst it duplicates one, which is the cheap error. Adopting the wrong
   // doc mis-attributes every book wearing the string, which is the dear one.
   let standalone = null;
-  if (keyHit && !keyHit.minted && EXCLUDE_APPEND.has(`${keyHit._id}|${s}`)) {
+  if (keyHit && v.standalone) standalone = `reviewed: not the same person as ${keyHit._id}`;
+  if (!standalone && keyHit?.minted && authorityOf(v) && claimedAuthority.get(keyHit._id) !== authorityOf(v)) {
+    standalone = `same cluster key as ${keyHit._id} minted this run, but a different authority id (${claimedAuthority.get(keyHit._id)} vs ${authorityOf(v)})`;
+  }
+  if (!standalone && keyHit && !keyHit.minted && otherAuthority(keyHit, v)) {
+    standalone = `cluster key matches ${keyHit._id}, which carries a different authority id (${keyHit.bdrc_ids.join(',')})`;
+  }
+  if (!standalone && keyHit && !keyHit.minted && authorityOf(v)) {
+    // An authority-backed person adopts an existing doc only through a reviewed link_to.
+    skips.push({ s, why: `cluster key matches existing doc ${keyHit._id} via ${JSON.stringify(keyHit.viaVariant)} — review, then set link_to or standalone` });
+    continue;
+  }
+  if (!standalone && keyHit && !keyHit.minted && EXCLUDE_APPEND.has(`${keyHit._id}|${s}`)) {
     standalone = `hand-excluded: key collision with ${keyHit._id} is NOT the same person`;
   }
   if (!standalone && cjkOf(s) && hitCjk.length && hitCjk.every(c => cjkDiffers(s, c))) {
@@ -310,19 +374,19 @@ for (const v of actionable) {
     if (keyHit.is_person === false) { skips.push({ s, why: `key lands on QUARANTINED doc ${keyHit._id} — needs eyes` }); continue; }
     if (v.verdict === 'institution') { skips.push({ s, why: `institution string keys onto person doc ${keyHit._id} — needs eyes` }); continue; }
     if (EXCLUDE_APPEND.has(`${keyHit._id}|${s}`)) { skips.push({ s, why: `hand-excluded: key collision with ${keyHit._id} is NOT the same person` }); continue; }
-    appends.push({ doc: keyHit._id, variant: s, variant_slug: authorSlug(s) || null, via: keyHit.viaVariant });
+    appends.push(appendOf(keyHit._id, v, { via: keyHit.viaVariant }));
     continue;
   }
   if (keyHit?.minted && !standalone) {
     // same cluster key as a doc minted earlier THIS run — append there
-    appends.push({ doc: keyHit._id, variant: s, variant_slug: authorSlug(s) || null });
+    appends.push(appendOf(keyHit._id, v));
     continue;
   }
 
   // An institution displays its own heading, which for a CJK body (司農司, the
   // Yuan Bureau of Agriculture) slugs to nothing. Fall back to the classifier's
   // romanization for the id only — the heading stays the canonical_name.
-  const id = authorSlug(display) || authorSlug(v.canonical_name || '');
+  const id = v.slug || authorSlug(display) || authorSlug(v.canonical_name || '');
   if (!id) { skips.push({ s, why: 'canonical_name slugs to empty — needs a romanization' }); continue; }
   // A slug clash used to mint `<slug>-2` silently, which decides a question it
   // has not asked: is this the same person under another spelling, or a
@@ -331,6 +395,10 @@ for (const v of actionable) {
   // distinction that actually separates the two cases:
   if (usedIds.has(id)) {
     const twin = mintedBySlug.get(id);
+    if (twin && authorityOf(v) && twin.authority !== authorityOf(v)) {
+      skips.push({ s, why: `slug "${id}" was minted this run for authority ${twin.authority}; this is ${authorityOf(v)} — give it a distinct name` });
+      continue;
+    }
     if (!twin) {
       // Clash with a PRE-EXISTING doc: its books, its history, no safe default.
       skips.push({ s, why: `slug "${id}" belongs to an existing doc — same person the key missed, or a homonym; needs eyes, not a "-2" doc` });
@@ -348,15 +416,17 @@ for (const v of actionable) {
       notes.push(`romanization homophone: ${JSON.stringify(s)} and ${JSON.stringify(twin.source)} both display "${display}" — distinct people, minting ${alt}`);
       usedIds.add(alt);
       claimedKeys.set(key, alt);
-      mintedBySlug.set(alt, { source: s });
+      mintedBySlug.set(alt, { source: s, authority: authorityOf(v) });
+      if (authorityOf(v)) claimedAuthority.set(alt, authorityOf(v));
       mints.push({ _id: alt, doc: buildDoc(alt, display, s, v) });
       continue;
     }
-    appends.push({ doc: id, variant: s, variant_slug: authorSlug(s) || null, via: `same-run spelling twin of ${JSON.stringify(twin.source)}` });
+    appends.push(appendOf(id, v, { via: `same-run spelling twin of ${JSON.stringify(twin.source)}` }));
     continue;
   }
   usedIds.add(id);
-  mintedBySlug.set(id, { source: s });
+  mintedBySlug.set(id, { source: s, authority: authorityOf(v) });
+  if (authorityOf(v)) claimedAuthority.set(id, authorityOf(v));
   // A standalone mint must NOT claim the shared key: the key is exactly what it
   // was refused for, and claiming it would hand the next homophone the same bad
   // match, this time pointing at a doc minted moments ago.
@@ -375,6 +445,7 @@ if (skips.length) {
   for (const s of skips.slice(0, 30)) console.log(`  "${s.s.slice(0, 50)}" — ${s.why}`);
 }
 
+if (PLAN_OUT) writeFileSync(PLAN_OUT, JSON.stringify({ source: SOURCE, mints: mints.map(m => m.doc), appends, skips, notes }, null, 1));
 if (!APPLY) { console.log('\nDRY-RUN. Re-run with --apply to write.'); await mc.close(); process.exit(0); }
 
 // ── backup (merge on id — earlier entries win) then write ────────────────────
@@ -384,7 +455,7 @@ const havePrior = new Set(prior.minted);
 const havePriorAppend = new Set(prior.appended.map(a => `${a.doc} ${a.variant}`));
 for (const m of mints) if (!havePrior.has(m._id)) prior.minted.push(m._id);
 for (const a of appends) if (!havePriorAppend.has(`${a.doc} ${a.variant}`)) prior.appended.push(a);
-prior.issue = 3780;
+prior.issue = prior.issue || (SOURCE === 'additive-mint-3780' ? 3780 : SOURCE);
 prior.created_at = prior.created_at || new Date().toISOString();
 prior.last_run_at = new Date().toISOString();
 writeFileSync(BACKUP, JSON.stringify(prior, null, 2));
@@ -398,7 +469,7 @@ let appended = 0;
 for (const a of appends) {
   const r = await authors.updateOne(
     { _id: a.doc, merged_into: { $exists: false } },
-    { $addToSet: { variants: a.variant, ...(a.variant_slug ? { variant_slugs: a.variant_slug } : {}) } },
+    { $addToSet: { variants: { $each: [a.variant, ...(a.extra_variants || [])] }, ...(a.variant_slug ? { variant_slugs: a.variant_slug } : {}), ...(a.bdrc ? { bdrc_ids: a.bdrc } : {}) } },
   );
   appended += r.modifiedCount;
 }

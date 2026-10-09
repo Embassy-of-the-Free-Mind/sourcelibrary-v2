@@ -136,7 +136,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
         setDownloading(null);
         toast.error(
           response.status === 504 || response.status === 524
-            ? 'This book is taking too long to package — please try again, or pick a lighter format.'
+            ? 'This book is taking too long to package. Please try again, or pick a lighter format.'
             : 'Download failed. Please try again.'
         );
         return;
@@ -244,7 +244,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
                 Sign in to download
               </button>
               <p className="mt-2 text-xs text-stone-400 text-center">
-                {ncImagesFree ? 'Text formats and page scans are free once you sign in.' : 'Text formats are free once you sign in — premium formats (facsimiles, parallel text, scholarly editions) need a member account.'}
+                {ncImagesFree ? 'Text formats and page scans are free once you sign in.' : 'Text formats are free once you sign in. Premium formats (facsimiles, parallel text, scholarly editions) need a member account.'}
               </p>
             </div>
           )}
@@ -262,7 +262,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
                 {purchasing ? 'Redirecting...' : 'Unlock premium formats ($5)'}
               </button>
               <p className="mt-2 text-xs text-stone-400 text-center">
-                {ncImagesFree ? 'Page scans are free; scholarly editions included with purchase.' : 'Text formats below are already free — this unlocks facsimiles and scholarly editions.'}
+                {ncImagesFree ? 'Page scans are free; scholarly editions included with purchase.' : 'Text formats below are already free; this unlocks facsimiles and scholarly editions.'}
               </p>
             </div>
           )}

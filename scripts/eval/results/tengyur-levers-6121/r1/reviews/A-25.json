@@ -1,0 +1,98 @@
+[
+{"id": "QWXL1", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "མེད་པའི་བློས་རྒྱུན་གཅོད་པ་ཡིན་ནོ",
+   "english": "causes the mind that grasps non-existence to sever the continuity",
+   "why": "The cognition of non-existence (by producing a discordant cause) cuts off the continuum of the cognition of the entity; the English makes the entity-cognition the causer."},
+  {"type": "reversal", "confidence": "medium",
+   "tibetan": "དེའི་ཚེ་མེ་ལས་གྲང་བ་ལྟར",
+   "english": "just as coldness is produced by fire",
+   "why": "The example is cold being removed by fire (as cold [ceases] from fire), not cold produced by fire."}
+ ],
+ "note": "A difficult apoha/virodha passage rendered largely correctly; two clauses misconstrued."},
+{"id": "QXBIA", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "Faithful rendering of the regress argument against space's nature and the six Vaiśeṣika categories."},
+{"id": "QTXTP", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "addition", "confidence": "medium",
+   "tibetan": "འོག་ནས་འབྱུང་བ་ལྷར་ཡིད་ཆེས་པའི་དད་པ་བསྐྱེད་པར་བྱའོ",
+   "english": "You should generate faith through conviction in deities",
+   "why": "ལྷར is an e-text slip for ལྟར ('as will come below'); the text asks for the faith of conviction, not conviction in deities."}
+ ],
+ "note": "Clear and accurate account of the sequence of faith and the instruction for stabilising it."},
+{"id": "Q3RIX", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "གསུམ་པའི་རྟགས་ཤེས་པར་གྲུབ་མོད་ཀྱི",
+   "english": "the sign of the third is certainly established",
+   "why": "The phrase concedes that the triply-characterised sign is established as known; 'of the third' and 'certainly' misread it."}
+ ],
+ "note": "The anvaya/vyatireka argument about the word 'niścita' is followed correctly overall."},
+{"id": "QH1PD", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "རིག་ཕྱིར་རོ་ཞེས་བྱ་བ་ནི",
+   "english": "\"For the purpose of knowing\" implies",
+   "why": "ཕྱིར here is causal: the lemma is 'because it is experienced', glossed by 'because one experiences it functioning at that very time'.",
+   "fix": {"find": "\"For the purpose of knowing\" implies", "replace": "\"Because it is experienced\" means"}}
+ ],
+ "note": "Mostly follows the dream/waking argument but the prose is murky in places and one lemma is misconstrued."},
+{"id": "QJZZY", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "འདུན་གྱི་ལྷག་མ་དང་པོའི་རྣམ་པར་འབྱེད་པའོ",
+   "english": "the first (Sanghadisesa) Formal Meeting of the Sangha",
+   "why": "This is the Mūlasarvāstivāda saṅghāvaśeṣa; the Pali form is used where the Sanskrit tradition is meant.",
+   "fix": {"find": "the first (Sanghadisesa) Formal Meeting of the Sangha", "replace": "the first saṅghāvaśeṣa offense"}},
+  {"type": "gloss", "confidence": "high",
+   "tibetan": "དེའི་རྣམ་པར་ཉེས་བྱས་ཉིད་དུ་རིག་པར་བྱའོ",
+   "english": "wrongdoing (dus-kyas)",
+   "why": "The term is nyes byas (Skt. duṣkṛta); 'dus-kyas' is a garbled equivalent.",
+   "fix": {"find": "wrongdoing (dus-kyas)", "replace": "wrongdoing (nyes byas, duṣkṛta)"}}
+ ],
+ "note": "Content of the Vinaya commentary is rendered correctly; terminology glosses need tidying."},
+{"id": "QEWZ8", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "དེ་བཞིན་གཤེགས་དག་མཆོག་ཏུ་གསལ་མཛད་པ",
+   "english": "the Tathagata made a supremely radiant stupa",
+   "why": "'Supremely illuminating' qualifies the Tathāgata, who honoured the body and also built stūpas; it is not an attribute of the stūpa."}
+ ],
+ "note": "The verses are understood correctly; one epithet is attached to the wrong noun."},
+{"id": "QKVO2", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "བསྒྲུབ་བྱ་སྒྲུབ་པར་བྱེད་པར་སྨོས་པ་དེ་ཉིད",
+   "english": "is established by the 'prover'",
+   "why": "The objection is about the phrase sādhyasādhana, 'that which proves the probandum', as itself the qualifier, not about the probandum being established by the prover."}
+ ],
+ "note": "The root verses and the general-rule/exception argument are rendered well; one objection is misparsed."},
+{"id": "QF8IQ", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "པ་དེས་མི་བདག་ནི",
+   "english": "Through the pride of the lord of men",
+   "why": "Continuing མ་བཀུར་ from the previous side (Skt. vimānena): the king was slighted/dishonoured by this; it is not his pride.",
+   "fix": {"find": "Through the pride of the lord of men", "replace": "Slighted by this, the lord of men"}}
+ ],
+ "note": "The narrative and the deity's speech are rendered faithfully apart from the opening line."},
+{"id": "QIBNG", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "གསལ་བ་བརྗོད་པར་འདོད་པས་མང་པོའི་ཚིག",
+   "english": "is a plural term used to express clarity",
+   "why": "གསལ་བ here is vyakti, the individual instances; the plural is used because the particulars are meant.",
+   "fix": {"find": "is a plural term used to express clarity", "replace": "is a plural term, because the individual instances (vyakti) are meant"}},
+  {"type": "reversal", "confidence": "medium",
+   "tibetan": "རྟེན་གྱིས་འཇིག་པའི་གནས་བྱེད་ན",
+   "english": "If a support makes the state of destruction occur through itself or another",
+   "why": "The hypothesis is that the support makes the perishing thing persist (stay), not that it brings about destruction."},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "མཚམས་སྦྱོར་བར་བྱེད་པའི་ཡིད་ཀྱི་རྣམ་པར་ཤེས་པ",
+   "english": "which performs the connection",
+   "why": "མཚམས་སྦྱོར་བ is rebirth-linking (pratisandhi); the mental consciousness that links rebirth is the 'being'."}
+ ],
+ "note": "Follows the refutation of a support for persistence in outline, but several technical terms are misread."}
+]

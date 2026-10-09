@@ -375,6 +375,14 @@ Entry format. **Reader sees** · **Lane** (image / OCR / translation / derived /
 - **Fix:** the translation carries the OCR's paragraph structure and nothing else: no headings it did not have, no tables it did not have, no line breaks inside a sentence unless the source is verse.
 - **Sub-variant — a closing source colophon made into the next section's heading (2026-09-30, #4523 pilot spot-check):** a Tibetan compilation ends each episode with its source, "…X ལས་བྱུང་བ" ("this came from X"), written before the next section's head mark ༄. The translator renders it as "From the X:" or "Derived from the X:", a heading over the FOLLOWING episode. That attributes the next story to the wrong sūtra or tantra. Seen on 2 of 4 non-canonical pages read by eye: https://sourcelibrary.org/book/6a14e170311a9edd46221253?page=179 ("From the Sutra of the Concentration of the Four Youths:") and https://sourcelibrary.org/book/6a14e170311a9edd46221253?page=262 ("Derived from the Vajra-Underworld Tantra:", where the image shows the colophon in small script before the ༄ that opens the next section `[image]`). **Fix:** a prompt line for Tibetan: "…ལས་བྱུང་བ closes the section before it; render it as a closing attribution, never as a heading."
 
+### T17 · The model's reasoning or a chat reply stored as the translation — NEW (2026-10-06) · #6056
+- **Reader sees:** "*Wait, the prompt says:* Style: warm museum label", a checklist of the prompt's own rules, drafts and re-drafts of a line; or a whole page that reads "Please provide the OCR transcription you would like me to translate". The translation-side twin of O15.
+- **Lane:** translation → display · on-page.
+- **Seen in:** at least 549 pages of 269 public books (corpus walk, 2026-10-06); January to April 2026 hold most, and it is still being written. Chat replies cluster where the transcription was empty.
+- **Example:** https://sourcelibrary.org/book/69dfee83ce6bb8619e07f177?page=245 `[tr]`; https://sourcelibrary.org/book/6953c6a777f38f6761bda113?page=14 `[tr]`.
+- **Detector / issue:** `translationReasoningLeak()` (`scripts/lib/page-integrity.mjs`), corpus walk `scripts/audit/translation-reasoning-leak.mjs`; `scripts/eval/experiments/2026-10-06-translation-reasoning-leak-6056.md`. A floor: phrase rules.
+- **Fix:** refuse at write time what the rule matches (the page stays untranslated and is retried); a chat reply means the input was empty, so do not send an empty transcription; re-translate the pages already stored.
+
 ### Display lane
 
 ### D1 · Markup the renderer does not know, or broken — NEW as a class (pieces known) · #5159

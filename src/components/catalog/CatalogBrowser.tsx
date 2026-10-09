@@ -294,7 +294,7 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages, 
           <select
             value={sort}
             onChange={e => handleSort(e.target.value)}
-            className="text-sm border border-border-light rounded-lg px-3 py-1.5 bg-white text-secondary focus:outline-none focus:border-accent-rust cursor-pointer"
+            className="text-sm max-w-full border border-border-light rounded-lg px-3 py-1.5 bg-white text-secondary focus:outline-none focus:border-accent-rust cursor-pointer"
           >
             <option value="popular">Most read</option>
             <option value="recent">Recently added</option>
@@ -309,7 +309,7 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages, 
           <select
             value={language}
             onChange={e => handleLanguage(e.target.value)}
-            className="text-sm border border-border-light rounded-lg px-3 py-1.5 bg-white text-secondary focus:outline-none focus:border-accent-rust cursor-pointer"
+            className="text-sm max-w-full border border-border-light rounded-lg px-3 py-1.5 bg-white text-secondary focus:outline-none focus:border-accent-rust cursor-pointer"
           >
             <option value="">All languages</option>
             {languages.map(l => (
@@ -324,7 +324,7 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages, 
             <select
               value={collection}
               onChange={e => handleCollection(e.target.value)}
-              className="text-sm border border-border-light rounded-lg px-3 py-1.5 bg-white text-secondary focus:outline-none focus:border-accent-rust cursor-pointer"
+              className="text-sm max-w-full border border-border-light rounded-lg px-3 py-1.5 bg-white text-secondary focus:outline-none focus:border-accent-rust cursor-pointer"
             >
               <option value="">All collections</option>
               {collections.map(c => (
