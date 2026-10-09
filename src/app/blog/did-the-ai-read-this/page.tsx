@@ -48,6 +48,23 @@ export default function DidTheAIReadThisPage() {
 
       <article className="prose-content max-w-none">
 
+        {/* Update box: the October 2026 re-run (#6038). The body below stays as written: it is the record. */}
+        <div className="bg-amber-50 border border-amber-200/50 rounded-lg p-4 mb-6">
+          <p className="text-sm text-stone-700 leading-relaxed">
+            <strong>Update (7 October 2026):</strong> we re-ran this survey on today&apos;s library with
+            current models, controls and a preregistered method. The question this note relied on (&ldquo;has
+            the model seen the text?&rdquo;) did not survive the controls: larger models deny having seen the
+            text of famous works too. We now ask the models to name each work&apos;s author from its title. For
+            about half of the distinct works we hold, none of Gemini 3.1 Pro, Claude Opus 5.5 or GPT-5.6 can;
+            by volumes it is about a third. That measures what models can recall, not what was in their
+            training data, so the phrase &ldquo;new to AI training&rdquo; below claims more than the method can
+            show. The re-run is in{' '}
+            <Link href="/blog/what-the-models-cannot-name" className="text-accent-rust hover:underline">
+              What the Models Cannot Name
+            </Link>.
+          </p>
+        </div>
+
         {/* --- Lead --- */}
         <p className="text-xl text-secondary leading-relaxed mb-8">
           We asked a frontier language model to quote the opening of Cornelius Drebbel&rsquo;s <em>Tractatus duo de Natura Elementorum</em> (Hamburg, 1621), a rare Latin alchemical treatise we hold. The model produced 680 characters of plausible-looking scholastic Latin beginning &ldquo;Cum omnia, quae sub Luna sunt&hellip;&rdquo; The actual text begins &ldquo;Cum discursus hic in manus tuas peruenerit, Amice Lector&hellip;&rdquo; The model invented the opening with complete confidence. This is the puzzle that motivated a small empirical project: for a digital library of pre-modern and multilingual books, how many are <em>genuinely</em> new to the AI ecosystem, and how would we know?

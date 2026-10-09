@@ -1,0 +1,121 @@
+{
+  "issue": 6056,
+  "dir": "scripts/eval/results/spot-check/overview-2026-10-07-bhutan-kangyur",
+  "weighted_serious_page_rate": 0.047619047619047616,
+  "weight_basis": "frame_size (books in stratum frame)",
+  "strata": [
+    {
+      "name": "bhutan-tibetan",
+      "desc": "Visible Tibetan books in the bhutan/vajrayana collections (BL EAP manuscripts and prints, read by our own OCR: BDRC Yigdzin + Gemini; no e-text), pages_translated>=8, frame tightened to the lives of Padmasambhava (rnam thar, skyes rabs, bka thang): 8 of 908 eligible books. 69e7481e85f786e884a4b4dc (Lamp Dispelling Darkness) has 595 OCR pages and 0 English, so it cannot be drawn; read separately by eye.",
+      "frame_size": 8,
+      "books": 4,
+      "pages": 16,
+      "serious_page_rate": 0.125,
+      "serious_ci": [
+        0,
+        0.25
+      ],
+      "wrong_leaf_rate": 0,
+      "mean_ocr": 4.06,
+      "mean_tr": 3.63,
+      "on_sight_books": 2,
+      "fit_to_show": {
+        "show_with_caveat": 3,
+        "show": 1
+      },
+      "showcase": [
+        "https://sourcelibrary.org/book/69e78aa54a6785cfd60d497d?page=6",
+        "https://sourcelibrary.org/book/69e7ac8c5f1a22ab19aa8f60?page=68",
+        "https://sourcelibrary.org/book/69e77a930fc6fc955e360a71?page=22",
+        "https://sourcelibrary.org/book/69e77a930fc6fc955e360a71?page=40",
+        "https://sourcelibrary.org/book/69e77a930fc6fc955e360a71?page=64",
+        "https://sourcelibrary.org/book/69e77a5e0fc6fc955e35f863?page=51",
+        "https://sourcelibrary.org/book/69e77a5e0fc6fc955e35f863?page=81",
+        "https://sourcelibrary.org/book/69e77a5e0fc6fc955e35f863?page=86",
+        "https://sourcelibrary.org/book/69e77a5e0fc6fc955e35f863?page=25"
+      ],
+      "verdicts": [
+        {
+          "book_id": "69e78aa54a6785cfd60d497d",
+          "title": "u rgyan padma'i rnam thar/ rin po che 'od 'bar ba (in Tibetan Headless letter)",
+          "fit": "show_with_caveat",
+          "summary": "A headless-script manuscript of a Padmasambhava biography (Amitābha's emanations, the lotus-born youths and King Zangpo Chok, later prophecies of treasure-revealers). The transcription is of the right leaves, but each page shows three leaves, and only 8 of 236 pages have English. The English follows the narrative but misreads proper names, and on p.104 it renders a recurring name as 'famine'. Treat names and rare terms as unchecked."
+        },
+        {
+          "book_id": "69e7ac8c5f1a22ab19aa8f60",
+          "title": "Phurdrup Gonpa Thor bu bKa' thang sde lnga",
+          "fit": "show_with_caveat",
+          "summary": "The bKa' thang sde lnga, O rgyan gling pa's five treasure chronicles (the queens, the ministers, the gods and demons, the translators), in a clear headed-script manuscript. The transcription is of the right text and very close to the page. The English is usable for the narrative, but names, titles and doctrinal clauses need checking against the Tibetan. Each page holds three separate leaves, not a continuous passage."
+        },
+        {
+          "book_id": "69e77a930fc6fc955e360a71",
+          "title": "O rgyan pad ma 'byung gnas kyi skyes rabs rnam thar",
+          "fit": "show_with_caveat",
+          "summary": "An illustrated headless-script life of Padmasambhava, from Indrabhūti's jewel and the lake-born child through Garab Dorje and the charnel grounds to his last testaments to doctors and the Tibetan people. The transcription is of the right leaves, and the English can largely be trusted for the story. Each page holds four separate leaves, and three-quarters of the book has no English yet."
+        },
+        {
+          "book_id": "69e77a5e0fc6fc955e35f863",
+          "title": "Pad 'byung rnam thar",
+          "fit": "show",
+          "summary": "A life of Padmasambhava in the Zangs gling ma tradition: the taming of the spirits for Samye, the invitation of Vimalamitra, and the Guru's parting advice to scholars, tantrikas and the women of Tibet. The transcription matches the leaves closely, and the English follows it faithfully. Each page holds three leaves, read leaf by leaf."
+        }
+      ]
+    },
+    {
+      "name": "derge-kangyur",
+      "desc": "Derge Kangyur volumes from #5665 (BDRC W4CZ5369 scans + Esukhia PD e-text), all hidden (curation, about to be published), with >=8 translated pages (the 40 84000 Not-Begun texts, 1,835 pages). Drawn from translated pages only; ~2,600 Prajnaparamita pages are deliberately empty.",
+      "frame_size": 13,
+      "books": 4,
+      "pages": 16,
+      "serious_page_rate": 0,
+      "serious_ci": [
+        0,
+        0
+      ],
+      "wrong_leaf_rate": 0,
+      "mean_ocr": 5,
+      "mean_tr": 4.38,
+      "on_sight_books": 3,
+      "fit_to_show": {
+        "show_with_caveat": 4
+      },
+      "showcase": [
+        "https://sourcelibrary.org/book/6ac0b6fff427c9bb0692cebd?page=465",
+        "https://sourcelibrary.org/book/6ac0b6fff427c9bb0692cebd?page=495",
+        "https://sourcelibrary.org/book/6ac0c0fef427c9bb0692dd73?page=20",
+        "https://sourcelibrary.org/book/6ac0c0fef427c9bb0692dd73?page=28",
+        "https://sourcelibrary.org/book/6ac0c0fef427c9bb0692dd73?page=36",
+        "https://sourcelibrary.org/book/6ac0afecf427c9bb0692c231?page=433",
+        "https://sourcelibrary.org/book/6ac0afecf427c9bb0692c231?page=439",
+        "https://sourcelibrary.org/book/6ac0bdbef427c9bb0692d885?page=239",
+        "https://sourcelibrary.org/book/6ac0bdbef427c9bb0692d885?page=176"
+      ],
+      "verdicts": [
+        {
+          "book_id": "6ac0b6fff427c9bb0692cebd",
+          "title": "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཅ (Derge Kangyur, vol. 81)",
+          "fit": "show_with_caveat",
+          "summary": "This is the Derge block print of Kangyur tantra volume ca, mostly the Vajramālā explanatory tantra, with an e-text transcription that matches each scanned folio. The English is an unrevised AI translation: it follows the verse closely, but slips on technical lists (the three sattvas, the goddesses' attributes) and adds glosses of its own. Read it as a guide to the Tibetan, not a citable rendering. About a quarter of the pages are translated."
+        },
+        {
+          "book_id": "6ac0c0fef427c9bb0692dd73",
+          "title": "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ན (Derge Kangyur, vol. 88)",
+          "fit": "show_with_caveat",
+          "summary": "This is the Derge block print of Kangyur tantra volume na. The sampled pages come from a dhāraṇī sūtra on stūpas and the Bodhigarbhālaṅkāralakṣa spell, and the e-text transcription matches the scanned folios. The English on the translated pages is accurate and plain. Only the first few dozen pages are translated, and the Tibetan pane sometimes shows the e-text's {variant,correction} braces."
+        },
+        {
+          "book_id": "6ac0afecf427c9bb0692c231",
+          "title": "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཨཱཾཿ (Derge Kangyur, vol. 76)",
+          "fit": "show_with_caveat",
+          "summary": "This is the Derge block print of the last sūtra-section volume, aṃ. The translated stretch is a prophecy of the end of the Dharma: foreign kings, King Duṣprasaha and the final council at Kauśāmbī. The transcription is the right text for each leaf, and the English tells the story faithfully. Almost all of the volume is Tibetan only, and the Tibetan pane shows editorial braces from the e-text."
+        },
+        {
+          "book_id": "6ac0bdbef427c9bb0692d885",
+          "title": "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཐ (Derge Kangyur, vol. 86)",
+          "fit": "show_with_caveat",
+          "summary": "This is the Derge block print of Kangyur tantra volume tha, a yoga-tantra maṇḍala and initiation text, and the transcription is the right text for each leaf. The AI English carries the ritual sequence and the praises well. In the iconographic lists, which goddess sits where is sometimes muddled, and some notes are the model's guesses. Check any identification against the Tibetan before citing it."
+        }
+      ]
+    }
+  ]
+}

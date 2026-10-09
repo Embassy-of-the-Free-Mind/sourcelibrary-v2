@@ -12,7 +12,7 @@ import { formatYear } from '@/lib/format-year';
 export const revalidate = 86400;
 
 const DESCRIPTION =
-  'Works held in several editions across several centuries — the same text as manuscript, early printing, and modern edition, each one readable page by page.';
+  'Works held in several editions across several centuries: the same text as manuscript, early printing, and modern edition, each one readable page by page.';
 
 export const metadata: Metadata = {
   title: 'Works | Source Library',

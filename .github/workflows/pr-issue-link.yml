@@ -1,0 +1,43 @@
+name: PR issue link
+
+# A PR that names an open issue in its title must say in its description
+# whether it closes the issue (`Closes #N`) or is only part of it (`Part of #N`)
+# (scripts/maintenance/pr-issue-link.mjs).
+#
+# WHY (#6284): a title reference `(#N)` does not close anything. Measured
+# 2026-10-08: 290 of 776 open issues had a merged PR titled for them, and 69
+# were fully done and still open.
+#
+# `edited` is in the trigger list so that fixing the description re-runs the
+# check without a push.
+
+on:
+  pull_request_target:
+    types: [opened, edited, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: read
+  issues: read
+
+concurrency:
+  group: pr-issue-link-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  issue-link:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # Checkout MAIN, not the PR head: pull_request_target must run trusted code.
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Title issues are declared in the description
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/maintenance/pr-issue-link.mjs --pr ${{ github.event.pull_request.number }}

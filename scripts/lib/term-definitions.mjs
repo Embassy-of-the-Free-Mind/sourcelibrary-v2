@@ -206,7 +206,7 @@ const SPAN_TAG = /<(\/?)(note|margin|gloss|insert|unclear|image-desc|interp|meta
  * @param {string} text
  * @returns {(offset: number) => boolean}
  */
-function insideSpan(text) {
+export function insideSpan(text) {
   /** @type {Array<[number, number]>} */
   const ranges = [];
   let depth = 0, from = 0;

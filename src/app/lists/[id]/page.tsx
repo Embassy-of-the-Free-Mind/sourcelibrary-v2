@@ -77,7 +77,7 @@ export default function ListDetailPage() {
       );
       setList(res.list);
       toast.success(res.list.visibility === 'public'
-        ? 'List is public — anyone with the link can view it'
+        ? 'List is public. Anyone with the link can view it'
         : 'List is private again');
     } catch {
       toast.error('Could not change visibility');
@@ -210,12 +210,12 @@ export default function ListDetailPage() {
                         disabled={saving}
                         className="inline-flex items-center gap-1.5 hover:opacity-70 transition-opacity disabled:opacity-50"
                         title={list.visibility === 'public'
-                          ? 'Public — anyone with the link can view this list. Click to make it private.'
-                          : 'Private — only you can see this list. Click to make it public (anyone with the link could view it; your name is never shown).'}
+                          ? 'Public: anyone with the link can view this list. Click to make it private.'
+                          : 'Private: only you can see this list. Click to make it public (anyone with the link could view it; your name is never shown).'}
                       >
                         {list.visibility === 'public'
-                          ? <><Globe className="w-4 h-4" style={{ color: 'var(--accent-sage)' }} aria-hidden="true" /> Public — anyone with the link</>
-                          : <><Lock className="w-4 h-4" aria-hidden="true" /> Private — only you</>}
+                          ? <><Globe className="w-4 h-4" style={{ color: 'var(--accent-sage)' }} aria-hidden="true" /> Public: anyone with the link</>
+                          : <><Lock className="w-4 h-4" aria-hidden="true" /> Private: only you</>}
                       </button>
                       <button
                         onClick={deleteList}
@@ -236,7 +236,7 @@ export default function ListDetailPage() {
 
             {items.length === 0 ? (
               <p className="text-sm py-10" style={{ color: 'var(--text-muted)' }}>
-                Nothing saved here yet{list.is_owner ? ' — use the bookmark on any book, page, or image to add it.' : '.'}
+                Nothing saved here yet{list.is_owner ? '. Use the bookmark on any book, page, or image to add it.' : '.'}
               </p>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">

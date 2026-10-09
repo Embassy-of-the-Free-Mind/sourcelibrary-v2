@@ -40,7 +40,8 @@
 
 import { MongoClient } from 'mongodb';
 import { writeFileSync } from 'node:fs';
-import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '../../src/lib/dedup';
+import { normalizeAuthor, sourceFingerprint } from '../../src/lib/dedup';
+import { buildEditionKey } from '../../src/lib/edition-key';
 
 function arg(name: string, def: string | null = null) { const i = process.argv.indexOf(name); return i >= 0 ? process.argv[i + 1] : def; }
 
@@ -109,19 +110,29 @@ async function enumerateIA() {
 }
 
 // ── DEDUPE (against current holdings) ────────────────────────────────────────
+// Title key: the edition key's own title part, computed here for both sides
+// (#4444). The stored ASCII `normalized_title` is '' for every title not in
+// Latin script, so reading it left this step blind to 20K held books. '' when
+// the title is too short or too generic to key on, by the edition key's rule.
+function titleKey(title) {
+  const built = buildEditionKey({ title });
+  return built.key ? built.parts.title : '';
+}
+
 async function loadHeldIndex(db) {
-  // Pull the dedup keys for every book: source_fingerprint + normalized_title.
+  // Pull the dedup keys for every book: source_fingerprint + title.
   const docs = await db.collection('books')
-    .find({}, { projection: { _id: 0, source_fingerprint: 1, normalized_title: 1, normalized_author: 1, ia_identifier: 1, visible: 1 } })
+    .find({}, { projection: { _id: 0, source_fingerprint: 1, title: 1, normalized_author: 1, ia_identifier: 1, visible: 1 } })
     .toArray();
   const byFingerprint = new Set();
   const byNormTitle = new Map(); // normTitle -> [{title-ish}]
   for (const d of docs) {
     if (d.source_fingerprint) byFingerprint.add(d.source_fingerprint);
     if (d.ia_identifier) byFingerprint.add(`ia:${d.ia_identifier}`);
-    if (d.normalized_title) {
-      if (!byNormTitle.has(d.normalized_title)) byNormTitle.set(d.normalized_title, []);
-      byNormTitle.get(d.normalized_title).push({ na: d.normalized_author, vis: d.visible });
+    const nt = titleKey(d.title || '');
+    if (nt) {
+      if (!byNormTitle.has(nt)) byNormTitle.set(nt, []);
+      byNormTitle.get(nt).push({ na: d.normalized_author, vis: d.visible });
     }
   }
   return { byFingerprint, byNormTitle, total: docs.length };
@@ -130,9 +141,9 @@ async function loadHeldIndex(db) {
 function classify(cand, held) {
   const fp = sourceFingerprint(cand); // uses ia_identifier → "ia:..."
   if (fp && held.byFingerprint.has(fp)) return { status: 'HELD', reason: `fingerprint ${fp}` };
-  const nt = normalizeTitle(cand.title || '');
+  const nt = titleKey(cand.title || '');
   const na = normalizeAuthor(cand.author || '');
-  if (nt.length >= 5 && held.byNormTitle.has(nt)) {
+  if (nt && held.byNormTitle.has(nt)) {
     const authors = held.byNormTitle.get(nt);
     const sameAuthor = authors.some(a => a.na === na);
     return { status: sameAuthor ? 'LIKELY_DUP' : 'TITLE_CLASH', reason: `normTitle "${nt}"${sameAuthor ? ' + author' : ''}` };

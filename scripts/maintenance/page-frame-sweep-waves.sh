@@ -84,7 +84,13 @@ Write exactly one line to $W/VERDICT and then stop:
   STOP <tile numbers and sheet> <what is cut off>
 Do not edit, commit, push or comment on anything else.
 EOF
-  "$JOB" start "pf-review-$i" "$W/brief.txt" >"$W/job.log" 2>&1
+  # The job name carries the state dir: claude-job.sh refuses a name whose branch
+  # already exists, so a second run's "pf-review-1" never started and its wave
+  # went unreviewed for an hour before the stop (run2, 2026-10-06).
+  if ! "$JOB" start "pf-review-$(basename "$DIR")-$i" "$W/brief.txt" >"$W/job.log" 2>&1; then
+    echo "wave $i: review job did not start" >"$STOP"
+    say "wave $i STOPPED: the review job did not start ($(tail -1 "$W/job.log")). Sheets $W/sheet-*.jpg"; exit 4
+  fi
   for _ in $(seq 1 120); do [ -s "$W/VERDICT" ] && break; sleep 30; done
   verdict=$(head -1 "$W/VERDICT" 2>/dev/null || echo "STOP no verdict within an hour")
   case "$verdict" in

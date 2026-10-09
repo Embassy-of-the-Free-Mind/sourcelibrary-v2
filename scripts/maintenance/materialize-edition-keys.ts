@@ -26,6 +26,10 @@
  *   --clear            $unset the three fields instead of computing them
  *   --restore=PATH     replay a backup file written by a previous --apply
  *   --limit=N          only process the first N books (smoke test)
+ *   --book-id=ID       only this book: restamp one record after a catalogue correction
+ *                      (the cluster report then covers that one book, not the corpus)
+ *   --collection=NAME  `books` (default) or `books_warehouse`. The import gate
+ *                      reads keys from both, so a builder change re-stamps both.
  *   --out=PATH         where to write the cluster report (default scripts/output/)
  *   --json             machine-readable summary on stdout
  */
@@ -43,6 +47,12 @@ const CLEAR = has('--clear');
 const RESTORE = val('--restore');
 const LIMIT = val('--limit') ? parseInt(val('--limit')!, 10) : 0;
 const JSON_OUT = has('--json');
+const BOOK_ID = val('--book-id');
+const COLLECTION = val('--collection') || 'books';
+if (!['books', 'books_warehouse'].includes(COLLECTION)) {
+  console.error(`--collection must be books or books_warehouse, got "${COLLECTION}"`);
+  process.exit(1);
+}
 
 const OUT_DIR = join(process.cwd(), 'scripts/output');
 const stamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
@@ -68,13 +78,18 @@ async function main() {
   const client = new MongoClient(uri);
   await client.connect();
   const db = client.db(process.env.MONGODB_DB || 'bookstore');
-  const books = db.collection('books');
+  const books = db.collection(COLLECTION);
 
   if (RESTORE) { await restore(books, RESTORE); await client.close(); return; }
 
   // Artworks have their own sha1/CLIP identity lane — they are not editions.
   const scope: Document = { content_type: { $ne: 'artwork' } };
+  if (BOOK_ID) scope.id = BOOK_ID;
 
+  if (CLEAR && BOOK_ID) {
+    console.error('--clear ignores --book-id and would clear every book; run them separately');
+    process.exit(1);
+  }
   if (CLEAR) {
     if (!APPLY) {
       const n = await books.countDocuments({ edition_key: { $exists: true } });
@@ -195,7 +210,7 @@ async function main() {
   // ---- write ---------------------------------------------------------------
   if (APPLY && ops.length) {
     if (!existsSync(OUT_DIR)) mkdirSync(OUT_DIR, { recursive: true });
-    const backupPath = join(OUT_DIR, `edition-key-backup-${stamp}.jsonl`);
+    const backupPath = join(OUT_DIR, `edition-key-backup-${COLLECTION}-${stamp}.jsonl`);
     const bs = createWriteStream(backupPath);
     for (const r of backupRows) bs.write(r + '\n');
     await new Promise((res) => bs.end(res));
@@ -213,7 +228,7 @@ async function main() {
   }
 
   // ---- report --------------------------------------------------------------
-  const outPath = val('--out') || join(OUT_DIR, `edition-key-clusters-${stamp}.json`);
+  const outPath = val('--out') || join(OUT_DIR, `edition-key-clusters-${COLLECTION}-${stamp}.json`);
   if (!existsSync(dirname(outPath))) mkdirSync(dirname(outPath), { recursive: true });
   const report = {
     summary,
@@ -230,7 +245,7 @@ async function main() {
     console.log(JSON.stringify(summary));
   } else {
     console.log('');
-    console.log(`edition_key materialization — ${stamp} ${APPLY ? '(APPLIED)' : '(dry run)'}`);
+    console.log(`edition_key materialization — ${COLLECTION} — ${stamp} ${APPLY ? '(APPLIED)' : '(dry run)'}`);
     console.log(`  scanned:        ${scanned}`);
     console.log(`  keyed:          ${keyed}  (unkeyable: ${JSON.stringify(unkeyable)})`);
     console.log(`  quality:        ${JSON.stringify(quality)}`);

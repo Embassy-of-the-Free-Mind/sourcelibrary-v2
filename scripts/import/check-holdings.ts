@@ -63,7 +63,8 @@ async function main() {
       for (const c of res.candidates) {
         const state = c.collection === 'books_warehouse' ? 'warehouse' : c.visible ? 'visible' : 'HIDDEN';
         const dup = c.duplicate_of ? ` dup-of:${c.duplicate_of}` : '';
-        console.log(`  [${c.reason}] ${state}${dup}  ${c.title.slice(0, 70)} — ${c.author ?? '?'} ${c.year ?? ''}  ${c.pages_count}pp/${c.pages_translated}tr  ${c.url}`);
+        const rel = c.related_to ? ` ${c.related_to.relation}:${c.related_to.book_id}` : '';
+        console.log(`  [${c.reason}] ${state}${dup}${rel}  ${c.title.slice(0, 70)} — ${c.author ?? '?'} ${c.year ?? ''}  ${c.pages_count}pp/${c.pages_translated}tr  ${c.url}`);
       }
       for (const l of res.limits) console.log(`  note: ${l}`);
     }

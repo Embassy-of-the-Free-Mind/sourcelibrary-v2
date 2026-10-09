@@ -104,7 +104,7 @@ export async function embedBookPages({ db, pg, book, apiKey, force = false }) {
     const batch = work.slice(i, i + EMBED_BATCH_SIZE);
     const vectors = await embedTexts(batch.map((w) => w.text), apiKey, { usage });
     const rows = batch.map((w, j) => buildPageEmbeddingRow({
-      page: w.page, book, text: w.text, hasTranslation: w.hasTranslation, embedding: vectors[j],
+      page: w.page, book, text: w.text, hasTranslation: w.hasTranslation, embedding: vectors[j], model: vectors.model,
     }));
     for (let k = 0; k < rows.length; k += UPSERT_BATCH_SIZE) {
       for (const row of rows.slice(k, k + UPSERT_BATCH_SIZE)) {

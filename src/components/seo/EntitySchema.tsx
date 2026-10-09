@@ -106,7 +106,7 @@ export default function EntitySchema({
     '@type': 'WebPage',
     '@id': pageUrl,
     url: pageUrl,
-    name: `${name} — Source Library Encyclopedia`,
+    name: `${name} | Source Library Encyclopedia`,
     mainEntity: { '@id': `${pageUrl}#entity` },
   };
 

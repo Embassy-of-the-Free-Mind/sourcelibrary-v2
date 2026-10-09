@@ -69,8 +69,10 @@ export function originalTitleIfDifferent(book: BookLike, lang: Locale): string |
  * `scripts/lib/book-docs.mjs`; one field per language, written by
  * `scripts/maintenance/sync-pages-translated-es.mjs`.
  */
-const TRANSLATED_COUNTER: Record<Exclude<Locale, 'en'>, string> = {
+const TRANSLATED_COUNTER: Partial<Record<Exclude<Locale, 'en'>, string>> = {
   es: 'pages_translated_es',
+  // No `la`: nothing is translated INTO Latin (#6254). A book exists in Latin
+  // only by being WRITTEN in it — see NATIVE_EDITION_LANGUAGE below.
 };
 
 /**
@@ -106,6 +108,14 @@ const TRANSLATED_COUNTER: Record<Exclude<Locale, 'en'>, string> = {
  */
 export const NATIVE_EDITION_LANGUAGE: Record<Exclude<Locale, 'en'>, RegExp> = {
   es: /^\s*(spanish|espa(?:ñ|n)ol|castellano|castilian)\s*$/i,
+  // Latin (#6254). Anchored for the same reason as Spanish: the stored values
+  // it must REFUSE are real ones — "Latin-German" (61 live books), "Greek-Latin",
+  // "Latin/English", "Chinese, Latin". A `/la` URL promises a Latin page, and a
+  // bilingual one keeps half of it. Measured 2026-10-07: "Latin" 15,771 live
+  // books, "lat" 5. "Neo-Latin" and "Ecclesiastical Latin" are the language
+  // table's aliases for Latin (`language-normalize.ts`) and a Latin reader reads
+  // both; the parity test holds this pattern to that table.
+  la: /^\s*(latin|latina|latine|lat|neo-latin|ecclesiastical latin)\s*$/i,
 };
 
 /** Is the book's own text already in `lang` (no translation involved)? */
@@ -122,12 +132,10 @@ export function isNativeEdition(book: Record<string, unknown>, lang: Locale): bo
  * page, so the query and `hasLocalizedEdition` below can never disagree.
  */
 export function localizedEditionFilter(lang: Exclude<Locale, 'en'>): Record<string, unknown> {
-  return {
-    $or: [
-      { [TRANSLATED_COUNTER[lang]]: { $gt: 0 } },
-      { language: NATIVE_EDITION_LANGUAGE[lang] },
-    ],
-  };
+  const counter = TRANSLATED_COUNTER[lang];
+  const native = { language: NATIVE_EDITION_LANGUAGE[lang] };
+  // A locale with no translation counter (Latin) exists by native editions alone.
+  return counter ? { $or: [{ [counter]: { $gt: 0 } }, native] } : native;
 }
 
 /** The slice of a Mongo `Db` the indexed filter needs — kept narrow so tests can fake it. */
@@ -169,12 +177,9 @@ export async function localizedEditionFilterIndexed(db: LanguageSpellingsSource,
   } catch {
     return localizedEditionFilter(lang);
   }
-  return {
-    $or: [
-      { [TRANSLATED_COUNTER[lang]]: { $gt: 0 } },
-      { language: { $in: spellings } },
-    ],
-  };
+  const counter = TRANSLATED_COUNTER[lang];
+  const native = { language: { $in: spellings } };
+  return counter ? { $or: [{ [counter]: { $gt: 0 } }, native] } : native;
 }
 
 /**
@@ -203,10 +208,12 @@ export function hasLocalizedEdition(
   lang: Locale,
 ): boolean | null {
   if (lang === 'en') return true;
-  const field = TRANSLATED_COUNTER[lang];
-  if (!field) return false;
   // Written in the language: the pages already ARE it, no counter involved.
   if (isNativeEdition(book, lang)) return true;
+  const field = TRANSLATED_COUNTER[lang];
+  // A locale nothing is translated INTO (Latin): the native test above is the
+  // whole answer, and it could only be given if `language` was projected.
+  if (!field) return book.language === undefined ? null : false;
   const value = book[field];
   if (value === undefined) return null;
   if (typeof value === 'number' && value > 0) return true;
