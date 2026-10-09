@@ -162,6 +162,23 @@ describe('safe-merge.sh', () => {
     expect(merges(r.calls)).toEqual([]);
   });
 
+  const hoursAgo = (h: number) => new Date(Date.now() - h * 36e5).toISOString();
+  const greenAt = (h: number) => clean(11, {
+    statusCheckRollup: [{ __typename: 'CheckRun', name: 'test', status: 'COMPLETED', conclusion: 'SUCCESS', completedAt: hoursAgo(h) }],
+  });
+
+  it('refuses a clean PR whose test run is older than a day (#5991 turned main red on a 3-day-old green)', () => {
+    const r = run(['11'], { views: { 11: [greenAt(72)] } });
+    expect(r.code).toBe(1);
+    expect(r.out).toMatch(/test last ran 72h ago/);
+    expect(merges(r.calls)).toEqual([]);
+  });
+
+  it('merges a fresh green, and an old one only with --allow-stale', () => {
+    expect(merges(run(['11'], { views: { 11: [greenAt(2)] } }).calls)).toHaveLength(1);
+    expect(merges(run(['--allow-stale', '11'], { views: { 11: [greenAt(72)] } }).calls)).toHaveLength(1);
+  });
+
   it('merges when the only failures are named with --allow-check', () => {
     const r = run(['--allow-check', 'next-build', '10'], { views: { 10: [unstable] } });
     expect(r.code).toBe(0);

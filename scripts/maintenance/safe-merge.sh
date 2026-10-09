@@ -23,12 +23,16 @@
 #     never read as clean (GitHub recomputes lazily after every merge to main).
 #     A non-CLEAN state is accepted only when every non-passing check is
 #     finished, failed, and named with --allow-check.
+#   - the `test` check finished within SAFE_MERGE_MAX_TEST_AGE_HOURS (default 24).
+#     A green from before main gained a guard is not a pass against main: #5991
+#     merged on a three-day-old green and turned main's `test` red (2026-10-09).
+#     Fix with `gh pr update-branch <pr>` and wait; --allow-stale overrides.
 #   - open PRs based on the head branch are retargeted to main, and re-listed
 #   - squash merge with --delete-branch, pinned to the head sha that was checked
 #   - prints the merge sha and the command that shows THAT commit's Vercel build
 #
 # USAGE
-#   scripts/maintenance/safe-merge.sh [--allow-check NAME]... [--dry-run] <pr> [<pr>...]
+#   scripts/maintenance/safe-merge.sh [--allow-check NAME]... [--allow-stale] [--dry-run] <pr> [<pr>...]
 #   exit 0 = all merged · 1 = refused (nothing after it was touched) · 2 = usage
 #
 # gh is always called with --repo, which also stops `gh pr merge` from
@@ -36,7 +40,8 @@
 # --repo is given) — that would fail in a worktree, and must never happen in
 # the shared main directory.
 #
-# Env: SAFE_MERGE_REPO (default Embassy-of-the-Free-Mind/sourcelibrary-v2),
+# Env: SAFE_MERGE_MAX_TEST_AGE_HOURS (default 24),
+#      SAFE_MERGE_REPO (default Embassy-of-the-Free-Mind/sourcelibrary-v2),
 #      SAFE_MERGE_POLL_SECS (default 5), SAFE_MERGE_POLL_TRIES (default 24).
 
 set -uo pipefail
@@ -51,12 +56,14 @@ usage() { sed -n '/^# USAGE/,/^# exit/p' "$0" | sed 's/^# \{0,1\}//' >&2; exit 2
 
 ALLOW=()
 DRY=0
+STALE_OK=0
 PRS=()
 while [ $# -gt 0 ]; do
   case "$1" in
     --allow-check) [ $# -ge 2 ] || usage; ALLOW+=("$2"); shift 2 ;;
     --allow-check=*) ALLOW+=("${1#*=}"); shift ;;
     --dry-run) DRY=1; shift ;;
+    --allow-stale) STALE_OK=1; shift ;;
     -h|--help) usage ;;
     -*) echo "unknown flag: $1" >&2; usage ;;
     *) [[ "$1" =~ ^[0-9]+$ ]] || { echo "not a PR number: $1" >&2; usage; }; PRS+=("$1"); shift ;;
@@ -84,6 +91,14 @@ judge() {
       out(`WAIT mergeable=${pr.mergeable} mergeStateStatus=${pr.mergeStateStatus}`);
     if (pr.mergeable !== "MERGEABLE") out(`REFUSE mergeable=${pr.mergeable}`);
     const ok = `OK ${pr.headRefName} ${pr.headRefOid} ${pr.isCrossRepository ? 1 : 0}`;
+    // A pass is a pass against the main it ran on. Newest `test` run decides.
+    const maxAgeH = Number(process.argv[4]) || 24;
+    const tests = (pr.statusCheckRollup || []).filter((c) => c.name === "test" && c.completedAt)
+      .sort((a, b) => new Date(b.completedAt) - new Date(a.completedAt));
+    if (process.argv[3] !== "1" && tests.length) {
+      const ageH = (Date.now() - new Date(tests[0].completedAt)) / 36e5;
+      if (ageH > maxAgeH) out(`REFUSE test last ran ${Math.round(ageH)}h ago (limit ${maxAgeH}h): run gh pr update-branch ${pr.number} and wait for a fresh run, or pass --allow-stale`);
+    }
     if (pr.mergeStateStatus === "CLEAN") out(`${ok} clean`);
     const BAD = new Set(["FAILURE", "ERROR", "TIMED_OUT", "CANCELLED", "ACTION_REQUIRED", "STARTUP_FAILURE", "STALE"]);
     const PASS = new Set(["SUCCESS", "NEUTRAL", "SKIPPED"]);
@@ -107,7 +122,7 @@ judge() {
     if (unknown.length) out(`REFUSE mergeStateStatus=${pr.mergeStateStatus}; failing: ${unknown.join(", ")} (pass --allow-check NAME only for a failure you know is not caused by this PR)`);
     if (!["UNSTABLE", "BLOCKED"].includes(pr.mergeStateStatus)) out(`REFUSE mergeStateStatus=${pr.mergeStateStatus}`);
     out(`${ok} allowed-failures:${failing.join(",")}`);
-  ' "$1" "$(printf '%s\n' "${ALLOW[@]+"${ALLOW[@]}"}")"
+  ' "$1" "$(printf '%s\n' "${ALLOW[@]+"${ALLOW[@]}"}")" "$STALE_OK" "${SAFE_MERGE_MAX_TEST_AGE_HOURS:-24}"
 }
 
 # PR numbers (one per line) of open PRs whose base is $1.
