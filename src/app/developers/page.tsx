@@ -10,17 +10,17 @@ import { IMAGE_CORPUS_STATS } from '@/lib/public-stats';
 // human one-liners — the agent-facing descriptions live in
 // src/app/api/mcp/route.ts and are much longer.
 const MCP_TOOLS: Array<{ name: string; blurb: string }> = [
-  { name: 'search_library', blurb: 'Find books on a topic — full-text search across the catalog' },
+  { name: 'search_library', blurb: 'Find books on a topic: full-text search across the catalog' },
   { name: 'search_translations', blurb: 'Find quotable passages by keyword across the whole library' },
-  { name: 'search_concept', blurb: 'Semantic passage search — matches paraphrases and adjacent ideas, not just keywords' },
+  { name: 'search_concept', blurb: 'Semantic passage search that matches paraphrases and adjacent ideas, not just keywords' },
   { name: 'search_within_book', blurb: 'Search inside a specific book’s pages' },
-  { name: 'list_books', blurb: 'Browse with filters — language, year, category, translation status' },
+  { name: 'list_books', blurb: 'Browse with filters: language, year, category, translation status' },
   { name: 'list_editions', blurb: 'Every edition of a work the library holds, across languages and centuries' },
   { name: 'get_book', blurb: 'Book metadata: summary, chapters, edition info, DOI' },
-  { name: 'get_book_text', blurb: 'Read 50+ pages in one call — OCR, translation, or both' },
+  { name: 'get_book_text', blurb: 'Read 50+ pages in one call: OCR, translation, or both' },
   { name: 'get_quote', blurb: 'Exact text of a single page with a stable citation URL' },
   { name: 'get_quotes', blurb: 'Verbatim text + citation links for up to 25 pages in one call' },
-  { name: 'get_locus', blurb: 'Resolve canonical references — Bekker (Aristotle) and Stephanus (Plato) — to the leaves that carry them' },
+  { name: 'get_locus', blurb: 'Resolve canonical references, Bekker (Aristotle) and Stephanus (Plato), to the leaves that carry them' },
   { name: 'search_images', blurb: 'Search historical illustrations and artworks by subject, symbol, figure, type' },
   { name: 'submit_feedback', blurb: 'Send bug reports and requests to the team' },
   { name: 'share_findings', blurb: 'Contribute a cited research dossier back to the library (human-reviewed)' },
@@ -44,7 +44,7 @@ const MCP_TOOLS: Array<{ name: string; blurb: string }> = [
 
 export const metadata: Metadata = {
   title: 'Developers - Source Library',
-  description: `Open API over 15,000+ rare pre-modern texts translated to English — theology, philosophy, history, science, mysticism, literature. No auth required — call /api/mcp from curl, the browser, or any MCP client. ${MCP_TOOLS.length} research tools, REST endpoints, CLI.`,
+  description: `Open API over 15,000+ rare pre-modern texts translated to English: theology, philosophy, history, science, mysticism, literature. No auth required; call /api/mcp from curl, the browser, or any MCP client. ${MCP_TOOLS.length} research tools, REST endpoints, CLI.`,
   alternates: {
     canonical: '/developers',
   },
@@ -56,7 +56,7 @@ export default function DevelopersPage() {
       header={
         <ContentHeader
           title="For Developers & AI"
-          subtitle="Open API over 15,000+ rare pre-modern texts translated to English. No auth needed to start — sign in for a free key to lift rate limits and help us see what you're building."
+          subtitle="Open API over 15,000+ rare pre-modern texts translated to English. No auth needed to start. Sign in for a free key to lift rate limits and help us see what you're building."
         />
       }
     >
@@ -65,7 +65,7 @@ export default function DevelopersPage() {
         <h2 className="text-2xl font-semibold text-primary mb-2">The easiest path: just ask Claude</h2>
         <p className="text-secondary mb-6 max-w-2xl">
           You don&apos;t need to install anything to use this collection with an AI. Open Claude (or any
-          assistant with web access) and ask it to look something up on sourcelibrary.org — it will
+          assistant with web access) and ask it to look something up on sourcelibrary.org. It will
           search, read pages, and quote with citation links. No SDK, no key, no setup.
         </p>
 
@@ -74,7 +74,7 @@ export default function DevelopersPage() {
             &ldquo;Use sourcelibrary.org to find what Paracelsus says about the spagyric process. Quote a few passages with citation URLs.&rdquo;
           </p>
           <p className="text-stone-700 text-sm italic border-l-2 border-accent-rust/30 pl-4">
-            &ldquo;Search sourcelibrary.org for early modern texts on the harmony of the spheres &mdash; give me three with page links.&rdquo;
+            &ldquo;Search sourcelibrary.org for early modern texts on the harmony of the spheres and give me three with page links.&rdquo;
           </p>
           <p className="text-stone-700 text-sm italic border-l-2 border-accent-rust/30 pl-4">
             &ldquo;On sourcelibrary.org, read the first 20 pages of Fludd&apos;s Utriusque Cosmi Historia and summarize the cosmological model.&rdquo;
@@ -82,8 +82,8 @@ export default function DevelopersPage() {
         </div>
 
         <p className="text-muted text-sm mt-4 max-w-2xl">
-          For richer, structured access &mdash; semantic search, 50-page bulk reads, image search,
-          DOI-backed citations &mdash; install the MCP server below or call the API directly.
+          For richer, structured access (semantic search, 50-page bulk reads, image search,
+          DOI-backed citations), install the MCP server below or call the API directly.
         </p>
       </section>
 
@@ -135,7 +135,7 @@ export default function DevelopersPage() {
         </div>
 
         <p className="text-muted text-sm mt-4 max-w-2xl">
-          CORS is open (<code className="text-accent-rust">Access-Control-Allow-Origin: *</code>) — paste the snippet above into any browser console and it works.
+          CORS is open (<code className="text-accent-rust">Access-Control-Allow-Origin: *</code>), so you can paste the snippet above into any browser console and it works.
         </p>
       </section>
 
@@ -144,10 +144,10 @@ export default function DevelopersPage() {
         <div className="bg-white rounded-xl border border-border-light p-6 md:p-8">
           <h2 className="text-lg font-semibold text-primary mb-2">Building something? Grab a free key.</h2>
           <p className="text-secondary mb-6">
-            The endpoints work without one — keys lift rate limits, give your traffic attribution, and help us learn what
+            The endpoints work without one. Keys lift rate limits, give your traffic attribution, and help us learn what
             people are building so we can keep this open and free. Takes a minute. Bulk page-image downloads need one:
             send it as <code className="text-sm">Authorization: Bearer sl_data_…</code> on <code className="text-sm">/api/image</code> requests
-            (anonymous scripts are capped per day; paid tiers are uncapped — see the rate card on the licensing page).
+            (anonymous scripts are capped per day and paid tiers are uncapped; see the rate card on the licensing page).
           </p>
           <ApiKeyRequestForm />
         </div>
@@ -205,7 +205,7 @@ export default function DevelopersPage() {
             and user-directed assistant fetches are never limited. Full-tier keys can request images without
             the visible provenance marks (<code>&amp;clean=1</code> on <code>/api/image</code>).
             Text served to a key carries an invisible provenance colophon that includes your key&apos;s
-            reference — attribution, not tracking: it names the edition and the puller, decodes to a
+            reference. This is attribution, not tracking: it names the edition and the puller, decodes to a
             readable note, and strips with any Unicode normalization pass.
           </p>
         </div>
@@ -220,7 +220,7 @@ export default function DevelopersPage() {
             &ldquo;spiritus mundi&rdquo; evolves from Ficino through Agrippa to Fludd. With the MCP server
             connected to Claude, they search across all three authors&apos; translated works in a single
             conversation, pull exact passages with page citations, and compile a comparative analysis
-            with DOI-backed references &mdash; work that would take days in a physical archive.
+            with DOI-backed references: work that would take days in a physical archive.
           </p>
           <p className="text-secondary">
             The same tools work for building research apps, enriching datasets with primary source
@@ -234,7 +234,7 @@ export default function DevelopersPage() {
       <section className="mb-16">
         <h2 className="text-2xl font-semibold text-primary mb-2">MCP Server</h2>
         <p className="text-secondary mb-6 max-w-2xl">
-          Gives Claude (and any MCP client) direct access to the full collection &mdash;
+          Gives Claude (and any MCP client) direct access to the full collection:
           search, read, quote, and browse {IMAGE_CORPUS_STATS.illustrations} illustrations. The endpoint is plain JSON-RPC
           over HTTP, so you can also call it from any HTTP client without an MCP library
           (see the snippets above). Pick whichever path fits.
@@ -254,7 +254,7 @@ export default function DevelopersPage() {
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-8">
           <h3 className="text-sm font-semibold text-amber-900 mb-1">Remote MCP Server (Streamable HTTP)</h3>
           <p className="text-amber-800 text-sm mb-3">
-            No install needed &mdash; connect any MCP client directly.
+            No install needed. Connect any MCP client directly.
           </p>
           <div className="bg-white border border-amber-200 rounded-lg px-4 py-2.5 font-mono text-sm text-primary select-all">
             https://sourcelibrary.org/api/mcp
@@ -265,7 +265,7 @@ export default function DevelopersPage() {
           <div className="bg-white rounded-xl border border-border-light overflow-hidden">
             <div className="bg-stone-100 px-4 py-2 border-b border-border-light flex items-center justify-between">
               <span className="text-sm font-medium text-stone-700">Claude.ai &amp; Claude Desktop (Connectors)</span>
-              <span className="text-xs text-muted">No code &mdash; works in the chat you already use</span>
+              <span className="text-xs text-muted">No code; works in the chat you already use</span>
             </div>
             <div className="p-4">
               <ol className="list-decimal list-inside space-y-2 text-sm text-secondary">
@@ -279,15 +279,15 @@ export default function DevelopersPage() {
                 <li>
                   Name it{' '}
                   <code className="text-accent-rust bg-stone-100 px-1.5 py-0.5 rounded">Source Library</code>{' '}
-                  &mdash; keep this exact name; shared pages and artifacts that call the library look your connector up by it.
+                  and keep this exact name: shared pages and artifacts that call the library look your connector up by it.
                 </li>
                 <li>
                   URL:{' '}
-                  <code className="text-accent-rust bg-stone-100 px-1.5 py-0.5 rounded select-all">https://sourcelibrary.org/api/mcp</code>{' '}
-                  &mdash; leave the OAuth fields empty (no authentication), then save.
+                  <code className="text-accent-rust bg-stone-100 px-1.5 py-0.5 rounded select-all">https://sourcelibrary.org/api/mcp</code>.
+                  Leave the OAuth fields empty (no authentication), then save.
                 </li>
                 <li>
-                  In any chat, open the tools menu, switch the connector on, and ask away &mdash; try the prompts below.
+                  In any chat, open the tools menu, switch the connector on, and ask away. Try the prompts below.
                 </li>
               </ol>
             </div>
@@ -324,7 +324,7 @@ export default function DevelopersPage() {
           <div className="bg-white rounded-xl border border-border-light overflow-hidden">
             <div className="bg-stone-100 px-4 py-2 border-b border-border-light flex items-center justify-between">
               <span className="text-sm font-medium text-stone-700">Local via npm (stdio-only clients)</span>
-              <span className="text-xs text-muted">Legacy &mdash; prefer the remote URL above</span>
+              <span className="text-xs text-muted">Legacy; prefer the remote URL above</span>
             </div>
             <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
 {`claude mcp add source-library -- npx -y @source-library/mcp-server`}
@@ -519,7 +519,7 @@ source-library search "alchemy" --json | jq .results`}
                   <tr className="border-b border-stone-100">
                     <td className="py-2 font-mono text-accent-rust">author_id</td>
                     <td className="py-2 text-muted">string</td>
-                    <td className="py-2 text-secondary">Canonical author slug — exactly that person&apos;s books. Discover slugs via /catalog/author-search; the response echoes the canonicalized author.</td>
+                    <td className="py-2 text-secondary">Canonical author slug: exactly that person&apos;s books. Discover slugs via /catalog/author-search; the response echoes the canonicalized author.</td>
                   </tr>
                   <tr className="border-b border-stone-100">
                     <td className="py-2 font-mono text-accent-rust">year_from / year_to</td>
@@ -570,22 +570,22 @@ source-library search "alchemy" --json | jq .results`}
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
                   <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/catalog/author-search?q=</td>
-                  <td className="py-2.5 text-secondary">Find canonical authors by name — returns author_id slugs (for /books/library) plus VIAF/Wikidata anchors</td>
+                  <td className="py-2.5 text-secondary">Find canonical authors by name. Returns author_id slugs (for /books/library) plus VIAF/Wikidata anchors</td>
                 </tr>
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
                   <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/vectors/:store</td>
-                  <td className="py-2.5 text-secondary">Embedding vectors — books, gallery, clip (visual), artworks. For your own UMAP, clustering, or nearest-neighbour work.</td>
+                  <td className="py-2.5 text-secondary">Embedding vectors: books, gallery, clip (visual), artworks. For your own UMAP, clustering, or nearest-neighbour work.</td>
                 </tr>
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
                   <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/works</td>
-                  <td className="py-2.5 text-secondary">Works held in many editions across centuries — witness counts and year spans. Feed work_id back to /books/library.</td>
+                  <td className="py-2.5 text-secondary">Works held in many editions across centuries, with witness counts and year spans. Feed work_id back to /books/library.</td>
                 </tr>
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
                   <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/libraries</td>
-                  <td className="py-2.5 text-secondary">Contributing institutions with book counts — resolves the library= filter values into named libraries</td>
+                  <td className="py-2.5 text-secondary">Contributing institutions with book counts; resolves the library= filter values into named libraries</td>
                 </tr>
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
@@ -595,7 +595,7 @@ source-library search "alchemy" --json | jq .results`}
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
                   <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/books/distributions</td>
-                  <td className="py-2.5 text-secondary">Counts by language, category, collection, library, and decade — same filters as /books/library (no free-text search). Built for charts and timelines.</td>
+                  <td className="py-2.5 text-secondary">Counts by language, category, collection, library, and decade, with the same filters as /books/library (no free-text search). Built for charts and timelines.</td>
                 </tr>
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
@@ -605,7 +605,7 @@ source-library search "alchemy" --json | jq .results`}
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
                   <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/gallery/collections/:slug</td>
-                  <td className="py-2.5 text-secondary">One image collection with resolved items — imageCount always equals items delivered</td>
+                  <td className="py-2.5 text-secondary">One image collection with resolved items; imageCount always equals items delivered</td>
                 </tr>
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
@@ -620,12 +620,12 @@ source-library search "alchemy" --json | jq .results`}
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
                   <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/verify?book_id=&amp;page=</td>
-                  <td className="py-2.5 text-secondary">Flat alias of /books/:id/quote — verbatim page text + citation block, for web agents with URL allow-lists</td>
+                  <td className="py-2.5 text-secondary">Flat alias of /books/:id/quote: verbatim page text + citation block, for web agents with URL allow-lists</td>
                 </tr>
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
                   <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/gallery</td>
-                  <td className="py-2.5 text-secondary">Search {IMAGE_CORPUS_STATS.illustrations} historical illustrations. Enumerating the corpus? Pass <code className="text-xs">maxPerBook=1000</code> — it defaults to 3 per book so no single volume dominates the browse.</td>
+                  <td className="py-2.5 text-secondary">Search {IMAGE_CORPUS_STATS.illustrations} historical illustrations. Enumerating the corpus? Pass <code className="text-xs">maxPerBook=1000</code>; it defaults to 3 per book so no single volume dominates the browse.</td>
                 </tr>
                 <tr>
                   <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
@@ -665,7 +665,7 @@ source-library search "alchemy" --json | jq .results`}
           </ul>
           <p className="text-secondary text-sm mt-4">
             Ancient toponyms are the known weak spot. The same place is written differently in
-            every tradition that names it — Magan / Makkan / Majan / Ṣuḥār / 甕蠻 / Oman — and
+            every tradition that names it (Magan / Makkan / Majan / Ṣuḥār / 甕蠻 / Oman), and
             string matching cannot join those. Chasing a place across languages works better if
             you search co-occurring names: a lone toponym also collects homographs in unrelated
             languages, while a pair like <code>Dilmun Meluhha</code> returns near-pure signal.
@@ -677,7 +677,7 @@ source-library search "alchemy" --json | jq .results`}
       <section className="mb-16">
         <h2 className="text-2xl font-semibold text-primary mb-2">Bulk dataset access</h2>
         <p className="text-secondary mb-6 max-w-2xl">
-          Pulling OCR text, translations, or page-level data in bulk? That tier is keyed — use the
+          Pulling OCR text, translations, or page-level data in bulk? That tier is keyed. Use the
           form above to request one, or email us with what you&apos;re building. Reviewed within 24 hours.
         </p>
 
@@ -689,23 +689,23 @@ source-library search "alchemy" --json | jq .results`}
           </p>
           <ul className="text-secondary text-sm space-y-2 mb-3">
             <li>
-              <code className="text-accent-rust">image_full</code> — the full-resolution master.
+              <code className="text-accent-rust">image_full</code>: the full-resolution master.
               Use this for archival work. It <strong>equals or exceeds</strong> what the originating
               library serves: measured page-for-page, Göttingen is 3651×4652 on both sides, and our
               Morgan master is 8308×10576 against 2000×2546 at the source.
             </li>
             <li>
-              <code className="text-accent-rust">image_display</code> — a ~2000px variant for viewers.
+              <code className="text-accent-rust">image_display</code>: a ~2000px variant for viewers.
             </li>
             <li>
-              <code className="text-accent-rust">image_thumb</code> — thumbnail.
+              <code className="text-accent-rust">image_thumb</code>: thumbnail.
             </li>
           </ul>
           <p className="text-secondary text-sm mb-3">
             We deliberately do <strong>not</strong> hand back the originating institution&apos;s own
-            image URLs. Roughly three quarters of the corpus was digitized by other libraries —
-            archive.org, the Bavarian State Library, the British Library, e-rara, Gallica, Harvard
-            and around fifteen more — and passing their per-page endpoints to every API consumer
+            image URLs. Roughly three quarters of the corpus was digitized by other libraries
+            (archive.org, the Bavarian State Library, the British Library, e-rara, Gallica, Harvard
+            and around fifteen more), and passing their per-page endpoints to every API consumer
             would turn this API into a fan-out onto institutions that gave us access. You would get
             blocked there; so would we.
           </p>

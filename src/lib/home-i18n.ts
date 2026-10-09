@@ -165,10 +165,10 @@ const en: HomeStrings = {
   emailPlaceholder: 'Your email address',
   join: 'Join us',
   sending: 'Sending…',
-  checkEmail: 'Check your email — we sent a sign-in link to',
+  checkEmail: 'Check your email. We sent a sign-in link to',
   differentEmail: 'Use a different email',
   google: 'Or continue with Google',
-  googleBlockedNote: 'Google sign-in is usually blocked in in-app browsers — use email above, or open this page in Safari/Chrome.',
+  googleBlockedNote: 'Google sign-in is usually blocked in in-app browsers. Use email above, or open this page in Safari/Chrome.',
   emailError: 'Could not send the sign-in link. Please try again.',
   didYouMean: (suggestion) => `Did you mean ${suggestion}?`,
   haveAccount: 'Already have an account?',
@@ -185,7 +185,7 @@ const en: HomeStrings = {
   heroSearchInstead: 'Or search the collection →',
   askSourceEyebrow: 'The Librarian',
   askSourceHeading: 'Ask the source',
-  askSourceSubtitle: 'Put a question to thousands of primary sources and get an answer — with citations to the originals you can read for yourself.',
+  askSourceSubtitle: 'Put a question to thousands of primary sources and get an answer, with citations to the originals you can read for yourself.',
 
   collectionsHeading: 'Collections',
   translationsLabel: 'readable in English',
@@ -200,7 +200,7 @@ const en: HomeStrings = {
   curatedExhibitions: 'Browse curated exhibitions',
   allCollections: 'All collections',
   showcaseEyebrow: 'Curated exhibitions',
-  showcaseSubtitle: 'Small selections with an argument to make — a few dozen books each, chosen and introduced by a curator.',
+  showcaseSubtitle: 'Small selections with an argument to make: a few dozen books each, chosen and introduced by a curator.',
   allExhibitions: (n) => `All ${n} exhibitions`,
   bySubjectHeading: 'Browse by subject',
   bySubjectLead: 'The whole library:',
@@ -234,7 +234,7 @@ const en: HomeStrings = {
   aboutP1:
     'Centuries of humanity’s deepest thinking sit locked in Latin and other inaccessible languages. These aren’t just inaccessible to humans; contemporary AI systems were trained on Reddit but not the Renaissance. Millions of books and manuscripts are unscanned and untranslated. These aren’t obscure footnotes. They are the roots of modern science, psychology, philosophy of mind, and the perennial questions about what it means to be human.',
   aboutP2:
-    'The Source Library uses scholarship and AI systems to recover this knowledge and make it accessible to all. We are building the world’s largest open-access collection of translated primary sources—so that scholars, seekers, and AI systems can draw on the full depth of the human intellectual tradition. This work is sustained by the people who use and value it.',
+    'The Source Library uses scholarship and AI systems to recover this knowledge and make it accessible to all. We are building the world’s largest open-access collection of translated primary sources, so that scholars, seekers, and AI systems can draw on the full depth of the human intellectual tradition. This work is sustained by the people who use and value it.',
   aboutP3Before: 'The Source Library is an initiative of the ',
   efmLinkText: 'Embassy of the Free Mind',
   aboutP3After:
@@ -244,7 +244,7 @@ const en: HomeStrings = {
   bePartHeading: 'Help recover the lost intellectual heritage of humanity.',
   supportTitle: 'Support the Library',
   supportBody:
-    'Thousands of texts from the ancient and early modern world remain untranslated and unread. Your support funds the digitization, OCR, and AI-assisted translation of these works—making them freely available to scholars, seekers, and the public for the first time.',
+    'Thousands of texts from the ancient and early modern world remain untranslated and unread. Your support funds the digitization, OCR, and AI-assisted translation of these works, making them freely available to scholars, seekers, and the public for the first time.',
   howToSupport: 'How to Support?',
   createAccount: 'Create a Free Account',
   contribute: 'Contribute',
@@ -265,13 +265,13 @@ const en: HomeStrings = {
   inSpiritOf: 'In the spirit of',
   ficinoRole: '1433–1499 · Philosopher & Translator',
   ficinoBio:
-    'Ficino translated the complete works of Plato, Plotinus, Proclus, Iamblichus, and the Hermetic writings into Latin—making them accessible to all of Europe for the first time. His work ignited the Renaissance recovery of Neoplatonism, Hermeticism, and the prisca theologia: the belief in an ancient wisdom tradition uniting all seekers of truth.',
+    'Ficino translated the complete works of Plato, Plotinus, Proclus, Iamblichus, and the Hermetic writings into Latin, making them accessible to all of Europe for the first time. His work ignited the Renaissance recovery of Neoplatonism, Hermeticism, and the prisca theologia: the belief in an ancient wisdom tradition uniting all seekers of truth.',
   cosimoRole: '1389–1464 · Florence',
   cosimoBio:
-    'The inventor of modern banking, Cosimo de’ Medici used his wealth to fund the Renaissance. In addition to commissioning art, he funded Ficino to make translations of Plato and other lost works into Latin so that they could be read. Around 1460, a Greek manuscript of the Corpus Hermeticum arrived in Florence, brought from Macedonia by a monk named Leonardo of Pistoia. The dying Cosimo asked Ficino to pause his translation of Plato so that he could read it—sensing that Hermes held the key to the most ancient wisdom.',
+    'The inventor of modern banking, Cosimo de’ Medici used his wealth to fund the Renaissance. In addition to commissioning art, he funded Ficino to make translations of Plato and other lost works into Latin so that they could be read. Around 1460, a Greek manuscript of the Corpus Hermeticum arrived in Florence, brought from Macedonia by a monk named Leonardo of Pistoia. The dying Cosimo asked Ficino to pause his translation of Plato so that he could read it, sensing that Hermes held the key to the most ancient wisdom.',
   closingStrong: 'The Source Library continues in the spirit of their work.',
   closingRest:
-    ' Translating ancient wisdom and sharing it freely has the power to transform civilization. Centuries after Ficino, thousands of texts remain untranslated and unread—including many of Ficino’s own works. We are recovering them—for scholars, for seekers, and for the AI systems that will shape how future generations think.',
+    ' Translating ancient wisdom and sharing it freely has the power to transform civilization. Centuries after Ficino, thousands of texts remain untranslated and unread, including many of Ficino’s own works. We are recovering them for scholars, for seekers, and for the AI systems that will shape how future generations think.',
 };
 
 const es: HomeStrings = {
@@ -283,10 +283,10 @@ const es: HomeStrings = {
   emailPlaceholder: 'Tu correo electrónico',
   join: 'Únete',
   sending: 'Enviando…',
-  checkEmail: 'Revisa tu correo — enviamos un enlace de acceso a',
+  checkEmail: 'Revisa tu correo. Enviamos un enlace de acceso a',
   differentEmail: 'Usar otro correo',
   google: 'O continúa con Google',
-  googleBlockedNote: 'El acceso con Google suele estar bloqueado en navegadores internos — usa el correo de arriba, o abre esta página en Safari/Chrome.',
+  googleBlockedNote: 'El acceso con Google suele estar bloqueado en navegadores internos. Usa el correo de arriba, o abre esta página en Safari/Chrome.',
   emailError: 'No se pudo enviar el enlace de acceso. Inténtalo de nuevo.',
   didYouMean: (suggestion) => `¿Quisiste decir ${suggestion}?`,
   haveAccount: '¿Ya tienes una cuenta?',
@@ -318,7 +318,7 @@ const es: HomeStrings = {
   curatedExhibitions: 'Explorar exposiciones comisariadas',
   allCollections: 'Todas las colecciones',
   showcaseEyebrow: 'Exposiciones comisariadas',
-  showcaseSubtitle: 'Selecciones breves con una tesis — unas docenas de libros cada una, elegidos y presentados por un comisario.',
+  showcaseSubtitle: 'Selecciones breves con una tesis: unas docenas de libros cada una, elegidos y presentados por un comisario.',
   allExhibitions: (n) => `Las ${n} exposiciones`,
   bySubjectHeading: 'Explorar por tema',
   bySubjectLead: 'Toda la biblioteca:',

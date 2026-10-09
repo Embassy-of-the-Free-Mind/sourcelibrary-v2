@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
   const title = result.book.display_title || result.book.title;
   return {
-    title: `Overview — ${title} - Source Library`,
+    title: `Overview: ${title} - Source Library`,
     robots: { index: false, follow: true },
     alternates: { canonical: `/book/${id}/overview` },
   };

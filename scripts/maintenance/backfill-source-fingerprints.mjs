@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 /**
- * Backfill `source_fingerprints` (the tier-1 SET) on `books` and `books_warehouse`.
+ * Backfill `source_fingerprints` (the tier-1 SET) on `books`. (The warehouse
+ * collection it also covered was retired 2026-10, #5470.)
  *
  * ADDITIVE ONLY. This sweep `$set`s one new array field and nothing else. It
  * never `$unset`s, never deletes, never touches `visible`/`hidden`, never
  * writes `duplicate_of`, and never modifies the legacy scalar
- * `source_fingerprint` — indexes, the warehouse and several audits still read
+ * `source_fingerprint` — indexes and several audits still read
  * that, and it stays exactly as it was.
  *
  * Why the set exists, and what is deliberately excluded from it (bare `dc:`
@@ -19,7 +20,7 @@
  *   node scripts/maintenance/backfill-source-fingerprints.mjs
  *
  *   --dry-run          compute and report, write nothing
- *   --collection NAME  just one of books | books_warehouse
+ *   --collection NAME  only `books` is accepted
  *   --all              recompute even where the field is already present
  *                      (needed after a change to the derivation rules)
  *   --no-index         skip creating the multikey index
@@ -33,7 +34,7 @@ const NO_INDEX = process.argv.includes('--no-index');
 const argAt = (name) => { const i = process.argv.indexOf(name); return i >= 0 ? process.argv[i + 1] : null; };
 const ONLY = argAt('--collection');
 
-const COLLECTIONS = ['books', 'books_warehouse'].filter((c) => !ONLY || c === ONLY);
+const COLLECTIONS = ['books'].filter((c) => !ONLY || c === ONLY);
 if (COLLECTIONS.length === 0) { console.error(`unknown --collection ${ONLY}`); process.exit(2); }
 
 const PROJECTION = {

@@ -1,0 +1,32 @@
+{
+  "summary": {
+    "book_id": "6a42d9431894955eb7262b96",
+    "title": "Ad Rationes decem Edmundi Campiani Jesuitae, quibus fretus certamen Anglicanae Ecclesiae ministris obtulit in causa fidei, responsio Guilielmi Whitakeri, Theologiae in Academia Cantabrigensi professoris Regii",
+    "published": "1581",
+    "source": "EEBO-TCP A17868",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 1,
+    "referenced": 1,
+    "skips": {},
+    "median_char_acc": 0.8103,
+    "median_char_acc_windowed": 0.6552,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": true,
+    "private_dir": "/root/sourcelibrary-ops/evals/refs-private"
+  },
+  "rows": [
+    {
+      "slug": "ed-6a42d9431894955eb7262b96-p16",
+      "page": 16,
+      "overlap": 0.357,
+      "probe_words": 29,
+      "ref_chars": 504,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.24,
+      "char_acc": 0.8103,
+      "char_acc_windowed": 0.6552
+    }
+  ]
+}

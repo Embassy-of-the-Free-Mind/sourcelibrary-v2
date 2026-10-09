@@ -134,7 +134,7 @@ export default async function EntityDetailPage({
                 </h2>
                 {authoredTotal > authoredWorks.length && (
                   <p className="text-sm text-stone-500 mt-0.5">
-                    Showing {authoredWorks.length} — see the author page for all {authoredTotal}.
+                    Showing {authoredWorks.length}. See the author page for all {authoredTotal}.
                   </p>
                 )}
               </div>
