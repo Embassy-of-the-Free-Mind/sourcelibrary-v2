@@ -497,6 +497,26 @@
     "detail": "run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at gemini-3.6-flash's API list price at the Batch rate by the #6293 preregistered formula: lite's metered production tokens per page, output scaled by this arm's text length over lite's on the same pages (×0.389); thinking not counted",
     "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.6-flash.json"
    }
+  ],
+  "gemini-3.8-flash-high+antigravity-cli": [
+   {
+    "charts": [
+     "latin"
+    ],
+    "usd_per_1k": 3.471,
+    "basis": "API price for comparison; $0 billed on the subscription",
+    "detail": "run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at gemini-3.8-flash's API list price at the Batch rate by the #6293 preregistered formula: lite's metered production tokens per page, output scaled by this arm's text length over lite's on the same pages (×1.02); thinking not counted",
+    "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.8-flash-high.json"
+   },
+   {
+    "charts": [
+     "english"
+    ],
+    "usd_per_1k": 3.433,
+    "basis": "API price for comparison; $0 billed on the subscription",
+    "detail": "run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at gemini-3.8-flash's API list price at the Batch rate by the #6293 preregistered formula: lite's metered production tokens per page, output scaled by this arm's text length over lite's on the same pages (×1.002); thinking not counted",
+    "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.8-flash-high.json"
+   }
   ]
  },
  "charts": [
@@ -687,6 +707,32 @@
        "on_frontier": false
       },
       {
+       "engine": "gemini-3.8-flash-high+antigravity-cli",
+       "label": "Gemini 3.8 Flash (high), CLI",
+       "production": false,
+       "median_cer": 0.072,
+       "cer_ci95": [
+        0.061,
+        0.084
+       ],
+       "accuracy": 0.928,
+       "accuracy_ci95": [
+        0.916,
+        0.939
+       ],
+       "invented": {
+        "median": 0.135,
+        "n": 87
+       },
+       "cost": {
+        "usd_per_1k": 3.471,
+        "basis": "API price for comparison; $0 billed on the subscription",
+        "detail": "run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at gemini-3.8-flash's API list price at the Batch rate by the #6293 preregistered formula: lite's metered production tokens per page, output scaled by this arm's text length over lite's on the same pages (×1.02); thinking not counted",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.8-flash-high.json"
+       },
+       "on_frontier": false
+      },
+      {
        "engine": "gemini-3.7-flash+antigravity-cli",
        "label": "Gemini 3.7 Flash, CLI",
        "production": false,
@@ -822,7 +868,8 @@
       "Sample check, 8 Oct 2026 (#6304): 4 of 147 pages left out because the reference does not transcribe this page, or no engine came within 35% of it",
       "On 40 of 143 pages the reference expands abbreviations or modernises u and v where the print does not, which counts against an engine that copies the print",
       "44 of 143 pages are Wikisource's own scans, not this library's",
-      "Gemini 3.8 Flash, CLI; Gemini 3.7 Flash, CLI and Gemini 3.6 Flash, CLI are gemini-3.8-flash-low, gemini-3.7-flash-low and gemini-3.6-flash-low run through Google's Antigravity command-line tool on a subscription (8–9 Oct 2026, #6293), which billed nothing; each sits at the API's list price for the same request. They differ from the other Gemini points in route, not prompt: same prompt and image, but the CLI sets its own temperature and a low thinking level. A page one could not be placed on (an empty read, or the model declining in prose) counts as 100% error. Through the CLI a reply sometimes opened with a note about a plan file before the text; that note is scored as part of the read"
+      "Gemini 3.8 Flash, CLI; Gemini 3.7 Flash, CLI; Gemini 3.6 Flash, CLI and Gemini 3.8 Flash (high), CLI are gemini-3.8-flash-low, gemini-3.7-flash-low, gemini-3.6-flash-low and gemini-3.8-flash-high run through Google's Antigravity command-line tool on a subscription (8–9 Oct 2026, #6293), which billed nothing; each sits at the API's list price for the same request, with its thinking not counted. They differ from the other Gemini points in route, not prompt: same prompt and image, but the CLI sets its own temperature and a low thinking level (high where the label says so). A page one could not be placed on (an empty read, or the model declining in prose) counts as 100% error. Through the CLI a reply sometimes opened with a note about a plan file before the text; that note is scored as part of the read",
+      "A second read of Gemini 3.8 Flash, CLI at the same low level on the same 143 pages (9 Oct 2026) had a median error of 6.6%, against 8.3% for the read plotted here. Most of the difference is replies that failed (the model declining in prose, or an empty reply), and these vary from one run to the next through the command-line tool. The gap between the CLI points and Gemini 3 Flash on this chart measures those failures more than the model's reading (#6293)"
      ]
     },
     {
@@ -1029,6 +1076,29 @@
         "basis": "billed",
         "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
         "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash-high+antigravity-cli",
+       "label": "Gemini 3.8 Flash (high), CLI",
+       "production": false,
+       "median_cer": 0.003,
+       "cer_ci95": [
+        0.002,
+        0.007
+       ],
+       "accuracy": 0.997,
+       "accuracy_ci95": [
+        0.993,
+        0.998
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 3.471,
+        "basis": "API price for comparison; $0 billed on the subscription",
+        "detail": "run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at gemini-3.8-flash's API list price at the Batch rate by the #6293 preregistered formula: lite's metered production tokens per page, output scaled by this arm's text length over lite's on the same pages (×1.02); thinking not counted",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.8-flash-high.json"
        },
        "on_frontier": false
       },
@@ -1409,6 +1479,32 @@
        "on_frontier": false
       },
       {
+       "engine": "gemini-3.8-flash-high+antigravity-cli",
+       "label": "Gemini 3.8 Flash (high), CLI",
+       "production": false,
+       "median_cer": 0.042,
+       "cer_ci95": [
+        0.029,
+        0.071
+       ],
+       "accuracy": 0.958,
+       "accuracy_ci95": [
+        0.929,
+        0.971
+       ],
+       "invented": {
+        "median": 0.014,
+        "n": 30
+       },
+       "cost": {
+        "usd_per_1k": 3.433,
+        "basis": "API price for comparison; $0 billed on the subscription",
+        "detail": "run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at gemini-3.8-flash's API list price at the Batch rate by the #6293 preregistered formula: lite's metered production tokens per page, output scaled by this arm's text length over lite's on the same pages (×1.002); thinking not counted",
+        "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.8-flash-high.json"
+       },
+       "on_frontier": false
+      },
+      {
        "engine": "gemini-3.7-flash+antigravity-cli",
        "label": "Gemini 3.7 Flash, CLI",
        "production": false,
@@ -1541,7 +1637,8 @@
      ],
      "no_cost": [],
      "notes": [
-      "Gemini 3.8 Flash, CLI; Gemini 3.7 Flash, CLI and Gemini 3.6 Flash, CLI are gemini-3.8-flash-low, gemini-3.7-flash-low and gemini-3.6-flash-low run through Google's Antigravity command-line tool on a subscription (8–9 Oct 2026, #6293), which billed nothing; each sits at the API's list price for the same request. They differ from the other Gemini points in route, not prompt: same prompt and image, but the CLI sets its own temperature and a low thinking level. A page one could not be placed on (an empty read, or the model declining in prose) counts as 100% error. Through the CLI a reply sometimes opened with a note about a plan file before the text; that note is scored as part of the read"
+      "Gemini 3.8 Flash, CLI; Gemini 3.7 Flash, CLI; Gemini 3.6 Flash, CLI and Gemini 3.8 Flash (high), CLI are gemini-3.8-flash-low, gemini-3.7-flash-low, gemini-3.6-flash-low and gemini-3.8-flash-high run through Google's Antigravity command-line tool on a subscription (8–9 Oct 2026, #6293), which billed nothing; each sits at the API's list price for the same request, with its thinking not counted. They differ from the other Gemini points in route, not prompt: same prompt and image, but the CLI sets its own temperature and a low thinking level (high where the label says so). A page one could not be placed on (an empty read, or the model declining in prose) counts as 100% error. Through the CLI a reply sometimes opened with a note about a plan file before the text; that note is scored as part of the read",
+      "A second read of Gemini 3.8 Flash, CLI at the same low level on the same 44 pages (9 Oct 2026) had a median error of 3.9%, against 17.7% for the read plotted here. Most of the difference is replies that failed (the model declining in prose, or an empty reply), and these vary from one run to the next through the command-line tool. The gap between the CLI points and Gemini 3 Flash on this chart measures those failures more than the model's reading (#6293)"
      ]
     }
    ],

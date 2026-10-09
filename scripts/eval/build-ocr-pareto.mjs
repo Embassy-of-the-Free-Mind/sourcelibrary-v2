@@ -169,8 +169,10 @@ const WAVE_ENGINES = new Set(['deepseek-ocr', 'qwen3-vl-8b', 'chandra-ocr-2', 'm
 // scored row on the WHOLE frozen set (keepCli6293 below), so it can never shrink a panel the other engines already
 // share. An engine that read only the capped subsample gets its own panel on those pages (subsamplePanel).
 const CLI_6293 = 'gemini-3.8-flash+antigravity-cli';
-const CLI_6293_TIERS = [['3.8', 'cli-cost.json'], ['3.7', 'cli-cost-gemini-3.7-flash.json'], ['3.6', 'cli-cost-gemini-3.6-flash.json']]
-  .map(([v, f]) => ({ v, engine: `gemini-${v}-flash+antigravity-cli`, costFile: path.join(__dirname, 'results', 'ocr-pareto-6293', f) }));
+// Amendment 3 (job cli-effort-6293): 3.8 Flash at the CLI's "high" thinking level, on the Latin and Early English sets only.
+const CLI_6293_TIERS = [['3.8', 'cli-cost.json'], ['3.7', 'cli-cost-gemini-3.7-flash.json'], ['3.6', 'cli-cost-gemini-3.6-flash.json'], ['3.8', 'cli-cost-gemini-3.8-flash-high.json', 'high']]
+  .map(([v, f, effort = 'low']) => ({ v, effort, engine: `gemini-${v}-flash${effort === 'low' ? '' : `-${effort}`}+antigravity-cli`,
+    label: `Gemini ${v} Flash${effort === 'low' ? '' : ` (${effort})`}, CLI`, costFile: path.join(__dirname, 'results', 'ocr-pareto-6293', f) }));
 const CLI_6293_ENGINES = new Set(CLI_6293_TIERS.map(t => t.engine));
 const OPEN_ENGINE_DIRS = ['open-engine-print-5660/scored', 'open-engine-print-5660/scored-olmocr', 'engine-wave1-6011/scored', 'engine-wave2-6011/scored', 'ocr-pareto-6293/scored'];
 const DIR_ENGINES = { 'engine-wave1-6011/scored': WAVE_ENGINES, 'engine-wave2-6011/scored': WAVE_ENGINES, 'ocr-pareto-6293/scored': CLI_6293_ENGINES };
@@ -261,7 +263,7 @@ const CAP_6293 = fs.existsSync(CAP_6293_FILE) ? new Set(JSON.parse(fs.readFileSy
 for (const t of CLI_6293_TIERS) {
   if (!fs.existsSync(t.costFile)) continue;
   const cc = JSON.parse(fs.readFileSync(t.costFile, 'utf8'));
-  LABEL[t.engine] = `Gemini ${t.v} Flash, CLI`;
+  LABEL[t.engine] = t.label;
   for (const [chart, c] of Object.entries(cc.charts)) (COST[t.engine] ||= []).push({
     charts: [chart], usd_per_1k: r3(c.usd_per_1k_batch), basis: 'API price for comparison; $0 billed on the subscription',
     detail: `run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at ${cc.model}'s API list price at the Batch rate by the #6293 preregistered formula: lite's metered production tokens per page, output scaled by this arm's text length over lite's on the same pages (×${c.r_out}); thinking not counted`,
@@ -270,7 +272,18 @@ for (const t of CLI_6293_TIERS) {
 const cliNote = engines => {
   const ts = CLI_6293_TIERS.filter(t => engines.has(t.engine)), many = ts.length > 1;
   const and = xs => (xs.length > 1 ? `${xs.slice(0, -1).join('; ')} and ${xs.at(-1)}` : xs[0]);
-  return `${and(ts.map(t => `Gemini ${t.v} Flash, CLI`))} ${many ? 'are' : 'is'} ${and(ts.map(t => `gemini-${t.v}-flash-low`)).replace(/; /g, ', ')} run through Google's Antigravity command-line tool on a subscription (8–9 Oct 2026, #6293), which billed nothing; ${many ? 'each sits' : 'it sits'} at the API's list price for the same request. ${many ? 'They differ' : 'It differs'} from the other Gemini points in route, not prompt: same prompt and image, but the CLI sets its own temperature and a low thinking level. A page ${many ? 'one' : 'it'} could not be placed on (an empty read, or the model declining in prose) counts as 100% error. Through the CLI a reply sometimes opened with a note about a plan file before the text; that note is scored as part of the read`;
+  const levels = [...new Set(ts.map(t => t.effort))];
+  return `${and(ts.map(t => t.label))} ${many ? 'are' : 'is'} ${and(ts.map(t => `gemini-${t.v}-flash-${t.effort}`)).replace(/; /g, ', ')} run through Google's Antigravity command-line tool on a subscription (8–9 Oct 2026, #6293), which billed nothing; ${many ? 'each sits' : 'it sits'} at the API's list price for the same request${levels.includes('high') ? ', with its thinking not counted' : ''}. ${many ? 'They differ' : 'It differs'} from the other Gemini points in route, not prompt: same prompt and image, but the CLI sets its own temperature and ${levels.length > 1 ? 'a low thinking level (high where the label says so)' : `a ${levels[0]} thinking level`}. A page ${many ? 'one' : 'it'} could not be placed on (an empty read, or the model declining in prose) counts as 100% error. Through the CLI a reply sometimes opened with a note about a plan file before the text; that note is scored as part of the read`;
+};
+// Amendment 3's A-vs-A repeat of 3.8 Flash CLI (cli-effort.json): a noise floor, never a point. Where it ran, the chart
+// says how far a second read at the same level moved, so the CLI points are not read as the model's reading alone.
+const CLI_EFFORT_FILE = path.join(__dirname, 'results', 'ocr-pareto-6293', 'cli-effort.json');
+const cliEffort = fs.existsSync(CLI_EFFORT_FILE) ? JSON.parse(fs.readFileSync(CLI_EFFORT_FILE, 'utf8')).panels : {};
+const repNote = id => {
+  const a = cliEffort[id]?.arms;
+  if (!a?.['C38L-rep'] || !a['C38 (stored)']) return null;
+  const pct = x => `${Math.round(x * 1000) / 10}%`;
+  return `A second read of Gemini 3.8 Flash, CLI at the same low level on the same ${a['C38L-rep'].n_scored} pages (9 Oct 2026) had a median error of ${pct(a['C38L-rep'].median_cer)}, against ${pct(a['C38 (stored)'].median_cer)} for the read plotted here. Most of the difference is replies that failed (the model declining in prose, or an empty reply), and these vary from one run to the next through the command-line tool. The gap between the CLI points and Gemini 3 Flash on this chart measures those failures more than the model's reading (#6293)`;
 };
 const cli6293Coverage = {}, cli6293Subsample = {};
 // Arms #6293 / #6295 asked for that cannot run: the CLI does not offer them, and the paid API is ruled out (2026-10-08).
@@ -444,6 +457,7 @@ for (const script of SCRIPTS) {
   if (script.source !== 'syriac-print') for (const p of panels) {
     const onPanel = new Set([...p.placed, ...p.no_cost].map(x => x.engine).filter(e => CLI_6293_ENGINES.has(e)));
     if (onPanel.size) p.notes = [...(p.notes || []), cliNote(onPanel)];
+    if (onPanel.has(CLI_6293) && p.kind === 'most-pages' && repNote(script.id)) p.notes.push(repNote(script.id));
   }
   mostPagesSets[script.id] = { engines: wide.engines, pages: [...wide.pages].sort() };
   const broad = without(greedy(byEngine, production, MIN_PAGES));

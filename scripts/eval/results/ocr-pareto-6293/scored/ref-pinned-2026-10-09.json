@@ -224,6 +224,31 @@
               "both_unaligned": 0
             }
           },
+          "gemini-3.8-flash-high+antigravity-cli": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 5,
+              "both_unaligned": 0
+            }
+          },
           "kraken-austriannewspapers": {
             "pages_run": 0,
             "aligned": 0,
@@ -794,6 +819,31 @@
             }
           },
           "gemini-3.8-flash+antigravity-cli": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3.8-flash-high+antigravity-cli": {
             "pages_run": 0,
             "aligned": 0,
             "refused": 0,
@@ -1412,6 +1462,31 @@
               "both_unaligned": 0
             }
           },
+          "gemini-3.8-flash-high+antigravity-cli": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
           "kraken-austriannewspapers": {
             "pages_run": 0,
             "aligned": 0,
@@ -1982,6 +2057,31 @@
             }
           },
           "gemini-3.8-flash+antigravity-cli": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
+          "gemini-3.8-flash-high+antigravity-cli": {
             "pages_run": 0,
             "aligned": 0,
             "refused": 0,
@@ -2600,6 +2700,31 @@
               "both_unaligned": 0
             }
           },
+          "gemini-3.8-flash-high+antigravity-cli": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
           "kraken-austriannewspapers": {
             "pages_run": 0,
             "aligned": 0,
@@ -3194,6 +3319,31 @@
               "both_unaligned": 0
             }
           },
+          "gemini-3.8-flash-high+antigravity-cli": {
+            "pages_run": 6,
+            "aligned": 6,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.022,
+            "mean_cer_windowed": 0.042,
+            "mean_acc_windowed": 0.958,
+            "mean_acc_upper": 0.989,
+            "median_cer_refusals_as_1": 0.022,
+            "mean_cer_refusals_as_1": 0.042,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 6,
+              "excluded_refused": 0,
+              "wins": 6,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": 0.01,
+              "p_sign": 0.031,
+              "ref_engine_aligned": 6,
+              "both_unaligned": 0
+            }
+          },
           "kraken-austriannewspapers": {
             "pages_run": 0,
             "aligned": 0,
@@ -3665,6 +3815,9 @@
           "span_dispersion": 1,
           "chars": 786
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -3831,6 +3984,9 @@
           "span_dispersion": 1,
           "chars": 781
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -3941,6 +4097,9 @@
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -4021,6 +4180,9 @@
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
           "missing": true
         },
         "kraken-austriannewspapers": {
@@ -4157,6 +4319,9 @@
           "refusal_source": "finishReason",
           "finish_reason": "SAFETY",
           "chars": 0
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -4324,6 +4489,9 @@
           "span_dispersion": 1,
           "chars": 2195
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -4490,6 +4658,9 @@
           "span_dispersion": 1,
           "chars": 3620
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -4600,6 +4771,9 @@
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -4680,6 +4854,9 @@
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
           "missing": true
         },
         "kraken-austriannewspapers": {
@@ -4764,6 +4941,9 @@
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -4844,6 +5024,9 @@
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
           "missing": true
         },
         "kraken-austriannewspapers": {
@@ -4928,6 +5111,9 @@
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -5008,6 +5194,9 @@
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
           "missing": true
         },
         "kraken-austriannewspapers": {
@@ -5092,6 +5281,9 @@
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -5172,6 +5364,9 @@
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
           "missing": true
         },
         "kraken-austriannewspapers": {
@@ -5256,6 +5451,9 @@
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -5336,6 +5534,9 @@
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
           "missing": true
         },
         "kraken-austriannewspapers": {
@@ -5420,6 +5621,9 @@
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -5500,6 +5704,9 @@
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
           "missing": true
         },
         "kraken-austriannewspapers": {
@@ -5584,6 +5791,9 @@
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -5664,6 +5874,9 @@
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
           "missing": true
         },
         "kraken-austriannewspapers": {
@@ -5748,6 +5961,9 @@
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -5828,6 +6044,9 @@
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
           "missing": true
         },
         "kraken-austriannewspapers": {
@@ -5912,6 +6131,9 @@
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -5992,6 +6214,9 @@
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
           "missing": true
         },
         "kraken-austriannewspapers": {
@@ -6076,6 +6301,9 @@
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -6156,6 +6384,9 @@
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
           "missing": true
         },
         "kraken-austriannewspapers": {
@@ -6240,6 +6471,9 @@
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -6320,6 +6554,9 @@
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
           "missing": true
         },
         "kraken-austriannewspapers": {
@@ -6404,6 +6641,9 @@
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -6484,6 +6724,9 @@
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
           "missing": true
         },
         "kraken-austriannewspapers": {
@@ -6568,6 +6811,9 @@
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -6648,6 +6894,9 @@
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
           "missing": true
         },
         "kraken-austriannewspapers": {
@@ -6732,6 +6981,9 @@
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -6812,6 +7064,9 @@
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
           "missing": true
         },
         "kraken-austriannewspapers": {
@@ -6896,6 +7151,9 @@
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -6976,6 +7234,9 @@
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
           "missing": true
         },
         "kraken-austriannewspapers": {
@@ -7060,6 +7321,9 @@
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -7140,6 +7404,9 @@
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
           "missing": true
         },
         "kraken-austriannewspapers": {
@@ -7224,6 +7491,9 @@
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -7304,6 +7574,9 @@
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
           "missing": true
         },
         "kraken-austriannewspapers": {
@@ -7388,6 +7661,9 @@
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -7468,6 +7744,9 @@
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
           "missing": true
         },
         "kraken-austriannewspapers": {
@@ -7608,6 +7887,16 @@
           "span_dispersion": null,
           "chars": 0
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.143,
+          "acc_upper": 0.972,
+          "acc_windowed": 0.868,
+          "cer": 0.132,
+          "span_dispersion": 1,
+          "chars": 2276
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -7711,6 +8000,9 @@
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -7791,6 +8083,9 @@
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
           "missing": true
         },
         "kraken-austriannewspapers": {
@@ -7930,6 +8225,16 @@
           "cer": 0.974,
           "span_dispersion": null,
           "chars": 31
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.09,
+          "acc_upper": 0.989,
+          "acc_windowed": 0.985,
+          "cer": 0.015,
+          "span_dispersion": 1,
+          "chars": 5387
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -8090,6 +8395,16 @@
           "span_dispersion": 1.035,
           "chars": 1668
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.011,
+          "acc_upper": 0.997,
+          "acc_windowed": 0.997,
+          "cer": 0.003,
+          "span_dispersion": 1.035,
+          "chars": 1657
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -8191,6 +8506,9 @@
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
           "missing": true
         },
         "kraken-austriannewspapers": {
@@ -8331,6 +8649,16 @@
           "span_dispersion": 1,
           "chars": 3731
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.013,
+          "acc_upper": 0.999,
+          "acc_windowed": 0.998,
+          "cer": 0.002,
+          "span_dispersion": 1,
+          "chars": 3728
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -8434,6 +8762,9 @@
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -8516,6 +8847,9 @@
         "gemini-3.8-flash+antigravity-cli": {
           "missing": true
         },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "missing": true
+        },
         "kraken-austriannewspapers": {
           "missing": true
         },
@@ -8596,6 +8930,9 @@
           "missing": true
         },
         "gemini-3.8-flash+antigravity-cli": {
+          "missing": true
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
           "missing": true
         },
         "kraken-austriannewspapers": {
@@ -8735,6 +9072,16 @@
           "cer": 0.057,
           "span_dispersion": 7.941,
           "chars": 2463
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.105,
+          "acc_upper": 0.989,
+          "acc_windowed": 0.929,
+          "cer": 0.071,
+          "span_dispersion": 5.176,
+          "chars": 2148
         },
         "kraken-austriannewspapers": {
           "missing": true
@@ -8894,6 +9241,16 @@
           "cer": 0.028,
           "span_dispersion": 74.5,
           "chars": 4073
+        },
+        "gemini-3.8-flash-high+antigravity-cli": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.075,
+          "acc_upper": 0.986,
+          "acc_windowed": 0.972,
+          "cer": 0.028,
+          "span_dispersion": 74,
+          "chars": 4107
         },
         "kraken-austriannewspapers": {
           "missing": true
