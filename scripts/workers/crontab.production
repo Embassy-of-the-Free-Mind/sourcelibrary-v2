@@ -124,6 +124,8 @@
 30 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-acquire.lock bash -c "set -a; source .env.production.local; set +a; node scripts/catalog-coverage/acquire-gap-batch.mjs --batch 400 --concurrency 10" >> /var/log/sourcelibrary/acquire.log 2>&1
 # Archive newly-acquired gap books to R2 (companion to acquisition)
 45 * * * * /root/sourcelibrary/scripts/catalog-coverage/archive-acquired-cron.sh >> /var/log/sourcelibrary/archive-acquired.log 2>&1
+# Archiver host lanes watchdog (#5457): restart any lane in /etc/sourcelibrary/archive-lanes.conf whose tmux session died (no file = no-op)
+*/10 * * * * /root/sourcelibrary/scripts/catalog-coverage/archive-lanes-revive.sh >> /var/log/sourcelibrary/archive-lanes-revive.log 2>&1
 30 */2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-supabase-sync.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/supabase-sync.mjs" >> /var/log/sourcelibrary/supabase-sync.log 2>&1
 # catchup-watchdog: restart the acquisition catch-up if it died (loop self-exits when queue drains)
 #TEMP-FT-CENSUS (#2933) — remove when ft-census-daily reports exhausted
