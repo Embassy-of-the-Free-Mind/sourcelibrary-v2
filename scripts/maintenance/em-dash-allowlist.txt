@@ -314,8 +314,6 @@ src/app/prototype/deep-zoom/page.tsx 8  # rewritten in a #6215 copy PR; --tighte
 src/app/prototype/prehistoric-art/page.tsx 5  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/quality/methods/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/quality/page.tsx 6  # rewritten in a #6215 copy PR; --tighten after it merges
-src/app/quality/ParetoCharts.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
-src/app/quality/pareto/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/read/gilgamesh/page.tsx 8  # Thompson 1930 translation text; rest rewritten in a #6215 copy PR
 src/app/research/atlas/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/research/canon-gap/diagrams.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges

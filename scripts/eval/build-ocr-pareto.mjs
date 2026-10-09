@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
- * build-ocr-pareto.mjs — cost against accuracy, one chart per script, for /quality (#5983).
+ * build-ocr-pareto.mjs — cost against accuracy, one chart per script, for /quality and /quality/pareto (#5983,
+ * rebuilt in #6386 after "I don't trust the data or the sampling").
  *
  * PRIOR ART: scripts/eval/benchmark-dashboard-data.mjs — grades every engine cell and pairs it
  * against the production engine, but carries no cost and never puts three engines on the SAME
@@ -11,54 +12,51 @@
  * Run by benchmark-dashboard-data.mjs after every re-score, so the charts move with the evidence
  * table in the same commit (the Vercel build cannot run it: .vercelignore drops scripts/eval/results).
  * tests/unit/ocr-pareto.test.ts runs --check, so CI refuses a stale file. Reads only committed files:
- *   accuracy   scripts/eval/lib/benchmark-rows.mjs (the evidence table's own rows), the #6295 Syriac print
- *              panel (results/syriac-pareto-6295/ocr-summary.json), and the Syriac
- *              ground-truth retest (results/benchmark/syriac-retest-2026-09-16/score.json)
- *   cost       Gemini: the latest results/ocr-cost/ocr-cost-<date>.json (ocr-cost-snapshot.mjs,
- *              metered Batch spend); self-hosted: ocr-engine-gpu-costs.json (each entry quotes
- *              its run's write-up, and this script refuses an entry whose quote is not in it)
+ *   accuracy   scripts/eval/lib/benchmark-rows.mjs (the evidence table's own rows), the #6011 / #6293 engine runs,
+ *              the #6295 Syriac print panel and the Syriac ground-truth retest; the #6293 CLI reads re-scored with
+ *              the CLI's preamble removed (results/ocr-pareto-6293/plan-note-rescored.json)
+ *   works      results/pareto-works.json (build-pareto-works.mjs: book → work_id), for the intervals
+ *   cost       Gemini: the latest results/ocr-cost/ocr-cost-<date>.json (metered Batch spend); self-hosted and
+ *              other APIs: ocr-engine-gpu-costs.json (each entry quotes its run's write-up); CLI arms: cli-cost*.json
  *   production scripts/lib/ocr-routing.mjs, the router that picks the model for new pages
  * Writes src/data/ocr-pareto.json. No timestamps: unchanged inputs give an identical file.
  *   node scripts/eval/build-ocr-pareto.mjs           # write
  *   node scripts/eval/build-ocr-pareto.mjs --check   # exit 1 if the committed file is stale
- *   node scripts/eval/build-ocr-pareto.mjs --dump-sets=<file>   # write each chart's most-pages page keys
- *                                                    # (stratum|slug) and engines, nothing else (#6011 wave 2)
- *   node scripts/eval/build-ocr-pareto.mjs --keep-dropped   # with the pages #6304 dropped (below) put back
- *   node scripts/eval/build-ocr-pareto.mjs --exclude=<file> --out=<file>
- *        # rebuild without the page keys listed in <file> (a JSON array of stratum|slug), for the #6304
- *        # sensitivity check; each panel keeps its engines, only pages drop. Never writes the committed file.
+ *   node scripts/eval/build-ocr-pareto.mjs --dump-sets=<file>   # each chart's primary page keys and engines
+ *   node scripts/eval/build-ocr-pareto.mjs --dump-rows=<file>   # every scored page × engine per chart
+ *   node scripts/eval/build-ocr-pareto.mjs --keep-dropped   # with the pages #6304 dropped put back
+ *   node scripts/eval/build-ocr-pareto.mjs --exclude=<file> --out=<file>   # sensitivity rebuilds; never the committed file
  *
- * The rules (.claude/docs/eval-design.md §7):
- *   - engines are compared ONLY on pages every plotted engine read, against a typed reference,
- *     and that no plotted engine refused (#5581); each page is one book in the sealed strata;
- *   - y = 1 − median CER on those pages, with a seeded bootstrap 95% CI;
- *   - per script up to two panels: the engine set that keeps the most pages, and (where more
- *     engines were run on a smaller sealed set) the set with the most engines on ≥ MIN_PAGES;
- *   - an engine with no measured cost is listed under the chart, never placed at a guessed x;
- *   - the frontier is drawn only with ≥ 3 placed engines; with fewer the chart says so.
+ * The rules (#6386; .claude/docs/eval-design.md §7):
+ *   - ONE FAILURE RULE for every engine: a read that is missing text, refused, or could not be placed against the
+ *     reference scores CER 1.0, and the page stays in for every engine. CER is capped at 1. A page drops only when
+ *     an engine was never run on it, or #6304 found its reference does not fit the page;
+ *   - each engine: mean accuracy (1 − mean CER, each page capped at 1) with a 95% interval that resamples WORKS, and the share of pages
+ *     with CER above 0.5;
+ *   - each engine against the engine in use: the mean per-page accuracy difference on the same pages, with a
+ *     work-clustered bootstrap interval; where a like-for-like second run of the engine in use covers the panel, its
+ *     spread sets the noise band (lib/pareto-stats.mjs noiseOf). Verdict words only when the interval excludes 0 and clears it;
+ *   - each panel gets a fitness grade (lib/pareto-stats.mjs gradePanel). Pages are split by how their reference was
+ *     made, so a panel never pools two error measures, and the strata whose reference was located with the
+ *     production engine's own reading get their own panel, graded not fit;
+ *   - ONE COST BASIS: billed dollars (Gemini at its metered Batch rate; other APIs at their billed rate; GPU runs at
+ *     the whole billed rental, shared by inference time); CLI runs at the API Batch price for the same requests,
+ *     marked `quota` ($0 billed, subscription); an engine with no billed price sits on the "no price" strip.
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readBenchmarkRows, BENCHMARK_DIR } from './lib/benchmark-rows.mjs';
 import { getOcrModelForBook } from '../lib/ocr-routing.mjs';
+import { r3, median, mean, hash, clusterCI, pairedDiff, noiseOf, verdictOf, gradePanel, GRADE_RULES, MARGIN, markFrontier, verdictSentence } from './lib/pareto-stats.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.join(__dirname, '..', '..');
 const OUT = path.join(REPO, 'src', 'data', 'ocr-pareto.json');
-const MIN_PAGES = 5;          // below this a bootstrap interval is decoration (as in the evidence table)
-const FRONTIER_MIN = 3;       // the issue's rule: fewer engines than this → "too few for a frontier"
-const WIDE_KEEP = 0.5;        // the most-pages panel keeps at least half the production engine's pages
-
-// Engines the issue lists as never tested on any script here. Testing them is a separate, priced
-// follow-up; this list only says so on the page.
-// DeepSeek-OCR, Qwen3-VL-8B, Chandra 2, Mistral OCR 4.1 and Claude Opus / Sonnet 5.5 left this list with #6011 wave 1.
-const NEVER_TESTED = ['Qwen3-VL 32B', 'GPT (vision)', 'Google Cloud Vision'];
-// General-purpose engines we HAVE run somewhere. A script whose pages one of them never read lists it as
-// not yet tested there. Script-specific models (a Kraken or Tesseract model for one script, NDL for
-// classical Japanese) are left out: their absence from another script is not a gap.
-const GENERAL = ['gemini-3.1-flash-lite', 'gemini-3-flash-preview', 'paddleocr-vl-1.6', 'olmocr-2-7b-fp8', 'surya2', 'dots-mocr', 'mineru',
-  'deepseek-ocr', 'qwen3-vl-8b', 'chandra-ocr-2', 'mistral-ocr-4-1', 'claude-opus-5-5', 'claude-sonnet-5-5'];
+const MIN_PAGES = 5;          // below this no interval at all
+const FRONTIER_MIN = 3;       // fewer priced engines than this: no frontier
+const WIDE_KEEP = 0.5;        // the primary panel keeps at least half the production engine's pages
+const MIN_WORKS_EXTRA = 10;   // a second view of the same pages is shown only on 10 or more works
 
 const LABEL = {
   'gemini-3.1-flash-lite': 'Gemini 3.1 Flash-Lite', 'gemini-3-flash-preview': 'Gemini 3 Flash',
@@ -73,15 +71,28 @@ const LABEL = {
   'deepseek-ocr': 'DeepSeek-OCR', 'qwen3-vl-8b': 'Qwen3-VL 8B', 'chandra-ocr-2': 'Chandra OCR 2', 'mistral-ocr-4-1': 'Mistral OCR 4.1',
   'claude-opus-5-5': 'Claude Opus 5.5', 'claude-sonnet-5-5': 'Claude Sonnet 5.5',
 };
-// What the typed reference is, by the stratum the page was sealed in (from each registry's reference_plan).
-const REFERENCE = {
-  'ref-ws': 'Wikisource transcriptions', 'ref-pinned': 'published e-texts pinned to the leaf',
-  'eebo-tcp-5488': 'EEBO-TCP keyed transcriptions', 'latin-period-5126': 'Wikisource and corrected transcriptions matched to the leaf',
-  greek: 'First1KGreek / Perseus TEI', 'greek-ext': 'First1KGreek / Perseus / el.wikisource TEI', 'greek-ext2': 'First1KGreek / Perseus / el.wikisource TEI',
-  chinese: 'Kanripo (Siku Quanshu) and CBETA', 'chinese-ext': 'Kanripo (Siku Quanshu) and CBETA', 'chinese-cohort-5547': 'Kanripo Siku Quanshu witnesses',
-  armenian: 'TITUS', 'syriac-gt': 'line-by-line ground truth for two manuscripts',
-  'syriac-print-6295': 'Digital Syriac Corpus e-texts, the window voted across engines',
+
+// How each stratum's reference was made. `metric`: which error measure the scorer applies (pages of two measures are
+// never pooled). `anchored`: the reference was located using the production engine's own stored reading (#6386
+// audit, point 2), which favours the engine in use. `edition`: the reference is a modern edition of the work rather
+// than a transcription of this page.
+const STRATA = {
+  'ref-ws': { reference: 'Wikisource proofread transcriptions of the page', metric: 'windowed' },
+  'ref-pinned': { reference: 'published e-texts pinned to the page', metric: 'windowed', edition: true },
+  'eebo-tcp-5488': { reference: 'EEBO-TCP keyed transcriptions', metric: 'whole', anchored: true },
+  'latin-period-5126': { reference: 'transcriptions matched to the page with our own reading', metric: 'whole', anchored: true },
+  greek: { reference: 'First1KGreek, Perseus and el.wikisource editions', metric: 'whole', edition: true },
+  'greek-ext': { reference: 'First1KGreek, Perseus and el.wikisource editions', metric: 'whole', edition: true },
+  'greek-ext2': { reference: 'First1KGreek, Perseus and el.wikisource editions', metric: 'whole', edition: true },
+  chinese: { reference: 'Kanripo (Siku Quanshu) and CBETA e-texts', metric: 'whole', edition: true },
+  'chinese-ext': { reference: 'Kanripo (Siku Quanshu) and CBETA e-texts', metric: 'whole', edition: true },
+  'chinese-cohort-5547': { reference: 'Kanripo (Siku Quanshu) and CBETA e-texts', metric: 'whole', edition: true },
+  armenian: { reference: 'TITUS e-texts keyed from the same edition', metric: 'whole' },
+  'syriac-gt': { reference: 'line-by-line transcriptions of two manuscripts', metric: 'line' },
+  'syriac-print-6295': { reference: 'Digital Syriac Corpus e-texts, located with our own reading', metric: 'consonant', anchored: true, edition: true },
 };
+const stratumOf = page => page.split('|')[0];
+const fallbackStratum = s => STRATA[s] || { reference: `references sealed with ${s}`, metric: 'whole' };
 
 // One chart per script. `language` is what the router is asked, to name the production engine.
 const SCRIPTS = [
@@ -98,53 +109,50 @@ const SCRIPTS = [
   // Production for printed Syriac is the Kraken lane (scripts/workers/syriac-kraken-lane.mjs, #4883), not the router.
   { id: 'syriac-print', title: 'Syriac print', language: 'Syriac', source: 'syriac-print', production: 'omnisyr' },
 ];
-// Scripts with OCR runs but no typed reference the charts could score against. Said on the page so an
-// absence reads as a gap in the evidence, not as a script nobody looked at.
+// #6304's verdicts: these charts' references were judged not fit to rank engines.
+const UNFIT_6304 = new Set(['chinese-print', 'armenian']);
+// Scripts with OCR runs but no typed reference the charts could score against.
 const NO_REFERENCE = [
-  { title: 'Tibetan', why: 'measured as syllable identity against the Derge e-text (a different measure from page CER): BDRC Yigdzin 0.949, Claude Opus 5.5 0.715, Mistral OCR 4.1 0.564, the three open VLMs ~0 (#6011)', source: 'scripts/eval/results/engine-wave1-6011/summary.json' },
-  { title: 'Sanskrit', why: 'only repeat-read consistency has been measured (stability), not accuracy', source: 'scripts/eval/results/sanskrit-consistency-2026-04-24.json' },
-  { title: 'Persian', why: 'scored as located windows against Ganjoor verse (a different measure from page CER); only Gemini has a measured cost', source: 'scripts/eval/results/persian-ganjoor-2026-10-01-stage1b/table.json' },
+  { title: 'Tibetan', why: 'measured as syllable identity against the Derge e-text, a different measure from page error (#6011)', source: 'scripts/eval/results/engine-wave1-6011/summary.json' },
+  { title: 'Sanskrit', why: 'only repeat-read consistency has been measured, not accuracy', source: 'scripts/eval/results/sanskrit-consistency-2026-04-24.json' },
+  { title: 'Persian', why: 'scored as located windows against Ganjoor verse, a different measure from page error', source: 'scripts/eval/results/persian-ganjoor-2026-10-01-stage1b/table.json' },
 ];
 
-// ── small statistics (the evidence table's own, seeded so the file is byte-stable) ─────────────
-const r3 = x => (x == null || Number.isNaN(x) ? null : Math.round(x * 1000) / 1000);
-const median = xs => { const s = [...xs].sort((a, b) => a - b); if (!s.length) return null; const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
-function rng(seed) { let a = seed >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
-const hash = s => { let h = 2166136261; for (const c of s) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); } return h >>> 0; };
-function bootstrapMedianCI(xs, seed, B = 2000) {
-  if (xs.length < MIN_PAGES) return null;
-  const rand = rng(seed), meds = [];
-  for (let b = 0; b < B; b++) { const s = []; for (let i = 0; i < xs.length; i++) s.push(xs[Math.floor(rand() * xs.length)]); meds.push(median(s)); }
-  meds.sort((a, b) => a - b);
-  return [r3(meds[Math.floor(0.025 * B)]), r3(meds[Math.floor(0.975 * B)])];
-}
-
-// ── cost ─────────────────────────────────────────────────────────────────────────────────────
+// ── cost: one basis ──────────────────────────────────────────────────────────────────────────
+// basis 'billed': dollars actually billed for these reads (Gemini metered at the Batch rate; Mistral and the Claude
+// API arms at their billed realtime rate, as they have no Batch route here; GPU rentals billed whole and shared by
+// inference time). basis 'quota': a CLI run on the subscription, $0 billed, placed at the API Batch price for the
+// same requests. An engine priced only on its inference time (no billed rental on record) has no price.
 const costDir = path.join(__dirname, 'results', 'ocr-cost');
 const costFile = fs.readdirSync(costDir).filter(f => /^ocr-cost-\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort().at(-1);
 if (!costFile) throw new Error(`no metered cost snapshot in ${costDir} — run scripts/eval/ocr-cost-snapshot.mjs`);
 const metered = JSON.parse(fs.readFileSync(path.join(costDir, costFile), 'utf8'));
 const gpu = JSON.parse(fs.readFileSync(path.join(__dirname, 'ocr-engine-gpu-costs.json'), 'utf8'));
-// COST[engine] = [{ charts|null, usd_per_1k, basis, detail, source }]; costOf picks the entry for a chart.
-const COST = {};
+const COST = {};      // engine → [{ charts|null, usd_per_1k, basis, detail, source }]
+const NO_PRICE = {};  // engine → why it has no price
 for (const [engine, m] of Object.entries(metered.models)) COST[engine] = [{
-  charts: null, usd_per_1k: r3(m.usd_per_1k_pages), basis: 'metered',
+  charts: null, usd_per_1k: r3(m.usd_per_1k_pages), basis: 'billed',
   detail: `Gemini Batch, ${m.pages.toLocaleString('en-US')} pages metered ${metered.window.from.slice(0, 10)} to ${metered.window.to.slice(0, 10)}`,
   source: `scripts/eval/results/ocr-cost/${costFile}`,
 }];
 const flat = t => t.replace(/\s+/g, ' ');   // write-ups wrap lines mid-sentence
-for (const [engine, entries] of Object.entries(gpu.engines)) COST[engine] = entries.map(g => {
-  const text = flat(fs.readFileSync(path.join(REPO, g.source), 'utf8'));
-  for (const part of g.quote.split(' … ')) if (!text.includes(flat(part))) throw new Error(`ocr-engine-gpu-costs.json: ${engine}'s quote "${part}" is not in ${g.source}`);
-  const eurPerPage = g.eur_per_page ?? (g.eur != null && g.pages ? g.eur / g.pages : null);
-  const usd = g.usd_per_1k ?? (eurPerPage != null ? eurPerPage * 1000 * gpu.usd_per_eur.value : null);
-  if (usd == null) throw new Error(`ocr-engine-gpu-costs.json: ${engine} entry has no eur+pages, eur_per_page or usd_per_1k`);
-  return {
-    charts: g.charts ?? null, usd_per_1k: r3(usd), basis: g.basis,
-    detail: `${g.hardware}; ${g.basis === 'billed' ? 'whole billed rental' : g.basis === 'metered-api' ? 'metered API spend, realtime prices' : 'inference time only'}, measured ${g.measured_on}`,
-    source: g.source,
-  };
-});
+for (const [engine, entries] of Object.entries(gpu.engines)) {
+  const billed = [];
+  for (const g of entries) {
+    const text = flat(fs.readFileSync(path.join(REPO, g.source), 'utf8'));
+    for (const part of g.quote.split(' … ')) if (!text.includes(flat(part))) throw new Error(`ocr-engine-gpu-costs.json: ${engine}'s quote "${part}" is not in ${g.source}`);
+    if (g.basis === 'compute') { NO_PRICE[engine] = 'priced on inference time only; no billed rental on record'; continue; }
+    const eurPerPage = g.eur_per_page ?? (g.eur != null && g.pages ? g.eur / g.pages : null);
+    const usd = g.usd_per_1k ?? (eurPerPage != null ? eurPerPage * 1000 * gpu.usd_per_eur.value : null);
+    if (usd == null) throw new Error(`ocr-engine-gpu-costs.json: ${engine} entry has no eur+pages, eur_per_page or usd_per_1k`);
+    billed.push({
+      charts: g.charts ?? null, usd_per_1k: r3(usd), basis: 'billed',
+      detail: `${g.hardware}; ${g.basis === 'metered-api' ? 'billed API spend, realtime rate' : 'whole billed rental'}, measured ${g.measured_on}`,
+      source: g.source,
+    });
+  }
+  if (billed.length) COST[engine] = billed;
+}
 function costOf(engine, chartId) {
   const es = COST[engine] || [];
   const e = es.find(x => x.charts?.includes(chartId)) || es.find(x => !x.charts);
@@ -153,30 +161,33 @@ function costOf(engine, chartId) {
   return rest;
 }
 
+// ── works: the unit the intervals resample ───────────────────────────────────────────────────
+const WORKS = JSON.parse(fs.readFileSync(path.join(__dirname, 'results', 'pareto-works.json'), 'utf8')).books;
+const workOfBook = b => (b ? `work:${WORKS[b] || b}` : null);
+const REGISTRY = new Map();
+for (const f of fs.readdirSync(path.join(__dirname, 'benchmark')).filter(f => f.endsWith('.json'))) {
+  const pages = JSON.parse(fs.readFileSync(path.join(__dirname, 'benchmark', f), 'utf8')).pages;
+  if (Array.isArray(pages)) for (const p of pages) if (p.book_id) REGISTRY.set(p.slug, p.book_id);
+}
+const gtOf = (dir, slug) => { const f = path.join(__dirname, dir, `${slug}.json`); return fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : null; };
+function workOfPage(page) {
+  const [stratum, slug] = page.split('|');
+  if (stratum === 'ref-ws') { const g = gtOf('ground-truth-ws', slug); return `scan:${g?.commons_file || g?.work || slug}`; }
+  if (stratum === 'ref-pinned') { const g = gtOf('ground-truth', slug); return workOfBook(g?.book_id) || `text:${g?.work || slug}`; }
+  return workOfBook(REGISTRY.get(slug)) || `page:${page}`;
+}
+
 // ── accuracy rows: one per page × engine, against a typed reference ─────────────────────────────
-// The benchmark store first; then the #5660 open-engine run, scored by the same scorer against the same
-// references, which adds PaddleOCR-VL and olmOCR to the print strata. Where both scored the same page ×
-// engine, the benchmark store wins (they agree on 681 of 690 such pairs; the rest are separate runs).
-// Then #6011 wave 1 (results/engine-wave1-6011/scored): the same scorer and references on a seeded subset of the
-// sealed strata. Only its six new engines are taken; its re-scored comparator rows never override the store.
-// Then #6011 wave 2 (results/engine-wave2-6011/scored): the same six engines on the rest of each chart's most-pages
-// set (PREREGISTRATION-engine-wave2-6011.md); a page wave 1 already read keeps its wave-1 row.
+// The benchmark store first; then the #5660 open-engine run, #6011 waves 1 and 2, and #6293's CLI arms, each scored
+// by the same scorer against the same references (a page × engine already read keeps its first row).
 const WAVE_ENGINES = new Set(['deepseek-ocr', 'qwen3-vl-8b', 'chandra-ocr-2', 'mistral-ocr-4-1', 'claude-opus-5-5', 'claude-sonnet-5-5']);
-// Then #6293 Part A (results/ocr-pareto-6293/scored, PREREGISTRATION-ocr-pareto-6293.md): gemini-3.8-flash through the
-// Antigravity CLI on the subscription ($0 billed), on every page of each chart's frozen most-pages set; then (Amendment
-// 2, job cli-queue-b-6293) 3.7 and 3.6 Flash the same way on a capped set: every chart whole except Chinese
-// manuscript, 150 of its pages. Only these engines are taken; each feeds a chart's main panels only where it has a
-// scored row on the WHOLE frozen set (keepCli6293 below), so it can never shrink a panel the other engines already
-// share. An engine that read only the capped subsample gets its own panel on those pages (subsamplePanel).
-const CLI_6293 = 'gemini-3.8-flash+antigravity-cli';
-// Amendment 3 (job cli-effort-6293): 3.8 Flash at the CLI's "high" thinking level, on the Latin and Early English sets only.
 const CLI_6293_TIERS = [['3.8', 'cli-cost.json'], ['3.7', 'cli-cost-gemini-3.7-flash.json'], ['3.6', 'cli-cost-gemini-3.6-flash.json'], ['3.8', 'cli-cost-gemini-3.8-flash-high.json', 'high']]
   .map(([v, f, effort = 'low']) => ({ v, effort, engine: `gemini-${v}-flash${effort === 'low' ? '' : `-${effort}`}+antigravity-cli`,
-    label: `Gemini ${v} Flash${effort === 'low' ? '' : ` (${effort})`}, CLI`, costFile: path.join(__dirname, 'results', 'ocr-pareto-6293', f) }));
+    label: `Gemini ${v} Flash (CLI${effort === 'low' ? '' : `, ${effort}`})`, costFile: path.join(__dirname, 'results', 'ocr-pareto-6293', f) }));
 const CLI_6293_ENGINES = new Set(CLI_6293_TIERS.map(t => t.engine));
 const OPEN_ENGINE_DIRS = ['open-engine-print-5660/scored', 'open-engine-print-5660/scored-olmocr', 'engine-wave1-6011/scored', 'engine-wave2-6011/scored', 'ocr-pareto-6293/scored'];
 const DIR_ENGINES = { 'engine-wave1-6011/scored': WAVE_ENGINES, 'engine-wave2-6011/scored': WAVE_ENGINES, 'ocr-pareto-6293/scored': CLI_6293_ENGINES };
-const isRepeatArm = e => /-b$/.test(e); // the A-vs-A repeat of production; it is the noise floor, not an engine
+const isRepeatArm = e => /-b$/.test(e); // the A-vs-A repeat of production: the noise band, never a point
 const benchRows = [];
 {
   const seen = new Set();
@@ -193,17 +204,24 @@ const benchRows = [];
     }
   }
 }
-// #6293's CLI arms: a reference-tier page one ran but that could not be aligned (an empty read, a stub, or the model's
-// prose refusal "I cannot provide the full transcription…") is a failed read, so it counts as CER 1.0, as a refusal
-// does in the sealed strata, rather than leaving the chart's shared set (the preregistration: a page counts as read).
-const cliFailed = r => CLI_6293_ENGINES.has(r.engine) && r.referenced && !r.aligned && /ocr-pareto-6293/.test(r.file || '');
-const accRows = benchRows
-  .map(r => (cliFailed(r) ? { ...r, aligned: true, cer: 1, cli_unaligned: true } : r))
-  .filter(r => r.referenced && r.aligned && r.cer != null && !isRepeatArm(r.engine))
-  .map(r => ({ page: `${r.stratum}|${r.slug}`, book: `${r.stratum}|${r.slug}`, stratum: r.stratum, engine: r.engine, cer: r.cer, refused: r.refused, invented: r.invention_ref, date: r.date, file: r.file, row: r }));
+// The CLI's preamble ("I have created the transcription plan…") is the route talking, not the page being read; the
+// #6293 reads that carried it are re-scored without it (rescore-plan-note.mjs, with its positive control).
+const RESCORED = new Map(JSON.parse(fs.readFileSync(path.join(__dirname, 'results', 'ocr-pareto-6293', 'plan-note-rescored.json'), 'utf8'))
+  .rows.map(r => [`${r.page}|${r.engine}`, r.stripped]));
+// ONE FAILURE RULE: a refused, unaligned or unscored read is CER 1.0, for every engine alike; CER is capped at 1.
+const toRow = (r, page, extra = {}) => {
+  const fixed = RESCORED.get(`${page}|${r.engine}`);
+  const aligned = fixed ? fixed.aligned : r.aligned, cer0 = fixed ? fixed.cer : r.cer;
+  const failed = r.refused || !aligned || cer0 == null;
+  return { page, stratum: r.stratum, engine: r.engine, cer: failed ? 1 : Math.min(1, cer0), failed, refused: !!r.refused,
+    invented: failed ? null : r.invention_ref, date: r.date, file: r.file, row: r, ...extra };
+};
+const allRows = benchRows.filter(r => r.referenced).map(r => toRow(r, `${r.stratum}|${r.slug}`));
+const accRows = allRows.filter(r => !isRepeatArm(r.engine));
+const repeatRows = allRows.filter(r => isRepeatArm(r.engine));
 
-// Syriac: the ground-truth retest scores pages of two manuscripts, so pages are not books here. #6011 wave 2 scored
-// the six wave engines with the same scorer against the same ground truth into its own file; only those engines are taken.
+// Syriac manuscript: the ground-truth retest scores pages of two manuscripts (the unit is the manuscript). Its CLI
+// reads are scored as returned: their ground truth is on the scoring box only, so the preamble cannot be removed here.
 const SYRIAC_FILE = 'syriac-retest-2026-09-16/score.json';
 const SYRIAC_SOURCES = [[path.join(BENCHMARK_DIR, SYRIAC_FILE), null, '2026-09-16'], [path.join(__dirname, 'results', 'engine-wave2-6011', 'syriac-gt-score.json'), WAVE_ENGINES, null],
   [path.join(__dirname, 'results', 'ocr-pareto-6293', 'syriac-gt-score.json'), CLI_6293_ENGINES, null]];
@@ -213,49 +231,41 @@ for (const [file, only, fixedDate] of SYRIAC_SOURCES) {
   const j = JSON.parse(fs.readFileSync(file, 'utf8'))['syriac-gt'];
   const date = fixedDate || j.date;
   for (const [slug, engines] of Object.entries(j.pages)) for (const [engine, e] of Object.entries(engines)) {
-    if (typeof e.cer_n2 !== 'number' || (only && !only.has(engine))) continue;
-    // An output longer than the page can score CER > 1; for accuracy it is simply 0.
-    syriacRows.push({ page: `syriac-gt|${slug}`, book: slug.split('-')[0], stratum: 'syriac-gt', engine, cer: Math.min(1, e.cer_n2), refused: false, invented: null, date, file: path.relative(REPO, file) });
+    if (only && !only.has(engine)) continue;
+    if (e.missing) continue;
+    const failed = typeof e.cer_n2 !== 'number';
+    syriacRows.push({ page: `syriac-gt|${slug}`, stratum: 'syriac-gt', engine, cer: failed ? 1 : Math.min(1, e.cer_n2), failed, refused: false, invented: null, date, file: path.relative(REPO, file), work: `ms:${slug.split('-')[0]}` });
   }
 }
 
-// Syriac print (#6295): one sealed page per book, scored by scripts/eval/syriac-pareto-6295/analyze-ocr.mjs. Its
-// intervals resample EDITIONS (four editions are held twice), as preregistered; they replace the page bootstrap below.
-// The served lane text scores identically to the omnisyr re-run (same model, same split) and the stored Gemini reads
-// exist on only some pages, so neither is an engine here; L-ocr-b and C38-ocr-b are the A-vs-A repeats.
-// C38-ocr is gemini-3.8-flash through the Antigravity CLI on the subscription ($0 billed), placed at the API's list
-// price at the Batch rate for the same requests (results/syriac-pareto-6295/cli-cost.json), as #6182's CLI arm is.
+// Syriac print (#6295): one sealed page per book, scored by scripts/eval/syriac-pareto-6295/analyze-ocr.mjs; the unit
+// is the edition. L-ocr-b / C38-ocr-b are A-vs-A repeats (noise), not engines.
 const SYRIAC_PRINT_FILE = path.join(__dirname, 'results', 'syriac-pareto-6295', 'ocr-summary.json');
 const SYRIAC_CLI_COST_FILE = path.join(__dirname, 'results', 'syriac-pareto-6295', 'cli-cost.json');
-const C38_CLI = 'gemini-3.8-flash+antigravity-cli';
-LABEL[C38_CLI] = 'Gemini 3.8 Flash, CLI';
-// Later CLI tiers (job cli-queue-6293, 2026-10-08): same request, same scoring, each at its own model's list price.
 const SYRIAC_CLI_TIERS = [['C38', '3.8'], ['C37', '3.7'], ['C36', '3.6']].map(([T, v]) => ({ T, v, key: `cli_${T.toLowerCase()}`, engine: `gemini-${v}-flash+antigravity-cli` }));
-for (const t of SYRIAC_CLI_TIERS) LABEL[t.engine] = `Gemini ${t.v} Flash, CLI`;
+for (const t of SYRIAC_CLI_TIERS) LABEL[t.engine] = `Gemini ${t.v} Flash (CLI)`;
 const SYRIAC_PRINT_ARMS = { omnisyr: 'omnisyr', 'omnisyr-nosplit': 'omnisyr-nosplit', 'sophro-mhiro': 'sophro-mhiro', 'qoruyo-eastern': 'qoruyo-eastern',
-  'qoruyo-estrangela': 'qoruyo-estrangela', 'L-ocr': 'gemini-3.1-flash-lite', mineru: 'mineru', 'C38-ocr': C38_CLI, 'C37-ocr': SYRIAC_CLI_TIERS[1].engine, 'C36-ocr': SYRIAC_CLI_TIERS[2].engine };
+  'qoruyo-estrangela': 'qoruyo-estrangela', 'L-ocr': 'gemini-3.1-flash-lite', mineru: 'mineru', 'C38-ocr': SYRIAC_CLI_TIERS[0].engine, 'C37-ocr': SYRIAC_CLI_TIERS[1].engine, 'C36-ocr': SYRIAC_CLI_TIERS[2].engine };
 const syriacPrint = fs.existsSync(SYRIAC_PRINT_FILE) ? JSON.parse(fs.readFileSync(SYRIAC_PRINT_FILE, 'utf8')) : null;
 const syriacCliTiers = SYRIAC_CLI_TIERS.filter(t => syriacPrint?.[t.key]);
 if (syriacCliTiers.length) {
   const cc = JSON.parse(fs.readFileSync(SYRIAC_CLI_COST_FILE, 'utf8'));
   for (const t of syriacCliTiers) {
     const c = t.T === 'C38' ? cc : cc.tiers[t.T];
-    COST[t.engine] = [{ charts: ['syriac-print'], usd_per_1k: r3(c.ocr.usd_per_1k_batch), basis: 'API price for comparison; $0 billed on the subscription',
-      detail: `run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at ${c.model}'s API list price at the Batch rate, thinking 0, for the same requests (input tokens as billed to Flash-Lite for them, output from the CLI text's length)`,
+    COST[t.engine] = [...(COST[t.engine] || []), { charts: ['syriac-print'], usd_per_1k: r3(c.ocr.usd_per_1k_batch), basis: 'quota',
+      detail: `run through the Antigravity CLI on the Google subscription, $0 billed; placed at ${c.model}'s API Batch price for the same requests`,
       source: path.relative(REPO, SYRIAC_CLI_COST_FILE) }];
   }
 }
 const syriacPrintRows = [];
 if (syriacPrint) for (const pg of syriacPrint.per_page) for (const [arm, engine] of Object.entries(SYRIAC_PRINT_ARMS)) {
   if (pg.cer[arm] == null) continue;
-  syriacPrintRows.push({ page: `syriac-print-6295|${pg.slug}`, book: pg.slug.split('_')[0], stratum: 'syriac-print-6295', engine, cer: pg.cer[arm], refused: false, invented: null, date: syriacPrint.date, file: path.relative(REPO, SYRIAC_PRINT_FILE) });
+  syriacPrintRows.push({ page: `syriac-print-6295|${pg.slug}`, stratum: 'syriac-print-6295', engine, cer: Math.min(1, pg.cer[arm]), failed: false, refused: false, invented: null,
+    date: syriacPrint.date, file: path.relative(REPO, SYRIAC_PRINT_FILE), work: `edition:${pg.edition || pg.slug.split('_')[0]}` });
 }
-const syriacPrintCI = syriacPrint ? Object.fromEntries(syriacPrint.panel.filter(p => SYRIAC_PRINT_ARMS[p.arm]).map(p => [SYRIAC_PRINT_ARMS[p.arm], p.cer_ci95])) : {};
 
-// #6293's CLI arms: per chart, kept only if each has a scored row on every page of the frozen set (minus the #6304
-// drops, applied below); placed at the preregistered x-axis formula with the CLI's own output ratio (cli-cost*.json).
-// 3.7 and 3.6 read the capped set (capped-set.json); where that is smaller than the chart (Chinese manuscript), an
-// engine covering it is held back for the subsample panel instead.
+// #6293's CLI arms: a chart keeps one only if it read every page of the chart's frozen set (minus the #6304 drops);
+// placed at the API's Batch price for the same requests (cli-cost*.json), basis 'quota'.
 const SEL_6293_FILE = path.join(__dirname, 'results', 'ocr-pareto-6293', 'pages.json');
 const CAP_6293_FILE = path.join(__dirname, 'results', 'ocr-pareto-6293', 'capped-set.json');
 const SEL_6293 = fs.existsSync(SEL_6293_FILE) ? JSON.parse(fs.readFileSync(SEL_6293_FILE, 'utf8')) : null;
@@ -265,29 +275,11 @@ for (const t of CLI_6293_TIERS) {
   const cc = JSON.parse(fs.readFileSync(t.costFile, 'utf8'));
   LABEL[t.engine] = t.label;
   for (const [chart, c] of Object.entries(cc.charts)) (COST[t.engine] ||= []).push({
-    charts: [chart], usd_per_1k: r3(c.usd_per_1k_batch), basis: 'API price for comparison; $0 billed on the subscription',
-    detail: `run through the Antigravity CLI on the Google subscription, so $0 was billed; placed at ${cc.model}'s API list price at the Batch rate by the #6293 preregistered formula: lite's metered production tokens per page, output scaled by this arm's text length over lite's on the same pages (×${c.r_out}); thinking not counted`,
+    charts: [chart], usd_per_1k: r3(c.usd_per_1k_batch), basis: 'quota',
+    detail: `run through the Antigravity CLI on the Google subscription, $0 billed; placed at ${cc.model}'s API Batch price by the #6293 preregistered formula (output scaled ×${c.r_out} by this arm's text length)`,
     source: path.relative(REPO, t.costFile) });
 }
-const cliNote = engines => {
-  const ts = CLI_6293_TIERS.filter(t => engines.has(t.engine)), many = ts.length > 1;
-  const and = xs => (xs.length > 1 ? `${xs.slice(0, -1).join('; ')} and ${xs.at(-1)}` : xs[0]);
-  const levels = [...new Set(ts.map(t => t.effort))];
-  return `${and(ts.map(t => t.label))} ${many ? 'are' : 'is'} ${and(ts.map(t => `gemini-${t.v}-flash-${t.effort}`)).replace(/; /g, ', ')} run through Google's Antigravity command-line tool on a subscription (8–9 Oct 2026, #6293), which billed nothing; ${many ? 'each sits' : 'it sits'} at the API's list price for the same request${levels.includes('high') ? ', with its thinking not counted' : ''}. ${many ? 'They differ' : 'It differs'} from the other Gemini points in route, not prompt: same prompt and image, but the CLI sets its own temperature and ${levels.length > 1 ? 'a low thinking level (high where the label says so)' : `a ${levels[0]} thinking level`}. A page ${many ? 'one' : 'it'} could not be placed on (an empty read, or the model declining in prose) counts as 100% error. Through the CLI a reply sometimes opened with a note about a plan file before the text; that note is scored as part of the read`;
-};
-// Amendment 3's A-vs-A repeat of 3.8 Flash CLI (cli-effort.json): a noise floor, never a point. Where it ran, the chart
-// says how far a second read at the same level moved, so the CLI points are not read as the model's reading alone.
-const CLI_EFFORT_FILE = path.join(__dirname, 'results', 'ocr-pareto-6293', 'cli-effort.json');
-const cliEffort = fs.existsSync(CLI_EFFORT_FILE) ? JSON.parse(fs.readFileSync(CLI_EFFORT_FILE, 'utf8')).panels : {};
-const repNote = id => {
-  const a = cliEffort[id]?.arms;
-  if (!a?.['C38L-rep'] || !a['C38 (stored)']) return null;
-  const pct = x => `${Math.round(x * 1000) / 10}%`;
-  return `A second read of Gemini 3.8 Flash, CLI at the same low level on the same ${a['C38L-rep'].n_scored} pages (9 Oct 2026) had a median error of ${pct(a['C38L-rep'].median_cer)}, against ${pct(a['C38 (stored)'].median_cer)} for the read plotted here. Most of the difference is replies that failed (the model declining in prose, or an empty reply), and these vary from one run to the next through the command-line tool. The gap between the CLI points and Gemini 3 Flash on this chart measures those failures more than the model's reading (#6293)`;
-};
 const cli6293Coverage = {}, cli6293Subsample = {};
-// Arms #6293 / #6295 asked for that cannot run: the CLI does not offer them, and the paid API is ruled out (2026-10-08).
-const NOT_ON_CLI = 'Gemini 3 Flash (a fresh read) and Gemini 3.5 Flash-Lite (not run: the Gemini command-line tool does not offer them, and paid Gemini API calls are ruled out for this work, 2026-10-08)';
 function keepCli6293(scriptId, rows, exclude) {
   const set = SEL_6293?.charts?.[scriptId]?.pages;
   if (!set) return rows.filter(r => !CLI_6293_ENGINES.has(r.engine) || !r.file?.includes('ocr-pareto-6293'));
@@ -305,193 +297,190 @@ function keepCli6293(scriptId, rows, exclude) {
   }
   return drop.size ? rows.filter(r => !drop.has(r.engine)) : rows;
 }
-/** The capped subsample (Amendment 2): the main panel's engines plus the CLI tiers that read only these pages,
- *  on the main panel's shared pages that fall in the subsample, minus any page a subsample engine refused. */
-function subsamplePanel(script, rowsAll, wide, production) {
-  const sub = cli6293Subsample[script.id];
-  if (!sub) return null;
-  const byEngine = pagesOf(rowsAll), inSub = new Set(sub.pages);
-  let pages = new Set([...wide.pages].filter(p => inSub.has(p)));
-  for (const e of sub.engines) pages = intersect(pages, answered(byEngine, e));
-  if (pages.size < MIN_PAGES) return null;
-  const engines = [...wide.engines, ...sub.engines];
-  const p = panel(script, 'cli-subsample', byEngine, engines, pages, production);
-  p.heading = `${pages.size} of these pages, drawn at random, with ${sub.engines.map(e => LABEL[e]).join(' and ')} (#6293)`;
-  const names = sub.engines.map(e => LABEL[e].replace(/, CLI$/, '')).join(' and ');
-  p.notes = [`${names} read ${sub.pages.length} of this chart's ${sub.of} pages through the CLI, a seeded random draw made to fit the subscription's time. Every engine here is scored on the same ${pages.size} of them, so these points compare with each other, not with the panel above`, cliNote(new Set(engines))];
-  return p;
-}
 
 // ── shared-page sets ─────────────────────────────────────────────────────────────────────────
 function pagesOf(rows) { const m = new Map(); for (const r of rows) { if (!m.has(r.engine)) m.set(r.engine, new Map()); m.get(r.engine).set(r.page, r); } return m; }
 const intersect = (a, b) => new Set([...a].filter(x => b.has(x)));
-const answered = (byEngine, e) => new Set([...byEngine.get(e)].filter(([, r]) => !r.refused).map(([p]) => p));
+const ran = (byEngine, e) => new Set(byEngine.get(e).keys());   // every page the engine was run on, failures included
 
 /** Greedy: start from the production engine, add whichever engine keeps the most shared pages, while ≥ floor. */
-function greedy(byEngine, start, floor) {
-  let set = [start], shared = answered(byEngine, start);
+function greedy(byEngine, start, floor, within) {
+  let set = [start], shared = intersect(ran(byEngine, start), within);
   for (;;) {
     let best = null;
-    for (const e of byEngine.keys()) {
+    for (const e of [...byEngine.keys()].sort()) {
       if (set.includes(e)) continue;
-      const s = intersect(shared, answered(byEngine, e));
-      if (s.size >= floor && (!best || s.size > best.s.size || (s.size === best.s.size && e < best.e))) best = { e, s };
+      const s = intersect(shared, ran(byEngine, e));
+      if (s.size >= floor && (!best || s.size > best.s.size)) best = { e, s };
     }
     if (!best) return { engines: set, pages: shared };
     set.push(best.e); shared = best.s;
   }
 }
 
-function panel(script, kind, byEngine, engines, pages, production) {
-  const placed = [], unplaced = [];
-  const strata = new Map(), books = new Set();
-  const files = new Set();
-  for (const p of pages) {
-    const r = byEngine.get(production).get(p);
-    const st = strata.get(r.stratum) || { pages: 0, date: '' };
-    st.pages++;
-    for (const e of engines) { const x = byEngine.get(e).get(p); if (x.date > st.date) st.date = x.date; files.add(x.file); }
-    strata.set(r.stratum, st); books.add(r.book);
+const numPts = d => `${d >= 0 ? '+' : '−'}${Math.abs(d * 100).toFixed(1)}`;
+
+/** One panel: every engine on the same pages, its own interval, its paired difference against the engine in use. */
+function panel(script, kind, byEngine, engines, pages, production, repeat, extra = {}) {
+  const ps = [...pages].sort();
+  const work = p => byEngine.get(production)?.get(p)?.work || workOfPage(p);
+  const works = new Set(ps.map(work));
+  const strata = new Map();
+  for (const p of ps) strata.set(stratumOf(p), (strata.get(stratumOf(p)) || 0) + 1);
+  const files = new Set(), dates = [];
+  for (const p of ps) for (const e of engines) { const x = byEngine.get(e).get(p); files.add(x.file); dates.push(x.date); }
+  const prodRows = byEngine.has(production) && engines.includes(production) ? ps.map(p => byEngine.get(production).get(p)) : null;
+  // The noise band: a second run of the engine in use on every page of the panel. Like-for-like only when the repeat
+  // was scored in the same result file as the read it repeats (same run, date and route). The #5660 repeat of the
+  // Wikisource pages ran on 3 Oct through the realtime API, 17 days after the stored read, and Gemini refused far more
+  // of those pages (7 of 30 German against 1): it is not like-for-like, so it is not used.
+  let noise = null;
+  if (prodRows && repeat && ps.every(p => repeat.has(p))) {
+    const like = ps.every((p, i) => repeat.get(p).file === prodRows[i].file);
+    const dA = [...new Set(prodRows.map(r => r.date))].sort().join(', '), dB = [...new Set(ps.map(p => repeat.get(p).date))].sort().join(', ');
+    noise = noiseOf(ps.map((p, i) => ({ d: prodRows[i].cer - repeat.get(p).cer, cluster: work(p) })), hash(`${script.id}|${kind}|aa`),
+      { like, why: like ? null : `it ran on ${dB}, by another route than the read it repeats (${dA})` });
   }
-  for (const e of engines) {
-    const rs = [...pages].map(p => byEngine.get(e).get(p));
-    const cers = rs.map(r => r.cer);
-    const med = median(cers), ci = bootstrapMedianCI(cers, hash(`${script.id}|${kind}|${e}`));
+  // ONE STATISTIC: accuracy is the MEAN over pages of 1 − CER (each page capped at 100% error, so failed reads count),
+  // and the paired difference below is the mean of per-page differences: the two columns measure the same thing.
+  const points = engines.map(e => {
+    const rs = ps.map(p => byEngine.get(e).get(p));
+    const items = rs.map((r, i) => ({ cer: r.cer, cluster: work(ps[i]) }));
+    const mn = mean(rs.map(r => r.cer));
+    const ci = clusterCI(items, x => x.cluster, xs => mean(xs.map(x => x.cer)), hash(`${script.id}|${kind}|${e}`));
     const inv = rs.filter(r => typeof r.invented === 'number').map(r => r.invented);
-    const point = {
+    const pt = {
       engine: e, label: LABEL[e] || e, production: e === production,
-      median_cer: r3(med), cer_ci95: ci,
-      accuracy: r3(1 - med), accuracy_ci95: ci ? [r3(1 - ci[1]), r3(1 - ci[0])] : null,
-      // share of the engine's words absent from the reference (benchmark-score.mjs invention_ref); sealed strata only
-      invented: inv.length >= MIN_PAGES ? { median: r3(median(inv)), n: inv.length } : null,
+      mean_cer: r3(mn), accuracy: r3(1 - mn), accuracy_ci95: ci ? [r3(1 - ci[1]), r3(1 - ci[0])] : null,
+      fail_share: r3(rs.filter(r => r.cer > 0.5).length / rs.length),
+      failed_reads: rs.filter(r => r.failed).length,
+      // share of the engine's words absent from the reference; only where the scorer computes it on most of the pages
+      words_not_in_ref: inv.length >= Math.max(MIN_PAGES, rs.length / 2) ? r3(median(inv)) : null,
       cost: costOf(e, script.id),
     };
-    (point.cost ? placed : unplaced).push(point);
-  }
-  // Frontier: placed engines no other placed engine beats on both cost and accuracy.
-  for (const a of placed) a.on_frontier = placed.length >= FRONTIER_MIN && !placed.some(b => b !== a
-    && b.cost.usd_per_1k <= a.cost.usd_per_1k && b.accuracy >= a.accuracy
-    && (b.cost.usd_per_1k < a.cost.usd_per_1k || b.accuracy > a.accuracy));
-  placed.sort((a, b) => a.cost.usd_per_1k - b.cost.usd_per_1k || a.engine.localeCompare(b.engine));
-  unplaced.sort((a, b) => a.engine.localeCompare(b.engine));
-  const refs = [...strata].map(([s, st]) => ({ stratum: s, reference: REFERENCE[s] || `references sealed with ${s}`, pages: st.pages, date: st.date }))
-    .sort((a, b) => b.pages - a.pages || a.stratum.localeCompare(b.stratum));
-  return {
-    kind, n_pages: pages.size, n_books: books.size,
-    frontier: placed.length >= FRONTIER_MIN, frontier_note: placed.length >= FRONTIER_MIN ? null : `too few for a frontier: ${placed.length} engine${placed.length === 1 ? '' : 's'} with a measured cost on these pages`,
-    references: refs, date: refs.map(r => r.date).sort().at(-1), files: [...files].sort(),
-    placed, no_cost: unplaced,
+    if (!pt.cost) pt.no_price = NO_PRICE[e] || (/^(kraken|tesseract|omnisyr|qoruyo|sophro)/.test(e) || ['omnisyr-nosplit', 'mineru'].includes(e) ? 'runs on our own servers; no billed price on record' : 'no billed price on record');
+    if (prodRows && e !== production) {
+      pt.vs_in_use = pairedDiff(rs.map((r, i) => ({ d: prodRows[i].cer - r.cer, cluster: work(ps[i]) })), hash(`${script.id}|${kind}|vs|${e}`));
+      pt.verdict = verdictOf(pt.vs_in_use, noise?.band ?? 0);
+    }
+    return pt;
+  });
+  const metricSet = new Set([...strata.keys()].map(s => fallbackStratum(s).metric));
+  const editionPages = [...strata].filter(([s]) => fallbackStratum(s).edition).reduce((n, [, k]) => n + k, 0);
+  const grade = gradePanel({
+    works: works.size, unfit6304: UNFIT_6304.has(script.id), metrics: metricSet.size,
+    productionAnchored: [...strata.keys()].some(s => fallbackStratum(s).anchored), modernEdition: editionPages > ps.length / 2,
+  });
+  // a not_fit panel, or one whose engine in use did not reproduce itself, gives no verdict words
+  if (grade.level === 'not_fit' || noise?.kind === 'not_reproduced') for (const pt of points) delete pt.verdict;
+  const placed = points.filter(p => p.cost), noCost = points.filter(p => !p.cost);
+  const frontier = grade.level !== 'not_fit' && placed.length >= FRONTIER_MIN;
+  markFrontier(placed, p => p.accuracy, frontier);
+  placed.sort((a, b) => b.accuracy - a.accuracy || a.engine.localeCompare(b.engine));
+  noCost.sort((a, b) => b.accuracy - a.accuracy || a.engine.localeCompare(b.engine));
+  const refs = [...strata].map(([s, n]) => ({ stratum: s, reference: fallbackStratum(s).reference, pages: n })).sort((a, b) => b.pages - a.pages || a.stratum.localeCompare(b.stratum));
+  const p = {
+    kind, n_pages: ps.length, n_works: works.size,
+    reference: [...new Set(refs.map(r => r.reference))].slice(0, 2).join('; '),
+    references: refs, grade, frontier, noise,
+    date: dates.filter(Boolean).sort().at(-1) || null, files: [...files].filter(Boolean).sort(),
+    placed, no_cost: noCost, ...extra,
   };
+  p.verdict = verdictSentence(p, { num: numPts, unit: 'points a page', verb: 'reads', margin: MARGIN.ocr, marginText: '1 point a page' });
+  return p;
 }
-
-// The edition-bootstrap intervals, the preregistered notes, and the arms this panel could not run on the box.
-function syriacPrintPanel(p) {
-  for (const x of [...p.placed, ...p.no_cost]) {
-    const ci = syriacPrintCI[x.engine]; if (!ci) continue;
-    x.cer_ci95 = ci; x.accuracy_ci95 = [r3(1 - ci[1]), r3(1 - ci[0])];
-  }
-  const s = syriacPrint, split = s.column_splitter, aa = s.lite_a_vs_a;
-  p.heading = `Printed Syriac, ${s.n_scored} pages from ${s.n_editions} editions (#6295)`;
-  p.notes = [
-    `Directional: ${s.n_books} books, under the 30 a decision needs; intervals resample editions (2,000 draws)`,
-    `Pages were drawn from those whose Kraken lane read could be located in the Digital Syriac Corpus, so the draw leans towards pages Kraken reads; ${s.unscored.length} of the ${s.n_sealed} sealed pages had no e-text window and are not scored`,
-    'Error is counted on the consonants (vowel points and Syriac punctuation folded, a Latin column ignored), scripts/eval/syriac-pareto-6295/syriac-cer.mjs',
-    `Column split (the lane's gutter cut) against no split: median difference ${split.median_diff} [${split.ci95.join(', ')}]; the cut changed the score on ${split.pages_split} pages, so ${split.verdict}`,
-    aa ? `Gemini 3.1 Flash-Lite read every page twice: ${aa.identical_pages} of ${aa.n} reads identical, median difference ${(aa.median_abs_diff * 100).toFixed(1)} points` : null,
-    ...syriacCliTiers.flatMap(t => cliTierNotes(t, s[t.key], s.n_scored)),
-    `Kraken and MinerU priced on this box's CPU time (a Hetzner cax41, about €32 a month), Gemini 3.1 Flash-Lite at its metered Batch rate${syriacCliTiers.length ? `, ${syriacCliTiers.map(t => `Gemini ${t.v} Flash`).join(', ').replace(/, ([^,]*)$/, ' and $1')} at ${syriacCliTiers.length > 1 ? 'their' : 'its'} list Batch price` : ''}`,
-  ].filter(Boolean);
-}
-function syriacPrintExtra() {
-  const st = syriacPrint.stored.filter(x => x.vs_served_lane_on_same_pages);
-  return {
-    elsewhere: st.map(x => ({ label: x.arm === 'stored-gemini-flash' ? 'Gemini 3 Flash, stored read' : 'Gemini 3.1 Flash-Lite, stored read', pages: x.n_pages,
-      why: `the read each page had before the Kraken lane: ${pctOf(x.accuracy)} against ${pctOf(x.vs_served_lane_on_same_pages.accuracy)} for the lane on the same pages` })),
-    notRun: ['PaddleOCR-VL 1.6 and GLM-OCR (not run here: no stored Syriac read, and no GPU rental under the 2026-10-08 spend rule)', NOT_ON_CLI],
-    pending: SYRIAC_CLI_TIERS.filter(t => !syriacPrint[t.key]).map(t => `Gemini ${t.v} Flash`),
-  };
-}
-function cliTierNotes(t, c, n) {
-  const aa = c.a_vs_a, u = c.unblocked, name = `Gemini ${t.v} Flash, CLI`;
-  const repeat = aa.n_repeat_reads >= c.reads
-    ? `Its repeat read: ${aa.identical_texts} of ${aa.n_repeat_reads} repeat reads identical, median difference ${(aa.median_abs_diff * 100).toFixed(1)} points on the ${aa.n_scored_pairs} scored pages`
-    : `Its repeat read stopped at ${aa.n_repeat_reads} of the 24 sealed pages when the subscription's quota ran out: ${aa.identical_texts} of ${aa.n_repeat_reads} repeat reads identical, median difference ${(aa.median_abs_diff * 100).toFixed(1)} points on the ${aa.n_scored_pairs} scored pages`;
-  return [
-    `${name} is ${c.model} run through Google's Antigravity command-line tool on a subscription (${c.run_date}), which billed nothing; it is drawn at the API's list price for the same requests`,
-    `Gemini's safety filter stopped ${c.blocked_pages} of its ${n} scored reads part-way down the page; they are scored as returned. ${u ? `On the ${u.n_pages} pages it was not stopped on, its median error is ${pctOf(u.median_cer)} [${pctOf(u.cer_ci95[0])}–${pctOf(u.cer_ci95[1])}], against ${pctOf(u.lane_on_same_pages.median_cer)} for the Kraken lane on the same pages` : 'Fewer than 5 pages were not stopped, so no interval is given for them'}`,
-    ...(aa.n_repeat_reads ? [repeat] : []),
-  ];
-}
-const pctOf = x => (x == null ? '—' : `${Math.round(x * 100)}%`);
 
 const argOf = n => process.argv.find(a => a.startsWith(`--${n}=`))?.slice(n.length + 3);
-// #6304: pages whose reference does not transcribe the page (no engine within 35% CER on print, or read
-// so by eye) or that are in another script, and per-panel limits, generated by audit-pareto-samples.mjs.
+// #6304: pages whose reference does not transcribe the page, or that are in another script.
 const AUDIT_FILE = path.join(__dirname, 'results', 'pareto-sample-audit-6304', 'drops.json');
 const AUDIT = !process.argv.includes('--keep-dropped') && fs.existsSync(AUDIT_FILE) ? JSON.parse(fs.readFileSync(AUDIT_FILE, 'utf8')) : null;
 const CLI_EXCLUDE = argOf('exclude') ? JSON.parse(fs.readFileSync(argOf('exclude'), 'utf8')) : [];
 const EXCLUDE = new Set([...CLI_EXCLUDE, ...(AUDIT?.drops || []).filter(d => d.family === 'ocr').map(d => d.page)]);
-const without = s => (EXCLUDE.size ? { ...s, pages: new Set([...s.pages].filter(p => !EXCLUDE.has(p))) } : s);
-const charts = [], noChart = [], mostPagesSets = {}, chartRows = {};
+
+// Pages split by how the reference was made: one error measure each, and the production-anchored strata apart.
+const familyOf = page => { const s = fallbackStratum(stratumOf(page)); return `${s.metric}|${s.anchored ? 'anchored' : 'independent'}`; };
+const FAMILY_HEADING = {
+  'windowed|independent': 'Transcriptions of the page', 'whole|independent': 'Typed editions of the text', 'line|independent': 'Line-by-line transcriptions',
+  'whole|anchored': 'References located with our own reading', 'consonant|anchored': 'References located with our own reading',
+};
+// Per-chart caption: only what is specific to that chart, 40 words at most.
+const CAPTION = {
+  'syriac-print': 'Error is counted on consonants: vowel points and Syriac punctuation are folded, and a Latin column is ignored.',
+  syriac: 'Two manuscripts only. The command-line reads here are scored as returned, with the route’s preamble left in.',
+  'chinese-manuscript': 'On many pages the reference runs longer than the page, so every engine carries some unavoidable error.',
+};
+
+const charts = [], noChart = [], primarySets = {}, chartRows = {};
 for (const script of SCRIPTS) {
-  const rows0 = script.source === 'syriac' ? syriacRows : script.source === 'syriac-print' ? syriacPrintRows : accRows.filter(r => script.match(r.row));
+  const rows0 = (script.source === 'syriac' ? syriacRows : script.source === 'syriac-print' ? syriacPrintRows : accRows.filter(r => script.match(r.row)))
+    .filter(r => !EXCLUDE.has(r.page));
   const rows = script.source === 'syriac-print' ? rows0 : keepCli6293(script.id, rows0, EXCLUDE);
-  const subEngines = new Set(cli6293Subsample[script.id]?.engines || []);
-  chartRows[script.id] = rows0.filter(r => !EXCLUDE.has(r.page)).map(r => ({ page: r.page, engine: r.engine, cer: r.cer, refused: !!r.refused }));
+  chartRows[script.id] = rows0.map(r => ({ page: r.page, engine: r.engine, cer: r.cer, refused: r.refused }));
   const byEngine = pagesOf(rows);
   const production = script.production || getOcrModelForBook({ language: script.language, visible: true });
-  const tested = new Set(rows.map(r => r.engine));
-  // Every engine run on the script at all, referenced or not — so "not yet tested" means exactly that.
-  if (!script.source) for (const r of benchRows) if (!isRepeatArm(r.engine) && script.match(r)) tested.add(r.engine);
-  const notTested = [...GENERAL.filter(e => !tested.has(e)).map(e => LABEL[e] || e), ...NEVER_TESTED];
-  const nProd = byEngine.has(production) ? answered(byEngine, production).size : 0;
+  const nProd = byEngine.has(production) ? byEngine.get(production).size : 0;
   if (nProd < MIN_PAGES) {
-    noChart.push({ title: script.title, why: nProd ? `${nProd} page${nProd === 1 ? '' : 's'} with a typed reference; at least ${MIN_PAGES} are needed for an interval` : 'no page with a typed reference yet (scored only against another engine)', source: 'scripts/eval/results/benchmark/', not_tested: notTested });
+    noChart.push({ title: script.title, why: nProd ? `${nProd} page${nProd === 1 ? '' : 's'} with a typed reference; at least ${MIN_PAGES} are needed` : 'no page with a typed reference yet', source: 'scripts/eval/results/benchmark/' });
     continue;
   }
-  const wide = without(greedy(byEngine, production, Math.max(MIN_PAGES, Math.ceil(nProd * WIDE_KEEP))));
-  const panels = [panel(script, 'most-pages', byEngine, wide.engines, wide.pages, production)];
-  if (script.source === 'syriac-print') syriacPrintPanel(panels[0]);
-  const notes = AUDIT?.notes?.ocr?.[`${script.id}|most-pages`];
-  if (notes?.length) panels[0].notes = notes;
-  if (script.source !== 'syriac-print') for (const p of panels) {
-    const onPanel = new Set([...p.placed, ...p.no_cost].map(x => x.engine).filter(e => CLI_6293_ENGINES.has(e)));
-    if (onPanel.size) p.notes = [...(p.notes || []), cliNote(onPanel)];
-    if (onPanel.has(CLI_6293) && p.kind === 'most-pages' && repNote(script.id)) p.notes.push(repNote(script.id));
+  const repeat = script.source ? null : new Map(repeatRows.filter(r => r.engine === `${production}-b` && script.match(r.row) && !EXCLUDE.has(r.page)).map(r => [r.page, r]));
+  // one candidate panel per reference family; the primary is the independent family with the most works
+  const prodPages = ran(byEngine, production);
+  const families = new Map();
+  for (const p of prodPages) { const f = familyOf(p); if (!families.has(f)) families.set(f, new Set()); families.get(f).add(p); }
+  // The primary is the family whose panel is fittest to decide on: independent references first, then the better
+  // grade, then more works. (Greek: the 24-work transcription panel grades `decide`, the 97-work edition panel only
+  // `directional`, so the transcriptions lead.)
+  const RANK = { decide: 0, directional: 1, not_fit: 2 };
+  const fam = [...families].map(([f, ps]) => {
+    const wide = greedy(byEngine, production, Math.max(MIN_PAGES, Math.ceil(ps.size * WIDE_KEEP)), ps);
+    const probe = wide.pages.size >= MIN_PAGES ? panel(script, 'probe', byEngine, wide.engines, wide.pages, production, repeat) : null;
+    return { f, ps, wide, probe };
+  }).filter(x => x.probe)
+    .sort((a, b) => Number(a.f.endsWith('|anchored')) - Number(b.f.endsWith('|anchored')) || RANK[a.probe.grade.level] - RANK[b.probe.grade.level]
+      || b.probe.n_works - a.probe.n_works || b.probe.n_pages - a.probe.n_pages || a.f.localeCompare(b.f));
+  if (!fam.length) { noChart.push({ title: script.title, why: `fewer than ${MIN_PAGES} pages share one kind of reference`, source: 'scripts/eval/results/benchmark/' }); continue; }
+  const panels = [];
+  fam.forEach((x, i) => {
+    const heading = FAMILY_HEADING[x.f] || x.f;
+    const pn = panel(script, i === 0 ? 'primary' : `family-${x.f.replace('|', '-')}`, byEngine, x.wide.engines, x.wide.pages, production, repeat, { role: i === 0 ? 'primary' : 'secondary', heading: i === 0 ? null : heading });
+    panels.push(pn);
+    if (i === 0) primarySets[script.id] = { engines: x.wide.engines, pages: [...x.wide.pages].sort() };
+    // a second view: more engines on fewer pages of the same family, when it still has enough works
+    const broad = greedy(byEngine, production, MIN_PAGES, x.ps);
+    if (broad.engines.length > x.wide.engines.length) {
+      const pb = panel(script, `${i === 0 ? 'primary' : x.f.replace('|', '-')}-more-engines`, byEngine, broad.engines, broad.pages, production, repeat, { role: 'secondary', heading: `${heading}: more engines, fewer pages` });
+      if (pb.n_works >= MIN_WORKS_EXTRA) panels.push(pb);
+    }
+  });
+  // #6293 Amendment 2: the CLI tiers that read only the capped subsample, on those pages of the primary set
+  const sub = cli6293Subsample[script.id];
+  if (sub) {
+    const subRows = [...rows, ...rows0.filter(r => sub.engines.includes(r.engine))];
+    const bySub = pagesOf(subRows), inSub = new Set(sub.pages);
+    let ps = new Set(primarySets[script.id].pages.filter(p => inSub.has(p)));
+    for (const e of sub.engines) ps = intersect(ps, ran(bySub, e));
+    if (ps.size >= MIN_PAGES) panels.push(panel(script, 'cli-subsample', bySub, [...primarySets[script.id].engines, ...sub.engines], ps, production, repeat,
+      { role: 'secondary', heading: `${ps.size} pages drawn at random, with ${sub.engines.map(e => LABEL[e]).join(' and ')}` }));
   }
-  mostPagesSets[script.id] = { engines: wide.engines, pages: [...wide.pages].sort() };
-  const broad = without(greedy(byEngine, production, MIN_PAGES));
-  // a panel the #6304 drops leave under MIN_PAGES has no interval, so it is not drawn
-  if (broad.engines.length > wide.engines.length && broad.pages.size >= MIN_PAGES) panels.push(panel(script, 'most-engines', byEngine, broad.engines, broad.pages, production));
-  const sub = subEngines.size ? subsamplePanel(script, [...rows, ...rows0.filter(r => subEngines.has(r.engine))], wide, production) : null;
-  if (sub) panels.push(sub);
-  // Engines run with a reference on this script but on too few of the same pages to join either panel.
-  const shown = new Set(panels.flatMap(p => [...p.placed, ...p.no_cost].map(x => x.engine)));
-  const elsewhere = [...byEngine.keys()].filter(e => !shown.has(e)).sort().map(e => ({ engine: e, label: LABEL[e] || e, pages: byEngine.get(e).size }));
-  const extra = script.source === 'syriac-print' ? syriacPrintExtra() : {};
-  const notRun = [...(extra.notRun || []), ...(SEL_6293?.charts?.[script.id] ? ['Gemini 3.5 Flash-Lite (not run: the Gemini command-line tool does not offer it, and paid Gemini API calls are ruled out for this work, 2026-10-08)'] : [])];
-  charts.push({ id: script.id, title: script.title, production_engine: production, production_label: LABEL[production] || production, panels, not_on_shared_pages: [...elsewhere, ...(extra.elsewhere || [])], not_tested: [...notTested.filter(t => ![...notRun, ...(extra.pending || [])].some(n => n.startsWith(t))), ...notRun], ...(extra.pending?.length ? { pending: extra.pending } : {}) });
+  charts.push({ id: script.id, title: script.title, production_engine: production, production_label: LABEL[production] || production, caption: CAPTION[script.id] || null, panels });
 }
 
 const out = {
-  issue: 5983,
+  issue: 6386,
   generated_by: 'scripts/eval/build-ocr-pareto.mjs',
-  measure: 'accuracy: 1 − median character error rate against a typed reference, on pages every engine in the panel read',
+  measure: 'accuracy: 1 − mean character error rate (each page capped at 100% error) against a typed reference, on pages every engine in the panel was run on; a failed read counts as 100% error',
   production_rule: 'the engine scripts/lib/ocr-routing.mjs assigns to new pages in the script',
-  cost_sources: { metered: `scripts/eval/results/ocr-cost/${costFile}`, self_hosted: 'scripts/eval/ocr-engine-gpu-costs.json', usd_per_eur: gpu.usd_per_eur },
-  costs: COST,
+  grade_rules: GRADE_RULES,
+  cost_sources: { metered: `scripts/eval/results/ocr-cost/${costFile}`, other: 'scripts/eval/ocr-engine-gpu-costs.json', usd_per_eur: gpu.usd_per_eur },
   charts,
   no_chart: [...noChart, ...NO_REFERENCE],
 };
 const json = JSON.stringify(out, null, 1) + '\n';
-const dumpTo = process.argv.find(a => a.startsWith('--dump-sets='))?.slice('--dump-sets='.length);
 if (argOf('out')) { fs.writeFileSync(argOf('out'), json); console.log(`wrote ${argOf('out')} (${EXCLUDE.size} pages excluded)`); process.exit(0); }
 if (CLI_EXCLUDE.length) throw new Error('--exclude needs --out: the committed file is never built without pages');
-// --dump-rows=<file>: every scored page × engine per chart after the #6304 drops (CLI arms included whatever their
-// coverage), for the paired comparisons in ocr-pareto-6293/analyze-cli-tiers.py; writes nothing else.
 if (argOf('dump-rows')) { fs.writeFileSync(argOf('dump-rows'), JSON.stringify(chartRows) + '\n'); console.log(`wrote ${argOf('dump-rows')}`); process.exit(0); }
-if (dumpTo) { fs.writeFileSync(dumpTo, JSON.stringify(mostPagesSets, null, 1) + '\n'); console.log(`wrote ${dumpTo}`); process.exit(0); }
-// --check: fail when the committed file is not what the inputs give (CI test); writes nothing.
+if (argOf('dump-sets')) { fs.writeFileSync(argOf('dump-sets'), JSON.stringify(primarySets, null, 1) + '\n'); console.log(`wrote ${argOf('dump-sets')}`); process.exit(0); }
 if (process.argv.includes('--check')) {
   const have = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : '';
   if (have !== json) { console.error(`${path.relative(process.cwd(), OUT)} is stale — run node scripts/eval/build-ocr-pareto.mjs`); process.exit(1); }
@@ -499,7 +488,11 @@ if (process.argv.includes('--check')) {
   process.exit(0);
 }
 fs.writeFileSync(OUT, json);
-for (const c of charts) for (const p of c.panels) console.log(`${c.title} [${p.kind}] ${p.n_pages} pages / ${p.n_books} books · ${p.placed.map(x => `${x.engine} ${x.accuracy}@$${x.cost.usd_per_1k}${x.on_frontier ? '*' : ''}`).join(', ')}${p.no_cost.length ? ` · no cost: ${p.no_cost.map(x => `${x.engine} ${x.accuracy}`).join(', ')}` : ''}`);
+const pct = x => (x == null ? '-' : `${Math.round(x * 1000) / 10}`);
+for (const c of charts) for (const p of c.panels) {
+  console.log(`${c.title} [${p.kind}] ${p.grade.level} · ${p.n_pages} pages / ${p.n_works} works${p.noise ? ` · noise ${p.noise.band}` : ''}`);
+  for (const x of [...p.placed, ...p.no_cost]) console.log(`   ${x.production ? '*' : ' '} ${x.label.padEnd(34)} acc ${pct(x.accuracy)} fail ${pct(x.fail_share)} ${x.vs_in_use ? `vs ${pct(x.vs_in_use.diff)} [${pct(x.vs_in_use.ci95?.[0])}, ${pct(x.vs_in_use.ci95?.[1])}] ${x.verdict}` : ''} ${x.cost ? `$${x.cost.usd_per_1k}/${x.cost.basis}` : 'no price'}${x.on_frontier ? ' F' : ''}`);
+  console.log(`   => ${p.verdict}`);
+}
 for (const n of out.no_chart) console.log(`no chart: ${n.title} — ${n.why}`);
 console.log(`wrote ${path.relative(process.cwd(), OUT)}`);
-for (const [id, c] of Object.entries(cli6293Coverage)) if (c.missing.length) console.log(`#6293 CLI arm not on the main panels of ${id}${cli6293Subsample[id.split('|')[0]]?.engines.includes(id.split('|')[1]) ? ' (on the subsample panel)' : ''}: scored on ${c.scored} of ${c.frozen} frozen pages (missing ${c.missing.slice(0, 6).join(", ")}${c.missing.length > 6 ? " …" : ""})`);
