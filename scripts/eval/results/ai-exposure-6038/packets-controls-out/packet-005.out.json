@@ -1,0 +1,14 @@
+[
+  {
+    "i": 1,
+    "knows_of": "yes",
+    "self_familiar": "yes",
+    "opening": "孟子見梁惠王。"
+  },
+  {
+    "i": 2,
+    "knows_of": "unsure",
+    "self_familiar": "no",
+    "opening": "unknown"
+  }
+]

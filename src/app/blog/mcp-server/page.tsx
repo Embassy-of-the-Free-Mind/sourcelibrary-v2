@@ -4,10 +4,10 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 
 export const metadata: Metadata = {
   title: 'Claude Can Now Read Thousands of Rare Books - Research Notes - Source Library',
-  description: 'We shipped an MCP server that gives Claude direct access to Source Library — thousands of historical texts with translations, a cross-book entity graph, and 90,000+ illustrations. One command to install.',
+  description: 'We shipped an MCP server that gives Claude direct access to Source Library: thousands of historical texts with translations, a cross-book entity graph, and 90,000+ illustrations. One command to install.',
   openGraph: {
     title: 'Claude Can Now Read Thousands of Rare Books',
-    description: 'An MCP server that gives Claude direct access to Source Library — thousands of historical texts with translations, a cross-book entity graph, and 90,000+ illustrations.',
+    description: 'An MCP server that gives Claude direct access to Source Library: thousands of historical texts with translations, a cross-book entity graph, and 90,000+ illustrations.',
     images: [{ url: 'https://images.sourcelibrary.org/archived/699065973dc2ed39a49f1e71/4.jpg', width: 1200, height: 630 }],
   },
   twitter: {
@@ -55,7 +55,7 @@ export default function McpServerPage() {
         <p className="text-xl text-secondary leading-relaxed mb-8">
           Today we&apos;re releasing an{' '}
           <a href="https://www.npmjs.com/package/@source-library/mcp-server" className="text-accent-rust hover:text-accent-rust underline" target="_blank" rel="noopener noreferrer">MCP server</a>
-          {' '}that gives Claude direct access to Source Library. One command, no API key, and Claude can search, read, and cite thousands of historical texts &mdash; with full English translations and 110,000+ extracted illustrations.
+          {' '}that gives Claude direct access to Source Library. One command, no API key, and Claude can search, read, and cite thousands of historical texts, with full English translations and 110,000+ extracted illustrations.
         </p>
 
         <div className="bg-stone-900 rounded-xl p-4 mb-8 overflow-x-auto">
@@ -64,7 +64,7 @@ export default function McpServerPage() {
 
         <p className="text-secondary leading-relaxed mb-8">
           <a href="https://modelcontextprotocol.io/" className="text-accent-rust hover:text-accent-rust underline" target="_blank" rel="noopener noreferrer">MCP</a>
-          {' '}(Model Context Protocol) is an open standard that lets AI assistants connect to external data sources. Instead of pasting text into a chat window, you give Claude a set of tools &mdash; and it decides when and how to use them. The server now provides 15 tools covering search, full-text reading, verbatim citation, canonical-reference lookup, and image retrieval &mdash; plus ways to contribute findings back. <em>(This post has been updated as the toolset has grown since launch; the list below is current.)</em>
+          {' '}(Model Context Protocol) is an open standard that lets AI assistants connect to external data sources. Instead of pasting text into a chat window, you give Claude a set of tools, and it decides when and how to use them. The server now provides 15 tools covering search, full-text reading, verbatim citation, canonical-reference lookup, and image retrieval, plus ways to contribute findings back. <em>(This post has been updated as the toolset has grown since launch; the list below is current.)</em>
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -84,7 +84,7 @@ export default function McpServerPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Claude searches the full text of every translated book, finds passages discussing prima materia in works spanning the 15th to 17th centuries, reads the relevant pages, and synthesizes a comparative analysis. It can pull the original Latin alongside the translation, showing you exactly what Sendivogius wrote versus what Basil Valentine wrote &mdash; with page numbers and links back to the source.
+          Claude searches the full text of every translated book, finds passages discussing prima materia in works spanning the 15th to 17th centuries, reads the relevant pages, and synthesizes a comparative analysis. It can pull the original Latin alongside the translation, showing you exactly what Sendivogius wrote versus what Basil Valentine wrote, with page numbers and links back to the source.
         </p>
 
         {/* Example 2 */}
@@ -96,21 +96,21 @@ export default function McpServerPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Source Library maintains a knowledge graph of entities &mdash; people, places, and concepts &mdash; linked across books. Hermes Trismegistus, for example, appears in 18 books with 441 total mentions, connecting:
+          Source Library maintains a knowledge graph of entities (people, places, and concepts) linked across books. Hermes Trismegistus, for example, appears in 18 books with 441 total mentions, connecting:
         </p>
 
         <ul className="space-y-2 mb-8 ml-4">
           <li className="text-secondary flex items-start gap-2">
             <span className="text-accent-rust mt-1.5 text-xs">&#9679;</span>
-            <span>Ficino&apos;s <Link href="/book/690989d5cf28baa1b4cae1c9" className="text-accent-rust hover:text-accent-rust underline"><em>Pymander</em></Link> &mdash; the 1471 translation that launched the Hermetic revival</span>
+            <span>Ficino&apos;s <Link href="/book/690989d5cf28baa1b4cae1c9" className="text-accent-rust hover:text-accent-rust underline"><em>Pymander</em></Link>: the 1471 translation that launched the Hermetic revival</span>
           </li>
           <li className="text-secondary flex items-start gap-2">
             <span className="text-accent-rust mt-1.5 text-xs">&#9679;</span>
-            <span>Copernicus&apos;s <Link href="/book/694f49d3f9b1ecc07965e424" className="text-accent-rust hover:text-accent-rust underline"><em>De Revolutionibus</em></Link> &mdash; which quotes Hermes on the Sun&apos;s centrality</span>
+            <span>Copernicus&apos;s <Link href="/book/694f49d3f9b1ecc07965e424" className="text-accent-rust hover:text-accent-rust underline"><em>De Revolutionibus</em></Link>, which quotes Hermes on the Sun&apos;s centrality</span>
           </li>
           <li className="text-secondary flex items-start gap-2">
             <span className="text-accent-rust mt-1.5 text-xs">&#9679;</span>
-            <span>The <Link href="/book/695203a5ab34727b1f041c53" className="text-accent-rust hover:text-accent-rust underline"><em>Musaeum Hermeticum</em></Link> &mdash; 543 pages of alchemical texts under his name</span>
+            <span>The <Link href="/book/695203a5ab34727b1f041c53" className="text-accent-rust hover:text-accent-rust underline"><em>Musaeum Hermeticum</em></Link>: 543 pages of alchemical texts under his name</span>
           </li>
           <li className="text-secondary flex items-start gap-2">
             <span className="text-accent-rust mt-1.5 text-xs">&#9679;</span>
@@ -119,7 +119,7 @@ export default function McpServerPage() {
         </ul>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Claude can follow these connections, read the relevant passages in each book, and show you how the figure of Hermes shifts from Ficino&apos;s prisca theologia to the Rosicrucian manifestos to Kircher&apos;s baroque syncretism &mdash; all grounded in the primary sources.
+          Claude can follow these connections, read the relevant passages in each book, and show you how the figure of Hermes shifts from Ficino&apos;s prisca theologia to the Rosicrucian manifestos to Kircher&apos;s baroque syncretism, all grounded in the primary sources.
         </p>
 
         {/* Example 3 */}
@@ -131,7 +131,7 @@ export default function McpServerPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-8">
-          The <code className="text-accent-rust text-sm">get_book_text</code> tool returns the complete text of a book &mdash; or a page range &mdash; in a single call. Claude can read 50 pages of the 1610 <em>Sidereus Nuncius</em> in both the original Latin and translation, then discuss the content as a reading partner who has actually read the text. This is the difference between searching <em>about</em> a book and reading <em>the book</em>.
+          The <code className="text-accent-rust text-sm">get_book_text</code> tool returns the complete text of a book (or a page range) in a single call. Claude can read 50 pages of the 1610 <em>Sidereus Nuncius</em> in both the original Latin and translation, then discuss the content as a reading partner who has actually read the text. This is the difference between searching <em>about</em> a book and reading <em>the book</em>.
         </p>
 
         {/* Example 4 */}
@@ -143,7 +143,7 @@ export default function McpServerPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-8">
-          The <code className="text-accent-rust text-sm">get_quote</code> tool returns the passage alongside pre-formatted citations &mdash; inline, footnote, and bibliography formats &mdash; with DOI when available. Claude finds the relevant passage, gives you the Latin and English, and hands you a citation ready to paste into your paper.
+          The <code className="text-accent-rust text-sm">get_quote</code> tool returns the passage alongside pre-formatted citations (inline, footnote, and bibliography formats) with DOI when available. Claude finds the relevant passage, gives you the Latin and English, and hands you a citation ready to paste into your paper.
         </p>
 
         {/* Example 5 */}
@@ -155,7 +155,7 @@ export default function McpServerPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Source Library has extracted and catalogued 90,000+ illustrations from its books &mdash; woodcuts, engravings, emblems, frontispieces, diagrams &mdash; each with AI-generated metadata including subject tags, depicted figures, symbols, and museum-style descriptions. Claude can search this gallery, find the images, identify which books they come from, and read the surrounding text to explain their context.
+          Source Library has extracted and catalogued 90,000+ illustrations from its books (woodcuts, engravings, emblems, frontispieces, diagrams), each with AI-generated metadata including subject tags, depicted figures, symbols, and museum-style descriptions. Claude can search this gallery, find the images, identify which books they come from, and read the surrounding text to explain their context.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -163,7 +163,7 @@ export default function McpServerPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Source Library holds over 4,000 books digitized from 13 archives worldwide &mdash; the Internet Archive, Gallica, the Bodleian, the Vatican Library, the Bavarian State Library, and others. The collection focuses on the Western esoteric tradition broadly defined:
+          Source Library holds over 4,000 books digitized from 13 archives worldwide: the Internet Archive, Gallica, the Bodleian, the Vatican Library, the Bavarian State Library, and others. The collection focuses on the Western esoteric tradition broadly defined:
         </p>
 
         <ul className="space-y-2 mb-8 ml-4">
@@ -177,7 +177,7 @@ export default function McpServerPage() {
           </li>
           <li className="text-secondary flex items-start gap-2">
             <span className="text-accent-rust mt-1.5 text-xs">&#9679;</span>
-            <span>Renaissance philosophy &mdash; Ficino, Bruno, Pico, Agrippa</span>
+            <span>Renaissance philosophy: Ficino, Bruno, Pico, Agrippa</span>
           </li>
           <li className="text-secondary flex items-start gap-2">
             <span className="text-accent-rust mt-1.5 text-xs">&#9679;</span>
@@ -185,7 +185,7 @@ export default function McpServerPage() {
           </li>
           <li className="text-secondary flex items-start gap-2">
             <span className="text-accent-rust mt-1.5 text-xs">&#9679;</span>
-            <span>Early modern science &mdash; Copernicus, Galileo, Kepler</span>
+            <span>Early modern science: Copernicus, Galileo, Kepler</span>
           </li>
           <li className="text-secondary flex items-start gap-2">
             <span className="text-accent-rust mt-1.5 text-xs">&#9679;</span>
@@ -232,7 +232,7 @@ export default function McpServerPage() {
             <h4 className="font-semibold text-primary mb-2">Citing</h4>
             <p className="text-secondary text-sm">
               <code className="text-accent-rust">get_quote</code> and <code className="text-accent-rust">get_quotes</code> for verbatim page text with stable citation links.{' '}
-              <code className="text-accent-rust">get_locus</code> resolves canonical references &mdash; Bekker numbers for Aristotle, Stephanus pages for Plato &mdash; to the actual leaves that carry them.
+              <code className="text-accent-rust">get_locus</code> resolves canonical references (Bekker numbers for Aristotle, Stephanus pages for Plato) to the actual leaves that carry them.
             </p>
           </div>
           <div className="bg-white rounded-lg border border-border-light p-5">
@@ -258,12 +258,12 @@ export default function McpServerPage() {
         <p className="text-secondary leading-relaxed mb-4">
           The easiest path today needs no install at all: Source Library is in the{' '}
           <a href="https://claude.ai/directory/connectors/source-library" className="text-accent-rust hover:text-accent-rust underline" target="_blank" rel="noopener noreferrer">Claude connector directory</a>
-          {' '}&mdash; switch it on from the connectors menu, or add{' '}
+          : switch it on from the connectors menu, or add{' '}
           <code className="text-accent-rust text-sm">https://sourcelibrary.org/api/mcp</code> as a custom connector in any MCP client.
         </p>
 
         <p className="text-secondary leading-relaxed mb-4">
-          To run it locally instead &mdash; for Claude Code:
+          To run it locally instead, for Claude Code:
         </p>
 
         <div className="bg-stone-900 rounded-xl p-4 mb-6 overflow-x-auto">
@@ -295,7 +295,7 @@ export default function McpServerPage() {
 
         <div className="border-t border-border-light pt-8 mt-16">
           <p className="text-secondary text-sm leading-relaxed">
-            Source Library is a project of the Embassy of the Free Mind. If you use it for research, we&apos;d love to hear about it &mdash;{' '}
+            Source Library is a project of the Embassy of the Free Mind. If you use it for research, we&apos;d love to hear about it:{' '}
             <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">team@sourcelibrary.org</a>.
           </p>
         </div>

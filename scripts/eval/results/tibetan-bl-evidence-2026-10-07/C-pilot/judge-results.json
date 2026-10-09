@@ -1,0 +1,728 @@
+{
+ "generated": "2026-10-07T16:30:39.061Z",
+ "seed": 4523,
+ "pages": 30,
+ "test_pages": 29,
+ "judges": {
+  "opus": {
+   "file": "/root/tib-bl-evidence/C/judge/verdicts/opus-.jsonl",
+   "pages_scored": 30,
+   "missing": []
+  },
+  "sonnet": {
+   "file": "/root/tib-bl-evidence/C/judge/verdicts/sonnet-.jsonl",
+   "pages_scored": 30,
+   "missing": []
+  }
+ },
+ "controls": {
+  "positive": {
+   "opus": {
+    "fidelity": 2,
+    "invention": true,
+    "omission": true,
+    "rank": 1,
+    "pass": false
+   },
+   "sonnet": {
+    "fidelity": 2,
+    "invention": true,
+    "omission": true,
+    "rank": 1,
+    "pass": false
+   }
+  },
+  "same_arm": {
+   "opus": {
+    "pairs": [
+     {
+      "id": "69e7aacb5f1a22ab19a8d7d8_00115",
+      "engine": "pilot",
+      "fidelity": [
+       4,
+       4
+      ],
+      "rank": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "69e7aaf75f1a22ab19a907e7_00008",
+      "engine": "pilot",
+      "fidelity": [
+       3,
+       3
+      ],
+      "rank": [
+       1,
+       1
+      ],
+      "tie": true
+     },
+     {
+      "id": "69e7ab985f1a22ab19a9a963_00095",
+      "engine": "pilot",
+      "fidelity": [
+       4,
+       4
+      ],
+      "rank": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "69e7abdd5f1a22ab19a9fade_00259",
+      "engine": "current",
+      "fidelity": [
+       5,
+       5
+      ],
+      "rank": [
+       0,
+       0
+      ],
+      "tie": true
+     }
+    ],
+    "n": 4,
+    "ties": 4,
+    "tie_rate": 1
+   },
+   "sonnet": {
+    "pairs": [
+     {
+      "id": "69e7aacb5f1a22ab19a8d7d8_00115",
+      "engine": "pilot",
+      "fidelity": [
+       4,
+       4
+      ],
+      "rank": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "69e7aaf75f1a22ab19a907e7_00008",
+      "engine": "pilot",
+      "fidelity": [
+       4,
+       4
+      ],
+      "rank": [
+       1,
+       1
+      ],
+      "tie": true
+     },
+     {
+      "id": "69e7ab985f1a22ab19a9a963_00095",
+      "engine": "pilot",
+      "fidelity": [
+       4,
+       4
+      ],
+      "rank": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "69e7abdd5f1a22ab19a9fade_00259",
+      "engine": "current",
+      "fidelity": [
+       4,
+       4
+      ],
+      "rank": [
+       1,
+       1
+      ],
+      "tie": true
+     }
+    ],
+    "n": 4,
+    "ties": 4,
+    "tie_rate": 1
+   }
+  },
+  "positive_supplementary": {}
+ },
+ "engines": {
+  "pilot": {
+   "by_judge": {
+    "opus": {
+     "n": 29,
+     "fidelity_median": 4,
+     "fidelity_mean": 4.069,
+     "omission_rate": 0.138,
+     "invention_rate": 0.138,
+     "inversion_rate": 0.069,
+     "rank_mean": 1.276,
+     "first_place": 21,
+     "inversion_count": 2,
+     "omission_count": 4,
+     "invention_count": 4
+    },
+    "sonnet": {
+     "n": 29,
+     "fidelity_median": 4,
+     "fidelity_mean": 3.862,
+     "omission_rate": 0.207,
+     "invention_rate": 0.138,
+     "inversion_rate": 0.034,
+     "rank_mean": 1.241,
+     "first_place": 22,
+     "inversion_count": 1,
+     "omission_count": 6,
+     "invention_count": 4
+    }
+   },
+   "pooled": {
+    "n": 58,
+    "fidelity_median": 4,
+    "fidelity_mean": 3.966,
+    "invention_rate": 0.138,
+    "omission_rate": 0.172,
+    "inversion_rate": 0.052,
+    "inversion_count": 3,
+    "omission_count": 10,
+    "invention_count": 8
+   },
+   "run": {
+    "pages": 29,
+    "ms_mean": null,
+    "in_tokens_mean": null,
+    "out_tokens_mean": null,
+    "usd_per_page_realtime": null,
+    "usd_per_page_batch": null,
+    "finish": {
+     "undefined": 29
+    }
+   }
+  },
+  "current": {
+   "by_judge": {
+    "opus": {
+     "n": 29,
+     "fidelity_median": 4,
+     "fidelity_mean": 3.552,
+     "omission_rate": 0.276,
+     "invention_rate": 0.069,
+     "inversion_rate": 0,
+     "rank_mean": 1.448,
+     "first_place": 16,
+     "inversion_count": 0,
+     "omission_count": 8,
+     "invention_count": 2
+    },
+    "sonnet": {
+     "n": 29,
+     "fidelity_median": 4,
+     "fidelity_mean": 3.483,
+     "omission_rate": 0.241,
+     "invention_rate": 0.069,
+     "inversion_rate": 0,
+     "rank_mean": 1.448,
+     "first_place": 16,
+     "inversion_count": 0,
+     "omission_count": 7,
+     "invention_count": 2
+    }
+   },
+   "pooled": {
+    "n": 58,
+    "fidelity_median": 4,
+    "fidelity_mean": 3.517,
+    "invention_rate": 0.069,
+    "omission_rate": 0.259,
+    "inversion_rate": 0,
+    "inversion_count": 0,
+    "omission_count": 15,
+    "invention_count": 4
+   },
+   "run": {
+    "pages": 29,
+    "ms_mean": null,
+    "in_tokens_mean": null,
+    "out_tokens_mean": null,
+    "usd_per_page_realtime": null,
+    "usd_per_page_batch": null,
+    "finish": {
+     "undefined": 29
+    }
+   }
+  }
+ },
+ "rules": {
+  "handoff": {
+   "rule": "cheapest engine whose median fidelity is within 0.5 of the best AND invention rate <= best + 5pp (pooled over judges)",
+   "cost_order": [
+    "lite",
+    "flash",
+    "mitra"
+   ],
+   "best_fidelity_engine": "pilot",
+   "eligible": [
+    "current"
+   ],
+   "pick": null
+  }
+ },
+ "agreement": {
+  "judges": [
+   "opus",
+   "sonnet"
+  ],
+  "fidelity_exact": 0.672,
+  "fidelity_within_1": 0.983,
+  "fidelity_mean_abs_diff": 0.345,
+  "top_rank_shared": 0.931,
+  "n_cells": 58,
+  "n_pages": 29
+ },
+ "pairs": {},
+ "per_page": [
+  {
+   "id": "69e7aacb5f1a22ab19a8d7d8_00115",
+   "opus": {
+    "pilot": "4",
+    "current": "3O"
+   },
+   "sonnet": {
+    "pilot": "4",
+    "current": "3"
+   },
+   "reasons": {
+    "opus": "Reference covers only the verse opening (188.b), judged on source. T2=T3 identical. T1 renders gshed byed med / sdig byed med as 'no fear and commit no sin', drops 'writing' (legs bri) from the merit list, and garbles 'praised by the Buddha's wisdom; all beings cannot describe it in many eons'; T2/T3 get these right but misread rgyal po de la sdig pa byed pa med as 'no sin for that king' (T1 better there) and add 'for countless ages'.",
+    "sonnet": "T2 and T3 are identical and render the verse 'no executioners, no sinners, spirits, kumbhandas, mahoragas; no sin for that king' as the source has it; T1 turns it into 'no fear and commit no sin' and 'no king will commit sin against them', and misframes the final comparison; prose after the leaf break is equivalent in all three."
+   }
+  },
+  {
+   "id": "69e7aacb5f1a22ab19a8d7d8_00116",
+   "opus": {
+    "pilot": "4I",
+    "current": "4"
+   },
+   "sonnet": {
+    "pilot": "4I",
+    "current": "5"
+   },
+   "reasons": {
+    "opus": "Both match 189.a (offerings list, eye/ear/nose/tongue diseases, fevers, poison, weapons, fire, happy family) and the Vajrapani entrustment in the source. T1 reads 'dri ba as 'questioners' where the reference has 'write it down' (T2 'those who write it' is right); T2 completes the page-final fragment chos smra ba de... as 'I will also make offerings to those who speak the Dharma', a clause with no counterpart on the page.",
+    "sonnet": "Both match the reference on the benefits list, the Akshobhya deathbed words, and the Vajrapani entrustment; T2 ends with 'I will also make offerings to those who speak the Dharma', which has no counterpart in the source (the source breaks off at 'ཆོས་སྨྲ་བ་དེ་'), while T1 breaks off at 'Those preachers of dharma...' as the source does."
+   }
+  },
+  {
+   "id": "69e7aacb5f1a22ab19a8d7d8_00113",
+   "opus": {
+    "pilot": "4X",
+    "current": "5"
+   },
+   "sonnet": {
+    "pilot": "3X",
+    "current": "5"
+   },
+   "reasons": {
+    "opus": "Reference (186.b-187.a) only touches Mara's obstacles; judged on source. Both render the four works of Mara and the Four Great Kings' pledge fully. T1 opens the lower leaf with 'The Blessed One said, \"We, the Four Great Kings, will make offerings...\"' - wrong speaker (source: bdag cag rgyal po chen po bzhis, addressed to bcom ldan 'das); T1 also calls mi dge ba'i bshes gnyen 'kalyanamitra of unvirtue'. T2 follows the source throughout.",
+    "sonnet": "Source leaf 2 opens 'བཅོམ་ལྡན་འདས་བདག་ཅག་རྒྱལ་པོ་ཆེན་པོ་བཞིས…' so the Four Great Kings are addressing the Blessed One; T1 prefixes 'The Blessed One said, We, the Four Great Kings…', giving the kings' vow to the wrong speaker; T2 has the speaker right; the Mara-activities passage is equivalent in both."
+   }
+  },
+  {
+   "id": "69e7aae45f1a22ab19a8f1d1_00382",
+   "opus": {
+    "pilot": "4",
+    "current": "1O"
+   },
+   "sonnet": {
+    "pilot": "4",
+    "current": "1O"
+   },
+   "reasons": {
+    "opus": "T1 is empty ('no English is stored'). T2 follows 254.a-254.b (Padma, Jñānapriya, Amohavihārin, Avraṇa) name by name, but gives Padma's lifespan as forty-four thousand where source lo khri bzhi stong and the reference have fourteen thousand, and Avraṇa's congregations as one billion where bye ba phrag 'bum and the reference have one trillion; the Jñānapriya-to-Amohavihārin gap is absent from the source itself and scored as a tie.",
+    "sonnet": "T1 is the placeholder '[no English is stored for this page]', so the whole page is absent; T2 follows the source buddha-by-buddha list (parents, son, attendant, congregations, lifespan, Dharma duration) and matches the reference except one number slip (lifespan 'forty-four thousand' where the reference has fourteen thousand); the jump at the leaf break is a gap in the OCR source that T2 reproduces faithfully."
+   }
+  },
+  {
+   "id": "69e7aae45f1a22ab19a8f1d1_00391",
+   "opus": {
+    "pilot": "4",
+    "current": "3"
+   },
+   "sonnet": {
+    "pilot": "5",
+    "current": "4"
+   },
+   "reasons": {
+    "opus": "Both follow 259.b-260.b name by name and share one slip (Gautama's congregations bye ba brgya phrag bco brgyad = eighteen billion per reference, both write 1.8 billion). T2 also gives Ojobala's congregations as eighty million (source bye ba phrag brgyad cu, reference eight hundred million) and Siddhi's as nine billion (ther 'bum phrag dgu bcu, reference ninety billion); T1 has both right.",
+    "sonnet": "Both follow the same names, lifespans (44k/83k/64k/80k), Dharma durations and light-extents as the reference list; the leaf-break gap is in the OCR source and shared; T2 gives the 82-assembly entry as 'eighty million each' where the source's 'ཕྲག་བརྒྱད་ཅུ་རྩ་རེ་རེ' and the reference (eight hundred million) match T1's 800 million, and T2's 'She Offered by Gods' for the mother is garbled where T1 has a clean rendering."
+   }
+  },
+  {
+   "id": "69e7aae45f1a22ab19a8f1d1_00383",
+   "opus": {
+    "pilot": "5",
+    "current": "5"
+   },
+   "sonnet": {
+    "pilot": "5",
+    "current": "4I"
+   },
+   "reasons": {
+    "opus": "Both match 255.a-255.b name by name and number by number (Ketudhvaja 'bum phrag dgu bcu rtsa dgu = 9.9 million irreversible bodhisattvas; Sukhacittin eighteen billion; Vidhijña 2.3 million, seven-league stupa; Śuddhasāgara eight hundred million). Only page-edge fragments differ: T1 drops the opening zad do and writes Rahula for sgra gcan; T2 renders it ('only one') but guesses '[Virtue]' for ...pa'i rgyal mtshan (reference: Banner of Renown). Not separable.",
+    "sonnet": "Both carry the same names, light-extents, assemblies and lifespans as the reference (Ketudhvaja through Ratnadhara) and break off at the same leaf-end points; T2 completes the source fragment 'པའི་རྒྱལ་མཚན་' as 'Victory Banner of [Virtue]', a guess with no counterpart in the source (the reference has Banner of Renown), and adds a 'Sukhavati' note; T1 leaves the fragment as 'Banner of…' (and drops the source's one-word opening fragment 'ཟད་དོ', a trivial loss)."
+   }
+  },
+  {
+   "id": "69e7aaf75f1a22ab19a907e7_00010",
+   "opus": {
+    "pilot": "5",
+    "current": "4"
+   },
+   "sonnet": {
+    "pilot": "4",
+    "current": "4"
+   },
+   "reasons": {
+    "opus": "Both match the reference's assembly, the 1,250 monks with Mahākāśyapa, the eight classes, the address to novice bodhisattvas on the level of devoted engagement and Great Skillful Trust's rising; T2 renders ཚིགས་སུ་བཅད་པ་གཉིས་པའི་གཟུངས as 'dharani of the second verse' (source: of the two verses, as T1) and drops དེ་དག་ལ་སོགས་པ 'such as these' before the five thousand; otherwise equivalent",
+    "sonnet": "Both track the reference span (assembly, 5,000 bodhisattvas, 1,250 monks, eight classes of beings, Great Means of Faith's kneeling) with only the one-line OCR gap at the leaf break; T1 slightly better on the verse ('devoted and possessed of intelligence') and T2 slightly looser ('mind of faith'), but neither separates on fidelity, omission or invention."
+   }
+  },
+  {
+   "id": "69e7aaf75f1a22ab19a907e7_00006",
+   "opus": {
+    "pilot": "4",
+    "current": "4"
+   },
+   "sonnet": {
+    "pilot": "4",
+    "current": "4"
+   },
+   "reasons": {
+    "opus": "Both render the eight similes, the attainments, the buried-treasure analogy and its decoding (bedrock = conceptual signs, dig = not directing the mind, silver/gold/gems = antidotes/emptiness/attainments) as the reference; both misread the leaf-initial ཡང་དག་པར་རྫོགས་པའི་སངས་རྒྱས་ཀྱི་ཚིག་བླ་དགས as 'words of the Buddha' (reference: the knower 'is the Perfect Buddha'); nothing separates them",
+    "sonnet": "Both follow the reference's treasure-under-rock analogy and its key (rock = conceptual signs of nature, dig = not directing the mind, silver/gold/jewels, wish-fulfilling jewel = nonconceptual sphere) and both jump over the same OCR-gap span at the leaf break; T1 renders 'great excellence of mind' closer to the source than T2's 'vast and perfect state of mind', a minor term slip that does not separate them."
+   }
+  },
+  {
+   "id": "69e7aaf75f1a22ab19a907e7_00008",
+   "opus": {
+    "pilot": "3IO",
+    "current": "4I"
+   },
+   "sonnet": {
+    "pilot": "4",
+    "current": "4"
+   },
+   "reasons": {
+    "opus": "T1 and T2 are identical text. All three open the upper leaf with 'do not see them as different / that non-existent cognition as an entity / as a non-entity', copied from the lower leaf's first line — the upper leaf (image and source) begins only རྗེས་སུ་མི་མཐོང་སྟེ; T1/T2 render 'that which is not conceptualized ... is the non-conceptual sphere; yet he does not see even that as real' where source and reference say they do not even regard it as 'the nonconceptual realm' (T3 correct), and cut the leaf-final 'omniscience is the afflictions and' to '...' (T3 keeps it); merit comparison, Ganga similes and verse match the reference in all",
+    "sonnet": "All three follow the reference (omniscience as the last conceptual sign, the 'does not see as different/entity/non-entity' formula, the Ganges-sand merit comparisons, the verses); T1 and T2 are identical text (one tie); T3 keeps the source's cut-off 'omniscience is the afflictions and' and 'equal yet unequal' where T1/T2 drop the clause and render the nonconceptual-realm line as 'yet he does not see even that as real'; differences are slight."
+   }
+  },
+  {
+   "id": "69e7ab345f1a22ab19a94976_00277",
+   "opus": {
+    "pilot": "4",
+    "current": "4"
+   },
+   "sonnet": {
+    "pilot": "4",
+    "current": "4"
+   },
+   "reasons": {
+    "opus": "Both render the hundred-thousandfold list, the uncountable manifestations 'for many eons ... up to many quintillions' and the third-bhūmi verses (refuge for beings terrified of liberation, wisdom from listening, giving jewels, wives, sons, head, limbs, marrow and heart, the fire-pit offer) as the reference; both read རྣམ་པར་ལྟ་དང་འདོད་ཉམས་པ as 'seeing ... failed/diminished in desire' instead of 'incorrect view and no aspiration'; nothing separates them",
+    "sonnet": "Both cover the hundred-thousand list, the 'difficult to count' eon sentence, and the verse span from 'childish beings terrified of liberation' to the blazing-pit offer, with the same slips against the reference (rnam par lta rendered as 'seeing' rather than 'incorrect view'; 'hearing is the hardship'); T1 'many billions of hundreds of thousands of eons' vs T2 transliterated 'krakhrik' is a term choice only; the verse gap at the leaf break is the OCR's dropped line for both."
+   }
+  },
+  {
+   "id": "69e7ab345f1a22ab19a94976_00271",
+   "opus": {
+    "pilot": "5",
+    "current": "5"
+   },
+   "sonnet": {
+    "pilot": "4",
+    "current": "4"
+   },
+   "reasons": {
+    "opus": "Both match the reference throughout: giving limbs and whole body, serving the guru, abandoning pride, one unheard word worth more than a trichiliocosm of jewels, one verse over Śakra/Brahmā/cakravartin rule, the fire-pit offer, then dhyānas two to four and the formless spheres; each has one term slip (T1 'exceedingly pure' for ཤིན་ཏུ་དང་ 'great clarity', T2 'fearful mind' for ཉམ་ང་བ 'unhappiness'); nothing separates them",
+    "sonnet": "Both track the reference (nothing not given up for the Dharma, serving the guru, one verse over Indra/Brahma/cakravartin, the fire-pit offer; then dhyanas 2-4 and the first two formless bases) and stop where the source stops; T1 slips on 'shin tu dang' ('exceedingly pure' vs reference 'great internal clarity') and T2 on nyam nga ba ('fearful mind' vs distress), small term slips that cancel out."
+   }
+  },
+  {
+   "id": "69e7ab485f1a22ab19a95e06_00206",
+   "opus": {
+    "pilot": "3X",
+    "current": "4"
+   },
+   "sonnet": {
+    "pilot": "5",
+    "current": "4I"
+   },
+   "reasons": {
+    "opus": "Source ལ་ལ་ཞིག་བར་ཆད་བྱེད་པར་འགྱུར་དུ་འོང་ངོ་ཞེས = reference 'lest certain obstacles occur'; T2 'Lest some person creates an obstacle' is right, T1 'May someone create obstacles for him' reverses the gods' protective wish; T1 also mislabels Brahmapārṣadya as Brahmakayika; T2 ends with a guessed 'does not...' where source has only འདི; otherwise both match the nadir passage, the Śāradvatīputra lines, dhāraṇī/samādhi gateways and never-separated clause",
+    "sonnet": "Both track the reference's lower-direction protection formula and god-realm list; the source ends 'when practising the perfection of wisdom, this (…)' — T1 ends 'practices … is this:' faithfully, T2 ends 'does not…', a negation with no counterpart in source or reference."
+   }
+  },
+  {
+   "id": "69e7ab485f1a22ab19a95e06_00202",
+   "opus": {
+    "pilot": "4O",
+    "current": "5"
+   },
+   "sonnet": {
+    "pilot": "3O",
+    "current": "5"
+   },
+   "reasons": {
+    "opus": "Both render the (unnamed-direction) and western passages as the reference's 'lest they fall to the level of the śrāvakas... lest certain obstacles occur'; T1 drops Ābha (སྣང་བ) and Śubha (དགེ་བ) from both god lists and renders ཚངས་པ་ཀུན་འཁོར as 'Brahmakayika'; T2 gives the full list as in the reference; both follow the OCR's བསམས་པས ('thought'), a shared source error",
+    "sonnet": "Source and reference list Ābha, Śubha and Brahmapāriṣadya (ཚངས་པ་ཀུན་འཁོར); T1 drops all three in every god-list repeat (also adds a speculative '[direction]' note), T2 gives the full list matching the reference."
+   }
+  },
+  {
+   "id": "69e7ab485f1a22ab19a95e06_00201",
+   "opus": {
+    "pilot": "4O",
+    "current": "5"
+   },
+   "sonnet": {
+    "pilot": "3O",
+    "current": "5"
+   },
+   "reasons": {
+    "opus": "Both match the reference's 'they do not think... I will listen with divine clairaudience... enable countless beings to pass into nirvāṇa', the māras finding no opportunity and the southern-direction protection; T1 drops Ābha (སྣང་བ) and Śubha (དགེ་བ) from the god list and renders ཚངས་པ་ཀུན་འཁོར as 'Brahmakayika'; T2 lists all as in the reference",
+    "sonnet": "Both render the divine-ear/eye, maras and eastern-protection passages like the reference; in the southern god-list the source and reference have Ābha, Śubha and Brahmapāriṣadya, which T1 omits and T2 keeps."
+   }
+  },
+  {
+   "id": "69e7ab555f1a22ab19a96c7a_00145",
+   "opus": {
+    "pilot": "5",
+    "current": "4"
+   },
+   "sonnet": {
+    "pilot": "5",
+    "current": "4"
+   },
+   "reasons": {
+    "opus": "Both cover tongue, body, mind, form / taste, touch, phenomena, eye-consciousness in order (source reads ཤེས་རབ where the reference has perseverance, an edition variant); T2 keeps the reference's causal chain 'purity of PW is owing to the purity of the tongue' (ལྕེ་རྣམ་པར་དག་པས), T1 recasts it each time as an identity 'Because the purity of the tongue is the purity of the perfection of wisdom'",
+    "sonnet": "Both cover tongue/body/mind, taste/touch/phenomena/eye-consciousness and the 'not two' refrain (the source reads 'perfection of wisdom' where the reference has 'perseverance', same for both); T2 keeps the reference's causal 'owing to the purity of X, the purity of the perfection' while T1 recasts it as an identity ('the purity of X is the purity of the perfection') and once drops 'purity' (touch)."
+   }
+  },
+  {
+   "id": "69e7ab555f1a22ab19a96c7a_00149",
+   "opus": {
+    "pilot": "5",
+    "current": "4I"
+   },
+   "sonnet": {
+    "pilot": "4",
+    "current": "4"
+   },
+   "reasons": {
+    "opus": "Both render nose/tongue/body-contact feeling with the perfection of wisdom, then feeling, perception, formations, consciousness with the perfection of concentration, as in the reference (F.101.a–b); T2 opens with a <meta> supplying a whole sentence on 'consciousness of the body' that is not on the page (the source begins with ...འདུས་ཏེ་རེག་པའི་རྐྱེན་ཀྱིས་ཚོར་བ, nose-contact feeling) and ends the upper leaf with 'purity of tactile contact' for 'feeling conditioned by body contact'; T1 = reference throughout",
+    "sonnet": "Both give nose/tongue/body contact feelings (wisdom pāramitā), then feeling/perception/formations/consciousness (concentration pāramitā) with the reference's causal 'owing to' structure and the 'not two' refrain; both drop 'compounded' (འདུས་ཏེ) from the contact terms and neither is separated by omission or invention (T2's <meta> and <summary> are house-format tags)."
+   }
+  },
+  {
+   "id": "69e7ab555f1a22ab19a96c7a_00151",
+   "opus": {
+    "pilot": "5",
+    "current": "4"
+   },
+   "sonnet": {
+    "pilot": "5",
+    "current": "4"
+   },
+   "reasons": {
+    "opus": "Both cover nose, tongue, body, mind / odor, taste, touch, phenomena with the perfection of meditative concentration, as in the reference (F.102.a–b); T2 keeps the reference's causal chain 'purity of the perfection is owing to the purity of the tongue' (ལྕེ་རྣམ་པར་དག་པས), T1 recasts it each time as an identity 'Because the purity of the tongue is the purity of the perfection of meditative concentration'",
+    "sonnet": "Both cover nose/tongue/body/mind and odor/taste/touch/phenomena with the 'not two' refrain (concentration pāramitā, as the source and reference); T2 keeps the reference's 'owing to the purity of X, the purity of the perfection' causation, while T1 recasts it as identity ('the purity of X is the purity of the perfection') and garbles the odor clause ('the purity of scent is pure')."
+   }
+  },
+  {
+   "id": "69e7ab5f5f1a22ab19a978df_00253",
+   "opus": {
+    "pilot": "4I",
+    "current": "1O"
+   },
+   "sonnet": {
+    "pilot": "3IO",
+    "current": "1O"
+   },
+   "reasons": {
+    "opus": "T1 = reference F.182.a–b throughout the source span (form, feelings…consciousness, eye, ear…mind, ear…mind-consciousness, eye-contact, ear…mind-contact) but adds a <note> claiming 'scribal additions in a smaller hand' that the image does not show; T2 has no English at all",
+    "sonnet": "T1 renders the form/consciousness/eye/ear-nose-mind/consciousness/contact purity formulae as in the reference but stops mid-list (ends at 'ear-contact...', source continues) and adds a <note> on 'scribal additions in a smaller hand' with no counterpart in source or reference; T2 has no English at all."
+   }
+  },
+  {
+   "id": "69e7ab5f5f1a22ab19a978df_00256",
+   "opus": {
+    "pilot": "5",
+    "current": "1O"
+   },
+   "sonnet": {
+    "pilot": "4",
+    "current": "1O"
+   },
+   "reasons": {
+    "opus": "T2 renders every formula in the source (generosity/eye-contact non-duality, ear…mind-contact, feeling conditioned by eye-contact) in the reference's pattern (the reference sides carry the same formulas under the perfection of wisdom; the generosity round is its parallel); T1 has no English",
+    "sonnet": "T2 renders the legible source (generosity/eye-contact, ear-to-mind contact, feeling conditioned by eye-contact formulae) in line with the reference pattern and tags the garbled OCR head as <unclear>; minor slip in the opening clause; T1 has no English."
+   }
+  },
+  {
+   "id": "69e7ab5f5f1a22ab19a978df_00251",
+   "opus": {
+    "pilot": "3",
+    "current": "1O"
+   },
+   "sonnet": {
+    "pilot": "3",
+    "current": "1O"
+   },
+   "reasons": {
+    "opus": "T1 renders birth/aging-and-death, aging-and-death/perfection of wisdom, the six perfections chain, immeasurables, formless attainments, eight liberations and nine serial attainments as in the source; the perfections passage is garbled (it follows the garbled OCR) against the reference's clean reciprocal pattern but recoverable; T2 has no English",
+    "sonnet": "T1 follows the source from aging/death-wisdom through the pāramitā chain to the immeasurables, liberations and nine absorptions, but mis-chains the pāramitās (concentration->diligence AND ->patience; generosity repeated) against the reference sequence and loops on garbled OCR; T2 has no English."
+   }
+  },
+  {
+   "id": "69e7ab985f1a22ab19a9a963_00099",
+   "opus": {
+    "pilot": "4",
+    "current": "4"
+   },
+   "sonnet": {
+    "pilot": "4",
+    "current": "4"
+   },
+   "reasons": {
+    "opus": "Both cover the same span of F.67.a–68.a (end of non-equipoise six, equipoise six with the awakening factors, omniscience six, start of without-remainder six) with the same minor slips against the reference ('result of' for 'ripens as', brahmin Devaputra reduced to 'a Brahmin'/'the Brahmins', gzhol ba as 'dwells'/'trending'); nothing separates them on fidelity, omission or invention",
+    "sonnet": "Both follow the source and reference pairing (miracles/diligence, brahmin/concentration, equipoise limbs of awakening, omniscience and without-remainder lists) with the same two slips: 'meditative state/absorption' for equipoise and 'dwells in/trending toward the three times' for the reference's 'commitment'; T1's 'pliancy' and T2's 'refinement' (reference 'ease') and T1's 'aspirational'/T2's 'prayer' differ only at term level; the gap between the leaves is the OCR's and identical in both."
+   }
+  },
+  {
+   "id": "69e7ab985f1a22ab19a9a963_00090",
+   "opus": {
+    "pilot": "4",
+    "current": "4O"
+   },
+   "sonnet": {
+    "pilot": "4",
+    "current": "4"
+   },
+   "reasons": {
+    "opus": "Both match F.60.b–61.b for golden complexion, lion-like upper body, perfectly proportionate body and conch-like throat (both render rtse'u chung as windpipe/larynx where the reference has veins); T2 drops the lower leaf's opening sentence ('…ripening of insight; such are the six perfections that ripen as the long hands'), which is in the source and which T1 renders",
+    "sonnet": "Both track the reference's golden-complexion, lion-like upper body, well-proportioned body and conch-throat lists item by item against the source; shared slip: the throat's 'veins not visible' becomes windpipe (T1) / larynx (T2) for the source's rtseu chung; T1 'skin' for complexion and its interpretive <note>s are not content errors; both stop where the source's leaf breaks and stops."
+   }
+  },
+  {
+   "id": "69e7ab985f1a22ab19a9a963_00095",
+   "opus": {
+    "pilot": "4",
+    "current": "4"
+   },
+   "sonnet": {
+    "pilot": "4",
+    "current": "4"
+   },
+   "reasons": {
+    "opus": "T2 and T3 are identical text; all three cover F.64.b–65.a (departure, time, end of discernment, harmonizing with the world, start of realization) with the same reading of the source and the same minor departures from the reference ('not looking back at kin' for 'absence of worry regarding loved ones', 'proceeding with equanimity' for 'smooth departure'); T1 completes the leaf-final clause in brackets where T2/T3 leave it cut as the source does — not a difference in fidelity",
+    "sonnet": "T2 and T3 are identical text; all three give the departure, time, discernment-end, world-harmonizing and realization lists as in the reference (the span between the 'time' list and 'dependent origination' is the OCR's gap for all); T1's 'categorization' and unglossed Tibetan names, versus T2/T3's 'differentiation' and 'I will not practice [asceticism]' (reference: refrained from food), are term-level slips that do not separate them on fidelity."
+   }
+  },
+  {
+   "id": "69e7abdd5f1a22ab19a9fade_00255",
+   "opus": {
+    "pilot": "5",
+    "current": "5"
+   },
+   "sonnet": {
+    "pilot": "4",
+    "current": "4"
+   },
+   "reasons": {
+    "opus": "Both render the full source span = reference 303.b–304.b (rain/drum/great drum/conch/central pillar/lamp of Dharma, dedication of the accumulation of supplications, trichiliocosm of seven jewels vs exhorting the wheel; ten strengths, eighteen unique qualities, four discernments, love, compassion, nirvāṇa; Śāriputra's question on dedicating roots of merit) with no omission; T1's '<gloss>victory banner</gloss>' for srog shing is a gloss only, main text 'life-tree' matches T2's 'life-pillar'; nothing separates them",
+    "sonnet": "Both track the reference's Dharma-offering series, supplication-heap, merit comparison, ten powers/eighteen qualities, Shariputra's question; the gap between leaves is the OCR's dropped line (tie); T1 adds a victory-banner gloss for life-pillar, T2 loses the noun 'fire' in the first clause - minor slips, not separable."
+   }
+  },
+  {
+   "id": "69e7abdd5f1a22ab19a9fade_00260",
+   "opus": {
+    "pilot": "4",
+    "current": "4"
+   },
+   "sonnet": {
+    "pilot": "3O",
+    "current": "4"
+   },
+   "reasons": {
+    "opus": "Both cover the span = reference 306.a–306.b (banners, sūtra merit, gift of Dharma supreme, ten thousand beings rise; Mahāraśmiskandha's assemblies, Gaṅgadevī) and share the number slips (lifespan 'sixty million' for bye ba phrag drug cu = 600 million; 'ninety-eight hundred billion' for 98 trillion); T1 also gives the first assembly as 'one hundred billion' (ref/source: a trillion) and prefixes the leaf with epithets from the previous page, while T2 gets the trillion right but renders 'od zer gyi phung po chen po' as the wrong name 'Mahaprabhashi' — offsetting single slips, a tie",
+    "sonnet": "Both follow the reference through the merit/Dharma-gift passage and the Buddha's lifespan and assemblies (both give 60 million for the reference's 600 million; both 98/99 'hundred billion'; T1 'one hundred billion' vs reference trillion; T2 'one trillion' correct); T1 renders the Buddha as Great Mass of Light Rays = Maharaśmiskandha and keeps 'Knower of the World' (source 'mkhyen pa'), while T2 renders the name as 'Mahaprabhashi' throughout and drops that epithet; the gap between leaves is the OCR's missing line (tie)."
+   }
+  },
+  {
+   "id": "69e7abdd5f1a22ab19a9fade_00259",
+   "opus": {
+    "pilot": "4",
+    "current": "5"
+   },
+   "sonnet": {
+    "pilot": "4",
+    "current": "4O"
+   },
+   "reasons": {
+    "opus": "All three cover reference 186.a–186.b (sūtra merit, trichiliocosm of beings attaining pratyekabuddhahood served with robes/food/bedding/medicine, Meru of jewels, ten-yojana stūpas of seven precious materials; ten thousand beings' vow, Śakra's coral flowers, Kauśika, the buddha 'od zer gyi phung po chen po); T2 and T3 are identical text; T1 names the buddha 'Mahaprabhashi' (ref: Mahāraśmiskandha), where T2/T3 render 'Great Mass of Light Rays'",
+    "sonnet": "All three follow the reference (Pratyekabuddha-offering, ten-yojana stupas, assembly vow, Sakra's flowers, past Buddha); T2 = T3 verbatim; T2/T3 drop 'flags' (ba dan) from the list of parasols/banners/flags/streamers and soften 'cherished' to 'precious means', while T1 names the Buddha 'Mahaprabhashi' where the reference (and T2/T3) have Great Mass of Light Rays/Mahaśmiskandha - a name slip rather than a separable difference."
+   }
+  },
+  {
+   "id": "6a14e171311a9edd46221377_00585",
+   "opus": {
+    "pilot": "3O",
+    "current": "1O"
+   },
+   "sonnet": {
+    "pilot": "3IO",
+    "current": "1O"
+   },
+   "reasons": {
+    "opus": "T2 is empty ('no English is stored'); T1 follows reference 270.a–271.a (Mahāratha faints, ministers sprinkle water, third minister's report, identities Śuddhodana/Māyā/Maitreya/Mañjuśrī/Mahāprajāpatī/five bhikṣus, offerings to the bones) but drops the source line on the princes looking ablaze into the four directions and falling again, and renders the garbled 'kiu rnams bstan' as showing the queen 'stupas' (ref: her two sons)",
+    "sonnet": "T2 is empty ('no English is stored'), so everything in the source is omitted; T1 tracks the reference's fainting of Mahaaratha, the third minister's report, the incarnation list (Shuddhodana, Maya, Maitreya, Manjushri, Mahaprajapati, five monks) but renders the princes as 'my young two', has the king 'show the stupas to the Queen' where the reference has him show her her two sons (garbled OCR 'kiu'), and skips the king's resolve/elephant verses."
+   }
+  },
+  {
+   "id": "6a14e171311a9edd46221377_00579",
+   "opus": {
+    "pilot": "3",
+    "current": "1O"
+   },
+   "sonnet": {
+    "pilot": "3O",
+    "current": "1O"
+   },
+   "reasons": {
+    "opus": "T2 is empty ('no English is stored'); T1 renders the prose-recension source (parents faint at the scattered bones, sandalwood revives them, the dream of three dove chicks and the hawk, offerings to the bones, bones placed in this spot, Ānanda: I was that prince — cf. reference 57.b–58.b) but garbles the heavily corrupt dream lines ('result of the burning of the corpse') and its summary gives the dream to the King where the reference has the queen",
+    "sonnet": "T2 is empty ('no English is stored'); T1 follows the (garbled, out-of-order) OCR source and the reference's matching beats - the princes' report, the king and queen fainting at the scattered bones, the queen's dream of three dove chicks and the hawk, the bones laid in this spot, 'Ananda, do not think it was another - I was the prince Mahasattva' - but the source's sword/teeth dream and 'burning of the corpse' lines are muddled and two spans are left as <unclear>."
+   }
+  },
+  {
+   "id": "6a14e171311a9edd46221377_00587",
+   "opus": {
+    "pilot": "3I",
+    "current": "4"
+   },
+   "sonnet": {
+    "pilot": "3I",
+    "current": "4"
+   },
+   "reasons": {
+    "opus": "Reference sides here are misaligned (ch. 19–21 of the short version); against the source and the ch. 27 praise quoted in the neighbouring packet (bodhisattvas go to Suvarṇaratnākaracchatrakūṭa, 'The color of the Jina's body is like refined gold…'), both render the verses fully, but T2 names the buddha 'Ratnaketu' three times, a different buddha with no counterpart in 'gser dang rin po che'i 'byung gnas gdugs brtsegs', while T1 keeps a literal gloss (garbled Sanskrit only); the one-line OCR gap is a tie",
+    "sonnet": "The matched reference span (ch.20-21) is not this page's text; the source is the twenty-sixth-chapter praise of the Tathagata 'gser dang rin po che'i 'byung gnas gdugs brtsegs' (Suvarnaratnakaracchatrakuta in 84000's chapter 27 of the other recension: 'The color of the Jina's body is like refined gold'). T1 gives that Buddha as Gold-and-Jewels-Source Crown of Parasols; T2 calls him 'Ratnaketu' three times, a different buddha with no counterpart in the source; verses otherwise equivalent; the missing OCR line is a tie."
+   }
+  }
+ ]
+}

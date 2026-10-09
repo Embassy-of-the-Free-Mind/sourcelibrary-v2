@@ -9,7 +9,10 @@
 // not per language). Neither joins the two by language, which is the point of this file.
 //
 //   node scripts/eval/quality-by-language.mjs [--audit scripts/eval/results/translation-corpus-audit-YYYY-MM-DD]
+//   node scripts/eval/quality-by-language.mjs --attach-three-ways   # only (re)attach ocr.three_ways (#5939)
 // Writes src/data/quality-by-language.json (src/data/* is gitignored: commit it with `git add -f`).
+// ocr.three_ways comes from the latest results/ocr-cer-three-ways/three-ways-<date>.json
+// (ocr-cer-three-ways.mjs): raw CER, CER after the OCR prompt's own conventions, and the error kinds.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -18,6 +21,60 @@ import { wilson } from './lib/agreement-stats.mjs';
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const args = Object.fromEntries(process.argv.slice(2).map((a, i, arr) => (a.startsWith('--') ? [a.slice(2), arr[i + 1]] : [])).filter((x) => x.length));
 const RESULTS = path.join(ROOT, 'scripts/eval/results');
+const OUT_FILE = path.join(ROOT, 'src/data/quality-by-language.json');
+
+// ── transcription error three ways (#5939) ───────────────────────────────────
+// The kinds that held up in the hand-check are shown by name; the rest (misreads, omissions,
+// "added" text, capitals, margins) are "other differences": by eye most of those were printed notes
+// and margins placed where they are printed, or scoring artefacts (hand-check-<date>.md).
+const TW_DIR = path.join(RESULTS, 'ocr-cer-three-ways');
+const SHOWN_KINDS = { 'ſ read as f': 'long_s_as_f', refusals: 'refusals', 'silent modernisation': 'modernised', 'reference defects': 'reference_wrong' };
+function loadThreeWays() {
+  const f = fs.existsSync(TW_DIR) ? fs.readdirSync(TW_DIR).filter((x) => /^three-ways-\d{4}-\d{2}-\d{2}\.json$/.test(x)).sort().at(-1) : null;
+  if (!f) return null;
+  const tw = JSON.parse(fs.readFileSync(path.join(TW_DIR, f), 'utf8'));
+  const hcFile = path.join(TW_DIR, `hand-check-${tw.date}.json`);
+  const hc = fs.existsSync(hcFile) ? JSON.parse(fs.readFileSync(hcFile, 'utf8')) : null;
+  const all = hc ? [...hc.batch1, ...hc.batch2] : [];
+  return { file: path.relative(ROOT, path.join(TW_DIR, f)), tw,
+    hand_check: hc ? { file: path.relative(ROOT, path.join(TW_DIR, `hand-check-${tw.date}.md`)), examples: all.length, reference_wrong: all.filter((x) => x.verdict === 'reference').length, engine_wrong: all.filter((x) => x.verdict === 'engine').length } : null };
+}
+const r3tw = (x) => (x == null ? null : Math.round(x * 1000) / 1000);
+function threeWaysFor(language, loaded, engine = 'gemini-3.1-flash-lite') {
+  const g = loaded?.tw.languages?.[language]?.[engine];
+  if (!g) return null;
+  const kinds = g.kinds ? Object.fromEntries(Object.entries(SHOWN_KINDS).map(([k, key]) => [key, g.kinds[k]?.share ?? 0])) : null;
+  if (kinds) kinds.other = r3tw(1 - Object.values(kinds).reduce((a, b) => a + b, 0));
+  return { engine, pages: g.pages, books: g.books, strata: g.strata, refused: g.refused, median_cer_raw: g.median_cer_raw, median_cer_prompt: g.median_cer_prompt, kinds };
+}
+// Per prompt, on the EEBO early-print pages: the long-s A/B arms (v16 vs v16 + long-s line, the refusal
+// retry) and the served text by the prompts row it resolves to. Kept for the write-up and later pages.
+function byPrompt(loaded) {
+  if (!loaded) return null;
+  const pick = (g) => ({ pages: g.pages, refused: g.refused, median_cer_raw: g.median_cer_raw, median_cer_prompt: g.median_cer_prompt,
+    long_s_as_f: g.kinds?.['ſ read as f']?.share ?? null, modernised: g.kinds?.['silent modernisation']?.share ?? null });
+  return {
+    arms: loaded.tw.prompts.map((p) => ({ source: p.set === 'bench' ? 'benchmark' : 'long-s A/B', arm: p.arm, engine: p.engine, prompt: p.prompt, long_s_retry: p.long_s_retry, ...pick(p) })),
+    served: loaded.tw.served_by_prompt.map((p) => ({ prompt: p.prompt, engines: p.engines, long_s_retry_pages: p.long_s_retry_pages, ...pick(p) })),
+    long_s_retry_jobs_corpus_wide: loaded.tw.long_s_retry.jobs_sent_corpus_wide,
+  };
+}
+const THREE_WAYS_NOTE = 'Three ways, on the pages whose references are the same printed edition or scan: raw character error (letters only; case, ſ, accents and u/v all count); the error left after the conventions the OCR prompt itself asks for (abbreviations expanded, standard Unicode, ligatures written out, ſ written as s); and what kinds of error remain, by share of the error. The kinds are a heuristic sorted by a script; read the hand-check before quoting one.';
+function attachThreeWays(out) {
+  const loaded = loadThreeWays();
+  if (!loaded) return out;
+  for (const r of out.rows) if (r.ocr) { const t = threeWaysFor(r.language, loaded); if (t) r.ocr.three_ways = t; else delete r.ocr.three_ways; }
+  out.sources.ocr_three_ways = loaded.file;
+  out.notes.ocr_three_ways = THREE_WAYS_NOTE;
+  out.ocr_three_ways = { generated: loaded.tw.date, hand_check: loaded.hand_check, live_prompt: loaded.tw.live_prompt, by_prompt: byPrompt(loaded) };
+  return out;
+}
+if ('attach-three-ways' in args) {
+  const out = attachThreeWays(JSON.parse(fs.readFileSync(OUT_FILE, 'utf8')));
+  fs.writeFileSync(OUT_FILE, JSON.stringify(out, null, 2) + '\n');
+  for (const r of out.rows) if (r.ocr?.three_ways) console.log(`${r.language.padEnd(10)} raw ${r.ocr.three_ways.median_cer_raw} prompt ${r.ocr.three_ways.median_cer_prompt} (${r.ocr.three_ways.pages} pages) ${JSON.stringify(r.ocr.three_ways.kinds)}`);
+  process.exit(0);
+}
 
 // Every random-sample audit with a report, pooled with each book counted once (its earliest
 // verdict). Chained runs sample the processing backlog, not served pages, so they are left out.
@@ -102,6 +159,7 @@ const out = {
   translation_books: pooled.size,
   rows,
 };
-fs.writeFileSync(path.join(ROOT, 'src/data/quality-by-language.json'), JSON.stringify(out, null, 2) + '\n');
+attachThreeWays(out);
+fs.writeFileSync(OUT_FILE, JSON.stringify(out, null, 2) + '\n');
 console.log(`${rows.length} languages, ${pooled.size} books pooled from ${auditDirs.length} audits`);
 for (const r of rows) console.log(`${r.language.padEnd(10)} ${String(r.share_of_translated_pages).padStart(5)}%  ocr lite ${r.ocr.current.median_cer ?? '—'} (${r.ocr.current.books_referenced})  flash ${r.ocr.flash.median_cer ?? '—'}  judge ${r.translation.rated_4_or_5}/${r.translation.books}`);

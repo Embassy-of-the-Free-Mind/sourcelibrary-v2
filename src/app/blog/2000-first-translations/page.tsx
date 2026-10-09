@@ -5,9 +5,9 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 
 
 export const metadata: Metadata = {
-  title: '2,000 Books Never Read in English — Source Library',
+  title: '2,000 Books Never Read in English | Source Library',
   description:
-    'Data analysis of 2,000+ historical texts receiving their first English translation through AI — from 15th-century alchemical manuscripts to 19th-century Sanskrit treatises.',
+    'Data analysis of 2,000+ historical texts receiving their first English translation through AI, from 15th-century alchemical manuscripts to 19th-century Sanskrit treatises.',
   openGraph: {
     title: '2,000 Books Never Read in English',
     description:
@@ -94,7 +94,7 @@ const GALLERY_IMAGES = [
     author: 'Heinrich Khunrath',
     year: 1609,
     slug: 'amphitheatre-of-eternal-wisdom-1609-khunrath',
-    desc: 'Porta Amphitheatri — Gate of the Amphitheatre of Wisdom',
+    desc: 'Porta Amphitheatri: Gate of the Amphitheatre of Wisdom',
   },
   {
     url: 'https://images.sourcelibrary.org/gallery/69593413b282844d7b277aaf/69593413b282844d7b277ab0-0.jpg?v=1771877346999',
@@ -102,7 +102,7 @@ const GALLERY_IMAGES = [
     author: 'Robert Fludd',
     year: 1617,
     slug: 'utriusque-cosmi-historia-tomus-primus-de-macrocosmi-fludd',
-    desc: 'Cosmological frontispiece — macrocosm and microcosm',
+    desc: 'Cosmological frontispiece: macrocosm and microcosm',
   },
   {
     url: 'https://images.sourcelibrary.org/gallery/6952dac677f38f6761bc683a/6952dac677f38f6761bc6847-0.jpg?v=1771876133767',
@@ -110,7 +110,7 @@ const GALLERY_IMAGES = [
     author: 'Robert Fludd',
     year: 1617,
     slug: 'history-of-both-worlds-macrocosm-fludd',
-    desc: 'Integra Naturae Speculum — Mirror of all Nature',
+    desc: 'Integra Naturae Speculum: Mirror of all Nature',
   },
   {
     url: 'https://images.sourcelibrary.org/gallery/6952dac277f38f6761bc66b0/6952dac277f38f6761bc6751-0.jpg',
@@ -126,7 +126,7 @@ const GALLERY_IMAGES = [
     author: 'Anonymous',
     year: 1150,
     slug: 'bodleian-library-ms-bodl-614-anonymous',
-    desc: 'Blemmyes — headless people of classical geography',
+    desc: 'Blemmyes: headless people of classical geography',
   },
   {
     url: 'https://images.sourcelibrary.org/gallery/6952e47c77f38f6761bc7ca8/6952e47c77f38f6761bc7cab-0.jpg',
@@ -159,14 +159,14 @@ const GAP_DISTRIBUTION = [
 
 // Top authors by book count (excluding Chinese compilations and anonymous)
 const TOP_AUTHORS = [
-  { name: 'Athanasius Kircher', n: 23, desc: 'Jesuit polymath — Egypt, music, magnetism, geology', color: '#9e4a3a' },
+  { name: 'Athanasius Kircher', n: 23, desc: 'Jesuit polymath: Egypt, music, magnetism, geology', color: '#9e4a3a' },
   { name: 'Christiaan Huygens', n: 23, desc: 'Optics, astronomy, mechanics, probability', color: '#8b9a7d' },
-  { name: 'Roger Bacon', n: 17, desc: 'Franciscan friar — optics, alchemy, natural philosophy', color: '#7c5db5' },
-  { name: 'Karl von Eckartshausen', n: 17, desc: 'Bavarian mystic — magic, theosophy, inner light', color: '#c9a86c' },
-  { name: 'Pierre Gassendi', n: 14, desc: 'Epicurean revival — astronomy, atomism', color: '#8b9a7d' },
-  { name: 'Robert Fludd', n: 13, desc: 'Hermetic cosmology — macrocosm, microcosm, music', color: '#7c5db5' },
-  { name: 'Gustav Fechner', n: 12, desc: 'Psychophysics — consciousness, panpsychism', color: '#c9a86c' },
-  { name: 'Leonardo da Vinci', n: 9, desc: 'Notebooks — anatomy, mechanics, observation', color: '#9e4a3a' },
+  { name: 'Roger Bacon', n: 17, desc: 'Franciscan friar: optics, alchemy, natural philosophy', color: '#7c5db5' },
+  { name: 'Karl von Eckartshausen', n: 17, desc: 'Bavarian mystic: magic, theosophy, inner light', color: '#c9a86c' },
+  { name: 'Pierre Gassendi', n: 14, desc: 'Epicurean revival: astronomy, atomism', color: '#8b9a7d' },
+  { name: 'Robert Fludd', n: 13, desc: 'Hermetic cosmology: macrocosm, microcosm, music', color: '#7c5db5' },
+  { name: 'Gustav Fechner', n: 12, desc: 'Psychophysics: consciousness, panpsychism', color: '#c9a86c' },
+  { name: 'Leonardo da Vinci', n: 9, desc: 'Notebooks: anatomy, mechanics, observation', color: '#9e4a3a' },
 ];
 const MAX_AUTHOR = 23;
 
@@ -223,7 +223,7 @@ const FEATURED_BOOKS = [
     slug: 'two-treatises-on-the-nature-of-elements-on-the-fifth-essence-drebbel',
     thumb: 'https://images.sourcelibrary.org/thumbnails/6836f8ee811c8ab472a49e36/1.jpg',
     summary:
-      'Cornelius Drebbel presents a mesmerizing synthesis of natural philosophy and spiritual alchemy, arguing that all matter is animated by a single vital force — the "fifth essence" of perpetual motion.',
+      'Cornelius Drebbel presents a mesmerizing synthesis of natural philosophy and spiritual alchemy, arguing that all matter is animated by a single vital force: the "fifth essence" of perpetual motion.',
   },
   {
     title: 'Key to the Secrets of Nature',
@@ -245,7 +245,7 @@ const FEATURED_BOOKS = [
     slug: 'on-the-mysteries-ficino',
     thumb: 'https://images.sourcelibrary.org/gallery/912cf0da-035c-425b-8975-e5a195a47767/6959afa11dfc1806c080bc8c-0.jpg',
     summary:
-      'In this profound exploration, Marsilio Ficino navigates the tension between earthly desire and divine contemplation — a philosophical meditation on beauty, love, and the soul\'s ascent.',
+      'In this exploration, Marsilio Ficino navigates the tension between earthly desire and divine contemplation: a philosophical meditation on beauty, love, and the soul\'s ascent.',
   },
   {
     title: 'History of Both Worlds: Macrocosm',
@@ -256,7 +256,7 @@ const FEATURED_BOOKS = [
     slug: 'history-of-both-worlds-macrocosm-fludd',
     thumb: 'https://images.sourcelibrary.org/archived/69593413b282844d7b277aaf/1.jpg',
     summary:
-      'The pinnacle of Paracelsian cosmology — Fludd\'s encyclopedic vision of the universe as a living organism, illustrated with 60+ engravings mapping the correspondences between macrocosm and microcosm.',
+      'The pinnacle of Paracelsian cosmology: Fludd\'s encyclopedic vision of the universe as a living organism, illustrated with 60+ engravings mapping the correspondences between macrocosm and microcosm.',
   },
 ];
 
@@ -287,7 +287,7 @@ export default function TwoThousandFirstTranslations() {
         <div>
           <p>
             Source Library has now produced the first English translations of over 2,000
-            historical texts — works that have waited centuries for an audience beyond
+            historical texts: works that have waited centuries for an audience beyond
             the small circle of scholars who could read them in their original languages.
             Latin alchemical treatises, German Rosicrucian manifestos, Chinese medical
             classics, Sanskrit philosophical works, Hebrew Kabbalistic commentaries,
@@ -328,11 +328,11 @@ export default function TwoThousandFirstTranslations() {
         <div className="mb-6">
           <p>
             The 17th century dominates. The 1600s spike is the tallest bar on
-            the chart — and 93 of those 167 volumes come from a single work: the{' '}
+            the chart, and 93 of those 167 volumes come from a single work: the{' '}
             <em>Sancai Tuhui</em> (三才圖會), a Chinese illustrated encyclopedia
             published in 1609 that covers heaven, earth, and humanity across dozens
             of volumes. Even without it, the decades from 1600 to 1630 mark the
-            golden age of esoteric publishing — Paracelsian medicine, Rosicrucian
+            golden age of esoteric publishing: Paracelsian medicine, Rosicrucian
             manifestos, Hermetic philosophy, and alchemical compendia all surged
             simultaneously. A second peak in the 1780s reflects Enlightenment-era
             natural philosophy. What survived in library vaults but never crossed the
@@ -410,9 +410,9 @@ export default function TwoThousandFirstTranslations() {
           <p>
             Some of these books carry ideas far older than the books themselves.
             Plato&apos;s <em>Timaeus</em>, written in 360 BCE, didn&apos;t reach print
-            until Ficino&apos;s Latin translation in 1484 — a gap of over 1,800 years.
+            until Ficino&apos;s Latin translation in 1484, a gap of over 1,800 years.
             The <em>Demotic Magical Papyrus</em>, composed around 200 BCE, waited until
-            1629 to appear in a printed edition. These are not just old books — they are
+            1629 to appear in a printed edition. These are not just old books; they are
             vessels for ideas that have traveled across millennia, and are now being read
             in English for the first time.
           </p>
@@ -483,7 +483,7 @@ export default function TwoThousandFirstTranslations() {
           <p>
             The most-represented authors are polymaths who resisted disciplinary
             boundaries. Athanasius Kircher alone published on Egypt, music, geology,
-            magnetism, optics, and China — all in Latin, all untranslated until now.
+            magnetism, optics, and China, all in Latin, all untranslated until now.
             Huygens and Gassendi represent the mathematical-experimental tradition.
             Roger Bacon bridges medieval alchemy and proto-science. Together they form
             a portrait of curiosity unbounded by specialization.
@@ -519,7 +519,7 @@ export default function TwoThousandFirstTranslations() {
         </h2>
         <div className="mb-6">
           <p>
-            Latin dominates — the lingua franca of European scholarship until the
+            Latin dominates: the lingua franca of European scholarship until the
             18th century. But the collection reaches far beyond Europe: 198 Chinese
             texts (medicine, divination, natural philosophy), 135 Sanskrit works
             (Vedic commentary, Ayurvedic medicine, astronomical treatises), 58 Syriac
@@ -555,7 +555,7 @@ export default function TwoThousandFirstTranslations() {
         </h2>
         <div className="mb-6">
           <p>
-            Categories overlap — a single book can be theology, alchemy, and
+            Categories overlap: a single book can be theology, alchemy, and
             natural philosophy simultaneously. That&apos;s the point. The modern
             separation of these fields hadn&apos;t happened yet. Paracelsus wrote
             about medicine and mysticism in the same paragraph. Kircher mapped
@@ -566,7 +566,7 @@ export default function TwoThousandFirstTranslations() {
           <p>
             A note on &quot;Theology&quot;: this category is inflated. Our AI classifier
             tends to label anything that mentions God, providence, or the soul as
-            theology — even when the book is primarily about alchemy, natural
+            theology, even when the book is primarily about alchemy, natural
             philosophy, or medicine. A more accurate reading would redistribute
             many of these 626 books into other categories. We&apos;re working on
             improving the classification.
@@ -602,9 +602,9 @@ export default function TwoThousandFirstTranslations() {
           <p>
             The most striking pattern in the data is how often these supposedly
             separate disciplines appear in the same book. Alchemy and Hermeticism
-            co-occur in 211 books — nearly half the alchemical corpus. Philosophy
+            co-occur in 211 books, nearly half the alchemical corpus. Philosophy
             and Theology appear together in 165 works. These aren&apos;t genre
-            labels — they&apos;re a map of how pre-modern thinkers actually organized
+            labels; they&apos;re a map of how pre-modern thinkers actually organized
             knowledge. The borders we draw between science, religion, and magic
             simply didn&apos;t exist.
           </p>
@@ -645,7 +645,7 @@ export default function TwoThousandFirstTranslations() {
         </h2>
         <div className="mb-6">
           <p>
-            Not academic citations — actual readers who found these books
+            Not academic citations, but actual readers who found these books
             and stayed. The Cabalistic Science introduction leads with 47 readers,
             followed by Drebbel&apos;s treatise on alchemy and Eckartshausen&apos;s
             mystical manual. The Corpus Hermeticum and Ficino&apos;s <em>On the
@@ -703,8 +703,8 @@ export default function TwoThousandFirstTranslations() {
             <Link href="https://embassyofthefreemind.com" className="text-[#9e4a3a] hover:underline">
               Embassy of the Free Mind
             </Link>{' '}
-            in Amsterdam — a museum and library dedicated to the Western esoteric
-            tradition — is the single most important specialized source, contributing
+            in Amsterdam, a museum and library dedicated to the Western esoteric
+            tradition, is the single most important specialized source, contributing
             788 books from their Bibliotheca Philosophica Hermetica. The Bibliothèque
             nationale de France, Bavarian State Library, and Vatican Library round out
             a truly global network of preservation.
@@ -738,7 +738,7 @@ export default function TwoThousandFirstTranslations() {
         </h2>
         <div className="mb-6">
           <p>
-            These books are visual objects — hand-engraved illustrations, emblematic
+            These books are visual objects: hand-engraved illustrations, emblematic
             frontispieces, cosmological diagrams, alchemical symbols. Our AI image
             extraction has catalogued over 73,000 illustrations across the collection.
             Here are some of the finest from the first-translation corpus.
@@ -779,7 +779,7 @@ export default function TwoThousandFirstTranslations() {
         </h2>
         <div className="mb-6">
           <p>
-            These are fully translated and ready to read — first English translations
+            These are fully translated and ready to read: first English translations
             of works that have shaped intellectual history but remained inaccessible
             to most readers.
           </p>
@@ -824,7 +824,7 @@ export default function TwoThousandFirstTranslations() {
         <div className="mb-6">
           <p>
             These aren&apos;t pamphlets. The median book is 220 pages, and 113 books
-            exceed 1,000 pages — massive compendia like Fludd&apos;s 1,036-page
+            exceed 1,000 pages: massive compendia like Fludd&apos;s 1,036-page
             cosmology or multi-volume theological disputations. Translating a
             1,000-page 17th-century Latin text would take a human scholar years of
             work. The AI pipeline processes them in hours.
@@ -887,8 +887,8 @@ export default function TwoThousandFirstTranslations() {
             <p className="text-base text-stone-600 leading-relaxed">
               During metadata enrichment, our AI reads the first 25 pages of OCR text
               from each book and classifies whether the work has ever been translated
-              into English. This lightweight check uses the book&apos;s own content —
-              title page, preface, colophon — alongside its metadata (author, language,
+              into English. This lightweight check uses the book&apos;s own content
+              (title page, preface, colophon) alongside its metadata (author, language,
               year, subject) to make an initial assessment. Cost: ~$0.002 per book.
             </p>
           </div>
@@ -900,11 +900,11 @@ export default function TwoThousandFirstTranslations() {
             <p className="text-base text-stone-600 leading-relaxed">
               Books flagged as potential first translations go through a deeper
               verification using Gemini with function-calling. The model is given
-              five real tools — <code className="bg-white/60 px-1.5 py-0.5 rounded text-sm">search_local_catalogs</code> (our
+              five real tools (<code className="bg-white/60 px-1.5 py-0.5 rounded text-sm">search_local_catalogs</code> (our
               own 1,200+ book database), <code className="bg-white/60 px-1.5 py-0.5 rounded text-sm">search_open_library</code>,{' '}
               <code className="bg-white/60 px-1.5 py-0.5 rounded text-sm">search_google_books</code>,{' '}
               <code className="bg-white/60 px-1.5 py-0.5 rounded text-sm">search_ustc</code> (the Universal Short Title
-              Catalogue), and <code className="bg-white/60 px-1.5 py-0.5 rounded text-sm">make_determination</code> — and
+              Catalogue), and <code className="bg-white/60 px-1.5 py-0.5 rounded text-sm">make_determination</code>) and
               autonomously searches for existing English translations. It checks
               academic publishers, specialist presses, PhD dissertations, journal
               translations, and anthologies.
@@ -920,11 +920,11 @@ export default function TwoThousandFirstTranslations() {
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {[
-                { label: 'Confirmed First', desc: 'No English translation found — high confidence', n: '1,727' },
+                { label: 'Confirmed First', desc: 'No English translation found, high confidence', n: '1,727' },
                 { label: 'First Complete Translation', desc: 'Partial excerpts exist, but no full translation', n: '609' },
                 { label: 'First Modern Translation', desc: 'Only outdated or archaic translations exist', n: '119' },
                 { label: 'Translation Found', desc: 'Verified English translation exists', n: '1,527' },
-                { label: 'Needs Review', desc: 'Insufficient evidence — flagged for manual check', n: '106' },
+                { label: 'Needs Review', desc: 'Insufficient evidence; flagged for manual check', n: '106' },
               ].map((d) => (
                 <div key={d.label} className="bg-white rounded-lg p-3 border border-[#e8e4dc]">
                   <div className="flex justify-between items-baseline">
