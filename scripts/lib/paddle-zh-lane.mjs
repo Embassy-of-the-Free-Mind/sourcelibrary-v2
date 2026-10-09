@@ -86,6 +86,29 @@ export function hanCount(text) {
   return n;
 }
 
+/**
+ * Han characters OUTSIDE the margin marks (<header>, <page-num>) — the reading a page actually carries. A read whose
+ * only text is margin furniture is textless. #5660 stress canary: on a blank SKQS leaf Paddle wrote 欽定四庫全書
+ * followed by a recited 卷一 … 卷十 (26 Han, every line a bare juan line, so all of it became <header>); counted
+ * with hanCount it passed MIN_HAN and would have been written as the page's text.
+ */
+/** Longest run of one repeated non-space character. */
+export function longestCharRun(text) {
+  let best = 0, run = 0, prev = '';
+  for (const ch of String(text || '').replace(/\s+/g, '')) { run = ch === prev ? run + 1 : 1; prev = ch; if (run > best) best = run; }
+  return best;
+}
+/**
+ * A run this long of ONE character is a loop, not a table (#5660 stress re-test: a rhyme table read as one line of
+ * thousands of ○, which ocr-loop-guard cannot see — ○ is a symbol, and its units must carry a letter or digit).
+ * The densest real cell runs seen in the SKQS numeric tables are ~12 (〇〇〇… in a zero column).
+ */
+export const MAX_CHAR_RUN = 40;
+
+export function bodyHanCount(body) {
+  return hanCount(String(body || '').replace(/<(header|page-num)>[\s\S]*?<\/\1>/g, ''));
+}
+
 /** Conversion 3: Paddle's HTML → lines. Returns { text, img, tables }. */
 export function flattenHtml(raw) {
   let s = String(raw || '');

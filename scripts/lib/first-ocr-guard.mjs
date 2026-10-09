@@ -22,6 +22,10 @@
  *                    WITH variation (the cursive page: `de ltar yang …` ×9 in one line). A page-level 3-gram count
  *                    cannot be used: Prajñāpāramitā lists repeat སྟོང་པ་ཉིད every few syllables, and it flagged 20 %
  *                    of shard 0; the per-line + overrun form flags 0.6 %.
+ *   local_loop       one unit fills ≥ 12 of some 30 consecutive units — a loop appended after real lines, which a
+ *                    page-level share dilutes (by eye: 14 lines read right, then 4 invented lines of དགེ་སློང་/དགེའོ)
+ *   numeral_loop     ≥ 8 lines of bare Tibetan numerals carrying 3× more numerals than syllables (a prose page read as
+ *                    ༢༠༤ ×70; numerals are not syllables, so no syllable rule sees it)
  *   exact_loop       ocr-loop-guard's exact periodic run, at a lower floor (short pages)
  *   blank_leaf       the leaf carries almost no ink texture (≤ 0.2 % of leaf pixels) but the text claims ≥ 60 units,
  *                    more than a title leaf holds (needs the image). Calibrated on shard 0: the 48 leaves under the
@@ -44,7 +48,10 @@ const TIB_SPLIT = /[་༌ༀ-༔\s]+/u;
 
 export const T = {
   punctMin: 8, punctSylMax: 6, punctRatio: 0.5, // punct_noise: ≥ 8 marks and ≤ 6 syllables, or syllables < 0.5 × marks
-  domMinCount: 5, domShare: 0.2, domMaxUnits: 400, // dominant_unit: top unit ≥ 5× and ≥ 20 % of units, page ≤ 400 units
+  domMinCount: 5, domShare: 0.2, domMaxUnits: 150, // dominant_unit: top unit ≥ 5× and ≥ 20 % of units, page ≤ 150 units (a title leaf;
+  // at 400 a red-ink Prajñāpāramitā leaf, པ = 21 % of 379 syllables, was flagged — a by-eye-clean page)
+  localWindow: 30, localMax: 12, // local_loop: one unit ≥ 12 of any 30 consecutive units (a tail of དགེའོ / དགེ་སློང་ after real lines)
+  digitLines: 8, digitRatio: 3, // numeral_loop: ≥ 8 lines of bare Tibetan numerals and numerals > 3 × syllables
   lineMinUnits: 6, lineRepeats: 2, // repeated_line: a ≥ 6-unit line seen ≥ 2× more (3 total)
   shortLineRepeats: 3, // repeated_line: ≥ 3 lines that are the same 1–2 units
   ngramN: 3, lineNgramMin: 6, overrun: 1.4, // line_loop: one line repeats a 3-gram ≥ 6× and is ≥ 1.4× the median line
@@ -81,6 +88,23 @@ export function textVerdict(text, t = T) {
   f.top_unit = top[0]; f.top_count = top[1]; f.top_share = n ? +(top[1] / n).toFixed(3) : 0;
   // Han: 之/也/曰 recur legitimately; only Tibetan uses the dominance rule
   if (u.script === 'tibetan' && n <= t.domMaxUnits && top[1] >= t.domMinCount && top[1] / n >= t.domShare) flags.push('dominant_unit');
+  // local loop: a dense run of one unit inside an otherwise normal page
+  let loc = 0;
+  if (n >= t.localWindow) {
+    const m = new Map();
+    for (let i = 0; i < n; i++) {
+      m.set(u.list[i], (m.get(u.list[i]) || 0) + 1);
+      if (i >= t.localWindow) m.set(u.list[i - t.localWindow], m.get(u.list[i - t.localWindow]) - 1);
+      if (i >= t.localWindow - 1) for (const v of m.values()) if (v > loc) loc = v;
+    }
+  }
+  f.local_max = loc;
+  if (loc >= t.localMax) flags.push('local_loop');
+  // numeral loop (Tibetan digits are not syllables)
+  const digits = (body.match(/[\u0F20-\u0F33]/gu) || []).length;
+  const digitLines = body.split('\n').filter(l => /[\u0F20-\u0F33]/u.test(l) && /^[\s\u0F20-\u0F33]+$/u.test(l)).length;
+  f.digit_lines = digitLines;
+  if (digitLines >= t.digitLines && digits > t.digitRatio * Math.max(1, n)) flags.push('numeral_loop');
   // repeated lines
   const lines = body.split(/\n+/).map(l => lineUnits(l, u.script)).filter(l => l.length);
   const lc = new Map(), sc = new Map();
@@ -141,7 +165,11 @@ export async function leafTexture(buf, D = 14) {
         if (size > bestSize) { bestSize = size; bestLab = cur; }
         cur++;
       }
-      for (let i = 0; i < N; i++) if (lab[i] === bestLab) mask[i] = 1;
+      // the leaf is the BOUNDING BOX of that region, not the region: blurred text lines are darker than the
+      // threshold, so the region itself has holes exactly where the ink is (a clean printed page read as 0.1 % ink)
+      let x0 = W, y0 = H, x1 = -1, y1 = -1;
+      for (let i = 0; i < N; i++) if (lab[i] === bestLab) { const x = i % W, y = (i / W) | 0; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+      for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) mask[y * W + x] = 1;
     }
     let m = mask;
     for (let k = 0; k < 6; k++) { const n = new Uint8Array(N); for (let y = 1; y < H - 1; y++) for (let x = 1; x < W - 1; x++) { const p = y * W + x; n[p] = m[p] & m[p - 1] & m[p + 1] & m[p - W] & m[p + W]; } m = n; }

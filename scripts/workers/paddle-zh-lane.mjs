@@ -47,7 +47,7 @@ import { holdBook, isHeld } from '../lib/pipeline-hold.mjs';
 import { juanRange } from '../eval/zh-cohort-5547-duplicates.mjs';
 import {
   LANE, LANE_ISSUE, REVISION_REASON, BOOK_EVENT, HOLD_REASON, HOLD_RELEASE, MIN_HAN, PADDLE,
-  convertPaddle, envelope, hanCount, workTitleOf, pagePolicy, ocrSetFields,
+  convertPaddle, envelope, hanCount, bodyHanCount, longestCharRun, MAX_CHAR_RUN, workTitleOf, pagePolicy, ocrSetFields,
   isHumanEdited, STALE_OCR_FIELDS, markTranslationsStale,
 } from '../lib/paddle-zh-lane.mjs';
 
@@ -296,7 +296,8 @@ async function apply() {
         if (!p) { if (APPLY) append(F.skipped, { bid, pn: r.pn, why: 'page_gone' }); continue; }
         if (isHumanEdited(p.ocr)) { if (APPLY) append(F.skipped, { bid, pn: r.pn, why: 'human_edited' }); totals.human_edited++; continue; }
         const { body, stats } = convertPaddle(fs.readFileSync(outTxt(bid, r.pn), 'utf8'), { workTitle });
-        const han = hanCount(body);
+        // margin marks alone are not a reading (#5660: a blank leaf read as a recited 卷一 … 卷十 list)
+        const han = bodyHanCount(body);
         const oldLoop = p.ocr?.data ? loopVerdict(p.ocr.data).refuse : false;
         if (han < MIN_HAN && !oldLoop) {
           // Paddle saw no text (a plate, a blank leaf): never store an empty reading. A stored reading is
@@ -306,6 +307,9 @@ async function apply() {
         }
         const text = envelope(body);
         const v = loopVerdict(text);
+        // a single-character run (○ ×4,000) is a loop the period guard cannot see (#5660 stress re-test)
+        const run = longestCharRun(body);
+        if (!v.refuse && run > MAX_CHAR_RUN) Object.assign(v, { refuse: true, reason: 'char_run', share: 1, period: 1, reps: run, chars: run, body: body.length });
         if (v.refuse) {
           if (APPLY) { await recordLoopRefusal(db, { pageId: p.id, bookId: bid, pageNumber: p.page_number, text, model: PADDLE.model, verdict: v }); append(F.refused, { bid, pn: r.pn, pid: r.pid, share: v.share }); }
           totals.refused++; continue;
