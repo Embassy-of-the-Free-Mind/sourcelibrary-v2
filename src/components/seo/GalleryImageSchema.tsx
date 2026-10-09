@@ -70,7 +70,7 @@ export default function GalleryImageSchema({
   const artwork = {
     '@type': ['VisualArtwork', 'ImageObject'],
     '@id': `${pageUrl}#artwork`,
-    name: `${desc} \u2014 ${bookTitle}`,
+    name: `${desc}, from ${bookTitle}`,
     caption: `${desc}. From ${bookTitle}${book?.author && book.author !== 'Various' ? `, by ${formatAuthor(book.author).name || book.author}` : ''}${book?.published ? ` (${book.published})` : ''}.`,
     ...(museumDescription && { description: museumDescription }),
     ...(imageUrl && { contentUrl: imageUrl }),
@@ -129,7 +129,7 @@ export default function GalleryImageSchema({
     '@type': 'WebPage',
     '@id': pageUrl,
     url: pageUrl,
-    name: `${desc} — ${bookTitle}`,
+    name: `${desc}, from ${bookTitle}`,
     mainEntity: { '@id': `${pageUrl}#artwork` },
   };
 

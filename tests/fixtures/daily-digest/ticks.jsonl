@@ -1,0 +1,4 @@
+{"t":"2026-10-01T03:15:02Z","test":"speedtest-demo","status":"running","today_usd":10,"ocr":[{"pages":5}],"translation":[{"pages":1}]}
+{"t":"2026-10-01T04:15:02Z","test":"speedtest-demo","status":"running","today_usd":126.75,"window_usd_since_start":213.06,"ocr":[{"pages":19164},{"pages":54124}],"translation":[{"pages":369},{"pages":830}]}
+{"t":"2026-10-01T04:20:00Z","test":"speedtest-demo","event":"routing_change","note":"event rows carry no status and are skipped"}
+not json at all

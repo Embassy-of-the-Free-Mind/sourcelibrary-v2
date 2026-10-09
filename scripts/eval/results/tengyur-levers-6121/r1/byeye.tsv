@@ -1,0 +1,21 @@
+n	arm	section	type	verdict	reason
+1	S	Pramāṇa	agent	confirmed	ཞེས་བྱ་བ་ལ་སོགས marks a quoted lemma ("the words 'the expounders' etc."); the English makes commentators the ones replying
+2	S	Jātaka	agent	confirmed	གང་ལ "the one in whom" this understanding arises is the one who relies on them; the English makes the wisdom depend on them
+3	S	Madhyamaka	agent	debatable	the e-text has the genitive གི, which the English follows; MMK 17.2 has the agentive (the Sage taught actions as…), so the doctrine supports the reviewer
+4	S	Pramāṇa	reversal	rejected	the Tibetan is affirmative (…རྣལ་མ་ཡིན་ནོ) and the English matches it; the reviewer read a denial into it from the dream example that follows
+5	S	Jātaka	reversal	debatable	the Tibetan literally says "if there is no anger… by abandoning, ill repute arises", which the English follows with a rationalising note; the contrast with the next stanza supports the reviewer, but the line is obscure
+6	A	Jātaka	agent	confirmed	the subject of མཐོང་ནས་སྨྲས་པ is Moon (the youths answer next); "they said" gives the words to the group
+7	A	Pramāṇa	reversal	debatable	ཕྱིར་ཏེ inside a prasaṅga ("it would follow… which is not wanted"): the English can be read as the reason for the absurdity, but it reads as a plain assertion
+8	A	Madhyamaka	reversal	confirmed	སྤོང་བར་བྱེད་པའི་གཉེན་པོ "the antidote that abandons" wrong views became "to counteract the abandonment of" them
+9	A	Pramāṇa	agent	confirmed	…ཞེས་བྱ་བའི་ལན: the clause is the objection being answered; the English makes it the author's own reason
+10	A	Vinaya	agent	confirmed	དགེ་འདུན་ལས "from the Saṅgha": the disciple helps the preceptor receive the penance from the Saṅgha; the English makes the Saṅgha the helper
+11	C	Pramāṇa	agent	confirmed	the agentive བློས makes the non-entity cognition the one that cuts off the entity-cognition's continuity; the English makes the entity-cognition produce the cause
+12	C	Pramāṇa	reversal	confirmed	ཐོགས་པ་མེད་པའི་དོན་མ་ཡིན "it is not a case of UNhindered capacity" became "this does not mean the capacity is hindered"
+13	C	Madhyamaka	reversal	confirmed	ཁྱོད་གང་གིས "the gold or jewels with which you are to honour Dharmodgata" became "what need is there for gold…": an invented dismissal
+14	C	Pramāṇa	reversal	confirmed	"how is the cause also hollow because the effect is hollow" became "how can the effect be hollow because the cause is hollow": the direction is inverted
+15	C	Pramāṇa	agent	confirmed	དེས "by that" refers to the conjunction (ལྡན་པ) of blue etc.; the note makes it "a single whole", the view the passage has just denied
+16	P	Jātaka	agent	confirmed	ཡིད་འཕྲོག is a name/the thing Moon is to be parted from; the English makes Moon "captivating"
+17	P	Vinaya	reversal	confirmed	གནས་ཀྱིས་ཀྱང་ཞུ་བར་མི་བྱར་ཟད "the niśraya teacher also does it, only he need not ask" became "the abbot does not only ask questions"
+18	P	Pramāṇa	agent	confirmed	the whole of གལ་ཏེ…ཞེས་དོགས་པ་བསུ་བ is an anticipated objection; the English presents its first half as the author's statement
+19	P	Pramāṇa	agent	confirmed	གྲང་བ་ལ་སོགས་པའི་མེ "fire (the counter) of cold" became "cold acts upon fire": the relation is inverted
+20	P	Vinaya	agent	confirmed	ཞོ་རྫིའུ is a small pot of curd, not "the milkman" (a real error; typed agent, it is a term/referent error)

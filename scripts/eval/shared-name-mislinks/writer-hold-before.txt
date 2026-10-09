@@ -1,0 +1,15 @@
+Bacon	6909b22fcf28baa1b4caf185	person terms 28	person records written 28	of them a held bare record: Bacon
+Bacon	69528a4fab34727b1f04eab6	person terms 358	person records written 358	of them a held bare record: Bacon, Philalethes
+Bacon	695434e11479a63c1108a3ab	person terms 138	person records written 138	of them a held bare record: Bacon
+Scaliger	31f2d90a-88af-4414-a445-68406caca58d	person terms 68	person records written 68	of them a held bare record: Scaliger
+Scaliger	4d4089b9-9227-4cc5-b0a2-9b06ee731061	person terms 376	person records written 376	of them a held bare record: Scaliger
+Scaliger	4f4ff6f9-f0bd-4307-910c-65da7c36c0ef	person terms 44	person records written 44	of them a held bare record: Scaliger
+Agricola	0a481175-492d-46c5-95b9-8042e7b6710a	person terms 231	person records written 231	of them a held bare record: Agricola
+Agricola	69099634cf28baa1b4cae779	person terms 117	person records written 117	of them a held bare record: Agricola
+Agricola	690c2476e0787282ad5930dd	person terms 35	person records written 35	of them a held bare record: Agricola
+Philalethes	6909d208cf28baa1b4cb003b	person terms 78	person records written 78	of them a held bare record: Philalethes, Scaliger
+Philalethes	695203a5ab34727b1f041c53	person terms 198	person records written 198	of them a held bare record: Bacon, Philalethes
+Philalethes	695258ceab34727b1f0457c2	person terms 172	person records written 172	of them a held bare record: Philalethes
+
+origin/main:scripts/batch/batch-generate-indexes.mjs
+12 books, 1843 person terms in their indexes: 1843 person records written, 15 of them a held bare-surname record.

@@ -1,0 +1,52 @@
+{
+ "issue": 5914,
+ "date": "sprint-2026-10-07-r1",
+ "fortnight": {
+  "books": 10,
+  "pages": 30,
+  "pages_with_serious": 15,
+  "serious_errors": 41,
+  "page_rate": 0.5,
+  "page_rate_ci": [
+   0.23333333333333334,
+   0.7666666666666667
+  ],
+  "books_on_sight_defect": 10,
+  "book_defect_rate": 1,
+  "book_defect_rate_ci": [
+   1,
+   1
+  ]
+ },
+ "window": {
+  "runs": [],
+  "books": 0,
+  "pages": 0,
+  "pages_with_serious": 0,
+  "serious_errors": 0,
+  "page_rate": null,
+  "page_rate_ci": null,
+  "books_on_sight_defect": 0,
+  "book_defect_rate": null,
+  "book_defect_rate_ci": null
+ },
+ "window_days": 0,
+ "top_classes": [
+  {
+   "class": "O6",
+   "score": 30,
+   "pages": 13
+  },
+  {
+   "class": "T7",
+   "score": 22,
+   "pages": 8
+  },
+  {
+   "class": "O1",
+   "score": 16,
+   "pages": 7
+  }
+ ],
+ "window_top_classes": []
+}

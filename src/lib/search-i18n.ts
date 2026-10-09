@@ -1,4 +1,4 @@
-import type { Locale } from '@/lib/locale-path';
+import { withEnglishFallback, type Locale } from '@/lib/locale-path';
 
 /**
  * Strings for the search page (`src/app/search/page.tsx`), which renders under
@@ -207,7 +207,9 @@ export interface SearchStrings {
  */
 export const EXAMPLE_QUERY_PROPER_NOUNS = ['Hermes', 'Paracelsus', 'Kabbalah', 'rasayana', 'Ficino'] as const;
 
-export const SEARCH_STRINGS: Record<Locale, SearchStrings> = {
+// No `/la` twin for this surface (#6254): Latin reads the English copy, which is
+// never rendered under a Latin URL. See `withEnglishFallback`.
+export const SEARCH_STRINGS: Record<Locale, SearchStrings> = withEnglishFallback({
   en: {
     numberLocale: 'en-US',
 
@@ -485,13 +487,13 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = {
 
     imagesEnglishNote: 'Las descripciones de las ilustraciones están indexadas en inglés, así que la búsqueda de imágenes usa palabras inglesas. Las imágenes se pueden explorar en cualquier idioma.',
   },
-};
+});
 
 /**
  * Example queries for the empty-results screen, per locale: the leading common
  * noun translated, the names left alone.
  */
-export const EXAMPLE_QUERIES: Record<Locale, string[]> = {
+export const EXAMPLE_QUERIES: Record<Locale, string[]> = withEnglishFallback({
   en: ['alchemy', ...EXAMPLE_QUERY_PROPER_NOUNS],
   es: ['alquimia', ...EXAMPLE_QUERY_PROPER_NOUNS],
-};
+});

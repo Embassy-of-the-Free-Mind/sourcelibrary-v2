@@ -23,7 +23,7 @@ Every query fans out to four lanes in parallel, each tenant-scoped:
 - **keyword books** — Supabase trigram (`books_catalog`) → Mongo metadata.
 - **keyword pages** — Atlas Search `pages_search` (phrase/fuzzy on translation+OCR).
 - **semantic books** — `match_books_semantic` (Gemini 768-dim). ⚠️ global RPC (no `tenant_id` column); tenant scope is re-applied in the Mongo materialization — see "Tenant scoping" below.
-- **semantic pages** — `match_semantic` (passes `filter_tenant_id`, so tenant-safe at the RPC).
+- **semantic pages** — `match_semantic` on the main site; under a tenant, `match_pages_in_scope` over the tenant's book set. (`match_semantic` accepts `filter_tenant_id` and **ignores it** — no embedding table has a tenant column. This line said "tenant-safe at the RPC" until 2026-10-06, #4330.)
 
 Lane results are concatenated, then **ordered** by the chosen ranking strategy, then work-id-deduped and paginated.
 
@@ -58,7 +58,7 @@ The `strategy` is the better routing signal than word count (e.g. 2-word "sympat
 
 ## Tenant scoping (lockdown) — fixed in #2159
 
-Partner subdomains (BPH/EFM) must never show non-tenant content. The keyword lanes and the semantic *page* lane scope by tenant; the semantic *book* lane did **not** (its RPC is global and `book_embeddings` has no `tenant_id` column), so it leaked global books into BPH results — measured at up to 18/25 for "hermetic philosophy and the soul". Fixed by re-applying the tenant filter in the semantic materialization queries. Guard: `scripts/audit/search-tenant-purity.mjs` (asserts 0 cross-tenant survivors; re-run after touching the semantic lanes).
+Partner subdomains (BPH/EFM) must never show non-tenant content. The keyword lanes and the semantic *page* lane scope by tenant; the semantic *book* lane did **not** (its RPC is global and `book_embeddings` has no `tenant_id` column), so it leaked global books into BPH results — measured at up to 18/25 for "hermetic philosophy and the soul". Fixed by re-applying the tenant filter in the semantic materialization queries. Guard: `scripts/audit/search-tenant-purity.mjs` (asserts 0 cross-tenant survivors; re-run after touching the semantic lanes). **Since #4330 every vector lane takes a `SearchScope`** (`src/lib/tenant-search-scope.ts`) and ranks inside the tenant's book set rather than filtering the global ranking afterwards — see `embeddings.md`, "Tenant scope".
 
 ## The BPH compare tool (PR #2161, preview-only)
 

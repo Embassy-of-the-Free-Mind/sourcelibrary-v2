@@ -5,12 +5,19 @@
 // prints the name, never whose name it is. scripts/audit/person-entity-name-collisions.mjs — counts
 // colliding names. None splits one catch-all record's mentions between the people who share it.
 /**
- * READ-ONLY DRY RUN: which person does each mention on a bare-surname record belong to? (#5950)
+ * Which person does each mention on a bare-surname record belong to? (#5950)
  *
  * Takes the bare record ("Bacon") and, for every book entry and every page it claims, proposes
- * a move to one of the configured bearers of the name — or leaves it. It writes NOTHING to Mongo:
- * the output is a plan file and counts. Applying it is a hold-list decision (an `entities` write,
- * and a sweep over `entities` blocks production builds — deploy-and-caching.md).
+ * a move to one of the configured bearers of the name — or leaves it. Without `--apply` it writes
+ * NOTHING to Mongo: the output is a plan file and counts.
+ *
+ * `--apply --undo-out <file>` (Derek, #5950, 2026-10-06: Bacon only) moves the proposed mentions
+ * from the bare record to each person's full-name record. It writes three `entities` documents in
+ * one transaction, after: the old `books[]` of each is in the undo file; the entities interlock
+ * (scripts/audit/entities-sweep-active.mjs) exits 0; none of the three changed since it was read.
+ * Counters come from `entityCounters`. One `sweep_log` row per book and person records what moved
+ * and why. `--undo <file>` puts the three `books[]` back. Check that no production build is
+ * running before either (deploy-and-caching.md): this script cannot see Vercel.
  *
  * Evidence, strongest first; a page is decided by the first tier that names exactly one person:
  *   1 printed    the page's own text has a cue for one person only ("Rogerius", "Verulam", a
@@ -24,11 +31,26 @@
  *   4 note       the translation's editorial note or keywords on the page name one of them.
  * Tiers 1 and 2 disagreeing, or a tier naming both, leaves the page unresolved.
  *
+ * A by-eye verdict in the surname's `byEye` table comes before all four. It is there because tier 3
+ * is weaker than its first check said (5 of 5): after the Bacon apply every same-book move was
+ * read, and 143 of 163 were right, 15 wrong, 5 undecidable. The wrong ones cluster by book: a
+ * history of logic that names Roger Bacon once in full and means Francis on seven other pages.
+ * Tier 4, read in full: 61 of 63 right, 2 undecidable. Tier 1 was sampled only (12 of 12).
+ * So: READ EVERY same-book and note proposal before an apply, and enter what was read here.
+ *
  * Usage:
  *   node --env-file=.env.production.local scripts/audit/shared-surname-reattribution-plan.mjs --surname Bacon [--out plan.json] [--check verdicts.tsv --sample sample.jsonl]
+ *   … --surname Bacon --apply --undo-out undo.json [--out plan.json]
+ *   … --undo undo.json
  */
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import fs from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+import { entityCounters } from '../lib/entity-page-match.mjs';
+import { recordSweepActions } from '../lib/sweep-log.mjs';
+
+const SWEEP = 'shared-surname-reattribution-5950';
 
 const arg = (flag, dflt) => { const i = process.argv.indexOf(flag); return i > 0 ? process.argv[i + 1] : dflt; };
 
@@ -40,6 +62,32 @@ const arg = (flag, dflt) => { const i = process.argv.indexOf(flag); return i > 0
 export const SURNAMES = {
   Bacon: {
     needle: /\bbac(c?h?o|on)/,
+    // book id → page → who the page means, read by eye on 2026-10-06. 'stay' = neither can be
+    // shown (or it is a third Bacon), so the mention stays on the bare record.
+    byEye: {
+      // Rozanov, O ponimanii (1886): "the logic of Bacon" against Aristotle's, induction.
+      '69af41912a17c2103c8205a5': { 113: 'francis', 120: 'francis', 122: 'francis', 332: 'francis', 457: 'francis', 475: 'francis', 541: 'francis' },
+      // Kittredge, Witchcraft (1929): "the deadliest poisons practised by the West Indians" (Sylva sylvarum).
+      '699069ee1cf6ed5fbc8f4589': { 155: 'francis' },
+      // Dutens, Recherches (1766): "Ramus, Bacon, Gassendi, Descartes, Newton".
+      '69c73f1a6a0f3d112faf7a97': { '-13': 'francis' },
+      // Blavatsky, Isis Unveiled (1877): p.459 Balfour Stewart quoting Bacon; p.107 "conviction
+      // comes not through arguments but through experiments", which could be either man.
+      '69528a4fab34727b1f04eab6': { 459: 'francis', 107: 'stay' },
+      // Ennemoser, History of Magic II (1854): the same saying.
+      '699069e81cf6ed5fbc8f3f00': { 29: 'stay' },
+      // Picard, Superstitions (1733): Bacon on garlic and the lodestone; not decidable from the page.
+      '69c828ae6c6f3cc53c84c46c': { 164: 'stay' },
+      // Wirdig, Nova medicina spirituum (1673): the powers of phantasy "according to Bacon".
+      '69bd9f35f6d63c919747fc30': { 179: 'stay', 191: 'stay' },
+      // Theatrum sympateticum (1709): recipes "from the Physician Bacon", a third man.
+      '69c8597a6c6f3cc53c8545c9': { '-275': 'stay', '-229': 'stay', 367: 'stay', 456: 'stay' },
+      // Francis Bacon, Scripta (1653), Temporis partus masculus: "qualis est Bacon" is Francis on Roger.
+      '69b2ff88a1a4246ddb45b1e1': { 496: 'roger' },
+      // Raynaud, Theologia naturalis (1622): a scholastic "Bacon" on the Intelligences, probably
+      // John Baconthorpe; the translator's note says Roger.
+      '69c7faaf6c6f3cc53c842b61': { 185: 'stay', 187: 'stay' },
+    },
     persons: [
       {
         key: 'roger', name: 'Roger Bacon', wikidata_id: 'Q171677', citedFrom: 1260,
@@ -98,13 +146,197 @@ export function decidePage(rule, { printed, editorial, bookYear, sameBook }) {
   return { person: null, tier: sb.length > 1 || t4.length > 1 ? 'both-in-book' : 'no-evidence' };
 }
 
+/**
+ * Turn the plan's rows into the new `books[]` of the bare record and of each target. Pure.
+ *
+ * A moved page leaves the bare entry and joins the person's entry for the same book; a bare entry
+ * with no page left is dropped. A section-precision entry moves whole. On the target, verified
+ * pages join an entry that is already page-precise and REPLACE a section range (as
+ * `dedupeEntityBooks` does). An unmarked legacy entry with pages is refused: merging into it would
+ * mark its unverified pages as verified (entity-page-attribution.md).
+ *
+ * @param {{ bareBooks: object[], targetBooks: Record<string, object[]>, rows: object[] }} input
+ * @returns {{ bare: object[], targets: Record<string, object[]>, moves: object[] }}
+ */
+export function applyPlanToBooks({ bareBooks, targetBooks, rows }) {
+  const seen = new Set();
+  for (const b of bareBooks) {
+    if (seen.has(b.book_id)) throw new Error(`bare record lists book ${b.book_id} twice: dedupe it first`);
+    seen.add(b.book_id);
+  }
+  const byBook = new Map();
+  for (const r of rows) {
+    if (!r.person) continue;
+    if (!(r.person in targetBooks)) throw new Error(`no target record for "${r.person}"`);
+    const perPerson = byBook.get(r.book_id) ?? new Map();
+    const m = perPerson.get(r.person) ?? { pages: new Set(), whole: false, tiers: new Set() };
+    if (r.page === null) m.whole = true; else m.pages.add(r.page);
+    m.tiers.add(r.tier);
+    perPerson.set(r.person, m);
+    byBook.set(r.book_id, perPerson);
+  }
+
+  const targets = Object.fromEntries(Object.entries(targetBooks).map(([k, list]) => [k, list.map(b => ({ ...b }))]));
+  const bare = [];
+  const moves = [];
+  for (const entry of bareBooks) {
+    const perPerson = byBook.get(entry.book_id);
+    if (!perPerson) { bare.push(entry); continue; }
+    const whole = [...perPerson].filter(([, m]) => m.whole);
+    if (whole.length > 0 && (perPerson.size > 1 || (entry.pages || []).length > 0)) {
+      throw new Error(`book ${entry.book_id}: a whole-entry move beside page moves`);
+    }
+    const gone = new Set();
+    for (const [person, m] of perPerson) {
+      const pages = m.whole ? [] : [...m.pages].filter(n => (entry.pages || []).includes(n)).sort((a, b) => a - b);
+      if (!m.whole && pages.length === 0) continue;
+      for (const n of pages) gone.add(n);
+      const list = targets[person];
+      const at = list.findIndex(b => b.book_id === entry.book_id);
+      const { pages: _p, page_precision: _pp, page_range: _pr, ...meta } = entry;
+      if (m.whole) {
+        // A section claim adds nothing to an entry the person already has for this book.
+        if (at === -1) list.push({ ...entry });
+      } else if (at === -1) {
+        list.push({ ...meta, pages, page_precision: 'page' });
+      } else {
+        const cur = list[at];
+        if (cur.page_precision === 'page') {
+          list[at] = { ...cur, pages: [...new Set([...(cur.pages || []), ...pages])].sort((a, b) => a - b) };
+        } else if (cur.page_precision === 'section' || (cur.pages || []).length === 0) {
+          const { page_range: _r, ...rest } = cur;
+          list[at] = { ...rest, pages, page_precision: 'page' };
+        } else {
+          throw new Error(`book ${entry.book_id}: the ${person} record has an unmarked legacy entry with pages; repair it first`);
+        }
+      }
+      moves.push({ book_id: entry.book_id, person, pages, whole: m.whole, tiers: [...m.tiers].sort(), target_had_book: at !== -1, bare_entry_before: entry });
+    }
+    const left = (entry.pages || []).filter(n => !gone.has(n));
+    if (whole.length === 0 && left.length > 0) bare.push({ ...entry, pages: left });
+  }
+  return { bare, targets, moves };
+}
+
+const toId = (s) => (typeof s === 'string' && ObjectId.isValid(s) ? new ObjectId(s) : s);
+/** `_id` is an ObjectId on most `entities` rows and a string on some. */
+const byAnyId = (id) => ({ _id: { $in: [toId(String(id)), String(id)] } });
+
+/** Exit code of the entities interlock, run bare (a piped exit code was misread twice, #5711). */
+function interlockClear() {
+  const script = fileURLToPath(new URL('./entities-sweep-active.mjs', import.meta.url));
+  const res = spawnSync(process.execPath, [script], { stdio: 'inherit', env: process.env });
+  return res.status === 0;
+}
+
+async function applyPlan({ client, db, surname, rule, bare, targets, rows, undoOut }) {
+  const entities = db.collection('entities');
+  const targetDocs = {};
+  for (const p of rule.persons) {
+    const named = (targets.get(p.key) || []).filter(t => fold(t.name) === fold(p.name));
+    if (named.length !== 1) throw new Error(`expected one record named "${p.name}" with ${p.wikidata_id}, found ${named.length}`);
+    targetDocs[p.key] = await entities.findOne(byAnyId(named[0]._id));
+    if (targetDocs[p.key]?.wikidata_id !== p.wikidata_id) throw new Error(`"${p.name}" no longer carries ${p.wikidata_id}`);
+  }
+  const next = applyPlanToBooks({
+    bareBooks: bare.books || [],
+    targetBooks: Object.fromEntries(rule.persons.map(p => [p.key, targetDocs[p.key].books || []])),
+    rows,
+  });
+  const now = new Date();
+  const writes = [
+    { doc: bare, books: next.bare },
+    ...rule.persons.map(p => ({ doc: targetDocs[p.key], books: next.targets[p.key] })),
+  ].map(w => ({ ...w, counters: entityCounters(w.books) }));
+
+  // The undo file exists before anything is written.
+  fs.writeFileSync(undoOut, JSON.stringify({
+    sweep: SWEEP, surname, applied_at: now.toISOString(),
+    docs: writes.map(w => ({
+      _id: String(w.doc._id), name: w.doc.name, updated_at_after: now.toISOString(),
+      before: { books: w.doc.books || [], book_count: w.doc.book_count ?? null, total_mentions: w.doc.total_mentions ?? null, updated_at: w.doc.updated_at ?? null },
+      after: w.counters,
+    })),
+  }, null, 1) + '\n');
+  console.log(`undo file: ${undoOut}`);
+
+  if (!interlockClear()) throw new Error('entities interlock is not clear (exit != 0): nothing written');
+
+  const session = client.startSession();
+  try {
+    await session.withTransaction(async () => {
+      for (const w of writes) {
+        // Unchanged since it was read, or nothing is written: an index writer may have added a book.
+        const res = await entities.updateOne(
+          { _id: w.doc._id, updated_at: w.doc.updated_at },
+          { $set: { books: w.books, ...w.counters, updated_at: now } },
+          { session },
+        );
+        if (res.matchedCount !== 1) throw new Error(`"${w.doc.name}" changed since it was read: nothing written, run again`);
+      }
+    });
+  } finally {
+    await session.endSession();
+  }
+
+  const targetOf = Object.fromEntries(rule.persons.map(p => [p.key, { _id: String(targetDocs[p.key]._id), name: p.name, wikidata_id: p.wikidata_id }]));
+  await recordSweepActions(db, next.moves.map(m => ({
+    sweep: SWEEP, book_id: m.book_id, action: 'entity-mention-moved',
+    detail: { surname, from: { _id: String(bare._id), name: bare.name }, to: targetOf[m.person], pages: m.pages, whole_entry: m.whole, tiers: m.tiers, target_had_book: m.target_had_book, bare_entry_before: m.bare_entry_before },
+  })));
+  for (const w of writes) {
+    console.log(`  ${w.doc.name}: books ${w.doc.books?.length ?? 0} -> ${w.counters.book_count}, mentions ${w.doc.total_mentions ?? '?'} -> ${w.counters.total_mentions}`);
+  }
+  console.log(`APPLIED: ${next.moves.length} book moves, ${next.moves.reduce((n, m) => n + (m.whole ? 1 : m.pages.length), 0)} mentions; ${next.moves.length} sweep_log rows (${SWEEP}).`);
+}
+
+/** Put back each document's `books[]` from an undo file, unless it changed after the apply. */
+async function undo(file) {
+  const saved = JSON.parse(fs.readFileSync(file, 'utf8'));
+  const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 15000 });
+  try {
+    await client.connect();
+    const db = client.db(process.env.MONGODB_DB || 'bookstore');
+    if (!interlockClear()) throw new Error('entities interlock is not clear (exit != 0): nothing written');
+    const force = process.argv.includes('--force');
+    for (const d of saved.docs) {
+      const filter = { ...byAnyId(d._id), ...(force ? {} : { updated_at: new Date(d.updated_at_after) }) };
+      const res = await db.collection('entities').updateOne(filter, {
+        $set: { books: d.before.books, ...entityCounters(d.before.books), updated_at: new Date() },
+      });
+      console.log(`${d.name}: ${res.matchedCount === 1 ? `restored ${d.before.books.length} book entries` : 'NOT restored: changed since the apply (re-run with --force to overwrite)'}`);
+    }
+    // The move rows of the undone apply stay in sweep_log; this row marks them as undone.
+    await recordSweepActions(db, [{ sweep: SWEEP, book_id: `entity:${saved.docs[0]._id}`, action: 'entity-moves-undone', detail: { surname: saved.surname, undo_file: file } }]);
+  } finally {
+    await client.close();
+  }
+}
+
+/**
+ * A page read by eye outranks every tier. Pure.
+ * @returns {{ person: string|null, tier: 'by-eye' } | null} null when nobody has read this page
+ */
+export function byEyeVerdict(rule, bookId, page) {
+  const verdict = rule.byEye?.[bookId]?.[String(page)];
+  if (!verdict) return null;
+  if (verdict !== 'stay' && !rule.persons.some(p => p.key === verdict)) throw new Error(`byEye ${bookId} p.${page}: unknown person "${verdict}"`);
+  return { person: verdict === 'stay' ? null : verdict, tier: 'by-eye' };
+}
+
 async function main() {
+  const undoFile = arg('--undo', null);
+  if (undoFile) return undo(undoFile);
+  const apply = process.argv.includes('--apply');
+  const undoOut = arg('--undo-out', null);
+  if (apply && !undoOut) { console.error('--apply needs --undo-out <file>: the old books[] are saved before any write'); process.exit(2); }
   const surname = arg('--surname', 'Bacon');
   const rule = SURNAMES[surname];
   if (!rule) { console.error(`no rule block for "${surname}" — cues are written by hand, per surname`); process.exit(2); }
   const uri = process.env.MONGODB_URI;
   if (!uri) { console.error('Missing MONGODB_URI.'); process.exit(2); }
-  const client = new MongoClient(uri, { serverSelectionTimeoutMS: 15000, readPreference: 'secondaryPreferred' });
+  // A transaction reads from the primary, so the apply run does too.
+  const client = new MongoClient(uri, { serverSelectionTimeoutMS: 15000, readPreference: apply ? 'primary' : 'secondaryPreferred' });
   try {
     await client.connect();
     const db = client.db(process.env.MONGODB_DB || 'bookstore');
@@ -119,6 +351,15 @@ async function main() {
       { $limit: 300 },
       { $project: { name: 1, wikidata_id: 1, merged_into: 1, book_ids: '$books.book_id' } },
     ]).toArray();
+    // A book that reached a person's record only through an earlier run of this plan is not
+    // evidence for the same-book tier: counted, the plan would confirm itself (a dry run after
+    // the first Bacon apply proposed 21 more moves on that ground alone).
+    const sweepLog = db.collection('sweep_log');
+    const lastUndo = await sweepLog.find({ sweep: SWEEP, action: 'entity-moves-undone', 'detail.surname': surname }).sort({ timestamp: -1 }).limit(1).next();
+    const planMade = new Set((await sweepLog.find({
+      sweep: SWEEP, action: 'entity-mention-moved', 'detail.surname': surname, 'detail.target_had_book': false,
+      ...(lastUndo ? { timestamp: { $gt: lastUndo.timestamp } } : {}),
+    }).project({ book_id: 1, 'detail.to._id': 1 }).toArray()).map(r => `${r.detail.to._id}:${r.book_id}`));
     const booksOf = new Map(rule.persons.map(p => [p.key, new Set()]));
     const targets = new Map(rule.persons.map(p => [p.key, []]));
     for (const r of full) {
@@ -126,7 +367,7 @@ async function main() {
       const p = rule.persons.find(x => x.wikidata_id === r.wikidata_id);
       if (!p || fold(r.name) === fold(surname)) continue;
       targets.get(p.key).push({ _id: String(r._id), name: r.name, books: (r.book_ids || []).length });
-      for (const id of r.book_ids || []) booksOf.get(p.key).add(id);
+      for (const id of r.book_ids || []) if (!planMade.has(`${r._id}:${id}`)) booksOf.get(p.key).add(id);
     }
 
     const byBook = new Map();
@@ -151,7 +392,7 @@ async function main() {
       for (const n of pages) {
         const text = splitPageText(byNumber.get(n));
         const named = rule.needle.test(text.printed);
-        const d = decidePage(rule, { ...text, bookYear, sameBook });
+        const d = byEyeVerdict(rule, entry.book_id, n) ?? decidePage(rule, { ...text, bookYear, sameBook });
         rows.push({ book_id: entry.book_id, page: n, book_year: bookYear ?? null, ...d, name_printed: named, precision: 'page' });
       }
     }
@@ -197,6 +438,9 @@ async function main() {
       }
       console.log(`against ${sample.length} by-eye verdicts: ${agree} agree, ${wrong} wrong, ${undecided} left in place`);
     }
+
+    if (apply) await applyPlan({ client, db, surname, rule, bare, targets, rows, undoOut });
+    else console.log('DRY RUN: nothing was written.');
   } finally {
     await client.close();
   }

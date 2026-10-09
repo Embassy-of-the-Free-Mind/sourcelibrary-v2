@@ -1,0 +1,59 @@
+[
+{"id": "Q7XKG", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "medium", "tibetan": "མངོན་སུམ་སུན་མ་ཕྱུང་བ་ནི།", "english": "One cannot refute direct perception because one cannot refute an inference", "why": "The Tibetan says that one who has not refuted perception cannot refute an inference from a mark established by it; the English inverts the dependency."},
+  {"type": "term", "confidence": "medium", "tibetan": "དངོས་སུ་བསལ་བའི་དོན", "english": "with the object that is directly removed", "why": "bsal ba here stands for vivid/manifest (the next side asks how something can be both vivid and conceptual), so the sense is 'a directly manifest object', not 'removed'; the same error recurs in 'remove the object of direct perception'."},
+  {"type": "agent", "confidence": "high", "tibetan": "རྗེས་སུ་དཔག་པ་ལྟར་ནུས་པ་ཡོད་པ་མ་ཡིན་པའི་ཕྱིར་རོ", "english": "because they lack the causal power found in direct perception", "why": "The comparison is with inference: other conceptions lack the capacity that inference has.", "fix": {"find": "because they lack the causal power found in direct perception", "replace": "because they lack the capacity that inference has"}},
+  {"type": "term", "confidence": "medium", "tibetan": "བྱམས་པ་ལ་སོགས་པ་རེས་འགས་ངོ་ཤེས་པར་གྱུར་པ་ཙམ་ལ", "english": "a person like Maitreya, merely by recognizing someone once", "why": "byams pa is the stock example name Maitra, and he is the person occasionally recognized, not the one who recognizes."}
+ ],
+ "note": "The argument is broadly followed, but the bsal ba term and several logical relations between perception and inference are garbled."},
+{"id": "QD40Z", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "omission", "confidence": "medium", "tibetan": "བརྗོད་ཕྱོགས་མཐར་རྒྱུ་བའི་ཚེ།", "english": "At the conclusion of the speech", "why": "The line says that when the gods' cry of 'well done' to the king spread to the ends of the directions; the sense of it spreading to the ends of the directions is lost."}
+ ],
+ "note": "A sound rendering of the Tibetan verses, with the Sanskrit correctly kept in notes."},
+{"id": "QJZZY", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "འདུན་གྱི་ལྷག་མ་དང་པོའི་རྣམ་པར་འབྱེད་པའོ", "english": "(Sanghadisesa) Formal Meeting of the Sangha", "why": "In the Mūlasarvāstivāda Vinaya the Sanskrit term saṅghāvaśeṣa is meant, not the Pali form.", "fix": {"find": "(Sanghadisesa)", "replace": "(saṅghāvaśeṣa)"}},
+  {"type": "term", "confidence": "medium", "tibetan": "གང་ཞིག་ན་སྨད་པར་འདོད་པ་དེའི་#བཟློག་པའི་དོན་དུའོ", "english": "in order to show the reversal for those who wish to avoid blame", "why": "The sūtra is cited to refute those who hold that the offence at that stage is a lower one (smad pa), not to address people who wish to avoid blame."}
+ ],
+ "note": "A generally faithful rendering of a technical Vinaya commentary, with a Pali term and one misread purpose clause."},
+{"id": "QAD3K", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "དེ་ཁོ་ན་ཞེས་བྱ་བའི་བློ་ལ་སྣང་བ་འཛིན་པ་ན", "english": "when it perceives an appearance in what is called the (essential mind) tattva-buddhi", "why": "de kho na zhes bya ba quotes the root-text word 'that very' and refers to the cognition; it is not a technical 'tattva-buddhi'."},
+  {"type": "term", "confidence": "high", "tibetan": "གཞན་གྱིས་བསམ་པ་མ་རིག་ནས་ཕྱི་རོལ་པ་རྣམས་ཞེས་བྱ་བ་ལ་སོགས་པ་སྨྲས་སོ", "english": "Not understanding the intention of others, externalists and so forth have spoken.", "why": "phyi rol pa rnams is a quoted root-text word meaning 'external things' (glossed as svalakṣaṇas), stated because others might not grasp the intent; these are not externalist opponents speaking.", "fix": {"find": "Not understanding the intention of others, externalists and so forth have spoken.", "replace": "Since others might not understand the intention, he said \"the external ones\" and so forth."}},
+  {"type": "agent", "confidence": "medium", "tibetan": "འཆད་པར་བྱེད་པ་རྣམས་ཞེས་བྱ་བ་ལ་སོགས", "english": "the commentators and others offer a reply", "why": "The text answers with the root-text words 'the expounders' and so on; it is not commentators who reply."}
+ ],
+ "note": "The main svalakṣaṇa/sāmānya point comes through, but quoted root-text words are misread as technical terms or as speakers."},
+{"id": "QW88F", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "ནིའི་སྒྲ་ནི་ཡང་གི་སྒྲའི་དོན་ལ་ཡིན་ཏེ", "english": "The word \"self\" [note: original: \"rang nyid\"] is used in the sense of \"also.\"", "why": "It is the particle ni that has the sense of 'also'; rang nyid (svayam) is glossed separately as 'in itself'.", "fix": {"find": "The word \"self\" [note: original: \"rang nyid\"] is used in the sense of \"also.\"", "replace": "The particle \"ni\" is used in the sense of \"also.\""}}
+ ],
+ "note": "A faithful rendering of the commentary on svayam in the definition of the thesis, apart from one misassigned grammatical gloss."},
+{"id": "Q9AU2", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "gloss", "confidence": "high", "tibetan": "གལ་ཏེ་བརྒྱ་བྱིན་སྤྱི་བོ་མེའི#།", "english": "[note: a reference to a specific type of grass or a mythological origin point]", "why": "'Indra's head' (śakramūrdhan) is the standard Pramāṇavārttika term for an anthill.", "fix": {"find": "[note: a reference to a specific type of grass or a mythological origin point]", "replace": "[note: Skt. śakramūrdhan, i.e. an anthill]"}},
+  {"type": "term", "confidence": "high", "tibetan": "ཅུང་ཟད་ལྕི་བ་ལ་སོགས་པ", "english": "heavy clay", "why": "lci ba is cow dung (gomaya), the classic example of a dissimilar cause from which a lotus or similar plant arises.", "fix": {"find": "heavy clay", "replace": "cow dung"}},
+  {"type": "structure", "confidence": "medium", "tibetan": "དུ་བའི་རྒྱུ་ཡི་རང་བཞིན་མེ། །དེ་ཡི་ནུས་པའི་བྱེ་བྲག་ལྡན།", "english": "Fire is the nature of the cause of smoke, possessing the specific capacity for it.", "why": "The two summary verses are run into prose."}
+ ],
+ "note": "The causal argument is followed, but the two classic examples (anthill, cow dung) are mistranslated."},
+{"id": "QW6FU", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "high", "tibetan": "དེ་བཞིན་གཤེགས་དག་མཆོག་ཏུ་གསལ་མཛད་པ། །གུས་", "english": "caused his body to be illuminated with supreme clarity", "why": "'Supremely radiant' (śuddhavaraprakāśaḥ) is an epithet of the Tathāgata, who out of devotion performed worship of his father's body; he did not illuminate the body.", "fix": {"find": "caused his body to be illuminated with supreme clarity. Out of devotion, he performed the funeral rites", "replace": "supremely radiant, out of devotion performed worship of his body"}},
+  {"type": "omission", "confidence": "medium", "tibetan": "དེ་ཉིད་ཉིན་མོ་དག་ལ་བསྔགས་པར་འོས།", "english": "The one who serves the feet of the Great One is sustained in this world and the next", "why": "The clause saying that it alone is worthy of praise among days is not rendered."}
+ ],
+ "note": "The narrative is right, but the Buddha's epithet is turned into an act of illuminating the body."},
+{"id": "QI1FJ", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "medium", "tibetan": "འཕགས་པ་འཇིག་རྟེན་ལས་འདས་པའི་འཕགས་པའི་བདག་དང་།", "english": "not motivated by the view of the noble, supramundane, noble self", "why": "'Noble, supramundane' describes the right view itself; the views that do not motivate it are views of self, sentient being, and so on."}
+ ],
+ "note": "A sound rendering of the Akṣayamati quotation and the argument about latencies."},
+{"id": "QJXR9", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "A faithful rendering of the general and specific characteristics of the four truths."},
+{"id": "QJXG5", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "ལྟ་བའི་ཡན་ལག་མེད་པ་ཉི་མ་རེ་རེ་སྲབ་པར་བྱེད", "english": "lacking any limb [note: or part] that does not look upon her faults as virtues", "why": "yan lag med pa is the 'Bodiless one' (Anaṅga, Kāma), who wastes their body day by day; it is not a lack of limbs."},
+  {"type": "structure", "confidence": "medium", "tibetan": "ལྕགས་ལས་འབྱུང་བའི་སྲེག་ཟ་འབར་བ་མེ་སྟག་གིས་ཁྱབ་བུད་མེད་ལ་ནི་འཁྱུད་བྱེད་ཅིང་", "english": "They would embrace a woman even if she were covered in sparks from a blazing fire born of iron.", "why": "This is the hell torment of embracing blazing iron women covered in sparks, not a hypothetical about the lustful man's passion."}
+ ],
+ "note": "The sermon against desire is usable, but several of the verse images (Anaṅga, the hell punishment) are misread."}
+]

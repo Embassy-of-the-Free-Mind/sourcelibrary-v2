@@ -1,0 +1,103 @@
+[
+{"id": "QPNMB", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "གལ་ཏེ་སྐྱེས་བུ་རྒྱལ་དཔོག་པའམ།",
+   "english": "whether a (Mimamsaka) a follower of the Mimamsa school of Hindu philosophy or another commentator",
+   "why": "rgyal dpog pa is the proper name Jaimini (author of the Mīmāṃsāsūtra), not a generic 'Mimamsaka'; the same misrendering recurs later in 'like a (Mimamsaka)' and 'is a (Mimamsaka) and so forth'.",
+   "fix": {"find": "whether a (Mimamsaka) a follower of the Mimamsa school of Hindu philosophy or another commentator", "replace": "whether Jaimini or another commentator"}},
+  {"type": "omission", "confidence": "medium",
+   "tibetan": "ལུང་ནི་ཚད་མ་གཞན་གྱིས་མི་སླུ་བ་ལ་ལྟོས་པ",
+   "english": "If one relies on scripture for a meaning that is extremely hidden",
+   "why": "The Tibetan says that if, for extremely hidden objects, scripture depends on non-deception established by another pramāṇa; the dependence on another pramāṇa is dropped."},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "རྒྱལ་དཔོག་པ་ལ་སོགས་པ་ཡིན་པར་ནི་མི་འདོད་ཀྱི་འོན་ཀྱང་རྗེས་སུ་དཔག་པས་ཡིན་པ་དེ་ལྟར་ན། གང་གིས་ཉེས་པ་འདིར་འགྱུར་ཞེ་ན།",
+   "english": "In that case, it is not accepted that the one who knows the meaning is a (Mimamsaka) and so forth; however, if it is through inference [note: term: anumana], then who would fall into this fault?",
+   "why": "This is the opponent's objection: 'we do not hold that Jaimini and others know it by perception but by inference, so by what would this fault arise?'; the English garbles it and does not mark it as the opponent's view."}
+ ],
+ "note": "The argument against Mīmāṃsā is broadly followed, but Jaimini is turned into a school label and the opponent's inference objection is garbled."},
+{"id": "QFL73", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "མང་པོ་དག་ཤེས་པ་དག་གཅིག་གི་བདག་ཉིད་ཀྱི་ཆོས་ཡིན་ནོ",
+   "english": "the notion that many objects of knowledge are properties",
+   "why": "shes pa here means cognitions (the many consciousnesses just mentioned), not objects of knowledge.",
+   "fix": {"find": "the notion that many objects of knowledge are properties", "replace": "the notion that many cognitions are properties"}}
+ ],
+ "note": "A sound rendering of the refutation of the elements as the basis of mind, with one term slip."},
+{"id": "QERIQ", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "Faithful rendering of Bhāviveka's reply on the fire example and the gone/not-gone/being-traversed argument; verses correctly set off."},
+{"id": "QVFD5", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "དེར་སྣང་གིས་སྟོང་ཆོས་གཞན་དང་། །མཚུངས་ཏེ་གཏན་ཚིགས་ཉིད་དུ་འགྱུར#།",
+   "english": "if that which is empty of appearances is another property, it would be equivalent to and indeed become the (hetu) logical reason or evidence itself",
+   "why": "der snang is 'the semblance of that [reason]' (hetvābhāsa): the verse says that if the reason is a property devoid of pseudo-reasons, another property would equally become a reason; 'empty of appearances' loses the point."},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "དྲུག་པ་ཉིད་དུ་རིག་པའི་ཚུལ་ལ",
+   "english": "being the sixth category",
+   "why": "drug pa here most likely refers to the sixth grammatical case (case-ending of the definition), not a sixth ontological category."}
+ ],
+ "note": "Follows the critique of Nyāya and Vaiśeṣika definitions of the reason, but the opening verse and some logical terms are blurred."},
+{"id": "QI0QN", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "high",
+   "tibetan": "ངོ་བོ་ཉིད་སྟོང་པའོ་ཞེས་དམ་བཅས་ནས",
+   "english": "Having made the thesis that \"essence is empty,\"",
+   "why": "The thesis (begun on the previous side with dngos po thams cad) is that all entities are empty of own-nature, not that essence is empty.",
+   "fix": {"find": "Having made the thesis that \"essence is empty,\"", "replace": "Having made the thesis that [all entities] \"are empty of essence,\""}}
+ ],
+ "note": "Good rendering of Avalokitavrata's gloss on disputing by means of emptiness, with the MMK 1.1 verse correctly set; the opening thesis is misstated."},
+{"id": "QP7AZ", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "འདུན་ལྷག་མ་བཅུ་པའོ།",
+   "english": "the tenth (saṅghāvaśeṣa) formal meeting of the monastic community",
+   "why": "dge 'dun lhag ma is the saṅghāvaśeṣa class of offence; this marks the end of the tenth saṅghāvaśeṣa rule, not a 'formal meeting'.",
+   "fix": {"find": "the tenth (saṅghāvaśeṣa) formal meeting of the monastic community", "replace": "the tenth (saṅghāvaśeṣa) offense"}}
+ ],
+ "note": "Accurate Vinaya commentary on the schism-supporter rule, including the duṣkṛta/sthūlātyaya gradation, apart from mislabeling saṅghāvaśeṣa."},
+{"id": "Q0DFX", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "high",
+   "tibetan": "གཞན་གྱི་གོམས་ལས་ཞེས་བྱ་བ་ལ་སོགས་པ་སྨྲས་སོ།",
+   "english": "The opponent argues: \"From the familiarity of others,\" and so forth.",
+   "why": "gzhan gyi marks the words as the opponent's (as elsewhere on the side); the quoted reply is simply 'from familiarity', not 'the familiarity of others'.",
+   "fix": {"find": "The opponent argues: \"From the familiarity of others,\" and so forth.", "replace": "The opponent says: \"From familiarity,\" and so forth."}},
+  {"type": "addition", "confidence": "high",
+   "tibetan": "མེ་ལ་སོགས་པ་གང་ཞིག་མཐོང་བ་ན་བསྲེག་",
+   "english": "When one sees the fire and its burning one line of text follows",
+   "why": "'one line of text follows' is not in the Tibetan, which only says 'when fire and the like are seen, burning ...' continuing on the next side.",
+   "fix": {"find": "When one sees the fire and its burning one line of text follows", "replace": "When one sees fire and the like, burning"}},
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "གཞན་དག་གལ་ཏེ་ཉམས་སུ་མྱོང་བའི་དོན་ནི་སྙོན་པའི་མི་ནུས་སོ་སྙམ་པས།",
+   "english": "Others, thinking that the experienced object cannot be denied, show the sequence",
+   "why": "It is the commentator who, reasoning that others cannot deny what is experienced, shows the sequence of activity; 'others' are not the ones who show it."}
+ ],
+ "note": "The dialectic on pramāṇa and attainment is mostly followed, but speaker markers are misread and a stray artifact ends the page."},
+{"id": "QUVOB", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "དེ་ལྟ་ན་ལྷ་ཉིད་ཀྱང་ཡིན་ལ་མི་ཉིད་ཀྱང་ཡིན་པར་འཐད་དོ་ཞེས་བྱ་བས",
+   "english": "Then it would be tenable to be both a god and a human.",
+   "why": "Only the first two lines are MMK 27.16 verse; this sentence is the commentary's prose continuation, but it is set as a third verse line."}
+ ],
+ "note": "Clear rendering of the continuum argument and the reply that the reason is stated generally."},
+{"id": "QDCI1", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "medium",
+   "tibetan": "འགྲོ་བ་རེ་ཐག་གཅོད་མཛད་པ།",
+   "english": "who sever the hopeless despair of living beings",
+   "why": "re thag gcod pa is 'to cut off hope', i.e. the departing Sage leaves beings without hope, the opposite of severing their despair."}
+ ],
+ "note": "A fluent and largely faithful rendering of the lament verses."},
+{"id": "QFRGB", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "གང་གི་ཕྱིར་མྱུ་གུ་སྐྱེ་བ་དེའི་ཕྱིར་མྱུ་གུ་བྱེད་པ་པོ་ཡིན་ཏེ",
+   "english": "because the sprout is what is produced, the sprout is the agent",
+   "why": "The Tibetan says the sprout is the agent because it is the sprout that arises (as Devadatta is agent of walking), not because it is what is produced."}
+ ],
+ "note": "Sound rendering of the ṭīkā's word-glosses on simultaneity of seed and sprout, with one slip on the agent rationale."}
+]

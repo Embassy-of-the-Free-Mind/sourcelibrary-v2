@@ -227,13 +227,13 @@ export async function generateMetadata({
   const attribution = `${bookTitle}${author ? ` by ${author}` : ''}${year ? ` (${year})` : ''}`;
 
   // OG title: short description + book info
-  const ogTitle = `${shortTitle} — ${attribution}`;
+  const ogTitle = `${shortTitle}: ${attribution}`;
 
   // `absolute`: the /gallery layout template would append "| Source Library
   // Gallery" after our own suffix. Book and author belong in the title — it is
   // what a search for "<book>" or "<author>" matches against.
   const bookAttribution = `${bookTitle}${author && author !== 'Various' ? `, ${author}` : ''}${year ? ` (${year})` : ''}`;
-  const title = { absolute: `${shortTitle} \u2014 ${bookAttribution} | Source Library` };
+  const title = { absolute: `${shortTitle}: ${bookAttribution} | Source Library` };
 
   return {
     title,
@@ -254,7 +254,7 @@ export async function generateMetadata({
       // collection was presenting the same card in every link preview and to
       // every og-reading crawler (#4286). When no image resolves, omit the key
       // so the file-convention opengraph-image card fills in.
-      ...(plateUrl ? { images: [{ url: plateUrl, alt: `${shortTitle} \u2014 ${bookAttribution}` }] } : {}),
+      ...(plateUrl ? { images: [{ url: plateUrl, alt: `${shortTitle}: ${bookAttribution}` }] } : {}),
     },
     twitter: {
       card: 'summary_large_image',
@@ -293,7 +293,7 @@ export default async function ImageLayout({
   const authorName = page.book?.author && page.book.author !== 'Various' ? page.book.author : '';
   const year = page.book?.published;
   const bookHref = `/book/${page.book?.slug || page.book?.id || page.book_id}?page=${page.page_number}`;
-  const altText = `${detection.description || 'Historical illustration'} \u2014 from ${bookTitle}${authorName ? ` by ${authorName}` : ''}${year ? ` (${year})` : ''}`;
+  const altText = `${detection.description || 'Historical illustration'}, from ${bookTitle}${authorName ? ` by ${authorName}` : ''}${year ? ` (${year})` : ''}`;
 
   return (
     <div className="min-h-screen bg-black">

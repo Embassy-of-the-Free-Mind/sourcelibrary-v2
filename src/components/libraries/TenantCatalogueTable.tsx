@@ -42,7 +42,7 @@ function eapShelfmark(sourceUrl: string | null): string {
 }
 
 function pct(num: number, denom: number): string {
-  if (!denom) return '—';
+  if (!denom) return '–';
   return `${Math.round((num / denom) * 100)}%`;
 }
 
@@ -136,12 +136,12 @@ export default function TenantCatalogueTable({ rows, total, page, pageSize, sort
                   <td className="px-3 py-2">
                     <Link href={href} className="text-stone-900 hover:underline">{titleText}</Link>
                   </td>
-                  <td className="px-3 py-2 text-stone-700">{row.author || '—'}</td>
-                  <td className="px-3 py-2 font-mono text-xs text-stone-600">{shelfmark || '—'}</td>
+                  <td className="px-3 py-2 text-stone-700">{row.author || '–'}</td>
+                  <td className="px-3 py-2 font-mono text-xs text-stone-600">{shelfmark || '–'}</td>
                   <td className="px-3 py-2 text-right tabular-nums">{row.pages_count.toLocaleString()}</td>
                   <td className="px-3 py-2 text-right tabular-nums">{pct(row.pages_ocr, row.pages_count)}</td>
                   <td className="px-3 py-2 text-right tabular-nums">{pct(row.pages_translated, row.pages_count)}</td>
-                  <td className="px-3 py-2 text-stone-700">{row.language || '—'}</td>
+                  <td className="px-3 py-2 text-stone-700">{row.language || '–'}</td>
                 </tr>
               );
             })}

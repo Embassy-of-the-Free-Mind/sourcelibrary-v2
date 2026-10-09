@@ -166,7 +166,7 @@ export default async function ModelsPage() {
           </li>
           <li>
             The steps every book goes through are described in{' '}
-            <Link href="/about/processing" className="text-accent-rust hover:underline">how we process books</Link>.
+            <Link href="/how-it-works" className="text-accent-rust hover:underline">how Source Library works</Link>.
           </li>
         </ul>
       </section>
