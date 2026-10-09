@@ -124,6 +124,8 @@
 30 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-acquire.lock bash -c "set -a; source .env.production.local; set +a; node scripts/catalog-coverage/acquire-gap-batch.mjs --batch 400 --concurrency 10" >> /var/log/sourcelibrary/acquire.log 2>&1
 # Archive newly-acquired gap books to R2 (companion to acquisition)
 45 * * * * /root/sourcelibrary/scripts/catalog-coverage/archive-acquired-cron.sh >> /var/log/sourcelibrary/archive-acquired.log 2>&1
+# Archiver host lanes watchdog (#5457): restart any lane in /etc/sourcelibrary/archive-lanes.conf whose tmux session died (no file = no-op)
+*/10 * * * * /root/sourcelibrary/scripts/catalog-coverage/archive-lanes-revive.sh >> /var/log/sourcelibrary/archive-lanes-revive.log 2>&1
 30 */2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-supabase-sync.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/supabase-sync.mjs" >> /var/log/sourcelibrary/supabase-sync.log 2>&1
 # catchup-watchdog: restart the acquisition catch-up if it died (loop self-exits when queue drains)
 #TEMP-FT-CENSUS (#2933) — remove when ft-census-daily reports exhausted
@@ -188,6 +190,11 @@
 # "spend check" line on /admin/work; emails only on FAIL (7-day cooldown per failure set). Exit 1 = FAIL, 2 = a
 # source unreadable. No model call. Runs after paid-vs-got (06:10), whose row it reads.
 0 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/spend-daily.mjs ] && flock -n /tmp/sl-spend-daily.lock bash -c "set -a; source .env.production.local; set +a; GOOGLE_SERVICE_ACCOUNT_JSON=/root/.gcp/spend-reconcile.json node scripts/audit/spend-daily.mjs --apply" >> /var/log/sourcelibrary/spend-daily.log 2>&1
+# Morning ntfy digest (#6181): the ONE default-priority message of the day — jobs landed / not landed on both boxes,
+# yesterday's spend vs the dial + envelopes near cap, decisions waiting, stuck jobs, tier:hold count. Read-only.
+# 06:00 UTC = 08:00 Europe/Amsterdam in summer (CEST). After the clocks go back (last Sunday of October) it arrives
+# at 07:00 CET — move it to 07:00 UTC for winter if Derek wants 08:00 local year-round. Crontab here is UTC.
+0 6 * * * cd /root/sourcelibrary && [ -f scripts/maintenance/ntfy-morning-digest.mjs ] && flock -n /tmp/sl-morning-digest.lock node --env-file=/root/sourcelibrary/.env.production.local scripts/maintenance/ntfy-morning-digest.mjs >> /var/log/sourcelibrary/morning-digest.log 2>&1
 # Weekly spend cut list (#5743), Mondays 06:30: a headless claude job (subscription; no API spend) runs
 # spend-daily.mjs --week and posts ONE comment on #5743, at most 5 numbered cuts with recommended defaults, which
 # /admin/work lists under WAITING ON YOU. It never stops, deletes or changes anything. Brief: scripts/audit/spend-weekly-brief.md
@@ -282,3 +289,7 @@
 50 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-printed-page.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/backfill-printed-page-4291.mjs --apply --ocr-since=26h" >> /var/log/sourcelibrary/printed-page.log 2>&1
 # Vercel prod build watcher (#5708)
 7,22,37,52 * * * * cd /root/sourcelibrary && [ -f scripts/audit/vercel-prod-watch.mjs ] && flock -n /tmp/sl-vercel-prod-watch.lock bash -c "set -a; source .env.production.local; set +a; VERCEL_TOKEN=\$VERCEL_API_TOKEN node scripts/audit/vercel-prod-watch.mjs" >> /var/log/sourcelibrary/vercel-prod-watch.log 2>&1  # #5708
+# routing drift audit (#5871): DECISIONS.md against the live routers (OCR model, translation model, the OCR-trust table)
+# and the generated table in .claude/docs/ocr-engine-routing.md. No model call, no database. --apply files, rewrites or closes ONE
+# GitHub issue per finding class (label routing-drift); nothing automated reads those issues. Guarded on the script so the line is inert until it is on main.
+40 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/routing-drift.mjs ] && flock -n /tmp/sl-routing-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/routing-drift.mjs --apply" >> /var/log/sourcelibrary/routing-drift.log 2>&1

@@ -18,7 +18,7 @@ export function PullQuote({ children, attribution }: PullQuoteProps) {
       </p>
       {attribution && (
         <footer className="mt-4 text-[10px] uppercase tracking-[0.2em] text-stone-500 dark:text-stone-400 font-mono">
-          — {attribution}
+          {attribution}
         </footer>
       )}
     </blockquote>

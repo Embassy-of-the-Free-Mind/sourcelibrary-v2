@@ -84,11 +84,11 @@ export default function CountingTheGapPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            We already had the Universal Short Title Catalogue on Supabase &mdash; 1.6 million edition records of European printed works from 1450 to 1700. And we had a translation catalog we&apos;d assembled from the UNESCO Index Translationum, Open Library, and about 40 other sources &mdash; 7,542 records of known English translations.
+            We already had the Universal Short Title Catalogue on Supabase: 1.6 million edition records of European printed works from 1450 to 1700. And we had a translation catalog we&apos;d assembled from the UNESCO Index Translationum, Open Library, and about 40 other sources: 7,542 records of known English translations.
           </p>
 
           <p className="text-secondary leading-relaxed font-body">
-            The first pass took twenty minutes. Match author surnames across the two databases, count matches. The result: about 1% of USTC works had a known English translation. That couldn&apos;t be right &mdash; our catalog was clearly missing things. We checked Machiavelli. One record. <em>The Prince</em> alone has had dozens of English editions. Our catalog was broken.
+            The first pass took twenty minutes. Match author surnames across the two databases, count matches. The result: about 1% of USTC works had a known English translation. That couldn&apos;t be right; our catalog was clearly missing things. We checked Machiavelli. One record. <em>The Prince</em> alone has had dozens of English editions. Our catalog was broken.
           </p>
         </section>
 
@@ -100,7 +100,7 @@ export default function CountingTheGapPage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            It turns out the Library of Congress distributes its entire catalog as downloadable files. 10 million MARC records, 3 gigabytes compressed, 41 files. Free. And buried in those records is a field &mdash; MARC 041 subfield $h &mdash; that encodes the original language of translations. A cataloger at some point looked at each book and recorded: this is an English translation from Latin. Or from French. Or from German.
+            It turns out the Library of Congress distributes its entire catalog as downloadable files. 10 million MARC records, 3 gigabytes compressed, 41 files. Free. And buried in those records is a field (MARC 041 subfield $h) that encodes the original language of translations. A cataloger at some point looked at each book and recorded: this is an English translation from Latin. Or from French. Or from German.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -124,15 +124,15 @@ export default function CountingTheGapPage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The LOC data had one big gap. MARC 041 coding wasn&apos;t consistently applied before the mid-20th century, so translations published in the 1500s and 1600s &mdash; the Elizabethan and Jacobean golden age of translation &mdash; were underrepresented. Chapman&apos;s Homer, Florio&apos;s Montaigne, Philemon Holland&apos;s Pliny &mdash; the translations that fed Shakespeare &mdash; were largely absent.
+            The LOC data had one big gap. MARC 041 coding wasn&apos;t consistently applied before the mid-20th century, so translations published in the 1500s and 1600s (the Elizabethan and Jacobean golden age of translation) were underrepresented. Chapman&apos;s Homer, Florio&apos;s Montaigne, Philemon Holland&apos;s Pliny, the translations that fed Shakespeare, were largely absent.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            There is a database that covers exactly this period: Renaissance Cultural Crossroads, a catalog of all translations printed in Britain from 1473 to 1640, built by Brenda Hosington at the University of Warwick. We scraped it &mdash; carefully, one request per second &mdash; and got 4,016 records. Calvin (101 translations), Augustine (55), Ovid (52), Bèze (48), Luther (43), Erasmus (37).
+            There is a database that covers exactly this period: Renaissance Cultural Crossroads, a catalog of all translations printed in Britain from 1473 to 1640, built by Brenda Hosington at the University of Warwick. We scraped it, carefully, one request per second, and got 4,016 records. Calvin (101 translations), Augustine (55), Ovid (52), Bèze (48), Luther (43), Erasmus (37).
           </p>
 
           <p className="text-secondary leading-relaxed font-body">
-            These are the translations the LOC data was missing. The 16th and 17th centuries weren&apos;t a dead zone for translation &mdash; they were a boom. The LOC just didn&apos;t have the MARC codes for books cataloged before the standard existed.
+            These are the translations the LOC data was missing. The 16th and 17th centuries weren&apos;t a dead zone for translation; they were a boom. The LOC just didn&apos;t have the MARC codes for books cataloged before the standard existed.
           </p>
         </section>
 
@@ -144,7 +144,7 @@ export default function CountingTheGapPage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Combined, we now have roughly 42,000 known English translation records from the Library of Congress, UNESCO, Renaissance Cultural Crossroads, and 43 other sources. After deduplication &mdash; which is imperfect, because the same translation appears under different titles in different databases &mdash; we estimate about 31,000 distinct translated works.
+            Combined, we now have roughly 42,000 known English translation records from the Library of Congress, UNESCO, Renaissance Cultural Crossroads, and 43 other sources. After deduplication (which is imperfect, because the same translation appears under different titles in different databases), we estimate about 31,000 distinct translated works.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -166,13 +166,13 @@ export default function CountingTheGapPage() {
           </div>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The 4.5% is a hard floor &mdash; we have evidence for each of those translations. The true rate is higher, because our catalog doesn&apos;t include translations published in dissertations, journal articles, or by presses we haven&apos;t cataloged. We estimate the true figure is somewhere between 5% and 14%. We wrote{' '}
+            The 4.5% is a hard floor: we have evidence for each of those translations. The true rate is higher, because our catalog doesn&apos;t include translations published in dissertations, journal articles, or by presses we haven&apos;t cataloged. We estimate the true figure is somewhere between 5% and 14%. We wrote{' '}
             <Link href="/blog/untranslated-renaissance" className="text-accent-rust hover:text-accent-rust underline">a longer post</Link>{' '}
             laying out the methodology and its limitations.
           </p>
 
           <p className="text-secondary leading-relaxed font-body">
-            Under any reasonable assumption, more than 85% of the early modern European printed record has never been translated into English. And that&apos;s just 1450 to 1700 &mdash; we haven&apos;t even looked at the 18th century, which probably produced more books than the previous 250 years combined.
+            Under any reasonable assumption, more than 85% of the early modern European printed record has never been translated into English. And that&apos;s just 1450 to 1700; we haven&apos;t even looked at the 18th century, which probably produced more books than the previous 250 years combined.
           </p>
         </section>
 
@@ -188,15 +188,15 @@ export default function CountingTheGapPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            <strong className="text-stone-800">Even Cicero is only 8% translated.</strong> The most published Latin author in the USTC, with 3,448 distinct works, has about 300 English translations. Thomas Aquinas has the best coverage at 31%, and he&apos;s exceptional because of centuries of sustained theological interest. Melanchthon &mdash; 1,222 works &mdash; has about 10 translations.
+            <strong className="text-stone-800">Even Cicero is only 8% translated.</strong> The most published Latin author in the USTC, with 3,448 distinct works, has about 300 English translations. Thomas Aquinas has the best coverage at 31%, and he&apos;s exceptional because of centuries of sustained theological interest. Melanchthon (1,222 works) has about 10 translations.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            <strong className="text-stone-800">&ldquo;Translated&rdquo; doesn&apos;t mean &ldquo;accessible.&rdquo;</strong> When we checked our own 4,083 verified books, we found that 18% have only partial translations &mdash; a chapter in an anthology, a passage quoted in an article, a 19th-century version in archaic English. They show up as &ldquo;translated&rdquo; in a census, but you can&apos;t sit down and read them.
+            <strong className="text-stone-800">&ldquo;Translated&rdquo; doesn&apos;t mean &ldquo;accessible.&rdquo;</strong> When we checked our own 4,083 verified books, we found that 18% have only partial translations: a chapter in an anthology, a passage quoted in an article, a 19th-century version in archaic English. They show up as &ldquo;translated&rdquo; in a census, but you can&apos;t sit down and read them.
           </p>
 
           <p className="text-secondary leading-relaxed font-body">
-            <strong className="text-stone-800">Nobody had counted before.</strong> This is what surprised me most. The scale of untranslated material is well known among Latin scholars &mdash; it&apos;s the water they swim in. But nobody had tried to put a number on it. The data was there &mdash; the USTC, the LOC MARC records, the UNESCO catalog &mdash; sitting in separate databases, waiting to be connected.
+            <strong className="text-stone-800">Nobody had counted before.</strong> This is what surprised me most. The scale of untranslated material is well known among Latin scholars; it&apos;s the water they swim in. But nobody had tried to put a number on it. The data was there (the USTC, the LOC MARC records, the UNESCO catalog), sitting in separate databases, waiting to be connected.
           </p>
         </section>
 
@@ -212,20 +212,20 @@ export default function CountingTheGapPage() {
             <Link href="/census" className="text-accent-rust hover:text-accent-rust underline">sourcelibrary.org/census</Link>.
             You can search any pre-modern author or title and see whether a known English translation exists.
             The data draws from 23,700+ catalog records across the Library of Congress, UNESCO, Open Library,
-            HathiTrust, and 20+ other sources &mdash; matched at the work level against 1.4 million USTC editions.
+            HathiTrust, and 20+ other sources, matched at the work level against 1.4 million USTC editions.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The work-level matching gave us a more precise &mdash; and more sobering &mdash; number than the edition-level
+            The work-level matching gave us a more precise (and more sobering) number than the edition-level
             estimates above. At the work level, under 1% of pre-1700 European works have a known English translation.
             Source Library&apos;s 6,000+ first translations represent a significant fraction of the total.
           </p>
 
           <p className="text-secondary leading-relaxed font-body">
             Source Library now has nearly 10,000 books with translations and over 6,000 verified first English translations.
-            The gap between &ldquo;digitized&rdquo; and &ldquo;translated&rdquo; remains vast &mdash; hundreds of thousands of scanned books
+            The gap between &ldquo;digitized&rdquo; and &ldquo;translated&rdquo; remains vast: hundreds of thousands of scanned books
             waiting to be read for the first time in centuries. The images are already online.
-            They just need someone &mdash; or something &mdash; to read them.
+            They just need someone, or something, to read them.
           </p>
         </section>
 
@@ -248,7 +248,7 @@ export default function CountingTheGapPage() {
           <p className="text-secondary text-sm leading-relaxed font-body">
             All data and code is open source at{' '}
             <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2" className="text-accent-rust hover:text-accent-rust underline">github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2</a>.
-            If you know of a translation we missed, please reach out &mdash;{' '}
+            If you know of a translation we missed, please reach out:{' '}
             <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">team@sourcelibrary.org</a>.
           </p>
         </div>

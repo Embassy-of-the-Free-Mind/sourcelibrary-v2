@@ -1,0 +1,1302 @@
+{
+ "prereg": "PREREGISTRATION-kraken-latin-ft-5730.md",
+ "n_test": 61,
+ "unusable": [
+  "ed-6a42c73497284560a2b10fee-p1"
+ ],
+ "comparisons": {
+  "all": {
+   "ft_vs_lite": {
+    "n": 60,
+    "median_cer": {
+     "kraken-ft-5730": 0.057,
+     "gemini-3.1-flash-lite": 0.084
+    },
+    "mean_cer": {
+     "kraken-ft-5730": 0.081,
+     "gemini-3.1-flash-lite": 0.115
+    },
+    "median_delta": -0.026,
+    "ci95": [
+     -0.04,
+     -0.012
+    ],
+    "wins": 46,
+    "losses": 13,
+    "ties": 1,
+    "p_sign": 0,
+    "catastrophic": {
+     "kraken-ft-5730": 1,
+     "gemini-3.1-flash-lite": 2
+    },
+    "verdict": "beats",
+    "folded": {
+     "n": 60,
+     "median_delta": -0.028,
+     "ci95": [
+      -0.038,
+      -0.014
+     ],
+     "wins": 46,
+     "losses": 13
+    },
+    "folded_plus_posthoc": {
+     "n": 60,
+     "median_delta": -0.014,
+     "ci95": [
+      -0.026,
+      -0.003
+     ],
+     "wins": 39,
+     "losses": 20
+    }
+   },
+   "ft_vs_catmus": {
+    "n": 60,
+    "median_cer": {
+     "kraken-ft-5730": 0.057,
+     "kraken-catmus": 0.09
+    },
+    "mean_cer": {
+     "kraken-ft-5730": 0.081,
+     "kraken-catmus": 0.117
+    },
+    "median_delta": -0.017,
+    "ci95": [
+     -0.023,
+     -0.011
+    ],
+    "wins": 50,
+    "losses": 9,
+    "ties": 1,
+    "p_sign": 0,
+    "catastrophic": {
+     "kraken-ft-5730": 1,
+     "kraken-catmus": 2
+    },
+    "verdict": "beats",
+    "folded": {
+     "n": 60,
+     "median_delta": -0.017,
+     "ci95": [
+      -0.023,
+      -0.011
+     ],
+     "wins": 50,
+     "losses": 9
+    },
+    "folded_plus_posthoc": {
+     "n": 60,
+     "median_delta": -0.006,
+     "ci95": [
+      -0.008,
+      -0.003
+     ],
+     "wins": 48,
+     "losses": 10
+    }
+   },
+   "catmus_vs_lite": {
+    "n": 60,
+    "median_cer": {
+     "kraken-catmus": 0.09,
+     "gemini-3.1-flash-lite": 0.084
+    },
+    "mean_cer": {
+     "kraken-catmus": 0.117,
+     "gemini-3.1-flash-lite": 0.115
+    },
+    "median_delta": 0.002,
+    "ci95": [
+     -0.003,
+     0.01
+    ],
+    "wins": 25,
+    "losses": 35,
+    "ties": 0,
+    "p_sign": 0.245,
+    "catastrophic": {
+     "kraken-catmus": 2,
+     "gemini-3.1-flash-lite": 2
+    },
+    "verdict": "ties",
+    "folded": {
+     "n": 60,
+     "median_delta": 0.002,
+     "ci95": [
+      -0.004,
+      0.007
+     ],
+     "wins": 26,
+     "losses": 33
+    },
+    "folded_plus_posthoc": {
+     "n": 60,
+     "median_delta": 0.002,
+     "ci95": [
+      -0.004,
+      0.01
+     ],
+     "wins": 26,
+     "losses": 32
+    }
+   }
+  },
+  "library": {
+   "ft_vs_lite": {
+    "n": 39,
+    "median_cer": {
+     "kraken-ft-5730": 0.063,
+     "gemini-3.1-flash-lite": 0.091
+    },
+    "mean_cer": {
+     "kraken-ft-5730": 0.083,
+     "gemini-3.1-flash-lite": 0.112
+    },
+    "median_delta": -0.04,
+    "ci95": [
+     -0.047,
+     -0.025
+    ],
+    "wins": 35,
+    "losses": 4,
+    "ties": 0,
+    "p_sign": 0,
+    "catastrophic": {
+     "kraken-ft-5730": 0,
+     "gemini-3.1-flash-lite": 0
+    },
+    "verdict": "beats",
+    "folded": {
+     "n": 39,
+     "median_delta": -0.038,
+     "ci95": [
+      -0.046,
+      -0.025
+     ],
+     "wins": 35,
+     "losses": 4
+    },
+    "folded_plus_posthoc": {
+     "n": 39,
+     "median_delta": -0.023,
+     "ci95": [
+      -0.028,
+      -0.008
+     ],
+     "wins": 30,
+     "losses": 9
+    }
+   },
+   "ft_vs_catmus": {
+    "n": 39,
+    "median_cer": {
+     "kraken-ft-5730": 0.063,
+     "kraken-catmus": 0.102
+    },
+    "mean_cer": {
+     "kraken-ft-5730": 0.083,
+     "kraken-catmus": 0.138
+    },
+    "median_delta": -0.031,
+    "ci95": [
+     -0.053,
+     -0.022
+    ],
+    "wins": 39,
+    "losses": 0,
+    "ties": 0,
+    "p_sign": 0,
+    "catastrophic": {
+     "kraken-ft-5730": 0,
+     "kraken-catmus": 1
+    },
+    "verdict": "beats",
+    "folded": {
+     "n": 39,
+     "median_delta": -0.031,
+     "ci95": [
+      -0.05,
+      -0.021
+     ],
+     "wins": 39,
+     "losses": 0
+    },
+    "folded_plus_posthoc": {
+     "n": 39,
+     "median_delta": -0.007,
+     "ci95": [
+      -0.034,
+      -0.005
+     ],
+     "wins": 37,
+     "losses": 1
+    }
+   },
+   "catmus_vs_lite": {
+    "n": 39,
+    "median_cer": {
+     "kraken-catmus": 0.102,
+     "gemini-3.1-flash-lite": 0.091
+    },
+    "mean_cer": {
+     "kraken-catmus": 0.138,
+     "gemini-3.1-flash-lite": 0.112
+    },
+    "median_delta": 0.002,
+    "ci95": [
+     -0.016,
+     0.011
+    ],
+    "wins": 18,
+    "losses": 21,
+    "ties": 0,
+    "p_sign": 0.749,
+    "catastrophic": {
+     "kraken-catmus": 1,
+     "gemini-3.1-flash-lite": 0
+    },
+    "verdict": "ties",
+    "folded": {
+     "n": 39,
+     "median_delta": 0,
+     "ci95": [
+      -0.018,
+      0.009
+     ],
+     "wins": 19,
+     "losses": 19
+    },
+    "folded_plus_posthoc": {
+     "n": 39,
+     "median_delta": 0,
+     "ci95": [
+      -0.013,
+      0.011
+     ],
+     "wins": 19,
+     "losses": 18
+    }
+   }
+  },
+  "wikisource": {
+   "ft_vs_lite": {
+    "n": 21,
+    "median_cer": {
+     "kraken-ft-5730": 0.041,
+     "gemini-3.1-flash-lite": 0.055
+    },
+    "mean_cer": {
+     "kraken-ft-5730": 0.077,
+     "gemini-3.1-flash-lite": 0.121
+    },
+    "median_delta": -0.001,
+    "ci95": [
+     -0.013,
+     0.012
+    ],
+    "wins": 11,
+    "losses": 9,
+    "ties": 1,
+    "p_sign": 0.824,
+    "catastrophic": {
+     "kraken-ft-5730": 1,
+     "gemini-3.1-flash-lite": 2
+    },
+    "verdict": "ties",
+    "folded": {
+     "n": 21,
+     "median_delta": -0.001,
+     "ci95": [
+      -0.013,
+      0.013
+     ],
+     "wins": 11,
+     "losses": 9
+    },
+    "folded_plus_posthoc": {
+     "n": 21,
+     "median_delta": 0.001,
+     "ci95": [
+      -0.013,
+      0.009
+     ],
+     "wins": 9,
+     "losses": 11
+    }
+   },
+   "ft_vs_catmus": {
+    "n": 21,
+    "median_cer": {
+     "kraken-ft-5730": 0.041,
+     "kraken-catmus": 0.051
+    },
+    "mean_cer": {
+     "kraken-ft-5730": 0.077,
+     "kraken-catmus": 0.078
+    },
+    "median_delta": -0.001,
+    "ci95": [
+     -0.003,
+     0.001
+    ],
+    "wins": 11,
+    "losses": 9,
+    "ties": 1,
+    "p_sign": 0.824,
+    "catastrophic": {
+     "kraken-ft-5730": 1,
+     "kraken-catmus": 1
+    },
+    "verdict": "ties",
+    "folded": {
+     "n": 21,
+     "median_delta": -0.002,
+     "ci95": [
+      -0.003,
+      0.001
+     ],
+     "wins": 11,
+     "losses": 9
+    },
+    "folded_plus_posthoc": {
+     "n": 21,
+     "median_delta": -0.001,
+     "ci95": [
+      -0.003,
+      0.001
+     ],
+     "wins": 11,
+     "losses": 9
+    }
+   },
+   "catmus_vs_lite": {
+    "n": 21,
+    "median_cer": {
+     "kraken-catmus": 0.051,
+     "gemini-3.1-flash-lite": 0.055
+    },
+    "mean_cer": {
+     "kraken-catmus": 0.078,
+     "gemini-3.1-flash-lite": 0.121
+    },
+    "median_delta": 0.002,
+    "ci95": [
+     -0.001,
+     0.01
+    ],
+    "wins": 7,
+    "losses": 14,
+    "ties": 0,
+    "p_sign": 0.189,
+    "catastrophic": {
+     "kraken-catmus": 1,
+     "gemini-3.1-flash-lite": 2
+    },
+    "verdict": "ties",
+    "folded": {
+     "n": 21,
+     "median_delta": 0.002,
+     "ci95": [
+      -0.001,
+      0.01
+     ],
+     "wins": 7,
+     "losses": 14
+    },
+    "folded_plus_posthoc": {
+     "n": 21,
+     "median_delta": 0.002,
+     "ci95": [
+      -0.001,
+      0.01
+     ],
+     "wins": 7,
+     "losses": 14
+    }
+   }
+  }
+ },
+ "tally": {
+  "gemini-3.1-flash-lite": {
+   "pages": 61,
+   "long_s_glyph": 497,
+   "f_for_s": 1156,
+   "abbrev_marks": 102,
+   "ref_long_s_glyph": 442,
+   "ref_abbrev_marks": 37
+  },
+  "kraken-catmus": {
+   "pages": 61,
+   "long_s_glyph": 0,
+   "f_for_s": 23,
+   "abbrev_marks": 155,
+   "ref_long_s_glyph": 442,
+   "ref_abbrev_marks": 37
+  },
+  "kraken-ft-5730": {
+   "pages": 61,
+   "long_s_glyph": 0,
+   "f_for_s": 16,
+   "abbrev_marks": 109,
+   "ref_long_s_glyph": 442,
+   "ref_abbrev_marks": 37
+  }
+ },
+ "per_page": [
+  {
+   "slug": "ed-6a425310343d756d34e34ea7-p15",
+   "origin": "library",
+   "year": 1630,
+   "gemini-3.1-flash-lite": 0.043,
+   "kraken-catmus": 0.038,
+   "kraken-ft-5730": 0.028,
+   "gemini-3.1-flash-lite_folded": 0.043,
+   "kraken-catmus_folded": 0.038,
+   "kraken-ft-5730_folded": 0.028,
+   "gemini-3.1-flash-lite_folded_plus": 0.035,
+   "kraken-catmus_folded_plus": 0.031,
+   "kraken-ft-5730_folded_plus": 0.028
+  },
+  {
+   "slug": "ed-6a425634dfbbb4d07aa5382e-p15",
+   "origin": "library",
+   "year": 1620,
+   "gemini-3.1-flash-lite": 0.12,
+   "kraken-catmus": 0.154,
+   "kraken-ft-5730": 0.07,
+   "gemini-3.1-flash-lite_folded": 0.112,
+   "kraken-catmus_folded": 0.144,
+   "kraken-ft-5730_folded": 0.065,
+   "gemini-3.1-flash-lite_folded_plus": 0.093,
+   "kraken-catmus_folded_plus": 0.128,
+   "kraken-ft-5730_folded_plus": 0.065
+  },
+  {
+   "slug": "ed-6a426869aedf4c943f91eac4-p14",
+   "origin": "library",
+   "year": 1679,
+   "gemini-3.1-flash-lite": 0.064,
+   "kraken-catmus": 0.074,
+   "kraken-ft-5730": 0.059,
+   "gemini-3.1-flash-lite_folded": 0.063,
+   "kraken-catmus_folded": 0.072,
+   "kraken-ft-5730_folded": 0.057,
+   "gemini-3.1-flash-lite_folded_plus": 0.054,
+   "kraken-catmus_folded_plus": 0.063,
+   "kraken-ft-5730_folded_plus": 0.057
+  },
+  {
+   "slug": "ed-6a4270ed62d175ca9e4e1aa5-p15",
+   "origin": "library",
+   "year": 1684,
+   "gemini-3.1-flash-lite": 0.077,
+   "kraken-catmus": 0.088,
+   "kraken-ft-5730": 0.035,
+   "gemini-3.1-flash-lite_folded": 0.076,
+   "kraken-catmus_folded": 0.083,
+   "kraken-ft-5730_folded": 0.033,
+   "gemini-3.1-flash-lite_folded_plus": 0.061,
+   "kraken-catmus_folded_plus": 0.07,
+   "kraken-ft-5730_folded_plus": 0.033
+  },
+  {
+   "slug": "ed-6a42aecb5207af7c42f5333c-p17",
+   "origin": "library",
+   "year": 1648,
+   "gemini-3.1-flash-lite": 0.248,
+   "kraken-catmus": 0.244,
+   "kraken-ft-5730": 0.176,
+   "gemini-3.1-flash-lite_folded": 0.248,
+   "kraken-catmus_folded": 0.244,
+   "kraken-ft-5730_folded": 0.176,
+   "gemini-3.1-flash-lite_folded_plus": 0.22,
+   "kraken-catmus_folded_plus": 0.216,
+   "kraken-ft-5730_folded_plus": 0.176
+  },
+  {
+   "slug": "ed-6a42d56d1894955eb725e97f-p22",
+   "origin": "library",
+   "year": 1611,
+   "gemini-3.1-flash-lite": 0.09,
+   "kraken-catmus": 0.096,
+   "kraken-ft-5730": 0.078,
+   "gemini-3.1-flash-lite_folded": 0.088,
+   "kraken-catmus_folded": 0.092,
+   "kraken-ft-5730_folded": 0.074,
+   "gemini-3.1-flash-lite_folded_plus": 0.073,
+   "kraken-catmus_folded_plus": 0.08,
+   "kraken-ft-5730_folded_plus": 0.074
+  },
+  {
+   "slug": "ed-6a42ec4006e6ead3ac544b8f-p14",
+   "origin": "library",
+   "year": 1678,
+   "gemini-3.1-flash-lite": 0.085,
+   "kraken-catmus": 0.065,
+   "kraken-ft-5730": 0.042,
+   "gemini-3.1-flash-lite_folded": 0.083,
+   "kraken-catmus_folded": 0.063,
+   "kraken-ft-5730_folded": 0.039,
+   "gemini-3.1-flash-lite_folded_plus": 0.065,
+   "kraken-catmus_folded_plus": 0.046,
+   "kraken-ft-5730_folded_plus": 0.039
+  },
+  {
+   "slug": "ed-6a43001a4e06bc233ecf5ef6-p16",
+   "origin": "library",
+   "year": 1686,
+   "gemini-3.1-flash-lite": 0.117,
+   "kraken-catmus": 0.1,
+   "kraken-ft-5730": 0.089,
+   "gemini-3.1-flash-lite_folded": 0.117,
+   "kraken-catmus_folded": 0.096,
+   "kraken-ft-5730_folded": 0.084,
+   "gemini-3.1-flash-lite_folded_plus": 0.107,
+   "kraken-catmus_folded_plus": 0.086,
+   "kraken-ft-5730_folded_plus": 0.084
+  },
+  {
+   "slug": "ed-6a4300764e06bc233ecf660a-p15",
+   "origin": "library",
+   "year": 1645,
+   "gemini-3.1-flash-lite": 0.061,
+   "kraken-catmus": 0.066,
+   "kraken-ft-5730": 0.044,
+   "gemini-3.1-flash-lite_folded": 0.06,
+   "kraken-catmus_folded": 0.06,
+   "kraken-ft-5730_folded": 0.041,
+   "gemini-3.1-flash-lite_folded_plus": 0.043,
+   "kraken-catmus_folded_plus": 0.043,
+   "kraken-ft-5730_folded_plus": 0.041
+  },
+  {
+   "slug": "ed-6a430a2a22c0c8edb0f8c8d4-p16",
+   "origin": "library",
+   "year": 1685,
+   "gemini-3.1-flash-lite": 0.082,
+   "kraken-catmus": 0.042,
+   "kraken-ft-5730": 0.03,
+   "gemini-3.1-flash-lite_folded": 0.082,
+   "kraken-catmus_folded": 0.041,
+   "kraken-ft-5730_folded": 0.03,
+   "gemini-3.1-flash-lite_folded_plus": 0.071,
+   "kraken-catmus_folded_plus": 0.03,
+   "kraken-ft-5730_folded_plus": 0.03
+  },
+  {
+   "slug": "ed-6a4376a3e296c55144956689-p15",
+   "origin": "library",
+   "year": 1691,
+   "gemini-3.1-flash-lite": 0.082,
+   "kraken-catmus": 0.046,
+   "kraken-ft-5730": 0.022,
+   "gemini-3.1-flash-lite_folded": 0.082,
+   "kraken-catmus_folded": 0.046,
+   "kraken-ft-5730_folded": 0.022,
+   "gemini-3.1-flash-lite_folded_plus": 0.062,
+   "kraken-catmus_folded_plus": 0.026,
+   "kraken-ft-5730_folded_plus": 0.022
+  },
+  {
+   "slug": "ed-6a43851557a09c2c0fcc0005-p17",
+   "origin": "library",
+   "year": 1695,
+   "gemini-3.1-flash-lite": 0.072,
+   "kraken-catmus": 0.101,
+   "kraken-ft-5730": 0.079,
+   "gemini-3.1-flash-lite_folded": 0.072,
+   "kraken-catmus_folded": 0.101,
+   "kraken-ft-5730_folded": 0.078,
+   "gemini-3.1-flash-lite_folded_plus": 0.053,
+   "kraken-catmus_folded_plus": 0.082,
+   "kraken-ft-5730_folded_plus": 0.078
+  },
+  {
+   "slug": "ed-6a48d985df05f7ea342b77fb-p16",
+   "origin": "library",
+   "year": 1662,
+   "gemini-3.1-flash-lite": 0.065,
+   "kraken-catmus": 0.067,
+   "kraken-ft-5730": 0.051,
+   "gemini-3.1-flash-lite_folded": 0.065,
+   "kraken-catmus_folded": 0.06,
+   "kraken-ft-5730_folded": 0.042,
+   "gemini-3.1-flash-lite_folded_plus": 0.05,
+   "kraken-catmus_folded_plus": 0.043,
+   "kraken-ft-5730_folded_plus": 0.042
+  },
+  {
+   "slug": "ed-6a4f71ca1cba01ec54e763c3-p15",
+   "origin": "library",
+   "year": 1665,
+   "gemini-3.1-flash-lite": 0.118,
+   "kraken-catmus": 0.368,
+   "kraken-ft-5730": 0.109,
+   "gemini-3.1-flash-lite_folded": 0.118,
+   "kraken-catmus_folded": 0.366,
+   "kraken-ft-5730_folded": 0.109,
+   "gemini-3.1-flash-lite_folded_plus": 0.1,
+   "kraken-catmus_folded_plus": 0.355,
+   "kraken-ft-5730_folded_plus": 0.109
+  },
+  {
+   "slug": "ed-6a506fd980b7658fae261d6e-p16",
+   "origin": "library",
+   "year": 1630,
+   "gemini-3.1-flash-lite": 0.119,
+   "kraken-catmus": 0.111,
+   "kraken-ft-5730": 0.046,
+   "gemini-3.1-flash-lite_folded": 0.116,
+   "kraken-catmus_folded": 0.109,
+   "kraken-ft-5730_folded": 0.046,
+   "gemini-3.1-flash-lite_folded_plus": 0.083,
+   "kraken-catmus_folded_plus": 0.081,
+   "kraken-ft-5730_folded_plus": 0.046
+  },
+  {
+   "slug": "ws-la-28233-pdf-pdf-p4",
+   "origin": "external",
+   "year": 1686,
+   "gemini-3.1-flash-lite": 0,
+   "kraken-catmus": 0.002,
+   "kraken-ft-5730": 0.025,
+   "gemini-3.1-flash-lite_folded": 0,
+   "kraken-catmus_folded": 0.002,
+   "kraken-ft-5730_folded": 0.025,
+   "gemini-3.1-flash-lite_folded_plus": 0,
+   "kraken-catmus_folded_plus": 0.003,
+   "kraken-ft-5730_folded_plus": 0.024
+  },
+  {
+   "slug": "ws-la-agricola-de-re-metallica-djvu-p406",
+   "origin": "external",
+   "year": 1556,
+   "gemini-3.1-flash-lite": 0.022,
+   "kraken-catmus": 0.023,
+   "kraken-ft-5730": 0.021,
+   "gemini-3.1-flash-lite_folded": 0.022,
+   "kraken-catmus_folded": 0.023,
+   "kraken-ft-5730_folded": 0.021,
+   "gemini-3.1-flash-lite_folded_plus": 0.02,
+   "kraken-catmus_folded_plus": 0.023,
+   "kraken-ft-5730_folded_plus": 0.021
+  },
+  {
+   "slug": "ws-la-ars-memorativa-leporeus-djvu-p33",
+   "origin": "external",
+   "year": 1523,
+   "gemini-3.1-flash-lite": 0.184,
+   "kraken-catmus": 0.199,
+   "kraken-ft-5730": 0.217,
+   "gemini-3.1-flash-lite_folded": 0.184,
+   "kraken-catmus_folded": 0.199,
+   "kraken-ft-5730_folded": 0.217,
+   "gemini-3.1-flash-lite_folded_plus": 0.185,
+   "kraken-catmus_folded_plus": 0.199,
+   "kraken-ft-5730_folded_plus": 0.217
+  },
+  {
+   "slug": "ws-la-athanasius-kircher-turris-babel-1679-djvu-p20",
+   "origin": "external",
+   "year": 1679,
+   "gemini-3.1-flash-lite": 0.509,
+   "kraken-catmus": 0.557,
+   "kraken-ft-5730": 0.555,
+   "gemini-3.1-flash-lite_folded": 0.509,
+   "kraken-catmus_folded": 0.557,
+   "kraken-ft-5730_folded": 0.555,
+   "gemini-3.1-flash-lite_folded_plus": 0.509,
+   "kraken-catmus_folded_plus": 0.556,
+   "kraken-ft-5730_folded_plus": 0.555
+  },
+  {
+   "slug": "ws-la-cl-ver-germania-antiqua-1616-pdf-p23",
+   "origin": "external",
+   "year": 1616,
+   "gemini-3.1-flash-lite": 0.039,
+   "kraken-catmus": 0.001,
+   "kraken-ft-5730": 0.002,
+   "gemini-3.1-flash-lite_folded": 0.039,
+   "kraken-catmus_folded": 0.001,
+   "kraken-ft-5730_folded": 0.002,
+   "gemini-3.1-flash-lite_folded_plus": 0.039,
+   "kraken-catmus_folded_plus": 0.001,
+   "kraken-ft-5730_folded_plus": 0.002
+  },
+  {
+   "slug": "ws-la-congestorium-artificiose-memorie-v-p-f-joa-n-nis-p15",
+   "origin": "external",
+   "year": 1533,
+   "gemini-3.1-flash-lite": 0.105,
+   "kraken-catmus": 0.146,
+   "kraken-ft-5730": 0.15,
+   "gemini-3.1-flash-lite_folded": 0.105,
+   "kraken-catmus_folded": 0.146,
+   "kraken-ft-5730_folded": 0.15,
+   "gemini-3.1-flash-lite_folded_plus": 0.112,
+   "kraken-catmus_folded_plus": 0.147,
+   "kraken-ft-5730_folded_plus": 0.152
+  },
+  {
+   "slug": "ws-la-coppernicus-monete-djvu-p4",
+   "origin": "external",
+   "year": 1526,
+   "gemini-3.1-flash-lite": 0.001,
+   "kraken-catmus": 0,
+   "kraken-ft-5730": 0.001,
+   "gemini-3.1-flash-lite_folded": 0.001,
+   "kraken-catmus_folded": 0,
+   "kraken-ft-5730_folded": 0.001,
+   "gemini-3.1-flash-lite_folded_plus": 0.001,
+   "kraken-catmus_folded_plus": 0,
+   "kraken-ft-5730_folded_plus": 0.001
+  },
+  {
+   "slug": "ws-la-de-spectris-lemuribus-et-magnis-atque-insolitis-p347",
+   "origin": "external",
+   "year": 1687,
+   "gemini-3.1-flash-lite": 0.047,
+   "kraken-catmus": 0.059,
+   "kraken-ft-5730": 0.056,
+   "gemini-3.1-flash-lite_folded": 0.047,
+   "kraken-catmus_folded": 0.059,
+   "kraken-ft-5730_folded": 0.056,
+   "gemini-3.1-flash-lite_folded_plus": 0.047,
+   "kraken-catmus_folded_plus": 0.059,
+   "kraken-ft-5730_folded_plus": 0.056
+  },
+  {
+   "slug": "ws-la-de-sternutatione-tractatus-copiosus-vanden-berge-p17",
+   "origin": "external",
+   "year": 1664,
+   "gemini-3.1-flash-lite": 0.044,
+   "kraken-catmus": 0.012,
+   "kraken-ft-5730": 0.011,
+   "gemini-3.1-flash-lite_folded": 0.044,
+   "kraken-catmus_folded": 0.012,
+   "kraken-ft-5730_folded": 0.011,
+   "gemini-3.1-flash-lite_folded_plus": 0.044,
+   "kraken-catmus_folded_plus": 0.012,
+   "kraken-ft-5730_folded_plus": 0.011
+  },
+  {
+   "slug": "ws-la-dictionarium-latinogallicum-estienne-1552-a-ins-p17",
+   "origin": "external",
+   "year": 1552,
+   "gemini-3.1-flash-lite": 0.058,
+   "kraken-catmus": 0.068,
+   "kraken-ft-5730": 0.041,
+   "gemini-3.1-flash-lite_folded": 0.058,
+   "kraken-catmus_folded": 0.068,
+   "kraken-ft-5730_folded": 0.041,
+   "gemini-3.1-flash-lite_folded_plus": 0.058,
+   "kraken-catmus_folded_plus": 0.068,
+   "kraken-ft-5730_folded_plus": 0.041
+  },
+  {
+   "slug": "ws-la-dictionarium-latinogallicum-estienne-1552-ins-z-p721",
+   "origin": "external",
+   "year": 1552,
+   "gemini-3.1-flash-lite": 0.038,
+   "kraken-catmus": 0.081,
+   "kraken-ft-5730": 0.074,
+   "gemini-3.1-flash-lite_folded": 0.038,
+   "kraken-catmus_folded": 0.081,
+   "kraken-ft-5730_folded": 0.074,
+   "gemini-3.1-flash-lite_folded_plus": 0.038,
+   "kraken-catmus_folded_plus": 0.081,
+   "kraken-ft-5730_folded_plus": 0.074
+  },
+  {
+   "slug": "ws-la-divini-platonis-opera-omnia-qu-exstant-djvu-p369",
+   "origin": "external",
+   "year": 1590,
+   "gemini-3.1-flash-lite": 1,
+   "kraken-catmus": 0.038,
+   "kraken-ft-5730": 0.046,
+   "gemini-3.1-flash-lite_folded": 1,
+   "kraken-catmus_folded": 0.038,
+   "kraken-ft-5730_folded": 0.046,
+   "gemini-3.1-flash-lite_folded_plus": 1,
+   "kraken-catmus_folded_plus": 0.038,
+   "kraken-ft-5730_folded_plus": 0.046
+  },
+  {
+   "slug": "ws-la-erycius-puteanus-bruxella-incomparabili-exemplo-p22",
+   "origin": "external",
+   "year": 1646,
+   "gemini-3.1-flash-lite": 0.005,
+   "kraken-catmus": 0.003,
+   "kraken-ft-5730": 0.003,
+   "gemini-3.1-flash-lite_folded": 0.005,
+   "kraken-catmus_folded": 0.003,
+   "kraken-ft-5730_folded": 0.003,
+   "gemini-3.1-flash-lite_folded_plus": 0.005,
+   "kraken-catmus_folded_plus": 0.003,
+   "kraken-ft-5730_folded_plus": 0.003
+  },
+  {
+   "slug": "ws-la-euripus-seu-de-fluxu-et-refluxu-maris-sententia-p38",
+   "origin": "external",
+   "year": 1624,
+   "gemini-3.1-flash-lite": 0.069,
+   "kraken-catmus": 0.07,
+   "kraken-ft-5730": 0.071,
+   "gemini-3.1-flash-lite_folded": 0.069,
+   "kraken-catmus_folded": 0.07,
+   "kraken-ft-5730_folded": 0.071,
+   "gemini-3.1-flash-lite_folded_plus": 0.069,
+   "kraken-catmus_folded_plus": 0.07,
+   "kraken-ft-5730_folded_plus": 0.071
+  },
+  {
+   "slug": "ws-la-foliot-canticum-pdf-p32",
+   "origin": "external",
+   "year": 1638,
+   "gemini-3.1-flash-lite": 0.061,
+   "kraken-catmus": 0.023,
+   "kraken-ft-5730": 0.018,
+   "gemini-3.1-flash-lite_folded": 0.061,
+   "kraken-catmus_folded": 0.023,
+   "kraken-ft-5730_folded": 0.018,
+   "gemini-3.1-flash-lite_folded_plus": 0.061,
+   "kraken-catmus_folded_plus": 0.025,
+   "kraken-ft-5730_folded_plus": 0.017
+  },
+  {
+   "slug": "ws-la-galilei-discorsi-e-dimostrazioni-matematiche-int-p204",
+   "origin": "external",
+   "year": 1638,
+   "gemini-3.1-flash-lite": 0.047,
+   "kraken-catmus": 0.051,
+   "kraken-ft-5730": 0.034,
+   "gemini-3.1-flash-lite_folded": 0.047,
+   "kraken-catmus_folded": 0.051,
+   "kraken-ft-5730_folded": 0.034,
+   "gemini-3.1-flash-lite_folded_plus": 0.047,
+   "kraken-catmus_folded_plus": 0.051,
+   "kraken-ft-5730_folded_plus": 0.034
+  },
+  {
+   "slug": "ws-la-historia-naturalis-brasiliae-1648-pdf-p198",
+   "origin": "external",
+   "year": 1648,
+   "gemini-3.1-flash-lite": 0.079,
+   "kraken-catmus": 0.091,
+   "kraken-ft-5730": 0.095,
+   "gemini-3.1-flash-lite_folded": 0.079,
+   "kraken-catmus_folded": 0.091,
+   "kraken-ft-5730_folded": 0.095,
+   "gemini-3.1-flash-lite_folded_plus": 0.079,
+   "kraken-catmus_folded_plus": 0.091,
+   "kraken-ft-5730_folded_plus": 0.095
+  },
+  {
+   "slug": "ws-la-hortus-malabaricus-volume-1-pdf-p4",
+   "origin": "external",
+   "year": 1678,
+   "gemini-3.1-flash-lite": 0.055,
+   "kraken-catmus": 0.009,
+   "kraken-ft-5730": 0.006,
+   "gemini-3.1-flash-lite_folded": 0.055,
+   "kraken-catmus_folded": 0.009,
+   "kraken-ft-5730_folded": 0.006,
+   "gemini-3.1-flash-lite_folded_plus": 0.055,
+   "kraken-catmus_folded_plus": 0.009,
+   "kraken-ft-5730_folded_plus": 0.006
+  },
+  {
+   "slug": "ws-la-machumetis-saracenorum-principis-eiusque-success-p259",
+   "origin": "external",
+   "year": 1550,
+   "gemini-3.1-flash-lite": 0.014,
+   "kraken-catmus": 0.024,
+   "kraken-ft-5730": 0.013,
+   "gemini-3.1-flash-lite_folded": 0.014,
+   "kraken-catmus_folded": 0.024,
+   "kraken-ft-5730_folded": 0.013,
+   "gemini-3.1-flash-lite_folded_plus": 0.009,
+   "kraken-catmus_folded_plus": 0.019,
+   "kraken-ft-5730_folded_plus": 0.013
+  },
+  {
+   "slug": "ws-la-mercurius-gallobelgicus-cologne-1592-pdf-p20",
+   "origin": "external",
+   "year": 1592,
+   "gemini-3.1-flash-lite": 0.115,
+   "kraken-catmus": 0.117,
+   "kraken-ft-5730": 0.111,
+   "gemini-3.1-flash-lite_folded": 0.115,
+   "kraken-catmus_folded": 0.117,
+   "kraken-ft-5730_folded": 0.111,
+   "gemini-3.1-flash-lite_folded_plus": 0.115,
+   "kraken-catmus_folded_plus": 0.117,
+   "kraken-ft-5730_folded_plus": 0.111
+  },
+  {
+   "slug": "ws-la-nicolaus-machiavellus-de-principe-pdf-p17",
+   "origin": "external",
+   "year": 1560,
+   "gemini-3.1-flash-lite": 0.057,
+   "kraken-catmus": 0.062,
+   "kraken-ft-5730": 0.069,
+   "gemini-3.1-flash-lite_folded": 0.057,
+   "kraken-catmus_folded": 0.062,
+   "kraken-ft-5730_folded": 0.069,
+   "gemini-3.1-flash-lite_folded_plus": 0.06,
+   "kraken-catmus_folded_plus": 0.062,
+   "kraken-ft-5730_folded_plus": 0.069
+  },
+  {
+   "slug": "ed-6a46062f896a4826cccdf873-p7",
+   "origin": "library",
+   "year": 1529,
+   "gemini-3.1-flash-lite": 0.088,
+   "kraken-catmus": 0.122,
+   "kraken-ft-5730": 0.046,
+   "gemini-3.1-flash-lite_folded": 0.084,
+   "kraken-catmus_folded": 0.11,
+   "kraken-ft-5730_folded": 0.045,
+   "gemini-3.1-flash-lite_folded_plus": 0.073,
+   "kraken-catmus_folded_plus": 0.098,
+   "kraken-ft-5730_folded_plus": 0.045
+  },
+  {
+   "slug": "ed-6a4710ef9e05dee59fe3cae8-p10",
+   "origin": "library",
+   "year": 1589,
+   "gemini-3.1-flash-lite": 0.065,
+   "kraken-catmus": 0.263,
+   "kraken-ft-5730": 0.064,
+   "gemini-3.1-flash-lite_folded": 0.063,
+   "kraken-catmus_folded": 0.261,
+   "kraken-ft-5730_folded": 0.061,
+   "gemini-3.1-flash-lite_folded_plus": 0.05,
+   "kraken-catmus_folded_plus": 0.257,
+   "kraken-ft-5730_folded_plus": 0.061
+  },
+  {
+   "slug": "ed-6a4fa9cdb5772a3dacaac6a6-p9",
+   "origin": "library",
+   "year": 1578,
+   "gemini-3.1-flash-lite": 0.106,
+   "kraken-catmus": 0.107,
+   "kraken-ft-5730": 0.063,
+   "gemini-3.1-flash-lite_folded": 0.1,
+   "kraken-catmus_folded": 0.105,
+   "kraken-ft-5730_folded": 0.062,
+   "gemini-3.1-flash-lite_folded_plus": 0.069,
+   "kraken-catmus_folded_plus": 0.069,
+   "kraken-ft-5730_folded_plus": 0.062
+  },
+  {
+   "slug": "ed-6a503c772f6539fb38937d92-p15",
+   "origin": "library",
+   "year": 1590,
+   "gemini-3.1-flash-lite": 0.225,
+   "kraken-catmus": 0.217,
+   "kraken-ft-5730": 0.161,
+   "gemini-3.1-flash-lite_folded": 0.225,
+   "kraken-catmus_folded": 0.217,
+   "kraken-ft-5730_folded": 0.161,
+   "gemini-3.1-flash-lite_folded_plus": 0.206,
+   "kraken-catmus_folded_plus": 0.197,
+   "kraken-ft-5730_folded_plus": 0.161
+  },
+  {
+   "slug": "ed-6a4252e5343d756d34e33e36-p10",
+   "origin": "library",
+   "year": 1669,
+   "gemini-3.1-flash-lite": 0.095,
+   "kraken-catmus": 0.101,
+   "kraken-ft-5730": 0.07,
+   "gemini-3.1-flash-lite_folded": 0.094,
+   "kraken-catmus_folded": 0.1,
+   "kraken-ft-5730_folded": 0.07,
+   "gemini-3.1-flash-lite_folded_plus": 0.079,
+   "kraken-catmus_folded_plus": 0.089,
+   "kraken-ft-5730_folded_plus": 0.07
+  },
+  {
+   "slug": "ed-6a4263b1744db9e3105b1125-p10",
+   "origin": "library",
+   "year": 1659,
+   "gemini-3.1-flash-lite": 0.137,
+   "kraken-catmus": 0.102,
+   "kraken-ft-5730": 0.097,
+   "gemini-3.1-flash-lite_folded": 0.137,
+   "kraken-catmus_folded": 0.102,
+   "kraken-ft-5730_folded": 0.094,
+   "gemini-3.1-flash-lite_folded_plus": 0.132,
+   "kraken-catmus_folded_plus": 0.097,
+   "kraken-ft-5730_folded_plus": 0.094
+  },
+  {
+   "slug": "ed-6a42acc65207af7c42f4db34-p14",
+   "origin": "library",
+   "year": 1627,
+   "gemini-3.1-flash-lite": 0.105,
+   "kraken-catmus": 0.201,
+   "kraken-ft-5730": 0.087,
+   "gemini-3.1-flash-lite_folded": 0.103,
+   "kraken-catmus_folded": 0.197,
+   "kraken-ft-5730_folded": 0.084,
+   "gemini-3.1-flash-lite_folded_plus": 0.09,
+   "kraken-catmus_folded_plus": 0.189,
+   "kraken-ft-5730_folded_plus": 0.084
+  },
+  {
+   "slug": "ed-6a42c73497284560a2b10fee-p1",
+   "origin": "library",
+   "year": 1637,
+   "gemini-3.1-flash-lite": null,
+   "kraken-catmus": 0.511,
+   "kraken-ft-5730": 0.503,
+   "gemini-3.1-flash-lite_folded": 0.771,
+   "kraken-catmus_folded": 1.018,
+   "kraken-ft-5730_folded": 0.725,
+   "gemini-3.1-flash-lite_folded_plus": 0.757,
+   "kraken-catmus_folded_plus": 1.009,
+   "kraken-ft-5730_folded_plus": 0.725
+  },
+  {
+   "slug": "ed-6a42ce3be76baa13aa851af5-p10",
+   "origin": "library",
+   "year": 1608,
+   "gemini-3.1-flash-lite": 0.103,
+   "kraken-catmus": 0.15,
+   "kraken-ft-5730": 0.113,
+   "gemini-3.1-flash-lite_folded": 0.098,
+   "kraken-catmus_folded": 0.144,
+   "kraken-ft-5730_folded": 0.108,
+   "gemini-3.1-flash-lite_folded_plus": 0.087,
+   "kraken-catmus_folded_plus": 0.135,
+   "kraken-ft-5730_folded_plus": 0.108
+  },
+  {
+   "slug": "ed-6a42d8f7e76baa13aa85e9b9-p9",
+   "origin": "library",
+   "year": 1638,
+   "gemini-3.1-flash-lite": 0.368,
+   "kraken-catmus": 0.334,
+   "kraken-ft-5730": 0.314,
+   "gemini-3.1-flash-lite_folded": 0.354,
+   "kraken-catmus_folded": 0.319,
+   "kraken-ft-5730_folded": 0.302,
+   "gemini-3.1-flash-lite_folded_plus": 0.33,
+   "kraken-catmus_folded_plus": 0.299,
+   "kraken-ft-5730_folded_plus": 0.302
+  },
+  {
+   "slug": "ed-6a42d8f8e76baa13aa85e9d0-p10",
+   "origin": "library",
+   "year": 1674,
+   "gemini-3.1-flash-lite": 0.062,
+   "kraken-catmus": 0.026,
+   "kraken-ft-5730": 0.015,
+   "gemini-3.1-flash-lite_folded": 0.062,
+   "kraken-catmus_folded": 0.026,
+   "kraken-ft-5730_folded": 0.015,
+   "gemini-3.1-flash-lite_folded_plus": 0.056,
+   "kraken-catmus_folded_plus": 0.019,
+   "kraken-ft-5730_folded_plus": 0.015
+  },
+  {
+   "slug": "ed-6a42d91f1894955eb72629fe-p10",
+   "origin": "library",
+   "year": 1674,
+   "gemini-3.1-flash-lite": 0.101,
+   "kraken-catmus": 0.12,
+   "kraken-ft-5730": 0.053,
+   "gemini-3.1-flash-lite_folded": 0.101,
+   "kraken-catmus_folded": 0.114,
+   "kraken-ft-5730_folded": 0.053,
+   "gemini-3.1-flash-lite_folded_plus": 0.089,
+   "kraken-catmus_folded_plus": 0.104,
+   "kraken-ft-5730_folded_plus": 0.053
+  },
+  {
+   "slug": "ed-6a42f62b3ad4d80da1237aed-p15",
+   "origin": "library",
+   "year": 1618,
+   "gemini-3.1-flash-lite": 0.083,
+   "kraken-catmus": 0.056,
+   "kraken-ft-5730": 0.045,
+   "gemini-3.1-flash-lite_folded": 0.083,
+   "kraken-catmus_folded": 0.056,
+   "kraken-ft-5730_folded": 0.045,
+   "gemini-3.1-flash-lite_folded_plus": 0.076,
+   "kraken-catmus_folded_plus": 0.048,
+   "kraken-ft-5730_folded_plus": 0.045
+  },
+  {
+   "slug": "ed-6a432b29e797132cc665b266-p10",
+   "origin": "library",
+   "year": 1629,
+   "gemini-3.1-flash-lite": 0.157,
+   "kraken-catmus": 0.131,
+   "kraken-ft-5730": 0.109,
+   "gemini-3.1-flash-lite_folded": 0.155,
+   "kraken-catmus_folded": 0.131,
+   "kraken-ft-5730_folded": 0.109,
+   "gemini-3.1-flash-lite_folded_plus": 0.132,
+   "kraken-catmus_folded_plus": 0.116,
+   "kraken-ft-5730_folded_plus": 0.109
+  },
+  {
+   "slug": "ed-6a434778201f98f53c3efe9d-p16",
+   "origin": "library",
+   "year": 1688,
+   "gemini-3.1-flash-lite": 0.093,
+   "kraken-catmus": 0.072,
+   "kraken-ft-5730": 0.057,
+   "gemini-3.1-flash-lite_folded": 0.093,
+   "kraken-catmus_folded": 0.072,
+   "kraken-ft-5730_folded": 0.057,
+   "gemini-3.1-flash-lite_folded_plus": 0.079,
+   "kraken-catmus_folded_plus": 0.057,
+   "kraken-ft-5730_folded_plus": 0.057
+  },
+  {
+   "slug": "ed-6a437b6257a09c2c0fcb48d7-p10",
+   "origin": "library",
+   "year": 1636,
+   "gemini-3.1-flash-lite": 0.213,
+   "kraken-catmus": 0.277,
+   "kraken-ft-5730": 0.265,
+   "gemini-3.1-flash-lite_folded": 0.206,
+   "kraken-catmus_folded": 0.265,
+   "kraken-ft-5730_folded": 0.258,
+   "gemini-3.1-flash-lite_folded_plus": 0.206,
+   "kraken-catmus_folded_plus": 0.265,
+   "kraken-ft-5730_folded_plus": 0.258
+  },
+  {
+   "slug": "ed-6a48279d2dd0016448f12f0f-p27",
+   "origin": "library",
+   "year": 1633,
+   "gemini-3.1-flash-lite": 0.076,
+   "kraken-catmus": 0.18,
+   "kraken-ft-5730": 0.049,
+   "gemini-3.1-flash-lite_folded": 0.075,
+   "kraken-catmus_folded": 0.174,
+   "kraken-ft-5730_folded": 0.043,
+   "gemini-3.1-flash-lite_folded_plus": 0.069,
+   "kraken-catmus_folded_plus": 0.174,
+   "kraken-ft-5730_folded_plus": 0.043
+  },
+  {
+   "slug": "ed-6a4f7c25a13ff00e22df18f1-p10",
+   "origin": "library",
+   "year": 1640,
+   "gemini-3.1-flash-lite": 0.12,
+   "kraken-catmus": 0.077,
+   "kraken-ft-5730": 0.043,
+   "gemini-3.1-flash-lite_folded": 0.12,
+   "kraken-catmus_folded": 0.077,
+   "kraken-ft-5730_folded": 0.042,
+   "gemini-3.1-flash-lite_folded_plus": 0.088,
+   "kraken-catmus_folded_plus": 0.044,
+   "kraken-ft-5730_folded_plus": 0.042
+  },
+  {
+   "slug": "ed-6a51d78d612243b274118e89-p9",
+   "origin": "library",
+   "year": 1612,
+   "gemini-3.1-flash-lite": 0.081,
+   "kraken-catmus": 0.051,
+   "kraken-ft-5730": 0.029,
+   "gemini-3.1-flash-lite_folded": 0.081,
+   "kraken-catmus_folded": 0.051,
+   "kraken-ft-5730_folded": 0.029,
+   "gemini-3.1-flash-lite_folded_plus": 0.064,
+   "kraken-catmus_folded_plus": 0.033,
+   "kraken-ft-5730_folded_plus": 0.029
+  },
+  {
+   "slug": "ed-6a90e7e5544007b776b3806a-p10",
+   "origin": "library",
+   "year": 1633,
+   "gemini-3.1-flash-lite": 0.114,
+   "kraken-catmus": 0.133,
+   "kraken-ft-5730": 0.075,
+   "gemini-3.1-flash-lite_folded": 0.112,
+   "kraken-catmus_folded": 0.13,
+   "kraken-ft-5730_folded": 0.075,
+   "gemini-3.1-flash-lite_folded_plus": 0.09,
+   "kraken-catmus_folded_plus": 0.126,
+   "kraken-ft-5730_folded_plus": 0.075
+  },
+  {
+   "slug": "ed-6a94341a7680120fac24d808-p15",
+   "origin": "library",
+   "year": 1618,
+   "gemini-3.1-flash-lite": 0.091,
+   "kraken-catmus": 0.102,
+   "kraken-ft-5730": 0.082,
+   "gemini-3.1-flash-lite_folded": 0.087,
+   "kraken-catmus_folded": 0.091,
+   "kraken-ft-5730_folded": 0.07,
+   "gemini-3.1-flash-lite_folded_plus": 0.069,
+   "kraken-catmus_folded_plus": 0.079,
+   "kraken-ft-5730_folded_plus": 0.07
+  },
+  {
+   "slug": "ed-6a9437f67e41ac276318823e-p10",
+   "origin": "library",
+   "year": 1656,
+   "gemini-3.1-flash-lite": 0.082,
+   "kraken-catmus": 0.542,
+   "kraken-ft-5730": 0.285,
+   "gemini-3.1-flash-lite_folded": 0.081,
+   "kraken-catmus_folded": 0.542,
+   "kraken-ft-5730_folded": 0.282,
+   "gemini-3.1-flash-lite_folded_plus": 0.062,
+   "kraken-catmus_folded_plus": 0.542,
+   "kraken-ft-5730_folded_plus": 0.282
+  },
+  {
+   "slug": "ed-6a94390b45a4780cb83dba46-p10",
+   "origin": "library",
+   "year": 1661,
+   "gemini-3.1-flash-lite": 0.086,
+   "kraken-catmus": 0.07,
+   "kraken-ft-5730": 0.028,
+   "gemini-3.1-flash-lite_folded": 0.084,
+   "kraken-catmus_folded": 0.066,
+   "kraken-ft-5730_folded": 0.027,
+   "gemini-3.1-flash-lite_folded_plus": 0.059,
+   "kraken-catmus_folded_plus": 0.046,
+   "kraken-ft-5730_folded_plus": 0.027
+  },
+  {
+   "slug": "ed-6a42a33fdec0f9e2ecca5a38-p11",
+   "origin": "library",
+   "year": 1650,
+   "gemini-3.1-flash-lite": 0.09,
+   "kraken-catmus": 0.188,
+   "kraken-ft-5730": 0.047,
+   "gemini-3.1-flash-lite_folded": 0.09,
+   "kraken-catmus_folded": 0.185,
+   "kraken-ft-5730_folded": 0.047,
+   "gemini-3.1-flash-lite_folded_plus": 0.066,
+   "kraken-catmus_folded_plus": 0.169,
+   "kraken-ft-5730_folded_plus": 0.047
+  },
+  {
+   "slug": "ed-6a9057a0ab26ecd307a0cd7c-p10",
+   "origin": "library",
+   "year": 1662,
+   "gemini-3.1-flash-lite": 0.168,
+   "kraken-catmus": 0.116,
+   "kraken-ft-5730": 0.074,
+   "gemini-3.1-flash-lite_folded": 0.168,
+   "kraken-catmus_folded": 0.112,
+   "kraken-ft-5730_folded": 0.07,
+   "gemini-3.1-flash-lite_folded_plus": 0.129,
+   "kraken-catmus_folded_plus": 0.085,
+   "kraken-ft-5730_folded_plus": 0.07
+  }
+ ]
+}

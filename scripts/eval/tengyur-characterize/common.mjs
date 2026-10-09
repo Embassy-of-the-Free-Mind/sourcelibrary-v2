@@ -4,7 +4,7 @@
 
 // Derge Tengyur divisions, from the Tibetan section word in each volume's title
 // ("བསྟན་འགྱུར། སྡེ་དགེ། <section>། <letter> (Derge Tengyur, vol. N)").
-const SECTIONS = {
+export const SECTIONS = {
   'བསྟོད་ཚོགས': 'Praises', 'རྒྱུད་འགྲེལ': 'Tantra commentary', 'ཤེར་ཕྱིན': 'Prajñāpāramitā', 'དབུ་མ': 'Madhyamaka',
   'མདོ་སྡེ': 'Sūtra commentary', 'སེམས་ཙམ': 'Cittamātra', 'མངོན་པ': 'Abhidharma', 'འདུལ་བ': 'Vinaya',
   'སྐྱེས་རབས': 'Jātaka', 'འཁྲི་ཤིང': 'Jātaka', 'སྤྲིང་ཡིག': 'Letters', 'ཚད་མ': 'Pramāṇa', 'སྒྲ་མདོ': 'Grammar & sciences',

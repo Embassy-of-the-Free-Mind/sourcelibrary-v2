@@ -21,14 +21,14 @@ const HEADLINE_LOW_KG = 220;
 const HEADLINE_HIGH_KG = 20000;
 
 export const metadata: Metadata = {
-  title: 'The Carbon Ledger of a Digital Library — Research Notes — Source Library',
+  title: 'The Carbon Ledger of a Digital Library | Research Notes | Source Library',
   description:
-    "Source Library has OCR'd 4.1 million pages and translated almost all of them into English using AI. We logged every API call. This is what it cost — in dollars, tokens, and carbon.",
+    "Source Library has OCR'd 4.1 million pages and translated almost all of them into English using AI. We logged every API call. This is what it cost in dollars, tokens, and carbon.",
   openGraph: {
     images: [{ url: 'https://images.sourcelibrary.org/gallery/a5d0c381-d4ea-42cd-8864-44457e7fda33/69500509f426a210d109c5bd-0.jpg', alt: 'Allegorical frontispiece of Athanasius Kircher\'s Ars Magna Lucis et Umbrae (1671)' }],
     title: 'The Carbon Ledger of a Digital Library',
     description:
-      "4.1 million pages, OCR'd and translated by AI. We logged every API call. This is what it cost — in dollars, tokens, and carbon.",
+      "4.1 million pages, OCR'd and translated by AI. We logged every API call. This is what it cost in dollars, tokens, and carbon.",
     type: 'article',
   },
   twitter: {
@@ -73,7 +73,7 @@ export default function CarbonLedgerPage() {
         <p className="text-xl text-secondary leading-relaxed mb-8">
           Source Library has OCR&apos;d <strong>4.1 million pages</strong> of
           historical text and translated almost all of them into English
-          using AI. We logged every API call. This is what it cost — in
+          using AI. We logged every API call. This is what it cost in
           dollars, in tokens, and in carbon.
         </p>
 
@@ -84,7 +84,7 @@ export default function CarbonLedgerPage() {
           The library has about <strong>14,977 books</strong> with pages in
           it, of which <strong>13,819</strong> are now readable in English
           (≥90% of pages translated). Most originals are in languages nobody
-          reads anymore — Latin, early modern German, Hebrew, Tibetan. To
+          reads anymore: Latin, early modern German, Hebrew, Tibetan. To
           get there, every page goes through image recognition,
           transcription, translation, illustration extraction, indexing.
         </p>
@@ -120,8 +120,8 @@ export default function CarbonLedgerPage() {
         </div>
         <p>
           About a third went to translation, a third to OCR. The biggest
-          surprise was <strong>image extraction</strong> — detecting
-          illustrations, plates, and diagrams in scanned pages — which alone
+          surprise was <strong>image extraction</strong> (detecting
+          illustrations, plates, and diagrams in scanned pages), which alone
           cost ~$3,300.
         </p>
 
@@ -146,7 +146,7 @@ export default function CarbonLedgerPage() {
         </p>
         <p>
           Pick a model and a serving mode below. The frontier models (Pro,
-          Opus) are counterfactuals — what if we used them instead? The
+          Opus) are counterfactuals: what if we used them instead? The
           spread is about <strong>240×</strong>.
         </p>
 
@@ -162,7 +162,7 @@ export default function CarbonLedgerPage() {
 
         <p>
           The Flash-Lite + batch path is what some sustainability
-          researchers call <em>distillation gains</em> — a smaller model,
+          researchers call <em>distillation gains</em>: a smaller model,
           compressed from a larger one via supervised training, can produce
           comparable output on simpler tasks (OCR of clean Latin script)
           for a small fraction of the energy. Pair it with batch serving,
@@ -183,7 +183,7 @@ export default function CarbonLedgerPage() {
           published one paper in August 2025.<Footnote id={3} /> Mistral
           published one cradle-to-grave life-cycle assessment in
           July.<Footnote id={4} /> Every other &quot;AI carbon
-          footprint&quot; number you&apos;ve read — including this one — is
+          footprint&quot; number you&apos;ve read (including this one) is
           an extrapolation.
         </p>
         <p>
@@ -191,7 +191,7 @@ export default function CarbonLedgerPage() {
           bottom-up family (rooflines + bridge factors) clusters around
           100–700 kg. The top-down family (extrapolating from real
           production measurements) clusters around 5,000–50,000 kg. The
-          geometric mean is <strong>{fmtCO2(HEADLINE_KG)} CO₂e</strong> —
+          geometric mean is <strong>{fmtCO2(HEADLINE_KG)} CO₂e</strong>,
           about{' '}
           <strong>{fmtCount(eq.amsLhr)} return flights AMS↔London</strong>,{' '}
           <strong>{fmtCount(eq.burgers)} beef burgers</strong>, or{' '}
@@ -211,7 +211,7 @@ export default function CarbonLedgerPage() {
         </p>
         <p>
           Closing the gap further requires disclosure from Anthropic (none
-          yet — required starting 2026 under California SB 253) and a
+          yet; required starting 2026 under California SB 253) and a
           second-generation paper from Google.<Footnote id={9} />
         </p>
         <p>
@@ -226,8 +226,8 @@ export default function CarbonLedgerPage() {
         <h2 id="the-other-half">The other half: dev work</h2>
         <p>
           The Gemini pipeline is roughly 60% of the project&apos;s AI
-          footprint. The other 40% comes from a different AI —
-          Anthropic&apos;s Claude Opus — which helped <em>write the
+          footprint. The other 40% comes from a different AI,
+          Anthropic&apos;s Claude Opus, which helped <em>write the
           code</em> for the site, the pipeline, the ingestion scripts, the
           search interface, this blog post. Over the same window,
           that&apos;s about 280,000 conversation turns.<Footnote id={2} />
@@ -235,7 +235,7 @@ export default function CarbonLedgerPage() {
         <p>
           The token economics are wildly different. Of the ~45 billion
           tokens that flowed through Claude during development,{' '}
-          <strong>43.5 billion were cache reads</strong> — the same context
+          <strong>43.5 billion were cache reads</strong>: the same context
           (file contents, prior conversation, tool definitions) re-read on
           every turn. Cache reads cost about <strong>one tenth</strong> of
           fresh input tokens because the KV cache skips the model&apos;s
@@ -263,7 +263,7 @@ export default function CarbonLedgerPage() {
           imageUrl="https://images.sourcelibrary.org/gallery/69526359ab34727b1f046d5a/69568fa01479a63c1108cdb0-0.jpg"
           alt="An alchemical engraving from Mutus Liber (1677) depicting figures collecting morning dew from sheets stretched on poles."
           caption="Collecting morning dew, an emblem of distillation"
-          source="Mutus Liber (1677), Plate 4 — Source Library"
+          source="Mutus Liber (1677), Plate 4, Source Library"
         />
 
         <h2 id="what-it-looks-like">What {fmtCO2(HEADLINE_KG)} looks like</h2>
@@ -280,15 +280,15 @@ export default function CarbonLedgerPage() {
           For comparison, an average person in the Netherlands emits
           roughly 8,400 kg of CO₂ per year.<Footnote id={15} /> Source
           Library&apos;s five-and-a-half-month AI footprint is about
-          one-fifth of one person&apos;s annual emissions — and produced
+          one-fifth of one person&apos;s annual emissions, and produced
           13,819 books readable in English (≥90% of pages translated).
         </p>
 
         <h2 id="why-the-gap">Why the gap is so wide</h2>
         <p>
           The reason no third party can estimate AI carbon emissions
-          accurately is that the people who can measure them — the
-          providers — mostly don&apos;t publish. Google has published one
+          accurately is that the people who can measure them (the
+          providers) mostly don&apos;t publish. Google has published one
           paper.<Footnote id={3} /> Mistral has published one
           cradle-to-grave LCA.<Footnote id={4} /> Anthropic, OpenAI, xAI,
           and Meta have published essentially nothing
@@ -303,14 +303,14 @@ export default function CarbonLedgerPage() {
           revenue doing business in California to report Scope 1 and 2
           emissions starting in 2026, with Scope 3 from 2027. All five of
           the empty rows above clear that threshold. So within a year, the
-          gap on this chart should narrow considerably — or someone gets
+          gap on this chart should narrow considerably, or someone gets
           sued.
         </p>
 
         <SectionDivider
           imageUrl="https://images.sourcelibrary.org/gallery/695234ddab34727b1f044cd2/6959117cecb01322b3069ae8-0.jpg"
           alt="Figure XII from the Book of Lambspring: two figures atop a mountain under the sun and moon."
-          caption="Conjunction of opposites — the alchemical Coniunctio"
+          caption="Conjunction of opposites: the alchemical Coniunctio"
           source="The Book of Lambspring, in The Hermetic Museum (1893)"
         />
 
@@ -322,13 +322,13 @@ export default function CarbonLedgerPage() {
           London</strong>.<Footnote id={13} /> The honest range is wider:
           two to eighty round-trips, depending on which estimation method
           you trust. For that, ~4 million pages of text that were
-          previously inaccessible — 17th-century printer&apos;s Latin,
+          previously inaccessible (17th-century printer&apos;s Latin,
           fraktur German, unvocalized Hebrew, dead languages, dead
-          handwriting — are now searchable in English.
+          handwriting) are now searchable in English.
         </p>
         <p>
           The counterfactual matters. The alternative to AI digitization
-          isn&apos;t no digitization — it&apos;s manual digitization.
+          isn&apos;t no digitization; it&apos;s manual digitization.
           Hiring transcribers. Renting facilities. Flying scholars in. We
           haven&apos;t modeled that footprint, but a single transatlantic
           flight per scholar per year would dwarf the AI number within
@@ -339,7 +339,7 @@ export default function CarbonLedgerPage() {
           biggest available model. Using Claude Opus instead of Gemini
           Flash for OCR would push the carbon footprint roughly{' '}
           <strong>80× higher</strong>. The pipeline saves carbon by picking
-          the smallest model that&apos;s good enough — exactly the same
+          the smallest model that&apos;s good enough, exactly the same
           logic that makes prompt caching, batching, and distillation the
           most effective sustainability levers in modern AI serving.
         </p>
@@ -371,7 +371,7 @@ export default function CarbonLedgerPage() {
         </p>
         <ol>
           <li>
-            Per-token energy disclosure from Anthropic — comparable to
+            Per-token energy disclosure from Anthropic, comparable to
             Google&apos;s Aug 2025 paper. With this, the Claude Code
             portion of the estimate moves from a ~10× range to ~2×.<Footnote id={9} />
           </li>
@@ -397,7 +397,7 @@ export default function CarbonLedgerPage() {
           every US company over $1B revenue doing business in California
           to disclose Scope 1 and 2 emissions. Anthropic, OpenAI, xAI, and
           Meta all qualify. By late 2026, the empty rows on the scoreboard
-          above should fill in — or someone gets sued by the California
+          above should fill in, or someone gets sued by the California
           Attorney General.
         </p>
 
@@ -424,7 +424,7 @@ export default function CarbonLedgerPage() {
             <li>
               <strong>Honesty:</strong> every number is sourced. Every
               method has assumptions. We may be off by 5× either way. When
-              new data arrives, this page will update — see the change log
+              new data arrives, this page will update; see the change log
               on{' '}
               <Link className="underline" href="/blog/carbon-ledger/methodology">
                 /methodology

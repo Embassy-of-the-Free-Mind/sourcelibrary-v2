@@ -139,6 +139,8 @@ const UNATTENDED = [
     note: 'weekly cut list: a headless claude job (Claude subscription, no Gemini/API spend) that runs spend-daily.mjs --week and posts one issue comment; changes nothing (#5743)' },
   { match: 'vercel-prod-watch.mjs', spends: false, gated: false,
     note: 'production-deploy watch: reads the Vercel REST API + origin/main; files/closes one GitHub issue, pages ntfy; no model call, no Vercel function invocation (#5708)' },
+  { match: 'ntfy-morning-digest.mjs', spends: false, gated: false,
+    note: 'morning ntfy digest: reads the ntfy topic history, usage stores, the spend-daily row, decisions.txt, claude-job status and gh; sends one ntfy message; no model call (#6181)' },
   { match: 'model-usage-snapshot.mjs', spends: false, gated: false,
     note: '/about/models counts: checkpointed walk over pages + gallery_images, Supabase count estimates; writes one ops_reports row; no model call (#5601)' },
   { match: 'daily-digest.mjs', spends: false, gated: false,
