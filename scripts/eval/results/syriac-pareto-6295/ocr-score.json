@@ -5,8 +5,52 @@
  "reference": "Digital Syriac Corpus (srophe/syriac-corpus, CC BY 4.0) TEI, window voted across arms (PREREGISTRATION-syriac-pareto-6295.md)",
  "date": "2026-10-08",
  "cli_arms": {
+  "C36-ocr-b": {
+   "rows": 24,
+   "model": "gemini-3.6-flash-low",
+   "route": "cli",
+   "run_date": "2026-10-08",
+   "blocked": [
+    "69943c68_564",
+    "69a5e9f0_81"
+   ],
+   "identical_to_a": 0
+  },
+  "C36-ocr": {
+   "rows": 24,
+   "model": "gemini-3.6-flash-low",
+   "route": "cli",
+   "run_date": "2026-10-08",
+   "blocked": [
+    "69943c68_564"
+   ]
+  },
+  "C37-ocr-b": {
+   "rows": 24,
+   "model": "gemini-3.7-flash-low",
+   "route": "cli",
+   "run_date": "2026-10-08",
+   "blocked": [
+    "69a5e9f0_81",
+    "69a5ea9a_391",
+    "6aaafba3_151",
+    "6aaafbb1_300"
+   ],
+   "identical_to_a": 0
+  },
+  "C37-ocr": {
+   "rows": 24,
+   "model": "gemini-3.7-flash-low",
+   "route": "cli",
+   "run_date": "2026-10-08",
+   "blocked": [
+    "69943c68_564",
+    "69a5e9f0_81",
+    "6aaafba3_151"
+   ]
+  },
   "C38-ocr-b": {
-   "rows": 16,
+   "rows": 24,
    "model": "gemini-3.8-flash-low",
    "route": "cli",
    "run_date": "2026-10-08",
@@ -14,8 +58,10 @@
     "69943c78_154",
     "69a5e9f0_81",
     "69a5ea9a_391",
+    "69a5eb6b_205",
     "69a5f02c_183",
-    "6aaafba3_151"
+    "6aaafba3_151",
+    "6aaafbb1_300"
    ],
    "identical_to_a": 0
   },
@@ -42,6 +88,10 @@
    "page_number": 271,
    "edition": "New Testament, Pinkerton-Gwilliam 1905",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
     "L-ocr",
@@ -126,6 +176,38 @@
      "fit_wer": 0.716,
      "voted": false
     },
+    "C36-ocr-b": {
+     "cer": 0.6891,
+     "cer_capped": 0.6891,
+     "hyp_chars": 673,
+     "length_ratio": 0.532,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C36-ocr": {
+     "cer": 0.5032,
+     "cer_capped": 0.5032,
+     "hyp_chars": 1205,
+     "length_ratio": 0.953,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr-b": {
+     "cer": 0.4897,
+     "cer_capped": 0.4897,
+     "hyp_chars": 1313,
+     "length_ratio": 1.039,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr": {
+     "cer": 0.3766,
+     "cer_capped": 0.3766,
+     "hyp_chars": 1276,
+     "length_ratio": 1.009,
+     "fit_wer": null,
+     "voted": false
+    },
     "C38-ocr-b": {
      "cer": 0.3434,
      "cer_capped": 0.3434,
@@ -176,6 +258,10 @@
    "page_number": 391,
    "edition": "Narsai, Mingana 1905",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
     "L-ocr",
@@ -260,6 +346,38 @@
      "fit_wer": 0.973,
      "voted": false
     },
+    "C36-ocr-b": {
+     "cer": 0.3395,
+     "cer_capped": 0.3395,
+     "hyp_chars": 1120,
+     "length_ratio": 0.946,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C36-ocr": {
+     "cer": 0.4409,
+     "cer_capped": 0.4409,
+     "hyp_chars": 947,
+     "length_ratio": 0.8,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr-b": {
+     "cer": 0.9941,
+     "cer_capped": 0.9941,
+     "hyp_chars": 7,
+     "length_ratio": 0.006,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr": {
+     "cer": 0.299,
+     "cer_capped": 0.299,
+     "hyp_chars": 1164,
+     "length_ratio": 0.983,
+     "fit_wer": null,
+     "voted": false
+    },
     "C38-ocr-b": {
      "cer": 0.984,
      "cer_capped": 0.984,
@@ -310,7 +428,12 @@
    "page_number": 628,
    "edition": "Narsai, Mingana 1905",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
+    "C38-ocr-b",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -393,6 +516,46 @@
      "fit_wer": 0.995,
      "voted": false
     },
+    "C36-ocr-b": {
+     "cer": 0.4154,
+     "cer_capped": 0.4154,
+     "hyp_chars": 1075,
+     "length_ratio": 0.888,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C36-ocr": {
+     "cer": 0.5929,
+     "cer_capped": 0.5929,
+     "hyp_chars": 662,
+     "length_ratio": 0.547,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr-b": {
+     "cer": 0.3138,
+     "cer_capped": 0.3138,
+     "hyp_chars": 1182,
+     "length_ratio": 0.976,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr": {
+     "cer": 0.3097,
+     "cer_capped": 0.3097,
+     "hyp_chars": 1182,
+     "length_ratio": 0.976,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C38-ocr-b": {
+     "cer": 0.3303,
+     "cer_capped": 0.3303,
+     "hyp_chars": 1205,
+     "length_ratio": 0.995,
+     "fit_wer": null,
+     "voted": false
+    },
     "C38-ocr": {
      "cer": 0.4145,
      "cer_capped": 0.4145,
@@ -435,7 +598,12 @@
    "page_number": 732,
    "edition": "Jacob of Sarug, Bedjan vol. 1",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
+    "C38-ocr-b",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -458,6 +626,10 @@
    "page_number": 611,
    "edition": "Jacob of Sarug, Bedjan vol. 1",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
     "L-ocr",
@@ -542,6 +714,38 @@
      "fit_wer": 0.95,
      "voted": false
     },
+    "C36-ocr-b": {
+     "cer": 0.4953,
+     "cer_capped": 0.4953,
+     "hyp_chars": 641,
+     "length_ratio": 0.995,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C36-ocr": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr-b": {
+     "cer": 0.2748,
+     "cer_capped": 0.2748,
+     "hyp_chars": 639,
+     "length_ratio": 0.992,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr": {
+     "cer": 0.3556,
+     "cer_capped": 0.3556,
+     "hyp_chars": 688,
+     "length_ratio": 1.068,
+     "fit_wer": null,
+     "voted": false
+    },
     "C38-ocr-b": {
      "cer": 0.3261,
      "cer_capped": 0.3261,
@@ -592,6 +796,10 @@
    "page_number": 836,
    "edition": "Jacob of Sarug, Bedjan vol. 2",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
     "L-ocr",
@@ -616,6 +824,10 @@
    "page_number": 154,
    "edition": "Isaac of Nineveh, Bedjan 1909",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
     "L-ocr",
@@ -700,6 +912,38 @@
      "fit_wer": 0.942,
      "voted": false
     },
+    "C36-ocr-b": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C36-ocr": {
+     "cer": 0.4535,
+     "cer_capped": 0.4535,
+     "hyp_chars": 674,
+     "length_ratio": 0.871,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr-b": {
+     "cer": 0.3928,
+     "cer_capped": 0.3928,
+     "hyp_chars": 767,
+     "length_ratio": 0.991,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr": {
+     "cer": 0.3902,
+     "cer_capped": 0.3902,
+     "hyp_chars": 770,
+     "length_ratio": 0.995,
+     "fit_wer": null,
+     "voted": false
+    },
     "C38-ocr-b": {
      "cer": 1,
      "cer_capped": 1,
@@ -750,6 +994,10 @@
    "page_number": 564,
    "edition": "Philoxenus, Budge 1894",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
     "L-ocr",
@@ -834,6 +1082,38 @@
      "fit_wer": 0.941,
      "voted": false
     },
+    "C36-ocr-b": {
+     "cer": 0.7613,
+     "cer_capped": 0.7613,
+     "hyp_chars": 335,
+     "length_ratio": 0.337,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C36-ocr": {
+     "cer": 0.7351,
+     "cer_capped": 0.7351,
+     "hyp_chars": 393,
+     "length_ratio": 0.396,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr-b": {
+     "cer": 0.4361,
+     "cer_capped": 0.4361,
+     "hyp_chars": 965,
+     "length_ratio": 0.972,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr": {
+     "cer": 0.9053,
+     "cer_capped": 0.9053,
+     "hyp_chars": 103,
+     "length_ratio": 0.104,
+     "fit_wer": null,
+     "voted": false
+    },
     "C38-ocr-b": {
      "cer": 0.433,
      "cer_capped": 0.433,
@@ -884,6 +1164,10 @@
    "page_number": 205,
    "edition": "Ephrem/Rabbula/Balai, Overbeck 1865",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
     "L-ocr",
@@ -968,6 +1252,38 @@
      "fit_wer": 0.636,
      "voted": false
     },
+    "C36-ocr-b": {
+     "cer": 0.5267,
+     "cer_capped": 0.5267,
+     "hyp_chars": 749,
+     "length_ratio": 0.815,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C36-ocr": {
+     "cer": 0.5223,
+     "cer_capped": 0.5223,
+     "hyp_chars": 922,
+     "length_ratio": 1.003,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr-b": {
+     "cer": 0.4842,
+     "cer_capped": 0.4842,
+     "hyp_chars": 943,
+     "length_ratio": 1.026,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr": {
+     "cer": 0.4342,
+     "cer_capped": 0.4342,
+     "hyp_chars": 891,
+     "length_ratio": 0.97,
+     "fit_wer": null,
+     "voted": false
+    },
     "C38-ocr-b": {
      "cer": 0.407,
      "cer_capped": 0.407,
@@ -1018,7 +1334,12 @@
    "page_number": 125,
    "edition": "Aphrahat, Parisot PS I.1",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
+    "C38-ocr-b",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -1100,6 +1421,46 @@
      "fit_wer": 0.965,
      "voted": false
     },
+    "C36-ocr-b": {
+     "cer": 0.3261,
+     "cer_capped": 0.3261,
+     "hyp_chars": 694,
+     "length_ratio": 0.881,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C36-ocr": {
+     "cer": 0.415,
+     "cer_capped": 0.415,
+     "hyp_chars": 656,
+     "length_ratio": 0.832,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr-b": {
+     "cer": 0.4251,
+     "cer_capped": 0.4251,
+     "hyp_chars": 880,
+     "length_ratio": 1.117,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr": {
+     "cer": 0.4188,
+     "cer_capped": 0.4188,
+     "hyp_chars": 859,
+     "length_ratio": 1.09,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C38-ocr-b": {
+     "cer": 0.3896,
+     "cer_capped": 0.3896,
+     "hyp_chars": 840,
+     "length_ratio": 1.066,
+     "fit_wer": null,
+     "voted": false
+    },
     "C38-ocr": {
      "cer": 0.632,
      "cer_capped": 0.632,
@@ -1142,7 +1503,12 @@
    "page_number": 197,
    "edition": "Aphrahat, Parisot PS I.1",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
+    "C38-ocr-b",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -1221,6 +1587,46 @@
      "fit_wer": 0.983,
      "voted": false
     },
+    "C36-ocr-b": {
+     "cer": 0.3569,
+     "cer_capped": 0.3569,
+     "hyp_chars": 765,
+     "length_ratio": 0.965,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C36-ocr": {
+     "cer": 0.3518,
+     "cer_capped": 0.3518,
+     "hyp_chars": 776,
+     "length_ratio": 0.979,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr-b": {
+     "cer": 0.2421,
+     "cer_capped": 0.2421,
+     "hyp_chars": 766,
+     "length_ratio": 0.966,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr": {
+     "cer": 0.3039,
+     "cer_capped": 0.3039,
+     "hyp_chars": 803,
+     "length_ratio": 1.013,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C38-ocr-b": {
+     "cer": 0.2522,
+     "cer_capped": 0.2522,
+     "hyp_chars": 795,
+     "length_ratio": 1.003,
+     "fit_wer": null,
+     "voted": false
+    },
     "C38-ocr": {
      "cer": 0.203,
      "cer_capped": 0.203,
@@ -1263,6 +1669,10 @@
    "page_number": 296,
    "edition": "Patrologia Syriaca I.2",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
     "L-ocr",
@@ -1344,6 +1754,38 @@
      "fit_wer": 0.986,
      "voted": false
     },
+    "C36-ocr-b": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C36-ocr": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr-b": {
+     "cer": 0.9682,
+     "cer_capped": 0.9682,
+     "hyp_chars": 27,
+     "length_ratio": 0.032,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    },
     "C38-ocr-b": {
      "cer": 0.2132,
      "cer_capped": 0.2132,
@@ -1394,7 +1836,12 @@
    "page_number": 555,
    "edition": "Patrologia Syriaca I.2",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
+    "C38-ocr-b",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -1417,6 +1864,10 @@
    "page_number": 183,
    "edition": "Bar Hebraeus, Chronicon Ecclesiasticum vol. 1",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
     "L-ocr",
@@ -1441,6 +1892,10 @@
    "page_number": 235,
    "edition": "Bar Hebraeus, Chronicon Ecclesiasticum vol. 2",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
     "L-ocr",
@@ -1523,6 +1978,38 @@
      "fit_wer": 0.994,
      "voted": false
     },
+    "C36-ocr-b": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C36-ocr": {
+     "cer": 0.6874,
+     "cer_capped": 0.6874,
+     "hyp_chars": 791,
+     "length_ratio": 1.07,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr-b": {
+     "cer": 0.3911,
+     "cer_capped": 0.3911,
+     "hyp_chars": 763,
+     "length_ratio": 1.032,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr": {
+     "cer": 0.5332,
+     "cer_capped": 0.5332,
+     "hyp_chars": 784,
+     "length_ratio": 1.061,
+     "fit_wer": null,
+     "voted": false
+    },
     "C38-ocr-b": {
      "cer": 0.6536,
      "cer_capped": 0.6536,
@@ -1573,7 +2060,12 @@
    "page_number": 300,
    "edition": "Chronicle of Zuqnin pt 4, Chabot 1895",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
+    "C38-ocr-b",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -1647,6 +2139,46 @@
      "fit_wer": 0.31,
      "voted": true
     },
+    "C36-ocr-b": {
+     "cer": 0.4291,
+     "cer_capped": 0.4291,
+     "hyp_chars": 1023,
+     "length_ratio": 0.924,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C36-ocr": {
+     "cer": 0.4128,
+     "cer_capped": 0.4128,
+     "hyp_chars": 1011,
+     "length_ratio": 0.913,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr-b": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr": {
+     "cer": 0.3107,
+     "cer_capped": 0.3107,
+     "hyp_chars": 1071,
+     "length_ratio": 0.967,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C38-ocr-b": {
+     "cer": 0.9946,
+     "cer_capped": 0.9946,
+     "hyp_chars": 6,
+     "length_ratio": 0.005,
+     "fit_wer": null,
+     "voted": false
+    },
     "C38-ocr": {
      "cer": 1,
      "cer_capped": 1,
@@ -1689,6 +2221,10 @@
    "page_number": 151,
    "edition": "Joshua the Stylite, Wright 1882",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
     "L-ocr",
@@ -1764,6 +2300,38 @@
      "fit_wer": 0.258,
      "voted": true
     },
+    "C36-ocr-b": {
+     "cer": 0.5697,
+     "cer_capped": 0.5697,
+     "hyp_chars": 1007,
+     "length_ratio": 0.989,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C36-ocr": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr-b": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    },
     "C38-ocr-b": {
      "cer": 0.9813,
      "cer_capped": 0.9813,
@@ -1814,7 +2382,12 @@
    "page_number": 205,
    "edition": "Acta Martyrum II, Bedjan",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
+    "C38-ocr-b",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -1896,6 +2469,46 @@
      "fit_wer": 0.565,
      "voted": false
     },
+    "C36-ocr-b": {
+     "cer": 0.5957,
+     "cer_capped": 0.5957,
+     "hyp_chars": 941,
+     "length_ratio": 1.132,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C36-ocr": {
+     "cer": 0.5439,
+     "cer_capped": 0.5439,
+     "hyp_chars": 873,
+     "length_ratio": 1.051,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr-b": {
+     "cer": 0.4777,
+     "cer_capped": 0.4777,
+     "hyp_chars": 888,
+     "length_ratio": 1.069,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr": {
+     "cer": 0.4669,
+     "cer_capped": 0.4669,
+     "hyp_chars": 877,
+     "length_ratio": 1.055,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C38-ocr-b": {
+     "cer": 0.8195,
+     "cer_capped": 0.8195,
+     "hyp_chars": 201,
+     "length_ratio": 0.242,
+     "fit_wer": null,
+     "voted": false
+    },
     "C38-ocr": {
      "cer": 0.4633,
      "cer_capped": 0.4633,
@@ -1938,6 +2551,10 @@
    "page_number": 81,
    "edition": "Book of the Laws of Countries, Nau 1899",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
     "L-ocr",
@@ -2021,6 +2638,38 @@
      "fit_wer": 0.953,
      "voted": false
     },
+    "C36-ocr-b": {
+     "cer": 0.8189,
+     "cer_capped": 0.8189,
+     "hyp_chars": 248,
+     "length_ratio": 0.239,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C36-ocr": {
+     "cer": 0.4576,
+     "cer_capped": 0.4576,
+     "hyp_chars": 991,
+     "length_ratio": 0.955,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr-b": {
+     "cer": 0.8526,
+     "cer_capped": 0.8526,
+     "hyp_chars": 187,
+     "length_ratio": 0.18,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr": {
+     "cer": 0.9249,
+     "cer_capped": 0.9249,
+     "hyp_chars": 84,
+     "length_ratio": 0.081,
+     "fit_wer": null,
+     "voted": false
+    },
     "C38-ocr-b": {
      "cer": 0.9913,
      "cer_capped": 0.9913,
@@ -2071,6 +2720,10 @@
    "page_number": 529,
    "edition": "Acta Martyrum III (Acts of Thomas)",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
     "L-ocr",
@@ -2154,6 +2807,38 @@
      "fit_wer": 0.994,
      "voted": false
     },
+    "C36-ocr-b": {
+     "cer": 2.4969,
+     "cer_capped": 1,
+     "hyp_chars": 2574,
+     "length_ratio": 3.23,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C36-ocr": {
+     "cer": 0.5182,
+     "cer_capped": 0.5182,
+     "hyp_chars": 762,
+     "length_ratio": 0.956,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr-b": {
+     "cer": 0.5458,
+     "cer_capped": 0.5458,
+     "hyp_chars": 906,
+     "length_ratio": 1.137,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr": {
+     "cer": 0.4931,
+     "cer_capped": 0.4931,
+     "hyp_chars": 878,
+     "length_ratio": 1.102,
+     "fit_wer": null,
+     "voted": false
+    },
     "C38-ocr-b": {
      "cer": 0.4806,
      "cer_capped": 0.4806,
@@ -2204,6 +2889,10 @@
    "page_number": 268,
    "edition": "Acta Martyrum IV (Life of Rabbula)",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
     "L-ocr",
@@ -2288,6 +2977,38 @@
      "fit_wer": 0.52,
      "voted": false
     },
+    "C36-ocr-b": {
+     "cer": 0.5061,
+     "cer_capped": 0.5061,
+     "hyp_chars": 937,
+     "length_ratio": 1.047,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C36-ocr": {
+     "cer": 0.4302,
+     "cer_capped": 0.4302,
+     "hyp_chars": 900,
+     "length_ratio": 1.006,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr-b": {
+     "cer": 0.4056,
+     "cer_capped": 0.4056,
+     "hyp_chars": 893,
+     "length_ratio": 0.998,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr": {
+     "cer": 0.2994,
+     "cer_capped": 0.2994,
+     "hyp_chars": 882,
+     "length_ratio": 0.985,
+     "fit_wer": null,
+     "voted": false
+    },
     "C38-ocr-b": {
      "cer": 0.2961,
      "cer_capped": 0.2961,
@@ -2338,6 +3059,10 @@
    "page_number": 461,
    "edition": "Acta Martyrum VI (Julian Romance)",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
     "L-ocr",
@@ -2422,6 +3147,38 @@
      "fit_wer": 0.669,
      "voted": false
     },
+    "C36-ocr-b": {
+     "cer": 0.5759,
+     "cer_capped": 0.5759,
+     "hyp_chars": 932,
+     "length_ratio": 1.032,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C36-ocr": {
+     "cer": 0.5559,
+     "cer_capped": 0.5559,
+     "hyp_chars": 802,
+     "length_ratio": 0.888,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr-b": {
+     "cer": 0.4042,
+     "cer_capped": 0.4042,
+     "hyp_chars": 906,
+     "length_ratio": 1.003,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr": {
+     "cer": 0.433,
+     "cer_capped": 0.433,
+     "hyp_chars": 906,
+     "length_ratio": 1.003,
+     "fit_wer": null,
+     "voted": false
+    },
     "C38-ocr-b": {
      "cer": 0.454,
      "cer_capped": 0.454,
@@ -2472,7 +3229,12 @@
    "page_number": 169,
    "edition": "Odes of Solomon, Harris-Mingana 1916",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
+    "C38-ocr-b",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -2554,6 +3316,46 @@
      "fit_wer": 0.941,
      "voted": false
     },
+    "C36-ocr-b": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C36-ocr": {
+     "cer": 0.4656,
+     "cer_capped": 0.4656,
+     "hyp_chars": 506,
+     "length_ratio": 0.892,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr-b": {
+     "cer": 0.3457,
+     "cer_capped": 0.3457,
+     "hyp_chars": 527,
+     "length_ratio": 0.929,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr": {
+     "cer": 0.3404,
+     "cer_capped": 0.3404,
+     "hyp_chars": 522,
+     "length_ratio": 0.921,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C38-ocr-b": {
+     "cer": 0.3721,
+     "cer_capped": 0.3721,
+     "hyp_chars": 544,
+     "length_ratio": 0.959,
+     "fit_wer": null,
+     "voted": false
+    },
     "C38-ocr": {
      "cer": 0.2945,
      "cer_capped": 0.2945,
@@ -2596,6 +3398,10 @@
    "page_number": 308,
    "edition": "Carmina Nisibena, Bickell 1866",
    "arms_read": [
+    "C36-ocr",
+    "C36-ocr-b",
+    "C37-ocr",
+    "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
     "L-ocr",
@@ -2675,6 +3481,38 @@
      "hyp_chars": 1071,
      "length_ratio": 1.108,
      "fit_wer": 0.976,
+     "voted": false
+    },
+    "C36-ocr-b": {
+     "cer": 0.9835,
+     "cer_capped": 0.9835,
+     "hyp_chars": 16,
+     "length_ratio": 0.017,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C36-ocr": {
+     "cer": 1,
+     "cer_capped": 1,
+     "hyp_chars": 0,
+     "length_ratio": 0,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr-b": {
+     "cer": 0.575,
+     "cer_capped": 0.575,
+     "hyp_chars": 1025,
+     "length_ratio": 1.06,
+     "fit_wer": null,
+     "voted": false
+    },
+    "C37-ocr": {
+     "cer": 0.6381,
+     "cer_capped": 0.6381,
+     "hyp_chars": 1121,
+     "length_ratio": 1.159,
+     "fit_wer": null,
      "voted": false
     },
     "C38-ocr-b": {

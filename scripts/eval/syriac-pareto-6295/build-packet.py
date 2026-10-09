@@ -16,13 +16,18 @@ beside a copy with one planted reversal) and 4 DUP (R, an identical copy of R, a
 the two lite drafts ride along as anchors, so C38 is compared with lite inside the same item and the round-1 lite
 scores stay as published. Controls are made from C38-R (8 PLANT, 4 DUP of C38-R beside itself and C38-K), with
 their own seeds; output goes to <work>/judge-c38/.
+
+--round c37 / c36 (added 2026-10-08, job cli-queue-6293): the same design for gemini-3.7-flash and gemini-3.6-flash
+through the CLI, one round per tier, each with its own seeds and <work>/judge-c37/ or judge-c36/.
 """
 import json, os, random, subprocess, sys
 
 opt = lambda k, d=None: sys.argv[sys.argv.index(f"--{k}") + 1] if f"--{k}" in sys.argv else d
 W = opt("work"); PARTS = int(opt("parts", "4")); ROUND = opt("round")
 ROUNDS = {None: {"dir": "judge", "arms": ["R", "R2", "K", "K2"], "base": "R", "dup_other": "K", "seed": 6295 + 1000, "tag": "6295"},
-          "c38": {"dir": "judge-c38", "arms": ["R", "K", "C38-R", "C38-K"], "base": "C38-R", "dup_other": "C38-K", "seed": 6295 + 2000, "tag": "6295|c38"}}
+          "c38": {"dir": "judge-c38", "arms": ["R", "K", "C38-R", "C38-K"], "base": "C38-R", "dup_other": "C38-K", "seed": 6295 + 2000, "tag": "6295|c38"},
+          "c37": {"dir": "judge-c37", "arms": ["R", "K", "C37-R", "C37-K"], "base": "C37-R", "dup_other": "C37-K", "seed": 6295 + 3000, "tag": "6295|c37"},
+          "c36": {"dir": "judge-c36", "arms": ["R", "K", "C36-R", "C36-K"], "base": "C36-R", "dup_other": "C36-K", "seed": 6295 + 4000, "tag": "6295|c36"}}
 RD = ROUNDS[ROUND]
 JW = f"{W}/{RD['dir']}"; os.makedirs(JW, exist_ok=True)
 read = lambda p: [json.loads(l) for l in open(p) if l.strip()]
