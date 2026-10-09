@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA historicapolitica/bornitz4",
+  "edition": "Aerarium, sive Tractatus Politicus De Aerario, Sacro Civili Militari, Communi et Sacratiori : Ex Reditibus Publicis: Tum Vectigalibus et Collationibus singulorum Ordinariis et Extraordinariis conficiendo, X. libris summatim et breviter comprehensus. — Francofurti : Typis Matthiae Beckeri, Impensis G",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "6a90a3c03a69baad5d30d34e",
+  "page_number": 90,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 135423,
+    "to_char": 139119,
+    "overlap": null,
+    "located_by": "pb-neighbour",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 0
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-0)",
+    "at": "2026-10-06T10:11:09Z",
+    "note": "dense notes; ref matches (CAMENA text noisy)",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "mixed",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      89,
+      90,
+      91
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.587Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "fde0655478761d4a41e94aa9059d0899034c2eea91ef2d31adb8a1788895c74e",
+  "unit": {
+    "chars": 3694
+  }
+}

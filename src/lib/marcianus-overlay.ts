@@ -68,14 +68,14 @@ function buildBadges(entry: OverlayEntry): OverlayBadge[] {
         label: 'Stable',
         className: 'bg-status-success/10 text-status-success',
         tooltip:
-          "Two independent AI passes agree on most of this folio's word-tokens — one of the more consistent folios in this manuscript. This is a relative stability signal, not a verified-accurate rating; the transcription is still unverified against the facsimile.",
+          "Two independent AI passes agree on most of this folio's word-tokens, making it one of the more consistent folios in this manuscript. This is a relative stability signal, not a verified-accurate rating; the transcription is still unverified against the facsimile.",
       });
     } else {
       badges.push({
         label: 'Unstable',
         className: 'bg-status-warning/10 border border-status-warning/20 text-status-warning',
         tooltip:
-          "Two independent AI passes disagree on much of this folio's wording — one of the least stable folios in this manuscript, a sign the model may be interpolating (inventing plausible-looking text) rather than reading it. Treat this folio's transcription with extra caution.",
+          "Two independent AI passes disagree on much of this folio's wording. It is one of the least stable folios in this manuscript, a sign the model may be interpolating (inventing plausible-looking text) rather than reading it. Treat this folio's transcription with extra caution.",
       });
     }
   }
@@ -92,7 +92,7 @@ function buildBadges(entry: OverlayEntry): OverlayBadge[] {
 }
 
 const PROVENANCE_NOTE =
-  "This manuscript's Greek transcription is AI-assisted and unverified. Where a critical edition is aligned, read that as the text of record — verify any quotation against it or the facsimile before citing the Greek.";
+  "This manuscript's Greek transcription is AI-assisted and unverified. Where a critical edition is aligned, read that as the text of record, and verify any quotation against it or the facsimile before citing the Greek.";
 
 const OCR_FLAG = MANUSCRIPT_OCR_FLAG;
 

@@ -9,7 +9,7 @@
 0 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-thumb-regen.lock bash -c "set -a; source .env.production.local; set +a; node scripts/tmp-regen-page-thumbs.mjs --limit=200" >> /var/log/sourcelibrary/thumb-regen.log 2>&1
 0 */4 * * * /root/moltbook-heartbeat.sh
 0 4 * * * /root/sourcelibrary/scripts/workers/backup-books.sh >> /var/log/sourcelibrary/backup-books.log 2>&1
-0 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-warm-authors.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/warm-author-pages.mjs" >> /var/log/sourcelibrary/warm-authors.log 2>&1
+# warm-author-pages.mjs retired (#4753): 15.7K author renders a day into a Vercel ISR cache that empties on every production deploy (~19/day). Readers and crawlers fill it on demand.
 0 6 * * * cd /root/sourcelibrary && bash -c "set -a; source .env.production.local; set +a; node scripts/workers/cron-caller.mjs daily-pipeline-report" >> /var/log/sourcelibrary/cron-caller.log 2>&1
 0 7 * * * cd /root/sourcelibrary && flock -n /tmp/sl-health.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/pipeline-health-alert.mjs" >> /var/log/sourcelibrary/health-alert.log 2>&1
 0 8 * * * cd /root/sourcelibrary && bash -c "set -a; source .env.production.local; set +a; node scripts/workers/daily-health-snapshot.mjs" >> /var/log/sourcelibrary/daily-snapshot.log 2>&1
