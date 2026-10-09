@@ -24,11 +24,13 @@ const args = process.argv.slice(2);
 const W = args[args.indexOf('--work') + 1];
 const OUT = 'scripts/eval/results/syriac-pareto-6295/cli-cost.json';
 const MODEL = 'gemini-3.8-flash';
-const P = MODEL_PRICING[MODEL];
+// Later CLI tiers (job cli-queue-6293): each priced at its own list price, same method; the C38 block stays top-level.
+const TIERS = { C37: 'gemini-3.7-flash', C36: 'gemini-3.6-flash' };
 const jl = (f) => fs.readFileSync(path.join(W, 'arms', `${f}.jsonl`), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
 const r4 = (x) => Math.round(x * 1e4) / 1e4;
 
-function estimate(cliArm, liteArms) {
+function estimate(cliArm, liteArms, model = MODEL) {
+  const P = MODEL_PRICING[model];
   const lite = new Map(); for (const a of liteArms) for (const r of jl(a)) lite.set(r.uid, r);
   const pool = [...lite.values()].filter((r) => r.text && r.out);
   const tpc = pool.reduce((s, r) => s + r.out, 0) / pool.reduce((s, r) => s + [...r.text].length, 0);
@@ -42,11 +44,18 @@ function estimate(cliArm, liteArms) {
     usd_per_1k_standard: Math.round((mean / BATCH_MULTIPLIER) * 1000 * 1000) / 1000, per_page: rows.map((r) => ({ ...r, usd_batch: +r.usd_batch.toFixed(6) })) };
 }
 
+const have = (a) => fs.existsSync(path.join(W, 'arms', `${a}.jsonl`));
+const tiers = Object.fromEntries(Object.entries(TIERS).filter(([t]) => have(`${t}-ocr`) && have(`T-${t}-R`) && have(`T-${t}-K`)).map(([t, m]) => [t, {
+  model: m, price_per_1m: MODEL_PRICING[m],
+  ocr: estimate(`${t}-ocr`, ['L-ocr', 'L-ocr-b'], m),
+  translation: { R: estimate(`T-${t}-R`, ['T-R', 'T-R2'], m), K: estimate(`T-${t}-K`, ['T-K', 'T-K2'], m) },
+}]));
 const out = {
-  issue: 6295, generated_by: 'scripts/eval/syriac-pareto-6295/cli-cost.mjs', model: MODEL, price_per_1m: P, batch_multiplier: BATCH_MULTIPLIER,
+  issue: 6295, generated_by: 'scripts/eval/syriac-pareto-6295/cli-cost.mjs', model: MODEL, price_per_1m: MODEL_PRICING[MODEL], batch_multiplier: BATCH_MULTIPLIER,
   basis: 'API list price at the Batch rate, thinking 0; input tokens as billed to gemini-3.1-flash-lite for the identical request, output tokens from the CLI text length at lite\'s billed tokens per character; $0 was billed (CLI, subscription)',
   ocr: estimate('C38-ocr', ['L-ocr', 'L-ocr-b']),
   translation: { R: estimate('T-C38-R', ['T-R', 'T-R2']), K: estimate('T-C38-K', ['T-K', 'T-K2']) },
+  ...(Object.keys(tiers).length ? { tiers } : {}),
 };
 fs.writeFileSync(OUT, JSON.stringify(out, null, 1) + '\n');
 console.log('OCR', out.ocr.usd_per_1k_batch, '$/1K Batch;', 'R', out.translation.R.usd_per_1k_batch, 'K', out.translation.K.usd_per_1k_batch, '→', OUT);

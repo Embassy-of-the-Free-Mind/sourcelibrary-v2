@@ -17,7 +17,10 @@ import json, os, random, statistics, sys, re, math
 opt = lambda k, d=None: sys.argv[sys.argv.index(f"--{k}") + 1] if f"--{k}" in sys.argv else d
 W = opt("work"); OUT = "scripts/eval/results/syriac-pareto-6295"; ROUND = opt("round")
 RD = {None: {"dir": "judge", "arms": ["R", "R2", "K", "K2"], "base": "R", "out": "translation-summary.json"},
-      "c38": {"dir": "judge-c38", "arms": ["R", "K", "C38-R", "C38-K"], "base": "C38-R", "out": "translation-summary-c38.json"}}[ROUND]
+      **{c: {"dir": f"judge-{c}", "arms": ["R", "K", f"{c.upper()}-R", f"{c.upper()}-K"], "base": f"{c.upper()}-R", "out": f"translation-summary-{c}.json"}
+         for c in ("c38", "c37", "c36")}}[ROUND]
+# CLI rounds: the tier's model id and its bootstrap seeds (c38's are the published ones; later tiers take the next).
+CLI_TIER = {"c38": ("gemini-3.8-flash", 8395), "c37": ("gemini-3.7-flash", 8495), "c36": ("gemini-3.6-flash", 8595)}
 JD = RD["dir"]; BASE = RD["base"]
 read = lambda p: [json.loads(l) for l in open(p) if l.strip()]
 pages = {p["slug"]: p for p in json.load(open(f"{W}/seal/pages.json"))}
@@ -113,30 +116,33 @@ if ROUND is None:
     }
 else:
     # Lite's two drafts are anchors in this round: their billed cost is round 1's; the CLI drafts' is cli-cost.json's.
+    T = ROUND.upper(); MODEL, SEED = CLI_TIER[ROUND]
     r1s = json.load(open(f"{OUT}/translation-summary.json")); cc = json.load(open(f"{OUT}/cli-cost.json"))
+    ccT = cc if ROUND == "c38" else cc["tiers"][T]
     for a in ("R", "K"): arms[a]["usd_per_1k_batch"] = r1s["arms"][a]["usd_per_1k_batch"]
-    for a in ("C38-R", "C38-K"):
-        c = {p["uid"]: p["usd_batch"] for p in cc["translation"][a[-1]]["per_page"]}
+    for a in (f"{T}-R", f"{T}-K"):
+        c = {p["uid"]: p["usd_batch"] for p in ccT["translation"][a[-1]]["per_page"]}
         arms[a]["usd_per_1k_batch"] = round(1000 * statistics.mean(c[u] for u in uids), 3)
         arms[a]["cost_basis"] = "API list price, Batch rate, estimated (cli-cost.json); $0 billed"
     f = r1s["noise_floor"]["f"]
-    kr = {"mean": round(statistics.mean(fid["C38-K"][u] - fid["C38-R"][u] for u in uids), 3), "ci95": boot(diff_of("C38-K", "C38-R"), 8395)}
-    lite_kr = {"mean": round(statistics.mean(fid["K"][u] - fid["R"][u] for u in uids), 3), "ci95": boot(diff_of("K", "R"), 8396)}
-    c38_r_minus_r = {"mean": round(statistics.mean(fid["C38-R"][u] - fid["R"][u] for u in uids), 3), "ci95": boot(diff_of("C38-R", "R"), 8397)}
-    c38_k_minus_k = {"mean": round(statistics.mean(fid["C38-K"][u] - fid["K"][u] for u in uids), 3), "ci95": boot(diff_of("C38-K", "K"), 8398)}
-    within = kr["ci95"][0] >= -f and arms["C38-K"]["inversion_pages"] <= arms["C38-R"]["inversion_pages"] + 2
+    kr = {"mean": round(statistics.mean(fid[f"{T}-K"][u] - fid[f"{T}-R"][u] for u in uids), 3), "ci95": boot(diff_of(f"{T}-K", f"{T}-R"), SEED)}
+    lite_kr = {"mean": round(statistics.mean(fid["K"][u] - fid["R"][u] for u in uids), 3), "ci95": boot(diff_of("K", "R"), SEED + 1)}
+    t_r_minus_r = {"mean": round(statistics.mean(fid[f"{T}-R"][u] - fid["R"][u] for u in uids), 3), "ci95": boot(diff_of(f"{T}-R", "R"), SEED + 2)}
+    t_k_minus_k = {"mean": round(statistics.mean(fid[f"{T}-K"][u] - fid["K"][u] for u in uids), 3), "ci95": boot(diff_of(f"{T}-K", "K"), SEED + 3)}
+    within = kr["ci95"][0] >= -f and arms[f"{T}-K"]["inversion_pages"] <= arms[f"{T}-R"]["inversion_pages"] + 2
+    run_date = sorted(str(r.get("date", ""))[:10] for r in read(f"{W}/arms/T-{T}-R.jsonl"))[0]
     out = {
-        "issue": 6295, "generated_by": "scripts/eval/syriac-pareto-6295/score-translation.py --round c38", "grade": "directional (under 30 books)",
-        "model": "gemini-3.8-flash-low through the Antigravity CLI (agy -p, subscription, $0), run 2026-10-08; same pinned v13 one-page prompt, byte-identical to the lite arms'",
+        "issue": 6295, "generated_by": f"scripts/eval/syriac-pareto-6295/score-translation.py --round {ROUND}", "grade": "directional (under 30 books)",
+        "model": f"{MODEL}-low through the Antigravity CLI (agy -p, subscription, $0), run {run_date}; same pinned v13 one-page prompt, byte-identical to the lite arms'",
         "anchors": "R and K are round 1's gemini-3.1-flash-lite drafts, re-judged in the same items as anchors",
         "judges": "two blind Opus judges (claude -p --model opus, subscription), against the Digital Syriac Corpus window",
         "n_pages": len(uids), "n_books": len({pages[u]["bid"] for u in uids}), "n_editions": len(eds), "bootstrap": f"{B} resamples of editions",
         "missing_outputs": missing, "gate": gate, "gate_pass": gate_pass, "judges_within_1_point": round(agree1, 3),
         "arms": arms, "noise_floor": {"from": "round 1 (translation-summary.json): lite's e-text translated twice", "f": f},
-        "k_minus_r": kr, "lite_k_minus_r_this_round": lite_kr, "c38_r_minus_lite_r": c38_r_minus_r, "c38_k_minus_lite_k": c38_k_minus_k,
+        "k_minus_r": kr, "lite_k_minus_r_this_round": lite_kr, f"{ROUND}_r_minus_lite_r": t_r_minus_r, f"{ROUND}_k_minus_lite_k": t_k_minus_k,
         "rule": {"within_noise_floor": within if gate_pass else None,
-                 "test": "lower bound of C38-K − C38-R ≥ −f (round 1's f) and inversion pages C38-K ≤ C38-R + 2",
-                 "verdict": (None if not gate_pass else "recommend the re-translation (gemini-3.8-flash)" if within else "keep the Kraken-read translations withheld")},
+                 "test": f"lower bound of {T}-K − {T}-R ≥ −f (round 1's f) and inversion pages {T}-K ≤ {T}-R + 2",
+                 "verdict": (None if not gate_pass else f"recommend the re-translation ({MODEL})" if within else "keep the Kraken-read translations withheld")},
         "per_page": [{"uid": u, "edition": edition(u), "tier": pages[u]["tier"], **{a: fid[a][u] for a in ARMS}, "inv": {a: rows[u][a]["inv"] for a in ARMS}} for u in uids],
     }
 os.makedirs(f"{OUT}/{JD}", exist_ok=True)
