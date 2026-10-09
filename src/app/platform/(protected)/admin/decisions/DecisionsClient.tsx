@@ -21,7 +21,7 @@ const C = {
   dim: '#8b949e', blue: '#58a6ff', green: '#3fb950', red: '#f85149', amber: '#f0883e', violet: '#d2a8ff',
 };
 
-const SOURCE_LABEL: Record<DecisionCard['source'], string> = { pr: 'PR · tier:hold', ops: 'Ops file', session: 'Session' };
+const SOURCE_LABEL: Record<DecisionCard['source'], string> = { pr: 'PR · tier:hold', ops: 'Ops file', apikey: 'API key request', session: 'Session' };
 
 const btn = (bg: string, fg = '#fff', ring = false) => ({
   flex: 1, minHeight: 44, borderRadius: 8, border: ring ? `2px solid ${C.violet}` : `1px solid ${C.border}`,
@@ -125,7 +125,7 @@ function Card({ card, onDone }: { card: BriefedCard; onDone: (id: string, note: 
 
       {otherOpen && (
         <textarea value={text} onChange={(e) => setText(e.target.value)} rows={3} autoFocus
-          placeholder={card.source === 'pr' ? 'Posted on the PR; the PR gets the `blocked` label.' : 'Your answer'}
+          placeholder={card.source === 'pr' ? 'Posted on the PR; the PR gets the `blocked` label.' : card.otherDoes ?? 'Your answer'}
           style={{ width: '100%', boxSizing: 'border-box', background: C.bg, color: C.text, border: `1px solid ${C.border}`,
             borderRadius: 8, padding: 10, fontSize: 16, fontFamily: 'inherit', marginBottom: 10 }} />
       )}
@@ -140,9 +140,11 @@ function Card({ card, onDone }: { card: BriefedCard; onDone: (id: string, note: 
           <>
             <button disabled={busy} onClick={() => answer(card.defaultActionable ? 'default' : 'skip')}
               style={btn(card.defaultActionable ? '#238636' : '#30363d', '#fff', reco === 'default')}>
-              {card.defaultActionable ? 'Default' : 'Default (skip)'}
+              {card.source === 'apikey' ? 'Approve' : card.defaultActionable ? 'Default' : 'Default (skip)'}
             </button>
-            <button disabled={busy} onClick={() => setOtherOpen(true)} style={btn('#30363d', '#fff', reco === 'other')}>Other</button>
+            <button disabled={busy} onClick={() => setOtherOpen(true)} style={btn('#30363d', '#fff', reco === 'other')}>
+              {card.source === 'apikey' ? 'Deny' : 'Other'}
+            </button>
             <button disabled={busy} onClick={() => answer('skip')} style={btn('transparent', C.dim, reco === 'skip')}>Skip</button>
           </>
         )}

@@ -1,0 +1,280 @@
+{
+ "CS": {
+  "kin": 1.684,
+  "chars_per_out_tok": 3.23,
+  "xcheck": {
+   "batches": 57,
+   "intercept": 34596,
+   "slope": 0.76,
+   "subagent_tokens_total": 4214145,
+   "pages": 529
+  },
+  "all": {
+   "n": 536,
+   "in": 4635,
+   "out": 913,
+   "list_per_1k": 18.4,
+   "batch_per_1k": 9.2
+  },
+  "tib": {
+   "n": 171,
+   "in": 4881,
+   "out": 796,
+   "list_per_1k": 17.73,
+   "batch_per_1k": 8.86
+  },
+  "xl": {
+   "n": 365,
+   "in": 4520,
+   "out": 968,
+   "list_per_1k": 18.72,
+   "batch_per_1k": 9.36
+  },
+  "by_lang": {
+   "Tibetan": {
+    "n": 171,
+    "in": 4881,
+    "out": 796,
+    "list_per_1k": 17.73,
+    "batch_per_1k": 8.86
+   },
+   "Arabic": {
+    "n": 24,
+    "in": 4292,
+    "out": 914,
+    "list_per_1k": 17.72,
+    "batch_per_1k": 8.86
+   },
+   "Latin": {
+    "n": 71,
+    "in": 4442,
+    "out": 932,
+    "list_per_1k": 18.2,
+    "batch_per_1k": 9.1
+   },
+   "French": {
+    "n": 14,
+    "in": 3848,
+    "out": 606,
+    "list_per_1k": 13.76,
+    "batch_per_1k": 6.88
+   },
+   "Greek": {
+    "n": 69,
+    "in": 5214,
+    "out": 1049,
+    "list_per_1k": 20.91,
+    "batch_per_1k": 10.46
+   },
+   "Hebrew": {
+    "n": 29,
+    "in": 5046,
+    "out": 1226,
+    "list_per_1k": 22.36,
+    "batch_per_1k": 11.18
+   },
+   "Aramaic": {
+    "n": 5,
+    "in": 5136,
+    "out": 1440,
+    "list_per_1k": 24.67,
+    "batch_per_1k": 12.34
+   },
+   "Italian": {
+    "n": 10,
+    "in": 4036,
+    "out": 724,
+    "list_per_1k": 15.31,
+    "batch_per_1k": 7.66
+   },
+   "Sanskrit": {
+    "n": 30,
+    "in": 4502,
+    "out": 1162,
+    "list_per_1k": 20.62,
+    "batch_per_1k": 10.31
+   },
+   "Pali": {
+    "n": 30,
+    "in": 4483,
+    "out": 944,
+    "list_per_1k": 18.41,
+    "batch_per_1k": 9.2
+   },
+   "German": {
+    "n": 22,
+    "in": 3848,
+    "out": 617,
+    "list_per_1k": 13.87,
+    "batch_per_1k": 6.93
+   },
+   "Chinese": {
+    "n": 25,
+    "in": 3658,
+    "out": 772,
+    "list_per_1k": 15.04,
+    "batch_per_1k": 7.52
+   },
+   "Dutch": {
+    "n": 7,
+    "in": 4856,
+    "out": 1106,
+    "list_per_1k": 20.77,
+    "batch_per_1k": 10.39
+   },
+   "Persian": {
+    "n": 23,
+    "in": 4295,
+    "out": 1028,
+    "list_per_1k": 18.87,
+    "batch_per_1k": 9.44
+   },
+   "Spanish": {
+    "n": 6,
+    "in": 4483,
+    "out": 1161,
+    "list_per_1k": 20.57,
+    "batch_per_1k": 10.29
+   }
+  }
+ },
+ "CH": {
+  "kin": 1.413,
+  "chars_per_out_tok": 4.61,
+  "xcheck": {
+   "batches": 56,
+   "intercept": 21158,
+   "slope": 1.33,
+   "subagent_tokens_total": 4334119,
+   "pages": 533
+  },
+  "all": {
+   "n": 536,
+   "in": 3890,
+   "out": 567,
+   "list_per_1k": 6.73,
+   "batch_per_1k": 3.36
+  },
+  "tib": {
+   "n": 171,
+   "in": 4097,
+   "out": 504,
+   "list_per_1k": 6.62,
+   "batch_per_1k": 3.31
+  },
+  "xl": {
+   "n": 365,
+   "in": 3794,
+   "out": 597,
+   "list_per_1k": 6.78,
+   "batch_per_1k": 3.39
+  },
+  "by_lang": {
+   "Tibetan": {
+    "n": 171,
+    "in": 4097,
+    "out": 504,
+    "list_per_1k": 6.62,
+    "batch_per_1k": 3.31
+   },
+   "Arabic": {
+    "n": 24,
+    "in": 3602,
+    "out": 568,
+    "list_per_1k": 6.44,
+    "batch_per_1k": 3.22
+   },
+   "Latin": {
+    "n": 71,
+    "in": 3728,
+    "out": 630,
+    "list_per_1k": 6.88,
+    "batch_per_1k": 3.44
+   },
+   "French": {
+    "n": 14,
+    "in": 3230,
+    "out": 406,
+    "list_per_1k": 5.26,
+    "batch_per_1k": 2.63
+   },
+   "Greek": {
+    "n": 69,
+    "in": 4377,
+    "out": 590,
+    "list_per_1k": 7.33,
+    "batch_per_1k": 3.66
+   },
+   "Hebrew": {
+    "n": 29,
+    "in": 4235,
+    "out": 775,
+    "list_per_1k": 8.11,
+    "batch_per_1k": 4.06
+   },
+   "Aramaic": {
+    "n": 5,
+    "in": 4311,
+    "out": 913,
+    "list_per_1k": 8.88,
+    "batch_per_1k": 4.44
+   },
+   "Italian": {
+    "n": 10,
+    "in": 3387,
+    "out": 502,
+    "list_per_1k": 5.9,
+    "batch_per_1k": 2.95
+   },
+   "Sanskrit": {
+    "n": 30,
+    "in": 3779,
+    "out": 666,
+    "list_per_1k": 7.11,
+    "batch_per_1k": 3.55
+   },
+   "Pali": {
+    "n": 30,
+    "in": 3763,
+    "out": 541,
+    "list_per_1k": 6.47,
+    "batch_per_1k": 3.23
+   },
+   "German": {
+    "n": 22,
+    "in": 3230,
+    "out": 386,
+    "list_per_1k": 5.16,
+    "batch_per_1k": 2.58
+   },
+   "Chinese": {
+    "n": 25,
+    "in": 3070,
+    "out": 505,
+    "list_per_1k": 5.59,
+    "batch_per_1k": 2.8
+   },
+   "Dutch": {
+    "n": 7,
+    "in": 4076,
+    "out": 747,
+    "list_per_1k": 7.81,
+    "batch_per_1k": 3.91
+   },
+   "Persian": {
+    "n": 23,
+    "in": 3605,
+    "out": 600,
+    "list_per_1k": 6.6,
+    "batch_per_1k": 3.3
+   },
+   "Spanish": {
+    "n": 6,
+    "in": 3763,
+    "out": 794,
+    "list_per_1k": 7.73,
+    "batch_per_1k": 3.87
+   }
+  }
+ }
+}

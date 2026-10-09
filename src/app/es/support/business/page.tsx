@@ -8,14 +8,14 @@ const ES_BUSINESS_DESCRIPTION =
   'Cómo pueden apoyar a Source Library los titulares de una BV neerlandesa y las empresas estadounidenses. Deducción por ANBI cultural, el multiplicador del 150%, donaciones periódicas y cuándo conviene más patrocinar que donar.';
 
 export const metadata: Metadata = {
-  title: 'Donar a través de tu empresa — Source Library',
+  title: 'Donar a través de tu empresa | Source Library',
   description: ES_BUSINESS_DESCRIPTION,
   alternates: {
     canonical: '/es/support/business',
     languages: { en: '/support/business', es: '/es/support/business' },
   },
   openGraph: {
-    title: 'Donar a través de tu empresa — Source Library',
+    title: 'Donar a través de tu empresa | Source Library',
     description: ES_BUSINESS_DESCRIPTION,
     siteName: 'Source Library',
     type: 'website',
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@SourceLibrary_',
-    title: 'Donar a través de tu empresa — Source Library',
+    title: 'Donar a través de tu empresa | Source Library',
     description: ES_BUSINESS_DESCRIPTION,
     images: [siteOgImage('es')],
   },

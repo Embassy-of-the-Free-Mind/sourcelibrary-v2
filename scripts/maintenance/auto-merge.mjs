@@ -26,7 +26,15 @@
  * Merges oldest-first, one per run, with --squash --delete-branch (the repo's
  * merge style). Prints what it did and why it skipped the rest.
  *
- * USAGE  node scripts/maintenance/auto-merge.mjs [--dry-run] [--settle 10] [--gap 8]
+ * STALLS. A PR skipped for a reason only a push can fix (CI never ran, a failed
+ * check, a conflict) and untouched for STALL_HOURS gets ONE comment saying why,
+ * per head commit. The skip reasons used to live only in this job's log, so a
+ * tier:auto PR could sit unmerged for a day with nobody told (#6188: `test`
+ * never ran on its head). The comment reaches the PR's author and wakes any
+ * session subscribed to the PR. Draft, `blocked` and `tier:hold` are deliberate
+ * holds and never get one.
+ *
+ * USAGE  node scripts/maintenance/auto-merge.mjs [--dry-run] [--settle 10] [--gap 8] [--stall-hours 6]
  * Needs gh auth and MONGODB_URI (for the interlock).
  */
 import { execSync, spawnSync } from 'node:child_process';
@@ -39,6 +47,7 @@ const DRY = has('--dry-run');
 const SETTLE_MIN = parseInt(val('--settle', '10'), 10);
 const BUILD_GAP_MIN = parseInt(val('--gap', '8'), 10);
 const MAX_RETRY_MIN = 10;
+const STALL_HOURS = parseFloat(val('--stall-hours', '6'));
 const sh = (cmd) => execSync(cmd, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
 const minutesAgo = (iso) => (Date.now() - new Date(iso).getTime()) / 60000;
 
@@ -70,7 +79,7 @@ function resolveMergeable(pr, attempts = 3) {
 }
 
 function candidates() {
-  const prs = JSON.parse(sh('gh pr list --state open --limit 200 --label tier:auto --json number,title,isDraft,mergeable,labels,updatedAt,createdAt,statusCheckRollup,headRefName'));
+  const prs = JSON.parse(sh('gh pr list --state open --limit 200 --label tier:auto --json number,title,isDraft,mergeable,labels,updatedAt,createdAt,statusCheckRollup,headRefName,headRefOid'));
   const out = [];
   for (let pr of prs.sort((a, b) => a.createdAt.localeCompare(b.createdAt))) {
     pr = resolveMergeable(pr);
@@ -91,6 +100,50 @@ function candidates() {
   return out;
 }
 
+// Holds someone chose: never "stalled".
+const DELIBERATE = ['draft', 'blocked label', 'tier:hold label'];
+const STALL_MARK = (sha) => `<!-- auto-merge-stalled:${sha} -->`;
+
+/** What to do about each skip reason, in the words the comment uses. */
+function stallAdvice(why) {
+  const out = [];
+  if (why.some((w) => /^(test|DCO)=missing$/.test(w))) {
+    out.push('CI never ran on this head commit (no `test` or `DCO` result). That usually means the PR conflicted with `main` when it was pushed. Merge `main` into the branch and push, and CI starts.');
+  }
+  if (why.some((w) => w === 'mergeable=CONFLICTING')) out.push('It conflicts with `main`. Merge `main` into the branch and resolve the conflict.');
+  const failed = why.filter((w) => /^(test|DCO|next-build|issue-link)=(FAILURE|ERROR|TIMED_OUT|CANCELLED|ACTION_REQUIRED|STARTUP_FAILURE)$/.test(w));
+  if (failed.length) out.push(`A gating check did not pass (${failed.join(', ')}). Fix it and push.`);
+  return out;
+}
+
+/** One comment per stalled head commit; returns how many were posted. */
+function reportStalls(rows) {
+  let posted = 0;
+  for (const { pr, why } of rows) {
+    if (!why.length || why.some((w) => DELIBERATE.includes(w))) continue;
+    if (minutesAgo(pr.updatedAt) < STALL_HOURS * 60) continue;
+    const advice = stallAdvice(why);
+    if (!advice.length) continue; // still running, settling, or UNKNOWN: not stuck yet
+    const mark = STALL_MARK(pr.headRefOid);
+    const bodies = JSON.parse(sh(`gh pr view ${pr.number} --json comments --jq '[.comments[].body]'`));
+    if (bodies.some((b) => b.includes(mark))) continue;
+    const body = [
+      `This \`tier:auto\` PR has not merged itself and will not until this is fixed. Untouched for ${Math.floor(minutesAgo(pr.updatedAt) / 60)} h on \`${pr.headRefOid.slice(0, 7)}\`:`,
+      '',
+      ...advice.map((a) => `- ${a}`),
+      '',
+      `Skip reasons, as auto-merge.mjs reads them: ${why.join(', ')}. One comment per head commit; a new push starts over.`,
+      '',
+      mark,
+    ].join('\n');
+    console.log(`#${pr.number} STALLED ${DRY ? '[dry-run] would comment' : 'commenting'}: ${advice.length} reason(s)`);
+    if (DRY) continue;
+    spawnSync('gh', ['pr', 'comment', String(pr.number), '--body', body], { encoding: 'utf8' });
+    posted++;
+  }
+  return posted;
+}
+
 function mainTipAgeMin() {
   const iso = sh('gh api repos/{owner}/{repo}/commits/main --jq .commit.committer.date').trim();
   return minutesAgo(iso);
@@ -107,6 +160,8 @@ function main() {
   const rows = candidates();
   const ready = rows.filter((r) => !r.why.length);
   for (const r of rows) console.log(`#${r.pr.number} ${r.why.length ? 'skip: ' + r.why.join(', ') : 'READY'}  ${r.pr.title.slice(0, 60)}`);
+  // A failed comment must never stop a merge.
+  try { reportStalls(rows); } catch (e) { console.log(`::warning::stall report failed: ${e.message}`); }
   if (!ready.length) {
     console.log('nothing to merge');
     // A PR held back ONLY by the settle window becomes ready with no event to

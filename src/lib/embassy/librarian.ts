@@ -1032,7 +1032,7 @@ async function executeTool(
       return {
         result: { found: data.total, context },
         step: { type: 'tool_result', name: 'browse_catalog', query: data.filterLabel, found: data.total,
-          summary: `${data.total} books — ${data.filterLabel}` },
+          summary: `${data.total} books: ${data.filterLabel}` },
       };
     }
 
@@ -1606,7 +1606,7 @@ export async function* streamAgenticResponse(
           console.error(`[Librarian] Tool ${fc.name} failed:`, err instanceof Error ? err.message : err);
           return {
             result: { error: `Tool ${fc.name} encountered an error` },
-            step: { type: 'tool_result' as const, name: fc.name, query: (fc.args?.query as string) || '', found: 0, summary: 'Error — skipped' },
+            step: { type: 'tool_result' as const, name: fc.name, query: (fc.args?.query as string) || '', found: 0, summary: 'Error, skipped' },
           };
         }
       }),
@@ -1796,7 +1796,7 @@ export async function* streamAgenticResponse(
   }
   if (unverifiedPages.length > 0) {
     clauses.push(
-      `${unverifiedPages.length === 1 ? 'a page citation' : `${unverifiedPages.length} page citations`} I couldn't confirm against the source (${unverifiedPages.map(p => `\`${p}\``).join(', ')}) — please open the linked page to check the quote before relying on it`,
+      `${unverifiedPages.length === 1 ? 'a page citation' : `${unverifiedPages.length} page citations`} I couldn't confirm against the source (${unverifiedPages.map(p => `\`${p}\``).join(', ')}), so please open the linked page to check the quote before relying on it`,
     );
   }
   if (clauses.length > 0) {
