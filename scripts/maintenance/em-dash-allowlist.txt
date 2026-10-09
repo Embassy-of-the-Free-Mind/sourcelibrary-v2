@@ -1,0 +1,508 @@
+# Em dash ratchet for scripts/maintenance/check-em-dashes.mjs (#6215).
+# <path> <max-count>  # reason
+# A file not listed may hold no em dash in a reader-visible string. Counts only go
+# down: after a copy PR merges, run the checker with --tighten and commit the result.
+# Raising a number needs a reason a reviewer agrees with (a quoted source, a model
+# prompt, a parser that must match an em dash in data). Empty cells take an en dash.
+src/app/about/by-the-numbers/page.tsx 14  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/about/faq/page.tsx 17  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/about/models/page.tsx 4  # compares against the '—' sentinel in src/data/public-models.ts (never rendered); rest rewritten in a #6215 copy PR
+src/app/about/page.tsx 16  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/about/progress/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/about/research/page.tsx 12  # quoted Corpus Hermeticum translations (Scott 1924); rest rewritten in a #6215 copy PR
+src/app/about/sources/page.tsx 9  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/account/AccountClient.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/account/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/api-keys/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/book-collections/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/canon/page.tsx 11  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/catalog-coverage/page.tsx 5  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/collection-proposals/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/DashboardCharts.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/dashboard-format.ts 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/email/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/errors/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/feedback/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/holdings/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/introductions/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/kdp/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/marketing/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/members/page.tsx 5  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/page.tsx 10  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/pipeline/NextStepPanel.tsx 7  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/quality/page.tsx 21  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/quality/QualityCharts.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/r2-coverage/page.tsx 12  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/scan-evaluation/page.tsx 16  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/shared-findings/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/spend/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/system-map/page.tsx 118  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/users/page.tsx 10  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/admin/work/page.tsx 7  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/adopt/certificate/[token]/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/admin/api-key-requests/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/admin/api-keys/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/admin/canon/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/admin/duplicates/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/admin/edition-keepers/batch/route.ts 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/admin/emergency-stop/route.ts 3  # added on main after the 2026-10-07 baseline; rewrite, then --tighten (#6215)
+src/app/api/admin/kdp/bundle/[id]/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/admin/metrics-snapshot/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/admin/seed-collections/route.ts 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/admin/storage-stats/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/admin/translation-failures/route.ts 5  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/admin/work-merges/batch/route.ts 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/authority/author/search/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/beta/subscribe/route.ts 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/books/[id]/batch-ocr-async/route.ts 1  # OCR prompt sent to a model
+src/app/api/books/[id]/batch-ocr-multi/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/books/[id]/download/route.ts 6  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/books/[id]/editions/front-matter/route.ts 12  # introduction prompt sent to a model
+src/app/api/books/[id]/ensure-cover/route.ts 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/books/[id]/index/route.ts 2  # quote list fed into the index prompt
+src/app/api/books/[id]/pages/[pageId]/package/route.ts 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/books/[id]/text/route.ts 3  # '[Translation — en]' label is quoted by the get_book_text MCP contract; change both together; rest rewritten in a #6215 copy PR
+src/app/api/catalog/bph/export/route.ts 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/catalog/coverage/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/cite/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/collection-proposals/[id]/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/collection-proposals/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/cron/_archived/post-import-pipeline/route.ts 8  # archived route, log messages only; rest rewritten in a #6215 copy PR
+src/app/api/cron/health-check/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/dataset/v1/keys/rotate/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/dataset/v1/keys/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/dataset/v1/stats/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/donate/route.ts 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/dts/collection/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/dts/document/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/embassy/chat/route.ts 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/embassy/rooms/route.ts 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/embassy/threads/[id]/notebook/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/experiments/ocr-quality/[id]/auto-judge/route.ts 2  # judge prompt and few-shot examples
+src/app/api/experiments/ocr-quality/[id]/results/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/explain/route.ts 3  # prompts sent to a model
+src/app/api/explore/map/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/feed/blog/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/health/auth/route.ts 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/identify/route.ts 12  # prompt sent to a model; rest rewritten in a #6215 copy PR
+src/app/api/iiif/[id]/manifest/route.ts 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/import/pdf/route.ts 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/import/sbb/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/learn/route.ts 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/lexicon/lookup/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/locus/route.ts 4  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/mcp/route.ts 112  # MCP tool descriptions and tool-result text written for a model
+src/app/api/me/avatar/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/nde/dataset/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/openapi/route.ts 21  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/pages/[id]/modernize/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/platform/tenants/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/review/translation-check/summary/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/search/ai-expand/route.ts 11  # prompt sent to a model
+src/app/api/share-findings/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/stripe/purchase/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/[tenant]/books/[id]/batch-ocr-async/route.ts 1  # OCR prompt sent to a model
+src/app/api/[tenant]/books/[id]/batch-ocr-multi/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/[tenant]/books/[id]/download/route.ts 6  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/[tenant]/books/[id]/editions/front-matter/route.ts 12  # introduction prompt sent to a model
+src/app/api/[tenant]/books/[id]/index/route.ts 2  # quote list fed into the index prompt
+src/app/api/[tenant]/books/[id]/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/[tenant]/catalog/create/route.ts 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/[tenant]/catalog/pending/[id]/approve/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/[tenant]/catalog/[ubn]/edit/route.ts 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/api/[tenant]/pages/[id]/modernize/route.ts 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/artist/[name]/page.tsx 5  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/artwork/artist/[slug]/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/artwork/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/artwork/[slug]/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/auth/error/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/author/[name]/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/beta/BetaLandingClient.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/beta/layout.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/bhutan-library/page.tsx 23  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/blog/10000-books/page.tsx 16  # blog copy, owned by the blog job (#6215)
+src/app/blog/2000-first-translations/page.tsx 39  # blog copy, owned by the blog job (#6215)
+src/app/blog/astrological-diagrams/page.tsx 61  # blog copy, owned by the blog job (#6215)
+src/app/blog/atlas-of-lost-instruments/page.tsx 3  # blog copy, owned by the blog job (#6215)
+src/app/blog/autonomous-agents/page.tsx 24  # blog copy, owned by the blog job (#6215)
+src/app/blog/cannabis-bangue/page.tsx 17  # blog copy, owned by the blog job (#6215)
+src/app/blog/carbon-ledger/methodology/page.tsx 11  # blog copy, owned by the blog job (#6215)
+src/app/blog/carbon-ledger/page.tsx 30  # blog copy, owned by the blog job (#6215)
+src/app/blog/cellulae/page.tsx 28  # blog copy, owned by the blog job (#6215)
+src/app/blog/chakra-tradition/page.tsx 24  # blog copy, owned by the blog job (#6215)
+src/app/blog/clustering/page.tsx 26  # blog copy, owned by the blog job (#6215)
+src/app/blog/confident-hallucinator/page.tsx 57  # blog copy, owned by the blog job (#6215)
+src/app/blog/counting-first-translations/page.tsx 32  # blog copy, owned by the blog job (#6215)
+src/app/blog/counting-the-gap/page.tsx 29  # blog copy, owned by the blog job (#6215)
+src/app/blog/cuneiform-ocr/page.tsx 109  # blog copy, owned by the blog job (#6215)
+src/app/blog/demonology/page.tsx 45  # blog copy, owned by the blog job (#6215)
+src/app/blog/did-an-ai-write-the-encyclical/page.tsx 38  # blog copy, owned by the blog job (#6215)
+src/app/blog/did-the-ai-read-this/page.tsx 11  # blog copy, owned by the blog job (#6215)
+src/app/blog/does-ai-get-religion/page.tsx 14  # blog copy, owned by the blog job (#6215)
+src/app/blog/fechner-bohme/page.tsx 49  # blog copy, owned by the blog job (#6215)
+src/app/blog/fire-horse/page.tsx 47  # blog copy, owned by the blog job (#6215)
+src/app/blog/first-translation-methodology/page.tsx 48  # blog copy, owned by the blog job (#6215)
+src/app/blog/first-translations/page.tsx 27  # blog copy, owned by the blog job (#6215)
+src/app/blog/fish-voiced-priest/page.tsx 36  # blog copy, owned by the blog job (#6215)
+src/app/blog/free-reading/page.tsx 3  # blog copy, owned by the blog job (#6215)
+src/app/blog/greek-lemma-table/page.tsx 23  # blog copy, owned by the blog job (#6215)
+src/app/blog/greek-lemma-table/ShapeCloud.tsx 2  # blog copy, owned by the blog job (#6215)
+src/app/blog/hidden-engineers/page.tsx 60  # blog copy, owned by the blog job (#6215)
+src/app/blog/hieroglyph-ocr/page.tsx 21  # blog copy, owned by the blog job (#6215)
+src/app/blog/history-of-astrology/page.tsx 58  # blog copy, owned by the blog job (#6215)
+src/app/blog/history-of-classification/page.tsx 55  # blog copy, owned by the blog job (#6215)
+src/app/blog/hogwarts-library/page.tsx 78  # blog copy, owned by the blog job (#6215)
+src/app/blog/how-big-is-the-library/page.tsx 19  # blog copy, owned by the blog job (#6215)
+src/app/blog/how-long-to-translate/page.tsx 4  # blog copy, owned by the blog job (#6215)
+src/app/blog/how-these-are-made/page.tsx 14  # blog copy, owned by the blog job (#6215)
+src/app/blog/iiif/page.tsx 60  # blog copy, owned by the blog job (#6215)
+src/app/blog/incunabula-knowledge-graph/page.tsx 28  # blog copy, owned by the blog job (#6215)
+src/app/blog/indigenous-traditions/page.tsx 57  # blog copy, owned by the blog job (#6215)
+src/app/blog/interlinear-experiment/page.tsx 14  # blog copy, owned by the blog job (#6215)
+src/app/blog/invisible-hand/page.tsx 59  # blog copy, owned by the blog job (#6215)
+src/app/blog/man-his-own-maker/page.tsx 82  # blog copy, owned by the blog job (#6215)
+src/app/blog/mcp-server/page.tsx 26  # blog copy, owned by the blog job (#6215)
+src/app/blog/naked-philosophers/page.tsx 42  # blog copy, owned by the blog job (#6215)
+src/app/blog/nature-of-harmony/page.tsx 76  # blog copy, owned by the blog job (#6215)
+src/app/blog/ngram-viewer/page.tsx 23  # blog copy, owned by the blog job (#6215)
+src/app/blog/nine-models-forty-pages/page.tsx 29  # blog copy, owned by the blog job (#6215)
+src/app/blog/nobody-knows-what-has-been-scanned/page.tsx 17  # blog copy, owned by the blog job (#6215)
+src/app/blog/ocr-consistency/page.tsx 25  # blog copy, owned by the blog job (#6215)
+src/app/blog/origin-story/page.tsx 29  # blog copy, owned by the blog job (#6215)
+src/app/blog/philosophers-stone/page.tsx 45  # blog copy, owned by the blog job (#6215)
+src/app/blog/playable-page/page.tsx 17  # blog copy, owned by the blog job (#6215)
+src/app/blog/posts.ts 39  # blog copy, owned by the blog job (#6215)
+src/app/blog/progress-studies/page.tsx 48  # blog copy, owned by the blog job (#6215)
+src/app/blog/rashi-ocr/page.tsx 31  # blog copy, owned by the blog job (#6215)
+src/app/blog/reading-classical-chinese/page.tsx 31  # blog copy, owned by the blog job (#6215)
+src/app/blog/reciting-not-reading/page.tsx 19  # blog copy, owned by the blog job (#6215)
+src/app/blog/rithmomachia/page.tsx 67  # blog copy, owned by the blog job (#6215)
+src/app/blog/show-me-the-number/page.tsx 39  # blog copy, owned by the blog job (#6215)
+src/app/blog/singularity-1486/page.tsx 58  # blog copy, owned by the blog job (#6215)
+src/app/blog/sound-laboratory/page.tsx 36  # blog copy, owned by the blog job (#6215)
+src/app/blog/suda-benchmark/page.tsx 61  # blog copy, owned by the blog job (#6215)
+src/app/blog/technique-is-local/page.tsx 38  # blog copy, owned by the blog job (#6215)
+src/app/blog/the-deletion/page.tsx 50  # blog copy, owned by the blog job (#6215)
+src/app/blog/the-giants-werent-translated/page.tsx 23  # blog copy, owned by the blog job (#6215)
+src/app/blog/tibetan-ocr/page.tsx 23  # blog copy, owned by the blog job (#6215)
+src/app/blog/translation-collapse/page.tsx 22  # blog copy, owned by the blog job (#6215)
+src/app/blog/translation-rate/page.tsx 20  # blog copy, owned by the blog job (#6215)
+src/app/blog/translations-across-civilizations/page.tsx 27  # blog copy, owned by the blog job (#6215)
+src/app/blog/two-copies-two-languages/page.tsx 19  # blog copy, owned by the blog job (#6215)
+src/app/blog/untranslated-renaissance/page.tsx 43  # blog copy, owned by the blog job (#6215)
+src/app/blog/visualizing-classification/page.tsx 9  # blog copy, owned by the blog job (#6215)
+src/app/blog/what-makes-a-good-scan/page.tsx 37  # blog copy, owned by the blog job (#6215)
+src/app/blog/why-terminals-cant-edit/page.tsx 18  # blog copy, owned by the blog job (#6215)
+src/app/blog/word-alignment/page.tsx 7  # blog copy, owned by the blog job (#6215)
+src/app/blog/worlds-largest-collection/page.tsx 37  # blog copy, owned by the blog job (#6215)
+src/app/book/[id]/edition/[editionId]/review/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/book/[id]/overview/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/book/[id]/page/[pageId]/error.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/book/[id]/page/[pageId]/layout.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/book/[id]/page/[pageId]/(reader)/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/book/[id]/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/book/[id]/pipeline/page.tsx 5  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/book/[id]/read/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/book/[id]/split/page.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/brand/mockups/page.tsx 13  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/brand/page.tsx 17  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/browse/subjects/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/browse/titles/[letter]/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/catalog/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/categories/[id]/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/categories/layout.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/categories/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/census/CensusSearch.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/census/page.tsx 17  # server-side throw, reader sees the generic error page; rest rewritten in a #6215 copy PR
+src/app/check/[token]/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/collection-areas/[id]/page.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/collections/drebbel/beeckman/passages.ts 1  # quoted historical source (Beeckman's journal)
+src/app/collections/[id]/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/collections/jung-resonances/page.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/collections/mycology/page.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/collections/sacred-texts/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/collections/slime-moulds/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/connect/page.tsx 8  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/contribute/page.tsx 5  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/contribute/volunteer/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/contribute/wikipedia/page.tsx 5  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/contribute/wikipedia/WikipediaPlaybook.tsx 6  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/curated/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/curation/identity-review/page.tsx 23  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/data/page.tsx 5  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/dataset/page.tsx 13  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/design-options/all-editorial/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/design-options/page.tsx 6  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/developers/page.tsx 43  # build-time drift error, never rendered; rest rewritten in a #6215 copy PR
+src/app/developers/pipeline/page.tsx 18  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/dmca/page.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/embed/[tenant]/catalog/help/page.tsx 6  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/embed/[tenant]/catalog/new/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/embed/[tenant]/catalog/review/page.tsx 3  # operator config error; rest rewritten in a #6215 copy PR
+src/app/embed/[tenant]/catalog/team/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/embed/[tenant]/catalog/[ubn]/edit/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/embed/[tenant]/catalog/[ubn]/GenericCatalogEntry.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/embed/[tenant]/catalog/[ubn]/history/page.tsx 6  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/embed/[tenant]/catalog/[ubn]/page.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/embed/[tenant]/catalogue/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/embed/[tenant]/catalog/workspace/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/embed/[tenant]/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/encyclopedia/layout.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/encyclopedia/[name]/layout.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/encyclopedia/[name]/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/es/auth/signin/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/es/collections/[id]/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/es/collections/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/es/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/es/support/business/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/es/support/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/experiments/ocr-quality/[id]/judge/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/experiments/ocr-quality/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/experiments/search-v2/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/explore/constellation/page.tsx 7  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/explore/layout.tsx 5  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/explore/map/page.tsx 8  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/explore/page.tsx 5  # operator config error; rest rewritten in a #6215 copy PR
+src/app/explore/timeline/page.tsx 6  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/favorites/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/ficino-society/layout.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/ficino-society/members/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/ficino-society/page.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/for-libraries/page.tsx 16  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/for-researchers/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/gallery/collections/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/gallery/collections/[slug]/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/gallery/curate/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/gallery/image/[id]/layout.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/gallery/image/[id]/page.tsx 5  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/gallery/layout.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/gallery/page.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/give/page.tsx 6  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/hieroglyphs/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/identify/layout.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/identify/page.tsx 6  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/in-memoriam/page.tsx 13  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/languages/[code]/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/languages/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/layout.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/learn/LearnQuiz.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/librarian/LibrarianClient.tsx 6  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/librarian/thread/[id]/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/librarian/voice/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/librarian/voice/VoiceAgentClient.tsx 11  # voice agent system prompt; rest rewritten in a #6215 copy PR
+src/app/licensing/page.tsx 27  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/lists/[id]/page.tsx 6  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/login/TenantSignIn.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/ngrams/page.tsx 7  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/not-found.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/platform/(protected)/admin/gallery-dedup-review/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/platform/(protected)/admin/line/page.tsx 5  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/platform/(protected)/admin/metrics/page.tsx 25  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/platform/(protected)/admin/ocr-evidence/page.tsx 18  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/platform/(protected)/admin/reading-register/page.tsx 9  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/platform/(protected)/admin/summary-review/ReviewClient.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/platform/(protected)/admin/translation-failures/TranslationFailuresClient.tsx 5  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/podcast/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/podcast/[threadId]/page.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/press-releases/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/press-releases/[slug]/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/press/trouw-interview-english/page.tsx 8  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/privacy/page.tsx 8  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/prototype/deep-zoom/collection/page.tsx 6  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/prototype/deep-zoom/DeepZoomViewer.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/prototype/deep-zoom/page.tsx 8  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/prototype/prehistoric-art/page.tsx 5  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/quality/methods/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/quality/page.tsx 6  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/quality/ParetoCharts.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/quality/pareto/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/read/gilgamesh/page.tsx 8  # Thompson 1930 translation text; rest rewritten in a #6215 copy PR
+src/app/research/atlas/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/research/canon-gap/diagrams.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/research/canon-gap/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/research/canon-quality/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/research/concept-diffusion/page.tsx 5  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/research/image-atlas/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/research/image-pixplot/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/research/page-errors/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/research/page.tsx 5  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/research/quality/open/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/research/quality/page.tsx 9  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/research/quality/summary/page.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/research/reading-plan/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/research/sessions/page.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/research/thumbnail-compare/page.tsx 5  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/research/translation-gap/page.tsx 19  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/research/translation-lag/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/research/translation-registry/page.tsx 11  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/research/translation-registry/RegistryBrowser.tsx 7  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/review/gallery-quality/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/review/hallucination/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/review/page-check/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/review/page.tsx 6  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/review/scan-quality/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/review/spanish-copy/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/review/translation-check/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/rithmomachia/guide/page.tsx 9  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/rithmomachia/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/roadmap/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/scan/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/search/layout.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/search/visual/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/specimen/aldine/page.tsx 11  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/sponsors/page.tsx 15  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/status/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/support/business/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/support/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/tablets/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/[tenant]/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/terms/page.tsx 19  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/timeline/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/timeline/TimelineClient.tsx 6  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/topics/[slug]/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/traffic/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/vision/content.ts 11  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/vision/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/vision/VisionView.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/volunteers/page.tsx 5  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/welcome/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/work/[id]/compare/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/work/[id]/page.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/works/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/account/ProfilePhotoEditor.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/analytics/charts/MultiLineChart.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/analytics/tabs/BooksTab.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/analytics/tabs/PipelineTab.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/analytics/TrafficDashboard.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/artwork/ArtworkHero.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/artwork/ArtworkInfo.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/auth/SignInForm.tsx 6  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/blog/carbon-ledger/interactives/DailyTimeline.tsx 1  # blog copy, owned by the blog job (#6215)
+src/components/blog/carbon-ledger/interactives/DisclosureBoard.tsx 2  # blog copy, owned by the blog job (#6215)
+src/components/blog/carbon-ledger/interactives/Equivalents.tsx 1  # blog copy, owned by the blog job (#6215)
+src/components/blog/carbon-ledger/interactives/ForestPlot.tsx 1  # blog copy, owned by the blog job (#6215)
+src/components/blog/carbon-ledger/interactives/PathPicker.tsx 1  # blog copy, owned by the blog job (#6215)
+src/components/blog/carbon-ledger/interactives/SensitivitySliders.tsx 1  # blog copy, owned by the blog job (#6215)
+src/components/blog/carbon-ledger/interactives/SpendTreemap.tsx 1  # blog copy, owned by the blog job (#6215)
+src/components/blog/carbon-ledger/interactives/TokenSankey.tsx 4  # blog copy, owned by the blog job (#6215)
+src/components/blog/carbon-ledger/PullQuote.tsx 1  # blog copy, owned by the blog job (#6215)
+src/components/blog/carbon-ledger/SectionDivider.tsx 1  # blog copy, owned by the blog job (#6215)
+src/components/blog/DissonanceDemo.tsx 1  # blog copy, owned by the blog job (#6215)
+src/components/blog/HarmonyVisuals.tsx 4  # blog copy, owned by the blog job (#6215)
+src/components/blog/lab/BoethiusLadderDemo.tsx 15  # blog copy, owned by the blog job (#6215)
+src/components/blog/lab/CommaSpiralDemo.tsx 10  # blog copy, owned by the blog job (#6215)
+src/components/blog/lab/EulerGradusDemo.tsx 5  # blog copy, owned by the blog job (#6215)
+src/components/blog/lab/GalileiStringsDemo.tsx 13  # blog copy, owned by the blog job (#6215)
+src/components/blog/lab/GalileoRhythmDemo.tsx 4  # blog copy, owned by the blog job (#6215)
+src/components/blog/lab/HammerStringDemo.tsx 10  # blog copy, owned by the blog job (#6215)
+src/components/blog/lab/KeplerPlanetsDemo.tsx 6  # blog copy, owned by the blog job (#6215)
+src/components/blog/lab/KircherResonanceDemo.tsx 16  # blog copy, owned by the blog job (#6215)
+src/components/blog/lab/LyreReadingsDemo.tsx 13  # blog copy, owned by the blog job (#6215)
+src/components/blog/lab/pythagorean.ts 3  # blog copy, owned by the blog job (#6215)
+src/components/blog/lab/SalmonTrialDemo.tsx 5  # blog copy, owned by the blog job (#6215)
+src/components/blog/lab/SchismaSliverDemo.tsx 5  # blog copy, owned by the blog job (#6215)
+src/components/blog/lab/ShrutiTestDemo.tsx 3  # blog copy, owned by the blog job (#6215)
+src/components/blog/lab/TartiniDemo.tsx 8  # blog copy, owned by the blog job (#6215)
+src/components/blog/lab/YueJiAffectDemo.tsx 3  # blog copy, owned by the blog job (#6215)
+src/components/book/AdoptBookPanel.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/book/BibliographicInfo.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/book/BookBiblioPanel.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/book/BookHistory.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/book/EarlyAccessGate.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/book/FirstTranslationEvidence.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/book/HymnPlayer.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/book/OriginalEditionNotice.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/book/ProcessingPanel.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/book/TranslatedSiblingNotice.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/browse/AuthorBibliography.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/catalog/BphWorkEditForm.tsx 7  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/catalog/CatalogTeamClient.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/catalog/ContributorsEditor.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/catalog/PendingChangesInbox.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/catalog/ScholarCatalog.tsx 7  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/collections/CollectionFurtherReading.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/collections/CollectionImageCurator.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/collections/CollectionListView.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/collections/CollectionReadingList.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/collections/ExhibitionLayout.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/collections/IndexCatalogBrowser.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/collections/IndexCatalogSection.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/developers/ApiKeyRequestForm.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/donate/BusinessGivingView.tsx 12  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/donate/GiveForm.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/donate/QuickSubscribe.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/donate/SupportView.tsx 5  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/editions/PublishEditionButton.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/explore/BookMap.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/explore/CenturyHeatmap.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/explore/DataSources.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/explore/ExploreNav.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/explore/Timeline.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/gallery/CurateClient.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/gallery/GalleryClient.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/layout/FeaturedCollections.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/layout/NotFoundContent.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/layout/SectionsNav.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/libraries/BphCatalogBrowser.tsx 5  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/libraries/CatalogBrowser.tsx 5  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/libraries/SharedLibraryView.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/libraries/TenantCatalogueTable.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/local-reader/DeskReader.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/ngrams/NgramViewer.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/ngrams/UstcCoveragePanel.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/pipeline/PipelineDiagram.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/pipeline/PipelineStageCard.tsx 6  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/pipeline/TranslationEditor.tsx 10  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/presence/ReaderPresence.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/press/releases/EmbassyAnnouncesSourceLibrary.tsx 15  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/press/releases/SourceLibraryPublicBetaLaunch.tsx 9  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/providers/AnalyticsScripts.tsx 3  # comments inside an inline <script> template literal
+src/components/reader/NotesRenderer.tsx 8  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/reader/PageDeepZoomButton.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/reader/PageMetadataPanel.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/reader/RevisionHistory.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/reader-v2/FeedbackPanel.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/reader-v2/PairedEdition.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/reader-v2/PaneEmptyState.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/reader-v2/Reader2C.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/reader-v2/ReaderAnnotations.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/reader-v2/ReaderWebMCP.tsx 3  # WebMCP tool descriptions/results for a model
+src/components/research/BookConstellationViz.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/researchers/AcademicAccessForm.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/research/ImageConstellationViz.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/review/HallucinationReview.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/review/InviteCheck.tsx 7  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/review/PageCheckReview.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/review/QueueShell.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/review/ReviewStats.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/review/SpanishCopyReview.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/review/TranslationCheckReview.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/review/TranslationCheckSummary.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/review/useReviewQueue.ts 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/rithmomachia/DemoMode.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/rithmomachia/RithmomachiaGame.tsx 11  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/rithmomachia/ScenarioSelector.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/rithmomachia/TutorialOverlay.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/rithmomachia/VictoryModal.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/scan/AutoScanFlow.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/scan/Viewfinder.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/search/SearchWebMCP.tsx 3  # WebMCP tool descriptions/results for a model
+src/components/seo/AuthorSchema.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/seo/CategorySchema.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/seo/CollectionSchema.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/seo/EntitySchema.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/seo/GalleryImageSchema.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/seo/GallerySchema.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/seo/LibrarySchema.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/seo/SchemaOrgMetadata.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/ui/AiBadge.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/ui/DownloadButton.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/ui/ImageWithMagnifier.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/ui/ProseField.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/ui/SaveToListButton.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/ui/ShareButton.tsx 7  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/welcome/WelcomeForm.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
+src/components/work/LocusJumpBox.tsx 2  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/blog/one-sentence-of-hermes/page.tsx 2  # added on main after the 2026-10-07 baseline; rewrite, then --tighten (#6215)
+src/app/book/[id]/checks/page.tsx 1  # added on main after the 2026-10-07 baseline; rewrite, then --tighten (#6215)
+src/app/platform/(protected)/admin/decisions/DecisionsClient.tsx 1  # added on main after the 2026-10-07 baseline; rewrite, then --tighten (#6215)
