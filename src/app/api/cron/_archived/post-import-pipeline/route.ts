@@ -14,7 +14,6 @@ import { syncBookToGitHub } from '@/lib/git-sync';
 import { deduplicateOverlappingPages } from '@/lib/page-split/dedup-overlapping-pages';
 import { detectAndRemoveGhostPages } from '@/lib/page-split/detect-ghost-pages';
 import { getAdaptiveLimits } from '@/lib/adaptive-limits';
-import { promoteFromWarehouse, moveToWarehouse } from '@/lib/warehouse';
 
 export const maxDuration = 300;
 
@@ -1098,36 +1097,19 @@ export async function GET(request: NextRequest) {
     // ── Phase 1: Archive check (queued/archiving -> archive_complete) ──
     // Archiving is done externally by Hetzner's archive-images-fast.ts script.
     // The cron just checks MongoDB to see if all pages are archived and advances status.
-    // NOTE: queued/archiving/archive_complete books live in warehouse collections.
-    // setPipelineStatus calls here target books_warehouse. When a book is ready
-    // for OCR (Phase 2), it gets promoted to live collections.
+    // (The warehouse collections were retired 2026-10, #5470.)
     if (hasTimeBudget(startTime)) {
       const ARCHIVABLE_SOURCES = /archive\.org|gallica\.bnf\.fr|digitale-sammlungen\.de|digi\.vatlib\.it|diglib\.hab\.de|e-rara|wellcomecollection|cudl\.lib\.cam|digital\.bodleian/;
 
-      // Move queued books to archiving (check both live and warehouse)
-      const queuedBooksLive = await db.collection('books')
+      const queuedBooks = await db.collection('books')
         .find({ 'pipeline_auto.status': 'queued' })
         .sort({ processing_priority: -1, hidden: 1 })
         .project({ id: 1 })
         .limit(ARCHIVE_LIMIT)
         .toArray();
-      const queuedBooksWarehouse = await db.collection('books_warehouse')
-        .find({ 'pipeline_auto.status': 'queued' })
-        .sort({ processing_priority: -1, hidden: 1 })
-        .project({ id: 1 })
-        .limit(ARCHIVE_LIMIT)
-        .toArray();
-
-      // Move any queued books from live to warehouse before advancing
-      for (const book of queuedBooksLive) {
-        if (!hasTimeBudget(startTime)) break;
-        await moveToWarehouse(db, book.id);
-      }
-
-      const queuedBooks = [...queuedBooksLive, ...queuedBooksWarehouse];
       for (const book of queuedBooks) {
         if (!hasTimeBudget(startTime)) break;
-        await db.collection('books_warehouse').updateOne(
+        await db.collection('books').updateOne(
           { id: book.id },
           { $set: { 'pipeline_auto.status': 'archiving', 'pipeline_auto.started_at': new Date(), 'pipeline_auto.last_updated': new Date(), updated_at: new Date() } }
         );
@@ -1136,7 +1118,7 @@ export async function GET(request: NextRequest) {
 
       // Check archiving books for completion (pages archived by Hetzner script)
       const ARCHIVE_TIMEOUT_MS = 24 * 60 * 60 * 1000; // 24h — OCR works on original IIIF URLs
-      const archivingBooks = await db.collection('books_warehouse')
+      const archivingBooks = await db.collection('books')
         .find({ 'pipeline_auto.status': 'archiving' })
         .sort({ processing_priority: -1, hidden: 1 }) // Visible books first
         .project({ id: 1, title: 1, 'pipeline_auto.last_updated': 1, 'pipeline_auto.started_at': 1 })
@@ -1148,8 +1130,7 @@ export async function GET(request: NextRequest) {
 
         // Count pages still needing archiving from external sources
         // Also treat "failed:*" archived_photo values as unarchived
-        // Pages are in pages_warehouse for these books
-        const remaining = await db.collection('pages_warehouse').countDocuments({
+        const remaining = await db.collection('pages').countDocuments({
           book_id: book.id,
           $or: [
             { archived_photo: { $exists: false } },
@@ -1164,7 +1145,7 @@ export async function GET(request: NextRequest) {
         });
 
         if (remaining === 0) {
-          await db.collection('books_warehouse').updateOne(
+          await db.collection('books').updateOne(
             { id: book.id },
             { $set: { 'pipeline_auto.status': 'archive_complete', 'pipeline_auto.retry_count': 0, 'pipeline_auto.last_updated': new Date(), updated_at: new Date() } }
           );
@@ -1174,7 +1155,7 @@ export async function GET(request: NextRequest) {
           // OCR works fine on original IIIF URLs — archiving is a nice-to-have, not a blocker.
           const archiveStart = book.pipeline_auto?.started_at || book.pipeline_auto?.last_updated;
           if (archiveStart && (Date.now() - new Date(archiveStart).getTime()) > ARCHIVE_TIMEOUT_MS) {
-            await db.collection('books_warehouse').updateOne(
+            await db.collection('books').updateOne(
               { id: book.id },
               { $set: { 'pipeline_auto.status': 'archive_complete', 'pipeline_auto.retry_count': 0, 'pipeline_auto.last_updated': new Date(), updated_at: new Date() } }
             );
@@ -1219,8 +1200,8 @@ export async function GET(request: NextRequest) {
         logger.backpressure('ocr_lambda_limit', { active: activeLambdaOcr, max: limits.ocr_lambda_max });
       }
 
-      // Query warehouse for archive_complete books ready for OCR, then promote them
-      const readyForOcr = (ocrLimit > 0 && activeLambdaOcr < limits.ocr_lambda_max) ? await db.collection('books_warehouse')
+      // Query archive_complete books ready for OCR
+      const readyForOcr = (ocrLimit > 0 && activeLambdaOcr < limits.ocr_lambda_max) ? await db.collection('books')
         .aggregate([
           { $match: { 'pipeline_auto.status': 'archive_complete' } },
           { $addFields: {
@@ -1254,10 +1235,6 @@ export async function GET(request: NextRequest) {
           logger.decision('backpressure', `OCR page cap reached: ${pagesEnqueuedThisRun}/${pageCapPerRun} pages this run`);
           break;
         }
-
-        // Promote from warehouse → live before OCR submission
-        // This moves the book + pages so all subsequent code can use the live collections.
-        await promoteFromWarehouse(db, book.id);
 
         const retries = book.pipeline_auto?.retry_count || 0;
         try {

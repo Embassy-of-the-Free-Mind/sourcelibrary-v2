@@ -131,7 +131,7 @@ export function botGateResponse(book: {
     summary: book.reading_summary || undefined,
     partnership: {
       contact: 'team@sourcelibrary.org',
-      subject: 'AI Partnership — Full Corpus Access',
+      subject: 'AI Partnership: Full Corpus Access',
       info: 'https://sourcelibrary.org/llms.txt',
     },
     license: CONTENT_LICENSE,

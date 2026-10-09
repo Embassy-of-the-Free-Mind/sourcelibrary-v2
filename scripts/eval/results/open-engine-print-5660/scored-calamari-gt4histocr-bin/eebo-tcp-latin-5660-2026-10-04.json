@@ -1,0 +1,3046 @@
+{
+  "summary": {
+    "stratum": "eebo-tcp-latin-5660",
+    "issue": 5660,
+    "date": "2026-10-04",
+    "refusal_source": "finishReason (meter) / inferred",
+    "cer_refusals": "ref.median_cer / mean_cer count a refusal as CER 1.0 (the pre-#5581 headline); *_answered exclude refused pages",
+    "n_pages": 25,
+    "n_with_ref": 24,
+    "ref_mismatch": [
+      "ed-6a42c73497284560a2b10fee-p1"
+    ],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "calamari-gt4histocr-bin": {
+        "pages_run": 25,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 24,
+          "median_cer": 0.134,
+          "mean_cer": 0.194,
+          "catastrophic": 1,
+          "median_gap": 0,
+          "median_seq": 0.654,
+          "refused": 0,
+          "n_answered": 24,
+          "median_cer_answered": 0.134,
+          "mean_cer_answered": 0.194,
+          "catastrophic_answered": 1
+        },
+        "proxy_vs_ref_engine": {
+          "n": 1,
+          "median_cer": 0.583,
+          "catastrophic": 1,
+          "median_gap": 0.028,
+          "median_bow": 0.207,
+          "refused": 0,
+          "n_answered": 1,
+          "median_cer_answered": 0.583,
+          "mean_cer": 0.583,
+          "mean_cer_answered": 0.583
+        },
+        "invention": {
+          "median": 0.273,
+          "mean": 0.34,
+          "n_engines": 3,
+          "ref_median": 0.305,
+          "ref_mean": 0.381
+        },
+        "paired_vs_ref": {
+          "n": 24,
+          "excluded_refused": 0,
+          "wins": 10,
+          "losses": 14,
+          "ties": 0,
+          "median_delta_cer": -0.014,
+          "p_sign": 0.541,
+          "invention_wins": 10,
+          "invention_losses": 14
+        },
+        "worst": [
+          {
+            "slug": "ed-6a9437f67e41ac276318823e-p10",
+            "title": "Carmen panegyricum, sive Paræneticum, postridie inaugurationis Dom. Protectori ab Auguo. Wingfieldo dicatum. Ac nuper cum scholiis & animadversionibus in selectiora vocabula, ab anonymo benevolo illustratum.",
+            "year": 1656,
+            "cer": 0.621,
+            "gap": 0.009,
+            "invention": 0.843,
+            "has_ref": true,
+            "unsupported": [
+              "eage",
+              "uude",
+              "dara",
+              "crrcd",
+              "lirur",
+              "ateperitrt",
+              "loraa",
+              "eletet"
+            ]
+          },
+          {
+            "slug": "ed-6a42c73497284560a2b10fee-p1",
+            "title": "Theses philosophicae, quas auspice & propitio D.O.M. adolescentes, magisterii candidati, in Academia Mareschallana, die 21 Iulii, Anno 1637. In publico clarissimorum philosophorum confessu propugnabunt, ab aurora ad meridiem.",
+            "year": 1637,
+            "cer": 0.583,
+            "gap": 0.028,
+            "invention": 0.417,
+            "has_ref": false,
+            "unsupported": [
+              "addo",
+              "cademia",
+              "marescbe",
+              "iuli",
+              "philescorum",
+              "corsesss",
+              "wridie",
+              "roii"
+            ]
+          },
+          {
+            "slug": "ed-6a42acc65207af7c42f4db34-p14",
+            "title": "Clauis apocalyptica ex innatis et insitis visionum characteribus eruta et demonstrata. Ad eorum usum quibus deus amorem studiúmq[ue] indiderit prophetiam illam admirandam cognoscendi scrutandíque.",
+            "year": 1627,
+            "cer": 0.434,
+            "gap": 0.004,
+            "invention": 0.878,
+            "has_ref": true,
+            "unsupported": [
+              "ciavv",
+              "oeavtoapas",
+              "eregi",
+              "perten",
+              "pritaara",
+              "syuckressa",
+              "seitur",
+              "alters"
+            ]
+          },
+          {
+            "slug": "ed-6a42d8f7e76baa13aa85e9b9-p9",
+            "title": "Panegyricon inaugurale honoratissimi & amplissimi domini prætoris regii, sive majoris, nobilissimæ & florentissimæ reipublicæ Londinensis, Richardi Fenn, sub finem anni Christi 1637.",
+            "year": 1638,
+            "cer": 0.336,
+            "gap": 0.011,
+            "invention": 0.273,
+            "has_ref": true,
+            "unsupported": [
+              "classis",
+              "constantèr",
+              "potu",
+              "vtbs",
+              "vibe",
+              "luridicum",
+              "pattiæ",
+              "legisquè"
+            ]
+          },
+          {
+            "slug": "ed-6a42a33fdec0f9e2ecca5a38-p11",
+            "title": "Europa lachrymans: Gulielmi Ballæi armigeri Angli, poema heroicvm.",
+            "year": 1650,
+            "cer": 0.324,
+            "gap": 0,
+            "invention": 0.636,
+            "has_ref": true,
+            "unsupported": [
+              "nugi",
+              "ultotiei",
+              "serar",
+              "germee",
+              "lgiete",
+              "dtatee",
+              "ririecpe",
+              "errere"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 25,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 24,
+          "median_cer": 0.098,
+          "mean_cer": 0.121,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_seq": 0.706,
+          "refused": 0,
+          "n_answered": 24,
+          "median_cer_answered": 0.098,
+          "mean_cer_answered": 0.121,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0,
+          "n_engines": 3,
+          "ref_median": 0.291,
+          "ref_mean": 0.274
+        },
+        "worst": [
+          {
+            "slug": "ed-6a42d8f7e76baa13aa85e9b9-p9",
+            "title": "Panegyricon inaugurale honoratissimi & amplissimi domini prætoris regii, sive majoris, nobilissimæ & florentissimæ reipublicæ Londinensis, Richardi Fenn, sub finem anni Christi 1637.",
+            "year": 1638,
+            "cer": 0.368,
+            "gap": 0.062,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6a503c772f6539fb38937d92-p15",
+            "title": "Armilla aurea, id est, Miranda series causarum et salutis & damnationis iuxta verbum Dei Eius synopsin continet annexa tabula",
+            "year": 1590,
+            "cer": 0.225,
+            "gap": 0.116,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6a437b6257a09c2c0fcb48d7-p10",
+            "title": "Barnabæ itinerarium, Mirtili & Faustuli nominibus insignitum viatoris solatio nuperrimè editum, aptissimis numeris redactum, veterique Tono Barnabæ, publicè decantatum.",
+            "year": 1636,
+            "cer": 0.213,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6a9057a0ab26ecd307a0cd7c-p10",
+            "title": "Problemata physica. De gravitate. Cap.I. De Æstibus marinis. Cap.II. De vacuo. Cap.III. De calore & luce. Cap.IV. De duro & molli. Cap.V. De pluvia, vento, aliisq[ue] coeli varietatibus. Cap. VI. De motuum speciebus. Cap. VII. Adjunctae sunt etiam propositiones duae de duplicatione cubi, & dimensione circuli.",
+            "year": 1662,
+            "cer": 0.168,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6a432b29e797132cc665b266-p10",
+            "title": "Nuncius inanimatus.",
+            "year": 1629,
+            "cer": 0.157,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite-b": {
+        "pages_run": 25,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 24,
+          "median_cer": 0.098,
+          "mean_cer": 0.121,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_seq": 0.706,
+          "refused": 0,
+          "n_answered": 24,
+          "median_cer_answered": 0.098,
+          "mean_cer_answered": 0.121,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 1,
+          "median_cer": 0,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 1,
+          "refused": 0,
+          "n_answered": 1,
+          "median_cer_answered": 0,
+          "mean_cer": 0,
+          "mean_cer_answered": 0
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0,
+          "n_engines": 3,
+          "ref_median": 0.291,
+          "ref_mean": 0.274
+        },
+        "paired_vs_ref": {
+          "n": 24,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 24,
+          "median_delta_cer": 0,
+          "p_sign": 1,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "ed-6a42d8f7e76baa13aa85e9b9-p9",
+            "title": "Panegyricon inaugurale honoratissimi & amplissimi domini prætoris regii, sive majoris, nobilissimæ & florentissimæ reipublicæ Londinensis, Richardi Fenn, sub finem anni Christi 1637.",
+            "year": 1638,
+            "cer": 0.368,
+            "gap": 0.062,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6a503c772f6539fb38937d92-p15",
+            "title": "Armilla aurea, id est, Miranda series causarum et salutis & damnationis iuxta verbum Dei Eius synopsin continet annexa tabula",
+            "year": 1590,
+            "cer": 0.225,
+            "gap": 0.116,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6a437b6257a09c2c0fcb48d7-p10",
+            "title": "Barnabæ itinerarium, Mirtili & Faustuli nominibus insignitum viatoris solatio nuperrimè editum, aptissimis numeris redactum, veterique Tono Barnabæ, publicè decantatum.",
+            "year": 1636,
+            "cer": 0.213,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6a9057a0ab26ecd307a0cd7c-p10",
+            "title": "Problemata physica. De gravitate. Cap.I. De Æstibus marinis. Cap.II. De vacuo. Cap.III. De calore & luce. Cap.IV. De duro & molli. Cap.V. De pluvia, vento, aliisq[ue] coeli varietatibus. Cap. VI. De motuum speciebus. Cap. VII. Adjunctae sunt etiam propositiones duae de duplicatione cubi, & dimensione circuli.",
+            "year": 1662,
+            "cer": 0.168,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "ed-6a432b29e797132cc665b266-p10",
+            "title": "Nuncius inanimatus.",
+            "year": 1629,
+            "cer": 0.157,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      }
+    }
+  },
+  "pages": [
+    {
+      "slug": "ed-6a4252e5343d756d34e33e36-p10",
+      "substratum": "Latin 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "De ortu et natura sanguinis. A Joanne Betto M.D. Regis medico ordinario & Colegii Londinensis Socio.",
+      "year": 1669,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 1042,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.133,
+          "acc": 0.867,
+          "seq": 0.558,
+          "bow": 0.563,
+          "gap": 0.005,
+          "len_ratio": 0.994,
+          "invention": 0.426,
+          "invention_indep": 0.426,
+          "invention_ref": 0.443,
+          "unsupported_sample": [
+            "tergiversaudi",
+            "conclusu",
+            "seuprincipiatm",
+            "alem",
+            "prineipiuu",
+            "idei",
+            "scursa",
+            "etia"
+          ],
+          "invention_ref_sample": [
+            "lectorem",
+            "tergiversaudi",
+            "conclusu",
+            "seuprincipiatm",
+            "alem",
+            "prineipiuu",
+            "idei",
+            "scursa"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.413,
+            "gemini-3.1-flash-lite-b": 0.413
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1022,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.095,
+          "acc": 0.905,
+          "seq": 0.655,
+          "bow": 0.655,
+          "gap": 0,
+          "len_ratio": 0.975,
+          "invention": 0,
+          "invention_indep": 0.321,
+          "invention_ref": 0.339,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "lectorem",
+            "tergiverfandi",
+            "poffibilitatem",
+            "conclufum",
+            "effe",
+            "difcurfus",
+            "diffimilis",
+            "naturæ"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.413,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 1022,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.095,
+          "acc": 0.905,
+          "seq": 0.655,
+          "bow": 0.655,
+          "gap": 0,
+          "len_ratio": 0.975,
+          "invention": 0,
+          "invention_indep": 0.321,
+          "invention_ref": 0.339,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "lectorem",
+            "tergiverfandi",
+            "poffibilitatem",
+            "conclufum",
+            "effe",
+            "difcurfus",
+            "diffimilis",
+            "naturæ"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.413,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "ed-6a4263b1744db9e3105b1125-p10",
+      "substratum": "Latin 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Oeconomia animalis, novis in medicina hypothesibus superstructa, & mechanicè explicata. Autore Gualtero Charleton, M.D. & Caroli Magnæ Britanniæ Regis. olian medico.",
+      "year": 1659,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 336,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.102,
+          "acc": 0.898,
+          "seq": 0.852,
+          "bow": 0.852,
+          "gap": 0,
+          "len_ratio": 0.903,
+          "invention": 0.091,
+          "invention_indep": 0.091,
+          "invention_ref": 0.114,
+          "unsupported_sample": [
+            "cognoscen",
+            "medicie",
+            "peranalogiam",
+            "apho"
+          ],
+          "invention_ref_sample": [
+            "cognoscen",
+            "naturæ",
+            "medicie",
+            "peranalogiam",
+            "apho"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.696,
+            "gemini-3.1-flash-lite-b": 0.696
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 337,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.137,
+          "acc": 0.863,
+          "seq": 0.701,
+          "bow": 0.701,
+          "gap": 0,
+          "len_ratio": 0.906,
+          "invention": 0,
+          "invention_indep": 0.186,
+          "invention_ref": 0.209,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "aufim",
+            "neceffaria",
+            "refque",
+            "hominefque",
+            "cognofcendo",
+            "naturæ",
+            "folius",
+            "magiftra"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.696,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 337,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.137,
+          "acc": 0.863,
+          "seq": 0.701,
+          "bow": 0.701,
+          "gap": 0,
+          "len_ratio": 0.906,
+          "invention": 0,
+          "invention_indep": 0.186,
+          "invention_ref": 0.209,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "aufim",
+            "neceffaria",
+            "refque",
+            "hominefque",
+            "cognofcendo",
+            "naturæ",
+            "folius",
+            "magiftra"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.696,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "ed-6a42a33fdec0f9e2ecca5a38-p11",
+      "substratum": "Latin 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Europa lachrymans: Gulielmi Ballæi armigeri Angli, poema heroicvm.",
+      "year": 1650,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 1001,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.324,
+          "acc": 0.676,
+          "seq": 0.338,
+          "bow": 0.338,
+          "gap": 0,
+          "len_ratio": 0.831,
+          "invention": 0.636,
+          "invention_indep": 0.636,
+          "invention_ref": 0.664,
+          "unsupported_sample": [
+            "nugi",
+            "ultotiei",
+            "serar",
+            "germee",
+            "lgiete",
+            "dtatee",
+            "ririecpe",
+            "errere"
+          ],
+          "invention_ref_sample": [
+            "nugi",
+            "ultotiei",
+            "serar",
+            "germee",
+            "lgiete",
+            "dtatee",
+            "ririecpe",
+            "errere"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.319,
+            "gemini-3.1-flash-lite-b": 0.319
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1168,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.09,
+          "acc": 0.91,
+          "seq": 0.702,
+          "bow": 0.702,
+          "gap": 0,
+          "len_ratio": 0.97,
+          "invention": 0,
+          "invention_indep": 0.218,
+          "invention_ref": 0.244,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "fæva",
+            "fororum",
+            "fint",
+            "difcernetur",
+            "noftris",
+            "liberi",
+            "celfa",
+            "rufforum"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.319,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 1168,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.09,
+          "acc": 0.91,
+          "seq": 0.702,
+          "bow": 0.702,
+          "gap": 0,
+          "len_ratio": 0.97,
+          "invention": 0,
+          "invention_indep": 0.218,
+          "invention_ref": 0.244,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "fæva",
+            "fororum",
+            "fint",
+            "difcernetur",
+            "noftris",
+            "liberi",
+            "celfa",
+            "rufforum"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.319,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "ed-6a42acc65207af7c42f4db34-p14",
+      "substratum": "Latin 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Clauis apocalyptica ex innatis et insitis visionum characteribus eruta et demonstrata. Ad eorum usum quibus deus amorem studiúmq[ue] indiderit prophetiam illam admirandam cognoscendi scrutandíque.",
+      "year": 1627,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 1077,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.434,
+          "acc": 0.566,
+          "seq": 0.145,
+          "bow": 0.15,
+          "gap": 0.004,
+          "len_ratio": 0.733,
+          "invention": 0.878,
+          "invention_indep": 0.878,
+          "invention_ref": 0.885,
+          "unsupported_sample": [
+            "ciavv",
+            "oeavtoapas",
+            "eregi",
+            "perten",
+            "pritaara",
+            "syuckressa",
+            "seitur",
+            "alters"
+          ],
+          "invention_ref_sample": [
+            "ciavv",
+            "oeavtoapas",
+            "eregi",
+            "perten",
+            "pritaara",
+            "syuckressa",
+            "seitur",
+            "alters"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.116,
+            "gemini-3.1-flash-lite-b": 0.116
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1430,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.105,
+          "acc": 0.895,
+          "seq": 0.726,
+          "bow": 0.726,
+          "gap": 0,
+          "len_ratio": 0.973,
+          "invention": 0,
+          "invention_indep": 0.273,
+          "invention_ref": 0.28,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "clavis",
+            "apocalyptica",
+            "feptem",
+            "synchronifmis",
+            "fequitur",
+            "præterea",
+            "funt",
+            "demonftrabo"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.116,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 1430,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.105,
+          "acc": 0.895,
+          "seq": 0.726,
+          "bow": 0.726,
+          "gap": 0,
+          "len_ratio": 0.973,
+          "invention": 0,
+          "invention_indep": 0.273,
+          "invention_ref": 0.28,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "clavis",
+            "apocalyptica",
+            "feptem",
+            "synchronifmis",
+            "fequitur",
+            "præterea",
+            "funt",
+            "demonftrabo"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.116,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "ed-6a42c73497284560a2b10fee-p1",
+      "substratum": "Latin 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Theses philosophicae, quas auspice & propitio D.O.M. adolescentes, magisterii candidati, in Academia Mareschallana, die 21 Iulii, Anno 1637. In publico clarissimorum philosophorum confessu propugnabunt, ab aurora ad meridiem.",
+      "year": 1637,
+      "has_ref": false,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 265,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.583,
+          "acc": 0.417,
+          "seq": 0.179,
+          "bow": 0.207,
+          "gap": 0.028,
+          "len_ratio": 0.736,
+          "invention": 0.417,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "addo",
+            "cademia",
+            "marescbe",
+            "iuli",
+            "philescorum",
+            "corsesss",
+            "wridie",
+            "roii"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.207,
+            "gemini-3.1-flash-lite-b": 0.207
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 360,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.207,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 360,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0,
+          "acc": 1,
+          "seq": 1,
+          "bow": 1,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.207,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      },
+      "ref_mismatch": true
+    },
+    {
+      "slug": "ed-6a42ce3be76baa13aa851af5-p10",
+      "substratum": "Latin 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Oratio funebris habita in templo beatæ Mariæ Oxon. Ab Isaaco Wake, Publico academie̜ oratore, Maij 25. An. 1607. quum moesti Oxonienses, pijs manibus Iohannis Rainoldi parentarent.",
+      "year": 1608,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 676,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.145,
+          "acc": 0.855,
+          "seq": 0.59,
+          "bow": 0.59,
+          "gap": 0,
+          "len_ratio": 0.963,
+          "invention": 0.3,
+          "invention_indep": 0.3,
+          "invention_ref": 0.388,
+          "unsupported_sample": [
+            "cept",
+            "insliteras",
+            "suablicioztamen",
+            "abste",
+            "averit",
+            "obsidioesto",
+            "enimquòd",
+            "idlomauiam"
+          ],
+          "invention_ref_sample": [
+            "oratio",
+            "funebris",
+            "cept",
+            "insliteras",
+            "suablicioztamen",
+            "abste",
+            "præclarissimè",
+            "averit"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.65,
+            "gemini-3.1-flash-lite-b": 0.65
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 643,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.103,
+          "acc": 0.897,
+          "seq": 0.809,
+          "bow": 0.809,
+          "gap": 0,
+          "len_ratio": 0.916,
+          "invention": 0,
+          "invention_indep": 0.103,
+          "invention_ref": 0.192,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "oratio",
+            "funebris",
+            "ceps",
+            "desiuisti",
+            "præclarissimè",
+            "nondum",
+            "manam",
+            "hominumq"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.65,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 643,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.103,
+          "acc": 0.897,
+          "seq": 0.809,
+          "bow": 0.809,
+          "gap": 0,
+          "len_ratio": 0.916,
+          "invention": 0,
+          "invention_indep": 0.103,
+          "invention_ref": 0.192,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "oratio",
+            "funebris",
+            "ceps",
+            "desiuisti",
+            "præclarissimè",
+            "nondum",
+            "manam",
+            "hominumq"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.65,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "ed-6a42d8f7e76baa13aa85e9b9-p9",
+      "substratum": "Latin 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Panegyricon inaugurale honoratissimi & amplissimi domini prætoris regii, sive majoris, nobilissimæ & florentissimæ reipublicæ Londinensis, Richardi Fenn, sub finem anni Christi 1637.",
+      "year": 1638,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 1058,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.336,
+          "acc": 0.664,
+          "seq": 0.624,
+          "bow": 0.635,
+          "gap": 0.011,
+          "len_ratio": 0.904,
+          "invention": 0.273,
+          "invention_indep": 0.273,
+          "invention_ref": 0.385,
+          "unsupported_sample": [
+            "classis",
+            "constantèr",
+            "potu",
+            "vtbs",
+            "vibe",
+            "luridicum",
+            "pattiæ",
+            "legisquè"
+          ],
+          "invention_ref_sample": [
+            "regia",
+            "classis",
+            "constantèr",
+            "æquore",
+            "potu",
+            "vtbs",
+            "æquare",
+            "prætoris"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.626,
+            "gemini-3.1-flash-lite-b": 0.626
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1082,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.368,
+          "acc": 0.632,
+          "seq": 0.549,
+          "bow": 0.611,
+          "gap": 0.062,
+          "len_ratio": 0.924,
+          "invention": 0,
+          "invention_indep": 0.284,
+          "invention_ref": 0.397,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "regia",
+            "claffis",
+            "conftantèr",
+            "æquore",
+            "vrbs",
+            "æquare",
+            "prætoris",
+            "vrbe"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.626,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 1082,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.368,
+          "acc": 0.632,
+          "seq": 0.549,
+          "bow": 0.611,
+          "gap": 0.062,
+          "len_ratio": 0.924,
+          "invention": 0,
+          "invention_indep": 0.284,
+          "invention_ref": 0.397,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "regia",
+            "claffis",
+            "conftantèr",
+            "æquore",
+            "vrbs",
+            "æquare",
+            "prætoris",
+            "vrbe"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.626,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "ed-6a42d8f8e76baa13aa85e9d0-p10",
+      "substratum": "Latin 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Icones & descriptiones rariorum plantarum Siciliæ, Melitæ, Galliæ, & Italiæ. Quarum unaquæque proprio charactere signata, ab aliis ejusdem classis facile distinguitur. Auctore Paulo Boccone Panormitano Siculo, serenissimi Magni Hetruriæ Ducis olim botanico.",
+      "year": 1674,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 1478,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.028,
+          "acc": 0.972,
+          "seq": 0.932,
+          "bow": 0.932,
+          "gap": 0,
+          "len_ratio": 0.979,
+          "invention": 0.052,
+          "invention_indep": 0.052,
+          "invention_ref": 0.064,
+          "unsupported_sample": [
+            "commisss",
+            "autboris",
+            "mibi",
+            "xoniensibus",
+            "eflagitavit",
+            "nodarum",
+            "satisferet",
+            "fant"
+          ],
+          "invention_ref_sample": [
+            "commisss",
+            "autboris",
+            "mibi",
+            "xoniensibus",
+            "eflagitavit",
+            "bonæ",
+            "nodarum",
+            "satisferet"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.77,
+            "gemini-3.1-flash-lite-b": 0.77
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1483,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.062,
+          "acc": 0.938,
+          "seq": 0.77,
+          "bow": 0.77,
+          "gap": 0,
+          "len_ratio": 0.982,
+          "invention": 0,
+          "invention_indep": 0.256,
+          "invention_ref": 0.267,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "commiffas",
+            "infculptis",
+            "perluftrandas",
+            "commififti",
+            "hafce",
+            "illuftriorem",
+            "oxonienfibus",
+            "blattifve"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.77,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 1483,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.062,
+          "acc": 0.938,
+          "seq": 0.77,
+          "bow": 0.77,
+          "gap": 0,
+          "len_ratio": 0.982,
+          "invention": 0,
+          "invention_indep": 0.256,
+          "invention_ref": 0.267,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "commiffas",
+            "infculptis",
+            "perluftrandas",
+            "commififti",
+            "hafce",
+            "illuftriorem",
+            "oxonienfibus",
+            "blattifve"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.77,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "ed-6a42d91f1894955eb72629fe-p10",
+      "substratum": "Latin 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "De secretione animali cogitata. Authore Gulielmo Cole, M.D.",
+      "year": 1674,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 618,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.143,
+          "acc": 0.857,
+          "seq": 0.533,
+          "bow": 0.533,
+          "gap": 0,
+          "len_ratio": 0.902,
+          "invention": 0.487,
+          "invention_indep": 0.487,
+          "invention_ref": 0.513,
+          "unsupported_sample": [
+            "præfatio",
+            "statanntura",
+            "reseinere",
+            "nouas",
+            "vlle",
+            "censea",
+            "murdum",
+            "hans"
+          ],
+          "invention_ref_sample": [
+            "præfatio",
+            "statanntura",
+            "reseinere",
+            "nouas",
+            "vlle",
+            "censea",
+            "murdum",
+            "hans"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.432,
+            "gemini-3.1-flash-lite-b": 0.432
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 651,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.101,
+          "acc": 0.899,
+          "seq": 0.681,
+          "bow": 0.681,
+          "gap": 0,
+          "len_ratio": 0.95,
+          "invention": 0,
+          "invention_indep": 0.282,
+          "invention_ref": 0.308,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "ftatas",
+            "naturæ",
+            "refcindere",
+            "ipfi",
+            "cenfeamur",
+            "cynofuram",
+            "conceptus",
+            "capti"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.432,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 651,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.101,
+          "acc": 0.899,
+          "seq": 0.681,
+          "bow": 0.681,
+          "gap": 0,
+          "len_ratio": 0.95,
+          "invention": 0,
+          "invention_indep": 0.282,
+          "invention_ref": 0.308,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "ftatas",
+            "naturæ",
+            "refcindere",
+            "ipfi",
+            "cenfeamur",
+            "cynofuram",
+            "conceptus",
+            "capti"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.432,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "ed-6a42f62b3ad4d80da1237aed-p15",
+      "substratum": "Latin 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Thomæ Bradwardini Archiepiscopi olim Cantuariensis, De causa Dei, contra Pelagium, et De virtute causarum, ad suos Mertonenses, libri tres: iussu reverendiss. Georgii Abbot Cantuariensis Archiepiscopi; opera et studio Di. Henrici Savilii, Collegij Mertonensis in Academia Oxoniensi custodis, ex scriptis codicibus nunc primum editi.",
+      "year": 1618,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 2051,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.061,
+          "acc": 0.939,
+          "seq": 0.821,
+          "bow": 0.833,
+          "gap": 0.012,
+          "len_ratio": 0.975,
+          "invention": 0.148,
+          "invention_indep": 0.148,
+          "invention_ref": 0.17,
+          "unsupported_sample": [
+            "sinista",
+            "teram",
+            "roborisaccinctus",
+            "pœnè",
+            "adinfimadetrabente",
+            "spræceram",
+            "oculi",
+            "egoautem"
+          ],
+          "invention_ref_sample": [
+            "praefatio",
+            "sinista",
+            "teram",
+            "roborisaccinctus",
+            "præualente",
+            "pœnè",
+            "adinfimadetrabente",
+            "præceps"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.656,
+            "gemini-3.1-flash-lite-b": 0.656
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 2066,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.083,
+          "acc": 0.917,
+          "seq": 0.715,
+          "bow": 0.721,
+          "gap": 0.006,
+          "len_ratio": 0.982,
+          "invention": 0,
+          "invention_indep": 0.286,
+          "invention_ref": 0.308,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "praefatio",
+            "finiftra",
+            "confertifque",
+            "talifque",
+            "præualente",
+            "pænè",
+            "ipfe",
+            "meipfo"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.656,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 2066,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.083,
+          "acc": 0.917,
+          "seq": 0.715,
+          "bow": 0.721,
+          "gap": 0.006,
+          "len_ratio": 0.982,
+          "invention": 0,
+          "invention_indep": 0.286,
+          "invention_ref": 0.308,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "praefatio",
+            "finiftra",
+            "confertifque",
+            "talifque",
+            "præualente",
+            "pænè",
+            "ipfe",
+            "meipfo"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.656,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "ed-6a432b29e797132cc665b266-p10",
+      "substratum": "Latin 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Nuncius inanimatus.",
+      "year": 1629,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 752,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.134,
+          "acc": 0.866,
+          "seq": 0.733,
+          "bow": 0.741,
+          "gap": 0.007,
+          "len_ratio": 0.965,
+          "invention": 0.098,
+          "invention_indep": 0.098,
+          "invention_ref": 0.174,
+          "unsupported_sample": [
+            "terdiu",
+            "speculæ",
+            "auglicè",
+            "nepe",
+            "solertii",
+            "ignara",
+            "prastari",
+            "squem"
+          ],
+          "invention_ref_sample": [
+            "terdiu",
+            "proximæ",
+            "speculæ",
+            "differri",
+            "velit",
+            "auglicè",
+            "nepe",
+            "solertii"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.678,
+            "gemini-3.1-flash-lite-b": 0.678
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 758,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.157,
+          "acc": 0.843,
+          "seq": 0.647,
+          "bow": 0.647,
+          "gap": 0,
+          "len_ratio": 0.973,
+          "invention": 0,
+          "invention_indep": 0.226,
+          "invention_ref": 0.301,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "terdiù",
+            "proximæ",
+            "fpeculæ",
+            "viciffim",
+            "fequenti",
+            "fpatio",
+            "poffet",
+            "fibi"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.678,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 758,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.157,
+          "acc": 0.843,
+          "seq": 0.647,
+          "bow": 0.647,
+          "gap": 0,
+          "len_ratio": 0.973,
+          "invention": 0,
+          "invention_indep": 0.226,
+          "invention_ref": 0.301,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "terdiù",
+            "proximæ",
+            "fpeculæ",
+            "viciffim",
+            "fequenti",
+            "fpatio",
+            "poffet",
+            "fibi"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.678,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "ed-6a434778201f98f53c3efe9d-p16",
+      "substratum": "Latin 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Opera posthuma chronologica, &c. Viz. De serie et successione primorum Romæ episcoporum dissertationes duæ: quibus præfiguntur Annales Paulini, et Lectiones in Acta Apostolorum. Singula prælo tradidit, edenda curavit & dissertationis novis additionibus auxit H. Dodwellus, A.M. Dubliniensis: cujus etiam accessit de eâdem successione usque ad annales cl. Cestriensis Cyprianicos, dissertatio singularis.",
+      "year": 1688,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 1602,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.101,
+          "acc": 0.899,
+          "seq": 0.755,
+          "bow": 0.765,
+          "gap": 0.01,
+          "len_ratio": 0.966,
+          "invention": 0.147,
+          "invention_indep": 0.147,
+          "invention_ref": 0.227,
+          "unsupported_sample": [
+            "batur",
+            "emporum",
+            "iutervallo",
+            "additioh",
+            "prebyteris",
+            "epistolæ",
+            "4nbil",
+            "quoa"
+          ],
+          "invention_ref_sample": [
+            "romæ",
+            "batur",
+            "impofiti",
+            "emporum",
+            "iutervallo",
+            "additioh",
+            "prebyteris",
+            "ipfis"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.656,
+            "gemini-3.1-flash-lite-b": 0.656
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1652,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.093,
+          "acc": 0.907,
+          "seq": 0.727,
+          "bow": 0.73,
+          "gap": 0.003,
+          "len_ratio": 0.996,
+          "invention": 0,
+          "invention_indep": 0.289,
+          "invention_ref": 0.371,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "extuliffe",
+            "romæ",
+            "fuiffe",
+            "impofiti",
+            "fingulares",
+            "epifcopi",
+            "fecundo",
+            "apoftolicorum"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.656,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 1652,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.093,
+          "acc": 0.907,
+          "seq": 0.727,
+          "bow": 0.73,
+          "gap": 0.003,
+          "len_ratio": 0.996,
+          "invention": 0,
+          "invention_indep": 0.289,
+          "invention_ref": 0.371,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "extuliffe",
+            "romæ",
+            "fuiffe",
+            "impofiti",
+            "fingulares",
+            "epifcopi",
+            "fecundo",
+            "apoftolicorum"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.656,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "ed-6a437b6257a09c2c0fcb48d7-p10",
+      "substratum": "Latin 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Barnabæ itinerarium, Mirtili & Faustuli nominibus insignitum viatoris solatio nuperrimè editum, aptissimis numeris redactum, veterique Tono Barnabæ, publicè decantatum.",
+      "year": 1636,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 116,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.323,
+          "acc": 0.677,
+          "seq": 0.557,
+          "bow": 0.557,
+          "gap": 0,
+          "len_ratio": 0.748,
+          "invention": 0.294,
+          "invention_indep": 0.294,
+          "invention_ref": 0.353,
+          "unsupported_sample": [
+            "bãculum",
+            "locvbiai",
+            "pistrini",
+            "popini",
+            "culini"
+          ],
+          "invention_ref_sample": [
+            "pars",
+            "bãculum",
+            "locvbiai",
+            "pistrini",
+            "popini",
+            "culini"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.69,
+            "gemini-3.1-flash-lite-b": 0.69
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 128,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.213,
+          "acc": 0.787,
+          "seq": 0.794,
+          "bow": 0.794,
+          "gap": 0,
+          "len_ratio": 0.826,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.053,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "pars"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.69,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 128,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.213,
+          "acc": 0.787,
+          "seq": 0.794,
+          "bow": 0.794,
+          "gap": 0,
+          "len_ratio": 0.826,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": 0.053,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "pars"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.69,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "ed-6a46062f896a4826cccdf873-p7",
+      "substratum": "Latin 1500s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Rudimenta grammatices et docendi methodus",
+      "year": 1529,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 1134,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.131,
+          "acc": 0.869,
+          "seq": 0.542,
+          "bow": 0.542,
+          "gap": 0,
+          "len_ratio": 0.936,
+          "invention": 0.422,
+          "invention_indep": 0.422,
+          "invention_ref": 0.467,
+          "unsupported_sample": [
+            "8exxtaeclassis",
+            "sextmordo",
+            "historiem",
+            "eliquam",
+            "velr",
+            "lusti",
+            "commentariorũ",
+            "cæsaris"
+          ],
+          "invention_ref_sample": [
+            "8exxtaeclassis",
+            "sextmordo",
+            "historiem",
+            "eliquam",
+            "velr",
+            "lusti",
+            "commentariorũ",
+            "cæsaris"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.508,
+            "gemini-3.1-flash-lite-b": 0.508
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1170,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.088,
+          "acc": 0.912,
+          "seq": 0.65,
+          "bow": 0.65,
+          "gap": 0,
+          "len_ratio": 0.966,
+          "invention": 0,
+          "invention_indep": 0.333,
+          "invention_ref": 0.376,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "fextus",
+            "hiftoriam",
+            "luftii",
+            "cæfaris",
+            "poftulare",
+            "quecunq",
+            "epiftolas",
+            "methamorphofin"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.508,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 1170,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.088,
+          "acc": 0.912,
+          "seq": 0.65,
+          "bow": 0.65,
+          "gap": 0,
+          "len_ratio": 0.966,
+          "invention": 0,
+          "invention_indep": 0.333,
+          "invention_ref": 0.376,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "fextus",
+            "hiftoriam",
+            "luftii",
+            "cæfaris",
+            "poftulare",
+            "quecunq",
+            "epiftolas",
+            "methamorphofin"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.508,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "ed-6a4710ef9e05dee59fe3cae8-p10",
+      "substratum": "Latin 1500s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Principum, ac illustrium aliquot & eruditorum in Anglia virorum, encomia, trophaea, genethliaca, & epithalamia. A Ioanne Lelando antiquario conscripta, nunc primùm in lucem edita. Quibus etiam adiuncta sunt, illustrissimorum aliquot herôum, hodiè viventium, aliorúmque hinc indè Anglorum, encomia quaedam: à Thoma Newtono, Cestreshyrio, succisivis horulis exarata",
+      "year": 1589,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 819,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.319,
+          "acc": 0.681,
+          "seq": 0.257,
+          "bow": 0.257,
+          "gap": 0,
+          "len_ratio": 0.773,
+          "invention": 0.739,
+          "invention_indep": 0.739,
+          "invention_ref": 0.748,
+          "unsupported_sample": [
+            "valeu",
+            "rege",
+            "getase",
+            "valet",
+            "notilis",
+            "pictar",
+            "cnltus",
+            "adter"
+          ],
+          "invention_ref_sample": [
+            "valeu",
+            "rege",
+            "getase",
+            "valet",
+            "notilis",
+            "pictar",
+            "cnltus",
+            "adter"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.22,
+            "gemini-3.1-flash-lite-b": 0.22
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1031,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.065,
+          "acc": 0.935,
+          "seq": 0.774,
+          "bow": 0.774,
+          "gap": 0,
+          "len_ratio": 0.974,
+          "invention": 0,
+          "invention_indep": 0.237,
+          "invention_ref": 0.245,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "gemmataque",
+            "ferta",
+            "fplendor",
+            "fola",
+            "fplendida",
+            "ripa",
+            "fudantia",
+            "vastæ"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.22,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 1031,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.065,
+          "acc": 0.935,
+          "seq": 0.774,
+          "bow": 0.774,
+          "gap": 0,
+          "len_ratio": 0.974,
+          "invention": 0,
+          "invention_indep": 0.237,
+          "invention_ref": 0.245,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "gemmataque",
+            "ferta",
+            "fplendor",
+            "fola",
+            "fplendida",
+            "ripa",
+            "fudantia",
+            "vastæ"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.22,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "ed-6a48279d2dd0016448f12f0f-p27",
+      "substratum": "Latin 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "De veritate, prout distinguitur a revelatione, a verisimili, a possibili, et a falso. Hoc opus condidit Edoardus Baro Herbert de Chirbury [sic] in Anglia, et castri insulæ de Kerry in Hibernia, et par utriusque regni. Et lectori cuivis, integri & illibati iudicii dicavit.",
+      "year": 1633,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 1287,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.254,
+          "acc": 0.746,
+          "seq": 0.307,
+          "bow": 0.307,
+          "gap": 0,
+          "len_ratio": 0.857,
+          "invention": 0.695,
+          "invention_indep": 0.695,
+          "invention_ref": 0.695,
+          "unsupported_sample": [
+            "àciteieriistiguitur",
+            "ulmn",
+            "abiti",
+            "inisprn",
+            "anseauz",
+            "lsendgum",
+            "sspeeicus1",
+            "wemafia"
+          ],
+          "invention_ref_sample": [
+            "àciteieriistiguitur",
+            "ulmn",
+            "abiti",
+            "inisprn",
+            "anseauz",
+            "lsendgum",
+            "sspeeicus1",
+            "wemafia"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.221,
+            "gemini-3.1-flash-lite-b": 0.221
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1469,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.076,
+          "acc": 0.924,
+          "seq": 0.693,
+          "bow": 0.697,
+          "gap": 0.004,
+          "len_ratio": 0.978,
+          "invention": 0,
+          "invention_indep": 0.302,
+          "invention_ref": 0.302,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "veritate",
+            "diftinguitur",
+            "iftis",
+            "manfeamus",
+            "obfervari",
+            "fpeciebus",
+            "fervatis",
+            "diftare"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.221,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 1469,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.076,
+          "acc": 0.924,
+          "seq": 0.693,
+          "bow": 0.697,
+          "gap": 0.004,
+          "len_ratio": 0.978,
+          "invention": 0,
+          "invention_indep": 0.302,
+          "invention_ref": 0.302,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "veritate",
+            "diftinguitur",
+            "iftis",
+            "manfeamus",
+            "obfervari",
+            "fpeciebus",
+            "fervatis",
+            "diftare"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.221,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "ed-6a4f7c25a13ff00e22df18f1-p10",
+      "substratum": "Latin 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Ad fraternam communionem inter evangelicas ecclesias restaurandam adhortatio; in cosundata, quòd non dissentiant in ullo fundamentali Catholicæ fidei articulo. Per Reverendum in Christo patrem, Johann. Davenantium Episcopum Sarisburiensem. Cui præfixa est ejusdem de pace itiden ecclesiastica commentatio Johanni Dictæo non ità pridem missa.",
+      "year": 1640,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 1038,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.077,
+          "acc": 0.923,
+          "seq": 0.855,
+          "bow": 0.855,
+          "gap": 0,
+          "len_ratio": 0.946,
+          "invention": 0.094,
+          "invention_indep": 0.094,
+          "invention_ref": 0.154,
+          "unsupported_sample": [
+            "ecclesiæ",
+            "quæstionibus",
+            "conservandæ",
+            "nostræ",
+            "agnscamus",
+            "iniquissimæ",
+            "superbiæ",
+            "ahsolutæ"
+          ],
+          "invention_ref_sample": [
+            "sententia",
+            "germanicæ",
+            "ecclesiæ",
+            "quæstionibus",
+            "tyrannicæ",
+            "ineundæ",
+            "conservandæ",
+            "fraternæ"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.709,
+            "gemini-3.1-flash-lite-b": 0.709
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1039,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.12,
+          "acc": 0.88,
+          "seq": 0.659,
+          "bow": 0.659,
+          "gap": 0,
+          "len_ratio": 0.947,
+          "invention": 0,
+          "invention_indep": 0.336,
+          "invention_ref": 0.397,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "sententia",
+            "conftabit",
+            "obfiftere",
+            "germanicæ",
+            "ecclefiæ",
+            "controverfiis",
+            "poffint",
+            "fanctè"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.709,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 1039,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.12,
+          "acc": 0.88,
+          "seq": 0.659,
+          "bow": 0.659,
+          "gap": 0,
+          "len_ratio": 0.947,
+          "invention": 0,
+          "invention_indep": 0.336,
+          "invention_ref": 0.397,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "sententia",
+            "conftabit",
+            "obfiftere",
+            "germanicæ",
+            "ecclefiæ",
+            "controverfiis",
+            "poffint",
+            "fanctè"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.709,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "ed-6a4fa9cdb5772a3dacaac6a6-p9",
+      "substratum": "Latin 1500s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Baptistes sive calumnia",
+      "year": 1578,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 776,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.107,
+          "acc": 0.893,
+          "seq": 0.726,
+          "bow": 0.726,
+          "gap": 0,
+          "len_ratio": 0.922,
+          "invention": 0.133,
+          "invention_indep": 0.133,
+          "invention_ref": 0.257,
+          "unsupported_sample": [
+            "sivecalvmnia",
+            "isera",
+            "imperuj",
+            "quicquidaut",
+            "cupidorapere",
+            "cleopatrefuimus",
+            "nedeesset",
+            "iudæa"
+          ],
+          "invention_ref_sample": [
+            "bapt",
+            "sivecalvmnia",
+            "isera",
+            "hosne",
+            "vitæ",
+            "imperuj",
+            "quicquidaut",
+            "cupidorapere"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.802,
+            "gemini-3.1-flash-lite-b": 0.802
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 782,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.106,
+          "acc": 0.894,
+          "seq": 0.757,
+          "bow": 0.757,
+          "gap": 0,
+          "len_ratio": 0.929,
+          "invention": 0,
+          "invention_indep": 0.127,
+          "invention_ref": 0.245,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "bapt",
+            "sive",
+            "calvmnia",
+            "ifera",
+            "fatag",
+            "hosne",
+            "vitæ",
+            "usus"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.802,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 782,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.106,
+          "acc": 0.894,
+          "seq": 0.757,
+          "bow": 0.757,
+          "gap": 0,
+          "len_ratio": 0.929,
+          "invention": 0,
+          "invention_indep": 0.127,
+          "invention_ref": 0.245,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "bapt",
+            "sive",
+            "calvmnia",
+            "ifera",
+            "fatag",
+            "hosne",
+            "vitæ",
+            "usus"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.802,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "ed-6a503c772f6539fb38937d92-p15",
+      "substratum": "Latin 1500s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Armilla aurea, id est, Miranda series causarum et salutis & damnationis iuxta verbum Dei Eius synopsin continet annexa tabula",
+      "year": 1590,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 754,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.217,
+          "acc": 0.783,
+          "seq": 0.683,
+          "bow": 0.75,
+          "gap": 0.067,
+          "len_ratio": 0.984,
+          "invention": 0.098,
+          "invention_indep": 0.098,
+          "invention_ref": 0.232,
+          "unsupported_sample": [
+            "isalutis",
+            "ephes4",
+            "ecolos3",
+            "consi",
+            "gena",
+            "apparets",
+            "decorcor",
+            "12a3"
+          ],
+          "invention_ref_sample": [
+            "isalutis",
+            "damnationis",
+            "innocentiæ",
+            "præcipuè",
+            "nissimus",
+            "naturæ",
+            "homi",
+            "ephes4"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.821,
+            "gemini-3.1-flash-lite-b": 0.821
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 765,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.225,
+          "acc": 0.775,
+          "seq": 0.671,
+          "bow": 0.786,
+          "gap": 0.116,
+          "len_ratio": 0.999,
+          "invention": 0,
+          "invention_indep": 0.074,
+          "invention_ref": 0.21,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "salutis",
+            "damnationis",
+            "innocentiæ",
+            "præcipuè",
+            "nissimus",
+            "naturæ",
+            "homi",
+            "ephef"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.821,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 765,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.225,
+          "acc": 0.775,
+          "seq": 0.671,
+          "bow": 0.786,
+          "gap": 0.116,
+          "len_ratio": 0.999,
+          "invention": 0,
+          "invention_indep": 0.074,
+          "invention_ref": 0.21,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "salutis",
+            "damnationis",
+            "innocentiæ",
+            "præcipuè",
+            "nissimus",
+            "naturæ",
+            "homi",
+            "ephef"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.821,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "ed-6a51d78d612243b274118e89-p9",
+      "substratum": "Latin 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "In Henricum Fridericum primogenitum Iacobi ter maximi Regis Magnæ Britanniæ, Galliæ, & Hiberniæ: serenissimum vero Walliae principem, morbo de hac vita decedentem Novemb. 1612 lachrymæ Alexr. Julii Scoti, suo & conterraneorum suorum nomine, namq́[ue] ab vno disce omnes.",
+      "year": 1612,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 1159,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.052,
+          "acc": 0.948,
+          "seq": 0.902,
+          "bow": 0.902,
+          "gap": 0,
+          "len_ratio": 0.969,
+          "invention": 0.045,
+          "invention_indep": 0.045,
+          "invention_ref": 0.096,
+          "unsupported_sample": [
+            "iepore",
+            "spiransʒ",
+            "præsens",
+            "fœlicior",
+            "unusz",
+            "esium",
+            "roseæ"
+          ],
+          "invention_ref_sample": [
+            "conterraneorum",
+            "iepore",
+            "spiransʒ",
+            "vitæ",
+            "frænis",
+            "pudicitiæ",
+            "præsens",
+            "æquet"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.822,
+            "gemini-3.1-flash-lite-b": 0.822
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1160,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.081,
+          "acc": 0.919,
+          "seq": 0.776,
+          "bow": 0.776,
+          "gap": 0,
+          "len_ratio": 0.97,
+          "invention": 0,
+          "invention_indep": 0.179,
+          "invention_ref": 0.231,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "conterraneorum",
+            "affufo",
+            "geftus",
+            "refpondit",
+            "fpirans",
+            "poffet",
+            "caufas",
+            "fuorum"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.822,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 1160,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.081,
+          "acc": 0.919,
+          "seq": 0.776,
+          "bow": 0.776,
+          "gap": 0,
+          "len_ratio": 0.97,
+          "invention": 0,
+          "invention_indep": 0.179,
+          "invention_ref": 0.231,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "conterraneorum",
+            "affufo",
+            "geftus",
+            "refpondit",
+            "fpirans",
+            "poffet",
+            "caufas",
+            "fuorum"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.822,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "ed-6a9057a0ab26ecd307a0cd7c-p10",
+      "substratum": "Latin 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Problemata physica. De gravitate. Cap.I. De Æstibus marinis. Cap.II. De vacuo. Cap.III. De calore & luce. Cap.IV. De duro & molli. Cap.V. De pluvia, vento, aliisq[ue] coeli varietatibus. Cap. VI. De motuum speciebus. Cap. VII. Adjunctae sunt etiam propositiones duae de duplicatione cubi, & dimensione circuli.",
+      "year": 1662,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 412,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.125,
+          "acc": 0.875,
+          "seq": 0.732,
+          "bow": 0.732,
+          "gap": 0,
+          "len_ratio": 0.902,
+          "invention": 0.176,
+          "invention_indep": 0.176,
+          "invention_ref": 0.196,
+          "unsupported_sample": [
+            "ecelesia",
+            "ecclesiæ",
+            "eeclesiæ",
+            "unusquisq",
+            "libere",
+            "lcripsit",
+            "rræterea",
+            "fpiscopatum"
+          ],
+          "invention_ref_sample": [
+            "ecelesia",
+            "ecclesiæ",
+            "eeclesiæ",
+            "anglicanæ",
+            "unusquisq",
+            "libere",
+            "lcripsit",
+            "rræterea"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.591,
+            "gemini-3.1-flash-lite-b": 0.591
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 413,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.168,
+          "acc": 0.832,
+          "seq": 0.507,
+          "bow": 0.507,
+          "gap": 0,
+          "len_ratio": 0.904,
+          "invention": 0,
+          "invention_indep": 0.44,
+          "invention_ref": 0.46,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "fubmitte",
+            "ecclefia",
+            "fumma",
+            "poftquam",
+            "ecclefiæ",
+            "reftituta",
+            "effet",
+            "fcribebam"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.591,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 413,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.168,
+          "acc": 0.832,
+          "seq": 0.507,
+          "bow": 0.507,
+          "gap": 0,
+          "len_ratio": 0.904,
+          "invention": 0,
+          "invention_indep": 0.44,
+          "invention_ref": 0.46,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "fubmitte",
+            "ecclefia",
+            "fumma",
+            "poftquam",
+            "ecclefiæ",
+            "reftituta",
+            "effet",
+            "fcribebam"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.591,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "ed-6a90e7e5544007b776b3806a-p10",
+      "substratum": "Latin 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Disputatio theologica de vero discrimine peccati mortalis & venialis, deque impossibilitate implendi legem Dei ob quotidianam peccatorum venialium incursionem. Cvi annexa est appendix de possibilitate præstandi legem consideratam secundum epieikeian euangelicam. Authore, Roberto Baronio, Ecclesiæ Abredonensi, S.S. Theologiæ Doctore, & ejusdem in Academia Marescallana professore.",
+      "year": 1633,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 804,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.304,
+          "acc": 0.696,
+          "seq": 0.393,
+          "bow": 0.393,
+          "gap": 0,
+          "len_ratio": 0.839,
+          "invention": 0.633,
+          "invention_indep": 0.633,
+          "invention_ref": 0.653,
+          "unsupported_sample": [
+            "disrttetio",
+            "tleolegics",
+            "vitn",
+            "masor",
+            "adrersaris",
+            "mliaor",
+            "infra",
+            "fuseè"
+          ],
+          "invention_ref_sample": [
+            "disrttetio",
+            "tleolegics",
+            "reri",
+            "vitn",
+            "masor",
+            "adrersaris",
+            "mliaor",
+            "infra"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.311,
+            "gemini-3.1-flash-lite-b": 0.311
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 924,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.114,
+          "acc": 0.886,
+          "seq": 0.664,
+          "bow": 0.671,
+          "gap": 0.007,
+          "len_ratio": 0.965,
+          "invention": 0,
+          "invention_indep": 0.298,
+          "invention_ref": 0.317,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "disputatio",
+            "theologica",
+            "reri",
+            "poffunt",
+            "æternam",
+            "adverfariis",
+            "adverfariorum",
+            "conclufio"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.311,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 924,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.114,
+          "acc": 0.886,
+          "seq": 0.664,
+          "bow": 0.671,
+          "gap": 0.007,
+          "len_ratio": 0.965,
+          "invention": 0,
+          "invention_indep": 0.298,
+          "invention_ref": 0.317,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "disputatio",
+            "theologica",
+            "reri",
+            "poffunt",
+            "æternam",
+            "adverfariis",
+            "adverfariorum",
+            "conclufio"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.311,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "ed-6a94341a7680120fac24d808-p15",
+      "substratum": "Latin 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Duellum poeticum. Contendentibus, Georgio Eglisemmio medico regio, & Georgio Buchanano regio præceptore. Pro dignitate paraphraseos Psalmi centisimi quarti. Adiectis prophylacticis aduersus Andreæ Meluini Cauillum iin aram Regiam, aliísq[ue]; epigrammatis.",
+      "year": 1618,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 600,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.111,
+          "acc": 0.889,
+          "seq": 0.774,
+          "bow": 0.774,
+          "gap": 0,
+          "len_ratio": 0.915,
+          "invention": 0.184,
+          "invention_indep": 0.184,
+          "invention_ref": 0.197,
+          "unsupported_sample": [
+            "ecplura",
+            "tempsq",
+            "pubrqʒ",
+            "inde",
+            "abunde",
+            "naturã",
+            "fortuna",
+            "diligentia"
+          ],
+          "invention_ref_sample": [
+            "ecplura",
+            "tempsq",
+            "pubrqʒ",
+            "dicere",
+            "inde",
+            "abunde",
+            "naturã",
+            "fortuna"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.82,
+            "gemini-3.1-flash-lite-b": 0.82
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 605,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.091,
+          "acc": 0.909,
+          "seq": 0.845,
+          "bow": 0.845,
+          "gap": 0,
+          "len_ratio": 0.922,
+          "invention": 0,
+          "invention_indep": 0.079,
+          "invention_ref": 0.092,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "plura",
+            "finit",
+            "tempúsq",
+            "pudórq",
+            "dicere",
+            "urget",
+            "maiestati"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.82,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 605,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.091,
+          "acc": 0.909,
+          "seq": 0.845,
+          "bow": 0.845,
+          "gap": 0,
+          "len_ratio": 0.922,
+          "invention": 0,
+          "invention_indep": 0.079,
+          "invention_ref": 0.092,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "plura",
+            "finit",
+            "tempúsq",
+            "pudórq",
+            "dicere",
+            "urget",
+            "maiestati"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.82,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "ed-6a9437f67e41ac276318823e-p10",
+      "substratum": "Latin 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Carmen panegyricum, sive Paræneticum, postridie inaugurationis Dom. Protectori ab Auguo. Wingfieldo dicatum. Ac nuper cum scholiis & animadversionibus in selectiora vocabula, ab anonymo benevolo illustratum.",
+      "year": 1656,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 733,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.621,
+          "acc": 0.379,
+          "seq": 0.14,
+          "bow": 0.149,
+          "gap": 0.009,
+          "len_ratio": 0.508,
+          "invention": 0.843,
+          "invention_indep": 0.843,
+          "invention_ref": 0.854,
+          "unsupported_sample": [
+            "eage",
+            "uude",
+            "dara",
+            "crrcd",
+            "lirur",
+            "ateperitrt",
+            "loraa",
+            "eletet"
+          ],
+          "invention_ref_sample": [
+            "eage",
+            "uude",
+            "dara",
+            "crrcd",
+            "lirur",
+            "ateperitrt",
+            "loraa",
+            "eletet"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.15,
+            "gemini-3.1-flash-lite-b": 0.15
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1396,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.082,
+          "acc": 0.918,
+          "seq": 0.871,
+          "bow": 0.875,
+          "gap": 0.004,
+          "len_ratio": 0.967,
+          "invention": 0,
+          "invention_indep": 0.124,
+          "invention_ref": 0.129,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "felix",
+            "tyrannum",
+            "enge",
+            "græco",
+            "λόγῳ",
+            "exercer",
+            "græce",
+            "περιούσιον"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.15,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 1396,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.082,
+          "acc": 0.918,
+          "seq": 0.871,
+          "bow": 0.875,
+          "gap": 0.004,
+          "len_ratio": 0.967,
+          "invention": 0,
+          "invention_indep": 0.124,
+          "invention_ref": 0.129,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "felix",
+            "tyrannum",
+            "enge",
+            "græco",
+            "λόγῳ",
+            "exercer",
+            "græce",
+            "περιούσιον"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.15,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    },
+    {
+      "slug": "ed-6a94390b45a4780cb83dba46-p10",
+      "substratum": "Latin 1600s",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Academiæ Edinburgenæ gratulatio, ob serenissimi, augustissimiq[ue], Monarchæ Caroli II. Britanniarum, Galliæ & Hiberniæ Regis, fidei defensoris, in solium paternum restitutionem, oblata illustrissimo dynastæ, D. Johanni Middiltonio, Middiltonii Comiti, Clarimontis & Fethercarniæ Domino, &c. inclytissimo Regis Legato, in aulâ ejusdem academiæ, 29 Maij 1661.",
+      "year": 1661,
+      "has_ref": true,
+      "engines": {
+        "calamari-gt4histocr-bin": {
+          "n_content": 1380,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.08,
+          "acc": 0.92,
+          "seq": 0.763,
+          "bow": 0.763,
+          "gap": 0,
+          "len_ratio": 0.97,
+          "invention": 0.189,
+          "invention_indep": 0.189,
+          "invention_ref": 0.222,
+          "unsupported_sample": [
+            "æqro",
+            "pendin",
+            "sudice",
+            "porns",
+            "parea",
+            "mnltorum",
+            "meti",
+            "mœsti"
+          ],
+          "invention_ref_sample": [
+            "æqro",
+            "pendin",
+            "sudice",
+            "porns",
+            "parea",
+            "mnltorum",
+            "meti",
+            "mœsti"
+          ],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.646,
+            "gemini-3.1-flash-lite-b": 0.646
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1375,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.086,
+          "acc": 0.914,
+          "seq": 0.711,
+          "bow": 0.711,
+          "gap": 0,
+          "len_ratio": 0.966,
+          "invention": 0,
+          "invention_indep": 0.274,
+          "invention_ref": 0.307,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "æquo",
+            "pœnas",
+            "mœfti",
+            "panomphæo",
+            "fudiftis",
+            "fæpe",
+            "firmatifque",
+            "facris"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.646,
+            "gemini-3.1-flash-lite-b": 1
+          }
+        },
+        "gemini-3.1-flash-lite-b": {
+          "n_content": 1375,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.086,
+          "acc": 0.914,
+          "seq": 0.711,
+          "bow": 0.711,
+          "gap": 0,
+          "len_ratio": 0.966,
+          "invention": 0,
+          "invention_indep": 0.274,
+          "invention_ref": 0.307,
+          "unsupported_sample": [],
+          "invention_ref_sample": [
+            "æquo",
+            "pœnas",
+            "mœfti",
+            "panomphæo",
+            "fudiftis",
+            "fæpe",
+            "firmatifque",
+            "facris"
+          ],
+          "agree": {
+            "calamari-gt4histocr-bin": 0.646,
+            "gemini-3.1-flash-lite": 1
+          }
+        }
+      }
+    }
+  ]
+}

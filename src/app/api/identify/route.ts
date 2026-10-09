@@ -6,7 +6,7 @@ import { getDb } from '@/lib/mongodb';
 import { GLOBAL_SCOPE, matchClip } from '@/lib/tenant-search-scope';
 import { semanticArtworkSearch, type SemanticArtworkResult } from '@/lib/semantic-search';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
-import { CLIP_URL } from '@/lib/clip';
+import { CLIP_URL, clipHeaders } from '@/lib/clip';
 import { getPageImageUrl, type PageImageFields } from '@/lib/page-image-url';
 import {
   getGalleryCandidatesByText,
@@ -227,7 +227,7 @@ export async function POST(request: NextRequest) {
         // Encode uploaded image via CLIP server
         const clipResp = await fetch(`${CLIP_URL}/embed-image`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: clipHeaders(),
           body: JSON.stringify({ base64, mime_type: mimeType }),
           signal: AbortSignal.timeout(8000),
         });
@@ -347,7 +347,7 @@ export async function POST(request: NextRequest) {
         const queryOne = async (buf: Buffer): Promise<ClipMatch[]> => {
           const clipResp = await fetch(`${CLIP_URL}/embed-image`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: clipHeaders(),
             body: JSON.stringify({ base64: buf.toString('base64'), mime_type: 'image/jpeg' }),
             signal: AbortSignal.timeout(8000),
           });

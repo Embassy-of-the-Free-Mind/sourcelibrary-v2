@@ -1,0 +1,11 @@
+ejus D lineam AB,
+
+angulus E lineam AC, & angulus F lineam BC tangat. Super DE, DF & EF describe tria circulorum segmenta DRE, DGF,
+EMF, quae capiant angulos angulis BAC, ABC, ACB aequales respective. Describantur autem haec segmenta ad eas partes linearum DE, DF, EF ut literae DRED eodem ordine cum literis BACB, literae DGFD eodem cum literis ABCA, & literae EMFE eodem cum literis ACBA in orbem redeant: deinde compleantur haec segmenta in circulos. Secent circuli duo priores se mutuo in G,
+sint
+que
+centra eorum P & Q. Junctis GP, PQ, cape Ga ad AB ut est GP ad PQ, & centro G, intervallo Ga describe circulum, qui secet circulum primum DGE in a. Jungatur tum aD secans circulum secundum DFG in b, tum aE secans circulum tertium G
+Ec in c. Et compleatur figura abcDEF similis & aequalis figurae ABCdef. Dico factum.
+Agatur enim Fc ipsi aD occurrens in n. Jungantur aG,
+
+bG, PD
