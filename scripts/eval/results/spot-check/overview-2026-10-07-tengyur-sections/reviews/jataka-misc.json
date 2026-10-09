@@ -1,0 +1,446 @@
+[
+  {
+    "book_id": "6abed259896ea18127c8cd4a",
+    "slot": 21,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། འཁྲི་ཤིང། ཁེ (Derge Tengyur, vol. 171)",
+    "tradition": "jataka-misc",
+    "shelf_fit": "fits",
+    "shelf_note": "Vol. khe of the 'khri shing section: Kṣemendra's Avadānakalpalatā, bilingual (Sanskrit in Tibetan transliteration alternating line by line with the Tibetan). This is the core jātaka/avadāna material of the shelf.",
+    "rights_flag": null,
+    "structure_note": "656/657 pages with OCR and translation (one leaf, probably a cover or blank, has none). No printed page numbers captured. All four images are single Derge folio sides and the transcription's line breaks match the leaf's lines. The transcription is the Esukhia Derge e-text, not an OCR of the image. The scan's reprint folio number is clipped at the left edge.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 156,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "དེ་ནས་འགྲོ་བསྟེན་གསར་པ་ཡི། །རབ་རིབ་མྱ་ངན་སྦྱོར་བ་དག",
+            "english": "Then, for the beings who dwell there, the light of the circles of lamps ... turned back the mounting sorrow brought by the fresh darkness",
+            "problem": "loose rendering of the night-fall image; 'beings who dwell there' is the translator's reading, not clearly in the verse",
+            "severity": "minor"
+          },
+          {
+            "source": "(Sanskrit lines 1, 3, 5)",
+            "english": "(not translated)",
+            "problem": "only the Tibetan lines are translated; the meta says so, so it is a choice, not an omission",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 186,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "གསེར་གྱི་འཁྲི་ཤིང་ནགས་ཀྱི་དཔལ།",
+            "english": "forest of golden climbing plants <note>original: \"hema-valli\", likely referring to the title of the work, the Kalpalata or \"Climbing Plant of Desires\"</note>",
+            "problem": "the note offers a speculative wordplay on the work's title as if it were scholarship",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "དྲན་པའི་མིག་གསུམ་མེ་དག་གི། །ཞི་བྱེད་ཆུ་ཡི་ལྷ་མོ་བཞིན།",
+            "english": "like a water goddess capable of extinguishing the fire of the three-eyed one",
+            "problem": "Smara (Kāma), whose water-goddess she is, is dropped; the comparison loses its point",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 342,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ཀླུ་དེ་དག་ནི་འཕགས་པའི་རིགས། །ཡུལ་འཁོར་སྲུང་དང་འཕགས་སྐྱེས་པོ། །གདུག་པའི་འདབ་བཟང་དེ་དག་ནི། །མིག་མི་བཟང་དང་ནོར་བདག་འདི། །ཞེས་པ་གསུང་བ་རྒྱལ་བ་ཡི། ... ཐུབ་པ་ཀེ་ནེ་ཡ་ཀས་ཐོས།",
+            "english": "Those Nagas were of noble lineage. Dhritarashtra <gloss>Guardian of the East</gloss> and Virudhaka ..., along with those fierce Suparnas, and Virupaksha ... and the Lord of Wealth ..., all heard the nectar of the excellent speech ... The sage Keneyaka ... heard this.",
+            "problem": "the source is the Buddha's identification at the close of the story ('those two nāgas were Dhṛtarāṣṭra and Virūḍhaka; those fierce suparṇas were Virūpākṣa and Vaiśravaṇa'), heard by the sage Keneya. The English drops the identification and makes the four kings the hearers. The summary repeats the error",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "ཞེ་སྡང་འགྲན་ཞིང་མངོན་ཁེངས་པ། །འདབ་བཟང་གིས་ཀྱང་འོད་སྲུངས་ལ། །བསྟན་པ་རིན་ཆེན་བཟུང་ནས་ནི། །དཀོན་མཆོག་གསུམ་ལ་སྐྱབས་སུ་སོང་།",
+            "english": "even the Suparnas submitted to Kashyapa. Having upheld the teachings and the Three Jewels, they took refuge",
+            "problem": "'submitted to' is not in the source (they received the teaching from Kāśyapa); the Three Jewels are what refuge is taken in, not something upheld",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 634,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "བཅུ་སྤྱད་པ་དང་། ༥༠ །གང་གིས་གསེར་ལྡན་རྟོགས་བརྗོད་ལ། །སྟག་མོ་ལ་ནི་རང་ལུས་བྱིན། ༥༡",
+            "english": "...who practiced the ten virtues;\n50. He who, in the Legend of Rukmavati ..., gave his own body to the tigress;",
+            "problem": "the printed verse numbers close each verse, but the English puts them before the next one, so every item from 50 to 63 carries the number of the verse before it",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "source": "པླུ་ཏིཤྩ་ཡཿ",
+            "english": "The Bodhisattva <note>original: \"Plutishca\"</note>",
+            "problem": "'The Bodhisattva' is supplied for a Sanskrit fragment carried over from the previous leaf",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The text is right: the Derge Avadānakalpalatā e-text sits on the right leaves, line for line. The English follows the Tibetan closely enough to read the stories, but it has slips at moments of identification and in the numbering of the closing list, and its glosses sometimes speculate.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      186,
+      156
+    ],
+    "reader_summary": "Kṣemendra's Avadānakalpalatā, the verse retellings of the Buddha's past lives, in the Derge print with the Sanskrit transliterated above each Tibetan line. The transcription is the Derge e-text and matches the leaves. The English translates only the Tibetan. It reads the narrative well, but it can miss who is identified with whom, and it shifts the verse numbers of the closing list by one, so check it against the Tibetan before quoting."
+  },
+  {
+    "book_id": "6abee2a5a43718d234bf1afb",
+    "slot": 22,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། ཆོ (Derge Tengyur, vol. 205)",
+    "tradition": "jataka-misc",
+    "shelf_fit": "fits",
+    "shelf_note": "A sna tshogs (miscellany) volume. The sampled pages are scholastic commentary: an Abhidharma/Yogācāra treatment of cognition, the afflictions and śamatha-vipaśyanā, and a sūtra commentary on the arhat's perfections. It is not jātaka; it belongs to the shelf only through the 'misc' half of the stratum.",
+    "rights_flag": null,
+    "structure_note": "584/585 pages translated. The margin number on each image is page_number + 1 (53→'54', 149→'150', 432→'433', 579→'580'). This is a consistent reprint pagination with one front leaf, not a misalignment: the transcription's opening and closing words match each leaf. The OCR text carries stray '#' markers from the e-text (e.g. 'བདེ་བར་#གནས་པ', 'སྡོད་#པ'), which show in the transcription pane.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 53,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཚེ་འདི་ལ་བདེ་བར་གནས་པའི་མཆོག་ཐོབ་པ་ཞེས་བྱ་བ་གསུངས་ཏེ།",
+            "english": "# Obtaining the Supreme Abiding in Peace in This Life",
+            "problem": "the commented sūtra phrases (lemmata) are promoted to '#' headings three times on the page",
+            "severity": "moderate",
+            "class": "T16"
+          }
+        ],
+        "other": [
+          {
+            "note": "e-text '#' markers ('བདེ་བར་#གནས་པ', 'སྡོད་#པ') appear in the transcription pane",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 149,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "དེ་ལྟར་སེམས་གསུམ་པོ་དེ་དག་ནི་སེམས་མེད་",
+            "english": "In that way, those three minds are without <unclear>mind</unclear>",
+            "problem": "the page breaks mid-phrase; the translator closes it with a guess wrapped in an <unclear> tag instead of leaving it open",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "many '#' e-text markers in the transcription pane",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 432,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "པ་དེ་དག་ཉིད་དང་ད་ལྟར་ཕུང་པོའི་རྒྱུད་ཉིད་ལ་ཉམས་སུ་མྱོང་བ་སྟེ།",
+            "english": "Those very experiences and the current continuum of the skandhas are experienced together.",
+            "problem": "the source says those same [awarenesses] are now experienced in the continuum of the aggregates; 'experienced together' misreads the construction",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 579,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "བསྒོམ་པའི་བྱ་བ་ནི་འདིར་ཟད་དེ། རྟེན་ལ་ཡོད་པའི་གནས་ངན་ལེན་བསལ་བར་བྱ་བ་དང་།",
+            "english": "# The activity of meditation\nends here. It consists of removing the latent predispositions...",
+            "problem": "'འདིར་ཟད' ('comes down to this') is read as 'ends here', and the subject of the sentence is cut off into an invented heading, so the sentence breaks across it",
+            "severity": "moderate",
+            "class": "T16"
+          }
+        ],
+        "other": [
+          {
+            "note": "a heading '# The activity of meditation' splits one sentence in the reader text",
+            "severity": "moderate",
+            "class": "T16"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Right text on the right leaves, and a careful, technically literate English. The visible blemishes are invented '#' headings that break sentences, and the e-text's '#' markers in the transcription.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      432,
+      149
+    ],
+    "reader_summary": "A Derge Tengyur miscellany volume; the sampled pages are Indian scholastic commentary on cognition, latent afflictions and calm-abiding/insight meditation, not jātaka. The transcription is the Derge e-text and matches the leaves. The English is faithful and uses standard Buddhist terms, but it turns quoted sūtra phrases into headings, once cutting a sentence in half."
+  },
+  {
+    "book_id": "6abee360a43718d234bf1fb5",
+    "slot": 23,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། ཉོ (Derge Tengyur, vol. 207)",
+    "tradition": "jataka-misc",
+    "shelf_fit": "fits",
+    "shelf_note": "A sna tshogs volume: a commentary on the Arthaviniścaya ('don rnam par gdon mi za ba'i chos kyi rnam grangs') covering the three trainings, the faculties and the ten powers. It ends with the Agracaryāpraṇidhāna prayer. This is miscellany, not jātaka.",
+    "rights_flag": null,
+    "structure_note": "718/720 pages translated. The margin number is page_number + 1 or + 2 (11→'12', 226→'227', 365→'366', 651→'653'). The jump from +1 to +2 between 365 and 651 suggests that one leaf of the reprint is missing or skipped in the record sequence. This is worth a check; it is not proven, since a margin numeral can be misprinted.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 11,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 226,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ཡིན་ནཔ་ནི",
+            "image": "ཡིན་ན་ནི (expected; not legible at this resolution)",
+            "problem": "stray letter in the e-text",
+            "severity": "minor",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ལམ་མི་ཐོབ་ཏུ་མི་རུང་བ",
+            "english": "the uninterrupted path <gloss>the path that leads directly to the abandonment of afflictions</gloss>",
+            "problem": "the term is anāgamya (the preliminary stage of the first dhyāna), not ānantaryamārga; the gloss confirms the wrong concept",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "'<unclear>...continued on next page</unclear>' at the foot of the English: the tag is misused as a continuation marker",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 365,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 651,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "བྱམས་པ་དང་ནི་འཇམ་དཔལ་མངའ་བདག་ཏོག །ཆོས་ཀྱི་བློ་གྲོས་དཔའ་བོ་བདུད་རྩི་གསུངས། །དཔའ་བོ་དེ་ལ་ཕྱག་འཚལ་མཁྱེན་པ་ལྟར། །དེ་བཞིན་བདག་ཀྱང་མི་དབང་རྣམས་ལ་འདུད།",
+            "english": "I pay homage to Maitreya, Manjushri, Adhipatitoka ..., Dharmamati, the Hero, and Amritavachana. To those heroes, I pay homage just as they are known; likewise, I bow to the Lords of Men",
+            "problem": "the verse says 'just as Maitreya, Mañjuśrī ... knew how to bow, so I too bow to the lords of men'. The English turns the bodhisattvas into the objects of homage and coins the Sanskrit name 'Adhipatitoka'",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Right text on the right leaves, and English that is mostly sound and sometimes excellent (pp. 11, 365). There is one wrong technical term with a confident gloss, and the prayer verses are misconstrued in places.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      11,
+      365
+    ],
+    "reader_summary": "A Derge Tengyur miscellany volume: a commentary on the Arthaviniścaya sūtra (the three trainings, the faculties, the Buddha's ten powers), then short prayers. The transcription is the Derge e-text and matches the leaves. The English of the doctrinal prose is close and readable; the verse prayers are less reliable, and technical terms need checking against the Tibetan."
+  },
+  {
+    "book_id": "6abee4eaa43718d234bf2c6d",
+    "slot": 24,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། ནོ (Derge Tengyur, vol. 211)",
+    "tradition": "jataka-misc",
+    "shelf_fit": "fits",
+    "shelf_note": "A sna tshogs volume holding a Sanskrit grammatical commentary (Uṇādi suffixes, in Tibetan transliteration) and medical texts (dietetics; remedies for haemorrhoids). This is miscellany; nothing on these pages is jātaka.",
+    "rights_flag": null,
+    "structure_note": "771 records, but only 747 have OCR and 746 are translated: 24 pages carry no text. Worth knowing which leaves these are, since that is more than a cover or two. Margin numerals visible on 395 ('96') are clipped; no backsteps.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 177,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ཤ་མུད་མུ་ཉེ་བར་ཞིབ་ལའོ",
+            "image": "small type, not verifiable at this resolution",
+            "problem": "the same root gloss appears earlier as 'ཤ་མུ་དམུ་ཉེ་བར་ཞི་བ་ལའོ'; 'ཞིབ' for 'ཞི་བ' looks like an e-text slip",
+            "severity": "minor",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ཛ་རཾ: ཤ་མི་ལས་ཐའོ། །ཤ་མུ་དམུ་ཉེ་བར་ཞི་བ་ལའོ།",
+            "english": "From jara <gloss>old age</gloss>, there is the suffix tha. From śamu and damu, meaning pacification, this tha is applied",
+            "problem": "'from' is attached to the wrong word: the suffix tha comes from the root śam(i), and jaraṃ closes the preceding list",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "ཉ་མ་ཞེས་པ་སོ་སོར་བསྡུ་བ་བཅུང་བའོ",
+            "english": "The term nyama refers to a slight individual contraction",
+            "problem": "the grammatical sense of the abbreviation (a pratyāhāra) is rendered as fluent nonsense with no uncertainty mark",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "nearly every word is wrapped in <term>, so the page reads as a wall of tags",
+            "severity": "minor",
+            "class": "T16"
+          }
+        ],
+        "confidence": "low"
+      },
+      {
+        "page_number": 206,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ཙ་དྲཱ་རཾ།",
+            "english": "Catvāra <gloss>four</gloss>",
+            "problem": "the derivative of cat + ṭvarac is catvara 'courtyard/crossroads', not catvāra 'four'; the gloss is wrong",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "ཀྵུ་རཿ ཁུ་བ། རོ་མཱ་ཡུ་དྷཿ",
+            "english": "Kṣura <gloss>razor/fluid</gloss> means khuva <gloss>sap or essence</gloss>, or romāyudha",
+            "problem": "the gloss is confused: kṣura is 'razor' (romāyudha, 'hair-weapon'); the 'sap' reading is the translator's",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      },
+      {
+        "page_number": 395,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཁར་གོ་སོལ་གྱི་ཤ་ནི",
+            "english": "The meat of the mkhar go sol <gloss>likely a species of wild bird or francolin</gloss>",
+            "problem": "a speculative identification is offered as a gloss",
+            "severity": "minor"
+          },
+          {
+            "source": "རྡུལ་སྙི་བར་བྱེད་དོ",
+            "english": "makes the skin supple",
+            "problem": "uncertain reading rendered without a flag",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 612,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "རིམས་འཕྲོག་ལྕགས་ཀྱུའི་སྦྱོར་བ་བདུན་པ་ནི།",
+            "english": "The Seven-Fold Formula of the Fever-Seizing Hook",
+            "problem": "'བདུན་པ' is the ordinal: 'the seventh formula, the Fever-Seizing Hook'. The English makes it a seven-part formula (it does have seven ingredients, which hides the error)",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "source": "ཆུ་ཚོད་གཅིག་ཙམ་གྱི་བར་བཞག",
+            "english": "for about one hour <note>... a traditional time unit of twenty-four minutes ...</note>",
+            "problem": "the English gives one hour in the text and the correct 24 minutes only in a note, for an application time in a remedy",
+            "severity": "moderate",
+            "class": "O7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Right text on the right leaves. The medical pages read well, with some numeric slips; the Sanskrit grammar pages come out as tag-heavy, partly garbled English that a reader cannot use without the Tibetan. 24 pages carry no text.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      395
+    ],
+    "reader_summary": "A Derge Tengyur miscellany volume that here holds a Sanskrit grammatical commentary on noun-forming suffixes and Tibetan medical material on diet and remedies. The transcription is the Derge e-text and matches the leaves. The medical English is usable, but check quantities and times against the Tibetan. The grammar English is often not reliable and should not be quoted."
+  }
+]

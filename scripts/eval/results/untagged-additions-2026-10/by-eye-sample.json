@@ -1,0 +1,627 @@
+{
+ "seed": 59820,
+ "flags": [
+  {
+   "id": "69aec0f51f4011b58bb54073_00407",
+   "n": 8,
+   "kind": "unsupported",
+   "words": "Thou who still hast all thy rage, whose tresses are still riotous and fresh from Cocytus’ fount, join thou thy strength to mine.",
+   "source_has": "NONE",
+   "reason": "This sentence renders text from the following page not provided in the source snippets.",
+   "sentence": "Thou who still hast all thy rage, whose tresses are still riotous and fresh from Cocytus’ fount, join thou thy strength to mine. ’Tis no common fray or Martian battle that we prepare, but brothers—though kindly Faith and Duty resist, they will be o’ercome—ay, brothers shall draw the sword in combat hand-to-hand. A noble work!",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "6"
+  },
+  {
+   "id": "69aec0f51f4011b58bb54073_00407",
+   "n": 9,
+   "kind": "unsupported",
+   "words": "Gird we ourselves with deadly hate, with armed discord. Dost thou hesitate?",
+   "source_has": "NONE",
+   "reason": "This sentence renders text from the following page not provided in the source snippets.",
+   "sentence": "Gird we ourselves with deadly hate, with armed discord. Dost thou hesitate?",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "6"
+  },
+  {
+   "id": "6953ab1077f38f6761bd67aa_00001",
+   "n": 6,
+   "kind": "explanation",
+   "words": "Founded in 1475, this is the central research library of the Holy See and one of the most important repositories",
+   "source_has": "NONE",
+   "reason": "Provides historical facts about the library not present in the source.",
+   "sentence": "Vatican Apostolic Library — Founded in 1475, this is the central research library of the Holy See and one of the most important repositories of historical texts in the world.",
+   "language": "Latin",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2"
+  },
+  {
+   "id": "6953ab1077f38f6761bd67aa_00001",
+   "n": 7,
+   "kind": "definition",
+   "words": "A unique identification code (similar to a modern call number) used by librarians and scholars to locate a specific book",
+   "source_has": "NONE",
+   "reason": "Defines the term 'Shelfmark' which does not appear in the source.",
+   "sentence": "Shelfmark — A unique identification code (similar to a modern call number) used by librarians and scholars to locate a specific book or manuscript in the stacks.",
+   "language": "Latin",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2"
+  },
+  {
+   "id": "6953112e77f38f6761bcbe3b_00061",
+   "n": 20,
+   "kind": "explanation",
+   "words": "and view the error as native to the $G^g$ manuscript.",
+   "source_has": "and regard the corruption as native to G^g.",
+   "reason": "Translates 'corruption' as 'error' and 'native to' as an interpretive explanation of the manuscript state.",
+   "sentence": "Since $G^s$ reads \"to know,\" it may be best to read \"to know\" (Greek: gnōnai) here and view the error as native to the $G^g$ manuscript.",
+   "language": "English",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2"
+  },
+  {
+   "id": "6953112e77f38f6761bcbe3b_00061",
+   "n": 22,
+   "kind": "explanation",
+   "words": "Alternatively, if we take the meaning \"to practice,\" the text might be a corruption of a Hebrew word meaning \"and they are perishing.\"",
+   "source_has": "If we are bound to accept this meaning, then some corruption seems",
+   "reason": "The translator summarizes and explains the complex textual reconstruction proposed in the footnote.",
+   "sentence": "Alternatively, if we take the meaning \"to practice,\" the text might be a corruption of a Hebrew word meaning \"and they are perishing.\"",
+   "language": "English",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2"
+  },
+  {
+   "id": "6992ce273ea667fbac82854a_00042",
+   "n": 4,
+   "kind": "image_description",
+   "words": "[Illustration: A woodcut diagram of a Red Square Canopy .",
+   "source_has": "NONE",
+   "reason": "Describes the visual content of the page not present in the source text.",
+   "sentence": "[Illustration: A woodcut diagram of a Red Square Canopy .",
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2"
+  },
+  {
+   "id": "6992ce273ea667fbac82854a_00042",
+   "n": 6,
+   "kind": "image_description",
+   "words": "It is adorned with two tiers of ruffled valances and is supported by a tall, multi-segmented carrying pole used by attendants in processions.]",
+   "source_has": "NONE",
+   "reason": "Describes visual details of the illustration.",
+   "sentence": "It is adorned with two tiers of ruffled valances and is supported by a tall, multi-segmented carrying pole used by attendants in processions.]",
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2"
+  },
+  {
+   "id": "6990666f2ec9f7db5717a544_00142",
+   "n": 5,
+   "kind": "explanation",
+   "words": "Astronomical Data and Planetary Positions",
+   "source_has": "NONE",
+   "reason": "Translator added a descriptive header for the table columns not present in source.",
+   "sentence": "| | Astronomical Data and Planetary Positions |",
+   "language": "Sanskrit",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2"
+  },
+  {
+   "id": "6a3c647639b4508b04e2740c_00079",
+   "n": 2,
+   "kind": "explanation",
+   "words": "If it is two characters",
+   "source_has": "丨 丨",
+   "reason": "The translator interprets the repetition marks as 'two characters'.",
+   "sentence": "If it is two characters , it can then secure half the body; if it suddenly collapses, one cannot escape or approach.",
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "13"
+  },
+  {
+   "id": "6aa94ea998dd95a320803cca_00130",
+   "n": 68,
+   "kind": "unsupported",
+   "words": "is supported by the canons.",
+   "source_has": "NONE",
+   "reason": "The translator added a concluding clause to summarize the list of legal citations.",
+   "sentence": "That detraction is a mortal sin in itself is supported by the canons.",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "2"
+  },
+  {
+   "id": "6aa94ea998dd95a320803cca_00130",
+   "n": 20,
+   "kind": "unsupported",
+   "words": "It is the supreme evil.",
+   "source_has": "Iste de summo bono.",
+   "reason": "The source 'Iste de summo bono' is a citation (e.g. Prosper), not a statement.",
+   "sentence": "It is the supreme evil.",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "2"
+  },
+  {
+   "id": "69ee475f6dd925d126f421de_00020",
+   "n": 1,
+   "kind": "explanation",
+   "words": "(the Roman Empire)",
+   "source_has": "dying Eagle",
+   "reason": "The translator explains the metaphor of the dying Eagle, which is not in the source.",
+   "sentence": "...her rites, notions, and ceremonies, in the most luxuriant abundance, from ancient and heathen Rome g , and that much the greater number of those flaunting externals which Infallibility (the Pope) has adopted by way of feathers to adorn the triple cap, have been stolen out of the wings of the dying Eagle (the Roman Empire).",
+   "language": "English",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "1"
+  },
+  {
+   "id": "69ee475f6dd925d126f421de_00020",
+   "n": 9,
+   "kind": "definition",
+   "words": "(an old game)",
+   "source_has": "Barley-Break",
+   "reason": "The translator adds a definition for the game Barley-Break.",
+   "sentence": "And Barley-Break (an old game) the ready way to Hell;",
+   "language": "English",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "1"
+  },
+  {
+   "id": "697a30555760769ad3c96636_00137",
+   "n": 14,
+   "kind": "explanation",
+   "words": "John George I of Saxony",
+   "source_has": "Ihre Churfürst. Durchl.",
+   "reason": "Identifies the specific historical person referred to by the title.",
+   "sentence": "His Electoral Highness Churfürstliche Durchlaucht; John George I of Saxony had",
+   "language": "Latin-German",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2"
+  },
+  {
+   "id": "697a30555760769ad3c96636_00137",
+   "n": 3,
+   "kind": "explanation",
+   "words": "the other prince-electors of the Empire",
+   "source_has": "Mit- Churfürsten",
+   "reason": "Adds an explanatory identification of the group not present in the source.",
+   "sentence": "Electors Mit-Churfürsten; the other prince-electors of the Empire to be of such an Electoral German and steadfast mind",
+   "language": "Latin-German",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2"
+  },
+  {
+   "id": "6a3c643839b4508b04e25465_00042",
+   "n": 10,
+   "kind": "explanation",
+   "words": "in the name of the crown refers to the shape being",
+   "source_has": "委貌之委||下大也",
+   "reason": "The translator adds an interpretive explanation of the character's function not in the source.",
+   "sentence": "The character for \"entrusting\" in the name of the crown refers to the shape being small at the top and large at the bottom.",
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "13"
+  },
+  {
+   "id": "6992cf69f5b4f75c1a4c8d6d_00046",
+   "n": 11,
+   "kind": "unsupported",
+   "words": "The Kingdom of Fu-lin reaches southeast to Mieli-sha",
+   "source_has": "宋史 拂菻國東南至滅力沙",
+   "reason": "The translator skipped the source's 'Yuan An' note entirely, which is the only missing text.",
+   "sentence": "History of the Song The Kingdom of Fu-lin reaches southeast to Mieli-sha , and north to the sea, both a distance of forty days' journey.",
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2"
+  },
+  {
+   "id": "6a3c65fa39b4508b04e30936_00105",
+   "n": 5,
+   "kind": "explanation",
+   "words": "The Collected Chapters on the Stars records that",
+   "source_has": "丨丨丨所載妖星皆見於月旁",
+   "reason": "The translator treats the heading 集星章 as an introductory subject for the next sentence.",
+   "sentence": "The Collected Chapters on the Stars records that ominous stars all appear beside the moon, alternating in five colors.",
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "13"
+  },
+  {
+   "id": "6a3c65fa39b4508b04e30936_00105",
+   "n": 15,
+   "kind": "unsupported",
+   "words": "Sometimes it is like a dragon-horse",
+   "source_has": "或丨丨丨或雜色鬱鬱衝天者",
+   "reason": "The source has placeholders (丨丨丨) here; the translator fills them with text from line 8.",
+   "sentence": "Sometimes it is like a dragon-horse , or a variegated vapor rising gloomily toward the sky.",
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "13"
+  },
+  {
+   "id": "699062f6e7b7642c081dd071_00021",
+   "n": 5,
+   "kind": "summary",
+   "words": "Muscle irritability , Nerve irritability , Sensitivity of the nerves , Muscle fiber , Nerve fiber , Dynamic relations , Sensory nerve irritability , Change of position",
+   "source_has": "NONE",
+   "reason": "A list of keywords/index terms added by the translator not present in the source text.",
+   "sentence": "Muscle irritability , Nerve irritability , Sensitivity of the nerves , Muscle fiber , Nerve fiber , Dynamic relations , Sensory nerve irritability , Change of position",
+   "language": "German",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2"
+  },
+  {
+   "id": "6992ca1cd4d545ae73fed82b_00007",
+   "n": 19,
+   "kind": "explanation",
+   "words": "in both internal and external studies",
+   "source_has": "博通內外",
+   "reason": "The source text '內外' (internal and external) is translated directly.",
+   "sentence": "Jicheng also loved antiquity and was broadly learned in both internal and external studies .",
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2"
+  },
+  {
+   "id": "69f8c13a0c0c281d4bd32e1c_00006",
+   "n": 8,
+   "kind": "definition",
+   "words": "(they speared)",
+   "source_has": "alcangaron for alancearon",
+   "reason": "Translator added a gloss for the Spanish word not in source.",
+   "sentence": "Others, such as llamaron for llevaron (they took) on page 20, line 1, and alcangaron for alancearon (they speared) on page 76, line 10, are not as misleading.",
+   "language": "English",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "1"
+  },
+  {
+   "id": "69f8c13a0c0c281d4bd32e1c_00006",
+   "n": 8,
+   "kind": "definition",
+   "words": "(they took)",
+   "source_has": "llamaron for llevaron",
+   "reason": "Translator added a gloss for the Spanish word not in source.",
+   "sentence": "Others, such as llamaron for llevaron (they took) on page 20, line 1, and alcangaron for alancearon (they speared) on page 76, line 10, are not as misleading.",
+   "language": "English",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "1"
+  },
+  {
+   "id": "69920b74e0a548a13d882d08_-1451",
+   "n": 22,
+   "kind": "definition",
+   "words": "copyright infringement: the use of works protected by copyright law without permission, which can lead to legal penalties",
+   "source_has": "Copyright infringement",
+   "reason": "The translator added a definition of 'copyright infringement' not present in the source.",
+   "sentence": "Copyright infringement copyright infringement: the use of works protected by copyright law without permission, which can lead to legal penalties liability can be quite severe.",
+   "language": "Armenian",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2"
+  },
+  {
+   "id": "69920b74e0a548a13d882d08_-1451",
+   "n": 14,
+   "kind": "definition",
+   "words": "optical character recognition (OCR): a technology that converts images of typed, handwritten, or printed text into machine-encoded text",
+   "source_has": "optical character recognition",
+   "reason": "The translator added a definition of 'optical character recognition' not present in the source.",
+   "sentence": "+ Refrain from automated querying Do not send automated queries of any sort to Google’s system: If you are conducting research on machine translation machine translation: the use of software to translate text from one language to another , optical character recognition optical character recognition (OCR): a technology that converts images of typed, handwritten, or printed text into machine-encoded text or other areas where access to a large amount of text is helpful, please contact us.",
+   "language": "Armenian",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2"
+  },
+  {
+   "id": "6a267cbd6c1f37c9c4f3705c_00025",
+   "n": 3,
+   "kind": "unsupported",
+   "words": ", on the sense of things and magic . Frankfurt, 1620.",
+   "source_has": "NONE",
+   "reason": "Sentence renders nothing on the source page or the provided previous page fragment.",
+   "sentence": ", on the sense of things and magic . Frankfurt, 1620.",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "11"
+  },
+  {
+   "id": "6953a82c77f38f6761bd0bc5_00304",
+   "n": 2,
+   "kind": "image_description",
+   "words": "Left Column (Greek)",
+   "source_has": "NONE",
+   "reason": "Describes the layout of the page not mentioned in the source text.",
+   "sentence": "Left Column (Greek)",
+   "language": "Armenian",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2"
+  },
+  {
+   "id": "6953a82c77f38f6761bd0bc5_00304",
+   "n": 11,
+   "kind": "image_description",
+   "words": "Right Column (Armenian)",
+   "source_has": "NONE",
+   "reason": "Describes the layout of the page not mentioned in the source text.",
+   "sentence": "Right Column (Armenian)",
+   "language": "Armenian",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2"
+  },
+  {
+   "id": "6990673a249ce014347d36f6_00004",
+   "n": 11,
+   "kind": "explanation",
+   "words": "(the primal Guru of the Siddhas)",
+   "source_has": "நந்திசொன்ன",
+   "reason": "Translator added an identification of who Nandi is.",
+   "sentence": "Except for the Nigandu (lexicon/encyclopedia) spoken by Nandi (the primal Guru of the Siddhas) , nothing else compares.",
+   "language": "Tamil",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2"
+  },
+  {
+   "id": "6990673a249ce014347d36f6_00004",
+   "n": 25,
+   "kind": "definition",
+   "words": "(a specific alchemical preparation, likely involving litharge or lead-based minerals)",
+   "source_has": "சுக்காதசிங்கி",
+   "reason": "Translator added a definition/explanation for the alchemical term.",
+   "sentence": "See how the calcined powder of Sukkathasingi (a specific alchemical preparation, likely involving litharge or lead-based minerals) is released;",
+   "language": "Tamil",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2"
+  },
+  {
+   "id": "69e787b34a6785cfd60cce39_00014",
+   "n": 12,
+   "kind": "unsupported",
+   "words": "Because it did not stop raining day after day, I wanted to finish my task.",
+   "source_has": "NONE",
+   "reason": "No mention of rain or finishing a task due to weather in the source text.",
+   "sentence": "Because it did not stop raining day after day, I wanted to finish my task.",
+   "language": "Japanese",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "10"
+  },
+  {
+   "id": "6a3c650c39b4508b04e2c22c_00017",
+   "n": 35,
+   "kind": "unsupported",
+   "words": "The next entry states: The matter is recorded in the Public Record.",
+   "source_has": "次定曰事公書",
+   "reason": "The source text is likely a garbled fragment; the translation adds a narrative framing not present.",
+   "sentence": "The next entry states: The matter is recorded in the Public Record.",
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "13"
+  },
+  {
+   "id": "69906304e7b7642c081dd7a9_00286",
+   "n": 23,
+   "kind": "definition",
+   "words": "\"The planet occupying it\" means the planet situated in the tenth house.",
+   "source_has": "तद्वतेन दशमगतेन ।",
+   "reason": "The source provides the gloss 'dashamagatena', but the translator adds a formal definition structure.",
+   "sentence": "\"The planet occupying it\" means the planet situated in the tenth house.",
+   "language": "Sanskrit",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2"
+  },
+  {
+   "id": "69906304e7b7642c081dd7a9_00286",
+   "n": 24,
+   "kind": "definition",
+   "words": "\"The planet aspecting it\" means the planet looking at the tenth house.",
+   "source_has": "तद्द्रष्ट्रा दशमद्रष्ट्रा ।",
+   "reason": "The source provides the gloss 'dashamadrastra', but the translator adds a formal definition structure.",
+   "sentence": "\"The planet aspecting it\" means the planet looking at the tenth house.",
+   "language": "Sanskrit",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "2"
+  },
+  {
+   "id": "6a4443dfaa50a8e8f5052727_00015",
+   "n": 8,
+   "kind": "unsupported",
+   "words": "[8] Indeed, some seeds of plants are found to be of such minute quantity that for that reason it could seem that some",
+   "source_has": "NONE",
+   "reason": "This sentence does not appear in the source, previous, or next page provided.",
+   "sentence": "Indeed, some seeds of plants are found to be of such minute quantity that for that reason it could seem that some plants arise entirely without seed, and they have appeared so even to the older philosophers. However, the contrary",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "13"
+  },
+  {
+   "id": "6a4443dfaa50a8e8f5052727_00015",
+   "n": 7,
+   "kind": "unsupported",
+   "words": "[7] In vegetables, what elegant phenomena are detected by the art of microscopes, otherwise observable by no reason!",
+   "source_has": "NONE",
+   "reason": "This sentence does not appear in the source, previous, or next page provided.",
+   "sentence": "In vegetables, what elegant phenomena are detected by the art of microscopes, otherwise observable by no reason!",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "13"
+  },
+  {
+   "id": "69b6429a09a998b4c36de0a2_00011",
+   "n": 13,
+   "kind": "definition",
+   "words": "(from cause to effect) and à posteriori (from effect to cause)",
+   "source_has": "These are familiarly known as the arguments à priori and à posteriori.",
+   "reason": "The translator added definitions of the Latin terms not present in the source text.",
+   "sentence": "These are familiarly known as the arguments à priori (from cause to effect) and à posteriori (from effect to cause).",
+   "language": "English",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "10"
+  },
+  {
+   "id": "69a68457256d25f466059e53_00037",
+   "n": 13,
+   "kind": "explanation",
+   "words": "[written as ef]",
+   "source_has": "reliquitur quadratū e f",
+   "reason": "Translator added a note about the source's literal spelling.",
+   "sentence": "But the square of line $dc$ is greater than the square of line $de$, for the reason that line $dc$ is greater than line $de$; therefore, the square of line $df$ having been taken away, there remains the square of line $fc$ [written as $ef$] greater than the square of line $fe$.",
+   "language": "Latin",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "1"
+  },
+  {
+   "id": "69a68457256d25f466059e53_00037",
+   "n": 4,
+   "kind": "explanation",
+   "words": "[proposition] of the first [book of Euclid]",
+   "source_has": "per 18. primi",
+   "reason": "Translator added 'book of Euclid' which is not in the source text.",
+   "sentence": "I say that line $ad$ is greater than line $db$, which is the remaining part of the same diameter; which is evident if lines $ac$ and $bc$ are joined, because since line $ad$ is greater than line $dc$ by hypothesis, therefore by the 18th [proposition] of the first [book of Euclid], angle $acd$ is greater than angle $cad$; and angle $acb$ is a right angle by the 30th of the third; it is clear, therefore, by the 32nd of the first, that angle $cbd$ is greater than angle $dcb$, because since angle $cbd$ with angle $cab$ is equal to a right angle, and angle $dcb$ with angle $acd$ (which is greater than angle $cad$) is equal to a right angle, it is evident that angle $cbd$ is greater than angle $dcb$; therefore by the 19th of the first, side $dc$ will be greater than side $db$.",
+   "language": "Latin",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "1"
+  }
+ ],
+ "unflagged_pages": [
+  {
+   "id": "6a3cc188ec254ff6cae0d21c_00146",
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "13",
+   "n_units": 8
+  },
+  {
+   "id": "69b2f3e3a9a500a45e5e8f88_00015",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "1",
+   "n_units": 15
+  },
+  {
+   "id": "6a3c679e39b4508b04e378d0_00057",
+   "language": "Chinese",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "13",
+   "n_units": 9
+  },
+  {
+   "id": "6a3c615d879008ba7e15db69_00118",
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "13",
+   "n_units": 18
+  },
+  {
+   "id": "69b651a418b87551bfcab4f6_00110",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "11",
+   "n_units": 7
+  },
+  {
+   "id": "69c7e2ec295ea01b70c8d8da_00-67",
+   "language": "Latin",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "10",
+   "n_units": 52
+  },
+  {
+   "id": "6a26c4b9aad44c98627d1b44_00003",
+   "language": "German",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "11",
+   "n_units": 31
+  },
+  {
+   "id": "69b21c2c429e087c6f8640e7_00013",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "10",
+   "n_units": 14
+  },
+  {
+   "id": "69b2f3e9a9a500a45e5e8fd3_00174",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "1",
+   "n_units": 10
+  },
+  {
+   "id": "69b62f6d1c1c21a3737f5c9f_00247",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "6",
+   "n_units": 14
+  },
+  {
+   "id": "69c8a28f6c6f3cc53c85e463_00001",
+   "language": "English",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "10",
+   "n_units": 11
+  },
+  {
+   "id": "6a08e2b150bd891addfb4ad9_00011",
+   "language": "Japanese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "11",
+   "n_units": 21
+  },
+  {
+   "id": "6a26b94061b3857ed05a8b2b_00010",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "11",
+   "n_units": 9
+  },
+  {
+   "id": "69b6bf758566c838146492ab_00059",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "10",
+   "n_units": 7
+  },
+  {
+   "id": "6a3c5f43879008ba7e153cc1_00027",
+   "language": "Chinese",
+   "model": "gemini-3-flash-preview",
+   "prompt_version": "13",
+   "n_units": 13
+  },
+  {
+   "id": "69e75a32095c302d3fdded0b_00075",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "11",
+   "n_units": 16
+  },
+  {
+   "id": "69af0f3c71c0dcb762286c99_00061",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "1",
+   "n_units": 31
+  },
+  {
+   "id": "6a4fb0696c11f99c0e4248f6_00013",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "13",
+   "n_units": 9
+  },
+  {
+   "id": "69b2f38721208ea9dc278617_00149",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite-preview",
+   "prompt_version": "10",
+   "n_units": 26
+  },
+  {
+   "id": "69f336d3876dd827cbc50fd1_00010",
+   "language": "Latin",
+   "model": "gemini-3.1-flash-lite",
+   "prompt_version": "11",
+   "n_units": 23
+  }
+ ]
+}

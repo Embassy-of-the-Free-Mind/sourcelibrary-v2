@@ -1,0 +1,1676 @@
+[
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69b51dcacf111105c4290453",
+    "title": "Amphitheatrvm Sapientiae Aeternae (Khunrath, 1653)",
+    "page": 74,
+    "url": "https://sourcelibrary.org/book/69b51dcacf111105c4290453?page=74",
+    "list": "tr",
+    "class": "T4",
+    "severity": "serious",
+    "note": "The English pane holds page 75's translation (Job 10, Colombo, verses 11-14). Nothing of this page (faith polemic, AXIOMA, SVMMA) is translated.",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69b51dcacf111105c4290453",
+    "title": "Amphitheatrvm Sapientiae Aeternae (Khunrath, 1653)",
+    "page": 75,
+    "url": "https://sourcelibrary.org/book/69b51dcacf111105c4290453?page=75",
+    "list": "tr",
+    "class": "T4",
+    "severity": "serious",
+    "note": "The translation starts two-thirds of the way down the page. Everything above (verse 11, Colombo, verse 12, Primam vocem) was put on page 74.",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69b51dcacf111105c4290453",
+    "title": "Amphitheatrvm Sapientiae Aeternae (Khunrath, 1653)",
+    "page": 76,
+    "url": "https://sourcelibrary.org/book/69b51dcacf111105c4290453?page=76",
+    "list": "ocr",
+    "class": "O5",
+    "severity": "serious",
+    "note": "first two lines of the page missing",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69b51dcacf111105c4290453",
+    "title": "Amphitheatrvm Sapientiae Aeternae (Khunrath, 1653)",
+    "page": 76,
+    "url": "https://sourcelibrary.org/book/69b51dcacf111105c4290453?page=76",
+    "list": "tr",
+    "class": "T8",
+    "severity": "serious",
+    "note": "Meaning reversed: the couplet says not everyone has the same manner of life and death",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69b51dcacf111105c4290453",
+    "title": "Amphitheatrvm Sapientiae Aeternae (Khunrath, 1653)",
+    "page": 76,
+    "url": "https://sourcelibrary.org/book/69b51dcacf111105c4290453?page=76",
+    "list": "tr",
+    "class": "T5",
+    "severity": "moderate",
+    "note": "runs on into the next page's text",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69f1347f365e3fcae574ed95",
+    "title": "Xuanzang ca. 596-664: Da ban ruo po luo mi duo jing",
+    "page": 8,
+    "url": "https://sourcelibrary.org/book/69f1347f365e3fcae574ed95?page=8",
+    "list": "other",
+    "class": "D1",
+    "severity": "moderate",
+    "note": "the OCR's image description ('A section of a traditional Chinese woodblock-printed Buddhist sutra scroll...', 'Ming or Song') is shown as a <note> at the head of the translation",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Classical Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69f1347f365e3fcae574ed95",
+    "title": "Xuanzang ca. 596-664: Da ban ruo po luo mi duo jing",
+    "page": 9,
+    "url": "https://sourcelibrary.org/book/69f1347f365e3fcae574ed95?page=9",
+    "list": "ocr",
+    "class": "O1",
+    "severity": "moderate",
+    "note": "cut-off edge column rendered as an invented phrase; the translation gives 'not eventually produce all feelings'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Classical Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69f1347f365e3fcae574ed95",
+    "title": "Xuanzang ca. 596-664: Da ban ruo po luo mi duo jing",
+    "page": 9,
+    "url": "https://sourcelibrary.org/book/69f1347f365e3fcae574ed95?page=9",
+    "list": "tr",
+    "class": "O11",
+    "severity": "moderate",
+    "note": "panel signature translated as content in mid-sentence",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Classical Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69f1347f365e3fcae574ed95",
+    "title": "Xuanzang ca. 596-664: Da ban ruo po luo mi duo jing",
+    "page": 10,
+    "url": "https://sourcelibrary.org/book/69f1347f365e3fcae574ed95?page=10",
+    "list": "ocr",
+    "class": "other:reading-order",
+    "severity": "moderate",
+    "note": "reading order reversed: the last panel is transcribed first",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Classical Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69f1347f365e3fcae574ed95",
+    "title": "Xuanzang ca. 596-664: Da ban ruo po luo mi duo jing",
+    "page": 10,
+    "url": "https://sourcelibrary.org/book/69f1347f365e3fcae574ed95?page=10",
+    "list": "tr",
+    "class": "T14",
+    "severity": "moderate",
+    "note": "English keeps the scrambled order: the ear-realm questions come before the end of the eye-realm series",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Classical Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990665a2ec9f7db5717a149",
+    "title": "Daivajnavallabha",
+    "page": 18,
+    "url": "https://sourcelibrary.org/book/6990665a2ec9f7db5717a149?page=18",
+    "list": "ocr",
+    "class": "O1",
+    "severity": "moderate",
+    "note": "syllable-level garble throughout; tracks the lines but often does not read as Sanskrit",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990665a2ec9f7db5717a149",
+    "title": "Daivajnavallabha",
+    "page": 18,
+    "url": "https://sourcelibrary.org/book/6990665a2ec9f7db5717a149?page=18",
+    "list": "tr",
+    "class": "T7",
+    "severity": "serious",
+    "note": "fluent English over garble; 'Sunday' has no basis in the source",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990665a2ec9f7db5717a149",
+    "title": "Daivajnavallabha",
+    "page": 18,
+    "url": "https://sourcelibrary.org/book/6990665a2ec9f7db5717a149?page=18",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "invented solar-time frame (likely a list of the fierce nakṣatras)",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990665a2ec9f7db5717a149",
+    "title": "Daivajnavallabha",
+    "page": 18,
+    "url": "https://sourcelibrary.org/book/6990665a2ec9f7db5717a149?page=18",
+    "list": "other",
+    "class": "O15",
+    "severity": "moderate",
+    "note": "the OCR <warning> is copied to the head of the translation, with a model <meta> paragraph",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990665a2ec9f7db5717a149",
+    "title": "Daivajnavallabha",
+    "page": 19,
+    "url": "https://sourcelibrary.org/book/6990665a2ec9f7db5717a149?page=19",
+    "list": "ocr",
+    "class": "O8",
+    "severity": "moderate",
+    "note": "normalised to a generic phrase; the named nakṣatras are lost",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990665a2ec9f7db5717a149",
+    "title": "Daivajnavallabha",
+    "page": 19,
+    "url": "https://sourcelibrary.org/book/6990665a2ec9f7db5717a149?page=19",
+    "list": "ocr",
+    "class": "O11",
+    "severity": "moderate",
+    "note": "numerals mis-tagged with wrong values; folio number pushed into the text",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990665a2ec9f7db5717a149",
+    "title": "Daivajnavallabha",
+    "page": 19,
+    "url": "https://sourcelibrary.org/book/6990665a2ec9f7db5717a149?page=19",
+    "list": "tr",
+    "class": "T7",
+    "severity": "serious",
+    "note": "section colophon invented from a garbled margin addition",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990665a2ec9f7db5717a149",
+    "title": "Daivajnavallabha",
+    "page": 19,
+    "url": "https://sourcelibrary.org/book/6990665a2ec9f7db5717a149?page=19",
+    "list": "tr",
+    "class": "T10",
+    "severity": "moderate",
+    "note": "gloss invented over a misread",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990665a2ec9f7db5717a149",
+    "title": "Daivajnavallabha",
+    "page": 19,
+    "url": "https://sourcelibrary.org/book/6990665a2ec9f7db5717a149?page=19",
+    "list": "other",
+    "class": "D1",
+    "severity": "moderate",
+    "note": "raw <insert>11</insert>/<insert>43</insert>/<margin> tags in the English reader text",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990665a2ec9f7db5717a149",
+    "title": "Daivajnavallabha",
+    "page": 20,
+    "url": "https://sourcelibrary.org/book/6990665a2ec9f7db5717a149?page=20",
+    "list": "ocr",
+    "class": "O16",
+    "severity": "serious",
+    "note": "runs of consecutive numerals invented as <gloss>, breaking up the words",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990665a2ec9f7db5717a149",
+    "title": "Daivajnavallabha",
+    "page": 20,
+    "url": "https://sourcelibrary.org/book/6990665a2ec9f7db5717a149?page=20",
+    "list": "ocr",
+    "class": "O1",
+    "severity": "moderate",
+    "note": "word-level garble",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990665a2ec9f7db5717a149",
+    "title": "Daivajnavallabha",
+    "page": 20,
+    "url": "https://sourcelibrary.org/book/6990665a2ec9f7db5717a149?page=20",
+    "list": "tr",
+    "class": "T7",
+    "severity": "serious",
+    "note": "statement invented from garble",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990665a2ec9f7db5717a149",
+    "title": "Daivajnavallabha",
+    "page": 20,
+    "url": "https://sourcelibrary.org/book/6990665a2ec9f7db5717a149?page=20",
+    "list": "tr",
+    "class": "T10",
+    "severity": "serious",
+    "note": "nonsense backed by an invented gloss (probably khara-uṣṭra-damana)",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990665a2ec9f7db5717a149",
+    "title": "Daivajnavallabha",
+    "page": 20,
+    "url": "https://sourcelibrary.org/book/6990665a2ec9f7db5717a149?page=20",
+    "list": "other",
+    "class": "D1",
+    "severity": "moderate",
+    "note": "dozens of bare <gloss>22</gloss> tags in the English; an added note calls it 'Vastu Shastra' from a 'medieval manuscript'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6a2032b118654bf8e1903571",
+    "title": "Dhikr Or. 7065",
+    "page": 37,
+    "url": "https://sourcelibrary.org/book/6a2032b118654bf8e1903571?page=37",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "مني read as من",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Arabic",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6a2032b118654bf8e1903571",
+    "title": "Dhikr Or. 7065",
+    "page": 37,
+    "url": "https://sourcelibrary.org/book/6a2032b118654bf8e1903571?page=37",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "ليلا is Laylā (the beloved), not 'at night'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Arabic",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6a2032b118654bf8e1903571",
+    "title": "Dhikr Or. 7065",
+    "page": 38,
+    "url": "https://sourcelibrary.org/book/6a2032b118654bf8e1903571?page=38",
+    "list": "ocr",
+    "class": "I6",
+    "severity": "moderate",
+    "note": "opening transcribed left-then-right, the reverse of pages 37 and 39",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Arabic",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6a2032b118654bf8e1903571",
+    "title": "Dhikr Or. 7065",
+    "page": 38,
+    "url": "https://sourcelibrary.org/book/6a2032b118654bf8e1903571?page=38",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "loaded misread 'mushrik' (polytheist) in a devotional text",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Arabic",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6a2032b118654bf8e1903571",
+    "title": "Dhikr Or. 7065",
+    "page": 38,
+    "url": "https://sourcelibrary.org/book/6a2032b118654bf8e1903571?page=38",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "literal nonsense over a misread (the image has قمت اجلالا, 'I stood in reverence')",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Arabic",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6a2032b118654bf8e1903571",
+    "title": "Dhikr Or. 7065",
+    "page": 39,
+    "url": "https://sourcelibrary.org/book/6a2032b118654bf8e1903571?page=39",
+    "list": "ocr",
+    "class": "O7",
+    "severity": "moderate",
+    "note": "day of the month dropped from the colophon",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Arabic",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6a2032b118654bf8e1903571",
+    "title": "Dhikr Or. 7065",
+    "page": 39,
+    "url": "https://sourcelibrary.org/book/6a2032b118654bf8e1903571?page=39",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'grant us fire'; the translation silently swaps in '[light]'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Arabic",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6991d8ac8c1030b12444c781",
+    "title": "Kriyakandakramavali (MS Add.1406)",
+    "page": 149,
+    "url": "https://sourcelibrary.org/book/6991d8ac8c1030b12444c781?page=149",
+    "list": "ocr",
+    "class": "O1",
+    "severity": "serious",
+    "note": "fluent Purāṇa-style dialogue that does not match the visible lines",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6991d8ac8c1030b12444c781",
+    "title": "Kriyakandakramavali (MS Add.1406)",
+    "page": 149,
+    "url": "https://sourcelibrary.org/book/6991d8ac8c1030b12444c781?page=149",
+    "list": "tr",
+    "class": "O1",
+    "severity": "serious",
+    "note": "not a translation of this leaf",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6991d8ac8c1030b12444c781",
+    "title": "Kriyakandakramavali (MS Add.1406)",
+    "page": 150,
+    "url": "https://sourcelibrary.org/book/6991d8ac8c1030b12444c781?page=150",
+    "list": "ocr",
+    "class": "O3",
+    "severity": "serious",
+    "note": "Canonical-text substitution, admitted by the OCR's own warning ('based on standard Sanskrit liturgical patterns for the Navakshari Vidya')",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6991d8ac8c1030b12444c781",
+    "title": "Kriyakandakramavali (MS Add.1406)",
+    "page": 150,
+    "url": "https://sourcelibrary.org/book/6991d8ac8c1030b12444c781?page=150",
+    "list": "tr",
+    "class": "O3",
+    "severity": "serious",
+    "note": "not a translation of this leaf",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6991d8ac8c1030b12444c781",
+    "title": "Kriyakandakramavali (MS Add.1406)",
+    "page": 150,
+    "url": "https://sourcelibrary.org/book/6991d8ac8c1030b12444c781?page=150",
+    "list": "other",
+    "class": "O15",
+    "severity": "serious",
+    "note": "the admission of reconstruction appears as a <warning> in the English, but the text is still served as the leaf's content",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6991d8ac8c1030b12444c781",
+    "title": "Kriyakandakramavali (MS Add.1406)",
+    "page": 151,
+    "url": "https://sourcelibrary.org/book/6991d8ac8c1030b12444c781?page=151",
+    "list": "ocr",
+    "class": "O3",
+    "severity": "serious",
+    "note": "Devī Māhātmya-style battle narrative substituted",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6991d8ac8c1030b12444c781",
+    "title": "Kriyakandakramavali (MS Add.1406)",
+    "page": 151,
+    "url": "https://sourcelibrary.org/book/6991d8ac8c1030b12444c781?page=151",
+    "list": "ocr",
+    "class": "O1",
+    "severity": "moderate",
+    "note": "section heading invented",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6991d8ac8c1030b12444c781",
+    "title": "Kriyakandakramavali (MS Add.1406)",
+    "page": 151,
+    "url": "https://sourcelibrary.org/book/6991d8ac8c1030b12444c781?page=151",
+    "list": "tr",
+    "class": "O3",
+    "severity": "serious",
+    "note": "not a translation of this leaf",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6991d8ac8c1030b12444c781",
+    "title": "Kriyakandakramavali (MS Add.1406)",
+    "page": 151,
+    "url": "https://sourcelibrary.org/book/6991d8ac8c1030b12444c781?page=151",
+    "list": "other",
+    "class": "T15",
+    "severity": "moderate",
+    "note": "the <meta> stitches the fabrications into a story ('Following the ritual instructions for the Navakshari Mantra... transitions into the Devi Mahatmya')",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69e7ab4f5f1a22ab19a96632",
+    "title": "Thadrak Kanjur 'Bum Ca",
+    "page": 525,
+    "url": "https://sourcelibrary.org/book/69e7ab4f5f1a22ab19a96632?page=525",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "misparsed: dharmas were taught BY WHICH beings enter; the English makes the entering the content of the teachings",
+    "lane": {
+      "ocr_model": "bdrc-yigdzin-v1",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Tibetan",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69e7ab4f5f1a22ab19a96632",
+    "title": "Thadrak Kanjur 'Bum Ca",
+    "page": 525,
+    "url": "https://sourcelibrary.org/book/69e7ab4f5f1a22ab19a96632?page=525",
+    "list": "other",
+    "class": "I5",
+    "severity": "moderate",
+    "note": "The bottom leaf of this photograph continues the top leaf of page 526; the reader shows the leaves out of reading order",
+    "lane": {
+      "ocr_model": "bdrc-yigdzin-v1",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Tibetan",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69e13adf0dae29249d20bb57",
+    "title": "Īśvara-Pratyabhijñā-Vivṛti-Vimarśinī, Part III",
+    "page": 207,
+    "url": "https://sourcelibrary.org/book/69e13adf0dae29249d20bb57?page=207",
+    "list": "ocr",
+    "class": "O5",
+    "severity": "moderate",
+    "note": "'सामग्री' dropped",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69e13adf0dae29249d20bb57",
+    "title": "Īśvara-Pratyabhijñā-Vivṛti-Vimarśinī, Part III",
+    "page": 207,
+    "url": "https://sourcelibrary.org/book/69e13adf0dae29249d20bb57?page=207",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'non-erroneous' (abhrama) misread as āśrama",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69e13adf0dae29249d20bb57",
+    "title": "Īśvara-Pratyabhijñā-Vivṛti-Vimarśinī, Part III",
+    "page": 207,
+    "url": "https://sourcelibrary.org/book/69e13adf0dae29249d20bb57?page=207",
+    "list": "tr",
+    "class": "T9",
+    "severity": "moderate",
+    "note": "the content of Dharmottara's definition (non-conceptual, non-erroneous) is dropped",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69e13adf0dae29249d20bb57",
+    "title": "Īśvara-Pratyabhijñā-Vivṛti-Vimarśinī, Part III",
+    "page": 208,
+    "url": "https://sourcelibrary.org/book/69e13adf0dae29249d20bb57?page=208",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'अति' dropped (over-pervasion becomes pervasion)",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69e13adf0dae29249d20bb57",
+    "title": "Īśvara-Pratyabhijñā-Vivṛti-Vimarśinī, Part III",
+    "page": 209,
+    "url": "https://sourcelibrary.org/book/69e13adf0dae29249d20bb57?page=209",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "serious",
+    "note": "'in non-fire' becomes 'in fire'; negation dropped",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69e13adf0dae29249d20bb57",
+    "title": "Īśvara-Pratyabhijñā-Vivṛti-Vimarśinī, Part III",
+    "page": 209,
+    "url": "https://sourcelibrary.org/book/69e13adf0dae29249d20bb57?page=209",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "serious",
+    "note": "two more 'non-fire' negations dropped",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69e13adf0dae29249d20bb57",
+    "title": "Īśvara-Pratyabhijñā-Vivṛti-Vimarśinī, Part III",
+    "page": 209,
+    "url": "https://sourcelibrary.org/book/69e13adf0dae29249d20bb57?page=209",
+    "list": "ocr",
+    "class": "O8",
+    "severity": "moderate",
+    "note": "Niyati normalised to niyata",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69e13adf0dae29249d20bb57",
+    "title": "Īśvara-Pratyabhijñā-Vivṛti-Vimarśinī, Part III",
+    "page": 209,
+    "url": "https://sourcelibrary.org/book/69e13adf0dae29249d20bb57?page=209",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'faultiness' misread",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69e13adf0dae29249d20bb57",
+    "title": "Īśvara-Pratyabhijñā-Vivṛti-Vimarśinī, Part III",
+    "page": 209,
+    "url": "https://sourcelibrary.org/book/69e13adf0dae29249d20bb57?page=209",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "'independent Self' lost",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69e13adf0dae29249d20bb57",
+    "title": "Īśvara-Pratyabhijñā-Vivṛti-Vimarśinī, Part III",
+    "page": 209,
+    "url": "https://sourcelibrary.org/book/69e13adf0dae29249d20bb57?page=209",
+    "list": "tr",
+    "class": "O6",
+    "severity": "serious",
+    "note": "sense inverted: the source says smoke is not seen in a wall, a NON-fire",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69e13adf0dae29249d20bb57",
+    "title": "Īśvara-Pratyabhijñā-Vivṛti-Vimarśinī, Part III",
+    "page": 209,
+    "url": "https://sourcelibrary.org/book/69e13adf0dae29249d20bb57?page=209",
+    "list": "tr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "the argument (no smoke without fire) is blurred",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69e13adf0dae29249d20bb57",
+    "title": "Īśvara-Pratyabhijñā-Vivṛti-Vimarśinī, Part III",
+    "page": 209,
+    "url": "https://sourcelibrary.org/book/69e13adf0dae29249d20bb57?page=209",
+    "list": "tr",
+    "class": "unclassed",
+    "severity": "moderate",
+    "note": "technical term Niyati lost",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69e13adf0dae29249d20bb57",
+    "title": "Īśvara-Pratyabhijñā-Vivṛti-Vimarśinī, Part III",
+    "page": 209,
+    "url": "https://sourcelibrary.org/book/69e13adf0dae29249d20bb57?page=209",
+    "list": "tr",
+    "class": "unclassed",
+    "severity": "moderate",
+    "note": "'faultiness' lost",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "69e13adf0dae29249d20bb57",
+    "title": "Īśvara-Pratyabhijñā-Vivṛti-Vimarśinī, Part III",
+    "page": 209,
+    "url": "https://sourcelibrary.org/book/69e13adf0dae29249d20bb57?page=209",
+    "list": "other",
+    "class": "T5",
+    "severity": "moderate",
+    "note": "Opens with '<meta>continues from previous page: …</meta>' repeating the previous page's English",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6a0f06c5900fb4799cef25f2",
+    "title": "Tantrik Texts Vol. VI (1917)",
+    "page": 21,
+    "url": "https://sourcelibrary.org/book/6a0f06c5900fb4799cef25f2?page=21",
+    "list": "ocr",
+    "class": "O8",
+    "severity": "serious",
+    "note": "'Vaiśya status' normalised to 'Vaiṣṇava-hood'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6a0f06c5900fb4799cef25f2",
+    "title": "Tantrik Texts Vol. VI (1917)",
+    "page": 21,
+    "url": "https://sourcelibrary.org/book/6a0f06c5900fb4799cef25f2?page=21",
+    "list": "tr",
+    "class": "O8",
+    "severity": "serious",
+    "note": "a caste-rank claim becomes a sectarian one, reinforced by a gloss",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6a0f06c5900fb4799cef25f2",
+    "title": "Tantrik Texts Vol. VI (1917)",
+    "page": 22,
+    "url": "https://sourcelibrary.org/book/6a0f06c5900fb4799cef25f2?page=22",
+    "list": "ocr",
+    "class": "O1",
+    "severity": "moderate",
+    "note": "half-line reconstructed",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6a0f06c5900fb4799cef25f2",
+    "title": "Tantrik Texts Vol. VI (1917)",
+    "page": 22,
+    "url": "https://sourcelibrary.org/book/6a0f06c5900fb4799cef25f2?page=22",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "translates the reconstruction and borrows 'never' from v.13",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6a0f06c5900fb4799cef25f2",
+    "title": "Tantrik Texts Vol. VI (1917)",
+    "page": 23,
+    "url": "https://sourcelibrary.org/book/6a0f06c5900fb4799cef25f2?page=23",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "vocative misread",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Sanskrit",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6984e84db96022f6fa69b4c8",
+    "title": "Opus mago-cabbalisticum et theosophicum",
+    "page": 240,
+    "url": "https://sourcelibrary.org/book/6984e84db96022f6fa69b4c8?page=240",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "Mercury sign read as Salt",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6984e84db96022f6fa69b4c8",
+    "title": "Opus mago-cabbalisticum et theosophicum",
+    "page": 240,
+    "url": "https://sourcelibrary.org/book/6984e84db96022f6fa69b4c8?page=240",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "the sign is Sulphur (the next sentence says so); the subject is misnamed 'fire' throughout. Page 242 says 'sulfur'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6984e84db96022f6fa69b4c8",
+    "title": "Opus mago-cabbalisticum et theosophicum",
+    "page": 240,
+    "url": "https://sourcelibrary.org/book/6984e84db96022f6fa69b4c8?page=240",
+    "list": "tr",
+    "class": "unclassed",
+    "severity": "moderate",
+    "note": "wrong cross-reference, carried from the OCR",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6984e84db96022f6fa69b4c8",
+    "title": "Opus mago-cabbalisticum et theosophicum",
+    "page": 241,
+    "url": "https://sourcelibrary.org/book/6984e84db96022f6fa69b4c8?page=241",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "Salt sign read as Sun",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6984e84db96022f6fa69b4c8",
+    "title": "Opus mago-cabbalisticum et theosophicum",
+    "page": 241,
+    "url": "https://sourcelibrary.org/book/6984e84db96022f6fa69b4c8?page=241",
+    "list": "tr",
+    "class": "T10",
+    "severity": "moderate",
+    "note": "wrong cross-reference plus an invented gloss on the wrong symbol",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6984e84db96022f6fa69b4c8",
+    "title": "Opus mago-cabbalisticum et theosophicum",
+    "page": 242,
+    "url": "https://sourcelibrary.org/book/6984e84db96022f6fa69b4c8?page=242",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "same misread as 240",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6984e84db96022f6fa69b4c8",
+    "title": "Opus mago-cabbalisticum et theosophicum",
+    "page": 242,
+    "url": "https://sourcelibrary.org/book/6984e84db96022f6fa69b4c8?page=242",
+    "list": "other",
+    "class": "I2",
+    "severity": "serious",
+    "note": "Duplicate of printed page 180 (= record 240) placed after page 181, with a different translation",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6984e84db96022f6fa69b4c8",
+    "title": "Opus mago-cabbalisticum et theosophicum",
+    "page": 242,
+    "url": "https://sourcelibrary.org/book/6984e84db96022f6fa69b4c8?page=242",
+    "list": "other",
+    "class": "D1",
+    "severity": "moderate",
+    "note": "LaTeX '$\\triangle$' / '$\\ominus$' in the reader text",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 345,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=345",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "aleph systematically read as heth",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 345,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=345",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "serious",
+    "note": "'the sun goes through the windows' becomes 'nations see'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 345,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=345",
+    "list": "ocr",
+    "class": "O1",
+    "severity": "serious",
+    "note": "window name garbled",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 345,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=345",
+    "list": "ocr",
+    "class": "O3",
+    "severity": "serious",
+    "note": "Gen 49:8 garbled",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 345,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=345",
+    "list": "tr",
+    "class": "O6",
+    "severity": "serious",
+    "note": "sense replaced",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 345,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=345",
+    "list": "tr",
+    "class": "T10",
+    "severity": "serious",
+    "note": "invented name and gloss",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 345,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=345",
+    "list": "tr",
+    "class": "T7",
+    "severity": "serious",
+    "note": "invented scripture quotation",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 345,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=345",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "fluent over garble",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 345,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=345",
+    "list": "tr",
+    "class": "O7",
+    "severity": "moderate",
+    "note": "translator emends the number",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 346,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=346",
+    "list": "ocr",
+    "class": "O16",
+    "severity": "moderate",
+    "note": "folio invented, catchword dropped",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 346,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=346",
+    "list": "ocr",
+    "class": "O15",
+    "severity": "serious",
+    "note": "invented editorial emendation inside the transcription",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 346,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=346",
+    "list": "ocr",
+    "class": "O3",
+    "severity": "serious",
+    "note": "Job 35:10 garbled",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 346,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=346",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "serious",
+    "note": "'Name' read as 'medicine'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 346,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=346",
+    "list": "tr",
+    "class": "T7",
+    "severity": "serious",
+    "note": "the homily's verse is lost",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 346,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=346",
+    "list": "tr",
+    "class": "T7",
+    "severity": "serious",
+    "note": "invented doctrine",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 346,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=346",
+    "list": "tr",
+    "class": "T10",
+    "severity": "serious",
+    "note": "names a Sefirah on an invented note",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 346,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=346",
+    "list": "other",
+    "class": "T10",
+    "severity": "serious",
+    "note": "Invented apparatus ('perhaps read Binah') presented as part of the source",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 347,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=347",
+    "list": "ocr",
+    "class": "O5",
+    "severity": "moderate",
+    "note": "Job keyword dropped",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 347,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=347",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "serious",
+    "note": "'to praise' misread",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 347,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=347",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "serious",
+    "note": "'fire' read as 'sin'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 347,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=347",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "serious",
+    "note": "serpent of the parable garbled",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 347,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=347",
+    "list": "tr",
+    "class": "O6",
+    "severity": "serious",
+    "note": "sense inverted: they divide to PRAISE God",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 347,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=347",
+    "list": "tr",
+    "class": "O6",
+    "severity": "serious",
+    "note": "angels made sinners",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-07-r1",
+    "frame": "canon",
+    "book_id": "6990630be7b7642c081de08b",
+    "title": "Sefer ha-Zohar (Cremona 1558)",
+    "page": 347,
+    "url": "https://sourcelibrary.org/book/6990630be7b7642c081de08b?page=347",
+    "list": "tr",
+    "class": "T7",
+    "severity": "serious",
+    "note": "invented Merkavah reference",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Hebrew",
+      "form": "print"
+    }
+  }
+]

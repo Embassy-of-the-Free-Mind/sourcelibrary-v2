@@ -1,0 +1,181 @@
+{
+ "n_calls_new": 2512,
+ "input_tokens_new": 6214999,
+ "cost_usd_gateway_new": 0.26103,
+ "max_chars_source": 6000,
+ "aa": {
+  "w1": 0.0102,
+  "w2": 0.0102,
+  "mean": 0.0083,
+  "n": 60
+ },
+ "sentence_base_rate_est": 0.0084,
+ "w1": {
+  "sentence": {
+   "auc": 0.837,
+   "n_pos": 72,
+   "n_neg": 1516
+  },
+  "fpr10": {
+   "threshold": 0.16,
+   "sent_recall": 0.431,
+   "sent_tp": 31,
+   "sent_fp": 146,
+   "sent_precision_pool": 0.175,
+   "sent_precision_at_base_rate": 0.037,
+   "quote_recall": "39/74",
+   "pages_flagged": "102/150",
+   "reversed_pages_flagged": "41/47",
+   "page_precision_reweighted": 0.152
+  },
+  "fpr5": {
+   "threshold": 0.24,
+   "sent_recall": 0.292,
+   "sent_tp": 21,
+   "sent_fp": 75,
+   "sent_precision_pool": 0.219,
+   "sent_precision_at_base_rate": 0.048,
+   "quote_recall": "29/74",
+   "pages_flagged": "78/150",
+   "reversed_pages_flagged": "35/47",
+   "page_precision_reweighted": 0.178
+  },
+  "fpr1": {
+   "threshold": 0.5,
+   "sent_recall": 0.111,
+   "sent_tp": 8,
+   "sent_fp": 16,
+   "sent_precision_pool": 0.333,
+   "sent_precision_at_base_rate": 0.082,
+   "quote_recall": "15/74",
+   "pages_flagged": "34/150",
+   "reversed_pages_flagged": "20/47",
+   "page_precision_reweighted": 0.275
+  },
+  "page_max_auc": 0.714,
+  "planted": {
+   "n": 21,
+   "planted_above_original": 21,
+   "auc_planted_vs_original": 0.982,
+   "planted_above_fpr10_threshold": 19,
+   "mean_delta": 0.6971
+  }
+ },
+ "w2": {
+  "sentence": {
+   "auc": 0.757,
+   "n_pos": 72,
+   "n_neg": 1516
+  },
+  "fpr10": {
+   "threshold": 0.27,
+   "sent_recall": 0.236,
+   "sent_tp": 17,
+   "sent_fp": 145,
+   "sent_precision_pool": 0.105,
+   "sent_precision_at_base_rate": 0.021,
+   "quote_recall": "24/74",
+   "pages_flagged": "97/150",
+   "reversed_pages_flagged": "41/47",
+   "page_precision_reweighted": 0.163
+  },
+  "fpr5": {
+   "threshold": 0.39,
+   "sent_recall": 0.111,
+   "sent_tp": 8,
+   "sent_fp": 71,
+   "sent_precision_pool": 0.101,
+   "sent_precision_at_base_rate": 0.02,
+   "quote_recall": "13/74",
+   "pages_flagged": "65/150",
+   "reversed_pages_flagged": "32/47",
+   "page_precision_reweighted": 0.205
+  },
+  "fpr1": {
+   "threshold": 0.75,
+   "sent_recall": 0.0,
+   "sent_tp": 0,
+   "sent_fp": 16,
+   "sent_precision_pool": 0.0,
+   "sent_precision_at_base_rate": 0.0,
+   "quote_recall": "0/74",
+   "pages_flagged": "10/150",
+   "reversed_pages_flagged": "3/47",
+   "page_precision_reweighted": 0.101
+  },
+  "page_max_auc": 0.701,
+  "planted": {
+   "n": 21,
+   "planted_above_original": 21,
+   "auc_planted_vs_original": 0.963,
+   "planted_above_fpr10_threshold": 17,
+   "mean_delta": 0.6119
+  }
+ },
+ "mean": {
+  "sentence": {
+   "auc": 0.805,
+   "n_pos": 72,
+   "n_neg": 1516
+  },
+  "fpr10": {
+   "threshold": 0.22,
+   "sent_recall": 0.375,
+   "sent_tp": 27,
+   "sent_fp": 148,
+   "sent_precision_pool": 0.154,
+   "sent_precision_at_base_rate": 0.032,
+   "quote_recall": "38/74",
+   "pages_flagged": "101/150",
+   "reversed_pages_flagged": "43/47",
+   "page_precision_reweighted": 0.165
+  },
+  "fpr5": {
+   "threshold": 0.315,
+   "sent_recall": 0.208,
+   "sent_tp": 15,
+   "sent_fp": 75,
+   "sent_precision_pool": 0.167,
+   "sent_precision_at_base_rate": 0.035,
+   "quote_recall": "22/74",
+   "pages_flagged": "73/150",
+   "reversed_pages_flagged": "33/47",
+   "page_precision_reweighted": 0.18
+  },
+  "fpr1": {
+   "threshold": 0.55,
+   "sent_recall": 0.069,
+   "sent_tp": 5,
+   "sent_fp": 16,
+   "sent_precision_pool": 0.238,
+   "sent_precision_at_base_rate": 0.053,
+   "quote_recall": "9/74",
+   "pages_flagged": "24/150",
+   "reversed_pages_flagged": "14/47",
+   "page_precision_reweighted": 0.27
+  },
+  "page_max_auc": 0.723,
+  "planted": {
+   "n": 21,
+   "planted_above_original": 21,
+   "auc_planted_vs_original": 0.982,
+   "planted_above_fpr10_threshold": 19,
+   "mean_delta": 0.6545
+  }
+ },
+ "by_track_sentence_auc_mean": {
+  "T1": 0.826,
+  "T2": 0.783,
+  "T3": 0.905,
+  "T4": 0.724,
+  "T5": 0.783,
+  "Tengyur": 0.887
+ },
+ "n": {
+  "sentences": 2437,
+  "pages": 150,
+  "quotes": 75,
+  "quotes_matched_to_sentence": 74,
+  "plants": 21
+ }
+}

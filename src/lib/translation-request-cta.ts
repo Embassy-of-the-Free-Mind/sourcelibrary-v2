@@ -1,4 +1,5 @@
 import { storedRung, isReadableRung, type StoredTranslationState } from './translation-completeness';
+import { isEnglishBook } from './translation-pane-state';
 
 function isNonEmptyText(value?: string | null) {
   return typeof value === 'string' && value.trim().length > 0;
@@ -49,7 +50,7 @@ export function shouldShowTranslationRequestCta({
   if (!isNonEmptyText(ocrText)) return false;
   // 2,447 public books are already in English. Offering to translate one is
   // nonsense to the reader and a wasted queue slot if anyone takes it up.
-  if ((bookLanguage || '').toLowerCase().startsWith('english')) return false;
+  if (isEnglishBook(bookLanguage)) return false;
   if (hasExistingTranslationContent({ translationText, translationData, translationUpdatedAt, modernizedText })) {
     return false;
   }

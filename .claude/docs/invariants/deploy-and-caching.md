@@ -147,6 +147,14 @@ every visible book. There were 106 merges to `main` in 30 days, each one a deplo
   The step is `scripts/vercel-ignore-build.mjs`: it builds when `src/`, config, deps, OR any `scripts/`
   file that `src/` imports (data JSON, shared `.mjs`) changed. Before it, a scripts-only data refresh
   (#5889) was skipped and /research/canon-gap served stale figures for 17h.
+- **The project builds ONE deployment at a time, production first — and an ignored build still
+  queues.** The ignore step runs only when a deployment reaches the slot, so a skipped preview still
+  waits behind production first (p90 27 min, 2026-10-06; 54 previews queued, held hand merges up an
+  hour). Branch gating therefore lives in `vercel.json` `git.deploymentEnabled`
+  (`"**": false, "main": true, "preview/**": true`; any matching `true` wins), so other branches create
+  no deployment at all. To get a preview, push to `preview/<name>` once. Do NOT fix the queue by
+  re-enabling concurrent builds: on Oct 1, the last day they were on, builds cost $20.48, against
+  $0.06–0.48/day since (#5976, #5990).
 - **Pipeline/worker scripts (`scripts/**`) need no Vercel deploy** — the Hetzner box auto-pulls
   `main` hourly at :17 (its crontab: `17 * * * * … auto-pull.sh`), so a scripts-only merge missing
   from behaviour is usually waiting for that pull, not a failed deploy.

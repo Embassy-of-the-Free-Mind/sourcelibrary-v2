@@ -57,7 +57,7 @@ export default async function OriginalEditionNotice({
         {original ? (
           <>
             This volume is a historical English translation{yearStr}. The library holds the
-            original {original.language || langStr} edition —{' '}
+            original {original.language || langStr} edition:{' '}
             <Link
               href={`/book/${encodeURIComponent(original.slug || original.id || '')}`}
               className="text-accent-gold hover:text-accent-gold/80 underline underline-offset-2"

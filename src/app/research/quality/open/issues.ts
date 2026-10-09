@@ -40,9 +40,15 @@ export const GROUPS: IssueGroup[] = [
       {
         n: 5902,
         title: 'Model-written definitions read as the book’s own text',
-        detail: 'On 5.9% of pages a definition sits inside a term tag, and with notes switched off it becomes body text. On 34% of pages a model gloss is labelled as a gloss printed in the original.',
+        detail: 'The prompts of February and March 2026 wrote the model’s definitions inside term tags, so with notes switched off they read as the book’s words. The reader now shows them as notes, and 207,363 stored pages were cleaned (#5901). Still open: on about a third of pages a model’s gloss is labelled as a gloss printed in the original, and a check that stops new cases at write time is in review.',
         status: 'defect',
         example: { href: '/book/6975158aa88d83c830d99e22?page=83', label: 'example page' },
+      },
+      {
+        n: 5982,
+        title: 'Commentary written into the translation with no tag',
+        detail: 'A detector, tested on planted and clean pages, finds an untagged addition on 4.9% of live pages, a lower bound. Almost all come from translations made with the prompts of February to April 2026 (16.3% of those pages); none were found under the current prompt (0 of 124 pages). On 86 benchmark pages that have a human-typed text, 4 carried a transcription misreading that the translation then rendered faithfully.',
+        status: 'defect',
       },
       {
         n: 5103,
@@ -131,10 +137,10 @@ export const GROUPS: IssueGroup[] = [
         status: 'defect',
       },
       {
-        n: 5698,
-        title: 'Notes as a typed apparatus',
-        detail: 'The book’s own notes, our clarifications, added context and quoted originals kept apart, each of which a reader can switch on or off.',
-        status: 'running',
+        n: 5942,
+        title: 'The translation and our notes stored apart',
+        detail: 'Translating with no instructions to write notes was not less faithful on 80 pages judged against published translations, and cost 7 to 11% less. Notes would then be written by their own step, stored beside the text, and shown as a layer the reader chooses. The storage design awaits a decision.',
+        status: 'planned',
       },
       {
         n: 5647,
@@ -173,9 +179,21 @@ export const GROUPS: IssueGroup[] = [
         status: 'running',
       },
       {
+        n: 6012,
+        title: 'Typed texts for Latin and German',
+        detail: 'Latin is 37% of translated pages and German 11%, and both have few reference pages. Human-typed editions from the Deutsches Textarchiv, CAMENA and EEBO-TCP are being matched to our books for internal measurement, with each source’s licence recorded.',
+        status: 'running',
+      },
+      {
         n: 5406,
         title: 'Readers of the source languages check the judges',
         detail: 'Volunteers re-judge 50 pages the model judges already scored. This is the only way to learn how far the judges agree with people. It awaits an ethics approval.',
+        status: 'planned',
+      },
+      {
+        n: 6338,
+        title: 'How much the AI reviewers miss, and whether a second one helps',
+        detail: 'Each page check is read by one AI reviewer, Claude Opus, whose miss rate has not been measured. A preregistered study plants known errors on some pages of three scripts and compares a second Opus read with a Gemini read, counting only errors confirmed against the page image. Every outcome will be published, with the data.',
         status: 'planned',
       },
       {

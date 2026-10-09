@@ -120,20 +120,20 @@ describe('getBookThumbnailUrl', () => {
     expect(getBookThumbnailUrl(book, 'thumb')).toBe('https://images.sourcelibrary.org/artwork/goltzius-thumb.jpg');
   });
 
-  it('returns -full.jpg for artwork URLs in display mode', () => {
+  it('maps an artwork -full.jpg to the 2000px display variant (#6092: originals are too big to render)', () => {
     const book = {
       thumbnail: 'https://images.sourcelibrary.org/artwork/goltzius-full.jpg',
       thumbnail_blob: 'https://images.sourcelibrary.org/artwork/goltzius-thumb.jpg',
     };
-    expect(getBookThumbnailUrl(book, 'display')).toBe('https://images.sourcelibrary.org/artwork/goltzius-full.jpg');
+    expect(getBookThumbnailUrl(book, 'display')).toBe('https://images.sourcelibrary.org/artwork/goltzius.jpg');
   });
 
-  it('rewrites artwork -thumb to -full in display mode', () => {
+  it('rewrites artwork -thumb to the display variant in display mode', () => {
     const book = {
       thumbnail: 'https://images.sourcelibrary.org/artwork/durer-thumb.jpg',
       thumbnail_blob: 'https://images.sourcelibrary.org/artwork/durer-thumb.jpg',
     };
-    expect(getBookThumbnailUrl(book, 'display')).toBe('https://images.sourcelibrary.org/artwork/durer-full.jpg');
+    expect(getBookThumbnailUrl(book, 'display')).toBe('https://images.sourcelibrary.org/artwork/durer.jpg');
   });
 
   it('rewrites artwork -full to -thumb in thumb mode', () => {
@@ -216,7 +216,7 @@ describe('getBookThumbnailUrl', () => {
       thumbnail: 'https://images.sourcelibrary.org/artwork/test-full.jpg',
       thumbnail_blob: 'https://images.sourcelibrary.org/artwork/test-thumb.jpg',
     };
-    expect(getBookThumbnailUrl(book)).toBe('https://images.sourcelibrary.org/artwork/test-full.jpg');
+    expect(getBookThumbnailUrl(book)).toBe('https://images.sourcelibrary.org/artwork/test.jpg');
   });
 
   // Null handling

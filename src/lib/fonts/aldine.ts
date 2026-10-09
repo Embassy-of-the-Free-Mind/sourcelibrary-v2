@@ -36,6 +36,11 @@ export const cardo = Cardo({
   subsets: ['latin', 'latin-ext', 'greek'],
   variable: '--font-cardo',
   display: 'swap',
+  // Same reason as aldineAetna above: every reader page imports this, but only
+  // Aldine-fount books use the family. Preloaded, it was 20 woff2 files / 783 KB
+  // on every reader page whose text never touches Cardo (#6092). Unpreloaded,
+  // the browser still fetches the faces on first use.
+  preload: false,
 });
 
 /** className to put on a wrapper so both CSS variables are in scope. */

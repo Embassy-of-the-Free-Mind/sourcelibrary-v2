@@ -27,6 +27,10 @@
 
 export const NATIVE_EDITION_LANGUAGE = {
   es: /^\s*(spanish|espa(?:ñ|n)ol|castellano|castilian)\s*$/i,
+  // Latin (#6254): kept in step with the TS side. Note that nothing is
+  // translated INTO Latin, so there is no `pages_translated_la` counter and the
+  // `$or` in `localizedEditionFilter` below reduces to this pattern for `la`.
+  la: /^\s*(latin|latina|latine|lat|neo-latin|ecclesiastical latin)\s*$/i,
 };
 
 /** True when `bookLanguage` means the text already IS `lang`. */

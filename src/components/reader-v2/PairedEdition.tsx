@@ -65,7 +65,7 @@ export function PairedNoticeBanner({ paired }: { paired: PairedEdition }) {
     >
       <BookOpen className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
       <span>
-        <span className="font-medium">Reading text from the critical edition</span> — Berthelot &amp; Ruelle 1887–88, folio {paired.folio}. The manuscript&rsquo;s own AI transcription is unverified; verify any quotation against the edition or the facsimile.
+        <span className="font-medium">Reading text from the critical edition:</span> Berthelot &amp; Ruelle 1887–88, folio {paired.folio}. The manuscript&rsquo;s own AI transcription is unverified; verify any quotation against the edition or the facsimile.
       </span>
     </div>
   );

@@ -1,0 +1,104 @@
+[
+{"id": "QEQ3F", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "ཆད་ངོ་བོ་#གང་ཡིན་པས།",
+   "english": "Regarding the phrase, \"Whatever the nature of destruction is,\" and so forth",
+   "why": "The lemma continues rgyun from the previous side: 'because [destruction] is of the nature of the cutting-off of the continuum', not 'whatever the nature of destruction is'."},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "བུམ་པ་ལ་སོགས་པ་འཆད་པར་#འགྱུར་བ་ན།",
+   "english": "when we later explain the destruction of a pot and so forth",
+   "why": "'chad par 'gyur ba here means 'when the pot etc. is cut off / ceases' (destruction as mere negation), not 'when we later explain'."}
+ ],
+ "note": "A sound rendering of the two kinds of destruction and the contradiction typology; the root-text lemma and one verb ('chad pa) are misread."},
+{"id": "QC9WQ", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "འགྱུར་བའི་རྒྱུ་གང་ཡིན་པ་དང་།",
+   "english": "perfectly knows the causes and the conditions for change",
+   "why": "The phrase completes rnam par dag par from the previous side: the causes and conditions for beings' becoming purified, not 'for change'.",
+   "fix": {"find": "perfectly knows the causes and the conditions for change", "replace": "perfectly knows the causes and the conditions for [beings'] becoming purified"}}
+ ],
+ "note": "Faithful rendering of the sutra passage on causes and conditions of defilement and purification and the Tathagata's absorptions, except the opening fragment."},
+{"id": "Q72BF", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "Faithful translation of the five modes of Pratimoksa recitation and the reciter's, elder's and middle monk's duties."},
+{"id": "QRRB7", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "འདིར་གང་ན་ལྡན་པ་ཡོད་པའི་ཡན་ལག་",
+   "english": "in the whole that possesses its parts",
+   "why": "ldan pa here is conjunction (samyoga): the whole in which conjunction is present, not 'the whole that possesses its parts'."}
+ ],
+ "note": "A careful rendering of the argument against variegated cognition by superimposition, with verses correctly set off; one technical term blurred."},
+{"id": "QQ7QT", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "དངོས་པོ་སྐད་ཅིག་མ་གཅིག་ལ་འབྱུང་བ་ཅན་འབྲས་བུ་སྐྱེད་དོ",
+   "english": "a momentary thing produces an effect that arises in a single moment",
+   "why": "'Occurring in a single moment' qualifies the thing that produces, not the effect: 'a thing that exists for a single moment produces an effect'."}
+ ],
+ "note": "Generally accurate commentary on momentary production and the variant reading; one qualifier attached to the wrong noun."},
+{"id": "QTYOF", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "medium",
+   "tibetan": "ནི་རྒྱུ་མེར་འགྱུར་རོ།",
+   "english": "that would become its cause in the form of fire",
+   "why": "rgyu mer 'gyur most likely = rgyu med par 'gyur: if smoke arose from the non-fire Sakramurdhan, which is not its cause, the smoke would be causeless."}
+ ],
+ "note": "A good rendering of the fire/smoke specification argument; the Sakramurdhan consequence is probably misread."},
+{"id": "Q840Q", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "སྔོན་པོ་ལ་སོགས་པའི་ལྡན་པ་སྣ་ཚོགས་པ་ཡོད་པ་ཡིན་ཞིང་།",
+   "english": "there are various instances of (conjunction) saṃyoga",
+   "why": "The opponent's claim is that there is a variegated conjunction of blue etc. (a single conjunction that is citra), not 'various instances of conjunction'."},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "སྒྲའི་ཡུལ་ལྡན་པ་སྣ་ཚོགས་པའི་ངོ་བོ་མ་ཡིན་པ",
+   "english": "even if the object of sound is not diverse in nature",
+   "why": "sgra'i yul is the referent of the word: 'even if conjunction, the referent of the word [variegated], is not of variegated nature'; 'object of sound' loses the subject, conjunction."},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "ལྡན་དོན་གཅིག་ལ་འཕྲོད་པ་འདུ་བའི་ཕྱིར།",
+   "english": "because of the (inherence) samavāya of many things in a single object of conjunction in a painting",
+   "why": "The Vaisesika notion is ekarthasamavaya: variegatedness is designated of the conjunction because it co-inheres in the same substrate, not 'inherence of many things in a single object of conjunction'."}
+ ],
+ "note": "Follows the anti-Vaisesika argument in outline, but the key technical relations (citra conjunction, ekarthasamavaya) are blurred in several places."},
+{"id": "QGRSI", "score": 3, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "high",
+   "tibetan": "ཆོས་འདི་དག་ནི་ཉོན་མོངས་པ་མེད་པ་འདི་དག་ནི་",
+   "english": "These phenomena are not without afflictions, nor are they possessed of afflictions.",
+   "why": "The Tibetan says these dharmas are without afflictions and are not possessed of afflictions; the English adds a negation to the first clause.",
+   "fix": {"find": "These phenomena are not without afflictions, nor are they possessed of afflictions.", "replace": "These phenomena are without afflictions; they are not possessed of afflictions."}},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "གང་ལས་འབྱུང་བ་མེད་པའི་ཆོས་དེ་གང་ཡང་མི་མཐོང་ངོ་",
+   "english": "or lacks origin",
+   "why": "'byung ba here is going forth / deliverance (niryana), as in the following 'knowing all dharmas as leading forth', not 'origin'."}
+ ],
+ "note": "Readable rendering of the Aksayamati quotation on mindfulness of dharmas, but one clause is reversed and 'byung ba is taken as 'origin'."},
+{"id": "QW4RY", "score": 3, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "high",
+   "tibetan": "པ་དེས་མི་བདག་ནི།",
+   "english": "Through the pride of the lord of men",
+   "why": "ma bkur pa des (Skt. vimanena) = 'through that disrespect' shown by the nagas; it is not the king's pride.",
+   "fix": {"find": "Through the pride of the lord of men", "replace": "Through that disrespect, for the lord of men"}},
+  {"type": "gloss", "confidence": "medium",
+   "tibetan": "ན་བི་མཱ་ནེ་ན",
+   "english": "[note: original Sanskrit: \"na vi mā nena\", referring to a king]",
+   "why": "The Sanskrit is na vimanena 'by that dishonour'; it does not refer to a king."},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "བཞིན་གྱི་ཆུ་སྐྱེས་མཛེས་བྲལ་ཞིང་། །",
+   "english": "the lotus of his face lost its beauty",
+   "why": "The Tibetan (and its Sanskrit) are verses throughout; the English runs them as continuous prose."}
+ ],
+ "note": "Tibetan verses translated correctly in the main, but the opening misattributes the cause of the king's distress to his pride, and the verse is set as prose."},
+{"id": "QYBBJ", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "ལུས་མཚུངས་པ་དང་མི་མཚུངས་པ་དག་ལ་རྗེས་སུ་མཐུན་པ་གོམས་པའི་བག་ཆགས",
+   "english": "karmic imprint or latent propensity that accords with both similar and dissimilar bodies",
+   "why": "The impression of habituation conforms [to the consciousness] in the case of both similar and dissimilar bodies; it does not 'accord with the bodies', and 'karmic' is not in the text."}
+ ],
+ "note": "Accurate on the whole for the argument that bodily change cannot explain differences of consciousness; one phrase is misattached."}
+]
