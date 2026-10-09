@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 // @ts-expect-error — plain .mjs module
-import { LANE, HOLD_REASON, PADDLE, MIN_HAN, convertPaddle, flattenHtml, envelope, hanCount, workTitleOf, pagePolicy, ocrSetFields, isHumanEdited } from '../../scripts/lib/paddle-zh-lane.mjs';
+import { LANE, HOLD_REASON, PADDLE, MIN_HAN, convertPaddle, flattenHtml, envelope, hanCount, bodyHanCount, longestCharRun, MAX_CHAR_RUN, workTitleOf, pagePolicy, ocrSetFields, isHumanEdited } from '../../scripts/lib/paddle-zh-lane.mjs';
 // @ts-expect-error — plain .mjs module
 import * as mjs from '../../scripts/lib/write-provenance.mjs';
 import * as ts from '../../src/lib/write-provenance';
@@ -73,6 +73,16 @@ describe('paddle-zh-lane conversion 3: HTML', () => {
   it('a plate page (only an <img>) converts to no Han text — the textless rule then keeps the stored reading', () => {
     const { body } = convertPaddle('<div style="text-align: center;"><img src="imgs/x.jpg" alt="Image" /></div>');
     expect(hanCount(body)).toBeLessThan(MIN_HAN);
+  });
+  it('a blank leaf read as a recited juan list is textless (#5660 stress canary)', () => {
+    const { body } = convertPaddle(['欽定四庫全書', '卷一', '卷二', '卷三', '卷四', '卷五', '卷六', '卷七', '卷八', '卷九', '卷十'].join('\n'));
+    expect(hanCount(body)).toBeGreaterThanOrEqual(MIN_HAN);
+    expect(bodyHanCount(body)).toBeLessThan(MIN_HAN);
+    expect(bodyHanCount(convertPaddle('欽定四庫全書\n子曰學而時習之不亦說乎').body)).toBeGreaterThanOrEqual(MIN_HAN);
+  });
+  it('a one-character loop is longer than any real table run (#5660 stress re-test)', () => {
+    expect(longestCharRun('幫裒包 ' + '○'.repeat(3000))).toBeGreaterThan(MAX_CHAR_RUN);
+    expect(longestCharRun('姑洗○七九三七○五二五九\n經度宮〇〇〇〇〇〇〇〇〇〇〇〇')).toBeLessThanOrEqual(MAX_CHAR_RUN);
   });
   it('no tag survives the conversion except the page marks it adds', () => {
     const { body } = convertPaddle('<table><tr><td>甲乙</td></tr></table>\n<div><img src="a.jpg"/></div>\n欽定四庫全書\n丙丁');
